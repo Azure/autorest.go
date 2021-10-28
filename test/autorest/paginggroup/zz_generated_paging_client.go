@@ -906,9 +906,6 @@ func (client *PagingClient) nextFragmentCreateRequest(ctx context.Context, apiVe
 		return nil, errors.New("parameter tenant cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(tenant))
-	if nextLink == "" {
-		return nil, errors.New("parameter nextLink cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -949,9 +946,6 @@ func (client *PagingClient) nextFragmentWithGroupingCreateRequest(ctx context.Co
 		return nil, errors.New("parameter customParameterGroup.Tenant cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{tenant}", url.PathEscape(customParameterGroup.Tenant))
-	if nextLink == "" {
-		return nil, errors.New("parameter nextLink cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{nextLink}", nextLink)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

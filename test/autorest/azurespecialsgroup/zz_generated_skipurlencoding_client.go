@@ -10,7 +10,6 @@ package azurespecialsgroup
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -49,9 +48,6 @@ func (client *SkipURLEncodingClient) GetMethodPathValid(ctx context.Context, une
 // getMethodPathValidCreateRequest creates the GetMethodPathValid request.
 func (client *SkipURLEncodingClient) getMethodPathValidCreateRequest(ctx context.Context, unencodedPathParam string, options *SkipURLEncodingGetMethodPathValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/skipUrlEncoding/method/path/valid/{unencodedPathParam}"
-	if unencodedPathParam == "" {
-		return nil, errors.New("parameter unencodedPathParam cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{unencodedPathParam}", unencodedPathParam)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {
@@ -228,9 +224,6 @@ func (client *SkipURLEncodingClient) GetPathValid(ctx context.Context, unencoded
 // getPathValidCreateRequest creates the GetPathValid request.
 func (client *SkipURLEncodingClient) getPathValidCreateRequest(ctx context.Context, unencodedPathParam string, options *SkipURLEncodingGetPathValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/skipUrlEncoding/path/path/valid/{unencodedPathParam}"
-	if unencodedPathParam == "" {
-		return nil, errors.New("parameter unencodedPathParam cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{unencodedPathParam}", unencodedPathParam)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
 	if err != nil {

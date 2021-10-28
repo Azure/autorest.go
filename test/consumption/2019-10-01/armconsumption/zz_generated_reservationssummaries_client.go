@@ -58,9 +58,6 @@ func (client *ReservationsSummariesClient) List(scope string, grain Datagrain, o
 // listCreateRequest creates the List request.
 func (client *ReservationsSummariesClient) listCreateRequest(ctx context.Context, scope string, grain Datagrain, options *ReservationsSummariesListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/reservationSummaries"
-	if scope == "" {
-		return nil, errors.New("parameter scope cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {

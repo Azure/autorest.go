@@ -52,9 +52,6 @@ func (client *RoleAssignmentsClient) createCreateRequest(ctx context.Context, va
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}"
-	if scope == "" {
-		return nil, errors.New("parameter scope cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	if roleAssignmentName == "" {
 		return nil, errors.New("parameter roleAssignmentName cannot be empty")
@@ -115,9 +112,6 @@ func (client *RoleAssignmentsClient) deleteCreateRequest(ctx context.Context, va
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}"
-	if scope == "" {
-		return nil, errors.New("parameter scope cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	if roleAssignmentName == "" {
 		return nil, errors.New("parameter roleAssignmentName cannot be empty")
@@ -178,9 +172,6 @@ func (client *RoleAssignmentsClient) getCreateRequest(ctx context.Context, vault
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}"
-	if scope == "" {
-		return nil, errors.New("parameter scope cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	if roleAssignmentName == "" {
 		return nil, errors.New("parameter roleAssignmentName cannot be empty")
@@ -238,9 +229,6 @@ func (client *RoleAssignmentsClient) listForScopeCreateRequest(ctx context.Conte
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleAssignments"
-	if scope == "" {
-		return nil, errors.New("parameter scope cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

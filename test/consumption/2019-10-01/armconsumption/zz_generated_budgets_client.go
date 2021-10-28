@@ -63,9 +63,6 @@ func (client *BudgetsClient) CreateOrUpdate(ctx context.Context, scope string, b
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
 func (client *BudgetsClient) createOrUpdateCreateRequest(ctx context.Context, scope string, budgetName string, parameters Budget, options *BudgetsCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}"
-	if scope == "" {
-		return nil, errors.New("parameter scope cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	if budgetName == "" {
 		return nil, errors.New("parameter budgetName cannot be empty")
@@ -124,9 +121,6 @@ func (client *BudgetsClient) Delete(ctx context.Context, scope string, budgetNam
 // deleteCreateRequest creates the Delete request.
 func (client *BudgetsClient) deleteCreateRequest(ctx context.Context, scope string, budgetName string, options *BudgetsDeleteOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}"
-	if scope == "" {
-		return nil, errors.New("parameter scope cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	if budgetName == "" {
 		return nil, errors.New("parameter budgetName cannot be empty")
@@ -176,9 +170,6 @@ func (client *BudgetsClient) Get(ctx context.Context, scope string, budgetName s
 // getCreateRequest creates the Get request.
 func (client *BudgetsClient) getCreateRequest(ctx context.Context, scope string, budgetName string, options *BudgetsGetOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}"
-	if scope == "" {
-		return nil, errors.New("parameter scope cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	if budgetName == "" {
 		return nil, errors.New("parameter budgetName cannot be empty")
@@ -234,9 +225,6 @@ func (client *BudgetsClient) List(scope string, options *BudgetsListOptions) *Bu
 // listCreateRequest creates the List request.
 func (client *BudgetsClient) listCreateRequest(ctx context.Context, scope string, options *BudgetsListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/budgets"
-	if scope == "" {
-		return nil, errors.New("parameter scope cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {

@@ -401,7 +401,8 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
         }
         return false;
       }
-      if (pp.schema.type === SchemaType.String || choiceIsString(pp.schema)) {
+      const skipEncoding = skipURLEncoding(pp);
+      if ((pp.schema.type === SchemaType.String || choiceIsString(pp.schema)) && !skipEncoding) {
         const paramName = getParamName(pp);
         imports.add('errors');
         text += `\tif ${paramName} == "" {\n`;
@@ -409,7 +410,7 @@ function createProtocolRequest(codeModel: CodeModel, op: Operation, imports: Imp
         text += '\t}\n';
       }
       let paramValue = formatParamValue(pp, imports);
-      if (!skipURLEncoding(pp)) {
+      if (!skipEncoding) {
         imports.add('net/url');
         paramValue = `url.PathEscape(${formatParamValue(pp, imports)})`;
       }

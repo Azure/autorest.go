@@ -10,7 +10,6 @@ package armconsumption
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
@@ -60,9 +59,6 @@ func (client *ReservationRecommendationDetailsClient) Get(ctx context.Context, b
 // getCreateRequest creates the Get request.
 func (client *ReservationRecommendationDetailsClient) getCreateRequest(ctx context.Context, billingScope string, scope Scope, region string, term Term, lookBackPeriod LookBackPeriod, product string, options *ReservationRecommendationDetailsGetOptions) (*policy.Request, error) {
 	urlPath := "/{billingScope}/providers/Microsoft.Consumption/reservationRecommendationDetails"
-	if billingScope == "" {
-		return nil, errors.New("parameter billingScope cannot be empty")
-	}
 	urlPath = strings.ReplaceAll(urlPath, "{billingScope}", billingScope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
 	if err != nil {
