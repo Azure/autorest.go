@@ -60,7 +60,7 @@ func (client *MultipleInheritanceServiceClient) getCatCreateRequest(ctx context.
 func (client *MultipleInheritanceServiceClient) getCatHandleResponse(resp *http.Response) (MultipleInheritanceServiceClientGetCatResponse, error) {
 	result := MultipleInheritanceServiceClientGetCatResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Cat); err != nil {
-		return MultipleInheritanceServiceClientGetCatResponse{}, err
+		return MultipleInheritanceServiceClientGetCatResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -110,7 +110,7 @@ func (client *MultipleInheritanceServiceClient) getFelineCreateRequest(ctx conte
 func (client *MultipleInheritanceServiceClient) getFelineHandleResponse(resp *http.Response) (MultipleInheritanceServiceClientGetFelineResponse, error) {
 	result := MultipleInheritanceServiceClientGetFelineResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Feline); err != nil {
-		return MultipleInheritanceServiceClientGetFelineResponse{}, err
+		return MultipleInheritanceServiceClientGetFelineResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -160,7 +160,7 @@ func (client *MultipleInheritanceServiceClient) getHorseCreateRequest(ctx contex
 func (client *MultipleInheritanceServiceClient) getHorseHandleResponse(resp *http.Response) (MultipleInheritanceServiceClientGetHorseResponse, error) {
 	result := MultipleInheritanceServiceClientGetHorseResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Horse); err != nil {
-		return MultipleInheritanceServiceClientGetHorseResponse{}, err
+		return MultipleInheritanceServiceClientGetHorseResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -210,7 +210,7 @@ func (client *MultipleInheritanceServiceClient) getKittenCreateRequest(ctx conte
 func (client *MultipleInheritanceServiceClient) getKittenHandleResponse(resp *http.Response) (MultipleInheritanceServiceClientGetKittenResponse, error) {
 	result := MultipleInheritanceServiceClientGetKittenResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Kitten); err != nil {
-		return MultipleInheritanceServiceClientGetKittenResponse{}, err
+		return MultipleInheritanceServiceClientGetKittenResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -260,7 +260,7 @@ func (client *MultipleInheritanceServiceClient) getPetCreateRequest(ctx context.
 func (client *MultipleInheritanceServiceClient) getPetHandleResponse(resp *http.Response) (MultipleInheritanceServiceClientGetPetResponse, error) {
 	result := MultipleInheritanceServiceClientGetPetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Pet); err != nil {
-		return MultipleInheritanceServiceClientGetPetResponse{}, err
+		return MultipleInheritanceServiceClientGetPetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -310,7 +310,7 @@ func (client *MultipleInheritanceServiceClient) putCatCreateRequest(ctx context.
 func (client *MultipleInheritanceServiceClient) putCatHandleResponse(resp *http.Response) (MultipleInheritanceServiceClientPutCatResponse, error) {
 	result := MultipleInheritanceServiceClientPutCatResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return MultipleInheritanceServiceClientPutCatResponse{}, err
+		return MultipleInheritanceServiceClientPutCatResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -359,7 +359,7 @@ func (client *MultipleInheritanceServiceClient) putFelineCreateRequest(ctx conte
 func (client *MultipleInheritanceServiceClient) putFelineHandleResponse(resp *http.Response) (MultipleInheritanceServiceClientPutFelineResponse, error) {
 	result := MultipleInheritanceServiceClientPutFelineResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return MultipleInheritanceServiceClientPutFelineResponse{}, err
+		return MultipleInheritanceServiceClientPutFelineResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -408,7 +408,7 @@ func (client *MultipleInheritanceServiceClient) putHorseCreateRequest(ctx contex
 func (client *MultipleInheritanceServiceClient) putHorseHandleResponse(resp *http.Response) (MultipleInheritanceServiceClientPutHorseResponse, error) {
 	result := MultipleInheritanceServiceClientPutHorseResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return MultipleInheritanceServiceClientPutHorseResponse{}, err
+		return MultipleInheritanceServiceClientPutHorseResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -457,7 +457,7 @@ func (client *MultipleInheritanceServiceClient) putKittenCreateRequest(ctx conte
 func (client *MultipleInheritanceServiceClient) putKittenHandleResponse(resp *http.Response) (MultipleInheritanceServiceClientPutKittenResponse, error) {
 	result := MultipleInheritanceServiceClientPutKittenResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return MultipleInheritanceServiceClientPutKittenResponse{}, err
+		return MultipleInheritanceServiceClientPutKittenResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -506,7 +506,7 @@ func (client *MultipleInheritanceServiceClient) putPetCreateRequest(ctx context.
 func (client *MultipleInheritanceServiceClient) putPetHandleResponse(resp *http.Response) (MultipleInheritanceServiceClientPutPetResponse, error) {
 	result := MultipleInheritanceServiceClientPutPetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return MultipleInheritanceServiceClientPutPetResponse{}, err
+		return MultipleInheritanceServiceClientPutPetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

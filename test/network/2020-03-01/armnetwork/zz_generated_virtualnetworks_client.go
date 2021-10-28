@@ -90,7 +90,7 @@ func (client *VirtualNetworksClient) checkIPAddressAvailabilityCreateRequest(ctx
 func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleResponse(resp *http.Response) (VirtualNetworksCheckIPAddressAvailabilityResponse, error) {
 	result := VirtualNetworksCheckIPAddressAvailabilityResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPAddressAvailabilityResult); err != nil {
-		return VirtualNetworksCheckIPAddressAvailabilityResponse{}, err
+		return VirtualNetworksCheckIPAddressAvailabilityResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -310,7 +310,7 @@ func (client *VirtualNetworksClient) getCreateRequest(ctx context.Context, resou
 func (client *VirtualNetworksClient) getHandleResponse(resp *http.Response) (VirtualNetworksGetResponse, error) {
 	result := VirtualNetworksGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetwork); err != nil {
-		return VirtualNetworksGetResponse{}, err
+		return VirtualNetworksGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -368,7 +368,7 @@ func (client *VirtualNetworksClient) listCreateRequest(ctx context.Context, reso
 func (client *VirtualNetworksClient) listHandleResponse(resp *http.Response) (VirtualNetworksListResponse, error) {
 	result := VirtualNetworksListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkListResult); err != nil {
-		return VirtualNetworksListResponse{}, err
+		return VirtualNetworksListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -422,7 +422,7 @@ func (client *VirtualNetworksClient) listAllCreateRequest(ctx context.Context, o
 func (client *VirtualNetworksClient) listAllHandleResponse(resp *http.Response) (VirtualNetworksListAllResponse, error) {
 	result := VirtualNetworksListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkListResult); err != nil {
-		return VirtualNetworksListAllResponse{}, err
+		return VirtualNetworksListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -484,7 +484,7 @@ func (client *VirtualNetworksClient) listUsageCreateRequest(ctx context.Context,
 func (client *VirtualNetworksClient) listUsageHandleResponse(resp *http.Response) (VirtualNetworksListUsageResponse, error) {
 	result := VirtualNetworksListUsageResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkListUsageResult); err != nil {
-		return VirtualNetworksListUsageResponse{}, err
+		return VirtualNetworksListUsageResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -549,7 +549,7 @@ func (client *VirtualNetworksClient) updateTagsCreateRequest(ctx context.Context
 func (client *VirtualNetworksClient) updateTagsHandleResponse(resp *http.Response) (VirtualNetworksUpdateTagsResponse, error) {
 	result := VirtualNetworksUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetwork); err != nil {
-		return VirtualNetworksUpdateTagsResponse{}, err
+		return VirtualNetworksUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -231,7 +231,7 @@ func (client *OrdersClient) getCreateRequest(ctx context.Context, deviceName str
 func (client *OrdersClient) getHandleResponse(resp *http.Response) (OrdersGetResponse, error) {
 	result := OrdersGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Order); err != nil {
-		return OrdersGetResponse{}, err
+		return OrdersGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -293,7 +293,7 @@ func (client *OrdersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Con
 func (client *OrdersClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (OrdersListByDataBoxEdgeDeviceResponse, error) {
 	result := OrdersListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.OrderList); err != nil {
-		return OrdersListByDataBoxEdgeDeviceResponse{}, err
+		return OrdersListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -358,7 +358,7 @@ func (client *OrdersClient) listDCAccessCodeCreateRequest(ctx context.Context, d
 func (client *OrdersClient) listDCAccessCodeHandleResponse(resp *http.Response) (OrdersListDCAccessCodeResponse, error) {
 	result := OrdersListDCAccessCodeResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DCAccessCode); err != nil {
-		return OrdersListDCAccessCodeResponse{}, err
+		return OrdersListDCAccessCodeResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

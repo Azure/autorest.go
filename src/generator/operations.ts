@@ -711,7 +711,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
     // use the designated time type for unmarshalling
     unmarshallerText += `\tvar aux *${response.schema.language.go!.internalTimeType}\n`;
     unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaType(response.protocol)}(resp, &aux); err != nil {\n`;
-    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
+    unmarshallerText += `\t\treturn ${zeroValue}, runtime.NewResponseError(err, resp)\n`;
     unmarshallerText += '\t}\n';
     unmarshallerText += `\tresult.${getResultFieldName(op)} = (*time.Time)(aux)\n`;
     return unmarshallerText;
@@ -719,7 +719,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
     // unmarshalling arrays of date/time is a little more involved
     unmarshallerText += `\tvar aux []*${(<ArraySchema>response.schema).elementType.language.go!.internalTimeType}\n`;
     unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaType(response.protocol)}(resp, &aux); err != nil {\n`;
-    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
+    unmarshallerText += `\t\treturn ${zeroValue}, runtime.NewResponseError(err, resp)\n`;
     unmarshallerText += '\t}\n';
     unmarshallerText += '\tcp := make([]*time.Time, len(aux), len(aux))\n';
     unmarshallerText += '\tfor i := 0; i < len(aux); i++ {\n';
@@ -730,7 +730,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
   } else if (isMapOfDateTime(response.schema) || isMapOfDate(response.schema)) {
     unmarshallerText += `\taux := map[string]*${(<DictionarySchema>response.schema).elementType.language.go!.internalTimeType}{}\n`;
     unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaType(response.protocol)}(resp, &aux); err != nil {\n`;
-    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
+    unmarshallerText += `\t\treturn ${zeroValue}, runtime.NewResponseError(err, resp)\n`;
     unmarshallerText += '\t}\n';
     unmarshallerText += `\tcp := map[string]*time.Time{}\n`;
     unmarshallerText += `\tfor k, v := range aux {\n`;
@@ -742,7 +742,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
   const mediaType = getMediaType(response.protocol);
   if (mediaType === 'JSON' || mediaType === 'XML') {
     unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaFormat(response.schema, mediaType, `resp, &${unmarshalTarget}`)}; err != nil {\n`;
-    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
+    unmarshallerText += `\t\treturn ${zeroValue}, runtime.NewResponseError(err, resp)\n`;
     unmarshallerText += '\t}\n';
   }
   return unmarshallerText;

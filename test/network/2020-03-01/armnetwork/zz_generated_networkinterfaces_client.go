@@ -244,7 +244,7 @@ func (client *NetworkInterfacesClient) getCreateRequest(ctx context.Context, res
 func (client *NetworkInterfacesClient) getHandleResponse(resp *http.Response) (NetworkInterfacesGetResponse, error) {
 	result := NetworkInterfacesGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterface); err != nil {
-		return NetworkInterfacesGetResponse{}, err
+		return NetworkInterfacesGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -400,7 +400,7 @@ func (client *NetworkInterfacesClient) getVirtualMachineScaleSetIPConfigurationC
 func (client *NetworkInterfacesClient) getVirtualMachineScaleSetIPConfigurationHandleResponse(resp *http.Response) (NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResponse, error) {
 	result := NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceIPConfiguration); err != nil {
-		return NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResponse{}, err
+		return NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -476,7 +476,7 @@ func (client *NetworkInterfacesClient) getVirtualMachineScaleSetNetworkInterface
 func (client *NetworkInterfacesClient) getVirtualMachineScaleSetNetworkInterfaceHandleResponse(resp *http.Response) (NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResponse, error) {
 	result := NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterface); err != nil {
-		return NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResponse{}, err
+		return NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -534,7 +534,7 @@ func (client *NetworkInterfacesClient) listCreateRequest(ctx context.Context, re
 func (client *NetworkInterfacesClient) listHandleResponse(resp *http.Response) (NetworkInterfacesListResponse, error) {
 	result := NetworkInterfacesListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceListResult); err != nil {
-		return NetworkInterfacesListResponse{}, err
+		return NetworkInterfacesListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -588,7 +588,7 @@ func (client *NetworkInterfacesClient) listAllCreateRequest(ctx context.Context,
 func (client *NetworkInterfacesClient) listAllHandleResponse(resp *http.Response) (NetworkInterfacesListAllResponse, error) {
 	result := NetworkInterfacesListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceListResult); err != nil {
-		return NetworkInterfacesListAllResponse{}, err
+		return NetworkInterfacesListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -737,7 +737,7 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetIPConfiguration
 func (client *NetworkInterfacesClient) listVirtualMachineScaleSetIPConfigurationsHandleResponse(resp *http.Response) (NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResponse, error) {
 	result := NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceIPConfigurationListResult); err != nil {
-		return NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResponse{}, err
+		return NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -799,7 +799,7 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetNetworkInterfac
 func (client *NetworkInterfacesClient) listVirtualMachineScaleSetNetworkInterfacesHandleResponse(resp *http.Response) (NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResponse, error) {
 	result := NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceListResult); err != nil {
-		return NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResponse{}, err
+		return NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -865,7 +865,7 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetVMNetworkInterf
 func (client *NetworkInterfacesClient) listVirtualMachineScaleSetVMNetworkInterfacesHandleResponse(resp *http.Response) (NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResponse, error) {
 	result := NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceListResult); err != nil {
-		return NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResponse{}, err
+		return NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -930,7 +930,7 @@ func (client *NetworkInterfacesClient) updateTagsCreateRequest(ctx context.Conte
 func (client *NetworkInterfacesClient) updateTagsHandleResponse(resp *http.Response) (NetworkInterfacesUpdateTagsResponse, error) {
 	result := NetworkInterfacesUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterface); err != nil {
-		return NetworkInterfacesUpdateTagsResponse{}, err
+		return NetworkInterfacesUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

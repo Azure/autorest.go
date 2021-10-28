@@ -244,7 +244,7 @@ func (client *RouteTablesClient) getCreateRequest(ctx context.Context, resourceG
 func (client *RouteTablesClient) getHandleResponse(resp *http.Response) (RouteTablesGetResponse, error) {
 	result := RouteTablesGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteTable); err != nil {
-		return RouteTablesGetResponse{}, err
+		return RouteTablesGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -302,7 +302,7 @@ func (client *RouteTablesClient) listCreateRequest(ctx context.Context, resource
 func (client *RouteTablesClient) listHandleResponse(resp *http.Response) (RouteTablesListResponse, error) {
 	result := RouteTablesListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteTableListResult); err != nil {
-		return RouteTablesListResponse{}, err
+		return RouteTablesListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -356,7 +356,7 @@ func (client *RouteTablesClient) listAllCreateRequest(ctx context.Context, optio
 func (client *RouteTablesClient) listAllHandleResponse(resp *http.Response) (RouteTablesListAllResponse, error) {
 	result := RouteTablesListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteTableListResult); err != nil {
-		return RouteTablesListAllResponse{}, err
+		return RouteTablesListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -421,7 +421,7 @@ func (client *RouteTablesClient) updateTagsCreateRequest(ctx context.Context, re
 func (client *RouteTablesClient) updateTagsHandleResponse(resp *http.Response) (RouteTablesUpdateTagsResponse, error) {
 	result := RouteTablesUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteTable); err != nil {
-		return RouteTablesUpdateTagsResponse{}, err
+		return RouteTablesUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

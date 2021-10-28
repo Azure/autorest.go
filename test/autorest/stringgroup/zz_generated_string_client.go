@@ -59,7 +59,7 @@ func (client *StringClient) getBase64EncodedCreateRequest(ctx context.Context, o
 func (client *StringClient) getBase64EncodedHandleResponse(resp *http.Response) (StringGetBase64EncodedResponse, error) {
 	result := StringGetBase64EncodedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return StringGetBase64EncodedResponse{}, err
+		return StringGetBase64EncodedResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -109,7 +109,7 @@ func (client *StringClient) getBase64URLEncodedCreateRequest(ctx context.Context
 func (client *StringClient) getBase64URLEncodedHandleResponse(resp *http.Response) (StringGetBase64URLEncodedResponse, error) {
 	result := StringGetBase64URLEncodedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64URLFormat); err != nil {
-		return StringGetBase64URLEncodedResponse{}, err
+		return StringGetBase64URLEncodedResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -159,7 +159,7 @@ func (client *StringClient) getEmptyCreateRequest(ctx context.Context, options *
 func (client *StringClient) getEmptyHandleResponse(resp *http.Response) (StringGetEmptyResponse, error) {
 	result := StringGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringGetEmptyResponse{}, err
+		return StringGetEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -209,7 +209,7 @@ func (client *StringClient) getMBCSCreateRequest(ctx context.Context, options *S
 func (client *StringClient) getMBCSHandleResponse(resp *http.Response) (StringGetMBCSResponse, error) {
 	result := StringGetMBCSResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringGetMBCSResponse{}, err
+		return StringGetMBCSResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -259,7 +259,7 @@ func (client *StringClient) getNotProvidedCreateRequest(ctx context.Context, opt
 func (client *StringClient) getNotProvidedHandleResponse(resp *http.Response) (StringGetNotProvidedResponse, error) {
 	result := StringGetNotProvidedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringGetNotProvidedResponse{}, err
+		return StringGetNotProvidedResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -309,7 +309,7 @@ func (client *StringClient) getNullCreateRequest(ctx context.Context, options *S
 func (client *StringClient) getNullHandleResponse(resp *http.Response) (StringGetNullResponse, error) {
 	result := StringGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringGetNullResponse{}, err
+		return StringGetNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -359,7 +359,7 @@ func (client *StringClient) getNullBase64URLEncodedCreateRequest(ctx context.Con
 func (client *StringClient) getNullBase64URLEncodedHandleResponse(resp *http.Response) (StringGetNullBase64URLEncodedResponse, error) {
 	result := StringGetNullBase64URLEncodedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64URLFormat); err != nil {
-		return StringGetNullBase64URLEncodedResponse{}, err
+		return StringGetNullBase64URLEncodedResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -409,7 +409,7 @@ func (client *StringClient) getWhitespaceCreateRequest(ctx context.Context, opti
 func (client *StringClient) getWhitespaceHandleResponse(resp *http.Response) (StringGetWhitespaceResponse, error) {
 	result := StringGetWhitespaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringGetWhitespaceResponse{}, err
+		return StringGetWhitespaceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

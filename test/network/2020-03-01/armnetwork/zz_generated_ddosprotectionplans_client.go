@@ -241,7 +241,7 @@ func (client *DdosProtectionPlansClient) getCreateRequest(ctx context.Context, r
 func (client *DdosProtectionPlansClient) getHandleResponse(resp *http.Response) (DdosProtectionPlansGetResponse, error) {
 	result := DdosProtectionPlansGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DdosProtectionPlan); err != nil {
-		return DdosProtectionPlansGetResponse{}, err
+		return DdosProtectionPlansGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -295,7 +295,7 @@ func (client *DdosProtectionPlansClient) listCreateRequest(ctx context.Context, 
 func (client *DdosProtectionPlansClient) listHandleResponse(resp *http.Response) (DdosProtectionPlansListResponse, error) {
 	result := DdosProtectionPlansListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DdosProtectionPlanListResult); err != nil {
-		return DdosProtectionPlansListResponse{}, err
+		return DdosProtectionPlansListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -353,7 +353,7 @@ func (client *DdosProtectionPlansClient) listByResourceGroupCreateRequest(ctx co
 func (client *DdosProtectionPlansClient) listByResourceGroupHandleResponse(resp *http.Response) (DdosProtectionPlansListByResourceGroupResponse, error) {
 	result := DdosProtectionPlansListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DdosProtectionPlanListResult); err != nil {
-		return DdosProtectionPlansListByResourceGroupResponse{}, err
+		return DdosProtectionPlansListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -418,7 +418,7 @@ func (client *DdosProtectionPlansClient) updateTagsCreateRequest(ctx context.Con
 func (client *DdosProtectionPlansClient) updateTagsHandleResponse(resp *http.Response) (DdosProtectionPlansUpdateTagsResponse, error) {
 	result := DdosProtectionPlansUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DdosProtectionPlan); err != nil {
-		return DdosProtectionPlansUpdateTagsResponse{}, err
+		return DdosProtectionPlansUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

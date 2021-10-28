@@ -182,7 +182,7 @@ func (client *HTTPSuccessClient) get200CreateRequest(ctx context.Context, option
 func (client *HTTPSuccessClient) get200HandleResponse(resp *http.Response) (HTTPSuccessGet200Response, error) {
 	result := HTTPSuccessGet200Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return HTTPSuccessGet200Response{}, err
+		return HTTPSuccessGet200Response{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -319,7 +319,7 @@ func (client *HTTPSuccessClient) options200CreateRequest(ctx context.Context, op
 func (client *HTTPSuccessClient) options200HandleResponse(resp *http.Response) (HTTPSuccessOptions200Response, error) {
 	result := HTTPSuccessOptions200Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return HTTPSuccessOptions200Response{}, err
+		return HTTPSuccessOptions200Response{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

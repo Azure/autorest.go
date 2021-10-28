@@ -80,7 +80,7 @@ func (client *ReservationRecommendationDetailsClient) getCreateRequest(ctx conte
 func (client *ReservationRecommendationDetailsClient) getHandleResponse(resp *http.Response) (ReservationRecommendationDetailsGetResponse, error) {
 	result := ReservationRecommendationDetailsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationRecommendationDetailsModel); err != nil {
-		return ReservationRecommendationDetailsGetResponse{}, err
+		return ReservationRecommendationDetailsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

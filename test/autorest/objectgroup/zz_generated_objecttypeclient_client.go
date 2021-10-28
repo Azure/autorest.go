@@ -59,7 +59,7 @@ func (client *ObjectTypeClient) getCreateRequest(ctx context.Context, options *O
 func (client *ObjectTypeClient) getHandleResponse(resp *http.Response) (ObjectTypeClientGetResponse, error) {
 	result := ObjectTypeClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Object); err != nil {
-		return ObjectTypeClientGetResponse{}, err
+		return ObjectTypeClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

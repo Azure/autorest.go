@@ -65,7 +65,7 @@ func (client *MediaTypesClient) analyzeBodyCreateRequest(ctx context.Context, co
 func (client *MediaTypesClient) analyzeBodyHandleResponse(resp *http.Response) (MediaTypesClientAnalyzeBodyResponse, error) {
 	result := MediaTypesClientAnalyzeBodyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return MediaTypesClientAnalyzeBodyResponse{}, err
+		return MediaTypesClientAnalyzeBodyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -202,7 +202,7 @@ func (client *MediaTypesClient) analyzeBodyWithSourcePathCreateRequest(ctx conte
 func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleResponse(resp *http.Response) (MediaTypesClientAnalyzeBodyWithSourcePathResponse, error) {
 	result := MediaTypesClientAnalyzeBodyWithSourcePathResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return MediaTypesClientAnalyzeBodyWithSourcePathResponse{}, err
+		return MediaTypesClientAnalyzeBodyWithSourcePathResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -255,7 +255,7 @@ func (client *MediaTypesClient) contentTypeWithEncodingCreateRequest(ctx context
 func (client *MediaTypesClient) contentTypeWithEncodingHandleResponse(resp *http.Response) (MediaTypesClientContentTypeWithEncodingResponse, error) {
 	result := MediaTypesClientContentTypeWithEncodingResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return MediaTypesClientContentTypeWithEncodingResponse{}, err
+		return MediaTypesClientContentTypeWithEncodingResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

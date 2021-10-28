@@ -62,7 +62,7 @@ func (client *sqlPoolsClient) getCreateRequest(ctx context.Context, sqlPoolName 
 func (client *sqlPoolsClient) getHandleResponse(resp *http.Response) (SQLPoolsGetResponse, error) {
 	result := SQLPoolsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SQLPool); err != nil {
-		return SQLPoolsGetResponse{}, err
+		return SQLPoolsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -115,7 +115,7 @@ func (client *sqlPoolsClient) listCreateRequest(ctx context.Context, options *SQ
 func (client *sqlPoolsClient) listHandleResponse(resp *http.Response) (SQLPoolsListResponse, error) {
 	result := SQLPoolsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SQLPoolInfoListResult); err != nil {
-		return SQLPoolsListResponse{}, err
+		return SQLPoolsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

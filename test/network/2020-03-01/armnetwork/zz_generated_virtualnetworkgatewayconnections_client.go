@@ -241,7 +241,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) getCreateRequest(ctx conte
 func (client *VirtualNetworkGatewayConnectionsClient) getHandleResponse(resp *http.Response) (VirtualNetworkGatewayConnectionsGetResponse, error) {
 	result := VirtualNetworkGatewayConnectionsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkGatewayConnection); err != nil {
-		return VirtualNetworkGatewayConnectionsGetResponse{}, err
+		return VirtualNetworkGatewayConnectionsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -307,7 +307,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) getSharedKeyCreateRequest(
 func (client *VirtualNetworkGatewayConnectionsClient) getSharedKeyHandleResponse(resp *http.Response) (VirtualNetworkGatewayConnectionsGetSharedKeyResponse, error) {
 	result := VirtualNetworkGatewayConnectionsGetSharedKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ConnectionSharedKey); err != nil {
-		return VirtualNetworkGatewayConnectionsGetSharedKeyResponse{}, err
+		return VirtualNetworkGatewayConnectionsGetSharedKeyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -365,7 +365,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) listCreateRequest(ctx cont
 func (client *VirtualNetworkGatewayConnectionsClient) listHandleResponse(resp *http.Response) (VirtualNetworkGatewayConnectionsListResponse, error) {
 	result := VirtualNetworkGatewayConnectionsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkGatewayConnectionListResult); err != nil {
-		return VirtualNetworkGatewayConnectionsListResponse{}, err
+		return VirtualNetworkGatewayConnectionsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

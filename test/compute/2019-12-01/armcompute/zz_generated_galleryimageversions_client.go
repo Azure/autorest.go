@@ -268,7 +268,7 @@ func (client *GalleryImageVersionsClient) getCreateRequest(ctx context.Context, 
 func (client *GalleryImageVersionsClient) getHandleResponse(resp *http.Response) (GalleryImageVersionsGetResponse, error) {
 	result := GalleryImageVersionsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GalleryImageVersion); err != nil {
-		return GalleryImageVersionsGetResponse{}, err
+		return GalleryImageVersionsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -334,7 +334,7 @@ func (client *GalleryImageVersionsClient) listByGalleryImageCreateRequest(ctx co
 func (client *GalleryImageVersionsClient) listByGalleryImageHandleResponse(resp *http.Response) (GalleryImageVersionsListByGalleryImageResponse, error) {
 	result := GalleryImageVersionsListByGalleryImageResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GalleryImageVersionList); err != nil {
-		return GalleryImageVersionsListByGalleryImageResponse{}, err
+		return GalleryImageVersionsListByGalleryImageResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

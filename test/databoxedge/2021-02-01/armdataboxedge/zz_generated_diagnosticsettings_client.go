@@ -79,7 +79,7 @@ func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSetti
 func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSettingsHandleResponse(resp *http.Response) (DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsResponse, error) {
 	result := DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DiagnosticProactiveLogCollectionSettings); err != nil {
-		return DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsResponse{}, err
+		return DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -144,7 +144,7 @@ func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsCreate
 func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsHandleResponse(resp *http.Response) (DiagnosticSettingsGetDiagnosticRemoteSupportSettingsResponse, error) {
 	result := DiagnosticSettingsGetDiagnosticRemoteSupportSettingsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DiagnosticRemoteSupportSettings); err != nil {
-		return DiagnosticSettingsGetDiagnosticRemoteSupportSettingsResponse{}, err
+		return DiagnosticSettingsGetDiagnosticRemoteSupportSettingsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

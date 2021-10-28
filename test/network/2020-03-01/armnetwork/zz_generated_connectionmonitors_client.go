@@ -253,7 +253,7 @@ func (client *ConnectionMonitorsClient) getCreateRequest(ctx context.Context, re
 func (client *ConnectionMonitorsClient) getHandleResponse(resp *http.Response) (ConnectionMonitorsGetResponse, error) {
 	result := ConnectionMonitorsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ConnectionMonitorResult); err != nil {
-		return ConnectionMonitorsGetResponse{}, err
+		return ConnectionMonitorsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -318,7 +318,7 @@ func (client *ConnectionMonitorsClient) listCreateRequest(ctx context.Context, r
 func (client *ConnectionMonitorsClient) listHandleResponse(resp *http.Response) (ConnectionMonitorsListResponse, error) {
 	result := ConnectionMonitorsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ConnectionMonitorListResult); err != nil {
-		return ConnectionMonitorsListResponse{}, err
+		return ConnectionMonitorsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -627,7 +627,7 @@ func (client *ConnectionMonitorsClient) updateTagsCreateRequest(ctx context.Cont
 func (client *ConnectionMonitorsClient) updateTagsHandleResponse(resp *http.Response) (ConnectionMonitorsUpdateTagsResponse, error) {
 	result := ConnectionMonitorsUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ConnectionMonitorResult); err != nil {
-		return ConnectionMonitorsUpdateTagsResponse{}, err
+		return ConnectionMonitorsUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

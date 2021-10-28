@@ -81,7 +81,7 @@ func (client *ServiceClient) getPropertiesHandleResponse(resp *http.Response) (S
 		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.TableServiceProperties); err != nil {
-		return ServiceGetPropertiesResponse{}, err
+		return ServiceGetPropertiesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -158,7 +158,7 @@ func (client *ServiceClient) getStatisticsHandleResponse(resp *http.Response) (S
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.TableServiceStats); err != nil {
-		return ServiceGetStatisticsResponse{}, err
+		return ServiceGetStatisticsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

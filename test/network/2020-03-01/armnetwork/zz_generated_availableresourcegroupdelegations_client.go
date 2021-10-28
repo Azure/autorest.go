@@ -86,7 +86,7 @@ func (client *AvailableResourceGroupDelegationsClient) listCreateRequest(ctx con
 func (client *AvailableResourceGroupDelegationsClient) listHandleResponse(resp *http.Response) (AvailableResourceGroupDelegationsListResponse, error) {
 	result := AvailableResourceGroupDelegationsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailableDelegationsResult); err != nil {
-		return AvailableResourceGroupDelegationsListResponse{}, err
+		return AvailableResourceGroupDelegationsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

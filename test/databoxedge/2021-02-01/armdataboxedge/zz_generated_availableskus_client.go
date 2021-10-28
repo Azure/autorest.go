@@ -67,7 +67,7 @@ func (client *AvailableSKUsClient) listCreateRequest(ctx context.Context, option
 func (client *AvailableSKUsClient) listHandleResponse(resp *http.Response) (AvailableSKUsListResponse, error) {
 	result := AvailableSKUsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DataBoxEdgeSKUList); err != nil {
-		return AvailableSKUsListResponse{}, err
+		return AvailableSKUsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

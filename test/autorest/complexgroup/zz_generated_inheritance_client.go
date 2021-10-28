@@ -59,7 +59,7 @@ func (client *InheritanceClient) getValidCreateRequest(ctx context.Context, opti
 func (client *InheritanceClient) getValidHandleResponse(resp *http.Response) (InheritanceGetValidResponse, error) {
 	result := InheritanceGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Siamese); err != nil {
-		return InheritanceGetValidResponse{}, err
+		return InheritanceGetValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

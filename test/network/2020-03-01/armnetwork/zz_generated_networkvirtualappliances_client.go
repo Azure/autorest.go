@@ -244,7 +244,7 @@ func (client *NetworkVirtualAppliancesClient) getCreateRequest(ctx context.Conte
 func (client *NetworkVirtualAppliancesClient) getHandleResponse(resp *http.Response) (NetworkVirtualAppliancesGetResponse, error) {
 	result := NetworkVirtualAppliancesGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkVirtualAppliance); err != nil {
-		return NetworkVirtualAppliancesGetResponse{}, err
+		return NetworkVirtualAppliancesGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -298,7 +298,7 @@ func (client *NetworkVirtualAppliancesClient) listCreateRequest(ctx context.Cont
 func (client *NetworkVirtualAppliancesClient) listHandleResponse(resp *http.Response) (NetworkVirtualAppliancesListResponse, error) {
 	result := NetworkVirtualAppliancesListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkVirtualApplianceListResult); err != nil {
-		return NetworkVirtualAppliancesListResponse{}, err
+		return NetworkVirtualAppliancesListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -356,7 +356,7 @@ func (client *NetworkVirtualAppliancesClient) listByResourceGroupCreateRequest(c
 func (client *NetworkVirtualAppliancesClient) listByResourceGroupHandleResponse(resp *http.Response) (NetworkVirtualAppliancesListByResourceGroupResponse, error) {
 	result := NetworkVirtualAppliancesListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkVirtualApplianceListResult); err != nil {
-		return NetworkVirtualAppliancesListByResourceGroupResponse{}, err
+		return NetworkVirtualAppliancesListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -421,7 +421,7 @@ func (client *NetworkVirtualAppliancesClient) updateTagsCreateRequest(ctx contex
 func (client *NetworkVirtualAppliancesClient) updateTagsHandleResponse(resp *http.Response) (NetworkVirtualAppliancesUpdateTagsResponse, error) {
 	result := NetworkVirtualAppliancesUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkVirtualAppliance); err != nil {
-		return NetworkVirtualAppliancesUpdateTagsResponse{}, err
+		return NetworkVirtualAppliancesUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -72,7 +72,7 @@ func (client *RoleDefinitionsClient) createOrUpdateCreateRequest(ctx context.Con
 func (client *RoleDefinitionsClient) createOrUpdateHandleResponse(resp *http.Response) (RoleDefinitionsCreateOrUpdateResponse, error) {
 	result := RoleDefinitionsCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinition); err != nil {
-		return RoleDefinitionsCreateOrUpdateResponse{}, err
+		return RoleDefinitionsCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -132,7 +132,7 @@ func (client *RoleDefinitionsClient) deleteCreateRequest(ctx context.Context, va
 func (client *RoleDefinitionsClient) deleteHandleResponse(resp *http.Response) (RoleDefinitionsDeleteResponse, error) {
 	result := RoleDefinitionsDeleteResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinition); err != nil {
-		return RoleDefinitionsDeleteResponse{}, err
+		return RoleDefinitionsDeleteResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -192,7 +192,7 @@ func (client *RoleDefinitionsClient) getCreateRequest(ctx context.Context, vault
 func (client *RoleDefinitionsClient) getHandleResponse(resp *http.Response) (RoleDefinitionsGetResponse, error) {
 	result := RoleDefinitionsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinition); err != nil {
-		return RoleDefinitionsGetResponse{}, err
+		return RoleDefinitionsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -248,7 +248,7 @@ func (client *RoleDefinitionsClient) listCreateRequest(ctx context.Context, vaul
 func (client *RoleDefinitionsClient) listHandleResponse(resp *http.Response) (RoleDefinitionsListResponse, error) {
 	result := RoleDefinitionsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinitionListResult); err != nil {
-		return RoleDefinitionsListResponse{}, err
+		return RoleDefinitionsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

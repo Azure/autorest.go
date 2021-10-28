@@ -61,7 +61,7 @@ func (client *Datetimerfc1123Client) getInvalidHandleResponse(resp *http.Respons
 	result := Datetimerfc1123GetInvalidResponse{RawResponse: resp}
 	var aux *timeRFC1123
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return Datetimerfc1123GetInvalidResponse{}, err
+		return Datetimerfc1123GetInvalidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil
@@ -113,7 +113,7 @@ func (client *Datetimerfc1123Client) getNullHandleResponse(resp *http.Response) 
 	result := Datetimerfc1123GetNullResponse{RawResponse: resp}
 	var aux *timeRFC1123
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return Datetimerfc1123GetNullResponse{}, err
+		return Datetimerfc1123GetNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil
@@ -165,7 +165,7 @@ func (client *Datetimerfc1123Client) getOverflowHandleResponse(resp *http.Respon
 	result := Datetimerfc1123GetOverflowResponse{RawResponse: resp}
 	var aux *timeRFC1123
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return Datetimerfc1123GetOverflowResponse{}, err
+		return Datetimerfc1123GetOverflowResponse{}, runtime.NewResponseError(err, resp)
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil
@@ -217,7 +217,7 @@ func (client *Datetimerfc1123Client) getUTCLowercaseMaxDateTimeHandleResponse(re
 	result := Datetimerfc1123GetUTCLowercaseMaxDateTimeResponse{RawResponse: resp}
 	var aux *timeRFC1123
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return Datetimerfc1123GetUTCLowercaseMaxDateTimeResponse{}, err
+		return Datetimerfc1123GetUTCLowercaseMaxDateTimeResponse{}, runtime.NewResponseError(err, resp)
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil
@@ -269,7 +269,7 @@ func (client *Datetimerfc1123Client) getUTCMinDateTimeHandleResponse(resp *http.
 	result := Datetimerfc1123GetUTCMinDateTimeResponse{RawResponse: resp}
 	var aux *timeRFC1123
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return Datetimerfc1123GetUTCMinDateTimeResponse{}, err
+		return Datetimerfc1123GetUTCMinDateTimeResponse{}, runtime.NewResponseError(err, resp)
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil
@@ -321,7 +321,7 @@ func (client *Datetimerfc1123Client) getUTCUppercaseMaxDateTimeHandleResponse(re
 	result := Datetimerfc1123GetUTCUppercaseMaxDateTimeResponse{RawResponse: resp}
 	var aux *timeRFC1123
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return Datetimerfc1123GetUTCUppercaseMaxDateTimeResponse{}, err
+		return Datetimerfc1123GetUTCUppercaseMaxDateTimeResponse{}, runtime.NewResponseError(err, resp)
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil
@@ -373,7 +373,7 @@ func (client *Datetimerfc1123Client) getUnderflowHandleResponse(resp *http.Respo
 	result := Datetimerfc1123GetUnderflowResponse{RawResponse: resp}
 	var aux *timeRFC1123
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return Datetimerfc1123GetUnderflowResponse{}, err
+		return Datetimerfc1123GetUnderflowResponse{}, runtime.NewResponseError(err, resp)
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil

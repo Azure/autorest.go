@@ -93,7 +93,7 @@ func (client *ExpressRouteLinksClient) getCreateRequest(ctx context.Context, res
 func (client *ExpressRouteLinksClient) getHandleResponse(resp *http.Response) (ExpressRouteLinksGetResponse, error) {
 	result := ExpressRouteLinksGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteLink); err != nil {
-		return ExpressRouteLinksGetResponse{}, err
+		return ExpressRouteLinksGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -155,7 +155,7 @@ func (client *ExpressRouteLinksClient) listCreateRequest(ctx context.Context, re
 func (client *ExpressRouteLinksClient) listHandleResponse(resp *http.Response) (ExpressRouteLinksListResponse, error) {
 	result := ExpressRouteLinksListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteLinkListResult); err != nil {
-		return ExpressRouteLinksListResponse{}, err
+		return ExpressRouteLinksListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

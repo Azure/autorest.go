@@ -241,7 +241,7 @@ func (client *ExpressRoutePortsClient) getCreateRequest(ctx context.Context, res
 func (client *ExpressRoutePortsClient) getHandleResponse(resp *http.Response) (ExpressRoutePortsGetResponse, error) {
 	result := ExpressRoutePortsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePort); err != nil {
-		return ExpressRoutePortsGetResponse{}, err
+		return ExpressRoutePortsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -295,7 +295,7 @@ func (client *ExpressRoutePortsClient) listCreateRequest(ctx context.Context, op
 func (client *ExpressRoutePortsClient) listHandleResponse(resp *http.Response) (ExpressRoutePortsListResponse, error) {
 	result := ExpressRoutePortsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePortListResult); err != nil {
-		return ExpressRoutePortsListResponse{}, err
+		return ExpressRoutePortsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -353,7 +353,7 @@ func (client *ExpressRoutePortsClient) listByResourceGroupCreateRequest(ctx cont
 func (client *ExpressRoutePortsClient) listByResourceGroupHandleResponse(resp *http.Response) (ExpressRoutePortsListByResourceGroupResponse, error) {
 	result := ExpressRoutePortsListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePortListResult); err != nil {
-		return ExpressRoutePortsListByResourceGroupResponse{}, err
+		return ExpressRoutePortsListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -418,7 +418,7 @@ func (client *ExpressRoutePortsClient) updateTagsCreateRequest(ctx context.Conte
 func (client *ExpressRoutePortsClient) updateTagsHandleResponse(resp *http.Response) (ExpressRoutePortsUpdateTagsResponse, error) {
 	result := ExpressRoutePortsUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePort); err != nil {
-		return ExpressRoutePortsUpdateTagsResponse{}, err
+		return ExpressRoutePortsUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

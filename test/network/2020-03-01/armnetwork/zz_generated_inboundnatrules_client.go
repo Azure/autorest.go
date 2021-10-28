@@ -256,7 +256,7 @@ func (client *InboundNatRulesClient) getCreateRequest(ctx context.Context, resou
 func (client *InboundNatRulesClient) getHandleResponse(resp *http.Response) (InboundNatRulesGetResponse, error) {
 	result := InboundNatRulesGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.InboundNatRule); err != nil {
-		return InboundNatRulesGetResponse{}, err
+		return InboundNatRulesGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -318,7 +318,7 @@ func (client *InboundNatRulesClient) listCreateRequest(ctx context.Context, reso
 func (client *InboundNatRulesClient) listHandleResponse(resp *http.Response) (InboundNatRulesListResponse, error) {
 	result := InboundNatRulesListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.InboundNatRuleListResult); err != nil {
-		return InboundNatRulesListResponse{}, err
+		return InboundNatRulesListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

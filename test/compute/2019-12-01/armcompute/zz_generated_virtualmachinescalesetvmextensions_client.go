@@ -268,7 +268,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) getCreateRequest(ctx con
 func (client *VirtualMachineScaleSetVMExtensionsClient) getHandleResponse(resp *http.Response) (VirtualMachineScaleSetVMExtensionsGetResponse, error) {
 	result := VirtualMachineScaleSetVMExtensionsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtension); err != nil {
-		return VirtualMachineScaleSetVMExtensionsGetResponse{}, err
+		return VirtualMachineScaleSetVMExtensionsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -340,7 +340,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) listCreateRequest(ctx co
 func (client *VirtualMachineScaleSetVMExtensionsClient) listHandleResponse(resp *http.Response) (VirtualMachineScaleSetVMExtensionsListResponse, error) {
 	result := VirtualMachineScaleSetVMExtensionsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtensionsListResult); err != nil {
-		return VirtualMachineScaleSetVMExtensionsListResponse{}, err
+		return VirtualMachineScaleSetVMExtensionsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

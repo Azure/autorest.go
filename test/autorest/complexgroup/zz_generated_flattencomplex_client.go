@@ -59,7 +59,7 @@ func (client *FlattencomplexClient) getValidCreateRequest(ctx context.Context, o
 func (client *FlattencomplexClient) getValidHandleResponse(resp *http.Response) (FlattencomplexGetValidResponse, error) {
 	result := FlattencomplexGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return FlattencomplexGetValidResponse{}, err
+		return FlattencomplexGetValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -244,7 +244,7 @@ func (client *NetworkSecurityGroupsClient) getCreateRequest(ctx context.Context,
 func (client *NetworkSecurityGroupsClient) getHandleResponse(resp *http.Response) (NetworkSecurityGroupsGetResponse, error) {
 	result := NetworkSecurityGroupsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkSecurityGroup); err != nil {
-		return NetworkSecurityGroupsGetResponse{}, err
+		return NetworkSecurityGroupsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -302,7 +302,7 @@ func (client *NetworkSecurityGroupsClient) listCreateRequest(ctx context.Context
 func (client *NetworkSecurityGroupsClient) listHandleResponse(resp *http.Response) (NetworkSecurityGroupsListResponse, error) {
 	result := NetworkSecurityGroupsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkSecurityGroupListResult); err != nil {
-		return NetworkSecurityGroupsListResponse{}, err
+		return NetworkSecurityGroupsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -356,7 +356,7 @@ func (client *NetworkSecurityGroupsClient) listAllCreateRequest(ctx context.Cont
 func (client *NetworkSecurityGroupsClient) listAllHandleResponse(resp *http.Response) (NetworkSecurityGroupsListAllResponse, error) {
 	result := NetworkSecurityGroupsListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkSecurityGroupListResult); err != nil {
-		return NetworkSecurityGroupsListAllResponse{}, err
+		return NetworkSecurityGroupsListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -421,7 +421,7 @@ func (client *NetworkSecurityGroupsClient) updateTagsCreateRequest(ctx context.C
 func (client *NetworkSecurityGroupsClient) updateTagsHandleResponse(resp *http.Response) (NetworkSecurityGroupsUpdateTagsResponse, error) {
 	result := NetworkSecurityGroupsUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkSecurityGroup); err != nil {
-		return NetworkSecurityGroupsUpdateTagsResponse{}, err
+		return NetworkSecurityGroupsUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

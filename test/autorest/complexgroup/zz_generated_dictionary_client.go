@@ -59,7 +59,7 @@ func (client *DictionaryClient) getEmptyCreateRequest(ctx context.Context, optio
 func (client *DictionaryClient) getEmptyHandleResponse(resp *http.Response) (DictionaryGetEmptyResponse, error) {
 	result := DictionaryGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DictionaryWrapper); err != nil {
-		return DictionaryGetEmptyResponse{}, err
+		return DictionaryGetEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -109,7 +109,7 @@ func (client *DictionaryClient) getNotProvidedCreateRequest(ctx context.Context,
 func (client *DictionaryClient) getNotProvidedHandleResponse(resp *http.Response) (DictionaryGetNotProvidedResponse, error) {
 	result := DictionaryGetNotProvidedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DictionaryWrapper); err != nil {
-		return DictionaryGetNotProvidedResponse{}, err
+		return DictionaryGetNotProvidedResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -159,7 +159,7 @@ func (client *DictionaryClient) getNullCreateRequest(ctx context.Context, option
 func (client *DictionaryClient) getNullHandleResponse(resp *http.Response) (DictionaryGetNullResponse, error) {
 	result := DictionaryGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DictionaryWrapper); err != nil {
-		return DictionaryGetNullResponse{}, err
+		return DictionaryGetNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -209,7 +209,7 @@ func (client *DictionaryClient) getValidCreateRequest(ctx context.Context, optio
 func (client *DictionaryClient) getValidHandleResponse(resp *http.Response) (DictionaryGetValidResponse, error) {
 	result := DictionaryGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DictionaryWrapper); err != nil {
-		return DictionaryGetValidResponse{}, err
+		return DictionaryGetValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

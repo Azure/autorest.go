@@ -59,7 +59,7 @@ func (client *PolymorphicrecursiveClient) getValidCreateRequest(ctx context.Cont
 func (client *PolymorphicrecursiveClient) getValidHandleResponse(resp *http.Response) (PolymorphicrecursiveGetValidResponse, error) {
 	result := PolymorphicrecursiveGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return PolymorphicrecursiveGetValidResponse{}, err
+		return PolymorphicrecursiveGetValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -80,7 +80,7 @@ func (client *aliasClient) createHandleResponse(resp *http.Response) (AliasCreat
 		result.AccessControlExposeHeaders = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AliasesCreateResponse); err != nil {
-		return AliasCreateResponse{}, err
+		return AliasCreateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -149,7 +149,7 @@ func (client *aliasClient) listCreateRequest(ctx context.Context, options *Alias
 func (client *aliasClient) listHandleResponse(resp *http.Response) (AliasListResponseEnvelope, error) {
 	result := AliasListResponseEnvelope{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AliasListResponse); err != nil {
-		return AliasListResponseEnvelope{}, err
+		return AliasListResponseEnvelope{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

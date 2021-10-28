@@ -243,7 +243,7 @@ func (client *SharesClient) getCreateRequest(ctx context.Context, deviceName str
 func (client *SharesClient) getHandleResponse(resp *http.Response) (SharesGetResponse, error) {
 	result := SharesGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Share); err != nil {
-		return SharesGetResponse{}, err
+		return SharesGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -305,7 +305,7 @@ func (client *SharesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Con
 func (client *SharesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (SharesListByDataBoxEdgeDeviceResponse, error) {
 	result := SharesListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ShareList); err != nil {
-		return SharesListByDataBoxEdgeDeviceResponse{}, err
+		return SharesListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

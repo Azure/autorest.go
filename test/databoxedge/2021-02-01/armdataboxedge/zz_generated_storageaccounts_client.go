@@ -243,7 +243,7 @@ func (client *StorageAccountsClient) getCreateRequest(ctx context.Context, devic
 func (client *StorageAccountsClient) getHandleResponse(resp *http.Response) (StorageAccountsGetResponse, error) {
 	result := StorageAccountsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageAccount); err != nil {
-		return StorageAccountsGetResponse{}, err
+		return StorageAccountsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -305,7 +305,7 @@ func (client *StorageAccountsClient) listByDataBoxEdgeDeviceCreateRequest(ctx co
 func (client *StorageAccountsClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (StorageAccountsListByDataBoxEdgeDeviceResponse, error) {
 	result := StorageAccountsListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageAccountList); err != nil {
-		return StorageAccountsListByDataBoxEdgeDeviceResponse{}, err
+		return StorageAccountsListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

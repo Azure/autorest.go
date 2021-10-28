@@ -100,7 +100,7 @@ func (client *sparkBatchClient) createSparkBatchJobCreateRequest(ctx context.Con
 func (client *sparkBatchClient) createSparkBatchJobHandleResponse(resp *http.Response) (SparkBatchCreateSparkBatchJobResponse, error) {
 	result := SparkBatchCreateSparkBatchJobResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SparkBatchJob); err != nil {
-		return SparkBatchCreateSparkBatchJobResponse{}, err
+		return SparkBatchCreateSparkBatchJobResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -155,7 +155,7 @@ func (client *sparkBatchClient) getSparkBatchJobCreateRequest(ctx context.Contex
 func (client *sparkBatchClient) getSparkBatchJobHandleResponse(resp *http.Response) (SparkBatchGetSparkBatchJobResponse, error) {
 	result := SparkBatchGetSparkBatchJobResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SparkBatchJob); err != nil {
-		return SparkBatchGetSparkBatchJobResponse{}, err
+		return SparkBatchGetSparkBatchJobResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -215,7 +215,7 @@ func (client *sparkBatchClient) getSparkBatchJobsCreateRequest(ctx context.Conte
 func (client *sparkBatchClient) getSparkBatchJobsHandleResponse(resp *http.Response) (SparkBatchGetSparkBatchJobsResponse, error) {
 	result := SparkBatchGetSparkBatchJobsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SparkBatchJobCollection); err != nil {
-		return SparkBatchGetSparkBatchJobsResponse{}, err
+		return SparkBatchGetSparkBatchJobsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

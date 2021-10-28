@@ -253,7 +253,7 @@ func (client *SecurityRulesClient) getCreateRequest(ctx context.Context, resourc
 func (client *SecurityRulesClient) getHandleResponse(resp *http.Response) (SecurityRulesGetResponse, error) {
 	result := SecurityRulesGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityRule); err != nil {
-		return SecurityRulesGetResponse{}, err
+		return SecurityRulesGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -315,7 +315,7 @@ func (client *SecurityRulesClient) listCreateRequest(ctx context.Context, resour
 func (client *SecurityRulesClient) listHandleResponse(resp *http.Response) (SecurityRulesListResponse, error) {
 	result := SecurityRulesListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityRuleListResult); err != nil {
-		return SecurityRulesListResponse{}, err
+		return SecurityRulesListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

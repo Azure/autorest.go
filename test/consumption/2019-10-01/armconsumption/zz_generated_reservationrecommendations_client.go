@@ -75,7 +75,7 @@ func (client *ReservationRecommendationsClient) listCreateRequest(ctx context.Co
 func (client *ReservationRecommendationsClient) listHandleResponse(resp *http.Response) (ReservationRecommendationsListResponse, error) {
 	result := ReservationRecommendationsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationRecommendationsListResult); err != nil {
-		return ReservationRecommendationsListResponse{}, err
+		return ReservationRecommendationsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

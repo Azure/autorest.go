@@ -241,7 +241,7 @@ func (client *VirtualNetworkTapsClient) getCreateRequest(ctx context.Context, re
 func (client *VirtualNetworkTapsClient) getHandleResponse(resp *http.Response) (VirtualNetworkTapsGetResponse, error) {
 	result := VirtualNetworkTapsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkTap); err != nil {
-		return VirtualNetworkTapsGetResponse{}, err
+		return VirtualNetworkTapsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -295,7 +295,7 @@ func (client *VirtualNetworkTapsClient) listAllCreateRequest(ctx context.Context
 func (client *VirtualNetworkTapsClient) listAllHandleResponse(resp *http.Response) (VirtualNetworkTapsListAllResponse, error) {
 	result := VirtualNetworkTapsListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkTapListResult); err != nil {
-		return VirtualNetworkTapsListAllResponse{}, err
+		return VirtualNetworkTapsListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -353,7 +353,7 @@ func (client *VirtualNetworkTapsClient) listByResourceGroupCreateRequest(ctx con
 func (client *VirtualNetworkTapsClient) listByResourceGroupHandleResponse(resp *http.Response) (VirtualNetworkTapsListByResourceGroupResponse, error) {
 	result := VirtualNetworkTapsListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkTapListResult); err != nil {
-		return VirtualNetworkTapsListByResourceGroupResponse{}, err
+		return VirtualNetworkTapsListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -418,7 +418,7 @@ func (client *VirtualNetworkTapsClient) updateTagsCreateRequest(ctx context.Cont
 func (client *VirtualNetworkTapsClient) updateTagsHandleResponse(resp *http.Response) (VirtualNetworkTapsUpdateTagsResponse, error) {
 	result := VirtualNetworkTapsUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkTap); err != nil {
-		return VirtualNetworkTapsUpdateTagsResponse{}, err
+		return VirtualNetworkTapsUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -255,7 +255,7 @@ func (client *AddonsClient) getCreateRequest(ctx context.Context, deviceName str
 func (client *AddonsClient) getHandleResponse(resp *http.Response) (AddonsGetResponse, error) {
 	result := AddonsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return AddonsGetResponse{}, err
+		return AddonsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -321,7 +321,7 @@ func (client *AddonsClient) listByRoleCreateRequest(ctx context.Context, deviceN
 func (client *AddonsClient) listByRoleHandleResponse(resp *http.Response) (AddonsListByRoleResponse, error) {
 	result := AddonsListByRoleResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AddonList); err != nil {
-		return AddonsListByRoleResponse{}, err
+		return AddonsListByRoleResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

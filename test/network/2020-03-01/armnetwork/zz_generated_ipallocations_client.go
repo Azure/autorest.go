@@ -244,7 +244,7 @@ func (client *IPAllocationsClient) getCreateRequest(ctx context.Context, resourc
 func (client *IPAllocationsClient) getHandleResponse(resp *http.Response) (IPAllocationsGetResponse, error) {
 	result := IPAllocationsGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPAllocation); err != nil {
-		return IPAllocationsGetResponse{}, err
+		return IPAllocationsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -298,7 +298,7 @@ func (client *IPAllocationsClient) listCreateRequest(ctx context.Context, option
 func (client *IPAllocationsClient) listHandleResponse(resp *http.Response) (IPAllocationsListResponse, error) {
 	result := IPAllocationsListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPAllocationListResult); err != nil {
-		return IPAllocationsListResponse{}, err
+		return IPAllocationsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -356,7 +356,7 @@ func (client *IPAllocationsClient) listByResourceGroupCreateRequest(ctx context.
 func (client *IPAllocationsClient) listByResourceGroupHandleResponse(resp *http.Response) (IPAllocationsListByResourceGroupResponse, error) {
 	result := IPAllocationsListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPAllocationListResult); err != nil {
-		return IPAllocationsListByResourceGroupResponse{}, err
+		return IPAllocationsListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -421,7 +421,7 @@ func (client *IPAllocationsClient) updateTagsCreateRequest(ctx context.Context, 
 func (client *IPAllocationsClient) updateTagsHandleResponse(resp *http.Response) (IPAllocationsUpdateTagsResponse, error) {
 	result := IPAllocationsUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPAllocation); err != nil {
-		return IPAllocationsUpdateTagsResponse{}, err
+		return IPAllocationsUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

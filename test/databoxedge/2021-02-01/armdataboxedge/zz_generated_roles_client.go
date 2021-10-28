@@ -243,7 +243,7 @@ func (client *RolesClient) getCreateRequest(ctx context.Context, deviceName stri
 func (client *RolesClient) getHandleResponse(resp *http.Response) (RolesGetResponse, error) {
 	result := RolesGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return RolesGetResponse{}, err
+		return RolesGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -305,7 +305,7 @@ func (client *RolesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Cont
 func (client *RolesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (RolesListByDataBoxEdgeDeviceResponse, error) {
 	result := RolesListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleList); err != nil {
-		return RolesListByDataBoxEdgeDeviceResponse{}, err
+		return RolesListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
