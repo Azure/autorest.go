@@ -8,6 +8,8 @@
 
 package datetimegroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "datetimegroup"
 	version = "v0.1.0"

@@ -12,8 +12,7 @@ import (
 )
 
 func newPathsClient() *PathsClient {
-	client := NewConnection(to.StringPtr(":3000"), nil)
-	return NewPathsClient(client)
+	return NewPathsClient(to.StringPtr(":3000"), nil)
 }
 
 func TestGetEmpty(t *testing.T) {

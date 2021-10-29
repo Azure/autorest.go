@@ -11,6 +11,7 @@ package lrogroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -20,12 +21,16 @@ import (
 // LROSADsClient contains the methods for the LROSADs group.
 // Don't use this type directly, use NewLROSADsClient() instead.
 type LROSADsClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewLROSADsClient creates a new instance of LROSADsClient with the specified values.
-func NewLROSADsClient(con *Connection) *LROSADsClient {
-	return &LROSADsClient{con: con}
+func NewLROSADsClient(options *azcore.ClientOptions) *LROSADsClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &LROSADsClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // BeginDelete202NonRetry400 - Long running delete request, service returns a 202 with a location header
@@ -38,7 +43,7 @@ func (client *LROSADsClient) BeginDelete202NonRetry400(ctx context.Context, opti
 	result := LROSADsDelete202NonRetry400PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.Delete202NonRetry400", "", resp, client.con.Pipeline(), client.delete202NonRetry400HandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.Delete202NonRetry400", "", resp, client.pl, client.delete202NonRetry400HandleError)
 	if err != nil {
 		return LROSADsDelete202NonRetry400PollerResponse{}, err
 	}
@@ -55,7 +60,7 @@ func (client *LROSADsClient) delete202NonRetry400(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +73,7 @@ func (client *LROSADsClient) delete202NonRetry400(ctx context.Context, options *
 // delete202NonRetry400CreateRequest creates the Delete202NonRetry400 request.
 func (client *LROSADsClient) delete202NonRetry400CreateRequest(ctx context.Context, options *LROSADsBeginDelete202NonRetry400Options) (*policy.Request, error) {
 	urlPath := "/lro/nonretryerror/delete/202/retry/400"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +105,7 @@ func (client *LROSADsClient) BeginDelete202RetryInvalidHeader(ctx context.Contex
 	result := LROSADsDelete202RetryInvalidHeaderPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.Delete202RetryInvalidHeader", "", resp, client.con.Pipeline(), client.delete202RetryInvalidHeaderHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.Delete202RetryInvalidHeader", "", resp, client.pl, client.delete202RetryInvalidHeaderHandleError)
 	if err != nil {
 		return LROSADsDelete202RetryInvalidHeaderPollerResponse{}, err
 	}
@@ -118,7 +123,7 @@ func (client *LROSADsClient) delete202RetryInvalidHeader(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +136,7 @@ func (client *LROSADsClient) delete202RetryInvalidHeader(ctx context.Context, op
 // delete202RetryInvalidHeaderCreateRequest creates the Delete202RetryInvalidHeader request.
 func (client *LROSADsClient) delete202RetryInvalidHeaderCreateRequest(ctx context.Context, options *LROSADsBeginDelete202RetryInvalidHeaderOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/delete/202/retry/invalidheader"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -162,7 +167,7 @@ func (client *LROSADsClient) BeginDelete204Succeeded(ctx context.Context, option
 	result := LROSADsDelete204SucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.Delete204Succeeded", "", resp, client.con.Pipeline(), client.delete204SucceededHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.Delete204Succeeded", "", resp, client.pl, client.delete204SucceededHandleError)
 	if err != nil {
 		return LROSADsDelete204SucceededPollerResponse{}, err
 	}
@@ -179,7 +184,7 @@ func (client *LROSADsClient) delete204Succeeded(ctx context.Context, options *LR
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -192,7 +197,7 @@ func (client *LROSADsClient) delete204Succeeded(ctx context.Context, options *LR
 // delete204SucceededCreateRequest creates the Delete204Succeeded request.
 func (client *LROSADsClient) delete204SucceededCreateRequest(ctx context.Context, options *LROSADsBeginDelete204SucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/delete/204/nolocation"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -224,7 +229,7 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetry400(ctx context.Contex
 	result := LROSADsDeleteAsyncRelativeRetry400PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.DeleteAsyncRelativeRetry400", "", resp, client.con.Pipeline(), client.deleteAsyncRelativeRetry400HandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.DeleteAsyncRelativeRetry400", "", resp, client.pl, client.deleteAsyncRelativeRetry400HandleError)
 	if err != nil {
 		return LROSADsDeleteAsyncRelativeRetry400PollerResponse{}, err
 	}
@@ -242,7 +247,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetry400(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -255,7 +260,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetry400(ctx context.Context, op
 // deleteAsyncRelativeRetry400CreateRequest creates the DeleteAsyncRelativeRetry400 request.
 func (client *LROSADsClient) deleteAsyncRelativeRetry400CreateRequest(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetry400Options) (*policy.Request, error) {
 	urlPath := "/lro/nonretryerror/deleteasync/retry/400"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -287,7 +292,7 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidHeader(ctx cont
 	result := LROSADsDeleteAsyncRelativeRetryInvalidHeaderPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.DeleteAsyncRelativeRetryInvalidHeader", "", resp, client.con.Pipeline(), client.deleteAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.DeleteAsyncRelativeRetryInvalidHeader", "", resp, client.pl, client.deleteAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
 		return LROSADsDeleteAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
@@ -305,7 +310,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidHeader(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -318,7 +323,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidHeader(ctx context.C
 // deleteAsyncRelativeRetryInvalidHeaderCreateRequest creates the DeleteAsyncRelativeRetryInvalidHeader request.
 func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidHeaderCreateRequest(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetryInvalidHeaderOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/deleteasync/retry/invalidheader"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -350,7 +355,7 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryInvalidJSONPolling(ctx
 	result := LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.DeleteAsyncRelativeRetryInvalidJSONPolling", "", resp, client.con.Pipeline(), client.deleteAsyncRelativeRetryInvalidJSONPollingHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.DeleteAsyncRelativeRetryInvalidJSONPolling", "", resp, client.pl, client.deleteAsyncRelativeRetryInvalidJSONPollingHandleError)
 	if err != nil {
 		return LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
@@ -368,7 +373,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidJSONPolling(ctx cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -381,7 +386,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidJSONPolling(ctx cont
 // deleteAsyncRelativeRetryInvalidJSONPollingCreateRequest creates the DeleteAsyncRelativeRetryInvalidJSONPolling request.
 func (client *LROSADsClient) deleteAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetryInvalidJSONPollingOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/deleteasync/retry/invalidjsonpolling"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -413,7 +418,7 @@ func (client *LROSADsClient) BeginDeleteAsyncRelativeRetryNoStatus(ctx context.C
 	result := LROSADsDeleteAsyncRelativeRetryNoStatusPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.DeleteAsyncRelativeRetryNoStatus", "", resp, client.con.Pipeline(), client.deleteAsyncRelativeRetryNoStatusHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.DeleteAsyncRelativeRetryNoStatus", "", resp, client.pl, client.deleteAsyncRelativeRetryNoStatusHandleError)
 	if err != nil {
 		return LROSADsDeleteAsyncRelativeRetryNoStatusPollerResponse{}, err
 	}
@@ -431,7 +436,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryNoStatus(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -444,7 +449,7 @@ func (client *LROSADsClient) deleteAsyncRelativeRetryNoStatus(ctx context.Contex
 // deleteAsyncRelativeRetryNoStatusCreateRequest creates the DeleteAsyncRelativeRetryNoStatus request.
 func (client *LROSADsClient) deleteAsyncRelativeRetryNoStatusCreateRequest(ctx context.Context, options *LROSADsBeginDeleteAsyncRelativeRetryNoStatusOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/deleteasync/retry/nostatus"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -475,7 +480,7 @@ func (client *LROSADsClient) BeginDeleteNonRetry400(ctx context.Context, options
 	result := LROSADsDeleteNonRetry400PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.DeleteNonRetry400", "", resp, client.con.Pipeline(), client.deleteNonRetry400HandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.DeleteNonRetry400", "", resp, client.pl, client.deleteNonRetry400HandleError)
 	if err != nil {
 		return LROSADsDeleteNonRetry400PollerResponse{}, err
 	}
@@ -492,7 +497,7 @@ func (client *LROSADsClient) deleteNonRetry400(ctx context.Context, options *LRO
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -505,7 +510,7 @@ func (client *LROSADsClient) deleteNonRetry400(ctx context.Context, options *LRO
 // deleteNonRetry400CreateRequest creates the DeleteNonRetry400 request.
 func (client *LROSADsClient) deleteNonRetry400CreateRequest(ctx context.Context, options *LROSADsBeginDeleteNonRetry400Options) (*policy.Request, error) {
 	urlPath := "/lro/nonretryerror/delete/400"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -536,7 +541,7 @@ func (client *LROSADsClient) BeginPost202NoLocation(ctx context.Context, options
 	result := LROSADsPost202NoLocationPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.Post202NoLocation", "", resp, client.con.Pipeline(), client.post202NoLocationHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.Post202NoLocation", "", resp, client.pl, client.post202NoLocationHandleError)
 	if err != nil {
 		return LROSADsPost202NoLocationPollerResponse{}, err
 	}
@@ -553,7 +558,7 @@ func (client *LROSADsClient) post202NoLocation(ctx context.Context, options *LRO
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -566,7 +571,7 @@ func (client *LROSADsClient) post202NoLocation(ctx context.Context, options *LRO
 // post202NoLocationCreateRequest creates the Post202NoLocation request.
 func (client *LROSADsClient) post202NoLocationCreateRequest(ctx context.Context, options *LROSADsBeginPost202NoLocationOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/post/202/nolocation"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -600,7 +605,7 @@ func (client *LROSADsClient) BeginPost202NonRetry400(ctx context.Context, option
 	result := LROSADsPost202NonRetry400PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.Post202NonRetry400", "", resp, client.con.Pipeline(), client.post202NonRetry400HandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.Post202NonRetry400", "", resp, client.pl, client.post202NonRetry400HandleError)
 	if err != nil {
 		return LROSADsPost202NonRetry400PollerResponse{}, err
 	}
@@ -617,7 +622,7 @@ func (client *LROSADsClient) post202NonRetry400(ctx context.Context, options *LR
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -630,7 +635,7 @@ func (client *LROSADsClient) post202NonRetry400(ctx context.Context, options *LR
 // post202NonRetry400CreateRequest creates the Post202NonRetry400 request.
 func (client *LROSADsClient) post202NonRetry400CreateRequest(ctx context.Context, options *LROSADsBeginPost202NonRetry400Options) (*policy.Request, error) {
 	urlPath := "/lro/nonretryerror/post/202/retry/400"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -664,7 +669,7 @@ func (client *LROSADsClient) BeginPost202RetryInvalidHeader(ctx context.Context,
 	result := LROSADsPost202RetryInvalidHeaderPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.Post202RetryInvalidHeader", "", resp, client.con.Pipeline(), client.post202RetryInvalidHeaderHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.Post202RetryInvalidHeader", "", resp, client.pl, client.post202RetryInvalidHeaderHandleError)
 	if err != nil {
 		return LROSADsPost202RetryInvalidHeaderPollerResponse{}, err
 	}
@@ -681,7 +686,7 @@ func (client *LROSADsClient) post202RetryInvalidHeader(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -694,7 +699,7 @@ func (client *LROSADsClient) post202RetryInvalidHeader(ctx context.Context, opti
 // post202RetryInvalidHeaderCreateRequest creates the Post202RetryInvalidHeader request.
 func (client *LROSADsClient) post202RetryInvalidHeaderCreateRequest(ctx context.Context, options *LROSADsBeginPost202RetryInvalidHeaderOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/post/202/retry/invalidheader"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -729,7 +734,7 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetry400(ctx context.Context,
 	result := LROSADsPostAsyncRelativeRetry400PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.PostAsyncRelativeRetry400", "", resp, client.con.Pipeline(), client.postAsyncRelativeRetry400HandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.PostAsyncRelativeRetry400", "", resp, client.pl, client.postAsyncRelativeRetry400HandleError)
 	if err != nil {
 		return LROSADsPostAsyncRelativeRetry400PollerResponse{}, err
 	}
@@ -747,7 +752,7 @@ func (client *LROSADsClient) postAsyncRelativeRetry400(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -760,7 +765,7 @@ func (client *LROSADsClient) postAsyncRelativeRetry400(ctx context.Context, opti
 // postAsyncRelativeRetry400CreateRequest creates the PostAsyncRelativeRetry400 request.
 func (client *LROSADsClient) postAsyncRelativeRetry400CreateRequest(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetry400Options) (*policy.Request, error) {
 	urlPath := "/lro/nonretryerror/postasync/retry/400"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -796,7 +801,7 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidHeader(ctx contex
 	result := LROSADsPostAsyncRelativeRetryInvalidHeaderPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.PostAsyncRelativeRetryInvalidHeader", "", resp, client.con.Pipeline(), client.postAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.PostAsyncRelativeRetryInvalidHeader", "", resp, client.pl, client.postAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
 		return LROSADsPostAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
@@ -815,7 +820,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidHeader(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -828,7 +833,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidHeader(ctx context.Con
 // postAsyncRelativeRetryInvalidHeaderCreateRequest creates the PostAsyncRelativeRetryInvalidHeader request.
 func (client *LROSADsClient) postAsyncRelativeRetryInvalidHeaderCreateRequest(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetryInvalidHeaderOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/postasync/retry/invalidheader"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -864,7 +869,7 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetryInvalidJSONPolling(ctx c
 	result := LROSADsPostAsyncRelativeRetryInvalidJSONPollingPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.PostAsyncRelativeRetryInvalidJSONPolling", "", resp, client.con.Pipeline(), client.postAsyncRelativeRetryInvalidJSONPollingHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.PostAsyncRelativeRetryInvalidJSONPolling", "", resp, client.pl, client.postAsyncRelativeRetryInvalidJSONPollingHandleError)
 	if err != nil {
 		return LROSADsPostAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
@@ -883,7 +888,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidJSONPolling(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -896,7 +901,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryInvalidJSONPolling(ctx contex
 // postAsyncRelativeRetryInvalidJSONPollingCreateRequest creates the PostAsyncRelativeRetryInvalidJSONPolling request.
 func (client *LROSADsClient) postAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetryInvalidJSONPollingOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/postasync/retry/invalidjsonpolling"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -932,7 +937,7 @@ func (client *LROSADsClient) BeginPostAsyncRelativeRetryNoPayload(ctx context.Co
 	result := LROSADsPostAsyncRelativeRetryNoPayloadPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.PostAsyncRelativeRetryNoPayload", "", resp, client.con.Pipeline(), client.postAsyncRelativeRetryNoPayloadHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.PostAsyncRelativeRetryNoPayload", "", resp, client.pl, client.postAsyncRelativeRetryNoPayloadHandleError)
 	if err != nil {
 		return LROSADsPostAsyncRelativeRetryNoPayloadPollerResponse{}, err
 	}
@@ -951,7 +956,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryNoPayload(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -964,7 +969,7 @@ func (client *LROSADsClient) postAsyncRelativeRetryNoPayload(ctx context.Context
 // postAsyncRelativeRetryNoPayloadCreateRequest creates the PostAsyncRelativeRetryNoPayload request.
 func (client *LROSADsClient) postAsyncRelativeRetryNoPayloadCreateRequest(ctx context.Context, options *LROSADsBeginPostAsyncRelativeRetryNoPayloadOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/postasync/retry/nopayload"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -998,7 +1003,7 @@ func (client *LROSADsClient) BeginPostNonRetry400(ctx context.Context, options *
 	result := LROSADsPostNonRetry400PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.PostNonRetry400", "", resp, client.con.Pipeline(), client.postNonRetry400HandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.PostNonRetry400", "", resp, client.pl, client.postNonRetry400HandleError)
 	if err != nil {
 		return LROSADsPostNonRetry400PollerResponse{}, err
 	}
@@ -1015,7 +1020,7 @@ func (client *LROSADsClient) postNonRetry400(ctx context.Context, options *LROSA
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1028,7 +1033,7 @@ func (client *LROSADsClient) postNonRetry400(ctx context.Context, options *LROSA
 // postNonRetry400CreateRequest creates the PostNonRetry400 request.
 func (client *LROSADsClient) postNonRetry400CreateRequest(ctx context.Context, options *LROSADsBeginPostNonRetry400Options) (*policy.Request, error) {
 	urlPath := "/lro/nonretryerror/post/400"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1062,7 +1067,7 @@ func (client *LROSADsClient) BeginPut200InvalidJSON(ctx context.Context, options
 	result := LROSADsPut200InvalidJSONPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.Put200InvalidJSON", "", resp, client.con.Pipeline(), client.put200InvalidJSONHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.Put200InvalidJSON", "", resp, client.pl, client.put200InvalidJSONHandleError)
 	if err != nil {
 		return LROSADsPut200InvalidJSONPollerResponse{}, err
 	}
@@ -1079,7 +1084,7 @@ func (client *LROSADsClient) put200InvalidJSON(ctx context.Context, options *LRO
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1092,7 +1097,7 @@ func (client *LROSADsClient) put200InvalidJSON(ctx context.Context, options *LRO
 // put200InvalidJSONCreateRequest creates the Put200InvalidJSON request.
 func (client *LROSADsClient) put200InvalidJSONCreateRequest(ctx context.Context, options *LROSADsBeginPut200InvalidJSONOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/put/200/invalidjson"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1127,7 +1132,7 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetry400(ctx context.Context, 
 	result := LROSADsPutAsyncRelativeRetry400PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.PutAsyncRelativeRetry400", "", resp, client.con.Pipeline(), client.putAsyncRelativeRetry400HandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.PutAsyncRelativeRetry400", "", resp, client.pl, client.putAsyncRelativeRetry400HandleError)
 	if err != nil {
 		return LROSADsPutAsyncRelativeRetry400PollerResponse{}, err
 	}
@@ -1145,7 +1150,7 @@ func (client *LROSADsClient) putAsyncRelativeRetry400(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1158,7 +1163,7 @@ func (client *LROSADsClient) putAsyncRelativeRetry400(ctx context.Context, optio
 // putAsyncRelativeRetry400CreateRequest creates the PutAsyncRelativeRetry400 request.
 func (client *LROSADsClient) putAsyncRelativeRetry400CreateRequest(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetry400Options) (*policy.Request, error) {
 	urlPath := "/lro/nonretryerror/putasync/retry/400"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1193,7 +1198,7 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidHeader(ctx context
 	result := LROSADsPutAsyncRelativeRetryInvalidHeaderPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.PutAsyncRelativeRetryInvalidHeader", "", resp, client.con.Pipeline(), client.putAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.PutAsyncRelativeRetryInvalidHeader", "", resp, client.pl, client.putAsyncRelativeRetryInvalidHeaderHandleError)
 	if err != nil {
 		return LROSADsPutAsyncRelativeRetryInvalidHeaderPollerResponse{}, err
 	}
@@ -1211,7 +1216,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeader(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1224,7 +1229,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeader(ctx context.Cont
 // putAsyncRelativeRetryInvalidHeaderCreateRequest creates the PutAsyncRelativeRetryInvalidHeader request.
 func (client *LROSADsClient) putAsyncRelativeRetryInvalidHeaderCreateRequest(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryInvalidHeaderOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/putasync/retry/invalidheader"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1260,7 +1265,7 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryInvalidJSONPolling(ctx co
 	result := LROSADsPutAsyncRelativeRetryInvalidJSONPollingPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling", "", resp, client.con.Pipeline(), client.putAsyncRelativeRetryInvalidJSONPollingHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling", "", resp, client.pl, client.putAsyncRelativeRetryInvalidJSONPollingHandleError)
 	if err != nil {
 		return LROSADsPutAsyncRelativeRetryInvalidJSONPollingPollerResponse{}, err
 	}
@@ -1279,7 +1284,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPolling(ctx context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1292,7 +1297,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPolling(ctx context
 // putAsyncRelativeRetryInvalidJSONPollingCreateRequest creates the PutAsyncRelativeRetryInvalidJSONPolling request.
 func (client *LROSADsClient) putAsyncRelativeRetryInvalidJSONPollingCreateRequest(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryInvalidJSONPollingOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/putasync/retry/invalidjsonpolling"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1328,7 +1333,7 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatus(ctx context.Cont
 	result := LROSADsPutAsyncRelativeRetryNoStatusPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.PutAsyncRelativeRetryNoStatus", "", resp, client.con.Pipeline(), client.putAsyncRelativeRetryNoStatusHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.PutAsyncRelativeRetryNoStatus", "", resp, client.pl, client.putAsyncRelativeRetryNoStatusHandleError)
 	if err != nil {
 		return LROSADsPutAsyncRelativeRetryNoStatusPollerResponse{}, err
 	}
@@ -1347,7 +1352,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatus(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1360,7 +1365,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatus(ctx context.Context, 
 // putAsyncRelativeRetryNoStatusCreateRequest creates the PutAsyncRelativeRetryNoStatus request.
 func (client *LROSADsClient) putAsyncRelativeRetryNoStatusCreateRequest(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryNoStatusOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/putasync/retry/nostatus"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1396,7 +1401,7 @@ func (client *LROSADsClient) BeginPutAsyncRelativeRetryNoStatusPayload(ctx conte
 	result := LROSADsPutAsyncRelativeRetryNoStatusPayloadPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.PutAsyncRelativeRetryNoStatusPayload", "", resp, client.con.Pipeline(), client.putAsyncRelativeRetryNoStatusPayloadHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.PutAsyncRelativeRetryNoStatusPayload", "", resp, client.pl, client.putAsyncRelativeRetryNoStatusPayloadHandleError)
 	if err != nil {
 		return LROSADsPutAsyncRelativeRetryNoStatusPayloadPollerResponse{}, err
 	}
@@ -1415,7 +1420,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayload(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1428,7 +1433,7 @@ func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayload(ctx context.Co
 // putAsyncRelativeRetryNoStatusPayloadCreateRequest creates the PutAsyncRelativeRetryNoStatusPayload request.
 func (client *LROSADsClient) putAsyncRelativeRetryNoStatusPayloadCreateRequest(ctx context.Context, options *LROSADsBeginPutAsyncRelativeRetryNoStatusPayloadOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/putasync/retry/nostatuspayload"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1462,7 +1467,7 @@ func (client *LROSADsClient) BeginPutError201NoProvisioningStatePayload(ctx cont
 	result := LROSADsPutError201NoProvisioningStatePayloadPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.PutError201NoProvisioningStatePayload", "", resp, client.con.Pipeline(), client.putError201NoProvisioningStatePayloadHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.PutError201NoProvisioningStatePayload", "", resp, client.pl, client.putError201NoProvisioningStatePayloadHandleError)
 	if err != nil {
 		return LROSADsPutError201NoProvisioningStatePayloadPollerResponse{}, err
 	}
@@ -1479,7 +1484,7 @@ func (client *LROSADsClient) putError201NoProvisioningStatePayload(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1492,7 +1497,7 @@ func (client *LROSADsClient) putError201NoProvisioningStatePayload(ctx context.C
 // putError201NoProvisioningStatePayloadCreateRequest creates the PutError201NoProvisioningStatePayload request.
 func (client *LROSADsClient) putError201NoProvisioningStatePayloadCreateRequest(ctx context.Context, options *LROSADsBeginPutError201NoProvisioningStatePayloadOptions) (*policy.Request, error) {
 	urlPath := "/lro/error/put/201/noprovisioningstatepayload"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1526,7 +1531,7 @@ func (client *LROSADsClient) BeginPutNonRetry201Creating400(ctx context.Context,
 	result := LROSADsPutNonRetry201Creating400PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.PutNonRetry201Creating400", "", resp, client.con.Pipeline(), client.putNonRetry201Creating400HandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.PutNonRetry201Creating400", "", resp, client.pl, client.putNonRetry201Creating400HandleError)
 	if err != nil {
 		return LROSADsPutNonRetry201Creating400PollerResponse{}, err
 	}
@@ -1543,7 +1548,7 @@ func (client *LROSADsClient) putNonRetry201Creating400(ctx context.Context, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1556,7 +1561,7 @@ func (client *LROSADsClient) putNonRetry201Creating400(ctx context.Context, opti
 // putNonRetry201Creating400CreateRequest creates the PutNonRetry201Creating400 request.
 func (client *LROSADsClient) putNonRetry201Creating400CreateRequest(ctx context.Context, options *LROSADsBeginPutNonRetry201Creating400Options) (*policy.Request, error) {
 	urlPath := "/lro/nonretryerror/put/201/creating/400"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1591,7 +1596,7 @@ func (client *LROSADsClient) BeginPutNonRetry201Creating400InvalidJSON(ctx conte
 	result := LROSADsPutNonRetry201Creating400InvalidJSONPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.PutNonRetry201Creating400InvalidJSON", "", resp, client.con.Pipeline(), client.putNonRetry201Creating400InvalidJSONHandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.PutNonRetry201Creating400InvalidJSON", "", resp, client.pl, client.putNonRetry201Creating400InvalidJSONHandleError)
 	if err != nil {
 		return LROSADsPutNonRetry201Creating400InvalidJSONPollerResponse{}, err
 	}
@@ -1608,7 +1613,7 @@ func (client *LROSADsClient) putNonRetry201Creating400InvalidJSON(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1621,7 +1626,7 @@ func (client *LROSADsClient) putNonRetry201Creating400InvalidJSON(ctx context.Co
 // putNonRetry201Creating400InvalidJSONCreateRequest creates the PutNonRetry201Creating400InvalidJSON request.
 func (client *LROSADsClient) putNonRetry201Creating400InvalidJSONCreateRequest(ctx context.Context, options *LROSADsBeginPutNonRetry201Creating400InvalidJSONOptions) (*policy.Request, error) {
 	urlPath := "/lro/nonretryerror/put/201/creating/400/invalidjson"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1655,7 +1660,7 @@ func (client *LROSADsClient) BeginPutNonRetry400(ctx context.Context, options *L
 	result := LROSADsPutNonRetry400PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROSADsClient.PutNonRetry400", "", resp, client.con.Pipeline(), client.putNonRetry400HandleError)
+	pt, err := armruntime.NewPoller("LROSADsClient.PutNonRetry400", "", resp, client.pl, client.putNonRetry400HandleError)
 	if err != nil {
 		return LROSADsPutNonRetry400PollerResponse{}, err
 	}
@@ -1672,7 +1677,7 @@ func (client *LROSADsClient) putNonRetry400(ctx context.Context, options *LROSAD
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1685,7 +1690,7 @@ func (client *LROSADsClient) putNonRetry400(ctx context.Context, options *LROSAD
 // putNonRetry400CreateRequest creates the PutNonRetry400 request.
 func (client *LROSADsClient) putNonRetry400CreateRequest(ctx context.Context, options *LROSADsBeginPutNonRetry400Options) (*policy.Request, error) {
 	urlPath := "/lro/nonretryerror/put/400"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

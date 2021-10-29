@@ -12,7 +12,7 @@ import (
 )
 
 func newObjectTypeClient() *ObjectTypeClient {
-	return NewObjectTypeClient(NewDefaultConnection(nil))
+	return NewObjectTypeClient(nil)
 }
 
 func TestGet(t *testing.T) {

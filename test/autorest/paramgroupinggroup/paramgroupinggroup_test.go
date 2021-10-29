@@ -10,7 +10,7 @@ import (
 )
 
 func newParameterGroupingClient() *ParameterGroupingClient {
-	return NewParameterGroupingClient(NewDefaultConnection(nil))
+	return NewParameterGroupingClient(nil)
 }
 
 // PostMultiParamGroups - Post parameters from multiple different parameter groups

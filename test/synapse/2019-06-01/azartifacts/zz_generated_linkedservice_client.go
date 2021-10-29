@@ -20,7 +20,13 @@ import (
 )
 
 type linkedServiceClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newLinkedServiceClient creates a new instance of linkedServiceClient with the specified values.
+func newLinkedServiceClient(endpoint string, pl runtime.Pipeline) *linkedServiceClient {
+	return &linkedServiceClient{endpoint: endpoint, pl: pl}
 }
 
 // BeginCreateOrUpdateLinkedService - Creates or updates a linked service.
@@ -33,7 +39,7 @@ func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.
 	result := LinkedServiceCreateOrUpdateLinkedServicePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("linkedServiceClient.CreateOrUpdateLinkedService", resp, client.con.Pipeline(), client.createOrUpdateLinkedServiceHandleError)
+	pt, err := runtime.NewPoller("linkedServiceClient.CreateOrUpdateLinkedService", resp, client.pl, client.createOrUpdateLinkedServiceHandleError)
 	if err != nil {
 		return LinkedServiceCreateOrUpdateLinkedServicePollerResponse{}, err
 	}
@@ -50,7 +56,7 @@ func (client *linkedServiceClient) createOrUpdateLinkedService(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +73,7 @@ func (client *linkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx 
 		return nil, errors.New("parameter linkedServiceName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{linkedServiceName}", url.PathEscape(linkedServiceName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +110,7 @@ func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context,
 	result := LinkedServiceDeleteLinkedServicePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("linkedServiceClient.DeleteLinkedService", resp, client.con.Pipeline(), client.deleteLinkedServiceHandleError)
+	pt, err := runtime.NewPoller("linkedServiceClient.DeleteLinkedService", resp, client.pl, client.deleteLinkedServiceHandleError)
 	if err != nil {
 		return LinkedServiceDeleteLinkedServicePollerResponse{}, err
 	}
@@ -121,7 +127,7 @@ func (client *linkedServiceClient) deleteLinkedService(ctx context.Context, link
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +144,7 @@ func (client *linkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.
 		return nil, errors.New("parameter linkedServiceName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{linkedServiceName}", url.PathEscape(linkedServiceName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +175,7 @@ func (client *linkedServiceClient) GetLinkedService(ctx context.Context, linkedS
 	if err != nil {
 		return LinkedServiceGetLinkedServiceResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return LinkedServiceGetLinkedServiceResponse{}, err
 	}
@@ -186,7 +192,7 @@ func (client *linkedServiceClient) getLinkedServiceCreateRequest(ctx context.Con
 		return nil, errors.New("parameter linkedServiceName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{linkedServiceName}", url.PathEscape(linkedServiceName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -239,7 +245,7 @@ func (client *linkedServiceClient) GetLinkedServicesByWorkspace(options *LinkedS
 // getLinkedServicesByWorkspaceCreateRequest creates the GetLinkedServicesByWorkspace request.
 func (client *linkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx context.Context, options *LinkedServiceGetLinkedServicesByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -282,7 +288,7 @@ func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context,
 	result := LinkedServiceRenameLinkedServicePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("linkedServiceClient.RenameLinkedService", resp, client.con.Pipeline(), client.renameLinkedServiceHandleError)
+	pt, err := runtime.NewPoller("linkedServiceClient.RenameLinkedService", resp, client.pl, client.renameLinkedServiceHandleError)
 	if err != nil {
 		return LinkedServiceRenameLinkedServicePollerResponse{}, err
 	}
@@ -299,7 +305,7 @@ func (client *linkedServiceClient) renameLinkedService(ctx context.Context, link
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -316,7 +322,7 @@ func (client *linkedServiceClient) renameLinkedServiceCreateRequest(ctx context.
 		return nil, errors.New("parameter linkedServiceName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{linkedServiceName}", url.PathEscape(linkedServiceName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -11,6 +11,7 @@ package lrogroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -20,12 +21,16 @@ import (
 // LROsClient contains the methods for the LROs group.
 // Don't use this type directly, use NewLROsClient() instead.
 type LROsClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewLROsClient creates a new instance of LROsClient with the specified values.
-func NewLROsClient(con *Connection) *LROsClient {
-	return &LROsClient{con: con}
+func NewLROsClient(options *azcore.ClientOptions) *LROsClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &LROsClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // BeginDelete202NoRetry204 - Long running delete request, service returns a 202 to the initial request. Polls return this value until the last poll returns
@@ -39,7 +44,7 @@ func (client *LROsClient) BeginDelete202NoRetry204(ctx context.Context, options 
 	result := LROsDelete202NoRetry204PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.Delete202NoRetry204", "", resp, client.con.Pipeline(), client.delete202NoRetry204HandleError)
+	pt, err := armruntime.NewPoller("LROsClient.Delete202NoRetry204", "", resp, client.pl, client.delete202NoRetry204HandleError)
 	if err != nil {
 		return LROsDelete202NoRetry204PollerResponse{}, err
 	}
@@ -57,7 +62,7 @@ func (client *LROsClient) delete202NoRetry204(ctx context.Context, options *LROs
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +75,7 @@ func (client *LROsClient) delete202NoRetry204(ctx context.Context, options *LROs
 // delete202NoRetry204CreateRequest creates the Delete202NoRetry204 request.
 func (client *LROsClient) delete202NoRetry204CreateRequest(ctx context.Context, options *LROsBeginDelete202NoRetry204Options) (*policy.Request, error) {
 	urlPath := "/lro/delete/202/noretry/204"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +107,7 @@ func (client *LROsClient) BeginDelete202Retry200(ctx context.Context, options *L
 	result := LROsDelete202Retry200PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.Delete202Retry200", "", resp, client.con.Pipeline(), client.delete202Retry200HandleError)
+	pt, err := armruntime.NewPoller("LROsClient.Delete202Retry200", "", resp, client.pl, client.delete202Retry200HandleError)
 	if err != nil {
 		return LROsDelete202Retry200PollerResponse{}, err
 	}
@@ -120,7 +125,7 @@ func (client *LROsClient) delete202Retry200(ctx context.Context, options *LROsBe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +138,7 @@ func (client *LROsClient) delete202Retry200(ctx context.Context, options *LROsBe
 // delete202Retry200CreateRequest creates the Delete202Retry200 request.
 func (client *LROsClient) delete202Retry200CreateRequest(ctx context.Context, options *LROsBeginDelete202Retry200Options) (*policy.Request, error) {
 	urlPath := "/lro/delete/202/retry/200"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -164,7 +169,7 @@ func (client *LROsClient) BeginDelete204Succeeded(ctx context.Context, options *
 	result := LROsDelete204SucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.Delete204Succeeded", "", resp, client.con.Pipeline(), client.delete204SucceededHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.Delete204Succeeded", "", resp, client.pl, client.delete204SucceededHandleError)
 	if err != nil {
 		return LROsDelete204SucceededPollerResponse{}, err
 	}
@@ -181,7 +186,7 @@ func (client *LROsClient) delete204Succeeded(ctx context.Context, options *LROsB
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -194,7 +199,7 @@ func (client *LROsClient) delete204Succeeded(ctx context.Context, options *LROsB
 // delete204SucceededCreateRequest creates the Delete204Succeeded request.
 func (client *LROsClient) delete204SucceededCreateRequest(ctx context.Context, options *LROsBeginDelete204SucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/delete/204/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -226,7 +231,7 @@ func (client *LROsClient) BeginDeleteAsyncNoHeaderInRetry(ctx context.Context, o
 	result := LROsDeleteAsyncNoHeaderInRetryPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.DeleteAsyncNoHeaderInRetry", "", resp, client.con.Pipeline(), client.deleteAsyncNoHeaderInRetryHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteAsyncNoHeaderInRetry", "", resp, client.pl, client.deleteAsyncNoHeaderInRetryHandleError)
 	if err != nil {
 		return LROsDeleteAsyncNoHeaderInRetryPollerResponse{}, err
 	}
@@ -244,7 +249,7 @@ func (client *LROsClient) deleteAsyncNoHeaderInRetry(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +262,7 @@ func (client *LROsClient) deleteAsyncNoHeaderInRetry(ctx context.Context, option
 // deleteAsyncNoHeaderInRetryCreateRequest creates the DeleteAsyncNoHeaderInRetry request.
 func (client *LROsClient) deleteAsyncNoHeaderInRetryCreateRequest(ctx context.Context, options *LROsBeginDeleteAsyncNoHeaderInRetryOptions) (*policy.Request, error) {
 	urlPath := "/lro/deleteasync/noheader/202/204"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -289,7 +294,7 @@ func (client *LROsClient) BeginDeleteAsyncNoRetrySucceeded(ctx context.Context, 
 	result := LROsDeleteAsyncNoRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.DeleteAsyncNoRetrySucceeded", "", resp, client.con.Pipeline(), client.deleteAsyncNoRetrySucceededHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteAsyncNoRetrySucceeded", "", resp, client.pl, client.deleteAsyncNoRetrySucceededHandleError)
 	if err != nil {
 		return LROsDeleteAsyncNoRetrySucceededPollerResponse{}, err
 	}
@@ -307,7 +312,7 @@ func (client *LROsClient) deleteAsyncNoRetrySucceeded(ctx context.Context, optio
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -320,7 +325,7 @@ func (client *LROsClient) deleteAsyncNoRetrySucceeded(ctx context.Context, optio
 // deleteAsyncNoRetrySucceededCreateRequest creates the DeleteAsyncNoRetrySucceeded request.
 func (client *LROsClient) deleteAsyncNoRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginDeleteAsyncNoRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/deleteasync/noretry/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -352,7 +357,7 @@ func (client *LROsClient) BeginDeleteAsyncRetryFailed(ctx context.Context, optio
 	result := LROsDeleteAsyncRetryFailedPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.DeleteAsyncRetryFailed", "", resp, client.con.Pipeline(), client.deleteAsyncRetryFailedHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteAsyncRetryFailed", "", resp, client.pl, client.deleteAsyncRetryFailedHandleError)
 	if err != nil {
 		return LROsDeleteAsyncRetryFailedPollerResponse{}, err
 	}
@@ -370,7 +375,7 @@ func (client *LROsClient) deleteAsyncRetryFailed(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -383,7 +388,7 @@ func (client *LROsClient) deleteAsyncRetryFailed(ctx context.Context, options *L
 // deleteAsyncRetryFailedCreateRequest creates the DeleteAsyncRetryFailed request.
 func (client *LROsClient) deleteAsyncRetryFailedCreateRequest(ctx context.Context, options *LROsBeginDeleteAsyncRetryFailedOptions) (*policy.Request, error) {
 	urlPath := "/lro/deleteasync/retry/failed"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -415,7 +420,7 @@ func (client *LROsClient) BeginDeleteAsyncRetrySucceeded(ctx context.Context, op
 	result := LROsDeleteAsyncRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.DeleteAsyncRetrySucceeded", "", resp, client.con.Pipeline(), client.deleteAsyncRetrySucceededHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteAsyncRetrySucceeded", "", resp, client.pl, client.deleteAsyncRetrySucceededHandleError)
 	if err != nil {
 		return LROsDeleteAsyncRetrySucceededPollerResponse{}, err
 	}
@@ -433,7 +438,7 @@ func (client *LROsClient) deleteAsyncRetrySucceeded(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -446,7 +451,7 @@ func (client *LROsClient) deleteAsyncRetrySucceeded(ctx context.Context, options
 // deleteAsyncRetrySucceededCreateRequest creates the DeleteAsyncRetrySucceeded request.
 func (client *LROsClient) deleteAsyncRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginDeleteAsyncRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/deleteasync/retry/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -478,7 +483,7 @@ func (client *LROsClient) BeginDeleteAsyncRetrycanceled(ctx context.Context, opt
 	result := LROsDeleteAsyncRetrycanceledPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.DeleteAsyncRetrycanceled", "", resp, client.con.Pipeline(), client.deleteAsyncRetrycanceledHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteAsyncRetrycanceled", "", resp, client.pl, client.deleteAsyncRetrycanceledHandleError)
 	if err != nil {
 		return LROsDeleteAsyncRetrycanceledPollerResponse{}, err
 	}
@@ -496,7 +501,7 @@ func (client *LROsClient) deleteAsyncRetrycanceled(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -509,7 +514,7 @@ func (client *LROsClient) deleteAsyncRetrycanceled(ctx context.Context, options 
 // deleteAsyncRetrycanceledCreateRequest creates the DeleteAsyncRetrycanceled request.
 func (client *LROsClient) deleteAsyncRetrycanceledCreateRequest(ctx context.Context, options *LROsBeginDeleteAsyncRetrycanceledOptions) (*policy.Request, error) {
 	urlPath := "/lro/deleteasync/retry/canceled"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -541,7 +546,7 @@ func (client *LROsClient) BeginDeleteNoHeaderInRetry(ctx context.Context, option
 	result := LROsDeleteNoHeaderInRetryPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.DeleteNoHeaderInRetry", "", resp, client.con.Pipeline(), client.deleteNoHeaderInRetryHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteNoHeaderInRetry", "", resp, client.pl, client.deleteNoHeaderInRetryHandleError)
 	if err != nil {
 		return LROsDeleteNoHeaderInRetryPollerResponse{}, err
 	}
@@ -559,7 +564,7 @@ func (client *LROsClient) deleteNoHeaderInRetry(ctx context.Context, options *LR
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -572,7 +577,7 @@ func (client *LROsClient) deleteNoHeaderInRetry(ctx context.Context, options *LR
 // deleteNoHeaderInRetryCreateRequest creates the DeleteNoHeaderInRetry request.
 func (client *LROsClient) deleteNoHeaderInRetryCreateRequest(ctx context.Context, options *LROsBeginDeleteNoHeaderInRetryOptions) (*policy.Request, error) {
 	urlPath := "/lro/delete/noheader"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -605,7 +610,7 @@ func (client *LROsClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx con
 	result := LROsDeleteProvisioning202Accepted200SucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.DeleteProvisioning202Accepted200Succeeded", "", resp, client.con.Pipeline(), client.deleteProvisioning202Accepted200SucceededHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteProvisioning202Accepted200Succeeded", "", resp, client.pl, client.deleteProvisioning202Accepted200SucceededHandleError)
 	if err != nil {
 		return LROsDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
 	}
@@ -624,7 +629,7 @@ func (client *LROsClient) deleteProvisioning202Accepted200Succeeded(ctx context.
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -637,7 +642,7 @@ func (client *LROsClient) deleteProvisioning202Accepted200Succeeded(ctx context.
 // deleteProvisioning202Accepted200SucceededCreateRequest creates the DeleteProvisioning202Accepted200Succeeded request.
 func (client *LROsClient) deleteProvisioning202Accepted200SucceededCreateRequest(ctx context.Context, options *LROsBeginDeleteProvisioning202Accepted200SucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/delete/provisioning/202/accepted/200/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -670,7 +675,7 @@ func (client *LROsClient) BeginDeleteProvisioning202DeletingFailed200(ctx contex
 	result := LROsDeleteProvisioning202DeletingFailed200PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.DeleteProvisioning202DeletingFailed200", "", resp, client.con.Pipeline(), client.deleteProvisioning202DeletingFailed200HandleError)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteProvisioning202DeletingFailed200", "", resp, client.pl, client.deleteProvisioning202DeletingFailed200HandleError)
 	if err != nil {
 		return LROsDeleteProvisioning202DeletingFailed200PollerResponse{}, err
 	}
@@ -689,7 +694,7 @@ func (client *LROsClient) deleteProvisioning202DeletingFailed200(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -702,7 +707,7 @@ func (client *LROsClient) deleteProvisioning202DeletingFailed200(ctx context.Con
 // deleteProvisioning202DeletingFailed200CreateRequest creates the DeleteProvisioning202DeletingFailed200 request.
 func (client *LROsClient) deleteProvisioning202DeletingFailed200CreateRequest(ctx context.Context, options *LROsBeginDeleteProvisioning202DeletingFailed200Options) (*policy.Request, error) {
 	urlPath := "/lro/delete/provisioning/202/deleting/200/failed"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -735,7 +740,7 @@ func (client *LROsClient) BeginDeleteProvisioning202Deletingcanceled200(ctx cont
 	result := LROsDeleteProvisioning202Deletingcanceled200PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.DeleteProvisioning202Deletingcanceled200", "", resp, client.con.Pipeline(), client.deleteProvisioning202Deletingcanceled200HandleError)
+	pt, err := armruntime.NewPoller("LROsClient.DeleteProvisioning202Deletingcanceled200", "", resp, client.pl, client.deleteProvisioning202Deletingcanceled200HandleError)
 	if err != nil {
 		return LROsDeleteProvisioning202Deletingcanceled200PollerResponse{}, err
 	}
@@ -754,7 +759,7 @@ func (client *LROsClient) deleteProvisioning202Deletingcanceled200(ctx context.C
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -767,7 +772,7 @@ func (client *LROsClient) deleteProvisioning202Deletingcanceled200(ctx context.C
 // deleteProvisioning202Deletingcanceled200CreateRequest creates the DeleteProvisioning202Deletingcanceled200 request.
 func (client *LROsClient) deleteProvisioning202Deletingcanceled200CreateRequest(ctx context.Context, options *LROsBeginDeleteProvisioning202Deletingcanceled200Options) (*policy.Request, error) {
 	urlPath := "/lro/delete/provisioning/202/deleting/200/canceled"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -799,7 +804,7 @@ func (client *LROsClient) BeginPatch200SucceededIgnoreHeaders(ctx context.Contex
 	result := LROsPatch200SucceededIgnoreHeadersPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.Patch200SucceededIgnoreHeaders", "", resp, client.con.Pipeline(), client.patch200SucceededIgnoreHeadersHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.Patch200SucceededIgnoreHeaders", "", resp, client.pl, client.patch200SucceededIgnoreHeadersHandleError)
 	if err != nil {
 		return LROsPatch200SucceededIgnoreHeadersPollerResponse{}, err
 	}
@@ -817,7 +822,7 @@ func (client *LROsClient) patch200SucceededIgnoreHeaders(ctx context.Context, op
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -830,7 +835,7 @@ func (client *LROsClient) patch200SucceededIgnoreHeaders(ctx context.Context, op
 // patch200SucceededIgnoreHeadersCreateRequest creates the Patch200SucceededIgnoreHeaders request.
 func (client *LROsClient) patch200SucceededIgnoreHeadersCreateRequest(ctx context.Context, options *LROsBeginPatch200SucceededIgnoreHeadersOptions) (*policy.Request, error) {
 	urlPath := "/lro/patch/200/succeeded/ignoreheaders"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -865,7 +870,7 @@ func (client *LROsClient) BeginPost200WithPayload(ctx context.Context, options *
 	result := LROsPost200WithPayloadPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.Post200WithPayload", "", resp, client.con.Pipeline(), client.post200WithPayloadHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.Post200WithPayload", "", resp, client.pl, client.post200WithPayloadHandleError)
 	if err != nil {
 		return LROsPost200WithPayloadPollerResponse{}, err
 	}
@@ -883,7 +888,7 @@ func (client *LROsClient) post200WithPayload(ctx context.Context, options *LROsB
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -896,7 +901,7 @@ func (client *LROsClient) post200WithPayload(ctx context.Context, options *LROsB
 // post200WithPayloadCreateRequest creates the Post200WithPayload request.
 func (client *LROsClient) post200WithPayloadCreateRequest(ctx context.Context, options *LROsBeginPost200WithPayloadOptions) (*policy.Request, error) {
 	urlPath := "/lro/post/payload/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -928,7 +933,7 @@ func (client *LROsClient) BeginPost202List(ctx context.Context, options *LROsBeg
 	result := LROsPost202ListPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.Post202List", "", resp, client.con.Pipeline(), client.post202ListHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.Post202List", "", resp, client.pl, client.post202ListHandleError)
 	if err != nil {
 		return LROsPost202ListPollerResponse{}, err
 	}
@@ -946,7 +951,7 @@ func (client *LROsClient) post202List(ctx context.Context, options *LROsBeginPos
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -959,7 +964,7 @@ func (client *LROsClient) post202List(ctx context.Context, options *LROsBeginPos
 // post202ListCreateRequest creates the Post202List request.
 func (client *LROsClient) post202ListCreateRequest(ctx context.Context, options *LROsBeginPost202ListOptions) (*policy.Request, error) {
 	urlPath := "/lro/list"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -991,7 +996,7 @@ func (client *LROsClient) BeginPost202NoRetry204(ctx context.Context, options *L
 	result := LROsPost202NoRetry204PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.Post202NoRetry204", "", resp, client.con.Pipeline(), client.post202NoRetry204HandleError)
+	pt, err := armruntime.NewPoller("LROsClient.Post202NoRetry204", "", resp, client.pl, client.post202NoRetry204HandleError)
 	if err != nil {
 		return LROsPost202NoRetry204PollerResponse{}, err
 	}
@@ -1008,7 +1013,7 @@ func (client *LROsClient) post202NoRetry204(ctx context.Context, options *LROsBe
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1021,7 +1026,7 @@ func (client *LROsClient) post202NoRetry204(ctx context.Context, options *LROsBe
 // post202NoRetry204CreateRequest creates the Post202NoRetry204 request.
 func (client *LROsClient) post202NoRetry204CreateRequest(ctx context.Context, options *LROsBeginPost202NoRetry204Options) (*policy.Request, error) {
 	urlPath := "/lro/post/202/noretry/204"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1056,7 +1061,7 @@ func (client *LROsClient) BeginPost202Retry200(ctx context.Context, options *LRO
 	result := LROsPost202Retry200PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.Post202Retry200", "", resp, client.con.Pipeline(), client.post202Retry200HandleError)
+	pt, err := armruntime.NewPoller("LROsClient.Post202Retry200", "", resp, client.pl, client.post202Retry200HandleError)
 	if err != nil {
 		return LROsPost202Retry200PollerResponse{}, err
 	}
@@ -1074,7 +1079,7 @@ func (client *LROsClient) post202Retry200(ctx context.Context, options *LROsBegi
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1087,7 +1092,7 @@ func (client *LROsClient) post202Retry200(ctx context.Context, options *LROsBegi
 // post202Retry200CreateRequest creates the Post202Retry200 request.
 func (client *LROsClient) post202Retry200CreateRequest(ctx context.Context, options *LROsBeginPost202Retry200Options) (*policy.Request, error) {
 	urlPath := "/lro/post/202/retry/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1123,7 +1128,7 @@ func (client *LROsClient) BeginPostAsyncNoRetrySucceeded(ctx context.Context, op
 	result := LROsPostAsyncNoRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PostAsyncNoRetrySucceeded", "", resp, client.con.Pipeline(), client.postAsyncNoRetrySucceededHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PostAsyncNoRetrySucceeded", "", resp, client.pl, client.postAsyncNoRetrySucceededHandleError)
 	if err != nil {
 		return LROsPostAsyncNoRetrySucceededPollerResponse{}, err
 	}
@@ -1142,7 +1147,7 @@ func (client *LROsClient) postAsyncNoRetrySucceeded(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1155,7 +1160,7 @@ func (client *LROsClient) postAsyncNoRetrySucceeded(ctx context.Context, options
 // postAsyncNoRetrySucceededCreateRequest creates the PostAsyncNoRetrySucceeded request.
 func (client *LROsClient) postAsyncNoRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginPostAsyncNoRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/postasync/noretry/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1191,7 +1196,7 @@ func (client *LROsClient) BeginPostAsyncRetryFailed(ctx context.Context, options
 	result := LROsPostAsyncRetryFailedPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PostAsyncRetryFailed", "", resp, client.con.Pipeline(), client.postAsyncRetryFailedHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PostAsyncRetryFailed", "", resp, client.pl, client.postAsyncRetryFailedHandleError)
 	if err != nil {
 		return LROsPostAsyncRetryFailedPollerResponse{}, err
 	}
@@ -1210,7 +1215,7 @@ func (client *LROsClient) postAsyncRetryFailed(ctx context.Context, options *LRO
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1223,7 +1228,7 @@ func (client *LROsClient) postAsyncRetryFailed(ctx context.Context, options *LRO
 // postAsyncRetryFailedCreateRequest creates the PostAsyncRetryFailed request.
 func (client *LROsClient) postAsyncRetryFailedCreateRequest(ctx context.Context, options *LROsBeginPostAsyncRetryFailedOptions) (*policy.Request, error) {
 	urlPath := "/lro/postasync/retry/failed"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1259,7 +1264,7 @@ func (client *LROsClient) BeginPostAsyncRetrySucceeded(ctx context.Context, opti
 	result := LROsPostAsyncRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PostAsyncRetrySucceeded", "", resp, client.con.Pipeline(), client.postAsyncRetrySucceededHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PostAsyncRetrySucceeded", "", resp, client.pl, client.postAsyncRetrySucceededHandleError)
 	if err != nil {
 		return LROsPostAsyncRetrySucceededPollerResponse{}, err
 	}
@@ -1278,7 +1283,7 @@ func (client *LROsClient) postAsyncRetrySucceeded(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1291,7 +1296,7 @@ func (client *LROsClient) postAsyncRetrySucceeded(ctx context.Context, options *
 // postAsyncRetrySucceededCreateRequest creates the PostAsyncRetrySucceeded request.
 func (client *LROsClient) postAsyncRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginPostAsyncRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/postasync/retry/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1327,7 +1332,7 @@ func (client *LROsClient) BeginPostAsyncRetrycanceled(ctx context.Context, optio
 	result := LROsPostAsyncRetrycanceledPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PostAsyncRetrycanceled", "", resp, client.con.Pipeline(), client.postAsyncRetrycanceledHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PostAsyncRetrycanceled", "", resp, client.pl, client.postAsyncRetrycanceledHandleError)
 	if err != nil {
 		return LROsPostAsyncRetrycanceledPollerResponse{}, err
 	}
@@ -1346,7 +1351,7 @@ func (client *LROsClient) postAsyncRetrycanceled(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1359,7 +1364,7 @@ func (client *LROsClient) postAsyncRetrycanceled(ctx context.Context, options *L
 // postAsyncRetrycanceledCreateRequest creates the PostAsyncRetrycanceled request.
 func (client *LROsClient) postAsyncRetrycanceledCreateRequest(ctx context.Context, options *LROsBeginPostAsyncRetrycanceledOptions) (*policy.Request, error) {
 	urlPath := "/lro/postasync/retry/canceled"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1394,7 +1399,7 @@ func (client *LROsClient) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx context.
 	result := LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PostDoubleHeadersFinalAzureHeaderGet", "azure-async-operation", resp, client.con.Pipeline(), client.postDoubleHeadersFinalAzureHeaderGetHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PostDoubleHeadersFinalAzureHeaderGet", "azure-async-operation", resp, client.pl, client.postDoubleHeadersFinalAzureHeaderGetHandleError)
 	if err != nil {
 		return LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse{}, err
 	}
@@ -1412,7 +1417,7 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGet(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1425,7 +1430,7 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGet(ctx context.Conte
 // postDoubleHeadersFinalAzureHeaderGetCreateRequest creates the PostDoubleHeadersFinalAzureHeaderGet request.
 func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetCreateRequest(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalAzureHeaderGetOptions) (*policy.Request, error) {
 	urlPath := "/lro/LROPostDoubleHeadersFinalAzureHeaderGet"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1458,7 +1463,7 @@ func (client *LROsClient) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(ctx c
 	result := LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PostDoubleHeadersFinalAzureHeaderGetDefault", "", resp, client.con.Pipeline(), client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PostDoubleHeadersFinalAzureHeaderGetDefault", "", resp, client.pl, client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleError)
 	if err != nil {
 		return LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse{}, err
 	}
@@ -1477,7 +1482,7 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefault(ctx contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1490,7 +1495,7 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefault(ctx contex
 // postDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest creates the PostDoubleHeadersFinalAzureHeaderGetDefault request.
 func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefaultCreateRequest(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalAzureHeaderGetDefaultOptions) (*policy.Request, error) {
 	urlPath := "/lro/LROPostDoubleHeadersFinalAzureHeaderGetDefault"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1522,7 +1527,7 @@ func (client *LROsClient) BeginPostDoubleHeadersFinalLocationGet(ctx context.Con
 	result := LROsPostDoubleHeadersFinalLocationGetPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PostDoubleHeadersFinalLocationGet", "location", resp, client.con.Pipeline(), client.postDoubleHeadersFinalLocationGetHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PostDoubleHeadersFinalLocationGet", "location", resp, client.pl, client.postDoubleHeadersFinalLocationGetHandleError)
 	if err != nil {
 		return LROsPostDoubleHeadersFinalLocationGetPollerResponse{}, err
 	}
@@ -1540,7 +1545,7 @@ func (client *LROsClient) postDoubleHeadersFinalLocationGet(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1553,7 +1558,7 @@ func (client *LROsClient) postDoubleHeadersFinalLocationGet(ctx context.Context,
 // postDoubleHeadersFinalLocationGetCreateRequest creates the PostDoubleHeadersFinalLocationGet request.
 func (client *LROsClient) postDoubleHeadersFinalLocationGetCreateRequest(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalLocationGetOptions) (*policy.Request, error) {
 	urlPath := "/lro/LROPostDoubleHeadersFinalLocationGet"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1586,7 +1591,7 @@ func (client *LROsClient) BeginPut200Acceptedcanceled200(ctx context.Context, op
 	result := LROsPut200Acceptedcanceled200PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.Put200Acceptedcanceled200", "", resp, client.con.Pipeline(), client.put200Acceptedcanceled200HandleError)
+	pt, err := armruntime.NewPoller("LROsClient.Put200Acceptedcanceled200", "", resp, client.pl, client.put200Acceptedcanceled200HandleError)
 	if err != nil {
 		return LROsPut200Acceptedcanceled200PollerResponse{}, err
 	}
@@ -1605,7 +1610,7 @@ func (client *LROsClient) put200Acceptedcanceled200(ctx context.Context, options
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1618,7 +1623,7 @@ func (client *LROsClient) put200Acceptedcanceled200(ctx context.Context, options
 // put200Acceptedcanceled200CreateRequest creates the Put200Acceptedcanceled200 request.
 func (client *LROsClient) put200Acceptedcanceled200CreateRequest(ctx context.Context, options *LROsBeginPut200Acceptedcanceled200Options) (*policy.Request, error) {
 	urlPath := "/lro/put/200/accepted/canceled/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1652,7 +1657,7 @@ func (client *LROsClient) BeginPut200Succeeded(ctx context.Context, options *LRO
 	result := LROsPut200SucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.Put200Succeeded", "", resp, client.con.Pipeline(), client.put200SucceededHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.Put200Succeeded", "", resp, client.pl, client.put200SucceededHandleError)
 	if err != nil {
 		return LROsPut200SucceededPollerResponse{}, err
 	}
@@ -1669,7 +1674,7 @@ func (client *LROsClient) put200Succeeded(ctx context.Context, options *LROsBegi
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1682,7 +1687,7 @@ func (client *LROsClient) put200Succeeded(ctx context.Context, options *LROsBegi
 // put200SucceededCreateRequest creates the Put200Succeeded request.
 func (client *LROsClient) put200SucceededCreateRequest(ctx context.Context, options *LROsBeginPut200SucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/put/200/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1716,7 +1721,7 @@ func (client *LROsClient) BeginPut200SucceededNoState(ctx context.Context, optio
 	result := LROsPut200SucceededNoStatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.Put200SucceededNoState", "", resp, client.con.Pipeline(), client.put200SucceededNoStateHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.Put200SucceededNoState", "", resp, client.pl, client.put200SucceededNoStateHandleError)
 	if err != nil {
 		return LROsPut200SucceededNoStatePollerResponse{}, err
 	}
@@ -1733,7 +1738,7 @@ func (client *LROsClient) put200SucceededNoState(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1746,7 +1751,7 @@ func (client *LROsClient) put200SucceededNoState(ctx context.Context, options *L
 // put200SucceededNoStateCreateRequest creates the Put200SucceededNoState request.
 func (client *LROsClient) put200SucceededNoStateCreateRequest(ctx context.Context, options *LROsBeginPut200SucceededNoStateOptions) (*policy.Request, error) {
 	urlPath := "/lro/put/200/succeeded/nostate"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1782,7 +1787,7 @@ func (client *LROsClient) BeginPut200UpdatingSucceeded204(ctx context.Context, o
 	result := LROsPut200UpdatingSucceeded204PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.Put200UpdatingSucceeded204", "", resp, client.con.Pipeline(), client.put200UpdatingSucceeded204HandleError)
+	pt, err := armruntime.NewPoller("LROsClient.Put200UpdatingSucceeded204", "", resp, client.pl, client.put200UpdatingSucceeded204HandleError)
 	if err != nil {
 		return LROsPut200UpdatingSucceeded204PollerResponse{}, err
 	}
@@ -1801,7 +1806,7 @@ func (client *LROsClient) put200UpdatingSucceeded204(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1814,7 +1819,7 @@ func (client *LROsClient) put200UpdatingSucceeded204(ctx context.Context, option
 // put200UpdatingSucceeded204CreateRequest creates the Put200UpdatingSucceeded204 request.
 func (client *LROsClient) put200UpdatingSucceeded204CreateRequest(ctx context.Context, options *LROsBeginPut200UpdatingSucceeded204Options) (*policy.Request, error) {
 	urlPath := "/lro/put/200/updating/succeeded/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1850,7 +1855,7 @@ func (client *LROsClient) BeginPut201CreatingFailed200(ctx context.Context, opti
 	result := LROsPut201CreatingFailed200PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.Put201CreatingFailed200", "", resp, client.con.Pipeline(), client.put201CreatingFailed200HandleError)
+	pt, err := armruntime.NewPoller("LROsClient.Put201CreatingFailed200", "", resp, client.pl, client.put201CreatingFailed200HandleError)
 	if err != nil {
 		return LROsPut201CreatingFailed200PollerResponse{}, err
 	}
@@ -1869,7 +1874,7 @@ func (client *LROsClient) put201CreatingFailed200(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1882,7 +1887,7 @@ func (client *LROsClient) put201CreatingFailed200(ctx context.Context, options *
 // put201CreatingFailed200CreateRequest creates the Put201CreatingFailed200 request.
 func (client *LROsClient) put201CreatingFailed200CreateRequest(ctx context.Context, options *LROsBeginPut201CreatingFailed200Options) (*policy.Request, error) {
 	urlPath := "/lro/put/201/created/failed/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1918,7 +1923,7 @@ func (client *LROsClient) BeginPut201CreatingSucceeded200(ctx context.Context, o
 	result := LROsPut201CreatingSucceeded200PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.Put201CreatingSucceeded200", "", resp, client.con.Pipeline(), client.put201CreatingSucceeded200HandleError)
+	pt, err := armruntime.NewPoller("LROsClient.Put201CreatingSucceeded200", "", resp, client.pl, client.put201CreatingSucceeded200HandleError)
 	if err != nil {
 		return LROsPut201CreatingSucceeded200PollerResponse{}, err
 	}
@@ -1937,7 +1942,7 @@ func (client *LROsClient) put201CreatingSucceeded200(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1950,7 +1955,7 @@ func (client *LROsClient) put201CreatingSucceeded200(ctx context.Context, option
 // put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
 func (client *LROsClient) put201CreatingSucceeded200CreateRequest(ctx context.Context, options *LROsBeginPut201CreatingSucceeded200Options) (*policy.Request, error) {
 	urlPath := "/lro/put/201/creating/succeeded/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1984,7 +1989,7 @@ func (client *LROsClient) BeginPut201Succeeded(ctx context.Context, options *LRO
 	result := LROsPut201SucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.Put201Succeeded", "", resp, client.con.Pipeline(), client.put201SucceededHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.Put201Succeeded", "", resp, client.pl, client.put201SucceededHandleError)
 	if err != nil {
 		return LROsPut201SucceededPollerResponse{}, err
 	}
@@ -2001,7 +2006,7 @@ func (client *LROsClient) put201Succeeded(ctx context.Context, options *LROsBegi
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2014,7 +2019,7 @@ func (client *LROsClient) put201Succeeded(ctx context.Context, options *LROsBegi
 // put201SucceededCreateRequest creates the Put201Succeeded request.
 func (client *LROsClient) put201SucceededCreateRequest(ctx context.Context, options *LROsBeginPut201SucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/put/201/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2049,7 +2054,7 @@ func (client *LROsClient) BeginPut202Retry200(ctx context.Context, options *LROs
 	result := LROsPut202Retry200PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.Put202Retry200", "", resp, client.con.Pipeline(), client.put202Retry200HandleError)
+	pt, err := armruntime.NewPoller("LROsClient.Put202Retry200", "", resp, client.pl, client.put202Retry200HandleError)
 	if err != nil {
 		return LROsPut202Retry200PollerResponse{}, err
 	}
@@ -2067,7 +2072,7 @@ func (client *LROsClient) put202Retry200(ctx context.Context, options *LROsBegin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2080,7 +2085,7 @@ func (client *LROsClient) put202Retry200(ctx context.Context, options *LROsBegin
 // put202Retry200CreateRequest creates the Put202Retry200 request.
 func (client *LROsClient) put202Retry200CreateRequest(ctx context.Context, options *LROsBeginPut202Retry200Options) (*policy.Request, error) {
 	urlPath := "/lro/put/202/retry/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2115,7 +2120,7 @@ func (client *LROsClient) BeginPutAsyncNoHeaderInRetry(ctx context.Context, opti
 	result := LROsPutAsyncNoHeaderInRetryPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PutAsyncNoHeaderInRetry", "", resp, client.con.Pipeline(), client.putAsyncNoHeaderInRetryHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PutAsyncNoHeaderInRetry", "", resp, client.pl, client.putAsyncNoHeaderInRetryHandleError)
 	if err != nil {
 		return LROsPutAsyncNoHeaderInRetryPollerResponse{}, err
 	}
@@ -2133,7 +2138,7 @@ func (client *LROsClient) putAsyncNoHeaderInRetry(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2146,7 +2151,7 @@ func (client *LROsClient) putAsyncNoHeaderInRetry(ctx context.Context, options *
 // putAsyncNoHeaderInRetryCreateRequest creates the PutAsyncNoHeaderInRetry request.
 func (client *LROsClient) putAsyncNoHeaderInRetryCreateRequest(ctx context.Context, options *LROsBeginPutAsyncNoHeaderInRetryOptions) (*policy.Request, error) {
 	urlPath := "/lro/putasync/noheader/201/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2182,7 +2187,7 @@ func (client *LROsClient) BeginPutAsyncNoRetrySucceeded(ctx context.Context, opt
 	result := LROsPutAsyncNoRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PutAsyncNoRetrySucceeded", "", resp, client.con.Pipeline(), client.putAsyncNoRetrySucceededHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PutAsyncNoRetrySucceeded", "", resp, client.pl, client.putAsyncNoRetrySucceededHandleError)
 	if err != nil {
 		return LROsPutAsyncNoRetrySucceededPollerResponse{}, err
 	}
@@ -2201,7 +2206,7 @@ func (client *LROsClient) putAsyncNoRetrySucceeded(ctx context.Context, options 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2214,7 +2219,7 @@ func (client *LROsClient) putAsyncNoRetrySucceeded(ctx context.Context, options 
 // putAsyncNoRetrySucceededCreateRequest creates the PutAsyncNoRetrySucceeded request.
 func (client *LROsClient) putAsyncNoRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginPutAsyncNoRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/putasync/noretry/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2250,7 +2255,7 @@ func (client *LROsClient) BeginPutAsyncNoRetrycanceled(ctx context.Context, opti
 	result := LROsPutAsyncNoRetrycanceledPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PutAsyncNoRetrycanceled", "", resp, client.con.Pipeline(), client.putAsyncNoRetrycanceledHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PutAsyncNoRetrycanceled", "", resp, client.pl, client.putAsyncNoRetrycanceledHandleError)
 	if err != nil {
 		return LROsPutAsyncNoRetrycanceledPollerResponse{}, err
 	}
@@ -2269,7 +2274,7 @@ func (client *LROsClient) putAsyncNoRetrycanceled(ctx context.Context, options *
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2282,7 +2287,7 @@ func (client *LROsClient) putAsyncNoRetrycanceled(ctx context.Context, options *
 // putAsyncNoRetrycanceledCreateRequest creates the PutAsyncNoRetrycanceled request.
 func (client *LROsClient) putAsyncNoRetrycanceledCreateRequest(ctx context.Context, options *LROsBeginPutAsyncNoRetrycanceledOptions) (*policy.Request, error) {
 	urlPath := "/lro/putasync/noretry/canceled"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2316,7 +2321,7 @@ func (client *LROsClient) BeginPutAsyncNonResource(ctx context.Context, options 
 	result := LROsPutAsyncNonResourcePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PutAsyncNonResource", "", resp, client.con.Pipeline(), client.putAsyncNonResourceHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PutAsyncNonResource", "", resp, client.pl, client.putAsyncNonResourceHandleError)
 	if err != nil {
 		return LROsPutAsyncNonResourcePollerResponse{}, err
 	}
@@ -2333,7 +2338,7 @@ func (client *LROsClient) putAsyncNonResource(ctx context.Context, options *LROs
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2346,7 +2351,7 @@ func (client *LROsClient) putAsyncNonResource(ctx context.Context, options *LROs
 // putAsyncNonResourceCreateRequest creates the PutAsyncNonResource request.
 func (client *LROsClient) putAsyncNonResourceCreateRequest(ctx context.Context, options *LROsBeginPutAsyncNonResourceOptions) (*policy.Request, error) {
 	urlPath := "/lro/putnonresourceasync/202/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2382,7 +2387,7 @@ func (client *LROsClient) BeginPutAsyncRetryFailed(ctx context.Context, options 
 	result := LROsPutAsyncRetryFailedPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PutAsyncRetryFailed", "", resp, client.con.Pipeline(), client.putAsyncRetryFailedHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PutAsyncRetryFailed", "", resp, client.pl, client.putAsyncRetryFailedHandleError)
 	if err != nil {
 		return LROsPutAsyncRetryFailedPollerResponse{}, err
 	}
@@ -2401,7 +2406,7 @@ func (client *LROsClient) putAsyncRetryFailed(ctx context.Context, options *LROs
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2414,7 +2419,7 @@ func (client *LROsClient) putAsyncRetryFailed(ctx context.Context, options *LROs
 // putAsyncRetryFailedCreateRequest creates the PutAsyncRetryFailed request.
 func (client *LROsClient) putAsyncRetryFailedCreateRequest(ctx context.Context, options *LROsBeginPutAsyncRetryFailedOptions) (*policy.Request, error) {
 	urlPath := "/lro/putasync/retry/failed"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2450,7 +2455,7 @@ func (client *LROsClient) BeginPutAsyncRetrySucceeded(ctx context.Context, optio
 	result := LROsPutAsyncRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PutAsyncRetrySucceeded", "", resp, client.con.Pipeline(), client.putAsyncRetrySucceededHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PutAsyncRetrySucceeded", "", resp, client.pl, client.putAsyncRetrySucceededHandleError)
 	if err != nil {
 		return LROsPutAsyncRetrySucceededPollerResponse{}, err
 	}
@@ -2469,7 +2474,7 @@ func (client *LROsClient) putAsyncRetrySucceeded(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2482,7 +2487,7 @@ func (client *LROsClient) putAsyncRetrySucceeded(ctx context.Context, options *L
 // putAsyncRetrySucceededCreateRequest creates the PutAsyncRetrySucceeded request.
 func (client *LROsClient) putAsyncRetrySucceededCreateRequest(ctx context.Context, options *LROsBeginPutAsyncRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/putasync/retry/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2516,7 +2521,7 @@ func (client *LROsClient) BeginPutAsyncSubResource(ctx context.Context, options 
 	result := LROsPutAsyncSubResourcePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PutAsyncSubResource", "", resp, client.con.Pipeline(), client.putAsyncSubResourceHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PutAsyncSubResource", "", resp, client.pl, client.putAsyncSubResourceHandleError)
 	if err != nil {
 		return LROsPutAsyncSubResourcePollerResponse{}, err
 	}
@@ -2533,7 +2538,7 @@ func (client *LROsClient) putAsyncSubResource(ctx context.Context, options *LROs
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2546,7 +2551,7 @@ func (client *LROsClient) putAsyncSubResource(ctx context.Context, options *LROs
 // putAsyncSubResourceCreateRequest creates the PutAsyncSubResource request.
 func (client *LROsClient) putAsyncSubResourceCreateRequest(ctx context.Context, options *LROsBeginPutAsyncSubResourceOptions) (*policy.Request, error) {
 	urlPath := "/lro/putsubresourceasync/202/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2581,7 +2586,7 @@ func (client *LROsClient) BeginPutNoHeaderInRetry(ctx context.Context, options *
 	result := LROsPutNoHeaderInRetryPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PutNoHeaderInRetry", "", resp, client.con.Pipeline(), client.putNoHeaderInRetryHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PutNoHeaderInRetry", "", resp, client.pl, client.putNoHeaderInRetryHandleError)
 	if err != nil {
 		return LROsPutNoHeaderInRetryPollerResponse{}, err
 	}
@@ -2599,7 +2604,7 @@ func (client *LROsClient) putNoHeaderInRetry(ctx context.Context, options *LROsB
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2612,7 +2617,7 @@ func (client *LROsClient) putNoHeaderInRetry(ctx context.Context, options *LROsB
 // putNoHeaderInRetryCreateRequest creates the PutNoHeaderInRetry request.
 func (client *LROsClient) putNoHeaderInRetryCreateRequest(ctx context.Context, options *LROsBeginPutNoHeaderInRetryOptions) (*policy.Request, error) {
 	urlPath := "/lro/put/noheader/202/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2646,7 +2651,7 @@ func (client *LROsClient) BeginPutNonResource(ctx context.Context, options *LROs
 	result := LROsPutNonResourcePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PutNonResource", "", resp, client.con.Pipeline(), client.putNonResourceHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PutNonResource", "", resp, client.pl, client.putNonResourceHandleError)
 	if err != nil {
 		return LROsPutNonResourcePollerResponse{}, err
 	}
@@ -2663,7 +2668,7 @@ func (client *LROsClient) putNonResource(ctx context.Context, options *LROsBegin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2676,7 +2681,7 @@ func (client *LROsClient) putNonResource(ctx context.Context, options *LROsBegin
 // putNonResourceCreateRequest creates the PutNonResource request.
 func (client *LROsClient) putNonResourceCreateRequest(ctx context.Context, options *LROsBeginPutNonResourceOptions) (*policy.Request, error) {
 	urlPath := "/lro/putnonresource/202/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -2710,7 +2715,7 @@ func (client *LROsClient) BeginPutSubResource(ctx context.Context, options *LROs
 	result := LROsPutSubResourcePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsClient.PutSubResource", "", resp, client.con.Pipeline(), client.putSubResourceHandleError)
+	pt, err := armruntime.NewPoller("LROsClient.PutSubResource", "", resp, client.pl, client.putSubResourceHandleError)
 	if err != nil {
 		return LROsPutSubResourcePollerResponse{}, err
 	}
@@ -2727,7 +2732,7 @@ func (client *LROsClient) putSubResource(ctx context.Context, options *LROsBegin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -2740,7 +2745,7 @@ func (client *LROsClient) putSubResource(ctx context.Context, options *LROsBegin
 // putSubResourceCreateRequest creates the PutSubResource request.
 func (client *LROsClient) putSubResourceCreateRequest(ctx context.Context, options *LROsBeginPutSubResourceOptions) (*policy.Request, error) {
 	urlPath := "/lro/putsubresource/202/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

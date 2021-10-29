@@ -13,7 +13,7 @@ import (
 )
 
 func newInheritanceClient() *InheritanceClient {
-	return NewInheritanceClient(NewDefaultConnection(nil))
+	return NewInheritanceClient(nil)
 }
 
 func TestInheritanceGetValid(t *testing.T) {

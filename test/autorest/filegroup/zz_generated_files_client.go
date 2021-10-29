@@ -11,6 +11,7 @@ package filegroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,16 @@ import (
 // FilesClient contains the methods for the Files group.
 // Don't use this type directly, use NewFilesClient() instead.
 type FilesClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewFilesClient creates a new instance of FilesClient with the specified values.
-func NewFilesClient(con *Connection) *FilesClient {
-	return &FilesClient{con: con}
+func NewFilesClient(options *azcore.ClientOptions) *FilesClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &FilesClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // GetEmptyFile - Get empty file
@@ -34,7 +39,7 @@ func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesGetEm
 	if err != nil {
 		return FilesGetEmptyFileResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return FilesGetEmptyFileResponse{}, err
 	}
@@ -47,7 +52,7 @@ func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesGetEm
 // getEmptyFileCreateRequest creates the GetEmptyFile request.
 func (client *FilesClient) getEmptyFileCreateRequest(ctx context.Context, options *FilesGetEmptyFileOptions) (*policy.Request, error) {
 	urlPath := "/files/stream/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +81,7 @@ func (client *FilesClient) GetFile(ctx context.Context, options *FilesGetFileOpt
 	if err != nil {
 		return FilesGetFileResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return FilesGetFileResponse{}, err
 	}
@@ -89,7 +94,7 @@ func (client *FilesClient) GetFile(ctx context.Context, options *FilesGetFileOpt
 // getFileCreateRequest creates the GetFile request.
 func (client *FilesClient) getFileCreateRequest(ctx context.Context, options *FilesGetFileOptions) (*policy.Request, error) {
 	urlPath := "/files/stream/nonempty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +123,7 @@ func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesGetFi
 	if err != nil {
 		return FilesGetFileLargeResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return FilesGetFileLargeResponse{}, err
 	}
@@ -131,7 +136,7 @@ func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesGetFi
 // getFileLargeCreateRequest creates the GetFileLarge request.
 func (client *FilesClient) getFileLargeCreateRequest(ctx context.Context, options *FilesGetFileLargeOptions) (*policy.Request, error) {
 	urlPath := "/files/stream/verylarge"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

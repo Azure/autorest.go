@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -22,12 +23,16 @@ import (
 // ComplexModelClient contains the methods for the ComplexModelClient group.
 // Don't use this type directly, use NewComplexModelClient() instead.
 type ComplexModelClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewComplexModelClient creates a new instance of ComplexModelClient with the specified values.
-func NewComplexModelClient(con *Connection) *ComplexModelClient {
-	return &ComplexModelClient{con: con}
+func NewComplexModelClient(options *azcore.ClientOptions) *ComplexModelClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &ComplexModelClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // Create - Resets products.
@@ -37,7 +42,7 @@ func (client *ComplexModelClient) Create(ctx context.Context, subscriptionID str
 	if err != nil {
 		return ComplexModelClientCreateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ComplexModelClientCreateResponse{}, err
 	}
@@ -58,7 +63,7 @@ func (client *ComplexModelClient) createCreateRequest(ctx context.Context, subsc
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +105,7 @@ func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName st
 	if err != nil {
 		return ComplexModelClientListResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ComplexModelClientListResponse{}, err
 	}
@@ -118,7 +123,7 @@ func (client *ComplexModelClient) listCreateRequest(ctx context.Context, resourc
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +163,7 @@ func (client *ComplexModelClient) Update(ctx context.Context, subscriptionID str
 	if err != nil {
 		return ComplexModelClientUpdateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ComplexModelClientUpdateResponse{}, err
 	}
@@ -179,7 +184,7 @@ func (client *ComplexModelClient) updateCreateRequest(ctx context.Context, subsc
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

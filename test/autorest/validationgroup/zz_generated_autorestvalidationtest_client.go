@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -23,13 +24,17 @@ import (
 // AutoRestValidationTestClient contains the methods for the AutoRestValidationTest group.
 // Don't use this type directly, use NewAutoRestValidationTestClient() instead.
 type AutoRestValidationTestClient struct {
-	con            *Connection
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewAutoRestValidationTestClient creates a new instance of AutoRestValidationTestClient with the specified values.
-func NewAutoRestValidationTestClient(con *Connection, subscriptionID string) *AutoRestValidationTestClient {
-	return &AutoRestValidationTestClient{con: con, subscriptionID: subscriptionID}
+func NewAutoRestValidationTestClient(subscriptionID string, options *azcore.ClientOptions) *AutoRestValidationTestClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &AutoRestValidationTestClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // GetWithConstantInPath -
@@ -39,7 +44,7 @@ func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Co
 	if err != nil {
 		return AutoRestValidationTestGetWithConstantInPathResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return AutoRestValidationTestGetWithConstantInPathResponse{}, err
 	}
@@ -53,7 +58,7 @@ func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Co
 func (client *AutoRestValidationTestClient) getWithConstantInPathCreateRequest(ctx context.Context, options *AutoRestValidationTestGetWithConstantInPathOptions) (*policy.Request, error) {
 	urlPath := "/validation/constantsInPath/{constantParam}/value"
 	urlPath = strings.ReplaceAll(urlPath, "{constantParam}", url.PathEscape("constant"))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +84,7 @@ func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.C
 	if err != nil {
 		return AutoRestValidationTestPostWithConstantInBodyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return AutoRestValidationTestPostWithConstantInBodyResponse{}, err
 	}
@@ -93,7 +98,7 @@ func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.C
 func (client *AutoRestValidationTestClient) postWithConstantInBodyCreateRequest(ctx context.Context, options *AutoRestValidationTestPostWithConstantInBodyOptions) (*policy.Request, error) {
 	urlPath := "/validation/constantsInPath/{constantParam}/value"
 	urlPath = strings.ReplaceAll(urlPath, "{constantParam}", url.PathEscape("constant"))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +137,7 @@ func (client *AutoRestValidationTestClient) ValidationOfBody(ctx context.Context
 	if err != nil {
 		return AutoRestValidationTestValidationOfBodyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return AutoRestValidationTestValidationOfBodyResponse{}, err
 	}
@@ -154,7 +159,7 @@ func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx co
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +202,7 @@ func (client *AutoRestValidationTestClient) ValidationOfMethodParameters(ctx con
 	if err != nil {
 		return AutoRestValidationTestValidationOfMethodParametersResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return AutoRestValidationTestValidationOfMethodParametersResponse{}, err
 	}
@@ -219,7 +224,7 @@ func (client *AutoRestValidationTestClient) validationOfMethodParametersCreateRe
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
 	urlPath = strings.ReplaceAll(urlPath, "{id}", url.PathEscape(strconv.FormatInt(int64(id), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

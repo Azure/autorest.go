@@ -12,7 +12,7 @@ import (
 )
 
 func newMultipleInheritanceServiceClient() *MultipleInheritanceServiceClient {
-	return NewMultipleInheritanceServiceClient(NewDefaultConnection(nil))
+	return NewMultipleInheritanceServiceClient(nil)
 }
 
 // GetCat - Get a cat with name 'Whiskers' where likesMilk, meows, and hisses is true

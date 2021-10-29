@@ -11,6 +11,7 @@ package mediatypesgroup
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
@@ -21,12 +22,16 @@ import (
 // MediaTypesClient contains the methods for the MediaTypesClient group.
 // Don't use this type directly, use NewMediaTypesClient() instead.
 type MediaTypesClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewMediaTypesClient creates a new instance of MediaTypesClient with the specified values.
-func NewMediaTypesClient(con *Connection) *MediaTypesClient {
-	return &MediaTypesClient{con: con}
+func NewMediaTypesClient(options *azcore.ClientOptions) *MediaTypesClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &MediaTypesClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // AnalyzeBody - Analyze body, that could be different media types.
@@ -36,7 +41,7 @@ func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType Con
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyResponse{}, err
 	}
@@ -49,7 +54,7 @@ func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType Con
 // analyzeBodyCreateRequest creates the AnalyzeBody request.
 func (client *MediaTypesClient) analyzeBodyCreateRequest(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/analyze"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -89,7 +94,7 @@ func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeader(ctx context.Context, c
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse{}, err
 	}
@@ -102,7 +107,7 @@ func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeader(ctx context.Context, c
 // analyzeBodyNoAcceptHeaderCreateRequest creates the AnalyzeBodyNoAcceptHeader request.
 func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderCreateRequest(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/analyzeNoAccept"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +137,7 @@ func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeaderWithSourcePath(ctx cont
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse{}, err
 	}
@@ -145,7 +150,7 @@ func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeaderWithSourcePath(ctx cont
 // analyzeBodyNoAcceptHeaderWithSourcePathCreateRequest creates the AnalyzeBodyNoAcceptHeaderWithSourcePath request.
 func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithSourcePathCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/analyzeNoAccept"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -174,7 +179,7 @@ func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, o
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyWithSourcePathResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return MediaTypesClientAnalyzeBodyWithSourcePathResponse{}, err
 	}
@@ -187,7 +192,7 @@ func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, o
 // analyzeBodyWithSourcePathCreateRequest creates the AnalyzeBodyWithSourcePath request.
 func (client *MediaTypesClient) analyzeBodyWithSourcePathCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/analyze"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -226,7 +231,7 @@ func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, opt
 	if err != nil {
 		return MediaTypesClientContentTypeWithEncodingResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return MediaTypesClientContentTypeWithEncodingResponse{}, err
 	}
@@ -239,7 +244,7 @@ func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, opt
 // contentTypeWithEncodingCreateRequest creates the ContentTypeWithEncoding request.
 func (client *MediaTypesClient) contentTypeWithEncodingCreateRequest(ctx context.Context, options *MediaTypesClientContentTypeWithEncodingOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/contentTypeWithEncoding"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

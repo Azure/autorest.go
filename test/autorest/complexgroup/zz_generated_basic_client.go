@@ -11,6 +11,7 @@ package complexgroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,16 @@ import (
 // BasicClient contains the methods for the Basic group.
 // Don't use this type directly, use NewBasicClient() instead.
 type BasicClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewBasicClient creates a new instance of BasicClient with the specified values.
-func NewBasicClient(con *Connection) *BasicClient {
-	return &BasicClient{con: con}
+func NewBasicClient(options *azcore.ClientOptions) *BasicClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &BasicClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // GetEmpty - Get a basic complex type that is empty
@@ -34,7 +39,7 @@ func (client *BasicClient) GetEmpty(ctx context.Context, options *BasicGetEmptyO
 	if err != nil {
 		return BasicGetEmptyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BasicGetEmptyResponse{}, err
 	}
@@ -47,7 +52,7 @@ func (client *BasicClient) GetEmpty(ctx context.Context, options *BasicGetEmptyO
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *BasicClient) getEmptyCreateRequest(ctx context.Context, options *BasicGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +89,7 @@ func (client *BasicClient) GetInvalid(ctx context.Context, options *BasicGetInva
 	if err != nil {
 		return BasicGetInvalidResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BasicGetInvalidResponse{}, err
 	}
@@ -97,7 +102,7 @@ func (client *BasicClient) GetInvalid(ctx context.Context, options *BasicGetInva
 // getInvalidCreateRequest creates the GetInvalid request.
 func (client *BasicClient) getInvalidCreateRequest(ctx context.Context, options *BasicGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/invalid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +139,7 @@ func (client *BasicClient) GetNotProvided(ctx context.Context, options *BasicGet
 	if err != nil {
 		return BasicGetNotProvidedResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BasicGetNotProvidedResponse{}, err
 	}
@@ -147,7 +152,7 @@ func (client *BasicClient) GetNotProvided(ctx context.Context, options *BasicGet
 // getNotProvidedCreateRequest creates the GetNotProvided request.
 func (client *BasicClient) getNotProvidedCreateRequest(ctx context.Context, options *BasicGetNotProvidedOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/notprovided"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -184,7 +189,7 @@ func (client *BasicClient) GetNull(ctx context.Context, options *BasicGetNullOpt
 	if err != nil {
 		return BasicGetNullResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BasicGetNullResponse{}, err
 	}
@@ -197,7 +202,7 @@ func (client *BasicClient) GetNull(ctx context.Context, options *BasicGetNullOpt
 // getNullCreateRequest creates the GetNull request.
 func (client *BasicClient) getNullCreateRequest(ctx context.Context, options *BasicGetNullOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -234,7 +239,7 @@ func (client *BasicClient) GetValid(ctx context.Context, options *BasicGetValidO
 	if err != nil {
 		return BasicGetValidResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BasicGetValidResponse{}, err
 	}
@@ -247,7 +252,7 @@ func (client *BasicClient) GetValid(ctx context.Context, options *BasicGetValidO
 // getValidCreateRequest creates the GetValid request.
 func (client *BasicClient) getValidCreateRequest(ctx context.Context, options *BasicGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -284,7 +289,7 @@ func (client *BasicClient) PutValid(ctx context.Context, complexBody Basic, opti
 	if err != nil {
 		return BasicPutValidResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BasicPutValidResponse{}, err
 	}
@@ -297,7 +302,7 @@ func (client *BasicClient) PutValid(ctx context.Context, complexBody Basic, opti
 // putValidCreateRequest creates the PutValid request.
 func (client *BasicClient) putValidCreateRequest(ctx context.Context, complexBody Basic, options *BasicPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

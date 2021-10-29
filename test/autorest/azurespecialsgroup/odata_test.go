@@ -12,7 +12,7 @@ import (
 )
 
 func newODataClient() *ODataClient {
-	return NewODataClient(NewDefaultConnection(nil))
+	return NewODataClient(nil)
 }
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'

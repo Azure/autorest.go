@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -22,14 +23,18 @@ import (
 // PathItemsClient contains the methods for the PathItems group.
 // Don't use this type directly, use NewPathItemsClient() instead.
 type PathItemsClient struct {
-	con               *Connection
 	globalStringPath  string
 	globalStringQuery *string
+	pl                runtime.Pipeline
 }
 
 // NewPathItemsClient creates a new instance of PathItemsClient with the specified values.
-func NewPathItemsClient(con *Connection, globalStringPath string, globalStringQuery *string) *PathItemsClient {
-	return &PathItemsClient{con: con, globalStringPath: globalStringPath, globalStringQuery: globalStringQuery}
+func NewPathItemsClient(globalStringPath string, globalStringQuery *string, options *azcore.ClientOptions) *PathItemsClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &PathItemsClient{globalStringPath: globalStringPath, globalStringQuery: globalStringQuery, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // GetAllWithValues - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery',
@@ -41,7 +46,7 @@ func (client *PathItemsClient) GetAllWithValues(ctx context.Context, pathItemStr
 	if err != nil {
 		return PathItemsGetAllWithValuesResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PathItemsGetAllWithValuesResponse{}, err
 	}
@@ -66,7 +71,7 @@ func (client *PathItemsClient) getAllWithValuesCreateRequest(ctx context.Context
 		return nil, errors.New("parameter localStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +112,7 @@ func (client *PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, p
 	if err != nil {
 		return PathItemsGetGlobalAndLocalQueryNullResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PathItemsGetGlobalAndLocalQueryNullResponse{}, err
 	}
@@ -132,7 +137,7 @@ func (client *PathItemsClient) getGlobalAndLocalQueryNullCreateRequest(ctx conte
 		return nil, errors.New("parameter localStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +178,7 @@ func (client *PathItemsClient) GetGlobalQueryNull(ctx context.Context, pathItemS
 	if err != nil {
 		return PathItemsGetGlobalQueryNullResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PathItemsGetGlobalQueryNullResponse{}, err
 	}
@@ -198,7 +203,7 @@ func (client *PathItemsClient) getGlobalQueryNullCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter localStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -239,7 +244,7 @@ func (client *PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, pa
 	if err != nil {
 		return PathItemsGetLocalPathItemQueryNullResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PathItemsGetLocalPathItemQueryNullResponse{}, err
 	}
@@ -264,7 +269,7 @@ func (client *PathItemsClient) getLocalPathItemQueryNullCreateRequest(ctx contex
 		return nil, errors.New("parameter localStringPath cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{localStringPath}", url.PathEscape(localStringPath))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

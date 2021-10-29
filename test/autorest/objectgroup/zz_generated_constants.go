@@ -8,6 +8,8 @@
 
 package objectgroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "objectgroup"
 	version = "v0.1.0"

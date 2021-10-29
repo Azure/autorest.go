@@ -20,7 +20,13 @@ import (
 )
 
 type sqlScriptClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newSQLScriptClient creates a new instance of sqlScriptClient with the specified values.
+func newSQLScriptClient(endpoint string, pl runtime.Pipeline) *sqlScriptClient {
+	return &sqlScriptClient{endpoint: endpoint, pl: pl}
 }
 
 // BeginCreateOrUpdateSQLScript - Creates or updates a Sql Script.
@@ -33,7 +39,7 @@ func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context,
 	result := SQLScriptCreateOrUpdateSQLScriptPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("sqlScriptClient.CreateOrUpdateSQLScript", resp, client.con.Pipeline(), client.createOrUpdateSQLScriptHandleError)
+	pt, err := runtime.NewPoller("sqlScriptClient.CreateOrUpdateSQLScript", resp, client.pl, client.createOrUpdateSQLScriptHandleError)
 	if err != nil {
 		return SQLScriptCreateOrUpdateSQLScriptPollerResponse{}, err
 	}
@@ -50,7 +56,7 @@ func (client *sqlScriptClient) createOrUpdateSQLScript(ctx context.Context, sqlS
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +73,7 @@ func (client *sqlScriptClient) createOrUpdateSQLScriptCreateRequest(ctx context.
 		return nil, errors.New("parameter sqlScriptName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +110,7 @@ func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScri
 	result := SQLScriptDeleteSQLScriptPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("sqlScriptClient.DeleteSQLScript", resp, client.con.Pipeline(), client.deleteSQLScriptHandleError)
+	pt, err := runtime.NewPoller("sqlScriptClient.DeleteSQLScript", resp, client.pl, client.deleteSQLScriptHandleError)
 	if err != nil {
 		return SQLScriptDeleteSQLScriptPollerResponse{}, err
 	}
@@ -121,7 +127,7 @@ func (client *sqlScriptClient) deleteSQLScript(ctx context.Context, sqlScriptNam
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +144,7 @@ func (client *sqlScriptClient) deleteSQLScriptCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter sqlScriptName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +175,7 @@ func (client *sqlScriptClient) GetSQLScript(ctx context.Context, sqlScriptName s
 	if err != nil {
 		return SQLScriptGetSQLScriptResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SQLScriptGetSQLScriptResponse{}, err
 	}
@@ -186,7 +192,7 @@ func (client *sqlScriptClient) getSQLScriptCreateRequest(ctx context.Context, sq
 		return nil, errors.New("parameter sqlScriptName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -239,7 +245,7 @@ func (client *sqlScriptClient) GetSQLScriptsByWorkspace(options *SQLScriptGetSQL
 // getSQLScriptsByWorkspaceCreateRequest creates the GetSQLScriptsByWorkspace request.
 func (client *sqlScriptClient) getSQLScriptsByWorkspaceCreateRequest(ctx context.Context, options *SQLScriptGetSQLScriptsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/sqlScripts"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -282,7 +288,7 @@ func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScri
 	result := SQLScriptRenameSQLScriptPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("sqlScriptClient.RenameSQLScript", resp, client.con.Pipeline(), client.renameSQLScriptHandleError)
+	pt, err := runtime.NewPoller("sqlScriptClient.RenameSQLScript", resp, client.pl, client.renameSQLScriptHandleError)
 	if err != nil {
 		return SQLScriptRenameSQLScriptPollerResponse{}, err
 	}
@@ -299,7 +305,7 @@ func (client *sqlScriptClient) renameSQLScript(ctx context.Context, sqlScriptNam
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -316,7 +322,7 @@ func (client *sqlScriptClient) renameSQLScriptCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter sqlScriptName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sqlScriptName}", url.PathEscape(sqlScriptName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

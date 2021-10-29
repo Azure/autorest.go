@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -22,12 +23,16 @@ import (
 // SubscriptionInMethodClient contains the methods for the SubscriptionInMethod group.
 // Don't use this type directly, use NewSubscriptionInMethodClient() instead.
 type SubscriptionInMethodClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewSubscriptionInMethodClient creates a new instance of SubscriptionInMethodClient with the specified values.
-func NewSubscriptionInMethodClient(con *Connection) *SubscriptionInMethodClient {
-	return &SubscriptionInMethodClient{con: con}
+func NewSubscriptionInMethodClient(options *azcore.ClientOptions) *SubscriptionInMethodClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &SubscriptionInMethodClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // PostMethodLocalNull - POST method with subscriptionId modeled in the method. pass in subscription id = null, client-side validation should prevent you
@@ -38,7 +43,7 @@ func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Contex
 	if err != nil {
 		return SubscriptionInMethodPostMethodLocalNullResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SubscriptionInMethodPostMethodLocalNullResponse{}, err
 	}
@@ -55,7 +60,7 @@ func (client *SubscriptionInMethodClient) postMethodLocalNullCreateRequest(ctx c
 		return nil, errors.New("parameter subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +88,7 @@ func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Conte
 	if err != nil {
 		return SubscriptionInMethodPostMethodLocalValidResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SubscriptionInMethodPostMethodLocalValidResponse{}, err
 	}
@@ -100,7 +105,7 @@ func (client *SubscriptionInMethodClient) postMethodLocalValidCreateRequest(ctx 
 		return nil, errors.New("parameter subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +133,7 @@ func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context
 	if err != nil {
 		return SubscriptionInMethodPostPathLocalValidResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SubscriptionInMethodPostPathLocalValidResponse{}, err
 	}
@@ -145,7 +150,7 @@ func (client *SubscriptionInMethodClient) postPathLocalValidCreateRequest(ctx co
 		return nil, errors.New("parameter subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +178,7 @@ func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Cont
 	if err != nil {
 		return SubscriptionInMethodPostSwaggerLocalValidResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SubscriptionInMethodPostSwaggerLocalValidResponse{}, err
 	}
@@ -190,7 +195,7 @@ func (client *SubscriptionInMethodClient) postSwaggerLocalValidCreateRequest(ctx
 		return nil, errors.New("parameter subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

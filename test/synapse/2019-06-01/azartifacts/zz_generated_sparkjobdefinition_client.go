@@ -20,7 +20,13 @@ import (
 )
 
 type sparkJobDefinitionClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newSparkJobDefinitionClient creates a new instance of sparkJobDefinitionClient with the specified values.
+func newSparkJobDefinitionClient(endpoint string, pl runtime.Pipeline) *sparkJobDefinitionClient {
+	return &sparkJobDefinitionClient{endpoint: endpoint, pl: pl}
 }
 
 // BeginCreateOrUpdateSparkJobDefinition - Creates or updates a Spark Job Definition.
@@ -33,7 +39,7 @@ func (client *sparkJobDefinitionClient) BeginCreateOrUpdateSparkJobDefinition(ct
 	result := SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition", resp, client.con.Pipeline(), client.createOrUpdateSparkJobDefinitionHandleError)
+	pt, err := runtime.NewPoller("sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition", resp, client.pl, client.createOrUpdateSparkJobDefinitionHandleError)
 	if err != nil {
 		return SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPollerResponse{}, err
 	}
@@ -50,7 +56,7 @@ func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinition(ctx con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +73,7 @@ func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinitionCreateRe
 		return nil, errors.New("parameter sparkJobDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +110,7 @@ func (client *sparkJobDefinitionClient) BeginDebugSparkJobDefinition(ctx context
 	result := SparkJobDefinitionDebugSparkJobDefinitionPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("sparkJobDefinitionClient.DebugSparkJobDefinition", resp, client.con.Pipeline(), client.debugSparkJobDefinitionHandleError)
+	pt, err := runtime.NewPoller("sparkJobDefinitionClient.DebugSparkJobDefinition", resp, client.pl, client.debugSparkJobDefinitionHandleError)
 	if err != nil {
 		return SparkJobDefinitionDebugSparkJobDefinitionPollerResponse{}, err
 	}
@@ -121,7 +127,7 @@ func (client *sparkJobDefinitionClient) debugSparkJobDefinition(ctx context.Cont
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +140,7 @@ func (client *sparkJobDefinitionClient) debugSparkJobDefinition(ctx context.Cont
 // debugSparkJobDefinitionCreateRequest creates the DebugSparkJobDefinition request.
 func (client *sparkJobDefinitionClient) debugSparkJobDefinitionCreateRequest(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource, options *SparkJobDefinitionBeginDebugSparkJobDefinitionOptions) (*policy.Request, error) {
 	urlPath := "/debugSparkJobDefinition"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +174,7 @@ func (client *sparkJobDefinitionClient) BeginDeleteSparkJobDefinition(ctx contex
 	result := SparkJobDefinitionDeleteSparkJobDefinitionPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("sparkJobDefinitionClient.DeleteSparkJobDefinition", resp, client.con.Pipeline(), client.deleteSparkJobDefinitionHandleError)
+	pt, err := runtime.NewPoller("sparkJobDefinitionClient.DeleteSparkJobDefinition", resp, client.pl, client.deleteSparkJobDefinitionHandleError)
 	if err != nil {
 		return SparkJobDefinitionDeleteSparkJobDefinitionPollerResponse{}, err
 	}
@@ -185,7 +191,7 @@ func (client *sparkJobDefinitionClient) deleteSparkJobDefinition(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -202,7 +208,7 @@ func (client *sparkJobDefinitionClient) deleteSparkJobDefinitionCreateRequest(ct
 		return nil, errors.New("parameter sparkJobDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -236,7 +242,7 @@ func (client *sparkJobDefinitionClient) BeginExecuteSparkJobDefinition(ctx conte
 	result := SparkJobDefinitionExecuteSparkJobDefinitionPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("sparkJobDefinitionClient.ExecuteSparkJobDefinition", resp, client.con.Pipeline(), client.executeSparkJobDefinitionHandleError)
+	pt, err := runtime.NewPoller("sparkJobDefinitionClient.ExecuteSparkJobDefinition", resp, client.pl, client.executeSparkJobDefinitionHandleError)
 	if err != nil {
 		return SparkJobDefinitionExecuteSparkJobDefinitionPollerResponse{}, err
 	}
@@ -253,7 +259,7 @@ func (client *sparkJobDefinitionClient) executeSparkJobDefinition(ctx context.Co
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -270,7 +276,7 @@ func (client *sparkJobDefinitionClient) executeSparkJobDefinitionCreateRequest(c
 		return nil, errors.New("parameter sparkJobDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -301,7 +307,7 @@ func (client *sparkJobDefinitionClient) GetSparkJobDefinition(ctx context.Contex
 	if err != nil {
 		return SparkJobDefinitionGetSparkJobDefinitionResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SparkJobDefinitionGetSparkJobDefinitionResponse{}, err
 	}
@@ -318,7 +324,7 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionCreateRequest(ctx c
 		return nil, errors.New("parameter sparkJobDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -371,7 +377,7 @@ func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspace(option
 // getSparkJobDefinitionsByWorkspaceCreateRequest creates the GetSparkJobDefinitionsByWorkspace request.
 func (client *sparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceCreateRequest(ctx context.Context, options *SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/sparkJobDefinitions"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -414,7 +420,7 @@ func (client *sparkJobDefinitionClient) BeginRenameSparkJobDefinition(ctx contex
 	result := SparkJobDefinitionRenameSparkJobDefinitionPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("sparkJobDefinitionClient.RenameSparkJobDefinition", resp, client.con.Pipeline(), client.renameSparkJobDefinitionHandleError)
+	pt, err := runtime.NewPoller("sparkJobDefinitionClient.RenameSparkJobDefinition", resp, client.pl, client.renameSparkJobDefinitionHandleError)
 	if err != nil {
 		return SparkJobDefinitionRenameSparkJobDefinitionPollerResponse{}, err
 	}
@@ -431,7 +437,7 @@ func (client *sparkJobDefinitionClient) renameSparkJobDefinition(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -448,7 +454,7 @@ func (client *sparkJobDefinitionClient) renameSparkJobDefinitionCreateRequest(ct
 		return nil, errors.New("parameter sparkJobDefinitionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sparkJobDefinitionName}", url.PathEscape(sparkJobDefinitionName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

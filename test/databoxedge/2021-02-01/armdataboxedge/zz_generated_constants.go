@@ -8,6 +8,8 @@
 
 package armdataboxedge
 
+const host = "https://management.azure.com"
+
 const (
 	module  = "armdataboxedge"
 	version = "v0.1.0"

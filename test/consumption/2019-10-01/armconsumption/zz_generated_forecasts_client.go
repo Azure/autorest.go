@@ -25,9 +25,9 @@ import (
 // ForecastsClient contains the methods for the Forecasts group.
 // Don't use this type directly, use NewForecastsClient() instead.
 type ForecastsClient struct {
-	ep             string
-	pl             runtime.Pipeline
+	host           string
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewForecastsClient creates a new instance of ForecastsClient with the specified values.
@@ -39,7 +39,7 @@ func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ForecastsClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	return &ForecastsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // List - Lists the forecast charges for scope defined. Please note that this API is no longer actively under development. We recommend using our new Forecast
@@ -68,7 +68,7 @@ func (client *ForecastsClient) listCreateRequest(ctx context.Context, options *F
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

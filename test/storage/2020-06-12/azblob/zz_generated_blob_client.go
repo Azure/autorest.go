@@ -21,9 +21,15 @@ import (
 )
 
 type blobClient struct {
-	con            *connection
+	endpoint       string
 	version        Enum2
 	pathRenameMode *PathRenameMode
+	pl             runtime.Pipeline
+}
+
+// newBlobClient creates a new instance of blobClient with the specified values.
+func newBlobClient(endpoint string, version Enum2, pathRenameMode *PathRenameMode, pl runtime.Pipeline) *blobClient {
+	return &blobClient{endpoint: endpoint, version: version, pathRenameMode: pathRenameMode, pl: pl}
 }
 
 // AbortCopyFromURL - The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination blob with zero length and full
@@ -34,7 +40,7 @@ func (client *blobClient) AbortCopyFromURL(ctx context.Context, comp Enum30, cop
 	if err != nil {
 		return BlobAbortCopyFromURLResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobAbortCopyFromURLResponse{}, err
 	}
@@ -46,7 +52,7 @@ func (client *blobClient) AbortCopyFromURL(ctx context.Context, comp Enum30, cop
 
 // abortCopyFromURLCreateRequest creates the AbortCopyFromURL request.
 func (client *blobClient) abortCopyFromURLCreateRequest(ctx context.Context, comp Enum30, copyActionAbortConstant Enum31, copyID string, blobAbortCopyFromURLOptions *BlobAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +117,7 @@ func (client *blobClient) AcquireLease(ctx context.Context, comp Enum16, blobAcq
 	if err != nil {
 		return BlobAcquireLeaseResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobAcquireLeaseResponse{}, err
 	}
@@ -123,7 +129,7 @@ func (client *blobClient) AcquireLease(ctx context.Context, comp Enum16, blobAcq
 
 // acquireLeaseCreateRequest creates the AcquireLease request.
 func (client *blobClient) acquireLeaseCreateRequest(ctx context.Context, comp Enum16, blobAcquireLeaseOptions *BlobAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -218,7 +224,7 @@ func (client *blobClient) BreakLease(ctx context.Context, comp Enum16, blobBreak
 	if err != nil {
 		return BlobBreakLeaseResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobBreakLeaseResponse{}, err
 	}
@@ -230,7 +236,7 @@ func (client *blobClient) BreakLease(ctx context.Context, comp Enum16, blobBreak
 
 // breakLeaseCreateRequest creates the BreakLease request.
 func (client *blobClient) breakLeaseCreateRequest(ctx context.Context, comp Enum16, blobBreakLeaseOptions *BlobBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -327,7 +333,7 @@ func (client *blobClient) ChangeLease(ctx context.Context, comp Enum16, leaseID 
 	if err != nil {
 		return BlobChangeLeaseResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobChangeLeaseResponse{}, err
 	}
@@ -339,7 +345,7 @@ func (client *blobClient) ChangeLease(ctx context.Context, comp Enum16, leaseID 
 
 // changeLeaseCreateRequest creates the ChangeLease request.
 func (client *blobClient) changeLeaseCreateRequest(ctx context.Context, comp Enum16, leaseID string, proposedLeaseID string, blobChangeLeaseOptions *BlobChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -430,7 +436,7 @@ func (client *blobClient) CopyFromURL(ctx context.Context, xmsRequiresSync Enum2
 	if err != nil {
 		return BlobCopyFromURLResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobCopyFromURLResponse{}, err
 	}
@@ -442,7 +448,7 @@ func (client *blobClient) CopyFromURL(ctx context.Context, xmsRequiresSync Enum2
 
 // copyFromURLCreateRequest creates the CopyFromURL request.
 func (client *blobClient) copyFromURLCreateRequest(ctx context.Context, xmsRequiresSync Enum29, copySource string, blobCopyFromURLOptions *BlobCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -589,7 +595,7 @@ func (client *blobClient) CreateSnapshot(ctx context.Context, comp Enum28, blobC
 	if err != nil {
 		return BlobCreateSnapshotResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobCreateSnapshotResponse{}, err
 	}
@@ -601,7 +607,7 @@ func (client *blobClient) CreateSnapshot(ctx context.Context, comp Enum28, blobC
 
 // createSnapshotCreateRequest creates the CreateSnapshot request.
 func (client *blobClient) createSnapshotCreateRequest(ctx context.Context, comp Enum28, blobCreateSnapshotOptions *BlobCreateSnapshotOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -729,7 +735,7 @@ func (client *blobClient) Delete(ctx context.Context, blobDeleteOptions *BlobDel
 	if err != nil {
 		return BlobDeleteResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobDeleteResponse{}, err
 	}
@@ -741,7 +747,7 @@ func (client *blobClient) Delete(ctx context.Context, blobDeleteOptions *BlobDel
 
 // deleteCreateRequest creates the Delete request.
 func (client *blobClient) deleteCreateRequest(ctx context.Context, blobDeleteOptions *BlobDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -830,7 +836,7 @@ func (client *blobClient) DeleteImmutabilityPolicy(ctx context.Context, comp Enu
 	if err != nil {
 		return BlobDeleteImmutabilityPolicyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobDeleteImmutabilityPolicyResponse{}, err
 	}
@@ -842,7 +848,7 @@ func (client *blobClient) DeleteImmutabilityPolicy(ctx context.Context, comp Enu
 
 // deleteImmutabilityPolicyCreateRequest creates the DeleteImmutabilityPolicy request.
 func (client *blobClient) deleteImmutabilityPolicyCreateRequest(ctx context.Context, comp Enum26, options *BlobDeleteImmutabilityPolicyOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -903,7 +909,7 @@ func (client *blobClient) Download(ctx context.Context, blobDownloadOptions *Blo
 	if err != nil {
 		return BlobDownloadResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobDownloadResponse{}, err
 	}
@@ -915,7 +921,7 @@ func (client *blobClient) Download(ctx context.Context, blobDownloadOptions *Blo
 
 // downloadCreateRequest creates the Download request.
 func (client *blobClient) downloadCreateRequest(ctx context.Context, blobDownloadOptions *BlobDownloadOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -1205,7 +1211,7 @@ func (client *blobClient) GetAccessControl(ctx context.Context, action Enum22, b
 	if err != nil {
 		return BlobGetAccessControlResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobGetAccessControlResponse{}, err
 	}
@@ -1217,7 +1223,7 @@ func (client *blobClient) GetAccessControl(ctx context.Context, action Enum22, b
 
 // getAccessControlCreateRequest creates the GetAccessControl request.
 func (client *blobClient) getAccessControlCreateRequest(ctx context.Context, action Enum22, blobGetAccessControlOptions *BlobGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodHead, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodHead, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -1314,7 +1320,7 @@ func (client *blobClient) GetAccountInfo(ctx context.Context, restype Enum8, com
 	if err != nil {
 		return BlobGetAccountInfoResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobGetAccountInfoResponse{}, err
 	}
@@ -1326,7 +1332,7 @@ func (client *blobClient) GetAccountInfo(ctx context.Context, restype Enum8, com
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
 func (client *blobClient) getAccountInfoCreateRequest(ctx context.Context, restype Enum8, comp Enum1, options *BlobGetAccountInfoOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -1388,7 +1394,7 @@ func (client *blobClient) GetProperties(ctx context.Context, blobGetPropertiesOp
 	if err != nil {
 		return BlobGetPropertiesResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobGetPropertiesResponse{}, err
 	}
@@ -1400,7 +1406,7 @@ func (client *blobClient) GetProperties(ctx context.Context, blobGetPropertiesOp
 
 // getPropertiesCreateRequest creates the GetProperties request.
 func (client *blobClient) getPropertiesCreateRequest(ctx context.Context, blobGetPropertiesOptions *BlobGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodHead, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodHead, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -1710,7 +1716,7 @@ func (client *blobClient) GetTags(ctx context.Context, comp Enum42, blobGetTagsO
 	if err != nil {
 		return BlobGetTagsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobGetTagsResponse{}, err
 	}
@@ -1722,7 +1728,7 @@ func (client *blobClient) GetTags(ctx context.Context, comp Enum42, blobGetTagsO
 
 // getTagsCreateRequest creates the GetTags request.
 func (client *blobClient) getTagsCreateRequest(ctx context.Context, comp Enum42, blobGetTagsOptions *BlobGetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -1797,7 +1803,7 @@ func (client *blobClient) Query(ctx context.Context, comp Enum40, blobQueryOptio
 	if err != nil {
 		return BlobQueryResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobQueryResponse{}, err
 	}
@@ -1809,7 +1815,7 @@ func (client *blobClient) Query(ctx context.Context, comp Enum40, blobQueryOptio
 
 // queryCreateRequest creates the Query request.
 func (client *blobClient) queryCreateRequest(ctx context.Context, comp Enum40, blobQueryOptions *BlobQueryOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPost, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPost, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -2032,7 +2038,7 @@ func (client *blobClient) ReleaseLease(ctx context.Context, comp Enum16, leaseID
 	if err != nil {
 		return BlobReleaseLeaseResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobReleaseLeaseResponse{}, err
 	}
@@ -2044,7 +2050,7 @@ func (client *blobClient) ReleaseLease(ctx context.Context, comp Enum16, leaseID
 
 // releaseLeaseCreateRequest creates the ReleaseLease request.
 func (client *blobClient) releaseLeaseCreateRequest(ctx context.Context, comp Enum16, leaseID string, blobReleaseLeaseOptions *BlobReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -2135,7 +2141,7 @@ func (client *blobClient) Rename(ctx context.Context, renameSource string, blobR
 	if err != nil {
 		return BlobRenameResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobRenameResponse{}, err
 	}
@@ -2147,7 +2153,7 @@ func (client *blobClient) Rename(ctx context.Context, renameSource string, blobR
 
 // renameCreateRequest creates the Rename request.
 func (client *blobClient) renameCreateRequest(ctx context.Context, renameSource string, blobRenameOptions *BlobRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -2281,7 +2287,7 @@ func (client *blobClient) RenewLease(ctx context.Context, comp Enum16, leaseID s
 	if err != nil {
 		return BlobRenewLeaseResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobRenewLeaseResponse{}, err
 	}
@@ -2293,7 +2299,7 @@ func (client *blobClient) RenewLease(ctx context.Context, comp Enum16, leaseID s
 
 // renewLeaseCreateRequest creates the RenewLease request.
 func (client *blobClient) renewLeaseCreateRequest(ctx context.Context, comp Enum16, leaseID string, blobRenewLeaseOptions *BlobRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -2383,7 +2389,7 @@ func (client *blobClient) SetAccessControl(ctx context.Context, action Enum21, b
 	if err != nil {
 		return BlobSetAccessControlResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobSetAccessControlResponse{}, err
 	}
@@ -2395,7 +2401,7 @@ func (client *blobClient) SetAccessControl(ctx context.Context, action Enum21, b
 
 // setAccessControlCreateRequest creates the SetAccessControl request.
 func (client *blobClient) setAccessControlCreateRequest(ctx context.Context, action Enum21, blobSetAccessControlOptions *BlobSetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -2489,7 +2495,7 @@ func (client *blobClient) SetExpiry(ctx context.Context, comp Enum24, expiryOpti
 	if err != nil {
 		return BlobSetExpiryResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobSetExpiryResponse{}, err
 	}
@@ -2501,7 +2507,7 @@ func (client *blobClient) SetExpiry(ctx context.Context, comp Enum24, expiryOpti
 
 // setExpiryCreateRequest creates the SetExpiry request.
 func (client *blobClient) setExpiryCreateRequest(ctx context.Context, comp Enum24, expiryOptions BlobExpiryOptions, options *BlobSetExpiryOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -2575,7 +2581,7 @@ func (client *blobClient) SetHTTPHeaders(ctx context.Context, comp Enum1, blobSe
 	if err != nil {
 		return BlobSetHTTPHeadersResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobSetHTTPHeadersResponse{}, err
 	}
@@ -2587,7 +2593,7 @@ func (client *blobClient) SetHTTPHeaders(ctx context.Context, comp Enum1, blobSe
 
 // setHTTPHeadersCreateRequest creates the SetHTTPHeaders request.
 func (client *blobClient) setHTTPHeadersCreateRequest(ctx context.Context, comp Enum1, blobSetHTTPHeadersOptions *BlobSetHTTPHeadersOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -2700,7 +2706,7 @@ func (client *blobClient) SetImmutabilityPolicy(ctx context.Context, comp Enum26
 	if err != nil {
 		return BlobSetImmutabilityPolicyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobSetImmutabilityPolicyResponse{}, err
 	}
@@ -2712,7 +2718,7 @@ func (client *blobClient) SetImmutabilityPolicy(ctx context.Context, comp Enum26
 
 // setImmutabilityPolicyCreateRequest creates the SetImmutabilityPolicy request.
 func (client *blobClient) setImmutabilityPolicyCreateRequest(ctx context.Context, comp Enum26, blobSetImmutabilityPolicyOptions *BlobSetImmutabilityPolicyOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -2791,7 +2797,7 @@ func (client *blobClient) SetLegalHold(ctx context.Context, comp Enum27, legalHo
 	if err != nil {
 		return BlobSetLegalHoldResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobSetLegalHoldResponse{}, err
 	}
@@ -2803,7 +2809,7 @@ func (client *blobClient) SetLegalHold(ctx context.Context, comp Enum27, legalHo
 
 // setLegalHoldCreateRequest creates the SetLegalHold request.
 func (client *blobClient) setLegalHoldCreateRequest(ctx context.Context, comp Enum27, legalHold bool, options *BlobSetLegalHoldOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -2871,7 +2877,7 @@ func (client *blobClient) SetMetadata(ctx context.Context, comp Enum12, blobSetM
 	if err != nil {
 		return BlobSetMetadataResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobSetMetadataResponse{}, err
 	}
@@ -2883,7 +2889,7 @@ func (client *blobClient) SetMetadata(ctx context.Context, comp Enum12, blobSetM
 
 // setMetadataCreateRequest creates the SetMetadata request.
 func (client *blobClient) setMetadataCreateRequest(ctx context.Context, comp Enum12, blobSetMetadataOptions *BlobSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -3004,7 +3010,7 @@ func (client *blobClient) SetTags(ctx context.Context, comp Enum42, blobSetTagsO
 	if err != nil {
 		return BlobSetTagsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobSetTagsResponse{}, err
 	}
@@ -3016,7 +3022,7 @@ func (client *blobClient) SetTags(ctx context.Context, comp Enum42, blobSetTagsO
 
 // setTagsCreateRequest creates the SetTags request.
 func (client *blobClient) setTagsCreateRequest(ctx context.Context, comp Enum42, blobSetTagsOptions *BlobSetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -3097,7 +3103,7 @@ func (client *blobClient) SetTier(ctx context.Context, comp Enum32, tier AccessT
 	if err != nil {
 		return BlobSetTierResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobSetTierResponse{}, err
 	}
@@ -3109,7 +3115,7 @@ func (client *blobClient) SetTier(ctx context.Context, comp Enum32, tier AccessT
 
 // setTierCreateRequest creates the SetTier request.
 func (client *blobClient) setTierCreateRequest(ctx context.Context, comp Enum32, tier AccessTier, blobSetTierOptions *BlobSetTierOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -3178,7 +3184,7 @@ func (client *blobClient) StartCopyFromURL(ctx context.Context, copySource strin
 	if err != nil {
 		return BlobStartCopyFromURLResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobStartCopyFromURLResponse{}, err
 	}
@@ -3190,7 +3196,7 @@ func (client *blobClient) StartCopyFromURL(ctx context.Context, copySource strin
 
 // startCopyFromURLCreateRequest creates the StartCopyFromURL request.
 func (client *blobClient) startCopyFromURLCreateRequest(ctx context.Context, copySource string, blobStartCopyFromURLOptions *BlobStartCopyFromURLOptions, sourceModifiedAccessConditions *SourceModifiedAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -3328,7 +3334,7 @@ func (client *blobClient) Undelete(ctx context.Context, comp Enum14, options *Bl
 	if err != nil {
 		return BlobUndeleteResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlobUndeleteResponse{}, err
 	}
@@ -3340,7 +3346,7 @@ func (client *blobClient) Undelete(ctx context.Context, comp Enum14, options *Bl
 
 // undeleteCreateRequest creates the Undelete request.
 func (client *blobClient) undeleteCreateRequest(ctx context.Context, comp Enum14, options *BlobUndeleteOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}

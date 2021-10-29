@@ -11,6 +11,7 @@ package httpinfrastructuregroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,16 @@ import (
 // HTTPSuccessClient contains the methods for the HTTPSuccess group.
 // Don't use this type directly, use NewHTTPSuccessClient() instead.
 type HTTPSuccessClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewHTTPSuccessClient creates a new instance of HTTPSuccessClient with the specified values.
-func NewHTTPSuccessClient(con *Connection) *HTTPSuccessClient {
-	return &HTTPSuccessClient{con: con}
+func NewHTTPSuccessClient(options *azcore.ClientOptions) *HTTPSuccessClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &HTTPSuccessClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // Delete200 - Delete simple boolean value true returns 200
@@ -34,7 +39,7 @@ func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuc
 	if err != nil {
 		return HTTPSuccessDelete200Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessDelete200Response{}, err
 	}
@@ -47,7 +52,7 @@ func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuc
 // delete200CreateRequest creates the Delete200 request.
 func (client *HTTPSuccessClient) delete200CreateRequest(ctx context.Context, options *HTTPSuccessDelete200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +80,7 @@ func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuc
 	if err != nil {
 		return HTTPSuccessDelete202Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessDelete202Response{}, err
 	}
@@ -88,7 +93,7 @@ func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuc
 // delete202CreateRequest creates the Delete202 request.
 func (client *HTTPSuccessClient) delete202CreateRequest(ctx context.Context, options *HTTPSuccessDelete202Options) (*policy.Request, error) {
 	urlPath := "/http/success/202"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +121,7 @@ func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuc
 	if err != nil {
 		return HTTPSuccessDelete204Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessDelete204Response{}, err
 	}
@@ -129,7 +134,7 @@ func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuc
 // delete204CreateRequest creates the Delete204 request.
 func (client *HTTPSuccessClient) delete204CreateRequest(ctx context.Context, options *HTTPSuccessDelete204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +162,7 @@ func (client *HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSucces
 	if err != nil {
 		return HTTPSuccessGet200Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessGet200Response{}, err
 	}
@@ -170,7 +175,7 @@ func (client *HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSucces
 // get200CreateRequest creates the Get200 request.
 func (client *HTTPSuccessClient) get200CreateRequest(ctx context.Context, options *HTTPSuccessGet200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -207,7 +212,7 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessHead200Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessHead200Response{}, err
 	}
@@ -221,7 +226,7 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 // head200CreateRequest creates the Head200 request.
 func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, options *HTTPSuccessHead200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -236,7 +241,7 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessHead204Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessHead204Response{}, err
 	}
@@ -250,7 +255,7 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 // head204CreateRequest creates the Head204 request.
 func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, options *HTTPSuccessHead204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -265,7 +270,7 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessHead404Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessHead404Response{}, err
 	}
@@ -279,7 +284,7 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 // head404CreateRequest creates the Head404 request.
 func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, options *HTTPSuccessHead404Options) (*policy.Request, error) {
 	urlPath := "/http/success/404"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -294,7 +299,7 @@ func (client *HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSu
 	if err != nil {
 		return HTTPSuccessOptions200Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessOptions200Response{}, err
 	}
@@ -307,7 +312,7 @@ func (client *HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSu
 // options200CreateRequest creates the Options200 request.
 func (client *HTTPSuccessClient) options200CreateRequest(ctx context.Context, options *HTTPSuccessOptions200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -344,7 +349,7 @@ func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSucc
 	if err != nil {
 		return HTTPSuccessPatch200Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessPatch200Response{}, err
 	}
@@ -357,7 +362,7 @@ func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSucc
 // patch200CreateRequest creates the Patch200 request.
 func (client *HTTPSuccessClient) patch200CreateRequest(ctx context.Context, options *HTTPSuccessPatch200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -385,7 +390,7 @@ func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSucc
 	if err != nil {
 		return HTTPSuccessPatch202Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessPatch202Response{}, err
 	}
@@ -398,7 +403,7 @@ func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSucc
 // patch202CreateRequest creates the Patch202 request.
 func (client *HTTPSuccessClient) patch202CreateRequest(ctx context.Context, options *HTTPSuccessPatch202Options) (*policy.Request, error) {
 	urlPath := "/http/success/202"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -426,7 +431,7 @@ func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSucc
 	if err != nil {
 		return HTTPSuccessPatch204Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessPatch204Response{}, err
 	}
@@ -439,7 +444,7 @@ func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSucc
 // patch204CreateRequest creates the Patch204 request.
 func (client *HTTPSuccessClient) patch204CreateRequest(ctx context.Context, options *HTTPSuccessPatch204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -467,7 +472,7 @@ func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessPost200Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessPost200Response{}, err
 	}
@@ -480,7 +485,7 @@ func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSucce
 // post200CreateRequest creates the Post200 request.
 func (client *HTTPSuccessClient) post200CreateRequest(ctx context.Context, options *HTTPSuccessPost200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -508,7 +513,7 @@ func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessPost201Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessPost201Response{}, err
 	}
@@ -521,7 +526,7 @@ func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSucce
 // post201CreateRequest creates the Post201 request.
 func (client *HTTPSuccessClient) post201CreateRequest(ctx context.Context, options *HTTPSuccessPost201Options) (*policy.Request, error) {
 	urlPath := "/http/success/201"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -549,7 +554,7 @@ func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessPost202Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessPost202Response{}, err
 	}
@@ -562,7 +567,7 @@ func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSucce
 // post202CreateRequest creates the Post202 request.
 func (client *HTTPSuccessClient) post202CreateRequest(ctx context.Context, options *HTTPSuccessPost202Options) (*policy.Request, error) {
 	urlPath := "/http/success/202"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -590,7 +595,7 @@ func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessPost204Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessPost204Response{}, err
 	}
@@ -603,7 +608,7 @@ func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSucce
 // post204CreateRequest creates the Post204 request.
 func (client *HTTPSuccessClient) post204CreateRequest(ctx context.Context, options *HTTPSuccessPost204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -631,7 +636,7 @@ func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSucces
 	if err != nil {
 		return HTTPSuccessPut200Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessPut200Response{}, err
 	}
@@ -644,7 +649,7 @@ func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSucces
 // put200CreateRequest creates the Put200 request.
 func (client *HTTPSuccessClient) put200CreateRequest(ctx context.Context, options *HTTPSuccessPut200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -672,7 +677,7 @@ func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSucces
 	if err != nil {
 		return HTTPSuccessPut201Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessPut201Response{}, err
 	}
@@ -685,7 +690,7 @@ func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSucces
 // put201CreateRequest creates the Put201 request.
 func (client *HTTPSuccessClient) put201CreateRequest(ctx context.Context, options *HTTPSuccessPut201Options) (*policy.Request, error) {
 	urlPath := "/http/success/201"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -713,7 +718,7 @@ func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSucces
 	if err != nil {
 		return HTTPSuccessPut202Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessPut202Response{}, err
 	}
@@ -726,7 +731,7 @@ func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSucces
 // put202CreateRequest creates the Put202 request.
 func (client *HTTPSuccessClient) put202CreateRequest(ctx context.Context, options *HTTPSuccessPut202Options) (*policy.Request, error) {
 	urlPath := "/http/success/202"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -754,7 +759,7 @@ func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSucces
 	if err != nil {
 		return HTTPSuccessPut204Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessPut204Response{}, err
 	}
@@ -767,7 +772,7 @@ func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSucces
 // put204CreateRequest creates the Put204 request.
 func (client *HTTPSuccessClient) put204CreateRequest(ctx context.Context, options *HTTPSuccessPut204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -23,8 +23,8 @@ import (
 // TagsClient contains the methods for the Tags group.
 // Don't use this type directly, use NewTagsClient() instead.
 type TagsClient struct {
-	ep string
-	pl runtime.Pipeline
+	host string
+	pl   runtime.Pipeline
 }
 
 // NewTagsClient creates a new instance of TagsClient with the specified values.
@@ -36,7 +36,7 @@ func NewTagsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &TagsClient{ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	return &TagsClient{host: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // Get - Get all available tag keys for the defined scope
@@ -60,7 +60,7 @@ func (client *TagsClient) Get(ctx context.Context, scope string, options *TagsGe
 func (client *TagsClient) getCreateRequest(ctx context.Context, scope string, options *TagsGetOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/tags"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

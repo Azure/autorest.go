@@ -11,6 +11,7 @@ package azurespecialsgroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,16 @@ import (
 // HeaderClient contains the methods for the Header group.
 // Don't use this type directly, use NewHeaderClient() instead.
 type HeaderClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewHeaderClient creates a new instance of HeaderClient with the specified values.
-func NewHeaderClient(con *Connection) *HeaderClient {
-	return &HeaderClient{con: con}
+func NewHeaderClient(options *azcore.ClientOptions) *HeaderClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &HeaderClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // CustomNamedRequestID - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
@@ -34,7 +39,7 @@ func (client *HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientR
 	if err != nil {
 		return HeaderCustomNamedRequestIDResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HeaderCustomNamedRequestIDResponse{}, err
 	}
@@ -47,7 +52,7 @@ func (client *HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientR
 // customNamedRequestIDCreateRequest creates the CustomNamedRequestID request.
 func (client *HeaderClient) customNamedRequestIDCreateRequest(ctx context.Context, fooClientRequestID string, options *HeaderCustomNamedRequestIDOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/customNamedRequestId"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +90,7 @@ func (client *HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooCli
 	if err != nil {
 		return HeaderCustomNamedRequestIDHeadResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HeaderCustomNamedRequestIDHeadResponse{}, err
 	}
@@ -95,7 +100,7 @@ func (client *HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooCli
 // customNamedRequestIDHeadCreateRequest creates the CustomNamedRequestIDHead request.
 func (client *HeaderClient) customNamedRequestIDHeadCreateRequest(ctx context.Context, fooClientRequestID string, options *HeaderCustomNamedRequestIDHeadOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/customNamedRequestIdHead"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +128,7 @@ func (client *HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Contex
 	if err != nil {
 		return HeaderCustomNamedRequestIDParamGroupingResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HeaderCustomNamedRequestIDParamGroupingResponse{}, err
 	}
@@ -136,7 +141,7 @@ func (client *HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Contex
 // customNamedRequestIDParamGroupingCreateRequest creates the CustomNamedRequestIDParamGrouping request.
 func (client *HeaderClient) customNamedRequestIDParamGroupingCreateRequest(ctx context.Context, headerCustomNamedRequestIDParamGroupingParameters HeaderCustomNamedRequestIDParamGroupingParameters) (*policy.Request, error) {
 	urlPath := "/azurespecials/customNamedRequestIdParamGrouping"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

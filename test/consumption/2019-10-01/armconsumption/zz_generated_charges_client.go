@@ -23,8 +23,8 @@ import (
 // ChargesClient contains the methods for the Charges group.
 // Don't use this type directly, use NewChargesClient() instead.
 type ChargesClient struct {
-	ep string
-	pl runtime.Pipeline
+	host string
+	pl   runtime.Pipeline
 }
 
 // NewChargesClient creates a new instance of ChargesClient with the specified values.
@@ -36,7 +36,7 @@ func NewChargesClient(credential azcore.TokenCredential, options *arm.ClientOpti
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ChargesClient{ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	return &ChargesClient{host: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // List - Lists the charges based for the defined scope.
@@ -60,7 +60,7 @@ func (client *ChargesClient) List(ctx context.Context, scope string, options *Ch
 func (client *ChargesClient) listCreateRequest(ctx context.Context, scope string, options *ChargesListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/charges"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

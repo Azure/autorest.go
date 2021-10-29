@@ -14,7 +14,7 @@ import (
 )
 
 func newDateClient() *DateClient {
-	return NewDateClient(NewDefaultConnection(nil))
+	return NewDateClient(nil)
 }
 
 func TestGetInvalidDate(t *testing.T) {

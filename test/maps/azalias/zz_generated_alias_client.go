@@ -15,10 +15,23 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
+	"strings"
 )
 
 type aliasClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newAliasClient creates a new instance of aliasClient with the specified values.
+func newAliasClient(geography *Geography, pl runtime.Pipeline) *aliasClient {
+	hostURL := "https://{geography}.atlas.microsoft.com"
+	if geography == nil {
+		defaultValue := GeographyUs
+		geography = &defaultValue
+	}
+	hostURL = strings.ReplaceAll(hostURL, "{geography}", string(*geography))
+	return &aliasClient{endpoint: hostURL, pl: pl}
 }
 
 // Create - Applies to: see pricing tiers [https://aka.ms/AzureMapsPricingTier].
@@ -41,7 +54,7 @@ func (client *aliasClient) Create(ctx context.Context, options *AliasCreateOptio
 	if err != nil {
 		return AliasCreateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return AliasCreateResponse{}, err
 	}
@@ -54,7 +67,7 @@ func (client *aliasClient) Create(ctx context.Context, options *AliasCreateOptio
 // createCreateRequest creates the Create request.
 func (client *aliasClient) createCreateRequest(ctx context.Context, options *AliasCreateOptions) (*policy.Request, error) {
 	urlPath := "/aliases"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +142,7 @@ func (client *aliasClient) List(options *AliasListOptions) *AliasListPager {
 // listCreateRequest creates the List request.
 func (client *aliasClient) listCreateRequest(ctx context.Context, options *AliasListOptions) (*policy.Request, error) {
 	urlPath := "/aliases"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

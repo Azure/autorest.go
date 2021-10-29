@@ -20,7 +20,13 @@ import (
 )
 
 type triggerClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newTriggerClient creates a new instance of triggerClient with the specified values.
+func newTriggerClient(endpoint string, pl runtime.Pipeline) *triggerClient {
+	return &triggerClient{endpoint: endpoint, pl: pl}
 }
 
 // BeginCreateOrUpdateTrigger - Creates or updates a trigger.
@@ -33,7 +39,7 @@ func (client *triggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, tri
 	result := TriggerCreateOrUpdateTriggerPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("triggerClient.CreateOrUpdateTrigger", resp, client.con.Pipeline(), client.createOrUpdateTriggerHandleError)
+	pt, err := runtime.NewPoller("triggerClient.CreateOrUpdateTrigger", resp, client.pl, client.createOrUpdateTriggerHandleError)
 	if err != nil {
 		return TriggerCreateOrUpdateTriggerPollerResponse{}, err
 	}
@@ -50,7 +56,7 @@ func (client *triggerClient) createOrUpdateTrigger(ctx context.Context, triggerN
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +73,7 @@ func (client *triggerClient) createOrUpdateTriggerCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter triggerName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +110,7 @@ func (client *triggerClient) BeginDeleteTrigger(ctx context.Context, triggerName
 	result := TriggerDeleteTriggerPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("triggerClient.DeleteTrigger", resp, client.con.Pipeline(), client.deleteTriggerHandleError)
+	pt, err := runtime.NewPoller("triggerClient.DeleteTrigger", resp, client.pl, client.deleteTriggerHandleError)
 	if err != nil {
 		return TriggerDeleteTriggerPollerResponse{}, err
 	}
@@ -121,7 +127,7 @@ func (client *triggerClient) deleteTrigger(ctx context.Context, triggerName stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +144,7 @@ func (client *triggerClient) deleteTriggerCreateRequest(ctx context.Context, tri
 		return nil, errors.New("parameter triggerName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +175,7 @@ func (client *triggerClient) GetEventSubscriptionStatus(ctx context.Context, tri
 	if err != nil {
 		return TriggerGetEventSubscriptionStatusResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return TriggerGetEventSubscriptionStatusResponse{}, err
 	}
@@ -186,7 +192,7 @@ func (client *triggerClient) getEventSubscriptionStatusCreateRequest(ctx context
 		return nil, errors.New("parameter triggerName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -226,7 +232,7 @@ func (client *triggerClient) GetTrigger(ctx context.Context, triggerName string,
 	if err != nil {
 		return TriggerGetTriggerResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return TriggerGetTriggerResponse{}, err
 	}
@@ -243,7 +249,7 @@ func (client *triggerClient) getTriggerCreateRequest(ctx context.Context, trigge
 		return nil, errors.New("parameter triggerName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -296,7 +302,7 @@ func (client *triggerClient) GetTriggersByWorkspace(options *TriggerGetTriggersB
 // getTriggersByWorkspaceCreateRequest creates the GetTriggersByWorkspace request.
 func (client *triggerClient) getTriggersByWorkspaceCreateRequest(ctx context.Context, options *TriggerGetTriggersByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/triggers"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -339,7 +345,7 @@ func (client *triggerClient) BeginStartTrigger(ctx context.Context, triggerName 
 	result := TriggerStartTriggerPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("triggerClient.StartTrigger", resp, client.con.Pipeline(), client.startTriggerHandleError)
+	pt, err := runtime.NewPoller("triggerClient.StartTrigger", resp, client.pl, client.startTriggerHandleError)
 	if err != nil {
 		return TriggerStartTriggerPollerResponse{}, err
 	}
@@ -356,7 +362,7 @@ func (client *triggerClient) startTrigger(ctx context.Context, triggerName strin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -373,7 +379,7 @@ func (client *triggerClient) startTriggerCreateRequest(ctx context.Context, trig
 		return nil, errors.New("parameter triggerName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -407,7 +413,7 @@ func (client *triggerClient) BeginStopTrigger(ctx context.Context, triggerName s
 	result := TriggerStopTriggerPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("triggerClient.StopTrigger", resp, client.con.Pipeline(), client.stopTriggerHandleError)
+	pt, err := runtime.NewPoller("triggerClient.StopTrigger", resp, client.pl, client.stopTriggerHandleError)
 	if err != nil {
 		return TriggerStopTriggerPollerResponse{}, err
 	}
@@ -424,7 +430,7 @@ func (client *triggerClient) stopTrigger(ctx context.Context, triggerName string
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -441,7 +447,7 @@ func (client *triggerClient) stopTriggerCreateRequest(ctx context.Context, trigg
 		return nil, errors.New("parameter triggerName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -475,7 +481,7 @@ func (client *triggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, 
 	result := TriggerSubscribeTriggerToEventsPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("triggerClient.SubscribeTriggerToEvents", resp, client.con.Pipeline(), client.subscribeTriggerToEventsHandleError)
+	pt, err := runtime.NewPoller("triggerClient.SubscribeTriggerToEvents", resp, client.pl, client.subscribeTriggerToEventsHandleError)
 	if err != nil {
 		return TriggerSubscribeTriggerToEventsPollerResponse{}, err
 	}
@@ -492,7 +498,7 @@ func (client *triggerClient) subscribeTriggerToEvents(ctx context.Context, trigg
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -509,7 +515,7 @@ func (client *triggerClient) subscribeTriggerToEventsCreateRequest(ctx context.C
 		return nil, errors.New("parameter triggerName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -543,7 +549,7 @@ func (client *triggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Conte
 	result := TriggerUnsubscribeTriggerFromEventsPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("triggerClient.UnsubscribeTriggerFromEvents", resp, client.con.Pipeline(), client.unsubscribeTriggerFromEventsHandleError)
+	pt, err := runtime.NewPoller("triggerClient.UnsubscribeTriggerFromEvents", resp, client.pl, client.unsubscribeTriggerFromEventsHandleError)
 	if err != nil {
 		return TriggerUnsubscribeTriggerFromEventsPollerResponse{}, err
 	}
@@ -560,7 +566,7 @@ func (client *triggerClient) unsubscribeTriggerFromEvents(ctx context.Context, t
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -577,7 +583,7 @@ func (client *triggerClient) unsubscribeTriggerFromEventsCreateRequest(ctx conte
 		return nil, errors.New("parameter triggerName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{triggerName}", url.PathEscape(triggerName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

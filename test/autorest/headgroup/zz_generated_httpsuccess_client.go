@@ -10,6 +10,7 @@ package headgroup
 
 import (
 	"context"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -18,12 +19,16 @@ import (
 // HTTPSuccessClient contains the methods for the HTTPSuccess group.
 // Don't use this type directly, use NewHTTPSuccessClient() instead.
 type HTTPSuccessClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewHTTPSuccessClient creates a new instance of HTTPSuccessClient with the specified values.
-func NewHTTPSuccessClient(con *Connection) *HTTPSuccessClient {
-	return &HTTPSuccessClient{con: con}
+func NewHTTPSuccessClient(options *azcore.ClientOptions) *HTTPSuccessClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &HTTPSuccessClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // Head200 - Return 200 status code if successful
@@ -33,7 +38,7 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessHead200Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessHead200Response{}, err
 	}
@@ -47,7 +52,7 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 // head200CreateRequest creates the Head200 request.
 func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, options *HTTPSuccessHead200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +66,7 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessHead204Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessHead204Response{}, err
 	}
@@ -75,7 +80,7 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 // head204CreateRequest creates the Head204 request.
 func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, options *HTTPSuccessHead204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -89,7 +94,7 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 	if err != nil {
 		return HTTPSuccessHead404Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPSuccessHead404Response{}, err
 	}
@@ -103,7 +108,7 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 // head404CreateRequest creates the Head404 request.
 func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, options *HTTPSuccessHead404Options) (*policy.Request, error) {
 	urlPath := "/http/success/404"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

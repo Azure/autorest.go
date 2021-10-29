@@ -11,6 +11,7 @@ package httpinfrastructuregroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,16 @@ import (
 // HTTPServerFailureClient contains the methods for the HTTPServerFailure group.
 // Don't use this type directly, use NewHTTPServerFailureClient() instead.
 type HTTPServerFailureClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewHTTPServerFailureClient creates a new instance of HTTPServerFailureClient with the specified values.
-func NewHTTPServerFailureClient(con *Connection) *HTTPServerFailureClient {
-	return &HTTPServerFailureClient{con: con}
+func NewHTTPServerFailureClient(options *azcore.ClientOptions) *HTTPServerFailureClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &HTTPServerFailureClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // Delete505 - Return 505 status code - should be represented in the client as an error
@@ -34,7 +39,7 @@ func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *H
 	if err != nil {
 		return HTTPServerFailureDelete505Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPServerFailureDelete505Response{}, err
 	}
@@ -47,7 +52,7 @@ func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *H
 // delete505CreateRequest creates the Delete505 request.
 func (client *HTTPServerFailureClient) delete505CreateRequest(ctx context.Context, options *HTTPServerFailureDelete505Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/505"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +80,7 @@ func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPServerFailureGet501Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPServerFailureGet501Response{}, err
 	}
@@ -88,7 +93,7 @@ func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTP
 // get501CreateRequest creates the Get501 request.
 func (client *HTTPServerFailureClient) get501CreateRequest(ctx context.Context, options *HTTPServerFailureGet501Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/501"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +121,7 @@ func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPServerFailureHead501Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPServerFailureHead501Response{}, err
 	}
@@ -130,7 +135,7 @@ func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTT
 // head501CreateRequest creates the Head501 request.
 func (client *HTTPServerFailureClient) head501CreateRequest(ctx context.Context, options *HTTPServerFailureHead501Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/501"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +150,7 @@ func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPServerFailurePost505Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPServerFailurePost505Response{}, err
 	}
@@ -158,7 +163,7 @@ func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTT
 // post505CreateRequest creates the Post505 request.
 func (client *HTTPServerFailureClient) post505CreateRequest(ctx context.Context, options *HTTPServerFailurePost505Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/505"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

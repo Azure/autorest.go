@@ -14,7 +14,7 @@ import (
 )
 
 func newPolymorphismClient() *PolymorphismClient {
-	return NewPolymorphismClient(NewDefaultConnection(nil))
+	return NewPolymorphismClient(nil)
 }
 
 // GetComplicated - Get complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties

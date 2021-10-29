@@ -10,7 +10,7 @@ import (
 )
 
 func newAPIVersionLocalClient() *APIVersionLocalClient {
-	return NewAPIVersionLocalClient(NewDefaultConnection(nil))
+	return NewAPIVersionLocalClient(nil)
 }
 
 // GetMethodLocalNull - Get method with api-version modeled in the method.  pass in api-version = null to succeed

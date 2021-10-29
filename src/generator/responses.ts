@@ -8,7 +8,7 @@ import { comment } from '@azure-tools/codegen';
 import { CodeModel, ObjectSchema, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { commentLength, isObjectSchema, PagerInfo, PollerInfo } from '../common/helpers';
-import { contentPreamble, emitPoller, getClientPipeline, getFinalResponseEnvelopeName, sortAscending, substituteDiscriminatorTypeName } from './helpers';
+import { contentPreamble, emitPoller, getFinalResponseEnvelopeName, sortAscending, substituteDiscriminatorTypeName } from './helpers';
 import { ImportManager } from './imports';
 import { generateStruct, StructDef, StructMethod } from './structs';
 
@@ -147,10 +147,10 @@ function generateResumeForResponse(structDef: StructDef, isARM: boolean, imports
   let resume = `func (l *${structDef.Language.name}) Resume(ctx context.Context, client *${clientName}, token string) error {`;
   if (isARM) {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime', 'armruntime');
-    resume += `\tpt, err := armruntime.NewPollerFromResumeToken("${clientName}.${apiMethod}", token, ${getClientPipeline(pollerInfo.op)}, client.${errorMethod})\n`;
+    resume += `\tpt, err := armruntime.NewPollerFromResumeToken("${clientName}.${apiMethod}", token, client.pl, client.${errorMethod})\n`;
   } else {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-    resume += `\tpt, err := runtime.NewPollerFromResumeToken("${clientName}.${apiMethod}",token, ${getClientPipeline(pollerInfo.op)}, client.${errorMethod})\n`;
+    resume += `\tpt, err := runtime.NewPollerFromResumeToken("${clientName}.${apiMethod}",token, client.pl, client.${errorMethod})\n`;
   }
   resume += '\tif err != nil {\n';
   resume += `\t\treturn err\n`;

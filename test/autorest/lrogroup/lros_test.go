@@ -22,7 +22,7 @@ func newLROSClient() *LROsClient {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.Transport = httpClientWithCookieJar()
-	return NewLROsClient(NewDefaultConnection(&options))
+	return NewLROsClient(&options)
 }
 
 func httpClientWithCookieJar() policy.Transporter {

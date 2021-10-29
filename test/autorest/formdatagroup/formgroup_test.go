@@ -15,7 +15,7 @@ import (
 )
 
 func newFormdataClient() *FormdataClient {
-	return NewFormdataClient(NewDefaultConnection(nil))
+	return NewFormdataClient(nil)
 }
 
 func TestUploadFile(t *testing.T) {

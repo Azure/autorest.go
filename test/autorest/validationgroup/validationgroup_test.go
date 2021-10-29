@@ -12,7 +12,7 @@ import (
 )
 
 func newAutoRestValidationTestClient() *AutoRestValidationTestClient {
-	return NewAutoRestValidationTestClient(NewDefaultConnection(nil), "")
+	return NewAutoRestValidationTestClient("", nil)
 }
 
 func TestValidationGetWithConstantInPath(t *testing.T) {

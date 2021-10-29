@@ -8,6 +8,8 @@
 
 package azurereportgroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "azurereportgroup"
 	version = "v0.1.0"

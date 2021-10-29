@@ -12,7 +12,7 @@ import (
 )
 
 func newHeaderClient() *HeaderClient {
-	return NewHeaderClient(NewDefaultConnection(nil))
+	return NewHeaderClient(nil)
 }
 
 // CustomNamedRequestID - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request

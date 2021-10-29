@@ -22,8 +22,14 @@ import (
 )
 
 type containerClient struct {
-	con     *connection
-	version Enum2
+	endpoint string
+	version  Enum2
+	pl       runtime.Pipeline
+}
+
+// newContainerClient creates a new instance of containerClient with the specified values.
+func newContainerClient(endpoint string, version Enum2, pl runtime.Pipeline) *containerClient {
+	return &containerClient{endpoint: endpoint, version: version, pl: pl}
 }
 
 // AcquireLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
@@ -33,7 +39,7 @@ func (client *containerClient) AcquireLease(ctx context.Context, comp Enum16, re
 	if err != nil {
 		return ContainerAcquireLeaseResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ContainerAcquireLeaseResponse{}, err
 	}
@@ -45,7 +51,7 @@ func (client *containerClient) AcquireLease(ctx context.Context, comp Enum16, re
 
 // acquireLeaseCreateRequest creates the AcquireLease request.
 func (client *containerClient) acquireLeaseCreateRequest(ctx context.Context, comp Enum16, restype Enum11, containerAcquireLeaseOptions *ContainerAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +138,7 @@ func (client *containerClient) BreakLease(ctx context.Context, comp Enum16, rest
 	if err != nil {
 		return ContainerBreakLeaseResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ContainerBreakLeaseResponse{}, err
 	}
@@ -144,7 +150,7 @@ func (client *containerClient) BreakLease(ctx context.Context, comp Enum16, rest
 
 // breakLeaseCreateRequest creates the BreakLease request.
 func (client *containerClient) breakLeaseCreateRequest(ctx context.Context, comp Enum16, restype Enum11, containerBreakLeaseOptions *ContainerBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -233,7 +239,7 @@ func (client *containerClient) ChangeLease(ctx context.Context, comp Enum16, res
 	if err != nil {
 		return ContainerChangeLeaseResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ContainerChangeLeaseResponse{}, err
 	}
@@ -245,7 +251,7 @@ func (client *containerClient) ChangeLease(ctx context.Context, comp Enum16, res
 
 // changeLeaseCreateRequest creates the ChangeLease request.
 func (client *containerClient) changeLeaseCreateRequest(ctx context.Context, comp Enum16, restype Enum11, leaseID string, proposedLeaseID string, containerChangeLeaseOptions *ContainerChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -328,7 +334,7 @@ func (client *containerClient) Create(ctx context.Context, restype Enum11, conta
 	if err != nil {
 		return ContainerCreateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ContainerCreateResponse{}, err
 	}
@@ -340,7 +346,7 @@ func (client *containerClient) Create(ctx context.Context, restype Enum11, conta
 
 // createCreateRequest creates the Create request.
 func (client *containerClient) createCreateRequest(ctx context.Context, restype Enum11, containerCreateOptions *ContainerCreateOptions, containerCpkScopeInfo *ContainerCpkScopeInfo) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -424,7 +430,7 @@ func (client *containerClient) Delete(ctx context.Context, restype Enum11, conta
 	if err != nil {
 		return ContainerDeleteResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ContainerDeleteResponse{}, err
 	}
@@ -436,7 +442,7 @@ func (client *containerClient) Delete(ctx context.Context, restype Enum11, conta
 
 // deleteCreateRequest creates the Delete request.
 func (client *containerClient) deleteCreateRequest(ctx context.Context, restype Enum11, containerDeleteOptions *ContainerDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -505,7 +511,7 @@ func (client *containerClient) GetAccessPolicy(ctx context.Context, restype Enum
 	if err != nil {
 		return ContainerGetAccessPolicyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ContainerGetAccessPolicyResponse{}, err
 	}
@@ -517,7 +523,7 @@ func (client *containerClient) GetAccessPolicy(ctx context.Context, restype Enum
 
 // getAccessPolicyCreateRequest creates the GetAccessPolicy request.
 func (client *containerClient) getAccessPolicyCreateRequest(ctx context.Context, restype Enum11, comp Enum13, containerGetAccessPolicyOptions *ContainerGetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -597,7 +603,7 @@ func (client *containerClient) GetAccountInfo(ctx context.Context, restype Enum8
 	if err != nil {
 		return ContainerGetAccountInfoResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ContainerGetAccountInfoResponse{}, err
 	}
@@ -609,7 +615,7 @@ func (client *containerClient) GetAccountInfo(ctx context.Context, restype Enum8
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
 func (client *containerClient) getAccountInfoCreateRequest(ctx context.Context, restype Enum8, comp Enum1, options *ContainerGetAccountInfoOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -671,7 +677,7 @@ func (client *containerClient) GetProperties(ctx context.Context, restype Enum11
 	if err != nil {
 		return ContainerGetPropertiesResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ContainerGetPropertiesResponse{}, err
 	}
@@ -683,7 +689,7 @@ func (client *containerClient) GetProperties(ctx context.Context, restype Enum11
 
 // getPropertiesCreateRequest creates the GetProperties request.
 func (client *containerClient) getPropertiesCreateRequest(ctx context.Context, restype Enum11, containerGetPropertiesOptions *ContainerGetPropertiesOptions, leaseAccessConditions *LeaseAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -816,7 +822,7 @@ func (client *containerClient) ListBlobFlatSegment(restype Enum11, comp Enum5, o
 
 // listBlobFlatSegmentCreateRequest creates the ListBlobFlatSegment request.
 func (client *containerClient) listBlobFlatSegmentCreateRequest(ctx context.Context, restype Enum11, comp Enum5, options *ContainerListBlobFlatSegmentOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -904,7 +910,7 @@ func (client *containerClient) ListBlobHierarchySegment(restype Enum11, comp Enu
 
 // listBlobHierarchySegmentCreateRequest creates the ListBlobHierarchySegment request.
 func (client *containerClient) listBlobHierarchySegmentCreateRequest(ctx context.Context, restype Enum11, comp Enum5, delimiter string, options *ContainerListBlobHierarchySegmentOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -984,7 +990,7 @@ func (client *containerClient) ReleaseLease(ctx context.Context, comp Enum16, re
 	if err != nil {
 		return ContainerReleaseLeaseResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ContainerReleaseLeaseResponse{}, err
 	}
@@ -996,7 +1002,7 @@ func (client *containerClient) ReleaseLease(ctx context.Context, comp Enum16, re
 
 // releaseLeaseCreateRequest creates the ReleaseLease request.
 func (client *containerClient) releaseLeaseCreateRequest(ctx context.Context, comp Enum16, restype Enum11, leaseID string, containerReleaseLeaseOptions *ContainerReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -1075,7 +1081,7 @@ func (client *containerClient) Rename(ctx context.Context, restype Enum11, comp 
 	if err != nil {
 		return ContainerRenameResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ContainerRenameResponse{}, err
 	}
@@ -1087,7 +1093,7 @@ func (client *containerClient) Rename(ctx context.Context, restype Enum11, comp 
 
 // renameCreateRequest creates the Rename request.
 func (client *containerClient) renameCreateRequest(ctx context.Context, restype Enum11, comp Enum15, sourceContainerName string, options *ContainerRenameOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -1152,7 +1158,7 @@ func (client *containerClient) RenewLease(ctx context.Context, comp Enum16, rest
 	if err != nil {
 		return ContainerRenewLeaseResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ContainerRenewLeaseResponse{}, err
 	}
@@ -1164,7 +1170,7 @@ func (client *containerClient) RenewLease(ctx context.Context, comp Enum16, rest
 
 // renewLeaseCreateRequest creates the RenewLease request.
 func (client *containerClient) renewLeaseCreateRequest(ctx context.Context, comp Enum16, restype Enum11, leaseID string, containerRenewLeaseOptions *ContainerRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -1246,7 +1252,7 @@ func (client *containerClient) Restore(ctx context.Context, restype Enum11, comp
 	if err != nil {
 		return ContainerRestoreResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ContainerRestoreResponse{}, err
 	}
@@ -1258,7 +1264,7 @@ func (client *containerClient) Restore(ctx context.Context, restype Enum11, comp
 
 // restoreCreateRequest creates the Restore request.
 func (client *containerClient) restoreCreateRequest(ctx context.Context, restype Enum11, comp Enum14, options *ContainerRestoreOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -1325,7 +1331,7 @@ func (client *containerClient) SetAccessPolicy(ctx context.Context, restype Enum
 	if err != nil {
 		return ContainerSetAccessPolicyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ContainerSetAccessPolicyResponse{}, err
 	}
@@ -1337,7 +1343,7 @@ func (client *containerClient) SetAccessPolicy(ctx context.Context, restype Enum
 
 // setAccessPolicyCreateRequest creates the SetAccessPolicy request.
 func (client *containerClient) setAccessPolicyCreateRequest(ctx context.Context, restype Enum11, comp Enum13, containerSetAccessPolicyOptions *ContainerSetAccessPolicyOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -1427,7 +1433,7 @@ func (client *containerClient) SetMetadata(ctx context.Context, restype Enum11, 
 	if err != nil {
 		return ContainerSetMetadataResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ContainerSetMetadataResponse{}, err
 	}
@@ -1439,7 +1445,7 @@ func (client *containerClient) SetMetadata(ctx context.Context, restype Enum11, 
 
 // setMetadataCreateRequest creates the SetMetadata request.
 func (client *containerClient) setMetadataCreateRequest(ctx context.Context, restype Enum11, comp Enum12, containerSetMetadataOptions *ContainerSetMetadataOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -1521,7 +1527,7 @@ func (client *containerClient) SubmitBatch(ctx context.Context, restype Enum11, 
 	if err != nil {
 		return ContainerSubmitBatchResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ContainerSubmitBatchResponse{}, err
 	}
@@ -1533,7 +1539,7 @@ func (client *containerClient) SubmitBatch(ctx context.Context, restype Enum11, 
 
 // submitBatchCreateRequest creates the SubmitBatch request.
 func (client *containerClient) submitBatchCreateRequest(ctx context.Context, restype Enum11, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *ContainerSubmitBatchOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPost, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPost, client.endpoint)
 	if err != nil {
 		return nil, err
 	}

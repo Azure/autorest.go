@@ -16,7 +16,7 @@ func newLrosaDsClient() *LROSADsClient {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.Transport = httpClientWithCookieJar()
-	return NewLROSADsClient(NewDefaultConnection(&options))
+	return NewLROSADsClient(&options)
 }
 
 func TestLROSADSBeginDelete202NonRetry400(t *testing.T) {

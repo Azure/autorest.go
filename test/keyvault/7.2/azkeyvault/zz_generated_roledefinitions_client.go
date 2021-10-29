@@ -22,12 +22,15 @@ import (
 // RoleDefinitionsClient contains the methods for the RoleDefinitions group.
 // Don't use this type directly, use NewRoleDefinitionsClient() instead.
 type RoleDefinitionsClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewRoleDefinitionsClient creates a new instance of RoleDefinitionsClient with the specified values.
-func NewRoleDefinitionsClient(con *Connection) *RoleDefinitionsClient {
-	return &RoleDefinitionsClient{con: con}
+func NewRoleDefinitionsClient(pl runtime.Pipeline) *RoleDefinitionsClient {
+	client := &RoleDefinitionsClient{
+		pl: pl,
+	}
+	return client
 }
 
 // CreateOrUpdate - Creates or updates a custom role definition.
@@ -37,7 +40,7 @@ func (client *RoleDefinitionsClient) CreateOrUpdate(ctx context.Context, vaultBa
 	if err != nil {
 		return RoleDefinitionsCreateOrUpdateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return RoleDefinitionsCreateOrUpdateResponse{}, err
 	}
@@ -97,7 +100,7 @@ func (client *RoleDefinitionsClient) Delete(ctx context.Context, vaultBaseURL st
 	if err != nil {
 		return RoleDefinitionsDeleteResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return RoleDefinitionsDeleteResponse{}, err
 	}
@@ -157,7 +160,7 @@ func (client *RoleDefinitionsClient) Get(ctx context.Context, vaultBaseURL strin
 	if err != nil {
 		return RoleDefinitionsGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return RoleDefinitionsGetResponse{}, err
 	}

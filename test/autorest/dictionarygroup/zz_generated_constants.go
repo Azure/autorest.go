@@ -8,6 +8,8 @@
 
 package dictionarygroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "dictionarygroup"
 	version = "v0.1.0"

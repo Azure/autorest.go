@@ -23,12 +23,15 @@ import (
 // KeyVaultClient contains the methods for the KeyVaultClient group.
 // Don't use this type directly, use NewKeyVaultClient() instead.
 type KeyVaultClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewKeyVaultClient creates a new instance of KeyVaultClient with the specified values.
-func NewKeyVaultClient(con *Connection) *KeyVaultClient {
-	return &KeyVaultClient{con: con}
+func NewKeyVaultClient(pl runtime.Pipeline) *KeyVaultClient {
+	client := &KeyVaultClient{
+		pl: pl,
+	}
+	return client
 }
 
 // BackupCertificate - Requests that a backup of the specified certificate be downloaded to the client. All versions of the certificate will be downloaded.
@@ -39,7 +42,7 @@ func (client *KeyVaultClient) BackupCertificate(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return KeyVaultClientBackupCertificateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientBackupCertificateResponse{}, err
 	}
@@ -107,7 +110,7 @@ func (client *KeyVaultClient) BackupKey(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return KeyVaultClientBackupKeyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientBackupKeyResponse{}, err
 	}
@@ -167,7 +170,7 @@ func (client *KeyVaultClient) BackupSecret(ctx context.Context, vaultBaseURL str
 	if err != nil {
 		return KeyVaultClientBackupSecretResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientBackupSecretResponse{}, err
 	}
@@ -227,7 +230,7 @@ func (client *KeyVaultClient) BackupStorageAccount(ctx context.Context, vaultBas
 	if err != nil {
 		return KeyVaultClientBackupStorageAccountResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientBackupStorageAccountResponse{}, err
 	}
@@ -286,7 +289,7 @@ func (client *KeyVaultClient) CreateCertificate(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return KeyVaultClientCreateCertificateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientCreateCertificateResponse{}, err
 	}
@@ -347,7 +350,7 @@ func (client *KeyVaultClient) CreateKey(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return KeyVaultClientCreateKeyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientCreateKeyResponse{}, err
 	}
@@ -410,7 +413,7 @@ func (client *KeyVaultClient) Decrypt(ctx context.Context, vaultBaseURL string, 
 	if err != nil {
 		return KeyVaultClientDecryptResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientDecryptResponse{}, err
 	}
@@ -475,7 +478,7 @@ func (client *KeyVaultClient) DeleteCertificate(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return KeyVaultClientDeleteCertificateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientDeleteCertificateResponse{}, err
 	}
@@ -535,7 +538,7 @@ func (client *KeyVaultClient) DeleteCertificateContacts(ctx context.Context, vau
 	if err != nil {
 		return KeyVaultClientDeleteCertificateContactsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientDeleteCertificateContactsResponse{}, err
 	}
@@ -591,7 +594,7 @@ func (client *KeyVaultClient) DeleteCertificateIssuer(ctx context.Context, vault
 	if err != nil {
 		return KeyVaultClientDeleteCertificateIssuerResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientDeleteCertificateIssuerResponse{}, err
 	}
@@ -651,7 +654,7 @@ func (client *KeyVaultClient) DeleteCertificateOperation(ctx context.Context, va
 	if err != nil {
 		return KeyVaultClientDeleteCertificateOperationResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientDeleteCertificateOperationResponse{}, err
 	}
@@ -712,7 +715,7 @@ func (client *KeyVaultClient) DeleteKey(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return KeyVaultClientDeleteKeyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientDeleteKeyResponse{}, err
 	}
@@ -771,7 +774,7 @@ func (client *KeyVaultClient) DeleteSasDefinition(ctx context.Context, vaultBase
 	if err != nil {
 		return KeyVaultClientDeleteSasDefinitionResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientDeleteSasDefinitionResponse{}, err
 	}
@@ -835,7 +838,7 @@ func (client *KeyVaultClient) DeleteSecret(ctx context.Context, vaultBaseURL str
 	if err != nil {
 		return KeyVaultClientDeleteSecretResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientDeleteSecretResponse{}, err
 	}
@@ -894,7 +897,7 @@ func (client *KeyVaultClient) DeleteStorageAccount(ctx context.Context, vaultBas
 	if err != nil {
 		return KeyVaultClientDeleteStorageAccountResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientDeleteStorageAccountResponse{}, err
 	}
@@ -959,7 +962,7 @@ func (client *KeyVaultClient) Encrypt(ctx context.Context, vaultBaseURL string, 
 	if err != nil {
 		return KeyVaultClientEncryptResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientEncryptResponse{}, err
 	}
@@ -1025,7 +1028,7 @@ func (client *KeyVaultClient) BeginFullBackup(ctx context.Context, vaultBaseURL 
 	result := KeyVaultClientFullBackupPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("KeyVaultClient.FullBackup", resp, client.con.Pipeline(), client.fullBackupHandleError)
+	pt, err := runtime.NewPoller("KeyVaultClient.FullBackup", resp, client.pl, client.fullBackupHandleError)
 	if err != nil {
 		return KeyVaultClientFullBackupPollerResponse{}, err
 	}
@@ -1042,7 +1045,7 @@ func (client *KeyVaultClient) fullBackup(ctx context.Context, vaultBaseURL strin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1091,7 +1094,7 @@ func (client *KeyVaultClient) FullBackupStatus(ctx context.Context, vaultBaseURL
 	if err != nil {
 		return KeyVaultClientFullBackupStatusResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientFullBackupStatusResponse{}, err
 	}
@@ -1153,7 +1156,7 @@ func (client *KeyVaultClient) BeginFullRestoreOperation(ctx context.Context, vau
 	result := KeyVaultClientFullRestoreOperationPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("KeyVaultClient.FullRestoreOperation", resp, client.con.Pipeline(), client.fullRestoreOperationHandleError)
+	pt, err := runtime.NewPoller("KeyVaultClient.FullRestoreOperation", resp, client.pl, client.fullRestoreOperationHandleError)
 	if err != nil {
 		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
 	}
@@ -1170,7 +1173,7 @@ func (client *KeyVaultClient) fullRestoreOperation(ctx context.Context, vaultBas
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -1219,7 +1222,7 @@ func (client *KeyVaultClient) GetCertificate(ctx context.Context, vaultBaseURL s
 	if err != nil {
 		return KeyVaultClientGetCertificateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientGetCertificateResponse{}, err
 	}
@@ -1283,7 +1286,7 @@ func (client *KeyVaultClient) GetCertificateContacts(ctx context.Context, vaultB
 	if err != nil {
 		return KeyVaultClientGetCertificateContactsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientGetCertificateContactsResponse{}, err
 	}
@@ -1339,7 +1342,7 @@ func (client *KeyVaultClient) GetCertificateIssuer(ctx context.Context, vaultBas
 	if err != nil {
 		return KeyVaultClientGetCertificateIssuerResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientGetCertificateIssuerResponse{}, err
 	}
@@ -1454,7 +1457,7 @@ func (client *KeyVaultClient) GetCertificateOperation(ctx context.Context, vault
 	if err != nil {
 		return KeyVaultClientGetCertificateOperationResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientGetCertificateOperationResponse{}, err
 	}
@@ -1514,7 +1517,7 @@ func (client *KeyVaultClient) GetCertificatePolicy(ctx context.Context, vaultBas
 	if err != nil {
 		return KeyVaultClientGetCertificatePolicyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientGetCertificatePolicyResponse{}, err
 	}
@@ -1694,7 +1697,7 @@ func (client *KeyVaultClient) GetDeletedCertificate(ctx context.Context, vaultBa
 	if err != nil {
 		return KeyVaultClientGetDeletedCertificateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientGetDeletedCertificateResponse{}, err
 	}
@@ -1815,7 +1818,7 @@ func (client *KeyVaultClient) GetDeletedKey(ctx context.Context, vaultBaseURL st
 	if err != nil {
 		return KeyVaultClientGetDeletedKeyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientGetDeletedKeyResponse{}, err
 	}
@@ -1934,7 +1937,7 @@ func (client *KeyVaultClient) GetDeletedSasDefinition(ctx context.Context, vault
 	if err != nil {
 		return KeyVaultClientGetDeletedSasDefinitionResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientGetDeletedSasDefinitionResponse{}, err
 	}
@@ -2058,7 +2061,7 @@ func (client *KeyVaultClient) GetDeletedSecret(ctx context.Context, vaultBaseURL
 	if err != nil {
 		return KeyVaultClientGetDeletedSecretResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientGetDeletedSecretResponse{}, err
 	}
@@ -2174,7 +2177,7 @@ func (client *KeyVaultClient) GetDeletedStorageAccount(ctx context.Context, vaul
 	if err != nil {
 		return KeyVaultClientGetDeletedStorageAccountResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientGetDeletedStorageAccountResponse{}, err
 	}
@@ -2290,7 +2293,7 @@ func (client *KeyVaultClient) GetKey(ctx context.Context, vaultBaseURL string, k
 	if err != nil {
 		return KeyVaultClientGetKeyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientGetKeyResponse{}, err
 	}
@@ -2470,7 +2473,7 @@ func (client *KeyVaultClient) GetSasDefinition(ctx context.Context, vaultBaseURL
 	if err != nil {
 		return KeyVaultClientGetSasDefinitionResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientGetSasDefinitionResponse{}, err
 	}
@@ -2592,7 +2595,7 @@ func (client *KeyVaultClient) GetSecret(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return KeyVaultClientGetSecretResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientGetSecretResponse{}, err
 	}
@@ -2772,7 +2775,7 @@ func (client *KeyVaultClient) GetStorageAccount(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return KeyVaultClientGetStorageAccountResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientGetStorageAccountResponse{}, err
 	}
@@ -2888,7 +2891,7 @@ func (client *KeyVaultClient) ImportCertificate(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return KeyVaultClientImportCertificateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientImportCertificateResponse{}, err
 	}
@@ -2949,7 +2952,7 @@ func (client *KeyVaultClient) ImportKey(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return KeyVaultClientImportKeyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientImportKeyResponse{}, err
 	}
@@ -3010,7 +3013,7 @@ func (client *KeyVaultClient) MergeCertificate(ctx context.Context, vaultBaseURL
 	if err != nil {
 		return KeyVaultClientMergeCertificateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientMergeCertificateResponse{}, err
 	}
@@ -3071,7 +3074,7 @@ func (client *KeyVaultClient) PurgeDeletedCertificate(ctx context.Context, vault
 	if err != nil {
 		return KeyVaultClientPurgeDeletedCertificateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientPurgeDeletedCertificateResponse{}, err
 	}
@@ -3123,7 +3126,7 @@ func (client *KeyVaultClient) PurgeDeletedKey(ctx context.Context, vaultBaseURL 
 	if err != nil {
 		return KeyVaultClientPurgeDeletedKeyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientPurgeDeletedKeyResponse{}, err
 	}
@@ -3175,7 +3178,7 @@ func (client *KeyVaultClient) PurgeDeletedSecret(ctx context.Context, vaultBaseU
 	if err != nil {
 		return KeyVaultClientPurgeDeletedSecretResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientPurgeDeletedSecretResponse{}, err
 	}
@@ -3227,7 +3230,7 @@ func (client *KeyVaultClient) PurgeDeletedStorageAccount(ctx context.Context, va
 	if err != nil {
 		return KeyVaultClientPurgeDeletedStorageAccountResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientPurgeDeletedStorageAccountResponse{}, err
 	}
@@ -3279,7 +3282,7 @@ func (client *KeyVaultClient) RecoverDeletedCertificate(ctx context.Context, vau
 	if err != nil {
 		return KeyVaultClientRecoverDeletedCertificateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientRecoverDeletedCertificateResponse{}, err
 	}
@@ -3340,7 +3343,7 @@ func (client *KeyVaultClient) RecoverDeletedKey(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return KeyVaultClientRecoverDeletedKeyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientRecoverDeletedKeyResponse{}, err
 	}
@@ -3400,7 +3403,7 @@ func (client *KeyVaultClient) RecoverDeletedSasDefinition(ctx context.Context, v
 	if err != nil {
 		return KeyVaultClientRecoverDeletedSasDefinitionResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientRecoverDeletedSasDefinitionResponse{}, err
 	}
@@ -3464,7 +3467,7 @@ func (client *KeyVaultClient) RecoverDeletedSecret(ctx context.Context, vaultBas
 	if err != nil {
 		return KeyVaultClientRecoverDeletedSecretResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientRecoverDeletedSecretResponse{}, err
 	}
@@ -3524,7 +3527,7 @@ func (client *KeyVaultClient) RecoverDeletedStorageAccount(ctx context.Context, 
 	if err != nil {
 		return KeyVaultClientRecoverDeletedStorageAccountResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientRecoverDeletedStorageAccountResponse{}, err
 	}
@@ -3583,7 +3586,7 @@ func (client *KeyVaultClient) RegenerateStorageAccountKey(ctx context.Context, v
 	if err != nil {
 		return KeyVaultClientRegenerateStorageAccountKeyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientRegenerateStorageAccountKeyResponse{}, err
 	}
@@ -3642,7 +3645,7 @@ func (client *KeyVaultClient) RestoreCertificate(ctx context.Context, vaultBaseU
 	if err != nil {
 		return KeyVaultClientRestoreCertificateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientRestoreCertificateResponse{}, err
 	}
@@ -3705,7 +3708,7 @@ func (client *KeyVaultClient) RestoreKey(ctx context.Context, vaultBaseURL strin
 	if err != nil {
 		return KeyVaultClientRestoreKeyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientRestoreKeyResponse{}, err
 	}
@@ -3760,7 +3763,7 @@ func (client *KeyVaultClient) RestoreSecret(ctx context.Context, vaultBaseURL st
 	if err != nil {
 		return KeyVaultClientRestoreSecretResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientRestoreSecretResponse{}, err
 	}
@@ -3815,7 +3818,7 @@ func (client *KeyVaultClient) RestoreStatus(ctx context.Context, vaultBaseURL st
 	if err != nil {
 		return KeyVaultClientRestoreStatusResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientRestoreStatusResponse{}, err
 	}
@@ -3874,7 +3877,7 @@ func (client *KeyVaultClient) RestoreStorageAccount(ctx context.Context, vaultBa
 	if err != nil {
 		return KeyVaultClientRestoreStorageAccountResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientRestoreStorageAccountResponse{}, err
 	}
@@ -3933,7 +3936,7 @@ func (client *KeyVaultClient) BeginSelectiveKeyRestoreOperation(ctx context.Cont
 	result := KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("KeyVaultClient.SelectiveKeyRestoreOperation", resp, client.con.Pipeline(), client.selectiveKeyRestoreOperationHandleError)
+	pt, err := runtime.NewPoller("KeyVaultClient.SelectiveKeyRestoreOperation", resp, client.pl, client.selectiveKeyRestoreOperationHandleError)
 	if err != nil {
 		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
 	}
@@ -3951,7 +3954,7 @@ func (client *KeyVaultClient) selectiveKeyRestoreOperation(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -4004,7 +4007,7 @@ func (client *KeyVaultClient) SetCertificateContacts(ctx context.Context, vaultB
 	if err != nil {
 		return KeyVaultClientSetCertificateContactsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientSetCertificateContactsResponse{}, err
 	}
@@ -4060,7 +4063,7 @@ func (client *KeyVaultClient) SetCertificateIssuer(ctx context.Context, vaultBas
 	if err != nil {
 		return KeyVaultClientSetCertificateIssuerResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientSetCertificateIssuerResponse{}, err
 	}
@@ -4119,7 +4122,7 @@ func (client *KeyVaultClient) SetSasDefinition(ctx context.Context, vaultBaseURL
 	if err != nil {
 		return KeyVaultClientSetSasDefinitionResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientSetSasDefinitionResponse{}, err
 	}
@@ -4183,7 +4186,7 @@ func (client *KeyVaultClient) SetSecret(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return KeyVaultClientSetSecretResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientSetSecretResponse{}, err
 	}
@@ -4242,7 +4245,7 @@ func (client *KeyVaultClient) SetStorageAccount(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return KeyVaultClientSetStorageAccountResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientSetStorageAccountResponse{}, err
 	}
@@ -4302,7 +4305,7 @@ func (client *KeyVaultClient) Sign(ctx context.Context, vaultBaseURL string, key
 	if err != nil {
 		return KeyVaultClientSignResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientSignResponse{}, err
 	}
@@ -4367,7 +4370,7 @@ func (client *KeyVaultClient) UnwrapKey(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return KeyVaultClientUnwrapKeyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientUnwrapKeyResponse{}, err
 	}
@@ -4432,7 +4435,7 @@ func (client *KeyVaultClient) UpdateCertificate(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return KeyVaultClientUpdateCertificateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientUpdateCertificateResponse{}, err
 	}
@@ -4496,7 +4499,7 @@ func (client *KeyVaultClient) UpdateCertificateIssuer(ctx context.Context, vault
 	if err != nil {
 		return KeyVaultClientUpdateCertificateIssuerResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientUpdateCertificateIssuerResponse{}, err
 	}
@@ -4555,7 +4558,7 @@ func (client *KeyVaultClient) UpdateCertificateOperation(ctx context.Context, va
 	if err != nil {
 		return KeyVaultClientUpdateCertificateOperationResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientUpdateCertificateOperationResponse{}, err
 	}
@@ -4614,7 +4617,7 @@ func (client *KeyVaultClient) UpdateCertificatePolicy(ctx context.Context, vault
 	if err != nil {
 		return KeyVaultClientUpdateCertificatePolicyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientUpdateCertificatePolicyResponse{}, err
 	}
@@ -4674,7 +4677,7 @@ func (client *KeyVaultClient) UpdateKey(ctx context.Context, vaultBaseURL string
 	if err != nil {
 		return KeyVaultClientUpdateKeyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientUpdateKeyResponse{}, err
 	}
@@ -4737,7 +4740,7 @@ func (client *KeyVaultClient) UpdateSasDefinition(ctx context.Context, vaultBase
 	if err != nil {
 		return KeyVaultClientUpdateSasDefinitionResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientUpdateSasDefinitionResponse{}, err
 	}
@@ -4802,7 +4805,7 @@ func (client *KeyVaultClient) UpdateSecret(ctx context.Context, vaultBaseURL str
 	if err != nil {
 		return KeyVaultClientUpdateSecretResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientUpdateSecretResponse{}, err
 	}
@@ -4865,7 +4868,7 @@ func (client *KeyVaultClient) UpdateStorageAccount(ctx context.Context, vaultBas
 	if err != nil {
 		return KeyVaultClientUpdateStorageAccountResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientUpdateStorageAccountResponse{}, err
 	}
@@ -4928,7 +4931,7 @@ func (client *KeyVaultClient) Verify(ctx context.Context, vaultBaseURL string, k
 	if err != nil {
 		return KeyVaultClientVerifyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientVerifyResponse{}, err
 	}
@@ -4995,7 +4998,7 @@ func (client *KeyVaultClient) WrapKey(ctx context.Context, vaultBaseURL string, 
 	if err != nil {
 		return KeyVaultClientWrapKeyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return KeyVaultClientWrapKeyResponse{}, err
 	}

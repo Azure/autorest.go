@@ -11,6 +11,7 @@ package nonstringenumgroup
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,16 @@ import (
 // IntClient contains the methods for the Int group.
 // Don't use this type directly, use NewIntClient() instead.
 type IntClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewIntClient creates a new instance of IntClient with the specified values.
-func NewIntClient(con *Connection) *IntClient {
-	return &IntClient{con: con}
+func NewIntClient(options *azcore.ClientOptions) *IntClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &IntClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // Get - Get an int enum
@@ -34,7 +39,7 @@ func (client *IntClient) Get(ctx context.Context, options *IntGetOptions) (IntGe
 	if err != nil {
 		return IntGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntGetResponse{}, err
 	}
@@ -47,7 +52,7 @@ func (client *IntClient) Get(ctx context.Context, options *IntGetOptions) (IntGe
 // getCreateRequest creates the Get request.
 func (client *IntClient) getCreateRequest(ctx context.Context, options *IntGetOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/int/get"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +88,7 @@ func (client *IntClient) Put(ctx context.Context, options *IntPutOptions) (IntPu
 	if err != nil {
 		return IntPutResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntPutResponse{}, err
 	}
@@ -96,7 +101,7 @@ func (client *IntClient) Put(ctx context.Context, options *IntPutOptions) (IntPu
 // putCreateRequest creates the Put request.
 func (client *IntClient) putCreateRequest(ctx context.Context, options *IntPutOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/int/put"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

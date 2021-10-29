@@ -24,8 +24,8 @@ import (
 // MarketplacesClient contains the methods for the Marketplaces group.
 // Don't use this type directly, use NewMarketplacesClient() instead.
 type MarketplacesClient struct {
-	ep string
-	pl runtime.Pipeline
+	host string
+	pl   runtime.Pipeline
 }
 
 // NewMarketplacesClient creates a new instance of MarketplacesClient with the specified values.
@@ -37,7 +37,7 @@ func NewMarketplacesClient(credential azcore.TokenCredential, options *arm.Clien
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &MarketplacesClient{ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	return &MarketplacesClient{host: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
 }
 
 // List - Lists the marketplaces for a scope at the defined scope. Marketplaces are available via this API only for May 1, 2014 or later.
@@ -58,7 +58,7 @@ func (client *MarketplacesClient) List(scope string, options *MarketplacesListOp
 func (client *MarketplacesClient) listCreateRequest(ctx context.Context, scope string, options *MarketplacesListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/marketplaces"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

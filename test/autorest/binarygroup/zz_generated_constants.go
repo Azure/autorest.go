@@ -8,6 +8,8 @@
 
 package binarygroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "binarygroup"
 	version = "v0.1.0"

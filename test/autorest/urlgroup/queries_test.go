@@ -10,7 +10,7 @@ import (
 )
 
 func newQueriesClient() *QueriesClient {
-	return NewQueriesClient(NewDefaultConnection(nil))
+	return NewQueriesClient(nil)
 }
 
 // ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format

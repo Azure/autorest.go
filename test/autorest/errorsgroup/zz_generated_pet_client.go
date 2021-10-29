@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -22,12 +23,16 @@ import (
 // PetClient contains the methods for the Pet group.
 // Don't use this type directly, use NewPetClient() instead.
 type PetClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewPetClient creates a new instance of PetClient with the specified values.
-func NewPetClient(con *Connection) *PetClient {
-	return &PetClient{con: con}
+func NewPetClient(options *azcore.ClientOptions) *PetClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &PetClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // DoSomething - Asks pet to do something
@@ -38,7 +43,7 @@ func (client *PetClient) DoSomething(ctx context.Context, whatAction string, opt
 	if err != nil {
 		return PetDoSomethingResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PetDoSomethingResponse{}, err
 	}
@@ -55,7 +60,7 @@ func (client *PetClient) doSomethingCreateRequest(ctx context.Context, whatActio
 		return nil, errors.New("parameter whatAction cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{whatAction}", url.PathEscape(whatAction))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +98,7 @@ func (client *PetClient) GetPetByID(ctx context.Context, petID string, options *
 	if err != nil {
 		return PetGetPetByIDResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PetGetPetByIDResponse{}, err
 	}
@@ -110,7 +115,7 @@ func (client *PetClient) getPetByIDCreateRequest(ctx context.Context, petID stri
 		return nil, errors.New("parameter petID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +173,7 @@ func (client *PetClient) HasModelsParam(ctx context.Context, options *PetHasMode
 	if err != nil {
 		return PetHasModelsParamResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PetHasModelsParamResponse{}, err
 	}
@@ -181,7 +186,7 @@ func (client *PetClient) HasModelsParam(ctx context.Context, options *PetHasMode
 // hasModelsParamCreateRequest creates the HasModelsParam request.
 func (client *PetClient) hasModelsParamCreateRequest(ctx context.Context, options *PetHasModelsParamOptions) (*policy.Request, error) {
 	urlPath := "/errorStatusCodes/Pets/hasModelsParam"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

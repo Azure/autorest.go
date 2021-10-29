@@ -21,8 +21,14 @@ import (
 )
 
 type blockBlobClient struct {
-	con     *connection
-	version Enum2
+	endpoint string
+	version  Enum2
+	pl       runtime.Pipeline
+}
+
+// newBlockBlobClient creates a new instance of blockBlobClient with the specified values.
+func newBlockBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *blockBlobClient {
+	return &blockBlobClient{endpoint: endpoint, version: version, pl: pl}
 }
 
 // CommitBlockList - The Commit Block List operation writes a blob by specifying the list of block IDs that make up the blob. In order to be written as
@@ -38,7 +44,7 @@ func (client *blockBlobClient) CommitBlockList(ctx context.Context, comp Enum34,
 	if err != nil {
 		return BlockBlobCommitBlockListResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlockBlobCommitBlockListResponse{}, err
 	}
@@ -50,7 +56,7 @@ func (client *blockBlobClient) CommitBlockList(ctx context.Context, comp Enum34,
 
 // commitBlockListCreateRequest creates the CommitBlockList request.
 func (client *blockBlobClient) commitBlockListCreateRequest(ctx context.Context, comp Enum34, blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -224,7 +230,7 @@ func (client *blockBlobClient) GetBlockList(ctx context.Context, comp Enum34, li
 	if err != nil {
 		return BlockBlobGetBlockListResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlockBlobGetBlockListResponse{}, err
 	}
@@ -236,7 +242,7 @@ func (client *blockBlobClient) GetBlockList(ctx context.Context, comp Enum34, li
 
 // getBlockListCreateRequest creates the GetBlockList request.
 func (client *blockBlobClient) getBlockListCreateRequest(ctx context.Context, comp Enum34, listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -333,7 +339,7 @@ func (client *blockBlobClient) PutBlobFromURL(ctx context.Context, contentLength
 	if err != nil {
 		return BlockBlobPutBlobFromURLResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlockBlobPutBlobFromURLResponse{}, err
 	}
@@ -345,7 +351,7 @@ func (client *blockBlobClient) PutBlobFromURL(ctx context.Context, contentLength
 
 // putBlobFromURLCreateRequest creates the PutBlobFromURL request.
 func (client *blockBlobClient) putBlobFromURLCreateRequest(ctx context.Context, contentLength int64, copySource string, blockBlobPutBlobFromURLOptions *BlockBlobPutBlobFromURLOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -523,7 +529,7 @@ func (client *blockBlobClient) StageBlock(ctx context.Context, comp Enum33, bloc
 	if err != nil {
 		return BlockBlobStageBlockResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlockBlobStageBlockResponse{}, err
 	}
@@ -535,7 +541,7 @@ func (client *blockBlobClient) StageBlock(ctx context.Context, comp Enum33, bloc
 
 // stageBlockCreateRequest creates the StageBlock request.
 func (client *blockBlobClient) stageBlockCreateRequest(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, blockBlobStageBlockOptions *BlockBlobStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -645,7 +651,7 @@ func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, comp Enum3
 	if err != nil {
 		return BlockBlobStageBlockFromURLResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlockBlobStageBlockFromURLResponse{}, err
 	}
@@ -657,7 +663,7 @@ func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, comp Enum3
 
 // stageBlockFromURLCreateRequest creates the StageBlockFromURL request.
 func (client *blockBlobClient) stageBlockFromURLCreateRequest(ctx context.Context, comp Enum33, blockID string, contentLength int64, sourceURL string, blockBlobStageBlockFromURLOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -786,7 +792,7 @@ func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, 
 	if err != nil {
 		return BlockBlobUploadResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BlockBlobUploadResponse{}, err
 	}
@@ -798,7 +804,7 @@ func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, 
 
 // uploadCreateRequest creates the Upload request.
 func (client *blockBlobClient) uploadCreateRequest(ctx context.Context, contentLength int64, body io.ReadSeekCloser, blockBlobUploadOptions *BlockBlobUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}

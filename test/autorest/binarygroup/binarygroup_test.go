@@ -14,7 +14,7 @@ import (
 )
 
 func newBinaryGroupClient() *UploadClient {
-	return NewUploadClient(NewDefaultConnection(nil))
+	return NewUploadClient(nil)
 }
 
 func TestBinary(t *testing.T) {

@@ -11,6 +11,7 @@ package formdatagroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"io"
@@ -20,12 +21,16 @@ import (
 // FormdataClient contains the methods for the Formdata group.
 // Don't use this type directly, use NewFormdataClient() instead.
 type FormdataClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewFormdataClient creates a new instance of FormdataClient with the specified values.
-func NewFormdataClient(con *Connection) *FormdataClient {
-	return &FormdataClient{con: con}
+func NewFormdataClient(options *azcore.ClientOptions) *FormdataClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &FormdataClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // UploadFile - Upload file
@@ -35,7 +40,7 @@ func (client *FormdataClient) UploadFile(ctx context.Context, fileContent io.Rea
 	if err != nil {
 		return FormdataUploadFileResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return FormdataUploadFileResponse{}, err
 	}
@@ -48,7 +53,7 @@ func (client *FormdataClient) UploadFile(ctx context.Context, fileContent io.Rea
 // uploadFileCreateRequest creates the UploadFile request.
 func (client *FormdataClient) uploadFileCreateRequest(ctx context.Context, fileContent io.ReadSeekCloser, fileName string, options *FormdataUploadFileOptions) (*policy.Request, error) {
 	urlPath := "/formdata/stream/uploadfile"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +88,7 @@ func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent
 	if err != nil {
 		return FormdataUploadFileViaBodyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return FormdataUploadFileViaBodyResponse{}, err
 	}
@@ -96,7 +101,7 @@ func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent
 // uploadFileViaBodyCreateRequest creates the UploadFileViaBody request.
 func (client *FormdataClient) uploadFileViaBodyCreateRequest(ctx context.Context, fileContent io.ReadSeekCloser, options *FormdataUploadFileViaBodyOptions) (*policy.Request, error) {
 	urlPath := "/formdata/stream/uploadfile"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -125,7 +130,7 @@ func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []io.
 	if err != nil {
 		return FormdataUploadFilesResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return FormdataUploadFilesResponse{}, err
 	}
@@ -138,7 +143,7 @@ func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []io.
 // uploadFilesCreateRequest creates the UploadFiles request.
 func (client *FormdataClient) uploadFilesCreateRequest(ctx context.Context, fileContent []io.ReadSeekCloser, options *FormdataUploadFilesOptions) (*policy.Request, error) {
 	urlPath := "/formdata/stream/uploadfiles"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

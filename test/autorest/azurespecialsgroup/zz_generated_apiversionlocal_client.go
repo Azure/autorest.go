@@ -11,6 +11,7 @@ package azurespecialsgroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,16 @@ import (
 // APIVersionLocalClient contains the methods for the APIVersionLocal group.
 // Don't use this type directly, use NewAPIVersionLocalClient() instead.
 type APIVersionLocalClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewAPIVersionLocalClient creates a new instance of APIVersionLocalClient with the specified values.
-func NewAPIVersionLocalClient(con *Connection) *APIVersionLocalClient {
-	return &APIVersionLocalClient{con: con}
+func NewAPIVersionLocalClient(options *azcore.ClientOptions) *APIVersionLocalClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &APIVersionLocalClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // GetMethodLocalNull - Get method with api-version modeled in the method. pass in api-version = null to succeed
@@ -34,7 +39,7 @@ func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, opt
 	if err != nil {
 		return APIVersionLocalGetMethodLocalNullResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return APIVersionLocalGetMethodLocalNullResponse{}, err
 	}
@@ -47,7 +52,7 @@ func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, opt
 // getMethodLocalNullCreateRequest creates the GetMethodLocalNull request.
 func (client *APIVersionLocalClient) getMethodLocalNullCreateRequest(ctx context.Context, options *APIVersionLocalGetMethodLocalNullOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/local/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +85,7 @@ func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, op
 	if err != nil {
 		return APIVersionLocalGetMethodLocalValidResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return APIVersionLocalGetMethodLocalValidResponse{}, err
 	}
@@ -93,7 +98,7 @@ func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, op
 // getMethodLocalValidCreateRequest creates the GetMethodLocalValid request.
 func (client *APIVersionLocalClient) getMethodLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalGetMethodLocalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/apiVersion/method/string/none/query/local/2.0"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +129,7 @@ func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, opti
 	if err != nil {
 		return APIVersionLocalGetPathLocalValidResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return APIVersionLocalGetPathLocalValidResponse{}, err
 	}
@@ -137,7 +142,7 @@ func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, opti
 // getPathLocalValidCreateRequest creates the GetPathLocalValid request.
 func (client *APIVersionLocalClient) getPathLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalGetPathLocalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/apiVersion/path/string/none/query/local/2.0"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +173,7 @@ func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, o
 	if err != nil {
 		return APIVersionLocalGetSwaggerLocalValidResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return APIVersionLocalGetSwaggerLocalValidResponse{}, err
 	}
@@ -181,7 +186,7 @@ func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, o
 // getSwaggerLocalValidCreateRequest creates the GetSwaggerLocalValid request.
 func (client *APIVersionLocalClient) getSwaggerLocalValidCreateRequest(ctx context.Context, options *APIVersionLocalGetSwaggerLocalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/apiVersion/swagger/string/none/query/local/2.0"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

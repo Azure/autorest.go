@@ -12,7 +12,7 @@ import (
 )
 
 func newEnumClient() *EnumClient {
-	return NewEnumClient(NewDefaultConnection(nil))
+	return NewEnumClient(nil)
 }
 
 func TestEnumGetNotExpandable(t *testing.T) {

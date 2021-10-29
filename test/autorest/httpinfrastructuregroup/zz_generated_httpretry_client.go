@@ -11,6 +11,7 @@ package httpinfrastructuregroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,16 @@ import (
 // HTTPRetryClient contains the methods for the HTTPRetry group.
 // Don't use this type directly, use NewHTTPRetryClient() instead.
 type HTTPRetryClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewHTTPRetryClient creates a new instance of HTTPRetryClient with the specified values.
-func NewHTTPRetryClient(con *Connection) *HTTPRetryClient {
-	return &HTTPRetryClient{con: con}
+func NewHTTPRetryClient(options *azcore.ClientOptions) *HTTPRetryClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &HTTPRetryClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // Delete503 - Return 503 status code, then 200 after retry
@@ -34,7 +39,7 @@ func (client *HTTPRetryClient) Delete503(ctx context.Context, options *HTTPRetry
 	if err != nil {
 		return HTTPRetryDelete503Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRetryDelete503Response{}, err
 	}
@@ -47,7 +52,7 @@ func (client *HTTPRetryClient) Delete503(ctx context.Context, options *HTTPRetry
 // delete503CreateRequest creates the Delete503 request.
 func (client *HTTPRetryClient) delete503CreateRequest(ctx context.Context, options *HTTPRetryDelete503Options) (*policy.Request, error) {
 	urlPath := "/http/retry/503"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +80,7 @@ func (client *HTTPRetryClient) Get502(ctx context.Context, options *HTTPRetryGet
 	if err != nil {
 		return HTTPRetryGet502Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRetryGet502Response{}, err
 	}
@@ -88,7 +93,7 @@ func (client *HTTPRetryClient) Get502(ctx context.Context, options *HTTPRetryGet
 // get502CreateRequest creates the Get502 request.
 func (client *HTTPRetryClient) get502CreateRequest(ctx context.Context, options *HTTPRetryGet502Options) (*policy.Request, error) {
 	urlPath := "/http/retry/502"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +121,7 @@ func (client *HTTPRetryClient) Head408(ctx context.Context, options *HTTPRetryHe
 	if err != nil {
 		return HTTPRetryHead408Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRetryHead408Response{}, err
 	}
@@ -130,7 +135,7 @@ func (client *HTTPRetryClient) Head408(ctx context.Context, options *HTTPRetryHe
 // head408CreateRequest creates the Head408 request.
 func (client *HTTPRetryClient) head408CreateRequest(ctx context.Context, options *HTTPRetryHead408Options) (*policy.Request, error) {
 	urlPath := "/http/retry/408"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +150,7 @@ func (client *HTTPRetryClient) Options502(ctx context.Context, options *HTTPRetr
 	if err != nil {
 		return HTTPRetryOptions502Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRetryOptions502Response{}, err
 	}
@@ -158,7 +163,7 @@ func (client *HTTPRetryClient) Options502(ctx context.Context, options *HTTPRetr
 // options502CreateRequest creates the Options502 request.
 func (client *HTTPRetryClient) options502CreateRequest(ctx context.Context, options *HTTPRetryOptions502Options) (*policy.Request, error) {
 	urlPath := "/http/retry/502"
-	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -195,7 +200,7 @@ func (client *HTTPRetryClient) Patch500(ctx context.Context, options *HTTPRetryP
 	if err != nil {
 		return HTTPRetryPatch500Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRetryPatch500Response{}, err
 	}
@@ -208,7 +213,7 @@ func (client *HTTPRetryClient) Patch500(ctx context.Context, options *HTTPRetryP
 // patch500CreateRequest creates the Patch500 request.
 func (client *HTTPRetryClient) patch500CreateRequest(ctx context.Context, options *HTTPRetryPatch500Options) (*policy.Request, error) {
 	urlPath := "/http/retry/500"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -236,7 +241,7 @@ func (client *HTTPRetryClient) Patch504(ctx context.Context, options *HTTPRetryP
 	if err != nil {
 		return HTTPRetryPatch504Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRetryPatch504Response{}, err
 	}
@@ -249,7 +254,7 @@ func (client *HTTPRetryClient) Patch504(ctx context.Context, options *HTTPRetryP
 // patch504CreateRequest creates the Patch504 request.
 func (client *HTTPRetryClient) patch504CreateRequest(ctx context.Context, options *HTTPRetryPatch504Options) (*policy.Request, error) {
 	urlPath := "/http/retry/504"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -277,7 +282,7 @@ func (client *HTTPRetryClient) Post503(ctx context.Context, options *HTTPRetryPo
 	if err != nil {
 		return HTTPRetryPost503Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRetryPost503Response{}, err
 	}
@@ -290,7 +295,7 @@ func (client *HTTPRetryClient) Post503(ctx context.Context, options *HTTPRetryPo
 // post503CreateRequest creates the Post503 request.
 func (client *HTTPRetryClient) post503CreateRequest(ctx context.Context, options *HTTPRetryPost503Options) (*policy.Request, error) {
 	urlPath := "/http/retry/503"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -318,7 +323,7 @@ func (client *HTTPRetryClient) Put500(ctx context.Context, options *HTTPRetryPut
 	if err != nil {
 		return HTTPRetryPut500Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRetryPut500Response{}, err
 	}
@@ -331,7 +336,7 @@ func (client *HTTPRetryClient) Put500(ctx context.Context, options *HTTPRetryPut
 // put500CreateRequest creates the Put500 request.
 func (client *HTTPRetryClient) put500CreateRequest(ctx context.Context, options *HTTPRetryPut500Options) (*policy.Request, error) {
 	urlPath := "/http/retry/500"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -359,7 +364,7 @@ func (client *HTTPRetryClient) Put504(ctx context.Context, options *HTTPRetryPut
 	if err != nil {
 		return HTTPRetryPut504Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRetryPut504Response{}, err
 	}
@@ -372,7 +377,7 @@ func (client *HTTPRetryClient) Put504(ctx context.Context, options *HTTPRetryPut
 // put504CreateRequest creates the Put504 request.
 func (client *HTTPRetryClient) put504CreateRequest(ctx context.Context, options *HTTPRetryPut504Options) (*policy.Request, error) {
 	urlPath := "/http/retry/504"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

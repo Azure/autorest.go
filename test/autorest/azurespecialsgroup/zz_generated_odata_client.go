@@ -11,6 +11,7 @@ package azurespecialsgroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,12 +21,16 @@ import (
 // ODataClient contains the methods for the OData group.
 // Don't use this type directly, use NewODataClient() instead.
 type ODataClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewODataClient creates a new instance of ODataClient with the specified values.
-func NewODataClient(con *Connection) *ODataClient {
-	return &ODataClient{con: con}
+func NewODataClient(options *azcore.ClientOptions) *ODataClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &ODataClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
@@ -35,7 +40,7 @@ func (client *ODataClient) GetWithFilter(ctx context.Context, options *ODataGetW
 	if err != nil {
 		return ODataGetWithFilterResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ODataGetWithFilterResponse{}, err
 	}
@@ -48,7 +53,7 @@ func (client *ODataClient) GetWithFilter(ctx context.Context, options *ODataGetW
 // getWithFilterCreateRequest creates the GetWithFilter request.
 func (client *ODataClient) getWithFilterCreateRequest(ctx context.Context, options *ODataGetWithFilterOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/odata/filter"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

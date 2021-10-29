@@ -17,7 +17,13 @@ import (
 )
 
 type workspaceGitRepoManagementClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newWorkspaceGitRepoManagementClient creates a new instance of workspaceGitRepoManagementClient with the specified values.
+func newWorkspaceGitRepoManagementClient(endpoint string, pl runtime.Pipeline) *workspaceGitRepoManagementClient {
+	return &workspaceGitRepoManagementClient{endpoint: endpoint, pl: pl}
 }
 
 // GetGitHubAccessToken - Get the GitHub access token.
@@ -27,7 +33,7 @@ func (client *workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context
 	if err != nil {
 		return WorkspaceGitRepoManagementGetGitHubAccessTokenResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return WorkspaceGitRepoManagementGetGitHubAccessTokenResponse{}, err
 	}
@@ -40,7 +46,7 @@ func (client *workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context
 // getGitHubAccessTokenCreateRequest creates the GetGitHubAccessToken request.
 func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenCreateRequest(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementGetGitHubAccessTokenOptions) (*policy.Request, error) {
 	urlPath := "/getGitHubAccessToken"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -11,6 +11,7 @@ package complexgroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,16 @@ import (
 // ArrayClient contains the methods for the Array group.
 // Don't use this type directly, use NewArrayClient() instead.
 type ArrayClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewArrayClient creates a new instance of ArrayClient with the specified values.
-func NewArrayClient(con *Connection) *ArrayClient {
-	return &ArrayClient{con: con}
+func NewArrayClient(options *azcore.ClientOptions) *ArrayClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &ArrayClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // GetEmpty - Get complex types with array property which is empty
@@ -34,7 +39,7 @@ func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayGetEmptyO
 	if err != nil {
 		return ArrayGetEmptyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ArrayGetEmptyResponse{}, err
 	}
@@ -47,7 +52,7 @@ func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayGetEmptyO
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, options *ArrayGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/complex/array/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +89,7 @@ func (client *ArrayClient) GetNotProvided(ctx context.Context, options *ArrayGet
 	if err != nil {
 		return ArrayGetNotProvidedResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ArrayGetNotProvidedResponse{}, err
 	}
@@ -97,7 +102,7 @@ func (client *ArrayClient) GetNotProvided(ctx context.Context, options *ArrayGet
 // getNotProvidedCreateRequest creates the GetNotProvided request.
 func (client *ArrayClient) getNotProvidedCreateRequest(ctx context.Context, options *ArrayGetNotProvidedOptions) (*policy.Request, error) {
 	urlPath := "/complex/array/notprovided"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +139,7 @@ func (client *ArrayClient) GetValid(ctx context.Context, options *ArrayGetValidO
 	if err != nil {
 		return ArrayGetValidResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ArrayGetValidResponse{}, err
 	}
@@ -147,7 +152,7 @@ func (client *ArrayClient) GetValid(ctx context.Context, options *ArrayGetValidO
 // getValidCreateRequest creates the GetValid request.
 func (client *ArrayClient) getValidCreateRequest(ctx context.Context, options *ArrayGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/array/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -184,7 +189,7 @@ func (client *ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrappe
 	if err != nil {
 		return ArrayPutEmptyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ArrayPutEmptyResponse{}, err
 	}
@@ -197,7 +202,7 @@ func (client *ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrappe
 // putEmptyCreateRequest creates the PutEmpty request.
 func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutEmptyOptions) (*policy.Request, error) {
 	urlPath := "/complex/array/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -225,7 +230,7 @@ func (client *ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrappe
 	if err != nil {
 		return ArrayPutValidResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ArrayPutValidResponse{}, err
 	}
@@ -238,7 +243,7 @@ func (client *ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrappe
 // putValidCreateRequest creates the PutValid request.
 func (client *ArrayClient) putValidCreateRequest(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/array/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

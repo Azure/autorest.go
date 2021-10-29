@@ -8,6 +8,8 @@
 
 package complexmodelgroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "complexmodelgroup"
 	version = "v0.1.0"

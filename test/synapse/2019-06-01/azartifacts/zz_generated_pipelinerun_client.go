@@ -21,7 +21,13 @@ import (
 )
 
 type pipelineRunClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newPipelineRunClient creates a new instance of pipelineRunClient with the specified values.
+func newPipelineRunClient(endpoint string, pl runtime.Pipeline) *pipelineRunClient {
+	return &pipelineRunClient{endpoint: endpoint, pl: pl}
 }
 
 // CancelPipelineRun - Cancel a pipeline run by its run ID.
@@ -31,7 +37,7 @@ func (client *pipelineRunClient) CancelPipelineRun(ctx context.Context, runID st
 	if err != nil {
 		return PipelineRunCancelPipelineRunResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PipelineRunCancelPipelineRunResponse{}, err
 	}
@@ -48,7 +54,7 @@ func (client *pipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter runID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +88,7 @@ func (client *pipelineRunClient) GetPipelineRun(ctx context.Context, runID strin
 	if err != nil {
 		return PipelineRunGetPipelineRunResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PipelineRunGetPipelineRunResponse{}, err
 	}
@@ -99,7 +105,7 @@ func (client *pipelineRunClient) getPipelineRunCreateRequest(ctx context.Context
 		return nil, errors.New("parameter runID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -139,7 +145,7 @@ func (client *pipelineRunClient) QueryActivityRuns(ctx context.Context, pipeline
 	if err != nil {
 		return PipelineRunQueryActivityRunsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PipelineRunQueryActivityRunsResponse{}, err
 	}
@@ -160,7 +166,7 @@ func (client *pipelineRunClient) queryActivityRunsCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter runID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -200,7 +206,7 @@ func (client *pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Contex
 	if err != nil {
 		return PipelineRunQueryPipelineRunsByWorkspaceResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PipelineRunQueryPipelineRunsByWorkspaceResponse{}, err
 	}
@@ -213,7 +219,7 @@ func (client *pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Contex
 // queryPipelineRunsByWorkspaceCreateRequest creates the QueryPipelineRunsByWorkspace request.
 func (client *pipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, options *PipelineRunQueryPipelineRunsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/queryPipelineRuns"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

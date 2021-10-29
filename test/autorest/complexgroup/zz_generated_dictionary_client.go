@@ -11,6 +11,7 @@ package complexgroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,16 @@ import (
 // DictionaryClient contains the methods for the Dictionary group.
 // Don't use this type directly, use NewDictionaryClient() instead.
 type DictionaryClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewDictionaryClient creates a new instance of DictionaryClient with the specified values.
-func NewDictionaryClient(con *Connection) *DictionaryClient {
-	return &DictionaryClient{con: con}
+func NewDictionaryClient(options *azcore.ClientOptions) *DictionaryClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &DictionaryClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // GetEmpty - Get complex types with dictionary property which is empty
@@ -34,7 +39,7 @@ func (client *DictionaryClient) GetEmpty(ctx context.Context, options *Dictionar
 	if err != nil {
 		return DictionaryGetEmptyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DictionaryGetEmptyResponse{}, err
 	}
@@ -47,7 +52,7 @@ func (client *DictionaryClient) GetEmpty(ctx context.Context, options *Dictionar
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *DictionaryClient) getEmptyCreateRequest(ctx context.Context, options *DictionaryGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +89,7 @@ func (client *DictionaryClient) GetNotProvided(ctx context.Context, options *Dic
 	if err != nil {
 		return DictionaryGetNotProvidedResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DictionaryGetNotProvidedResponse{}, err
 	}
@@ -97,7 +102,7 @@ func (client *DictionaryClient) GetNotProvided(ctx context.Context, options *Dic
 // getNotProvidedCreateRequest creates the GetNotProvided request.
 func (client *DictionaryClient) getNotProvidedCreateRequest(ctx context.Context, options *DictionaryGetNotProvidedOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/notprovided"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +139,7 @@ func (client *DictionaryClient) GetNull(ctx context.Context, options *Dictionary
 	if err != nil {
 		return DictionaryGetNullResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DictionaryGetNullResponse{}, err
 	}
@@ -147,7 +152,7 @@ func (client *DictionaryClient) GetNull(ctx context.Context, options *Dictionary
 // getNullCreateRequest creates the GetNull request.
 func (client *DictionaryClient) getNullCreateRequest(ctx context.Context, options *DictionaryGetNullOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -184,7 +189,7 @@ func (client *DictionaryClient) GetValid(ctx context.Context, options *Dictionar
 	if err != nil {
 		return DictionaryGetValidResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DictionaryGetValidResponse{}, err
 	}
@@ -197,7 +202,7 @@ func (client *DictionaryClient) GetValid(ctx context.Context, options *Dictionar
 // getValidCreateRequest creates the GetValid request.
 func (client *DictionaryClient) getValidCreateRequest(ctx context.Context, options *DictionaryGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -234,7 +239,7 @@ func (client *DictionaryClient) PutEmpty(ctx context.Context, complexBody Dictio
 	if err != nil {
 		return DictionaryPutEmptyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DictionaryPutEmptyResponse{}, err
 	}
@@ -247,7 +252,7 @@ func (client *DictionaryClient) PutEmpty(ctx context.Context, complexBody Dictio
 // putEmptyCreateRequest creates the PutEmpty request.
 func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryPutEmptyOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -275,7 +280,7 @@ func (client *DictionaryClient) PutValid(ctx context.Context, complexBody Dictio
 	if err != nil {
 		return DictionaryPutValidResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DictionaryPutValidResponse{}, err
 	}
@@ -288,7 +293,7 @@ func (client *DictionaryClient) PutValid(ctx context.Context, complexBody Dictio
 // putValidCreateRequest creates the PutValid request.
 func (client *DictionaryClient) putValidCreateRequest(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

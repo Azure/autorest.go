@@ -16,7 +16,7 @@ import (
 )
 
 func newMultipleResponsesClient() *MultipleResponsesClient {
-	return NewMultipleResponsesClient(NewDefaultConnection(nil))
+	return NewMultipleResponsesClient(nil)
 }
 
 // Get200Model201ModelDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}

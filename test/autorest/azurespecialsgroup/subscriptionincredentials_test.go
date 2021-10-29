@@ -12,7 +12,7 @@ import (
 )
 
 func newSubscriptionInCredentialsClient() *SubscriptionInCredentialsClient {
-	return NewSubscriptionInCredentialsClient(NewDefaultConnection(nil), "1234-5678-9012-3456")
+	return NewSubscriptionInCredentialsClient("1234-5678-9012-3456", nil)
 }
 
 // PostMethodGlobalNotProvidedValid - POST method with subscriptionId modeled in credentials.  Set the credential subscriptionId to '1234-5678-9012-3456' to succeed

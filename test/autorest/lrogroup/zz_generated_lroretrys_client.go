@@ -11,6 +11,7 @@ package lrogroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -20,12 +21,16 @@ import (
 // LRORetrysClient contains the methods for the LRORetrys group.
 // Don't use this type directly, use NewLRORetrysClient() instead.
 type LRORetrysClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewLRORetrysClient creates a new instance of LRORetrysClient with the specified values.
-func NewLRORetrysClient(con *Connection) *LRORetrysClient {
-	return &LRORetrysClient{con: con}
+func NewLRORetrysClient(options *azcore.ClientOptions) *LRORetrysClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &LRORetrysClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // BeginDelete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return this value until the last
@@ -39,7 +44,7 @@ func (client *LRORetrysClient) BeginDelete202Retry200(ctx context.Context, optio
 	result := LRORetrysDelete202Retry200PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LRORetrysClient.Delete202Retry200", "", resp, client.con.Pipeline(), client.delete202Retry200HandleError)
+	pt, err := armruntime.NewPoller("LRORetrysClient.Delete202Retry200", "", resp, client.pl, client.delete202Retry200HandleError)
 	if err != nil {
 		return LRORetrysDelete202Retry200PollerResponse{}, err
 	}
@@ -57,7 +62,7 @@ func (client *LRORetrysClient) delete202Retry200(ctx context.Context, options *L
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +75,7 @@ func (client *LRORetrysClient) delete202Retry200(ctx context.Context, options *L
 // delete202Retry200CreateRequest creates the Delete202Retry200 request.
 func (client *LRORetrysClient) delete202Retry200CreateRequest(ctx context.Context, options *LRORetrysBeginDelete202Retry200Options) (*policy.Request, error) {
 	urlPath := "/lro/retryerror/delete/202/retry/200"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +107,7 @@ func (client *LRORetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx contex
 	result := LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LRORetrysClient.DeleteAsyncRelativeRetrySucceeded", "", resp, client.con.Pipeline(), client.deleteAsyncRelativeRetrySucceededHandleError)
+	pt, err := armruntime.NewPoller("LRORetrysClient.DeleteAsyncRelativeRetrySucceeded", "", resp, client.pl, client.deleteAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
 		return LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
@@ -120,7 +125,7 @@ func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceeded(ctx context.Con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +138,7 @@ func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceeded(ctx context.Con
 // deleteAsyncRelativeRetrySucceededCreateRequest creates the DeleteAsyncRelativeRetrySucceeded request.
 func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceededCreateRequest(ctx context.Context, options *LRORetrysBeginDeleteAsyncRelativeRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/retryerror/deleteasync/retry/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +171,7 @@ func (client *LRORetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ct
 	result := LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LRORetrysClient.DeleteProvisioning202Accepted200Succeeded", "", resp, client.con.Pipeline(), client.deleteProvisioning202Accepted200SucceededHandleError)
+	pt, err := armruntime.NewPoller("LRORetrysClient.DeleteProvisioning202Accepted200Succeeded", "", resp, client.pl, client.deleteProvisioning202Accepted200SucceededHandleError)
 	if err != nil {
 		return LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
 	}
@@ -185,7 +190,7 @@ func (client *LRORetrysClient) deleteProvisioning202Accepted200Succeeded(ctx con
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -198,7 +203,7 @@ func (client *LRORetrysClient) deleteProvisioning202Accepted200Succeeded(ctx con
 // deleteProvisioning202Accepted200SucceededCreateRequest creates the DeleteProvisioning202Accepted200Succeeded request.
 func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededCreateRequest(ctx context.Context, options *LRORetrysBeginDeleteProvisioning202Accepted200SucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/retryerror/delete/provisioning/202/accepted/200/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -230,7 +235,7 @@ func (client *LRORetrysClient) BeginPost202Retry200(ctx context.Context, options
 	result := LRORetrysPost202Retry200PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LRORetrysClient.Post202Retry200", "", resp, client.con.Pipeline(), client.post202Retry200HandleError)
+	pt, err := armruntime.NewPoller("LRORetrysClient.Post202Retry200", "", resp, client.pl, client.post202Retry200HandleError)
 	if err != nil {
 		return LRORetrysPost202Retry200PollerResponse{}, err
 	}
@@ -248,7 +253,7 @@ func (client *LRORetrysClient) post202Retry200(ctx context.Context, options *LRO
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -261,7 +266,7 @@ func (client *LRORetrysClient) post202Retry200(ctx context.Context, options *LRO
 // post202Retry200CreateRequest creates the Post202Retry200 request.
 func (client *LRORetrysClient) post202Retry200CreateRequest(ctx context.Context, options *LRORetrysBeginPost202Retry200Options) (*policy.Request, error) {
 	urlPath := "/lro/retryerror/post/202/retry/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -297,7 +302,7 @@ func (client *LRORetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.
 	result := LRORetrysPostAsyncRelativeRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LRORetrysClient.PostAsyncRelativeRetrySucceeded", "", resp, client.con.Pipeline(), client.postAsyncRelativeRetrySucceededHandleError)
+	pt, err := armruntime.NewPoller("LRORetrysClient.PostAsyncRelativeRetrySucceeded", "", resp, client.pl, client.postAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
 		return LRORetrysPostAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
@@ -316,7 +321,7 @@ func (client *LRORetrysClient) postAsyncRelativeRetrySucceeded(ctx context.Conte
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -329,7 +334,7 @@ func (client *LRORetrysClient) postAsyncRelativeRetrySucceeded(ctx context.Conte
 // postAsyncRelativeRetrySucceededCreateRequest creates the PostAsyncRelativeRetrySucceeded request.
 func (client *LRORetrysClient) postAsyncRelativeRetrySucceededCreateRequest(ctx context.Context, options *LRORetrysBeginPostAsyncRelativeRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/retryerror/postasync/retry/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -365,7 +370,7 @@ func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Conte
 	result := LRORetrysPut201CreatingSucceeded200PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LRORetrysClient.Put201CreatingSucceeded200", "", resp, client.con.Pipeline(), client.put201CreatingSucceeded200HandleError)
+	pt, err := armruntime.NewPoller("LRORetrysClient.Put201CreatingSucceeded200", "", resp, client.pl, client.put201CreatingSucceeded200HandleError)
 	if err != nil {
 		return LRORetrysPut201CreatingSucceeded200PollerResponse{}, err
 	}
@@ -384,7 +389,7 @@ func (client *LRORetrysClient) put201CreatingSucceeded200(ctx context.Context, o
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -397,7 +402,7 @@ func (client *LRORetrysClient) put201CreatingSucceeded200(ctx context.Context, o
 // put201CreatingSucceeded200CreateRequest creates the Put201CreatingSucceeded200 request.
 func (client *LRORetrysClient) put201CreatingSucceeded200CreateRequest(ctx context.Context, options *LRORetrysBeginPut201CreatingSucceeded200Options) (*policy.Request, error) {
 	urlPath := "/lro/retryerror/put/201/creating/succeeded/200"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -433,7 +438,7 @@ func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.C
 	result := LRORetrysPutAsyncRelativeRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LRORetrysClient.PutAsyncRelativeRetrySucceeded", "", resp, client.con.Pipeline(), client.putAsyncRelativeRetrySucceededHandleError)
+	pt, err := armruntime.NewPoller("LRORetrysClient.PutAsyncRelativeRetrySucceeded", "", resp, client.pl, client.putAsyncRelativeRetrySucceededHandleError)
 	if err != nil {
 		return LRORetrysPutAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
@@ -452,7 +457,7 @@ func (client *LRORetrysClient) putAsyncRelativeRetrySucceeded(ctx context.Contex
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -465,7 +470,7 @@ func (client *LRORetrysClient) putAsyncRelativeRetrySucceeded(ctx context.Contex
 // putAsyncRelativeRetrySucceededCreateRequest creates the PutAsyncRelativeRetrySucceeded request.
 func (client *LRORetrysClient) putAsyncRelativeRetrySucceededCreateRequest(ctx context.Context, options *LRORetrysBeginPutAsyncRelativeRetrySucceededOptions) (*policy.Request, error) {
 	urlPath := "/lro/retryerror/putasync/retry/succeeded"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

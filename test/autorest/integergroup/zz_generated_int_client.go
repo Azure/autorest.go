@@ -11,6 +11,7 @@ package integergroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,12 +21,16 @@ import (
 // IntClient contains the methods for the Int group.
 // Don't use this type directly, use NewIntClient() instead.
 type IntClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewIntClient creates a new instance of IntClient with the specified values.
-func NewIntClient(con *Connection) *IntClient {
-	return &IntClient{con: con}
+func NewIntClient(options *azcore.ClientOptions) *IntClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &IntClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // GetInvalid - Get invalid Int value
@@ -35,7 +40,7 @@ func (client *IntClient) GetInvalid(ctx context.Context, options *IntGetInvalidO
 	if err != nil {
 		return IntGetInvalidResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntGetInvalidResponse{}, err
 	}
@@ -48,7 +53,7 @@ func (client *IntClient) GetInvalid(ctx context.Context, options *IntGetInvalidO
 // getInvalidCreateRequest creates the GetInvalid request.
 func (client *IntClient) getInvalidCreateRequest(ctx context.Context, options *IntGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/int/invalid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +90,7 @@ func (client *IntClient) GetInvalidUnixTime(ctx context.Context, options *IntGet
 	if err != nil {
 		return IntGetInvalidUnixTimeResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntGetInvalidUnixTimeResponse{}, err
 	}
@@ -98,7 +103,7 @@ func (client *IntClient) GetInvalidUnixTime(ctx context.Context, options *IntGet
 // getInvalidUnixTimeCreateRequest creates the GetInvalidUnixTime request.
 func (client *IntClient) getInvalidUnixTimeCreateRequest(ctx context.Context, options *IntGetInvalidUnixTimeOptions) (*policy.Request, error) {
 	urlPath := "/int/invalidunixtime"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +142,7 @@ func (client *IntClient) GetNull(ctx context.Context, options *IntGetNullOptions
 	if err != nil {
 		return IntGetNullResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntGetNullResponse{}, err
 	}
@@ -150,7 +155,7 @@ func (client *IntClient) GetNull(ctx context.Context, options *IntGetNullOptions
 // getNullCreateRequest creates the GetNull request.
 func (client *IntClient) getNullCreateRequest(ctx context.Context, options *IntGetNullOptions) (*policy.Request, error) {
 	urlPath := "/int/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -187,7 +192,7 @@ func (client *IntClient) GetNullUnixTime(ctx context.Context, options *IntGetNul
 	if err != nil {
 		return IntGetNullUnixTimeResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntGetNullUnixTimeResponse{}, err
 	}
@@ -200,7 +205,7 @@ func (client *IntClient) GetNullUnixTime(ctx context.Context, options *IntGetNul
 // getNullUnixTimeCreateRequest creates the GetNullUnixTime request.
 func (client *IntClient) getNullUnixTimeCreateRequest(ctx context.Context, options *IntGetNullUnixTimeOptions) (*policy.Request, error) {
 	urlPath := "/int/nullunixtime"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -239,7 +244,7 @@ func (client *IntClient) GetOverflowInt32(ctx context.Context, options *IntGetOv
 	if err != nil {
 		return IntGetOverflowInt32Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntGetOverflowInt32Response{}, err
 	}
@@ -252,7 +257,7 @@ func (client *IntClient) GetOverflowInt32(ctx context.Context, options *IntGetOv
 // getOverflowInt32CreateRequest creates the GetOverflowInt32 request.
 func (client *IntClient) getOverflowInt32CreateRequest(ctx context.Context, options *IntGetOverflowInt32Options) (*policy.Request, error) {
 	urlPath := "/int/overflowint32"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -289,7 +294,7 @@ func (client *IntClient) GetOverflowInt64(ctx context.Context, options *IntGetOv
 	if err != nil {
 		return IntGetOverflowInt64Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntGetOverflowInt64Response{}, err
 	}
@@ -302,7 +307,7 @@ func (client *IntClient) GetOverflowInt64(ctx context.Context, options *IntGetOv
 // getOverflowInt64CreateRequest creates the GetOverflowInt64 request.
 func (client *IntClient) getOverflowInt64CreateRequest(ctx context.Context, options *IntGetOverflowInt64Options) (*policy.Request, error) {
 	urlPath := "/int/overflowint64"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -339,7 +344,7 @@ func (client *IntClient) GetUnderflowInt32(ctx context.Context, options *IntGetU
 	if err != nil {
 		return IntGetUnderflowInt32Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntGetUnderflowInt32Response{}, err
 	}
@@ -352,7 +357,7 @@ func (client *IntClient) GetUnderflowInt32(ctx context.Context, options *IntGetU
 // getUnderflowInt32CreateRequest creates the GetUnderflowInt32 request.
 func (client *IntClient) getUnderflowInt32CreateRequest(ctx context.Context, options *IntGetUnderflowInt32Options) (*policy.Request, error) {
 	urlPath := "/int/underflowint32"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -389,7 +394,7 @@ func (client *IntClient) GetUnderflowInt64(ctx context.Context, options *IntGetU
 	if err != nil {
 		return IntGetUnderflowInt64Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntGetUnderflowInt64Response{}, err
 	}
@@ -402,7 +407,7 @@ func (client *IntClient) GetUnderflowInt64(ctx context.Context, options *IntGetU
 // getUnderflowInt64CreateRequest creates the GetUnderflowInt64 request.
 func (client *IntClient) getUnderflowInt64CreateRequest(ctx context.Context, options *IntGetUnderflowInt64Options) (*policy.Request, error) {
 	urlPath := "/int/underflowint64"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -439,7 +444,7 @@ func (client *IntClient) GetUnixTime(ctx context.Context, options *IntGetUnixTim
 	if err != nil {
 		return IntGetUnixTimeResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntGetUnixTimeResponse{}, err
 	}
@@ -452,7 +457,7 @@ func (client *IntClient) GetUnixTime(ctx context.Context, options *IntGetUnixTim
 // getUnixTimeCreateRequest creates the GetUnixTime request.
 func (client *IntClient) getUnixTimeCreateRequest(ctx context.Context, options *IntGetUnixTimeOptions) (*policy.Request, error) {
 	urlPath := "/int/unixtime"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -491,7 +496,7 @@ func (client *IntClient) PutMax32(ctx context.Context, intBody int32, options *I
 	if err != nil {
 		return IntPutMax32Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntPutMax32Response{}, err
 	}
@@ -504,7 +509,7 @@ func (client *IntClient) PutMax32(ctx context.Context, intBody int32, options *I
 // putMax32CreateRequest creates the PutMax32 request.
 func (client *IntClient) putMax32CreateRequest(ctx context.Context, intBody int32, options *IntPutMax32Options) (*policy.Request, error) {
 	urlPath := "/int/max/32"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -532,7 +537,7 @@ func (client *IntClient) PutMax64(ctx context.Context, intBody int64, options *I
 	if err != nil {
 		return IntPutMax64Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntPutMax64Response{}, err
 	}
@@ -545,7 +550,7 @@ func (client *IntClient) PutMax64(ctx context.Context, intBody int64, options *I
 // putMax64CreateRequest creates the PutMax64 request.
 func (client *IntClient) putMax64CreateRequest(ctx context.Context, intBody int64, options *IntPutMax64Options) (*policy.Request, error) {
 	urlPath := "/int/max/64"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -573,7 +578,7 @@ func (client *IntClient) PutMin32(ctx context.Context, intBody int32, options *I
 	if err != nil {
 		return IntPutMin32Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntPutMin32Response{}, err
 	}
@@ -586,7 +591,7 @@ func (client *IntClient) PutMin32(ctx context.Context, intBody int32, options *I
 // putMin32CreateRequest creates the PutMin32 request.
 func (client *IntClient) putMin32CreateRequest(ctx context.Context, intBody int32, options *IntPutMin32Options) (*policy.Request, error) {
 	urlPath := "/int/min/32"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -614,7 +619,7 @@ func (client *IntClient) PutMin64(ctx context.Context, intBody int64, options *I
 	if err != nil {
 		return IntPutMin64Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntPutMin64Response{}, err
 	}
@@ -627,7 +632,7 @@ func (client *IntClient) PutMin64(ctx context.Context, intBody int64, options *I
 // putMin64CreateRequest creates the PutMin64 request.
 func (client *IntClient) putMin64CreateRequest(ctx context.Context, intBody int64, options *IntPutMin64Options) (*policy.Request, error) {
 	urlPath := "/int/min/64"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -655,7 +660,7 @@ func (client *IntClient) PutUnixTimeDate(ctx context.Context, intBody time.Time,
 	if err != nil {
 		return IntPutUnixTimeDateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntPutUnixTimeDateResponse{}, err
 	}
@@ -668,7 +673,7 @@ func (client *IntClient) PutUnixTimeDate(ctx context.Context, intBody time.Time,
 // putUnixTimeDateCreateRequest creates the PutUnixTimeDate request.
 func (client *IntClient) putUnixTimeDateCreateRequest(ctx context.Context, intBody time.Time, options *IntPutUnixTimeDateOptions) (*policy.Request, error) {
 	urlPath := "/int/unixtime"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -14,7 +14,7 @@ import (
 )
 
 func newPolymorphicrecursiveClient() *PolymorphicrecursiveClient {
-	return NewPolymorphicrecursiveClient(NewDefaultConnection(nil))
+	return NewPolymorphicrecursiveClient(nil)
 }
 
 // GetValid - Get complex types that are polymorphic and have recursive references

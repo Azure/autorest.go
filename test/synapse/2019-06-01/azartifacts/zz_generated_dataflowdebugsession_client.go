@@ -17,7 +17,13 @@ import (
 )
 
 type dataFlowDebugSessionClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newDataFlowDebugSessionClient creates a new instance of dataFlowDebugSessionClient with the specified values.
+func newDataFlowDebugSessionClient(endpoint string, pl runtime.Pipeline) *dataFlowDebugSessionClient {
+	return &dataFlowDebugSessionClient{endpoint: endpoint, pl: pl}
 }
 
 // AddDataFlow - Add a data flow into debug session.
@@ -27,7 +33,7 @@ func (client *dataFlowDebugSessionClient) AddDataFlow(ctx context.Context, reque
 	if err != nil {
 		return DataFlowDebugSessionAddDataFlowResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DataFlowDebugSessionAddDataFlowResponse{}, err
 	}
@@ -40,7 +46,7 @@ func (client *dataFlowDebugSessionClient) AddDataFlow(ctx context.Context, reque
 // addDataFlowCreateRequest creates the AddDataFlow request.
 func (client *dataFlowDebugSessionClient) addDataFlowCreateRequest(ctx context.Context, request DataFlowDebugPackage, options *DataFlowDebugSessionAddDataFlowOptions) (*policy.Request, error) {
 	urlPath := "/addDataFlowToDebugSession"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +89,7 @@ func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx co
 	result := DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("dataFlowDebugSessionClient.CreateDataFlowDebugSession", resp, client.con.Pipeline(), client.createDataFlowDebugSessionHandleError)
+	pt, err := runtime.NewPoller("dataFlowDebugSessionClient.CreateDataFlowDebugSession", resp, client.pl, client.createDataFlowDebugSessionHandleError)
 	if err != nil {
 		return DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse{}, err
 	}
@@ -100,7 +106,7 @@ func (client *dataFlowDebugSessionClient) createDataFlowDebugSession(ctx context
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +119,7 @@ func (client *dataFlowDebugSessionClient) createDataFlowDebugSession(ctx context
 // createDataFlowDebugSessionCreateRequest creates the CreateDataFlowDebugSession request.
 func (client *dataFlowDebugSessionClient) createDataFlowDebugSessionCreateRequest(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionBeginCreateDataFlowDebugSessionOptions) (*policy.Request, error) {
 	urlPath := "/createDataFlowDebugSession"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +150,7 @@ func (client *dataFlowDebugSessionClient) DeleteDataFlowDebugSession(ctx context
 	if err != nil {
 		return DataFlowDebugSessionDeleteDataFlowDebugSessionResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DataFlowDebugSessionDeleteDataFlowDebugSessionResponse{}, err
 	}
@@ -157,7 +163,7 @@ func (client *dataFlowDebugSessionClient) DeleteDataFlowDebugSession(ctx context
 // deleteDataFlowDebugSessionCreateRequest creates the DeleteDataFlowDebugSession request.
 func (client *dataFlowDebugSessionClient) deleteDataFlowDebugSessionCreateRequest(ctx context.Context, request DeleteDataFlowDebugSessionRequest, options *DataFlowDebugSessionDeleteDataFlowDebugSessionOptions) (*policy.Request, error) {
 	urlPath := "/deleteDataFlowDebugSession"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -191,7 +197,7 @@ func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Contex
 	result := DataFlowDebugSessionExecuteCommandPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("dataFlowDebugSessionClient.ExecuteCommand", resp, client.con.Pipeline(), client.executeCommandHandleError)
+	pt, err := runtime.NewPoller("dataFlowDebugSessionClient.ExecuteCommand", resp, client.pl, client.executeCommandHandleError)
 	if err != nil {
 		return DataFlowDebugSessionExecuteCommandPollerResponse{}, err
 	}
@@ -208,7 +214,7 @@ func (client *dataFlowDebugSessionClient) executeCommand(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -221,7 +227,7 @@ func (client *dataFlowDebugSessionClient) executeCommand(ctx context.Context, re
 // executeCommandCreateRequest creates the ExecuteCommand request.
 func (client *dataFlowDebugSessionClient) executeCommandCreateRequest(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionBeginExecuteCommandOptions) (*policy.Request, error) {
 	urlPath := "/executeDataFlowDebugCommand"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -262,7 +268,7 @@ func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspace(
 // queryDataFlowDebugSessionsByWorkspaceCreateRequest creates the QueryDataFlowDebugSessionsByWorkspace request.
 func (client *dataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceCreateRequest(ctx context.Context, options *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/queryDataFlowDebugSessions"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

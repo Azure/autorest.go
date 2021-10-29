@@ -11,6 +11,7 @@ package durationgroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,16 @@ import (
 // DurationClient contains the methods for the Duration group.
 // Don't use this type directly, use NewDurationClient() instead.
 type DurationClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewDurationClient creates a new instance of DurationClient with the specified values.
-func NewDurationClient(con *Connection) *DurationClient {
-	return &DurationClient{con: con}
+func NewDurationClient(options *azcore.ClientOptions) *DurationClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &DurationClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // GetInvalid - Get an invalid duration value
@@ -34,7 +39,7 @@ func (client *DurationClient) GetInvalid(ctx context.Context, options *DurationG
 	if err != nil {
 		return DurationGetInvalidResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DurationGetInvalidResponse{}, err
 	}
@@ -47,7 +52,7 @@ func (client *DurationClient) GetInvalid(ctx context.Context, options *DurationG
 // getInvalidCreateRequest creates the GetInvalid request.
 func (client *DurationClient) getInvalidCreateRequest(ctx context.Context, options *DurationGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/duration/invalid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +89,7 @@ func (client *DurationClient) GetNull(ctx context.Context, options *DurationGetN
 	if err != nil {
 		return DurationGetNullResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DurationGetNullResponse{}, err
 	}
@@ -97,7 +102,7 @@ func (client *DurationClient) GetNull(ctx context.Context, options *DurationGetN
 // getNullCreateRequest creates the GetNull request.
 func (client *DurationClient) getNullCreateRequest(ctx context.Context, options *DurationGetNullOptions) (*policy.Request, error) {
 	urlPath := "/duration/null"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +139,7 @@ func (client *DurationClient) GetPositiveDuration(ctx context.Context, options *
 	if err != nil {
 		return DurationGetPositiveDurationResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DurationGetPositiveDurationResponse{}, err
 	}
@@ -147,7 +152,7 @@ func (client *DurationClient) GetPositiveDuration(ctx context.Context, options *
 // getPositiveDurationCreateRequest creates the GetPositiveDuration request.
 func (client *DurationClient) getPositiveDurationCreateRequest(ctx context.Context, options *DurationGetPositiveDurationOptions) (*policy.Request, error) {
 	urlPath := "/duration/positiveduration"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -184,7 +189,7 @@ func (client *DurationClient) PutPositiveDuration(ctx context.Context, durationB
 	if err != nil {
 		return DurationPutPositiveDurationResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DurationPutPositiveDurationResponse{}, err
 	}
@@ -197,7 +202,7 @@ func (client *DurationClient) PutPositiveDuration(ctx context.Context, durationB
 // putPositiveDurationCreateRequest creates the PutPositiveDuration request.
 func (client *DurationClient) putPositiveDurationCreateRequest(ctx context.Context, durationBody string, options *DurationPutPositiveDurationOptions) (*policy.Request, error) {
 	urlPath := "/duration/positiveduration"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

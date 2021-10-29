@@ -8,6 +8,8 @@
 
 package paginggroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "paginggroup"
 	version = "v0.1.0"

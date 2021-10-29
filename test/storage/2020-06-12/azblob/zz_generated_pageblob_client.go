@@ -21,8 +21,14 @@ import (
 )
 
 type pageBlobClient struct {
-	con     *connection
-	version Enum2
+	endpoint string
+	version  Enum2
+	pl       runtime.Pipeline
+}
+
+// newPageBlobClient creates a new instance of pageBlobClient with the specified values.
+func newPageBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *pageBlobClient {
+	return &pageBlobClient{endpoint: endpoint, version: version, pl: pl}
 }
 
 // ClearPages - The Clear Pages operation clears a set of pages from a page blob
@@ -32,7 +38,7 @@ func (client *pageBlobClient) ClearPages(ctx context.Context, comp Enum35, conte
 	if err != nil {
 		return PageBlobClearPagesResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PageBlobClearPagesResponse{}, err
 	}
@@ -44,7 +50,7 @@ func (client *pageBlobClient) ClearPages(ctx context.Context, comp Enum35, conte
 
 // clearPagesCreateRequest creates the ClearPages request.
 func (client *pageBlobClient) clearPagesCreateRequest(ctx context.Context, comp Enum35, contentLength int64, pageBlobClearPagesOptions *PageBlobClearPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -183,7 +189,7 @@ func (client *pageBlobClient) CopyIncremental(ctx context.Context, comp Enum37, 
 	if err != nil {
 		return PageBlobCopyIncrementalResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PageBlobCopyIncrementalResponse{}, err
 	}
@@ -195,7 +201,7 @@ func (client *pageBlobClient) CopyIncremental(ctx context.Context, comp Enum37, 
 
 // copyIncrementalCreateRequest creates the CopyIncremental request.
 func (client *pageBlobClient) copyIncrementalCreateRequest(ctx context.Context, comp Enum37, copySource string, pageBlobCopyIncrementalOptions *PageBlobCopyIncrementalOptions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -287,7 +293,7 @@ func (client *pageBlobClient) Create(ctx context.Context, contentLength int64, b
 	if err != nil {
 		return PageBlobCreateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PageBlobCreateResponse{}, err
 	}
@@ -299,7 +305,7 @@ func (client *pageBlobClient) Create(ctx context.Context, contentLength int64, b
 
 // createCreateRequest creates the Create request.
 func (client *pageBlobClient) createCreateRequest(ctx context.Context, contentLength int64, blobContentLength int64, pageBlobCreateOptions *PageBlobCreateOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -465,7 +471,7 @@ func (client *pageBlobClient) GetPageRanges(ctx context.Context, comp Enum36, pa
 	if err != nil {
 		return PageBlobGetPageRangesResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PageBlobGetPageRangesResponse{}, err
 	}
@@ -477,7 +483,7 @@ func (client *pageBlobClient) GetPageRanges(ctx context.Context, comp Enum36, pa
 
 // getPageRangesCreateRequest creates the GetPageRanges request.
 func (client *pageBlobClient) getPageRangesCreateRequest(ctx context.Context, comp Enum36, pageBlobGetPageRangesOptions *PageBlobGetPageRangesOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -582,7 +588,7 @@ func (client *pageBlobClient) GetPageRangesDiff(ctx context.Context, comp Enum36
 	if err != nil {
 		return PageBlobGetPageRangesDiffResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PageBlobGetPageRangesDiffResponse{}, err
 	}
@@ -594,7 +600,7 @@ func (client *pageBlobClient) GetPageRangesDiff(ctx context.Context, comp Enum36
 
 // getPageRangesDiffCreateRequest creates the GetPageRangesDiff request.
 func (client *pageBlobClient) getPageRangesDiffCreateRequest(ctx context.Context, comp Enum36, pageBlobGetPageRangesDiffOptions *PageBlobGetPageRangesDiffOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -704,7 +710,7 @@ func (client *pageBlobClient) Resize(ctx context.Context, comp Enum1, blobConten
 	if err != nil {
 		return PageBlobResizeResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PageBlobResizeResponse{}, err
 	}
@@ -716,7 +722,7 @@ func (client *pageBlobClient) Resize(ctx context.Context, comp Enum1, blobConten
 
 // resizeCreateRequest creates the Resize request.
 func (client *pageBlobClient) resizeCreateRequest(ctx context.Context, comp Enum1, blobContentLength int64, pageBlobResizeOptions *PageBlobResizeOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -824,7 +830,7 @@ func (client *pageBlobClient) UpdateSequenceNumber(ctx context.Context, comp Enu
 	if err != nil {
 		return PageBlobUpdateSequenceNumberResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PageBlobUpdateSequenceNumberResponse{}, err
 	}
@@ -836,7 +842,7 @@ func (client *pageBlobClient) UpdateSequenceNumber(ctx context.Context, comp Enu
 
 // updateSequenceNumberCreateRequest creates the UpdateSequenceNumber request.
 func (client *pageBlobClient) updateSequenceNumberCreateRequest(ctx context.Context, comp Enum1, sequenceNumberAction SequenceNumberActionType, pageBlobUpdateSequenceNumberOptions *PageBlobUpdateSequenceNumberOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -935,7 +941,7 @@ func (client *pageBlobClient) UploadPages(ctx context.Context, comp Enum35, cont
 	if err != nil {
 		return PageBlobUploadPagesResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PageBlobUploadPagesResponse{}, err
 	}
@@ -947,7 +953,7 @@ func (client *pageBlobClient) UploadPages(ctx context.Context, comp Enum35, cont
 
 // uploadPagesCreateRequest creates the UploadPages request.
 func (client *pageBlobClient) uploadPagesCreateRequest(ctx context.Context, comp Enum35, contentLength int64, body io.ReadSeekCloser, pageBlobUploadPagesOptions *PageBlobUploadPagesOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -1101,7 +1107,7 @@ func (client *pageBlobClient) UploadPagesFromURL(ctx context.Context, comp Enum3
 	if err != nil {
 		return PageBlobUploadPagesFromURLResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PageBlobUploadPagesFromURLResponse{}, err
 	}
@@ -1113,7 +1119,7 @@ func (client *pageBlobClient) UploadPagesFromURL(ctx context.Context, comp Enum3
 
 // uploadPagesFromURLCreateRequest creates the UploadPagesFromURL request.
 func (client *pageBlobClient) uploadPagesFromURLCreateRequest(ctx context.Context, comp Enum35, sourceURL string, sourceRange string, contentLength int64, rangeParam string, pageBlobUploadPagesFromURLOptions *PageBlobUploadPagesFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sequenceNumberAccessConditions *SequenceNumberAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}

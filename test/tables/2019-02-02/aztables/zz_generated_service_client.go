@@ -21,13 +21,14 @@ import (
 // ServiceClient contains the methods for the Service group.
 // Don't use this type directly, use NewServiceClient() instead.
 type ServiceClient struct {
-	con     *Connection
-	version Enum0
+	endpoint string
+	version  Enum0
+	pl       runtime.Pipeline
 }
 
 // NewServiceClient creates a new instance of ServiceClient with the specified values.
-func NewServiceClient(con *Connection, version Enum0) *ServiceClient {
-	return &ServiceClient{con: con, version: version}
+func NewServiceClient(endpoint string, version Enum0, pl runtime.Pipeline) *ServiceClient {
+	return &ServiceClient{endpoint: endpoint, version: version, pl: pl}
 }
 
 // GetProperties - Gets the properties of an account's Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules.
@@ -37,7 +38,7 @@ func (client *ServiceClient) GetProperties(ctx context.Context, restype Enum5, c
 	if err != nil {
 		return ServiceGetPropertiesResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ServiceGetPropertiesResponse{}, err
 	}
@@ -49,7 +50,7 @@ func (client *ServiceClient) GetProperties(ctx context.Context, restype Enum5, c
 
 // getPropertiesCreateRequest creates the GetProperties request.
 func (client *ServiceClient) getPropertiesCreateRequest(ctx context.Context, restype Enum5, comp Enum6, options *ServiceGetPropertiesOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +108,7 @@ func (client *ServiceClient) GetStatistics(ctx context.Context, restype Enum5, c
 	if err != nil {
 		return ServiceGetStatisticsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ServiceGetStatisticsResponse{}, err
 	}
@@ -119,7 +120,7 @@ func (client *ServiceClient) GetStatistics(ctx context.Context, restype Enum5, c
 
 // getStatisticsCreateRequest creates the GetStatistics request.
 func (client *ServiceClient) getStatisticsCreateRequest(ctx context.Context, restype Enum5, comp Enum7, options *ServiceGetStatisticsOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -184,7 +185,7 @@ func (client *ServiceClient) SetProperties(ctx context.Context, restype Enum5, c
 	if err != nil {
 		return ServiceSetPropertiesResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ServiceSetPropertiesResponse{}, err
 	}
@@ -196,7 +197,7 @@ func (client *ServiceClient) SetProperties(ctx context.Context, restype Enum5, c
 
 // setPropertiesCreateRequest creates the SetProperties request.
 func (client *ServiceClient) setPropertiesCreateRequest(ctx context.Context, restype Enum5, comp Enum6, tableServiceProperties TableServiceProperties, options *ServiceSetPropertiesOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}

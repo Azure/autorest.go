@@ -11,6 +11,7 @@ package complexgroup
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,16 @@ import (
 // FlattencomplexClient contains the methods for the Flattencomplex group.
 // Don't use this type directly, use NewFlattencomplexClient() instead.
 type FlattencomplexClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewFlattencomplexClient creates a new instance of FlattencomplexClient with the specified values.
-func NewFlattencomplexClient(con *Connection) *FlattencomplexClient {
-	return &FlattencomplexClient{con: con}
+func NewFlattencomplexClient(options *azcore.ClientOptions) *FlattencomplexClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &FlattencomplexClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // GetValid -
@@ -34,7 +39,7 @@ func (client *FlattencomplexClient) GetValid(ctx context.Context, options *Flatt
 	if err != nil {
 		return FlattencomplexGetValidResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return FlattencomplexGetValidResponse{}, err
 	}
@@ -47,7 +52,7 @@ func (client *FlattencomplexClient) GetValid(ctx context.Context, options *Flatt
 // getValidCreateRequest creates the GetValid request.
 func (client *FlattencomplexClient) getValidCreateRequest(ctx context.Context, options *FlattencomplexGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/flatten/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

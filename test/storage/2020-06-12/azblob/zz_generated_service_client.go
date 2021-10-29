@@ -21,8 +21,14 @@ import (
 )
 
 type serviceClient struct {
-	con     *connection
-	version Enum2
+	endpoint string
+	version  Enum2
+	pl       runtime.Pipeline
+}
+
+// newServiceClient creates a new instance of serviceClient with the specified values.
+func newServiceClient(endpoint string, version Enum2, pl runtime.Pipeline) *serviceClient {
+	return &serviceClient{endpoint: endpoint, version: version, pl: pl}
 }
 
 // FilterBlobs - The Filter Blobs operation enables callers to list blobs across all containers whose tags match a given search expression. Filter blobs
@@ -34,7 +40,7 @@ func (client *serviceClient) FilterBlobs(ctx context.Context, comp Enum10, optio
 	if err != nil {
 		return ServiceFilterBlobsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ServiceFilterBlobsResponse{}, err
 	}
@@ -46,7 +52,7 @@ func (client *serviceClient) FilterBlobs(ctx context.Context, comp Enum10, optio
 
 // filterBlobsCreateRequest creates the FilterBlobs request.
 func (client *serviceClient) filterBlobsCreateRequest(ctx context.Context, comp Enum10, options *ServiceFilterBlobsOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +124,7 @@ func (client *serviceClient) GetAccountInfo(ctx context.Context, restype Enum8, 
 	if err != nil {
 		return ServiceGetAccountInfoResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ServiceGetAccountInfoResponse{}, err
 	}
@@ -130,7 +136,7 @@ func (client *serviceClient) GetAccountInfo(ctx context.Context, restype Enum8, 
 
 // getAccountInfoCreateRequest creates the GetAccountInfo request.
 func (client *serviceClient) getAccountInfoCreateRequest(ctx context.Context, restype Enum8, comp Enum1, options *ServiceGetAccountInfoOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -199,7 +205,7 @@ func (client *serviceClient) GetProperties(ctx context.Context, restype Enum0, c
 	if err != nil {
 		return ServiceGetPropertiesResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ServiceGetPropertiesResponse{}, err
 	}
@@ -211,7 +217,7 @@ func (client *serviceClient) GetProperties(ctx context.Context, restype Enum0, c
 
 // getPropertiesCreateRequest creates the GetProperties request.
 func (client *serviceClient) getPropertiesCreateRequest(ctx context.Context, restype Enum0, comp Enum1, options *ServiceGetPropertiesOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -269,7 +275,7 @@ func (client *serviceClient) GetStatistics(ctx context.Context, restype Enum0, c
 	if err != nil {
 		return ServiceGetStatisticsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ServiceGetStatisticsResponse{}, err
 	}
@@ -281,7 +287,7 @@ func (client *serviceClient) GetStatistics(ctx context.Context, restype Enum0, c
 
 // getStatisticsCreateRequest creates the GetStatistics request.
 func (client *serviceClient) getStatisticsCreateRequest(ctx context.Context, restype Enum0, comp Enum3, options *ServiceGetStatisticsOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -345,7 +351,7 @@ func (client *serviceClient) GetUserDelegationKey(ctx context.Context, restype E
 	if err != nil {
 		return ServiceGetUserDelegationKeyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ServiceGetUserDelegationKeyResponse{}, err
 	}
@@ -357,7 +363,7 @@ func (client *serviceClient) GetUserDelegationKey(ctx context.Context, restype E
 
 // getUserDelegationKeyCreateRequest creates the GetUserDelegationKey request.
 func (client *serviceClient) getUserDelegationKeyCreateRequest(ctx context.Context, restype Enum0, comp Enum7, keyInfo KeyInfo, options *ServiceGetUserDelegationKeyOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPost, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPost, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -430,7 +436,7 @@ func (client *serviceClient) ListContainersSegment(comp Enum5, options *ServiceL
 
 // listContainersSegmentCreateRequest creates the ListContainersSegment request.
 func (client *serviceClient) listContainersSegmentCreateRequest(ctx context.Context, comp Enum5, options *ServiceListContainersSegmentOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodGet, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -499,7 +505,7 @@ func (client *serviceClient) SetProperties(ctx context.Context, restype Enum0, c
 	if err != nil {
 		return ServiceSetPropertiesResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ServiceSetPropertiesResponse{}, err
 	}
@@ -511,7 +517,7 @@ func (client *serviceClient) SetProperties(ctx context.Context, restype Enum0, c
 
 // setPropertiesCreateRequest creates the SetProperties request.
 func (client *serviceClient) setPropertiesCreateRequest(ctx context.Context, restype Enum0, comp Enum1, storageServiceProperties StorageServiceProperties, options *ServiceSetPropertiesOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -565,7 +571,7 @@ func (client *serviceClient) SubmitBatch(ctx context.Context, comp Enum9, conten
 	if err != nil {
 		return ServiceSubmitBatchResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ServiceSubmitBatchResponse{}, err
 	}
@@ -577,7 +583,7 @@ func (client *serviceClient) SubmitBatch(ctx context.Context, comp Enum9, conten
 
 // submitBatchCreateRequest creates the SubmitBatch request.
 func (client *serviceClient) submitBatchCreateRequest(ctx context.Context, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *ServiceSubmitBatchOptions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPost, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPost, client.endpoint)
 	if err != nil {
 		return nil, err
 	}

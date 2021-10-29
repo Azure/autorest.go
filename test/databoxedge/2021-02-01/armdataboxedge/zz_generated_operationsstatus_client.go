@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -22,13 +23,17 @@ import (
 // OperationsStatusClient contains the methods for the OperationsStatus group.
 // Don't use this type directly, use NewOperationsStatusClient() instead.
 type OperationsStatusClient struct {
-	con            *connection
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewOperationsStatusClient creates a new instance of OperationsStatusClient with the specified values.
-func NewOperationsStatusClient(con *connection, subscriptionID string) *OperationsStatusClient {
-	return &OperationsStatusClient{con: con, subscriptionID: subscriptionID}
+func NewOperationsStatusClient(subscriptionID string, options *azcore.ClientOptions) *OperationsStatusClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &OperationsStatusClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // Get - Gets the details of a specified job on a Data Box Edge/Data Box Gateway device.
@@ -38,7 +43,7 @@ func (client *OperationsStatusClient) Get(ctx context.Context, deviceName string
 	if err != nil {
 		return OperationsStatusGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return OperationsStatusGetResponse{}, err
 	}
@@ -67,7 +72,7 @@ func (client *OperationsStatusClient) getCreateRequest(ctx context.Context, devi
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

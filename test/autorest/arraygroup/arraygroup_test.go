@@ -15,7 +15,7 @@ import (
 )
 
 func newArrayClient() *ArrayClient {
-	return NewArrayClient(NewDefaultConnection(nil))
+	return NewArrayClient(nil)
 }
 
 // GetArrayEmpty - Get an empty array []

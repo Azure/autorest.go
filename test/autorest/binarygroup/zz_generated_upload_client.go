@@ -11,6 +11,7 @@ package binarygroup
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"io"
@@ -20,12 +21,16 @@ import (
 // UploadClient contains the methods for the Upload group.
 // Don't use this type directly, use NewUploadClient() instead.
 type UploadClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewUploadClient creates a new instance of UploadClient with the specified values.
-func NewUploadClient(con *Connection) *UploadClient {
-	return &UploadClient{con: con}
+func NewUploadClient(options *azcore.ClientOptions) *UploadClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	return &UploadClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
 }
 
 // Binary - Uploading binary file
@@ -35,7 +40,7 @@ func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekClo
 	if err != nil {
 		return UploadBinaryResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return UploadBinaryResponse{}, err
 	}
@@ -48,7 +53,7 @@ func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekClo
 // binaryCreateRequest creates the Binary request.
 func (client *UploadClient) binaryCreateRequest(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadBinaryOptions) (*policy.Request, error) {
 	urlPath := "/binary/octet"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +79,7 @@ func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekClose
 	if err != nil {
 		return UploadFileResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return UploadFileResponse{}, err
 	}
@@ -87,7 +92,7 @@ func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekClose
 // fileCreateRequest creates the File request.
 func (client *UploadClient) fileCreateRequest(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadFileOptions) (*policy.Request, error) {
 	urlPath := "/binary/file"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

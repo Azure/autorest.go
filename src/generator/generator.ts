@@ -11,7 +11,6 @@ import { generateOperations } from './operations';
 import { generateModels } from './models';
 import { generateResponses } from './responses';
 import { generateConstants } from './constants';
-import { generateConnection } from './connection';
 import { generateTimeHelpers } from './time';
 import { generatePagers } from './pagers';
 import { generatePollers } from './pollers';
@@ -62,11 +61,6 @@ export async function protocolGen(host: Host) {
     const responses = await generateResponses(session);
     if (responses.length > 0) {
       host.WriteFile(`${filePrefix}response_types.go`, responses, undefined, 'source-file-go');
-    }
-
-    const connection = await generateConnection(session);
-    if (connection.length > 0) {
-      host.WriteFile(`${filePrefix}connection.go`, connection, undefined, 'source-file-go');
     }
 
     const timeHelpers = await generateTimeHelpers(session);

@@ -22,12 +22,15 @@ import (
 // RoleAssignmentsClient contains the methods for the RoleAssignments group.
 // Don't use this type directly, use NewRoleAssignmentsClient() instead.
 type RoleAssignmentsClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewRoleAssignmentsClient creates a new instance of RoleAssignmentsClient with the specified values.
-func NewRoleAssignmentsClient(con *Connection) *RoleAssignmentsClient {
-	return &RoleAssignmentsClient{con: con}
+func NewRoleAssignmentsClient(pl runtime.Pipeline) *RoleAssignmentsClient {
+	client := &RoleAssignmentsClient{
+		pl: pl,
+	}
+	return client
 }
 
 // Create - Creates a role assignment.
@@ -37,7 +40,7 @@ func (client *RoleAssignmentsClient) Create(ctx context.Context, vaultBaseURL st
 	if err != nil {
 		return RoleAssignmentsCreateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return RoleAssignmentsCreateResponse{}, err
 	}
@@ -97,7 +100,7 @@ func (client *RoleAssignmentsClient) Delete(ctx context.Context, vaultBaseURL st
 	if err != nil {
 		return RoleAssignmentsDeleteResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return RoleAssignmentsDeleteResponse{}, err
 	}
@@ -157,7 +160,7 @@ func (client *RoleAssignmentsClient) Get(ctx context.Context, vaultBaseURL strin
 	if err != nil {
 		return RoleAssignmentsGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return RoleAssignmentsGetResponse{}, err
 	}

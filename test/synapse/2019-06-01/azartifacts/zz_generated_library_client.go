@@ -22,7 +22,13 @@ import (
 )
 
 type libraryClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newLibraryClient creates a new instance of libraryClient with the specified values.
+func newLibraryClient(endpoint string, pl runtime.Pipeline) *libraryClient {
+	return &libraryClient{endpoint: endpoint, pl: pl}
 }
 
 // Append - Append the content to the library resource created using the create operation. The maximum content size is 4MiB. Content larger than 4MiB must
@@ -33,7 +39,7 @@ func (client *libraryClient) Append(ctx context.Context, libraryName string, con
 	if err != nil {
 		return LibraryAppendResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return LibraryAppendResponse{}, err
 	}
@@ -50,7 +56,7 @@ func (client *libraryClient) appendCreateRequest(ctx context.Context, libraryNam
 		return nil, errors.New("parameter libraryName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{libraryName}", url.PathEscape(libraryName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +93,7 @@ func (client *libraryClient) BeginCreate(ctx context.Context, libraryName string
 	result := LibraryCreatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("libraryClient.Create", resp, client.con.Pipeline(), client.createHandleError)
+	pt, err := runtime.NewPoller("libraryClient.Create", resp, client.pl, client.createHandleError)
 	if err != nil {
 		return LibraryCreatePollerResponse{}, err
 	}
@@ -104,7 +110,7 @@ func (client *libraryClient) create(ctx context.Context, libraryName string, opt
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +127,7 @@ func (client *libraryClient) createCreateRequest(ctx context.Context, libraryNam
 		return nil, errors.New("parameter libraryName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{libraryName}", url.PathEscape(libraryName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -155,7 +161,7 @@ func (client *libraryClient) BeginDelete(ctx context.Context, libraryName string
 	result := LibraryDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("libraryClient.Delete", resp, client.con.Pipeline(), client.deleteHandleError)
+	pt, err := runtime.NewPoller("libraryClient.Delete", resp, client.pl, client.deleteHandleError)
 	if err != nil {
 		return LibraryDeletePollerResponse{}, err
 	}
@@ -172,7 +178,7 @@ func (client *libraryClient) deleteOperation(ctx context.Context, libraryName st
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -189,7 +195,7 @@ func (client *libraryClient) deleteCreateRequest(ctx context.Context, libraryNam
 		return nil, errors.New("parameter libraryName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{libraryName}", url.PathEscape(libraryName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -223,7 +229,7 @@ func (client *libraryClient) BeginFlush(ctx context.Context, libraryName string,
 	result := LibraryFlushPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("libraryClient.Flush", resp, client.con.Pipeline(), client.flushHandleError)
+	pt, err := runtime.NewPoller("libraryClient.Flush", resp, client.pl, client.flushHandleError)
 	if err != nil {
 		return LibraryFlushPollerResponse{}, err
 	}
@@ -240,7 +246,7 @@ func (client *libraryClient) flush(ctx context.Context, libraryName string, opti
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +263,7 @@ func (client *libraryClient) flushCreateRequest(ctx context.Context, libraryName
 		return nil, errors.New("parameter libraryName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{libraryName}", url.PathEscape(libraryName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -288,7 +294,7 @@ func (client *libraryClient) Get(ctx context.Context, libraryName string, option
 	if err != nil {
 		return LibraryGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return LibraryGetResponse{}, err
 	}
@@ -305,7 +311,7 @@ func (client *libraryClient) getCreateRequest(ctx context.Context, libraryName s
 		return nil, errors.New("parameter libraryName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{libraryName}", url.PathEscape(libraryName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -345,7 +351,7 @@ func (client *libraryClient) GetOperationResult(ctx context.Context, operationID
 	if err != nil {
 		return LibraryGetOperationResultResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return LibraryGetOperationResultResponse{}, err
 	}
@@ -362,7 +368,7 @@ func (client *libraryClient) getOperationResultCreateRequest(ctx context.Context
 		return nil, errors.New("parameter operationID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{operationId}", url.PathEscape(operationID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -425,7 +431,7 @@ func (client *libraryClient) List(options *LibraryListOptions) *LibraryListPager
 // listCreateRequest creates the List request.
 func (client *libraryClient) listCreateRequest(ctx context.Context, options *LibraryListOptions) (*policy.Request, error) {
 	urlPath := "/libraries"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

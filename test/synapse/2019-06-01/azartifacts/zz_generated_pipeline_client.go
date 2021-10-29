@@ -21,7 +21,13 @@ import (
 )
 
 type pipelineClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newPipelineClient creates a new instance of pipelineClient with the specified values.
+func newPipelineClient(endpoint string, pl runtime.Pipeline) *pipelineClient {
+	return &pipelineClient{endpoint: endpoint, pl: pl}
 }
 
 // BeginCreateOrUpdatePipeline - Creates or updates a pipeline.
@@ -34,7 +40,7 @@ func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, p
 	result := PipelineCreateOrUpdatePipelinePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("pipelineClient.CreateOrUpdatePipeline", resp, client.con.Pipeline(), client.createOrUpdatePipelineHandleError)
+	pt, err := runtime.NewPoller("pipelineClient.CreateOrUpdatePipeline", resp, client.pl, client.createOrUpdatePipelineHandleError)
 	if err != nil {
 		return PipelineCreateOrUpdatePipelinePollerResponse{}, err
 	}
@@ -51,7 +57,7 @@ func (client *pipelineClient) createOrUpdatePipeline(ctx context.Context, pipeli
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +74,7 @@ func (client *pipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Co
 		return nil, errors.New("parameter pipelineName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +108,7 @@ func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineNam
 	if err != nil {
 		return PipelineCreatePipelineRunResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PipelineCreatePipelineRunResponse{}, err
 	}
@@ -119,7 +125,7 @@ func (client *pipelineClient) createPipelineRunCreateRequest(ctx context.Context
 		return nil, errors.New("parameter pipelineName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -174,7 +180,7 @@ func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineN
 	result := PipelineDeletePipelinePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("pipelineClient.DeletePipeline", resp, client.con.Pipeline(), client.deletePipelineHandleError)
+	pt, err := runtime.NewPoller("pipelineClient.DeletePipeline", resp, client.pl, client.deletePipelineHandleError)
 	if err != nil {
 		return PipelineDeletePipelinePollerResponse{}, err
 	}
@@ -191,7 +197,7 @@ func (client *pipelineClient) deletePipeline(ctx context.Context, pipelineName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -208,7 +214,7 @@ func (client *pipelineClient) deletePipelineCreateRequest(ctx context.Context, p
 		return nil, errors.New("parameter pipelineName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -239,7 +245,7 @@ func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName stri
 	if err != nil {
 		return PipelineGetPipelineResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PipelineGetPipelineResponse{}, err
 	}
@@ -256,7 +262,7 @@ func (client *pipelineClient) getPipelineCreateRequest(ctx context.Context, pipe
 		return nil, errors.New("parameter pipelineName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -309,7 +315,7 @@ func (client *pipelineClient) GetPipelinesByWorkspace(options *PipelineGetPipeli
 // getPipelinesByWorkspaceCreateRequest creates the GetPipelinesByWorkspace request.
 func (client *pipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.Context, options *PipelineGetPipelinesByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/pipelines"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -352,7 +358,7 @@ func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineN
 	result := PipelineRenamePipelinePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("pipelineClient.RenamePipeline", resp, client.con.Pipeline(), client.renamePipelineHandleError)
+	pt, err := runtime.NewPoller("pipelineClient.RenamePipeline", resp, client.pl, client.renamePipelineHandleError)
 	if err != nil {
 		return PipelineRenamePipelinePollerResponse{}, err
 	}
@@ -369,7 +375,7 @@ func (client *pipelineClient) renamePipeline(ctx context.Context, pipelineName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -386,7 +392,7 @@ func (client *pipelineClient) renamePipelineCreateRequest(ctx context.Context, p
 		return nil, errors.New("parameter pipelineName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{pipelineName}", url.PathEscape(pipelineName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

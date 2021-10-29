@@ -13,7 +13,7 @@ import (
 )
 
 func newNumberClient() *NumberClient {
-	return NewNumberClient(NewDefaultConnection(nil))
+	return NewNumberClient(nil)
 }
 
 func TestNumberGetBigDecimal(t *testing.T) {
