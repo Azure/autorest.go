@@ -39,7 +39,12 @@ func NewAzureFirewallFqdnTagsClient(subscriptionID string, credential azcore.Tok
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &AzureFirewallFqdnTagsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &AzureFirewallFqdnTagsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // ListAll - Gets all the Azure Firewall FQDN Tags in a subscription.

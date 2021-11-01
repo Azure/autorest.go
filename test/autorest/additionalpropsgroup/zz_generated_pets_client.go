@@ -29,7 +29,10 @@ func NewPetsClient(options *azcore.ClientOptions) *PetsClient {
 	if options != nil {
 		cp = *options
 	}
-	return &PetsClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &PetsClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // CreateAPInProperties - Create a Pet which contains more properties than what is defined.

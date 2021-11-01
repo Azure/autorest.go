@@ -39,7 +39,12 @@ func NewDefaultSecurityRulesClient(subscriptionID string, credential azcore.Toke
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &DefaultSecurityRulesClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &DefaultSecurityRulesClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // Get - Get the specified default network security rule.

@@ -23,7 +23,11 @@ type dataFlowDebugSessionClient struct {
 
 // newDataFlowDebugSessionClient creates a new instance of dataFlowDebugSessionClient with the specified values.
 func newDataFlowDebugSessionClient(endpoint string, pl runtime.Pipeline) *dataFlowDebugSessionClient {
-	return &dataFlowDebugSessionClient{endpoint: endpoint, pl: pl}
+	client := &dataFlowDebugSessionClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // AddDataFlow - Add a data flow into debug session.

@@ -39,7 +39,12 @@ func NewSecurityRulesClient(subscriptionID string, credential azcore.TokenCreden
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &SecurityRulesClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &SecurityRulesClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a security rule in the specified network security group.

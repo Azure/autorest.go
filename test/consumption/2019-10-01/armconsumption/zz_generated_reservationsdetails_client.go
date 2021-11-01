@@ -38,7 +38,11 @@ func NewReservationsDetailsClient(credential azcore.TokenCredential, options *ar
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ReservationsDetailsClient{host: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ReservationsDetailsClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Lists the reservations details for the defined scope and provided date range.

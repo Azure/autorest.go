@@ -39,7 +39,12 @@ func NewExpressRouteCrossConnectionsClient(subscriptionID string, credential azc
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ExpressRouteCrossConnectionsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ExpressRouteCrossConnectionsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Update the specified ExpressRouteCrossConnection.

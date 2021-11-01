@@ -39,7 +39,12 @@ func NewServiceTagsClient(subscriptionID string, credential azcore.TokenCredenti
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ServiceTagsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ServiceTagsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Gets a list of service tag information resources.

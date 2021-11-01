@@ -33,7 +33,11 @@ func NewJobsClient(subscriptionID string, options *azcore.ClientOptions) *JobsCl
 	if options != nil {
 		cp = *options
 	}
-	return &JobsClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &JobsClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Get - Gets the details of a specified job on a Data Box Edge/Data Box Gateway device.

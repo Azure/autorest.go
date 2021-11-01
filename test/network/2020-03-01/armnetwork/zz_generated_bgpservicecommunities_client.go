@@ -39,7 +39,12 @@ func NewBgpServiceCommunitiesClient(subscriptionID string, credential azcore.Tok
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &BgpServiceCommunitiesClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &BgpServiceCommunitiesClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Gets all the available bgp service communities.

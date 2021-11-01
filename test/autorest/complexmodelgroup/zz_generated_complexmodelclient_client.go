@@ -32,7 +32,10 @@ func NewComplexModelClient(options *azcore.ClientOptions) *ComplexModelClient {
 	if options != nil {
 		cp = *options
 	}
-	return &ComplexModelClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &ComplexModelClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Create - Resets products.

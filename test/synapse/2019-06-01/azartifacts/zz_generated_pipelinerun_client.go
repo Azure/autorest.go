@@ -27,7 +27,11 @@ type pipelineRunClient struct {
 
 // newPipelineRunClient creates a new instance of pipelineRunClient with the specified values.
 func newPipelineRunClient(endpoint string, pl runtime.Pipeline) *pipelineRunClient {
-	return &pipelineRunClient{endpoint: endpoint, pl: pl}
+	client := &pipelineRunClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // CancelPipelineRun - Cancel a pipeline run by its run ID.

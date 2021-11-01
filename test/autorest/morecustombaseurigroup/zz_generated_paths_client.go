@@ -28,19 +28,25 @@ type PathsClient struct {
 	pl             runtime.Pipeline
 }
 
+// PathsClientOptions contains the optional parameters for NewPathsClient.
+type PathsClientOptions struct {
+	azcore.ClientOptions
+	DnsSuffix *string
+}
+
 // NewPathsClient creates a new instance of PathsClient with the specified values.
-func NewPathsClient(dnsSuffix *string, subscriptionID string, options *azcore.ClientOptions) *PathsClient {
-	cp := azcore.ClientOptions{}
+func NewPathsClient(subscriptionID string, options *PathsClientOptions) *PathsClient {
+	cp := PathsClientOptions{}
 	if options != nil {
 		cp = *options
 	}
 	client := &PathsClient{
 		dnsSuffix:      "host",
 		subscriptionID: subscriptionID,
-		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp.ClientOptions),
 	}
-	if dnsSuffix != nil {
-		client.dnsSuffix = *dnsSuffix
+	if options.DnsSuffix != nil {
+		client.dnsSuffix = *options.DnsSuffix
 	}
 	return client
 }

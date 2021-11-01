@@ -40,7 +40,12 @@ func NewVirtualMachinesClient(subscriptionID string, credential azcore.TokenCred
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &VirtualMachinesClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &VirtualMachinesClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginCapture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.

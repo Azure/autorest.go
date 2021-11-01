@@ -29,7 +29,10 @@ func NewPolymorphismClient(options *azcore.ClientOptions) *PolymorphismClient {
 	if options != nil {
 		cp = *options
 	}
-	return &PolymorphismClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &PolymorphismClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetComplicated - Get complex types that are polymorphic, but not at the root of the hierarchy; also have additional properties

@@ -38,7 +38,12 @@ func NewProximityPlacementGroupsClient(subscriptionID string, credential azcore.
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ProximityPlacementGroupsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ProximityPlacementGroupsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // CreateOrUpdate - Create or update a proximity placement group.

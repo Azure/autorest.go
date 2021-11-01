@@ -39,7 +39,12 @@ func NewVirtualNetworksClient(subscriptionID string, credential azcore.TokenCred
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &VirtualNetworksClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &VirtualNetworksClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // CheckIPAddressAvailability - Checks whether a private IP address is available for use.

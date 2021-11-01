@@ -30,7 +30,10 @@ func NewLROSADsClient(options *azcore.ClientOptions) *LROSADsClient {
 	if options != nil {
 		cp = *options
 	}
-	return &LROSADsClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &LROSADsClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginDelete202NonRetry400 - Long running delete request, service returns a 202 with a location header

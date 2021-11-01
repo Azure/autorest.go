@@ -30,7 +30,10 @@ func NewODataClient(options *azcore.ClientOptions) *ODataClient {
 	if options != nil {
 		cp = *options
 	}
-	return &ODataClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &ODataClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'

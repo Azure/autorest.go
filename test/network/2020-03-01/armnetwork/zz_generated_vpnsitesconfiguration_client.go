@@ -39,7 +39,12 @@ func NewVPNSitesConfigurationClient(subscriptionID string, credential azcore.Tok
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &VPNSitesConfigurationClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &VPNSitesConfigurationClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginDownload - Gives the sas-url to download the configurations for vpn-sites in a resource group.

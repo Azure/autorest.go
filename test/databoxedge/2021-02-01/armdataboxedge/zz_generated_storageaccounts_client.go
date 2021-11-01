@@ -34,7 +34,11 @@ func NewStorageAccountsClient(subscriptionID string, options *azcore.ClientOptio
 	if options != nil {
 		cp = *options
 	}
-	return &StorageAccountsClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &StorageAccountsClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates a new StorageAccount or updates an existing StorageAccount on the device.

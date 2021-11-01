@@ -29,7 +29,10 @@ func NewStringClient(options *azcore.ClientOptions) *StringClient {
 	if options != nil {
 		cp = *options
 	}
-	return &StringClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &StringClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetBase64Encoded - Get value that is base64 encoded

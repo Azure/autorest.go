@@ -39,7 +39,12 @@ func NewLocalNetworkGatewaysClient(subscriptionID string, credential azcore.Toke
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &LocalNetworkGatewaysClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &LocalNetworkGatewaysClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a local network gateway in the specified resource group.

@@ -31,7 +31,10 @@ func NewPetClient(options *azcore.ClientOptions) *PetClient {
 	if options != nil {
 		cp = *options
 	}
-	return &PetClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &PetClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // AddPet - add pet

@@ -31,7 +31,10 @@ func NewMediaTypesClient(options *azcore.ClientOptions) *MediaTypesClient {
 	if options != nil {
 		cp = *options
 	}
-	return &MediaTypesClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &MediaTypesClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // AnalyzeBody - Analyze body, that could be different media types.

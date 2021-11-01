@@ -29,7 +29,10 @@ func NewReadonlypropertyClient(options *azcore.ClientOptions) *ReadonlypropertyC
 	if options != nil {
 		cp = *options
 	}
-	return &ReadonlypropertyClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &ReadonlypropertyClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetValid - Get complex types that have readonly properties

@@ -67,18 +67,58 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       group.language.go!.hostParamName = 'endpoint';
       clientText += `\t${group.language.go!.hostParamName} string\n`;
     }
+
+    // check for any optional host params for ARM variants.  this
+    // will be used to determine if an options struct is needed.
+    const optionalParams = new Array<Parameter>();
+    if (isARM && group.language.go!.hostParams) {
+      // client parameterized host
+      const hostParams = <Array<Parameter>>group.language.go!.hostParams;
+      for (const param of values(hostParams)) {
+        if (param.clientDefaultValue || param.required === false) {
+          optionalParams.push(param);
+        }
+      }
+    }
+
     // now emit any client params (non parameterized host params case)
     const clientLiterals = new Array<string>();
     if (group.language.go!.clientParams) {
       const clientParams = <Array<Parameter>>group.language.go!.clientParams;
       for (const clientParam of values(clientParams)) {
         clientText += `\t${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}\n`;
-        // track the client params needed during client type instantiation
-        clientLiterals.push(`${clientParam.language.go!.name}: ${clientParam.language.go!.name}`);
+        if (isARM && (clientParam.clientDefaultValue || clientParam.required === false)) {
+          // add to optional params struct for ARM variants
+          optionalParams.push(clientParam);
+        } else {
+          clientLiterals.push(`${clientParam.language.go!.name}: ${clientParam.language.go!.name}`);
+        }
       }
     }
     clientText += '\tpl runtime.Pipeline\n';
     clientText += '}\n\n';
+
+    let optionsType = 'azcore.ClientOptions';
+    if (<boolean>session.model.language.go!.azureARM) {
+      optionsType = 'arm.ClientOptions';
+    }
+
+    // if there are any optional client params, create a client options struct and put them there.
+    // note that we don't do this for data-plane as it takes a pipeline, not an options struct.
+    if (optionalParams.length > 0) {
+      optionsType = `${clientName}Options`;
+      clientText += `// ${optionsType} contains the optional parameters for ${clientCtor}.\n`;
+      clientText += `type ${optionsType} struct {\n`;
+      let optionsPkg = 'azcore';
+      if (<boolean>session.model.language.go!.azureARM) {
+        optionsPkg = 'arm';
+      }
+      clientText += `\t${optionsPkg}.ClientOptions\n`;
+      for (const param of values(optionalParams)) {
+        clientText += `\t${param.language.go!.name.capitalize()} ${formatParameterTypeName(param)}\n`;
+      }
+      clientText += '}\n\n';
+    }
 
     // generate client constructor
     // build constructor params
@@ -93,14 +133,12 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     }
 
     const methodParams = new Array<string>();
-    let optionsPkg = 'azcore';
     if (<boolean>session.model.language.go!.azureARM) {
       // AzureARM is the simplest case, no parametertized host etc
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-      optionsPkg = 'arm';
       emitClientParams();
       methodParams.push('credential azcore.TokenCredential');
-      methodParams.push('options *arm.ClientOptions');
+      methodParams.push(`options *${optionsType}`);
     } else {
       // this is the vanilla ARM or data-plane case.  both of them can
       // have parameterized host, however data-plane takes a pipeline
@@ -111,6 +149,10 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         // client parameterized host
         const hostParams = <Array<Parameter>>group.language.go!.hostParams;
         for (const param of values(hostParams)) {
+          if (isARM && (param.clientDefaultValue || param.required === false)) {
+            // skip adding optional param to constructor sig for ARM variants
+            continue;
+          }
           const paramName = param.language.go!.name;
           methodParams.push(`${paramName} ${formatParameterTypeName(param)}`);
         }
@@ -122,7 +164,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       // add the final param
       if (isARM) {
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
-        methodParams.push('options *azcore.ClientOptions');
+        methodParams.push(`options *${optionsType}`);
       } else {
         methodParams.push('pl runtime.Pipeline');
       }
@@ -133,53 +175,23 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     clientText += `func ${clientCtor}(${methodParams.join(', ')}) *${clientName} {\n`;
     if (isARM) {
       // data-plane doesn't take client options
-      clientText += `\tcp := ${optionsPkg}.ClientOptions{}\n`;
+      clientText += `\tcp := ${optionsType}{}\n`;
       clientText += '\tif options != nil {\n';
       clientText += '\t\tcp = *options\n';
       clientText += '\t}\n';
+    }
+    let optionsCopy = 'cp';
+    if (optionalParams.length > 0) {
+      optionsCopy = 'cp.ClientOptions';
     }
     if (<boolean>session.model.language.go!.azureARM) {
       clientText += '\tif len(cp.Host) == 0 {\n';
       clientText += '\t\tcp.Host = arm.AzurePublicCloud\n';
       clientText += '\t}\n';
-      clientText += `\treturn &${clientName}{${group.language.go!.hostParamName}: string(cp.Host), `;
-      for (const clientLiteral of values(clientLiterals)) {
-        clientText += `\t\t${clientLiteral}, `;
-      }
-      clientText += 'pl: armruntime.NewPipeline(module, version, credential, &cp)}\n';
-    } else if (group.language.go!.complexHostParams) {
-      // complex case, full URL will be constructed and parsed in operations
-      clientText += `\tclient := &${clientName}{\n`;
-      const hostParams = <Array<Parameter>>group.language.go!.hostParams;
-      for (const hostParam of values(hostParams)) {
-        let val = hostParam.language.go!.name;
-        if (hostParam.clientDefaultValue) {
-          val = getClientDefaultValue(hostParam);
-        }
-        clientText += `\t\t${hostParam.language.go!.name}: ${val},\n`;
-      }
-      for (const clientLiteral of values(clientLiterals)) {
-        clientText += `\t\t${clientLiteral},\n`;
-      }
-      // create or add pipeline based on vanilla/data-plane
-      if (isARM) {
-        clientText += '\t\tpl: runtime.NewPipeline(module, version, nil, nil, &cp),\n';
-      } else {
-        clientText += '\t\tpl: pl,\n';
-      }
-      clientText += '\t}\n';
-      // handle optional host params
-      for (const hostParam of values(hostParams)) {
-        if (hostParam.clientDefaultValue) {
-          clientText += `\tif ${hostParam.language.go!.name} != nil {\n`;
-          clientText += `\t\tclient.${hostParam.language.go!.name} = *${hostParam.language.go!.name}\n`;
-          clientText += '\t}\n';
-        }
-      }
-      clientText += '\treturn client\n';
-    } else if (group.language.go!.hostParams) {
+    }
+    let parameterizedURL = '';
+    if (group.language.go!.hostParams && !group.language.go!.complexHostParams) {
       // simple case, construct the full endpoint here
-      var hostURL: string;
       const uriTemplate = <string>session.model.operationGroups[0].operations[0].requests![0].protocol.http!.uri;
       // if the uriTemplate is simply {whatever} then we can skip doing the strings.ReplaceAll thing.
       if (uriTemplate.match(/^\{\w+\}$/)) {
@@ -191,11 +203,11 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         switch (hostParam.schema.type) {
           case SchemaType.Choice:
           case SchemaType.SealedChoice:
-            hostURL = `string(${hostParam.language.go!.name}))\n`;
+            parameterizedURL = `string(${hostParam.language.go!.name}))\n`;
             break;
           default:
             // assumes default is string
-            hostURL = hostParam.language.go!.name;
+            parameterizedURL = hostParam.language.go!.name;
             break;
         }
       } else {
@@ -206,48 +218,73 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         for (const hostParam of values(hostParams)) {
           // dereference optional params
           let pointer = '';
+          let paramName = hostParam.language.go!.name;
           if (hostParam.clientDefaultValue) {
             pointer = '*';
-            clientText += `\tif ${hostParam.language.go!.name} == nil {\n`;
+            if (isARM) {
+              paramName = `options.${hostParam.language.go!.name.capitalize()}`;
+            }
+            clientText += `\tif ${paramName} == nil {\n`;
             clientText += `\t\tdefaultValue := ${getClientDefaultValue(hostParam)}\n`;
-            clientText += `\t\t${hostParam.language.go!.name} = &defaultValue\n`;
+            clientText += `\t\t${paramName} = &defaultValue\n`;
             clientText += '\t}\n';
           }
           clientText += `\thostURL = strings.ReplaceAll(hostURL, "{${hostParam.language.go!.serializedName}}", `;
           switch (hostParam.schema.type) {
             case SchemaType.Choice:
             case SchemaType.SealedChoice:
-              clientText += `string(${pointer}${hostParam.language.go!.name}))\n`;
+              clientText += `string(${pointer}${paramName}))\n`;
               break;
             case SchemaType.String:
-              clientText += `${pointer}${hostParam.language.go!.name})\n`;
+              clientText += `${pointer}${paramName})\n`;
               break;
             default:
               imports.add('fmt');
-              clientText += `fmt.Sprint(${pointer}${hostParam.language.go!.name}))\n`;
+              clientText += `fmt.Sprint(${pointer}${paramName}))\n`;
               break;
           }
         }
-        hostURL = 'hostURL';
+        parameterizedURL = 'hostURL';
       }
-      // create or add pipeline based on vanilla/data-plane
-      let pipeline = 'pl: pl';
-      if (isARM) {
-        pipeline = 'pl: runtime.NewPipeline(module, version, nil, nil, &cp)';
-      }
-      clientText += `\treturn &${clientName}{${group.language.go!.hostParamName}: ${hostURL}, `;
-      for (const clientLiteral of values(clientLiterals)) {
-        clientText += `${clientLiteral}, `;
-      }
-      clientText += `${pipeline}}\n`;
-    } else {
-      // swagger specified host
-      clientText += `\treturn &${clientName}{`;
-      for (const clientLiteral of values(clientLiterals)) {
-        clientText += `\t\t${clientLiteral}, `;
-      }
-      clientText += 'pl: runtime.NewPipeline(module, version, nil, nil, &cp)}\n';
     }
+    // construct client literal
+    clientText += `\tclient := &${clientName}{\n`;
+    // populate any default values
+    for (const optionalParam of values(optionalParams)) {
+      if (optionalParam.clientDefaultValue) {
+        clientText += `\t\t${optionalParam.language.go!.name}: ${getClientDefaultValue(optionalParam)},\n`;
+      }
+    }
+    if (parameterizedURL !== '') {
+      clientText += `\t\t${group.language.go!.hostParamName}: ${parameterizedURL},\n`;
+    }
+    // propagate params
+    for (const clientLiteral of values(clientLiterals)) {
+      clientText += `\t\t${clientLiteral},\n`;
+    }
+    // create or add pipeline based on arm/vanilla/data-plane
+    if (<boolean>session.model.language.go!.azureARM) {
+      clientText += `\t\t${group.language.go!.hostParamName}: string(cp.Host),\n`;
+      clientText += `\t\tpl: armruntime.NewPipeline(module, version, credential, &${optionsCopy}),\n`;
+    } else if (isARM) {
+      clientText += `\t\tpl: runtime.NewPipeline(module, version, nil, nil, &${optionsCopy}),\n`;
+    } else {
+      clientText += '\t\tpl: pl,\n';
+    }
+    clientText += '\t}\n';
+    // propagate optional params
+    for (const optionalParam of values(optionalParams)) {
+      if (optionalParam.clientDefaultValue || optionalParam.required === false) {
+        let paramName = optionalParam.language.go!.name;
+        if (isARM) {
+          paramName = `options.${optionalParam.language.go!.name.capitalize()}`;
+        }
+        clientText += `\tif ${paramName} != nil {\n`;
+        clientText += `\t\tclient.${optionalParam.language.go!.name} = *${paramName}\n`;
+        clientText += '\t}\n';
+      }
+    }
+    clientText += '\treturn client\n';
     clientText += '}\n\n';
 
     // generate operations

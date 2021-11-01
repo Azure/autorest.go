@@ -34,7 +34,11 @@ func NewTriggersClient(subscriptionID string, options *azcore.ClientOptions) *Tr
 	if options != nil {
 		cp = *options
 	}
-	return &TriggersClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &TriggersClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a trigger.

@@ -26,7 +26,11 @@ type datasetClient struct {
 
 // newDatasetClient creates a new instance of datasetClient with the specified values.
 func newDatasetClient(endpoint string, pl runtime.Pipeline) *datasetClient {
-	return &datasetClient{endpoint: endpoint, pl: pl}
+	client := &datasetClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // BeginCreateOrUpdateDataset - Creates or updates a dataset.

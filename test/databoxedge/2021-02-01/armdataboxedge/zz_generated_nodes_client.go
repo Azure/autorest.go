@@ -33,7 +33,11 @@ func NewNodesClient(subscriptionID string, options *azcore.ClientOptions) *Nodes
 	if options != nil {
 		cp = *options
 	}
-	return &NodesClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &NodesClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // ListByDataBoxEdgeDevice - Gets all the nodes currently configured under this Data Box Edge device

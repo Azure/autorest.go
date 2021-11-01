@@ -36,7 +36,11 @@ func NewCreditsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &CreditsClient{host: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &CreditsClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // Get - The credit summary by billingAccountId and billingProfileId.

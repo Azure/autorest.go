@@ -39,7 +39,12 @@ func NewNetworkManagementClient(subscriptionID string, credential azcore.TokenCr
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &NetworkManagementClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &NetworkManagementClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // CheckDNSNameAvailability - Checks whether a domain name in the cloudapp.azure.com zone is available for use.

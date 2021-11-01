@@ -29,7 +29,10 @@ func NewAutoRestReportServiceClient(options *azcore.ClientOptions) *AutoRestRepo
 	if options != nil {
 		cp = *options
 	}
-	return &AutoRestReportServiceClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &AutoRestReportServiceClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetOptionalReport - Get optional test coverage report

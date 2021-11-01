@@ -39,7 +39,12 @@ func NewExpressRouteCircuitPeeringsClient(subscriptionID string, credential azco
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ExpressRouteCircuitPeeringsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ExpressRouteCircuitPeeringsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a peering in the specified express route circuits.

@@ -35,7 +35,11 @@ func NewOperationsClient(credential azcore.TokenCredential, options *arm.ClientO
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &OperationsClient{host: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &OperationsClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Lists all of the available Network Rest API operations.

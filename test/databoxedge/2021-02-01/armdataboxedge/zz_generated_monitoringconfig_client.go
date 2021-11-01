@@ -34,7 +34,11 @@ func NewMonitoringConfigClient(subscriptionID string, options *azcore.ClientOpti
 	if options != nil {
 		cp = *options
 	}
-	return &MonitoringConfigClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &MonitoringConfigClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates a new metric configuration or updates an existing one for a role.

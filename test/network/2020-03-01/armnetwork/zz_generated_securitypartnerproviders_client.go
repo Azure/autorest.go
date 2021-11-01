@@ -39,7 +39,12 @@ func NewSecurityPartnerProvidersClient(subscriptionID string, credential azcore.
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &SecurityPartnerProvidersClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &SecurityPartnerProvidersClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified Security Partner Provider.

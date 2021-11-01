@@ -26,7 +26,11 @@ type dataFlowClient struct {
 
 // newDataFlowClient creates a new instance of dataFlowClient with the specified values.
 func newDataFlowClient(endpoint string, pl runtime.Pipeline) *dataFlowClient {
-	return &dataFlowClient{endpoint: endpoint, pl: pl}
+	client := &dataFlowClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // BeginCreateOrUpdateDataFlow - Creates or updates a data flow.

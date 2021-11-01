@@ -28,7 +28,12 @@ type appendBlobClient struct {
 
 // newAppendBlobClient creates a new instance of appendBlobClient with the specified values.
 func newAppendBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *appendBlobClient {
-	return &appendBlobClient{endpoint: endpoint, version: version, pl: pl}
+	client := &appendBlobClient{
+		endpoint: endpoint,
+		version:  version,
+		pl:       pl,
+	}
+	return client
 }
 
 // AppendBlock - The Append Block operation commits a new block of data to the end of an existing append blob. The Append Block operation is permitted only

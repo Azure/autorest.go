@@ -38,7 +38,12 @@ func NewAvailabilitySetsClient(subscriptionID string, credential azcore.TokenCre
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &AvailabilitySetsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &AvailabilitySetsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // CreateOrUpdate - Create or update an availability set.

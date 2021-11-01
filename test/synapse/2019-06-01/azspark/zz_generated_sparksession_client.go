@@ -34,7 +34,11 @@ func newSparkSessionClient(endpoint string, livyAPIVersion *string, sparkPoolNam
 	}
 	hostURL = strings.ReplaceAll(hostURL, "{livyApiVersion}", *livyAPIVersion)
 	hostURL = strings.ReplaceAll(hostURL, "{sparkPoolName}", sparkPoolName)
-	return &sparkSessionClient{endpoint: hostURL, pl: pl}
+	client := &sparkSessionClient{
+		endpoint: hostURL,
+		pl:       pl,
+	}
+	return client
 }
 
 // CancelSparkSession - Cancels a running spark session.

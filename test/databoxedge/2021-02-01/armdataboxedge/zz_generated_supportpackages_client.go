@@ -34,7 +34,11 @@ func NewSupportPackagesClient(subscriptionID string, options *azcore.ClientOptio
 	if options != nil {
 		cp = *options
 	}
-	return &SupportPackagesClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &SupportPackagesClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginTriggerSupportPackage - Triggers support package on the device

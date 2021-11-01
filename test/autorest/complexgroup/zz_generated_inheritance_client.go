@@ -29,7 +29,10 @@ func NewInheritanceClient(options *azcore.ClientOptions) *InheritanceClient {
 	if options != nil {
 		cp = *options
 	}
-	return &InheritanceClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &InheritanceClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetValid - Get complex types that extend others

@@ -30,7 +30,10 @@ func NewIntClient(options *azcore.ClientOptions) *IntClient {
 	if options != nil {
 		cp = *options
 	}
-	return &IntClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &IntClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetInvalid - Get invalid Int value

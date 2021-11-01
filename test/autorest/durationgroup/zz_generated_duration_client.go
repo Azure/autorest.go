@@ -29,7 +29,10 @@ func NewDurationClient(options *azcore.ClientOptions) *DurationClient {
 	if options != nil {
 		cp = *options
 	}
-	return &DurationClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &DurationClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetInvalid - Get an invalid duration value

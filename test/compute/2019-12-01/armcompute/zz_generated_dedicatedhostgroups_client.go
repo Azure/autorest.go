@@ -38,7 +38,12 @@ func NewDedicatedHostGroupsClient(subscriptionID string, credential azcore.Token
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &DedicatedHostGroupsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &DedicatedHostGroupsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // CreateOrUpdate - Create or update a dedicated host group. For details of Dedicated Host and Dedicated Host Groups please see Dedicated Host Documentation

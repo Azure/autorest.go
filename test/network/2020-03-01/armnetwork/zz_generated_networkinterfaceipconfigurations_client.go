@@ -39,7 +39,12 @@ func NewNetworkInterfaceIPConfigurationsClient(subscriptionID string, credential
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &NetworkInterfaceIPConfigurationsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &NetworkInterfaceIPConfigurationsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // Get - Gets the specified network interface ip configuration.

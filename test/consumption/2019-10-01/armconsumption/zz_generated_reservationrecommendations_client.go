@@ -36,7 +36,11 @@ func NewReservationRecommendationsClient(credential azcore.TokenCredential, opti
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ReservationRecommendationsClient{host: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ReservationRecommendationsClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - List of recommendations for purchasing reserved instances.

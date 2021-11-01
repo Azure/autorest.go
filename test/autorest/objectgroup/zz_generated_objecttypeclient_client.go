@@ -29,7 +29,10 @@ func NewObjectTypeClient(options *azcore.ClientOptions) *ObjectTypeClient {
 	if options != nil {
 		cp = *options
 	}
-	return &ObjectTypeClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &ObjectTypeClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Get - Basic get that returns an object. Returns object { 'message': 'An object was successfully returned' }

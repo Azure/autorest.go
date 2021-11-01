@@ -38,7 +38,11 @@ func NewAggregatedCostClient(credential azcore.TokenCredential, options *arm.Cli
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &AggregatedCostClient{host: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &AggregatedCostClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // GetByManagementGroup - Provides the aggregate cost of a management group and all child management groups by current billing period.

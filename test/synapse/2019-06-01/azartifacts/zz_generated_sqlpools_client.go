@@ -26,7 +26,11 @@ type sqlPoolsClient struct {
 
 // newSQLPoolsClient creates a new instance of sqlPoolsClient with the specified values.
 func newSQLPoolsClient(endpoint string, pl runtime.Pipeline) *sqlPoolsClient {
-	return &sqlPoolsClient{endpoint: endpoint, pl: pl}
+	client := &sqlPoolsClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // Get - Get Sql Pool

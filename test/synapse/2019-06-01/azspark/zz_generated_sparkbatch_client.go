@@ -34,7 +34,11 @@ func newSparkBatchClient(endpoint string, livyAPIVersion *string, sparkPoolName 
 	}
 	hostURL = strings.ReplaceAll(hostURL, "{livyApiVersion}", *livyAPIVersion)
 	hostURL = strings.ReplaceAll(hostURL, "{sparkPoolName}", sparkPoolName)
-	return &sparkBatchClient{endpoint: hostURL, pl: pl}
+	client := &sparkBatchClient{
+		endpoint: hostURL,
+		pl:       pl,
+	}
+	return client
 }
 
 // CancelSparkBatchJob - Cancels a running spark batch job.

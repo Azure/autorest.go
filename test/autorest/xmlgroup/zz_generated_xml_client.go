@@ -31,7 +31,10 @@ func NewXMLClient(options *azcore.ClientOptions) *XMLClient {
 	if options != nil {
 		cp = *options
 	}
-	return &XMLClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &XMLClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetACLs - Gets storage ACLs for a container.

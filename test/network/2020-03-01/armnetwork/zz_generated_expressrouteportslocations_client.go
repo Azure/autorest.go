@@ -39,7 +39,12 @@ func NewExpressRoutePortsLocationsClient(subscriptionID string, credential azcor
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ExpressRoutePortsLocationsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ExpressRoutePortsLocationsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.

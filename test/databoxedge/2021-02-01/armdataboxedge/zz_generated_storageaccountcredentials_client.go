@@ -34,7 +34,11 @@ func NewStorageAccountCredentialsClient(subscriptionID string, options *azcore.C
 	if options != nil {
 		cp = *options
 	}
-	return &StorageAccountCredentialsClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &StorageAccountCredentialsClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates the storage account credential.

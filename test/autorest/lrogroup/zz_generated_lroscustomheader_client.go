@@ -30,7 +30,10 @@ func NewLROsCustomHeaderClient(options *azcore.ClientOptions) *LROsCustomHeaderC
 	if options != nil {
 		cp = *options
 	}
-	return &LROsCustomHeaderClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &LROsCustomHeaderClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginPost202Retry200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests. Long running post request,

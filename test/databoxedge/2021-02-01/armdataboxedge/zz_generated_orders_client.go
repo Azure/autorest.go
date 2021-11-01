@@ -34,7 +34,11 @@ func NewOrdersClient(subscriptionID string, options *azcore.ClientOptions) *Orde
 	if options != nil {
 		cp = *options
 	}
-	return &OrdersClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &OrdersClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates an order.

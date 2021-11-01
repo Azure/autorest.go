@@ -29,7 +29,10 @@ func NewBasicClient(options *azcore.ClientOptions) *BasicClient {
 	if options != nil {
 		cp = *options
 	}
-	return &BasicClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &BasicClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetEmpty - Get a basic complex type that is empty

@@ -12,7 +12,9 @@ import (
 )
 
 func newPathsClient() *PathsClient {
-	return NewPathsClient(to.StringPtr(":3000"), nil)
+	return NewPathsClient(&PathsClientOptions{
+		Host: to.StringPtr(":3000"),
+	})
 }
 
 func TestGetEmpty(t *testing.T) {

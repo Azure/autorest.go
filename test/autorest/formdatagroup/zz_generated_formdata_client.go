@@ -30,7 +30,10 @@ func NewFormdataClient(options *azcore.ClientOptions) *FormdataClient {
 	if options != nil {
 		cp = *options
 	}
-	return &FormdataClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &FormdataClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // UploadFile - Upload file

@@ -34,7 +34,12 @@ func NewPathItemsClient(globalStringPath string, globalStringQuery *string, opti
 	if options != nil {
 		cp = *options
 	}
-	return &PathItemsClient{globalStringPath: globalStringPath, globalStringQuery: globalStringQuery, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &PathItemsClient{
+		globalStringPath:  globalStringPath,
+		globalStringQuery: globalStringQuery,
+		pl:                runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetAllWithValues - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery',

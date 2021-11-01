@@ -30,7 +30,10 @@ func NewMultipleResponsesClient(options *azcore.ClientOptions) *MultipleResponse
 	if options != nil {
 		cp = *options
 	}
-	return &MultipleResponsesClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &MultipleResponsesClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Get200Model201ModelDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}

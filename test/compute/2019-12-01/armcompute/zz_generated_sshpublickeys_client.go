@@ -38,7 +38,12 @@ func NewSSHPublicKeysClient(subscriptionID string, credential azcore.TokenCreden
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &SSHPublicKeysClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &SSHPublicKeysClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // Create - Creates a new SSH public key resource.

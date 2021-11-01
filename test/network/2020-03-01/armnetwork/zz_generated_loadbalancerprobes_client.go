@@ -39,7 +39,12 @@ func NewLoadBalancerProbesClient(subscriptionID string, credential azcore.TokenC
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &LoadBalancerProbesClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &LoadBalancerProbesClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // Get - Gets load balancer probe.

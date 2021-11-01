@@ -33,7 +33,10 @@ func NewQueriesClient(options *azcore.ClientOptions) *QueriesClient {
 	if options != nil {
 		cp = *options
 	}
-	return &QueriesClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &QueriesClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format

@@ -33,7 +33,10 @@ func NewParameterGroupingClient(options *azcore.ClientOptions) *ParameterGroupin
 	if options != nil {
 		cp = *options
 	}
-	return &ParameterGroupingClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &ParameterGroupingClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // PostMultiParamGroups - Post parameters from multiple different parameter groups

@@ -30,7 +30,10 @@ func NewUploadClient(options *azcore.ClientOptions) *UploadClient {
 	if options != nil {
 		cp = *options
 	}
-	return &UploadClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &UploadClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Binary - Uploading binary file

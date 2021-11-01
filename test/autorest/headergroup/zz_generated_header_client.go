@@ -32,7 +32,10 @@ func NewHeaderClient(options *azcore.ClientOptions) *HeaderClient {
 	if options != nil {
 		cp = *options
 	}
-	return &HeaderClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &HeaderClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // CustomRequestID - Send x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request

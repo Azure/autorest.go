@@ -33,7 +33,11 @@ func NewAlertsClient(subscriptionID string, options *azcore.ClientOptions) *Aler
 	if options != nil {
 		cp = *options
 	}
-	return &AlertsClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &AlertsClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Get - Gets an alert by name.

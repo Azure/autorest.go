@@ -39,7 +39,12 @@ func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ForecastsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ForecastsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Lists the forecast charges for scope defined. Please note that this API is no longer actively under development. We recommend using our new Forecast

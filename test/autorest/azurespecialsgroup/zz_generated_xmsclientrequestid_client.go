@@ -30,7 +30,10 @@ func NewXMSClientRequestIDClient(options *azcore.ClientOptions) *XMSClientReques
 	if options != nil {
 		cp = *options
 	}
-	return &XMSClientRequestIDClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &XMSClientRequestIDClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.

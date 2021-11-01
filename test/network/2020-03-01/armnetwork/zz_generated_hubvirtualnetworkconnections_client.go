@@ -39,7 +39,12 @@ func NewHubVirtualNetworkConnectionsClient(subscriptionID string, credential azc
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &HubVirtualNetworkConnectionsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &HubVirtualNetworkConnectionsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // Get - Retrieves the details of a HubVirtualNetworkConnection.

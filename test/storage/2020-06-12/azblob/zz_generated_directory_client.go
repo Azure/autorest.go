@@ -27,7 +27,13 @@ type directoryClient struct {
 
 // newDirectoryClient creates a new instance of directoryClient with the specified values.
 func newDirectoryClient(endpoint string, version Enum2, pathRenameMode *PathRenameMode, pl runtime.Pipeline) *directoryClient {
-	return &directoryClient{endpoint: endpoint, version: version, pathRenameMode: pathRenameMode, pl: pl}
+	client := &directoryClient{
+		endpoint:       endpoint,
+		version:        version,
+		pathRenameMode: pathRenameMode,
+		pl:             pl,
+	}
+	return client
 }
 
 // Create - Create a directory. By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken. This

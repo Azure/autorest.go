@@ -28,7 +28,12 @@ type ServiceClient struct {
 
 // NewServiceClient creates a new instance of ServiceClient with the specified values.
 func NewServiceClient(endpoint string, version Enum0, pl runtime.Pipeline) *ServiceClient {
-	return &ServiceClient{endpoint: endpoint, version: version, pl: pl}
+	client := &ServiceClient{
+		endpoint: endpoint,
+		version:  version,
+		pl:       pl,
+	}
+	return client
 }
 
 // GetProperties - Gets the properties of an account's Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules.

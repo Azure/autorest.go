@@ -39,7 +39,12 @@ func NewNetworkWatchersClient(subscriptionID string, credential azcore.TokenCred
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &NetworkWatchersClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &NetworkWatchersClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginCheckConnectivity - Verifies the possibility of establishing a direct TCP connection from a virtual machine to a given endpoint including another

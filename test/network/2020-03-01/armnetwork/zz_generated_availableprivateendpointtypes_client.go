@@ -39,7 +39,12 @@ func NewAvailablePrivateEndpointTypesClient(subscriptionID string, credential az
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &AvailablePrivateEndpointTypesClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &AvailablePrivateEndpointTypesClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.

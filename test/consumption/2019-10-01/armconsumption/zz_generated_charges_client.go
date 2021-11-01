@@ -36,7 +36,11 @@ func NewChargesClient(credential azcore.TokenCredential, options *arm.ClientOpti
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ChargesClient{host: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ChargesClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Lists the charges based for the defined scope.

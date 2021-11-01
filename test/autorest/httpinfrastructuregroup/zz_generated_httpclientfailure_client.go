@@ -29,7 +29,10 @@ func NewHTTPClientFailureClient(options *azcore.ClientOptions) *HTTPClientFailur
 	if options != nil {
 		cp = *options
 	}
-	return &HTTPClientFailureClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &HTTPClientFailureClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Delete400 - Return 400 status code - should be represented in the client as an error

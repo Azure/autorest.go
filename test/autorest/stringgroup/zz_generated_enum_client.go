@@ -29,7 +29,10 @@ func NewEnumClient(options *azcore.ClientOptions) *EnumClient {
 	if options != nil {
 		cp = *options
 	}
-	return &EnumClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &EnumClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.

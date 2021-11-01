@@ -38,7 +38,12 @@ func NewVirtualMachineScaleSetRollingUpgradesClient(subscriptionID string, crede
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &VirtualMachineScaleSetRollingUpgradesClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &VirtualMachineScaleSetRollingUpgradesClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginCancel - Cancels the current virtual machine scale set rolling upgrade.

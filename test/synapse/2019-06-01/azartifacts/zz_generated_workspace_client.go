@@ -23,7 +23,11 @@ type workspaceClient struct {
 
 // newWorkspaceClient creates a new instance of workspaceClient with the specified values.
 func newWorkspaceClient(endpoint string, pl runtime.Pipeline) *workspaceClient {
-	return &workspaceClient{endpoint: endpoint, pl: pl}
+	client := &workspaceClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // Get - Get Workspace

@@ -29,7 +29,10 @@ func NewHTTPRedirectsClient(options *azcore.ClientOptions) *HTTPRedirectsClient 
 	if options != nil {
 		cp = *options
 	}
-	return &HTTPRedirectsClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &HTTPRedirectsClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Delete307 - Delete redirected with 307, resulting in a 200 after redirect

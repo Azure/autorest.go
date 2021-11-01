@@ -28,7 +28,10 @@ func NewHTTPSuccessClient(options *azcore.ClientOptions) *HTTPSuccessClient {
 	if options != nil {
 		cp = *options
 	}
-	return &HTTPSuccessClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &HTTPSuccessClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Head200 - Return 200 status code if successful

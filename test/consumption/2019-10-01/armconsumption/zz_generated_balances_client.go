@@ -38,7 +38,11 @@ func NewBalancesClient(credential azcore.TokenCredential, options *arm.ClientOpt
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &BalancesClient{host: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &BalancesClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // GetByBillingAccount - Gets the balances for a scope by billingAccountId. Balances are available via this API only for May 1, 2014 or later.

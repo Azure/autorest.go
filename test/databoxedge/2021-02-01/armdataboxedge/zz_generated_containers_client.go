@@ -34,7 +34,11 @@ func NewContainersClient(subscriptionID string, options *azcore.ClientOptions) *
 	if options != nil {
 		cp = *options
 	}
-	return &ContainersClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &ContainersClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates a new container or updates an existing container on the device.

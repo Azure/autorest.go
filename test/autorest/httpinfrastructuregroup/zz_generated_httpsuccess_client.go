@@ -29,7 +29,10 @@ func NewHTTPSuccessClient(options *azcore.ClientOptions) *HTTPSuccessClient {
 	if options != nil {
 		cp = *options
 	}
-	return &HTTPSuccessClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &HTTPSuccessClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Delete200 - Delete simple boolean value true returns 200

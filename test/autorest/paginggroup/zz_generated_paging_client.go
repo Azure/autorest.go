@@ -33,7 +33,10 @@ func NewPagingClient(options *azcore.ClientOptions) *PagingClient {
 	if options != nil {
 		cp = *options
 	}
-	return &PagingClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &PagingClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // FirstResponseEmpty - A paging operation whose first response's items list is empty, but still returns a next link. Second (and final) call, will give

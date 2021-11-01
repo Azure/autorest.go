@@ -34,7 +34,10 @@ func NewPathsClient(options *azcore.ClientOptions) *PathsClient {
 	if options != nil {
 		cp = *options
 	}
-	return &PathsClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &PathsClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // ArrayCSVInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format

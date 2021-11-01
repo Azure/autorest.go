@@ -13,7 +13,9 @@ import (
 
 func newPathsClient() *PathsClient {
 	// dnsSuffix string, subscriptionID string
-	return NewPathsClient(to.StringPtr(":3000"), "test12", nil)
+	return NewPathsClient("test12", &PathsClientOptions{
+		DnsSuffix: to.StringPtr(":3000"),
+	})
 }
 
 func TestGetEmpty(t *testing.T) {

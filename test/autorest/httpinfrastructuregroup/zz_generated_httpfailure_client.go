@@ -30,7 +30,10 @@ func NewHTTPFailureClient(options *azcore.ClientOptions) *HTTPFailureClient {
 	if options != nil {
 		cp = *options
 	}
-	return &HTTPFailureClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &HTTPFailureClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetEmptyError - Get empty error form server

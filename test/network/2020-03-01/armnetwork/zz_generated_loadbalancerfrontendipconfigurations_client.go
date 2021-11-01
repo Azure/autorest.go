@@ -39,7 +39,12 @@ func NewLoadBalancerFrontendIPConfigurationsClient(subscriptionID string, creden
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &LoadBalancerFrontendIPConfigurationsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &LoadBalancerFrontendIPConfigurationsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // Get - Gets load balancer frontend IP configuration.

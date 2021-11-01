@@ -29,7 +29,10 @@ func NewHTTPRetryClient(options *azcore.ClientOptions) *HTTPRetryClient {
 	if options != nil {
 		cp = *options
 	}
-	return &HTTPRetryClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &HTTPRetryClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Delete503 - Return 503 status code, then 200 after retry

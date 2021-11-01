@@ -26,7 +26,11 @@ type sparkJobDefinitionClient struct {
 
 // newSparkJobDefinitionClient creates a new instance of sparkJobDefinitionClient with the specified values.
 func newSparkJobDefinitionClient(endpoint string, pl runtime.Pipeline) *sparkJobDefinitionClient {
-	return &sparkJobDefinitionClient{endpoint: endpoint, pl: pl}
+	client := &sparkJobDefinitionClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // BeginCreateOrUpdateSparkJobDefinition - Creates or updates a Spark Job Definition.

@@ -29,7 +29,13 @@ type blobClient struct {
 
 // newBlobClient creates a new instance of blobClient with the specified values.
 func newBlobClient(endpoint string, version Enum2, pathRenameMode *PathRenameMode, pl runtime.Pipeline) *blobClient {
-	return &blobClient{endpoint: endpoint, version: version, pathRenameMode: pathRenameMode, pl: pl}
+	client := &blobClient{
+		endpoint:       endpoint,
+		version:        version,
+		pathRenameMode: pathRenameMode,
+		pl:             pl,
+	}
+	return client
 }
 
 // AbortCopyFromURL - The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination blob with zero length and full

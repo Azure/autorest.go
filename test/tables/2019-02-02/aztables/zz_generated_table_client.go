@@ -32,7 +32,12 @@ type TableClient struct {
 
 // NewTableClient creates a new instance of TableClient with the specified values.
 func NewTableClient(endpoint string, version Enum0, pl runtime.Pipeline) *TableClient {
-	return &TableClient{endpoint: endpoint, version: version, pl: pl}
+	client := &TableClient{
+		endpoint: endpoint,
+		version:  version,
+		pl:       pl,
+	}
+	return client
 }
 
 // Create - Creates a new table under the given account.

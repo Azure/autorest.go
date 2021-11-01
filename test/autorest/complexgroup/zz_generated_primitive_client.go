@@ -29,7 +29,10 @@ func NewPrimitiveClient(options *azcore.ClientOptions) *PrimitiveClient {
 	if options != nil {
 		cp = *options
 	}
-	return &PrimitiveClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &PrimitiveClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetBool - Get complex types with bool properties

@@ -29,7 +29,10 @@ func NewBoolClient(options *azcore.ClientOptions) *BoolClient {
 	if options != nil {
 		cp = *options
 	}
-	return &BoolClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &BoolClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetFalse - Get false Boolean value

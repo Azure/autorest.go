@@ -29,7 +29,10 @@ func NewAPIVersionLocalClient(options *azcore.ClientOptions) *APIVersionLocalCli
 	if options != nil {
 		cp = *options
 	}
-	return &APIVersionLocalClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &APIVersionLocalClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetMethodLocalNull - Get method with api-version modeled in the method. pass in api-version = null to succeed

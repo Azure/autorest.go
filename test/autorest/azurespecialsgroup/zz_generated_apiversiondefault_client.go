@@ -29,7 +29,10 @@ func NewAPIVersionDefaultClient(options *azcore.ClientOptions) *APIVersionDefaul
 	if options != nil {
 		cp = *options
 	}
-	return &APIVersionDefaultClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &APIVersionDefaultClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetMethodGlobalNotProvidedValid - GET method with api-version modeled in global settings.

@@ -34,7 +34,11 @@ func NewUsersClient(subscriptionID string, options *azcore.ClientOptions) *Users
 	if options != nil {
 		cp = *options
 	}
-	return &UsersClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &UsersClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway device.

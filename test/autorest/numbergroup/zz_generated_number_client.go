@@ -29,7 +29,10 @@ func NewNumberClient(options *azcore.ClientOptions) *NumberClient {
 	if options != nil {
 		cp = *options
 	}
-	return &NumberClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &NumberClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetBigDecimal - Get big decimal value 2.5976931e+101

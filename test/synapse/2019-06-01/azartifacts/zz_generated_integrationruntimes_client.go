@@ -26,7 +26,11 @@ type integrationRuntimesClient struct {
 
 // newIntegrationRuntimesClient creates a new instance of integrationRuntimesClient with the specified values.
 func newIntegrationRuntimesClient(endpoint string, pl runtime.Pipeline) *integrationRuntimesClient {
-	return &integrationRuntimesClient{endpoint: endpoint, pl: pl}
+	client := &integrationRuntimesClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // Get - Get Integration Runtime

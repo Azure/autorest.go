@@ -33,7 +33,11 @@ func NewAvailableSKUsClient(subscriptionID string, options *azcore.ClientOptions
 	if options != nil {
 		cp = *options
 	}
-	return &AvailableSKUsClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &AvailableSKUsClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // List - List all the available Skus and information related to them.

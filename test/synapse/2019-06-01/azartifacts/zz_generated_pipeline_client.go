@@ -27,7 +27,11 @@ type pipelineClient struct {
 
 // newPipelineClient creates a new instance of pipelineClient with the specified values.
 func newPipelineClient(endpoint string, pl runtime.Pipeline) *pipelineClient {
-	return &pipelineClient{endpoint: endpoint, pl: pl}
+	client := &pipelineClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // BeginCreateOrUpdatePipeline - Creates or updates a pipeline.

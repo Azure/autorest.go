@@ -39,7 +39,12 @@ func NewNetworkProfilesClient(subscriptionID string, credential azcore.TokenCred
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &NetworkProfilesClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &NetworkProfilesClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // CreateOrUpdate - Creates or updates a network profile.

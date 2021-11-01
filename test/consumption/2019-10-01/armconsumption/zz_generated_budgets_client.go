@@ -38,7 +38,11 @@ func NewBudgetsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &BudgetsClient{host: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &BudgetsClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // CreateOrUpdate - The operation to create or update a budget. You can optionally provide an eTag if desired as a form of concurrency control. To obtain

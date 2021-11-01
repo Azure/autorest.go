@@ -26,7 +26,11 @@ type notebookClient struct {
 
 // newNotebookClient creates a new instance of notebookClient with the specified values.
 func newNotebookClient(endpoint string, pl runtime.Pipeline) *notebookClient {
-	return &notebookClient{endpoint: endpoint, pl: pl}
+	client := &notebookClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // BeginCreateOrUpdateNotebook - Creates or updates a Note Book.

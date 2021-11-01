@@ -31,7 +31,11 @@ func newAliasClient(geography *Geography, pl runtime.Pipeline) *aliasClient {
 		geography = &defaultValue
 	}
 	hostURL = strings.ReplaceAll(hostURL, "{geography}", string(*geography))
-	return &aliasClient{endpoint: hostURL, pl: pl}
+	client := &aliasClient{
+		endpoint: hostURL,
+		pl:       pl,
+	}
+	return client
 }
 
 // Create - Applies to: see pricing tiers [https://aka.ms/AzureMapsPricingTier].

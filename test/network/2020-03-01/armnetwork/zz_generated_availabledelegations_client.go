@@ -39,7 +39,12 @@ func NewAvailableDelegationsClient(subscriptionID string, credential azcore.Toke
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &AvailableDelegationsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &AvailableDelegationsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Gets all of the available subnet delegations for this subscription in this region.

@@ -32,7 +32,10 @@ func NewExplicitClient(options *azcore.ClientOptions) *ExplicitClient {
 	if options != nil {
 		cp = *options
 	}
-	return &ExplicitClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &ExplicitClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // PostOptionalArrayHeader - Test explicitly optional integer. Please put a header 'headerParameter' => null.

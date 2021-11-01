@@ -39,7 +39,12 @@ func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(subscriptionID str
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &VPNServerConfigurationsAssociatedWithVirtualWanClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &VPNServerConfigurationsAssociatedWithVirtualWanClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginList - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.

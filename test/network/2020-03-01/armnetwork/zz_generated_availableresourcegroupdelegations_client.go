@@ -39,7 +39,12 @@ func NewAvailableResourceGroupDelegationsClient(subscriptionID string, credentia
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &AvailableResourceGroupDelegationsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &AvailableResourceGroupDelegationsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Gets all of the available subnet delegations for this resource group in this region.

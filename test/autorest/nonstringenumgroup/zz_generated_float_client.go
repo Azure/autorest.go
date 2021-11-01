@@ -29,7 +29,10 @@ func NewFloatClient(options *azcore.ClientOptions) *FloatClient {
 	if options != nil {
 		cp = *options
 	}
-	return &FloatClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &FloatClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Get - Get a float enum

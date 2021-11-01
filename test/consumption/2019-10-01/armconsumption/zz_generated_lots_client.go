@@ -36,7 +36,11 @@ func NewLotsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &LotsClient{host: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &LotsClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Lists the lots by billingAccountId and billingProfileId.

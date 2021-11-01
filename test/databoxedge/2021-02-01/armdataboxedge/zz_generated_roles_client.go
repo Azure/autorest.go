@@ -34,7 +34,11 @@ func NewRolesClient(subscriptionID string, options *azcore.ClientOptions) *Roles
 	if options != nil {
 		cp = *options
 	}
-	return &RolesClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &RolesClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Create or update a role.

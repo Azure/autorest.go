@@ -30,7 +30,10 @@ func NewLRORetrysClient(options *azcore.ClientOptions) *LRORetrysClient {
 	if options != nil {
 		cp = *options
 	}
-	return &LRORetrysClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &LRORetrysClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginDelete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return this value until the last

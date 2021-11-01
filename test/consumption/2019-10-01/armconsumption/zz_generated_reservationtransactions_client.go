@@ -38,7 +38,11 @@ func NewReservationTransactionsClient(credential azcore.TokenCredential, options
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ReservationTransactionsClient{host: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ReservationTransactionsClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - List of transactions for reserved instances on billing account scope

@@ -39,7 +39,12 @@ func NewWebApplicationFirewallPoliciesClient(subscriptionID string, credential a
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &WebApplicationFirewallPoliciesClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &WebApplicationFirewallPoliciesClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // CreateOrUpdate - Creates or update policy with specified rule set name within a resource group.

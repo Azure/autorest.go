@@ -28,7 +28,12 @@ type serviceClient struct {
 
 // newServiceClient creates a new instance of serviceClient with the specified values.
 func newServiceClient(endpoint string, version Enum2, pl runtime.Pipeline) *serviceClient {
-	return &serviceClient{endpoint: endpoint, version: version, pl: pl}
+	client := &serviceClient{
+		endpoint: endpoint,
+		version:  version,
+		pl:       pl,
+	}
+	return client
 }
 
 // FilterBlobs - The Filter Blobs operation enables callers to list blobs across all containers whose tags match a given search expression. Filter blobs

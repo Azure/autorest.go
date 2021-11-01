@@ -34,7 +34,11 @@ func NewAddonsClient(subscriptionID string, options *azcore.ClientOptions) *Addo
 	if options != nil {
 		cp = *options
 	}
-	return &AddonsClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &AddonsClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Create or update a addon.

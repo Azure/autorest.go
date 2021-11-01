@@ -30,7 +30,10 @@ func NewMultipleInheritanceServiceClient(options *azcore.ClientOptions) *Multipl
 	if options != nil {
 		cp = *options
 	}
-	return &MultipleInheritanceServiceClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &MultipleInheritanceServiceClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetCat - Get a cat with name 'Whiskers' where likesMilk, meows, and hisses is true

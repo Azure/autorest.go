@@ -39,7 +39,12 @@ func NewVirtualMachineScaleSetsClient(subscriptionID string, credential azcore.T
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &VirtualMachineScaleSetsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &VirtualMachineScaleSetsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // ConvertToSinglePlacementGroup - Converts SinglePlacementGroup property to true for a existing virtual machine scale set.

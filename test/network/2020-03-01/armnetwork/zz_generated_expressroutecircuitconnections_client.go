@@ -39,7 +39,12 @@ func NewExpressRouteCircuitConnectionsClient(subscriptionID string, credential a
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ExpressRouteCircuitConnectionsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ExpressRouteCircuitConnectionsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a Express Route Circuit Connection in the specified express route circuits.

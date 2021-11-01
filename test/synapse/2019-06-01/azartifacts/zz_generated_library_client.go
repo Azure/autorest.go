@@ -28,7 +28,11 @@ type libraryClient struct {
 
 // newLibraryClient creates a new instance of libraryClient with the specified values.
 func newLibraryClient(endpoint string, pl runtime.Pipeline) *libraryClient {
-	return &libraryClient{endpoint: endpoint, pl: pl}
+	client := &libraryClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // Append - Append the content to the library resource created using the create operation. The maximum content size is 4MiB. Content larger than 4MiB must

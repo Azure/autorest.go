@@ -40,7 +40,12 @@ func NewPriceSheetClient(subscriptionID string, credential azcore.TokenCredentia
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &PriceSheetClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &PriceSheetClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // Get - Gets the price sheet for a scope by subscriptionId. Price sheet is available via this API only for May 1, 2014 or later.

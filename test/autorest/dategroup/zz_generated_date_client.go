@@ -30,7 +30,10 @@ func NewDateClient(options *azcore.ClientOptions) *DateClient {
 	if options != nil {
 		cp = *options
 	}
-	return &DateClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &DateClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetInvalidDate - Get invalid date value

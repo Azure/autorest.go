@@ -26,7 +26,11 @@ type triggerRunClient struct {
 
 // newTriggerRunClient creates a new instance of triggerRunClient with the specified values.
 func newTriggerRunClient(endpoint string, pl runtime.Pipeline) *triggerRunClient {
-	return &triggerRunClient{endpoint: endpoint, pl: pl}
+	client := &triggerRunClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // CancelTriggerInstance - Cancel single trigger instance by runId.

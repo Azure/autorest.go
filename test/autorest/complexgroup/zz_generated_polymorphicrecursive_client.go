@@ -29,7 +29,10 @@ func NewPolymorphicrecursiveClient(options *azcore.ClientOptions) *Polymorphicre
 	if options != nil {
 		cp = *options
 	}
-	return &PolymorphicrecursiveClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &PolymorphicrecursiveClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetValid - Get complex types that are polymorphic and have recursive references

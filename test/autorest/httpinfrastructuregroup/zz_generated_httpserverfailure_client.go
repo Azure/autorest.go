@@ -29,7 +29,10 @@ func NewHTTPServerFailureClient(options *azcore.ClientOptions) *HTTPServerFailur
 	if options != nil {
 		cp = *options
 	}
-	return &HTTPServerFailureClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &HTTPServerFailureClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Delete505 - Return 505 status code - should be represented in the client as an error

@@ -30,7 +30,10 @@ func NewSkipURLEncodingClient(options *azcore.ClientOptions) *SkipURLEncodingCli
 	if options != nil {
 		cp = *options
 	}
-	return &SkipURLEncodingClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &SkipURLEncodingClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetMethodPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'

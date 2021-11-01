@@ -29,7 +29,10 @@ func NewByteClient(options *azcore.ClientOptions) *ByteClient {
 	if options != nil {
 		cp = *options
 	}
-	return &ByteClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &ByteClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetEmpty - Get empty byte value ''

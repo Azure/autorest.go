@@ -34,7 +34,11 @@ func NewDevicesClient(subscriptionID string, options *azcore.ClientOptions) *Dev
 	if options != nil {
 		cp = *options
 	}
-	return &DevicesClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &DevicesClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // CreateOrUpdate - Creates or updates a Data Box Edge/Data Box Gateway resource.

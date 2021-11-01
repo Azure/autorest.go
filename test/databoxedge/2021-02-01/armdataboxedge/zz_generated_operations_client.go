@@ -29,7 +29,10 @@ func NewOperationsClient(options *azcore.ClientOptions) *OperationsClient {
 	if options != nil {
 		cp = *options
 	}
-	return &OperationsClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &OperationsClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // List - List all the supported operations.

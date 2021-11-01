@@ -34,7 +34,11 @@ func NewSharesClient(subscriptionID string, options *azcore.ClientOptions) *Shar
 	if options != nil {
 		cp = *options
 	}
-	return &SharesClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &SharesClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates a new share or updates an existing share on the device.

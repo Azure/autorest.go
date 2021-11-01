@@ -38,7 +38,12 @@ func NewLogAnalyticsClient(subscriptionID string, credential azcore.TokenCredent
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &LogAnalyticsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &LogAnalyticsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginExportRequestRateByInterval - Export logs that show Api requests made by this subscription in the given time window to show throttling activities.

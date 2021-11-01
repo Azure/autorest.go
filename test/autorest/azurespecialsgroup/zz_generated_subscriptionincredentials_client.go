@@ -33,7 +33,11 @@ func NewSubscriptionInCredentialsClient(subscriptionID string, options *azcore.C
 	if options != nil {
 		cp = *options
 	}
-	return &SubscriptionInCredentialsClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &SubscriptionInCredentialsClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // PostMethodGlobalNotProvidedValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'

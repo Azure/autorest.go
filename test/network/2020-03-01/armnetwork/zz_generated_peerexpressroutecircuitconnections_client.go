@@ -39,7 +39,12 @@ func NewPeerExpressRouteCircuitConnectionsClient(subscriptionID string, credenti
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &PeerExpressRouteCircuitConnectionsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &PeerExpressRouteCircuitConnectionsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // Get - Gets the specified Peer Express Route Circuit Connection from the specified express route circuit.

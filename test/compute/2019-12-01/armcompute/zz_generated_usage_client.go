@@ -38,7 +38,12 @@ func NewUsageClient(subscriptionID string, credential azcore.TokenCredential, op
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &UsageClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &UsageClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.

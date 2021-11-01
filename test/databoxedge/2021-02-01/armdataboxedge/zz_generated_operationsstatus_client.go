@@ -33,7 +33,11 @@ func NewOperationsStatusClient(subscriptionID string, options *azcore.ClientOpti
 	if options != nil {
 		cp = *options
 	}
-	return &OperationsStatusClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &OperationsStatusClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Get - Gets the details of a specified job on a Data Box Edge/Data Box Gateway device.

@@ -26,7 +26,11 @@ type triggerClient struct {
 
 // newTriggerClient creates a new instance of triggerClient with the specified values.
 func newTriggerClient(endpoint string, pl runtime.Pipeline) *triggerClient {
-	return &triggerClient{endpoint: endpoint, pl: pl}
+	client := &triggerClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // BeginCreateOrUpdateTrigger - Creates or updates a trigger.

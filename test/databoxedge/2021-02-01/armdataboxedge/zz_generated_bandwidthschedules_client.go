@@ -34,7 +34,11 @@ func NewBandwidthSchedulesClient(subscriptionID string, options *azcore.ClientOp
 	if options != nil {
 		cp = *options
 	}
-	return &BandwidthSchedulesClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &BandwidthSchedulesClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a bandwidth schedule.

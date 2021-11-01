@@ -39,7 +39,12 @@ func NewLoadBalancerOutboundRulesClient(subscriptionID string, credential azcore
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &LoadBalancerOutboundRulesClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &LoadBalancerOutboundRulesClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // Get - Gets the specified load balancer outbound rule.

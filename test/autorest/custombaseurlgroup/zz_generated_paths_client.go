@@ -25,18 +25,24 @@ type PathsClient struct {
 	pl   runtime.Pipeline
 }
 
+// PathsClientOptions contains the optional parameters for NewPathsClient.
+type PathsClientOptions struct {
+	azcore.ClientOptions
+	Host *string
+}
+
 // NewPathsClient creates a new instance of PathsClient with the specified values.
-func NewPathsClient(host *string, options *azcore.ClientOptions) *PathsClient {
-	cp := azcore.ClientOptions{}
+func NewPathsClient(options *PathsClientOptions) *PathsClient {
+	cp := PathsClientOptions{}
 	if options != nil {
 		cp = *options
 	}
 	client := &PathsClient{
 		host: "host",
-		pl:   runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl:   runtime.NewPipeline(module, version, nil, nil, &cp.ClientOptions),
 	}
-	if host != nil {
-		client.host = *host
+	if options.Host != nil {
+		client.host = *options.Host
 	}
 	return client
 }

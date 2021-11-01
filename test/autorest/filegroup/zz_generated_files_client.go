@@ -29,7 +29,10 @@ func NewFilesClient(options *azcore.ClientOptions) *FilesClient {
 	if options != nil {
 		cp = *options
 	}
-	return &FilesClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &FilesClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetEmptyFile - Get empty file

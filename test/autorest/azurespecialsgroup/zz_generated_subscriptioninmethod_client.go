@@ -32,7 +32,10 @@ func NewSubscriptionInMethodClient(options *azcore.ClientOptions) *SubscriptionI
 	if options != nil {
 		cp = *options
 	}
-	return &SubscriptionInMethodClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &SubscriptionInMethodClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // PostMethodLocalNull - POST method with subscriptionId modeled in the method. pass in subscription id = null, client-side validation should prevent you

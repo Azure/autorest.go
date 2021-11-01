@@ -38,7 +38,11 @@ func NewReservationsSummariesClient(credential azcore.TokenCredential, options *
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ReservationsSummariesClient{host: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ReservationsSummariesClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Lists the reservations summaries for the defined scope daily or monthly grain.

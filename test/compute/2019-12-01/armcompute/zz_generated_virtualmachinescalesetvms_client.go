@@ -39,7 +39,12 @@ func NewVirtualMachineScaleSetVMsClient(subscriptionID string, credential azcore
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &VirtualMachineScaleSetVMsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &VirtualMachineScaleSetVMsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginDeallocate - Deallocates a specific virtual machine in a VM scale set. Shuts down the virtual machine and releases the compute resources it uses.

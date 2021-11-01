@@ -34,7 +34,11 @@ func NewDiagnosticSettingsClient(subscriptionID string, options *azcore.ClientOp
 	if options != nil {
 		cp = *options
 	}
-	return &DiagnosticSettingsClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &DiagnosticSettingsClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetDiagnosticProactiveLogCollectionSettings - Gets the proactive log collection settings of the specified Data Box Edge/Data Box Gateway device.

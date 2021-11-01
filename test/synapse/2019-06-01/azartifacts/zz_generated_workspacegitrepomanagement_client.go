@@ -23,7 +23,11 @@ type workspaceGitRepoManagementClient struct {
 
 // newWorkspaceGitRepoManagementClient creates a new instance of workspaceGitRepoManagementClient with the specified values.
 func newWorkspaceGitRepoManagementClient(endpoint string, pl runtime.Pipeline) *workspaceGitRepoManagementClient {
-	return &workspaceGitRepoManagementClient{endpoint: endpoint, pl: pl}
+	client := &workspaceGitRepoManagementClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // GetGitHubAccessToken - Get the GitHub access token.

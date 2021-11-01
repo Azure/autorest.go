@@ -29,7 +29,10 @@ func NewFlattencomplexClient(options *azcore.ClientOptions) *FlattencomplexClien
 	if options != nil {
 		cp = *options
 	}
-	return &FlattencomplexClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &FlattencomplexClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetValid -

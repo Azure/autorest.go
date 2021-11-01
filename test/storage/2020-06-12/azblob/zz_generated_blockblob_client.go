@@ -28,7 +28,12 @@ type blockBlobClient struct {
 
 // newBlockBlobClient creates a new instance of blockBlobClient with the specified values.
 func newBlockBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *blockBlobClient {
-	return &blockBlobClient{endpoint: endpoint, version: version, pl: pl}
+	client := &blockBlobClient{
+		endpoint: endpoint,
+		version:  version,
+		pl:       pl,
+	}
+	return client
 }
 
 // CommitBlockList - The Commit Block List operation writes a blob by specifying the list of block IDs that make up the blob. In order to be written as

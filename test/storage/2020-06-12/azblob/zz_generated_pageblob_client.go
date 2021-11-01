@@ -28,7 +28,12 @@ type pageBlobClient struct {
 
 // newPageBlobClient creates a new instance of pageBlobClient with the specified values.
 func newPageBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *pageBlobClient {
-	return &pageBlobClient{endpoint: endpoint, version: version, pl: pl}
+	client := &pageBlobClient{
+		endpoint: endpoint,
+		version:  version,
+		pl:       pl,
+	}
+	return client
 }
 
 // ClearPages - The Clear Pages operation clears a set of pages from a page blob

@@ -34,7 +34,11 @@ func NewAutoRestValidationTestClient(subscriptionID string, options *azcore.Clie
 	if options != nil {
 		cp = *options
 	}
-	return &AutoRestValidationTestClient{subscriptionID: subscriptionID, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &AutoRestValidationTestClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetWithConstantInPath -

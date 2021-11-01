@@ -30,7 +30,10 @@ func NewLROsClient(options *azcore.ClientOptions) *LROsClient {
 	if options != nil {
 		cp = *options
 	}
-	return &LROsClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &LROsClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginDelete202NoRetry204 - Long running delete request, service returns a 202 to the initial request. Polls return this value until the last poll returns

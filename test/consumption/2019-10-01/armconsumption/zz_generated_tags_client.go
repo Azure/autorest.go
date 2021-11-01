@@ -36,7 +36,11 @@ func NewTagsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &TagsClient{host: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &TagsClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // Get - Get all available tag keys for the defined scope

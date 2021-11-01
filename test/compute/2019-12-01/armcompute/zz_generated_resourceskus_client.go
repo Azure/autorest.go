@@ -38,7 +38,12 @@ func NewResourceSKUsClient(subscriptionID string, credential azcore.TokenCredent
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ResourceSKUsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ResourceSKUsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Gets the list of Microsoft.Compute SKUs available for your Subscription.

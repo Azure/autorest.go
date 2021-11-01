@@ -26,7 +26,11 @@ type bigDataPoolsClient struct {
 
 // newBigDataPoolsClient creates a new instance of bigDataPoolsClient with the specified values.
 func newBigDataPoolsClient(endpoint string, pl runtime.Pipeline) *bigDataPoolsClient {
-	return &bigDataPoolsClient{endpoint: endpoint, pl: pl}
+	client := &bigDataPoolsClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // Get - Get Big Data Pool

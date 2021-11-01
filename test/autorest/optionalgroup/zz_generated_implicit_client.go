@@ -36,7 +36,13 @@ func NewImplicitClient(requiredGlobalPath string, requiredGlobalQuery string, op
 	if options != nil {
 		cp = *options
 	}
-	return &ImplicitClient{requiredGlobalPath: requiredGlobalPath, requiredGlobalQuery: requiredGlobalQuery, optionalGlobalQuery: optionalGlobalQuery, pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &ImplicitClient{
+		requiredGlobalPath:  requiredGlobalPath,
+		requiredGlobalQuery: requiredGlobalQuery,
+		optionalGlobalQuery: optionalGlobalQuery,
+		pl:                  runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetOptionalGlobalQuery - Test implicitly optional query parameter

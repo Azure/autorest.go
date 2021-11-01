@@ -26,7 +26,11 @@ type sqlScriptClient struct {
 
 // newSQLScriptClient creates a new instance of sqlScriptClient with the specified values.
 func newSQLScriptClient(endpoint string, pl runtime.Pipeline) *sqlScriptClient {
-	return &sqlScriptClient{endpoint: endpoint, pl: pl}
+	client := &sqlScriptClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // BeginCreateOrUpdateSQLScript - Creates or updates a Sql Script.

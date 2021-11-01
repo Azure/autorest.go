@@ -29,7 +29,10 @@ func NewDictionaryClient(options *azcore.ClientOptions) *DictionaryClient {
 	if options != nil {
 		cp = *options
 	}
-	return &DictionaryClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &DictionaryClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetEmpty - Get complex types with dictionary property which is empty

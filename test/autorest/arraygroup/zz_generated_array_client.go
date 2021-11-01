@@ -30,7 +30,10 @@ func NewArrayClient(options *azcore.ClientOptions) *ArrayClient {
 	if options != nil {
 		cp = *options
 	}
-	return &ArrayClient{pl: runtime.NewPipeline(module, version, nil, nil, &cp)}
+	client := &ArrayClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetArrayEmpty - Get an empty array []

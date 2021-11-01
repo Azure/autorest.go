@@ -39,7 +39,12 @@ func NewPrivateDNSZoneGroupsClient(subscriptionID string, credential azcore.Toke
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &PrivateDNSZoneGroupsClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &PrivateDNSZoneGroupsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a private dns zone group in the specified private endpoint.

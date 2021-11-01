@@ -29,7 +29,12 @@ type containerClient struct {
 
 // newContainerClient creates a new instance of containerClient with the specified values.
 func newContainerClient(endpoint string, version Enum2, pl runtime.Pipeline) *containerClient {
-	return &containerClient{endpoint: endpoint, version: version, pl: pl}
+	client := &containerClient{
+		endpoint: endpoint,
+		version:  version,
+		pl:       pl,
+	}
+	return client
 }
 
 // AcquireLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite

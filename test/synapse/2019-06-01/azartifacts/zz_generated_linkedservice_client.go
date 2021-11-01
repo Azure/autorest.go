@@ -26,7 +26,11 @@ type linkedServiceClient struct {
 
 // newLinkedServiceClient creates a new instance of linkedServiceClient with the specified values.
 func newLinkedServiceClient(endpoint string, pl runtime.Pipeline) *linkedServiceClient {
-	return &linkedServiceClient{endpoint: endpoint, pl: pl}
+	client := &linkedServiceClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // BeginCreateOrUpdateLinkedService - Creates or updates a linked service.

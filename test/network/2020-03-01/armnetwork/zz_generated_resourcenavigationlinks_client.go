@@ -39,7 +39,12 @@ func NewResourceNavigationLinksClient(subscriptionID string, credential azcore.T
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ResourceNavigationLinksClient{host: string(cp.Host), subscriptionID: subscriptionID, pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ResourceNavigationLinksClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Gets a list of resource navigation links for a subnet.
