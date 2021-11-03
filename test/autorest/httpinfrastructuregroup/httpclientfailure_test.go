@@ -10,7 +10,7 @@ import (
 )
 
 func newHTTPClientFailureClient() *HTTPClientFailureClient {
-	return NewHTTPClientFailureClient(NewDefaultConnection(nil))
+	return NewHTTPClientFailureClient(nil)
 }
 
 func TestHTTPClientFailureDelete400(t *testing.T) {

@@ -8,6 +8,8 @@
 
 package headgroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "headgroup"
 	version = "v0.1.0"

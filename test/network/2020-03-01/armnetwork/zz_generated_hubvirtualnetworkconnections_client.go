@@ -25,9 +25,9 @@ import (
 // HubVirtualNetworkConnectionsClient contains the methods for the HubVirtualNetworkConnections group.
 // Don't use this type directly, use NewHubVirtualNetworkConnectionsClient() instead.
 type HubVirtualNetworkConnectionsClient struct {
-	ep             string
-	pl             runtime.Pipeline
+	host           string
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewHubVirtualNetworkConnectionsClient creates a new instance of HubVirtualNetworkConnectionsClient with the specified values.
@@ -39,7 +39,12 @@ func NewHubVirtualNetworkConnectionsClient(subscriptionID string, credential azc
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &HubVirtualNetworkConnectionsClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &HubVirtualNetworkConnectionsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // Get - Retrieves the details of a HubVirtualNetworkConnection.
@@ -78,7 +83,7 @@ func (client *HubVirtualNetworkConnectionsClient) getCreateRequest(ctx context.C
 		return nil, errors.New("parameter connectionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{connectionName}", url.PathEscape(connectionName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -140,7 +145,7 @@ func (client *HubVirtualNetworkConnectionsClient) listCreateRequest(ctx context.
 		return nil, errors.New("parameter virtualHubName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualHubName}", url.PathEscape(virtualHubName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

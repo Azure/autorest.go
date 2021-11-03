@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -22,13 +23,21 @@ import (
 // AlertsClient contains the methods for the Alerts group.
 // Don't use this type directly, use NewAlertsClient() instead.
 type AlertsClient struct {
-	con            *connection
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewAlertsClient creates a new instance of AlertsClient with the specified values.
-func NewAlertsClient(con *connection, subscriptionID string) *AlertsClient {
-	return &AlertsClient{con: con, subscriptionID: subscriptionID}
+func NewAlertsClient(subscriptionID string, options *azcore.ClientOptions) *AlertsClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &AlertsClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Get - Gets an alert by name.
@@ -38,7 +47,7 @@ func (client *AlertsClient) Get(ctx context.Context, deviceName string, name str
 	if err != nil {
 		return AlertsGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return AlertsGetResponse{}, err
 	}
@@ -67,7 +76,7 @@ func (client *AlertsClient) getCreateRequest(ctx context.Context, deviceName str
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +138,7 @@ func (client *AlertsClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Con
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

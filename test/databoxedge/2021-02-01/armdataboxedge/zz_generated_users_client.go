@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -23,13 +24,21 @@ import (
 // UsersClient contains the methods for the Users group.
 // Don't use this type directly, use NewUsersClient() instead.
 type UsersClient struct {
-	con            *connection
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewUsersClient creates a new instance of UsersClient with the specified values.
-func NewUsersClient(con *connection, subscriptionID string) *UsersClient {
-	return &UsersClient{con: con, subscriptionID: subscriptionID}
+func NewUsersClient(subscriptionID string, options *azcore.ClientOptions) *UsersClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &UsersClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway device.
@@ -42,7 +51,7 @@ func (client *UsersClient) BeginCreateOrUpdate(ctx context.Context, deviceName s
 	result := UsersCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("UsersClient.CreateOrUpdate", "", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("UsersClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
 		return UsersCreateOrUpdatePollerResponse{}, err
 	}
@@ -59,7 +68,7 @@ func (client *UsersClient) createOrUpdate(ctx context.Context, deviceName string
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +97,7 @@ func (client *UsersClient) createOrUpdateCreateRequest(ctx context.Context, devi
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +131,7 @@ func (client *UsersClient) BeginDelete(ctx context.Context, deviceName string, n
 	result := UsersDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("UsersClient.Delete", "", resp, client.con.Pipeline(), client.deleteHandleError)
+	pt, err := armruntime.NewPoller("UsersClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
 		return UsersDeletePollerResponse{}, err
 	}
@@ -139,7 +148,7 @@ func (client *UsersClient) deleteOperation(ctx context.Context, deviceName strin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +177,7 @@ func (client *UsersClient) deleteCreateRequest(ctx context.Context, deviceName s
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -199,7 +208,7 @@ func (client *UsersClient) Get(ctx context.Context, deviceName string, name stri
 	if err != nil {
 		return UsersGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return UsersGetResponse{}, err
 	}
@@ -228,7 +237,7 @@ func (client *UsersClient) getCreateRequest(ctx context.Context, deviceName stri
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -290,7 +299,7 @@ func (client *UsersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

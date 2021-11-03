@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,12 +21,19 @@ import (
 // HTTPFailureClient contains the methods for the HTTPFailure group.
 // Don't use this type directly, use NewHTTPFailureClient() instead.
 type HTTPFailureClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewHTTPFailureClient creates a new instance of HTTPFailureClient with the specified values.
-func NewHTTPFailureClient(con *Connection) *HTTPFailureClient {
-	return &HTTPFailureClient{con: con}
+func NewHTTPFailureClient(options *azcore.ClientOptions) *HTTPFailureClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &HTTPFailureClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetEmptyError - Get empty error form server
@@ -35,7 +43,7 @@ func (client *HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTT
 	if err != nil {
 		return HTTPFailureGetEmptyErrorResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPFailureGetEmptyErrorResponse{}, err
 	}
@@ -48,7 +56,7 @@ func (client *HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTT
 // getEmptyErrorCreateRequest creates the GetEmptyError request.
 func (client *HTTPFailureClient) getEmptyErrorCreateRequest(ctx context.Context, options *HTTPFailureGetEmptyErrorOptions) (*policy.Request, error) {
 	urlPath := "/http/failure/emptybody/error"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +93,7 @@ func (client *HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *H
 	if err != nil {
 		return HTTPFailureGetNoModelEmptyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPFailureGetNoModelEmptyResponse{}, err
 	}
@@ -98,7 +106,7 @@ func (client *HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *H
 // getNoModelEmptyCreateRequest creates the GetNoModelEmpty request.
 func (client *HTTPFailureClient) getNoModelEmptyCreateRequest(ctx context.Context, options *HTTPFailureGetNoModelEmptyOptions) (*policy.Request, error) {
 	urlPath := "/http/failure/nomodel/empty"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +142,7 @@ func (client *HTTPFailureClient) GetNoModelError(ctx context.Context, options *H
 	if err != nil {
 		return HTTPFailureGetNoModelErrorResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPFailureGetNoModelErrorResponse{}, err
 	}
@@ -147,7 +155,7 @@ func (client *HTTPFailureClient) GetNoModelError(ctx context.Context, options *H
 // getNoModelErrorCreateRequest creates the GetNoModelError request.
 func (client *HTTPFailureClient) getNoModelErrorCreateRequest(ctx context.Context, options *HTTPFailureGetNoModelErrorOptions) (*policy.Request, error) {
 	urlPath := "/http/failure/nomodel/error"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

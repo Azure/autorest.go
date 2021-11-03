@@ -13,7 +13,7 @@ import (
 )
 
 func newArrayClient() *ArrayClient {
-	return NewArrayClient(NewDefaultConnection(nil))
+	return NewArrayClient(nil)
 }
 
 func TestArrayGetEmpty(t *testing.T) {

@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { CodeModel } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { isLROOperation, PagerInfo } from '../common/helpers';
-import { contentPreamble, getClientPipeline, getResponseEnvelopeName, getResultFieldName, getStatusCodes, formatStatusCodes, sortAscending, getFinalResponseEnvelopeName } from './helpers';
+import { contentPreamble, getResponseEnvelopeName, getResultFieldName, getStatusCodes, formatStatusCodes, sortAscending, getFinalResponseEnvelopeName } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content in pagers.go
@@ -73,7 +73,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
       text += '\t\treq, err = p.requester(ctx)\n\t}\n';
     }
     text += '\tif err != nil {\n\t\tp.err = err\n\t\treturn false\n\t}\n';
-    text += `\tresp, err := p.${getClientPipeline(pager.op)}.Do(req)\n`;
+    text += `\tresp, err := p.client.pl.Do(req)\n`;
     text += '\tif err != nil {\n\t\tp.err = err\n\t\treturn false\n\t}\n';
     let statusCodes: string;
     if (isLROOperation(pager.op)) {

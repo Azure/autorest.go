@@ -17,7 +17,17 @@ import (
 )
 
 type workspaceClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newWorkspaceClient creates a new instance of workspaceClient with the specified values.
+func newWorkspaceClient(endpoint string, pl runtime.Pipeline) *workspaceClient {
+	client := &workspaceClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // Get - Get Workspace
@@ -27,7 +37,7 @@ func (client *workspaceClient) Get(ctx context.Context, options *WorkspaceGetOpt
 	if err != nil {
 		return WorkspaceGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return WorkspaceGetResponse{}, err
 	}
@@ -40,7 +50,7 @@ func (client *workspaceClient) Get(ctx context.Context, options *WorkspaceGetOpt
 // getCreateRequest creates the Get request.
 func (client *workspaceClient) getCreateRequest(ctx context.Context, options *WorkspaceGetOptions) (*policy.Request, error) {
 	urlPath := "/workspace"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -12,7 +12,7 @@ import (
 )
 
 func newDictionaryClient() *DictionaryClient {
-	return NewDictionaryClient(NewDefaultConnection(nil))
+	return NewDictionaryClient(nil)
 }
 
 func TestDictionaryGetEmpty(t *testing.T) {

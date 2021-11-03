@@ -11,6 +11,7 @@ package custombaseurlgroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,12 +21,30 @@ import (
 // PathsClient contains the methods for the Paths group.
 // Don't use this type directly, use NewPathsClient() instead.
 type PathsClient struct {
-	con *Connection
+	host string
+	pl   runtime.Pipeline
+}
+
+// PathsClientOptions contains the optional parameters for NewPathsClient.
+type PathsClientOptions struct {
+	azcore.ClientOptions
+	Host *string
 }
 
 // NewPathsClient creates a new instance of PathsClient with the specified values.
-func NewPathsClient(con *Connection) *PathsClient {
-	return &PathsClient{con: con}
+func NewPathsClient(options *PathsClientOptions) *PathsClient {
+	cp := PathsClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &PathsClient{
+		host: "host",
+		pl:   runtime.NewPipeline(module, version, nil, nil, &cp.ClientOptions),
+	}
+	if options.Host != nil {
+		client.host = *options.Host
+	}
+	return client
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
@@ -35,7 +54,7 @@ func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, opt
 	if err != nil {
 		return PathsGetEmptyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PathsGetEmptyResponse{}, err
 	}
@@ -48,7 +67,7 @@ func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, opt
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, accountName string, options *PathsGetEmptyOptions) (*policy.Request, error) {
 	host := "http://{accountName}{host}"
-	host = strings.ReplaceAll(host, "{host}", client.con.Host())
+	host = strings.ReplaceAll(host, "{host}", client.host)
 	host = strings.ReplaceAll(host, "{accountName}", accountName)
 	urlPath := "/customuri"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))

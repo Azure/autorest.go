@@ -20,7 +20,17 @@ import (
 )
 
 type bigDataPoolsClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newBigDataPoolsClient creates a new instance of bigDataPoolsClient with the specified values.
+func newBigDataPoolsClient(endpoint string, pl runtime.Pipeline) *bigDataPoolsClient {
+	client := &bigDataPoolsClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // Get - Get Big Data Pool
@@ -30,7 +40,7 @@ func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName strin
 	if err != nil {
 		return BigDataPoolsGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BigDataPoolsGetResponse{}, err
 	}
@@ -47,7 +57,7 @@ func (client *bigDataPoolsClient) getCreateRequest(ctx context.Context, bigDataP
 		return nil, errors.New("parameter bigDataPoolName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{bigDataPoolName}", url.PathEscape(bigDataPoolName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +97,7 @@ func (client *bigDataPoolsClient) List(ctx context.Context, options *BigDataPool
 	if err != nil {
 		return BigDataPoolsListResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BigDataPoolsListResponse{}, err
 	}
@@ -100,7 +110,7 @@ func (client *bigDataPoolsClient) List(ctx context.Context, options *BigDataPool
 // listCreateRequest creates the List request.
 func (client *bigDataPoolsClient) listCreateRequest(ctx context.Context, options *BigDataPoolsListOptions) (*policy.Request, error) {
 	urlPath := "/bigDataPools"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

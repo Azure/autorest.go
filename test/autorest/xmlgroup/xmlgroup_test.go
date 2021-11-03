@@ -24,11 +24,11 @@ func toTimePtr(layout string, value string) *time.Time {
 }
 
 func newXMLClient() *XMLClient {
-	return NewXMLClient(NewDefaultConnection(&azcore.ClientOptions{
+	return NewXMLClient(&azcore.ClientOptions{
 		Logging: policy.LogOptions{
 			IncludeBody: true,
 		},
-	}))
+	})
 }
 
 func TestGetACLs(t *testing.T) {

@@ -8,6 +8,8 @@
 
 package xmlgroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "xmlgroup"
 	version = "v0.1.0"

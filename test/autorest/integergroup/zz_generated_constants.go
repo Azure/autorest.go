@@ -8,6 +8,8 @@
 
 package integergroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "integergroup"
 	version = "v0.1.0"

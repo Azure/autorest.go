@@ -20,7 +20,25 @@ import (
 )
 
 type sparkSessionClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newSparkSessionClient creates a new instance of sparkSessionClient with the specified values.
+func newSparkSessionClient(endpoint string, livyAPIVersion *string, sparkPoolName string, pl runtime.Pipeline) *sparkSessionClient {
+	hostURL := "{endpoint}/livyApi/versions/{livyApiVersion}/sparkPools/{sparkPoolName}"
+	hostURL = strings.ReplaceAll(hostURL, "{endpoint}", endpoint)
+	if livyAPIVersion == nil {
+		defaultValue := "2019-11-01-preview"
+		livyAPIVersion = &defaultValue
+	}
+	hostURL = strings.ReplaceAll(hostURL, "{livyApiVersion}", *livyAPIVersion)
+	hostURL = strings.ReplaceAll(hostURL, "{sparkPoolName}", sparkPoolName)
+	client := &sparkSessionClient{
+		endpoint: hostURL,
+		pl:       pl,
+	}
+	return client
 }
 
 // CancelSparkSession - Cancels a running spark session.
@@ -30,7 +48,7 @@ func (client *sparkSessionClient) CancelSparkSession(ctx context.Context, sessio
 	if err != nil {
 		return SparkSessionCancelSparkSessionResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SparkSessionCancelSparkSessionResponse{}, err
 	}
@@ -44,7 +62,7 @@ func (client *sparkSessionClient) CancelSparkSession(ctx context.Context, sessio
 func (client *sparkSessionClient) cancelSparkSessionCreateRequest(ctx context.Context, sessionID int32, options *SparkSessionCancelSparkSessionOptions) (*policy.Request, error) {
 	urlPath := "/sessions/{sessionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionID), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +88,7 @@ func (client *sparkSessionClient) CancelSparkStatement(ctx context.Context, sess
 	if err != nil {
 		return SparkSessionCancelSparkStatementResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SparkSessionCancelSparkStatementResponse{}, err
 	}
@@ -85,7 +103,7 @@ func (client *sparkSessionClient) cancelSparkStatementCreateRequest(ctx context.
 	urlPath := "/sessions/{sessionId}/statements/{statementId}/cancel"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionID), 10)))
 	urlPath = strings.ReplaceAll(urlPath, "{statementId}", url.PathEscape(strconv.FormatInt(int64(statementID), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +139,7 @@ func (client *sparkSessionClient) CreateSparkSession(ctx context.Context, sparkS
 	if err != nil {
 		return SparkSessionCreateSparkSessionResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SparkSessionCreateSparkSessionResponse{}, err
 	}
@@ -134,7 +152,7 @@ func (client *sparkSessionClient) CreateSparkSession(ctx context.Context, sparkS
 // createSparkSessionCreateRequest creates the CreateSparkSession request.
 func (client *sparkSessionClient) createSparkSessionCreateRequest(ctx context.Context, sparkSessionOptions SparkSessionOptions, options *SparkSessionCreateSparkSessionOptions) (*policy.Request, error) {
 	urlPath := "/sessions"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -175,7 +193,7 @@ func (client *sparkSessionClient) CreateSparkStatement(ctx context.Context, sess
 	if err != nil {
 		return SparkSessionCreateSparkStatementResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SparkSessionCreateSparkStatementResponse{}, err
 	}
@@ -189,7 +207,7 @@ func (client *sparkSessionClient) CreateSparkStatement(ctx context.Context, sess
 func (client *sparkSessionClient) createSparkStatementCreateRequest(ctx context.Context, sessionID int32, sparkStatementOptions SparkStatementOptions, options *SparkSessionCreateSparkStatementOptions) (*policy.Request, error) {
 	urlPath := "/sessions/{sessionId}/statements"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionID), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -225,7 +243,7 @@ func (client *sparkSessionClient) GetSparkSession(ctx context.Context, sessionID
 	if err != nil {
 		return SparkSessionGetSparkSessionResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SparkSessionGetSparkSessionResponse{}, err
 	}
@@ -239,7 +257,7 @@ func (client *sparkSessionClient) GetSparkSession(ctx context.Context, sessionID
 func (client *sparkSessionClient) getSparkSessionCreateRequest(ctx context.Context, sessionID int32, options *SparkSessionGetSparkSessionOptions) (*policy.Request, error) {
 	urlPath := "/sessions/{sessionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionID), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -280,7 +298,7 @@ func (client *sparkSessionClient) GetSparkSessions(ctx context.Context, options 
 	if err != nil {
 		return SparkSessionGetSparkSessionsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SparkSessionGetSparkSessionsResponse{}, err
 	}
@@ -293,7 +311,7 @@ func (client *sparkSessionClient) GetSparkSessions(ctx context.Context, options 
 // getSparkSessionsCreateRequest creates the GetSparkSessions request.
 func (client *sparkSessionClient) getSparkSessionsCreateRequest(ctx context.Context, options *SparkSessionGetSparkSessionsOptions) (*policy.Request, error) {
 	urlPath := "/sessions"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -340,7 +358,7 @@ func (client *sparkSessionClient) GetSparkStatement(ctx context.Context, session
 	if err != nil {
 		return SparkSessionGetSparkStatementResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SparkSessionGetSparkStatementResponse{}, err
 	}
@@ -355,7 +373,7 @@ func (client *sparkSessionClient) getSparkStatementCreateRequest(ctx context.Con
 	urlPath := "/sessions/{sessionId}/statements/{statementId}"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionID), 10)))
 	urlPath = strings.ReplaceAll(urlPath, "{statementId}", url.PathEscape(strconv.FormatInt(int64(statementID), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -391,7 +409,7 @@ func (client *sparkSessionClient) GetSparkStatements(ctx context.Context, sessio
 	if err != nil {
 		return SparkSessionGetSparkStatementsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SparkSessionGetSparkStatementsResponse{}, err
 	}
@@ -405,7 +423,7 @@ func (client *sparkSessionClient) GetSparkStatements(ctx context.Context, sessio
 func (client *sparkSessionClient) getSparkStatementsCreateRequest(ctx context.Context, sessionID int32, options *SparkSessionGetSparkStatementsOptions) (*policy.Request, error) {
 	urlPath := "/sessions/{sessionId}/statements"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionID), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -441,7 +459,7 @@ func (client *sparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, 
 	if err != nil {
 		return SparkSessionResetSparkSessionTimeoutResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SparkSessionResetSparkSessionTimeoutResponse{}, err
 	}
@@ -455,7 +473,7 @@ func (client *sparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, 
 func (client *sparkSessionClient) resetSparkSessionTimeoutCreateRequest(ctx context.Context, sessionID int32, options *SparkSessionResetSparkSessionTimeoutOptions) (*policy.Request, error) {
 	urlPath := "/sessions/{sessionId}/reset-timeout"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionID), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

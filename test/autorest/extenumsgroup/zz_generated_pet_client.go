@@ -11,6 +11,7 @@ package extenumsgroup
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -21,12 +22,19 @@ import (
 // PetClient contains the methods for the Pet group.
 // Don't use this type directly, use NewPetClient() instead.
 type PetClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewPetClient creates a new instance of PetClient with the specified values.
-func NewPetClient(con *Connection) *PetClient {
-	return &PetClient{con: con}
+func NewPetClient(options *azcore.ClientOptions) *PetClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &PetClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // AddPet - add pet
@@ -36,7 +44,7 @@ func (client *PetClient) AddPet(ctx context.Context, options *PetAddPetOptions) 
 	if err != nil {
 		return PetAddPetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PetAddPetResponse{}, err
 	}
@@ -49,7 +57,7 @@ func (client *PetClient) AddPet(ctx context.Context, options *PetAddPetOptions) 
 // addPetCreateRequest creates the AddPet request.
 func (client *PetClient) addPetCreateRequest(ctx context.Context, options *PetAddPetOptions) (*policy.Request, error) {
 	urlPath := "/extensibleenums/pet/addPet"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +96,7 @@ func (client *PetClient) GetByPetID(ctx context.Context, petID string, options *
 	if err != nil {
 		return PetGetByPetIDResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PetGetByPetIDResponse{}, err
 	}
@@ -105,7 +113,7 @@ func (client *PetClient) getByPetIDCreateRequest(ctx context.Context, petID stri
 		return nil, errors.New("parameter petID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{petId}", url.PathEscape(petID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

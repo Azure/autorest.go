@@ -11,6 +11,7 @@ package httpinfrastructuregroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,19 @@ import (
 // HTTPRedirectsClient contains the methods for the HTTPRedirects group.
 // Don't use this type directly, use NewHTTPRedirectsClient() instead.
 type HTTPRedirectsClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewHTTPRedirectsClient creates a new instance of HTTPRedirectsClient with the specified values.
-func NewHTTPRedirectsClient(con *Connection) *HTTPRedirectsClient {
-	return &HTTPRedirectsClient{con: con}
+func NewHTTPRedirectsClient(options *azcore.ClientOptions) *HTTPRedirectsClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &HTTPRedirectsClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Delete307 - Delete redirected with 307, resulting in a 200 after redirect
@@ -34,7 +42,7 @@ func (client *HTTPRedirectsClient) Delete307(ctx context.Context, options *HTTPR
 	if err != nil {
 		return HTTPRedirectsDelete307Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRedirectsDelete307Response{}, err
 	}
@@ -47,7 +55,7 @@ func (client *HTTPRedirectsClient) Delete307(ctx context.Context, options *HTTPR
 // delete307CreateRequest creates the Delete307 request.
 func (client *HTTPRedirectsClient) delete307CreateRequest(ctx context.Context, options *HTTPRedirectsDelete307Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/307"
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +83,7 @@ func (client *HTTPRedirectsClient) Get300(ctx context.Context, options *HTTPRedi
 	if err != nil {
 		return HTTPRedirectsGet300Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRedirectsGet300Response{}, err
 	}
@@ -88,7 +96,7 @@ func (client *HTTPRedirectsClient) Get300(ctx context.Context, options *HTTPRedi
 // get300CreateRequest creates the Get300 request.
 func (client *HTTPRedirectsClient) get300CreateRequest(ctx context.Context, options *HTTPRedirectsGet300Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/300"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +136,7 @@ func (client *HTTPRedirectsClient) Get301(ctx context.Context, options *HTTPRedi
 	if err != nil {
 		return HTTPRedirectsGet301Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRedirectsGet301Response{}, err
 	}
@@ -141,7 +149,7 @@ func (client *HTTPRedirectsClient) Get301(ctx context.Context, options *HTTPRedi
 // get301CreateRequest creates the Get301 request.
 func (client *HTTPRedirectsClient) get301CreateRequest(ctx context.Context, options *HTTPRedirectsGet301Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/301"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +177,7 @@ func (client *HTTPRedirectsClient) Get302(ctx context.Context, options *HTTPRedi
 	if err != nil {
 		return HTTPRedirectsGet302Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRedirectsGet302Response{}, err
 	}
@@ -182,7 +190,7 @@ func (client *HTTPRedirectsClient) Get302(ctx context.Context, options *HTTPRedi
 // get302CreateRequest creates the Get302 request.
 func (client *HTTPRedirectsClient) get302CreateRequest(ctx context.Context, options *HTTPRedirectsGet302Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/302"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -210,7 +218,7 @@ func (client *HTTPRedirectsClient) Get307(ctx context.Context, options *HTTPRedi
 	if err != nil {
 		return HTTPRedirectsGet307Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRedirectsGet307Response{}, err
 	}
@@ -223,7 +231,7 @@ func (client *HTTPRedirectsClient) Get307(ctx context.Context, options *HTTPRedi
 // get307CreateRequest creates the Get307 request.
 func (client *HTTPRedirectsClient) get307CreateRequest(ctx context.Context, options *HTTPRedirectsGet307Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/307"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -251,7 +259,7 @@ func (client *HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsHead300Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRedirectsHead300Response{}, err
 	}
@@ -261,7 +269,7 @@ func (client *HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRed
 // head300CreateRequest creates the Head300 request.
 func (client *HTTPRedirectsClient) head300CreateRequest(ctx context.Context, options *HTTPRedirectsHead300Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/300"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -288,7 +296,7 @@ func (client *HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsHead301Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRedirectsHead301Response{}, err
 	}
@@ -302,7 +310,7 @@ func (client *HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRed
 // head301CreateRequest creates the Head301 request.
 func (client *HTTPRedirectsClient) head301CreateRequest(ctx context.Context, options *HTTPRedirectsHead301Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/301"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -317,7 +325,7 @@ func (client *HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsHead302Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRedirectsHead302Response{}, err
 	}
@@ -331,7 +339,7 @@ func (client *HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRed
 // head302CreateRequest creates the Head302 request.
 func (client *HTTPRedirectsClient) head302CreateRequest(ctx context.Context, options *HTTPRedirectsHead302Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/302"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -346,7 +354,7 @@ func (client *HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsHead307Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRedirectsHead307Response{}, err
 	}
@@ -360,7 +368,7 @@ func (client *HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRed
 // head307CreateRequest creates the Head307 request.
 func (client *HTTPRedirectsClient) head307CreateRequest(ctx context.Context, options *HTTPRedirectsHead307Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/307"
-	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -375,7 +383,7 @@ func (client *HTTPRedirectsClient) Options307(ctx context.Context, options *HTTP
 	if err != nil {
 		return HTTPRedirectsOptions307Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRedirectsOptions307Response{}, err
 	}
@@ -388,7 +396,7 @@ func (client *HTTPRedirectsClient) Options307(ctx context.Context, options *HTTP
 // options307CreateRequest creates the Options307 request.
 func (client *HTTPRedirectsClient) options307CreateRequest(ctx context.Context, options *HTTPRedirectsOptions307Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/307"
-	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -417,7 +425,7 @@ func (client *HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRe
 	if err != nil {
 		return HTTPRedirectsPatch302Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRedirectsPatch302Response{}, err
 	}
@@ -430,7 +438,7 @@ func (client *HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRe
 // patch302CreateRequest creates the Patch302 request.
 func (client *HTTPRedirectsClient) patch302CreateRequest(ctx context.Context, options *HTTPRedirectsPatch302Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/302"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -467,7 +475,7 @@ func (client *HTTPRedirectsClient) Patch307(ctx context.Context, options *HTTPRe
 	if err != nil {
 		return HTTPRedirectsPatch307Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRedirectsPatch307Response{}, err
 	}
@@ -480,7 +488,7 @@ func (client *HTTPRedirectsClient) Patch307(ctx context.Context, options *HTTPRe
 // patch307CreateRequest creates the Patch307 request.
 func (client *HTTPRedirectsClient) patch307CreateRequest(ctx context.Context, options *HTTPRedirectsPatch307Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/307"
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -509,7 +517,7 @@ func (client *HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsPost303Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRedirectsPost303Response{}, err
 	}
@@ -522,7 +530,7 @@ func (client *HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRed
 // post303CreateRequest creates the Post303 request.
 func (client *HTTPRedirectsClient) post303CreateRequest(ctx context.Context, options *HTTPRedirectsPost303Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/303"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -559,7 +567,7 @@ func (client *HTTPRedirectsClient) Post307(ctx context.Context, options *HTTPRed
 	if err != nil {
 		return HTTPRedirectsPost307Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRedirectsPost307Response{}, err
 	}
@@ -572,7 +580,7 @@ func (client *HTTPRedirectsClient) Post307(ctx context.Context, options *HTTPRed
 // post307CreateRequest creates the Post307 request.
 func (client *HTTPRedirectsClient) post307CreateRequest(ctx context.Context, options *HTTPRedirectsPost307Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/307"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -601,7 +609,7 @@ func (client *HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedi
 	if err != nil {
 		return HTTPRedirectsPut301Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRedirectsPut301Response{}, err
 	}
@@ -614,7 +622,7 @@ func (client *HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedi
 // put301CreateRequest creates the Put301 request.
 func (client *HTTPRedirectsClient) put301CreateRequest(ctx context.Context, options *HTTPRedirectsPut301Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/301"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -651,7 +659,7 @@ func (client *HTTPRedirectsClient) Put307(ctx context.Context, options *HTTPRedi
 	if err != nil {
 		return HTTPRedirectsPut307Response{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HTTPRedirectsPut307Response{}, err
 	}
@@ -664,7 +672,7 @@ func (client *HTTPRedirectsClient) Put307(ctx context.Context, options *HTTPRedi
 // put307CreateRequest creates the Put307 request.
 func (client *HTTPRedirectsClient) put307CreateRequest(ctx context.Context, options *HTTPRedirectsPut307Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/307"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

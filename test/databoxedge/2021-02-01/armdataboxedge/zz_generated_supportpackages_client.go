@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -23,13 +24,21 @@ import (
 // SupportPackagesClient contains the methods for the SupportPackages group.
 // Don't use this type directly, use NewSupportPackagesClient() instead.
 type SupportPackagesClient struct {
-	con            *connection
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewSupportPackagesClient creates a new instance of SupportPackagesClient with the specified values.
-func NewSupportPackagesClient(con *connection, subscriptionID string) *SupportPackagesClient {
-	return &SupportPackagesClient{con: con, subscriptionID: subscriptionID}
+func NewSupportPackagesClient(subscriptionID string, options *azcore.ClientOptions) *SupportPackagesClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &SupportPackagesClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginTriggerSupportPackage - Triggers support package on the device
@@ -42,7 +51,7 @@ func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Cont
 	result := SupportPackagesTriggerSupportPackagePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SupportPackagesClient.TriggerSupportPackage", "", resp, client.con.Pipeline(), client.triggerSupportPackageHandleError)
+	pt, err := armruntime.NewPoller("SupportPackagesClient.TriggerSupportPackage", "", resp, client.pl, client.triggerSupportPackageHandleError)
 	if err != nil {
 		return SupportPackagesTriggerSupportPackagePollerResponse{}, err
 	}
@@ -59,7 +68,7 @@ func (client *SupportPackagesClient) triggerSupportPackage(ctx context.Context, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +93,7 @@ func (client *SupportPackagesClient) triggerSupportPackageCreateRequest(ctx cont
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

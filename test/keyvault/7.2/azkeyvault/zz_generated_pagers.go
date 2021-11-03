@@ -47,7 +47,7 @@ func (p *KeyVaultClientGetCertificateIssuersPager) NextPage(ctx context.Context)
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -101,7 +101,7 @@ func (p *KeyVaultClientGetCertificateVersionsPager) NextPage(ctx context.Context
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -155,7 +155,7 @@ func (p *KeyVaultClientGetCertificatesPager) NextPage(ctx context.Context) bool 
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -209,7 +209,7 @@ func (p *KeyVaultClientGetDeletedCertificatesPager) NextPage(ctx context.Context
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -263,7 +263,7 @@ func (p *KeyVaultClientGetDeletedKeysPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -317,7 +317,7 @@ func (p *KeyVaultClientGetDeletedSasDefinitionsPager) NextPage(ctx context.Conte
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -371,7 +371,7 @@ func (p *KeyVaultClientGetDeletedSecretsPager) NextPage(ctx context.Context) boo
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -425,7 +425,7 @@ func (p *KeyVaultClientGetDeletedStorageAccountsPager) NextPage(ctx context.Cont
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -479,7 +479,7 @@ func (p *KeyVaultClientGetKeyVersionsPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -533,7 +533,7 @@ func (p *KeyVaultClientGetKeysPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -587,7 +587,7 @@ func (p *KeyVaultClientGetSasDefinitionsPager) NextPage(ctx context.Context) boo
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -641,7 +641,7 @@ func (p *KeyVaultClientGetSecretVersionsPager) NextPage(ctx context.Context) boo
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -695,7 +695,7 @@ func (p *KeyVaultClientGetSecretsPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -749,7 +749,7 @@ func (p *KeyVaultClientGetStorageAccountsPager) NextPage(ctx context.Context) bo
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -803,7 +803,7 @@ func (p *RoleAssignmentsListForScopePager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -857,7 +857,7 @@ func (p *RoleDefinitionsListPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false

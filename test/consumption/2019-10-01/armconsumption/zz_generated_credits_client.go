@@ -23,8 +23,8 @@ import (
 // CreditsClient contains the methods for the Credits group.
 // Don't use this type directly, use NewCreditsClient() instead.
 type CreditsClient struct {
-	ep string
-	pl runtime.Pipeline
+	host string
+	pl   runtime.Pipeline
 }
 
 // NewCreditsClient creates a new instance of CreditsClient with the specified values.
@@ -36,7 +36,11 @@ func NewCreditsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &CreditsClient{ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &CreditsClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // Get - The credit summary by billingAccountId and billingProfileId.
@@ -60,7 +64,7 @@ func (client *CreditsClient) Get(ctx context.Context, scope string, options *Cre
 func (client *CreditsClient) getCreateRequest(ctx context.Context, scope string, options *CreditsGetOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/credits/balanceSummary"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

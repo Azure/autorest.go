@@ -13,7 +13,7 @@ import (
 )
 
 func newByteClient() *ByteClient {
-	return NewByteClient(NewDefaultConnection(nil))
+	return NewByteClient(nil)
 }
 
 func TestGetEmpty(t *testing.T) {

@@ -12,7 +12,7 @@ import (
 )
 
 func newIntClient() *IntClient {
-	return NewIntClient(NewDefaultConnection(nil))
+	return NewIntClient(nil)
 }
 
 // Get - Get an int enum

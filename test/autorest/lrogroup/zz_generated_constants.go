@@ -8,6 +8,8 @@
 
 package lrogroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "lrogroup"
 	version = "v0.1.0"

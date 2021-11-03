@@ -47,7 +47,7 @@ func (p *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager) NextPag
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -101,7 +101,7 @@ func (p *DataFlowGetDataFlowsByWorkspacePager) NextPage(ctx context.Context) boo
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -155,7 +155,7 @@ func (p *DatasetGetDatasetsByWorkspacePager) NextPage(ctx context.Context) bool 
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -209,7 +209,7 @@ func (p *LibraryListPager) NextPage(ctx context.Context) bool {
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -263,7 +263,7 @@ func (p *LinkedServiceGetLinkedServicesByWorkspacePager) NextPage(ctx context.Co
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -317,7 +317,7 @@ func (p *NotebookGetNotebookSummaryByWorkSpacePager) NextPage(ctx context.Contex
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -371,7 +371,7 @@ func (p *NotebookGetNotebooksByWorkspacePager) NextPage(ctx context.Context) boo
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -425,7 +425,7 @@ func (p *PipelineGetPipelinesByWorkspacePager) NextPage(ctx context.Context) boo
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -479,7 +479,7 @@ func (p *SQLScriptGetSQLScriptsByWorkspacePager) NextPage(ctx context.Context) b
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -533,7 +533,7 @@ func (p *SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager) NextPage(ctx 
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false
@@ -587,7 +587,7 @@ func (p *TriggerGetTriggersByWorkspacePager) NextPage(ctx context.Context) bool 
 		p.err = err
 		return false
 	}
-	resp, err := p.client.con.Pipeline().Do(req)
+	resp, err := p.client.pl.Do(req)
 	if err != nil {
 		p.err = err
 		return false

@@ -11,6 +11,7 @@ package objectgroup
 import (
 	"context"
 	"errors"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,19 @@ import (
 // ObjectTypeClient contains the methods for the ObjectTypeClient group.
 // Don't use this type directly, use NewObjectTypeClient() instead.
 type ObjectTypeClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewObjectTypeClient creates a new instance of ObjectTypeClient with the specified values.
-func NewObjectTypeClient(con *Connection) *ObjectTypeClient {
-	return &ObjectTypeClient{con: con}
+func NewObjectTypeClient(options *azcore.ClientOptions) *ObjectTypeClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &ObjectTypeClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Get - Basic get that returns an object. Returns object { 'message': 'An object was successfully returned' }
@@ -34,7 +42,7 @@ func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClie
 	if err != nil {
 		return ObjectTypeClientGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ObjectTypeClientGetResponse{}, err
 	}
@@ -47,7 +55,7 @@ func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClie
 // getCreateRequest creates the Get request.
 func (client *ObjectTypeClient) getCreateRequest(ctx context.Context, options *ObjectTypeClientGetOptions) (*policy.Request, error) {
 	urlPath := "/objectType/get"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +91,7 @@ func (client *ObjectTypeClient) Put(ctx context.Context, putObject map[string]in
 	if err != nil {
 		return ObjectTypeClientPutResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return ObjectTypeClientPutResponse{}, err
 	}
@@ -96,7 +104,7 @@ func (client *ObjectTypeClient) Put(ctx context.Context, putObject map[string]in
 // putCreateRequest creates the Put request.
 func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject map[string]interface{}, options *ObjectTypeClientPutOptions) (*policy.Request, error) {
 	urlPath := "/objectType/put"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

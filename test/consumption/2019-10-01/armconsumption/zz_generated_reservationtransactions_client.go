@@ -25,8 +25,8 @@ import (
 // ReservationTransactionsClient contains the methods for the ReservationTransactions group.
 // Don't use this type directly, use NewReservationTransactionsClient() instead.
 type ReservationTransactionsClient struct {
-	ep string
-	pl runtime.Pipeline
+	host string
+	pl   runtime.Pipeline
 }
 
 // NewReservationTransactionsClient creates a new instance of ReservationTransactionsClient with the specified values.
@@ -38,7 +38,11 @@ func NewReservationTransactionsClient(credential azcore.TokenCredential, options
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ReservationTransactionsClient{ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ReservationTransactionsClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - List of transactions for reserved instances on billing account scope
@@ -62,7 +66,7 @@ func (client *ReservationTransactionsClient) listCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter billingAccountID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{billingAccountId}", url.PathEscape(billingAccountID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +127,7 @@ func (client *ReservationTransactionsClient) listByBillingProfileCreateRequest(c
 		return nil, errors.New("parameter billingProfileID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{billingProfileId}", url.PathEscape(billingProfileID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

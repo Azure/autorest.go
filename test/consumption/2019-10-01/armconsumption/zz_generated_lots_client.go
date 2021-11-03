@@ -23,8 +23,8 @@ import (
 // LotsClient contains the methods for the Lots group.
 // Don't use this type directly, use NewLotsClient() instead.
 type LotsClient struct {
-	ep string
-	pl runtime.Pipeline
+	host string
+	pl   runtime.Pipeline
 }
 
 // NewLotsClient creates a new instance of LotsClient with the specified values.
@@ -36,7 +36,11 @@ func NewLotsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &LotsClient{ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &LotsClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Lists the lots by billingAccountId and billingProfileId.
@@ -57,7 +61,7 @@ func (client *LotsClient) List(scope string, options *LotsListOptions) *LotsList
 func (client *LotsClient) listCreateRequest(ctx context.Context, scope string, options *LotsListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/lots"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

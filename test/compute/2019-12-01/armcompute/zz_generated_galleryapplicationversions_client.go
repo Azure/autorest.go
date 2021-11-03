@@ -25,9 +25,9 @@ import (
 // GalleryApplicationVersionsClient contains the methods for the GalleryApplicationVersions group.
 // Don't use this type directly, use NewGalleryApplicationVersionsClient() instead.
 type GalleryApplicationVersionsClient struct {
-	ep             string
-	pl             runtime.Pipeline
+	host           string
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewGalleryApplicationVersionsClient creates a new instance of GalleryApplicationVersionsClient with the specified values.
@@ -39,7 +39,12 @@ func NewGalleryApplicationVersionsClient(subscriptionID string, credential azcor
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &GalleryApplicationVersionsClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &GalleryApplicationVersionsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Create or update a gallery Application Version.
@@ -102,7 +107,7 @@ func (client *GalleryApplicationVersionsClient) createOrUpdateCreateRequest(ctx 
 		return nil, errors.New("parameter galleryApplicationVersionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationVersionName}", url.PathEscape(galleryApplicationVersionName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -186,7 +191,7 @@ func (client *GalleryApplicationVersionsClient) deleteCreateRequest(ctx context.
 		return nil, errors.New("parameter galleryApplicationVersionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationVersionName}", url.PathEscape(galleryApplicationVersionName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -250,7 +255,7 @@ func (client *GalleryApplicationVersionsClient) getCreateRequest(ctx context.Con
 		return nil, errors.New("parameter galleryApplicationVersionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationVersionName}", url.PathEscape(galleryApplicationVersionName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -319,7 +324,7 @@ func (client *GalleryApplicationVersionsClient) listByGalleryApplicationCreateRe
 		return nil, errors.New("parameter galleryApplicationName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationName}", url.PathEscape(galleryApplicationName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -412,7 +417,7 @@ func (client *GalleryApplicationVersionsClient) updateCreateRequest(ctx context.
 		return nil, errors.New("parameter galleryApplicationVersionName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{galleryApplicationVersionName}", url.PathEscape(galleryApplicationVersionName))
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

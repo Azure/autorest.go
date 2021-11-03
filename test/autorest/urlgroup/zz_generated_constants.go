@@ -8,6 +8,8 @@
 
 package urlgroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "urlgroup"
 	version = "v0.1.0"

@@ -16,7 +16,7 @@ import (
 )
 
 func newPrimitiveClient() *PrimitiveClient {
-	return NewPrimitiveClient(NewDefaultConnection(nil))
+	return NewPrimitiveClient(nil)
 }
 
 func TestPrimitiveGetInt(t *testing.T) {

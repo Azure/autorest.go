@@ -25,9 +25,9 @@ import (
 // AvailableResourceGroupDelegationsClient contains the methods for the AvailableResourceGroupDelegations group.
 // Don't use this type directly, use NewAvailableResourceGroupDelegationsClient() instead.
 type AvailableResourceGroupDelegationsClient struct {
-	ep             string
-	pl             runtime.Pipeline
+	host           string
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewAvailableResourceGroupDelegationsClient creates a new instance of AvailableResourceGroupDelegationsClient with the specified values.
@@ -39,7 +39,12 @@ func NewAvailableResourceGroupDelegationsClient(subscriptionID string, credentia
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &AvailableResourceGroupDelegationsClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &AvailableResourceGroupDelegationsClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Gets all of the available subnet delegations for this resource group in this region.
@@ -71,7 +76,7 @@ func (client *AvailableResourceGroupDelegationsClient) listCreateRequest(ctx con
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

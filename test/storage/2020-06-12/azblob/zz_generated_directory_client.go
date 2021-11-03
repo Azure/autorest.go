@@ -19,9 +19,21 @@ import (
 )
 
 type directoryClient struct {
-	con            *connection
+	endpoint       string
 	version        Enum2
 	pathRenameMode *PathRenameMode
+	pl             runtime.Pipeline
+}
+
+// newDirectoryClient creates a new instance of directoryClient with the specified values.
+func newDirectoryClient(endpoint string, version Enum2, pathRenameMode *PathRenameMode, pl runtime.Pipeline) *directoryClient {
+	client := &directoryClient{
+		endpoint:       endpoint,
+		version:        version,
+		pathRenameMode: pathRenameMode,
+		pl:             pl,
+	}
+	return client
 }
 
 // Create - Create a directory. By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken. This
@@ -35,7 +47,7 @@ func (client *directoryClient) Create(ctx context.Context, resource Enum20, dire
 	if err != nil {
 		return DirectoryCreateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DirectoryCreateResponse{}, err
 	}
@@ -47,7 +59,7 @@ func (client *directoryClient) Create(ctx context.Context, resource Enum20, dire
 
 // createCreateRequest creates the Create request.
 func (client *directoryClient) createCreateRequest(ctx context.Context, resource Enum20, directoryCreateOptions *DirectoryCreateOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -163,7 +175,7 @@ func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDel
 	if err != nil {
 		return DirectoryDeleteResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DirectoryDeleteResponse{}, err
 	}
@@ -175,7 +187,7 @@ func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDel
 
 // deleteCreateRequest creates the Delete request.
 func (client *directoryClient) deleteCreateRequest(ctx context.Context, recursiveDirectoryDelete bool, directoryDeleteOptions *DirectoryDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -256,7 +268,7 @@ func (client *directoryClient) GetAccessControl(ctx context.Context, action Enum
 	if err != nil {
 		return DirectoryGetAccessControlResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DirectoryGetAccessControlResponse{}, err
 	}
@@ -268,7 +280,7 @@ func (client *directoryClient) GetAccessControl(ctx context.Context, action Enum
 
 // getAccessControlCreateRequest creates the GetAccessControl request.
 func (client *directoryClient) getAccessControlCreateRequest(ctx context.Context, action Enum22, directoryGetAccessControlOptions *DirectoryGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodHead, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodHead, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -369,7 +381,7 @@ func (client *directoryClient) Rename(ctx context.Context, renameSource string, 
 	if err != nil {
 		return DirectoryRenameResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DirectoryRenameResponse{}, err
 	}
@@ -381,7 +393,7 @@ func (client *directoryClient) Rename(ctx context.Context, renameSource string, 
 
 // renameCreateRequest creates the Rename request.
 func (client *directoryClient) renameCreateRequest(ctx context.Context, renameSource string, directoryRenameOptions *DirectoryRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -521,7 +533,7 @@ func (client *directoryClient) SetAccessControl(ctx context.Context, action Enum
 	if err != nil {
 		return DirectorySetAccessControlResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DirectorySetAccessControlResponse{}, err
 	}
@@ -533,7 +545,7 @@ func (client *directoryClient) SetAccessControl(ctx context.Context, action Enum
 
 // setAccessControlCreateRequest creates the SetAccessControl request.
 func (client *directoryClient) setAccessControlCreateRequest(ctx context.Context, action Enum21, directorySetAccessControlOptions *DirectorySetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, client.endpoint)
 	if err != nil {
 		return nil, err
 	}

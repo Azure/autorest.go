@@ -20,7 +20,17 @@ import (
 )
 
 type dataFlowClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newDataFlowClient creates a new instance of dataFlowClient with the specified values.
+func newDataFlowClient(endpoint string, pl runtime.Pipeline) *dataFlowClient {
+	client := &dataFlowClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // BeginCreateOrUpdateDataFlow - Creates or updates a data flow.
@@ -33,7 +43,7 @@ func (client *dataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, d
 	result := DataFlowCreateOrUpdateDataFlowPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("dataFlowClient.CreateOrUpdateDataFlow", resp, client.con.Pipeline(), client.createOrUpdateDataFlowHandleError)
+	pt, err := runtime.NewPoller("dataFlowClient.CreateOrUpdateDataFlow", resp, client.pl, client.createOrUpdateDataFlowHandleError)
 	if err != nil {
 		return DataFlowCreateOrUpdateDataFlowPollerResponse{}, err
 	}
@@ -50,7 +60,7 @@ func (client *dataFlowClient) createOrUpdateDataFlow(ctx context.Context, dataFl
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +77,7 @@ func (client *dataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Co
 		return nil, errors.New("parameter dataFlowName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +114,7 @@ func (client *dataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowN
 	result := DataFlowDeleteDataFlowPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("dataFlowClient.DeleteDataFlow", resp, client.con.Pipeline(), client.deleteDataFlowHandleError)
+	pt, err := runtime.NewPoller("dataFlowClient.DeleteDataFlow", resp, client.pl, client.deleteDataFlowHandleError)
 	if err != nil {
 		return DataFlowDeleteDataFlowPollerResponse{}, err
 	}
@@ -121,7 +131,7 @@ func (client *dataFlowClient) deleteDataFlow(ctx context.Context, dataFlowName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +148,7 @@ func (client *dataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, d
 		return nil, errors.New("parameter dataFlowName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +179,7 @@ func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName stri
 	if err != nil {
 		return DataFlowGetDataFlowResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DataFlowGetDataFlowResponse{}, err
 	}
@@ -186,7 +196,7 @@ func (client *dataFlowClient) getDataFlowCreateRequest(ctx context.Context, data
 		return nil, errors.New("parameter dataFlowName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -239,7 +249,7 @@ func (client *dataFlowClient) GetDataFlowsByWorkspace(options *DataFlowGetDataFl
 // getDataFlowsByWorkspaceCreateRequest creates the GetDataFlowsByWorkspace request.
 func (client *dataFlowClient) getDataFlowsByWorkspaceCreateRequest(ctx context.Context, options *DataFlowGetDataFlowsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/dataflows"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -282,7 +292,7 @@ func (client *dataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowN
 	result := DataFlowRenameDataFlowPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("dataFlowClient.RenameDataFlow", resp, client.con.Pipeline(), client.renameDataFlowHandleError)
+	pt, err := runtime.NewPoller("dataFlowClient.RenameDataFlow", resp, client.pl, client.renameDataFlowHandleError)
 	if err != nil {
 		return DataFlowRenameDataFlowPollerResponse{}, err
 	}
@@ -299,7 +309,7 @@ func (client *dataFlowClient) renameDataFlow(ctx context.Context, dataFlowName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -316,7 +326,7 @@ func (client *dataFlowClient) renameDataFlowCreateRequest(ctx context.Context, d
 		return nil, errors.New("parameter dataFlowName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{dataFlowName}", url.PathEscape(dataFlowName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

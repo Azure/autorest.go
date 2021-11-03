@@ -11,6 +11,7 @@ package stringgroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,19 @@ import (
 // EnumClient contains the methods for the Enum group.
 // Don't use this type directly, use NewEnumClient() instead.
 type EnumClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewEnumClient creates a new instance of EnumClient with the specified values.
-func NewEnumClient(con *Connection) *EnumClient {
-	return &EnumClient{con: con}
+func NewEnumClient(options *azcore.ClientOptions) *EnumClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &EnumClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
@@ -34,7 +42,7 @@ func (client *EnumClient) GetNotExpandable(ctx context.Context, options *EnumGet
 	if err != nil {
 		return EnumGetNotExpandableResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return EnumGetNotExpandableResponse{}, err
 	}
@@ -47,7 +55,7 @@ func (client *EnumClient) GetNotExpandable(ctx context.Context, options *EnumGet
 // getNotExpandableCreateRequest creates the GetNotExpandable request.
 func (client *EnumClient) getNotExpandableCreateRequest(ctx context.Context, options *EnumGetNotExpandableOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/notExpandable"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +92,7 @@ func (client *EnumClient) GetReferenced(ctx context.Context, options *EnumGetRef
 	if err != nil {
 		return EnumGetReferencedResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return EnumGetReferencedResponse{}, err
 	}
@@ -97,7 +105,7 @@ func (client *EnumClient) GetReferenced(ctx context.Context, options *EnumGetRef
 // getReferencedCreateRequest creates the GetReferenced request.
 func (client *EnumClient) getReferencedCreateRequest(ctx context.Context, options *EnumGetReferencedOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/Referenced"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +142,7 @@ func (client *EnumClient) GetReferencedConstant(ctx context.Context, options *En
 	if err != nil {
 		return EnumGetReferencedConstantResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return EnumGetReferencedConstantResponse{}, err
 	}
@@ -147,7 +155,7 @@ func (client *EnumClient) GetReferencedConstant(ctx context.Context, options *En
 // getReferencedConstantCreateRequest creates the GetReferencedConstant request.
 func (client *EnumClient) getReferencedConstantCreateRequest(ctx context.Context, options *EnumGetReferencedConstantOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/ReferencedConstant"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -184,7 +192,7 @@ func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Color
 	if err != nil {
 		return EnumPutNotExpandableResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return EnumPutNotExpandableResponse{}, err
 	}
@@ -197,7 +205,7 @@ func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Color
 // putNotExpandableCreateRequest creates the PutNotExpandable request.
 func (client *EnumClient) putNotExpandableCreateRequest(ctx context.Context, stringBody Colors, options *EnumPutNotExpandableOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/notExpandable"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -225,7 +233,7 @@ func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colo
 	if err != nil {
 		return EnumPutReferencedResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return EnumPutReferencedResponse{}, err
 	}
@@ -238,7 +246,7 @@ func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colo
 // putReferencedCreateRequest creates the PutReferenced request.
 func (client *EnumClient) putReferencedCreateRequest(ctx context.Context, enumStringBody Colors, options *EnumPutReferencedOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/Referenced"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -266,7 +274,7 @@ func (client *EnumClient) PutReferencedConstant(ctx context.Context, enumStringB
 	if err != nil {
 		return EnumPutReferencedConstantResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return EnumPutReferencedConstantResponse{}, err
 	}
@@ -279,7 +287,7 @@ func (client *EnumClient) PutReferencedConstant(ctx context.Context, enumStringB
 // putReferencedConstantCreateRequest creates the PutReferencedConstant request.
 func (client *EnumClient) putReferencedConstantCreateRequest(ctx context.Context, enumStringBody RefColorConstant, options *EnumPutReferencedConstantOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/ReferencedConstant"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

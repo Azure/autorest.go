@@ -8,6 +8,8 @@
 
 package nonstringenumgroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "nonstringenumgroup"
 	version = "v0.1.0"

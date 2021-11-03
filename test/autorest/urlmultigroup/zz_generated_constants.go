@@ -8,6 +8,8 @@
 
 package urlmultigroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "urlmultigroup"
 	version = "v0.1.0"

@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -23,13 +24,21 @@ import (
 // MonitoringConfigClient contains the methods for the MonitoringConfig group.
 // Don't use this type directly, use NewMonitoringConfigClient() instead.
 type MonitoringConfigClient struct {
-	con            *connection
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewMonitoringConfigClient creates a new instance of MonitoringConfigClient with the specified values.
-func NewMonitoringConfigClient(con *connection, subscriptionID string) *MonitoringConfigClient {
-	return &MonitoringConfigClient{con: con, subscriptionID: subscriptionID}
+func NewMonitoringConfigClient(subscriptionID string, options *azcore.ClientOptions) *MonitoringConfigClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &MonitoringConfigClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates a new metric configuration or updates an existing one for a role.
@@ -42,7 +51,7 @@ func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, d
 	result := MonitoringConfigCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("MonitoringConfigClient.CreateOrUpdate", "", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("MonitoringConfigClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
 		return MonitoringConfigCreateOrUpdatePollerResponse{}, err
 	}
@@ -59,7 +68,7 @@ func (client *MonitoringConfigClient) createOrUpdate(ctx context.Context, device
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +97,7 @@ func (client *MonitoringConfigClient) createOrUpdateCreateRequest(ctx context.Co
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +131,7 @@ func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceNam
 	result := MonitoringConfigDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("MonitoringConfigClient.Delete", "", resp, client.con.Pipeline(), client.deleteHandleError)
+	pt, err := armruntime.NewPoller("MonitoringConfigClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
 		return MonitoringConfigDeletePollerResponse{}, err
 	}
@@ -139,7 +148,7 @@ func (client *MonitoringConfigClient) deleteOperation(ctx context.Context, devic
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +177,7 @@ func (client *MonitoringConfigClient) deleteCreateRequest(ctx context.Context, d
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -199,7 +208,7 @@ func (client *MonitoringConfigClient) Get(ctx context.Context, deviceName string
 	if err != nil {
 		return MonitoringConfigGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return MonitoringConfigGetResponse{}, err
 	}
@@ -228,7 +237,7 @@ func (client *MonitoringConfigClient) getCreateRequest(ctx context.Context, devi
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -294,7 +303,7 @@ func (client *MonitoringConfigClient) listCreateRequest(ctx context.Context, dev
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

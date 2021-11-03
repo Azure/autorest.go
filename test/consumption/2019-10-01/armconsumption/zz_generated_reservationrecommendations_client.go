@@ -23,8 +23,8 @@ import (
 // ReservationRecommendationsClient contains the methods for the ReservationRecommendations group.
 // Don't use this type directly, use NewReservationRecommendationsClient() instead.
 type ReservationRecommendationsClient struct {
-	ep string
-	pl runtime.Pipeline
+	host string
+	pl   runtime.Pipeline
 }
 
 // NewReservationRecommendationsClient creates a new instance of ReservationRecommendationsClient with the specified values.
@@ -36,7 +36,11 @@ func NewReservationRecommendationsClient(credential azcore.TokenCredential, opti
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ReservationRecommendationsClient{ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ReservationRecommendationsClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - List of recommendations for purchasing reserved instances.
@@ -57,7 +61,7 @@ func (client *ReservationRecommendationsClient) List(scope string, options *Rese
 func (client *ReservationRecommendationsClient) listCreateRequest(ctx context.Context, scope string, options *ReservationRecommendationsListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/reservationRecommendations"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -8,6 +8,8 @@
 
 package mediatypesgroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "mediatypesgroup"
 	version = "v0.1.0"

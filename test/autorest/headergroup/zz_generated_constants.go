@@ -8,6 +8,8 @@
 
 package headergroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "headergroup"
 	version = "v0.1.0"

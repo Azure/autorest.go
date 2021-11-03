@@ -11,6 +11,7 @@ package azurereportgroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,19 @@ import (
 // AutoRestReportServiceForAzureClient contains the methods for the AutoRestReportServiceForAzure group.
 // Don't use this type directly, use NewAutoRestReportServiceForAzureClient() instead.
 type AutoRestReportServiceForAzureClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewAutoRestReportServiceForAzureClient creates a new instance of AutoRestReportServiceForAzureClient with the specified values.
-func NewAutoRestReportServiceForAzureClient(con *Connection) *AutoRestReportServiceForAzureClient {
-	return &AutoRestReportServiceForAzureClient{con: con}
+func NewAutoRestReportServiceForAzureClient(options *azcore.ClientOptions) *AutoRestReportServiceForAzureClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &AutoRestReportServiceForAzureClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetReport - Get test coverage report
@@ -34,7 +42,7 @@ func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context
 	if err != nil {
 		return AutoRestReportServiceForAzureGetReportResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return AutoRestReportServiceForAzureGetReportResponse{}, err
 	}
@@ -47,7 +55,7 @@ func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context
 // getReportCreateRequest creates the GetReport request.
 func (client *AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (*policy.Request, error) {
 	urlPath := "/report/azure"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

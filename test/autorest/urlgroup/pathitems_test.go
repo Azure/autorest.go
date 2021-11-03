@@ -12,8 +12,7 @@ import (
 )
 
 func TestGetAllWithValues(t *testing.T) {
-	client := NewDefaultConnection(nil)
-	grp := NewPathItemsClient(client, "globalStringPath", to.StringPtr("globalStringQuery"))
+	grp := NewPathItemsClient("globalStringPath", to.StringPtr("globalStringQuery"), nil)
 	result, err := grp.GetAllWithValues(context.Background(), "pathItemStringPath", "localStringPath", &PathItemsGetAllWithValuesOptions{
 		LocalStringQuery:    to.StringPtr("localStringQuery"),
 		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
@@ -27,8 +26,7 @@ func TestGetAllWithValues(t *testing.T) {
 }
 
 func TestGetGlobalAndLocalQueryNull(t *testing.T) {
-	client := NewDefaultConnection(nil)
-	grp := NewPathItemsClient(client, "globalStringPath", nil)
+	grp := NewPathItemsClient("globalStringPath", nil, nil)
 	result, err := grp.GetGlobalAndLocalQueryNull(context.Background(), "pathItemStringPath", "localStringPath", &PathItemsGetGlobalAndLocalQueryNullOptions{
 		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
 	})
@@ -41,8 +39,7 @@ func TestGetGlobalAndLocalQueryNull(t *testing.T) {
 }
 
 func TestGetGlobalQueryNull(t *testing.T) {
-	client := NewDefaultConnection(nil)
-	grp := NewPathItemsClient(client, "globalStringPath", nil)
+	grp := NewPathItemsClient("globalStringPath", nil, nil)
 	result, err := grp.GetGlobalQueryNull(context.Background(), "pathItemStringPath", "localStringPath", &PathItemsGetGlobalQueryNullOptions{
 		LocalStringQuery:    to.StringPtr("localStringQuery"),
 		PathItemStringQuery: to.StringPtr("pathItemStringQuery"),
@@ -56,8 +53,7 @@ func TestGetGlobalQueryNull(t *testing.T) {
 }
 
 func TestGetLocalPathItemQueryNull(t *testing.T) {
-	client := NewDefaultConnection(nil)
-	grp := NewPathItemsClient(client, "globalStringPath", to.StringPtr("globalStringQuery"))
+	grp := NewPathItemsClient("globalStringPath", to.StringPtr("globalStringQuery"), nil)
 	result, err := grp.GetLocalPathItemQueryNull(context.Background(), "pathItemStringPath", "localStringPath", nil)
 	if err != nil {
 		t.Fatal(err)

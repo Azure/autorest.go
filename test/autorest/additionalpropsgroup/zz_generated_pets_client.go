@@ -11,6 +11,7 @@ package additionalpropsgroup
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,19 @@ import (
 // PetsClient contains the methods for the Pets group.
 // Don't use this type directly, use NewPetsClient() instead.
 type PetsClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewPetsClient creates a new instance of PetsClient with the specified values.
-func NewPetsClient(con *Connection) *PetsClient {
-	return &PetsClient{con: con}
+func NewPetsClient(options *azcore.ClientOptions) *PetsClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &PetsClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // CreateAPInProperties - Create a Pet which contains more properties than what is defined.
@@ -34,7 +42,7 @@ func (client *PetsClient) CreateAPInProperties(ctx context.Context, createParame
 	if err != nil {
 		return PetsCreateAPInPropertiesResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PetsCreateAPInPropertiesResponse{}, err
 	}
@@ -47,7 +55,7 @@ func (client *PetsClient) CreateAPInProperties(ctx context.Context, createParame
 // createAPInPropertiesCreateRequest creates the CreateAPInProperties request.
 func (client *PetsClient) createAPInPropertiesCreateRequest(ctx context.Context, createParameters PetAPInProperties, options *PetsCreateAPInPropertiesOptions) (*policy.Request, error) {
 	urlPath := "/additionalProperties/in/properties"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +92,7 @@ func (client *PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, 
 	if err != nil {
 		return PetsCreateAPInPropertiesWithAPStringResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PetsCreateAPInPropertiesWithAPStringResponse{}, err
 	}
@@ -97,7 +105,7 @@ func (client *PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, 
 // createAPInPropertiesWithAPStringCreateRequest creates the CreateAPInPropertiesWithAPString request.
 func (client *PetsClient) createAPInPropertiesWithAPStringCreateRequest(ctx context.Context, createParameters PetAPInPropertiesWithAPString, options *PetsCreateAPInPropertiesWithAPStringOptions) (*policy.Request, error) {
 	urlPath := "/additionalProperties/in/properties/with/additionalProperties/string"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +142,7 @@ func (client *PetsClient) CreateAPObject(ctx context.Context, createParameters P
 	if err != nil {
 		return PetsCreateAPObjectResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PetsCreateAPObjectResponse{}, err
 	}
@@ -147,7 +155,7 @@ func (client *PetsClient) CreateAPObject(ctx context.Context, createParameters P
 // createAPObjectCreateRequest creates the CreateAPObject request.
 func (client *PetsClient) createAPObjectCreateRequest(ctx context.Context, createParameters PetAPObject, options *PetsCreateAPObjectOptions) (*policy.Request, error) {
 	urlPath := "/additionalProperties/type/object"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -184,7 +192,7 @@ func (client *PetsClient) CreateAPString(ctx context.Context, createParameters P
 	if err != nil {
 		return PetsCreateAPStringResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PetsCreateAPStringResponse{}, err
 	}
@@ -197,7 +205,7 @@ func (client *PetsClient) CreateAPString(ctx context.Context, createParameters P
 // createAPStringCreateRequest creates the CreateAPString request.
 func (client *PetsClient) createAPStringCreateRequest(ctx context.Context, createParameters PetAPString, options *PetsCreateAPStringOptions) (*policy.Request, error) {
 	urlPath := "/additionalProperties/type/string"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -234,7 +242,7 @@ func (client *PetsClient) CreateAPTrue(ctx context.Context, createParameters Pet
 	if err != nil {
 		return PetsCreateAPTrueResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PetsCreateAPTrueResponse{}, err
 	}
@@ -247,7 +255,7 @@ func (client *PetsClient) CreateAPTrue(ctx context.Context, createParameters Pet
 // createAPTrueCreateRequest creates the CreateAPTrue request.
 func (client *PetsClient) createAPTrueCreateRequest(ctx context.Context, createParameters PetAPTrue, options *PetsCreateAPTrueOptions) (*policy.Request, error) {
 	urlPath := "/additionalProperties/true"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -284,7 +292,7 @@ func (client *PetsClient) CreateCatAPTrue(ctx context.Context, createParameters 
 	if err != nil {
 		return PetsCreateCatAPTrueResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PetsCreateCatAPTrueResponse{}, err
 	}
@@ -297,7 +305,7 @@ func (client *PetsClient) CreateCatAPTrue(ctx context.Context, createParameters 
 // createCatAPTrueCreateRequest creates the CreateCatAPTrue request.
 func (client *PetsClient) createCatAPTrueCreateRequest(ctx context.Context, createParameters CatAPTrue, options *PetsCreateCatAPTrueOptions) (*policy.Request, error) {
 	urlPath := "/additionalProperties/true-subclass"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

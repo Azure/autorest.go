@@ -18,7 +18,7 @@ func newLRORetrysClient() *LRORetrysClient {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.Transport = httpClientWithCookieJar()
-	return NewLRORetrysClient(NewDefaultConnection(&options))
+	return NewLRORetrysClient(&options)
 }
 
 func TestLRORetrysBeginDelete202Retry200(t *testing.T) {

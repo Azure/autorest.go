@@ -25,9 +25,9 @@ import (
 // VPNSitesConfigurationClient contains the methods for the VPNSitesConfiguration group.
 // Don't use this type directly, use NewVPNSitesConfigurationClient() instead.
 type VPNSitesConfigurationClient struct {
-	ep             string
-	pl             runtime.Pipeline
+	host           string
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewVPNSitesConfigurationClient creates a new instance of VPNSitesConfigurationClient with the specified values.
@@ -39,7 +39,12 @@ func NewVPNSitesConfigurationClient(subscriptionID string, credential azcore.Tok
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &VPNSitesConfigurationClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &VPNSitesConfigurationClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginDownload - Gives the sas-url to download the configurations for vpn-sites in a resource group.
@@ -94,7 +99,7 @@ func (client *VPNSitesConfigurationClient) downloadCreateRequest(ctx context.Con
 		return nil, errors.New("parameter virtualWANName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{virtualWANName}", url.PathEscape(virtualWANName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

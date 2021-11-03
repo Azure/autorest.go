@@ -8,6 +8,8 @@
 
 package validationgroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "validationgroup"
 	version = "v0.1.0"

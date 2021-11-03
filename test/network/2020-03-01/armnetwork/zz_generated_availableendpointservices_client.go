@@ -25,9 +25,9 @@ import (
 // AvailableEndpointServicesClient contains the methods for the AvailableEndpointServices group.
 // Don't use this type directly, use NewAvailableEndpointServicesClient() instead.
 type AvailableEndpointServicesClient struct {
-	ep             string
-	pl             runtime.Pipeline
+	host           string
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewAvailableEndpointServicesClient creates a new instance of AvailableEndpointServicesClient with the specified values.
@@ -39,7 +39,12 @@ func NewAvailableEndpointServicesClient(subscriptionID string, credential azcore
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &AvailableEndpointServicesClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &AvailableEndpointServicesClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - List what values of endpoint services are available for use.
@@ -67,7 +72,7 @@ func (client *AvailableEndpointServicesClient) listCreateRequest(ctx context.Con
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

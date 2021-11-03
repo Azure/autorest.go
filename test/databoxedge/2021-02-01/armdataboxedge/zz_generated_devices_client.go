@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -23,13 +24,21 @@ import (
 // DevicesClient contains the methods for the Devices group.
 // Don't use this type directly, use NewDevicesClient() instead.
 type DevicesClient struct {
-	con            *connection
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewDevicesClient creates a new instance of DevicesClient with the specified values.
-func NewDevicesClient(con *connection, subscriptionID string) *DevicesClient {
-	return &DevicesClient{con: con, subscriptionID: subscriptionID}
+func NewDevicesClient(subscriptionID string, options *azcore.ClientOptions) *DevicesClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &DevicesClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // CreateOrUpdate - Creates or updates a Data Box Edge/Data Box Gateway resource.
@@ -39,7 +48,7 @@ func (client *DevicesClient) CreateOrUpdate(ctx context.Context, deviceName stri
 	if err != nil {
 		return DevicesCreateOrUpdateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DevicesCreateOrUpdateResponse{}, err
 	}
@@ -64,7 +73,7 @@ func (client *DevicesClient) createOrUpdateCreateRequest(ctx context.Context, de
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +116,7 @@ func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Con
 	result := DevicesCreateOrUpdateSecuritySettingsPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DevicesClient.CreateOrUpdateSecuritySettings", "", resp, client.con.Pipeline(), client.createOrUpdateSecuritySettingsHandleError)
+	pt, err := armruntime.NewPoller("DevicesClient.CreateOrUpdateSecuritySettings", "", resp, client.pl, client.createOrUpdateSecuritySettingsHandleError)
 	if err != nil {
 		return DevicesCreateOrUpdateSecuritySettingsPollerResponse{}, err
 	}
@@ -124,7 +133,7 @@ func (client *DevicesClient) createOrUpdateSecuritySettings(ctx context.Context,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -149,7 +158,7 @@ func (client *DevicesClient) createOrUpdateSecuritySettingsCreateRequest(ctx con
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -183,7 +192,7 @@ func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string,
 	result := DevicesDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DevicesClient.Delete", "", resp, client.con.Pipeline(), client.deleteHandleError)
+	pt, err := armruntime.NewPoller("DevicesClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
 		return DevicesDeletePollerResponse{}, err
 	}
@@ -200,7 +209,7 @@ func (client *DevicesClient) deleteOperation(ctx context.Context, deviceName str
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -225,7 +234,7 @@ func (client *DevicesClient) deleteCreateRequest(ctx context.Context, deviceName
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -259,7 +268,7 @@ func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceNam
 	result := DevicesDownloadUpdatesPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DevicesClient.DownloadUpdates", "", resp, client.con.Pipeline(), client.downloadUpdatesHandleError)
+	pt, err := armruntime.NewPoller("DevicesClient.DownloadUpdates", "", resp, client.pl, client.downloadUpdatesHandleError)
 	if err != nil {
 		return DevicesDownloadUpdatesPollerResponse{}, err
 	}
@@ -276,7 +285,7 @@ func (client *DevicesClient) downloadUpdates(ctx context.Context, deviceName str
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -301,7 +310,7 @@ func (client *DevicesClient) downloadUpdatesCreateRequest(ctx context.Context, d
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -332,7 +341,7 @@ func (client *DevicesClient) GenerateCertificate(ctx context.Context, deviceName
 	if err != nil {
 		return DevicesGenerateCertificateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DevicesGenerateCertificateResponse{}, err
 	}
@@ -357,7 +366,7 @@ func (client *DevicesClient) generateCertificateCreateRequest(ctx context.Contex
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -397,7 +406,7 @@ func (client *DevicesClient) Get(ctx context.Context, deviceName string, resourc
 	if err != nil {
 		return DevicesGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DevicesGetResponse{}, err
 	}
@@ -422,7 +431,7 @@ func (client *DevicesClient) getCreateRequest(ctx context.Context, deviceName st
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -462,7 +471,7 @@ func (client *DevicesClient) GetExtendedInformation(ctx context.Context, deviceN
 	if err != nil {
 		return DevicesGetExtendedInformationResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DevicesGetExtendedInformationResponse{}, err
 	}
@@ -487,7 +496,7 @@ func (client *DevicesClient) getExtendedInformationCreateRequest(ctx context.Con
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -527,7 +536,7 @@ func (client *DevicesClient) GetNetworkSettings(ctx context.Context, deviceName 
 	if err != nil {
 		return DevicesGetNetworkSettingsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DevicesGetNetworkSettingsResponse{}, err
 	}
@@ -552,7 +561,7 @@ func (client *DevicesClient) getNetworkSettingsCreateRequest(ctx context.Context
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -593,7 +602,7 @@ func (client *DevicesClient) GetUpdateSummary(ctx context.Context, deviceName st
 	if err != nil {
 		return DevicesGetUpdateSummaryResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DevicesGetUpdateSummaryResponse{}, err
 	}
@@ -618,7 +627,7 @@ func (client *DevicesClient) getUpdateSummaryCreateRequest(ctx context.Context, 
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -661,7 +670,7 @@ func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName
 	result := DevicesInstallUpdatesPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DevicesClient.InstallUpdates", "", resp, client.con.Pipeline(), client.installUpdatesHandleError)
+	pt, err := armruntime.NewPoller("DevicesClient.InstallUpdates", "", resp, client.pl, client.installUpdatesHandleError)
 	if err != nil {
 		return DevicesInstallUpdatesPollerResponse{}, err
 	}
@@ -678,7 +687,7 @@ func (client *DevicesClient) installUpdates(ctx context.Context, deviceName stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -703,7 +712,7 @@ func (client *DevicesClient) installUpdatesCreateRequest(ctx context.Context, de
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -752,7 +761,7 @@ func (client *DevicesClient) listByResourceGroupCreateRequest(ctx context.Contex
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -809,7 +818,7 @@ func (client *DevicesClient) listBySubscriptionCreateRequest(ctx context.Context
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -855,7 +864,7 @@ func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName
 	result := DevicesScanForUpdatesPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DevicesClient.ScanForUpdates", "", resp, client.con.Pipeline(), client.scanForUpdatesHandleError)
+	pt, err := armruntime.NewPoller("DevicesClient.ScanForUpdates", "", resp, client.pl, client.scanForUpdatesHandleError)
 	if err != nil {
 		return DevicesScanForUpdatesPollerResponse{}, err
 	}
@@ -872,7 +881,7 @@ func (client *DevicesClient) scanForUpdates(ctx context.Context, deviceName stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -897,7 +906,7 @@ func (client *DevicesClient) scanForUpdatesCreateRequest(ctx context.Context, de
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -928,7 +937,7 @@ func (client *DevicesClient) Update(ctx context.Context, deviceName string, reso
 	if err != nil {
 		return DevicesUpdateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DevicesUpdateResponse{}, err
 	}
@@ -953,7 +962,7 @@ func (client *DevicesClient) updateCreateRequest(ctx context.Context, deviceName
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -993,7 +1002,7 @@ func (client *DevicesClient) UpdateExtendedInformation(ctx context.Context, devi
 	if err != nil {
 		return DevicesUpdateExtendedInformationResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DevicesUpdateExtendedInformationResponse{}, err
 	}
@@ -1018,7 +1027,7 @@ func (client *DevicesClient) updateExtendedInformationCreateRequest(ctx context.
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1058,7 +1067,7 @@ func (client *DevicesClient) UploadCertificate(ctx context.Context, deviceName s
 	if err != nil {
 		return DevicesUploadCertificateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DevicesUploadCertificateResponse{}, err
 	}
@@ -1083,7 +1092,7 @@ func (client *DevicesClient) uploadCertificateCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

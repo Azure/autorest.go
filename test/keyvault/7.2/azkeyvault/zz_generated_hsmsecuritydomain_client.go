@@ -20,12 +20,15 @@ import (
 // HSMSecurityDomainClient contains the methods for the HSMSecurityDomain group.
 // Don't use this type directly, use NewHSMSecurityDomainClient() instead.
 type HSMSecurityDomainClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewHSMSecurityDomainClient creates a new instance of HSMSecurityDomainClient with the specified values.
-func NewHSMSecurityDomainClient(con *Connection) *HSMSecurityDomainClient {
-	return &HSMSecurityDomainClient{con: con}
+func NewHSMSecurityDomainClient(pl runtime.Pipeline) *HSMSecurityDomainClient {
+	client := &HSMSecurityDomainClient{
+		pl: pl,
+	}
+	return client
 }
 
 // BeginDownload - Retrieves the Security Domain from the managed HSM. Calling this endpoint can be used to activate a provisioned managed HSM resource.
@@ -38,7 +41,7 @@ func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultB
 	result := HSMSecurityDomainDownloadPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("HSMSecurityDomainClient.Download", resp, client.con.Pipeline(), client.downloadHandleError)
+	pt, err := runtime.NewPoller("HSMSecurityDomainClient.Download", resp, client.pl, client.downloadHandleError)
 	if err != nil {
 		return HSMSecurityDomainDownloadPollerResponse{}, err
 	}
@@ -55,7 +58,7 @@ func (client *HSMSecurityDomainClient) download(ctx context.Context, vaultBaseUR
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +104,7 @@ func (client *HSMSecurityDomainClient) DownloadPending(ctx context.Context, vaul
 	if err != nil {
 		return HSMSecurityDomainDownloadPendingResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HSMSecurityDomainDownloadPendingResponse{}, err
 	}
@@ -153,7 +156,7 @@ func (client *HSMSecurityDomainClient) TransferKey(ctx context.Context, vaultBas
 	if err != nil {
 		return HSMSecurityDomainTransferKeyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HSMSecurityDomainTransferKeyResponse{}, err
 	}
@@ -211,7 +214,7 @@ func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBas
 	result := HSMSecurityDomainUploadPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("HSMSecurityDomainClient.Upload", resp, client.con.Pipeline(), client.uploadHandleError)
+	pt, err := runtime.NewPoller("HSMSecurityDomainClient.Upload", resp, client.pl, client.uploadHandleError)
 	if err != nil {
 		return HSMSecurityDomainUploadPollerResponse{}, err
 	}
@@ -228,7 +231,7 @@ func (client *HSMSecurityDomainClient) upload(ctx context.Context, vaultBaseURL 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -271,7 +274,7 @@ func (client *HSMSecurityDomainClient) UploadPending(ctx context.Context, vaultB
 	if err != nil {
 		return HSMSecurityDomainUploadPendingResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return HSMSecurityDomainUploadPendingResponse{}, err
 	}

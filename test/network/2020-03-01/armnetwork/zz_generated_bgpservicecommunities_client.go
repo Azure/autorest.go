@@ -25,9 +25,9 @@ import (
 // BgpServiceCommunitiesClient contains the methods for the BgpServiceCommunities group.
 // Don't use this type directly, use NewBgpServiceCommunitiesClient() instead.
 type BgpServiceCommunitiesClient struct {
-	ep             string
-	pl             runtime.Pipeline
+	host           string
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewBgpServiceCommunitiesClient creates a new instance of BgpServiceCommunitiesClient with the specified values.
@@ -39,7 +39,12 @@ func NewBgpServiceCommunitiesClient(subscriptionID string, credential azcore.Tok
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &BgpServiceCommunitiesClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &BgpServiceCommunitiesClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Gets all the available bgp service communities.
@@ -63,7 +68,7 @@ func (client *BgpServiceCommunitiesClient) listCreateRequest(ctx context.Context
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -12,7 +12,7 @@ import (
 )
 
 func newSubscriptionInMethodClient() *SubscriptionInMethodClient {
-	return NewSubscriptionInMethodClient(NewDefaultConnection(nil))
+	return NewSubscriptionInMethodClient(nil)
 }
 
 // PostMethodLocalNull - POST method with subscriptionId modeled in the method.  pass in subscription id = null, client-side validation should prevent you from making this call

@@ -8,6 +8,8 @@
 
 package arraygroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "arraygroup"
 	version = "v0.1.0"

@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,12 +21,19 @@ import (
 // XMSClientRequestIDClient contains the methods for the XMSClientRequestID group.
 // Don't use this type directly, use NewXMSClientRequestIDClient() instead.
 type XMSClientRequestIDClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewXMSClientRequestIDClient creates a new instance of XMSClientRequestIDClient with the specified values.
-func NewXMSClientRequestIDClient(con *Connection) *XMSClientRequestIDClient {
-	return &XMSClientRequestIDClient{con: con}
+func NewXMSClientRequestIDClient(options *azcore.ClientOptions) *XMSClientRequestIDClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &XMSClientRequestIDClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
@@ -35,7 +43,7 @@ func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSCli
 	if err != nil {
 		return XMSClientRequestIDGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMSClientRequestIDGetResponse{}, err
 	}
@@ -48,7 +56,7 @@ func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSCli
 // getCreateRequest creates the Get request.
 func (client *XMSClientRequestIDClient) getCreateRequest(ctx context.Context, options *XMSClientRequestIDGetOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/method/"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +82,7 @@ func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientR
 	if err != nil {
 		return XMSClientRequestIDParamGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMSClientRequestIDParamGetResponse{}, err
 	}
@@ -87,7 +95,7 @@ func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientR
 // paramGetCreateRequest creates the ParamGet request.
 func (client *XMSClientRequestIDClient) paramGetCreateRequest(ctx context.Context, xmsClientRequestID string, options *XMSClientRequestIDParamGetOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/via-param/method/"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

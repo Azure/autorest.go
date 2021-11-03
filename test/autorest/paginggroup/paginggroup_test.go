@@ -20,7 +20,7 @@ func newPagingClient() *PagingClient {
 	options := azcore.ClientOptions{}
 	options.Retry.RetryDelay = 10 * time.Millisecond
 	options.Transport = httpClientWithCookieJar()
-	return NewPagingClient(NewDefaultConnection(&options))
+	return NewPagingClient(&options)
 }
 
 func httpClientWithCookieJar() policy.Transporter {

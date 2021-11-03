@@ -8,6 +8,8 @@
 
 package optionalgroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "optionalgroup"
 	version = "v0.1.0"

@@ -8,6 +8,8 @@
 
 package httpinfrastructuregroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "httpinfrastructuregroup"
 	version = "v0.1.0"

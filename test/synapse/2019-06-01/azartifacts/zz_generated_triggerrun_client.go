@@ -20,7 +20,17 @@ import (
 )
 
 type triggerRunClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newTriggerRunClient creates a new instance of triggerRunClient with the specified values.
+func newTriggerRunClient(endpoint string, pl runtime.Pipeline) *triggerRunClient {
+	client := &triggerRunClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // CancelTriggerInstance - Cancel single trigger instance by runId.
@@ -30,7 +40,7 @@ func (client *triggerRunClient) CancelTriggerInstance(ctx context.Context, trigg
 	if err != nil {
 		return TriggerRunCancelTriggerInstanceResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return TriggerRunCancelTriggerInstanceResponse{}, err
 	}
@@ -51,7 +61,7 @@ func (client *triggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.C
 		return nil, errors.New("parameter runID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +92,7 @@ func (client *triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context,
 	if err != nil {
 		return TriggerRunQueryTriggerRunsByWorkspaceResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return TriggerRunQueryTriggerRunsByWorkspaceResponse{}, err
 	}
@@ -95,7 +105,7 @@ func (client *triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context,
 // queryTriggerRunsByWorkspaceCreateRequest creates the QueryTriggerRunsByWorkspace request.
 func (client *triggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunQueryTriggerRunsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/queryTriggerRuns"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +145,7 @@ func (client *triggerRunClient) RerunTriggerInstance(ctx context.Context, trigge
 	if err != nil {
 		return TriggerRunRerunTriggerInstanceResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return TriggerRunRerunTriggerInstanceResponse{}, err
 	}
@@ -156,7 +166,7 @@ func (client *triggerRunClient) rerunTriggerInstanceCreateRequest(ctx context.Co
 		return nil, errors.New("parameter runID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{runId}", url.PathEscape(runID))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -14,7 +14,7 @@ import (
 )
 
 func newMediaTypesClient() *MediaTypesClient {
-	return NewMediaTypesClient(NewDefaultConnection(nil))
+	return NewMediaTypesClient(nil)
 }
 
 func TestAnalyzeBody(t *testing.T) {

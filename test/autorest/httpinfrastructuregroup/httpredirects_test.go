@@ -10,7 +10,7 @@ import (
 )
 
 func newHTTPRedirectsClient() *HTTPRedirectsClient {
-	return NewHTTPRedirectsClient(NewDefaultConnection(nil))
+	return NewHTTPRedirectsClient(nil)
 }
 
 func TestHTTPRedirectsDelete307(t *testing.T) {

@@ -21,8 +21,19 @@ import (
 )
 
 type appendBlobClient struct {
-	con     *connection
-	version Enum2
+	endpoint string
+	version  Enum2
+	pl       runtime.Pipeline
+}
+
+// newAppendBlobClient creates a new instance of appendBlobClient with the specified values.
+func newAppendBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *appendBlobClient {
+	client := &appendBlobClient{
+		endpoint: endpoint,
+		version:  version,
+		pl:       pl,
+	}
+	return client
 }
 
 // AppendBlock - The Append Block operation commits a new block of data to the end of an existing append blob. The Append Block operation is permitted only
@@ -34,7 +45,7 @@ func (client *appendBlobClient) AppendBlock(ctx context.Context, comp Enum38, co
 	if err != nil {
 		return AppendBlobAppendBlockResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return AppendBlobAppendBlockResponse{}, err
 	}
@@ -46,7 +57,7 @@ func (client *appendBlobClient) AppendBlock(ctx context.Context, comp Enum38, co
 
 // appendBlockCreateRequest creates the AppendBlock request.
 func (client *appendBlobClient) appendBlockCreateRequest(ctx context.Context, comp Enum38, contentLength int64, body io.ReadSeekCloser, appendBlobAppendBlockOptions *AppendBlobAppendBlockOptions, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -199,7 +210,7 @@ func (client *appendBlobClient) AppendBlockFromURL(ctx context.Context, comp Enu
 	if err != nil {
 		return AppendBlobAppendBlockFromURLResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return AppendBlobAppendBlockFromURLResponse{}, err
 	}
@@ -211,7 +222,7 @@ func (client *appendBlobClient) AppendBlockFromURL(ctx context.Context, comp Enu
 
 // appendBlockFromURLCreateRequest creates the AppendBlockFromURL request.
 func (client *appendBlobClient) appendBlockFromURLCreateRequest(ctx context.Context, comp Enum38, sourceURL string, contentLength int64, appendBlobAppendBlockFromURLOptions *AppendBlobAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -378,7 +389,7 @@ func (client *appendBlobClient) Create(ctx context.Context, contentLength int64,
 	if err != nil {
 		return AppendBlobCreateResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return AppendBlobCreateResponse{}, err
 	}
@@ -390,7 +401,7 @@ func (client *appendBlobClient) Create(ctx context.Context, contentLength int64,
 
 // createCreateRequest creates the Create request.
 func (client *appendBlobClient) createCreateRequest(ctx context.Context, contentLength int64, appendBlobCreateOptions *AppendBlobCreateOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -549,7 +560,7 @@ func (client *appendBlobClient) Seal(ctx context.Context, comp Enum39, appendBlo
 	if err != nil {
 		return AppendBlobSealResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return AppendBlobSealResponse{}, err
 	}
@@ -561,7 +572,7 @@ func (client *appendBlobClient) Seal(ctx context.Context, comp Enum39, appendBlo
 
 // sealCreateRequest creates the Seal request.
 func (client *appendBlobClient) sealCreateRequest(ctx context.Context, comp Enum39, appendBlobSealOptions *AppendBlobSealOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions) (*policy.Request, error) {
-	req, err := runtime.NewRequest(ctx, http.MethodPut, client.con.Endpoint())
+	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}

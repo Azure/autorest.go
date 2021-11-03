@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -22,13 +23,32 @@ import (
 // PathsClient contains the methods for the Paths group.
 // Don't use this type directly, use NewPathsClient() instead.
 type PathsClient struct {
-	con            *Connection
+	dnsSuffix      string
 	subscriptionID string
+	pl             runtime.Pipeline
+}
+
+// PathsClientOptions contains the optional parameters for NewPathsClient.
+type PathsClientOptions struct {
+	azcore.ClientOptions
+	DnsSuffix *string
 }
 
 // NewPathsClient creates a new instance of PathsClient with the specified values.
-func NewPathsClient(con *Connection, subscriptionID string) *PathsClient {
-	return &PathsClient{con: con, subscriptionID: subscriptionID}
+func NewPathsClient(subscriptionID string, options *PathsClientOptions) *PathsClient {
+	cp := PathsClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &PathsClient{
+		dnsSuffix:      "host",
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp.ClientOptions),
+	}
+	if options.DnsSuffix != nil {
+		client.dnsSuffix = *options.DnsSuffix
+	}
+	return client
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
@@ -38,7 +58,7 @@ func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret st
 	if err != nil {
 		return PathsGetEmptyResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return PathsGetEmptyResponse{}, err
 	}
@@ -51,7 +71,7 @@ func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret st
 // getEmptyCreateRequest creates the GetEmpty request.
 func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*policy.Request, error) {
 	host := "{vault}{secret}{dnsSuffix}"
-	host = strings.ReplaceAll(host, "{dnsSuffix}", client.con.DnsSuffix())
+	host = strings.ReplaceAll(host, "{dnsSuffix}", client.dnsSuffix)
 	host = strings.ReplaceAll(host, "{vault}", vault)
 	host = strings.ReplaceAll(host, "{secret}", secret)
 	urlPath := "/customuri/{subscriptionId}/{keyName}"

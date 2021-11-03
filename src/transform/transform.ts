@@ -315,8 +315,7 @@ function processOperationRequests(session: Session<CodeModel>) {
     }
   }
   // track any client-level parameterized host params.
-  // use the param name to avoid reference equality checks.
-  const hostParams = new Map<string, [Parameter, Array<OperationGroup>]>();
+  const hostParams = new Array<Parameter>();
   // track any parameter groups and/or optional parameters
   const paramGroups = new Map<string, GroupProperty>();
   for (const group of values(session.model.operationGroups)) {
@@ -361,13 +360,10 @@ function processOperationRequests(session: Session<CodeModel>) {
         }
         if (param.implementation === ImplementationLocation.Client && param.schema.type !== SchemaType.Constant && param.language.default.name !== '$host') {
           if (param.protocol.http!.in === 'uri') {
-            // this is a parameterized host param
-            if (!hostParams.has(param.language.go!.name)) {
-              hostParams.set(param.language.go!.name, [param, new Array<OperationGroup>()]);
-            }
-            const groups = hostParams.get(param.language.go!.name)![1];
-            if (!groups!.includes(group)) {
-              groups!.push(group);
+            // this is a parameterized host param.
+            // use the param name to avoid reference equality checks.
+            if (!values(hostParams).where(p => p.language.go!.name === param.language.go!.name).any()) {
+              hostParams.push(param);
             }
             continue;
           }
@@ -383,7 +379,7 @@ function processOperationRequests(session: Session<CodeModel>) {
           clientParams.push(param);
         } else if (param.implementation === ImplementationLocation.Method && param.protocol.http!.in === 'uri') {
           // at least one method contains a parameterized host param, bye-bye simple case
-          session.model.language.go!.complexHostParams = true;
+          group.language.go!.complexHostParams = true;
         }
         let opName = op.language.go!.name;
         if (isLROOperation(op)) {
@@ -460,6 +456,19 @@ function processOperationRequests(session: Session<CodeModel>) {
         }
       }
     }
+    if (hostParams.length > 0) {
+      // attach host params to the operation group
+      group.language.go!.hostParams = hostParams;
+    } else if (!<boolean>session.model.language.go!.azureARM) {
+      // if there are no host params and this isn't Azure ARM, check for a swagger-provided host (e.g. test server)
+      for (const param of values(session.model.globalParameters)) {
+        if (param.language.default.name === '$host') {
+          group.language.go!.host = param.clientDefaultValue;
+          session.model.language.go!.host = group.language.go!.host;
+          break;
+        }
+      }
+    }
   }
   // emit any param groups
   if (paramGroups.size > 0) {
@@ -470,33 +479,7 @@ function processOperationRequests(session: Session<CodeModel>) {
     for (const items of paramGroups.entries()) {
       pg.push(items[1]);
     }
-  }
-  // parameterized host gets split into two buckets.
-  //  simple case  - all host params are client and shared across all operation groups
-  //  complex case - client host params unique to op groups and/or method host params
-  for (const paramName of hostParams.keys()) {
-    const param = hostParams.get(paramName)![0];
-    const groups = hostParams.get(paramName)![1];
-    if (groups!.length !== session.model.operationGroups.length) {
-      // this host param doesn't appear in all operation groups so it goes in the operation group method
-      for (const group of values(groups)) {
-        if (group.language.go!.clientParams === undefined) {
-          group.language.go!.clientParams = new Array<Parameter>();
-        }
-        const clientParams = <Array<Parameter>>group.language.go!.clientParams;
-        clientParams.push(param);
-      }
-      // this also indicates the complex case
-      session.model.language.go!.complexHostParams = true;
-    } else {
-      // this host param appears in all operation groups so it goes in the client ctor
-      if (session.model.language.go!.hostParams === undefined) {
-        session.model.language.go!.hostParams = new Array<Parameter>();
-      }
-      const hostParams = <Array<Parameter>>session.model.language.go!.hostParams;
-      hostParams.push(param);
-    }
-  }
+  }  
 }
 
 function createGroupProperty(name: string, description: string): GroupProperty {

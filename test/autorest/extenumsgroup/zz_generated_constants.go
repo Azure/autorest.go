@@ -8,6 +8,8 @@
 
 package extenumsgroup
 
+const host = "http://localhost:3000"
+
 const (
 	module  = "extenumsgroup"
 	version = "v0.1.0"

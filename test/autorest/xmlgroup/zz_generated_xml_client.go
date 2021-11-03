@@ -13,6 +13,7 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -21,12 +22,19 @@ import (
 // XMLClient contains the methods for the XML group.
 // Don't use this type directly, use NewXMLClient() instead.
 type XMLClient struct {
-	con *Connection
+	pl runtime.Pipeline
 }
 
 // NewXMLClient creates a new instance of XMLClient with the specified values.
-func NewXMLClient(con *Connection) *XMLClient {
-	return &XMLClient{con: con}
+func NewXMLClient(options *azcore.ClientOptions) *XMLClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &XMLClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // GetACLs - Gets storage ACLs for a container.
@@ -36,7 +44,7 @@ func (client *XMLClient) GetACLs(ctx context.Context, options *XMLGetACLsOptions
 	if err != nil {
 		return XMLGetACLsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLGetACLsResponse{}, err
 	}
@@ -49,7 +57,7 @@ func (client *XMLClient) GetACLs(ctx context.Context, options *XMLGetACLsOptions
 // getACLsCreateRequest creates the GetACLs request.
 func (client *XMLClient) getACLsCreateRequest(ctx context.Context, options *XMLGetACLsOptions) (*policy.Request, error) {
 	urlPath := "/xml/mycontainer"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -89,7 +97,7 @@ func (client *XMLClient) GetBytes(ctx context.Context, options *XMLGetBytesOptio
 	if err != nil {
 		return XMLGetBytesResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLGetBytesResponse{}, err
 	}
@@ -102,7 +110,7 @@ func (client *XMLClient) GetBytes(ctx context.Context, options *XMLGetBytesOptio
 // getBytesCreateRequest creates the GetBytes request.
 func (client *XMLClient) getBytesCreateRequest(ctx context.Context, options *XMLGetBytesOptions) (*policy.Request, error) {
 	urlPath := "/xml/bytes"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -139,7 +147,7 @@ func (client *XMLClient) GetComplexTypeRefNoMeta(ctx context.Context, options *X
 	if err != nil {
 		return XMLGetComplexTypeRefNoMetaResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLGetComplexTypeRefNoMetaResponse{}, err
 	}
@@ -152,7 +160,7 @@ func (client *XMLClient) GetComplexTypeRefNoMeta(ctx context.Context, options *X
 // getComplexTypeRefNoMetaCreateRequest creates the GetComplexTypeRefNoMeta request.
 func (client *XMLClient) getComplexTypeRefNoMetaCreateRequest(ctx context.Context, options *XMLGetComplexTypeRefNoMetaOptions) (*policy.Request, error) {
 	urlPath := "/xml/complex-type-ref-no-meta"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -188,7 +196,7 @@ func (client *XMLClient) GetComplexTypeRefWithMeta(ctx context.Context, options 
 	if err != nil {
 		return XMLGetComplexTypeRefWithMetaResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLGetComplexTypeRefWithMetaResponse{}, err
 	}
@@ -201,7 +209,7 @@ func (client *XMLClient) GetComplexTypeRefWithMeta(ctx context.Context, options 
 // getComplexTypeRefWithMetaCreateRequest creates the GetComplexTypeRefWithMeta request.
 func (client *XMLClient) getComplexTypeRefWithMetaCreateRequest(ctx context.Context, options *XMLGetComplexTypeRefWithMetaOptions) (*policy.Request, error) {
 	urlPath := "/xml/complex-type-ref-with-meta"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -237,7 +245,7 @@ func (client *XMLClient) GetEmptyChildElement(ctx context.Context, options *XMLG
 	if err != nil {
 		return XMLGetEmptyChildElementResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLGetEmptyChildElementResponse{}, err
 	}
@@ -250,7 +258,7 @@ func (client *XMLClient) GetEmptyChildElement(ctx context.Context, options *XMLG
 // getEmptyChildElementCreateRequest creates the GetEmptyChildElement request.
 func (client *XMLClient) getEmptyChildElementCreateRequest(ctx context.Context, options *XMLGetEmptyChildElementOptions) (*policy.Request, error) {
 	urlPath := "/xml/empty-child-element"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -286,7 +294,7 @@ func (client *XMLClient) GetEmptyList(ctx context.Context, options *XMLGetEmptyL
 	if err != nil {
 		return XMLGetEmptyListResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLGetEmptyListResponse{}, err
 	}
@@ -299,7 +307,7 @@ func (client *XMLClient) GetEmptyList(ctx context.Context, options *XMLGetEmptyL
 // getEmptyListCreateRequest creates the GetEmptyList request.
 func (client *XMLClient) getEmptyListCreateRequest(ctx context.Context, options *XMLGetEmptyListOptions) (*policy.Request, error) {
 	urlPath := "/xml/empty-list"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -335,7 +343,7 @@ func (client *XMLClient) GetEmptyRootList(ctx context.Context, options *XMLGetEm
 	if err != nil {
 		return XMLGetEmptyRootListResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLGetEmptyRootListResponse{}, err
 	}
@@ -348,7 +356,7 @@ func (client *XMLClient) GetEmptyRootList(ctx context.Context, options *XMLGetEm
 // getEmptyRootListCreateRequest creates the GetEmptyRootList request.
 func (client *XMLClient) getEmptyRootListCreateRequest(ctx context.Context, options *XMLGetEmptyRootListOptions) (*policy.Request, error) {
 	urlPath := "/xml/empty-root-list"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -384,7 +392,7 @@ func (client *XMLClient) GetEmptyWrappedLists(ctx context.Context, options *XMLG
 	if err != nil {
 		return XMLGetEmptyWrappedListsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLGetEmptyWrappedListsResponse{}, err
 	}
@@ -397,7 +405,7 @@ func (client *XMLClient) GetEmptyWrappedLists(ctx context.Context, options *XMLG
 // getEmptyWrappedListsCreateRequest creates the GetEmptyWrappedLists request.
 func (client *XMLClient) getEmptyWrappedListsCreateRequest(ctx context.Context, options *XMLGetEmptyWrappedListsOptions) (*policy.Request, error) {
 	urlPath := "/xml/empty-wrapped-lists"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -433,7 +441,7 @@ func (client *XMLClient) GetHeaders(ctx context.Context, options *XMLGetHeadersO
 	if err != nil {
 		return XMLGetHeadersResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLGetHeadersResponse{}, err
 	}
@@ -446,7 +454,7 @@ func (client *XMLClient) GetHeaders(ctx context.Context, options *XMLGetHeadersO
 // getHeadersCreateRequest creates the GetHeaders request.
 func (client *XMLClient) getHeadersCreateRequest(ctx context.Context, options *XMLGetHeadersOptions) (*policy.Request, error) {
 	urlPath := "/xml/headers"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -481,7 +489,7 @@ func (client *XMLClient) GetRootList(ctx context.Context, options *XMLGetRootLis
 	if err != nil {
 		return XMLGetRootListResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLGetRootListResponse{}, err
 	}
@@ -494,7 +502,7 @@ func (client *XMLClient) GetRootList(ctx context.Context, options *XMLGetRootLis
 // getRootListCreateRequest creates the GetRootList request.
 func (client *XMLClient) getRootListCreateRequest(ctx context.Context, options *XMLGetRootListOptions) (*policy.Request, error) {
 	urlPath := "/xml/root-list"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -530,7 +538,7 @@ func (client *XMLClient) GetRootListSingleItem(ctx context.Context, options *XML
 	if err != nil {
 		return XMLGetRootListSingleItemResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLGetRootListSingleItemResponse{}, err
 	}
@@ -543,7 +551,7 @@ func (client *XMLClient) GetRootListSingleItem(ctx context.Context, options *XML
 // getRootListSingleItemCreateRequest creates the GetRootListSingleItem request.
 func (client *XMLClient) getRootListSingleItemCreateRequest(ctx context.Context, options *XMLGetRootListSingleItemOptions) (*policy.Request, error) {
 	urlPath := "/xml/root-list-single-item"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -579,7 +587,7 @@ func (client *XMLClient) GetServiceProperties(ctx context.Context, options *XMLG
 	if err != nil {
 		return XMLGetServicePropertiesResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLGetServicePropertiesResponse{}, err
 	}
@@ -592,7 +600,7 @@ func (client *XMLClient) GetServiceProperties(ctx context.Context, options *XMLG
 // getServicePropertiesCreateRequest creates the GetServiceProperties request.
 func (client *XMLClient) getServicePropertiesCreateRequest(ctx context.Context, options *XMLGetServicePropertiesOptions) (*policy.Request, error) {
 	urlPath := "/xml/"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -632,7 +640,7 @@ func (client *XMLClient) GetSimple(ctx context.Context, options *XMLGetSimpleOpt
 	if err != nil {
 		return XMLGetSimpleResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLGetSimpleResponse{}, err
 	}
@@ -645,7 +653,7 @@ func (client *XMLClient) GetSimple(ctx context.Context, options *XMLGetSimpleOpt
 // getSimpleCreateRequest creates the GetSimple request.
 func (client *XMLClient) getSimpleCreateRequest(ctx context.Context, options *XMLGetSimpleOptions) (*policy.Request, error) {
 	urlPath := "/xml/simple"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -682,7 +690,7 @@ func (client *XMLClient) GetURI(ctx context.Context, options *XMLGetURIOptions) 
 	if err != nil {
 		return XMLGetURIResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLGetURIResponse{}, err
 	}
@@ -695,7 +703,7 @@ func (client *XMLClient) GetURI(ctx context.Context, options *XMLGetURIOptions) 
 // getURICreateRequest creates the GetURI request.
 func (client *XMLClient) getURICreateRequest(ctx context.Context, options *XMLGetURIOptions) (*policy.Request, error) {
 	urlPath := "/xml/url"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -732,7 +740,7 @@ func (client *XMLClient) GetWrappedLists(ctx context.Context, options *XMLGetWra
 	if err != nil {
 		return XMLGetWrappedListsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLGetWrappedListsResponse{}, err
 	}
@@ -745,7 +753,7 @@ func (client *XMLClient) GetWrappedLists(ctx context.Context, options *XMLGetWra
 // getWrappedListsCreateRequest creates the GetWrappedLists request.
 func (client *XMLClient) getWrappedListsCreateRequest(ctx context.Context, options *XMLGetWrappedListsOptions) (*policy.Request, error) {
 	urlPath := "/xml/wrapped-lists"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -782,7 +790,7 @@ func (client *XMLClient) GetXMsText(ctx context.Context, options *XMLGetXMsTextO
 	if err != nil {
 		return XMLGetXMsTextResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLGetXMsTextResponse{}, err
 	}
@@ -795,7 +803,7 @@ func (client *XMLClient) GetXMsText(ctx context.Context, options *XMLGetXMsTextO
 // getXMsTextCreateRequest creates the GetXMsText request.
 func (client *XMLClient) getXMsTextCreateRequest(ctx context.Context, options *XMLGetXMsTextOptions) (*policy.Request, error) {
 	urlPath := "/xml/x-ms-text"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -831,7 +839,7 @@ func (client *XMLClient) JSONInput(ctx context.Context, properties JSONInput, op
 	if err != nil {
 		return XMLJSONInputResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLJSONInputResponse{}, err
 	}
@@ -844,7 +852,7 @@ func (client *XMLClient) JSONInput(ctx context.Context, properties JSONInput, op
 // jsonInputCreateRequest creates the JSONInput request.
 func (client *XMLClient) jsonInputCreateRequest(ctx context.Context, properties JSONInput, options *XMLJSONInputOptions) (*policy.Request, error) {
 	urlPath := "/xml/jsoninput"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -870,7 +878,7 @@ func (client *XMLClient) JSONOutput(ctx context.Context, options *XMLJSONOutputO
 	if err != nil {
 		return XMLJSONOutputResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLJSONOutputResponse{}, err
 	}
@@ -883,7 +891,7 @@ func (client *XMLClient) JSONOutput(ctx context.Context, options *XMLJSONOutputO
 // jsonOutputCreateRequest creates the JSONOutput request.
 func (client *XMLClient) jsonOutputCreateRequest(ctx context.Context, options *XMLJSONOutputOptions) (*policy.Request, error) {
 	urlPath := "/xml/jsonoutput"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -919,7 +927,7 @@ func (client *XMLClient) ListBlobs(ctx context.Context, options *XMLListBlobsOpt
 	if err != nil {
 		return XMLListBlobsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLListBlobsResponse{}, err
 	}
@@ -932,7 +940,7 @@ func (client *XMLClient) ListBlobs(ctx context.Context, options *XMLListBlobsOpt
 // listBlobsCreateRequest creates the ListBlobs request.
 func (client *XMLClient) listBlobsCreateRequest(ctx context.Context, options *XMLListBlobsOptions) (*policy.Request, error) {
 	urlPath := "/xml/mycontainer"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -972,7 +980,7 @@ func (client *XMLClient) ListContainers(ctx context.Context, options *XMLListCon
 	if err != nil {
 		return XMLListContainersResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLListContainersResponse{}, err
 	}
@@ -985,7 +993,7 @@ func (client *XMLClient) ListContainers(ctx context.Context, options *XMLListCon
 // listContainersCreateRequest creates the ListContainers request.
 func (client *XMLClient) listContainersCreateRequest(ctx context.Context, options *XMLListContainersOptions) (*policy.Request, error) {
 	urlPath := "/xml/"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1024,7 +1032,7 @@ func (client *XMLClient) PutACLs(ctx context.Context, properties []*SignedIdenti
 	if err != nil {
 		return XMLPutACLsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLPutACLsResponse{}, err
 	}
@@ -1037,7 +1045,7 @@ func (client *XMLClient) PutACLs(ctx context.Context, properties []*SignedIdenti
 // putACLsCreateRequest creates the PutACLs request.
 func (client *XMLClient) putACLsCreateRequest(ctx context.Context, properties []*SignedIdentifier, options *XMLPutACLsOptions) (*policy.Request, error) {
 	urlPath := "/xml/mycontainer"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1071,7 +1079,7 @@ func (client *XMLClient) PutBinary(ctx context.Context, slideshow ModelWithByteP
 	if err != nil {
 		return XMLPutBinaryResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLPutBinaryResponse{}, err
 	}
@@ -1084,7 +1092,7 @@ func (client *XMLClient) PutBinary(ctx context.Context, slideshow ModelWithByteP
 // putBinaryCreateRequest creates the PutBinary request.
 func (client *XMLClient) putBinaryCreateRequest(ctx context.Context, slideshow ModelWithByteProperty, options *XMLPutBinaryOptions) (*policy.Request, error) {
 	urlPath := "/xml/bytes"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1112,7 +1120,7 @@ func (client *XMLClient) PutComplexTypeRefNoMeta(ctx context.Context, model Root
 	if err != nil {
 		return XMLPutComplexTypeRefNoMetaResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLPutComplexTypeRefNoMetaResponse{}, err
 	}
@@ -1125,7 +1133,7 @@ func (client *XMLClient) PutComplexTypeRefNoMeta(ctx context.Context, model Root
 // putComplexTypeRefNoMetaCreateRequest creates the PutComplexTypeRefNoMeta request.
 func (client *XMLClient) putComplexTypeRefNoMetaCreateRequest(ctx context.Context, model RootWithRefAndNoMeta, options *XMLPutComplexTypeRefNoMetaOptions) (*policy.Request, error) {
 	urlPath := "/xml/complex-type-ref-no-meta"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1151,7 +1159,7 @@ func (client *XMLClient) PutComplexTypeRefWithMeta(ctx context.Context, model Ro
 	if err != nil {
 		return XMLPutComplexTypeRefWithMetaResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLPutComplexTypeRefWithMetaResponse{}, err
 	}
@@ -1164,7 +1172,7 @@ func (client *XMLClient) PutComplexTypeRefWithMeta(ctx context.Context, model Ro
 // putComplexTypeRefWithMetaCreateRequest creates the PutComplexTypeRefWithMeta request.
 func (client *XMLClient) putComplexTypeRefWithMetaCreateRequest(ctx context.Context, model RootWithRefAndMeta, options *XMLPutComplexTypeRefWithMetaOptions) (*policy.Request, error) {
 	urlPath := "/xml/complex-type-ref-with-meta"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1190,7 +1198,7 @@ func (client *XMLClient) PutEmptyChildElement(ctx context.Context, banana Banana
 	if err != nil {
 		return XMLPutEmptyChildElementResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLPutEmptyChildElementResponse{}, err
 	}
@@ -1203,7 +1211,7 @@ func (client *XMLClient) PutEmptyChildElement(ctx context.Context, banana Banana
 // putEmptyChildElementCreateRequest creates the PutEmptyChildElement request.
 func (client *XMLClient) putEmptyChildElementCreateRequest(ctx context.Context, banana Banana, options *XMLPutEmptyChildElementOptions) (*policy.Request, error) {
 	urlPath := "/xml/empty-child-element"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1229,7 +1237,7 @@ func (client *XMLClient) PutEmptyList(ctx context.Context, slideshow Slideshow, 
 	if err != nil {
 		return XMLPutEmptyListResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLPutEmptyListResponse{}, err
 	}
@@ -1242,7 +1250,7 @@ func (client *XMLClient) PutEmptyList(ctx context.Context, slideshow Slideshow, 
 // putEmptyListCreateRequest creates the PutEmptyList request.
 func (client *XMLClient) putEmptyListCreateRequest(ctx context.Context, slideshow Slideshow, options *XMLPutEmptyListOptions) (*policy.Request, error) {
 	urlPath := "/xml/empty-list"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1268,7 +1276,7 @@ func (client *XMLClient) PutEmptyRootList(ctx context.Context, bananas []*Banana
 	if err != nil {
 		return XMLPutEmptyRootListResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLPutEmptyRootListResponse{}, err
 	}
@@ -1281,7 +1289,7 @@ func (client *XMLClient) PutEmptyRootList(ctx context.Context, bananas []*Banana
 // putEmptyRootListCreateRequest creates the PutEmptyRootList request.
 func (client *XMLClient) putEmptyRootListCreateRequest(ctx context.Context, bananas []*Banana, options *XMLPutEmptyRootListOptions) (*policy.Request, error) {
 	urlPath := "/xml/empty-root-list"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1311,7 +1319,7 @@ func (client *XMLClient) PutEmptyWrappedLists(ctx context.Context, appleBarrel A
 	if err != nil {
 		return XMLPutEmptyWrappedListsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLPutEmptyWrappedListsResponse{}, err
 	}
@@ -1324,7 +1332,7 @@ func (client *XMLClient) PutEmptyWrappedLists(ctx context.Context, appleBarrel A
 // putEmptyWrappedListsCreateRequest creates the PutEmptyWrappedLists request.
 func (client *XMLClient) putEmptyWrappedListsCreateRequest(ctx context.Context, appleBarrel AppleBarrel, options *XMLPutEmptyWrappedListsOptions) (*policy.Request, error) {
 	urlPath := "/xml/empty-wrapped-lists"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1350,7 +1358,7 @@ func (client *XMLClient) PutRootList(ctx context.Context, bananas []*Banana, opt
 	if err != nil {
 		return XMLPutRootListResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLPutRootListResponse{}, err
 	}
@@ -1363,7 +1371,7 @@ func (client *XMLClient) PutRootList(ctx context.Context, bananas []*Banana, opt
 // putRootListCreateRequest creates the PutRootList request.
 func (client *XMLClient) putRootListCreateRequest(ctx context.Context, bananas []*Banana, options *XMLPutRootListOptions) (*policy.Request, error) {
 	urlPath := "/xml/root-list"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1393,7 +1401,7 @@ func (client *XMLClient) PutRootListSingleItem(ctx context.Context, bananas []*B
 	if err != nil {
 		return XMLPutRootListSingleItemResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLPutRootListSingleItemResponse{}, err
 	}
@@ -1406,7 +1414,7 @@ func (client *XMLClient) PutRootListSingleItem(ctx context.Context, bananas []*B
 // putRootListSingleItemCreateRequest creates the PutRootListSingleItem request.
 func (client *XMLClient) putRootListSingleItemCreateRequest(ctx context.Context, bananas []*Banana, options *XMLPutRootListSingleItemOptions) (*policy.Request, error) {
 	urlPath := "/xml/root-list-single-item"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1436,7 +1444,7 @@ func (client *XMLClient) PutServiceProperties(ctx context.Context, properties St
 	if err != nil {
 		return XMLPutServicePropertiesResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLPutServicePropertiesResponse{}, err
 	}
@@ -1449,7 +1457,7 @@ func (client *XMLClient) PutServiceProperties(ctx context.Context, properties St
 // putServicePropertiesCreateRequest creates the PutServiceProperties request.
 func (client *XMLClient) putServicePropertiesCreateRequest(ctx context.Context, properties StorageServiceProperties, options *XMLPutServicePropertiesOptions) (*policy.Request, error) {
 	urlPath := "/xml/"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1479,7 +1487,7 @@ func (client *XMLClient) PutSimple(ctx context.Context, slideshow Slideshow, opt
 	if err != nil {
 		return XMLPutSimpleResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLPutSimpleResponse{}, err
 	}
@@ -1492,7 +1500,7 @@ func (client *XMLClient) PutSimple(ctx context.Context, slideshow Slideshow, opt
 // putSimpleCreateRequest creates the PutSimple request.
 func (client *XMLClient) putSimpleCreateRequest(ctx context.Context, slideshow Slideshow, options *XMLPutSimpleOptions) (*policy.Request, error) {
 	urlPath := "/xml/simple"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1520,7 +1528,7 @@ func (client *XMLClient) PutURI(ctx context.Context, model ModelWithURLProperty,
 	if err != nil {
 		return XMLPutURIResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLPutURIResponse{}, err
 	}
@@ -1533,7 +1541,7 @@ func (client *XMLClient) PutURI(ctx context.Context, model ModelWithURLProperty,
 // putURICreateRequest creates the PutURI request.
 func (client *XMLClient) putURICreateRequest(ctx context.Context, model ModelWithURLProperty, options *XMLPutURIOptions) (*policy.Request, error) {
 	urlPath := "/xml/url"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1561,7 +1569,7 @@ func (client *XMLClient) PutWrappedLists(ctx context.Context, wrappedLists Apple
 	if err != nil {
 		return XMLPutWrappedListsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return XMLPutWrappedListsResponse{}, err
 	}
@@ -1574,7 +1582,7 @@ func (client *XMLClient) PutWrappedLists(ctx context.Context, wrappedLists Apple
 // putWrappedListsCreateRequest creates the PutWrappedLists request.
 func (client *XMLClient) putWrappedListsCreateRequest(ctx context.Context, wrappedLists AppleBarrel, options *XMLPutWrappedListsOptions) (*policy.Request, error) {
 	urlPath := "/xml/wrapped-lists"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

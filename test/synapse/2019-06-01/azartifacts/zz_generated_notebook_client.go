@@ -20,7 +20,17 @@ import (
 )
 
 type notebookClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newNotebookClient creates a new instance of notebookClient with the specified values.
+func newNotebookClient(endpoint string, pl runtime.Pipeline) *notebookClient {
+	client := &notebookClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // BeginCreateOrUpdateNotebook - Creates or updates a Note Book.
@@ -33,7 +43,7 @@ func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, n
 	result := NotebookCreateOrUpdateNotebookPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("notebookClient.CreateOrUpdateNotebook", resp, client.con.Pipeline(), client.createOrUpdateNotebookHandleError)
+	pt, err := runtime.NewPoller("notebookClient.CreateOrUpdateNotebook", resp, client.pl, client.createOrUpdateNotebookHandleError)
 	if err != nil {
 		return NotebookCreateOrUpdateNotebookPollerResponse{}, err
 	}
@@ -50,7 +60,7 @@ func (client *notebookClient) createOrUpdateNotebook(ctx context.Context, notebo
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +77,7 @@ func (client *notebookClient) createOrUpdateNotebookCreateRequest(ctx context.Co
 		return nil, errors.New("parameter notebookName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +114,7 @@ func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookN
 	result := NotebookDeleteNotebookPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("notebookClient.DeleteNotebook", resp, client.con.Pipeline(), client.deleteNotebookHandleError)
+	pt, err := runtime.NewPoller("notebookClient.DeleteNotebook", resp, client.pl, client.deleteNotebookHandleError)
 	if err != nil {
 		return NotebookDeleteNotebookPollerResponse{}, err
 	}
@@ -121,7 +131,7 @@ func (client *notebookClient) deleteNotebook(ctx context.Context, notebookName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +148,7 @@ func (client *notebookClient) deleteNotebookCreateRequest(ctx context.Context, n
 		return nil, errors.New("parameter notebookName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +179,7 @@ func (client *notebookClient) GetNotebook(ctx context.Context, notebookName stri
 	if err != nil {
 		return NotebookGetNotebookResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return NotebookGetNotebookResponse{}, err
 	}
@@ -186,7 +196,7 @@ func (client *notebookClient) getNotebookCreateRequest(ctx context.Context, note
 		return nil, errors.New("parameter notebookName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -239,7 +249,7 @@ func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGet
 // getNotebookSummaryByWorkSpaceCreateRequest creates the GetNotebookSummaryByWorkSpace request.
 func (client *notebookClient) getNotebookSummaryByWorkSpaceCreateRequest(ctx context.Context, options *NotebookGetNotebookSummaryByWorkSpaceOptions) (*policy.Request, error) {
 	urlPath := "/notebooks/summary"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -289,7 +299,7 @@ func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebo
 // getNotebooksByWorkspaceCreateRequest creates the GetNotebooksByWorkspace request.
 func (client *notebookClient) getNotebooksByWorkspaceCreateRequest(ctx context.Context, options *NotebookGetNotebooksByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/notebooks"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -332,7 +342,7 @@ func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookN
 	result := NotebookRenameNotebookPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("notebookClient.RenameNotebook", resp, client.con.Pipeline(), client.renameNotebookHandleError)
+	pt, err := runtime.NewPoller("notebookClient.RenameNotebook", resp, client.pl, client.renameNotebookHandleError)
 	if err != nil {
 		return NotebookRenameNotebookPollerResponse{}, err
 	}
@@ -349,7 +359,7 @@ func (client *notebookClient) renameNotebook(ctx context.Context, notebookName s
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -366,7 +376,7 @@ func (client *notebookClient) renameNotebookCreateRequest(ctx context.Context, n
 		return nil, errors.New("parameter notebookName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{notebookName}", url.PathEscape(notebookName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

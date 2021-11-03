@@ -25,9 +25,9 @@ import (
 // GalleryImagesClient contains the methods for the GalleryImages group.
 // Don't use this type directly, use NewGalleryImagesClient() instead.
 type GalleryImagesClient struct {
-	ep             string
-	pl             runtime.Pipeline
+	host           string
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewGalleryImagesClient creates a new instance of GalleryImagesClient with the specified values.
@@ -39,7 +39,12 @@ func NewGalleryImagesClient(subscriptionID string, credential azcore.TokenCreden
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &GalleryImagesClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &GalleryImagesClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Create or update a gallery Image Definition.
@@ -98,7 +103,7 @@ func (client *GalleryImagesClient) createOrUpdateCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter galleryImageName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{galleryImageName}", url.PathEscape(galleryImageName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -178,7 +183,7 @@ func (client *GalleryImagesClient) deleteCreateRequest(ctx context.Context, reso
 		return nil, errors.New("parameter galleryImageName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{galleryImageName}", url.PathEscape(galleryImageName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -238,7 +243,7 @@ func (client *GalleryImagesClient) getCreateRequest(ctx context.Context, resourc
 		return nil, errors.New("parameter galleryImageName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{galleryImageName}", url.PathEscape(galleryImageName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -300,7 +305,7 @@ func (client *GalleryImagesClient) listByGalleryCreateRequest(ctx context.Contex
 		return nil, errors.New("parameter galleryName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{galleryName}", url.PathEscape(galleryName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -389,7 +394,7 @@ func (client *GalleryImagesClient) updateCreateRequest(ctx context.Context, reso
 		return nil, errors.New("parameter galleryImageName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{galleryImageName}", url.PathEscape(galleryImageName))
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

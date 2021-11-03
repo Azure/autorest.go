@@ -25,9 +25,9 @@ import (
 // ResourceNavigationLinksClient contains the methods for the ResourceNavigationLinks group.
 // Don't use this type directly, use NewResourceNavigationLinksClient() instead.
 type ResourceNavigationLinksClient struct {
-	ep             string
-	pl             runtime.Pipeline
+	host           string
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewResourceNavigationLinksClient creates a new instance of ResourceNavigationLinksClient with the specified values.
@@ -39,7 +39,12 @@ func NewResourceNavigationLinksClient(subscriptionID string, credential azcore.T
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ResourceNavigationLinksClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ResourceNavigationLinksClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Gets a list of resource navigation links for a subnet.
@@ -78,7 +83,7 @@ func (client *ResourceNavigationLinksClient) listCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

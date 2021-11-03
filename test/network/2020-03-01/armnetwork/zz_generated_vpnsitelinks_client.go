@@ -25,9 +25,9 @@ import (
 // VPNSiteLinksClient contains the methods for the VPNSiteLinks group.
 // Don't use this type directly, use NewVPNSiteLinksClient() instead.
 type VPNSiteLinksClient struct {
-	ep             string
-	pl             runtime.Pipeline
+	host           string
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewVPNSiteLinksClient creates a new instance of VPNSiteLinksClient with the specified values.
@@ -39,7 +39,12 @@ func NewVPNSiteLinksClient(subscriptionID string, credential azcore.TokenCredent
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &VPNSiteLinksClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &VPNSiteLinksClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // Get - Retrieves the details of a VPN site link.
@@ -78,7 +83,7 @@ func (client *VPNSiteLinksClient) getCreateRequest(ctx context.Context, resource
 		return nil, errors.New("parameter vpnSiteLinkName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{vpnSiteLinkName}", url.PathEscape(vpnSiteLinkName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -140,7 +145,7 @@ func (client *VPNSiteLinksClient) listByVPNSiteCreateRequest(ctx context.Context
 		return nil, errors.New("parameter vpnSiteName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{vpnSiteName}", url.PathEscape(vpnSiteName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

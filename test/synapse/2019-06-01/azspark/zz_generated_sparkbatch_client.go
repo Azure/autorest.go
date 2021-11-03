@@ -20,7 +20,25 @@ import (
 )
 
 type sparkBatchClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newSparkBatchClient creates a new instance of sparkBatchClient with the specified values.
+func newSparkBatchClient(endpoint string, livyAPIVersion *string, sparkPoolName string, pl runtime.Pipeline) *sparkBatchClient {
+	hostURL := "{endpoint}/livyApi/versions/{livyApiVersion}/sparkPools/{sparkPoolName}"
+	hostURL = strings.ReplaceAll(hostURL, "{endpoint}", endpoint)
+	if livyAPIVersion == nil {
+		defaultValue := "2019-11-01-preview"
+		livyAPIVersion = &defaultValue
+	}
+	hostURL = strings.ReplaceAll(hostURL, "{livyApiVersion}", *livyAPIVersion)
+	hostURL = strings.ReplaceAll(hostURL, "{sparkPoolName}", sparkPoolName)
+	client := &sparkBatchClient{
+		endpoint: hostURL,
+		pl:       pl,
+	}
+	return client
 }
 
 // CancelSparkBatchJob - Cancels a running spark batch job.
@@ -30,7 +48,7 @@ func (client *sparkBatchClient) CancelSparkBatchJob(ctx context.Context, batchID
 	if err != nil {
 		return SparkBatchCancelSparkBatchJobResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SparkBatchCancelSparkBatchJobResponse{}, err
 	}
@@ -44,7 +62,7 @@ func (client *sparkBatchClient) CancelSparkBatchJob(ctx context.Context, batchID
 func (client *sparkBatchClient) cancelSparkBatchJobCreateRequest(ctx context.Context, batchID int32, options *SparkBatchCancelSparkBatchJobOptions) (*policy.Request, error) {
 	urlPath := "/batches/{batchId}"
 	urlPath = strings.ReplaceAll(urlPath, "{batchId}", url.PathEscape(strconv.FormatInt(int64(batchID), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +88,7 @@ func (client *sparkBatchClient) CreateSparkBatchJob(ctx context.Context, sparkBa
 	if err != nil {
 		return SparkBatchCreateSparkBatchJobResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SparkBatchCreateSparkBatchJobResponse{}, err
 	}
@@ -83,7 +101,7 @@ func (client *sparkBatchClient) CreateSparkBatchJob(ctx context.Context, sparkBa
 // createSparkBatchJobCreateRequest creates the CreateSparkBatchJob request.
 func (client *sparkBatchClient) createSparkBatchJobCreateRequest(ctx context.Context, sparkBatchJobOptions SparkBatchJobOptions, options *SparkBatchCreateSparkBatchJobOptions) (*policy.Request, error) {
 	urlPath := "/batches"
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +142,7 @@ func (client *sparkBatchClient) GetSparkBatchJob(ctx context.Context, batchID in
 	if err != nil {
 		return SparkBatchGetSparkBatchJobResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SparkBatchGetSparkBatchJobResponse{}, err
 	}
@@ -138,7 +156,7 @@ func (client *sparkBatchClient) GetSparkBatchJob(ctx context.Context, batchID in
 func (client *sparkBatchClient) getSparkBatchJobCreateRequest(ctx context.Context, batchID int32, options *SparkBatchGetSparkBatchJobOptions) (*policy.Request, error) {
 	urlPath := "/batches/{batchId}"
 	urlPath = strings.ReplaceAll(urlPath, "{batchId}", url.PathEscape(strconv.FormatInt(int64(batchID), 10)))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -179,7 +197,7 @@ func (client *sparkBatchClient) GetSparkBatchJobs(ctx context.Context, options *
 	if err != nil {
 		return SparkBatchGetSparkBatchJobsResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SparkBatchGetSparkBatchJobsResponse{}, err
 	}
@@ -192,7 +210,7 @@ func (client *sparkBatchClient) GetSparkBatchJobs(ctx context.Context, options *
 // getSparkBatchJobsCreateRequest creates the GetSparkBatchJobs request.
 func (client *sparkBatchClient) getSparkBatchJobsCreateRequest(ctx context.Context, options *SparkBatchGetSparkBatchJobsOptions) (*policy.Request, error) {
 	urlPath := "/batches"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

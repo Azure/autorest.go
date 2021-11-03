@@ -24,9 +24,9 @@ import (
 // DisksClient contains the methods for the Disks group.
 // Don't use this type directly, use NewDisksClient() instead.
 type DisksClient struct {
-	ep             string
-	pl             runtime.Pipeline
+	host           string
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewDisksClient creates a new instance of DisksClient with the specified values.
@@ -38,7 +38,12 @@ func NewDisksClient(subscriptionID string, credential azcore.TokenCredential, op
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &DisksClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &DisksClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a disk.
@@ -93,7 +98,7 @@ func (client *DisksClient) createOrUpdateCreateRequest(ctx context.Context, reso
 		return nil, errors.New("parameter diskName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diskName}", url.PathEscape(diskName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +173,7 @@ func (client *DisksClient) deleteCreateRequest(ctx context.Context, resourceGrou
 		return nil, errors.New("parameter diskName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diskName}", url.PathEscape(diskName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -222,7 +227,7 @@ func (client *DisksClient) getCreateRequest(ctx context.Context, resourceGroupNa
 		return nil, errors.New("parameter diskName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diskName}", url.PathEscape(diskName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -306,7 +311,7 @@ func (client *DisksClient) grantAccessCreateRequest(ctx context.Context, resourc
 		return nil, errors.New("parameter diskName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diskName}", url.PathEscape(diskName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -350,7 +355,7 @@ func (client *DisksClient) listCreateRequest(ctx context.Context, options *Disks
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -407,7 +412,7 @@ func (client *DisksClient) listByResourceGroupCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -491,7 +496,7 @@ func (client *DisksClient) revokeAccessCreateRequest(ctx context.Context, resour
 		return nil, errors.New("parameter diskName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diskName}", url.PathEscape(diskName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -565,7 +570,7 @@ func (client *DisksClient) updateCreateRequest(ctx context.Context, resourceGrou
 		return nil, errors.New("parameter diskName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{diskName}", url.PathEscape(diskName))
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

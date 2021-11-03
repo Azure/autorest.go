@@ -25,8 +25,8 @@ import (
 // BalancesClient contains the methods for the Balances group.
 // Don't use this type directly, use NewBalancesClient() instead.
 type BalancesClient struct {
-	ep string
-	pl runtime.Pipeline
+	host string
+	pl   runtime.Pipeline
 }
 
 // NewBalancesClient creates a new instance of BalancesClient with the specified values.
@@ -38,7 +38,11 @@ func NewBalancesClient(credential azcore.TokenCredential, options *arm.ClientOpt
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &BalancesClient{ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &BalancesClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // GetByBillingAccount - Gets the balances for a scope by billingAccountId. Balances are available via this API only for May 1, 2014 or later.
@@ -65,7 +69,7 @@ func (client *BalancesClient) getByBillingAccountCreateRequest(ctx context.Conte
 		return nil, errors.New("parameter billingAccountID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{billingAccountId}", url.PathEscape(billingAccountID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -127,7 +131,7 @@ func (client *BalancesClient) getForBillingPeriodByBillingAccountCreateRequest(c
 		return nil, errors.New("parameter billingPeriodName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{billingPeriodName}", url.PathEscape(billingPeriodName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

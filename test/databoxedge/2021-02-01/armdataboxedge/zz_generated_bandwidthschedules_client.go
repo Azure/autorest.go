@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -23,13 +24,21 @@ import (
 // BandwidthSchedulesClient contains the methods for the BandwidthSchedules group.
 // Don't use this type directly, use NewBandwidthSchedulesClient() instead.
 type BandwidthSchedulesClient struct {
-	con            *connection
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewBandwidthSchedulesClient creates a new instance of BandwidthSchedulesClient with the specified values.
-func NewBandwidthSchedulesClient(con *connection, subscriptionID string) *BandwidthSchedulesClient {
-	return &BandwidthSchedulesClient{con: con, subscriptionID: subscriptionID}
+func NewBandwidthSchedulesClient(subscriptionID string, options *azcore.ClientOptions) *BandwidthSchedulesClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &BandwidthSchedulesClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a bandwidth schedule.
@@ -42,7 +51,7 @@ func (client *BandwidthSchedulesClient) BeginCreateOrUpdate(ctx context.Context,
 	result := BandwidthSchedulesCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("BandwidthSchedulesClient.CreateOrUpdate", "", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("BandwidthSchedulesClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
 		return BandwidthSchedulesCreateOrUpdatePollerResponse{}, err
 	}
@@ -59,7 +68,7 @@ func (client *BandwidthSchedulesClient) createOrUpdate(ctx context.Context, devi
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +97,7 @@ func (client *BandwidthSchedulesClient) createOrUpdateCreateRequest(ctx context.
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +131,7 @@ func (client *BandwidthSchedulesClient) BeginDelete(ctx context.Context, deviceN
 	result := BandwidthSchedulesDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("BandwidthSchedulesClient.Delete", "", resp, client.con.Pipeline(), client.deleteHandleError)
+	pt, err := armruntime.NewPoller("BandwidthSchedulesClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
 		return BandwidthSchedulesDeletePollerResponse{}, err
 	}
@@ -139,7 +148,7 @@ func (client *BandwidthSchedulesClient) deleteOperation(ctx context.Context, dev
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +177,7 @@ func (client *BandwidthSchedulesClient) deleteCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -199,7 +208,7 @@ func (client *BandwidthSchedulesClient) Get(ctx context.Context, deviceName stri
 	if err != nil {
 		return BandwidthSchedulesGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return BandwidthSchedulesGetResponse{}, err
 	}
@@ -228,7 +237,7 @@ func (client *BandwidthSchedulesClient) getCreateRequest(ctx context.Context, de
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -290,7 +299,7 @@ func (client *BandwidthSchedulesClient) listByDataBoxEdgeDeviceCreateRequest(ctx
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -15,7 +15,7 @@ import (
 )
 
 func newIntClient() *IntClient {
-	return NewIntClient(NewDefaultConnection(nil))
+	return NewIntClient(nil)
 }
 
 func TestIntGetInvalid(t *testing.T) {

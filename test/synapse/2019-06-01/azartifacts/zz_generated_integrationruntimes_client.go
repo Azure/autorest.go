@@ -20,7 +20,17 @@ import (
 )
 
 type integrationRuntimesClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newIntegrationRuntimesClient creates a new instance of integrationRuntimesClient with the specified values.
+func newIntegrationRuntimesClient(endpoint string, pl runtime.Pipeline) *integrationRuntimesClient {
+	client := &integrationRuntimesClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // Get - Get Integration Runtime
@@ -30,7 +40,7 @@ func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRun
 	if err != nil {
 		return IntegrationRuntimesGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntegrationRuntimesGetResponse{}, err
 	}
@@ -47,7 +57,7 @@ func (client *integrationRuntimesClient) getCreateRequest(ctx context.Context, i
 		return nil, errors.New("parameter integrationRuntimeName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{integrationRuntimeName}", url.PathEscape(integrationRuntimeName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +97,7 @@ func (client *integrationRuntimesClient) List(ctx context.Context, options *Inte
 	if err != nil {
 		return IntegrationRuntimesListResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return IntegrationRuntimesListResponse{}, err
 	}
@@ -100,7 +110,7 @@ func (client *integrationRuntimesClient) List(ctx context.Context, options *Inte
 // listCreateRequest creates the List request.
 func (client *integrationRuntimesClient) listCreateRequest(ctx context.Context, options *IntegrationRuntimesListOptions) (*policy.Request, error) {
 	urlPath := "/integrationRuntimes"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -20,8 +20,7 @@ import (
 func newPetClient() *PetClient {
 	options := azcore.ClientOptions{}
 	options.Retry.MaxRetryDelay = 20 * time.Millisecond
-	client := NewConnection("http://localhost:3000", &options)
-	return NewPetClient(client)
+	return NewPetClient(&options)
 }
 
 // DoSomething - Asks pet to do something

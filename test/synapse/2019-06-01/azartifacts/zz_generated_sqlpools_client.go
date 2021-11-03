@@ -20,7 +20,17 @@ import (
 )
 
 type sqlPoolsClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newSQLPoolsClient creates a new instance of sqlPoolsClient with the specified values.
+func newSQLPoolsClient(endpoint string, pl runtime.Pipeline) *sqlPoolsClient {
+	client := &sqlPoolsClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // Get - Get Sql Pool
@@ -30,7 +40,7 @@ func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, optio
 	if err != nil {
 		return SQLPoolsGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SQLPoolsGetResponse{}, err
 	}
@@ -47,7 +57,7 @@ func (client *sqlPoolsClient) getCreateRequest(ctx context.Context, sqlPoolName 
 		return nil, errors.New("parameter sqlPoolName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{sqlPoolName}", url.PathEscape(sqlPoolName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +97,7 @@ func (client *sqlPoolsClient) List(ctx context.Context, options *SQLPoolsListOpt
 	if err != nil {
 		return SQLPoolsListResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return SQLPoolsListResponse{}, err
 	}
@@ -100,7 +110,7 @@ func (client *sqlPoolsClient) List(ctx context.Context, options *SQLPoolsListOpt
 // listCreateRequest creates the List request.
 func (client *sqlPoolsClient) listCreateRequest(ctx context.Context, options *SQLPoolsListOptions) (*policy.Request, error) {
 	urlPath := "/sqlPools"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}

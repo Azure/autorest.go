@@ -23,8 +23,8 @@ import (
 // EventsClient contains the methods for the Events group.
 // Don't use this type directly, use NewEventsClient() instead.
 type EventsClient struct {
-	ep string
-	pl runtime.Pipeline
+	host string
+	pl   runtime.Pipeline
 }
 
 // NewEventsClient creates a new instance of EventsClient with the specified values.
@@ -36,7 +36,11 @@ func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptio
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &EventsClient{ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &EventsClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Lists the events by billingAccountId and billingProfileId for given start and end date.
@@ -57,7 +61,7 @@ func (client *EventsClient) List(startDate string, endDate string, scope string,
 func (client *EventsClient) listCreateRequest(ctx context.Context, startDate string, endDate string, scope string, options *EventsListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/events"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

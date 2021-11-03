@@ -24,8 +24,8 @@ import (
 // UsageDetailsClient contains the methods for the UsageDetails group.
 // Don't use this type directly, use NewUsageDetailsClient() instead.
 type UsageDetailsClient struct {
-	ep string
-	pl runtime.Pipeline
+	host string
+	pl   runtime.Pipeline
 }
 
 // NewUsageDetailsClient creates a new instance of UsageDetailsClient with the specified values.
@@ -37,7 +37,11 @@ func NewUsageDetailsClient(credential azcore.TokenCredential, options *arm.Clien
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &UsageDetailsClient{ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &UsageDetailsClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Lists the usage details for the defined scope. Usage details are available via this API only for May 1, 2014 or later. For more information on
@@ -60,7 +64,7 @@ func (client *UsageDetailsClient) List(scope string, options *UsageDetailsListOp
 func (client *UsageDetailsClient) listCreateRequest(ctx context.Context, scope string, options *UsageDetailsListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/usageDetails"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -12,6 +12,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -23,13 +24,21 @@ import (
 // OrdersClient contains the methods for the Orders group.
 // Don't use this type directly, use NewOrdersClient() instead.
 type OrdersClient struct {
-	con            *connection
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewOrdersClient creates a new instance of OrdersClient with the specified values.
-func NewOrdersClient(con *connection, subscriptionID string) *OrdersClient {
-	return &OrdersClient{con: con, subscriptionID: subscriptionID}
+func NewOrdersClient(subscriptionID string, options *azcore.ClientOptions) *OrdersClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &OrdersClient{
+		subscriptionID: subscriptionID,
+		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates an order.
@@ -42,7 +51,7 @@ func (client *OrdersClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 	result := OrdersCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("OrdersClient.CreateOrUpdate", "", resp, client.con.Pipeline(), client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("OrdersClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
 		return OrdersCreateOrUpdatePollerResponse{}, err
 	}
@@ -59,7 +68,7 @@ func (client *OrdersClient) createOrUpdate(ctx context.Context, deviceName strin
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +93,7 @@ func (client *OrdersClient) createOrUpdateCreateRequest(ctx context.Context, dev
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +127,7 @@ func (client *OrdersClient) BeginDelete(ctx context.Context, deviceName string, 
 	result := OrdersDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("OrdersClient.Delete", "", resp, client.con.Pipeline(), client.deleteHandleError)
+	pt, err := armruntime.NewPoller("OrdersClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
 		return OrdersDeletePollerResponse{}, err
 	}
@@ -135,7 +144,7 @@ func (client *OrdersClient) deleteOperation(ctx context.Context, deviceName stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +169,7 @@ func (client *OrdersClient) deleteCreateRequest(ctx context.Context, deviceName 
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -191,7 +200,7 @@ func (client *OrdersClient) Get(ctx context.Context, deviceName string, resource
 	if err != nil {
 		return OrdersGetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return OrdersGetResponse{}, err
 	}
@@ -216,7 +225,7 @@ func (client *OrdersClient) getCreateRequest(ctx context.Context, deviceName str
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -278,7 +287,7 @@ func (client *OrdersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Con
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -318,7 +327,7 @@ func (client *OrdersClient) ListDCAccessCode(ctx context.Context, deviceName str
 	if err != nil {
 		return OrdersListDCAccessCodeResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return OrdersListDCAccessCodeResponse{}, err
 	}
@@ -343,7 +352,7 @@ func (client *OrdersClient) listDCAccessCodeCreateRequest(ctx context.Context, d
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

@@ -17,6 +17,9 @@ export async function generateConstants(session: Session<CodeModel>, version: st
     return '';
   }
   let text = await contentPreamble(session);
+  if (session.model.language.go!.host) {
+    text += `const host = "${session.model.language.go!.host}"\n\n`;
+  }
   text += `const (\n`;
   text += `\tmodule = "${session.model.language.go!.packageName}"\n`;
   text += `\tversion = "v${version}"\n`;

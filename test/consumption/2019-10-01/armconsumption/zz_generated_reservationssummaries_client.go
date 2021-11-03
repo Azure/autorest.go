@@ -25,8 +25,8 @@ import (
 // ReservationsSummariesClient contains the methods for the ReservationsSummaries group.
 // Don't use this type directly, use NewReservationsSummariesClient() instead.
 type ReservationsSummariesClient struct {
-	ep string
-	pl runtime.Pipeline
+	host string
+	pl   runtime.Pipeline
 }
 
 // NewReservationsSummariesClient creates a new instance of ReservationsSummariesClient with the specified values.
@@ -38,7 +38,11 @@ func NewReservationsSummariesClient(credential azcore.TokenCredential, options *
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &ReservationsSummariesClient{ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &ReservationsSummariesClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Lists the reservations summaries for the defined scope daily or monthly grain.
@@ -59,7 +63,7 @@ func (client *ReservationsSummariesClient) List(scope string, grain Datagrain, o
 func (client *ReservationsSummariesClient) listCreateRequest(ctx context.Context, scope string, grain Datagrain, options *ReservationsSummariesListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/reservationSummaries"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +133,7 @@ func (client *ReservationsSummariesClient) listByReservationOrderCreateRequest(c
 		return nil, errors.New("parameter reservationOrderID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{reservationOrderId}", url.PathEscape(reservationOrderID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -191,7 +195,7 @@ func (client *ReservationsSummariesClient) listByReservationOrderAndReservationC
 		return nil, errors.New("parameter reservationID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{reservationId}", url.PathEscape(reservationID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

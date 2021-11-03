@@ -22,8 +22,8 @@ import (
 // OperationsClient contains the methods for the Operations group.
 // Don't use this type directly, use NewOperationsClient() instead.
 type OperationsClient struct {
-	ep string
-	pl runtime.Pipeline
+	host string
+	pl   runtime.Pipeline
 }
 
 // NewOperationsClient creates a new instance of OperationsClient with the specified values.
@@ -35,7 +35,11 @@ func NewOperationsClient(credential azcore.TokenCredential, options *arm.ClientO
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &OperationsClient{ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &OperationsClient{
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - Lists all of the available Network Rest API operations.
@@ -55,7 +59,7 @@ func (client *OperationsClient) List(options *OperationsListOptions) *Operations
 // listCreateRequest creates the List request.
 func (client *OperationsClient) listCreateRequest(ctx context.Context, options *OperationsListOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Network/operations"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

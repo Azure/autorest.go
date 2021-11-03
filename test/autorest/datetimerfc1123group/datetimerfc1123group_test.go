@@ -13,7 +13,7 @@ import (
 )
 
 func newDatetimerfc1123Client() *Datetimerfc1123Client {
-	return NewDatetimerfc1123Client(NewDefaultConnection(nil))
+	return NewDatetimerfc1123Client(nil)
 }
 
 func TestGetInvalid(t *testing.T) {

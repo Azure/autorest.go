@@ -11,6 +11,7 @@ package armdataboxedge
 import (
 	"context"
 	"fmt"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -19,12 +20,19 @@ import (
 // OperationsClient contains the methods for the Operations group.
 // Don't use this type directly, use NewOperationsClient() instead.
 type OperationsClient struct {
-	con *connection
+	pl runtime.Pipeline
 }
 
 // NewOperationsClient creates a new instance of OperationsClient with the specified values.
-func NewOperationsClient(con *connection) *OperationsClient {
-	return &OperationsClient{con: con}
+func NewOperationsClient(options *azcore.ClientOptions) *OperationsClient {
+	cp := azcore.ClientOptions{}
+	if options != nil {
+		cp = *options
+	}
+	client := &OperationsClient{
+		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+	}
+	return client
 }
 
 // List - List all the supported operations.
@@ -44,7 +52,7 @@ func (client *OperationsClient) List(options *OperationsListOptions) *Operations
 // listCreateRequest creates the List request.
 func (client *OperationsClient) listCreateRequest(ctx context.Context, options *OperationsListOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.DataBoxEdge/operations"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}

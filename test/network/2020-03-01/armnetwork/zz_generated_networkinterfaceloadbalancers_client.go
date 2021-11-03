@@ -25,9 +25,9 @@ import (
 // NetworkInterfaceLoadBalancersClient contains the methods for the NetworkInterfaceLoadBalancers group.
 // Don't use this type directly, use NewNetworkInterfaceLoadBalancersClient() instead.
 type NetworkInterfaceLoadBalancersClient struct {
-	ep             string
-	pl             runtime.Pipeline
+	host           string
 	subscriptionID string
+	pl             runtime.Pipeline
 }
 
 // NewNetworkInterfaceLoadBalancersClient creates a new instance of NetworkInterfaceLoadBalancersClient with the specified values.
@@ -39,7 +39,12 @@ func NewNetworkInterfaceLoadBalancersClient(subscriptionID string, credential az
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	return &NetworkInterfaceLoadBalancersClient{subscriptionID: subscriptionID, ep: string(cp.Host), pl: armruntime.NewPipeline(module, version, credential, &cp)}
+	client := &NetworkInterfaceLoadBalancersClient{
+		subscriptionID: subscriptionID,
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+	}
+	return client
 }
 
 // List - List all load balancers in a network interface.
@@ -71,7 +76,7 @@ func (client *NetworkInterfaceLoadBalancersClient) listCreateRequest(ctx context
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.ep, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

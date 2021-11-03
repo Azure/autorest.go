@@ -11,7 +11,7 @@ import (
 )
 
 func newFilesClient() *FilesClient {
-	return NewFilesClient(NewDefaultConnection(nil))
+	return NewFilesClient(nil)
 }
 
 func TestGetEmptyFile(t *testing.T) {

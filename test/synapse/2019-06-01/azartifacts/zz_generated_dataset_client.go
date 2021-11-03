@@ -20,7 +20,17 @@ import (
 )
 
 type datasetClient struct {
-	con *connection
+	endpoint string
+	pl       runtime.Pipeline
+}
+
+// newDatasetClient creates a new instance of datasetClient with the specified values.
+func newDatasetClient(endpoint string, pl runtime.Pipeline) *datasetClient {
+	client := &datasetClient{
+		endpoint: endpoint,
+		pl:       pl,
+	}
+	return client
 }
 
 // BeginCreateOrUpdateDataset - Creates or updates a dataset.
@@ -33,7 +43,7 @@ func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, dat
 	result := DatasetCreateOrUpdateDatasetPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("datasetClient.CreateOrUpdateDataset", resp, client.con.Pipeline(), client.createOrUpdateDatasetHandleError)
+	pt, err := runtime.NewPoller("datasetClient.CreateOrUpdateDataset", resp, client.pl, client.createOrUpdateDatasetHandleError)
 	if err != nil {
 		return DatasetCreateOrUpdateDatasetPollerResponse{}, err
 	}
@@ -50,7 +60,7 @@ func (client *datasetClient) createOrUpdateDataset(ctx context.Context, datasetN
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +77,7 @@ func (client *datasetClient) createOrUpdateDatasetCreateRequest(ctx context.Cont
 		return nil, errors.New("parameter datasetName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +114,7 @@ func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName
 	result := DatasetDeleteDatasetPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("datasetClient.DeleteDataset", resp, client.con.Pipeline(), client.deleteDatasetHandleError)
+	pt, err := runtime.NewPoller("datasetClient.DeleteDataset", resp, client.pl, client.deleteDatasetHandleError)
 	if err != nil {
 		return DatasetDeleteDatasetPollerResponse{}, err
 	}
@@ -121,7 +131,7 @@ func (client *datasetClient) deleteDataset(ctx context.Context, datasetName stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +148,7 @@ func (client *datasetClient) deleteDatasetCreateRequest(ctx context.Context, dat
 		return nil, errors.New("parameter datasetName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +179,7 @@ func (client *datasetClient) GetDataset(ctx context.Context, datasetName string,
 	if err != nil {
 		return DatasetGetDatasetResponse{}, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return DatasetGetDatasetResponse{}, err
 	}
@@ -186,7 +196,7 @@ func (client *datasetClient) getDatasetCreateRequest(ctx context.Context, datase
 		return nil, errors.New("parameter datasetName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -239,7 +249,7 @@ func (client *datasetClient) GetDatasetsByWorkspace(options *DatasetGetDatasetsB
 // getDatasetsByWorkspaceCreateRequest creates the GetDatasetsByWorkspace request.
 func (client *datasetClient) getDatasetsByWorkspaceCreateRequest(ctx context.Context, options *DatasetGetDatasetsByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/datasets"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -282,7 +292,7 @@ func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName
 	result := DatasetRenameDatasetPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("datasetClient.RenameDataset", resp, client.con.Pipeline(), client.renameDatasetHandleError)
+	pt, err := runtime.NewPoller("datasetClient.RenameDataset", resp, client.pl, client.renameDatasetHandleError)
 	if err != nil {
 		return DatasetRenameDatasetPollerResponse{}, err
 	}
@@ -299,7 +309,7 @@ func (client *datasetClient) renameDataset(ctx context.Context, datasetName stri
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.con.Pipeline().Do(req)
+	resp, err := client.pl.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -316,7 +326,7 @@ func (client *datasetClient) renameDatasetCreateRequest(ctx context.Context, dat
 		return nil, errors.New("parameter datasetName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{datasetName}", url.PathEscape(datasetName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.con.Endpoint(), urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
