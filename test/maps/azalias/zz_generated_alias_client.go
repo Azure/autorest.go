@@ -19,12 +19,13 @@ import (
 )
 
 type aliasClient struct {
-	endpoint string
-	pl       runtime.Pipeline
+	endpoint   string
+	apiVersion *string
+	pl         runtime.Pipeline
 }
 
 // newAliasClient creates a new instance of aliasClient with the specified values.
-func newAliasClient(geography *Geography, pl runtime.Pipeline) *aliasClient {
+func newAliasClient(geography *Geography, apiVersion *string, pl runtime.Pipeline) *aliasClient {
 	hostURL := "https://{geography}.atlas.microsoft.com"
 	if geography == nil {
 		defaultValue := GeographyUs
@@ -32,8 +33,9 @@ func newAliasClient(geography *Geography, pl runtime.Pipeline) *aliasClient {
 	}
 	hostURL = strings.ReplaceAll(hostURL, "{geography}", string(*geography))
 	client := &aliasClient{
-		endpoint: hostURL,
-		pl:       pl,
+		endpoint:   hostURL,
+		apiVersion: apiVersion,
+		pl:         pl,
 	}
 	return client
 }
@@ -76,7 +78,9 @@ func (client *aliasClient) createCreateRequest(ctx context.Context, options *Ali
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2.0")
+	if client.apiVersion != nil {
+		reqQP.Set("api-version", "2.0")
+	}
 	if options != nil && options.CreatorDataItemID != nil {
 		reqQP.Set("creatorDataItemId", *options.CreatorDataItemID)
 	}
@@ -151,7 +155,9 @@ func (client *aliasClient) listCreateRequest(ctx context.Context, options *Alias
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2.0")
+	if client.apiVersion != nil {
+		reqQP.Set("api-version", "2.0")
+	}
 	if options != nil && options.GroupBy != nil {
 		for _, qv := range options.GroupBy {
 			reqQP.Add("groupBy", string(qv))

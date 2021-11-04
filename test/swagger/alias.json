@@ -54,7 +54,6 @@
       "description": "Version number of Azure Maps API.",
       "type": "string",
       "in": "query",
-      "required": true,
       "default": "2.0",
       "x-ms-parameter-location": "client"
     },

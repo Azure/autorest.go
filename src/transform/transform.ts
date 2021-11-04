@@ -358,7 +358,7 @@ function processOperationRequests(session: Session<CodeModel>) {
         if (param.extensions?.['x-ms-header-collection-prefix']) {
           param.schema.language.go!.headerCollectionPrefix = param.extensions['x-ms-header-collection-prefix'];
         }
-        if (param.implementation === ImplementationLocation.Client && param.schema.type !== SchemaType.Constant && param.language.default.name !== '$host') {
+        if (param.implementation === ImplementationLocation.Client && (param.schema.type !== SchemaType.Constant || !param.required) && param.language.default.name !== '$host') {
           if (param.protocol.http!.in === 'uri') {
             // this is a parameterized host param.
             // use the param name to avoid reference equality checks.
