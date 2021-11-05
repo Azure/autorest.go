@@ -31,6 +31,10 @@ type NetworkSecurityGroupsClient struct {
 }
 
 // NewNetworkSecurityGroupsClient creates a new instance of NetworkSecurityGroupsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewNetworkSecurityGroupsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NetworkSecurityGroupsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,11 @@ func NewNetworkSecurityGroupsClient(subscriptionID string, credential azcore.Tok
 
 // BeginCreateOrUpdate - Creates or updates a network security group in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkSecurityGroupName - The name of the network security group.
+// parameters - Parameters supplied to the create or update network security group operation.
+// options - NetworkSecurityGroupsBeginCreateOrUpdateOptions contains the optional parameters for the NetworkSecurityGroups.BeginCreateOrUpdate
+// method.
 func (client *NetworkSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters NetworkSecurityGroup, options *NetworkSecurityGroupsBeginCreateOrUpdateOptions) (NetworkSecurityGroupsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, parameters, options)
 	if err != nil {
@@ -125,6 +134,10 @@ func (client *NetworkSecurityGroupsClient) createOrUpdateHandleError(resp *http.
 
 // BeginDelete - Deletes the specified network security group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkSecurityGroupName - The name of the network security group.
+// options - NetworkSecurityGroupsBeginDeleteOptions contains the optional parameters for the NetworkSecurityGroups.BeginDelete
+// method.
 func (client *NetworkSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *NetworkSecurityGroupsBeginDeleteOptions) (NetworkSecurityGroupsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkSecurityGroupName, options)
 	if err != nil {
@@ -201,6 +214,9 @@ func (client *NetworkSecurityGroupsClient) deleteHandleError(resp *http.Response
 
 // Get - Gets the specified network security group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkSecurityGroupName - The name of the network security group.
+// options - NetworkSecurityGroupsGetOptions contains the optional parameters for the NetworkSecurityGroups.Get method.
 func (client *NetworkSecurityGroupsClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *NetworkSecurityGroupsGetOptions) (NetworkSecurityGroupsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, options)
 	if err != nil {
@@ -269,6 +285,8 @@ func (client *NetworkSecurityGroupsClient) getHandleError(resp *http.Response) e
 
 // List - Gets all network security groups in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - NetworkSecurityGroupsListOptions contains the optional parameters for the NetworkSecurityGroups.List method.
 func (client *NetworkSecurityGroupsClient) List(resourceGroupName string, options *NetworkSecurityGroupsListOptions) *NetworkSecurityGroupsListPager {
 	return &NetworkSecurityGroupsListPager{
 		client: client,
@@ -327,6 +345,7 @@ func (client *NetworkSecurityGroupsClient) listHandleError(resp *http.Response) 
 
 // ListAll - Gets all network security groups in a subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - NetworkSecurityGroupsListAllOptions contains the optional parameters for the NetworkSecurityGroups.ListAll method.
 func (client *NetworkSecurityGroupsClient) ListAll(options *NetworkSecurityGroupsListAllOptions) *NetworkSecurityGroupsListAllPager {
 	return &NetworkSecurityGroupsListAllPager{
 		client: client,
@@ -381,6 +400,11 @@ func (client *NetworkSecurityGroupsClient) listAllHandleError(resp *http.Respons
 
 // UpdateTags - Updates a network security group tags.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkSecurityGroupName - The name of the network security group.
+// parameters - Parameters supplied to update network security group tags.
+// options - NetworkSecurityGroupsUpdateTagsOptions contains the optional parameters for the NetworkSecurityGroups.UpdateTags
+// method.
 func (client *NetworkSecurityGroupsClient) UpdateTags(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters TagsObject, options *NetworkSecurityGroupsUpdateTagsOptions) (NetworkSecurityGroupsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, parameters, options)
 	if err != nil {

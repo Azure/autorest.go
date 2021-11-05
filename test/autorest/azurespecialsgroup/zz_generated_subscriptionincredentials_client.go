@@ -28,6 +28,8 @@ type SubscriptionInCredentialsClient struct {
 }
 
 // NewSubscriptionInCredentialsClient creates a new instance of SubscriptionInCredentialsClient with the specified values.
+// subscriptionID - The subscription id, which appears in the path, always modeled in credentials. The value is always '1234-5678-9012-3456'
+// options - pass nil to accept the default values.
 func NewSubscriptionInCredentialsClient(subscriptionID string, options *azcore.ClientOptions) *SubscriptionInCredentialsClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -40,9 +42,11 @@ func NewSubscriptionInCredentialsClient(subscriptionID string, options *azcore.C
 	return client
 }
 
-// PostMethodGlobalNotProvidedValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
-// to succeed
+// PostMethodGlobalNotProvidedValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId
+// to '1234-5678-9012-3456' to succeed
 // If the operation fails it returns the *Error error type.
+// options - SubscriptionInCredentialsPostMethodGlobalNotProvidedValidOptions contains the optional parameters for the SubscriptionInCredentials.PostMethodGlobalNotProvidedValid
+// method.
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValid(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalNotProvidedValidOptions) (SubscriptionInCredentialsPostMethodGlobalNotProvidedValidResponse, error) {
 	req, err := client.postMethodGlobalNotProvidedValidCreateRequest(ctx, options)
 	if err != nil {
@@ -89,9 +93,11 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidH
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostMethodGlobalNull - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to null, and client-side validation
-// should prevent you from making this call
+// PostMethodGlobalNull - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to null,
+// and client-side validation should prevent you from making this call
 // If the operation fails it returns the *Error error type.
+// options - SubscriptionInCredentialsPostMethodGlobalNullOptions contains the optional parameters for the SubscriptionInCredentials.PostMethodGlobalNull
+// method.
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalNull(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalNullOptions) (SubscriptionInCredentialsPostMethodGlobalNullResponse, error) {
 	req, err := client.postMethodGlobalNullCreateRequest(ctx, options)
 	if err != nil {
@@ -135,8 +141,11 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNullHandleError(r
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostMethodGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
+// PostMethodGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
+// to succeed
 // If the operation fails it returns the *Error error type.
+// options - SubscriptionInCredentialsPostMethodGlobalValidOptions contains the optional parameters for the SubscriptionInCredentials.PostMethodGlobalValid
+// method.
 func (client *SubscriptionInCredentialsClient) PostMethodGlobalValid(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalValidOptions) (SubscriptionInCredentialsPostMethodGlobalValidResponse, error) {
 	req, err := client.postMethodGlobalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -180,8 +189,11 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalValidHandleError(
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostPathGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
+// PostPathGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
+// to succeed
 // If the operation fails it returns the *Error error type.
+// options - SubscriptionInCredentialsPostPathGlobalValidOptions contains the optional parameters for the SubscriptionInCredentials.PostPathGlobalValid
+// method.
 func (client *SubscriptionInCredentialsClient) PostPathGlobalValid(ctx context.Context, options *SubscriptionInCredentialsPostPathGlobalValidOptions) (SubscriptionInCredentialsPostPathGlobalValidResponse, error) {
 	req, err := client.postPathGlobalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -225,8 +237,11 @@ func (client *SubscriptionInCredentialsClient) postPathGlobalValidHandleError(re
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostSwaggerGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456' to succeed
+// PostSwaggerGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
+// to succeed
 // If the operation fails it returns the *Error error type.
+// options - SubscriptionInCredentialsPostSwaggerGlobalValidOptions contains the optional parameters for the SubscriptionInCredentials.PostSwaggerGlobalValid
+// method.
 func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValid(ctx context.Context, options *SubscriptionInCredentialsPostSwaggerGlobalValidOptions) (SubscriptionInCredentialsPostSwaggerGlobalValidResponse, error) {
 	req, err := client.postSwaggerGlobalValidCreateRequest(ctx, options)
 	if err != nil {

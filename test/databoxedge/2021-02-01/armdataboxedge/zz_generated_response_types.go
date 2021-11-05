@@ -878,7 +878,8 @@ func (l DiagnosticSettingsUpdateDiagnosticProactiveLogCollectionSettingsPollerRe
 	return respType, nil
 }
 
-// Resume rehydrates a DiagnosticSettingsUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse from the provided client and resume token.
+// Resume rehydrates a DiagnosticSettingsUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse from the provided client
+// and resume token.
 func (l *DiagnosticSettingsUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse) Resume(ctx context.Context, client *DiagnosticSettingsClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("DiagnosticSettingsClient.UpdateDiagnosticProactiveLogCollectionSettings", token, client.pl, client.updateDiagnosticProactiveLogCollectionSettingsHandleError)
 	if err != nil {
@@ -923,7 +924,8 @@ func (l DiagnosticSettingsUpdateDiagnosticRemoteSupportSettingsPollerResponse) P
 	return respType, nil
 }
 
-// Resume rehydrates a DiagnosticSettingsUpdateDiagnosticRemoteSupportSettingsPollerResponse from the provided client and resume token.
+// Resume rehydrates a DiagnosticSettingsUpdateDiagnosticRemoteSupportSettingsPollerResponse from the provided client and
+// resume token.
 func (l *DiagnosticSettingsUpdateDiagnosticRemoteSupportSettingsPollerResponse) Resume(ctx context.Context, client *DiagnosticSettingsClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("DiagnosticSettingsClient.UpdateDiagnosticRemoteSupportSettings", token, client.pl, client.updateDiagnosticRemoteSupportSettingsHandleError)
 	if err != nil {

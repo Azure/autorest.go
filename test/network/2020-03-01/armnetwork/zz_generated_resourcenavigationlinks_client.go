@@ -31,6 +31,10 @@ type ResourceNavigationLinksClient struct {
 }
 
 // NewResourceNavigationLinksClient creates a new instance of ResourceNavigationLinksClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewResourceNavigationLinksClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ResourceNavigationLinksClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,10 @@ func NewResourceNavigationLinksClient(subscriptionID string, credential azcore.T
 
 // List - Gets a list of resource navigation links for a subnet.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// virtualNetworkName - The name of the virtual network.
+// subnetName - The name of the subnet.
+// options - ResourceNavigationLinksListOptions contains the optional parameters for the ResourceNavigationLinks.List method.
 func (client *ResourceNavigationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (ResourceNavigationLinksListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {

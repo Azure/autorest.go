@@ -31,6 +31,10 @@ type IPAllocationsClient struct {
 }
 
 // NewIPAllocationsClient creates a new instance of IPAllocationsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewIPAllocationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *IPAllocationsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,11 @@ func NewIPAllocationsClient(subscriptionID string, credential azcore.TokenCreden
 
 // BeginCreateOrUpdate - Creates or updates an IpAllocation in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// ipAllocationName - The name of the IpAllocation.
+// parameters - Parameters supplied to the create or update virtual network operation.
+// options - IPAllocationsBeginCreateOrUpdateOptions contains the optional parameters for the IPAllocations.BeginCreateOrUpdate
+// method.
 func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsBeginCreateOrUpdateOptions) (IPAllocationsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ipAllocationName, parameters, options)
 	if err != nil {
@@ -125,6 +134,9 @@ func (client *IPAllocationsClient) createOrUpdateHandleError(resp *http.Response
 
 // BeginDelete - Deletes the specified IpAllocation.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// ipAllocationName - The name of the IpAllocation.
+// options - IPAllocationsBeginDeleteOptions contains the optional parameters for the IPAllocations.BeginDelete method.
 func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsBeginDeleteOptions) (IPAllocationsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ipAllocationName, options)
 	if err != nil {
@@ -201,6 +213,9 @@ func (client *IPAllocationsClient) deleteHandleError(resp *http.Response) error 
 
 // Get - Gets the specified IpAllocation by resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// ipAllocationName - The name of the IpAllocation.
+// options - IPAllocationsGetOptions contains the optional parameters for the IPAllocations.Get method.
 func (client *IPAllocationsClient) Get(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsGetOptions) (IPAllocationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, ipAllocationName, options)
 	if err != nil {
@@ -269,6 +284,7 @@ func (client *IPAllocationsClient) getHandleError(resp *http.Response) error {
 
 // List - Gets all IpAllocations in a subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - IPAllocationsListOptions contains the optional parameters for the IPAllocations.List method.
 func (client *IPAllocationsClient) List(options *IPAllocationsListOptions) *IPAllocationsListPager {
 	return &IPAllocationsListPager{
 		client: client,
@@ -323,6 +339,9 @@ func (client *IPAllocationsClient) listHandleError(resp *http.Response) error {
 
 // ListByResourceGroup - Gets all IpAllocations in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - IPAllocationsListByResourceGroupOptions contains the optional parameters for the IPAllocations.ListByResourceGroup
+// method.
 func (client *IPAllocationsClient) ListByResourceGroup(resourceGroupName string, options *IPAllocationsListByResourceGroupOptions) *IPAllocationsListByResourceGroupPager {
 	return &IPAllocationsListByResourceGroupPager{
 		client: client,
@@ -381,6 +400,10 @@ func (client *IPAllocationsClient) listByResourceGroupHandleError(resp *http.Res
 
 // UpdateTags - Updates a IpAllocation tags.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// ipAllocationName - The name of the IpAllocation.
+// parameters - Parameters supplied to update IpAllocation tags.
+// options - IPAllocationsUpdateTagsOptions contains the optional parameters for the IPAllocations.UpdateTags method.
 func (client *IPAllocationsClient) UpdateTags(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters TagsObject, options *IPAllocationsUpdateTagsOptions) (IPAllocationsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, ipAllocationName, parameters, options)
 	if err != nil {

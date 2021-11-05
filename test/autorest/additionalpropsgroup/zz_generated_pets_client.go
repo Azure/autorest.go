@@ -24,6 +24,7 @@ type PetsClient struct {
 }
 
 // NewPetsClient creates a new instance of PetsClient with the specified values.
+// options - pass nil to accept the default values.
 func NewPetsClient(options *azcore.ClientOptions) *PetsClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewPetsClient(options *azcore.ClientOptions) *PetsClient {
 
 // CreateAPInProperties - Create a Pet which contains more properties than what is defined.
 // If the operation fails it returns the *Error error type.
+// options - PetsCreateAPInPropertiesOptions contains the optional parameters for the Pets.CreateAPInProperties method.
 func (client *PetsClient) CreateAPInProperties(ctx context.Context, createParameters PetAPInProperties, options *PetsCreateAPInPropertiesOptions) (PetsCreateAPInPropertiesResponse, error) {
 	req, err := client.createAPInPropertiesCreateRequest(ctx, createParameters, options)
 	if err != nil {
@@ -87,6 +89,8 @@ func (client *PetsClient) createAPInPropertiesHandleError(resp *http.Response) e
 
 // CreateAPInPropertiesWithAPString - Create a Pet which contains more properties than what is defined.
 // If the operation fails it returns the *Error error type.
+// options - PetsCreateAPInPropertiesWithAPStringOptions contains the optional parameters for the Pets.CreateAPInPropertiesWithAPString
+// method.
 func (client *PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, createParameters PetAPInPropertiesWithAPString, options *PetsCreateAPInPropertiesWithAPStringOptions) (PetsCreateAPInPropertiesWithAPStringResponse, error) {
 	req, err := client.createAPInPropertiesWithAPStringCreateRequest(ctx, createParameters, options)
 	if err != nil {
@@ -137,6 +141,7 @@ func (client *PetsClient) createAPInPropertiesWithAPStringHandleError(resp *http
 
 // CreateAPObject - Create a Pet which contains more properties than what is defined.
 // If the operation fails it returns the *Error error type.
+// options - PetsCreateAPObjectOptions contains the optional parameters for the Pets.CreateAPObject method.
 func (client *PetsClient) CreateAPObject(ctx context.Context, createParameters PetAPObject, options *PetsCreateAPObjectOptions) (PetsCreateAPObjectResponse, error) {
 	req, err := client.createAPObjectCreateRequest(ctx, createParameters, options)
 	if err != nil {
@@ -187,6 +192,7 @@ func (client *PetsClient) createAPObjectHandleError(resp *http.Response) error {
 
 // CreateAPString - Create a Pet which contains more properties than what is defined.
 // If the operation fails it returns the *Error error type.
+// options - PetsCreateAPStringOptions contains the optional parameters for the Pets.CreateAPString method.
 func (client *PetsClient) CreateAPString(ctx context.Context, createParameters PetAPString, options *PetsCreateAPStringOptions) (PetsCreateAPStringResponse, error) {
 	req, err := client.createAPStringCreateRequest(ctx, createParameters, options)
 	if err != nil {
@@ -237,6 +243,7 @@ func (client *PetsClient) createAPStringHandleError(resp *http.Response) error {
 
 // CreateAPTrue - Create a Pet which contains more properties than what is defined.
 // If the operation fails it returns the *Error error type.
+// options - PetsCreateAPTrueOptions contains the optional parameters for the Pets.CreateAPTrue method.
 func (client *PetsClient) CreateAPTrue(ctx context.Context, createParameters PetAPTrue, options *PetsCreateAPTrueOptions) (PetsCreateAPTrueResponse, error) {
 	req, err := client.createAPTrueCreateRequest(ctx, createParameters, options)
 	if err != nil {
@@ -287,6 +294,7 @@ func (client *PetsClient) createAPTrueHandleError(resp *http.Response) error {
 
 // CreateCatAPTrue - Create a CatAPTrue which contains more properties than what is defined.
 // If the operation fails it returns the *Error error type.
+// options - PetsCreateCatAPTrueOptions contains the optional parameters for the Pets.CreateCatAPTrue method.
 func (client *PetsClient) CreateCatAPTrue(ctx context.Context, createParameters CatAPTrue, options *PetsCreateCatAPTrueOptions) (PetsCreateCatAPTrueResponse, error) {
 	req, err := client.createCatAPTrueCreateRequest(ctx, createParameters, options)
 	if err != nil {

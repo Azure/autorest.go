@@ -1130,7 +1130,8 @@ func (c QueryRequestQueryType) ToPtr() *QueryRequestQueryType {
 	return &c
 }
 
-// RehydratePriority - If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard.
+// RehydratePriority - If an object is in rehydrate pending state then this header is returned with priority of rehydrate.
+// Valid values are High and Standard.
 type RehydratePriority string
 
 const (

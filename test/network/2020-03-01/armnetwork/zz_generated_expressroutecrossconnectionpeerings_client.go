@@ -31,6 +31,10 @@ type ExpressRouteCrossConnectionPeeringsClient struct {
 }
 
 // NewExpressRouteCrossConnectionPeeringsClient creates a new instance of ExpressRouteCrossConnectionPeeringsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewExpressRouteCrossConnectionPeeringsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ExpressRouteCrossConnectionPeeringsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,12 @@ func NewExpressRouteCrossConnectionPeeringsClient(subscriptionID string, credent
 
 // BeginCreateOrUpdate - Creates or updates a peering in the specified ExpressRouteCrossConnection.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// crossConnectionName - The name of the ExpressRouteCrossConnection.
+// peeringName - The name of the peering.
+// peeringParameters - Parameters supplied to the create or update ExpressRouteCrossConnection peering operation.
+// options - ExpressRouteCrossConnectionPeeringsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCrossConnectionPeerings.BeginCreateOrUpdate
+// method.
 func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, peeringParameters ExpressRouteCrossConnectionPeering, options *ExpressRouteCrossConnectionPeeringsBeginCreateOrUpdateOptions) (ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, crossConnectionName, peeringName, peeringParameters, options)
 	if err != nil {
@@ -129,6 +139,11 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdateHandleErr
 
 // BeginDelete - Deletes the specified peering from the ExpressRouteCrossConnection.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// crossConnectionName - The name of the ExpressRouteCrossConnection.
+// peeringName - The name of the peering.
+// options - ExpressRouteCrossConnectionPeeringsBeginDeleteOptions contains the optional parameters for the ExpressRouteCrossConnectionPeerings.BeginDelete
+// method.
 func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsBeginDeleteOptions) (ExpressRouteCrossConnectionPeeringsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, crossConnectionName, peeringName, options)
 	if err != nil {
@@ -209,6 +224,11 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) deleteHandleError(resp 
 
 // Get - Gets the specified peering for the ExpressRouteCrossConnection.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// crossConnectionName - The name of the ExpressRouteCrossConnection.
+// peeringName - The name of the peering.
+// options - ExpressRouteCrossConnectionPeeringsGetOptions contains the optional parameters for the ExpressRouteCrossConnectionPeerings.Get
+// method.
 func (client *ExpressRouteCrossConnectionPeeringsClient) Get(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsGetOptions) (ExpressRouteCrossConnectionPeeringsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, crossConnectionName, peeringName, options)
 	if err != nil {
@@ -278,6 +298,10 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) getHandleError(resp *ht
 
 // List - Gets all peerings in a specified ExpressRouteCrossConnection.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// crossConnectionName - The name of the ExpressRouteCrossConnection.
+// options - ExpressRouteCrossConnectionPeeringsListOptions contains the optional parameters for the ExpressRouteCrossConnectionPeerings.List
+// method.
 func (client *ExpressRouteCrossConnectionPeeringsClient) List(resourceGroupName string, crossConnectionName string, options *ExpressRouteCrossConnectionPeeringsListOptions) *ExpressRouteCrossConnectionPeeringsListPager {
 	return &ExpressRouteCrossConnectionPeeringsListPager{
 		client: client,

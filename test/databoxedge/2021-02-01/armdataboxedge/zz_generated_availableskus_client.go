@@ -28,6 +28,8 @@ type AvailableSKUsClient struct {
 }
 
 // NewAvailableSKUsClient creates a new instance of AvailableSKUsClient with the specified values.
+// subscriptionID - The subscription ID.
+// options - pass nil to accept the default values.
 func NewAvailableSKUsClient(subscriptionID string, options *azcore.ClientOptions) *AvailableSKUsClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -42,6 +44,7 @@ func NewAvailableSKUsClient(subscriptionID string, options *azcore.ClientOptions
 
 // List - List all the available Skus and information related to them.
 // If the operation fails it returns the *CloudError error type.
+// options - AvailableSKUsListOptions contains the optional parameters for the AvailableSKUs.List method.
 func (client *AvailableSKUsClient) List(options *AvailableSKUsListOptions) *AvailableSKUsListPager {
 	return &AvailableSKUsListPager{
 		client: client,

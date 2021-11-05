@@ -30,6 +30,10 @@ type AvailabilitySetsClient struct {
 }
 
 // NewAvailabilitySetsClient creates a new instance of AvailabilitySetsClient with the specified values.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewAvailabilitySetsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *AvailabilitySetsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -48,6 +52,11 @@ func NewAvailabilitySetsClient(subscriptionID string, credential azcore.TokenCre
 
 // CreateOrUpdate - Create or update an availability set.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// availabilitySetName - The name of the availability set.
+// parameters - Parameters supplied to the Create Availability Set operation.
+// options - AvailabilitySetsCreateOrUpdateOptions contains the optional parameters for the AvailabilitySets.CreateOrUpdate
+// method.
 func (client *AvailabilitySetsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet, options *AvailabilitySetsCreateOrUpdateOptions) (AvailabilitySetsCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, availabilitySetName, parameters, options)
 	if err != nil {
@@ -112,6 +121,9 @@ func (client *AvailabilitySetsClient) createOrUpdateHandleError(resp *http.Respo
 
 // Delete - Delete an availability set.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// availabilitySetName - The name of the availability set.
+// options - AvailabilitySetsDeleteOptions contains the optional parameters for the AvailabilitySets.Delete method.
 func (client *AvailabilitySetsClient) Delete(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsDeleteOptions) (AvailabilitySetsDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
@@ -166,6 +178,9 @@ func (client *AvailabilitySetsClient) deleteHandleError(resp *http.Response) err
 
 // Get - Retrieves information about an availability set.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// availabilitySetName - The name of the availability set.
+// options - AvailabilitySetsGetOptions contains the optional parameters for the AvailabilitySets.Get method.
 func (client *AvailabilitySetsClient) Get(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsGetOptions) (AvailabilitySetsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
@@ -230,6 +245,8 @@ func (client *AvailabilitySetsClient) getHandleError(resp *http.Response) error 
 
 // List - Lists all availability sets in a resource group.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// options - AvailabilitySetsListOptions contains the optional parameters for the AvailabilitySets.List method.
 func (client *AvailabilitySetsClient) List(resourceGroupName string, options *AvailabilitySetsListOptions) *AvailabilitySetsListPager {
 	return &AvailabilitySetsListPager{
 		client: client,
@@ -285,8 +302,13 @@ func (client *AvailabilitySetsClient) listHandleError(resp *http.Response) error
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// ListAvailableSizes - Lists all available virtual machine sizes that can be used to create a new virtual machine in an existing availability set.
+// ListAvailableSizes - Lists all available virtual machine sizes that can be used to create a new virtual machine in an existing
+// availability set.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// availabilitySetName - The name of the availability set.
+// options - AvailabilitySetsListAvailableSizesOptions contains the optional parameters for the AvailabilitySets.ListAvailableSizes
+// method.
 func (client *AvailabilitySetsClient) ListAvailableSizes(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsListAvailableSizesOptions) (AvailabilitySetsListAvailableSizesResponse, error) {
 	req, err := client.listAvailableSizesCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
@@ -351,6 +373,8 @@ func (client *AvailabilitySetsClient) listAvailableSizesHandleError(resp *http.R
 
 // ListBySubscription - Lists all availability sets in a subscription.
 // If the operation fails it returns a generic error.
+// options - AvailabilitySetsListBySubscriptionOptions contains the optional parameters for the AvailabilitySets.ListBySubscription
+// method.
 func (client *AvailabilitySetsClient) ListBySubscription(options *AvailabilitySetsListBySubscriptionOptions) *AvailabilitySetsListBySubscriptionPager {
 	return &AvailabilitySetsListBySubscriptionPager{
 		client: client,
@@ -407,6 +431,10 @@ func (client *AvailabilitySetsClient) listBySubscriptionHandleError(resp *http.R
 
 // Update - Update an availability set.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// availabilitySetName - The name of the availability set.
+// parameters - Parameters supplied to the Update Availability Set operation.
+// options - AvailabilitySetsUpdateOptions contains the optional parameters for the AvailabilitySets.Update method.
 func (client *AvailabilitySetsClient) Update(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySetUpdate, options *AvailabilitySetsUpdateOptions) (AvailabilitySetsUpdateResponse, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, availabilitySetName, parameters, options)
 	if err != nil {

@@ -28,6 +28,8 @@ type OperationsStatusClient struct {
 }
 
 // NewOperationsStatusClient creates a new instance of OperationsStatusClient with the specified values.
+// subscriptionID - The subscription ID.
+// options - pass nil to accept the default values.
 func NewOperationsStatusClient(subscriptionID string, options *azcore.ClientOptions) *OperationsStatusClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -42,6 +44,10 @@ func NewOperationsStatusClient(subscriptionID string, options *azcore.ClientOpti
 
 // Get - Gets the details of a specified job on a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// name - The job name.
+// resourceGroupName - The resource group name.
+// options - OperationsStatusGetOptions contains the optional parameters for the OperationsStatus.Get method.
 func (client *OperationsStatusClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *OperationsStatusGetOptions) (OperationsStatusGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {

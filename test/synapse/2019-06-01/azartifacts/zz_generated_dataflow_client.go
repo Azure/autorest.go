@@ -25,6 +25,8 @@ type dataFlowClient struct {
 }
 
 // newDataFlowClient creates a new instance of dataFlowClient with the specified values.
+// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+// pl - the pipeline used for sending requests and handling responses.
 func newDataFlowClient(endpoint string, pl runtime.Pipeline) *dataFlowClient {
 	client := &dataFlowClient{
 		endpoint: endpoint,
@@ -35,6 +37,10 @@ func newDataFlowClient(endpoint string, pl runtime.Pipeline) *dataFlowClient {
 
 // BeginCreateOrUpdateDataFlow - Creates or updates a data flow.
 // If the operation fails it returns the *CloudError error type.
+// dataFlowName - The data flow name.
+// dataFlow - Data flow resource definition.
+// options - DataFlowBeginCreateOrUpdateDataFlowOptions contains the optional parameters for the DataFlow.BeginCreateOrUpdateDataFlow
+// method.
 func (client *dataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowBeginCreateOrUpdateDataFlowOptions) (DataFlowCreateOrUpdateDataFlowPollerResponse, error) {
 	resp, err := client.createOrUpdateDataFlow(ctx, dataFlowName, dataFlow, options)
 	if err != nil {
@@ -106,6 +112,8 @@ func (client *dataFlowClient) createOrUpdateDataFlowHandleError(resp *http.Respo
 
 // BeginDeleteDataFlow - Deletes a data flow.
 // If the operation fails it returns the *CloudError error type.
+// dataFlowName - The data flow name.
+// options - DataFlowBeginDeleteDataFlowOptions contains the optional parameters for the DataFlow.BeginDeleteDataFlow method.
 func (client *dataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowName string, options *DataFlowBeginDeleteDataFlowOptions) (DataFlowDeleteDataFlowPollerResponse, error) {
 	resp, err := client.deleteDataFlow(ctx, dataFlowName, options)
 	if err != nil {
@@ -174,6 +182,8 @@ func (client *dataFlowClient) deleteDataFlowHandleError(resp *http.Response) err
 
 // GetDataFlow - Gets a data flow.
 // If the operation fails it returns the *CloudError error type.
+// dataFlowName - The data flow name.
+// options - DataFlowGetDataFlowOptions contains the optional parameters for the DataFlow.GetDataFlow method.
 func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName string, options *DataFlowGetDataFlowOptions) (DataFlowGetDataFlowResponse, error) {
 	req, err := client.getDataFlowCreateRequest(ctx, dataFlowName, options)
 	if err != nil {
@@ -234,6 +244,8 @@ func (client *dataFlowClient) getDataFlowHandleError(resp *http.Response) error 
 
 // GetDataFlowsByWorkspace - Lists data flows.
 // If the operation fails it returns the *CloudError error type.
+// options - DataFlowGetDataFlowsByWorkspaceOptions contains the optional parameters for the DataFlow.GetDataFlowsByWorkspace
+// method.
 func (client *dataFlowClient) GetDataFlowsByWorkspace(options *DataFlowGetDataFlowsByWorkspaceOptions) *DataFlowGetDataFlowsByWorkspacePager {
 	return &DataFlowGetDataFlowsByWorkspacePager{
 		client: client,
@@ -284,6 +296,9 @@ func (client *dataFlowClient) getDataFlowsByWorkspaceHandleError(resp *http.Resp
 
 // BeginRenameDataFlow - Renames a dataflow.
 // If the operation fails it returns the *CloudError error type.
+// dataFlowName - The data flow name.
+// request - proposed new name.
+// options - DataFlowBeginRenameDataFlowOptions contains the optional parameters for the DataFlow.BeginRenameDataFlow method.
 func (client *dataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *DataFlowBeginRenameDataFlowOptions) (DataFlowRenameDataFlowPollerResponse, error) {
 	resp, err := client.renameDataFlow(ctx, dataFlowName, request, options)
 	if err != nil {

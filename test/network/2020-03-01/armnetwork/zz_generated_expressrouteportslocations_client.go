@@ -31,6 +31,10 @@ type ExpressRoutePortsLocationsClient struct {
 }
 
 // NewExpressRoutePortsLocationsClient creates a new instance of ExpressRoutePortsLocationsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewExpressRoutePortsLocationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ExpressRoutePortsLocationsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -47,8 +51,12 @@ func NewExpressRoutePortsLocationsClient(subscriptionID string, credential azcor
 	return client
 }
 
-// Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
+// Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said
+// peering location.
 // If the operation fails it returns the *CloudError error type.
+// locationName - Name of the requested ExpressRoutePort peering location.
+// options - ExpressRoutePortsLocationsGetOptions contains the optional parameters for the ExpressRoutePortsLocations.Get
+// method.
 func (client *ExpressRoutePortsLocationsClient) Get(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (ExpressRoutePortsLocationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, locationName, options)
 	if err != nil {
@@ -108,9 +116,11 @@ func (client *ExpressRoutePortsLocationsClient) getHandleError(resp *http.Respon
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available bandwidths can only be obtained
-// when retrieving a specific peering location.
+// List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available
+// bandwidths can only be obtained when retrieving a specific peering location.
 // If the operation fails it returns the *CloudError error type.
+// options - ExpressRoutePortsLocationsListOptions contains the optional parameters for the ExpressRoutePortsLocations.List
+// method.
 func (client *ExpressRoutePortsLocationsClient) List(options *ExpressRoutePortsLocationsListOptions) *ExpressRoutePortsLocationsListPager {
 	return &ExpressRoutePortsLocationsListPager{
 		client: client,

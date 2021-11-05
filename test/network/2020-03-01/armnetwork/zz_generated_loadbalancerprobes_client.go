@@ -31,6 +31,10 @@ type LoadBalancerProbesClient struct {
 }
 
 // NewLoadBalancerProbesClient creates a new instance of LoadBalancerProbesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewLoadBalancerProbesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *LoadBalancerProbesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,10 @@ func NewLoadBalancerProbesClient(subscriptionID string, credential azcore.TokenC
 
 // Get - Gets load balancer probe.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// loadBalancerName - The name of the load balancer.
+// probeName - The name of the probe.
+// options - LoadBalancerProbesGetOptions contains the optional parameters for the LoadBalancerProbes.Get method.
 func (client *LoadBalancerProbesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string, options *LoadBalancerProbesGetOptions) (LoadBalancerProbesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, probeName, options)
 	if err != nil {
@@ -118,6 +126,9 @@ func (client *LoadBalancerProbesClient) getHandleError(resp *http.Response) erro
 
 // List - Gets all the load balancer probes.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// loadBalancerName - The name of the load balancer.
+// options - LoadBalancerProbesListOptions contains the optional parameters for the LoadBalancerProbes.List method.
 func (client *LoadBalancerProbesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerProbesListOptions) *LoadBalancerProbesListPager {
 	return &LoadBalancerProbesListPager{
 		client: client,

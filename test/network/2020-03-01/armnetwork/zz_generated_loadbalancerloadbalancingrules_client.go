@@ -31,6 +31,10 @@ type LoadBalancerLoadBalancingRulesClient struct {
 }
 
 // NewLoadBalancerLoadBalancingRulesClient creates a new instance of LoadBalancerLoadBalancingRulesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewLoadBalancerLoadBalancingRulesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *LoadBalancerLoadBalancingRulesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,11 @@ func NewLoadBalancerLoadBalancingRulesClient(subscriptionID string, credential a
 
 // Get - Gets the specified load balancer load balancing rule.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// loadBalancerName - The name of the load balancer.
+// loadBalancingRuleName - The name of the load balancing rule.
+// options - LoadBalancerLoadBalancingRulesGetOptions contains the optional parameters for the LoadBalancerLoadBalancingRules.Get
+// method.
 func (client *LoadBalancerLoadBalancingRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string, options *LoadBalancerLoadBalancingRulesGetOptions) (LoadBalancerLoadBalancingRulesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, loadBalancingRuleName, options)
 	if err != nil {
@@ -118,6 +127,10 @@ func (client *LoadBalancerLoadBalancingRulesClient) getHandleError(resp *http.Re
 
 // List - Gets all the load balancing rules in a load balancer.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// loadBalancerName - The name of the load balancer.
+// options - LoadBalancerLoadBalancingRulesListOptions contains the optional parameters for the LoadBalancerLoadBalancingRules.List
+// method.
 func (client *LoadBalancerLoadBalancingRulesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerLoadBalancingRulesListOptions) *LoadBalancerLoadBalancingRulesListPager {
 	return &LoadBalancerLoadBalancingRulesListPager{
 		client: client,

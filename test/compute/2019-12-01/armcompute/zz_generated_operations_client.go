@@ -27,6 +27,8 @@ type OperationsClient struct {
 }
 
 // NewOperationsClient creates a new instance of OperationsClient with the specified values.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewOperationsClient(credential azcore.TokenCredential, options *arm.ClientOptions) *OperationsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -44,6 +46,7 @@ func NewOperationsClient(credential azcore.TokenCredential, options *arm.ClientO
 
 // List - Gets a list of compute operations.
 // If the operation fails it returns a generic error.
+// options - OperationsListOptions contains the optional parameters for the Operations.List method.
 func (client *OperationsClient) List(ctx context.Context, options *OperationsListOptions) (OperationsListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {

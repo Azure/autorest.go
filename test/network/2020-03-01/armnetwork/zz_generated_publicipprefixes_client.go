@@ -31,6 +31,10 @@ type PublicIPPrefixesClient struct {
 }
 
 // NewPublicIPPrefixesClient creates a new instance of PublicIPPrefixesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewPublicIPPrefixesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *PublicIPPrefixesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,11 @@ func NewPublicIPPrefixesClient(subscriptionID string, credential azcore.TokenCre
 
 // BeginCreateOrUpdate - Creates or updates a static or dynamic public IP prefix.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// publicIPPrefixName - The name of the public IP prefix.
+// parameters - Parameters supplied to the create or update public IP prefix operation.
+// options - PublicIPPrefixesBeginCreateOrUpdateOptions contains the optional parameters for the PublicIPPrefixes.BeginCreateOrUpdate
+// method.
 func (client *PublicIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters PublicIPPrefix, options *PublicIPPrefixesBeginCreateOrUpdateOptions) (PublicIPPrefixesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, publicIPPrefixName, parameters, options)
 	if err != nil {
@@ -125,6 +134,9 @@ func (client *PublicIPPrefixesClient) createOrUpdateHandleError(resp *http.Respo
 
 // BeginDelete - Deletes the specified public IP prefix.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// publicIPPrefixName - The name of the PublicIpPrefix.
+// options - PublicIPPrefixesBeginDeleteOptions contains the optional parameters for the PublicIPPrefixes.BeginDelete method.
 func (client *PublicIPPrefixesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesBeginDeleteOptions) (PublicIPPrefixesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, publicIPPrefixName, options)
 	if err != nil {
@@ -201,6 +213,9 @@ func (client *PublicIPPrefixesClient) deleteHandleError(resp *http.Response) err
 
 // Get - Gets the specified public IP prefix in a specified resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// publicIPPrefixName - The name of the public IP prefix.
+// options - PublicIPPrefixesGetOptions contains the optional parameters for the PublicIPPrefixes.Get method.
 func (client *PublicIPPrefixesClient) Get(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesGetOptions) (PublicIPPrefixesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, publicIPPrefixName, options)
 	if err != nil {
@@ -269,6 +284,8 @@ func (client *PublicIPPrefixesClient) getHandleError(resp *http.Response) error 
 
 // List - Gets all public IP prefixes in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - PublicIPPrefixesListOptions contains the optional parameters for the PublicIPPrefixes.List method.
 func (client *PublicIPPrefixesClient) List(resourceGroupName string, options *PublicIPPrefixesListOptions) *PublicIPPrefixesListPager {
 	return &PublicIPPrefixesListPager{
 		client: client,
@@ -327,6 +344,7 @@ func (client *PublicIPPrefixesClient) listHandleError(resp *http.Response) error
 
 // ListAll - Gets all the public IP prefixes in a subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - PublicIPPrefixesListAllOptions contains the optional parameters for the PublicIPPrefixes.ListAll method.
 func (client *PublicIPPrefixesClient) ListAll(options *PublicIPPrefixesListAllOptions) *PublicIPPrefixesListAllPager {
 	return &PublicIPPrefixesListAllPager{
 		client: client,
@@ -381,6 +399,10 @@ func (client *PublicIPPrefixesClient) listAllHandleError(resp *http.Response) er
 
 // UpdateTags - Updates public IP prefix tags.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// publicIPPrefixName - The name of the public IP prefix.
+// parameters - Parameters supplied to update public IP prefix tags.
+// options - PublicIPPrefixesUpdateTagsOptions contains the optional parameters for the PublicIPPrefixes.UpdateTags method.
 func (client *PublicIPPrefixesClient) UpdateTags(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters TagsObject, options *PublicIPPrefixesUpdateTagsOptions) (PublicIPPrefixesUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, publicIPPrefixName, parameters, options)
 	if err != nil {

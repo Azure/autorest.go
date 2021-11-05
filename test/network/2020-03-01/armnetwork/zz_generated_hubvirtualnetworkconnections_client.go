@@ -31,6 +31,10 @@ type HubVirtualNetworkConnectionsClient struct {
 }
 
 // NewHubVirtualNetworkConnectionsClient creates a new instance of HubVirtualNetworkConnectionsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewHubVirtualNetworkConnectionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *HubVirtualNetworkConnectionsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,11 @@ func NewHubVirtualNetworkConnectionsClient(subscriptionID string, credential azc
 
 // Get - Retrieves the details of a HubVirtualNetworkConnection.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The resource group name of the VirtualHub.
+// virtualHubName - The name of the VirtualHub.
+// connectionName - The name of the vpn connection.
+// options - HubVirtualNetworkConnectionsGetOptions contains the optional parameters for the HubVirtualNetworkConnections.Get
+// method.
 func (client *HubVirtualNetworkConnectionsClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, options *HubVirtualNetworkConnectionsGetOptions) (HubVirtualNetworkConnectionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualHubName, connectionName, options)
 	if err != nil {
@@ -118,6 +127,10 @@ func (client *HubVirtualNetworkConnectionsClient) getHandleError(resp *http.Resp
 
 // List - Retrieves the details of all HubVirtualNetworkConnections.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The resource group name of the VirtualHub.
+// virtualHubName - The name of the VirtualHub.
+// options - HubVirtualNetworkConnectionsListOptions contains the optional parameters for the HubVirtualNetworkConnections.List
+// method.
 func (client *HubVirtualNetworkConnectionsClient) List(resourceGroupName string, virtualHubName string, options *HubVirtualNetworkConnectionsListOptions) *HubVirtualNetworkConnectionsListPager {
 	return &HubVirtualNetworkConnectionsListPager{
 		client: client,

@@ -271,7 +271,8 @@ type PetGetPetByIDOptions struct {
 
 // PetHasModelsParamOptions contains the optional parameters for the Pet.HasModelsParam method.
 type PetHasModelsParamOptions struct {
-	// Make sure model deserialization doesn't conflict with this param name, which has input name 'models'. Use client default value in call
+	// Make sure model deserialization doesn't conflict with this param name, which has input name 'models'. Use client default
+	// value in call
 	Models *string
 }
 

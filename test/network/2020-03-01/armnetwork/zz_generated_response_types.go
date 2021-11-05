@@ -2424,7 +2424,8 @@ func (l ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse) PollUnt
 	return respType, nil
 }
 
-// Resume rehydrates a ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse from the provided client and resume token.
+// Resume rehydrates a ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse from the provided client and resume
+// token.
 func (l *ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteCrossConnectionPeeringsClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
@@ -2738,7 +2739,8 @@ func (l ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse) PollUn
 	return respType, nil
 }
 
-// Resume rehydrates a ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse from the provided client and resume token.
+// Resume rehydrates a ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse from the provided client and resume
+// token.
 func (l *ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse) Resume(ctx context.Context, client *ExpressRouteCrossConnectionsClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCrossConnectionsClient.ListRoutesTableSummary", token, client.pl, client.listRoutesTableSummaryHandleError)
 	if err != nil {
@@ -4872,7 +4874,8 @@ func (l NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse) PollU
 	return respType, nil
 }
 
-// Resume rehydrates a NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse from the provided client and resume token.
+// Resume rehydrates a NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse from the provided client and resume
+// token.
 func (l *NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse) Resume(ctx context.Context, client *NetworkInterfacesClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("NetworkInterfacesClient.ListEffectiveNetworkSecurityGroups", token, client.pl, client.listEffectiveNetworkSecurityGroupsHandleError)
 	if err != nil {
@@ -4996,7 +4999,8 @@ func (l NetworkManagementClientDeleteBastionShareableLinkPollerResponse) PollUnt
 	return respType, nil
 }
 
-// Resume rehydrates a NetworkManagementClientDeleteBastionShareableLinkPollerResponse from the provided client and resume token.
+// Resume rehydrates a NetworkManagementClientDeleteBastionShareableLinkPollerResponse from the provided client and resume
+// token.
 func (l *NetworkManagementClientDeleteBastionShareableLinkPollerResponse) Resume(ctx context.Context, client *NetworkManagementClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("NetworkManagementClient.DeleteBastionShareableLink", token, client.pl, client.deleteBastionShareableLinkHandleError)
 	if err != nil {
@@ -5032,7 +5036,8 @@ type NetworkManagementClientDisconnectActiveSessionsResult struct {
 	BastionSessionDeleteResult
 }
 
-// NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse contains the response from method NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile.
+// NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse contains the response from method
+// NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile.
 type NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse struct {
 	// Poller contains an initialized poller.
 	Poller *NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller
@@ -5054,7 +5059,8 @@ func (l NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofil
 	return respType, nil
 }
 
-// Resume rehydrates a NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse from the provided client and resume token.
+// Resume rehydrates a NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse from the provided
+// client and resume token.
 func (l *NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse) Resume(ctx context.Context, client *NetworkManagementClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", token, client.pl, client.generatevirtualwanvpnserverconfigurationvpnprofileHandleError)
 	if err != nil {
@@ -5850,7 +5856,8 @@ func (l NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse) PollUnti
 	return respType, nil
 }
 
-// Resume rehydrates a NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse from the provided client and resume token.
+// Resume rehydrates a NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse from the provided client and resume
+// token.
 func (l *NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("NetworkWatchersClient.GetNetworkConfigurationDiagnostic", token, client.pl, client.getNetworkConfigurationDiagnosticHandleError)
 	if err != nil {
@@ -7186,7 +7193,8 @@ func (l PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPolle
 	return respType, nil
 }
 
-// Resume rehydrates a PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse from the provided client and resume token.
+// Resume rehydrates a PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse from the provided
+// client and resume token.
 func (l *PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse) Resume(ctx context.Context, client *PrivateLinkServicesClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibilityByResourceGroup", token, client.pl, client.checkPrivateLinkServiceVisibilityByResourceGroupHandleError)
 	if err != nil {
@@ -7238,7 +7246,8 @@ func (l PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse) Poll
 	return respType, nil
 }
 
-// Resume rehydrates a PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse from the provided client and resume token.
+// Resume rehydrates a PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse from the provided client and resume
+// token.
 func (l *PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse) Resume(ctx context.Context, client *PrivateLinkServicesClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibility", token, client.pl, client.checkPrivateLinkServiceVisibilityHandleError)
 	if err != nil {
@@ -7382,7 +7391,8 @@ func (l PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse) PollUn
 	return respType, nil
 }
 
-// Resume rehydrates a PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse from the provided client and resume token.
+// Resume rehydrates a PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse from the provided client and resume
+// token.
 func (l *PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse) Resume(ctx context.Context, client *PrivateLinkServicesClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("PrivateLinkServicesClient.DeletePrivateEndpointConnection", token, client.pl, client.deletePrivateEndpointConnectionHandleError)
 	if err != nil {
@@ -9524,7 +9534,8 @@ func (l VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse) PollU
 	return respType, nil
 }
 
-// Resume rehydrates a VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse from the provided client and resume token.
+// Resume rehydrates a VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse from the provided client and resume
+// token.
 func (l *VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse) Resume(ctx context.Context, client *VPNServerConfigurationsAssociatedWithVirtualWanClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", token, client.pl, client.listHandleError)
 	if err != nil {
@@ -10456,7 +10467,8 @@ func (l VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse) PollUn
 	return respType, nil
 }
 
-// Resume rehydrates a VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse from the provided client and resume token.
+// Resume rehydrates a VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse from the provided client and resume
+// token.
 func (l *VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewayConnectionsClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.StartPacketCapture", token, client.pl, client.startPacketCaptureHandleError)
 	if err != nil {
@@ -10508,7 +10520,8 @@ func (l VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse) PollUnt
 	return respType, nil
 }
 
-// Resume rehydrates a VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse from the provided client and resume token.
+// Resume rehydrates a VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse from the provided client and resume
+// token.
 func (l *VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewayConnectionsClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.StopPacketCapture", token, client.pl, client.stopPacketCaptureHandleError)
 	if err != nil {
@@ -10710,7 +10723,8 @@ func (l VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPolle
 	return respType, nil
 }
 
-// Resume rehydrates a VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse from the provided client and resume token.
+// Resume rehydrates a VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse from the provided
+// client and resume token.
 func (l *VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.DisconnectVirtualNetworkGatewayVPNConnections", token, client.pl, client.disconnectVirtualNetworkGatewayVPNConnectionsHandleError)
 	if err != nil {
@@ -11080,7 +11094,8 @@ func (l VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse) PollUn
 	return respType, nil
 }
 
-// Resume rehydrates a VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse from the provided client and resume token.
+// Resume rehydrates a VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse from the provided client and resume
+// token.
 func (l *VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GetVpnclientConnectionHealth", token, client.pl, client.getVpnclientConnectionHealthHandleError)
 	if err != nil {
@@ -11132,7 +11147,8 @@ func (l VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse) PollUnt
 	return respType, nil
 }
 
-// Resume rehydrates a VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse from the provided client and resume token.
+// Resume rehydrates a VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse from the provided client and resume
+// token.
 func (l *VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GetVpnclientIPSecParameters", token, client.pl, client.getVpnclientIPSecParametersHandleError)
 	if err != nil {
@@ -11306,7 +11322,8 @@ func (l VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse) PollUnt
 	return respType, nil
 }
 
-// Resume rehydrates a VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse from the provided client and resume token.
+// Resume rehydrates a VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse from the provided client and resume
+// token.
 func (l *VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.SetVpnclientIPSecParameters", token, client.pl, client.setVpnclientIPSecParametersHandleError)
 	if err != nil {

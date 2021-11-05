@@ -7,7 +7,7 @@ import { ArraySchema, DictionarySchema, ObjectSchema, Operation, Parameter, Resp
 import { values } from '@azure-tools/linq';
 
 // variable to be used to determine comment length when calling comment from @azure-tools
-export const commentLength = 150;
+export const commentLength = 120;
 
 // aggregates the Parameter in op.parameters and the first request
 export function aggregateParameters(op: Operation): Array<Parameter> {

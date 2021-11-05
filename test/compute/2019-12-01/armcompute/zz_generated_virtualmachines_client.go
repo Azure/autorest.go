@@ -32,6 +32,10 @@ type VirtualMachinesClient struct {
 }
 
 // NewVirtualMachinesClient creates a new instance of VirtualMachinesClient with the specified values.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewVirtualMachinesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualMachinesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -48,8 +52,13 @@ func NewVirtualMachinesClient(subscriptionID string, credential azcore.TokenCred
 	return client
 }
 
-// BeginCapture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.
+// BeginCapture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create
+// similar VMs.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// parameters - Parameters supplied to the Capture Virtual Machine operation.
+// options - VirtualMachinesBeginCaptureOptions contains the optional parameters for the VirtualMachines.BeginCapture method.
 func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesBeginCaptureOptions) (VirtualMachinesCapturePollerResponse, error) {
 	resp, err := client.capture(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
@@ -68,7 +77,8 @@ func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceG
 	return result, nil
 }
 
-// Capture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.
+// Capture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar
+// VMs.
 // If the operation fails it returns a generic error.
 func (client *VirtualMachinesClient) capture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesBeginCaptureOptions) (*http.Response, error) {
 	req, err := client.captureCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
@@ -123,12 +133,16 @@ func (client *VirtualMachinesClient) captureHandleError(resp *http.Response) err
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// BeginConvertToManagedDisks - Converts virtual machine disks from blob-based to managed disks. Virtual machine must be stop-deallocated before invoking
-// this operation. For Windows, please refer to Convert a virtual machine from
-// unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks]. For Linux, please
-// refer to Convert a virtual machine from
+// BeginConvertToManagedDisks - Converts virtual machine disks from blob-based to managed disks. Virtual machine must be stop-deallocated
+// before invoking this operation. For Windows, please refer to Convert a virtual machine from
+// unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks].
+// For Linux, please refer to Convert a virtual machine from
 // unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks].
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// options - VirtualMachinesBeginConvertToManagedDisksOptions contains the optional parameters for the VirtualMachines.BeginConvertToManagedDisks
+// method.
 func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginConvertToManagedDisksOptions) (VirtualMachinesConvertToManagedDisksPollerResponse, error) {
 	resp, err := client.convertToManagedDisks(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -147,10 +161,10 @@ func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Cont
 	return result, nil
 }
 
-// ConvertToManagedDisks - Converts virtual machine disks from blob-based to managed disks. Virtual machine must be stop-deallocated before invoking this
-// operation. For Windows, please refer to Convert a virtual machine from
-// unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks]. For Linux, please
-// refer to Convert a virtual machine from
+// ConvertToManagedDisks - Converts virtual machine disks from blob-based to managed disks. Virtual machine must be stop-deallocated
+// before invoking this operation. For Windows, please refer to Convert a virtual machine from
+// unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks].
+// For Linux, please refer to Convert a virtual machine from
 // unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks].
 // If the operation fails it returns a generic error.
 func (client *VirtualMachinesClient) convertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginConvertToManagedDisksOptions) (*http.Response, error) {
@@ -205,8 +219,14 @@ func (client *VirtualMachinesClient) convertToManagedDisksHandleError(resp *http
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// BeginCreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.
+// BeginCreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only
+// during virtual machine creation.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// parameters - Parameters supplied to the Create Virtual Machine operation.
+// options - VirtualMachinesBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachines.BeginCreateOrUpdate
+// method.
 func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesBeginCreateOrUpdateOptions) (VirtualMachinesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
@@ -225,7 +245,8 @@ func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, re
 	return result, nil
 }
 
-// CreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.
+// CreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only during
+// virtual machine creation.
 // If the operation fails it returns a generic error.
 func (client *VirtualMachinesClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
@@ -280,9 +301,13 @@ func (client *VirtualMachinesClient) createOrUpdateHandleError(resp *http.Respon
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// BeginDeallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute resources that this virtual machine
-// uses.
+// BeginDeallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute
+// resources that this virtual machine uses.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// options - VirtualMachinesBeginDeallocateOptions contains the optional parameters for the VirtualMachines.BeginDeallocate
+// method.
 func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginDeallocateOptions) (VirtualMachinesDeallocatePollerResponse, error) {
 	resp, err := client.deallocate(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -301,8 +326,8 @@ func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resour
 	return result, nil
 }
 
-// Deallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute resources that this virtual machine
-// uses.
+// Deallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute resources
+// that this virtual machine uses.
 // If the operation fails it returns a generic error.
 func (client *VirtualMachinesClient) deallocate(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginDeallocateOptions) (*http.Response, error) {
 	req, err := client.deallocateCreateRequest(ctx, resourceGroupName, vmName, options)
@@ -358,6 +383,9 @@ func (client *VirtualMachinesClient) deallocateHandleError(resp *http.Response) 
 
 // BeginDelete - The operation to delete a virtual machine.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// options - VirtualMachinesBeginDeleteOptions contains the optional parameters for the VirtualMachines.BeginDelete method.
 func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginDeleteOptions) (VirtualMachinesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -430,12 +458,15 @@ func (client *VirtualMachinesClient) deleteHandleError(resp *http.Response) erro
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// Generalize - Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine before performing this operation.
-// For Windows, please refer to Create a managed image of a
-// generalized VM in Azure [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource]. For Linux, please refer to How to create
-// an image of a virtual machine or VHD
+// Generalize - Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine
+// before performing this operation. For Windows, please refer to Create a managed image of a
+// generalized VM in Azure [https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource]. For Linux,
+// please refer to How to create an image of a virtual machine or VHD
 // [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image].
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// options - VirtualMachinesGeneralizeOptions contains the optional parameters for the VirtualMachines.Generalize method.
 func (client *VirtualMachinesClient) Generalize(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGeneralizeOptions) (VirtualMachinesGeneralizeResponse, error) {
 	req, err := client.generalizeCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -490,6 +521,9 @@ func (client *VirtualMachinesClient) generalizeHandleError(resp *http.Response) 
 
 // Get - Retrieves information about the model view or the instance view of a virtual machine.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// options - VirtualMachinesGetOptions contains the optional parameters for the VirtualMachines.Get method.
 func (client *VirtualMachinesClient) Get(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGetOptions) (VirtualMachinesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -557,6 +591,9 @@ func (client *VirtualMachinesClient) getHandleError(resp *http.Response) error {
 
 // InstanceView - Retrieves information about the run-time state of a virtual machine.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// options - VirtualMachinesInstanceViewOptions contains the optional parameters for the VirtualMachines.InstanceView method.
 func (client *VirtualMachinesClient) InstanceView(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesInstanceViewOptions) (VirtualMachinesInstanceViewResponse, error) {
 	req, err := client.instanceViewCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -619,8 +656,11 @@ func (client *VirtualMachinesClient) instanceViewHandleError(resp *http.Response
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// List - Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response to get the next page of virtual machines.
+// List - Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response to
+// get the next page of virtual machines.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// options - VirtualMachinesListOptions contains the optional parameters for the VirtualMachines.List method.
 func (client *VirtualMachinesClient) List(resourceGroupName string, options *VirtualMachinesListOptions) *VirtualMachinesListPager {
 	return &VirtualMachinesListPager{
 		client: client,
@@ -676,9 +716,10 @@ func (client *VirtualMachinesClient) listHandleError(resp *http.Response) error 
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// ListAll - Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual
-// machines.
+// ListAll - Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to
+// get the next page of virtual machines.
 // If the operation fails it returns a generic error.
+// options - VirtualMachinesListAllOptions contains the optional parameters for the VirtualMachines.ListAll method.
 func (client *VirtualMachinesClient) ListAll(options *VirtualMachinesListAllOptions) *VirtualMachinesListAllPager {
 	return &VirtualMachinesListAllPager{
 		client: client,
@@ -735,6 +776,10 @@ func (client *VirtualMachinesClient) listAllHandleError(resp *http.Response) err
 
 // ListAvailableSizes - Lists all available virtual machine sizes to which the specified virtual machine can be resized.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// options - VirtualMachinesListAvailableSizesOptions contains the optional parameters for the VirtualMachines.ListAvailableSizes
+// method.
 func (client *VirtualMachinesClient) ListAvailableSizes(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesListAvailableSizesOptions) (VirtualMachinesListAvailableSizesResponse, error) {
 	req, err := client.listAvailableSizesCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -799,6 +844,9 @@ func (client *VirtualMachinesClient) listAvailableSizesHandleError(resp *http.Re
 
 // ListByLocation - Gets all the virtual machines under the specified subscription for the specified location.
 // If the operation fails it returns a generic error.
+// location - The location for which virtual machines under the subscription are queried.
+// options - VirtualMachinesListByLocationOptions contains the optional parameters for the VirtualMachines.ListByLocation
+// method.
 func (client *VirtualMachinesClient) ListByLocation(location string, options *VirtualMachinesListByLocationOptions) *VirtualMachinesListByLocationPager {
 	return &VirtualMachinesListByLocationPager{
 		client: client,
@@ -854,9 +902,13 @@ func (client *VirtualMachinesClient) listByLocationHandleError(resp *http.Respon
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// BeginPerformMaintenance - Shuts down the virtual machine, moves it to an already updated node, and powers it back on during the self-service phase of
-// planned maintenance.
+// BeginPerformMaintenance - Shuts down the virtual machine, moves it to an already updated node, and powers it back on during
+// the self-service phase of planned maintenance.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// options - VirtualMachinesBeginPerformMaintenanceOptions contains the optional parameters for the VirtualMachines.BeginPerformMaintenance
+// method.
 func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginPerformMaintenanceOptions) (VirtualMachinesPerformMaintenancePollerResponse, error) {
 	resp, err := client.performMaintenance(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -875,8 +927,8 @@ func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context
 	return result, nil
 }
 
-// PerformMaintenance - Shuts down the virtual machine, moves it to an already updated node, and powers it back on during the self-service phase of planned
-// maintenance.
+// PerformMaintenance - Shuts down the virtual machine, moves it to an already updated node, and powers it back on during
+// the self-service phase of planned maintenance.
 // If the operation fails it returns a generic error.
 func (client *VirtualMachinesClient) performMaintenance(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginPerformMaintenanceOptions) (*http.Response, error) {
 	req, err := client.performMaintenanceCreateRequest(ctx, resourceGroupName, vmName, options)
@@ -930,9 +982,12 @@ func (client *VirtualMachinesClient) performMaintenanceHandleError(resp *http.Re
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// BeginPowerOff - The operation to power off (stop) a virtual machine. The virtual machine can be restarted with the same provisioned resources. You are
-// still charged for this virtual machine.
+// BeginPowerOff - The operation to power off (stop) a virtual machine. The virtual machine can be restarted with the same
+// provisioned resources. You are still charged for this virtual machine.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// options - VirtualMachinesBeginPowerOffOptions contains the optional parameters for the VirtualMachines.BeginPowerOff method.
 func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginPowerOffOptions) (VirtualMachinesPowerOffPollerResponse, error) {
 	resp, err := client.powerOff(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -951,8 +1006,8 @@ func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resource
 	return result, nil
 }
 
-// PowerOff - The operation to power off (stop) a virtual machine. The virtual machine can be restarted with the same provisioned resources. You are still
-// charged for this virtual machine.
+// PowerOff - The operation to power off (stop) a virtual machine. The virtual machine can be restarted with the same provisioned
+// resources. You are still charged for this virtual machine.
 // If the operation fails it returns a generic error.
 func (client *VirtualMachinesClient) powerOff(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginPowerOffOptions) (*http.Response, error) {
 	req, err := client.powerOffCreateRequest(ctx, resourceGroupName, vmName, options)
@@ -1011,6 +1066,9 @@ func (client *VirtualMachinesClient) powerOffHandleError(resp *http.Response) er
 
 // BeginReapply - The operation to reapply a virtual machine's state.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// options - VirtualMachinesBeginReapplyOptions contains the optional parameters for the VirtualMachines.BeginReapply method.
 func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginReapplyOptions) (VirtualMachinesReapplyPollerResponse, error) {
 	resp, err := client.reapply(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -1087,6 +1145,9 @@ func (client *VirtualMachinesClient) reapplyHandleError(resp *http.Response) err
 
 // BeginRedeploy - Shuts down the virtual machine, moves it to a new node, and powers it back on.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// options - VirtualMachinesBeginRedeployOptions contains the optional parameters for the VirtualMachines.BeginRedeploy method.
 func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginRedeployOptions) (VirtualMachinesRedeployPollerResponse, error) {
 	resp, err := client.redeploy(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -1161,6 +1222,9 @@ func (client *VirtualMachinesClient) redeployHandleError(resp *http.Response) er
 
 // BeginReimage - Reimages the virtual machine which has an ephemeral OS disk back to its initial state.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// options - VirtualMachinesBeginReimageOptions contains the optional parameters for the VirtualMachines.BeginReimage method.
 func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginReimageOptions) (VirtualMachinesReimagePollerResponse, error) {
 	resp, err := client.reimage(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -1238,6 +1302,9 @@ func (client *VirtualMachinesClient) reimageHandleError(resp *http.Response) err
 
 // BeginRestart - The operation to restart a virtual machine.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// options - VirtualMachinesBeginRestartOptions contains the optional parameters for the VirtualMachines.BeginRestart method.
 func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginRestartOptions) (VirtualMachinesRestartPollerResponse, error) {
 	resp, err := client.restart(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -1312,6 +1379,11 @@ func (client *VirtualMachinesClient) restartHandleError(resp *http.Response) err
 
 // BeginRunCommand - Run command on the VM.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// parameters - Parameters supplied to the Run command operation.
+// options - VirtualMachinesBeginRunCommandOptions contains the optional parameters for the VirtualMachines.BeginRunCommand
+// method.
 func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesBeginRunCommandOptions) (VirtualMachinesRunCommandPollerResponse, error) {
 	resp, err := client.runCommand(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
@@ -1385,8 +1457,13 @@ func (client *VirtualMachinesClient) runCommandHandleError(resp *http.Response) 
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// SimulateEviction - The operation to simulate the eviction of spot virtual machine. The eviction will occur within 30 minutes of calling the API
+// SimulateEviction - The operation to simulate the eviction of spot virtual machine. The eviction will occur within 30 minutes
+// of calling the API
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// options - VirtualMachinesSimulateEvictionOptions contains the optional parameters for the VirtualMachines.SimulateEviction
+// method.
 func (client *VirtualMachinesClient) SimulateEviction(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesSimulateEvictionOptions) (VirtualMachinesSimulateEvictionResponse, error) {
 	req, err := client.simulateEvictionCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -1441,6 +1518,9 @@ func (client *VirtualMachinesClient) simulateEvictionHandleError(resp *http.Resp
 
 // BeginStart - The operation to start a virtual machine.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// options - VirtualMachinesBeginStartOptions contains the optional parameters for the VirtualMachines.BeginStart method.
 func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginStartOptions) (VirtualMachinesStartPollerResponse, error) {
 	resp, err := client.start(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -1515,6 +1595,10 @@ func (client *VirtualMachinesClient) startHandleError(resp *http.Response) error
 
 // BeginUpdate - The operation to update a virtual machine.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmName - The name of the virtual machine.
+// parameters - Parameters supplied to the Update Virtual Machine operation.
+// options - VirtualMachinesBeginUpdateOptions contains the optional parameters for the VirtualMachines.BeginUpdate method.
 func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesBeginUpdateOptions) (VirtualMachinesUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {

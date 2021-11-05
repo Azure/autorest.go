@@ -30,6 +30,8 @@ type ReservationsSummariesClient struct {
 }
 
 // NewReservationsSummariesClient creates a new instance of ReservationsSummariesClient with the specified values.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewReservationsSummariesClient(credential azcore.TokenCredential, options *arm.ClientOptions) *ReservationsSummariesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -47,6 +49,12 @@ func NewReservationsSummariesClient(credential azcore.TokenCredential, options *
 
 // List - Lists the reservations summaries for the defined scope daily or monthly grain.
 // If the operation fails it returns the *ErrorResponse error type.
+// scope - The scope associated with reservations summaries operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
+// for BillingAccount scope (legacy), and
+// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile
+// scope (modern).
+// grain - Can be daily or monthly
+// options - ReservationsSummariesListOptions contains the optional parameters for the ReservationsSummaries.List method.
 func (client *ReservationsSummariesClient) List(scope string, grain Datagrain, options *ReservationsSummariesListOptions) *ReservationsSummariesListPager {
 	return &ReservationsSummariesListPager{
 		client: client,
@@ -114,6 +122,10 @@ func (client *ReservationsSummariesClient) listHandleError(resp *http.Response) 
 
 // ListByReservationOrder - Lists the reservations summaries for daily or monthly grain.
 // If the operation fails it returns the *ErrorResponse error type.
+// reservationOrderID - Order Id of the reservation
+// grain - Can be daily or monthly
+// options - ReservationsSummariesListByReservationOrderOptions contains the optional parameters for the ReservationsSummaries.ListByReservationOrder
+// method.
 func (client *ReservationsSummariesClient) ListByReservationOrder(reservationOrderID string, grain Datagrain, options *ReservationsSummariesListByReservationOrderOptions) *ReservationsSummariesListByReservationOrderPager {
 	return &ReservationsSummariesListByReservationOrderPager{
 		client: client,
@@ -172,6 +184,11 @@ func (client *ReservationsSummariesClient) listByReservationOrderHandleError(res
 
 // ListByReservationOrderAndReservation - Lists the reservations summaries for daily or monthly grain.
 // If the operation fails it returns the *ErrorResponse error type.
+// reservationOrderID - Order Id of the reservation
+// reservationID - Id of the reservation
+// grain - Can be daily or monthly
+// options - ReservationsSummariesListByReservationOrderAndReservationOptions contains the optional parameters for the ReservationsSummaries.ListByReservationOrderAndReservation
+// method.
 func (client *ReservationsSummariesClient) ListByReservationOrderAndReservation(reservationOrderID string, reservationID string, grain Datagrain, options *ReservationsSummariesListByReservationOrderAndReservationOptions) *ReservationsSummariesListByReservationOrderAndReservationPager {
 	return &ReservationsSummariesListByReservationOrderAndReservationPager{
 		client: client,

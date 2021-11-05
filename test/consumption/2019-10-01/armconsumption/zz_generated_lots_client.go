@@ -28,6 +28,8 @@ type LotsClient struct {
 }
 
 // NewLotsClient creates a new instance of LotsClient with the specified values.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewLotsClient(credential azcore.TokenCredential, options *arm.ClientOptions) *LotsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -45,6 +47,10 @@ func NewLotsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 
 // List - Lists the lots by billingAccountId and billingProfileId.
 // If the operation fails it returns the *ErrorResponse error type.
+// scope - The scope associated with Lots operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
+// for Billing Profile scope, and
+// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
+// options - LotsListOptions contains the optional parameters for the Lots.List method.
 func (client *LotsClient) List(scope string, options *LotsListOptions) *LotsListPager {
 	return &LotsListPager{
 		client: client,

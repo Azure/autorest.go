@@ -30,6 +30,10 @@ type VirtualMachineSizesClient struct {
 }
 
 // NewVirtualMachineSizesClient creates a new instance of VirtualMachineSizesClient with the specified values.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewVirtualMachineSizesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualMachineSizesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -48,6 +52,8 @@ func NewVirtualMachineSizesClient(subscriptionID string, credential azcore.Token
 
 // List - This API is deprecated. Use Resources Skus [https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list]
 // If the operation fails it returns a generic error.
+// location - The location upon which virtual-machine-sizes is queried.
+// options - VirtualMachineSizesListOptions contains the optional parameters for the VirtualMachineSizes.List method.
 func (client *VirtualMachineSizesClient) List(ctx context.Context, location string, options *VirtualMachineSizesListOptions) (VirtualMachineSizesListResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, options)
 	if err != nil {

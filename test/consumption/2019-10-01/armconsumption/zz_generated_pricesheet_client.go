@@ -32,6 +32,9 @@ type PriceSheetClient struct {
 }
 
 // NewPriceSheetClient creates a new instance of PriceSheetClient with the specified values.
+// subscriptionID - Azure Subscription ID.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewPriceSheetClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *PriceSheetClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -48,8 +51,10 @@ func NewPriceSheetClient(subscriptionID string, credential azcore.TokenCredentia
 	return client
 }
 
-// Get - Gets the price sheet for a scope by subscriptionId. Price sheet is available via this API only for May 1, 2014 or later.
+// Get - Gets the price sheet for a scope by subscriptionId. Price sheet is available via this API only for May 1, 2014 or
+// later.
 // If the operation fails it returns the *ErrorResponse error type.
+// options - PriceSheetGetOptions contains the optional parameters for the PriceSheet.Get method.
 func (client *PriceSheetClient) Get(ctx context.Context, options *PriceSheetGetOptions) (PriceSheetGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -114,9 +119,11 @@ func (client *PriceSheetClient) getHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetByBillingPeriod - Get the price sheet for a scope by subscriptionId and billing period. Price sheet is available via this API only for May 1, 2014
-// or later.
+// GetByBillingPeriod - Get the price sheet for a scope by subscriptionId and billing period. Price sheet is available via
+// this API only for May 1, 2014 or later.
 // If the operation fails it returns the *ErrorResponse error type.
+// billingPeriodName - Billing Period Name.
+// options - PriceSheetGetByBillingPeriodOptions contains the optional parameters for the PriceSheet.GetByBillingPeriod method.
 func (client *PriceSheetClient) GetByBillingPeriod(ctx context.Context, billingPeriodName string, options *PriceSheetGetByBillingPeriodOptions) (PriceSheetGetByBillingPeriodResponse, error) {
 	req, err := client.getByBillingPeriodCreateRequest(ctx, billingPeriodName, options)
 	if err != nil {

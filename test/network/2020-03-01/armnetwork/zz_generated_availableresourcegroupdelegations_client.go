@@ -31,6 +31,10 @@ type AvailableResourceGroupDelegationsClient struct {
 }
 
 // NewAvailableResourceGroupDelegationsClient creates a new instance of AvailableResourceGroupDelegationsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewAvailableResourceGroupDelegationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *AvailableResourceGroupDelegationsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,10 @@ func NewAvailableResourceGroupDelegationsClient(subscriptionID string, credentia
 
 // List - Gets all of the available subnet delegations for this resource group in this region.
 // If the operation fails it returns the *CloudError error type.
+// location - The location of the domain name.
+// resourceGroupName - The name of the resource group.
+// options - AvailableResourceGroupDelegationsListOptions contains the optional parameters for the AvailableResourceGroupDelegations.List
+// method.
 func (client *AvailableResourceGroupDelegationsClient) List(location string, resourceGroupName string, options *AvailableResourceGroupDelegationsListOptions) *AvailableResourceGroupDelegationsListPager {
 	return &AvailableResourceGroupDelegationsListPager{
 		client: client,

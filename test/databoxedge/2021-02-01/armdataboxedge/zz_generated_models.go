@@ -542,7 +542,8 @@ func (b BandwidthScheduleProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// BandwidthSchedulesBeginCreateOrUpdateOptions contains the optional parameters for the BandwidthSchedules.BeginCreateOrUpdate method.
+// BandwidthSchedulesBeginCreateOrUpdateOptions contains the optional parameters for the BandwidthSchedules.BeginCreateOrUpdate
+// method.
 type BandwidthSchedulesBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -574,7 +575,8 @@ func (b BandwidthSchedulesList) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// BandwidthSchedulesListByDataBoxEdgeDeviceOptions contains the optional parameters for the BandwidthSchedules.ListByDataBoxEdgeDevice method.
+// BandwidthSchedulesListByDataBoxEdgeDeviceOptions contains the optional parameters for the BandwidthSchedules.ListByDataBoxEdgeDevice
+// method.
 type BandwidthSchedulesListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
 }
@@ -588,10 +590,10 @@ type ClientAccessRight struct {
 	Client *string `json:"client,omitempty"`
 }
 
-// CloudEdgeManagementRole - The preview of Virtual Machine Cloud Management from the Azure supports deploying and managing VMs on your Azure Stack Edge
-// device from Azure Portal. For more information, refer to:
-// https://docs.microsoft.com/en-us/azure/databox-online/azure-stack-edge-gpu-virtual-machine-overview By using this feature, you agree to the preview legal
-// terms. See the
+// CloudEdgeManagementRole - The preview of Virtual Machine Cloud Management from the Azure supports deploying and managing
+// VMs on your Azure Stack Edge device from Azure Portal. For more information, refer to:
+// https://docs.microsoft.com/en-us/azure/databox-online/azure-stack-edge-gpu-virtual-machine-overview By using this feature,
+// you agree to the preview legal terms. See the
 // https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/ for additional details.
 type CloudEdgeManagementRole struct {
 	Role
@@ -882,8 +884,8 @@ type DCAccessCodeProperties struct {
 // DataBoxEdgeDevice - The Data Box Edge/Gateway device.
 type DataBoxEdgeDevice struct {
 	ARMBaseModel
-	// REQUIRED; The location of the device. This is a supported and registered Azure geographical region (for example, West US, East US, or Southeast Asia).
-	// The geographical region of a device cannot be changed once
+	// REQUIRED; The location of the device. This is a supported and registered Azure geographical region (for example, West US,
+	// East US, or Southeast Asia). The geographical region of a device cannot be changed once
 	// it is created, but if an identical geographical region is specified on update, the request will succeed.
 	Location *string `json:"location,omitempty"`
 
@@ -1020,7 +1022,8 @@ type DataBoxEdgeDeviceExtendedInfoPatch struct {
 	// The url to access the Client Key Vault
 	ClientSecretStoreURL *string `json:"clientSecretStoreUrl,omitempty"`
 
-	// For changing or to initiate the resync to key-vault set the status to KeyVaultSyncPending, rest of the status will not be applicable.
+	// For changing or to initiate the resync to key-vault set the status to KeyVaultSyncPending, rest of the status will not
+	// be applicable.
 	SyncStatus *KeyVaultSyncStatus `json:"syncStatus,omitempty"`
 }
 
@@ -1303,7 +1306,8 @@ type DataResidency struct {
 	Type *DataResidencyType `json:"type,omitempty"`
 }
 
-// DevicesBeginCreateOrUpdateSecuritySettingsOptions contains the optional parameters for the Devices.BeginCreateOrUpdateSecuritySettings method.
+// DevicesBeginCreateOrUpdateSecuritySettingsOptions contains the optional parameters for the Devices.BeginCreateOrUpdateSecuritySettings
+// method.
 type DevicesBeginCreateOrUpdateSecuritySettingsOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1360,13 +1364,15 @@ type DevicesGetUpdateSummaryOptions struct {
 
 // DevicesListByResourceGroupOptions contains the optional parameters for the Devices.ListByResourceGroup method.
 type DevicesListByResourceGroupOptions struct {
-	// Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=<token> to populate the next page in the list.
+	// Specify $expand=details to populate additional fields related to the resource or Specify $skipToken= to populate the next
+	// page in the list.
 	Expand *string
 }
 
 // DevicesListBySubscriptionOptions contains the optional parameters for the Devices.ListBySubscription method.
 type DevicesListBySubscriptionOptions struct {
-	// Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=<token> to populate the next page in the list.
+	// Specify $expand=details to populate additional fields related to the resource or Specify $skipToken= to populate the next
+	// page in the list.
 	Expand *string
 }
 
@@ -1604,8 +1610,8 @@ type FileTriggerProperties struct {
 	// REQUIRED; File event source details.
 	SourceInfo *FileSourceInfo `json:"sourceInfo,omitempty"`
 
-	// A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific
-	// IoT modules in the device, the tag can be the
+	// A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger
+	// is intended for certain specific IoT modules in the device, the tag can be the
 	// name or the image URL of the module.
 	CustomContextTag *string `json:"customContextTag,omitempty"`
 }
@@ -1732,7 +1738,8 @@ type IoTDeviceInfo struct {
 	IoTHostHubID *string `json:"ioTHostHubId,omitempty"`
 }
 
-// IoTEdgeAgentInfo - IoT edge agent details is optional, this will be used for download system Agent module while bootstrapping IoT Role if specified.
+// IoTEdgeAgentInfo - IoT edge agent details is optional, this will be used for download system Agent module while bootstrapping
+// IoT Role if specified.
 type IoTEdgeAgentInfo struct {
 	// REQUIRED; Name of the IoT edge agent image.
 	ImageName *string `json:"imageName,omitempty"`
@@ -1956,7 +1963,8 @@ func (j JobErrorItem) MarshalJSON() ([]byte, error) {
 
 // JobProperties - The properties for the job.
 type JobProperties struct {
-	// If only subfolders need to be refreshed, then the subfolder path inside the share or container. (The path is empty if there are no subfolders.)
+	// If only subfolders need to be refreshed, then the subfolder path inside the share or container. (The path is empty if there
+	// are no subfolders.)
 	Folder *string `json:"folder,omitempty"`
 
 	// READ-ONLY; Current stage of the update operation.
@@ -2018,13 +2026,15 @@ type KubernetesIPConfiguration struct {
 
 // KubernetesRole - The limited preview of Kubernetes Cluster Management from the Azure supports:
 // 1. Using a simple turn-key option in Azure Portal, deploy a Kubernetes cluster on your Azure Stack Edge device.
-// 2. Configure Kubernetes cluster running on your device with Arc enabled Kubernetes with a click of a button in the Azure Portal. Azure Arc enables organizations
-// to view, manage, and govern their
+// 2. Configure Kubernetes cluster running on your device with Arc enabled Kubernetes with a click of a button in the Azure
+// Portal. Azure Arc enables organizations to view, manage, and govern their
 // on-premises Kubernetes clusters using the Azure Portal, command line tools, and APIs.
-// 3. Easily configure Persistent Volumes using SMB and NFS shares for storing container data. For more information, refer to the document here:
-// https://databoxupdatepackages.blob.core.windows.net/documentation/Microsoft-Azure-Stack-Edge-K8-Cloud-Management-20210323.pdf Or Demo:
-// https://databoxupdatepackages.blob.core.windows.net/documentation/Microsoft-Azure-Stack-Edge-K8S-Cloud-Management-20210323.mp4 By using this feature,
-// you agree to the preview legal terms. See the
+// 3. Easily configure Persistent Volumes using SMB and NFS shares for storing container data. For more information, refer
+// to the document here:
+// https://databoxupdatepackages.blob.core.windows.net/documentation/Microsoft-Azure-Stack-Edge-K8-Cloud-Management-20210323.pdf
+// Or Demo:
+// https://databoxupdatepackages.blob.core.windows.net/documentation/Microsoft-Azure-Stack-Edge-K8S-Cloud-Management-20210323.mp4
+// By using this feature, you agree to the preview legal terms. See the
 // https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/
 type KubernetesRole struct {
 	Role
@@ -2345,7 +2355,8 @@ func (m MetricSpecificationV1) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// MonitoringConfigBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfig.BeginCreateOrUpdate method.
+// MonitoringConfigBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfig.BeginCreateOrUpdate
+// method.
 type MonitoringConfigBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2594,8 +2605,8 @@ func (n NetworkSettingsProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// Node - Represents a single node in a Data box Edge/Gateway device Gateway devices, standalone Edge devices and a single node cluster Edge device will
-// all have 1 node Multi-node Edge devices will have more
+// Node - Represents a single node in a Data box Edge/Gateway device Gateway devices, standalone Edge devices and a single
+// node cluster Edge device will all have 1 node Multi-node Edge devices will have more
 // than 1 nodes
 type Node struct {
 	ARMBaseModel
@@ -2849,7 +2860,8 @@ type OrderProperties struct {
 	// READ-ONLY; List of status changes in the order.
 	OrderHistory []*OrderStatus `json:"orderHistory,omitempty" azure:"ro"`
 
-	// READ-ONLY; Tracking information for the package returned from the customer whether it has an original or a replacement device.
+	// READ-ONLY; Tracking information for the package returned from the customer whether it has an original or a replacement
+	// device.
 	ReturnTrackingInfo []*TrackingInfo `json:"returnTrackingInfo,omitempty" azure:"ro"`
 
 	// READ-ONLY; Serial number of the device.
@@ -3002,8 +3014,8 @@ type PeriodicTimerProperties struct {
 	// REQUIRED; Periodic timer details.
 	SourceInfo *PeriodicTimerSourceInfo `json:"sourceInfo,omitempty"`
 
-	// A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific
-	// IoT modules in the device, the tag can be the
+	// A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger
+	// is intended for certain specific IoT modules in the device, the tag can be the
 	// name or the image URL of the module.
 	CustomContextTag *string `json:"customContextTag,omitempty"`
 }
@@ -3013,8 +3025,8 @@ type PeriodicTimerSourceInfo struct {
 	// REQUIRED; Periodic frequency at which timer event needs to be raised. Supports daily, hourly, minutes, and seconds.
 	Schedule *string `json:"schedule,omitempty"`
 
-	// REQUIRED; The time of the day that results in a valid trigger. Schedule is computed with reference to the time specified upto seconds. If timezone is
-	// not specified the time will considered to be in device
+	// REQUIRED; The time of the day that results in a valid trigger. Schedule is computed with reference to the time specified
+	// upto seconds. If timezone is not specified the time will considered to be in device
 	// timezone. The value will always be returned as UTC time.
 	StartTime *time.Time `json:"startTime,omitempty"`
 
@@ -3074,18 +3086,20 @@ type RawCertificateData struct {
 
 // RefreshDetails - Fields for tracking refresh job on the share or container.
 type RefreshDetails struct {
-	// Indicates the relative path of the error xml for the last refresh job on this particular share or container, if any. This could be a failed job or a
-	// successful job.
+	// Indicates the relative path of the error xml for the last refresh job on this particular share or container, if any. This
+	// could be a failed job or a successful job.
 	ErrorManifestFile *string `json:"errorManifestFile,omitempty"`
 
-	// If a refresh job is currently in progress on this share or container, this field indicates the ARM resource ID of that job. The field is empty if no
-	// job is in progress.
+	// If a refresh job is currently in progress on this share or container, this field indicates the ARM resource ID of that
+	// job. The field is empty if no job is in progress.
 	InProgressRefreshJobID *string `json:"inProgressRefreshJobId,omitempty"`
 
-	// Indicates the completed time for the last refresh job on this particular share or container, if any.This could be a failed job or a successful job.
+	// Indicates the completed time for the last refresh job on this particular share or container, if any.This could be a failed
+	// job or a successful job.
 	LastCompletedRefreshJobTimeInUTC *time.Time `json:"lastCompletedRefreshJobTimeInUTC,omitempty"`
 
-	// Indicates the id of the last refresh job on this particular share or container,if any. This could be a failed job or a successful job.
+	// Indicates the id of the last refresh job on this particular share or container,if any. This could be a failed job or a
+	// successful job.
 	LastJob *string `json:"lastJob,omitempty"`
 }
 
@@ -3531,8 +3545,8 @@ func (s *SecuritySettings) UnmarshalJSON(data []byte) error {
 
 // SecuritySettingsProperties - The properties of security settings.
 type SecuritySettingsProperties struct {
-	// REQUIRED; Device administrator password as an encrypted string (encrypted using RSA PKCS #1) is used to sign into the local web UI of the device. The
-	// Actual password should have at least 8 characters that are a
+	// REQUIRED; Device administrator password as an encrypted string (encrypted using RSA PKCS #1) is used to sign into the local
+	// web UI of the device. The Actual password should have at least 8 characters that are a
 	// combination of uppercase, lowercase, numeric, and special characters.
 	DeviceAdminPassword *AsymmetricEncryptedSecret `json:"deviceAdminPassword,omitempty"`
 }
@@ -3829,12 +3843,14 @@ type StorageAccountCredentialProperties struct {
 	UserName *string `json:"userName,omitempty"`
 }
 
-// StorageAccountCredentialsBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountCredentials.BeginCreateOrUpdate method.
+// StorageAccountCredentialsBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountCredentials.BeginCreateOrUpdate
+// method.
 type StorageAccountCredentialsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StorageAccountCredentialsBeginDeleteOptions contains the optional parameters for the StorageAccountCredentials.BeginDelete method.
+// StorageAccountCredentialsBeginDeleteOptions contains the optional parameters for the StorageAccountCredentials.BeginDelete
+// method.
 type StorageAccountCredentialsBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
@@ -3844,7 +3860,8 @@ type StorageAccountCredentialsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StorageAccountCredentialsListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountCredentials.ListByDataBoxEdgeDevice method.
+// StorageAccountCredentialsListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountCredentials.ListByDataBoxEdgeDevice
+// method.
 type StorageAccountCredentialsListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
 }
@@ -3887,7 +3904,8 @@ type StorageAccountProperties struct {
 	ContainerCount *int32 `json:"containerCount,omitempty" azure:"ro"`
 }
 
-// StorageAccountsBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccounts.BeginCreateOrUpdate method.
+// StorageAccountsBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccounts.BeginCreateOrUpdate
+// method.
 type StorageAccountsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -3902,7 +3920,8 @@ type StorageAccountsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StorageAccountsListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccounts.ListByDataBoxEdgeDevice method.
+// StorageAccountsListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccounts.ListByDataBoxEdgeDevice
+// method.
 type StorageAccountsListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
 }
@@ -3933,8 +3952,8 @@ type SubscriptionRegisteredFeatures struct {
 
 // SupportPackageRequestProperties - The share properties.
 type SupportPackageRequestProperties struct {
-	// Type of files, which need to be included in the logs This will contain the type of logs (Default/DefaultWithDumps/None/All/DefaultWithArchived) or a
-	// comma separated list of log types that are required
+	// Type of files, which need to be included in the logs This will contain the type of logs (Default/DefaultWithDumps/None/All/DefaultWithArchived)
+	// or a comma separated list of log types that are required
 	Include *string `json:"include,omitempty"`
 
 	// MaximumTimeStamp until where logs need to be collected
@@ -3979,7 +3998,8 @@ func (s *SupportPackageRequestProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// SupportPackagesBeginTriggerSupportPackageOptions contains the optional parameters for the SupportPackages.BeginTriggerSupportPackage method.
+// SupportPackagesBeginTriggerSupportPackageOptions contains the optional parameters for the SupportPackages.BeginTriggerSupportPackage
+// method.
 type SupportPackagesBeginTriggerSupportPackageOptions struct {
 	// placeholder for future optional parameters
 }
@@ -4227,7 +4247,7 @@ type TriggersGetOptions struct {
 
 // TriggersListByDataBoxEdgeDeviceOptions contains the optional parameters for the Triggers.ListByDataBoxEdgeDevice method.
 type TriggersListByDataBoxEdgeDeviceOptions struct {
-	// Specify $filter='CustomContextTag eq <tag>' to filter on custom context tag property
+	// Specify $filter='CustomContextTag eq ' to filter on custom context tag property
 	Filter *string
 }
 
@@ -4682,7 +4702,7 @@ type UsersGetOptions struct {
 
 // UsersListByDataBoxEdgeDeviceOptions contains the optional parameters for the Users.ListByDataBoxEdgeDevice method.
 type UsersListByDataBoxEdgeDeviceOptions struct {
-	// Specify $filter='Type eq <type>' to filter on user type property
+	// Specify $filter='Type eq ' to filter on user type property
 	Filter *string
 }
 

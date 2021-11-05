@@ -31,6 +31,10 @@ type VirtualNetworkPeeringsClient struct {
 }
 
 // NewVirtualNetworkPeeringsClient creates a new instance of VirtualNetworkPeeringsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewVirtualNetworkPeeringsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualNetworkPeeringsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,12 @@ func NewVirtualNetworkPeeringsClient(subscriptionID string, credential azcore.To
 
 // BeginCreateOrUpdate - Creates or updates a peering in the specified virtual network.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// virtualNetworkName - The name of the virtual network.
+// virtualNetworkPeeringName - The name of the peering.
+// virtualNetworkPeeringParameters - Parameters supplied to the create or update virtual network peering operation.
+// options - VirtualNetworkPeeringsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkPeerings.BeginCreateOrUpdate
+// method.
 func (client *VirtualNetworkPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, virtualNetworkPeeringParameters VirtualNetworkPeering, options *VirtualNetworkPeeringsBeginCreateOrUpdateOptions) (VirtualNetworkPeeringsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters, options)
 	if err != nil {
@@ -129,6 +139,11 @@ func (client *VirtualNetworkPeeringsClient) createOrUpdateHandleError(resp *http
 
 // BeginDelete - Deletes the specified virtual network peering.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// virtualNetworkName - The name of the virtual network.
+// virtualNetworkPeeringName - The name of the virtual network peering.
+// options - VirtualNetworkPeeringsBeginDeleteOptions contains the optional parameters for the VirtualNetworkPeerings.BeginDelete
+// method.
 func (client *VirtualNetworkPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, options *VirtualNetworkPeeringsBeginDeleteOptions) (VirtualNetworkPeeringsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, options)
 	if err != nil {
@@ -209,6 +224,10 @@ func (client *VirtualNetworkPeeringsClient) deleteHandleError(resp *http.Respons
 
 // Get - Gets the specified virtual network peering.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// virtualNetworkName - The name of the virtual network.
+// virtualNetworkPeeringName - The name of the virtual network peering.
+// options - VirtualNetworkPeeringsGetOptions contains the optional parameters for the VirtualNetworkPeerings.Get method.
 func (client *VirtualNetworkPeeringsClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, options *VirtualNetworkPeeringsGetOptions) (VirtualNetworkPeeringsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, options)
 	if err != nil {
@@ -278,6 +297,9 @@ func (client *VirtualNetworkPeeringsClient) getHandleError(resp *http.Response) 
 
 // List - Gets all virtual network peerings in a virtual network.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// virtualNetworkName - The name of the virtual network.
+// options - VirtualNetworkPeeringsListOptions contains the optional parameters for the VirtualNetworkPeerings.List method.
 func (client *VirtualNetworkPeeringsClient) List(resourceGroupName string, virtualNetworkName string, options *VirtualNetworkPeeringsListOptions) *VirtualNetworkPeeringsListPager {
 	return &VirtualNetworkPeeringsListPager{
 		client: client,

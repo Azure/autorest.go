@@ -31,6 +31,10 @@ type GalleriesClient struct {
 }
 
 // NewGalleriesClient creates a new instance of GalleriesClient with the specified values.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewGalleriesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *GalleriesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,11 @@ func NewGalleriesClient(subscriptionID string, credential azcore.TokenCredential
 
 // BeginCreateOrUpdate - Create or update a Shared Image Gallery.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// galleryName - The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods
+// allowed in the middle. The maximum length is 80 characters.
+// gallery - Parameters supplied to the create or update Shared Image Gallery operation.
+// options - GalleriesBeginCreateOrUpdateOptions contains the optional parameters for the Galleries.BeginCreateOrUpdate method.
 func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, options *GalleriesBeginCreateOrUpdateOptions) (GalleriesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, gallery, options)
 	if err != nil {
@@ -125,6 +134,9 @@ func (client *GalleriesClient) createOrUpdateHandleError(resp *http.Response) er
 
 // BeginDelete - Delete a Shared Image Gallery.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// galleryName - The name of the Shared Image Gallery to be deleted.
+// options - GalleriesBeginDeleteOptions contains the optional parameters for the Galleries.BeginDelete method.
 func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesBeginDeleteOptions) (GalleriesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, options)
 	if err != nil {
@@ -201,6 +213,9 @@ func (client *GalleriesClient) deleteHandleError(resp *http.Response) error {
 
 // Get - Retrieves information about a Shared Image Gallery.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// galleryName - The name of the Shared Image Gallery.
+// options - GalleriesGetOptions contains the optional parameters for the Galleries.Get method.
 func (client *GalleriesClient) Get(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesGetOptions) (GalleriesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, galleryName, options)
 	if err != nil {
@@ -266,6 +281,7 @@ func (client *GalleriesClient) getHandleError(resp *http.Response) error {
 
 // List - List galleries under a subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - GalleriesListOptions contains the optional parameters for the Galleries.List method.
 func (client *GalleriesClient) List(options *GalleriesListOptions) *GalleriesListPager {
 	return &GalleriesListPager{
 		client: client,
@@ -320,6 +336,8 @@ func (client *GalleriesClient) listHandleError(resp *http.Response) error {
 
 // ListByResourceGroup - List galleries under a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - GalleriesListByResourceGroupOptions contains the optional parameters for the Galleries.ListByResourceGroup method.
 func (client *GalleriesClient) ListByResourceGroup(resourceGroupName string, options *GalleriesListByResourceGroupOptions) *GalleriesListByResourceGroupPager {
 	return &GalleriesListByResourceGroupPager{
 		client: client,
@@ -378,6 +396,11 @@ func (client *GalleriesClient) listByResourceGroupHandleError(resp *http.Respons
 
 // BeginUpdate - Update a Shared Image Gallery.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// galleryName - The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods
+// allowed in the middle. The maximum length is 80 characters.
+// gallery - Parameters supplied to the update Shared Image Gallery operation.
+// options - GalleriesBeginUpdateOptions contains the optional parameters for the Galleries.BeginUpdate method.
 func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate, options *GalleriesBeginUpdateOptions) (GalleriesUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, galleryName, gallery, options)
 	if err != nil {

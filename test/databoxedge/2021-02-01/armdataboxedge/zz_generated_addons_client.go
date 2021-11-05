@@ -29,6 +29,8 @@ type AddonsClient struct {
 }
 
 // NewAddonsClient creates a new instance of AddonsClient with the specified values.
+// subscriptionID - The subscription ID.
+// options - pass nil to accept the default values.
 func NewAddonsClient(subscriptionID string, options *azcore.ClientOptions) *AddonsClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -43,6 +45,12 @@ func NewAddonsClient(subscriptionID string, options *azcore.ClientOptions) *Addo
 
 // BeginCreateOrUpdate - Create or update a addon.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// roleName - The role name.
+// addonName - The addon name.
+// resourceGroupName - The resource group name.
+// addon - The addon properties.
+// options - AddonsBeginCreateOrUpdateOptions contains the optional parameters for the Addons.BeginCreateOrUpdate method.
 func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsBeginCreateOrUpdateOptions) (AddonsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, roleName, addonName, resourceGroupName, addon, options)
 	if err != nil {
@@ -127,6 +135,11 @@ func (client *AddonsClient) createOrUpdateHandleError(resp *http.Response) error
 
 // BeginDelete - Deletes the addon on the device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// roleName - The role name.
+// addonName - The addon name.
+// resourceGroupName - The resource group name.
+// options - AddonsBeginDeleteOptions contains the optional parameters for the Addons.BeginDelete method.
 func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsBeginDeleteOptions) (AddonsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, roleName, addonName, resourceGroupName, options)
 	if err != nil {
@@ -211,6 +224,11 @@ func (client *AddonsClient) deleteHandleError(resp *http.Response) error {
 
 // Get - Gets a specific addon by name.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// roleName - The role name.
+// addonName - The addon name.
+// resourceGroupName - The resource group name.
+// options - AddonsGetOptions contains the optional parameters for the Addons.Get method.
 func (client *AddonsClient) Get(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsGetOptions) (AddonsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, roleName, addonName, resourceGroupName, options)
 	if err != nil {
@@ -284,6 +302,10 @@ func (client *AddonsClient) getHandleError(resp *http.Response) error {
 
 // ListByRole - Lists all the addons configured in the role.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// roleName - The role name.
+// resourceGroupName - The resource group name.
+// options - AddonsListByRoleOptions contains the optional parameters for the Addons.ListByRole method.
 func (client *AddonsClient) ListByRole(deviceName string, roleName string, resourceGroupName string, options *AddonsListByRoleOptions) *AddonsListByRolePager {
 	return &AddonsListByRolePager{
 		client: client,

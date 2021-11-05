@@ -13,8 +13,8 @@ const (
 	version = "v0.1.0"
 )
 
-// GeoJSONObjectType - Specifies the GeoJSON type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString,
-// Polygon, MultiPolygon, GeometryCollection, Feature and
+// GeoJSONObjectType - Specifies the GeoJSON type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint,
+// LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and
 // FeatureCollection.
 type GeoJSONObjectType string
 

@@ -27,6 +27,7 @@ type HeaderClient struct {
 }
 
 // NewHeaderClient creates a new instance of HeaderClient with the specified values.
+// options - pass nil to accept the default values.
 func NewHeaderClient(options *azcore.ClientOptions) *HeaderClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -40,6 +41,7 @@ func NewHeaderClient(options *azcore.ClientOptions) *HeaderClient {
 
 // CustomRequestID - Send x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 // If the operation fails it returns the *Error error type.
+// options - HeaderCustomRequestIDOptions contains the optional parameters for the Header.CustomRequestID method.
 func (client *HeaderClient) CustomRequestID(ctx context.Context, options *HeaderCustomRequestIDOptions) (HeaderCustomRequestIDResponse, error) {
 	req, err := client.customRequestIDCreateRequest(ctx, options)
 	if err != nil {
@@ -81,6 +83,9 @@ func (client *HeaderClient) customRequestIDHandleError(resp *http.Response) erro
 
 // ParamBool - Send a post request with header values "scenario": "true", "value": true or "scenario": "false", "value": false
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "true" or "false"
+// value - Send a post request with header values true or false
+// options - HeaderParamBoolOptions contains the optional parameters for the Header.ParamBool method.
 func (client *HeaderClient) ParamBool(ctx context.Context, scenario string, value bool, options *HeaderParamBoolOptions) (HeaderParamBoolResponse, error) {
 	req, err := client.paramBoolCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -124,6 +129,9 @@ func (client *HeaderClient) paramBoolHandleError(resp *http.Response) error {
 
 // ParamByte - Send a post request with header values "scenario": "valid", "value": "啊齄丂狛狜隣郎隣兀﨩"
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "valid"
+// value - Send a post request with header values "啊齄丂狛狜隣郎隣兀﨩"
+// options - HeaderParamByteOptions contains the optional parameters for the Header.ParamByte method.
 func (client *HeaderClient) ParamByte(ctx context.Context, scenario string, value []byte, options *HeaderParamByteOptions) (HeaderParamByteResponse, error) {
 	req, err := client.paramByteCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -165,8 +173,12 @@ func (client *HeaderClient) paramByteHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamDate - Send a post request with header values "scenario": "valid", "value": "2010-01-01" or "scenario": "min", "value": "0001-01-01"
+// ParamDate - Send a post request with header values "scenario": "valid", "value": "2010-01-01" or "scenario": "min", "value":
+// "0001-01-01"
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "valid" or "min"
+// value - Send a post request with header values "2010-01-01" or "0001-01-01"
+// options - HeaderParamDateOptions contains the optional parameters for the Header.ParamDate method.
 func (client *HeaderClient) ParamDate(ctx context.Context, scenario string, value time.Time, options *HeaderParamDateOptions) (HeaderParamDateResponse, error) {
 	req, err := client.paramDateCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -208,8 +220,12 @@ func (client *HeaderClient) paramDateHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamDatetime - Send a post request with header values "scenario": "valid", "value": "2010-01-01T12:34:56Z" or "scenario": "min", "value": "0001-01-01T00:00:00Z"
+// ParamDatetime - Send a post request with header values "scenario": "valid", "value": "2010-01-01T12:34:56Z" or "scenario":
+// "min", "value": "0001-01-01T00:00:00Z"
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "valid" or "min"
+// value - Send a post request with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
+// options - HeaderParamDatetimeOptions contains the optional parameters for the Header.ParamDatetime method.
 func (client *HeaderClient) ParamDatetime(ctx context.Context, scenario string, value time.Time, options *HeaderParamDatetimeOptions) (HeaderParamDatetimeResponse, error) {
 	req, err := client.paramDatetimeCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -251,9 +267,11 @@ func (client *HeaderClient) paramDatetimeHandleError(resp *http.Response) error 
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56 GMT" or "scenario": "min", "value":
-// "Mon, 01 Jan 0001 00:00:00 GMT"
+// ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56
+// GMT" or "scenario": "min", "value": "Mon, 01 Jan 0001 00:00:00 GMT"
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "valid" or "min"
+// options - HeaderParamDatetimeRFC1123Options contains the optional parameters for the Header.ParamDatetimeRFC1123 method.
 func (client *HeaderClient) ParamDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderParamDatetimeRFC1123Options) (HeaderParamDatetimeRFC1123Response, error) {
 	req, err := client.paramDatetimeRFC1123CreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -297,8 +315,12 @@ func (client *HeaderClient) paramDatetimeRFC1123HandleError(resp *http.Response)
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamDouble - Send a post request with header values "scenario": "positive", "value": 7e120 or "scenario": "negative", "value": -3.0
+// ParamDouble - Send a post request with header values "scenario": "positive", "value": 7e120 or "scenario": "negative",
+// "value": -3.0
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "positive" or "negative"
+// value - Send a post request with header values 7e120 or -3.0
+// options - HeaderParamDoubleOptions contains the optional parameters for the Header.ParamDouble method.
 func (client *HeaderClient) ParamDouble(ctx context.Context, scenario string, value float64, options *HeaderParamDoubleOptions) (HeaderParamDoubleResponse, error) {
 	req, err := client.paramDoubleCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -342,6 +364,9 @@ func (client *HeaderClient) paramDoubleHandleError(resp *http.Response) error {
 
 // ParamDuration - Send a post request with header values "scenario": "valid", "value": "P123DT22H14M12.011S"
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "valid"
+// value - Send a post request with header values "P123DT22H14M12.011S"
+// options - HeaderParamDurationOptions contains the optional parameters for the Header.ParamDuration method.
 func (client *HeaderClient) ParamDuration(ctx context.Context, scenario string, value string, options *HeaderParamDurationOptions) (HeaderParamDurationResponse, error) {
 	req, err := client.paramDurationCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -383,8 +408,11 @@ func (client *HeaderClient) paramDurationHandleError(resp *http.Response) error 
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamEnum - Send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null", "value": null
+// ParamEnum - Send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null", "value":
+// null
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "valid" or "null" or "empty"
+// options - HeaderParamEnumOptions contains the optional parameters for the Header.ParamEnum method.
 func (client *HeaderClient) ParamEnum(ctx context.Context, scenario string, options *HeaderParamEnumOptions) (HeaderParamEnumResponse, error) {
 	req, err := client.paramEnumCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -430,6 +458,8 @@ func (client *HeaderClient) paramEnumHandleError(resp *http.Response) error {
 
 // ParamExistingKey - Send a post request with header value "User-Agent": "overwrite"
 // If the operation fails it returns the *Error error type.
+// userAgent - Send a post request with header value "User-Agent": "overwrite"
+// options - HeaderParamExistingKeyOptions contains the optional parameters for the Header.ParamExistingKey method.
 func (client *HeaderClient) ParamExistingKey(ctx context.Context, userAgent string, options *HeaderParamExistingKeyOptions) (HeaderParamExistingKeyResponse, error) {
 	req, err := client.paramExistingKeyCreateRequest(ctx, userAgent, options)
 	if err != nil {
@@ -470,8 +500,12 @@ func (client *HeaderClient) paramExistingKeyHandleError(resp *http.Response) err
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamFloat - Send a post request with header values "scenario": "positive", "value": 0.07 or "scenario": "negative", "value": -3.0
+// ParamFloat - Send a post request with header values "scenario": "positive", "value": 0.07 or "scenario": "negative", "value":
+// -3.0
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "positive" or "negative"
+// value - Send a post request with header values 0.07 or -3.0
+// options - HeaderParamFloatOptions contains the optional parameters for the Header.ParamFloat method.
 func (client *HeaderClient) ParamFloat(ctx context.Context, scenario string, value float32, options *HeaderParamFloatOptions) (HeaderParamFloatResponse, error) {
 	req, err := client.paramFloatCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -513,8 +547,12 @@ func (client *HeaderClient) paramFloatHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamInteger - Send a post request with header values "scenario": "positive", "value": 1 or "scenario": "negative", "value": -2
+// ParamInteger - Send a post request with header values "scenario": "positive", "value": 1 or "scenario": "negative", "value":
+// -2
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "positive" or "negative"
+// value - Send a post request with header values 1 or -2
+// options - HeaderParamIntegerOptions contains the optional parameters for the Header.ParamInteger method.
 func (client *HeaderClient) ParamInteger(ctx context.Context, scenario string, value int32, options *HeaderParamIntegerOptions) (HeaderParamIntegerResponse, error) {
 	req, err := client.paramIntegerCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -556,8 +594,12 @@ func (client *HeaderClient) paramIntegerHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamLong - Send a post request with header values "scenario": "positive", "value": 105 or "scenario": "negative", "value": -2
+// ParamLong - Send a post request with header values "scenario": "positive", "value": 105 or "scenario": "negative", "value":
+// -2
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "positive" or "negative"
+// value - Send a post request with header values 105 or -2
+// options - HeaderParamLongOptions contains the optional parameters for the Header.ParamLong method.
 func (client *HeaderClient) ParamLong(ctx context.Context, scenario string, value int64, options *HeaderParamLongOptions) (HeaderParamLongResponse, error) {
 	req, err := client.paramLongCreateRequest(ctx, scenario, value, options)
 	if err != nil {
@@ -601,6 +643,8 @@ func (client *HeaderClient) paramLongHandleError(resp *http.Response) error {
 
 // ParamProtectedKey - Send a post request with header value "Content-Type": "text/html"
 // If the operation fails it returns the *Error error type.
+// contentType - Send a post request with header value "Content-Type": "text/html"
+// options - HeaderParamProtectedKeyOptions contains the optional parameters for the Header.ParamProtectedKey method.
 func (client *HeaderClient) ParamProtectedKey(ctx context.Context, contentType string, options *HeaderParamProtectedKeyOptions) (HeaderParamProtectedKeyResponse, error) {
 	req, err := client.paramProtectedKeyCreateRequest(ctx, contentType, options)
 	if err != nil {
@@ -641,9 +685,11 @@ func (client *HeaderClient) paramProtectedKeyHandleError(resp *http.Response) er
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the lazy dog" or "scenario": "null",
-// "value": null or "scenario": "empty", "value": ""
+// ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the
+// lazy dog" or "scenario": "null", "value": null or "scenario": "empty", "value": ""
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "valid" or "null" or "empty"
+// options - HeaderParamStringOptions contains the optional parameters for the Header.ParamString method.
 func (client *HeaderClient) ParamString(ctx context.Context, scenario string, options *HeaderParamStringOptions) (HeaderParamStringResponse, error) {
 	req, err := client.paramStringCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -689,6 +735,8 @@ func (client *HeaderClient) paramStringHandleError(resp *http.Response) error {
 
 // ResponseBool - Get a response with header value "value": true or false
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "true" or "false"
+// options - HeaderResponseBoolOptions contains the optional parameters for the Header.ResponseBool method.
 func (client *HeaderClient) ResponseBool(ctx context.Context, scenario string, options *HeaderResponseBoolOptions) (HeaderResponseBoolResponse, error) {
 	req, err := client.responseBoolCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -744,6 +792,8 @@ func (client *HeaderClient) responseBoolHandleError(resp *http.Response) error {
 
 // ResponseByte - Get a response with header values "啊齄丂狛狜隣郎隣兀﨩"
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "valid"
+// options - HeaderResponseByteOptions contains the optional parameters for the Header.ResponseByte method.
 func (client *HeaderClient) ResponseByte(ctx context.Context, scenario string, options *HeaderResponseByteOptions) (HeaderResponseByteResponse, error) {
 	req, err := client.responseByteCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -799,6 +849,8 @@ func (client *HeaderClient) responseByteHandleError(resp *http.Response) error {
 
 // ResponseDate - Get a response with header values "2010-01-01" or "0001-01-01"
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "valid" or "min"
+// options - HeaderResponseDateOptions contains the optional parameters for the Header.ResponseDate method.
 func (client *HeaderClient) ResponseDate(ctx context.Context, scenario string, options *HeaderResponseDateOptions) (HeaderResponseDateResponse, error) {
 	req, err := client.responseDateCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -854,6 +906,8 @@ func (client *HeaderClient) responseDateHandleError(resp *http.Response) error {
 
 // ResponseDatetime - Get a response with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "valid" or "min"
+// options - HeaderResponseDatetimeOptions contains the optional parameters for the Header.ResponseDatetime method.
 func (client *HeaderClient) ResponseDatetime(ctx context.Context, scenario string, options *HeaderResponseDatetimeOptions) (HeaderResponseDatetimeResponse, error) {
 	req, err := client.responseDatetimeCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -907,8 +961,12 @@ func (client *HeaderClient) responseDatetimeHandleError(resp *http.Response) err
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ResponseDatetimeRFC1123 - Get a response with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00 GMT"
+// ResponseDatetimeRFC1123 - Get a response with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00
+// GMT"
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "valid" or "min"
+// options - HeaderResponseDatetimeRFC1123Options contains the optional parameters for the Header.ResponseDatetimeRFC1123
+// method.
 func (client *HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderResponseDatetimeRFC1123Options) (HeaderResponseDatetimeRFC1123Response, error) {
 	req, err := client.responseDatetimeRFC1123CreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -964,6 +1022,8 @@ func (client *HeaderClient) responseDatetimeRFC1123HandleError(resp *http.Respon
 
 // ResponseDouble - Get a response with header value "value": 7e120 or -3.0
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "positive" or "negative"
+// options - HeaderResponseDoubleOptions contains the optional parameters for the Header.ResponseDouble method.
 func (client *HeaderClient) ResponseDouble(ctx context.Context, scenario string, options *HeaderResponseDoubleOptions) (HeaderResponseDoubleResponse, error) {
 	req, err := client.responseDoubleCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1019,6 +1079,8 @@ func (client *HeaderClient) responseDoubleHandleError(resp *http.Response) error
 
 // ResponseDuration - Get a response with header values "P123DT22H14M12.011S"
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "valid"
+// options - HeaderResponseDurationOptions contains the optional parameters for the Header.ResponseDuration method.
 func (client *HeaderClient) ResponseDuration(ctx context.Context, scenario string, options *HeaderResponseDurationOptions) (HeaderResponseDurationResponse, error) {
 	req, err := client.responseDurationCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1070,6 +1132,8 @@ func (client *HeaderClient) responseDurationHandleError(resp *http.Response) err
 
 // ResponseEnum - Get a response with header values "GREY" or null
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "valid" or "null" or "empty"
+// options - HeaderResponseEnumOptions contains the optional parameters for the Header.ResponseEnum method.
 func (client *HeaderClient) ResponseEnum(ctx context.Context, scenario string, options *HeaderResponseEnumOptions) (HeaderResponseEnumResponse, error) {
 	req, err := client.responseEnumCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1121,6 +1185,7 @@ func (client *HeaderClient) responseEnumHandleError(resp *http.Response) error {
 
 // ResponseExistingKey - Get a response with header value "User-Agent": "overwrite"
 // If the operation fails it returns the *Error error type.
+// options - HeaderResponseExistingKeyOptions contains the optional parameters for the Header.ResponseExistingKey method.
 func (client *HeaderClient) ResponseExistingKey(ctx context.Context, options *HeaderResponseExistingKeyOptions) (HeaderResponseExistingKeyResponse, error) {
 	req, err := client.responseExistingKeyCreateRequest(ctx, options)
 	if err != nil {
@@ -1171,6 +1236,8 @@ func (client *HeaderClient) responseExistingKeyHandleError(resp *http.Response) 
 
 // ResponseFloat - Get a response with header value "value": 0.07 or -3.0
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "positive" or "negative"
+// options - HeaderResponseFloatOptions contains the optional parameters for the Header.ResponseFloat method.
 func (client *HeaderClient) ResponseFloat(ctx context.Context, scenario string, options *HeaderResponseFloatOptions) (HeaderResponseFloatResponse, error) {
 	req, err := client.responseFloatCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1227,6 +1294,8 @@ func (client *HeaderClient) responseFloatHandleError(resp *http.Response) error 
 
 // ResponseInteger - Get a response with header value "value": 1 or -2
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "positive" or "negative"
+// options - HeaderResponseIntegerOptions contains the optional parameters for the Header.ResponseInteger method.
 func (client *HeaderClient) ResponseInteger(ctx context.Context, scenario string, options *HeaderResponseIntegerOptions) (HeaderResponseIntegerResponse, error) {
 	req, err := client.responseIntegerCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1283,6 +1352,8 @@ func (client *HeaderClient) responseIntegerHandleError(resp *http.Response) erro
 
 // ResponseLong - Get a response with header value "value": 105 or -2
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "positive" or "negative"
+// options - HeaderResponseLongOptions contains the optional parameters for the Header.ResponseLong method.
 func (client *HeaderClient) ResponseLong(ctx context.Context, scenario string, options *HeaderResponseLongOptions) (HeaderResponseLongResponse, error) {
 	req, err := client.responseLongCreateRequest(ctx, scenario, options)
 	if err != nil {
@@ -1338,6 +1409,7 @@ func (client *HeaderClient) responseLongHandleError(resp *http.Response) error {
 
 // ResponseProtectedKey - Get a response with header value "Content-Type": "text/html"
 // If the operation fails it returns the *Error error type.
+// options - HeaderResponseProtectedKeyOptions contains the optional parameters for the Header.ResponseProtectedKey method.
 func (client *HeaderClient) ResponseProtectedKey(ctx context.Context, options *HeaderResponseProtectedKeyOptions) (HeaderResponseProtectedKeyResponse, error) {
 	req, err := client.responseProtectedKeyCreateRequest(ctx, options)
 	if err != nil {
@@ -1388,6 +1460,8 @@ func (client *HeaderClient) responseProtectedKeyHandleError(resp *http.Response)
 
 // ResponseString - Get a response with header values "The quick brown fox jumps over the lazy dog" or null or ""
 // If the operation fails it returns the *Error error type.
+// scenario - Send a post request with header values "scenario": "valid" or "null" or "empty"
+// options - HeaderResponseStringOptions contains the optional parameters for the Header.ResponseString method.
 func (client *HeaderClient) ResponseString(ctx context.Context, scenario string, options *HeaderResponseStringOptions) (HeaderResponseStringResponse, error) {
 	req, err := client.responseStringCreateRequest(ctx, scenario, options)
 	if err != nil {

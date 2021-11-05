@@ -64,7 +64,8 @@ type PagingGetMultiplePagesFailureURIOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PagingGetMultiplePagesFragmentNextLinkOptions contains the optional parameters for the Paging.GetMultiplePagesFragmentNextLink method.
+// PagingGetMultiplePagesFragmentNextLinkOptions contains the optional parameters for the Paging.GetMultiplePagesFragmentNextLink
+// method.
 type PagingGetMultiplePagesFragmentNextLinkOptions struct {
 	// placeholder for future optional parameters
 }

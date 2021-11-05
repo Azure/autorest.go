@@ -30,6 +30,10 @@ type ResourceSKUsClient struct {
 }
 
 // NewResourceSKUsClient creates a new instance of ResourceSKUsClient with the specified values.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewResourceSKUsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ResourceSKUsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -48,6 +52,7 @@ func NewResourceSKUsClient(subscriptionID string, credential azcore.TokenCredent
 
 // List - Gets the list of Microsoft.Compute SKUs available for your Subscription.
 // If the operation fails it returns a generic error.
+// options - ResourceSKUsListOptions contains the optional parameters for the ResourceSKUs.List method.
 func (client *ResourceSKUsClient) List(options *ResourceSKUsListOptions) *ResourceSKUsListPager {
 	return &ResourceSKUsListPager{
 		client: client,

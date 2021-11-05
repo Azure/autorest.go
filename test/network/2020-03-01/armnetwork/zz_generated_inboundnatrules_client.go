@@ -31,6 +31,10 @@ type InboundNatRulesClient struct {
 }
 
 // NewInboundNatRulesClient creates a new instance of InboundNatRulesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewInboundNatRulesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *InboundNatRulesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,12 @@ func NewInboundNatRulesClient(subscriptionID string, credential azcore.TokenCred
 
 // BeginCreateOrUpdate - Creates or updates a load balancer inbound nat rule.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// loadBalancerName - The name of the load balancer.
+// inboundNatRuleName - The name of the inbound nat rule.
+// inboundNatRuleParameters - Parameters supplied to the create or update inbound nat rule operation.
+// options - InboundNatRulesBeginCreateOrUpdateOptions contains the optional parameters for the InboundNatRules.BeginCreateOrUpdate
+// method.
 func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesBeginCreateOrUpdateOptions) (InboundNatRulesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, inboundNatRuleParameters, options)
 	if err != nil {
@@ -129,6 +139,10 @@ func (client *InboundNatRulesClient) createOrUpdateHandleError(resp *http.Respon
 
 // BeginDelete - Deletes the specified load balancer inbound nat rule.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// loadBalancerName - The name of the load balancer.
+// inboundNatRuleName - The name of the inbound nat rule.
+// options - InboundNatRulesBeginDeleteOptions contains the optional parameters for the InboundNatRules.BeginDelete method.
 func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesBeginDeleteOptions) (InboundNatRulesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 	if err != nil {
@@ -209,6 +223,10 @@ func (client *InboundNatRulesClient) deleteHandleError(resp *http.Response) erro
 
 // Get - Gets the specified load balancer inbound nat rule.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// loadBalancerName - The name of the load balancer.
+// inboundNatRuleName - The name of the inbound nat rule.
+// options - InboundNatRulesGetOptions contains the optional parameters for the InboundNatRules.Get method.
 func (client *InboundNatRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesGetOptions) (InboundNatRulesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 	if err != nil {
@@ -281,6 +299,9 @@ func (client *InboundNatRulesClient) getHandleError(resp *http.Response) error {
 
 // List - Gets all the inbound nat rules in a load balancer.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// loadBalancerName - The name of the load balancer.
+// options - InboundNatRulesListOptions contains the optional parameters for the InboundNatRules.List method.
 func (client *InboundNatRulesClient) List(resourceGroupName string, loadBalancerName string, options *InboundNatRulesListOptions) *InboundNatRulesListPager {
 	return &InboundNatRulesListPager{
 		client: client,

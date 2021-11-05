@@ -467,17 +467,20 @@ type MultipleResponsesGet200Model204NoModelDefaultError400ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA200InvalidOptions contains the optional parameters for the MultipleResponses.Get200ModelA200Invalid method.
+// MultipleResponsesGet200ModelA200InvalidOptions contains the optional parameters for the MultipleResponses.Get200ModelA200Invalid
+// method.
 type MultipleResponsesGet200ModelA200InvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA200NoneOptions contains the optional parameters for the MultipleResponses.Get200ModelA200None method.
+// MultipleResponsesGet200ModelA200NoneOptions contains the optional parameters for the MultipleResponses.Get200ModelA200None
+// method.
 type MultipleResponsesGet200ModelA200NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA200ValidOptions contains the optional parameters for the MultipleResponses.Get200ModelA200Valid method.
+// MultipleResponsesGet200ModelA200ValidOptions contains the optional parameters for the MultipleResponses.Get200ModelA200Valid
+// method.
 type MultipleResponsesGet200ModelA200ValidOptions struct {
 	// placeholder for future optional parameters
 }
@@ -506,22 +509,26 @@ type MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError404ValidOptions 
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA202ValidOptions contains the optional parameters for the MultipleResponses.Get200ModelA202Valid method.
+// MultipleResponsesGet200ModelA202ValidOptions contains the optional parameters for the MultipleResponses.Get200ModelA202Valid
+// method.
 type MultipleResponsesGet200ModelA202ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA400InvalidOptions contains the optional parameters for the MultipleResponses.Get200ModelA400Invalid method.
+// MultipleResponsesGet200ModelA400InvalidOptions contains the optional parameters for the MultipleResponses.Get200ModelA400Invalid
+// method.
 type MultipleResponsesGet200ModelA400InvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA400NoneOptions contains the optional parameters for the MultipleResponses.Get200ModelA400None method.
+// MultipleResponsesGet200ModelA400NoneOptions contains the optional parameters for the MultipleResponses.Get200ModelA400None
+// method.
 type MultipleResponsesGet200ModelA400NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA400ValidOptions contains the optional parameters for the MultipleResponses.Get200ModelA400Valid method.
+// MultipleResponsesGet200ModelA400ValidOptions contains the optional parameters for the MultipleResponses.Get200ModelA400Valid
+// method.
 type MultipleResponsesGet200ModelA400ValidOptions struct {
 	// placeholder for future optional parameters
 }
@@ -568,42 +575,50 @@ type MultipleResponsesGet202None204NoneDefaultNone400NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGetDefaultModelA200NoneOptions contains the optional parameters for the MultipleResponses.GetDefaultModelA200None method.
+// MultipleResponsesGetDefaultModelA200NoneOptions contains the optional parameters for the MultipleResponses.GetDefaultModelA200None
+// method.
 type MultipleResponsesGetDefaultModelA200NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGetDefaultModelA200ValidOptions contains the optional parameters for the MultipleResponses.GetDefaultModelA200Valid method.
+// MultipleResponsesGetDefaultModelA200ValidOptions contains the optional parameters for the MultipleResponses.GetDefaultModelA200Valid
+// method.
 type MultipleResponsesGetDefaultModelA200ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGetDefaultModelA400NoneOptions contains the optional parameters for the MultipleResponses.GetDefaultModelA400None method.
+// MultipleResponsesGetDefaultModelA400NoneOptions contains the optional parameters for the MultipleResponses.GetDefaultModelA400None
+// method.
 type MultipleResponsesGetDefaultModelA400NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGetDefaultModelA400ValidOptions contains the optional parameters for the MultipleResponses.GetDefaultModelA400Valid method.
+// MultipleResponsesGetDefaultModelA400ValidOptions contains the optional parameters for the MultipleResponses.GetDefaultModelA400Valid
+// method.
 type MultipleResponsesGetDefaultModelA400ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGetDefaultNone200InvalidOptions contains the optional parameters for the MultipleResponses.GetDefaultNone200Invalid method.
+// MultipleResponsesGetDefaultNone200InvalidOptions contains the optional parameters for the MultipleResponses.GetDefaultNone200Invalid
+// method.
 type MultipleResponsesGetDefaultNone200InvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGetDefaultNone200NoneOptions contains the optional parameters for the MultipleResponses.GetDefaultNone200None method.
+// MultipleResponsesGetDefaultNone200NoneOptions contains the optional parameters for the MultipleResponses.GetDefaultNone200None
+// method.
 type MultipleResponsesGetDefaultNone200NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGetDefaultNone400InvalidOptions contains the optional parameters for the MultipleResponses.GetDefaultNone400Invalid method.
+// MultipleResponsesGetDefaultNone400InvalidOptions contains the optional parameters for the MultipleResponses.GetDefaultNone400Invalid
+// method.
 type MultipleResponsesGetDefaultNone400InvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGetDefaultNone400NoneOptions contains the optional parameters for the MultipleResponses.GetDefaultNone400None method.
+// MultipleResponsesGetDefaultNone400NoneOptions contains the optional parameters for the MultipleResponses.GetDefaultNone400None
+// method.
 type MultipleResponsesGetDefaultNone400NoneOptions struct {
 	// placeholder for future optional parameters
 }

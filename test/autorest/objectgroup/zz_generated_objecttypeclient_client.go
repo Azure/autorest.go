@@ -24,6 +24,7 @@ type ObjectTypeClient struct {
 }
 
 // NewObjectTypeClient creates a new instance of ObjectTypeClient with the specified values.
+// options - pass nil to accept the default values.
 func NewObjectTypeClient(options *azcore.ClientOptions) *ObjectTypeClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewObjectTypeClient(options *azcore.ClientOptions) *ObjectTypeClient {
 
 // Get - Basic get that returns an object. Returns object { 'message': 'An object was successfully returned' }
 // If the operation fails it returns a generic error.
+// options - ObjectTypeClientGetOptions contains the optional parameters for the ObjectTypeClient.Get method.
 func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClientGetOptions) (ObjectTypeClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -86,6 +88,8 @@ func (client *ObjectTypeClient) getHandleError(resp *http.Response) error {
 
 // Put - Basic put that puts an object. Pass in {'foo': 'bar'} to get a 200 and anything else to get an object error.
 // If the operation fails it returns a generic error.
+// putObject - Pass in {'foo': 'bar'} for a 200, anything else for an object error
+// options - ObjectTypeClientPutOptions contains the optional parameters for the ObjectTypeClient.Put method.
 func (client *ObjectTypeClient) Put(ctx context.Context, putObject map[string]interface{}, options *ObjectTypeClientPutOptions) (ObjectTypeClientPutResponse, error) {
 	req, err := client.putCreateRequest(ctx, putObject, options)
 	if err != nil {

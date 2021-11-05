@@ -31,6 +31,10 @@ type BastionHostsClient struct {
 }
 
 // NewBastionHostsClient creates a new instance of BastionHostsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewBastionHostsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *BastionHostsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,11 @@ func NewBastionHostsClient(subscriptionID string, credential azcore.TokenCredent
 
 // BeginCreateOrUpdate - Creates or updates the specified Bastion Host.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// bastionHostName - The name of the Bastion Host.
+// parameters - Parameters supplied to the create or update Bastion Host operation.
+// options - BastionHostsBeginCreateOrUpdateOptions contains the optional parameters for the BastionHosts.BeginCreateOrUpdate
+// method.
 func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost, options *BastionHostsBeginCreateOrUpdateOptions) (BastionHostsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, bastionHostName, parameters, options)
 	if err != nil {
@@ -125,6 +134,9 @@ func (client *BastionHostsClient) createOrUpdateHandleError(resp *http.Response)
 
 // BeginDelete - Deletes the specified Bastion Host.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// bastionHostName - The name of the Bastion Host.
+// options - BastionHostsBeginDeleteOptions contains the optional parameters for the BastionHosts.BeginDelete method.
 func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsBeginDeleteOptions) (BastionHostsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
@@ -201,6 +213,9 @@ func (client *BastionHostsClient) deleteHandleError(resp *http.Response) error {
 
 // Get - Gets the specified Bastion Host.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// bastionHostName - The name of the Bastion Host.
+// options - BastionHostsGetOptions contains the optional parameters for the BastionHosts.Get method.
 func (client *BastionHostsClient) Get(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsGetOptions) (BastionHostsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
@@ -266,6 +281,7 @@ func (client *BastionHostsClient) getHandleError(resp *http.Response) error {
 
 // List - Lists all Bastion Hosts in a subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - BastionHostsListOptions contains the optional parameters for the BastionHosts.List method.
 func (client *BastionHostsClient) List(options *BastionHostsListOptions) *BastionHostsListPager {
 	return &BastionHostsListPager{
 		client: client,
@@ -320,6 +336,9 @@ func (client *BastionHostsClient) listHandleError(resp *http.Response) error {
 
 // ListByResourceGroup - Lists all Bastion Hosts in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - BastionHostsListByResourceGroupOptions contains the optional parameters for the BastionHosts.ListByResourceGroup
+// method.
 func (client *BastionHostsClient) ListByResourceGroup(resourceGroupName string, options *BastionHostsListByResourceGroupOptions) *BastionHostsListByResourceGroupPager {
 	return &BastionHostsListByResourceGroupPager{
 		client: client,

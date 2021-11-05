@@ -334,7 +334,8 @@ type ArrayGetDictionaryItemEmptyResponse struct {
 
 // ArrayGetDictionaryItemEmptyResult contains the result from method Array.GetDictionaryItemEmpty.
 type ArrayGetDictionaryItemEmptyResult struct {
-	// An array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
+	// An array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7': 'seven',
+	// '8': 'eight', '9': 'nine'}]
 	MapOfStringArray []map[string]*string
 }
 
@@ -347,7 +348,8 @@ type ArrayGetDictionaryItemNullResponse struct {
 
 // ArrayGetDictionaryItemNullResult contains the result from method Array.GetDictionaryItemNull.
 type ArrayGetDictionaryItemNullResult struct {
-	// An array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, null, {'7': 'seven', '8': 'eight', '9': 'nine'}]
+	// An array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, null, {'7': 'seven',
+	// '8': 'eight', '9': 'nine'}]
 	MapOfStringArray []map[string]*string
 }
 
@@ -373,8 +375,8 @@ type ArrayGetDictionaryValidResponse struct {
 
 // ArrayGetDictionaryValidResult contains the result from method Array.GetDictionaryValid.
 type ArrayGetDictionaryValidResult struct {
-	// An array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'}, {'7': 'seven',
-	// '8': 'eight', '9': 'nine'}]
+	// An array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5':
+	// 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 	MapOfStringArray []map[string]*string
 }
 

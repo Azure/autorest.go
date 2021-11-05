@@ -24,6 +24,7 @@ type StringClient struct {
 }
 
 // NewStringClient creates a new instance of StringClient with the specified values.
+// options - pass nil to accept the default values.
 func NewStringClient(options *azcore.ClientOptions) *StringClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewStringClient(options *azcore.ClientOptions) *StringClient {
 
 // GetBase64Encoded - Get value that is base64 encoded
 // If the operation fails it returns the *Error error type.
+// options - StringGetBase64EncodedOptions contains the optional parameters for the String.GetBase64Encoded method.
 func (client *StringClient) GetBase64Encoded(ctx context.Context, options *StringGetBase64EncodedOptions) (StringGetBase64EncodedResponse, error) {
 	req, err := client.getBase64EncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -87,6 +89,7 @@ func (client *StringClient) getBase64EncodedHandleError(resp *http.Response) err
 
 // GetBase64URLEncoded - Get value that is base64url encoded
 // If the operation fails it returns the *Error error type.
+// options - StringGetBase64URLEncodedOptions contains the optional parameters for the String.GetBase64URLEncoded method.
 func (client *StringClient) GetBase64URLEncoded(ctx context.Context, options *StringGetBase64URLEncodedOptions) (StringGetBase64URLEncodedResponse, error) {
 	req, err := client.getBase64URLEncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -137,6 +140,7 @@ func (client *StringClient) getBase64URLEncodedHandleError(resp *http.Response) 
 
 // GetEmpty - Get empty string value value ''
 // If the operation fails it returns the *Error error type.
+// options - StringGetEmptyOptions contains the optional parameters for the String.GetEmpty method.
 func (client *StringClient) GetEmpty(ctx context.Context, options *StringGetEmptyOptions) (StringGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -187,6 +191,7 @@ func (client *StringClient) getEmptyHandleError(resp *http.Response) error {
 
 // GetMBCS - Get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 // If the operation fails it returns the *Error error type.
+// options - StringGetMBCSOptions contains the optional parameters for the String.GetMBCS method.
 func (client *StringClient) GetMBCS(ctx context.Context, options *StringGetMBCSOptions) (StringGetMBCSResponse, error) {
 	req, err := client.getMBCSCreateRequest(ctx, options)
 	if err != nil {
@@ -237,6 +242,7 @@ func (client *StringClient) getMBCSHandleError(resp *http.Response) error {
 
 // GetNotProvided - Get String value when no string value is sent in response payload
 // If the operation fails it returns the *Error error type.
+// options - StringGetNotProvidedOptions contains the optional parameters for the String.GetNotProvided method.
 func (client *StringClient) GetNotProvided(ctx context.Context, options *StringGetNotProvidedOptions) (StringGetNotProvidedResponse, error) {
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
@@ -287,6 +293,7 @@ func (client *StringClient) getNotProvidedHandleError(resp *http.Response) error
 
 // GetNull - Get null string value value
 // If the operation fails it returns the *Error error type.
+// options - StringGetNullOptions contains the optional parameters for the String.GetNull method.
 func (client *StringClient) GetNull(ctx context.Context, options *StringGetNullOptions) (StringGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -337,6 +344,8 @@ func (client *StringClient) getNullHandleError(resp *http.Response) error {
 
 // GetNullBase64URLEncoded - Get null value that is expected to be base64url encoded
 // If the operation fails it returns the *Error error type.
+// options - StringGetNullBase64URLEncodedOptions contains the optional parameters for the String.GetNullBase64URLEncoded
+// method.
 func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context, options *StringGetNullBase64URLEncodedOptions) (StringGetNullBase64URLEncodedResponse, error) {
 	req, err := client.getNullBase64URLEncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -385,8 +394,10 @@ func (client *StringClient) getNullBase64URLEncodedHandleError(resp *http.Respon
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetWhitespace - Get string value with leading and trailing whitespace 'Now is the time for all good men to come to the aid of their country'
+// GetWhitespace - Get string value with leading and trailing whitespace 'Now is the time for all good men to come to the
+// aid of their country'
 // If the operation fails it returns the *Error error type.
+// options - StringGetWhitespaceOptions contains the optional parameters for the String.GetWhitespace method.
 func (client *StringClient) GetWhitespace(ctx context.Context, options *StringGetWhitespaceOptions) (StringGetWhitespaceResponse, error) {
 	req, err := client.getWhitespaceCreateRequest(ctx, options)
 	if err != nil {
@@ -437,6 +448,8 @@ func (client *StringClient) getWhitespaceHandleError(resp *http.Response) error 
 
 // PutBase64URLEncoded - Put value that is base64url encoded
 // If the operation fails it returns the *Error error type.
+// stringBody - string body
+// options - StringPutBase64URLEncodedOptions contains the optional parameters for the String.PutBase64URLEncoded method.
 func (client *StringClient) PutBase64URLEncoded(ctx context.Context, stringBody []byte, options *StringPutBase64URLEncodedOptions) (StringPutBase64URLEncodedResponse, error) {
 	req, err := client.putBase64URLEncodedCreateRequest(ctx, stringBody, options)
 	if err != nil {
@@ -478,6 +491,7 @@ func (client *StringClient) putBase64URLEncodedHandleError(resp *http.Response) 
 
 // PutEmpty - Set string value empty ''
 // If the operation fails it returns the *Error error type.
+// options - StringPutEmptyOptions contains the optional parameters for the String.PutEmpty method.
 func (client *StringClient) PutEmpty(ctx context.Context, options *StringPutEmptyOptions) (StringPutEmptyResponse, error) {
 	req, err := client.putEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -519,6 +533,7 @@ func (client *StringClient) putEmptyHandleError(resp *http.Response) error {
 
 // PutMBCS - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 // If the operation fails it returns the *Error error type.
+// options - StringPutMBCSOptions contains the optional parameters for the String.PutMBCS method.
 func (client *StringClient) PutMBCS(ctx context.Context, options *StringPutMBCSOptions) (StringPutMBCSResponse, error) {
 	req, err := client.putMBCSCreateRequest(ctx, options)
 	if err != nil {
@@ -560,6 +575,7 @@ func (client *StringClient) putMBCSHandleError(resp *http.Response) error {
 
 // PutNull - Set string value null
 // If the operation fails it returns the *Error error type.
+// options - StringPutNullOptions contains the optional parameters for the String.PutNull method.
 func (client *StringClient) PutNull(ctx context.Context, options *StringPutNullOptions) (StringPutNullResponse, error) {
 	req, err := client.putNullCreateRequest(ctx, options)
 	if err != nil {
@@ -602,8 +618,10 @@ func (client *StringClient) putNullHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PutWhitespace - Set String value with leading and trailing whitespace 'Now is the time for all good men to come to the aid of their country'
+// PutWhitespace - Set String value with leading and trailing whitespace 'Now is the time for all good men to come to the
+// aid of their country'
 // If the operation fails it returns the *Error error type.
+// options - StringPutWhitespaceOptions contains the optional parameters for the String.PutWhitespace method.
 func (client *StringClient) PutWhitespace(ctx context.Context, options *StringPutWhitespaceOptions) (StringPutWhitespaceResponse, error) {
 	req, err := client.putWhitespaceCreateRequest(ctx, options)
 	if err != nil {

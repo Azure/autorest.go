@@ -27,6 +27,9 @@ type serviceClient struct {
 }
 
 // newServiceClient creates a new instance of serviceClient with the specified values.
+// endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
+// version - Specifies the version of the operation to use for this request.
+// pl - the pipeline used for sending requests and handling responses.
 func newServiceClient(endpoint string, version Enum2, pl runtime.Pipeline) *serviceClient {
 	client := &serviceClient{
 		endpoint: endpoint,
@@ -36,10 +39,11 @@ func newServiceClient(endpoint string, version Enum2, pl runtime.Pipeline) *serv
 	return client
 }
 
-// FilterBlobs - The Filter Blobs operation enables callers to list blobs across all containers whose tags match a given search expression. Filter blobs
-// searches across all containers within a storage account but can
+// FilterBlobs - The Filter Blobs operation enables callers to list blobs across all containers whose tags match a given search
+// expression. Filter blobs searches across all containers within a storage account but can
 // be scoped within the expression to a single container.
 // If the operation fails it returns the *StorageError error type.
+// options - ServiceFilterBlobsOptions contains the optional parameters for the Service.FilterBlobs method.
 func (client *serviceClient) FilterBlobs(ctx context.Context, comp Enum10, options *ServiceFilterBlobsOptions) (ServiceFilterBlobsResponse, error) {
 	req, err := client.filterBlobsCreateRequest(ctx, comp, options)
 	if err != nil {
@@ -124,6 +128,7 @@ func (client *serviceClient) filterBlobsHandleError(resp *http.Response) error {
 
 // GetAccountInfo - Returns the sku name and account kind
 // If the operation fails it returns the *StorageError error type.
+// options - ServiceGetAccountInfoOptions contains the optional parameters for the Service.GetAccountInfo method.
 func (client *serviceClient) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *ServiceGetAccountInfoOptions) (ServiceGetAccountInfoResponse, error) {
 	req, err := client.getAccountInfoCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -202,9 +207,10 @@ func (client *serviceClient) getAccountInfoHandleError(resp *http.Response) erro
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetProperties - gets the properties of a storage account's Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing)
-// rules.
+// GetProperties - gets the properties of a storage account's Blob service, including properties for Storage Analytics and
+// CORS (Cross-Origin Resource Sharing) rules.
 // If the operation fails it returns the *StorageError error type.
+// options - ServiceGetPropertiesOptions contains the optional parameters for the Service.GetProperties method.
 func (client *serviceClient) GetProperties(ctx context.Context, restype Enum0, comp Enum1, options *ServiceGetPropertiesOptions) (ServiceGetPropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -272,9 +278,10 @@ func (client *serviceClient) getPropertiesHandleError(resp *http.Response) error
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetStatistics - Retrieves statistics related to replication for the Blob service. It is only available on the secondary location endpoint when read-access
-// geo-redundant replication is enabled for the storage account.
+// GetStatistics - Retrieves statistics related to replication for the Blob service. It is only available on the secondary
+// location endpoint when read-access geo-redundant replication is enabled for the storage account.
 // If the operation fails it returns the *StorageError error type.
+// options - ServiceGetStatisticsOptions contains the optional parameters for the Service.GetStatistics method.
 func (client *serviceClient) GetStatistics(ctx context.Context, restype Enum0, comp Enum3, options *ServiceGetStatisticsOptions) (ServiceGetStatisticsResponse, error) {
 	req, err := client.getStatisticsCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -349,8 +356,10 @@ func (client *serviceClient) getStatisticsHandleError(resp *http.Response) error
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetUserDelegationKey - Retrieves a user delegation key for the Blob service. This is only a valid operation when using bearer token authentication.
+// GetUserDelegationKey - Retrieves a user delegation key for the Blob service. This is only a valid operation when using
+// bearer token authentication.
 // If the operation fails it returns the *StorageError error type.
+// options - ServiceGetUserDelegationKeyOptions contains the optional parameters for the Service.GetUserDelegationKey method.
 func (client *serviceClient) GetUserDelegationKey(ctx context.Context, restype Enum0, comp Enum7, keyInfo KeyInfo, options *ServiceGetUserDelegationKeyOptions) (ServiceGetUserDelegationKeyResponse, error) {
 	req, err := client.getUserDelegationKeyCreateRequest(ctx, restype, comp, keyInfo, options)
 	if err != nil {
@@ -427,6 +436,7 @@ func (client *serviceClient) getUserDelegationKeyHandleError(resp *http.Response
 
 // ListContainersSegment - The List Containers Segment operation returns a list of the containers under the specified account
 // If the operation fails it returns the *StorageError error type.
+// options - ServiceListContainersSegmentOptions contains the optional parameters for the Service.ListContainersSegment method.
 func (client *serviceClient) ListContainersSegment(comp Enum5, options *ServiceListContainersSegmentOptions) *ServiceListContainersSegmentPager {
 	return &ServiceListContainersSegmentPager{
 		client: client,
@@ -502,9 +512,11 @@ func (client *serviceClient) listContainersSegmentHandleError(resp *http.Respons
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// SetProperties - Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource
-// Sharing) rules
+// SetProperties - Sets properties for a storage account's Blob service endpoint, including properties for Storage Analytics
+// and CORS (Cross-Origin Resource Sharing) rules
 // If the operation fails it returns the *StorageError error type.
+// storageServiceProperties - The StorageService properties.
+// options - ServiceSetPropertiesOptions contains the optional parameters for the Service.SetProperties method.
 func (client *serviceClient) SetProperties(ctx context.Context, restype Enum0, comp Enum1, storageServiceProperties StorageServiceProperties, options *ServiceSetPropertiesOptions) (ServiceSetPropertiesResponse, error) {
 	req, err := client.setPropertiesCreateRequest(ctx, restype, comp, storageServiceProperties, options)
 	if err != nil {
@@ -571,6 +583,11 @@ func (client *serviceClient) setPropertiesHandleError(resp *http.Response) error
 
 // SubmitBatch - The Batch operation allows multiple API calls to be embedded into a single HTTP request.
 // If the operation fails it returns the *StorageError error type.
+// contentLength - The length of the request.
+// multipartContentType - Required. The value of this header must be multipart/mixed with a batch boundary. Example header
+// value: multipart/mixed; boundary=batch_
+// body - Initial data
+// options - ServiceSubmitBatchOptions contains the optional parameters for the Service.SubmitBatch method.
 func (client *serviceClient) SubmitBatch(ctx context.Context, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *ServiceSubmitBatchOptions) (ServiceSubmitBatchResponse, error) {
 	req, err := client.submitBatchCreateRequest(ctx, comp, contentLength, multipartContentType, body, options)
 	if err != nil {

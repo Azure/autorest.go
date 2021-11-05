@@ -31,6 +31,10 @@ type VPNSiteLinkConnectionsClient struct {
 }
 
 // NewVPNSiteLinkConnectionsClient creates a new instance of VPNSiteLinkConnectionsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewVPNSiteLinkConnectionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VPNSiteLinkConnectionsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,11 @@ func NewVPNSiteLinkConnectionsClient(subscriptionID string, credential azcore.To
 
 // Get - Retrieves the details of a vpn site link connection.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The resource group name of the VpnGateway.
+// gatewayName - The name of the gateway.
+// connectionName - The name of the vpn connection.
+// linkConnectionName - The name of the vpn connection.
+// options - VPNSiteLinkConnectionsGetOptions contains the optional parameters for the VPNSiteLinkConnections.Get method.
 func (client *VPNSiteLinkConnectionsClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, linkConnectionName string, options *VPNSiteLinkConnectionsGetOptions) (VPNSiteLinkConnectionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, linkConnectionName, options)
 	if err != nil {

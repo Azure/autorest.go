@@ -28,6 +28,8 @@ type TagsClient struct {
 }
 
 // NewTagsClient creates a new instance of TagsClient with the specified values.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewTagsClient(credential azcore.TokenCredential, options *arm.ClientOptions) *TagsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -45,6 +47,14 @@ func NewTagsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 
 // Get - Get all available tag keys for the defined scope
 // If the operation fails it returns the *ErrorResponse error type.
+// scope - The scope associated with tags operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope,
+// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+// resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope,
+// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope,
+// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount
+// scope and
+// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope..
+// options - TagsGetOptions contains the optional parameters for the Tags.Get method.
 func (client *TagsClient) Get(ctx context.Context, scope string, options *TagsGetOptions) (TagsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, scope, options)
 	if err != nil {

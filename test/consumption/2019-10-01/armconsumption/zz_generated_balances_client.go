@@ -30,6 +30,8 @@ type BalancesClient struct {
 }
 
 // NewBalancesClient creates a new instance of BalancesClient with the specified values.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewBalancesClient(credential azcore.TokenCredential, options *arm.ClientOptions) *BalancesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -45,8 +47,11 @@ func NewBalancesClient(credential azcore.TokenCredential, options *arm.ClientOpt
 	return client
 }
 
-// GetByBillingAccount - Gets the balances for a scope by billingAccountId. Balances are available via this API only for May 1, 2014 or later.
+// GetByBillingAccount - Gets the balances for a scope by billingAccountId. Balances are available via this API only for May
+// 1, 2014 or later.
 // If the operation fails it returns the *ErrorResponse error type.
+// billingAccountID - BillingAccount ID
+// options - BalancesGetByBillingAccountOptions contains the optional parameters for the Balances.GetByBillingAccount method.
 func (client *BalancesClient) GetByBillingAccount(ctx context.Context, billingAccountID string, options *BalancesGetByBillingAccountOptions) (BalancesGetByBillingAccountResponse, error) {
 	req, err := client.getByBillingAccountCreateRequest(ctx, billingAccountID, options)
 	if err != nil {
@@ -102,9 +107,13 @@ func (client *BalancesClient) getByBillingAccountHandleError(resp *http.Response
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetForBillingPeriodByBillingAccount - Gets the balances for a scope by billing period and billingAccountId. Balances are available via this API only
-// for May 1, 2014 or later.
+// GetForBillingPeriodByBillingAccount - Gets the balances for a scope by billing period and billingAccountId. Balances are
+// available via this API only for May 1, 2014 or later.
 // If the operation fails it returns the *ErrorResponse error type.
+// billingAccountID - BillingAccount ID
+// billingPeriodName - Billing Period Name.
+// options - BalancesGetForBillingPeriodByBillingAccountOptions contains the optional parameters for the Balances.GetForBillingPeriodByBillingAccount
+// method.
 func (client *BalancesClient) GetForBillingPeriodByBillingAccount(ctx context.Context, billingAccountID string, billingPeriodName string, options *BalancesGetForBillingPeriodByBillingAccountOptions) (BalancesGetForBillingPeriodByBillingAccountResponse, error) {
 	req, err := client.getForBillingPeriodByBillingAccountCreateRequest(ctx, billingAccountID, billingPeriodName, options)
 	if err != nil {

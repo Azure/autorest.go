@@ -31,6 +31,10 @@ type RouteTablesClient struct {
 }
 
 // NewRouteTablesClient creates a new instance of RouteTablesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewRouteTablesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *RouteTablesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,11 @@ func NewRouteTablesClient(subscriptionID string, credential azcore.TokenCredenti
 
 // BeginCreateOrUpdate - Create or updates a route table in a specified resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// routeTableName - The name of the route table.
+// parameters - Parameters supplied to the create or update route table operation.
+// options - RouteTablesBeginCreateOrUpdateOptions contains the optional parameters for the RouteTables.BeginCreateOrUpdate
+// method.
 func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable, options *RouteTablesBeginCreateOrUpdateOptions) (RouteTablesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeTableName, parameters, options)
 	if err != nil {
@@ -125,6 +134,9 @@ func (client *RouteTablesClient) createOrUpdateHandleError(resp *http.Response) 
 
 // BeginDelete - Deletes the specified route table.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// routeTableName - The name of the route table.
+// options - RouteTablesBeginDeleteOptions contains the optional parameters for the RouteTables.BeginDelete method.
 func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesBeginDeleteOptions) (RouteTablesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
@@ -201,6 +213,9 @@ func (client *RouteTablesClient) deleteHandleError(resp *http.Response) error {
 
 // Get - Gets the specified route table.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// routeTableName - The name of the route table.
+// options - RouteTablesGetOptions contains the optional parameters for the RouteTables.Get method.
 func (client *RouteTablesClient) Get(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesGetOptions) (RouteTablesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
@@ -269,6 +284,8 @@ func (client *RouteTablesClient) getHandleError(resp *http.Response) error {
 
 // List - Gets all route tables in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - RouteTablesListOptions contains the optional parameters for the RouteTables.List method.
 func (client *RouteTablesClient) List(resourceGroupName string, options *RouteTablesListOptions) *RouteTablesListPager {
 	return &RouteTablesListPager{
 		client: client,
@@ -327,6 +344,7 @@ func (client *RouteTablesClient) listHandleError(resp *http.Response) error {
 
 // ListAll - Gets all route tables in a subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - RouteTablesListAllOptions contains the optional parameters for the RouteTables.ListAll method.
 func (client *RouteTablesClient) ListAll(options *RouteTablesListAllOptions) *RouteTablesListAllPager {
 	return &RouteTablesListAllPager{
 		client: client,
@@ -381,6 +399,10 @@ func (client *RouteTablesClient) listAllHandleError(resp *http.Response) error {
 
 // UpdateTags - Updates a route table tags.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// routeTableName - The name of the route table.
+// parameters - Parameters supplied to update route table tags.
+// options - RouteTablesUpdateTagsOptions contains the optional parameters for the RouteTables.UpdateTags method.
 func (client *RouteTablesClient) UpdateTags(ctx context.Context, resourceGroupName string, routeTableName string, parameters TagsObject, options *RouteTablesUpdateTagsOptions) (RouteTablesUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, routeTableName, parameters, options)
 	if err != nil {

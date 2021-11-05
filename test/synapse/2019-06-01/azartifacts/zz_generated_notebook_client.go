@@ -25,6 +25,8 @@ type notebookClient struct {
 }
 
 // newNotebookClient creates a new instance of notebookClient with the specified values.
+// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+// pl - the pipeline used for sending requests and handling responses.
 func newNotebookClient(endpoint string, pl runtime.Pipeline) *notebookClient {
 	client := &notebookClient{
 		endpoint: endpoint,
@@ -35,6 +37,10 @@ func newNotebookClient(endpoint string, pl runtime.Pipeline) *notebookClient {
 
 // BeginCreateOrUpdateNotebook - Creates or updates a Note Book.
 // If the operation fails it returns the *CloudError error type.
+// notebookName - The notebook name.
+// notebook - Note book resource definition.
+// options - NotebookBeginCreateOrUpdateNotebookOptions contains the optional parameters for the Notebook.BeginCreateOrUpdateNotebook
+// method.
 func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (NotebookCreateOrUpdateNotebookPollerResponse, error) {
 	resp, err := client.createOrUpdateNotebook(ctx, notebookName, notebook, options)
 	if err != nil {
@@ -106,6 +112,8 @@ func (client *notebookClient) createOrUpdateNotebookHandleError(resp *http.Respo
 
 // BeginDeleteNotebook - Deletes a Note book.
 // If the operation fails it returns the *CloudError error type.
+// notebookName - The notebook name.
+// options - NotebookBeginDeleteNotebookOptions contains the optional parameters for the Notebook.BeginDeleteNotebook method.
 func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookName string, options *NotebookBeginDeleteNotebookOptions) (NotebookDeleteNotebookPollerResponse, error) {
 	resp, err := client.deleteNotebook(ctx, notebookName, options)
 	if err != nil {
@@ -174,6 +182,8 @@ func (client *notebookClient) deleteNotebookHandleError(resp *http.Response) err
 
 // GetNotebook - Gets a Note Book.
 // If the operation fails it returns the *CloudError error type.
+// notebookName - The notebook name.
+// options - NotebookGetNotebookOptions contains the optional parameters for the Notebook.GetNotebook method.
 func (client *notebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (NotebookGetNotebookResponse, error) {
 	req, err := client.getNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
@@ -234,6 +244,8 @@ func (client *notebookClient) getNotebookHandleError(resp *http.Response) error 
 
 // GetNotebookSummaryByWorkSpace - Lists a summary of Notebooks.
 // If the operation fails it returns the *CloudError error type.
+// options - NotebookGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the Notebook.GetNotebookSummaryByWorkSpace
+// method.
 func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGetNotebookSummaryByWorkSpaceOptions) *NotebookGetNotebookSummaryByWorkSpacePager {
 	return &NotebookGetNotebookSummaryByWorkSpacePager{
 		client: client,
@@ -284,6 +296,8 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleError(resp *htt
 
 // GetNotebooksByWorkspace - Lists Notebooks.
 // If the operation fails it returns the *CloudError error type.
+// options - NotebookGetNotebooksByWorkspaceOptions contains the optional parameters for the Notebook.GetNotebooksByWorkspace
+// method.
 func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebooksByWorkspaceOptions) *NotebookGetNotebooksByWorkspacePager {
 	return &NotebookGetNotebooksByWorkspacePager{
 		client: client,
@@ -334,6 +348,9 @@ func (client *notebookClient) getNotebooksByWorkspaceHandleError(resp *http.Resp
 
 // BeginRenameNotebook - Renames a notebook.
 // If the operation fails it returns the *CloudError error type.
+// notebookName - The notebook name.
+// request - proposed new name.
+// options - NotebookBeginRenameNotebookOptions contains the optional parameters for the Notebook.BeginRenameNotebook method.
 func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookBeginRenameNotebookOptions) (NotebookRenameNotebookPollerResponse, error) {
 	resp, err := client.renameNotebook(ctx, notebookName, request, options)
 	if err != nil {

@@ -31,6 +31,10 @@ type DefaultSecurityRulesClient struct {
 }
 
 // NewDefaultSecurityRulesClient creates a new instance of DefaultSecurityRulesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewDefaultSecurityRulesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *DefaultSecurityRulesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,10 @@ func NewDefaultSecurityRulesClient(subscriptionID string, credential azcore.Toke
 
 // Get - Get the specified default network security rule.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkSecurityGroupName - The name of the network security group.
+// defaultSecurityRuleName - The name of the default security rule.
+// options - DefaultSecurityRulesGetOptions contains the optional parameters for the DefaultSecurityRules.Get method.
 func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string, options *DefaultSecurityRulesGetOptions) (DefaultSecurityRulesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, defaultSecurityRuleName, options)
 	if err != nil {
@@ -118,6 +126,9 @@ func (client *DefaultSecurityRulesClient) getHandleError(resp *http.Response) er
 
 // List - Gets all default security rules in a network security group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkSecurityGroupName - The name of the network security group.
+// options - DefaultSecurityRulesListOptions contains the optional parameters for the DefaultSecurityRules.List method.
 func (client *DefaultSecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *DefaultSecurityRulesListOptions) *DefaultSecurityRulesListPager {
 	return &DefaultSecurityRulesListPager{
 		client: client,

@@ -31,6 +31,10 @@ type WebApplicationFirewallPoliciesClient struct {
 }
 
 // NewWebApplicationFirewallPoliciesClient creates a new instance of WebApplicationFirewallPoliciesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewWebApplicationFirewallPoliciesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *WebApplicationFirewallPoliciesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,11 @@ func NewWebApplicationFirewallPoliciesClient(subscriptionID string, credential a
 
 // CreateOrUpdate - Creates or update policy with specified rule set name within a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// policyName - The name of the policy.
+// parameters - Policy to be created.
+// options - WebApplicationFirewallPoliciesCreateOrUpdateOptions contains the optional parameters for the WebApplicationFirewallPolicies.CreateOrUpdate
+// method.
 func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, policyName string, parameters WebApplicationFirewallPolicy, options *WebApplicationFirewallPoliciesCreateOrUpdateOptions) (WebApplicationFirewallPoliciesCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, policyName, parameters, options)
 	if err != nil {
@@ -114,6 +123,10 @@ func (client *WebApplicationFirewallPoliciesClient) createOrUpdateHandleError(re
 
 // BeginDelete - Deletes Policy.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// policyName - The name of the policy.
+// options - WebApplicationFirewallPoliciesBeginDeleteOptions contains the optional parameters for the WebApplicationFirewallPolicies.BeginDelete
+// method.
 func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, policyName string, options *WebApplicationFirewallPoliciesBeginDeleteOptions) (WebApplicationFirewallPoliciesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, policyName, options)
 	if err != nil {
@@ -190,6 +203,10 @@ func (client *WebApplicationFirewallPoliciesClient) deleteHandleError(resp *http
 
 // Get - Retrieve protection policy with specified name within a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// policyName - The name of the policy.
+// options - WebApplicationFirewallPoliciesGetOptions contains the optional parameters for the WebApplicationFirewallPolicies.Get
+// method.
 func (client *WebApplicationFirewallPoliciesClient) Get(ctx context.Context, resourceGroupName string, policyName string, options *WebApplicationFirewallPoliciesGetOptions) (WebApplicationFirewallPoliciesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, policyName, options)
 	if err != nil {
@@ -255,6 +272,9 @@ func (client *WebApplicationFirewallPoliciesClient) getHandleError(resp *http.Re
 
 // List - Lists all of the protection policies within a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - WebApplicationFirewallPoliciesListOptions contains the optional parameters for the WebApplicationFirewallPolicies.List
+// method.
 func (client *WebApplicationFirewallPoliciesClient) List(resourceGroupName string, options *WebApplicationFirewallPoliciesListOptions) *WebApplicationFirewallPoliciesListPager {
 	return &WebApplicationFirewallPoliciesListPager{
 		client: client,
@@ -313,6 +333,8 @@ func (client *WebApplicationFirewallPoliciesClient) listHandleError(resp *http.R
 
 // ListAll - Gets all the WAF policies in a subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - WebApplicationFirewallPoliciesListAllOptions contains the optional parameters for the WebApplicationFirewallPolicies.ListAll
+// method.
 func (client *WebApplicationFirewallPoliciesClient) ListAll(options *WebApplicationFirewallPoliciesListAllOptions) *WebApplicationFirewallPoliciesListAllPager {
 	return &WebApplicationFirewallPoliciesListAllPager{
 		client: client,

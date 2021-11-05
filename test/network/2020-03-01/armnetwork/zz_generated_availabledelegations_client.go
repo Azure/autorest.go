@@ -31,6 +31,10 @@ type AvailableDelegationsClient struct {
 }
 
 // NewAvailableDelegationsClient creates a new instance of AvailableDelegationsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewAvailableDelegationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *AvailableDelegationsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,8 @@ func NewAvailableDelegationsClient(subscriptionID string, credential azcore.Toke
 
 // List - Gets all of the available subnet delegations for this subscription in this region.
 // If the operation fails it returns the *CloudError error type.
+// location - The location of the subnet.
+// options - AvailableDelegationsListOptions contains the optional parameters for the AvailableDelegations.List method.
 func (client *AvailableDelegationsClient) List(location string, options *AvailableDelegationsListOptions) *AvailableDelegationsListPager {
 	return &AvailableDelegationsListPager{
 		client: client,

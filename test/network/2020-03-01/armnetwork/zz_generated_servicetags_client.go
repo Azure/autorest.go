@@ -31,6 +31,10 @@ type ServiceTagsClient struct {
 }
 
 // NewServiceTagsClient creates a new instance of ServiceTagsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewServiceTagsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ServiceTagsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,10 @@ func NewServiceTagsClient(subscriptionID string, credential azcore.TokenCredenti
 
 // List - Gets a list of service tag information resources.
 // If the operation fails it returns the *CloudError error type.
+// location - The location that will be used as a reference for version (not as a filter based on location, you will get the
+// list of service tags with prefix details across all regions but limited to the cloud that
+// your subscription belongs to).
+// options - ServiceTagsListOptions contains the optional parameters for the ServiceTags.List method.
 func (client *ServiceTagsClient) List(ctx context.Context, location string, options *ServiceTagsListOptions) (ServiceTagsListResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, options)
 	if err != nil {

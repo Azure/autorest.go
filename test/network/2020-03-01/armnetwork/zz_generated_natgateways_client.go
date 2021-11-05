@@ -31,6 +31,10 @@ type NatGatewaysClient struct {
 }
 
 // NewNatGatewaysClient creates a new instance of NatGatewaysClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewNatGatewaysClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NatGatewaysClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,11 @@ func NewNatGatewaysClient(subscriptionID string, credential azcore.TokenCredenti
 
 // BeginCreateOrUpdate - Creates or updates a nat gateway.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// natGatewayName - The name of the nat gateway.
+// parameters - Parameters supplied to the create or update nat gateway operation.
+// options - NatGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the NatGateways.BeginCreateOrUpdate
+// method.
 func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysBeginCreateOrUpdateOptions) (NatGatewaysCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, natGatewayName, parameters, options)
 	if err != nil {
@@ -125,6 +134,9 @@ func (client *NatGatewaysClient) createOrUpdateHandleError(resp *http.Response) 
 
 // BeginDelete - Deletes the specified nat gateway.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// natGatewayName - The name of the nat gateway.
+// options - NatGatewaysBeginDeleteOptions contains the optional parameters for the NatGateways.BeginDelete method.
 func (client *NatGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysBeginDeleteOptions) (NatGatewaysDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, natGatewayName, options)
 	if err != nil {
@@ -201,6 +213,9 @@ func (client *NatGatewaysClient) deleteHandleError(resp *http.Response) error {
 
 // Get - Gets the specified nat gateway in a specified resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// natGatewayName - The name of the nat gateway.
+// options - NatGatewaysGetOptions contains the optional parameters for the NatGateways.Get method.
 func (client *NatGatewaysClient) Get(ctx context.Context, resourceGroupName string, natGatewayName string, options *NatGatewaysGetOptions) (NatGatewaysGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, natGatewayName, options)
 	if err != nil {
@@ -269,6 +284,8 @@ func (client *NatGatewaysClient) getHandleError(resp *http.Response) error {
 
 // List - Gets all nat gateways in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - NatGatewaysListOptions contains the optional parameters for the NatGateways.List method.
 func (client *NatGatewaysClient) List(resourceGroupName string, options *NatGatewaysListOptions) *NatGatewaysListPager {
 	return &NatGatewaysListPager{
 		client: client,
@@ -327,6 +344,7 @@ func (client *NatGatewaysClient) listHandleError(resp *http.Response) error {
 
 // ListAll - Gets all the Nat Gateways in a subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - NatGatewaysListAllOptions contains the optional parameters for the NatGateways.ListAll method.
 func (client *NatGatewaysClient) ListAll(options *NatGatewaysListAllOptions) *NatGatewaysListAllPager {
 	return &NatGatewaysListAllPager{
 		client: client,
@@ -381,6 +399,10 @@ func (client *NatGatewaysClient) listAllHandleError(resp *http.Response) error {
 
 // UpdateTags - Updates nat gateway tags.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// natGatewayName - The name of the nat gateway.
+// parameters - Parameters supplied to update nat gateway tags.
+// options - NatGatewaysUpdateTagsOptions contains the optional parameters for the NatGateways.UpdateTags method.
 func (client *NatGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, natGatewayName string, parameters TagsObject, options *NatGatewaysUpdateTagsOptions) (NatGatewaysUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, natGatewayName, parameters, options)
 	if err != nil {

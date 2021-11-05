@@ -29,6 +29,7 @@ type PathsClient struct {
 }
 
 // NewPathsClient creates a new instance of PathsClient with the specified values.
+// options - pass nil to accept the default values.
 func NewPathsClient(options *azcore.ClientOptions) *PathsClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -42,6 +43,8 @@ func NewPathsClient(options *azcore.ClientOptions) *PathsClient {
 
 // ArrayCSVInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 // If the operation fails it returns the *Error error type.
+// arrayPath - an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+// options - PathsArrayCSVInPathOptions contains the optional parameters for the Paths.ArrayCSVInPath method.
 func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []string, options *PathsArrayCSVInPathOptions) (PathsArrayCSVInPathResponse, error) {
 	req, err := client.arrayCSVInPathCreateRequest(ctx, arrayPath, options)
 	if err != nil {
@@ -84,6 +87,8 @@ func (client *PathsClient) arrayCSVInPathHandleError(resp *http.Response) error 
 
 // Base64URL - Get 'lorem' encoded value as 'bG9yZW0' (base64url)
 // If the operation fails it returns the *Error error type.
+// base64URLPath - base64url encoded value
+// options - PathsBase64URLOptions contains the optional parameters for the Paths.Base64URL method.
 func (client *PathsClient) Base64URL(ctx context.Context, base64URLPath []byte, options *PathsBase64URLOptions) (PathsBase64URLResponse, error) {
 	req, err := client.base64URLCreateRequest(ctx, base64URLPath, options)
 	if err != nil {
@@ -126,6 +131,7 @@ func (client *PathsClient) base64URLHandleError(resp *http.Response) error {
 
 // ByteEmpty - Get '' as byte array
 // If the operation fails it returns the *Error error type.
+// options - PathsByteEmptyOptions contains the optional parameters for the Paths.ByteEmpty method.
 func (client *PathsClient) ByteEmpty(ctx context.Context, options *PathsByteEmptyOptions) (PathsByteEmptyResponse, error) {
 	req, err := client.byteEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -168,6 +174,8 @@ func (client *PathsClient) byteEmptyHandleError(resp *http.Response) error {
 
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 // If the operation fails it returns the *Error error type.
+// bytePath - '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
+// options - PathsByteMultiByteOptions contains the optional parameters for the Paths.ByteMultiByte method.
 func (client *PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte, options *PathsByteMultiByteOptions) (PathsByteMultiByteResponse, error) {
 	req, err := client.byteMultiByteCreateRequest(ctx, bytePath, options)
 	if err != nil {
@@ -210,6 +218,8 @@ func (client *PathsClient) byteMultiByteHandleError(resp *http.Response) error {
 
 // ByteNull - Get null as byte array (should throw)
 // If the operation fails it returns the *Error error type.
+// bytePath - null as byte array (should throw)
+// options - PathsByteNullOptions contains the optional parameters for the Paths.ByteNull method.
 func (client *PathsClient) ByteNull(ctx context.Context, bytePath []byte, options *PathsByteNullOptions) (PathsByteNullResponse, error) {
 	req, err := client.byteNullCreateRequest(ctx, bytePath, options)
 	if err != nil {
@@ -252,6 +262,8 @@ func (client *PathsClient) byteNullHandleError(resp *http.Response) error {
 
 // DateNull - Get null as date - this should throw or be unusable on the client side, depending on date representation
 // If the operation fails it returns the *Error error type.
+// datePath - null as date (should throw)
+// options - PathsDateNullOptions contains the optional parameters for the Paths.DateNull method.
 func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time, options *PathsDateNullOptions) (PathsDateNullResponse, error) {
 	req, err := client.dateNullCreateRequest(ctx, datePath, options)
 	if err != nil {
@@ -294,6 +306,8 @@ func (client *PathsClient) dateNullHandleError(resp *http.Response) error {
 
 // DateTimeNull - Get null as date-time, should be disallowed or throw depending on representation of date-time
 // If the operation fails it returns the *Error error type.
+// dateTimePath - null as date-time
+// options - PathsDateTimeNullOptions contains the optional parameters for the Paths.DateTimeNull method.
 func (client *PathsClient) DateTimeNull(ctx context.Context, dateTimePath time.Time, options *PathsDateTimeNullOptions) (PathsDateTimeNullResponse, error) {
 	req, err := client.dateTimeNullCreateRequest(ctx, dateTimePath, options)
 	if err != nil {
@@ -336,6 +350,7 @@ func (client *PathsClient) dateTimeNullHandleError(resp *http.Response) error {
 
 // DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
 // If the operation fails it returns the *Error error type.
+// options - PathsDateTimeValidOptions contains the optional parameters for the Paths.DateTimeValid method.
 func (client *PathsClient) DateTimeValid(ctx context.Context, options *PathsDateTimeValidOptions) (PathsDateTimeValidResponse, error) {
 	req, err := client.dateTimeValidCreateRequest(ctx, options)
 	if err != nil {
@@ -378,6 +393,7 @@ func (client *PathsClient) dateTimeValidHandleError(resp *http.Response) error {
 
 // DateValid - Get '2012-01-01' as date
 // If the operation fails it returns the *Error error type.
+// options - PathsDateValidOptions contains the optional parameters for the Paths.DateValid method.
 func (client *PathsClient) DateValid(ctx context.Context, options *PathsDateValidOptions) (PathsDateValidResponse, error) {
 	req, err := client.dateValidCreateRequest(ctx, options)
 	if err != nil {
@@ -420,6 +436,7 @@ func (client *PathsClient) dateValidHandleError(resp *http.Response) error {
 
 // DoubleDecimalNegative - Get '-9999999.999' numeric value
 // If the operation fails it returns the *Error error type.
+// options - PathsDoubleDecimalNegativeOptions contains the optional parameters for the Paths.DoubleDecimalNegative method.
 func (client *PathsClient) DoubleDecimalNegative(ctx context.Context, options *PathsDoubleDecimalNegativeOptions) (PathsDoubleDecimalNegativeResponse, error) {
 	req, err := client.doubleDecimalNegativeCreateRequest(ctx, options)
 	if err != nil {
@@ -462,6 +479,7 @@ func (client *PathsClient) doubleDecimalNegativeHandleError(resp *http.Response)
 
 // DoubleDecimalPositive - Get '9999999.999' numeric value
 // If the operation fails it returns the *Error error type.
+// options - PathsDoubleDecimalPositiveOptions contains the optional parameters for the Paths.DoubleDecimalPositive method.
 func (client *PathsClient) DoubleDecimalPositive(ctx context.Context, options *PathsDoubleDecimalPositiveOptions) (PathsDoubleDecimalPositiveResponse, error) {
 	req, err := client.doubleDecimalPositiveCreateRequest(ctx, options)
 	if err != nil {
@@ -504,6 +522,8 @@ func (client *PathsClient) doubleDecimalPositiveHandleError(resp *http.Response)
 
 // EnumNull - Get null (should throw on the client before the request is sent on wire)
 // If the operation fails it returns the *Error error type.
+// enumPath - send null should throw
+// options - PathsEnumNullOptions contains the optional parameters for the Paths.EnumNull method.
 func (client *PathsClient) EnumNull(ctx context.Context, enumPath URIColor, options *PathsEnumNullOptions) (PathsEnumNullResponse, error) {
 	req, err := client.enumNullCreateRequest(ctx, enumPath, options)
 	if err != nil {
@@ -549,6 +569,8 @@ func (client *PathsClient) enumNullHandleError(resp *http.Response) error {
 
 // EnumValid - Get using uri with 'green color' in path parameter
 // If the operation fails it returns the *Error error type.
+// enumPath - send the value green
+// options - PathsEnumValidOptions contains the optional parameters for the Paths.EnumValid method.
 func (client *PathsClient) EnumValid(ctx context.Context, enumPath URIColor, options *PathsEnumValidOptions) (PathsEnumValidResponse, error) {
 	req, err := client.enumValidCreateRequest(ctx, enumPath, options)
 	if err != nil {
@@ -594,6 +616,7 @@ func (client *PathsClient) enumValidHandleError(resp *http.Response) error {
 
 // FloatScientificNegative - Get '-1.034E-20' numeric value
 // If the operation fails it returns the *Error error type.
+// options - PathsFloatScientificNegativeOptions contains the optional parameters for the Paths.FloatScientificNegative method.
 func (client *PathsClient) FloatScientificNegative(ctx context.Context, options *PathsFloatScientificNegativeOptions) (PathsFloatScientificNegativeResponse, error) {
 	req, err := client.floatScientificNegativeCreateRequest(ctx, options)
 	if err != nil {
@@ -636,6 +659,7 @@ func (client *PathsClient) floatScientificNegativeHandleError(resp *http.Respons
 
 // FloatScientificPositive - Get '1.034E+20' numeric value
 // If the operation fails it returns the *Error error type.
+// options - PathsFloatScientificPositiveOptions contains the optional parameters for the Paths.FloatScientificPositive method.
 func (client *PathsClient) FloatScientificPositive(ctx context.Context, options *PathsFloatScientificPositiveOptions) (PathsFloatScientificPositiveResponse, error) {
 	req, err := client.floatScientificPositiveCreateRequest(ctx, options)
 	if err != nil {
@@ -678,6 +702,7 @@ func (client *PathsClient) floatScientificPositiveHandleError(resp *http.Respons
 
 // GetBooleanFalse - Get false Boolean value on path
 // If the operation fails it returns the *Error error type.
+// options - PathsGetBooleanFalseOptions contains the optional parameters for the Paths.GetBooleanFalse method.
 func (client *PathsClient) GetBooleanFalse(ctx context.Context, options *PathsGetBooleanFalseOptions) (PathsGetBooleanFalseResponse, error) {
 	req, err := client.getBooleanFalseCreateRequest(ctx, options)
 	if err != nil {
@@ -720,6 +745,7 @@ func (client *PathsClient) getBooleanFalseHandleError(resp *http.Response) error
 
 // GetBooleanTrue - Get true Boolean value on path
 // If the operation fails it returns the *Error error type.
+// options - PathsGetBooleanTrueOptions contains the optional parameters for the Paths.GetBooleanTrue method.
 func (client *PathsClient) GetBooleanTrue(ctx context.Context, options *PathsGetBooleanTrueOptions) (PathsGetBooleanTrueResponse, error) {
 	req, err := client.getBooleanTrueCreateRequest(ctx, options)
 	if err != nil {
@@ -762,6 +788,8 @@ func (client *PathsClient) getBooleanTrueHandleError(resp *http.Response) error 
 
 // GetIntNegativeOneMillion - Get '-1000000' integer value
 // If the operation fails it returns the *Error error type.
+// options - PathsGetIntNegativeOneMillionOptions contains the optional parameters for the Paths.GetIntNegativeOneMillion
+// method.
 func (client *PathsClient) GetIntNegativeOneMillion(ctx context.Context, options *PathsGetIntNegativeOneMillionOptions) (PathsGetIntNegativeOneMillionResponse, error) {
 	req, err := client.getIntNegativeOneMillionCreateRequest(ctx, options)
 	if err != nil {
@@ -804,6 +832,7 @@ func (client *PathsClient) getIntNegativeOneMillionHandleError(resp *http.Respon
 
 // GetIntOneMillion - Get '1000000' integer value
 // If the operation fails it returns the *Error error type.
+// options - PathsGetIntOneMillionOptions contains the optional parameters for the Paths.GetIntOneMillion method.
 func (client *PathsClient) GetIntOneMillion(ctx context.Context, options *PathsGetIntOneMillionOptions) (PathsGetIntOneMillionResponse, error) {
 	req, err := client.getIntOneMillionCreateRequest(ctx, options)
 	if err != nil {
@@ -846,6 +875,7 @@ func (client *PathsClient) getIntOneMillionHandleError(resp *http.Response) erro
 
 // GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
 // If the operation fails it returns the *Error error type.
+// options - PathsGetNegativeTenBillionOptions contains the optional parameters for the Paths.GetNegativeTenBillion method.
 func (client *PathsClient) GetNegativeTenBillion(ctx context.Context, options *PathsGetNegativeTenBillionOptions) (PathsGetNegativeTenBillionResponse, error) {
 	req, err := client.getNegativeTenBillionCreateRequest(ctx, options)
 	if err != nil {
@@ -888,6 +918,7 @@ func (client *PathsClient) getNegativeTenBillionHandleError(resp *http.Response)
 
 // GetTenBillion - Get '10000000000' 64 bit integer value
 // If the operation fails it returns the *Error error type.
+// options - PathsGetTenBillionOptions contains the optional parameters for the Paths.GetTenBillion method.
 func (client *PathsClient) GetTenBillion(ctx context.Context, options *PathsGetTenBillionOptions) (PathsGetTenBillionResponse, error) {
 	req, err := client.getTenBillionCreateRequest(ctx, options)
 	if err != nil {
@@ -930,6 +961,7 @@ func (client *PathsClient) getTenBillionHandleError(resp *http.Response) error {
 
 // StringEmpty - Get ''
 // If the operation fails it returns the *Error error type.
+// options - PathsStringEmptyOptions contains the optional parameters for the Paths.StringEmpty method.
 func (client *PathsClient) StringEmpty(ctx context.Context, options *PathsStringEmptyOptions) (PathsStringEmptyResponse, error) {
 	req, err := client.stringEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -972,6 +1004,8 @@ func (client *PathsClient) stringEmptyHandleError(resp *http.Response) error {
 
 // StringNull - Get null (should throw)
 // If the operation fails it returns the *Error error type.
+// stringPath - null string value
+// options - PathsStringNullOptions contains the optional parameters for the Paths.StringNull method.
 func (client *PathsClient) StringNull(ctx context.Context, stringPath string, options *PathsStringNullOptions) (PathsStringNullResponse, error) {
 	req, err := client.stringNullCreateRequest(ctx, stringPath, options)
 	if err != nil {
@@ -1017,6 +1051,7 @@ func (client *PathsClient) stringNullHandleError(resp *http.Response) error {
 
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
 // If the operation fails it returns the *Error error type.
+// options - PathsStringURLEncodedOptions contains the optional parameters for the Paths.StringURLEncoded method.
 func (client *PathsClient) StringURLEncoded(ctx context.Context, options *PathsStringURLEncodedOptions) (PathsStringURLEncodedResponse, error) {
 	req, err := client.stringURLEncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -1059,6 +1094,7 @@ func (client *PathsClient) stringURLEncodedHandleError(resp *http.Response) erro
 
 // StringURLNonEncoded - https://tools.ietf.org/html/rfc3986#appendix-A 'path' accept any 'pchar' not encoded
 // If the operation fails it returns the *Error error type.
+// options - PathsStringURLNonEncodedOptions contains the optional parameters for the Paths.StringURLNonEncoded method.
 func (client *PathsClient) StringURLNonEncoded(ctx context.Context, options *PathsStringURLNonEncodedOptions) (PathsStringURLNonEncodedResponse, error) {
 	req, err := client.stringURLNonEncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -1101,6 +1137,7 @@ func (client *PathsClient) stringURLNonEncodedHandleError(resp *http.Response) e
 
 // StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
 // If the operation fails it returns the *Error error type.
+// options - PathsStringUnicodeOptions contains the optional parameters for the Paths.StringUnicode method.
 func (client *PathsClient) StringUnicode(ctx context.Context, options *PathsStringUnicodeOptions) (PathsStringUnicodeResponse, error) {
 	req, err := client.stringUnicodeCreateRequest(ctx, options)
 	if err != nil {
@@ -1143,6 +1180,8 @@ func (client *PathsClient) stringUnicodeHandleError(resp *http.Response) error {
 
 // UnixTimeURL - Get the date 2016-04-13 encoded value as '1460505600' (Unix time)
 // If the operation fails it returns the *Error error type.
+// unixTimeURLPath - Unix time encoded value
+// options - PathsUnixTimeURLOptions contains the optional parameters for the Paths.UnixTimeURL method.
 func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath time.Time, options *PathsUnixTimeURLOptions) (PathsUnixTimeURLResponse, error) {
 	req, err := client.unixTimeURLCreateRequest(ctx, unixTimeURLPath, options)
 	if err != nil {

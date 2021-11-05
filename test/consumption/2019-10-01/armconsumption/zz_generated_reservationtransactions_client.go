@@ -30,6 +30,8 @@ type ReservationTransactionsClient struct {
 }
 
 // NewReservationTransactionsClient creates a new instance of ReservationTransactionsClient with the specified values.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewReservationTransactionsClient(credential azcore.TokenCredential, options *arm.ClientOptions) *ReservationTransactionsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -47,6 +49,8 @@ func NewReservationTransactionsClient(credential azcore.TokenCredential, options
 
 // List - List of transactions for reserved instances on billing account scope
 // If the operation fails it returns the *ErrorResponse error type.
+// billingAccountID - BillingAccount ID
+// options - ReservationTransactionsListOptions contains the optional parameters for the ReservationTransactions.List method.
 func (client *ReservationTransactionsClient) List(billingAccountID string, options *ReservationTransactionsListOptions) *ReservationTransactionsListPager {
 	return &ReservationTransactionsListPager{
 		client: client,
@@ -104,6 +108,10 @@ func (client *ReservationTransactionsClient) listHandleError(resp *http.Response
 
 // ListByBillingProfile - List of transactions for reserved instances on billing account scope
 // If the operation fails it returns the *ErrorResponse error type.
+// billingAccountID - BillingAccount ID
+// billingProfileID - Azure Billing Profile ID.
+// options - ReservationTransactionsListByBillingProfileOptions contains the optional parameters for the ReservationTransactions.ListByBillingProfile
+// method.
 func (client *ReservationTransactionsClient) ListByBillingProfile(billingAccountID string, billingProfileID string, options *ReservationTransactionsListByBillingProfileOptions) *ReservationTransactionsListByBillingProfilePager {
 	return &ReservationTransactionsListByBillingProfilePager{
 		client: client,

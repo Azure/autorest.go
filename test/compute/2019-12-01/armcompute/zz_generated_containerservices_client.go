@@ -30,6 +30,10 @@ type ContainerServicesClient struct {
 }
 
 // NewContainerServicesClient creates a new instance of ContainerServicesClient with the specified values.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewContainerServicesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ContainerServicesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -46,8 +50,14 @@ func NewContainerServicesClient(subscriptionID string, credential azcore.TokenCr
 	return client
 }
 
-// BeginCreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters, and agents.
+// BeginCreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters,
+// and agents.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// containerServiceName - The name of the container service in the specified subscription and resource group.
+// parameters - Parameters supplied to the Create or Update a Container Service operation.
+// options - ContainerServicesBeginCreateOrUpdateOptions contains the optional parameters for the ContainerServices.BeginCreateOrUpdate
+// method.
 func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesBeginCreateOrUpdateOptions) (ContainerServicesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, containerServiceName, parameters, options)
 	if err != nil {
@@ -66,7 +76,8 @@ func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, 
 	return result, nil
 }
 
-// CreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters, and agents.
+// CreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters, and
+// agents.
 // If the operation fails it returns a generic error.
 func (client *ContainerServicesClient) createOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, containerServiceName, parameters, options)
@@ -121,11 +132,14 @@ func (client *ContainerServicesClient) createOrUpdateHandleError(resp *http.Resp
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// BeginDelete - Deletes the specified container service in the specified subscription and resource group. The operation does not delete other resources
-// created as part of creating a container service, including
-// storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the same resource group and can
-// be deleted individually.
+// BeginDelete - Deletes the specified container service in the specified subscription and resource group. The operation does
+// not delete other resources created as part of creating a container service, including
+// storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the
+// same resource group and can be deleted individually.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// containerServiceName - The name of the container service in the specified subscription and resource group.
+// options - ContainerServicesBeginDeleteOptions contains the optional parameters for the ContainerServices.BeginDelete method.
 func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesBeginDeleteOptions) (ContainerServicesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
@@ -144,10 +158,10 @@ func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resource
 	return result, nil
 }
 
-// Delete - Deletes the specified container service in the specified subscription and resource group. The operation does not delete other resources created
-// as part of creating a container service, including
-// storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the same resource group and can
-// be deleted individually.
+// Delete - Deletes the specified container service in the specified subscription and resource group. The operation does not
+// delete other resources created as part of creating a container service, including
+// storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the
+// same resource group and can be deleted individually.
 // If the operation fails it returns a generic error.
 func (client *ContainerServicesClient) deleteOperation(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, containerServiceName, options)
@@ -201,10 +215,13 @@ func (client *ContainerServicesClient) deleteHandleError(resp *http.Response) er
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// Get - Gets the properties of the specified container service in the specified subscription and resource group. The operation returns the properties including
-// state, orchestrator, number of masters and
+// Get - Gets the properties of the specified container service in the specified subscription and resource group. The operation
+// returns the properties including state, orchestrator, number of masters and
 // agents, and FQDNs of masters and agents.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// containerServiceName - The name of the container service in the specified subscription and resource group.
+// options - ContainerServicesGetOptions contains the optional parameters for the ContainerServices.Get method.
 func (client *ContainerServicesClient) Get(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesGetOptions) (ContainerServicesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
@@ -267,10 +284,11 @@ func (client *ContainerServicesClient) getHandleError(resp *http.Response) error
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// List - Gets a list of container services in the specified subscription. The operation returns properties of each container service including state, orchestrator,
-// number of masters and agents, and FQDNs of
+// List - Gets a list of container services in the specified subscription. The operation returns properties of each container
+// service including state, orchestrator, number of masters and agents, and FQDNs of
 // masters and agents.
 // If the operation fails it returns a generic error.
+// options - ContainerServicesListOptions contains the optional parameters for the ContainerServices.List method.
 func (client *ContainerServicesClient) List(options *ContainerServicesListOptions) *ContainerServicesListPager {
 	return &ContainerServicesListPager{
 		client: client,
@@ -322,10 +340,13 @@ func (client *ContainerServicesClient) listHandleError(resp *http.Response) erro
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// ListByResourceGroup - Gets a list of container services in the specified subscription and resource group. The operation returns properties of each container
-// service including state, orchestrator, number of masters and
+// ListByResourceGroup - Gets a list of container services in the specified subscription and resource group. The operation
+// returns properties of each container service including state, orchestrator, number of masters and
 // agents, and FQDNs of masters and agents.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// options - ContainerServicesListByResourceGroupOptions contains the optional parameters for the ContainerServices.ListByResourceGroup
+// method.
 func (client *ContainerServicesClient) ListByResourceGroup(resourceGroupName string, options *ContainerServicesListByResourceGroupOptions) *ContainerServicesListByResourceGroupPager {
 	return &ContainerServicesListByResourceGroupPager{
 		client: client,

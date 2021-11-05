@@ -31,6 +31,10 @@ type ExpressRouteCircuitsClient struct {
 }
 
 // NewExpressRouteCircuitsClient creates a new instance of ExpressRouteCircuitsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewExpressRouteCircuitsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ExpressRouteCircuitsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,11 @@ func NewExpressRouteCircuitsClient(subscriptionID string, credential azcore.Toke
 
 // BeginCreateOrUpdate - Creates or updates an express route circuit.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// circuitName - The name of the circuit.
+// parameters - Parameters supplied to the create or update express route circuit operation.
+// options - ExpressRouteCircuitsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuits.BeginCreateOrUpdate
+// method.
 func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, parameters ExpressRouteCircuit, options *ExpressRouteCircuitsBeginCreateOrUpdateOptions) (ExpressRouteCircuitsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, parameters, options)
 	if err != nil {
@@ -125,6 +134,10 @@ func (client *ExpressRouteCircuitsClient) createOrUpdateHandleError(resp *http.R
 
 // BeginDelete - Deletes the specified express route circuit.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// circuitName - The name of the express route circuit.
+// options - ExpressRouteCircuitsBeginDeleteOptions contains the optional parameters for the ExpressRouteCircuits.BeginDelete
+// method.
 func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsBeginDeleteOptions) (ExpressRouteCircuitsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, options)
 	if err != nil {
@@ -201,6 +214,9 @@ func (client *ExpressRouteCircuitsClient) deleteHandleError(resp *http.Response)
 
 // Get - Gets information about the specified express route circuit.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// circuitName - The name of express route circuit.
+// options - ExpressRouteCircuitsGetOptions contains the optional parameters for the ExpressRouteCircuits.Get method.
 func (client *ExpressRouteCircuitsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsGetOptions) (ExpressRouteCircuitsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, options)
 	if err != nil {
@@ -266,6 +282,11 @@ func (client *ExpressRouteCircuitsClient) getHandleError(resp *http.Response) er
 
 // GetPeeringStats - Gets all stats from an express route circuit in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// circuitName - The name of the express route circuit.
+// peeringName - The name of the peering.
+// options - ExpressRouteCircuitsGetPeeringStatsOptions contains the optional parameters for the ExpressRouteCircuits.GetPeeringStats
+// method.
 func (client *ExpressRouteCircuitsClient) GetPeeringStats(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitsGetPeeringStatsOptions) (ExpressRouteCircuitsGetPeeringStatsResponse, error) {
 	req, err := client.getPeeringStatsCreateRequest(ctx, resourceGroupName, circuitName, peeringName, options)
 	if err != nil {
@@ -335,6 +356,9 @@ func (client *ExpressRouteCircuitsClient) getPeeringStatsHandleError(resp *http.
 
 // GetStats - Gets all the stats from an express route circuit in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// circuitName - The name of the express route circuit.
+// options - ExpressRouteCircuitsGetStatsOptions contains the optional parameters for the ExpressRouteCircuits.GetStats method.
 func (client *ExpressRouteCircuitsClient) GetStats(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsGetStatsOptions) (ExpressRouteCircuitsGetStatsResponse, error) {
 	req, err := client.getStatsCreateRequest(ctx, resourceGroupName, circuitName, options)
 	if err != nil {
@@ -400,6 +424,8 @@ func (client *ExpressRouteCircuitsClient) getStatsHandleError(resp *http.Respons
 
 // List - Gets all the express route circuits in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - ExpressRouteCircuitsListOptions contains the optional parameters for the ExpressRouteCircuits.List method.
 func (client *ExpressRouteCircuitsClient) List(resourceGroupName string, options *ExpressRouteCircuitsListOptions) *ExpressRouteCircuitsListPager {
 	return &ExpressRouteCircuitsListPager{
 		client: client,
@@ -458,6 +484,7 @@ func (client *ExpressRouteCircuitsClient) listHandleError(resp *http.Response) e
 
 // ListAll - Gets all the express route circuits in a subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - ExpressRouteCircuitsListAllOptions contains the optional parameters for the ExpressRouteCircuits.ListAll method.
 func (client *ExpressRouteCircuitsClient) ListAll(options *ExpressRouteCircuitsListAllOptions) *ExpressRouteCircuitsListAllPager {
 	return &ExpressRouteCircuitsListAllPager{
 		client: client,
@@ -512,6 +539,12 @@ func (client *ExpressRouteCircuitsClient) listAllHandleError(resp *http.Response
 
 // BeginListArpTable - Gets the currently advertised ARP table associated with the express route circuit in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// circuitName - The name of the express route circuit.
+// peeringName - The name of the peering.
+// devicePath - The path of the device.
+// options - ExpressRouteCircuitsBeginListArpTableOptions contains the optional parameters for the ExpressRouteCircuits.BeginListArpTable
+// method.
 func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsBeginListArpTableOptions) (ExpressRouteCircuitsListArpTablePollerResponse, error) {
 	resp, err := client.listArpTable(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
@@ -594,8 +627,15 @@ func (client *ExpressRouteCircuitsClient) listArpTableHandleError(resp *http.Res
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// BeginListRoutesTable - Gets the currently advertised routes table associated with the express route circuit in a resource group.
+// BeginListRoutesTable - Gets the currently advertised routes table associated with the express route circuit in a resource
+// group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// circuitName - The name of the express route circuit.
+// peeringName - The name of the peering.
+// devicePath - The path of the device.
+// options - ExpressRouteCircuitsBeginListRoutesTableOptions contains the optional parameters for the ExpressRouteCircuits.BeginListRoutesTable
+// method.
 func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsBeginListRoutesTableOptions) (ExpressRouteCircuitsListRoutesTablePollerResponse, error) {
 	resp, err := client.listRoutesTable(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
@@ -678,8 +718,15 @@ func (client *ExpressRouteCircuitsClient) listRoutesTableHandleError(resp *http.
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// BeginListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit in a resource group.
+// BeginListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit
+// in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// circuitName - The name of the express route circuit.
+// peeringName - The name of the peering.
+// devicePath - The path of the device.
+// options - ExpressRouteCircuitsBeginListRoutesTableSummaryOptions contains the optional parameters for the ExpressRouteCircuits.BeginListRoutesTableSummary
+// method.
 func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsBeginListRoutesTableSummaryOptions) (ExpressRouteCircuitsListRoutesTableSummaryPollerResponse, error) {
 	resp, err := client.listRoutesTableSummary(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
@@ -698,7 +745,8 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx contex
 	return result, nil
 }
 
-// ListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit in a resource group.
+// ListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit in
+// a resource group.
 // If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteCircuitsClient) listRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsBeginListRoutesTableSummaryOptions) (*http.Response, error) {
 	req, err := client.listRoutesTableSummaryCreateRequest(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
@@ -764,6 +812,11 @@ func (client *ExpressRouteCircuitsClient) listRoutesTableSummaryHandleError(resp
 
 // UpdateTags - Updates an express route circuit tags.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// circuitName - The name of the circuit.
+// parameters - Parameters supplied to update express route circuit tags.
+// options - ExpressRouteCircuitsUpdateTagsOptions contains the optional parameters for the ExpressRouteCircuits.UpdateTags
+// method.
 func (client *ExpressRouteCircuitsClient) UpdateTags(ctx context.Context, resourceGroupName string, circuitName string, parameters TagsObject, options *ExpressRouteCircuitsUpdateTagsOptions) (ExpressRouteCircuitsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, circuitName, parameters, options)
 	if err != nil {

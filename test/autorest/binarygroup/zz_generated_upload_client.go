@@ -25,6 +25,7 @@ type UploadClient struct {
 }
 
 // NewUploadClient creates a new instance of UploadClient with the specified values.
+// options - pass nil to accept the default values.
 func NewUploadClient(options *azcore.ClientOptions) *UploadClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -38,6 +39,8 @@ func NewUploadClient(options *azcore.ClientOptions) *UploadClient {
 
 // Binary - Uploading binary file
 // If the operation fails it returns a generic error.
+// fileParam - Non-empty binary file
+// options - UploadBinaryOptions contains the optional parameters for the Upload.Binary method.
 func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadBinaryOptions) (UploadBinaryResponse, error) {
 	req, err := client.binaryCreateRequest(ctx, fileParam, options)
 	if err != nil {
@@ -77,6 +80,8 @@ func (client *UploadClient) binaryHandleError(resp *http.Response) error {
 
 // File - Uploading json file
 // If the operation fails it returns a generic error.
+// fileParam - JSON file with payload { "more": "cowbell" }
+// options - UploadFileOptions contains the optional parameters for the Upload.File method.
 func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadFileOptions) (UploadFileResponse, error) {
 	req, err := client.fileCreateRequest(ctx, fileParam, options)
 	if err != nil {

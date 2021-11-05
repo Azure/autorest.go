@@ -32,7 +32,8 @@ type LRORetrysBeginDelete202Retry200Options struct {
 	// placeholder for future optional parameters
 }
 
-// LRORetrysBeginDeleteAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrys.BeginDeleteAsyncRelativeRetrySucceeded method.
+// LRORetrysBeginDeleteAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrys.BeginDeleteAsyncRelativeRetrySucceeded
+// method.
 type LRORetrysBeginDeleteAsyncRelativeRetrySucceededOptions struct {
 	// placeholder for future optional parameters
 }
@@ -49,19 +50,22 @@ type LRORetrysBeginPost202Retry200Options struct {
 	Product *Product
 }
 
-// LRORetrysBeginPostAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrys.BeginPostAsyncRelativeRetrySucceeded method.
+// LRORetrysBeginPostAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrys.BeginPostAsyncRelativeRetrySucceeded
+// method.
 type LRORetrysBeginPostAsyncRelativeRetrySucceededOptions struct {
 	// Product to put
 	Product *Product
 }
 
-// LRORetrysBeginPut201CreatingSucceeded200Options contains the optional parameters for the LRORetrys.BeginPut201CreatingSucceeded200 method.
+// LRORetrysBeginPut201CreatingSucceeded200Options contains the optional parameters for the LRORetrys.BeginPut201CreatingSucceeded200
+// method.
 type LRORetrysBeginPut201CreatingSucceeded200Options struct {
 	// Product to put
 	Product *Product
 }
 
-// LRORetrysBeginPutAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrys.BeginPutAsyncRelativeRetrySucceeded method.
+// LRORetrysBeginPutAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrys.BeginPutAsyncRelativeRetrySucceeded
+// method.
 type LRORetrysBeginPutAsyncRelativeRetrySucceededOptions struct {
 	// Product to put
 	Product *Product
@@ -72,7 +76,8 @@ type LROSADsBeginDelete202NonRetry400Options struct {
 	// placeholder for future optional parameters
 }
 
-// LROSADsBeginDelete202RetryInvalidHeaderOptions contains the optional parameters for the LROSADs.BeginDelete202RetryInvalidHeader method.
+// LROSADsBeginDelete202RetryInvalidHeaderOptions contains the optional parameters for the LROSADs.BeginDelete202RetryInvalidHeader
+// method.
 type LROSADsBeginDelete202RetryInvalidHeaderOptions struct {
 	// placeholder for future optional parameters
 }
@@ -82,7 +87,8 @@ type LROSADsBeginDelete204SucceededOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LROSADsBeginDeleteAsyncRelativeRetry400Options contains the optional parameters for the LROSADs.BeginDeleteAsyncRelativeRetry400 method.
+// LROSADsBeginDeleteAsyncRelativeRetry400Options contains the optional parameters for the LROSADs.BeginDeleteAsyncRelativeRetry400
+// method.
 type LROSADsBeginDeleteAsyncRelativeRetry400Options struct {
 	// placeholder for future optional parameters
 }
@@ -99,7 +105,8 @@ type LROSADsBeginDeleteAsyncRelativeRetryInvalidJSONPollingOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LROSADsBeginDeleteAsyncRelativeRetryNoStatusOptions contains the optional parameters for the LROSADs.BeginDeleteAsyncRelativeRetryNoStatus method.
+// LROSADsBeginDeleteAsyncRelativeRetryNoStatusOptions contains the optional parameters for the LROSADs.BeginDeleteAsyncRelativeRetryNoStatus
+// method.
 type LROSADsBeginDeleteAsyncRelativeRetryNoStatusOptions struct {
 	// placeholder for future optional parameters
 }
@@ -121,19 +128,22 @@ type LROSADsBeginPost202NonRetry400Options struct {
 	Product *Product
 }
 
-// LROSADsBeginPost202RetryInvalidHeaderOptions contains the optional parameters for the LROSADs.BeginPost202RetryInvalidHeader method.
+// LROSADsBeginPost202RetryInvalidHeaderOptions contains the optional parameters for the LROSADs.BeginPost202RetryInvalidHeader
+// method.
 type LROSADsBeginPost202RetryInvalidHeaderOptions struct {
 	// Product to put
 	Product *Product
 }
 
-// LROSADsBeginPostAsyncRelativeRetry400Options contains the optional parameters for the LROSADs.BeginPostAsyncRelativeRetry400 method.
+// LROSADsBeginPostAsyncRelativeRetry400Options contains the optional parameters for the LROSADs.BeginPostAsyncRelativeRetry400
+// method.
 type LROSADsBeginPostAsyncRelativeRetry400Options struct {
 	// Product to put
 	Product *Product
 }
 
-// LROSADsBeginPostAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADs.BeginPostAsyncRelativeRetryInvalidHeader method.
+// LROSADsBeginPostAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADs.BeginPostAsyncRelativeRetryInvalidHeader
+// method.
 type LROSADsBeginPostAsyncRelativeRetryInvalidHeaderOptions struct {
 	// Product to put
 	Product *Product
@@ -146,7 +156,8 @@ type LROSADsBeginPostAsyncRelativeRetryInvalidJSONPollingOptions struct {
 	Product *Product
 }
 
-// LROSADsBeginPostAsyncRelativeRetryNoPayloadOptions contains the optional parameters for the LROSADs.BeginPostAsyncRelativeRetryNoPayload method.
+// LROSADsBeginPostAsyncRelativeRetryNoPayloadOptions contains the optional parameters for the LROSADs.BeginPostAsyncRelativeRetryNoPayload
+// method.
 type LROSADsBeginPostAsyncRelativeRetryNoPayloadOptions struct {
 	// Product to put
 	Product *Product
@@ -164,13 +175,15 @@ type LROSADsBeginPut200InvalidJSONOptions struct {
 	Product *Product
 }
 
-// LROSADsBeginPutAsyncRelativeRetry400Options contains the optional parameters for the LROSADs.BeginPutAsyncRelativeRetry400 method.
+// LROSADsBeginPutAsyncRelativeRetry400Options contains the optional parameters for the LROSADs.BeginPutAsyncRelativeRetry400
+// method.
 type LROSADsBeginPutAsyncRelativeRetry400Options struct {
 	// Product to put
 	Product *Product
 }
 
-// LROSADsBeginPutAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADs.BeginPutAsyncRelativeRetryInvalidHeader method.
+// LROSADsBeginPutAsyncRelativeRetryInvalidHeaderOptions contains the optional parameters for the LROSADs.BeginPutAsyncRelativeRetryInvalidHeader
+// method.
 type LROSADsBeginPutAsyncRelativeRetryInvalidHeaderOptions struct {
 	// Product to put
 	Product *Product
@@ -183,13 +196,15 @@ type LROSADsBeginPutAsyncRelativeRetryInvalidJSONPollingOptions struct {
 	Product *Product
 }
 
-// LROSADsBeginPutAsyncRelativeRetryNoStatusOptions contains the optional parameters for the LROSADs.BeginPutAsyncRelativeRetryNoStatus method.
+// LROSADsBeginPutAsyncRelativeRetryNoStatusOptions contains the optional parameters for the LROSADs.BeginPutAsyncRelativeRetryNoStatus
+// method.
 type LROSADsBeginPutAsyncRelativeRetryNoStatusOptions struct {
 	// Product to put
 	Product *Product
 }
 
-// LROSADsBeginPutAsyncRelativeRetryNoStatusPayloadOptions contains the optional parameters for the LROSADs.BeginPutAsyncRelativeRetryNoStatusPayload method.
+// LROSADsBeginPutAsyncRelativeRetryNoStatusPayloadOptions contains the optional parameters for the LROSADs.BeginPutAsyncRelativeRetryNoStatusPayload
+// method.
 type LROSADsBeginPutAsyncRelativeRetryNoStatusPayloadOptions struct {
 	// Product to put
 	Product *Product
@@ -202,13 +217,15 @@ type LROSADsBeginPutError201NoProvisioningStatePayloadOptions struct {
 	Product *Product
 }
 
-// LROSADsBeginPutNonRetry201Creating400InvalidJSONOptions contains the optional parameters for the LROSADs.BeginPutNonRetry201Creating400InvalidJSON method.
+// LROSADsBeginPutNonRetry201Creating400InvalidJSONOptions contains the optional parameters for the LROSADs.BeginPutNonRetry201Creating400InvalidJSON
+// method.
 type LROSADsBeginPutNonRetry201Creating400InvalidJSONOptions struct {
 	// Product to put
 	Product *Product
 }
 
-// LROSADsBeginPutNonRetry201Creating400Options contains the optional parameters for the LROSADs.BeginPutNonRetry201Creating400 method.
+// LROSADsBeginPutNonRetry201Creating400Options contains the optional parameters for the LROSADs.BeginPutNonRetry201Creating400
+// method.
 type LROSADsBeginPutNonRetry201Creating400Options struct {
 	// Product to put
 	Product *Product
@@ -235,12 +252,14 @@ type LROsBeginDelete204SucceededOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LROsBeginDeleteAsyncNoHeaderInRetryOptions contains the optional parameters for the LROs.BeginDeleteAsyncNoHeaderInRetry method.
+// LROsBeginDeleteAsyncNoHeaderInRetryOptions contains the optional parameters for the LROs.BeginDeleteAsyncNoHeaderInRetry
+// method.
 type LROsBeginDeleteAsyncNoHeaderInRetryOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LROsBeginDeleteAsyncNoRetrySucceededOptions contains the optional parameters for the LROs.BeginDeleteAsyncNoRetrySucceeded method.
+// LROsBeginDeleteAsyncNoRetrySucceededOptions contains the optional parameters for the LROs.BeginDeleteAsyncNoRetrySucceeded
+// method.
 type LROsBeginDeleteAsyncNoRetrySucceededOptions struct {
 	// placeholder for future optional parameters
 }
@@ -250,7 +269,8 @@ type LROsBeginDeleteAsyncRetryFailedOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LROsBeginDeleteAsyncRetrySucceededOptions contains the optional parameters for the LROs.BeginDeleteAsyncRetrySucceeded method.
+// LROsBeginDeleteAsyncRetrySucceededOptions contains the optional parameters for the LROs.BeginDeleteAsyncRetrySucceeded
+// method.
 type LROsBeginDeleteAsyncRetrySucceededOptions struct {
 	// placeholder for future optional parameters
 }
@@ -271,7 +291,8 @@ type LROsBeginDeleteProvisioning202Accepted200SucceededOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LROsBeginDeleteProvisioning202DeletingFailed200Options contains the optional parameters for the LROs.BeginDeleteProvisioning202DeletingFailed200 method.
+// LROsBeginDeleteProvisioning202DeletingFailed200Options contains the optional parameters for the LROs.BeginDeleteProvisioning202DeletingFailed200
+// method.
 type LROsBeginDeleteProvisioning202DeletingFailed200Options struct {
 	// placeholder for future optional parameters
 }
@@ -282,7 +303,8 @@ type LROsBeginDeleteProvisioning202Deletingcanceled200Options struct {
 	// placeholder for future optional parameters
 }
 
-// LROsBeginPatch200SucceededIgnoreHeadersOptions contains the optional parameters for the LROs.BeginPatch200SucceededIgnoreHeaders method.
+// LROsBeginPatch200SucceededIgnoreHeadersOptions contains the optional parameters for the LROs.BeginPatch200SucceededIgnoreHeaders
+// method.
 type LROsBeginPatch200SucceededIgnoreHeadersOptions struct {
 	// Product to patch
 	Product *Product
@@ -310,7 +332,8 @@ type LROsBeginPost202Retry200Options struct {
 	Product *Product
 }
 
-// LROsBeginPostAsyncNoRetrySucceededOptions contains the optional parameters for the LROs.BeginPostAsyncNoRetrySucceeded method.
+// LROsBeginPostAsyncNoRetrySucceededOptions contains the optional parameters for the LROs.BeginPostAsyncNoRetrySucceeded
+// method.
 type LROsBeginPostAsyncNoRetrySucceededOptions struct {
 	// Product to put
 	Product *Product
@@ -340,17 +363,20 @@ type LROsBeginPostDoubleHeadersFinalAzureHeaderGetDefaultOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LROsBeginPostDoubleHeadersFinalAzureHeaderGetOptions contains the optional parameters for the LROs.BeginPostDoubleHeadersFinalAzureHeaderGet method.
+// LROsBeginPostDoubleHeadersFinalAzureHeaderGetOptions contains the optional parameters for the LROs.BeginPostDoubleHeadersFinalAzureHeaderGet
+// method.
 type LROsBeginPostDoubleHeadersFinalAzureHeaderGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LROsBeginPostDoubleHeadersFinalLocationGetOptions contains the optional parameters for the LROs.BeginPostDoubleHeadersFinalLocationGet method.
+// LROsBeginPostDoubleHeadersFinalLocationGetOptions contains the optional parameters for the LROs.BeginPostDoubleHeadersFinalLocationGet
+// method.
 type LROsBeginPostDoubleHeadersFinalLocationGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LROsBeginPut200Acceptedcanceled200Options contains the optional parameters for the LROs.BeginPut200Acceptedcanceled200 method.
+// LROsBeginPut200Acceptedcanceled200Options contains the optional parameters for the LROs.BeginPut200Acceptedcanceled200
+// method.
 type LROsBeginPut200Acceptedcanceled200Options struct {
 	// Product to put
 	Product *Product
@@ -368,7 +394,8 @@ type LROsBeginPut200SucceededOptions struct {
 	Product *Product
 }
 
-// LROsBeginPut200UpdatingSucceeded204Options contains the optional parameters for the LROs.BeginPut200UpdatingSucceeded204 method.
+// LROsBeginPut200UpdatingSucceeded204Options contains the optional parameters for the LROs.BeginPut200UpdatingSucceeded204
+// method.
 type LROsBeginPut200UpdatingSucceeded204Options struct {
 	// Product to put
 	Product *Product
@@ -380,7 +407,8 @@ type LROsBeginPut201CreatingFailed200Options struct {
 	Product *Product
 }
 
-// LROsBeginPut201CreatingSucceeded200Options contains the optional parameters for the LROs.BeginPut201CreatingSucceeded200 method.
+// LROsBeginPut201CreatingSucceeded200Options contains the optional parameters for the LROs.BeginPut201CreatingSucceeded200
+// method.
 type LROsBeginPut201CreatingSucceeded200Options struct {
 	// Product to put
 	Product *Product
@@ -458,25 +486,29 @@ type LROsBeginPutSubResourceOptions struct {
 	Product *SubProduct
 }
 
-// LROsCustomHeaderBeginPost202Retry200Options contains the optional parameters for the LROsCustomHeader.BeginPost202Retry200 method.
+// LROsCustomHeaderBeginPost202Retry200Options contains the optional parameters for the LROsCustomHeader.BeginPost202Retry200
+// method.
 type LROsCustomHeaderBeginPost202Retry200Options struct {
 	// Product to put
 	Product *Product
 }
 
-// LROsCustomHeaderBeginPostAsyncRetrySucceededOptions contains the optional parameters for the LROsCustomHeader.BeginPostAsyncRetrySucceeded method.
+// LROsCustomHeaderBeginPostAsyncRetrySucceededOptions contains the optional parameters for the LROsCustomHeader.BeginPostAsyncRetrySucceeded
+// method.
 type LROsCustomHeaderBeginPostAsyncRetrySucceededOptions struct {
 	// Product to put
 	Product *Product
 }
 
-// LROsCustomHeaderBeginPut201CreatingSucceeded200Options contains the optional parameters for the LROsCustomHeader.BeginPut201CreatingSucceeded200 method.
+// LROsCustomHeaderBeginPut201CreatingSucceeded200Options contains the optional parameters for the LROsCustomHeader.BeginPut201CreatingSucceeded200
+// method.
 type LROsCustomHeaderBeginPut201CreatingSucceeded200Options struct {
 	// Product to put
 	Product *Product
 }
 
-// LROsCustomHeaderBeginPutAsyncRetrySucceededOptions contains the optional parameters for the LROsCustomHeader.BeginPutAsyncRetrySucceeded method.
+// LROsCustomHeaderBeginPutAsyncRetrySucceededOptions contains the optional parameters for the LROsCustomHeader.BeginPutAsyncRetrySucceeded
+// method.
 type LROsCustomHeaderBeginPutAsyncRetrySucceededOptions struct {
 	// Product to put
 	Product *Product

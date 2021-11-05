@@ -31,6 +31,10 @@ type ExpressRouteLinksClient struct {
 }
 
 // NewExpressRouteLinksClient creates a new instance of ExpressRouteLinksClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewExpressRouteLinksClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ExpressRouteLinksClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,10 @@ func NewExpressRouteLinksClient(subscriptionID string, credential azcore.TokenCr
 
 // Get - Retrieves the specified ExpressRouteLink resource.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// expressRoutePortName - The name of the ExpressRoutePort resource.
+// linkName - The name of the ExpressRouteLink resource.
+// options - ExpressRouteLinksGetOptions contains the optional parameters for the ExpressRouteLinks.Get method.
 func (client *ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string, options *ExpressRouteLinksGetOptions) (ExpressRouteLinksGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, expressRoutePortName, linkName, options)
 	if err != nil {
@@ -118,6 +126,9 @@ func (client *ExpressRouteLinksClient) getHandleError(resp *http.Response) error
 
 // List - Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// expressRoutePortName - The name of the ExpressRoutePort resource.
+// options - ExpressRouteLinksListOptions contains the optional parameters for the ExpressRouteLinks.List method.
 func (client *ExpressRouteLinksClient) List(resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksListOptions) *ExpressRouteLinksListPager {
 	return &ExpressRouteLinksListPager{
 		client: client,

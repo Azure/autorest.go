@@ -60,8 +60,8 @@ func (c AggregatedReplicationState) ToPtr() *AggregatedReplicationState {
 	return &c
 }
 
-// AvailabilitySetSKUTypes - Specifies the sku of an Availability Set. Use 'Aligned' for virtual machines with managed disks and 'Classic' for virtual machines
-// with unmanaged disks. Default value is 'Classic'.
+// AvailabilitySetSKUTypes - Specifies the sku of an Availability Set. Use 'Aligned' for virtual machines with managed disks
+// and 'Classic' for virtual machines with unmanaged disks. Default value is 'Classic'.
 type AvailabilitySetSKUTypes string
 
 const (
@@ -110,7 +110,8 @@ func (c CachingTypes) ToPtr() *CachingTypes {
 	return &c
 }
 
-// ContainerServiceMasterProfileCount - Number of masters (VMs) in the container service cluster. Allowed values are 1, 3, and 5. The default value is 1.
+// ContainerServiceMasterProfileCount - Number of masters (VMs) in the container service cluster. Allowed values are 1, 3,
+// and 5. The default value is 1.
 type ContainerServiceMasterProfileCount int32
 
 const (
@@ -133,7 +134,8 @@ func (c ContainerServiceMasterProfileCount) ToPtr() *ContainerServiceMasterProfi
 	return &c
 }
 
-// ContainerServiceOrchestratorTypes - The orchestrator to use to manage container service cluster resources. Valid values are Swarm, DCOS, and Custom.
+// ContainerServiceOrchestratorTypes - The orchestrator to use to manage container service cluster resources. Valid values
+// are Swarm, DCOS, and Custom.
 type ContainerServiceOrchestratorTypes string
 
 const (
@@ -269,7 +271,8 @@ func (c ContainerServiceVMSizeTypes) ToPtr() *ContainerServiceVMSizeTypes {
 	return &c
 }
 
-// DedicatedHostLicenseTypes - Specifies the software license type that will be applied to the VMs deployed on the dedicated host.
+// DedicatedHostLicenseTypes - Specifies the software license type that will be applied to the VMs deployed on the dedicated
+// host.
 // Possible values are:
 // None
 // WindowsServerHybrid
@@ -316,9 +319,10 @@ func (c DiffDiskOptions) ToPtr() *DiffDiskOptions {
 	return &c
 }
 
-// DiffDiskPlacement - Specifies the ephemeral disk placement for operating system disk. This property can be used by user in the request to choose the
-// location i.e, cache disk or resource disk space for Ephemeral OS disk
-// provisioning. For more information on Ephemeral OS disk size requirements, please refer Ephemeral OS disk size requirements for Windows VM at
+// DiffDiskPlacement - Specifies the ephemeral disk placement for operating system disk. This property can be used by user
+// in the request to choose the location i.e, cache disk or resource disk space for Ephemeral OS disk
+// provisioning. For more information on Ephemeral OS disk size requirements, please refer Ephemeral OS disk size requirements
+// for Windows VM at
 // https://docs.microsoft.com/en-us/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements and Linux VM at
 // https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements
 type DiffDiskPlacement string
@@ -353,11 +357,13 @@ const (
 	DiskCreateOptionEmpty DiskCreateOption = "Empty"
 	// DiskCreateOptionFromImage - Create a new disk from a platform image specified by the given imageReference or galleryImageReference.
 	DiskCreateOptionFromImage DiskCreateOption = "FromImage"
-	// DiskCreateOptionImport - Create a disk by importing from a blob specified by a sourceUri in a storage account specified by storageAccountId.
+	// DiskCreateOptionImport - Create a disk by importing from a blob specified by a sourceUri in a storage account specified
+	// by storageAccountId.
 	DiskCreateOptionImport DiskCreateOption = "Import"
 	// DiskCreateOptionRestore - Create a new disk by copying from a backup recovery point.
 	DiskCreateOptionRestore DiskCreateOption = "Restore"
-	// DiskCreateOptionUpload - Create a new disk by obtaining a write token and using it to directly upload the contents of the disk.
+	// DiskCreateOptionUpload - Create a new disk by obtaining a write token and using it to directly upload the contents of the
+	// disk.
 	DiskCreateOptionUpload DiskCreateOption = "Upload"
 )
 
@@ -382,8 +388,8 @@ func (c DiskCreateOption) ToPtr() *DiskCreateOption {
 // DiskCreateOptionTypes - Specifies how the virtual machine should be created.
 // Possible values are:
 // Attach \u2013 This value is used when you are using a specialized disk to create the virtual machine.
-// FromImage \u2013 This value is used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference
-// element described above. If you are
+// FromImage \u2013 This value is used when you are using an image to create the virtual machine. If you are using a platform
+// image, you also use the imageReference element described above. If you are
 // using a marketplace image, you also use the plan element previously described.
 type DiskCreateOptionTypes string
 
@@ -465,14 +471,17 @@ func (c DiskState) ToPtr() *DiskState {
 type DiskStorageAccountTypes string
 
 const (
-	// DiskStorageAccountTypesPremiumLRS - Premium SSD locally redundant storage. Best for production and performance sensitive workloads.
+	// DiskStorageAccountTypesPremiumLRS - Premium SSD locally redundant storage. Best for production and performance sensitive
+	// workloads.
 	DiskStorageAccountTypesPremiumLRS DiskStorageAccountTypes = "Premium_LRS"
-	// DiskStorageAccountTypesStandardLRS - Standard HDD locally redundant storage. Best for backup, non-critical, and infrequent access.
+	// DiskStorageAccountTypesStandardLRS - Standard HDD locally redundant storage. Best for backup, non-critical, and infrequent
+	// access.
 	DiskStorageAccountTypesStandardLRS DiskStorageAccountTypes = "Standard_LRS"
-	// DiskStorageAccountTypesStandardSSDLRS - Standard SSD locally redundant storage. Best for web servers, lightly used enterprise applications and dev/test.
+	// DiskStorageAccountTypesStandardSSDLRS - Standard SSD locally redundant storage. Best for web servers, lightly used enterprise
+	// applications and dev/test.
 	DiskStorageAccountTypesStandardSSDLRS DiskStorageAccountTypes = "StandardSSD_LRS"
-	// DiskStorageAccountTypesUltraSSDLRS - Ultra SSD locally redundant storage. Best for IO-intensive workloads such as SAP HANA, top tier databases (for example,
-	// SQL, Oracle), and other transaction-heavy workloads.
+	// DiskStorageAccountTypesUltraSSDLRS - Ultra SSD locally redundant storage. Best for IO-intensive workloads such as SAP HANA,
+	// top tier databases (for example, SQL, Oracle), and other transaction-heavy workloads.
 	DiskStorageAccountTypesUltraSSDLRS DiskStorageAccountTypes = "UltraSSD_LRS"
 )
 
@@ -497,7 +506,8 @@ type EncryptionType string
 const (
 	// EncryptionTypeEncryptionAtRestWithCustomerKey - Disk is encrypted with Customer managed key at rest.
 	EncryptionTypeEncryptionAtRestWithCustomerKey EncryptionType = "EncryptionAtRestWithCustomerKey"
-	// EncryptionTypeEncryptionAtRestWithPlatformKey - Disk is encrypted with XStore managed key at rest. It is the default encryption type.
+	// EncryptionTypeEncryptionAtRestWithPlatformKey - Disk is encrypted with XStore managed key at rest. It is the default encryption
+	// type.
 	EncryptionTypeEncryptionAtRestWithPlatformKey EncryptionType = "EncryptionAtRestWithPlatformKey"
 )
 
@@ -716,8 +726,8 @@ func (c HyperVGenerationTypes) ToPtr() *HyperVGenerationTypes {
 	return &c
 }
 
-// IPVersion - Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.
-// Possible values are: 'IPv4' and 'IPv6'.
+// IPVersion - Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or
+// IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'.
 type IPVersion string
 
 const (
@@ -986,8 +996,8 @@ func (c ReplicationStatusTypes) ToPtr() *ReplicationStatusTypes {
 	return &c
 }
 
-// ResourceIdentityType - The type of identity used for the virtual machine. The type 'SystemAssigned, UserAssigned' includes both an implicitly created
-// identity and a set of user assigned identities. The type 'None' will
+// ResourceIdentityType - The type of identity used for the virtual machine. The type 'SystemAssigned, UserAssigned' includes
+// both an implicitly created identity and a set of user assigned identities. The type 'None' will
 // remove any identities from the virtual machine.
 type ResourceIdentityType string
 
@@ -1124,7 +1134,8 @@ func (c RollingUpgradeStatusCode) ToPtr() *RollingUpgradeStatusCode {
 	return &c
 }
 
-// SettingNames - Specifies the name of the setting to which the content applies. Possible values are: FirstLogonCommands and AutoLogon.
+// SettingNames - Specifies the name of the setting to which the content applies. Possible values are: FirstLogonCommands
+// and AutoLogon.
 type SettingNames string
 
 const (
@@ -1217,12 +1228,12 @@ func (c StorageAccountType) ToPtr() *StorageAccountType {
 	return &c
 }
 
-// StorageAccountTypes - Specifies the storage account type for the managed disk. Managed OS disk storage account type can only be set when you create the
-// scale set. NOTE: UltraSSDLRS can only be used with data disks. It
-// cannot be used with OS Disk. StandardLRS uses Standard HDD. StandardSSDLRS uses Standard SSD. PremiumLRS uses Premium SSD. UltraSSD_LRS uses Ultra disk.
-// For more information regarding disks supported
-// for Windows Virtual Machines, refer to https://docs.microsoft.com/en-us/azure/virtual-machines/windows/disks-types and, for Linux Virtual Machines, refer
-// to
+// StorageAccountTypes - Specifies the storage account type for the managed disk. Managed OS disk storage account type can
+// only be set when you create the scale set. NOTE: UltraSSDLRS can only be used with data disks. It
+// cannot be used with OS Disk. StandardLRS uses Standard HDD. StandardSSDLRS uses Standard SSD. PremiumLRS uses Premium SSD.
+// UltraSSD_LRS uses Ultra disk. For more information regarding disks supported
+// for Windows Virtual Machines, refer to https://docs.microsoft.com/en-us/azure/virtual-machines/windows/disks-types and,
+// for Linux Virtual Machines, refer to
 // https://docs.microsoft.com/en-us/azure/virtual-machines/linux/disks-types
 type StorageAccountTypes string
 
@@ -1250,7 +1261,8 @@ func (c StorageAccountTypes) ToPtr() *StorageAccountTypes {
 
 // UpgradeMode - Specifies the mode of an upgrade to virtual machines in the scale set.
 // Possible values are:
-// Manual - You control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.
+// Manual - You control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade
+// action.
 // Automatic - All virtual machines in the scale set are automatically updated at the same time.
 type UpgradeMode string
 
@@ -1343,7 +1355,8 @@ func (c VirtualMachineEvictionPolicyTypes) ToPtr() *VirtualMachineEvictionPolicy
 	return &c
 }
 
-// VirtualMachinePriorityTypes - Specifies the priority for a standalone virtual machine or the virtual machines in the scale set.
+// VirtualMachinePriorityTypes - Specifies the priority for a standalone virtual machine or the virtual machines in the scale
+// set.
 // 'Low' enum will be deprecated in the future, please use 'Spot' as the enum to deploy Azure Spot VM/VMSS.
 type VirtualMachinePriorityTypes string
 
@@ -1410,7 +1423,8 @@ func (c VirtualMachineScaleSetScaleInRules) ToPtr() *VirtualMachineScaleSetScale
 	return &c
 }
 
-// VirtualMachineSizeTypes - Specifies the size of the virtual machine. For more information about virtual machine sizes, see Sizes for virtual machines
+// VirtualMachineSizeTypes - Specifies the size of the virtual machine. For more information about virtual machine sizes,
+// see Sizes for virtual machines
 // [https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-sizes?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json].
 // The available VM sizes depend on region and availability set. For a list of available sizes use these APIs:
 // List all available virtual machine sizes in an availability set [https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes]

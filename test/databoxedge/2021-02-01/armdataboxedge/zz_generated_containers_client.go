@@ -29,6 +29,8 @@ type ContainersClient struct {
 }
 
 // NewContainersClient creates a new instance of ContainersClient with the specified values.
+// subscriptionID - The subscription ID.
+// options - pass nil to accept the default values.
 func NewContainersClient(subscriptionID string, options *azcore.ClientOptions) *ContainersClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -43,6 +45,13 @@ func NewContainersClient(subscriptionID string, options *azcore.ClientOptions) *
 
 // BeginCreateOrUpdate - Creates a new container or updates an existing container on the device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// storageAccountName - The Storage Account Name
+// containerName - The container name.
+// resourceGroupName - The resource group name.
+// containerParam - The container properties.
+// options - ContainersBeginCreateOrUpdateOptions contains the optional parameters for the Containers.BeginCreateOrUpdate
+// method.
 func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersBeginCreateOrUpdateOptions) (ContainersCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, storageAccountName, containerName, resourceGroupName, containerParam, options)
 	if err != nil {
@@ -127,6 +136,11 @@ func (client *ContainersClient) createOrUpdateHandleError(resp *http.Response) e
 
 // BeginDelete - Deletes the container on the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// storageAccountName - The Storage Account Name
+// containerName - The container name.
+// resourceGroupName - The resource group name.
+// options - ContainersBeginDeleteOptions contains the optional parameters for the Containers.BeginDelete method.
 func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersBeginDeleteOptions) (ContainersDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
@@ -211,6 +225,11 @@ func (client *ContainersClient) deleteHandleError(resp *http.Response) error {
 
 // Get - Gets a container by name.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// storageAccountName - The Storage Account Name
+// containerName - The container Name
+// resourceGroupName - The resource group name.
+// options - ContainersGetOptions contains the optional parameters for the Containers.Get method.
 func (client *ContainersClient) Get(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersGetOptions) (ContainersGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
@@ -284,6 +303,11 @@ func (client *ContainersClient) getHandleError(resp *http.Response) error {
 
 // ListByStorageAccount - Lists all the containers of a storage Account in a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// storageAccountName - The storage Account name.
+// resourceGroupName - The resource group name.
+// options - ContainersListByStorageAccountOptions contains the optional parameters for the Containers.ListByStorageAccount
+// method.
 func (client *ContainersClient) ListByStorageAccount(deviceName string, storageAccountName string, resourceGroupName string, options *ContainersListByStorageAccountOptions) *ContainersListByStorageAccountPager {
 	return &ContainersListByStorageAccountPager{
 		client: client,
@@ -350,6 +374,11 @@ func (client *ContainersClient) listByStorageAccountHandleError(resp *http.Respo
 
 // BeginRefresh - Refreshes the container metadata with the data from the cloud.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// storageAccountName - The Storage Account Name
+// containerName - The container name.
+// resourceGroupName - The resource group name.
+// options - ContainersBeginRefreshOptions contains the optional parameters for the Containers.BeginRefresh method.
 func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersBeginRefreshOptions) (ContainersRefreshPollerResponse, error) {
 	resp, err := client.refresh(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {

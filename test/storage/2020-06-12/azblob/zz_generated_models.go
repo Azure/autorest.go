@@ -60,7 +60,8 @@ func (a *AccessPolicy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 
 // AppendBlobAppendBlockFromURLOptions contains the optional parameters for the AppendBlob.AppendBlockFromURL method.
 type AppendBlobAppendBlockFromURLOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
 	// Specify the md5 calculated for the range of bytes that must be read from the copy source.
 	SourceContentMD5 []byte
@@ -68,8 +69,8 @@ type AppendBlobAppendBlockFromURLOptions struct {
 	SourceContentcrc64 []byte
 	// Bytes of source data in the specified range.
 	SourceRange *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 	// Specify the transactional md5 for the body, to be validated by the service.
 	TransactionalContentMD5 []byte
@@ -77,10 +78,11 @@ type AppendBlobAppendBlockFromURLOptions struct {
 
 // AppendBlobAppendBlockOptions contains the optional parameters for the AppendBlob.AppendBlock method.
 type AppendBlobAppendBlockOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 	// Specify the transactional crc64 for the body, to be validated by the service.
 	TransactionalContentCRC64 []byte
@@ -98,36 +100,41 @@ type AppendBlobCreateOptions struct {
 	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
 	// Specified if a legal hold should be set on the blob.
 	LegalHold *bool
-	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
-	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
-	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
-	// rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.
+	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the
+	// operation will copy the metadata from the source blob or file to the destination
+	// blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata
+	// is not copied from the source blob or file. Note that beginning with
+	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
+	// Blobs, and Metadata for more information.
 	Metadata map[string]string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // AppendBlobSealOptions contains the optional parameters for the AppendBlob.Seal method.
 type AppendBlobSealOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // AppendPositionAccessConditions contains a group of parameters for the AppendBlob.AppendBlock method.
 type AppendPositionAccessConditions struct {
-	// Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only
-	// if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412
-	// - Precondition Failed).
+	// Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare.
+	// Append Block will succeed only if the append position is equal to this number. If
+	// it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed).
 	AppendPosition *int64
-	// Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that
-	// limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP
-	// status code 412 - Precondition Failed).
+	// Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would
+	// cause the blob to exceed that limit or if the blob size is already greater than
+	// the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 -
+	// Precondition Failed).
 	MaxSize *int64
 }
 
@@ -163,48 +170,56 @@ type ArrowField struct {
 
 // BlobAbortCopyFromURLOptions contains the optional parameters for the Blob.AbortCopyFromURL method.
 type BlobAbortCopyFromURLOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // BlobAcquireLeaseOptions contains the optional parameters for the Blob.AcquireLease method.
 type BlobAcquireLeaseOptions struct {
-	// Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds.
-	// A lease duration cannot be changed using renew or change.
+	// Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease
+	// can be between 15 and 60 seconds. A lease duration cannot be changed using
+	// renew or change.
 	Duration *int32
-	// Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See
-	// Guid Constructor (String) for a list of valid GUID string formats.
+	// Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is
+	// not in the correct format. See Guid Constructor (String) for a list of valid GUID
+	// string formats.
 	ProposedLeaseID *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // BlobBreakLeaseOptions contains the optional parameters for the Blob.BreakLease method.
 type BlobBreakLeaseOptions struct {
-	// For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used
-	// if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the
-	// break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration
-	// lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately.
+	// For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This
+	// break period is only used if it is shorter than the time remaining on the
+	// lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has
+	// expired, but the lease may be held for longer than the break period. If this
+	// header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses,
+	// and an infinite lease breaks immediately.
 	BreakPeriod *int32
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // BlobChangeLeaseOptions contains the optional parameters for the Blob.ChangeLease method.
 type BlobChangeLeaseOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -218,63 +233,73 @@ type BlobCopyFromURLOptions struct {
 	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
 	// Specified if a legal hold should be set on the blob.
 	LegalHold *bool
-	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
-	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
-	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
-	// rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.
+	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the
+	// operation will copy the metadata from the source blob or file to the destination
+	// blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata
+	// is not copied from the source blob or file. Note that beginning with
+	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
+	// Blobs, and Metadata for more information.
 	Metadata map[string]string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
 	// Specify the md5 calculated for the range of bytes that must be read from the copy source.
 	SourceContentMD5 []byte
 	// Optional. Indicates the tier to be set on the blob.
 	Tier *AccessTier
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // BlobCreateSnapshotOptions contains the optional parameters for the Blob.CreateSnapshot method.
 type BlobCreateSnapshotOptions struct {
-	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
-	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
-	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
-	// rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.
+	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the
+	// operation will copy the metadata from the source blob or file to the destination
+	// blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata
+	// is not copied from the source blob or file. Note that beginning with
+	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
+	// Blobs, and Metadata for more information.
 	Metadata map[string]string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // BlobDeleteImmutabilityPolicyOptions contains the optional parameters for the Blob.DeleteImmutabilityPolicy method.
 type BlobDeleteImmutabilityPolicyOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // BlobDeleteOptions contains the optional parameters for the Blob.Delete method.
 type BlobDeleteOptions struct {
-	// Optional. Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled.
+	// Optional. Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled..
+	// Specifying any value will set the value to Permanent.
 	BlobDeleteType *string
-	// Required if the blob has associated snapshots. Specify one of the following two options: include: Delete the base blob and all of its snapshots. only:
-	// Delete only the blob's snapshots and not the blob itself
+	// Required if the blob has associated snapshots. Specify one of the following two options: include: Delete the base blob
+	// and all of its snapshots. only: Delete only the blob's snapshots and not the blob
+	// itself
 	DeleteSnapshots *DeleteSnapshotsOptionType
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
-	// blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot
-	// of a Blob.</a>
+	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more
+	// information on working with blob snapshots, see Creating a Snapshot of a Blob.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob]
 	Snapshot *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
-	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10
-	// and newer.
+	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on.
+	// It's for service version 2019-10-10 and newer.
 	VersionID *string
 }
 
@@ -282,23 +307,24 @@ type BlobDeleteOptions struct {
 type BlobDownloadOptions struct {
 	// Return only the bytes of the blob in the specified range.
 	Range *string
-	// When set to true and specified together with the Range, the service returns the CRC64 hash for the range, as long as the range is less than or equal
-	// to 4 MB in size.
+	// When set to true and specified together with the Range, the service returns the CRC64 hash for the range, as long as the
+	// range is less than or equal to 4 MB in size.
 	RangeGetContentCRC64 *bool
-	// When set to true and specified together with the Range, the service returns the MD5 hash for the range, as long as the range is less than or equal to
-	// 4 MB in size.
+	// When set to true and specified together with the Range, the service returns the MD5 hash for the range, as long as the
+	// range is less than or equal to 4 MB in size.
 	RangeGetContentMD5 *bool
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
-	// blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot
-	// of a Blob.</a>
+	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more
+	// information on working with blob snapshots, see Creating a Snapshot of a Blob.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob]
 	Snapshot *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
-	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10
-	// and newer.
+	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on.
+	// It's for service version 2019-10-10 and newer.
 	VersionID *string
 }
 
@@ -324,14 +350,16 @@ func (b BlobFlatListSegment) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 // BlobGetAccessControlOptions contains the optional parameters for the Blob.GetAccessControl method.
 type BlobGetAccessControlOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
-	// Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the identity values returned in the x-ms-owner, x-ms-group, and
-	// x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names. If "false", the values will be returned
-	// as Azure Active Directory Object IDs. The default value is false.
+	// Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the identity values returned in
+	// the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed
+	// from Azure Active Directory Object IDs to User Principal Names. If "false", the values will be returned as Azure Active
+	// Directory Object IDs. The default value is false.
 	Upn *bool
 }
 
@@ -342,33 +370,35 @@ type BlobGetAccountInfoOptions struct {
 
 // BlobGetPropertiesOptions contains the optional parameters for the Blob.GetProperties method.
 type BlobGetPropertiesOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
-	// blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot
-	// of a Blob.</a>
+	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more
+	// information on working with blob snapshots, see Creating a Snapshot of a Blob.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob]
 	Snapshot *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
-	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10
-	// and newer.
+	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on.
+	// It's for service version 2019-10-10 and newer.
 	VersionID *string
 }
 
 // BlobGetTagsOptions contains the optional parameters for the Blob.GetTags method.
 type BlobGetTagsOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
-	// blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot
-	// of a Blob.</a>
+	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more
+	// information on working with blob snapshots, see Creating a Snapshot of a Blob.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob]
 	Snapshot *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
-	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10
-	// and newer.
+	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on.
+	// It's for service version 2019-10-10 and newer.
 	VersionID *string
 }
 
@@ -378,12 +408,14 @@ type BlobHTTPHeaders struct {
 	BlobCacheControl *string
 	// Optional. Sets the blob's Content-Disposition header.
 	BlobContentDisposition *string
-	// Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read request.
+	// Optional. Sets the blob's content encoding. If specified, this property is stored with the blob and returned with a read
+	// request.
 	BlobContentEncoding *string
-	// Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read request.
+	// Optional. Set the blob's content language. If specified, this property is stored with the blob and returned with a read
+	// request.
 	BlobContentLanguage *string
-	// Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks were validated when each was
-	// uploaded.
+	// Optional. An MD5 hash of the blob content. Note that this hash is not validated, as the hashes for the individual blocks
+	// were validated when each was uploaded.
 	BlobContentMD5 []byte
 	// Optional. Sets the blob's content type. If specified, this property is stored with the blob and returned with a read request.
 	BlobContentType *string
@@ -511,7 +543,8 @@ type BlobPropertiesInternal struct {
 	LeaseStatus                 *LeaseStatusType            `xml:"LeaseStatus"`
 	LegalHold                   *bool                       `xml:"LegalHold"`
 
-	// If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard.
+	// If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High
+	// and Standard.
 	RehydratePriority      *RehydratePriority `xml:"RehydratePriority"`
 	RemainingRetentionDays *int32             `xml:"RemainingRetentionDays"`
 	ServerEncrypted        *bool              `xml:"ServerEncrypted"`
@@ -584,55 +617,61 @@ func (b *BlobPropertiesInternal) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 type BlobQueryOptions struct {
 	// the query request
 	QueryRequest *QueryRequest
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
-	// blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot
-	// of a Blob.</a>
+	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more
+	// information on working with blob snapshots, see Creating a Snapshot of a Blob.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob]
 	Snapshot *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // BlobReleaseLeaseOptions contains the optional parameters for the Blob.ReleaseLease method.
 type BlobReleaseLeaseOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // BlobRenameOptions contains the optional parameters for the Blob.Rename method.
 type BlobRenameOptions struct {
-	// Optional. User-defined properties to be stored with the file or directory, in the format of a comma-separated list of name and value pairs "n1=v1, n2=v2,
-	// ...", where each value is base64 encoded.
+	// Optional. User-defined properties to be stored with the file or directory, in the format of a comma-separated list of name
+	// and value pairs "n1=v1, n2=v2, …", where each value is base64 encoded.
 	DirectoryProperties *string
-	// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file owner, the file owning group,
-	// and others. Each class may be granted read, write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit octal
-	// notation (e.g. 0766) are supported.
+	// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file
+	// owner, the file owning group, and others. Each class may be granted read,
+	// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g.
+	// 0766) are supported.
 	PosixPermissions *string
-	// Only valid if Hierarchical Namespace is enabled for the account. This umask restricts permission settings for file and directory, and will only be applied
-	// when default Acl does not exist in parent directory. If the umask bit has set, it means that the corresponding permission will be disabled. Otherwise
-	// the corresponding permission will be determined by the permission. A 4-digit octal notation (e.g. 0022) is supported here. If no umask was specified,
-	// a default umask - 0027 will be used.
+	// Only valid if Hierarchical Namespace is enabled for the account. This umask restricts permission settings for file and
+	// directory, and will only be applied when default Acl does not exist in parent
+	// directory. If the umask bit has set, it means that the corresponding permission will be disabled. Otherwise the corresponding
+	// permission will be determined by the permission. A 4-digit octal notation
+	// (e.g. 0022) is supported here. If no umask was specified, a default umask - 0027 will be used.
 	PosixUmask *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
 	// A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.
 	SourceLeaseID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // BlobRenewLeaseOptions contains the optional parameters for the Blob.RenewLease method.
 type BlobRenewLeaseOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -642,17 +681,20 @@ type BlobSetAccessControlOptions struct {
 	Group *string
 	// Optional. The owner of the blob or directory.
 	Owner *string
-	// Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE)
-	// consists of a scope, a type, a user or group identifier, and permissions in the format "[scope:][type]:[id]:[permissions]".
+	// Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries.
+	// Each access control entry (ACE) consists of a scope, a type, a user or group
+	// identifier, and permissions in the format "[scope:][type]:[id]:[permissions]".
 	PosixACL *string
-	// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file owner, the file owning group,
-	// and others. Each class may be granted read, write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit octal
-	// notation (e.g. 0766) are supported.
+	// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file
+	// owner, the file owning group, and others. Each class may be granted read,
+	// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g.
+	// 0766) are supported.
 	PosixPermissions *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -660,19 +702,21 @@ type BlobSetAccessControlOptions struct {
 type BlobSetExpiryOptions struct {
 	// The time to set the blob to expiry
 	ExpiresOn *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // BlobSetHTTPHeadersOptions contains the optional parameters for the Blob.SetHTTPHeaders method.
 type BlobSetHTTPHeadersOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -682,51 +726,57 @@ type BlobSetImmutabilityPolicyOptions struct {
 	ImmutabilityPolicyExpiry *time.Time
 	// Specifies the immutability policy mode to set on the blob.
 	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // BlobSetLegalHoldOptions contains the optional parameters for the Blob.SetLegalHold method.
 type BlobSetLegalHoldOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // BlobSetMetadataOptions contains the optional parameters for the Blob.SetMetadata method.
 type BlobSetMetadataOptions struct {
-	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
-	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
-	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
-	// rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.
+	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the
+	// operation will copy the metadata from the source blob or file to the destination
+	// blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata
+	// is not copied from the source blob or file. Note that beginning with
+	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
+	// Blobs, and Metadata for more information.
 	Metadata map[string]string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // BlobSetTagsOptions contains the optional parameters for the Blob.SetTags method.
 type BlobSetTagsOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
 	// Blob tags
 	Tags *BlobTags
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 	// Specify the transactional crc64 for the body, to be validated by the service.
 	TransactionalContentCRC64 []byte
 	// Specify the transactional md5 for the body, to be validated by the service.
 	TransactionalContentMD5 []byte
-	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10
-	// and newer.
+	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on.
+	// It's for service version 2019-10-10 and newer.
 	VersionID *string
 }
 
@@ -734,17 +784,18 @@ type BlobSetTagsOptions struct {
 type BlobSetTierOptions struct {
 	// Optional: Indicates the priority with which to rehydrate an archived blob.
 	RehydratePriority *RehydratePriority
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
-	// blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot
-	// of a Blob.</a>
+	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more
+	// information on working with blob snapshots, see Creating a Snapshot of a Blob.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob]
 	Snapshot *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
-	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10
-	// and newer.
+	// The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on.
+	// It's for service version 2019-10-10 and newer.
 	VersionID *string
 }
 
@@ -758,21 +809,24 @@ type BlobStartCopyFromURLOptions struct {
 	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
 	// Specified if a legal hold should be set on the blob.
 	LegalHold *bool
-	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
-	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
-	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
-	// rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.
+	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the
+	// operation will copy the metadata from the source blob or file to the destination
+	// blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata
+	// is not copied from the source blob or file. Note that beginning with
+	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
+	// Blobs, and Metadata for more information.
 	Metadata map[string]string
 	// Optional: Indicates the priority with which to rehydrate an archived blob.
 	RehydratePriority *RehydratePriority
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
 	// Overrides the sealed state of the destination blob. Service version 2019-12-12 and newer.
 	SealBlob *bool
 	// Optional. Indicates the tier to be set on the blob.
 	Tier *AccessTier
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -808,10 +862,11 @@ func (b BlobTags) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 // BlobUndeleteOptions contains the optional parameters for the Blob.Undelete method.
 type BlobUndeleteOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -834,17 +889,20 @@ type BlockBlobCommitBlockListOptions struct {
 	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
 	// Specified if a legal hold should be set on the blob.
 	LegalHold *bool
-	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
-	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
-	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
-	// rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.
+	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the
+	// operation will copy the metadata from the source blob or file to the destination
+	// blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata
+	// is not copied from the source blob or file. Note that beginning with
+	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
+	// Blobs, and Metadata for more information.
 	Metadata map[string]string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
 	// Optional. Indicates the tier to be set on the blob.
 	Tier *AccessTier
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 	// Specify the transactional crc64 for the body, to be validated by the service.
 	TransactionalContentCRC64 []byte
@@ -854,14 +912,15 @@ type BlockBlobCommitBlockListOptions struct {
 
 // BlockBlobGetBlockListOptions contains the optional parameters for the BlockBlob.GetBlockList method.
 type BlockBlobGetBlockListOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
-	// blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot
-	// of a Blob.</a>
+	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more
+	// information on working with blob snapshots, see Creating a Snapshot of a Blob.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob]
 	Snapshot *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -871,19 +930,22 @@ type BlockBlobPutBlobFromURLOptions struct {
 	BlobTagsString *string
 	// Optional, default is true. Indicates if properties from the source blob should be copied.
 	CopySourceBlobProperties *bool
-	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
-	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
-	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
-	// rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.
+	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the
+	// operation will copy the metadata from the source blob or file to the destination
+	// blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata
+	// is not copied from the source blob or file. Note that beginning with
+	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
+	// Blobs, and Metadata for more information.
 	Metadata map[string]string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
 	// Specify the md5 calculated for the range of bytes that must be read from the copy source.
 	SourceContentMD5 []byte
 	// Optional. Indicates the tier to be set on the blob.
 	Tier *AccessTier
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 	// Specify the transactional md5 for the body, to be validated by the service.
 	TransactionalContentMD5 []byte
@@ -891,7 +953,8 @@ type BlockBlobPutBlobFromURLOptions struct {
 
 // BlockBlobStageBlockFromURLOptions contains the optional parameters for the BlockBlob.StageBlockFromURL method.
 type BlockBlobStageBlockFromURLOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
 	// Specify the md5 calculated for the range of bytes that must be read from the copy source.
 	SourceContentMD5 []byte
@@ -899,17 +962,18 @@ type BlockBlobStageBlockFromURLOptions struct {
 	SourceContentcrc64 []byte
 	// Bytes of source data in the specified range.
 	SourceRange *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // BlockBlobStageBlockOptions contains the optional parameters for the BlockBlob.StageBlock method.
 type BlockBlobStageBlockOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 	// Specify the transactional crc64 for the body, to be validated by the service.
 	TransactionalContentCRC64 []byte
@@ -927,17 +991,20 @@ type BlockBlobUploadOptions struct {
 	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
 	// Specified if a legal hold should be set on the blob.
 	LegalHold *bool
-	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
-	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
-	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
-	// rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.
+	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the
+	// operation will copy the metadata from the source blob or file to the destination
+	// blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata
+	// is not copied from the source blob or file. Note that beginning with
+	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
+	// Blobs, and Metadata for more information.
 	Metadata map[string]string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
 	// Optional. Indicates the tier to be set on the blob.
 	Tier *AccessTier
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 	// Specify the transactional md5 for the body, to be validated by the service.
 	TransactionalContentMD5 []byte
@@ -1007,47 +1074,56 @@ type ClearRange struct {
 
 // ContainerAcquireLeaseOptions contains the optional parameters for the Container.AcquireLease method.
 type ContainerAcquireLeaseOptions struct {
-	// Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds.
-	// A lease duration cannot be changed using renew or change.
+	// Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease
+	// can be between 15 and 60 seconds. A lease duration cannot be changed using
+	// renew or change.
 	Duration *int32
-	// Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See
-	// Guid Constructor (String) for a list of valid GUID string formats.
+	// Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is
+	// not in the correct format. See Guid Constructor (String) for a list of valid GUID
+	// string formats.
 	ProposedLeaseID *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // ContainerBreakLeaseOptions contains the optional parameters for the Container.BreakLease method.
 type ContainerBreakLeaseOptions struct {
-	// For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used
-	// if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the
-	// break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration
-	// lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately.
+	// For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This
+	// break period is only used if it is shorter than the time remaining on the
+	// lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has
+	// expired, but the lease may be held for longer than the break period. If this
+	// header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses,
+	// and an infinite lease breaks immediately.
 	BreakPeriod *int32
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // ContainerChangeLeaseOptions contains the optional parameters for the Container.ChangeLease method.
 type ContainerChangeLeaseOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // ContainerCpkScopeInfo contains a group of parameters for the Container.Create method.
 type ContainerCpkScopeInfo struct {
-	// Optional. Version 2019-07-07 and later. Specifies the default encryption scope to set on the container and use for all future writes.
+	// Optional. Version 2019-07-07 and later. Specifies the default encryption scope to set on the container and use for all
+	// future writes.
 	DefaultEncryptionScope *string
-	// Optional. Version 2019-07-07 and newer. If true, prevents any request from specifying a different encryption scope than the scope set on the container.
+	// Optional. Version 2019-07-07 and newer. If true, prevents any request from specifying a different encryption scope than
+	// the scope set on the container.
 	PreventEncryptionScopeOverride *bool
 }
 
@@ -1055,33 +1131,38 @@ type ContainerCpkScopeInfo struct {
 type ContainerCreateOptions struct {
 	// Specifies whether data in the container may be accessed publicly and the level of access
 	Access *PublicAccessType
-	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
-	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
-	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
-	// rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.
+	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the
+	// operation will copy the metadata from the source blob or file to the destination
+	// blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata
+	// is not copied from the source blob or file. Note that beginning with
+	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
+	// Blobs, and Metadata for more information.
 	Metadata map[string]string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // ContainerDeleteOptions contains the optional parameters for the Container.Delete method.
 type ContainerDeleteOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // ContainerGetAccessPolicyOptions contains the optional parameters for the Container.GetAccessPolicy method.
 type ContainerGetAccessPolicyOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -1092,10 +1173,11 @@ type ContainerGetAccountInfoOptions struct {
 
 // ContainerGetPropertiesOptions contains the optional parameters for the Container.GetProperties method.
 type ContainerGetPropertiesOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -1133,21 +1215,25 @@ func (c *ContainerItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 type ContainerListBlobFlatSegmentOptions struct {
 	// Include this parameter to specify one or more datasets to include in the response.
 	Include []ListBlobsIncludeItem
-	// A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker
-	// value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value
-	// can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client.
+	// A string value that identifies the portion of the list of containers to be returned with the next listing operation. The
+	// operation returns the NextMarker value within the response body if the listing
+	// operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used
+	// as the value for the marker parameter in a subsequent call to request the next
+	// page of list items. The marker value is opaque to the client.
 	Marker *string
-	// Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server
-	// will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for
-	// retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or
-	// than the default of 5000.
+	// Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value
+	// greater than 5000, the server will return up to 5000 items. Note that if the
+	// listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder
+	// of the results. For this reason, it is possible that the service will
+	// return fewer results than specified by maxresults, or than the default of 5000.
 	Maxresults *int32
 	// Filters the results to return only containers whose name begins with the specified prefix.
 	Prefix *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -1155,21 +1241,25 @@ type ContainerListBlobFlatSegmentOptions struct {
 type ContainerListBlobHierarchySegmentOptions struct {
 	// Include this parameter to specify one or more datasets to include in the response.
 	Include []ListBlobsIncludeItem
-	// A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker
-	// value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value
-	// can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client.
+	// A string value that identifies the portion of the list of containers to be returned with the next listing operation. The
+	// operation returns the NextMarker value within the response body if the listing
+	// operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used
+	// as the value for the marker parameter in a subsequent call to request the next
+	// page of list items. The marker value is opaque to the client.
 	Marker *string
-	// Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server
-	// will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for
-	// retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or
-	// than the default of 5000.
+	// Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value
+	// greater than 5000, the server will return up to 5000 items. Note that if the
+	// listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder
+	// of the results. For this reason, it is possible that the service will
+	// return fewer results than specified by maxresults, or than the default of 5000.
 	Maxresults *int32
 	// Filters the results to return only containers whose name begins with the specified prefix.
 	Prefix *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -1230,30 +1320,33 @@ func (c *ContainerProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 
 // ContainerReleaseLeaseOptions contains the optional parameters for the Container.ReleaseLease method.
 type ContainerReleaseLeaseOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // ContainerRenameOptions contains the optional parameters for the Container.Rename method.
 type ContainerRenameOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
 	// A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.
 	SourceLeaseID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // ContainerRenewLeaseOptions contains the optional parameters for the Container.RenewLease method.
 type ContainerRenewLeaseOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -1263,10 +1356,11 @@ type ContainerRestoreOptions struct {
 	DeletedContainerName *string
 	// Optional. Version 2019-12-12 and later. Specifies the version of the deleted container to restore.
 	DeletedContainerVersion *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -1276,40 +1370,45 @@ type ContainerSetAccessPolicyOptions struct {
 	Access *PublicAccessType
 	// the acls for the container
 	ContainerACL []*SignedIdentifier
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // ContainerSetMetadataOptions contains the optional parameters for the Container.SetMetadata method.
 type ContainerSetMetadataOptions struct {
-	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
-	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
-	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
-	// rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.
+	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the
+	// operation will copy the metadata from the source blob or file to the destination
+	// blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata
+	// is not copied from the source blob or file. Note that beginning with
+	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
+	// Blobs, and Metadata for more information.
 	Metadata map[string]string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // ContainerSubmitBatchOptions contains the optional parameters for the Container.SubmitBatch method.
 type ContainerSubmitBatchOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
-// CorsRule - CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement
-// a security restriction known as same-origin policy that
-// prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another
-// domain
+// CorsRule - CORS is an HTTP feature that enables a web application running under one domain to access resources in another
+// domain. Web browsers implement a security restriction known as same-origin policy that
+// prevents a web page from calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin
+// domain) to call APIs in another domain
 type CorsRule struct {
 	// REQUIRED; the request headers that the origin domain may specify on the CORS request.
 	AllowedHeaders *string `xml:"AllowedHeaders"`
@@ -1317,13 +1416,14 @@ type CorsRule struct {
 	// REQUIRED; The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated)
 	AllowedMethods *string `xml:"AllowedMethods"`
 
-	// REQUIRED; The origin domains that are permitted to make a request against the storage service via CORS. The origin domain is the domain from which the
-	// request originates. Note that the origin must be an exact
-	// case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character '*' to allow all origin domains
-	// to make requests via CORS.
+	// REQUIRED; The origin domains that are permitted to make a request against the storage service via CORS. The origin domain
+	// is the domain from which the request originates. Note that the origin must be an exact
+	// case-sensitive match with the origin that the user age sends to the service. You can also use the wildcard character '*'
+	// to allow all origin domains to make requests via CORS.
 	AllowedOrigins *string `xml:"AllowedOrigins"`
 
-	// REQUIRED; The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer
+	// REQUIRED; The response headers that may be sent in the response to the CORS request and exposed by the browser to the request
+	// issuer
 	ExposedHeaders *string `xml:"ExposedHeaders"`
 
 	// REQUIRED; The maximum amount time that a browser should cache the preflight OPTIONS request.
@@ -1332,11 +1432,12 @@ type CorsRule struct {
 
 // CpkInfo contains a group of parameters for the Blob.Download method.
 type CpkInfo struct {
-	// The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header
-	// is provided.
+	// The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided
+	// if the x-ms-encryption-key header is provided.. Specifying any value will set the value to AES256.
 	EncryptionAlgorithm *string
-	// Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account
-	// encryption key. For more information, see Encryption at Rest for Azure Storage Services.
+	// Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption
+	// is performed with the root account encryption key. For more information, see
+	// Encryption at Rest for Azure Storage Services.
 	EncryptionKey *string
 	// The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.
 	EncryptionKeySHA256 *string
@@ -1344,8 +1445,9 @@ type CpkInfo struct {
 
 // CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
 type CpkScopeInfo struct {
-	// Optional. Version 2019-07-07 and later. Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified,
-	// encryption is performed with the default account encryption scope. For more information, see Encryption at Rest for Azure Storage Services.
+	// Optional. Version 2019-07-07 and later. Specifies the name of the encryption scope to use to encrypt the data provided
+	// in the request. If not specified, encryption is performed with the default
+	// account encryption scope. For more information, see Encryption at Rest for Azure Storage Services.
 	EncryptionScope *string
 }
 
@@ -1391,48 +1493,55 @@ type DelimitedTextConfiguration struct {
 
 // DirectoryCreateOptions contains the optional parameters for the Directory.Create method.
 type DirectoryCreateOptions struct {
-	// Optional. User-defined properties to be stored with the file or directory, in the format of a comma-separated list of name and value pairs "n1=v1, n2=v2,
-	// ...", where each value is base64 encoded.
+	// Optional. User-defined properties to be stored with the file or directory, in the format of a comma-separated list of name
+	// and value pairs "n1=v1, n2=v2, …", where each value is base64 encoded.
 	DirectoryProperties *string
-	// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file owner, the file owning group,
-	// and others. Each class may be granted read, write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit octal
-	// notation (e.g. 0766) are supported.
+	// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file
+	// owner, the file owning group, and others. Each class may be granted read,
+	// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g.
+	// 0766) are supported.
 	PosixPermissions *string
-	// Only valid if Hierarchical Namespace is enabled for the account. This umask restricts permission settings for file and directory, and will only be applied
-	// when default Acl does not exist in parent directory. If the umask bit has set, it means that the corresponding permission will be disabled. Otherwise
-	// the corresponding permission will be determined by the permission. A 4-digit octal notation (e.g. 0022) is supported here. If no umask was specified,
-	// a default umask - 0027 will be used.
+	// Only valid if Hierarchical Namespace is enabled for the account. This umask restricts permission settings for file and
+	// directory, and will only be applied when default Acl does not exist in parent
+	// directory. If the umask bit has set, it means that the corresponding permission will be disabled. Otherwise the corresponding
+	// permission will be determined by the permission. A 4-digit octal notation
+	// (e.g. 0022) is supported here. If no umask was specified, a default umask - 0027 will be used.
 	PosixUmask *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // DirectoryDeleteOptions contains the optional parameters for the Directory.Delete method.
 type DirectoryDeleteOptions struct {
-	// When renaming a directory, the number of paths that are renamed with each invocation is limited. If the number of paths to be renamed exceeds this limit,
-	// a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent
-	// invocation of the rename operation to continue renaming the directory.
+	// When renaming a directory, the number of paths that are renamed with each invocation is limited. If the number of paths
+	// to be renamed exceeds this limit, a continuation token is returned in this
+	// response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation
+	// of the rename operation to continue renaming the directory.
 	Marker *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // DirectoryGetAccessControlOptions contains the optional parameters for the Directory.GetAccessControl method.
 type DirectoryGetAccessControlOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
-	// Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the identity values returned in the x-ms-owner, x-ms-group, and
-	// x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names. If "false", the values will be returned
-	// as Azure Active Directory Object IDs. The default value is false.
+	// Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the identity values returned in
+	// the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed
+	// from Azure Active Directory Object IDs to User Principal Names. If "false", the values will be returned as Azure Active
+	// Directory Object IDs. The default value is false.
 	Upn *bool
 }
 
@@ -1452,28 +1561,32 @@ type DirectoryHTTPHeaders struct {
 
 // DirectoryRenameOptions contains the optional parameters for the Directory.Rename method.
 type DirectoryRenameOptions struct {
-	// Optional. User-defined properties to be stored with the file or directory, in the format of a comma-separated list of name and value pairs "n1=v1, n2=v2,
-	// ...", where each value is base64 encoded.
+	// Optional. User-defined properties to be stored with the file or directory, in the format of a comma-separated list of name
+	// and value pairs "n1=v1, n2=v2, …", where each value is base64 encoded.
 	DirectoryProperties *string
-	// When renaming a directory, the number of paths that are renamed with each invocation is limited. If the number of paths to be renamed exceeds this limit,
-	// a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent
-	// invocation of the rename operation to continue renaming the directory.
+	// When renaming a directory, the number of paths that are renamed with each invocation is limited. If the number of paths
+	// to be renamed exceeds this limit, a continuation token is returned in this
+	// response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation
+	// of the rename operation to continue renaming the directory.
 	Marker *string
-	// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file owner, the file owning group,
-	// and others. Each class may be granted read, write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit octal
-	// notation (e.g. 0766) are supported.
+	// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file
+	// owner, the file owning group, and others. Each class may be granted read,
+	// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g.
+	// 0766) are supported.
 	PosixPermissions *string
-	// Only valid if Hierarchical Namespace is enabled for the account. This umask restricts permission settings for file and directory, and will only be applied
-	// when default Acl does not exist in parent directory. If the umask bit has set, it means that the corresponding permission will be disabled. Otherwise
-	// the corresponding permission will be determined by the permission. A 4-digit octal notation (e.g. 0022) is supported here. If no umask was specified,
-	// a default umask - 0027 will be used.
+	// Only valid if Hierarchical Namespace is enabled for the account. This umask restricts permission settings for file and
+	// directory, and will only be applied when default Acl does not exist in parent
+	// directory. If the umask bit has set, it means that the corresponding permission will be disabled. Otherwise the corresponding
+	// permission will be determined by the permission. A 4-digit octal notation
+	// (e.g. 0022) is supported here. If no umask was specified, a default umask - 0027 will be used.
 	PosixUmask *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
 	// A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.
 	SourceLeaseID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -1483,17 +1596,20 @@ type DirectorySetAccessControlOptions struct {
 	Group *string
 	// Optional. The owner of the blob or directory.
 	Owner *string
-	// Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE)
-	// consists of a scope, a type, a user or group identifier, and permissions in the format "[scope:][type]:[id]:[permissions]".
+	// Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries.
+	// Each access control entry (ACE) consists of a scope, a type, a user or group
+	// identifier, and permissions in the format "[scope:][type]:[id]:[permissions]".
 	PosixACL *string
-	// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file owner, the file owning group,
-	// and others. Each class may be granted read, write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit octal
-	// notation (e.g. 0766) are supported.
+	// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file
+	// owner, the file owning group, and others. Each class may be granted read,
+	// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g.
+	// 0766) are supported.
 	PosixPermissions *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -1539,8 +1655,8 @@ func (f FilterBlobSegment) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 // GeoReplication - Geo-Replication information for the Secondary Storage Service
 type GeoReplication struct {
-	// REQUIRED; A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary.
-	// Primary writes after this point in time may or may
+	// REQUIRED; A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available
+	// for read operations at the secondary. Primary writes after this point in time may or may
 	// not be available for reads.
 	LastSyncTime *time.Time `xml:"LastSyncTime"`
 
@@ -1710,26 +1826,28 @@ type ModifiedAccessConditions struct {
 type PageBlobClearPagesOptions struct {
 	// Return only the bytes of the blob in the specified range.
 	Range *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // PageBlobCopyIncrementalOptions contains the optional parameters for the PageBlob.CopyIncremental method.
 type PageBlobCopyIncrementalOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // PageBlobCreateOptions contains the optional parameters for the PageBlob.Create method.
 type PageBlobCreateOptions struct {
-	// Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be
-	// between 0 and 2^63 - 1.
+	// Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of
+	// the sequence number must be between 0 and 2^63 - 1.
 	BlobSequenceNumber *int64
 	// Optional. Used to set blob tags in various blob operations.
 	BlobTagsString *string
@@ -1739,40 +1857,46 @@ type PageBlobCreateOptions struct {
 	ImmutabilityPolicyMode *BlobImmutabilityPolicyMode
 	// Specified if a legal hold should be set on the blob.
 	LegalHold *bool
-	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata
-	// from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified
-	// metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming
-	// rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.
+	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the
+	// operation will copy the metadata from the source blob or file to the destination
+	// blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata
+	// is not copied from the source blob or file. Note that beginning with
+	// version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers,
+	// Blobs, and Metadata for more information.
 	Metadata map[string]string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
 	// Optional. Indicates the tier to be set on the page blob.
 	Tier *PremiumPageBlobAccessTier
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // PageBlobGetPageRangesDiffOptions contains the optional parameters for the PageBlob.GetPageRangesDiff method.
 type PageBlobGetPageRangesDiffOptions struct {
-	// Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot of the target blob. The
-	// response will only contain pages that were changed between the target blob and its previous snapshot.
+	// Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot
+	// of the target blob. The response will only contain pages that were changed
+	// between the target blob and its previous snapshot.
 	PrevSnapshotURL *string
-	// Optional in version 2015-07-08 and newer. The prevsnapshot parameter is a DateTime value that specifies that the response will contain only pages that
-	// were changed between target blob and previous snapshot. Changed pages include both updated and cleared pages. The target blob may be a snapshot, as long
-	// as the snapshot specified by prevsnapshot is the older of the two. Note that incremental snapshots are currently supported only for blobs created on
-	// or after January 1, 2016.
+	// Optional in version 2015-07-08 and newer. The prevsnapshot parameter is a DateTime value that specifies that the response
+	// will contain only pages that were changed between target blob and previous
+	// snapshot. Changed pages include both updated and cleared pages. The target blob may be a snapshot, as long as the snapshot
+	// specified by prevsnapshot is the older of the two. Note that incremental
+	// snapshots are currently supported only for blobs created on or after January 1, 2016.
 	Prevsnapshot *string
 	// Return only the bytes of the blob in the specified range.
 	Range *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
-	// blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot
-	// of a Blob.</a>
+	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more
+	// information on working with blob snapshots, see Creating a Snapshot of a Blob.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob]
 	Snapshot *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -1780,48 +1904,52 @@ type PageBlobGetPageRangesDiffOptions struct {
 type PageBlobGetPageRangesOptions struct {
 	// Return only the bytes of the blob in the specified range.
 	Range *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with
-	// blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot
-	// of a Blob.</a>
+	// The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more
+	// information on working with blob snapshots, see Creating a Snapshot of a Blob.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob]
 	Snapshot *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // PageBlobResizeOptions contains the optional parameters for the PageBlob.Resize method.
 type PageBlobResizeOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // PageBlobUpdateSequenceNumberOptions contains the optional parameters for the PageBlob.UpdateSequenceNumber method.
 type PageBlobUpdateSequenceNumberOptions struct {
-	// Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be
-	// between 0 and 2^63 - 1.
+	// Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of
+	// the sequence number must be between 0 and 2^63 - 1.
 	BlobSequenceNumber *int64
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // PageBlobUploadPagesFromURLOptions contains the optional parameters for the PageBlob.UploadPagesFromURL method.
 type PageBlobUploadPagesFromURLOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
 	// Specify the md5 calculated for the range of bytes that must be read from the copy source.
 	SourceContentMD5 []byte
 	// Specify the crc64 calculated for the range of bytes that must be read from the copy source.
 	SourceContentcrc64 []byte
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -1829,10 +1957,11 @@ type PageBlobUploadPagesFromURLOptions struct {
 type PageBlobUploadPagesOptions struct {
 	// Return only the bytes of the blob in the specified range.
 	Range *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 	// Specify the transactional crc64 for the body, to be validated by the service.
 	TransactionalContentCRC64 []byte
@@ -1923,7 +2052,8 @@ type RetentionPolicy struct {
 	// Indicates whether permanent delete is allowed on this storage account.
 	AllowPermanentDelete *bool `xml:"AllowPermanentDelete"`
 
-	// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted
+	// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this
+	// value will be deleted
 	Days *int32 `xml:"Days"`
 }
 
@@ -1939,19 +2069,23 @@ type SequenceNumberAccessConditions struct {
 
 // ServiceFilterBlobsOptions contains the optional parameters for the Service.FilterBlobs method.
 type ServiceFilterBlobsOptions struct {
-	// A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker
-	// value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value
-	// can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client.
+	// A string value that identifies the portion of the list of containers to be returned with the next listing operation. The
+	// operation returns the NextMarker value within the response body if the listing
+	// operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used
+	// as the value for the marker parameter in a subsequent call to request the next
+	// page of list items. The marker value is opaque to the client.
 	Marker *string
-	// Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server
-	// will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for
-	// retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or
-	// than the default of 5000.
+	// Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value
+	// greater than 5000, the server will return up to 5000 items. Note that if the
+	// listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder
+	// of the results. For this reason, it is possible that the service will
+	// return fewer results than specified by maxresults, or than the default of 5000.
 	Maxresults *int32
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 	// Filters the results to return only to return only blobs whose tags match the specified expression.
 	Where *string
@@ -1964,28 +2098,31 @@ type ServiceGetAccountInfoOptions struct {
 
 // ServiceGetPropertiesOptions contains the optional parameters for the Service.GetProperties method.
 type ServiceGetPropertiesOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // ServiceGetStatisticsOptions contains the optional parameters for the Service.GetStatistics method.
 type ServiceGetStatisticsOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // ServiceGetUserDelegationKeyOptions contains the optional parameters for the Service.GetUserDelegationKey method.
 type ServiceGetUserDelegationKeyOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -1993,39 +2130,45 @@ type ServiceGetUserDelegationKeyOptions struct {
 type ServiceListContainersSegmentOptions struct {
 	// Include this parameter to specify that the container's metadata be returned as part of the response body.
 	Include []ListContainersIncludeType
-	// A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker
-	// value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value
-	// can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client.
+	// A string value that identifies the portion of the list of containers to be returned with the next listing operation. The
+	// operation returns the NextMarker value within the response body if the listing
+	// operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used
+	// as the value for the marker parameter in a subsequent call to request the next
+	// page of list items. The marker value is opaque to the client.
 	Marker *string
-	// Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server
-	// will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for
-	// retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or
-	// than the default of 5000.
+	// Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value
+	// greater than 5000, the server will return up to 5000 items. Note that if the
+	// listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder
+	// of the results. For this reason, it is possible that the service will
+	// return fewer results than specified by maxresults, or than the default of 5000.
 	Maxresults *int32
 	// Filters the results to return only containers whose name begins with the specified prefix.
 	Prefix *string
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // ServiceSetPropertiesOptions contains the optional parameters for the Service.SetProperties method.
 type ServiceSetPropertiesOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
 // ServiceSubmitBatchOptions contains the optional parameters for the Service.SubmitBatch method.
 type ServiceSubmitBatchOptions struct {
-	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.
+	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
+	// analytics logging is enabled.
 	RequestID *string
-	// The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting
-	// Timeouts for Blob Service Operations.</a>
+	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
+	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
 }
 
@@ -2084,8 +2227,8 @@ type StorageServiceProperties struct {
 	// The set of CORS rules.
 	Cors []*CorsRule `xml:"Cors>CorsRule"`
 
-	// The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version 2008-10-27
-	// and all more recent versions
+	// The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible
+	// values include version 2008-10-27 and all more recent versions
 	DefaultServiceVersion *string `xml:"DefaultServiceVersion"`
 
 	// the retention policy which determines how long the associated data should persist

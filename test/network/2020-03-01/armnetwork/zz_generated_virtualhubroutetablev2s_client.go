@@ -31,6 +31,10 @@ type VirtualHubRouteTableV2SClient struct {
 }
 
 // NewVirtualHubRouteTableV2SClient creates a new instance of VirtualHubRouteTableV2SClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
+// options - pass nil to accept the default values.
 func NewVirtualHubRouteTableV2SClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualHubRouteTableV2SClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +53,12 @@ func NewVirtualHubRouteTableV2SClient(subscriptionID string, credential azcore.T
 
 // BeginCreateOrUpdate - Creates a VirtualHubRouteTableV2 resource if it doesn't exist else updates the existing VirtualHubRouteTableV2.
 // If the operation fails it returns the *Error error type.
+// resourceGroupName - The resource group name of the VirtualHub.
+// virtualHubName - The name of the VirtualHub.
+// routeTableName - The name of the VirtualHubRouteTableV2.
+// virtualHubRouteTableV2Parameters - Parameters supplied to create or update VirtualHubRouteTableV2.
+// options - VirtualHubRouteTableV2SBeginCreateOrUpdateOptions contains the optional parameters for the VirtualHubRouteTableV2S.BeginCreateOrUpdate
+// method.
 func (client *VirtualHubRouteTableV2SClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, virtualHubRouteTableV2Parameters VirtualHubRouteTableV2, options *VirtualHubRouteTableV2SBeginCreateOrUpdateOptions) (VirtualHubRouteTableV2SCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, routeTableName, virtualHubRouteTableV2Parameters, options)
 	if err != nil {
@@ -129,6 +139,11 @@ func (client *VirtualHubRouteTableV2SClient) createOrUpdateHandleError(resp *htt
 
 // BeginDelete - Deletes a VirtualHubRouteTableV2.
 // If the operation fails it returns the *Error error type.
+// resourceGroupName - The resource group name of the VirtualHubRouteTableV2.
+// virtualHubName - The name of the VirtualHub.
+// routeTableName - The name of the VirtualHubRouteTableV2.
+// options - VirtualHubRouteTableV2SBeginDeleteOptions contains the optional parameters for the VirtualHubRouteTableV2S.BeginDelete
+// method.
 func (client *VirtualHubRouteTableV2SClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, options *VirtualHubRouteTableV2SBeginDeleteOptions) (VirtualHubRouteTableV2SDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, routeTableName, options)
 	if err != nil {
@@ -209,6 +224,10 @@ func (client *VirtualHubRouteTableV2SClient) deleteHandleError(resp *http.Respon
 
 // Get - Retrieves the details of a VirtualHubRouteTableV2.
 // If the operation fails it returns the *Error error type.
+// resourceGroupName - The resource group name of the VirtualHubRouteTableV2.
+// virtualHubName - The name of the VirtualHub.
+// routeTableName - The name of the VirtualHubRouteTableV2.
+// options - VirtualHubRouteTableV2SGetOptions contains the optional parameters for the VirtualHubRouteTableV2S.Get method.
 func (client *VirtualHubRouteTableV2SClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, routeTableName string, options *VirtualHubRouteTableV2SGetOptions) (VirtualHubRouteTableV2SGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualHubName, routeTableName, options)
 	if err != nil {
@@ -278,6 +297,9 @@ func (client *VirtualHubRouteTableV2SClient) getHandleError(resp *http.Response)
 
 // List - Retrieves the details of all VirtualHubRouteTableV2s.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The resource group name of the VirtualHub.
+// virtualHubName - The name of the VirtualHub.
+// options - VirtualHubRouteTableV2SListOptions contains the optional parameters for the VirtualHubRouteTableV2S.List method.
 func (client *VirtualHubRouteTableV2SClient) List(resourceGroupName string, virtualHubName string, options *VirtualHubRouteTableV2SListOptions) *VirtualHubRouteTableV2SListPager {
 	return &VirtualHubRouteTableV2SListPager{
 		client: client,
