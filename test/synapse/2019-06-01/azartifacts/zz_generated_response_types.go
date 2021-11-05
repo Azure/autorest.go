@@ -1488,7 +1488,8 @@ func (l SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPollerResponse) PollUn
 	return respType, nil
 }
 
-// Resume rehydrates a SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPollerResponse from the provided client and resume token.
+// Resume rehydrates a SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPollerResponse from the provided client and resume
+// token.
 func (l *SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPollerResponse) Resume(ctx context.Context, client *sparkJobDefinitionClient, token string) error {
 	pt, err := runtime.NewPollerFromResumeToken("sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition", token, client.pl, client.createOrUpdateSparkJobDefinitionHandleError)
 	if err != nil {

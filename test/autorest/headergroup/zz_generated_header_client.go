@@ -173,7 +173,8 @@ func (client *HeaderClient) paramByteHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamDate - Send a post request with header values "scenario": "valid", "value": "2010-01-01" or "scenario": "min", "value": "0001-01-01"
+// ParamDate - Send a post request with header values "scenario": "valid", "value": "2010-01-01" or "scenario": "min", "value":
+// "0001-01-01"
 // If the operation fails it returns the *Error error type.
 // scenario - Send a post request with header values "scenario": "valid" or "min"
 // value - Send a post request with header values "2010-01-01" or "0001-01-01"
@@ -219,7 +220,8 @@ func (client *HeaderClient) paramDateHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamDatetime - Send a post request with header values "scenario": "valid", "value": "2010-01-01T12:34:56Z" or "scenario": "min", "value": "0001-01-01T00:00:00Z"
+// ParamDatetime - Send a post request with header values "scenario": "valid", "value": "2010-01-01T12:34:56Z" or "scenario":
+// "min", "value": "0001-01-01T00:00:00Z"
 // If the operation fails it returns the *Error error type.
 // scenario - Send a post request with header values "scenario": "valid" or "min"
 // value - Send a post request with header values "2010-01-01T12:34:56Z" or "0001-01-01T00:00:00Z"
@@ -265,8 +267,8 @@ func (client *HeaderClient) paramDatetimeHandleError(resp *http.Response) error 
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56 GMT" or "scenario": "min", "value":
-// "Mon, 01 Jan 0001 00:00:00 GMT"
+// ParamDatetimeRFC1123 - Send a post request with header values "scenario": "valid", "value": "Wed, 01 Jan 2010 12:34:56
+// GMT" or "scenario": "min", "value": "Mon, 01 Jan 0001 00:00:00 GMT"
 // If the operation fails it returns the *Error error type.
 // scenario - Send a post request with header values "scenario": "valid" or "min"
 // options - HeaderParamDatetimeRFC1123Options contains the optional parameters for the Header.ParamDatetimeRFC1123 method.
@@ -313,7 +315,8 @@ func (client *HeaderClient) paramDatetimeRFC1123HandleError(resp *http.Response)
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamDouble - Send a post request with header values "scenario": "positive", "value": 7e120 or "scenario": "negative", "value": -3.0
+// ParamDouble - Send a post request with header values "scenario": "positive", "value": 7e120 or "scenario": "negative",
+// "value": -3.0
 // If the operation fails it returns the *Error error type.
 // scenario - Send a post request with header values "scenario": "positive" or "negative"
 // value - Send a post request with header values 7e120 or -3.0
@@ -405,7 +408,8 @@ func (client *HeaderClient) paramDurationHandleError(resp *http.Response) error 
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamEnum - Send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null", "value": null
+// ParamEnum - Send a post request with header values "scenario": "valid", "value": "GREY" or "scenario": "null", "value":
+// null
 // If the operation fails it returns the *Error error type.
 // scenario - Send a post request with header values "scenario": "valid" or "null" or "empty"
 // options - HeaderParamEnumOptions contains the optional parameters for the Header.ParamEnum method.
@@ -496,7 +500,8 @@ func (client *HeaderClient) paramExistingKeyHandleError(resp *http.Response) err
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamFloat - Send a post request with header values "scenario": "positive", "value": 0.07 or "scenario": "negative", "value": -3.0
+// ParamFloat - Send a post request with header values "scenario": "positive", "value": 0.07 or "scenario": "negative", "value":
+// -3.0
 // If the operation fails it returns the *Error error type.
 // scenario - Send a post request with header values "scenario": "positive" or "negative"
 // value - Send a post request with header values 0.07 or -3.0
@@ -542,7 +547,8 @@ func (client *HeaderClient) paramFloatHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamInteger - Send a post request with header values "scenario": "positive", "value": 1 or "scenario": "negative", "value": -2
+// ParamInteger - Send a post request with header values "scenario": "positive", "value": 1 or "scenario": "negative", "value":
+// -2
 // If the operation fails it returns the *Error error type.
 // scenario - Send a post request with header values "scenario": "positive" or "negative"
 // value - Send a post request with header values 1 or -2
@@ -588,7 +594,8 @@ func (client *HeaderClient) paramIntegerHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamLong - Send a post request with header values "scenario": "positive", "value": 105 or "scenario": "negative", "value": -2
+// ParamLong - Send a post request with header values "scenario": "positive", "value": 105 or "scenario": "negative", "value":
+// -2
 // If the operation fails it returns the *Error error type.
 // scenario - Send a post request with header values "scenario": "positive" or "negative"
 // value - Send a post request with header values 105 or -2
@@ -678,8 +685,8 @@ func (client *HeaderClient) paramProtectedKeyHandleError(resp *http.Response) er
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the lazy dog" or "scenario": "null",
-// "value": null or "scenario": "empty", "value": ""
+// ParamString - Send a post request with header values "scenario": "valid", "value": "The quick brown fox jumps over the
+// lazy dog" or "scenario": "null", "value": null or "scenario": "empty", "value": ""
 // If the operation fails it returns the *Error error type.
 // scenario - Send a post request with header values "scenario": "valid" or "null" or "empty"
 // options - HeaderParamStringOptions contains the optional parameters for the Header.ParamString method.
@@ -954,10 +961,12 @@ func (client *HeaderClient) responseDatetimeHandleError(resp *http.Response) err
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ResponseDatetimeRFC1123 - Get a response with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00 GMT"
+// ResponseDatetimeRFC1123 - Get a response with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00
+// GMT"
 // If the operation fails it returns the *Error error type.
 // scenario - Send a post request with header values "scenario": "valid" or "min"
-// options - HeaderResponseDatetimeRFC1123Options contains the optional parameters for the Header.ResponseDatetimeRFC1123 method.
+// options - HeaderResponseDatetimeRFC1123Options contains the optional parameters for the Header.ResponseDatetimeRFC1123
+// method.
 func (client *HeaderClient) ResponseDatetimeRFC1123(ctx context.Context, scenario string, options *HeaderResponseDatetimeRFC1123Options) (HeaderResponseDatetimeRFC1123Response, error) {
 	req, err := client.responseDatetimeRFC1123CreateRequest(ctx, scenario, options)
 	if err != nil {

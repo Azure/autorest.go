@@ -8,17 +8,18 @@
 
 package reportgroup
 
-// AutoRestReportServiceGetOptionalReportOptions contains the optional parameters for the AutoRestReportService.GetOptionalReport method.
+// AutoRestReportServiceGetOptionalReportOptions contains the optional parameters for the AutoRestReportService.GetOptionalReport
+// method.
 type AutoRestReportServiceGetOptionalReportOptions struct {
-	// If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators that run all tests several
-	// times, can distinguish the generated reports.
+	// If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators
+	// that run all tests several times, can distinguish the generated reports.
 	Qualifier *string
 }
 
 // AutoRestReportServiceGetReportOptions contains the optional parameters for the AutoRestReportService.GetReport method.
 type AutoRestReportServiceGetReportOptions struct {
-	// If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators that run all tests several
-	// times, can distinguish the generated reports.
+	// If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators
+	// that run all tests several times, can distinguish the generated reports.
 	Qualifier *string
 }
 

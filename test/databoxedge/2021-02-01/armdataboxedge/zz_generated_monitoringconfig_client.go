@@ -49,7 +49,8 @@ func NewMonitoringConfigClient(subscriptionID string, options *azcore.ClientOpti
 // roleName - The role name.
 // resourceGroupName - The resource group name.
 // monitoringMetricConfiguration - The metric configuration.
-// options - MonitoringConfigBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfig.BeginCreateOrUpdate method.
+// options - MonitoringConfigBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfig.BeginCreateOrUpdate
+// method.
 func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigBeginCreateOrUpdateOptions) (MonitoringConfigCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, roleName, resourceGroupName, monitoringMetricConfiguration, options)
 	if err != nil {

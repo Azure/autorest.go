@@ -28,7 +28,7 @@ type ReservationRecommendationsClient struct {
 }
 
 // NewReservationRecommendationsClient creates a new instance of ReservationRecommendationsClient with the specified values.
-// credential - the credential used to authenticate the request.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewReservationRecommendationsClient(credential azcore.TokenCredential, options *arm.ClientOptions) *ReservationRecommendationsClient {
 	cp := arm.ClientOptions{}
@@ -47,8 +47,14 @@ func NewReservationRecommendationsClient(credential azcore.TokenCredential, opti
 
 // List - List of recommendations for purchasing reserved instances.
 // If the operation fails it returns the *ErrorResponse error type.
-// scope - The scope associated with reservation recommendations operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resource group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for BillingAccount scope, and '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile scope
-// options - ReservationRecommendationsListOptions contains the optional parameters for the ReservationRecommendations.List method.
+// scope - The scope associated with reservation recommendations operations. This includes '/subscriptions/{subscriptionId}/'
+// for subscription scope,
+// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resource group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
+// for BillingAccount scope, and
+// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile
+// scope
+// options - ReservationRecommendationsListOptions contains the optional parameters for the ReservationRecommendations.List
+// method.
 func (client *ReservationRecommendationsClient) List(scope string, options *ReservationRecommendationsListOptions) *ReservationRecommendationsListPager {
 	return &ReservationRecommendationsListPager{
 		client: client,

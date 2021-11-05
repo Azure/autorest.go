@@ -31,8 +31,9 @@ type VirtualNetworksClient struct {
 }
 
 // NewVirtualNetworksClient creates a new instance of VirtualNetworksClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewVirtualNetworksClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualNetworksClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewVirtualNetworksClient(subscriptionID string, credential azcore.TokenCred
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // ipAddress - The private IP address to be verified.
-// options - VirtualNetworksCheckIPAddressAvailabilityOptions contains the optional parameters for the VirtualNetworks.CheckIPAddressAvailability method.
+// options - VirtualNetworksCheckIPAddressAvailabilityOptions contains the optional parameters for the VirtualNetworks.CheckIPAddressAvailability
+// method.
 func (client *VirtualNetworksClient) CheckIPAddressAvailability(ctx context.Context, resourceGroupName string, virtualNetworkName string, ipAddress string, options *VirtualNetworksCheckIPAddressAvailabilityOptions) (VirtualNetworksCheckIPAddressAvailabilityResponse, error) {
 	req, err := client.checkIPAddressAvailabilityCreateRequest(ctx, resourceGroupName, virtualNetworkName, ipAddress, options)
 	if err != nil {
@@ -125,7 +127,8 @@ func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleError(resp 
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // parameters - Parameters supplied to the create or update virtual network operation.
-// options - VirtualNetworksBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworks.BeginCreateOrUpdate method.
+// options - VirtualNetworksBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworks.BeginCreateOrUpdate
+// method.
 func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksBeginCreateOrUpdateOptions) (VirtualNetworksCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 	if err != nil {

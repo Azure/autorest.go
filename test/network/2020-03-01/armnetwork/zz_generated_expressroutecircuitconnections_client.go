@@ -31,8 +31,9 @@ type ExpressRouteCircuitConnectionsClient struct {
 }
 
 // NewExpressRouteCircuitConnectionsClient creates a new instance of ExpressRouteCircuitConnectionsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewExpressRouteCircuitConnectionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ExpressRouteCircuitConnectionsClient {
 	cp := arm.ClientOptions{}
@@ -56,8 +57,10 @@ func NewExpressRouteCircuitConnectionsClient(subscriptionID string, credential a
 // circuitName - The name of the express route circuit.
 // peeringName - The name of the peering.
 // connectionName - The name of the express route circuit connection.
-// expressRouteCircuitConnectionParameters - Parameters supplied to the create or update express route circuit connection operation.
-// options - ExpressRouteCircuitConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitConnections.BeginCreateOrUpdate method.
+// expressRouteCircuitConnectionParameters - Parameters supplied to the create or update express route circuit connection
+// operation.
+// options - ExpressRouteCircuitConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitConnections.BeginCreateOrUpdate
+// method.
 func (client *ExpressRouteCircuitConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, expressRouteCircuitConnectionParameters ExpressRouteCircuitConnection, options *ExpressRouteCircuitConnectionsBeginCreateOrUpdateOptions) (ExpressRouteCircuitConnectionsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, peeringName, connectionName, expressRouteCircuitConnectionParameters, options)
 	if err != nil {
@@ -146,7 +149,8 @@ func (client *ExpressRouteCircuitConnectionsClient) createOrUpdateHandleError(re
 // circuitName - The name of the express route circuit.
 // peeringName - The name of the peering.
 // connectionName - The name of the express route circuit connection.
-// options - ExpressRouteCircuitConnectionsBeginDeleteOptions contains the optional parameters for the ExpressRouteCircuitConnections.BeginDelete method.
+// options - ExpressRouteCircuitConnectionsBeginDeleteOptions contains the optional parameters for the ExpressRouteCircuitConnections.BeginDelete
+// method.
 func (client *ExpressRouteCircuitConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, options *ExpressRouteCircuitConnectionsBeginDeleteOptions) (ExpressRouteCircuitConnectionsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, peeringName, connectionName, options)
 	if err != nil {
@@ -235,7 +239,8 @@ func (client *ExpressRouteCircuitConnectionsClient) deleteHandleError(resp *http
 // circuitName - The name of the express route circuit.
 // peeringName - The name of the peering.
 // connectionName - The name of the express route circuit connection.
-// options - ExpressRouteCircuitConnectionsGetOptions contains the optional parameters for the ExpressRouteCircuitConnections.Get method.
+// options - ExpressRouteCircuitConnectionsGetOptions contains the optional parameters for the ExpressRouteCircuitConnections.Get
+// method.
 func (client *ExpressRouteCircuitConnectionsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, options *ExpressRouteCircuitConnectionsGetOptions) (ExpressRouteCircuitConnectionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, peeringName, connectionName, options)
 	if err != nil {
@@ -312,7 +317,8 @@ func (client *ExpressRouteCircuitConnectionsClient) getHandleError(resp *http.Re
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the circuit.
 // peeringName - The name of the peering.
-// options - ExpressRouteCircuitConnectionsListOptions contains the optional parameters for the ExpressRouteCircuitConnections.List method.
+// options - ExpressRouteCircuitConnectionsListOptions contains the optional parameters for the ExpressRouteCircuitConnections.List
+// method.
 func (client *ExpressRouteCircuitConnectionsClient) List(resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitConnectionsListOptions) *ExpressRouteCircuitConnectionsListPager {
 	return &ExpressRouteCircuitConnectionsListPager{
 		client: client,

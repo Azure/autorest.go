@@ -31,8 +31,9 @@ type VirtualNetworkTapsClient struct {
 }
 
 // NewVirtualNetworkTapsClient creates a new instance of VirtualNetworkTapsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewVirtualNetworkTapsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualNetworkTapsClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewVirtualNetworkTapsClient(subscriptionID string, credential azcore.TokenC
 // resourceGroupName - The name of the resource group.
 // tapName - The name of the virtual network tap.
 // parameters - Parameters supplied to the create or update virtual network tap operation.
-// options - VirtualNetworkTapsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkTaps.BeginCreateOrUpdate method.
+// options - VirtualNetworkTapsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkTaps.BeginCreateOrUpdate
+// method.
 func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap, options *VirtualNetworkTapsBeginCreateOrUpdateOptions) (VirtualNetworkTapsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, tapName, parameters, options)
 	if err != nil {
@@ -134,7 +136,8 @@ func (client *VirtualNetworkTapsClient) createOrUpdateHandleError(resp *http.Res
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // tapName - The name of the virtual network tap.
-// options - VirtualNetworkTapsBeginDeleteOptions contains the optional parameters for the VirtualNetworkTaps.BeginDelete method.
+// options - VirtualNetworkTapsBeginDeleteOptions contains the optional parameters for the VirtualNetworkTaps.BeginDelete
+// method.
 func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsBeginDeleteOptions) (VirtualNetworkTapsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, tapName, options)
 	if err != nil {
@@ -335,7 +338,8 @@ func (client *VirtualNetworkTapsClient) listAllHandleError(resp *http.Response) 
 // ListByResourceGroup - Gets all the VirtualNetworkTaps in a subscription.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - VirtualNetworkTapsListByResourceGroupOptions contains the optional parameters for the VirtualNetworkTaps.ListByResourceGroup method.
+// options - VirtualNetworkTapsListByResourceGroupOptions contains the optional parameters for the VirtualNetworkTaps.ListByResourceGroup
+// method.
 func (client *VirtualNetworkTapsClient) ListByResourceGroup(resourceGroupName string, options *VirtualNetworkTapsListByResourceGroupOptions) *VirtualNetworkTapsListByResourceGroupPager {
 	return &VirtualNetworkTapsListByResourceGroupPager{
 		client: client,

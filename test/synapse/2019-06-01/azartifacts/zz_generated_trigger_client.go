@@ -39,7 +39,8 @@ func newTriggerClient(endpoint string, pl runtime.Pipeline) *triggerClient {
 // If the operation fails it returns the *CloudError error type.
 // triggerName - The trigger name.
 // trigger - Trigger resource definition.
-// options - TriggerBeginCreateOrUpdateTriggerOptions contains the optional parameters for the Trigger.BeginCreateOrUpdateTrigger method.
+// options - TriggerBeginCreateOrUpdateTriggerOptions contains the optional parameters for the Trigger.BeginCreateOrUpdateTrigger
+// method.
 func (client *triggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *TriggerBeginCreateOrUpdateTriggerOptions) (TriggerCreateOrUpdateTriggerPollerResponse, error) {
 	resp, err := client.createOrUpdateTrigger(ctx, triggerName, trigger, options)
 	if err != nil {
@@ -182,7 +183,8 @@ func (client *triggerClient) deleteTriggerHandleError(resp *http.Response) error
 // GetEventSubscriptionStatus - Get a trigger's event subscription status.
 // If the operation fails it returns the *CloudError error type.
 // triggerName - The trigger name.
-// options - TriggerGetEventSubscriptionStatusOptions contains the optional parameters for the Trigger.GetEventSubscriptionStatus method.
+// options - TriggerGetEventSubscriptionStatusOptions contains the optional parameters for the Trigger.GetEventSubscriptionStatus
+// method.
 func (client *triggerClient) GetEventSubscriptionStatus(ctx context.Context, triggerName string, options *TriggerGetEventSubscriptionStatusOptions) (TriggerGetEventSubscriptionStatusResponse, error) {
 	req, err := client.getEventSubscriptionStatusCreateRequest(ctx, triggerName, options)
 	if err != nil {
@@ -302,7 +304,8 @@ func (client *triggerClient) getTriggerHandleError(resp *http.Response) error {
 
 // GetTriggersByWorkspace - Lists triggers.
 // If the operation fails it returns the *CloudError error type.
-// options - TriggerGetTriggersByWorkspaceOptions contains the optional parameters for the Trigger.GetTriggersByWorkspace method.
+// options - TriggerGetTriggersByWorkspaceOptions contains the optional parameters for the Trigger.GetTriggersByWorkspace
+// method.
 func (client *triggerClient) GetTriggersByWorkspace(options *TriggerGetTriggersByWorkspaceOptions) *TriggerGetTriggersByWorkspacePager {
 	return &TriggerGetTriggersByWorkspacePager{
 		client: client,
@@ -494,7 +497,8 @@ func (client *triggerClient) stopTriggerHandleError(resp *http.Response) error {
 // BeginSubscribeTriggerToEvents - Subscribe event trigger to events.
 // If the operation fails it returns the *CloudError error type.
 // triggerName - The trigger name.
-// options - TriggerBeginSubscribeTriggerToEventsOptions contains the optional parameters for the Trigger.BeginSubscribeTriggerToEvents method.
+// options - TriggerBeginSubscribeTriggerToEventsOptions contains the optional parameters for the Trigger.BeginSubscribeTriggerToEvents
+// method.
 func (client *triggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, triggerName string, options *TriggerBeginSubscribeTriggerToEventsOptions) (TriggerSubscribeTriggerToEventsPollerResponse, error) {
 	resp, err := client.subscribeTriggerToEvents(ctx, triggerName, options)
 	if err != nil {
@@ -564,7 +568,8 @@ func (client *triggerClient) subscribeTriggerToEventsHandleError(resp *http.Resp
 // BeginUnsubscribeTriggerFromEvents - Unsubscribe event trigger from events.
 // If the operation fails it returns the *CloudError error type.
 // triggerName - The trigger name.
-// options - TriggerBeginUnsubscribeTriggerFromEventsOptions contains the optional parameters for the Trigger.BeginUnsubscribeTriggerFromEvents method.
+// options - TriggerBeginUnsubscribeTriggerFromEventsOptions contains the optional parameters for the Trigger.BeginUnsubscribeTriggerFromEvents
+// method.
 func (client *triggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *TriggerBeginUnsubscribeTriggerFromEventsOptions) (TriggerUnsubscribeTriggerFromEventsPollerResponse, error) {
 	resp, err := client.unsubscribeTriggerFromEvents(ctx, triggerName, options)
 	if err != nil {

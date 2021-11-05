@@ -39,7 +39,8 @@ func newNotebookClient(endpoint string, pl runtime.Pipeline) *notebookClient {
 // If the operation fails it returns the *CloudError error type.
 // notebookName - The notebook name.
 // notebook - Note book resource definition.
-// options - NotebookBeginCreateOrUpdateNotebookOptions contains the optional parameters for the Notebook.BeginCreateOrUpdateNotebook method.
+// options - NotebookBeginCreateOrUpdateNotebookOptions contains the optional parameters for the Notebook.BeginCreateOrUpdateNotebook
+// method.
 func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (NotebookCreateOrUpdateNotebookPollerResponse, error) {
 	resp, err := client.createOrUpdateNotebook(ctx, notebookName, notebook, options)
 	if err != nil {
@@ -243,7 +244,8 @@ func (client *notebookClient) getNotebookHandleError(resp *http.Response) error 
 
 // GetNotebookSummaryByWorkSpace - Lists a summary of Notebooks.
 // If the operation fails it returns the *CloudError error type.
-// options - NotebookGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the Notebook.GetNotebookSummaryByWorkSpace method.
+// options - NotebookGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the Notebook.GetNotebookSummaryByWorkSpace
+// method.
 func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGetNotebookSummaryByWorkSpaceOptions) *NotebookGetNotebookSummaryByWorkSpacePager {
 	return &NotebookGetNotebookSummaryByWorkSpacePager{
 		client: client,
@@ -294,7 +296,8 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleError(resp *htt
 
 // GetNotebooksByWorkspace - Lists Notebooks.
 // If the operation fails it returns the *CloudError error type.
-// options - NotebookGetNotebooksByWorkspaceOptions contains the optional parameters for the Notebook.GetNotebooksByWorkspace method.
+// options - NotebookGetNotebooksByWorkspaceOptions contains the optional parameters for the Notebook.GetNotebooksByWorkspace
+// method.
 func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebooksByWorkspaceOptions) *NotebookGetNotebooksByWorkspacePager {
 	return &NotebookGetNotebooksByWorkspacePager{
 		client: client,

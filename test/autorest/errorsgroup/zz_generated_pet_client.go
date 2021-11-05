@@ -173,7 +173,8 @@ func (client *PetClient) getPetByIDHandleError(resp *http.Response) error {
 	}
 }
 
-// HasModelsParam - Ensure you can correctly deserialize the returned PetActionError and deserialization doesn't conflict with the input param name 'models'
+// HasModelsParam - Ensure you can correctly deserialize the returned PetActionError and deserialization doesn't conflict
+// with the input param name 'models'
 // If the operation fails it returns one of the following error types.
 // - *PetActionError, *PetHungryOrThirstyError, *PetSadError
 // options - PetHasModelsParamOptions contains the optional parameters for the Pet.HasModelsParam method.

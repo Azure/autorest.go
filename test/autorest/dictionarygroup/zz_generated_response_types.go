@@ -152,7 +152,8 @@ type DictionaryGetByteValidResponse struct {
 
 // DictionaryGetByteValidResult contains the result from method Dictionary.GetByteValid.
 type DictionaryGetByteValidResult struct {
-	// The dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each elementencoded in base 64
+	// The dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each elementencoded in base
+	// 64
 	Value map[string][]byte
 }
 
@@ -217,7 +218,8 @@ type DictionaryGetComplexValidResponse struct {
 
 // DictionaryGetComplexValidResult contains the result from method Dictionary.GetComplexValid.
 type DictionaryGetComplexValidResult struct {
-	// Dictionary of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
+	// Dictionary of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string':
+	// '6'}]
 	Value map[string]*Widget
 }
 
@@ -282,7 +284,8 @@ type DictionaryGetDateTimeRFC1123ValidResponse struct {
 
 // DictionaryGetDateTimeRFC1123ValidResult contains the result from method Dictionary.GetDateTimeRFC1123Valid.
 type DictionaryGetDateTimeRFC1123ValidResult struct {
-	// The dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
+	// The dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492
+	// 10:15:01 GMT"}
 	Value map[string]*time.Time
 }
 
@@ -334,8 +337,8 @@ type DictionaryGetDictionaryItemEmptyResponse struct {
 
 // DictionaryGetDictionaryItemEmptyResult contains the result from method Dictionary.GetDictionaryItemEmpty.
 type DictionaryGetDictionaryItemEmptyResult struct {
-	// An dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {}, "2": {"7": "seven", "8": "eight",
-	// "9": "nine"}}
+	// An dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1":
+	// {}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 	Value map[string]map[string]*string
 }
 
@@ -348,8 +351,8 @@ type DictionaryGetDictionaryItemNullResponse struct {
 
 // DictionaryGetDictionaryItemNullResult contains the result from method Dictionary.GetDictionaryItemNull.
 type DictionaryGetDictionaryItemNullResult struct {
-	// An dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": null, "2": {"7": "seven", "8":
-	// "eight", "9": "nine"}}
+	// An dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1":
+	// null, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 	Value map[string]map[string]*string
 }
 
@@ -375,8 +378,8 @@ type DictionaryGetDictionaryValidResponse struct {
 
 // DictionaryGetDictionaryValidResult contains the result from method Dictionary.GetDictionaryValid.
 type DictionaryGetDictionaryValidResult struct {
-	// An dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1": {"4": "four", "5": "five", "6":
-	// "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
+	// An dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1":
+	// {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 	Value map[string]map[string]*string
 }
 

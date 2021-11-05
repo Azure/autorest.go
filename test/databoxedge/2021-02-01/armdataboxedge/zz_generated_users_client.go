@@ -43,7 +43,8 @@ func NewUsersClient(subscriptionID string, options *azcore.ClientOptions) *Users
 	return client
 }
 
-// BeginCreateOrUpdate - Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway device.
+// BeginCreateOrUpdate - Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway
+// device.
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // name - The user name.

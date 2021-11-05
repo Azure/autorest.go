@@ -28,7 +28,7 @@ type EventsClient struct {
 }
 
 // NewEventsClient creates a new instance of EventsClient with the specified values.
-// credential - the credential used to authenticate the request.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptions) *EventsClient {
 	cp := arm.ClientOptions{}
@@ -49,7 +49,9 @@ func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptio
 // If the operation fails it returns the *ErrorResponse error type.
 // startDate - Start date
 // endDate - End date
-// scope - The scope associated with events operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}' for Billing Profile scope, and 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
+// scope - The scope associated with events operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
+// for Billing Profile scope, and
+// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
 // options - EventsListOptions contains the optional parameters for the Events.List method.
 func (client *EventsClient) List(startDate string, endDate string, scope string, options *EventsListOptions) *EventsListPager {
 	return &EventsListPager{

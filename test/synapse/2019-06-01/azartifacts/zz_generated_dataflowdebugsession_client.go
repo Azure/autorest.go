@@ -35,7 +35,8 @@ func newDataFlowDebugSessionClient(endpoint string, pl runtime.Pipeline) *dataFl
 // AddDataFlow - Add a data flow into debug session.
 // If the operation fails it returns the *CloudError error type.
 // request - Data flow debug session definition with debug content.
-// options - DataFlowDebugSessionAddDataFlowOptions contains the optional parameters for the DataFlowDebugSession.AddDataFlow method.
+// options - DataFlowDebugSessionAddDataFlowOptions contains the optional parameters for the DataFlowDebugSession.AddDataFlow
+// method.
 func (client *dataFlowDebugSessionClient) AddDataFlow(ctx context.Context, request DataFlowDebugPackage, options *DataFlowDebugSessionAddDataFlowOptions) (DataFlowDebugSessionAddDataFlowResponse, error) {
 	req, err := client.addDataFlowCreateRequest(ctx, request, options)
 	if err != nil {
@@ -90,7 +91,8 @@ func (client *dataFlowDebugSessionClient) addDataFlowHandleError(resp *http.Resp
 // BeginCreateDataFlowDebugSession - Creates a data flow debug session.
 // If the operation fails it returns the *CloudError error type.
 // request - Data flow debug session definition
-// options - DataFlowDebugSessionBeginCreateDataFlowDebugSessionOptions contains the optional parameters for the DataFlowDebugSession.BeginCreateDataFlowDebugSession method.
+// options - DataFlowDebugSessionBeginCreateDataFlowDebugSessionOptions contains the optional parameters for the DataFlowDebugSession.BeginCreateDataFlowDebugSession
+// method.
 func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *DataFlowDebugSessionBeginCreateDataFlowDebugSessionOptions) (DataFlowDebugSessionCreateDataFlowDebugSessionPollerResponse, error) {
 	resp, err := client.createDataFlowDebugSession(ctx, request, options)
 	if err != nil {
@@ -156,7 +158,8 @@ func (client *dataFlowDebugSessionClient) createDataFlowDebugSessionHandleError(
 // DeleteDataFlowDebugSession - Deletes a data flow debug session.
 // If the operation fails it returns the *CloudError error type.
 // request - Data flow debug session definition for deletion
-// options - DataFlowDebugSessionDeleteDataFlowDebugSessionOptions contains the optional parameters for the DataFlowDebugSession.DeleteDataFlowDebugSession method.
+// options - DataFlowDebugSessionDeleteDataFlowDebugSessionOptions contains the optional parameters for the DataFlowDebugSession.DeleteDataFlowDebugSession
+// method.
 func (client *dataFlowDebugSessionClient) DeleteDataFlowDebugSession(ctx context.Context, request DeleteDataFlowDebugSessionRequest, options *DataFlowDebugSessionDeleteDataFlowDebugSessionOptions) (DataFlowDebugSessionDeleteDataFlowDebugSessionResponse, error) {
 	req, err := client.deleteDataFlowDebugSessionCreateRequest(ctx, request, options)
 	if err != nil {
@@ -202,7 +205,8 @@ func (client *dataFlowDebugSessionClient) deleteDataFlowDebugSessionHandleError(
 // BeginExecuteCommand - Execute a data flow debug command.
 // If the operation fails it returns the *CloudError error type.
 // request - Data flow debug command definition.
-// options - DataFlowDebugSessionBeginExecuteCommandOptions contains the optional parameters for the DataFlowDebugSession.BeginExecuteCommand method.
+// options - DataFlowDebugSessionBeginExecuteCommandOptions contains the optional parameters for the DataFlowDebugSession.BeginExecuteCommand
+// method.
 func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *DataFlowDebugSessionBeginExecuteCommandOptions) (DataFlowDebugSessionExecuteCommandPollerResponse, error) {
 	resp, err := client.executeCommand(ctx, request, options)
 	if err != nil {
@@ -267,7 +271,8 @@ func (client *dataFlowDebugSessionClient) executeCommandHandleError(resp *http.R
 
 // QueryDataFlowDebugSessionsByWorkspace - Query all active data flow debug sessions.
 // If the operation fails it returns the *CloudError error type.
-// options - DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceOptions contains the optional parameters for the DataFlowDebugSession.QueryDataFlowDebugSessionsByWorkspace method.
+// options - DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceOptions contains the optional parameters for the DataFlowDebugSession.QueryDataFlowDebugSessionsByWorkspace
+// method.
 func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspace(options *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceOptions) *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager {
 	return &DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager{
 		client: client,

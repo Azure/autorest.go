@@ -31,8 +31,9 @@ type VirtualWansClient struct {
 }
 
 // NewVirtualWansClient creates a new instance of VirtualWansClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewVirtualWansClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualWansClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewVirtualWansClient(subscriptionID string, credential azcore.TokenCredenti
 // resourceGroupName - The resource group name of the VirtualWan.
 // virtualWANName - The name of the VirtualWAN being created or updated.
 // wanParameters - Parameters supplied to create or update VirtualWAN.
-// options - VirtualWansBeginCreateOrUpdateOptions contains the optional parameters for the VirtualWans.BeginCreateOrUpdate method.
+// options - VirtualWansBeginCreateOrUpdateOptions contains the optional parameters for the VirtualWans.BeginCreateOrUpdate
+// method.
 func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansBeginCreateOrUpdateOptions) (VirtualWansCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualWANName, wanParameters, options)
 	if err != nil {
@@ -335,7 +337,8 @@ func (client *VirtualWansClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Lists all the VirtualWANs in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VirtualWan.
-// options - VirtualWansListByResourceGroupOptions contains the optional parameters for the VirtualWans.ListByResourceGroup method.
+// options - VirtualWansListByResourceGroupOptions contains the optional parameters for the VirtualWans.ListByResourceGroup
+// method.
 func (client *VirtualWansClient) ListByResourceGroup(resourceGroupName string, options *VirtualWansListByResourceGroupOptions) *VirtualWansListByResourceGroupPager {
 	return &VirtualWansListByResourceGroupPager{
 		client: client,

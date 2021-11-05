@@ -32,11 +32,14 @@ func NewHSMSecurityDomainClient(pl runtime.Pipeline) *HSMSecurityDomainClient {
 	return client
 }
 
-// BeginDownload - Retrieves the Security Domain from the managed HSM. Calling this endpoint can be used to activate a provisioned managed HSM resource.
+// BeginDownload - Retrieves the Security Domain from the managed HSM. Calling this endpoint can be used to activate a provisioned
+// managed HSM resource.
 // If the operation fails it returns the *KeyVaultError error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// certificateInfoObject - The Security Domain download operation requires customer to provide N certificates (minimum 3 and maximum 10) containing a public key in JWK format.
-// options - HSMSecurityDomainBeginDownloadOptions contains the optional parameters for the HSMSecurityDomain.BeginDownload method.
+// certificateInfoObject - The Security Domain download operation requires customer to provide N certificates (minimum 3 and
+// maximum 10) containing a public key in JWK format.
+// options - HSMSecurityDomainBeginDownloadOptions contains the optional parameters for the HSMSecurityDomain.BeginDownload
+// method.
 func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainBeginDownloadOptions) (HSMSecurityDomainDownloadPollerResponse, error) {
 	resp, err := client.download(ctx, vaultBaseURL, certificateInfoObject, options)
 	if err != nil {
@@ -55,7 +58,8 @@ func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultB
 	return result, nil
 }
 
-// Download - Retrieves the Security Domain from the managed HSM. Calling this endpoint can be used to activate a provisioned managed HSM resource.
+// Download - Retrieves the Security Domain from the managed HSM. Calling this endpoint can be used to activate a provisioned
+// managed HSM resource.
 // If the operation fails it returns the *KeyVaultError error type.
 func (client *HSMSecurityDomainClient) download(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainBeginDownloadOptions) (*http.Response, error) {
 	req, err := client.downloadCreateRequest(ctx, vaultBaseURL, certificateInfoObject, options)
@@ -104,7 +108,8 @@ func (client *HSMSecurityDomainClient) downloadHandleError(resp *http.Response) 
 // DownloadPending - Retrieves the Security Domain download operation status
 // If the operation fails it returns the *KeyVaultError error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - HSMSecurityDomainDownloadPendingOptions contains the optional parameters for the HSMSecurityDomain.DownloadPending method.
+// options - HSMSecurityDomainDownloadPendingOptions contains the optional parameters for the HSMSecurityDomain.DownloadPending
+// method.
 func (client *HSMSecurityDomainClient) DownloadPending(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainDownloadPendingOptions) (HSMSecurityDomainDownloadPendingResponse, error) {
 	req, err := client.downloadPendingCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
@@ -281,7 +286,8 @@ func (client *HSMSecurityDomainClient) uploadHandleError(resp *http.Response) er
 // UploadPending - Get Security Domain upload operation status
 // If the operation fails it returns the *KeyVaultError error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - HSMSecurityDomainUploadPendingOptions contains the optional parameters for the HSMSecurityDomain.UploadPending method.
+// options - HSMSecurityDomainUploadPendingOptions contains the optional parameters for the HSMSecurityDomain.UploadPending
+// method.
 func (client *HSMSecurityDomainClient) UploadPending(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainUploadPendingOptions) (HSMSecurityDomainUploadPendingResponse, error) {
 	req, err := client.uploadPendingCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {

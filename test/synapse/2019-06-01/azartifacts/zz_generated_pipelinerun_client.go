@@ -216,7 +216,8 @@ func (client *pipelineRunClient) queryActivityRunsHandleError(resp *http.Respons
 // QueryPipelineRunsByWorkspace - Query pipeline runs in the workspace based on input filter conditions.
 // If the operation fails it returns the *CloudError error type.
 // filterParameters - Parameters to filter the pipeline run.
-// options - PipelineRunQueryPipelineRunsByWorkspaceOptions contains the optional parameters for the PipelineRun.QueryPipelineRunsByWorkspace method.
+// options - PipelineRunQueryPipelineRunsByWorkspaceOptions contains the optional parameters for the PipelineRun.QueryPipelineRunsByWorkspace
+// method.
 func (client *pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *PipelineRunQueryPipelineRunsByWorkspaceOptions) (PipelineRunQueryPipelineRunsByWorkspaceResponse, error) {
 	req, err := client.queryPipelineRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {

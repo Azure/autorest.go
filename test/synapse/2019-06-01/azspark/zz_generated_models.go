@@ -38,8 +38,7 @@ type SparkBatchGetSparkBatchJobsOptions struct {
 	Detailed *bool
 	// Optional param specifying which index the list should begin from.
 	From *int32
-	// Optional param specifying the size of the returned list.
-	// By default it is 20 and that is the maximum.
+	// Optional param specifying the size of the returned list. By default it is 20 and that is the maximum.
 	Size *int32
 }
 
@@ -531,8 +530,7 @@ type SparkSessionGetSparkSessionsOptions struct {
 	Detailed *bool
 	// Optional param specifying which index the list should begin from.
 	From *int32
-	// Optional param specifying the size of the returned list.
-	// By default it is 20 and that is the maximum.
+	// Optional param specifying the size of the returned list. By default it is 20 and that is the maximum.
 	Size *int32
 }
 
@@ -592,7 +590,8 @@ func (s SparkSessionOptions) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the SparkSession.ResetSparkSessionTimeout method.
+// SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the SparkSession.ResetSparkSessionTimeout
+// method.
 type SparkSessionResetSparkSessionTimeoutOptions struct {
 	// placeholder for future optional parameters
 }

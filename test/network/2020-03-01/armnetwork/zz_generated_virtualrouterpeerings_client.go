@@ -31,8 +31,9 @@ type VirtualRouterPeeringsClient struct {
 }
 
 // NewVirtualRouterPeeringsClient creates a new instance of VirtualRouterPeeringsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewVirtualRouterPeeringsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualRouterPeeringsClient {
 	cp := arm.ClientOptions{}
@@ -56,7 +57,8 @@ func NewVirtualRouterPeeringsClient(subscriptionID string, credential azcore.Tok
 // virtualRouterName - The name of the Virtual Router.
 // peeringName - The name of the Virtual Router Peering.
 // parameters - Parameters supplied to the create or update Virtual Router Peering operation.
-// options - VirtualRouterPeeringsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualRouterPeerings.BeginCreateOrUpdate method.
+// options - VirtualRouterPeeringsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualRouterPeerings.BeginCreateOrUpdate
+// method.
 func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering, options *VirtualRouterPeeringsBeginCreateOrUpdateOptions) (VirtualRouterPeeringsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualRouterName, peeringName, parameters, options)
 	if err != nil {
@@ -140,7 +142,8 @@ func (client *VirtualRouterPeeringsClient) createOrUpdateHandleError(resp *http.
 // resourceGroupName - The name of the resource group.
 // virtualRouterName - The name of the Virtual Router.
 // peeringName - The name of the peering.
-// options - VirtualRouterPeeringsBeginDeleteOptions contains the optional parameters for the VirtualRouterPeerings.BeginDelete method.
+// options - VirtualRouterPeeringsBeginDeleteOptions contains the optional parameters for the VirtualRouterPeerings.BeginDelete
+// method.
 func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsBeginDeleteOptions) (VirtualRouterPeeringsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualRouterName, peeringName, options)
 	if err != nil {

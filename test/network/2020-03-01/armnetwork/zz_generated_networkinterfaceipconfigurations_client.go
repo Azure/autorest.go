@@ -31,8 +31,9 @@ type NetworkInterfaceIPConfigurationsClient struct {
 }
 
 // NewNetworkInterfaceIPConfigurationsClient creates a new instance of NetworkInterfaceIPConfigurationsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewNetworkInterfaceIPConfigurationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NetworkInterfaceIPConfigurationsClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewNetworkInterfaceIPConfigurationsClient(subscriptionID string, credential
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // ipConfigurationName - The name of the ip configuration name.
-// options - NetworkInterfaceIPConfigurationsGetOptions contains the optional parameters for the NetworkInterfaceIPConfigurations.Get method.
+// options - NetworkInterfaceIPConfigurationsGetOptions contains the optional parameters for the NetworkInterfaceIPConfigurations.Get
+// method.
 func (client *NetworkInterfaceIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfaceIPConfigurationsGetOptions) (NetworkInterfaceIPConfigurationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkInterfaceName, ipConfigurationName, options)
 	if err != nil {
@@ -127,7 +129,8 @@ func (client *NetworkInterfaceIPConfigurationsClient) getHandleError(resp *http.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfaceIPConfigurationsListOptions contains the optional parameters for the NetworkInterfaceIPConfigurations.List method.
+// options - NetworkInterfaceIPConfigurationsListOptions contains the optional parameters for the NetworkInterfaceIPConfigurations.List
+// method.
 func (client *NetworkInterfaceIPConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceIPConfigurationsListOptions) *NetworkInterfaceIPConfigurationsListPager {
 	return &NetworkInterfaceIPConfigurationsListPager{
 		client: client,

@@ -82,7 +82,8 @@ type ErrorResponse struct {
 	Message *string `json:"message,omitempty" azure:"ro"`
 }
 
-// GeoJSONFeature - A valid GeoJSON Feature object type. Please refer to RFC 7946 [https://tools.ietf.org/html/rfc7946#section-3.2] for details.
+// GeoJSONFeature - A valid GeoJSON Feature object type. Please refer to RFC 7946 [https://tools.ietf.org/html/rfc7946#section-3.2]
+// for details.
 type GeoJSONFeature struct {
 	GeoJSONFeatureData
 	GeoJSONObject
@@ -97,7 +98,8 @@ func (g GeoJSONFeature) MarshalJSON() ([]byte, error) {
 }
 
 type GeoJSONFeatureData struct {
-	// The type of the feature. The value depends on the data model the current feature is part of. Some data models may have an empty value.
+	// The type of the feature. The value depends on the data model the current feature is part of. Some data models may have
+	// an empty value.
 	FeatureType *string `json:"featureType,omitempty"`
 
 	// Identifier for the feature.
@@ -161,8 +163,8 @@ type GeoJSONObjectClassification interface {
 
 // GeoJSONObject - A valid GeoJSON object. Please refer to RFC 7946 [https://tools.ietf.org/html/rfc7946#section-3] for details.
 type GeoJSONObject struct {
-	// REQUIRED; Specifies the GeoJSON type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon,
-	// GeometryCollection, Feature and
+	// REQUIRED; Specifies the GeoJSON type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString,
+	// MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and
 	// FeatureCollection.
 	Type *GeoJSONObjectType `json:"type,omitempty"`
 }

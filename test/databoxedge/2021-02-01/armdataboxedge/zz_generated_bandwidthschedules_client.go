@@ -49,7 +49,8 @@ func NewBandwidthSchedulesClient(subscriptionID string, options *azcore.ClientOp
 // name - The bandwidth schedule name which needs to be added/updated.
 // resourceGroupName - The resource group name.
 // parameters - The bandwidth schedule to be added or updated.
-// options - BandwidthSchedulesBeginCreateOrUpdateOptions contains the optional parameters for the BandwidthSchedules.BeginCreateOrUpdate method.
+// options - BandwidthSchedulesBeginCreateOrUpdateOptions contains the optional parameters for the BandwidthSchedules.BeginCreateOrUpdate
+// method.
 func (client *BandwidthSchedulesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, parameters BandwidthSchedule, options *BandwidthSchedulesBeginCreateOrUpdateOptions) (BandwidthSchedulesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, parameters, options)
 	if err != nil {
@@ -133,7 +134,8 @@ func (client *BandwidthSchedulesClient) createOrUpdateHandleError(resp *http.Res
 // deviceName - The device name.
 // name - The bandwidth schedule name.
 // resourceGroupName - The resource group name.
-// options - BandwidthSchedulesBeginDeleteOptions contains the optional parameters for the BandwidthSchedules.BeginDelete method.
+// options - BandwidthSchedulesBeginDeleteOptions contains the optional parameters for the BandwidthSchedules.BeginDelete
+// method.
 func (client *BandwidthSchedulesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesBeginDeleteOptions) (BandwidthSchedulesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -289,7 +291,8 @@ func (client *BandwidthSchedulesClient) getHandleError(resp *http.Response) erro
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - BandwidthSchedulesListByDataBoxEdgeDeviceOptions contains the optional parameters for the BandwidthSchedules.ListByDataBoxEdgeDevice method.
+// options - BandwidthSchedulesListByDataBoxEdgeDeviceOptions contains the optional parameters for the BandwidthSchedules.ListByDataBoxEdgeDevice
+// method.
 func (client *BandwidthSchedulesClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *BandwidthSchedulesListByDataBoxEdgeDeviceOptions) *BandwidthSchedulesListByDataBoxEdgeDevicePager {
 	return &BandwidthSchedulesListByDataBoxEdgeDevicePager{
 		client: client,

@@ -31,8 +31,9 @@ type VirtualMachineExtensionImagesClient struct {
 }
 
 // NewVirtualMachineExtensionImagesClient creates a new instance of VirtualMachineExtensionImagesClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewVirtualMachineExtensionImagesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualMachineExtensionImagesClient {
 	cp := arm.ClientOptions{}
@@ -53,7 +54,8 @@ func NewVirtualMachineExtensionImagesClient(subscriptionID string, credential az
 // Get - Gets a virtual machine extension image.
 // If the operation fails it returns a generic error.
 // location - The name of a supported Azure region.
-// options - VirtualMachineExtensionImagesGetOptions contains the optional parameters for the VirtualMachineExtensionImages.Get method.
+// options - VirtualMachineExtensionImagesGetOptions contains the optional parameters for the VirtualMachineExtensionImages.Get
+// method.
 func (client *VirtualMachineExtensionImagesClient) Get(ctx context.Context, location string, publisherName string, typeParam string, version string, options *VirtualMachineExtensionImagesGetOptions) (VirtualMachineExtensionImagesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, publisherName, typeParam, version, options)
 	if err != nil {
@@ -127,7 +129,8 @@ func (client *VirtualMachineExtensionImagesClient) getHandleError(resp *http.Res
 // ListTypes - Gets a list of virtual machine extension image types.
 // If the operation fails it returns a generic error.
 // location - The name of a supported Azure region.
-// options - VirtualMachineExtensionImagesListTypesOptions contains the optional parameters for the VirtualMachineExtensionImages.ListTypes method.
+// options - VirtualMachineExtensionImagesListTypesOptions contains the optional parameters for the VirtualMachineExtensionImages.ListTypes
+// method.
 func (client *VirtualMachineExtensionImagesClient) ListTypes(ctx context.Context, location string, publisherName string, options *VirtualMachineExtensionImagesListTypesOptions) (VirtualMachineExtensionImagesListTypesResponse, error) {
 	req, err := client.listTypesCreateRequest(ctx, location, publisherName, options)
 	if err != nil {
@@ -193,7 +196,8 @@ func (client *VirtualMachineExtensionImagesClient) listTypesHandleError(resp *ht
 // ListVersions - Gets a list of virtual machine extension image versions.
 // If the operation fails it returns a generic error.
 // location - The name of a supported Azure region.
-// options - VirtualMachineExtensionImagesListVersionsOptions contains the optional parameters for the VirtualMachineExtensionImages.ListVersions method.
+// options - VirtualMachineExtensionImagesListVersionsOptions contains the optional parameters for the VirtualMachineExtensionImages.ListVersions
+// method.
 func (client *VirtualMachineExtensionImagesClient) ListVersions(ctx context.Context, location string, publisherName string, typeParam string, options *VirtualMachineExtensionImagesListVersionsOptions) (VirtualMachineExtensionImagesListVersionsResponse, error) {
 	req, err := client.listVersionsCreateRequest(ctx, location, publisherName, typeParam, options)
 	if err != nil {

@@ -292,7 +292,8 @@ func (client *ArrayClient) getArrayValidHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items base64url encoded
+// GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items
+// base64url encoded
 // If the operation fails it returns the *Error error type.
 // options - ArrayGetBase64URLOptions contains the optional parameters for the Array.GetBase64URL method.
 func (client *ArrayClient) GetBase64URL(ctx context.Context, options *ArrayGetBase64URLOptions) (ArrayGetBase64URLResponse, error) {
@@ -649,7 +650,8 @@ func (client *ArrayClient) getComplexEmptyHandleError(resp *http.Response) error
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetComplexItemEmpty - Get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string': '6'}]
+// GetComplexItemEmpty - Get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string':
+// '6'}]
 // If the operation fails it returns the *Error error type.
 // options - ArrayGetComplexItemEmptyOptions contains the optional parameters for the Array.GetComplexItemEmpty method.
 func (client *ArrayClient) GetComplexItemEmpty(ctx context.Context, options *ArrayGetComplexItemEmptyOptions) (ArrayGetComplexItemEmptyResponse, error) {
@@ -700,7 +702,8 @@ func (client *ArrayClient) getComplexItemEmptyHandleError(resp *http.Response) e
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string': '6'}]
+// GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string':
+// '6'}]
 // If the operation fails it returns the *Error error type.
 // options - ArrayGetComplexItemNullOptions contains the optional parameters for the Array.GetComplexItemNull method.
 func (client *ArrayClient) GetComplexItemNull(ctx context.Context, options *ArrayGetComplexItemNullOptions) (ArrayGetComplexItemNullResponse, error) {
@@ -802,7 +805,8 @@ func (client *ArrayClient) getComplexNullHandleError(resp *http.Response) error 
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetComplexValid - Get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
+// GetComplexValid - Get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer':
+// 5, 'string': '6'}]
 // If the operation fails it returns the *Error error type.
 // options - ArrayGetComplexValidOptions contains the optional parameters for the Array.GetComplexValid method.
 func (client *ArrayClient) GetComplexValid(ctx context.Context, options *ArrayGetComplexValidOptions) (ArrayGetComplexValidResponse, error) {
@@ -1081,7 +1085,8 @@ func (client *ArrayClient) getDateTimeInvalidNullHandleError(resp *http.Response
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetDateTimeRFC1123Valid - Get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
+// GetDateTimeRFC1123Valid - Get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT',
+// 'Wed, 12 Oct 1492 10:15:01 GMT']
 // If the operation fails it returns the *Error error type.
 // options - ArrayGetDateTimeRFC1123ValidOptions contains the optional parameters for the Array.GetDateTimeRFC1123Valid method.
 func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context, options *ArrayGetDateTimeRFC1123ValidOptions) (ArrayGetDateTimeRFC1123ValidResponse, error) {
@@ -1303,8 +1308,8 @@ func (client *ArrayClient) getDictionaryEmptyHandleError(resp *http.Response) er
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetDictionaryItemEmpty - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7': 'seven', '8': 'eight', '9':
-// 'nine'}]
+// GetDictionaryItemEmpty - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7':
+// 'seven', '8': 'eight', '9': 'nine'}]
 // If the operation fails it returns the *Error error type.
 // options - ArrayGetDictionaryItemEmptyOptions contains the optional parameters for the Array.GetDictionaryItemEmpty method.
 func (client *ArrayClient) GetDictionaryItemEmpty(ctx context.Context, options *ArrayGetDictionaryItemEmptyOptions) (ArrayGetDictionaryItemEmptyResponse, error) {
@@ -1355,8 +1360,8 @@ func (client *ArrayClient) getDictionaryItemEmptyHandleError(resp *http.Response
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetDictionaryItemNull - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, null, {'7': 'seven', '8': 'eight', '9':
-// 'nine'}]
+// GetDictionaryItemNull - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, null,
+// {'7': 'seven', '8': 'eight', '9': 'nine'}]
 // If the operation fails it returns the *Error error type.
 // options - ArrayGetDictionaryItemNullOptions contains the optional parameters for the Array.GetDictionaryItemNull method.
 func (client *ArrayClient) GetDictionaryItemNull(ctx context.Context, options *ArrayGetDictionaryItemNullOptions) (ArrayGetDictionaryItemNullResponse, error) {
@@ -1458,8 +1463,8 @@ func (client *ArrayClient) getDictionaryNullHandleError(resp *http.Response) err
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'},
-// {'7': 'seven', '8': 'eight', '9': 'nine'}]
+// GetDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four',
+// '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 // If the operation fails it returns the *Error error type.
 // options - ArrayGetDictionaryValidOptions contains the optional parameters for the Array.GetDictionaryValid method.
 func (client *ArrayClient) GetDictionaryValid(ctx context.Context, options *ArrayGetDictionaryValidOptions) (ArrayGetDictionaryValidResponse, error) {
@@ -2767,7 +2772,8 @@ func (client *ArrayClient) putBooleanTfftHandleError(resp *http.Response) error 
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base 64
+// PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base
+// 64
 // If the operation fails it returns the *Error error type.
 // options - ArrayPutByteValidOptions contains the optional parameters for the Array.PutByteValid method.
 func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte, options *ArrayPutByteValidOptions) (ArrayPutByteValidResponse, error) {
@@ -2809,7 +2815,8 @@ func (client *ArrayClient) putByteValidHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
+// PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'},
+// {'integer': 5, 'string': '6'}]
 // If the operation fails it returns the *Error error type.
 // options - ArrayPutComplexValidOptions contains the optional parameters for the Array.PutComplexValid method.
 func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []*Product, options *ArrayPutComplexValidOptions) (ArrayPutComplexValidResponse, error) {
@@ -2851,7 +2858,8 @@ func (client *ArrayClient) putComplexValidHandleError(resp *http.Response) error
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PutDateTimeRFC1123Valid - Set array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
+// PutDateTimeRFC1123Valid - Set array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct
+// 1492 10:15:01 GMT']
 // If the operation fails it returns the *Error error type.
 // options - ArrayPutDateTimeRFC1123ValidOptions contains the optional parameters for the Array.PutDateTimeRFC1123Valid method.
 func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateTimeRFC1123ValidOptions) (ArrayPutDateTimeRFC1123ValidResponse, error) {
@@ -2985,8 +2993,8 @@ func (client *ArrayClient) putDateValidHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PutDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5': 'five', '6': 'six'},
-// {'7': 'seven', '8': 'eight', '9': 'nine'}]
+// PutDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four',
+// '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 // If the operation fails it returns the *Error error type.
 // options - ArrayPutDictionaryValidOptions contains the optional parameters for the Array.PutDictionaryValid method.
 func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []map[string]*string, options *ArrayPutDictionaryValidOptions) (ArrayPutDictionaryValidResponse, error) {

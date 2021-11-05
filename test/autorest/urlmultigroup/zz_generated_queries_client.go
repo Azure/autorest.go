@@ -134,7 +134,8 @@ func (client *QueriesClient) arrayStringMultiNullHandleError(resp *http.Response
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array format
+// ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array
+// format
 // If the operation fails it returns the *Error error type.
 // options - QueriesArrayStringMultiValidOptions contains the optional parameters for the Queries.ArrayStringMultiValid method.
 func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options *QueriesArrayStringMultiValidOptions) (QueriesArrayStringMultiValidResponse, error) {

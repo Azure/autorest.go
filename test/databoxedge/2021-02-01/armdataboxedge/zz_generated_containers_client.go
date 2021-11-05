@@ -50,7 +50,8 @@ func NewContainersClient(subscriptionID string, options *azcore.ClientOptions) *
 // containerName - The container name.
 // resourceGroupName - The resource group name.
 // containerParam - The container properties.
-// options - ContainersBeginCreateOrUpdateOptions contains the optional parameters for the Containers.BeginCreateOrUpdate method.
+// options - ContainersBeginCreateOrUpdateOptions contains the optional parameters for the Containers.BeginCreateOrUpdate
+// method.
 func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersBeginCreateOrUpdateOptions) (ContainersCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, storageAccountName, containerName, resourceGroupName, containerParam, options)
 	if err != nil {
@@ -305,7 +306,8 @@ func (client *ContainersClient) getHandleError(resp *http.Response) error {
 // deviceName - The device name.
 // storageAccountName - The storage Account name.
 // resourceGroupName - The resource group name.
-// options - ContainersListByStorageAccountOptions contains the optional parameters for the Containers.ListByStorageAccount method.
+// options - ContainersListByStorageAccountOptions contains the optional parameters for the Containers.ListByStorageAccount
+// method.
 func (client *ContainersClient) ListByStorageAccount(deviceName string, storageAccountName string, resourceGroupName string, options *ContainersListByStorageAccountOptions) *ContainersListByStorageAccountPager {
 	return &ContainersListByStorageAccountPager{
 		client: client,

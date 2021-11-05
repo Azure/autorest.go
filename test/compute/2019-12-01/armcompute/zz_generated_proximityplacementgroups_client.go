@@ -30,8 +30,9 @@ type ProximityPlacementGroupsClient struct {
 }
 
 // NewProximityPlacementGroupsClient creates a new instance of ProximityPlacementGroupsClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewProximityPlacementGroupsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ProximityPlacementGroupsClient {
 	cp := arm.ClientOptions{}
@@ -54,7 +55,8 @@ func NewProximityPlacementGroupsClient(subscriptionID string, credential azcore.
 // resourceGroupName - The name of the resource group.
 // proximityPlacementGroupName - The name of the proximity placement group.
 // parameters - Parameters supplied to the Create Proximity Placement Group operation.
-// options - ProximityPlacementGroupsCreateOrUpdateOptions contains the optional parameters for the ProximityPlacementGroups.CreateOrUpdate method.
+// options - ProximityPlacementGroupsCreateOrUpdateOptions contains the optional parameters for the ProximityPlacementGroups.CreateOrUpdate
+// method.
 func (client *ProximityPlacementGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroup, options *ProximityPlacementGroupsCreateOrUpdateOptions) (ProximityPlacementGroupsCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, parameters, options)
 	if err != nil {
@@ -121,7 +123,8 @@ func (client *ProximityPlacementGroupsClient) createOrUpdateHandleError(resp *ht
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // proximityPlacementGroupName - The name of the proximity placement group.
-// options - ProximityPlacementGroupsDeleteOptions contains the optional parameters for the ProximityPlacementGroups.Delete method.
+// options - ProximityPlacementGroupsDeleteOptions contains the optional parameters for the ProximityPlacementGroups.Delete
+// method.
 func (client *ProximityPlacementGroupsClient) Delete(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, options *ProximityPlacementGroupsDeleteOptions) (ProximityPlacementGroupsDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, options)
 	if err != nil {
@@ -247,7 +250,8 @@ func (client *ProximityPlacementGroupsClient) getHandleError(resp *http.Response
 // ListByResourceGroup - Lists all proximity placement groups in a resource group.
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
-// options - ProximityPlacementGroupsListByResourceGroupOptions contains the optional parameters for the ProximityPlacementGroups.ListByResourceGroup method.
+// options - ProximityPlacementGroupsListByResourceGroupOptions contains the optional parameters for the ProximityPlacementGroups.ListByResourceGroup
+// method.
 func (client *ProximityPlacementGroupsClient) ListByResourceGroup(resourceGroupName string, options *ProximityPlacementGroupsListByResourceGroupOptions) *ProximityPlacementGroupsListByResourceGroupPager {
 	return &ProximityPlacementGroupsListByResourceGroupPager{
 		client: client,
@@ -305,7 +309,8 @@ func (client *ProximityPlacementGroupsClient) listByResourceGroupHandleError(res
 
 // ListBySubscription - Lists all proximity placement groups in a subscription.
 // If the operation fails it returns a generic error.
-// options - ProximityPlacementGroupsListBySubscriptionOptions contains the optional parameters for the ProximityPlacementGroups.ListBySubscription method.
+// options - ProximityPlacementGroupsListBySubscriptionOptions contains the optional parameters for the ProximityPlacementGroups.ListBySubscription
+// method.
 func (client *ProximityPlacementGroupsClient) ListBySubscription(options *ProximityPlacementGroupsListBySubscriptionOptions) *ProximityPlacementGroupsListBySubscriptionPager {
 	return &ProximityPlacementGroupsListBySubscriptionPager{
 		client: client,
@@ -362,7 +367,8 @@ func (client *ProximityPlacementGroupsClient) listBySubscriptionHandleError(resp
 // resourceGroupName - The name of the resource group.
 // proximityPlacementGroupName - The name of the proximity placement group.
 // parameters - Parameters supplied to the Update Proximity Placement Group operation.
-// options - ProximityPlacementGroupsUpdateOptions contains the optional parameters for the ProximityPlacementGroups.Update method.
+// options - ProximityPlacementGroupsUpdateOptions contains the optional parameters for the ProximityPlacementGroups.Update
+// method.
 func (client *ProximityPlacementGroupsClient) Update(ctx context.Context, resourceGroupName string, proximityPlacementGroupName string, parameters ProximityPlacementGroupUpdate, options *ProximityPlacementGroupsUpdateOptions) (ProximityPlacementGroupsUpdateResponse, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, proximityPlacementGroupName, parameters, options)
 	if err != nil {

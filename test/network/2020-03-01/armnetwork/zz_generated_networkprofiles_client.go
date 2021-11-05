@@ -31,8 +31,9 @@ type NetworkProfilesClient struct {
 }
 
 // NewNetworkProfilesClient creates a new instance of NetworkProfilesClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewNetworkProfilesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NetworkProfilesClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewNetworkProfilesClient(subscriptionID string, credential azcore.TokenCred
 // resourceGroupName - The name of the resource group.
 // networkProfileName - The name of the network profile.
 // parameters - Parameters supplied to the create or update network profile operation.
-// options - NetworkProfilesCreateOrUpdateOptions contains the optional parameters for the NetworkProfiles.CreateOrUpdate method.
+// options - NetworkProfilesCreateOrUpdateOptions contains the optional parameters for the NetworkProfiles.CreateOrUpdate
+// method.
 func (client *NetworkProfilesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkProfileName string, parameters NetworkProfile, options *NetworkProfilesCreateOrUpdateOptions) (NetworkProfilesCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkProfileName, parameters, options)
 	if err != nil {

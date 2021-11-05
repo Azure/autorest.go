@@ -31,8 +31,9 @@ type GalleriesClient struct {
 }
 
 // NewGalleriesClient creates a new instance of GalleriesClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewGalleriesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *GalleriesClient {
 	cp := arm.ClientOptions{}
@@ -53,7 +54,8 @@ func NewGalleriesClient(subscriptionID string, credential azcore.TokenCredential
 // BeginCreateOrUpdate - Create or update a Shared Image Gallery.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// galleryName - The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods allowed in the middle. The maximum length is 80 characters.
+// galleryName - The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods
+// allowed in the middle. The maximum length is 80 characters.
 // gallery - Parameters supplied to the create or update Shared Image Gallery operation.
 // options - GalleriesBeginCreateOrUpdateOptions contains the optional parameters for the Galleries.BeginCreateOrUpdate method.
 func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, options *GalleriesBeginCreateOrUpdateOptions) (GalleriesCreateOrUpdatePollerResponse, error) {
@@ -395,7 +397,8 @@ func (client *GalleriesClient) listByResourceGroupHandleError(resp *http.Respons
 // BeginUpdate - Update a Shared Image Gallery.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// galleryName - The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods allowed in the middle. The maximum length is 80 characters.
+// galleryName - The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods
+// allowed in the middle. The maximum length is 80 characters.
 // gallery - Parameters supplied to the update Shared Image Gallery operation.
 // options - GalleriesBeginUpdateOptions contains the optional parameters for the Galleries.BeginUpdate method.
 func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate, options *GalleriesBeginUpdateOptions) (GalleriesUpdatePollerResponse, error) {

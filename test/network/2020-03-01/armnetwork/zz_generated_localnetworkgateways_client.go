@@ -31,8 +31,9 @@ type LocalNetworkGatewaysClient struct {
 }
 
 // NewLocalNetworkGatewaysClient creates a new instance of LocalNetworkGatewaysClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewLocalNetworkGatewaysClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *LocalNetworkGatewaysClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewLocalNetworkGatewaysClient(subscriptionID string, credential azcore.Toke
 // resourceGroupName - The name of the resource group.
 // localNetworkGatewayName - The name of the local network gateway.
 // parameters - Parameters supplied to the create or update local network gateway operation.
-// options - LocalNetworkGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the LocalNetworkGateways.BeginCreateOrUpdate method.
+// options - LocalNetworkGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the LocalNetworkGateways.BeginCreateOrUpdate
+// method.
 func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysBeginCreateOrUpdateOptions) (LocalNetworkGatewaysCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)
 	if err != nil {
@@ -134,7 +136,8 @@ func (client *LocalNetworkGatewaysClient) createOrUpdateHandleError(resp *http.R
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // localNetworkGatewayName - The name of the local network gateway.
-// options - LocalNetworkGatewaysBeginDeleteOptions contains the optional parameters for the LocalNetworkGateways.BeginDelete method.
+// options - LocalNetworkGatewaysBeginDeleteOptions contains the optional parameters for the LocalNetworkGateways.BeginDelete
+// method.
 func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysBeginDeleteOptions) (LocalNetworkGatewaysDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, localNetworkGatewayName, options)
 	if err != nil {
@@ -342,7 +345,8 @@ func (client *LocalNetworkGatewaysClient) listHandleError(resp *http.Response) e
 // resourceGroupName - The name of the resource group.
 // localNetworkGatewayName - The name of the local network gateway.
 // parameters - Parameters supplied to update local network gateway tags.
-// options - LocalNetworkGatewaysUpdateTagsOptions contains the optional parameters for the LocalNetworkGateways.UpdateTags method.
+// options - LocalNetworkGatewaysUpdateTagsOptions contains the optional parameters for the LocalNetworkGateways.UpdateTags
+// method.
 func (client *LocalNetworkGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters TagsObject, options *LocalNetworkGatewaysUpdateTagsOptions) (LocalNetworkGatewaysUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)
 	if err != nil {

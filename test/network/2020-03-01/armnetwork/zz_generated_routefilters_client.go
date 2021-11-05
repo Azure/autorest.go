@@ -31,8 +31,9 @@ type RouteFiltersClient struct {
 }
 
 // NewRouteFiltersClient creates a new instance of RouteFiltersClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewRouteFiltersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *RouteFiltersClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewRouteFiltersClient(subscriptionID string, credential azcore.TokenCredent
 // resourceGroupName - The name of the resource group.
 // routeFilterName - The name of the route filter.
 // routeFilterParameters - Parameters supplied to the create or update route filter operation.
-// options - RouteFiltersBeginCreateOrUpdateOptions contains the optional parameters for the RouteFilters.BeginCreateOrUpdate method.
+// options - RouteFiltersBeginCreateOrUpdateOptions contains the optional parameters for the RouteFilters.BeginCreateOrUpdate
+// method.
 func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter, options *RouteFiltersBeginCreateOrUpdateOptions) (RouteFiltersCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeFilterName, routeFilterParameters, options)
 	if err != nil {
@@ -338,7 +340,8 @@ func (client *RouteFiltersClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Gets all route filters in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - RouteFiltersListByResourceGroupOptions contains the optional parameters for the RouteFilters.ListByResourceGroup method.
+// options - RouteFiltersListByResourceGroupOptions contains the optional parameters for the RouteFilters.ListByResourceGroup
+// method.
 func (client *RouteFiltersClient) ListByResourceGroup(resourceGroupName string, options *RouteFiltersListByResourceGroupOptions) *RouteFiltersListByResourceGroupPager {
 	return &RouteFiltersListByResourceGroupPager{
 		client: client,

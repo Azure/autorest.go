@@ -30,8 +30,9 @@ type AvailabilitySetsClient struct {
 }
 
 // NewAvailabilitySetsClient creates a new instance of AvailabilitySetsClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewAvailabilitySetsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *AvailabilitySetsClient {
 	cp := arm.ClientOptions{}
@@ -54,7 +55,8 @@ func NewAvailabilitySetsClient(subscriptionID string, credential azcore.TokenCre
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
 // parameters - Parameters supplied to the Create Availability Set operation.
-// options - AvailabilitySetsCreateOrUpdateOptions contains the optional parameters for the AvailabilitySets.CreateOrUpdate method.
+// options - AvailabilitySetsCreateOrUpdateOptions contains the optional parameters for the AvailabilitySets.CreateOrUpdate
+// method.
 func (client *AvailabilitySetsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet, options *AvailabilitySetsCreateOrUpdateOptions) (AvailabilitySetsCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, availabilitySetName, parameters, options)
 	if err != nil {
@@ -300,11 +302,13 @@ func (client *AvailabilitySetsClient) listHandleError(resp *http.Response) error
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// ListAvailableSizes - Lists all available virtual machine sizes that can be used to create a new virtual machine in an existing availability set.
+// ListAvailableSizes - Lists all available virtual machine sizes that can be used to create a new virtual machine in an existing
+// availability set.
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
-// options - AvailabilitySetsListAvailableSizesOptions contains the optional parameters for the AvailabilitySets.ListAvailableSizes method.
+// options - AvailabilitySetsListAvailableSizesOptions contains the optional parameters for the AvailabilitySets.ListAvailableSizes
+// method.
 func (client *AvailabilitySetsClient) ListAvailableSizes(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsListAvailableSizesOptions) (AvailabilitySetsListAvailableSizesResponse, error) {
 	req, err := client.listAvailableSizesCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
@@ -369,7 +373,8 @@ func (client *AvailabilitySetsClient) listAvailableSizesHandleError(resp *http.R
 
 // ListBySubscription - Lists all availability sets in a subscription.
 // If the operation fails it returns a generic error.
-// options - AvailabilitySetsListBySubscriptionOptions contains the optional parameters for the AvailabilitySets.ListBySubscription method.
+// options - AvailabilitySetsListBySubscriptionOptions contains the optional parameters for the AvailabilitySets.ListBySubscription
+// method.
 func (client *AvailabilitySetsClient) ListBySubscription(options *AvailabilitySetsListBySubscriptionOptions) *AvailabilitySetsListBySubscriptionPager {
 	return &AvailabilitySetsListBySubscriptionPager{
 		client: client,

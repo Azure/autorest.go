@@ -65,7 +65,8 @@ type ExplicitPostOptionalArrayHeaderOptions struct {
 	HeaderParameter []string
 }
 
-// ExplicitPostOptionalArrayParameterOptions contains the optional parameters for the Explicit.PostOptionalArrayParameter method.
+// ExplicitPostOptionalArrayParameterOptions contains the optional parameters for the Explicit.PostOptionalArrayParameter
+// method.
 type ExplicitPostOptionalArrayParameterOptions struct {
 	BodyParameter []*string
 }
@@ -75,7 +76,8 @@ type ExplicitPostOptionalArrayPropertyOptions struct {
 	BodyParameter *ArrayOptionalWrapper
 }
 
-// ExplicitPostOptionalClassParameterOptions contains the optional parameters for the Explicit.PostOptionalClassParameter method.
+// ExplicitPostOptionalClassParameterOptions contains the optional parameters for the Explicit.PostOptionalClassParameter
+// method.
 type ExplicitPostOptionalClassParameterOptions struct {
 	BodyParameter *Product
 }
@@ -90,12 +92,14 @@ type ExplicitPostOptionalIntegerHeaderOptions struct {
 	HeaderParameter *int32
 }
 
-// ExplicitPostOptionalIntegerParameterOptions contains the optional parameters for the Explicit.PostOptionalIntegerParameter method.
+// ExplicitPostOptionalIntegerParameterOptions contains the optional parameters for the Explicit.PostOptionalIntegerParameter
+// method.
 type ExplicitPostOptionalIntegerParameterOptions struct {
 	BodyParameter *int32
 }
 
-// ExplicitPostOptionalIntegerPropertyOptions contains the optional parameters for the Explicit.PostOptionalIntegerProperty method.
+// ExplicitPostOptionalIntegerPropertyOptions contains the optional parameters for the Explicit.PostOptionalIntegerProperty
+// method.
 type ExplicitPostOptionalIntegerPropertyOptions struct {
 	BodyParameter *IntOptionalWrapper
 }
@@ -105,12 +109,14 @@ type ExplicitPostOptionalStringHeaderOptions struct {
 	BodyParameter *string
 }
 
-// ExplicitPostOptionalStringParameterOptions contains the optional parameters for the Explicit.PostOptionalStringParameter method.
+// ExplicitPostOptionalStringParameterOptions contains the optional parameters for the Explicit.PostOptionalStringParameter
+// method.
 type ExplicitPostOptionalStringParameterOptions struct {
 	BodyParameter *string
 }
 
-// ExplicitPostOptionalStringPropertyOptions contains the optional parameters for the Explicit.PostOptionalStringProperty method.
+// ExplicitPostOptionalStringPropertyOptions contains the optional parameters for the Explicit.PostOptionalStringProperty
+// method.
 type ExplicitPostOptionalStringPropertyOptions struct {
 	BodyParameter *StringOptionalWrapper
 }
@@ -120,7 +126,8 @@ type ExplicitPostRequiredArrayHeaderOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPostRequiredArrayParameterOptions contains the optional parameters for the Explicit.PostRequiredArrayParameter method.
+// ExplicitPostRequiredArrayParameterOptions contains the optional parameters for the Explicit.PostRequiredArrayParameter
+// method.
 type ExplicitPostRequiredArrayParameterOptions struct {
 	// placeholder for future optional parameters
 }
@@ -130,7 +137,8 @@ type ExplicitPostRequiredArrayPropertyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPostRequiredClassParameterOptions contains the optional parameters for the Explicit.PostRequiredClassParameter method.
+// ExplicitPostRequiredClassParameterOptions contains the optional parameters for the Explicit.PostRequiredClassParameter
+// method.
 type ExplicitPostRequiredClassParameterOptions struct {
 	// placeholder for future optional parameters
 }
@@ -145,12 +153,14 @@ type ExplicitPostRequiredIntegerHeaderOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPostRequiredIntegerParameterOptions contains the optional parameters for the Explicit.PostRequiredIntegerParameter method.
+// ExplicitPostRequiredIntegerParameterOptions contains the optional parameters for the Explicit.PostRequiredIntegerParameter
+// method.
 type ExplicitPostRequiredIntegerParameterOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPostRequiredIntegerPropertyOptions contains the optional parameters for the Explicit.PostRequiredIntegerProperty method.
+// ExplicitPostRequiredIntegerPropertyOptions contains the optional parameters for the Explicit.PostRequiredIntegerProperty
+// method.
 type ExplicitPostRequiredIntegerPropertyOptions struct {
 	// placeholder for future optional parameters
 }
@@ -160,12 +170,14 @@ type ExplicitPostRequiredStringHeaderOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPostRequiredStringParameterOptions contains the optional parameters for the Explicit.PostRequiredStringParameter method.
+// ExplicitPostRequiredStringParameterOptions contains the optional parameters for the Explicit.PostRequiredStringParameter
+// method.
 type ExplicitPostRequiredStringParameterOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPostRequiredStringPropertyOptions contains the optional parameters for the Explicit.PostRequiredStringProperty method.
+// ExplicitPostRequiredStringPropertyOptions contains the optional parameters for the Explicit.PostRequiredStringProperty
+// method.
 type ExplicitPostRequiredStringPropertyOptions struct {
 	// placeholder for future optional parameters
 }

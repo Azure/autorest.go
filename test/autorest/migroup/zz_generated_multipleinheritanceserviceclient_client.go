@@ -39,7 +39,8 @@ func NewMultipleInheritanceServiceClient(options *azcore.ClientOptions) *Multipl
 
 // GetCat - Get a cat with name 'Whiskers' where likesMilk, meows, and hisses is true
 // If the operation fails it returns the *Error error type.
-// options - MultipleInheritanceServiceClientGetCatOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetCat method.
+// options - MultipleInheritanceServiceClientGetCatOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetCat
+// method.
 func (client *MultipleInheritanceServiceClient) GetCat(ctx context.Context, options *MultipleInheritanceServiceClientGetCatOptions) (MultipleInheritanceServiceClientGetCatResponse, error) {
 	req, err := client.getCatCreateRequest(ctx, options)
 	if err != nil {
@@ -90,7 +91,8 @@ func (client *MultipleInheritanceServiceClient) getCatHandleError(resp *http.Res
 
 // GetFeline - Get a feline where meows and hisses are true
 // If the operation fails it returns the *Error error type.
-// options - MultipleInheritanceServiceClientGetFelineOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetFeline method.
+// options - MultipleInheritanceServiceClientGetFelineOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetFeline
+// method.
 func (client *MultipleInheritanceServiceClient) GetFeline(ctx context.Context, options *MultipleInheritanceServiceClientGetFelineOptions) (MultipleInheritanceServiceClientGetFelineResponse, error) {
 	req, err := client.getFelineCreateRequest(ctx, options)
 	if err != nil {
@@ -141,7 +143,8 @@ func (client *MultipleInheritanceServiceClient) getFelineHandleError(resp *http.
 
 // GetHorse - Get a horse with name 'Fred' and isAShowHorse true
 // If the operation fails it returns the *Error error type.
-// options - MultipleInheritanceServiceClientGetHorseOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetHorse method.
+// options - MultipleInheritanceServiceClientGetHorseOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetHorse
+// method.
 func (client *MultipleInheritanceServiceClient) GetHorse(ctx context.Context, options *MultipleInheritanceServiceClientGetHorseOptions) (MultipleInheritanceServiceClientGetHorseResponse, error) {
 	req, err := client.getHorseCreateRequest(ctx, options)
 	if err != nil {
@@ -192,7 +195,8 @@ func (client *MultipleInheritanceServiceClient) getHorseHandleError(resp *http.R
 
 // GetKitten - Get a kitten with name 'Gatito' where likesMilk and meows is true, and hisses and eatsMiceYet is false
 // If the operation fails it returns the *Error error type.
-// options - MultipleInheritanceServiceClientGetKittenOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetKitten method.
+// options - MultipleInheritanceServiceClientGetKittenOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetKitten
+// method.
 func (client *MultipleInheritanceServiceClient) GetKitten(ctx context.Context, options *MultipleInheritanceServiceClientGetKittenOptions) (MultipleInheritanceServiceClientGetKittenResponse, error) {
 	req, err := client.getKittenCreateRequest(ctx, options)
 	if err != nil {
@@ -243,7 +247,8 @@ func (client *MultipleInheritanceServiceClient) getKittenHandleError(resp *http.
 
 // GetPet - Get a pet with name 'Peanut'
 // If the operation fails it returns the *Error error type.
-// options - MultipleInheritanceServiceClientGetPetOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetPet method.
+// options - MultipleInheritanceServiceClientGetPetOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetPet
+// method.
 func (client *MultipleInheritanceServiceClient) GetPet(ctx context.Context, options *MultipleInheritanceServiceClientGetPetOptions) (MultipleInheritanceServiceClientGetPetResponse, error) {
 	req, err := client.getPetCreateRequest(ctx, options)
 	if err != nil {
@@ -295,7 +300,8 @@ func (client *MultipleInheritanceServiceClient) getPetHandleError(resp *http.Res
 // PutCat - Put a cat with name 'Boots' where likesMilk and hisses is false, meows is true
 // If the operation fails it returns a generic error.
 // cat - Put a cat with name 'Boots' where likesMilk and hisses is false, meows is true
-// options - MultipleInheritanceServiceClientPutCatOptions contains the optional parameters for the MultipleInheritanceServiceClient.PutCat method.
+// options - MultipleInheritanceServiceClientPutCatOptions contains the optional parameters for the MultipleInheritanceServiceClient.PutCat
+// method.
 func (client *MultipleInheritanceServiceClient) PutCat(ctx context.Context, cat Cat, options *MultipleInheritanceServiceClientPutCatOptions) (MultipleInheritanceServiceClientPutCatResponse, error) {
 	req, err := client.putCatCreateRequest(ctx, cat, options)
 	if err != nil {
@@ -346,7 +352,8 @@ func (client *MultipleInheritanceServiceClient) putCatHandleError(resp *http.Res
 // PutFeline - Put a feline who hisses and doesn't meow
 // If the operation fails it returns a generic error.
 // feline - Put a feline who hisses and doesn't meow
-// options - MultipleInheritanceServiceClientPutFelineOptions contains the optional parameters for the MultipleInheritanceServiceClient.PutFeline method.
+// options - MultipleInheritanceServiceClientPutFelineOptions contains the optional parameters for the MultipleInheritanceServiceClient.PutFeline
+// method.
 func (client *MultipleInheritanceServiceClient) PutFeline(ctx context.Context, feline Feline, options *MultipleInheritanceServiceClientPutFelineOptions) (MultipleInheritanceServiceClientPutFelineResponse, error) {
 	req, err := client.putFelineCreateRequest(ctx, feline, options)
 	if err != nil {
@@ -397,7 +404,8 @@ func (client *MultipleInheritanceServiceClient) putFelineHandleError(resp *http.
 // PutHorse - Put a horse with name 'General' and isAShowHorse false
 // If the operation fails it returns a generic error.
 // horse - Put a horse with name 'General' and isAShowHorse false
-// options - MultipleInheritanceServiceClientPutHorseOptions contains the optional parameters for the MultipleInheritanceServiceClient.PutHorse method.
+// options - MultipleInheritanceServiceClientPutHorseOptions contains the optional parameters for the MultipleInheritanceServiceClient.PutHorse
+// method.
 func (client *MultipleInheritanceServiceClient) PutHorse(ctx context.Context, horse Horse, options *MultipleInheritanceServiceClientPutHorseOptions) (MultipleInheritanceServiceClientPutHorseResponse, error) {
 	req, err := client.putHorseCreateRequest(ctx, horse, options)
 	if err != nil {
@@ -448,7 +456,8 @@ func (client *MultipleInheritanceServiceClient) putHorseHandleError(resp *http.R
 // PutKitten - Put a kitten with name 'Kitty' where likesMilk and hisses is false, meows and eatsMiceYet is true
 // If the operation fails it returns a generic error.
 // kitten - Put a kitten with name 'Kitty' where likesMilk and hisses is false, meows and eatsMiceYet is true
-// options - MultipleInheritanceServiceClientPutKittenOptions contains the optional parameters for the MultipleInheritanceServiceClient.PutKitten method.
+// options - MultipleInheritanceServiceClientPutKittenOptions contains the optional parameters for the MultipleInheritanceServiceClient.PutKitten
+// method.
 func (client *MultipleInheritanceServiceClient) PutKitten(ctx context.Context, kitten Kitten, options *MultipleInheritanceServiceClientPutKittenOptions) (MultipleInheritanceServiceClientPutKittenResponse, error) {
 	req, err := client.putKittenCreateRequest(ctx, kitten, options)
 	if err != nil {
@@ -499,7 +508,8 @@ func (client *MultipleInheritanceServiceClient) putKittenHandleError(resp *http.
 // PutPet - Put a pet with name 'Butter'
 // If the operation fails it returns a generic error.
 // pet - Put a pet with name 'Butter'
-// options - MultipleInheritanceServiceClientPutPetOptions contains the optional parameters for the MultipleInheritanceServiceClient.PutPet method.
+// options - MultipleInheritanceServiceClientPutPetOptions contains the optional parameters for the MultipleInheritanceServiceClient.PutPet
+// method.
 func (client *MultipleInheritanceServiceClient) PutPet(ctx context.Context, pet Pet, options *MultipleInheritanceServiceClientPutPetOptions) (MultipleInheritanceServiceClientPutPetResponse, error) {
 	req, err := client.putPetCreateRequest(ctx, pet, options)
 	if err != nil {

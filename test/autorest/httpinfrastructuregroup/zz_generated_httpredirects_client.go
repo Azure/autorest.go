@@ -428,8 +428,8 @@ func (client *HTTPRedirectsClient) options307HandleError(resp *http.Response) er
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// Patch302 - Patch true Boolean value in request returns 302. This request should not be automatically redirected, but should return the received 302 to
-// the caller for evaluation
+// Patch302 - Patch true Boolean value in request returns 302. This request should not be automatically redirected, but should
+// return the received 302 to the caller for evaluation
 // If the operation fails it returns the *Error error type.
 // options - HTTPRedirectsPatch302Options contains the optional parameters for the HTTPRedirects.Patch302 method.
 func (client *HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRedirectsPatch302Options) (HTTPRedirectsPatch302Response, error) {
@@ -522,8 +522,8 @@ func (client *HTTPRedirectsClient) patch307HandleError(resp *http.Response) erro
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// Post303 - Post true Boolean value in request returns 303. This request should be automatically redirected usign a get, ultimately returning a 200 status
-// code
+// Post303 - Post true Boolean value in request returns 303. This request should be automatically redirected usign a get,
+// ultimately returning a 200 status code
 // If the operation fails it returns the *Error error type.
 // options - HTTPRedirectsPost303Options contains the optional parameters for the HTTPRedirects.Post303 method.
 func (client *HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRedirectsPost303Options) (HTTPRedirectsPost303Response, error) {
@@ -616,8 +616,8 @@ func (client *HTTPRedirectsClient) post307HandleError(resp *http.Response) error
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// Put301 - Put true Boolean value in request returns 301. This request should not be automatically redirected, but should return the received 301 to the
-// caller for evaluation
+// Put301 - Put true Boolean value in request returns 301. This request should not be automatically redirected, but should
+// return the received 301 to the caller for evaluation
 // If the operation fails it returns the *Error error type.
 // options - HTTPRedirectsPut301Options contains the optional parameters for the HTTPRedirects.Put301 method.
 func (client *HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedirectsPut301Options) (HTTPRedirectsPut301Response, error) {

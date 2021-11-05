@@ -31,8 +31,9 @@ type VirtualMachineScaleSetVMExtensionsClient struct {
 }
 
 // NewVirtualMachineScaleSetVMExtensionsClient creates a new instance of VirtualMachineScaleSetVMExtensionsClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewVirtualMachineScaleSetVMExtensionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualMachineScaleSetVMExtensionsClient {
 	cp := arm.ClientOptions{}
@@ -57,7 +58,8 @@ func NewVirtualMachineScaleSetVMExtensionsClient(subscriptionID string, credenti
 // instanceID - The instance ID of the virtual machine.
 // vmExtensionName - The name of the virtual machine extension.
 // extensionParameters - Parameters supplied to the Create Virtual Machine Extension operation.
-// options - VirtualMachineScaleSetVMExtensionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.BeginCreateOrUpdate method.
+// options - VirtualMachineScaleSetVMExtensionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.BeginCreateOrUpdate
+// method.
 func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineScaleSetVMExtensionsBeginCreateOrUpdateOptions) (VirtualMachineScaleSetVMExtensionsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
 	if err != nil {
@@ -146,7 +148,8 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdateHandleErro
 // vmScaleSetName - The name of the VM scale set.
 // instanceID - The instance ID of the virtual machine.
 // vmExtensionName - The name of the virtual machine extension.
-// options - VirtualMachineScaleSetVMExtensionsBeginDeleteOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.BeginDelete method.
+// options - VirtualMachineScaleSetVMExtensionsBeginDeleteOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.BeginDelete
+// method.
 func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsBeginDeleteOptions) (VirtualMachineScaleSetVMExtensionsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, options)
 	if err != nil {
@@ -235,7 +238,8 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) deleteHandleError(resp *
 // vmScaleSetName - The name of the VM scale set.
 // instanceID - The instance ID of the virtual machine.
 // vmExtensionName - The name of the virtual machine extension.
-// options - VirtualMachineScaleSetVMExtensionsGetOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.Get method.
+// options - VirtualMachineScaleSetVMExtensionsGetOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.Get
+// method.
 func (client *VirtualMachineScaleSetVMExtensionsClient) Get(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsGetOptions) (VirtualMachineScaleSetVMExtensionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, options)
 	if err != nil {
@@ -315,7 +319,8 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) getHandleError(resp *htt
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
 // instanceID - The instance ID of the virtual machine.
-// options - VirtualMachineScaleSetVMExtensionsListOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.List method.
+// options - VirtualMachineScaleSetVMExtensionsListOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.List
+// method.
 func (client *VirtualMachineScaleSetVMExtensionsClient) List(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, options *VirtualMachineScaleSetVMExtensionsListOptions) (VirtualMachineScaleSetVMExtensionsListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, options)
 	if err != nil {
@@ -393,7 +398,8 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) listHandleError(resp *ht
 // instanceID - The instance ID of the virtual machine.
 // vmExtensionName - The name of the virtual machine extension.
 // extensionParameters - Parameters supplied to the Update Virtual Machine Extension operation.
-// options - VirtualMachineScaleSetVMExtensionsBeginUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.BeginUpdate method.
+// options - VirtualMachineScaleSetVMExtensionsBeginUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.BeginUpdate
+// method.
 func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineScaleSetVMExtensionsBeginUpdateOptions) (VirtualMachineScaleSetVMExtensionsUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
 	if err != nil {

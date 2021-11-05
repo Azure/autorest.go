@@ -344,7 +344,8 @@ func (client *StringClient) getNullHandleError(resp *http.Response) error {
 
 // GetNullBase64URLEncoded - Get null value that is expected to be base64url encoded
 // If the operation fails it returns the *Error error type.
-// options - StringGetNullBase64URLEncodedOptions contains the optional parameters for the String.GetNullBase64URLEncoded method.
+// options - StringGetNullBase64URLEncodedOptions contains the optional parameters for the String.GetNullBase64URLEncoded
+// method.
 func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context, options *StringGetNullBase64URLEncodedOptions) (StringGetNullBase64URLEncodedResponse, error) {
 	req, err := client.getNullBase64URLEncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -393,7 +394,8 @@ func (client *StringClient) getNullBase64URLEncodedHandleError(resp *http.Respon
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetWhitespace - Get string value with leading and trailing whitespace 'Now is the time for all good men to come to the aid of their country'
+// GetWhitespace - Get string value with leading and trailing whitespace 'Now is the time for all good men to come to the
+// aid of their country'
 // If the operation fails it returns the *Error error type.
 // options - StringGetWhitespaceOptions contains the optional parameters for the String.GetWhitespace method.
 func (client *StringClient) GetWhitespace(ctx context.Context, options *StringGetWhitespaceOptions) (StringGetWhitespaceResponse, error) {
@@ -616,7 +618,8 @@ func (client *StringClient) putNullHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PutWhitespace - Set String value with leading and trailing whitespace 'Now is the time for all good men to come to the aid of their country'
+// PutWhitespace - Set String value with leading and trailing whitespace 'Now is the time for all good men to come to the
+// aid of their country'
 // If the operation fails it returns the *Error error type.
 // options - StringPutWhitespaceOptions contains the optional parameters for the String.PutWhitespace method.
 func (client *StringClient) PutWhitespace(ctx context.Context, options *StringPutWhitespaceOptions) (StringPutWhitespaceResponse, error) {

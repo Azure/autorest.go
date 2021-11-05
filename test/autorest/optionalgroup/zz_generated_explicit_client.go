@@ -41,7 +41,8 @@ func NewExplicitClient(options *azcore.ClientOptions) *ExplicitClient {
 
 // PostOptionalArrayHeader - Test explicitly optional integer. Please put a header 'headerParameter' => null.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostOptionalArrayHeaderOptions contains the optional parameters for the Explicit.PostOptionalArrayHeader method.
+// options - ExplicitPostOptionalArrayHeaderOptions contains the optional parameters for the Explicit.PostOptionalArrayHeader
+// method.
 func (client *ExplicitClient) PostOptionalArrayHeader(ctx context.Context, options *ExplicitPostOptionalArrayHeaderOptions) (ExplicitPostOptionalArrayHeaderResponse, error) {
 	req, err := client.postOptionalArrayHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -86,7 +87,8 @@ func (client *ExplicitClient) postOptionalArrayHeaderHandleError(resp *http.Resp
 
 // PostOptionalArrayParameter - Test explicitly optional array. Please put null.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostOptionalArrayParameterOptions contains the optional parameters for the Explicit.PostOptionalArrayParameter method.
+// options - ExplicitPostOptionalArrayParameterOptions contains the optional parameters for the Explicit.PostOptionalArrayParameter
+// method.
 func (client *ExplicitClient) PostOptionalArrayParameter(ctx context.Context, options *ExplicitPostOptionalArrayParameterOptions) (ExplicitPostOptionalArrayParameterResponse, error) {
 	req, err := client.postOptionalArrayParameterCreateRequest(ctx, options)
 	if err != nil {
@@ -131,7 +133,8 @@ func (client *ExplicitClient) postOptionalArrayParameterHandleError(resp *http.R
 
 // PostOptionalArrayProperty - Test explicitly optional array. Please put a valid array-wrapper with 'value' = null.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostOptionalArrayPropertyOptions contains the optional parameters for the Explicit.PostOptionalArrayProperty method.
+// options - ExplicitPostOptionalArrayPropertyOptions contains the optional parameters for the Explicit.PostOptionalArrayProperty
+// method.
 func (client *ExplicitClient) PostOptionalArrayProperty(ctx context.Context, options *ExplicitPostOptionalArrayPropertyOptions) (ExplicitPostOptionalArrayPropertyResponse, error) {
 	req, err := client.postOptionalArrayPropertyCreateRequest(ctx, options)
 	if err != nil {
@@ -176,7 +179,8 @@ func (client *ExplicitClient) postOptionalArrayPropertyHandleError(resp *http.Re
 
 // PostOptionalClassParameter - Test explicitly optional complex object. Please put null.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostOptionalClassParameterOptions contains the optional parameters for the Explicit.PostOptionalClassParameter method.
+// options - ExplicitPostOptionalClassParameterOptions contains the optional parameters for the Explicit.PostOptionalClassParameter
+// method.
 func (client *ExplicitClient) PostOptionalClassParameter(ctx context.Context, options *ExplicitPostOptionalClassParameterOptions) (ExplicitPostOptionalClassParameterResponse, error) {
 	req, err := client.postOptionalClassParameterCreateRequest(ctx, options)
 	if err != nil {
@@ -221,7 +225,8 @@ func (client *ExplicitClient) postOptionalClassParameterHandleError(resp *http.R
 
 // PostOptionalClassProperty - Test explicitly optional complex object. Please put a valid class-wrapper with 'value' = null.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostOptionalClassPropertyOptions contains the optional parameters for the Explicit.PostOptionalClassProperty method.
+// options - ExplicitPostOptionalClassPropertyOptions contains the optional parameters for the Explicit.PostOptionalClassProperty
+// method.
 func (client *ExplicitClient) PostOptionalClassProperty(ctx context.Context, options *ExplicitPostOptionalClassPropertyOptions) (ExplicitPostOptionalClassPropertyResponse, error) {
 	req, err := client.postOptionalClassPropertyCreateRequest(ctx, options)
 	if err != nil {
@@ -266,7 +271,8 @@ func (client *ExplicitClient) postOptionalClassPropertyHandleError(resp *http.Re
 
 // PostOptionalIntegerHeader - Test explicitly optional integer. Please put a header 'headerParameter' => null.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostOptionalIntegerHeaderOptions contains the optional parameters for the Explicit.PostOptionalIntegerHeader method.
+// options - ExplicitPostOptionalIntegerHeaderOptions contains the optional parameters for the Explicit.PostOptionalIntegerHeader
+// method.
 func (client *ExplicitClient) PostOptionalIntegerHeader(ctx context.Context, options *ExplicitPostOptionalIntegerHeaderOptions) (ExplicitPostOptionalIntegerHeaderResponse, error) {
 	req, err := client.postOptionalIntegerHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -311,7 +317,8 @@ func (client *ExplicitClient) postOptionalIntegerHeaderHandleError(resp *http.Re
 
 // PostOptionalIntegerParameter - Test explicitly optional integer. Please put null.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostOptionalIntegerParameterOptions contains the optional parameters for the Explicit.PostOptionalIntegerParameter method.
+// options - ExplicitPostOptionalIntegerParameterOptions contains the optional parameters for the Explicit.PostOptionalIntegerParameter
+// method.
 func (client *ExplicitClient) PostOptionalIntegerParameter(ctx context.Context, options *ExplicitPostOptionalIntegerParameterOptions) (ExplicitPostOptionalIntegerParameterResponse, error) {
 	req, err := client.postOptionalIntegerParameterCreateRequest(ctx, options)
 	if err != nil {
@@ -356,7 +363,8 @@ func (client *ExplicitClient) postOptionalIntegerParameterHandleError(resp *http
 
 // PostOptionalIntegerProperty - Test explicitly optional integer. Please put a valid int-wrapper with 'value' = null.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostOptionalIntegerPropertyOptions contains the optional parameters for the Explicit.PostOptionalIntegerProperty method.
+// options - ExplicitPostOptionalIntegerPropertyOptions contains the optional parameters for the Explicit.PostOptionalIntegerProperty
+// method.
 func (client *ExplicitClient) PostOptionalIntegerProperty(ctx context.Context, options *ExplicitPostOptionalIntegerPropertyOptions) (ExplicitPostOptionalIntegerPropertyResponse, error) {
 	req, err := client.postOptionalIntegerPropertyCreateRequest(ctx, options)
 	if err != nil {
@@ -401,7 +409,8 @@ func (client *ExplicitClient) postOptionalIntegerPropertyHandleError(resp *http.
 
 // PostOptionalStringHeader - Test explicitly optional string. Please put a header 'headerParameter' => null.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostOptionalStringHeaderOptions contains the optional parameters for the Explicit.PostOptionalStringHeader method.
+// options - ExplicitPostOptionalStringHeaderOptions contains the optional parameters for the Explicit.PostOptionalStringHeader
+// method.
 func (client *ExplicitClient) PostOptionalStringHeader(ctx context.Context, options *ExplicitPostOptionalStringHeaderOptions) (ExplicitPostOptionalStringHeaderResponse, error) {
 	req, err := client.postOptionalStringHeaderCreateRequest(ctx, options)
 	if err != nil {
@@ -446,7 +455,8 @@ func (client *ExplicitClient) postOptionalStringHeaderHandleError(resp *http.Res
 
 // PostOptionalStringParameter - Test explicitly optional string. Please put null.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostOptionalStringParameterOptions contains the optional parameters for the Explicit.PostOptionalStringParameter method.
+// options - ExplicitPostOptionalStringParameterOptions contains the optional parameters for the Explicit.PostOptionalStringParameter
+// method.
 func (client *ExplicitClient) PostOptionalStringParameter(ctx context.Context, options *ExplicitPostOptionalStringParameterOptions) (ExplicitPostOptionalStringParameterResponse, error) {
 	req, err := client.postOptionalStringParameterCreateRequest(ctx, options)
 	if err != nil {
@@ -491,7 +501,8 @@ func (client *ExplicitClient) postOptionalStringParameterHandleError(resp *http.
 
 // PostOptionalStringProperty - Test explicitly optional integer. Please put a valid string-wrapper with 'value' = null.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostOptionalStringPropertyOptions contains the optional parameters for the Explicit.PostOptionalStringProperty method.
+// options - ExplicitPostOptionalStringPropertyOptions contains the optional parameters for the Explicit.PostOptionalStringProperty
+// method.
 func (client *ExplicitClient) PostOptionalStringProperty(ctx context.Context, options *ExplicitPostOptionalStringPropertyOptions) (ExplicitPostOptionalStringPropertyResponse, error) {
 	req, err := client.postOptionalStringPropertyCreateRequest(ctx, options)
 	if err != nil {
@@ -534,10 +545,11 @@ func (client *ExplicitClient) postOptionalStringPropertyHandleError(resp *http.R
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostRequiredArrayHeader - Test explicitly required array. Please put a header 'headerParameter' => null and the client library should throw before the
-// request is sent.
+// PostRequiredArrayHeader - Test explicitly required array. Please put a header 'headerParameter' => null and the client
+// library should throw before the request is sent.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostRequiredArrayHeaderOptions contains the optional parameters for the Explicit.PostRequiredArrayHeader method.
+// options - ExplicitPostRequiredArrayHeaderOptions contains the optional parameters for the Explicit.PostRequiredArrayHeader
+// method.
 func (client *ExplicitClient) PostRequiredArrayHeader(ctx context.Context, headerParameter []string, options *ExplicitPostRequiredArrayHeaderOptions) (ExplicitPostRequiredArrayHeaderResponse, error) {
 	req, err := client.postRequiredArrayHeaderCreateRequest(ctx, headerParameter, options)
 	if err != nil {
@@ -578,9 +590,11 @@ func (client *ExplicitClient) postRequiredArrayHeaderHandleError(resp *http.Resp
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostRequiredArrayParameter - Test explicitly required array. Please put null and the client library should throw before the request is sent.
+// PostRequiredArrayParameter - Test explicitly required array. Please put null and the client library should throw before
+// the request is sent.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostRequiredArrayParameterOptions contains the optional parameters for the Explicit.PostRequiredArrayParameter method.
+// options - ExplicitPostRequiredArrayParameterOptions contains the optional parameters for the Explicit.PostRequiredArrayParameter
+// method.
 func (client *ExplicitClient) PostRequiredArrayParameter(ctx context.Context, bodyParameter []*string, options *ExplicitPostRequiredArrayParameterOptions) (ExplicitPostRequiredArrayParameterResponse, error) {
 	req, err := client.postRequiredArrayParameterCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -620,10 +634,11 @@ func (client *ExplicitClient) postRequiredArrayParameterHandleError(resp *http.R
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostRequiredArrayProperty - Test explicitly required array. Please put a valid array-wrapper with 'value' = null and the client library should throw
-// before the request is sent.
+// PostRequiredArrayProperty - Test explicitly required array. Please put a valid array-wrapper with 'value' = null and the
+// client library should throw before the request is sent.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostRequiredArrayPropertyOptions contains the optional parameters for the Explicit.PostRequiredArrayProperty method.
+// options - ExplicitPostRequiredArrayPropertyOptions contains the optional parameters for the Explicit.PostRequiredArrayProperty
+// method.
 func (client *ExplicitClient) PostRequiredArrayProperty(ctx context.Context, bodyParameter ArrayWrapper, options *ExplicitPostRequiredArrayPropertyOptions) (ExplicitPostRequiredArrayPropertyResponse, error) {
 	req, err := client.postRequiredArrayPropertyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -663,9 +678,11 @@ func (client *ExplicitClient) postRequiredArrayPropertyHandleError(resp *http.Re
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostRequiredClassParameter - Test explicitly required complex object. Please put null and the client library should throw before the request is sent.
+// PostRequiredClassParameter - Test explicitly required complex object. Please put null and the client library should throw
+// before the request is sent.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostRequiredClassParameterOptions contains the optional parameters for the Explicit.PostRequiredClassParameter method.
+// options - ExplicitPostRequiredClassParameterOptions contains the optional parameters for the Explicit.PostRequiredClassParameter
+// method.
 func (client *ExplicitClient) PostRequiredClassParameter(ctx context.Context, bodyParameter Product, options *ExplicitPostRequiredClassParameterOptions) (ExplicitPostRequiredClassParameterResponse, error) {
 	req, err := client.postRequiredClassParameterCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -705,10 +722,11 @@ func (client *ExplicitClient) postRequiredClassParameterHandleError(resp *http.R
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostRequiredClassProperty - Test explicitly required complex object. Please put a valid class-wrapper with 'value' = null and the client library should
-// throw before the request is sent.
+// PostRequiredClassProperty - Test explicitly required complex object. Please put a valid class-wrapper with 'value' = null
+// and the client library should throw before the request is sent.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostRequiredClassPropertyOptions contains the optional parameters for the Explicit.PostRequiredClassProperty method.
+// options - ExplicitPostRequiredClassPropertyOptions contains the optional parameters for the Explicit.PostRequiredClassProperty
+// method.
 func (client *ExplicitClient) PostRequiredClassProperty(ctx context.Context, bodyParameter ClassWrapper, options *ExplicitPostRequiredClassPropertyOptions) (ExplicitPostRequiredClassPropertyResponse, error) {
 	req, err := client.postRequiredClassPropertyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -748,10 +766,11 @@ func (client *ExplicitClient) postRequiredClassPropertyHandleError(resp *http.Re
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostRequiredIntegerHeader - Test explicitly required integer. Please put a header 'headerParameter' => null and the client library should throw before
-// the request is sent.
+// PostRequiredIntegerHeader - Test explicitly required integer. Please put a header 'headerParameter' => null and the client
+// library should throw before the request is sent.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostRequiredIntegerHeaderOptions contains the optional parameters for the Explicit.PostRequiredIntegerHeader method.
+// options - ExplicitPostRequiredIntegerHeaderOptions contains the optional parameters for the Explicit.PostRequiredIntegerHeader
+// method.
 func (client *ExplicitClient) PostRequiredIntegerHeader(ctx context.Context, headerParameter int32, options *ExplicitPostRequiredIntegerHeaderOptions) (ExplicitPostRequiredIntegerHeaderResponse, error) {
 	req, err := client.postRequiredIntegerHeaderCreateRequest(ctx, headerParameter, options)
 	if err != nil {
@@ -792,9 +811,11 @@ func (client *ExplicitClient) postRequiredIntegerHeaderHandleError(resp *http.Re
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostRequiredIntegerParameter - Test explicitly required integer. Please put null and the client library should throw before the request is sent.
+// PostRequiredIntegerParameter - Test explicitly required integer. Please put null and the client library should throw before
+// the request is sent.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostRequiredIntegerParameterOptions contains the optional parameters for the Explicit.PostRequiredIntegerParameter method.
+// options - ExplicitPostRequiredIntegerParameterOptions contains the optional parameters for the Explicit.PostRequiredIntegerParameter
+// method.
 func (client *ExplicitClient) PostRequiredIntegerParameter(ctx context.Context, bodyParameter int32, options *ExplicitPostRequiredIntegerParameterOptions) (ExplicitPostRequiredIntegerParameterResponse, error) {
 	req, err := client.postRequiredIntegerParameterCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -834,10 +855,11 @@ func (client *ExplicitClient) postRequiredIntegerParameterHandleError(resp *http
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostRequiredIntegerProperty - Test explicitly required integer. Please put a valid int-wrapper with 'value' = null and the client library should throw
-// before the request is sent.
+// PostRequiredIntegerProperty - Test explicitly required integer. Please put a valid int-wrapper with 'value' = null and
+// the client library should throw before the request is sent.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostRequiredIntegerPropertyOptions contains the optional parameters for the Explicit.PostRequiredIntegerProperty method.
+// options - ExplicitPostRequiredIntegerPropertyOptions contains the optional parameters for the Explicit.PostRequiredIntegerProperty
+// method.
 func (client *ExplicitClient) PostRequiredIntegerProperty(ctx context.Context, bodyParameter IntWrapper, options *ExplicitPostRequiredIntegerPropertyOptions) (ExplicitPostRequiredIntegerPropertyResponse, error) {
 	req, err := client.postRequiredIntegerPropertyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -877,10 +899,11 @@ func (client *ExplicitClient) postRequiredIntegerPropertyHandleError(resp *http.
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostRequiredStringHeader - Test explicitly required string. Please put a header 'headerParameter' => null and the client library should throw before
-// the request is sent.
+// PostRequiredStringHeader - Test explicitly required string. Please put a header 'headerParameter' => null and the client
+// library should throw before the request is sent.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostRequiredStringHeaderOptions contains the optional parameters for the Explicit.PostRequiredStringHeader method.
+// options - ExplicitPostRequiredStringHeaderOptions contains the optional parameters for the Explicit.PostRequiredStringHeader
+// method.
 func (client *ExplicitClient) PostRequiredStringHeader(ctx context.Context, headerParameter string, options *ExplicitPostRequiredStringHeaderOptions) (ExplicitPostRequiredStringHeaderResponse, error) {
 	req, err := client.postRequiredStringHeaderCreateRequest(ctx, headerParameter, options)
 	if err != nil {
@@ -921,9 +944,11 @@ func (client *ExplicitClient) postRequiredStringHeaderHandleError(resp *http.Res
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostRequiredStringParameter - Test explicitly required string. Please put null and the client library should throw before the request is sent.
+// PostRequiredStringParameter - Test explicitly required string. Please put null and the client library should throw before
+// the request is sent.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostRequiredStringParameterOptions contains the optional parameters for the Explicit.PostRequiredStringParameter method.
+// options - ExplicitPostRequiredStringParameterOptions contains the optional parameters for the Explicit.PostRequiredStringParameter
+// method.
 func (client *ExplicitClient) PostRequiredStringParameter(ctx context.Context, bodyParameter string, options *ExplicitPostRequiredStringParameterOptions) (ExplicitPostRequiredStringParameterResponse, error) {
 	req, err := client.postRequiredStringParameterCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -963,10 +988,11 @@ func (client *ExplicitClient) postRequiredStringParameterHandleError(resp *http.
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostRequiredStringProperty - Test explicitly required string. Please put a valid string-wrapper with 'value' = null and the client library should throw
-// before the request is sent.
+// PostRequiredStringProperty - Test explicitly required string. Please put a valid string-wrapper with 'value' = null and
+// the client library should throw before the request is sent.
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPostRequiredStringPropertyOptions contains the optional parameters for the Explicit.PostRequiredStringProperty method.
+// options - ExplicitPostRequiredStringPropertyOptions contains the optional parameters for the Explicit.PostRequiredStringProperty
+// method.
 func (client *ExplicitClient) PostRequiredStringProperty(ctx context.Context, bodyParameter StringWrapper, options *ExplicitPostRequiredStringPropertyOptions) (ExplicitPostRequiredStringPropertyResponse, error) {
 	req, err := client.postRequiredStringPropertyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {
@@ -1008,7 +1034,8 @@ func (client *ExplicitClient) postRequiredStringPropertyHandleError(resp *http.R
 
 // PutOptionalBinaryBody - Test explicitly optional body parameter
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPutOptionalBinaryBodyOptions contains the optional parameters for the Explicit.PutOptionalBinaryBody method.
+// options - ExplicitPutOptionalBinaryBodyOptions contains the optional parameters for the Explicit.PutOptionalBinaryBody
+// method.
 func (client *ExplicitClient) PutOptionalBinaryBody(ctx context.Context, options *ExplicitPutOptionalBinaryBodyOptions) (ExplicitPutOptionalBinaryBodyResponse, error) {
 	req, err := client.putOptionalBinaryBodyCreateRequest(ctx, options)
 	if err != nil {
@@ -1053,7 +1080,8 @@ func (client *ExplicitClient) putOptionalBinaryBodyHandleError(resp *http.Respon
 
 // PutRequiredBinaryBody - Test explicitly required body parameter
 // If the operation fails it returns the *Error error type.
-// options - ExplicitPutRequiredBinaryBodyOptions contains the optional parameters for the Explicit.PutRequiredBinaryBody method.
+// options - ExplicitPutRequiredBinaryBodyOptions contains the optional parameters for the Explicit.PutRequiredBinaryBody
+// method.
 func (client *ExplicitClient) PutRequiredBinaryBody(ctx context.Context, bodyParameter io.ReadSeekCloser, options *ExplicitPutRequiredBinaryBodyOptions) (ExplicitPutRequiredBinaryBodyResponse, error) {
 	req, err := client.putRequiredBinaryBodyCreateRequest(ctx, bodyParameter, options)
 	if err != nil {

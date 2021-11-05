@@ -89,7 +89,8 @@ func (client *PetsClient) createAPInPropertiesHandleError(resp *http.Response) e
 
 // CreateAPInPropertiesWithAPString - Create a Pet which contains more properties than what is defined.
 // If the operation fails it returns the *Error error type.
-// options - PetsCreateAPInPropertiesWithAPStringOptions contains the optional parameters for the Pets.CreateAPInPropertiesWithAPString method.
+// options - PetsCreateAPInPropertiesWithAPStringOptions contains the optional parameters for the Pets.CreateAPInPropertiesWithAPString
+// method.
 func (client *PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, createParameters PetAPInPropertiesWithAPString, options *PetsCreateAPInPropertiesWithAPStringOptions) (PetsCreateAPInPropertiesWithAPStringResponse, error) {
 	req, err := client.createAPInPropertiesWithAPStringCreateRequest(ctx, createParameters, options)
 	if err != nil {

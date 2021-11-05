@@ -31,8 +31,9 @@ type VPNSiteLinkConnectionsClient struct {
 }
 
 // NewVPNSiteLinkConnectionsClient creates a new instance of VPNSiteLinkConnectionsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewVPNSiteLinkConnectionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VPNSiteLinkConnectionsClient {
 	cp := arm.ClientOptions{}

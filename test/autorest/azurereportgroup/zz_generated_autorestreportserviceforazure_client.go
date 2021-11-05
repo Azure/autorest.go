@@ -38,7 +38,8 @@ func NewAutoRestReportServiceForAzureClient(options *azcore.ClientOptions) *Auto
 
 // GetReport - Get test coverage report
 // If the operation fails it returns the *Error error type.
-// options - AutoRestReportServiceForAzureGetReportOptions contains the optional parameters for the AutoRestReportServiceForAzure.GetReport method.
+// options - AutoRestReportServiceForAzureGetReportOptions contains the optional parameters for the AutoRestReportServiceForAzure.GetReport
+// method.
 func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (AutoRestReportServiceForAzureGetReportResponse, error) {
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {

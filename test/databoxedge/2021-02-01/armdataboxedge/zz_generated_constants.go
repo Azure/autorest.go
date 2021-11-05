@@ -583,7 +583,8 @@ func (c JobType) ToPtr() *JobType {
 	return &c
 }
 
-// KeyVaultSyncStatus - For changing or to initiate the resync to key-vault set the status to KeyVaultSyncPending, rest of the status will not be applicable.
+// KeyVaultSyncStatus - For changing or to initiate the resync to key-vault set the status to KeyVaultSyncPending, rest of
+// the status will not be applicable.
 type KeyVaultSyncStatus string
 
 const (

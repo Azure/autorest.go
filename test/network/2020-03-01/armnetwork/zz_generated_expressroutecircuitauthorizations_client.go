@@ -31,8 +31,9 @@ type ExpressRouteCircuitAuthorizationsClient struct {
 }
 
 // NewExpressRouteCircuitAuthorizationsClient creates a new instance of ExpressRouteCircuitAuthorizationsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewExpressRouteCircuitAuthorizationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ExpressRouteCircuitAuthorizationsClient {
 	cp := arm.ClientOptions{}
@@ -56,7 +57,8 @@ func NewExpressRouteCircuitAuthorizationsClient(subscriptionID string, credentia
 // circuitName - The name of the express route circuit.
 // authorizationName - The name of the authorization.
 // authorizationParameters - Parameters supplied to the create or update express route circuit authorization operation.
-// options - ExpressRouteCircuitAuthorizationsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.BeginCreateOrUpdate method.
+// options - ExpressRouteCircuitAuthorizationsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.BeginCreateOrUpdate
+// method.
 func (client *ExpressRouteCircuitAuthorizationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, authorizationParameters ExpressRouteCircuitAuthorization, options *ExpressRouteCircuitAuthorizationsBeginCreateOrUpdateOptions) (ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, authorizationName, authorizationParameters, options)
 	if err != nil {
@@ -140,7 +142,8 @@ func (client *ExpressRouteCircuitAuthorizationsClient) createOrUpdateHandleError
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // authorizationName - The name of the authorization.
-// options - ExpressRouteCircuitAuthorizationsBeginDeleteOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.BeginDelete method.
+// options - ExpressRouteCircuitAuthorizationsBeginDeleteOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.BeginDelete
+// method.
 func (client *ExpressRouteCircuitAuthorizationsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsBeginDeleteOptions) (ExpressRouteCircuitAuthorizationsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, authorizationName, options)
 	if err != nil {
@@ -224,7 +227,8 @@ func (client *ExpressRouteCircuitAuthorizationsClient) deleteHandleError(resp *h
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // authorizationName - The name of the authorization.
-// options - ExpressRouteCircuitAuthorizationsGetOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.Get method.
+// options - ExpressRouteCircuitAuthorizationsGetOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.Get
+// method.
 func (client *ExpressRouteCircuitAuthorizationsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsGetOptions) (ExpressRouteCircuitAuthorizationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, authorizationName, options)
 	if err != nil {
@@ -296,7 +300,8 @@ func (client *ExpressRouteCircuitAuthorizationsClient) getHandleError(resp *http
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the circuit.
-// options - ExpressRouteCircuitAuthorizationsListOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.List method.
+// options - ExpressRouteCircuitAuthorizationsListOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.List
+// method.
 func (client *ExpressRouteCircuitAuthorizationsClient) List(resourceGroupName string, circuitName string, options *ExpressRouteCircuitAuthorizationsListOptions) *ExpressRouteCircuitAuthorizationsListPager {
 	return &ExpressRouteCircuitAuthorizationsListPager{
 		client: client,

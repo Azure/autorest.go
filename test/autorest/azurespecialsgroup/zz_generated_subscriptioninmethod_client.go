@@ -39,11 +39,12 @@ func NewSubscriptionInMethodClient(options *azcore.ClientOptions) *SubscriptionI
 	return client
 }
 
-// PostMethodLocalNull - POST method with subscriptionId modeled in the method. pass in subscription id = null, client-side validation should prevent you
-// from making this call
+// PostMethodLocalNull - POST method with subscriptionId modeled in the method. pass in subscription id = null, client-side
+// validation should prevent you from making this call
 // If the operation fails it returns the *Error error type.
 // subscriptionID - This should appear as a method parameter, use value null, client-side validation should prvenet the call
-// options - SubscriptionInMethodPostMethodLocalNullOptions contains the optional parameters for the SubscriptionInMethod.PostMethodLocalNull method.
+// options - SubscriptionInMethodPostMethodLocalNullOptions contains the optional parameters for the SubscriptionInMethod.PostMethodLocalNull
+// method.
 func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostMethodLocalNullOptions) (SubscriptionInMethodPostMethodLocalNullResponse, error) {
 	req, err := client.postMethodLocalNullCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
@@ -87,10 +88,12 @@ func (client *SubscriptionInMethodClient) postMethodLocalNullHandleError(resp *h
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostMethodLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456' to succeed
+// PostMethodLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456'
+// to succeed
 // If the operation fails it returns the *Error error type.
 // subscriptionID - This should appear as a method parameter, use value '1234-5678-9012-3456'
-// options - SubscriptionInMethodPostMethodLocalValidOptions contains the optional parameters for the SubscriptionInMethod.PostMethodLocalValid method.
+// options - SubscriptionInMethodPostMethodLocalValidOptions contains the optional parameters for the SubscriptionInMethod.PostMethodLocalValid
+// method.
 func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostMethodLocalValidOptions) (SubscriptionInMethodPostMethodLocalValidResponse, error) {
 	req, err := client.postMethodLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
@@ -134,10 +137,12 @@ func (client *SubscriptionInMethodClient) postMethodLocalValidHandleError(resp *
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostPathLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456' to succeed
+// PostPathLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456'
+// to succeed
 // If the operation fails it returns the *Error error type.
 // subscriptionID - Should appear as a method parameter -use value '1234-5678-9012-3456'
-// options - SubscriptionInMethodPostPathLocalValidOptions contains the optional parameters for the SubscriptionInMethod.PostPathLocalValid method.
+// options - SubscriptionInMethodPostPathLocalValidOptions contains the optional parameters for the SubscriptionInMethod.PostPathLocalValid
+// method.
 func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostPathLocalValidOptions) (SubscriptionInMethodPostPathLocalValidResponse, error) {
 	req, err := client.postPathLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
@@ -181,10 +186,12 @@ func (client *SubscriptionInMethodClient) postPathLocalValidHandleError(resp *ht
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PostSwaggerLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456' to succeed
+// PostSwaggerLocalValid - POST method with subscriptionId modeled in the method. pass in subscription id = '1234-5678-9012-3456'
+// to succeed
 // If the operation fails it returns the *Error error type.
 // subscriptionID - The subscriptionId, which appears in the path, the value is always '1234-5678-9012-3456'
-// options - SubscriptionInMethodPostSwaggerLocalValidOptions contains the optional parameters for the SubscriptionInMethod.PostSwaggerLocalValid method.
+// options - SubscriptionInMethodPostSwaggerLocalValidOptions contains the optional parameters for the SubscriptionInMethod.PostSwaggerLocalValid
+// method.
 func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostSwaggerLocalValidOptions) (SubscriptionInMethodPostSwaggerLocalValidResponse, error) {
 	req, err := client.postSwaggerLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {

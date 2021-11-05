@@ -39,15 +39,17 @@ func newAppendBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *a
 	return client
 }
 
-// AppendBlock - The Append Block operation commits a new block of data to the end of an existing append blob. The Append Block operation is permitted only
-// if the blob was created with x-ms-blob-type set to
+// AppendBlock - The Append Block operation commits a new block of data to the end of an existing append blob. The Append
+// Block operation is permitted only if the blob was created with x-ms-blob-type set to
 // AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
 // If the operation fails it returns the *StorageError error type.
 // contentLength - The length of the request.
 // body - Initial data
-// AppendBlobAppendBlockOptions - AppendBlobAppendBlockOptions contains the optional parameters for the AppendBlob.AppendBlock method.
+// AppendBlobAppendBlockOptions - AppendBlobAppendBlockOptions contains the optional parameters for the AppendBlob.AppendBlock
+// method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
-// AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the AppendBlob.AppendBlock method.
+// AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the AppendBlob.AppendBlock
+// method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
@@ -212,19 +214,22 @@ func (client *appendBlobClient) appendBlockHandleError(resp *http.Response) erro
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// AppendBlockFromURL - The Append Block operation commits a new block of data to the end of an existing append blob where the contents are read from a
-// source url. The Append Block operation is permitted only if the blob was
+// AppendBlockFromURL - The Append Block operation commits a new block of data to the end of an existing append blob where
+// the contents are read from a source url. The Append Block operation is permitted only if the blob was
 // created with x-ms-blob-type set to AppendBlob. Append Block is supported only on version 2015-02-21 version or later.
 // If the operation fails it returns the *StorageError error type.
 // sourceURL - Specify a URL to the copy source.
 // contentLength - The length of the request.
-// AppendBlobAppendBlockFromURLOptions - AppendBlobAppendBlockFromURLOptions contains the optional parameters for the AppendBlob.AppendBlockFromURL method.
+// AppendBlobAppendBlockFromURLOptions - AppendBlobAppendBlockFromURLOptions contains the optional parameters for the AppendBlob.AppendBlockFromURL
+// method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
-// AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the AppendBlob.AppendBlock method.
+// AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the AppendBlob.AppendBlock
+// method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
-// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Directory.Rename method.
+// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Directory.Rename
+// method.
 func (client *appendBlobClient) AppendBlockFromURL(ctx context.Context, comp Enum38, sourceURL string, contentLength int64, appendBlobAppendBlockFromURLOptions *AppendBlobAppendBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (AppendBlobAppendBlockFromURLResponse, error) {
 	req, err := client.appendBlockFromURLCreateRequest(ctx, comp, sourceURL, contentLength, appendBlobAppendBlockFromURLOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, appendPositionAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
@@ -580,12 +585,14 @@ func (client *appendBlobClient) createHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// Seal - The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version or later.
+// Seal - The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version
+// or later.
 // If the operation fails it returns the *StorageError error type.
 // AppendBlobSealOptions - AppendBlobSealOptions contains the optional parameters for the AppendBlob.Seal method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
-// AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the AppendBlob.AppendBlock method.
+// AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the AppendBlob.AppendBlock
+// method.
 func (client *appendBlobClient) Seal(ctx context.Context, comp Enum39, appendBlobSealOptions *AppendBlobSealOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, appendPositionAccessConditions *AppendPositionAccessConditions) (AppendBlobSealResponse, error) {
 	req, err := client.sealCreateRequest(ctx, comp, appendBlobSealOptions, leaseAccessConditions, modifiedAccessConditions, appendPositionAccessConditions)
 	if err != nil {

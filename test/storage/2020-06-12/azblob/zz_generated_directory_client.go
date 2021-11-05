@@ -40,8 +40,8 @@ func newDirectoryClient(endpoint string, version Enum2, pathRenameMode *PathRena
 	return client
 }
 
-// Create - Create a directory. By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken. This
-// operation supports conditional HTTP requests. For more
+// Create - Create a directory. By default, the destination is overwritten and if the destination already exists and has a
+// lease the lease is broken. This operation supports conditional HTTP requests. For more
 // information, see Specifying Conditional Headers for Blob Service Operations [https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations].
 // To
 // fail if the destination already exists, use a conditional request with If-None-Match: "*".
@@ -178,7 +178,8 @@ func (client *directoryClient) createHandleError(resp *http.Response) error {
 
 // Delete - Deletes the directory
 // If the operation fails it returns the *DataLakeStorageError error type.
-// recursiveDirectoryDelete - If "true", all paths beneath the directory will be deleted. If "false" and the directory is non-empty, an error occurs.
+// recursiveDirectoryDelete - If "true", all paths beneath the directory will be deleted. If "false" and the directory is
+// non-empty, an error occurs.
 // DirectoryDeleteOptions - DirectoryDeleteOptions contains the optional parameters for the Directory.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
@@ -275,7 +276,8 @@ func (client *directoryClient) deleteHandleError(resp *http.Response) error {
 
 // GetAccessControl - Get the owner, group, permissions, or access control list for a directory.
 // If the operation fails it returns the *DataLakeStorageError error type.
-// DirectoryGetAccessControlOptions - DirectoryGetAccessControlOptions contains the optional parameters for the Directory.GetAccessControl method.
+// DirectoryGetAccessControlOptions - DirectoryGetAccessControlOptions contains the optional parameters for the Directory.GetAccessControl
+// method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 func (client *directoryClient) GetAccessControl(ctx context.Context, action Enum22, directoryGetAccessControlOptions *DirectoryGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryGetAccessControlResponse, error) {
@@ -385,18 +387,21 @@ func (client *directoryClient) getAccessControlHandleError(resp *http.Response) 
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// Rename - Rename a directory. By default, the destination is overwritten and if the destination already exists and has a lease the lease is broken. This
-// operation supports conditional HTTP requests. For more
+// Rename - Rename a directory. By default, the destination is overwritten and if the destination already exists and has a
+// lease the lease is broken. This operation supports conditional HTTP requests. For more
 // information, see Specifying Conditional Headers for Blob Service Operations [https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations].
 // To
 // fail if the destination already exists, use a conditional request with If-None-Match: "*".
 // If the operation fails it returns the *DataLakeStorageError error type.
-// renameSource - The file or directory to be renamed. The value must have the following format: "/{filesysystem}/{path}".  If "x-ms-properties" is specified, the properties will overwrite the existing properties; otherwise, the existing properties will be preserved.
+// renameSource - The file or directory to be renamed. The value must have the following format: "/{filesysystem}/{path}".
+// If "x-ms-properties" is specified, the properties will overwrite the existing properties;
+// otherwise, the existing properties will be preserved.
 // DirectoryRenameOptions - DirectoryRenameOptions contains the optional parameters for the Directory.Rename method.
 // DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the Directory.Create method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
-// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Directory.Rename method.
+// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Directory.Rename
+// method.
 func (client *directoryClient) Rename(ctx context.Context, renameSource string, directoryRenameOptions *DirectoryRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (DirectoryRenameResponse, error) {
 	req, err := client.renameCreateRequest(ctx, renameSource, directoryRenameOptions, directoryHTTPHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
@@ -549,7 +554,8 @@ func (client *directoryClient) renameHandleError(resp *http.Response) error {
 
 // SetAccessControl - Set the owner, group, permissions, or access control list for a directory.
 // If the operation fails it returns the *DataLakeStorageError error type.
-// DirectorySetAccessControlOptions - DirectorySetAccessControlOptions contains the optional parameters for the Directory.SetAccessControl method.
+// DirectorySetAccessControlOptions - DirectorySetAccessControlOptions contains the optional parameters for the Directory.SetAccessControl
+// method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 func (client *directoryClient) SetAccessControl(ctx context.Context, action Enum21, directorySetAccessControlOptions *DirectorySetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectorySetAccessControlResponse, error) {

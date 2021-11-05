@@ -39,15 +39,16 @@ func newBlockBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *bl
 	return client
 }
 
-// CommitBlockList - The Commit Block List operation writes a blob by specifying the list of block IDs that make up the blob. In order to be written as
-// part of a blob, a block must have been successfully written to the
-// server in a prior Put Block operation. You can call Put Block List to update a blob by uploading only those blocks that have changed, then committing
-// the new and existing blocks together. You can do
-// this by specifying whether to commit a block from the committed block list or from the uncommitted block list, or to commit the most recently uploaded
-// version of the block, whichever list it may
+// CommitBlockList - The Commit Block List operation writes a blob by specifying the list of block IDs that make up the blob.
+// In order to be written as part of a blob, a block must have been successfully written to the
+// server in a prior Put Block operation. You can call Put Block List to update a blob by uploading only those blocks that
+// have changed, then committing the new and existing blocks together. You can do
+// this by specifying whether to commit a block from the committed block list or from the uncommitted block list, or to commit
+// the most recently uploaded version of the block, whichever list it may
 // belong to.
 // If the operation fails it returns the *StorageError error type.
-// BlockBlobCommitBlockListOptions - BlockBlobCommitBlockListOptions contains the optional parameters for the BlockBlob.CommitBlockList method.
+// BlockBlobCommitBlockListOptions - BlockBlobCommitBlockListOptions contains the optional parameters for the BlockBlob.CommitBlockList
+// method.
 // BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the Blob.SetHTTPHeaders method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
@@ -240,7 +241,8 @@ func (client *blockBlobClient) commitBlockListHandleError(resp *http.Response) e
 // GetBlockList - The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob
 // If the operation fails it returns the *StorageError error type.
 // listType - Specifies whether to return the list of committed blocks, the list of uncommitted blocks, or both lists together.
-// BlockBlobGetBlockListOptions - BlockBlobGetBlockListOptions contains the optional parameters for the BlockBlob.GetBlockList method.
+// BlockBlobGetBlockListOptions - BlockBlobGetBlockListOptions contains the optional parameters for the BlockBlob.GetBlockList
+// method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 func (client *blockBlobClient) GetBlockList(ctx context.Context, comp Enum34, listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobGetBlockListResponse, error) {
@@ -346,21 +348,25 @@ func (client *blockBlobClient) getBlockListHandleError(resp *http.Response) erro
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// PutBlobFromURL - The Put Blob from URL operation creates a new Block Blob where the contents of the blob are read from a given URL. This API is supported
-// beginning with the 2020-04-08 version. Partial updates are not
-// supported with Put Blob from URL; the content of an existing blob is overwritten with the content of the new blob. To perform partial updates to a block
-// blob’s contents using a source URL, use the Put
+// PutBlobFromURL - The Put Blob from URL operation creates a new Block Blob where the contents of the blob are read from
+// a given URL. This API is supported beginning with the 2020-04-08 version. Partial updates are not
+// supported with Put Blob from URL; the content of an existing blob is overwritten with the content of the new blob. To perform
+// partial updates to a block blob’s contents using a source URL, use the Put
 // Block from URL API in conjunction with Put Block List.
 // If the operation fails it returns the *StorageError error type.
 // contentLength - The length of the request.
-// copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies a page blob snapshot. The value should be URL-encoded as it would appear in a request URI. The source blob must either be public or must be authenticated via a shared access signature.
-// BlockBlobPutBlobFromURLOptions - BlockBlobPutBlobFromURLOptions contains the optional parameters for the BlockBlob.PutBlobFromURL method.
+// copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
+// a page blob snapshot. The value should be URL-encoded as it would appear in a request
+// URI. The source blob must either be public or must be authenticated via a shared access signature.
+// BlockBlobPutBlobFromURLOptions - BlockBlobPutBlobFromURLOptions contains the optional parameters for the BlockBlob.PutBlobFromURL
+// method.
 // BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the Blob.SetHTTPHeaders method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
-// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Directory.Rename method.
+// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Directory.Rename
+// method.
 func (client *blockBlobClient) PutBlobFromURL(ctx context.Context, contentLength int64, copySource string, blockBlobPutBlobFromURLOptions *BlockBlobPutBlobFromURLOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobPutBlobFromURLResponse, error) {
 	req, err := client.putBlobFromURLCreateRequest(ctx, contentLength, copySource, blockBlobPutBlobFromURLOptions, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
@@ -551,7 +557,9 @@ func (client *blockBlobClient) putBlobFromURLHandleError(resp *http.Response) er
 
 // StageBlock - The Stage Block operation creates a new block to be committed as part of a blob
 // If the operation fails it returns the *StorageError error type.
-// blockID - A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal to 64 bytes in size. For a given blob, the length of the value specified for the blockid parameter must be the same size for each block.
+// blockID - A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal
+// to 64 bytes in size. For a given blob, the length of the value specified for the blockid
+// parameter must be the same size for each block.
 // contentLength - The length of the request.
 // body - Initial data
 // BlockBlobStageBlockOptions - BlockBlobStageBlockOptions contains the optional parameters for the BlockBlob.StageBlock method.
@@ -678,16 +686,21 @@ func (client *blockBlobClient) stageBlockHandleError(resp *http.Response) error 
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// StageBlockFromURL - The Stage Block operation creates a new block to be committed as part of a blob where the contents are read from a URL.
+// StageBlockFromURL - The Stage Block operation creates a new block to be committed as part of a blob where the contents
+// are read from a URL.
 // If the operation fails it returns the *StorageError error type.
-// blockID - A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal to 64 bytes in size. For a given blob, the length of the value specified for the blockid parameter must be the same size for each block.
+// blockID - A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal
+// to 64 bytes in size. For a given blob, the length of the value specified for the blockid
+// parameter must be the same size for each block.
 // contentLength - The length of the request.
 // sourceURL - Specify a URL to the copy source.
-// BlockBlobStageBlockFromURLOptions - BlockBlobStageBlockFromURLOptions contains the optional parameters for the BlockBlob.StageBlockFromURL method.
+// BlockBlobStageBlockFromURLOptions - BlockBlobStageBlockFromURLOptions contains the optional parameters for the BlockBlob.StageBlockFromURL
+// method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
-// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Directory.Rename method.
+// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Directory.Rename
+// method.
 func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, comp Enum33, blockID string, contentLength int64, sourceURL string, blockBlobStageBlockFromURLOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobStageBlockFromURLResponse, error) {
 	req, err := client.stageBlockFromURLCreateRequest(ctx, comp, blockID, contentLength, sourceURL, blockBlobStageBlockFromURLOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
@@ -824,10 +837,10 @@ func (client *blockBlobClient) stageBlockFromURLHandleError(resp *http.Response)
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// Upload - The Upload Block Blob operation updates the content of an existing block blob. Updating an existing block blob overwrites any existing metadata
-// on the blob. Partial updates are not supported with Put
-// Blob; the content of the existing blob is overwritten with the content of the new blob. To perform a partial update of the content of a block blob, use
-// the Put Block List operation.
+// Upload - The Upload Block Blob operation updates the content of an existing block blob. Updating an existing block blob
+// overwrites any existing metadata on the blob. Partial updates are not supported with Put
+// Blob; the content of the existing blob is overwritten with the content of the new blob. To perform a partial update of
+// the content of a block blob, use the Put Block List operation.
 // If the operation fails it returns the *StorageError error type.
 // contentLength - The length of the request.
 // body - Initial data

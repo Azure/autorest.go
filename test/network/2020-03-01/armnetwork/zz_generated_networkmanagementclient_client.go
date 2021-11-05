@@ -31,8 +31,9 @@ type NetworkManagementClient struct {
 }
 
 // NewNetworkManagementClient creates a new instance of NetworkManagementClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewNetworkManagementClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NetworkManagementClient {
 	cp := arm.ClientOptions{}
@@ -54,7 +55,8 @@ func NewNetworkManagementClient(subscriptionID string, credential azcore.TokenCr
 // If the operation fails it returns the *CloudError error type.
 // location - The location of the domain name.
 // domainNameLabel - The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$.
-// options - NetworkManagementClientCheckDNSNameAvailabilityOptions contains the optional parameters for the NetworkManagementClient.CheckDNSNameAvailability method.
+// options - NetworkManagementClientCheckDNSNameAvailabilityOptions contains the optional parameters for the NetworkManagementClient.CheckDNSNameAvailability
+// method.
 func (client *NetworkManagementClient) CheckDNSNameAvailability(ctx context.Context, location string, domainNameLabel string, options *NetworkManagementClientCheckDNSNameAvailabilityOptions) (NetworkManagementClientCheckDNSNameAvailabilityResponse, error) {
 	req, err := client.checkDNSNameAvailabilityCreateRequest(ctx, location, domainNameLabel, options)
 	if err != nil {
@@ -120,7 +122,8 @@ func (client *NetworkManagementClient) checkDNSNameAvailabilityHandleError(resp 
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
 // bslRequest - Post request for all the Bastion Shareable Link endpoints.
-// options - NetworkManagementClientBeginDeleteBastionShareableLinkOptions contains the optional parameters for the NetworkManagementClient.BeginDeleteBastionShareableLink method.
+// options - NetworkManagementClientBeginDeleteBastionShareableLinkOptions contains the optional parameters for the NetworkManagementClient.BeginDeleteBastionShareableLink
+// method.
 func (client *NetworkManagementClient) BeginDeleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *NetworkManagementClientBeginDeleteBastionShareableLinkOptions) (NetworkManagementClientDeleteBastionShareableLinkPollerResponse, error) {
 	resp, err := client.deleteBastionShareableLink(ctx, resourceGroupName, bastionHostName, bslRequest, options)
 	if err != nil {
@@ -200,7 +203,8 @@ func (client *NetworkManagementClient) deleteBastionShareableLinkHandleError(res
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
 // sessionIDs - The list of sessionids to disconnect.
-// options - NetworkManagementClientDisconnectActiveSessionsOptions contains the optional parameters for the NetworkManagementClient.DisconnectActiveSessions method.
+// options - NetworkManagementClientDisconnectActiveSessionsOptions contains the optional parameters for the NetworkManagementClient.DisconnectActiveSessions
+// method.
 func (client *NetworkManagementClient) DisconnectActiveSessions(resourceGroupName string, bastionHostName string, sessionIDs SessionIDs, options *NetworkManagementClientDisconnectActiveSessionsOptions) *NetworkManagementClientDisconnectActiveSessionsPager {
 	return &NetworkManagementClientDisconnectActiveSessionsPager{
 		client: client,
@@ -261,13 +265,14 @@ func (client *NetworkManagementClient) disconnectActiveSessionsHandleError(resp 
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// BeginGeneratevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration
-// combination in the specified resource group.
+// BeginGeneratevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan
+// and associated VpnServerConfiguration combination in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name.
 // virtualWANName - The name of the VirtualWAN whose associated VpnServerConfigurations is needed.
 // vpnClientParams - Parameters supplied to the generate VirtualWan VPN profile generation operation.
-// options - NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions contains the optional parameters for the NetworkManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile method.
+// options - NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions contains the optional parameters
+// for the NetworkManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile method.
 func (client *NetworkManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse, error) {
 	resp, err := client.generatevirtualwanvpnserverconfigurationvpnprofile(ctx, resourceGroupName, virtualWANName, vpnClientParams, options)
 	if err != nil {
@@ -286,8 +291,8 @@ func (client *NetworkManagementClient) BeginGeneratevirtualwanvpnserverconfigura
 	return result, nil
 }
 
-// Generatevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration
-// combination in the specified resource group.
+// Generatevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and
+// associated VpnServerConfiguration combination in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
 func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*http.Response, error) {
 	req, err := client.generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx, resourceGroupName, virtualWANName, vpnClientParams, options)
@@ -347,7 +352,8 @@ func (client *NetworkManagementClient) generatevirtualwanvpnserverconfigurationv
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
-// options - NetworkManagementClientBeginGetActiveSessionsOptions contains the optional parameters for the NetworkManagementClient.BeginGetActiveSessions method.
+// options - NetworkManagementClientBeginGetActiveSessionsOptions contains the optional parameters for the NetworkManagementClient.BeginGetActiveSessions
+// method.
 func (client *NetworkManagementClient) BeginGetActiveSessions(ctx context.Context, resourceGroupName string, bastionHostName string, options *NetworkManagementClientBeginGetActiveSessionsOptions) (NetworkManagementClientGetActiveSessionsPollerResponse, error) {
 	resp, err := client.getActiveSessions(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
@@ -437,7 +443,8 @@ func (client *NetworkManagementClient) getActiveSessionsHandleError(resp *http.R
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
 // bslRequest - Post request for all the Bastion Shareable Link endpoints.
-// options - NetworkManagementClientGetBastionShareableLinkOptions contains the optional parameters for the NetworkManagementClient.GetBastionShareableLink method.
+// options - NetworkManagementClientGetBastionShareableLinkOptions contains the optional parameters for the NetworkManagementClient.GetBastionShareableLink
+// method.
 func (client *NetworkManagementClient) GetBastionShareableLink(resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *NetworkManagementClientGetBastionShareableLinkOptions) *NetworkManagementClientGetBastionShareableLinkPager {
 	return &NetworkManagementClientGetBastionShareableLinkPager{
 		client: client,
@@ -503,7 +510,8 @@ func (client *NetworkManagementClient) getBastionShareableLinkHandleError(resp *
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
 // bslRequest - Post request for all the Bastion Shareable Link endpoints.
-// options - NetworkManagementClientBeginPutBastionShareableLinkOptions contains the optional parameters for the NetworkManagementClient.BeginPutBastionShareableLink method.
+// options - NetworkManagementClientBeginPutBastionShareableLinkOptions contains the optional parameters for the NetworkManagementClient.BeginPutBastionShareableLink
+// method.
 func (client *NetworkManagementClient) BeginPutBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *NetworkManagementClientBeginPutBastionShareableLinkOptions) (NetworkManagementClientPutBastionShareableLinkPollerResponse, error) {
 	resp, err := client.putBastionShareableLink(ctx, resourceGroupName, bastionHostName, bslRequest, options)
 	if err != nil {
@@ -592,7 +600,8 @@ func (client *NetworkManagementClient) putBastionShareableLinkHandleError(resp *
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name.
 // virtualWANName - The name of the VirtualWAN for which supported security providers are needed.
-// options - NetworkManagementClientSupportedSecurityProvidersOptions contains the optional parameters for the NetworkManagementClient.SupportedSecurityProviders method.
+// options - NetworkManagementClientSupportedSecurityProvidersOptions contains the optional parameters for the NetworkManagementClient.SupportedSecurityProviders
+// method.
 func (client *NetworkManagementClient) SupportedSecurityProviders(ctx context.Context, resourceGroupName string, virtualWANName string, options *NetworkManagementClientSupportedSecurityProvidersOptions) (NetworkManagementClientSupportedSecurityProvidersResponse, error) {
 	req, err := client.supportedSecurityProvidersCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {

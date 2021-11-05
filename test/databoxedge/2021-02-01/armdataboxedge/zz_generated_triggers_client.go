@@ -289,7 +289,8 @@ func (client *TriggersClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - TriggersListByDataBoxEdgeDeviceOptions contains the optional parameters for the Triggers.ListByDataBoxEdgeDevice method.
+// options - TriggersListByDataBoxEdgeDeviceOptions contains the optional parameters for the Triggers.ListByDataBoxEdgeDevice
+// method.
 func (client *TriggersClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *TriggersListByDataBoxEdgeDeviceOptions) *TriggersListByDataBoxEdgeDevicePager {
 	return &TriggersListByDataBoxEdgeDevicePager{
 		client: client,

@@ -360,7 +360,8 @@ type PetsCreateAPInPropertiesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateAPInPropertiesWithAPStringOptions contains the optional parameters for the Pets.CreateAPInPropertiesWithAPString method.
+// PetsCreateAPInPropertiesWithAPStringOptions contains the optional parameters for the Pets.CreateAPInPropertiesWithAPString
+// method.
 type PetsCreateAPInPropertiesWithAPStringOptions struct {
 	// placeholder for future optional parameters
 }

@@ -31,8 +31,9 @@ type PrivateDNSZoneGroupsClient struct {
 }
 
 // NewPrivateDNSZoneGroupsClient creates a new instance of PrivateDNSZoneGroupsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewPrivateDNSZoneGroupsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *PrivateDNSZoneGroupsClient {
 	cp := arm.ClientOptions{}
@@ -56,7 +57,8 @@ func NewPrivateDNSZoneGroupsClient(subscriptionID string, credential azcore.Toke
 // privateEndpointName - The name of the private endpoint.
 // privateDNSZoneGroupName - The name of the private dns zone group.
 // parameters - Parameters supplied to the create or update private dns zone group operation.
-// options - PrivateDNSZoneGroupsBeginCreateOrUpdateOptions contains the optional parameters for the PrivateDNSZoneGroups.BeginCreateOrUpdate method.
+// options - PrivateDNSZoneGroupsBeginCreateOrUpdateOptions contains the optional parameters for the PrivateDNSZoneGroups.BeginCreateOrUpdate
+// method.
 func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, parameters PrivateDNSZoneGroup, options *PrivateDNSZoneGroupsBeginCreateOrUpdateOptions) (PrivateDNSZoneGroupsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, parameters, options)
 	if err != nil {
@@ -140,7 +142,8 @@ func (client *PrivateDNSZoneGroupsClient) createOrUpdateHandleError(resp *http.R
 // resourceGroupName - The name of the resource group.
 // privateEndpointName - The name of the private endpoint.
 // privateDNSZoneGroupName - The name of the private dns zone group.
-// options - PrivateDNSZoneGroupsBeginDeleteOptions contains the optional parameters for the PrivateDNSZoneGroups.BeginDelete method.
+// options - PrivateDNSZoneGroupsBeginDeleteOptions contains the optional parameters for the PrivateDNSZoneGroups.BeginDelete
+// method.
 func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, options *PrivateDNSZoneGroupsBeginDeleteOptions) (PrivateDNSZoneGroupsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, options)
 	if err != nil {

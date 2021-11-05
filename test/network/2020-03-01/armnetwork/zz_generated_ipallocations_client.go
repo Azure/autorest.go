@@ -31,8 +31,9 @@ type IPAllocationsClient struct {
 }
 
 // NewIPAllocationsClient creates a new instance of IPAllocationsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewIPAllocationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *IPAllocationsClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewIPAllocationsClient(subscriptionID string, credential azcore.TokenCreden
 // resourceGroupName - The name of the resource group.
 // ipAllocationName - The name of the IpAllocation.
 // parameters - Parameters supplied to the create or update virtual network operation.
-// options - IPAllocationsBeginCreateOrUpdateOptions contains the optional parameters for the IPAllocations.BeginCreateOrUpdate method.
+// options - IPAllocationsBeginCreateOrUpdateOptions contains the optional parameters for the IPAllocations.BeginCreateOrUpdate
+// method.
 func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsBeginCreateOrUpdateOptions) (IPAllocationsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ipAllocationName, parameters, options)
 	if err != nil {
@@ -338,7 +340,8 @@ func (client *IPAllocationsClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Gets all IpAllocations in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - IPAllocationsListByResourceGroupOptions contains the optional parameters for the IPAllocations.ListByResourceGroup method.
+// options - IPAllocationsListByResourceGroupOptions contains the optional parameters for the IPAllocations.ListByResourceGroup
+// method.
 func (client *IPAllocationsClient) ListByResourceGroup(resourceGroupName string, options *IPAllocationsListByResourceGroupOptions) *IPAllocationsListByResourceGroupPager {
 	return &IPAllocationsListByResourceGroupPager{
 		client: client,

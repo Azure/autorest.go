@@ -39,7 +39,8 @@ func newDatasetClient(endpoint string, pl runtime.Pipeline) *datasetClient {
 // If the operation fails it returns the *CloudError error type.
 // datasetName - The dataset name.
 // dataset - Dataset resource definition.
-// options - DatasetBeginCreateOrUpdateDatasetOptions contains the optional parameters for the Dataset.BeginCreateOrUpdateDataset method.
+// options - DatasetBeginCreateOrUpdateDatasetOptions contains the optional parameters for the Dataset.BeginCreateOrUpdateDataset
+// method.
 func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (DatasetCreateOrUpdateDatasetPollerResponse, error) {
 	resp, err := client.createOrUpdateDataset(ctx, datasetName, dataset, options)
 	if err != nil {
@@ -243,7 +244,8 @@ func (client *datasetClient) getDatasetHandleError(resp *http.Response) error {
 
 // GetDatasetsByWorkspace - Lists datasets.
 // If the operation fails it returns the *CloudError error type.
-// options - DatasetGetDatasetsByWorkspaceOptions contains the optional parameters for the Dataset.GetDatasetsByWorkspace method.
+// options - DatasetGetDatasetsByWorkspaceOptions contains the optional parameters for the Dataset.GetDatasetsByWorkspace
+// method.
 func (client *datasetClient) GetDatasetsByWorkspace(options *DatasetGetDatasetsByWorkspaceOptions) *DatasetGetDatasetsByWorkspacePager {
 	return &DatasetGetDatasetsByWorkspacePager{
 		client: client,

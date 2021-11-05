@@ -30,8 +30,9 @@ type VirtualMachineRunCommandsClient struct {
 }
 
 // NewVirtualMachineRunCommandsClient creates a new instance of VirtualMachineRunCommandsClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewVirtualMachineRunCommandsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualMachineRunCommandsClient {
 	cp := arm.ClientOptions{}
@@ -119,7 +120,8 @@ func (client *VirtualMachineRunCommandsClient) getHandleError(resp *http.Respons
 // List - Lists all available run commands for a subscription in a location.
 // If the operation fails it returns a generic error.
 // location - The location upon which run commands is queried.
-// options - VirtualMachineRunCommandsListOptions contains the optional parameters for the VirtualMachineRunCommands.List method.
+// options - VirtualMachineRunCommandsListOptions contains the optional parameters for the VirtualMachineRunCommands.List
+// method.
 func (client *VirtualMachineRunCommandsClient) List(location string, options *VirtualMachineRunCommandsListOptions) *VirtualMachineRunCommandsListPager {
 	return &VirtualMachineRunCommandsListPager{
 		client: client,

@@ -119,7 +119,8 @@ func (client *AlertsClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - AlertsListByDataBoxEdgeDeviceOptions contains the optional parameters for the Alerts.ListByDataBoxEdgeDevice method.
+// options - AlertsListByDataBoxEdgeDeviceOptions contains the optional parameters for the Alerts.ListByDataBoxEdgeDevice
+// method.
 func (client *AlertsClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *AlertsListByDataBoxEdgeDeviceOptions) *AlertsListByDataBoxEdgeDevicePager {
 	return &AlertsListByDataBoxEdgeDevicePager{
 		client: client,

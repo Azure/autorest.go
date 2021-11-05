@@ -31,8 +31,9 @@ type VirtualHubsClient struct {
 }
 
 // NewVirtualHubsClient creates a new instance of VirtualHubsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewVirtualHubsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualHubsClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewVirtualHubsClient(subscriptionID string, credential azcore.TokenCredenti
 // resourceGroupName - The resource group name of the VirtualHub.
 // virtualHubName - The name of the VirtualHub.
 // virtualHubParameters - Parameters supplied to create or update VirtualHub.
-// options - VirtualHubsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualHubs.BeginCreateOrUpdate method.
+// options - VirtualHubsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualHubs.BeginCreateOrUpdate
+// method.
 func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters VirtualHub, options *VirtualHubsBeginCreateOrUpdateOptions) (VirtualHubsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, virtualHubParameters, options)
 	if err != nil {
@@ -335,7 +337,8 @@ func (client *VirtualHubsClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Lists all the VirtualHubs in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VirtualHub.
-// options - VirtualHubsListByResourceGroupOptions contains the optional parameters for the VirtualHubs.ListByResourceGroup method.
+// options - VirtualHubsListByResourceGroupOptions contains the optional parameters for the VirtualHubs.ListByResourceGroup
+// method.
 func (client *VirtualHubsClient) ListByResourceGroup(resourceGroupName string, options *VirtualHubsListByResourceGroupOptions) *VirtualHubsListByResourceGroupPager {
 	return &VirtualHubsListByResourceGroupPager{
 		client: client,

@@ -31,8 +31,9 @@ type RouteTablesClient struct {
 }
 
 // NewRouteTablesClient creates a new instance of RouteTablesClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewRouteTablesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *RouteTablesClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewRouteTablesClient(subscriptionID string, credential azcore.TokenCredenti
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
 // parameters - Parameters supplied to the create or update route table operation.
-// options - RouteTablesBeginCreateOrUpdateOptions contains the optional parameters for the RouteTables.BeginCreateOrUpdate method.
+// options - RouteTablesBeginCreateOrUpdateOptions contains the optional parameters for the RouteTables.BeginCreateOrUpdate
+// method.
 func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable, options *RouteTablesBeginCreateOrUpdateOptions) (RouteTablesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeTableName, parameters, options)
 	if err != nil {

@@ -32,7 +32,7 @@ type ForecastsClient struct {
 
 // NewForecastsClient creates a new instance of ForecastsClient with the specified values.
 // subscriptionID - Azure Subscription ID.
-// credential - the credential used to authenticate the request.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ForecastsClient {
 	cp := arm.ClientOptions{}
@@ -50,8 +50,8 @@ func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential
 	return client
 }
 
-// List - Lists the forecast charges for scope defined. Please note that this API is no longer actively under development. We recommend using our new Forecast
-// API moving forward:
+// List - Lists the forecast charges for scope defined. Please note that this API is no longer actively under development.
+// We recommend using our new Forecast API moving forward:
 // https://docs.microsoft.com/en-us/rest/api/cost-management/forecast/usage.
 // If the operation fails it returns the *ErrorResponse error type.
 // options - ForecastsListOptions contains the optional parameters for the Forecasts.List method.

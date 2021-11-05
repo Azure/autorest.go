@@ -117,7 +117,8 @@ func (client *DevicesClient) createOrUpdateHandleError(resp *http.Response) erro
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // securitySettings - The security settings.
-// options - DevicesBeginCreateOrUpdateSecuritySettingsOptions contains the optional parameters for the Devices.BeginCreateOrUpdateSecuritySettings method.
+// options - DevicesBeginCreateOrUpdateSecuritySettingsOptions contains the optional parameters for the Devices.BeginCreateOrUpdateSecuritySettings
+// method.
 func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, options *DevicesBeginCreateOrUpdateSecuritySettingsOptions) (DevicesCreateOrUpdateSecuritySettingsPollerResponse, error) {
 	resp, err := client.createOrUpdateSecuritySettings(ctx, deviceName, resourceGroupName, securitySettings, options)
 	if err != nil {
@@ -490,7 +491,8 @@ func (client *DevicesClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - DevicesGetExtendedInformationOptions contains the optional parameters for the Devices.GetExtendedInformation method.
+// options - DevicesGetExtendedInformationOptions contains the optional parameters for the Devices.GetExtendedInformation
+// method.
 func (client *DevicesClient) GetExtendedInformation(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesGetExtendedInformationOptions) (DevicesGetExtendedInformationResponse, error) {
 	req, err := client.getExtendedInformationCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -622,8 +624,8 @@ func (client *DevicesClient) getNetworkSettingsHandleError(resp *http.Response) 
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetUpdateSummary - Gets information about the availability of updates based on the last scan of the device. It also gets information about any ongoing
-// download or install jobs on the device.
+// GetUpdateSummary - Gets information about the availability of updates based on the last scan of the device. It also gets
+// information about any ongoing download or install jobs on the device.
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
@@ -1044,7 +1046,8 @@ func (client *DevicesClient) updateHandleError(resp *http.Response) error {
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // parameters - The patch object.
-// options - DevicesUpdateExtendedInformationOptions contains the optional parameters for the Devices.UpdateExtendedInformation method.
+// options - DevicesUpdateExtendedInformationOptions contains the optional parameters for the Devices.UpdateExtendedInformation
+// method.
 func (client *DevicesClient) UpdateExtendedInformation(ctx context.Context, deviceName string, resourceGroupName string, parameters DataBoxEdgeDeviceExtendedInfoPatch, options *DevicesUpdateExtendedInformationOptions) (DevicesUpdateExtendedInformationResponse, error) {
 	req, err := client.updateExtendedInformationCreateRequest(ctx, deviceName, resourceGroupName, parameters, options)
 	if err != nil {

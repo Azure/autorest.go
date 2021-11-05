@@ -244,8 +244,8 @@ type CertificateAttributes struct {
 	// READ-ONLY; softDelete data retention days. Value should be >=7 and <=90 when softDelete enabled, otherwise 0.
 	RecoverableDays *int32 `json:"recoverableDays,omitempty" azure:"ro"`
 
-	// READ-ONLY; Reflects the deletion recovery level currently in effect for certificates in the current vault. If it contains 'Purgeable', the certificate
-	// can be permanently deleted by a privileged user; otherwise,
+	// READ-ONLY; Reflects the deletion recovery level currently in effect for certificates in the current vault. If it contains
+	// 'Purgeable', the certificate can be permanently deleted by a privileged user; otherwise,
 	// only the system can purge the certificate, at the end of the retention interval.
 	RecoveryLevel *DeletionRecoveryLevel `json:"recoveryLevel,omitempty" azure:"ro"`
 }
@@ -405,7 +405,8 @@ func (c CertificateCreateParameters) MarshalJSON() ([]byte, error) {
 
 // CertificateImportParameters - The certificate import parameters.
 type CertificateImportParameters struct {
-	// REQUIRED; Base64 encoded representation of the certificate object to import. This certificate needs to contain the private key.
+	// REQUIRED; Base64 encoded representation of the certificate object to import. This certificate needs to contain the private
+	// key.
 	Base64EncodedCertificate *string `json:"value,omitempty"`
 
 	// The attributes of the certificate (optional).
@@ -462,7 +463,8 @@ type CertificateIssuerListResult struct {
 	// READ-ONLY; The URL to get the next set of certificate issuers.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
-	// READ-ONLY; A response message containing a list of certificate issuers in the key vault along with a link to the next page of certificate issuers.
+	// READ-ONLY; A response message containing a list of certificate issuers in the key vault along with a link to the next page
+	// of certificate issuers.
 	Value []*CertificateIssuerItem `json:"value,omitempty" azure:"ro"`
 }
 
@@ -581,7 +583,8 @@ type CertificateListResult struct {
 	// READ-ONLY; The URL to get the next set of certificates.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
-	// READ-ONLY; A response message containing a list of certificates in the key vault along with a link to the next page of certificates.
+	// READ-ONLY; A response message containing a list of certificates in the key vault along with a link to the next page of
+	// certificates.
 	Value []*CertificateItem `json:"value,omitempty" azure:"ro"`
 }
 
@@ -836,7 +839,8 @@ func (c Contacts) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// DeletedCertificateBundle - A Deleted Certificate consisting of its previous id, attributes and its tags, as well as information on when it will be purged.
+// DeletedCertificateBundle - A Deleted Certificate consisting of its previous id, attributes and its tags, as well as information
+// on when it will be purged.
 type DeletedCertificateBundle struct {
 	CertificateBundle
 	// The url of the recovery object, used to identify and recover the deleted certificate.
@@ -945,7 +949,8 @@ type DeletedCertificateListResult struct {
 	// READ-ONLY; The URL to get the next set of deleted certificates.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
-	// READ-ONLY; A response message containing a list of deleted certificates in the vault along with a link to the next page of deleted certificates
+	// READ-ONLY; A response message containing a list of deleted certificates in the vault along with a link to the next page
+	// of deleted certificates
 	Value []*DeletedCertificateItem `json:"value,omitempty" azure:"ro"`
 }
 
@@ -1066,7 +1071,8 @@ type DeletedKeyListResult struct {
 	// READ-ONLY; The URL to get the next set of deleted keys.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
-	// READ-ONLY; A response message containing a list of deleted keys in the vault along with a link to the next page of deleted keys
+	// READ-ONLY; A response message containing a list of deleted keys in the vault along with a link to the next page of deleted
+	// keys
 	Value []*DeletedKeyItem `json:"value,omitempty" azure:"ro"`
 }
 
@@ -1078,8 +1084,8 @@ func (d DeletedKeyListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// DeletedSasDefinitionBundle - A deleted SAS definition bundle consisting of its previous id, attributes and its tags, as well as information on when it
-// will be purged.
+// DeletedSasDefinitionBundle - A deleted SAS definition bundle consisting of its previous id, attributes and its tags, as
+// well as information on when it will be purged.
 type DeletedSasDefinitionBundle struct {
 	SasDefinitionBundle
 	// The url of the recovery object, used to identify and recover the deleted SAS definition.
@@ -1188,7 +1194,8 @@ type DeletedSasDefinitionListResult struct {
 	// READ-ONLY; The URL to get the next set of deleted SAS definitions.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
-	// READ-ONLY; A response message containing a list of the deleted SAS definitions in the vault along with a link to the next page of deleted sas definitions
+	// READ-ONLY; A response message containing a list of the deleted SAS definitions in the vault along with a link to the next
+	// page of deleted sas definitions
 	Value []*DeletedSasDefinitionItem `json:"value,omitempty" azure:"ro"`
 }
 
@@ -1200,7 +1207,8 @@ func (d DeletedSasDefinitionListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// DeletedSecretBundle - A Deleted Secret consisting of its previous id, attributes and its tags, as well as information on when it will be purged.
+// DeletedSecretBundle - A Deleted Secret consisting of its previous id, attributes and its tags, as well as information on
+// when it will be purged.
 type DeletedSecretBundle struct {
 	SecretBundle
 	// The url of the recovery object, used to identify and recover the deleted secret.
@@ -1309,7 +1317,8 @@ type DeletedSecretListResult struct {
 	// READ-ONLY; The URL to get the next set of deleted secrets.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
-	// READ-ONLY; A response message containing a list of the deleted secrets in the vault along with a link to the next page of deleted secrets
+	// READ-ONLY; A response message containing a list of the deleted secrets in the vault along with a link to the next page
+	// of deleted secrets
 	Value []*DeletedSecretItem `json:"value,omitempty" azure:"ro"`
 }
 
@@ -1373,8 +1382,8 @@ func (d *DeletedStorageAccountItem) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// DeletedStorageBundle - A deleted storage account bundle consisting of its previous id, attributes and its tags, as well as information on when it will
-// be purged.
+// DeletedStorageBundle - A deleted storage account bundle consisting of its previous id, attributes and its tags, as well
+// as information on when it will be purged.
 type DeletedStorageBundle struct {
 	StorageBundle
 	// The url of the recovery object, used to identify and recover the deleted storage account.
@@ -1431,7 +1440,8 @@ type DeletedStorageListResult struct {
 	// READ-ONLY; The URL to get the next set of deleted storage accounts.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
-	// READ-ONLY; A response message containing a list of the deleted storage accounts in the vault along with a link to the next page of deleted storage accounts
+	// READ-ONLY; A response message containing a list of the deleted storage accounts in the vault along with a link to the next
+	// page of deleted storage accounts
 	Value []*DeletedStorageAccountItem `json:"value,omitempty" azure:"ro"`
 }
 
@@ -1783,8 +1793,8 @@ type KeyAttributes struct {
 	// READ-ONLY; softDelete data retention days. Value should be >=7 and <=90 when softDelete enabled, otherwise 0.
 	RecoverableDays *int32 `json:"recoverableDays,omitempty" azure:"ro"`
 
-	// READ-ONLY; Reflects the deletion recovery level currently in effect for keys in the current vault. If it contains 'Purgeable' the key can be permanently
-	// deleted by a privileged user; otherwise, only the system
+	// READ-ONLY; Reflects the deletion recovery level currently in effect for keys in the current vault. If it contains 'Purgeable'
+	// the key can be permanently deleted by a privileged user; otherwise, only the system
 	// can purge the key, at the end of the retention interval.
 	RecoveryLevel *DeletionRecoveryLevel `json:"recoveryLevel,omitempty" azure:"ro"`
 }
@@ -1835,7 +1845,8 @@ type KeyBundle struct {
 	// Application specific metadata in the form of key-value pairs.
 	Tags map[string]*string `json:"tags,omitempty"`
 
-	// READ-ONLY; True if the key's lifetime is managed by key vault. If this is a key backing a certificate, then managed will be true.
+	// READ-ONLY; True if the key's lifetime is managed by key vault. If this is a key backing a certificate, then managed will
+	// be true.
 	Managed *bool `json:"managed,omitempty" azure:"ro"`
 }
 
@@ -1957,7 +1968,8 @@ type KeyItem struct {
 	// Application specific metadata in the form of key-value pairs.
 	Tags map[string]*string `json:"tags,omitempty"`
 
-	// READ-ONLY; True if the key's lifetime is managed by key vault. If this is a key backing a certificate, then managed will be true.
+	// READ-ONLY; True if the key's lifetime is managed by key vault. If this is a key backing a certificate, then managed will
+	// be true.
 	Managed *bool `json:"managed,omitempty" azure:"ro"`
 }
 
@@ -2274,25 +2286,29 @@ type KeyVaultClientBackupSecretOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientBackupStorageAccountOptions contains the optional parameters for the KeyVaultClient.BackupStorageAccount method.
+// KeyVaultClientBackupStorageAccountOptions contains the optional parameters for the KeyVaultClient.BackupStorageAccount
+// method.
 type KeyVaultClientBackupStorageAccountOptions struct {
 	// placeholder for future optional parameters
 }
 
 // KeyVaultClientBeginFullBackupOptions contains the optional parameters for the KeyVaultClient.BeginFullBackup method.
 type KeyVaultClientBeginFullBackupOptions struct {
-	// Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored. This token needs to be valid
-	// for at least next 24 hours from the time of making this call
+	// Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored.
+	// This token needs to be valid for at least next 24 hours from the time of making
+	// this call
 	AzureStorageBlobContainerURI *SASTokenParameter
 }
 
-// KeyVaultClientBeginFullRestoreOperationOptions contains the optional parameters for the KeyVaultClient.BeginFullRestoreOperation method.
+// KeyVaultClientBeginFullRestoreOperationOptions contains the optional parameters for the KeyVaultClient.BeginFullRestoreOperation
+// method.
 type KeyVaultClientBeginFullRestoreOperationOptions struct {
 	// The Azure blob SAS token pointing to a folder where the previous successful full backup was stored
 	RestoreBlobDetails *RestoreOperationParameters
 }
 
-// KeyVaultClientBeginSelectiveKeyRestoreOperationOptions contains the optional parameters for the KeyVaultClient.BeginSelectiveKeyRestoreOperation method.
+// KeyVaultClientBeginSelectiveKeyRestoreOperationOptions contains the optional parameters for the KeyVaultClient.BeginSelectiveKeyRestoreOperation
+// method.
 type KeyVaultClientBeginSelectiveKeyRestoreOperationOptions struct {
 	// The Azure blob SAS token pointing to a folder where the previous successful full backup was stored
 	RestoreBlobDetails *SelectiveKeyRestoreOperationParameters
@@ -2313,17 +2329,20 @@ type KeyVaultClientDecryptOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientDeleteCertificateContactsOptions contains the optional parameters for the KeyVaultClient.DeleteCertificateContacts method.
+// KeyVaultClientDeleteCertificateContactsOptions contains the optional parameters for the KeyVaultClient.DeleteCertificateContacts
+// method.
 type KeyVaultClientDeleteCertificateContactsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientDeleteCertificateIssuerOptions contains the optional parameters for the KeyVaultClient.DeleteCertificateIssuer method.
+// KeyVaultClientDeleteCertificateIssuerOptions contains the optional parameters for the KeyVaultClient.DeleteCertificateIssuer
+// method.
 type KeyVaultClientDeleteCertificateIssuerOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientDeleteCertificateOperationOptions contains the optional parameters for the KeyVaultClient.DeleteCertificateOperation method.
+// KeyVaultClientDeleteCertificateOperationOptions contains the optional parameters for the KeyVaultClient.DeleteCertificateOperation
+// method.
 type KeyVaultClientDeleteCertificateOperationOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2348,7 +2367,8 @@ type KeyVaultClientDeleteSecretOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientDeleteStorageAccountOptions contains the optional parameters for the KeyVaultClient.DeleteStorageAccount method.
+// KeyVaultClientDeleteStorageAccountOptions contains the optional parameters for the KeyVaultClient.DeleteStorageAccount
+// method.
 type KeyVaultClientDeleteStorageAccountOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2363,23 +2383,27 @@ type KeyVaultClientFullBackupStatusOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientGetCertificateContactsOptions contains the optional parameters for the KeyVaultClient.GetCertificateContacts method.
+// KeyVaultClientGetCertificateContactsOptions contains the optional parameters for the KeyVaultClient.GetCertificateContacts
+// method.
 type KeyVaultClientGetCertificateContactsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientGetCertificateIssuerOptions contains the optional parameters for the KeyVaultClient.GetCertificateIssuer method.
+// KeyVaultClientGetCertificateIssuerOptions contains the optional parameters for the KeyVaultClient.GetCertificateIssuer
+// method.
 type KeyVaultClientGetCertificateIssuerOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientGetCertificateIssuersOptions contains the optional parameters for the KeyVaultClient.GetCertificateIssuers method.
+// KeyVaultClientGetCertificateIssuersOptions contains the optional parameters for the KeyVaultClient.GetCertificateIssuers
+// method.
 type KeyVaultClientGetCertificateIssuersOptions struct {
 	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
 	Maxresults *int32
 }
 
-// KeyVaultClientGetCertificateOperationOptions contains the optional parameters for the KeyVaultClient.GetCertificateOperation method.
+// KeyVaultClientGetCertificateOperationOptions contains the optional parameters for the KeyVaultClient.GetCertificateOperation
+// method.
 type KeyVaultClientGetCertificateOperationOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2389,12 +2413,14 @@ type KeyVaultClientGetCertificateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientGetCertificatePolicyOptions contains the optional parameters for the KeyVaultClient.GetCertificatePolicy method.
+// KeyVaultClientGetCertificatePolicyOptions contains the optional parameters for the KeyVaultClient.GetCertificatePolicy
+// method.
 type KeyVaultClientGetCertificatePolicyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientGetCertificateVersionsOptions contains the optional parameters for the KeyVaultClient.GetCertificateVersions method.
+// KeyVaultClientGetCertificateVersionsOptions contains the optional parameters for the KeyVaultClient.GetCertificateVersions
+// method.
 type KeyVaultClientGetCertificateVersionsOptions struct {
 	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
 	Maxresults *int32
@@ -2408,12 +2434,14 @@ type KeyVaultClientGetCertificatesOptions struct {
 	Maxresults *int32
 }
 
-// KeyVaultClientGetDeletedCertificateOptions contains the optional parameters for the KeyVaultClient.GetDeletedCertificate method.
+// KeyVaultClientGetDeletedCertificateOptions contains the optional parameters for the KeyVaultClient.GetDeletedCertificate
+// method.
 type KeyVaultClientGetDeletedCertificateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientGetDeletedCertificatesOptions contains the optional parameters for the KeyVaultClient.GetDeletedCertificates method.
+// KeyVaultClientGetDeletedCertificatesOptions contains the optional parameters for the KeyVaultClient.GetDeletedCertificates
+// method.
 type KeyVaultClientGetDeletedCertificatesOptions struct {
 	// Specifies whether to include certificates which are not completely provisioned.
 	IncludePending *bool
@@ -2432,12 +2460,14 @@ type KeyVaultClientGetDeletedKeysOptions struct {
 	Maxresults *int32
 }
 
-// KeyVaultClientGetDeletedSasDefinitionOptions contains the optional parameters for the KeyVaultClient.GetDeletedSasDefinition method.
+// KeyVaultClientGetDeletedSasDefinitionOptions contains the optional parameters for the KeyVaultClient.GetDeletedSasDefinition
+// method.
 type KeyVaultClientGetDeletedSasDefinitionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientGetDeletedSasDefinitionsOptions contains the optional parameters for the KeyVaultClient.GetDeletedSasDefinitions method.
+// KeyVaultClientGetDeletedSasDefinitionsOptions contains the optional parameters for the KeyVaultClient.GetDeletedSasDefinitions
+// method.
 type KeyVaultClientGetDeletedSasDefinitionsOptions struct {
 	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
 	Maxresults *int32
@@ -2454,12 +2484,14 @@ type KeyVaultClientGetDeletedSecretsOptions struct {
 	Maxresults *int32
 }
 
-// KeyVaultClientGetDeletedStorageAccountOptions contains the optional parameters for the KeyVaultClient.GetDeletedStorageAccount method.
+// KeyVaultClientGetDeletedStorageAccountOptions contains the optional parameters for the KeyVaultClient.GetDeletedStorageAccount
+// method.
 type KeyVaultClientGetDeletedStorageAccountOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientGetDeletedStorageAccountsOptions contains the optional parameters for the KeyVaultClient.GetDeletedStorageAccounts method.
+// KeyVaultClientGetDeletedStorageAccountsOptions contains the optional parameters for the KeyVaultClient.GetDeletedStorageAccounts
+// method.
 type KeyVaultClientGetDeletedStorageAccountsOptions struct {
 	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
 	Maxresults *int32
@@ -2536,7 +2568,8 @@ type KeyVaultClientMergeCertificateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientPurgeDeletedCertificateOptions contains the optional parameters for the KeyVaultClient.PurgeDeletedCertificate method.
+// KeyVaultClientPurgeDeletedCertificateOptions contains the optional parameters for the KeyVaultClient.PurgeDeletedCertificate
+// method.
 type KeyVaultClientPurgeDeletedCertificateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2551,12 +2584,14 @@ type KeyVaultClientPurgeDeletedSecretOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientPurgeDeletedStorageAccountOptions contains the optional parameters for the KeyVaultClient.PurgeDeletedStorageAccount method.
+// KeyVaultClientPurgeDeletedStorageAccountOptions contains the optional parameters for the KeyVaultClient.PurgeDeletedStorageAccount
+// method.
 type KeyVaultClientPurgeDeletedStorageAccountOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientRecoverDeletedCertificateOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedCertificate method.
+// KeyVaultClientRecoverDeletedCertificateOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedCertificate
+// method.
 type KeyVaultClientRecoverDeletedCertificateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2566,22 +2601,26 @@ type KeyVaultClientRecoverDeletedKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientRecoverDeletedSasDefinitionOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedSasDefinition method.
+// KeyVaultClientRecoverDeletedSasDefinitionOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedSasDefinition
+// method.
 type KeyVaultClientRecoverDeletedSasDefinitionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientRecoverDeletedSecretOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedSecret method.
+// KeyVaultClientRecoverDeletedSecretOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedSecret
+// method.
 type KeyVaultClientRecoverDeletedSecretOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientRecoverDeletedStorageAccountOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedStorageAccount method.
+// KeyVaultClientRecoverDeletedStorageAccountOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedStorageAccount
+// method.
 type KeyVaultClientRecoverDeletedStorageAccountOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientRegenerateStorageAccountKeyOptions contains the optional parameters for the KeyVaultClient.RegenerateStorageAccountKey method.
+// KeyVaultClientRegenerateStorageAccountKeyOptions contains the optional parameters for the KeyVaultClient.RegenerateStorageAccountKey
+// method.
 type KeyVaultClientRegenerateStorageAccountKeyOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2606,17 +2645,20 @@ type KeyVaultClientRestoreStatusOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientRestoreStorageAccountOptions contains the optional parameters for the KeyVaultClient.RestoreStorageAccount method.
+// KeyVaultClientRestoreStorageAccountOptions contains the optional parameters for the KeyVaultClient.RestoreStorageAccount
+// method.
 type KeyVaultClientRestoreStorageAccountOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientSetCertificateContactsOptions contains the optional parameters for the KeyVaultClient.SetCertificateContacts method.
+// KeyVaultClientSetCertificateContactsOptions contains the optional parameters for the KeyVaultClient.SetCertificateContacts
+// method.
 type KeyVaultClientSetCertificateContactsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientSetCertificateIssuerOptions contains the optional parameters for the KeyVaultClient.SetCertificateIssuer method.
+// KeyVaultClientSetCertificateIssuerOptions contains the optional parameters for the KeyVaultClient.SetCertificateIssuer
+// method.
 type KeyVaultClientSetCertificateIssuerOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2646,12 +2688,14 @@ type KeyVaultClientUnwrapKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientUpdateCertificateIssuerOptions contains the optional parameters for the KeyVaultClient.UpdateCertificateIssuer method.
+// KeyVaultClientUpdateCertificateIssuerOptions contains the optional parameters for the KeyVaultClient.UpdateCertificateIssuer
+// method.
 type KeyVaultClientUpdateCertificateIssuerOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientUpdateCertificateOperationOptions contains the optional parameters for the KeyVaultClient.UpdateCertificateOperation method.
+// KeyVaultClientUpdateCertificateOperationOptions contains the optional parameters for the KeyVaultClient.UpdateCertificateOperation
+// method.
 type KeyVaultClientUpdateCertificateOperationOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2661,7 +2705,8 @@ type KeyVaultClientUpdateCertificateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientUpdateCertificatePolicyOptions contains the optional parameters for the KeyVaultClient.UpdateCertificatePolicy method.
+// KeyVaultClientUpdateCertificatePolicyOptions contains the optional parameters for the KeyVaultClient.UpdateCertificatePolicy
+// method.
 type KeyVaultClientUpdateCertificatePolicyOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2681,7 +2726,8 @@ type KeyVaultClientUpdateSecretOptions struct {
 	// placeholder for future optional parameters
 }
 
-// KeyVaultClientUpdateStorageAccountOptions contains the optional parameters for the KeyVaultClient.UpdateStorageAccount method.
+// KeyVaultClientUpdateStorageAccountOptions contains the optional parameters for the KeyVaultClient.UpdateStorageAccount
+// method.
 type KeyVaultClientUpdateStorageAccountOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2942,8 +2988,8 @@ func (r RoleAssignmentListResult) MarshalJSON() ([]byte, error) {
 
 // RoleAssignmentProperties - Role assignment properties.
 type RoleAssignmentProperties struct {
-	// REQUIRED; The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security
-	// group.
+	// REQUIRED; The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user,
+	// service principal, or security group.
 	PrincipalID *string `json:"principalId,omitempty"`
 
 	// REQUIRED; The role definition ID used in the role assignment.
@@ -2979,8 +3025,9 @@ type RoleAssignmentsGetOptions struct {
 
 // RoleAssignmentsListForScopeOptions contains the optional parameters for the RoleAssignments.ListForScope method.
 type RoleAssignmentsListForScopeOptions struct {
-	// The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to
-	// return all role assignments at, above or below the scope for the specified principal.
+	// The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId
+	// eq {id} to return all role assignments at, above or below the
+	// scope for the specified principal.
 	Filter *string
 }
 
@@ -3097,8 +3144,8 @@ type SasDefinitionAttributes struct {
 	// READ-ONLY; softDelete data retention days. Value should be >=7 and <=90 when softDelete enabled, otherwise 0.
 	RecoverableDays *int32 `json:"recoverableDays,omitempty" azure:"ro"`
 
-	// READ-ONLY; Reflects the deletion recovery level currently in effect for SAS definitions in the current vault. If it contains 'Purgeable' the SAS definition
-	// can be permanently deleted by a privileged user;
+	// READ-ONLY; Reflects the deletion recovery level currently in effect for SAS definitions in the current vault. If it contains
+	// 'Purgeable' the SAS definition can be permanently deleted by a privileged user;
 	// otherwise, only the system can purge the SAS definition, at the end of the retention interval.
 	RecoveryLevel *DeletionRecoveryLevel `json:"recoveryLevel,omitempty" azure:"ro"`
 
@@ -3166,8 +3213,8 @@ type SasDefinitionBundle struct {
 	// READ-ONLY; Application specific metadata in the form of key-value pairs
 	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
 
-	// READ-ONLY; The SAS definition token template signed with an arbitrary key. Tokens created according to the SAS definition will have the same properties
-	// as the template.
+	// READ-ONLY; The SAS definition token template signed with an arbitrary key. Tokens created according to the SAS definition
+	// will have the same properties as the template.
 	TemplateURI *string `json:"templateUri,omitempty" azure:"ro"`
 
 	// READ-ONLY; The validity period of SAS tokens created according to the SAS definition.
@@ -3238,8 +3285,8 @@ type SasDefinitionCreateParameters struct {
 	// REQUIRED; The type of SAS token the SAS definition will create.
 	SasType *SasTokenType `json:"sasType,omitempty"`
 
-	// REQUIRED; The SAS definition token template signed with an arbitrary key. Tokens created according to the SAS definition will have the same properties
-	// as the template.
+	// REQUIRED; The SAS definition token template signed with an arbitrary key. Tokens created according to the SAS definition
+	// will have the same properties as the template.
 	TemplateURI *string `json:"templateUri,omitempty"`
 
 	// REQUIRED; The validity period of SAS tokens created according to the SAS definition.
@@ -3353,7 +3400,8 @@ type SasDefinitionUpdateParameters struct {
 	// Application specific metadata in the form of key-value pairs.
 	Tags map[string]*string `json:"tags,omitempty"`
 
-	// The SAS definition token template signed with an arbitrary key. Tokens created according to the SAS definition will have the same properties as the template.
+	// The SAS definition token template signed with an arbitrary key. Tokens created according to the SAS definition will have
+	// the same properties as the template.
 	TemplateURI *string `json:"templateUri,omitempty"`
 
 	// The validity period of SAS tokens created according to the SAS definition.
@@ -3377,8 +3425,8 @@ type SecretAttributes struct {
 	// READ-ONLY; softDelete data retention days. Value should be >=7 and <=90 when softDelete enabled, otherwise 0.
 	RecoverableDays *int32 `json:"recoverableDays,omitempty" azure:"ro"`
 
-	// READ-ONLY; Reflects the deletion recovery level currently in effect for secrets in the current vault. If it contains 'Purgeable', the secret can be permanently
-	// deleted by a privileged user; otherwise, only the
+	// READ-ONLY; Reflects the deletion recovery level currently in effect for secrets in the current vault. If it contains 'Purgeable',
+	// the secret can be permanently deleted by a privileged user; otherwise, only the
 	// system can purge the secret, at the end of the retention interval.
 	RecoveryLevel *DeletionRecoveryLevel `json:"recoveryLevel,omitempty" azure:"ro"`
 }
@@ -3435,10 +3483,12 @@ type SecretBundle struct {
 	// The secret value.
 	Value *string `json:"value,omitempty"`
 
-	// READ-ONLY; If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV certificate.
+	// READ-ONLY; If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV
+	// certificate.
 	Kid *string `json:"kid,omitempty" azure:"ro"`
 
-	// READ-ONLY; True if the secret's lifetime is managed by key vault. If this is a secret backing a certificate, then managed will be true.
+	// READ-ONLY; True if the secret's lifetime is managed by key vault. If this is a secret backing a certificate, then managed
+	// will be true.
 	Managed *bool `json:"managed,omitempty" azure:"ro"`
 }
 
@@ -3515,7 +3565,8 @@ type SecretItem struct {
 	// Application specific metadata in the form of key-value pairs.
 	Tags map[string]*string `json:"tags,omitempty"`
 
-	// READ-ONLY; True if the secret's lifetime is managed by key vault. If this is a key backing a certificate, then managed will be true.
+	// READ-ONLY; True if the secret's lifetime is managed by key vault. If this is a key backing a certificate, then managed
+	// will be true.
 	Managed *bool `json:"managed,omitempty" azure:"ro"`
 }
 
@@ -3690,8 +3741,8 @@ type SecurityDomainJSONWebKey struct {
 	// REQUIRED; Key identifier.
 	Kid *string `json:"kid,omitempty"`
 
-	// REQUIRED; JsonWebKey Key Type (kty), as defined in https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40. For Security Domain this value
-	// must be RSA.
+	// REQUIRED; JsonWebKey Key Type (kty), as defined in https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40.
+	// For Security Domain this value must be RSA.
 	Kty *string `json:"kty,omitempty"`
 
 	// REQUIRED; RSA modulus.
@@ -3825,8 +3876,8 @@ type StorageAccountAttributes struct {
 	// READ-ONLY; softDelete data retention days. Value should be >=7 and <=90 when softDelete enabled, otherwise 0.
 	RecoverableDays *int32 `json:"recoverableDays,omitempty" azure:"ro"`
 
-	// READ-ONLY; Reflects the deletion recovery level currently in effect for storage accounts in the current vault. If it contains 'Purgeable' the storage
-	// account can be permanently deleted by a privileged user;
+	// READ-ONLY; Reflects the deletion recovery level currently in effect for storage accounts in the current vault. If it contains
+	// 'Purgeable' the storage account can be permanently deleted by a privileged user;
 	// otherwise, only the system can purge the storage account, at the end of the retention interval.
 	RecoveryLevel *DeletionRecoveryLevel `json:"recoveryLevel,omitempty" azure:"ro"`
 
@@ -4095,7 +4146,8 @@ type StorageListResult struct {
 	// READ-ONLY; The URL to get the next set of storage accounts.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
-	// READ-ONLY; A response message containing a list of storage accounts in the key vault along with a link to the next page of storage accounts.
+	// READ-ONLY; A response message containing a list of storage accounts in the key vault along with a link to the next page
+	// of storage accounts.
 	Value []*StorageAccountItem `json:"value,omitempty" azure:"ro"`
 }
 
@@ -4171,8 +4223,8 @@ type TransferKey struct {
 
 // Trigger - A condition to be satisfied for an action to be executed.
 type Trigger struct {
-	// Days before expiry to attempt renewal. Value should be between 1 and validityinmonths multiplied by 27. If validityinmonths is 36, then value should
-	// be between 1 and 972 (36 * 27).
+	// Days before expiry to attempt renewal. Value should be between 1 and validityinmonths multiplied by 27. If validityinmonths
+	// is 36, then value should be between 1 and 972 (36 * 27).
 	DaysBeforeExpiry *int32 `json:"days_before_expiry,omitempty"`
 
 	// Percentage of lifetime at which to trigger. Value should be between 1 and 99.

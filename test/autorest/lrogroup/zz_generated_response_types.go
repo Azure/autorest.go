@@ -126,7 +126,8 @@ func (l LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse) PollUn
 	return respType, nil
 }
 
-// Resume rehydrates a LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse from the provided client and resume token.
+// Resume rehydrates a LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse from the provided client and resume
+// token.
 func (l *LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse) Resume(ctx context.Context, client *LRORetrysClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.DeleteProvisioning202Accepted200Succeeded", token, client.pl, client.deleteProvisioning202Accepted200SucceededHandleError)
 	if err != nil {
@@ -594,7 +595,8 @@ func (l LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse) PollUnt
 	return respType, nil
 }
 
-// Resume rehydrates a LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse from the provided client and resume token.
+// Resume rehydrates a LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse from the provided client and resume
+// token.
 func (l *LROSADsDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetryInvalidJSONPolling", token, client.pl, client.deleteAsyncRelativeRetryInvalidJSONPollingHandleError)
 	if err != nil {

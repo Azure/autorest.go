@@ -31,8 +31,9 @@ type GalleryApplicationsClient struct {
 }
 
 // NewGalleryApplicationsClient creates a new instance of GalleryApplicationsClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewGalleryApplicationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *GalleryApplicationsClient {
 	cp := arm.ClientOptions{}
@@ -54,9 +55,12 @@ func NewGalleryApplicationsClient(subscriptionID string, credential azcore.Token
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition is to be created.
-// galleryApplicationName - The name of the gallery Application Definition to be created or updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters.
+// galleryApplicationName - The name of the gallery Application Definition to be created or updated. The allowed characters
+// are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80
+// characters.
 // galleryApplication - Parameters supplied to the create or update gallery Application operation.
-// options - GalleryApplicationsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryApplications.BeginCreateOrUpdate method.
+// options - GalleryApplicationsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryApplications.BeginCreateOrUpdate
+// method.
 func (client *GalleryApplicationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication, options *GalleryApplicationsBeginCreateOrUpdateOptions) (GalleryApplicationsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)
 	if err != nil {
@@ -140,7 +144,8 @@ func (client *GalleryApplicationsClient) createOrUpdateHandleError(resp *http.Re
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition is to be deleted.
 // galleryApplicationName - The name of the gallery Application Definition to be deleted.
-// options - GalleryApplicationsBeginDeleteOptions contains the optional parameters for the GalleryApplications.BeginDelete method.
+// options - GalleryApplicationsBeginDeleteOptions contains the optional parameters for the GalleryApplications.BeginDelete
+// method.
 func (client *GalleryApplicationsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsBeginDeleteOptions) (GalleryApplicationsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryApplicationName, options)
 	if err != nil {
@@ -296,7 +301,8 @@ func (client *GalleryApplicationsClient) getHandleError(resp *http.Response) err
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery from which Application Definitions are to be listed.
-// options - GalleryApplicationsListByGalleryOptions contains the optional parameters for the GalleryApplications.ListByGallery method.
+// options - GalleryApplicationsListByGalleryOptions contains the optional parameters for the GalleryApplications.ListByGallery
+// method.
 func (client *GalleryApplicationsClient) ListByGallery(resourceGroupName string, galleryName string, options *GalleryApplicationsListByGalleryOptions) *GalleryApplicationsListByGalleryPager {
 	return &GalleryApplicationsListByGalleryPager{
 		client: client,
@@ -361,9 +367,12 @@ func (client *GalleryApplicationsClient) listByGalleryHandleError(resp *http.Res
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition is to be updated.
-// galleryApplicationName - The name of the gallery Application Definition to be updated. The allowed characters are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters.
+// galleryApplicationName - The name of the gallery Application Definition to be updated. The allowed characters are alphabets
+// and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80
+// characters.
 // galleryApplication - Parameters supplied to the update gallery Application operation.
-// options - GalleryApplicationsBeginUpdateOptions contains the optional parameters for the GalleryApplications.BeginUpdate method.
+// options - GalleryApplicationsBeginUpdateOptions contains the optional parameters for the GalleryApplications.BeginUpdate
+// method.
 func (client *GalleryApplicationsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplicationUpdate, options *GalleryApplicationsBeginUpdateOptions) (GalleryApplicationsUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)
 	if err != nil {

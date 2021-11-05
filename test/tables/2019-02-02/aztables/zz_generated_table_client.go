@@ -207,7 +207,8 @@ func (client *TableClient) deleteHandleError(resp *http.Response) error {
 // table - The name of the table.
 // partitionKey - The partition key of the entity.
 // rowKey - The row key of the entity.
-// ifMatch - Match condition for an entity to be deleted. If specified and a matching entity is not found, an error will be raised. To force an unconditional delete, set to the wildcard character (*).
+// ifMatch - Match condition for an entity to be deleted. If specified and a matching entity is not found, an error will be
+// raised. To force an unconditional delete, set to the wildcard character (*).
 // options - TableDeleteEntityOptions contains the optional parameters for the Table.DeleteEntity method.
 func (client *TableClient) DeleteEntity(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, ifMatch string, options *TableDeleteEntityOptions) (TableDeleteEntityResponse, error) {
 	req, err := client.deleteEntityCreateRequest(ctx, dataServiceVersion, table, partitionKey, rowKey, ifMatch, options)
@@ -296,7 +297,8 @@ func (client *TableClient) deleteEntityHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetAccessPolicy - Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures.
+// GetAccessPolicy - Retrieves details about any stored access policies specified on the table that may be used with Shared
+// Access Signatures.
 // If the operation fails it returns the *TableServiceError error type.
 // table - The name of the table.
 // comp - Required query string to handle stored access policies for the table that may be used with Shared Access Signatures.
@@ -787,7 +789,8 @@ func (client *TableClient) queryEntitiesHandleError(resp *http.Response) error {
 // table - The name of the table.
 // partitionKey - The partition key of the entity.
 // rowKey - The row key of the entity.
-// options - TableQueryEntityWithPartitionAndRowKeyOptions contains the optional parameters for the Table.QueryEntityWithPartitionAndRowKey method.
+// options - TableQueryEntityWithPartitionAndRowKeyOptions contains the optional parameters for the Table.QueryEntityWithPartitionAndRowKey
+// method.
 func (client *TableClient) QueryEntityWithPartitionAndRowKey(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, options *TableQueryEntityWithPartitionAndRowKeyOptions) (TableQueryEntityWithPartitionAndRowKeyResponse, error) {
 	req, err := client.queryEntityWithPartitionAndRowKeyCreateRequest(ctx, dataServiceVersion, table, partitionKey, rowKey, options)
 	if err != nil {

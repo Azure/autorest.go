@@ -39,7 +39,8 @@ func newDataFlowClient(endpoint string, pl runtime.Pipeline) *dataFlowClient {
 // If the operation fails it returns the *CloudError error type.
 // dataFlowName - The data flow name.
 // dataFlow - Data flow resource definition.
-// options - DataFlowBeginCreateOrUpdateDataFlowOptions contains the optional parameters for the DataFlow.BeginCreateOrUpdateDataFlow method.
+// options - DataFlowBeginCreateOrUpdateDataFlowOptions contains the optional parameters for the DataFlow.BeginCreateOrUpdateDataFlow
+// method.
 func (client *dataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *DataFlowBeginCreateOrUpdateDataFlowOptions) (DataFlowCreateOrUpdateDataFlowPollerResponse, error) {
 	resp, err := client.createOrUpdateDataFlow(ctx, dataFlowName, dataFlow, options)
 	if err != nil {
@@ -243,7 +244,8 @@ func (client *dataFlowClient) getDataFlowHandleError(resp *http.Response) error 
 
 // GetDataFlowsByWorkspace - Lists data flows.
 // If the operation fails it returns the *CloudError error type.
-// options - DataFlowGetDataFlowsByWorkspaceOptions contains the optional parameters for the DataFlow.GetDataFlowsByWorkspace method.
+// options - DataFlowGetDataFlowsByWorkspaceOptions contains the optional parameters for the DataFlow.GetDataFlowsByWorkspace
+// method.
 func (client *dataFlowClient) GetDataFlowsByWorkspace(options *DataFlowGetDataFlowsByWorkspaceOptions) *DataFlowGetDataFlowsByWorkspacePager {
 	return &DataFlowGetDataFlowsByWorkspacePager{
 		client: client,

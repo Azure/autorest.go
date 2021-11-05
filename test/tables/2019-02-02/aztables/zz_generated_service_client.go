@@ -39,7 +39,8 @@ func NewServiceClient(endpoint string, version Enum0, pl runtime.Pipeline) *Serv
 	return client
 }
 
-// GetProperties - Gets the properties of an account's Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules.
+// GetProperties - Gets the properties of an account's Table service, including properties for Analytics and CORS (Cross-Origin
+// Resource Sharing) rules.
 // If the operation fails it returns the *TableServiceError error type.
 // restype - Required query string to set the service properties.
 // comp - Required query string to set the service properties.
@@ -111,8 +112,8 @@ func (client *ServiceClient) getPropertiesHandleError(resp *http.Response) error
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetStatistics - Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access
-// geo-redundant replication is enabled for the account.
+// GetStatistics - Retrieves statistics related to replication for the Table service. It is only available on the secondary
+// location endpoint when read-access geo-redundant replication is enabled for the account.
 // If the operation fails it returns the *TableServiceError error type.
 // restype - Required query string to get service stats.
 // comp - Required query string to get service stats.
@@ -191,8 +192,8 @@ func (client *ServiceClient) getStatisticsHandleError(resp *http.Response) error
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// SetProperties - Sets properties for an account's Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing)
-// rules.
+// SetProperties - Sets properties for an account's Table service endpoint, including properties for Analytics and CORS (Cross-Origin
+// Resource Sharing) rules.
 // If the operation fails it returns the *TableServiceError error type.
 // restype - Required query string to set the service properties.
 // comp - Required query string to set the service properties.

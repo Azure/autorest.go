@@ -30,8 +30,9 @@ type DedicatedHostsClient struct {
 }
 
 // NewDedicatedHostsClient creates a new instance of DedicatedHostsClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewDedicatedHostsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *DedicatedHostsClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewDedicatedHostsClient(subscriptionID string, credential azcore.TokenCrede
 // hostGroupName - The name of the dedicated host group.
 // hostName - The name of the dedicated host .
 // parameters - Parameters supplied to the Create Dedicated Host.
-// options - DedicatedHostsBeginCreateOrUpdateOptions contains the optional parameters for the DedicatedHosts.BeginCreateOrUpdate method.
+// options - DedicatedHostsBeginCreateOrUpdateOptions contains the optional parameters for the DedicatedHosts.BeginCreateOrUpdate
+// method.
 func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsBeginCreateOrUpdateOptions) (DedicatedHostsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 	if err != nil {
@@ -290,12 +292,13 @@ func (client *DedicatedHostsClient) getHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// ListByHostGroup - Lists all of the dedicated hosts in the specified dedicated host group. Use the nextLink property in the response to get the next page
-// of dedicated hosts.
+// ListByHostGroup - Lists all of the dedicated hosts in the specified dedicated host group. Use the nextLink property in
+// the response to get the next page of dedicated hosts.
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.
-// options - DedicatedHostsListByHostGroupOptions contains the optional parameters for the DedicatedHosts.ListByHostGroup method.
+// options - DedicatedHostsListByHostGroupOptions contains the optional parameters for the DedicatedHosts.ListByHostGroup
+// method.
 func (client *DedicatedHostsClient) ListByHostGroup(resourceGroupName string, hostGroupName string, options *DedicatedHostsListByHostGroupOptions) *DedicatedHostsListByHostGroupPager {
 	return &DedicatedHostsListByHostGroupPager{
 		client: client,

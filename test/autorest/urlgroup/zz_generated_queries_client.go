@@ -134,7 +134,8 @@ func (client *QueriesClient) arrayStringCSVNullHandleError(resp *http.Response) 
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
+// ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array
+// format
 // If the operation fails it returns the *Error error type.
 // options - QueriesArrayStringCSVValidOptions contains the optional parameters for the Queries.ArrayStringCSVValid method.
 func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (QueriesArrayStringCSVValidResponse, error) {
@@ -181,10 +182,11 @@ func (client *QueriesClient) arrayStringCSVValidHandleError(resp *http.Response)
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello', 'nihao', 'bonjour'] for the
-// 'arrayQuery' parameter to the service
+// ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello',
+// 'nihao', 'bonjour'] for the 'arrayQuery' parameter to the service
 // If the operation fails it returns the *Error error type.
-// options - QueriesArrayStringNoCollectionFormatEmptyOptions contains the optional parameters for the Queries.ArrayStringNoCollectionFormatEmpty method.
+// options - QueriesArrayStringNoCollectionFormatEmptyOptions contains the optional parameters for the Queries.ArrayStringNoCollectionFormatEmpty
+// method.
 func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Context, options *QueriesArrayStringNoCollectionFormatEmptyOptions) (QueriesArrayStringNoCollectionFormatEmptyResponse, error) {
 	req, err := client.arrayStringNoCollectionFormatEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -229,7 +231,8 @@ func (client *QueriesClient) arrayStringNoCollectionFormatEmptyHandleError(resp 
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
+// ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array
+// format
 // If the operation fails it returns the *Error error type.
 // options - QueriesArrayStringPipesValidOptions contains the optional parameters for the Queries.ArrayStringPipesValid method.
 func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options *QueriesArrayStringPipesValidOptions) (QueriesArrayStringPipesValidResponse, error) {
@@ -276,7 +279,8 @@ func (client *QueriesClient) arrayStringPipesValidHandleError(resp *http.Respons
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
+// ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array
+// format
 // If the operation fails it returns the *Error error type.
 // options - QueriesArrayStringSsvValidOptions contains the optional parameters for the Queries.ArrayStringSsvValid method.
 func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *QueriesArrayStringSsvValidOptions) (QueriesArrayStringSsvValidResponse, error) {
@@ -323,7 +327,8 @@ func (client *QueriesClient) arrayStringSsvValidHandleError(resp *http.Response)
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
+// ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array
+// format
 // If the operation fails it returns the *Error error type.
 // options - QueriesArrayStringTsvValidOptions contains the optional parameters for the Queries.ArrayStringTsvValid method.
 func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *QueriesArrayStringTsvValidOptions) (QueriesArrayStringTsvValidResponse, error) {
@@ -973,7 +978,8 @@ func (client *QueriesClient) floatNullHandleError(resp *http.Response) error {
 
 // FloatScientificNegative - Get '-1.034E-20' numeric value
 // If the operation fails it returns the *Error error type.
-// options - QueriesFloatScientificNegativeOptions contains the optional parameters for the Queries.FloatScientificNegative method.
+// options - QueriesFloatScientificNegativeOptions contains the optional parameters for the Queries.FloatScientificNegative
+// method.
 func (client *QueriesClient) FloatScientificNegative(ctx context.Context, options *QueriesFloatScientificNegativeOptions) (QueriesFloatScientificNegativeResponse, error) {
 	req, err := client.floatScientificNegativeCreateRequest(ctx, options)
 	if err != nil {
@@ -1018,7 +1024,8 @@ func (client *QueriesClient) floatScientificNegativeHandleError(resp *http.Respo
 
 // FloatScientificPositive - Get '1.034E+20' numeric value
 // If the operation fails it returns the *Error error type.
-// options - QueriesFloatScientificPositiveOptions contains the optional parameters for the Queries.FloatScientificPositive method.
+// options - QueriesFloatScientificPositiveOptions contains the optional parameters for the Queries.FloatScientificPositive
+// method.
 func (client *QueriesClient) FloatScientificPositive(ctx context.Context, options *QueriesFloatScientificPositiveOptions) (QueriesFloatScientificPositiveResponse, error) {
 	req, err := client.floatScientificPositiveCreateRequest(ctx, options)
 	if err != nil {
@@ -1200,7 +1207,8 @@ func (client *QueriesClient) getBooleanTrueHandleError(resp *http.Response) erro
 
 // GetIntNegativeOneMillion - Get '-1000000' integer value
 // If the operation fails it returns the *Error error type.
-// options - QueriesGetIntNegativeOneMillionOptions contains the optional parameters for the Queries.GetIntNegativeOneMillion method.
+// options - QueriesGetIntNegativeOneMillionOptions contains the optional parameters for the Queries.GetIntNegativeOneMillion
+// method.
 func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, options *QueriesGetIntNegativeOneMillionOptions) (QueriesGetIntNegativeOneMillionResponse, error) {
 	req, err := client.getIntNegativeOneMillionCreateRequest(ctx, options)
 	if err != nil {

@@ -31,8 +31,9 @@ type SecurityRulesClient struct {
 }
 
 // NewSecurityRulesClient creates a new instance of SecurityRulesClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewSecurityRulesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *SecurityRulesClient {
 	cp := arm.ClientOptions{}
@@ -56,7 +57,8 @@ func NewSecurityRulesClient(subscriptionID string, credential azcore.TokenCreden
 // networkSecurityGroupName - The name of the network security group.
 // securityRuleName - The name of the security rule.
 // securityRuleParameters - Parameters supplied to the create or update network security rule operation.
-// options - SecurityRulesBeginCreateOrUpdateOptions contains the optional parameters for the SecurityRules.BeginCreateOrUpdate method.
+// options - SecurityRulesBeginCreateOrUpdateOptions contains the optional parameters for the SecurityRules.BeginCreateOrUpdate
+// method.
 func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (SecurityRulesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, options)
 	if err != nil {

@@ -31,8 +31,9 @@ type ExpressRouteConnectionsClient struct {
 }
 
 // NewExpressRouteConnectionsClient creates a new instance of ExpressRouteConnectionsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewExpressRouteConnectionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ExpressRouteConnectionsClient {
 	cp := arm.ClientOptions{}
@@ -56,7 +57,8 @@ func NewExpressRouteConnectionsClient(subscriptionID string, credential azcore.T
 // expressRouteGatewayName - The name of the ExpressRoute gateway.
 // connectionName - The name of the connection subresource.
 // putExpressRouteConnectionParameters - Parameters required in an ExpressRouteConnection PUT operation.
-// options - ExpressRouteConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteConnections.BeginCreateOrUpdate method.
+// options - ExpressRouteConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteConnections.BeginCreateOrUpdate
+// method.
 func (client *ExpressRouteConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, putExpressRouteConnectionParameters ExpressRouteConnection, options *ExpressRouteConnectionsBeginCreateOrUpdateOptions) (ExpressRouteConnectionsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, expressRouteGatewayName, connectionName, putExpressRouteConnectionParameters, options)
 	if err != nil {
@@ -140,7 +142,8 @@ func (client *ExpressRouteConnectionsClient) createOrUpdateHandleError(resp *htt
 // resourceGroupName - The name of the resource group.
 // expressRouteGatewayName - The name of the ExpressRoute gateway.
 // connectionName - The name of the connection subresource.
-// options - ExpressRouteConnectionsBeginDeleteOptions contains the optional parameters for the ExpressRouteConnections.BeginDelete method.
+// options - ExpressRouteConnectionsBeginDeleteOptions contains the optional parameters for the ExpressRouteConnections.BeginDelete
+// method.
 func (client *ExpressRouteConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, connectionName string, options *ExpressRouteConnectionsBeginDeleteOptions) (ExpressRouteConnectionsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, expressRouteGatewayName, connectionName, options)
 	if err != nil {

@@ -15,11 +15,12 @@ import (
 	"time"
 )
 
-// AggregatedCostGetByManagementGroupOptions contains the optional parameters for the AggregatedCost.GetByManagementGroup method.
+// AggregatedCostGetByManagementGroupOptions contains the optional parameters for the AggregatedCost.GetByManagementGroup
+// method.
 type AggregatedCostGetByManagementGroupOptions struct {
-	// May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports 'eq', 'lt', 'gt', 'le',
-	// 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon
-	// (:).
+	// May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports
+	// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support
+	// 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:).
 	Filter *string
 }
 
@@ -176,7 +177,8 @@ type BalancesGetByBillingAccountOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BalancesGetForBillingPeriodByBillingAccountOptions contains the optional parameters for the Balances.GetForBillingPeriodByBillingAccount method.
+// BalancesGetForBillingPeriodByBillingAccountOptions contains the optional parameters for the Balances.GetForBillingPeriodByBillingAccount
+// method.
 type BalancesGetForBillingPeriodByBillingAccountOptions struct {
 	// placeholder for future optional parameters
 }
@@ -251,13 +253,14 @@ type BudgetProperties struct {
 	// REQUIRED; The category of the budget, whether the budget tracks cost or usage.
 	Category *CategoryType `json:"category,omitempty"`
 
-	// REQUIRED; The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual
-	// are only supported by WD customers
+	// REQUIRED; The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter,
+	// and BillingAnnual are only supported by WD customers
 	TimeGrain *TimeGrainType `json:"timeGrain,omitempty"`
 
-	// REQUIRED; Has start and end date of the budget. The start date must be first of the month and should be less than the end date. Budget start date must
-	// be on or after June 1, 2017. Future start date should not
-	// be more than twelve months. Past start date should be selected within the timegrain period. There are no restrictions on the end date.
+	// REQUIRED; Has start and end date of the budget. The start date must be first of the month and should be less than the end
+	// date. Budget start date must be on or after June 1, 2017. Future start date should not
+	// be more than twelve months. Past start date should be selected within the timegrain period. There are no restrictions on
+	// the end date.
 	TimePeriod *BudgetTimePeriod `json:"timePeriod,omitempty"`
 
 	// May be used to filter budgets by user-specified dimensions and/or tags.
@@ -418,13 +421,15 @@ func (c *ChargeSummary) unmarshalInternal(rawMsg map[string]json.RawMessage) err
 
 // ChargesListOptions contains the optional parameters for the Charges.List method.
 type ChargesListOptions struct {
-	// May be used to group charges for billingAccount scope by properties/billingProfileId, properties/invoiceSectionId, properties/customerId (specific for
-	// Partner Led), or for billingProfile scope by properties/invoiceSectionId.
+	// May be used to group charges for billingAccount scope by properties/billingProfileId, properties/invoiceSectionId, properties/customerId
+	// (specific for Partner Led), or for billingProfile scope by
+	// properties/invoiceSectionId.
 	Apply *string
 	// End date
 	EndDate *string
-	// May be used to filter charges by properties/usageEnd (Utc time), properties/usageStart (Utc time). The filter supports 'eq', 'lt', 'gt', 'le', 'ge',
-	// and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:).
+	// May be used to filter charges by properties/usageEnd (Utc time), properties/usageStart (Utc time). The filter supports
+	// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne',
+	// 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:).
 	Filter *string
 	// Start date
 	StartDate *string
@@ -572,12 +577,15 @@ type ErrorDetails struct {
 	Message *string `json:"message,omitempty" azure:"ro"`
 }
 
-// ErrorResponse - Error response indicates that the service is not able to process the incoming request. The reason is provided in the error message.
+// ErrorResponse - Error response indicates that the service is not able to process the incoming request. The reason is provided
+// in the error message.
 // Some Error responses:
-// * 429 TooManyRequests - Request is throttled. Retry after waiting for the time specified in the "x-ms-ratelimit-microsoft.consumption-retry-after" header.
+// * 429 TooManyRequests - Request is throttled. Retry after waiting for the time specified in the "x-ms-ratelimit-microsoft.consumption-retry-after"
+// header.
 //
 //
-// * 503 ServiceUnavailable - Service is temporarily unavailable. Retry after waiting for the time specified in the "Retry-After" header.
+// * 503 ServiceUnavailable - Service is temporarily unavailable. Retry after waiting for the time specified in the "Retry-After"
+// header.
 // Implements the error and azcore.HTTPResponse interfaces.
 type ErrorResponse struct {
 	raw string
@@ -839,8 +847,8 @@ type ForecastProperties struct {
 	// The type of the charge. Could be actual or forecast
 	ChargeType *ChargeType `json:"chargeType,omitempty"`
 
-	// The granularity of forecast. Please note that Yearly is not currently supported in this API. The API will provide responses in the Monthly grain if Yearly
-	// is selected. To get yearly grain data, please
+	// The granularity of forecast. Please note that Yearly is not currently supported in this API. The API will provide responses
+	// in the Monthly grain if Yearly is selected. To get yearly grain data, please
 	// use our newer Forecast API.
 	Grain *Grain `json:"grain,omitempty"`
 
@@ -882,8 +890,8 @@ type ForecastPropertiesConfidenceLevelsItem struct {
 
 // ForecastSpend - The forecasted cost which is being tracked for a budget.
 type ForecastSpend struct {
-	// READ-ONLY; The forecasted cost for the total time period which is being tracked by the budget. This value is only provided if the budget contains a forecast
-	// alert type.
+	// READ-ONLY; The forecasted cost for the total time period which is being tracked by the budget. This value is only provided
+	// if the budget contains a forecast alert type.
 	Amount *float64 `json:"amount,omitempty" azure:"ro"`
 
 	// READ-ONLY; The unit of measure for the budget amount.
@@ -892,8 +900,9 @@ type ForecastSpend struct {
 
 // ForecastsListOptions contains the optional parameters for the Forecasts.List method.
 type ForecastsListOptions struct {
-	// May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt',
-	// 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'.
+	// May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter
+	// supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently
+	// support 'ne', 'or', or 'not'.
 	Filter *string
 }
 
@@ -919,12 +928,15 @@ type HighCasedErrorDetails struct {
 	Message *string `json:"message,omitempty" azure:"ro"`
 }
 
-// HighCasedErrorResponse - Error response indicates that the service is not able to process the incoming request. The reason is provided in the error message.
+// HighCasedErrorResponse - Error response indicates that the service is not able to process the incoming request. The reason
+// is provided in the error message.
 // Some Error responses:
-// * 429 TooManyRequests - Request is throttled. Retry after waiting for the time specified in the "x-ms-ratelimit-microsoft.consumption-retry-after" header.
+// * 429 TooManyRequests - Request is throttled. Retry after waiting for the time specified in the "x-ms-ratelimit-microsoft.consumption-retry-after"
+// header.
 //
 //
-// * 503 ServiceUnavailable - Service is temporarily unavailable. Retry after waiting for the time specified in the "Retry-After" header.
+// * 503 ServiceUnavailable - Service is temporarily unavailable. Retry after waiting for the time specified in the "Retry-After"
+// header.
 // Implements the error and azcore.HTTPResponse interfaces.
 type HighCasedErrorResponse struct {
 	raw string
@@ -1227,8 +1239,8 @@ type LegacyReservationTransactionProperties struct {
 	// READ-ONLY; The region of the transaction.
 	Region *string `json:"region,omitempty" azure:"ro"`
 
-	// READ-ONLY; The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction.
-	// A reservation order contains reservations. The reservation
+	// READ-ONLY; The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents
+	// a single purchase transaction. A reservation order contains reservations. The reservation
 	// order specifies the VM size and region for the reservations.
 	ReservationOrderID *string `json:"reservationOrderId,omitempty" azure:"ro"`
 
@@ -1388,8 +1400,8 @@ type LegacyUsageDetailProperties struct {
 	// READ-ONLY; Account Owner Id.
 	AccountOwnerID *string `json:"accountOwnerId,omitempty" azure:"ro"`
 
-	// READ-ONLY; Additional details of this usage item. By default this is not populated, unless it's specified in $expand. Use this field to get usage line
-	// item specific details such as the actual VM Size
+	// READ-ONLY; Additional details of this usage item. By default this is not populated, unless it's specified in $expand. Use
+	// this field to get usage line item specific details such as the actual VM Size
 	// (ServiceType) or the ratio in which the reservation discount is applied.
 	AdditionalInfo *string `json:"additionalInfo,omitempty" azure:"ro"`
 
@@ -1417,8 +1429,8 @@ type LegacyUsageDetailProperties struct {
 	// READ-ONLY; Indicates a charge represents credits, usage, a Marketplace purchase, a reservation fee, or a refund.
 	ChargeType *string `json:"chargeType,omitempty" azure:"ro"`
 
-	// READ-ONLY; Consumed service name. Name of the azure resource provider that emits the usage or was purchased. This value is not provided for marketplace
-	// usage.
+	// READ-ONLY; Consumed service name. Name of the azure resource provider that emits the usage or was purchased. This value
+	// is not provided for marketplace usage.
 	ConsumedService *string `json:"consumedService,omitempty" azure:"ro"`
 
 	// READ-ONLY; The amount of cost before tax.
@@ -1433,8 +1445,8 @@ type LegacyUsageDetailProperties struct {
 	// READ-ONLY; Effective Price that's charged for the usage.
 	EffectivePrice *float64 `json:"effectivePrice,omitempty" azure:"ro"`
 
-	// READ-ONLY; Indicates how frequently this charge will occur. OneTime for purchases which only happen once, Monthly for fees which recur every month, and
-	// UsageBased for charges based on how much a service is used.
+	// READ-ONLY; Indicates how frequently this charge will occur. OneTime for purchases which only happen once, Monthly for fees
+	// which recur every month, and UsageBased for charges based on how much a service is used.
 	Frequency *string `json:"frequency,omitempty" azure:"ro"`
 
 	// READ-ONLY; Invoice Section Name.
@@ -1446,8 +1458,8 @@ type LegacyUsageDetailProperties struct {
 	// READ-ONLY; The details about the meter. By default this is not populated, unless it's specified in $expand.
 	MeterDetails *MeterDetailsResponse `json:"meterDetails,omitempty" azure:"ro"`
 
-	// READ-ONLY; The meter id (GUID). Not available for marketplace. For reserved instance this represents the primary meter for which the reservation was
-	// purchased. For the actual VM Size for which the reservation is
+	// READ-ONLY; The meter id (GUID). Not available for marketplace. For reserved instance this represents the primary meter
+	// for which the reservation was purchased. For the actual VM Size for which the reservation is
 	// purchased see productOrderName.
 	MeterID *string `json:"meterId,omitempty" azure:"ro"`
 
@@ -1481,8 +1493,8 @@ type LegacyUsageDetailProperties struct {
 	// READ-ONLY; ARM resource id of the reservation. Only applies to records relevant to reservations.
 	ReservationID *string `json:"reservationId,omitempty" azure:"ro"`
 
-	// READ-ONLY; User provided display name of the reservation. Last known name for a particular day is populated in the daily data. Only applies to records
-	// relevant to reservations.
+	// READ-ONLY; User provided display name of the reservation. Last known name for a particular day is populated in the daily
+	// data. Only applies to records relevant to reservations.
 	ReservationName *string `json:"reservationName,omitempty" azure:"ro"`
 
 	// READ-ONLY; Resource Group Name.
@@ -1509,7 +1521,8 @@ type LegacyUsageDetailProperties struct {
 	// READ-ONLY; Subscription name.
 	SubscriptionName *string `json:"subscriptionName,omitempty" azure:"ro"`
 
-	// READ-ONLY; Term (in months). 1 month for monthly recurring purchase. 12 months for a 1 year reservation. 36 months for a 3 year reservation.
+	// READ-ONLY; Term (in months). 1 month for monthly recurring purchase. 12 months for a 1 year reservation. 36 months for
+	// a 3 year reservation.
 	Term *string `json:"term,omitempty" azure:"ro"`
 
 	// READ-ONLY; Unit Price is the price applicable to you. (your EA or other contract price).
@@ -2252,17 +2265,20 @@ func (m *MarketplaceProperties) UnmarshalJSON(data []byte) error {
 
 // MarketplacesListOptions contains the optional parameters for the Marketplaces.List method.
 type MarketplacesListOptions struct {
-	// May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName
-	// or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'.
+	// May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup,
+	// properties/instanceName or properties/instanceId. The filter supports
+	// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'.
 	Filter *string
-	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink
-	// element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.
+	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element,
+	// the value of the nextLink element will include a skiptoken parameter that
+	// specifies a starting point to use for subsequent calls.
 	Skiptoken *string
 	// May be used to limit the number of results to the most recent N marketplaces.
 	Top *int32
 }
 
-// MarketplacesListResult - Result of listing marketplaces. It contains a list of available marketplaces in reverse chronological order by billing period.
+// MarketplacesListResult - Result of listing marketplaces. It contains a list of available marketplaces in reverse chronological
+// order by billing period.
 type MarketplacesListResult struct {
 	// READ-ONLY; The link (url) to the next page of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
@@ -2666,8 +2682,8 @@ type ModernReservationTransactionProperties struct {
 	// READ-ONLY; The region of the transaction.
 	Region *string `json:"region,omitempty" azure:"ro"`
 
-	// READ-ONLY; The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction.
-	// A reservation order contains reservations. The reservation
+	// READ-ONLY; The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents
+	// a single purchase transaction. A reservation order contains reservations. The reservation
 	// order specifies the VM size and region for the reservations.
 	ReservationOrderID *string `json:"reservationOrderId,omitempty" azure:"ro"`
 
@@ -2838,8 +2854,8 @@ func (m *ModernUsageDetail) UnmarshalJSON(data []byte) error {
 
 // ModernUsageDetailProperties - The properties of the usage detail.
 type ModernUsageDetailProperties struct {
-	// READ-ONLY; Additional details of this usage item. Use this field to get usage line item specific details such as the actual VM Size (ServiceType) or
-	// the ratio in which the reservation discount is applied.
+	// READ-ONLY; Additional details of this usage item. Use this field to get usage line item specific details such as the actual
+	// VM Size (ServiceType) or the ratio in which the reservation discount is applied.
 	AdditionalInfo *string `json:"additionalInfo,omitempty" azure:"ro"`
 
 	// READ-ONLY; Billing Account identifier.
@@ -2857,21 +2873,21 @@ type ModernUsageDetailProperties struct {
 	// READ-ONLY; Billing Period Start Date as in the invoice.
 	BillingPeriodStartDate *time.Time `json:"billingPeriodStartDate,omitempty" azure:"ro"`
 
-	// READ-ONLY; Identifier for the billing profile that groups costs across invoices in the a singular billing currency across across the customers who have
-	// onboarded the Microsoft customer agreement and the
+	// READ-ONLY; Identifier for the billing profile that groups costs across invoices in the a singular billing currency across
+	// across the customers who have onboarded the Microsoft customer agreement and the
 	// customers in CSP who have made entitlement purchases like SaaS, Marketplace, RI, etc.
 	BillingProfileID *string `json:"billingProfileId,omitempty" azure:"ro"`
 
-	// READ-ONLY; Name of the billing profile that groups costs across invoices in the a singular billing currency across across the customers who have onboarded
-	// the Microsoft customer agreement and the customers in
+	// READ-ONLY; Name of the billing profile that groups costs across invoices in the a singular billing currency across across
+	// the customers who have onboarded the Microsoft customer agreement and the customers in
 	// CSP who have made entitlement purchases like SaaS, Marketplace, RI, etc.
 	BillingProfileName *string `json:"billingProfileName,omitempty" azure:"ro"`
 
 	// READ-ONLY; Indicates a charge represents credits, usage, a Marketplace purchase, a reservation fee, or a refund.
 	ChargeType *string `json:"chargeType,omitempty" azure:"ro"`
 
-	// READ-ONLY; Consumed service name. Name of the azure resource provider that emits the usage or was purchased. This value is not provided for marketplace
-	// usage.
+	// READ-ONLY; Consumed service name. Name of the azure resource provider that emits the usage or was purchased. This value
+	// is not provided for marketplace usage.
 	ConsumedService *string `json:"consumedService,omitempty" azure:"ro"`
 
 	// READ-ONLY; The cost center of this department if it is a department and a cost center is provided.
@@ -2904,8 +2920,8 @@ type ModernUsageDetailProperties struct {
 	// READ-ONLY; Exchange Rate from pricing currency to billing currency.
 	ExchangeRatePricingToBilling *float64 `json:"exchangeRatePricingToBilling,omitempty" azure:"ro"`
 
-	// READ-ONLY; Indicates how frequently this charge will occur. OneTime for purchases which only happen once, Monthly for fees which recur every month, and
-	// UsageBased for charges based on how much a service is used.
+	// READ-ONLY; Indicates how frequently this charge will occur. OneTime for purchases which only happen once, Monthly for fees
+	// which recur every month, and UsageBased for charges based on how much a service is used.
 	Frequency *string `json:"frequency,omitempty" azure:"ro"`
 
 	// READ-ONLY; Instance Name.
@@ -2914,10 +2930,12 @@ type ModernUsageDetailProperties struct {
 	// READ-ONLY; Invoice ID as on the invoice where the specific transaction appears.
 	InvoiceID *string `json:"invoiceId,omitempty" azure:"ro"`
 
-	// READ-ONLY; Identifier of the project that is being charged in the invoice. Not applicable for Microsoft Customer Agreements onboarded by partners.
+	// READ-ONLY; Identifier of the project that is being charged in the invoice. Not applicable for Microsoft Customer Agreements
+	// onboarded by partners.
 	InvoiceSectionID *string `json:"invoiceSectionId,omitempty" azure:"ro"`
 
-	// READ-ONLY; Name of the project that is being charged in the invoice. Not applicable for Microsoft Customer Agreements onboarded by partners.
+	// READ-ONLY; Name of the project that is being charged in the invoice. Not applicable for Microsoft Customer Agreements onboarded
+	// by partners.
 	InvoiceSectionName *string `json:"invoiceSectionName,omitempty" azure:"ro"`
 
 	// READ-ONLY; Determines if the cost is eligible to be paid for using Azure credits.
@@ -2929,8 +2947,8 @@ type ModernUsageDetailProperties struct {
 	// READ-ONLY; Identifies the top-level service for the usage.
 	MeterCategory *string `json:"meterCategory,omitempty" azure:"ro"`
 
-	// READ-ONLY; The meter id (GUID). Not available for marketplace. For reserved instance this represents the primary meter for which the reservation was
-	// purchased. For the actual VM Size for which the reservation is
+	// READ-ONLY; The meter id (GUID). Not available for marketplace. For reserved instance this represents the primary meter
+	// for which the reservation was purchased. For the actual VM Size for which the reservation is
 	// purchased see productOrderName.
 	MeterID *string `json:"meterId,omitempty" azure:"ro"`
 
@@ -2970,15 +2988,16 @@ type ModernUsageDetailProperties struct {
 	// READ-ONLY; Pricing Billing Currency.
 	PricingCurrencyCode *string `json:"pricingCurrencyCode,omitempty" azure:"ro"`
 
-	// READ-ONLY; Name of the product that has accrued charges by consumption or purchase as listed in the invoice. Not available for Marketplace.
+	// READ-ONLY; Name of the product that has accrued charges by consumption or purchase as listed in the invoice. Not available
+	// for Marketplace.
 	Product *string `json:"product,omitempty" azure:"ro"`
 
-	// READ-ONLY; Identifier for the product that has accrued charges by consumption or purchase . This is the concatenated key of productId and SkuId in partner
-	// center.
+	// READ-ONLY; Identifier for the product that has accrued charges by consumption or purchase . This is the concatenated key
+	// of productId and SkuId in partner center.
 	ProductIdentifier *string `json:"productIdentifier,omitempty" azure:"ro"`
 
-	// READ-ONLY; The identifier for the asset or Azure plan name that the subscription belongs to. For example: Azure Plan. For reservations this is the Reservation
-	// Order ID.
+	// READ-ONLY; The identifier for the asset or Azure plan name that the subscription belongs to. For example: Azure Plan. For
+	// reservations this is the Reservation Order ID.
 	ProductOrderID *string `json:"productOrderId,omitempty" azure:"ro"`
 
 	// READ-ONLY; Product Order Name. For reservations this is the SKU that was purchased.
@@ -3005,8 +3024,8 @@ type ModernUsageDetailProperties struct {
 	// READ-ONLY; ARM resource id of the reservation. Only applies to records relevant to reservations.
 	ReservationID *string `json:"reservationId,omitempty" azure:"ro"`
 
-	// READ-ONLY; User provided display name of the reservation. Last known name for a particular day is populated in the daily data. Only applies to records
-	// relevant to reservations.
+	// READ-ONLY; User provided display name of the reservation. Last known name for a particular day is populated in the daily
+	// data. Only applies to records relevant to reservations.
 	ReservationName *string `json:"reservationName,omitempty" azure:"ro"`
 
 	// READ-ONLY; Name of the Azure resource group used for cohesive lifecycle management of resources.
@@ -3027,11 +3046,12 @@ type ModernUsageDetailProperties struct {
 	// READ-ONLY; Service Info 2.
 	ServiceInfo2 *string `json:"serviceInfo2,omitempty" azure:"ro"`
 
-	// READ-ONLY; End date for the period when the service usage was rated for charges. The prices for Azure services are determined based on the rating period.
+	// READ-ONLY; End date for the period when the service usage was rated for charges. The prices for Azure services are determined
+	// based on the rating period.
 	ServicePeriodEndDate *time.Time `json:"servicePeriodEndDate,omitempty" azure:"ro"`
 
-	// READ-ONLY; Start date for the rating period when the service usage was rated for charges. The prices for Azure services are determined for the rating
-	// period.
+	// READ-ONLY; Start date for the rating period when the service usage was rated for charges. The prices for Azure services
+	// are determined for the rating period.
 	ServicePeriodStartDate *time.Time `json:"servicePeriodStartDate,omitempty" azure:"ro"`
 
 	// READ-ONLY; Unique Microsoft generated identifier for the Azure Subscription.
@@ -3040,8 +3060,8 @@ type ModernUsageDetailProperties struct {
 	// READ-ONLY; Name of the Azure Subscription.
 	SubscriptionName *string `json:"subscriptionName,omitempty" azure:"ro"`
 
-	// READ-ONLY; Term (in months). Displays the term for the validity of the offer. For example. In case of reserved instances it displays 12 months for yearly
-	// term of reserved instance. For one time purchases or
+	// READ-ONLY; Term (in months). Displays the term for the validity of the offer. For example. In case of reserved instances
+	// it displays 12 months for yearly term of reserved instance. For one time purchases or
 	// recurring purchases, the terms displays 1 month; This is not applicable for Azure consumption.
 	Term *string `json:"term,omitempty" azure:"ro"`
 
@@ -3341,8 +3361,8 @@ func (m *ModernUsageDetailProperties) UnmarshalJSON(data []byte) error {
 
 // Notification - The notification associated with a budget.
 type Notification struct {
-	// REQUIRED; Email addresses to send the budget notification to when the threshold is exceeded. Must have at least one contact email or contact group specified
-	// at the Subscription or Resource Group scopes. All
+	// REQUIRED; Email addresses to send the budget notification to when the threshold is exceeded. Must have at least one contact
+	// email or contact group specified at the Subscription or Resource Group scopes. All
 	// other scopes must have at least one contact email specified.
 	ContactEmails []*string `json:"contactEmails,omitempty"`
 
@@ -3352,12 +3372,12 @@ type Notification struct {
 	// REQUIRED; The comparison operator.
 	Operator *OperatorType `json:"operator,omitempty"`
 
-	// REQUIRED; Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to
-	// be between 0 and 1000.
+	// REQUIRED; Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It
+	// is always percent and has to be between 0 and 1000.
 	Threshold *float64 `json:"threshold,omitempty"`
 
-	// Action groups to send the budget notification to when the threshold is exceeded. Must be provided as a fully qualified Azure resource id. Only supported
-	// at Subscription or Resource Group scopes.
+	// Action groups to send the budget notification to when the threshold is exceeded. Must be provided as a fully qualified
+	// Azure resource id. Only supported at Subscription or Resource Group scopes.
 	ContactGroups []*string `json:"contactGroups,omitempty"`
 
 	// Contact roles to send the budget notification to when the threshold is exceeded.
@@ -3411,7 +3431,8 @@ type OperationDisplay struct {
 	Resource *string `json:"resource,omitempty" azure:"ro"`
 }
 
-// OperationListResult - Result of listing consumption operations. It contains a list of operations and a URL link to get the next set of results.
+// OperationListResult - Result of listing consumption operations. It contains a list of operations and a URL link to get
+// the next set of results.
 type OperationListResult struct {
 	// READ-ONLY; URL to get the next set of operation list results if there are any.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
@@ -3435,10 +3456,12 @@ type OperationsListOptions struct {
 
 // PriceSheetGetByBillingPeriodOptions contains the optional parameters for the PriceSheet.GetByBillingPeriod method.
 type PriceSheetGetByBillingPeriodOptions struct {
-	// May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet.
+	// May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when
+	// returning price sheet.
 	Expand *string
-	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink
-	// element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.
+	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element,
+	// the value of the nextLink element will include a skiptoken parameter that
+	// specifies a starting point to use for subsequent calls.
 	Skiptoken *string
 	// May be used to limit the number of results to the top N results.
 	Top *int32
@@ -3446,10 +3469,12 @@ type PriceSheetGetByBillingPeriodOptions struct {
 
 // PriceSheetGetOptions contains the optional parameters for the PriceSheet.Get method.
 type PriceSheetGetOptions struct {
-	// May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet.
+	// May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when
+	// returning price sheet.
 	Expand *string
-	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink
-	// element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.
+	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element,
+	// the value of the nextLink element will include a skiptoken parameter that
+	// specifies a starting point to use for subsequent calls.
 	Skiptoken *string
 	// May be used to limit the number of results to the top N results.
 	Top *int32
@@ -3546,7 +3571,8 @@ func (p *PriceSheetResult) UnmarshalJSON(data []byte) error {
 
 // ProxyResource - The Resource model definition.
 type ProxyResource struct {
-	// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not.
+	// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating
+	// the latest version or not.
 	ETag *string `json:"eTag,omitempty"`
 
 	// READ-ONLY; Resource Id.
@@ -3620,18 +3646,18 @@ type ReservationDetailProperties struct {
 	// READ-ONLY; The reservation kind.
 	Kind *string `json:"kind,omitempty" azure:"ro"`
 
-	// READ-ONLY; The reservation ID is the identifier of a reservation within a reservation order. Each reservation is the grouping for applying the benefit
-	// scope and also specifies the number of instances to which
+	// READ-ONLY; The reservation ID is the identifier of a reservation within a reservation order. Each reservation is the grouping
+	// for applying the benefit scope and also specifies the number of instances to which
 	// the reservation benefit can be applied to.
 	ReservationID *string `json:"reservationId,omitempty" azure:"ro"`
 
-	// READ-ONLY; The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction.
-	// A reservation order contains reservations. The reservation
+	// READ-ONLY; The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents
+	// a single purchase transaction. A reservation order contains reservations. The reservation
 	// order specifies the VM size and region for the reservations.
 	ReservationOrderID *string `json:"reservationOrderId,omitempty" azure:"ro"`
 
-	// READ-ONLY; This is the total hours reserved for the day. E.g. if reservation for 1 instance was made on 1 PM, this will be 11 hours for that day and
-	// 24 hours from subsequent days.
+	// READ-ONLY; This is the total hours reserved for the day. E.g. if reservation for 1 instance was made on 1 PM, this will
+	// be 11 hours for that day and 24 hours from subsequent days.
 	ReservedHours *float64 `json:"reservedHours,omitempty" azure:"ro"`
 
 	// READ-ONLY; This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records.
@@ -3814,7 +3840,8 @@ type ReservationRecommendationDetailsCalculatedSavingsProperties struct {
 	TotalReservationCost *float32 `json:"totalReservationCost,omitempty" azure:"ro"`
 }
 
-// ReservationRecommendationDetailsGetOptions contains the optional parameters for the ReservationRecommendationDetails.Get method.
+// ReservationRecommendationDetailsGetOptions contains the optional parameters for the ReservationRecommendationDetails.Get
+// method.
 type ReservationRecommendationDetailsGetOptions struct {
 	// placeholder for future optional parameters
 }
@@ -3965,7 +3992,8 @@ func (r ReservationRecommendationDetailsSavingsProperties) MarshalJSON() ([]byte
 	return json.Marshal(objectMap)
 }
 
-// ReservationRecommendationDetailsUsageProperties - Details about historical usage data that has been used for computing the recommendation.
+// ReservationRecommendationDetailsUsageProperties - Details about historical usage data that has been used for computing
+// the recommendation.
 type ReservationRecommendationDetailsUsageProperties struct {
 	// READ-ONLY; The first usage date used for looking back for computing the recommendation.
 	FirstConsumptionDate *string `json:"firstConsumptionDate,omitempty" azure:"ro"`
@@ -3976,7 +4004,8 @@ type ReservationRecommendationDetailsUsageProperties struct {
 	// READ-ONLY; What the usage data values represent ex: virtual machine instance.
 	LookBackUnitType *string `json:"lookBackUnitType,omitempty" azure:"ro"`
 
-	// READ-ONLY; The breakdown of historical resource usage. The values are in the order of usage between the firstConsumptionDate and the lastConsumptionDate.
+	// READ-ONLY; The breakdown of historical resource usage. The values are in the order of usage between the firstConsumptionDate
+	// and the lastConsumptionDate.
 	UsageData []*float32 `json:"usageData,omitempty" azure:"ro"`
 
 	// READ-ONLY; The grain of the values represented in the usage data ex: hourly.
@@ -3996,10 +4025,13 @@ func (r ReservationRecommendationDetailsUsageProperties) MarshalJSON() ([]byte, 
 
 // ReservationRecommendationsListOptions contains the optional parameters for the ReservationRecommendations.List method.
 type ReservationRecommendationsListOptions struct {
-	// May be used to filter reservationRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default value 'Single'; properties/resourceType
-	// with allowed values ['VirtualMachines', 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat', 'MariaDB', 'RedisCache', 'CosmosDB', 'SqlDataWarehouse',
-	// 'SUSELinux', 'AppService', 'BlockBlob', 'AzureDataExplorer', 'VMwareCloudSimple'] and default value 'VirtualMachines'; and properties/lookBackPeriod
-	// with allowed values ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last7Days'.
+	// May be used to filter reservationRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default
+	// value 'Single'; properties/resourceType with allowed values
+	// ['VirtualMachines', 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat', 'MariaDB', 'RedisCache', 'CosmosDB',
+	// 'SqlDataWarehouse', 'SUSELinux', 'AppService', 'BlockBlob',
+	// 'AzureDataExplorer', 'VMwareCloudSimple'] and default value 'VirtualMachines'; and properties/lookBackPeriod with allowed
+	// values ['Last7Days', 'Last30Days', 'Last60Days'] and default value
+	// 'Last7Days'.
 	Filter *string
 }
 
@@ -4120,13 +4152,13 @@ type ReservationSummaryProperties struct {
 	// READ-ONLY; The reservation kind.
 	Kind *string `json:"kind,omitempty" azure:"ro"`
 
-	// READ-ONLY; This is the maximum hourly utilization in the usage time (day or month). E.g. if usage record corresponds to 12/10/2017 and on that for hour
-	// 4 and 5, utilization was 100%, this field will return 100%
+	// READ-ONLY; This is the maximum hourly utilization in the usage time (day or month). E.g. if usage record corresponds to
+	// 12/10/2017 and on that for hour 4 and 5, utilization was 100%, this field will return 100%
 	// for that day.
 	MaxUtilizationPercentage *float64 `json:"maxUtilizationPercentage,omitempty" azure:"ro"`
 
-	// READ-ONLY; This is the minimum hourly utilization in the usage time (day or month). E.g. if usage record corresponds to 12/10/2017 and on that for hour
-	// 4 and 5, utilization was 10%, this field will return 10%
+	// READ-ONLY; This is the minimum hourly utilization in the usage time (day or month). E.g. if usage record corresponds to
+	// 12/10/2017 and on that for hour 4 and 5, utilization was 10%, this field will return 10%
 	// for that day
 	MinUtilizationPercentage *float64 `json:"minUtilizationPercentage,omitempty" azure:"ro"`
 
@@ -4136,18 +4168,18 @@ type ReservationSummaryProperties struct {
 	// READ-ONLY; This is the remaining quantity for the reservationId.
 	RemainingQuantity *float64 `json:"remainingQuantity,omitempty" azure:"ro"`
 
-	// READ-ONLY; The reservation ID is the identifier of a reservation within a reservation order. Each reservation is the grouping for applying the benefit
-	// scope and also specifies the number of instances to which
+	// READ-ONLY; The reservation ID is the identifier of a reservation within a reservation order. Each reservation is the grouping
+	// for applying the benefit scope and also specifies the number of instances to which
 	// the reservation benefit can be applied to.
 	ReservationID *string `json:"reservationId,omitempty" azure:"ro"`
 
-	// READ-ONLY; The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction.
-	// A reservation order contains reservations. The reservation
+	// READ-ONLY; The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents
+	// a single purchase transaction. A reservation order contains reservations. The reservation
 	// order specifies the VM size and region for the reservations.
 	ReservationOrderID *string `json:"reservationOrderId,omitempty" azure:"ro"`
 
-	// READ-ONLY; This is the total hours reserved. E.g. if reservation for 1 instance was made on 1 PM, this will be 11 hours for that day and 24 hours from
-	// subsequent days
+	// READ-ONLY; This is the total hours reserved. E.g. if reservation for 1 instance was made on 1 PM, this will be 11 hours
+	// for that day and 24 hours from subsequent days
 	ReservedHours *float64 `json:"reservedHours,omitempty" azure:"ro"`
 
 	// READ-ONLY; This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records.
@@ -4300,15 +4332,18 @@ func (r ReservationTransactionResource) marshalInternal(objectMap map[string]int
 	populate(objectMap, "type", r.Type)
 }
 
-// ReservationTransactionsListByBillingProfileOptions contains the optional parameters for the ReservationTransactions.ListByBillingProfile method.
+// ReservationTransactionsListByBillingProfileOptions contains the optional parameters for the ReservationTransactions.ListByBillingProfile
+// method.
 type ReservationTransactionsListByBillingProfileOptions struct {
-	// Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports 'le' and 'ge'
+	// Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports
+	// 'le' and 'ge'
 	Filter *string
 }
 
 // ReservationTransactionsListOptions contains the optional parameters for the ReservationTransactions.List method.
 type ReservationTransactionsListOptions struct {
-	// Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports 'le' and 'ge'
+	// Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports
+	// 'le' and 'ge'
 	Filter *string
 }
 
@@ -4335,7 +4370,8 @@ type ReservationsDetailsListByReservationOrderAndReservationOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ReservationsDetailsListByReservationOrderOptions contains the optional parameters for the ReservationsDetails.ListByReservationOrder method.
+// ReservationsDetailsListByReservationOrderOptions contains the optional parameters for the ReservationsDetails.ListByReservationOrder
+// method.
 type ReservationsDetailsListByReservationOrderOptions struct {
 	// placeholder for future optional parameters
 }
@@ -4344,8 +4380,8 @@ type ReservationsDetailsListByReservationOrderOptions struct {
 type ReservationsDetailsListOptions struct {
 	// End date. Only applicable when querying with billing profile
 	EndDate *string
-	// Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le' and 'ge'. Not applicable when
-	// querying with billing profile
+	// Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le'
+	// and 'ge'. Not applicable when querying with billing profile
 	Filter *string
 	// Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation
 	ReservationID *string
@@ -4362,7 +4398,8 @@ type ReservationsSummariesListByReservationOrderAndReservationOptions struct {
 	Filter *string
 }
 
-// ReservationsSummariesListByReservationOrderOptions contains the optional parameters for the ReservationsSummaries.ListByReservationOrder method.
+// ReservationsSummariesListByReservationOrderOptions contains the optional parameters for the ReservationsSummaries.ListByReservationOrder
+// method.
 type ReservationsSummariesListByReservationOrderOptions struct {
 	// Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and 'ge'
 	Filter *string
@@ -4372,7 +4409,8 @@ type ReservationsSummariesListByReservationOrderOptions struct {
 type ReservationsSummariesListOptions struct {
 	// End date. Required only when querying with billing profile
 	EndDate *string
-	// The properties/UsageDate for start date and end date. The filter supports 'le' and 'ge'. Not required when querying with billing profile
+	// The properties/UsageDate for start date and end date. The filter supports 'le' and 'ge'. Not required when querying with
+	// billing profile
 	Filter *string
 	// Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation
 	ReservationID *string
@@ -4605,24 +4643,27 @@ func (u *UsageDetail) unmarshalInternal(rawMsg map[string]json.RawMessage) error
 
 // UsageDetailsListOptions contains the optional parameters for the UsageDetails.List method.
 type UsageDetailsListOptions struct {
-	// May be used to expand the properties/additionalInfo or properties/meterDetails within a list of usage details. By default, these fields are not included
-	// when listing usage details.
+	// May be used to expand the properties/additionalInfo or properties/meterDetails within a list of usage details. By default,
+	// these fields are not included when listing usage details.
 	Expand *string
-	// May be used to filter usageDetails by properties/resourceGroup, properties/instanceName, properties/resourceId, properties/chargeType, properties/reservationId,
-	// properties/publisherType or tags. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag
-	// filter is a key value pair string where key and value is separated by a colon (:). PublisherType Filter accepts two values azure and marketplace and
-	// it is currently supported for Web Direct Offer Type
+	// May be used to filter usageDetails by properties/resourceGroup, properties/instanceName, properties/resourceId, properties/chargeType,
+	// properties/reservationId, properties/publisherType or tags. The
+	// filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter
+	// is a key value pair string where key and value is separated by a colon (:).
+	// PublisherType Filter accepts two values azure and marketplace and it is currently supported for Web Direct Offer Type
 	Filter *string
 	// Allows to select different type of cost/usage records.
 	Metric *Metrictype
-	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink
-	// element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.
+	// Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element,
+	// the value of the nextLink element will include a skiptoken parameter that
+	// specifies a starting point to use for subsequent calls.
 	Skiptoken *string
 	// May be used to limit the number of results to the most recent N usageDetails.
 	Top *int32
 }
 
-// UsageDetailsListResult - Result of listing usage details. It contains a list of available usage details in reverse chronological order by billing period.
+// UsageDetailsListResult - Result of listing usage details. It contains a list of available usage details in reverse chronological
+// order by billing period.
 type UsageDetailsListResult struct {
 	// READ-ONLY; The link (url) to the next page of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`

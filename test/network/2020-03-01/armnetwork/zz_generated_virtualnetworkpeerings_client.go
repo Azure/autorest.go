@@ -31,8 +31,9 @@ type VirtualNetworkPeeringsClient struct {
 }
 
 // NewVirtualNetworkPeeringsClient creates a new instance of VirtualNetworkPeeringsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewVirtualNetworkPeeringsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualNetworkPeeringsClient {
 	cp := arm.ClientOptions{}
@@ -56,7 +57,8 @@ func NewVirtualNetworkPeeringsClient(subscriptionID string, credential azcore.To
 // virtualNetworkName - The name of the virtual network.
 // virtualNetworkPeeringName - The name of the peering.
 // virtualNetworkPeeringParameters - Parameters supplied to the create or update virtual network peering operation.
-// options - VirtualNetworkPeeringsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkPeerings.BeginCreateOrUpdate method.
+// options - VirtualNetworkPeeringsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkPeerings.BeginCreateOrUpdate
+// method.
 func (client *VirtualNetworkPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, virtualNetworkPeeringParameters VirtualNetworkPeering, options *VirtualNetworkPeeringsBeginCreateOrUpdateOptions) (VirtualNetworkPeeringsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters, options)
 	if err != nil {
@@ -140,7 +142,8 @@ func (client *VirtualNetworkPeeringsClient) createOrUpdateHandleError(resp *http
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // virtualNetworkPeeringName - The name of the virtual network peering.
-// options - VirtualNetworkPeeringsBeginDeleteOptions contains the optional parameters for the VirtualNetworkPeerings.BeginDelete method.
+// options - VirtualNetworkPeeringsBeginDeleteOptions contains the optional parameters for the VirtualNetworkPeerings.BeginDelete
+// method.
 func (client *VirtualNetworkPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, options *VirtualNetworkPeeringsBeginDeleteOptions) (VirtualNetworkPeeringsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, options)
 	if err != nil {

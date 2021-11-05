@@ -104,8 +104,8 @@ func (client *ComplexModelClient) createHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// List - The Products endpoint returns information about the Uber products offered at a given location. The response includes the display name and other
-// details about each product, and lists the products in
+// List - The Products endpoint returns information about the Uber products offered at a given location. The response includes
+// the display name and other details about each product, and lists the products in
 // the proper display order.
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - Resource Group ID.

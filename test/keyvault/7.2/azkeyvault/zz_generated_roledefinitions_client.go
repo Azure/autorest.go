@@ -40,7 +40,8 @@ func NewRoleDefinitionsClient(pl runtime.Pipeline) *RoleDefinitionsClient {
 // scope - The scope of the role definition to create or update. Managed HSM only supports '/'.
 // roleDefinitionName - The name of the role definition to create or update. It can be any valid GUID.
 // parameters - Parameters for the role definition.
-// options - RoleDefinitionsCreateOrUpdateOptions contains the optional parameters for the RoleDefinitions.CreateOrUpdate method.
+// options - RoleDefinitionsCreateOrUpdateOptions contains the optional parameters for the RoleDefinitions.CreateOrUpdate
+// method.
 func (client *RoleDefinitionsClient) CreateOrUpdate(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, parameters RoleDefinitionCreateParameters, options *RoleDefinitionsCreateOrUpdateOptions) (RoleDefinitionsCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, vaultBaseURL, scope, roleDefinitionName, parameters, options)
 	if err != nil {

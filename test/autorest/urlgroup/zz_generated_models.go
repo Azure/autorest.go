@@ -31,7 +31,8 @@ type PathItemsGetAllWithValuesOptions struct {
 	PathItemStringQuery *string
 }
 
-// PathItemsGetGlobalAndLocalQueryNullOptions contains the optional parameters for the PathItems.GetGlobalAndLocalQueryNull method.
+// PathItemsGetGlobalAndLocalQueryNullOptions contains the optional parameters for the PathItems.GetGlobalAndLocalQueryNull
+// method.
 type PathItemsGetGlobalAndLocalQueryNullOptions struct {
 	// should contain null value
 	LocalStringQuery *string
@@ -47,7 +48,8 @@ type PathItemsGetGlobalQueryNullOptions struct {
 	PathItemStringQuery *string
 }
 
-// PathItemsGetLocalPathItemQueryNullOptions contains the optional parameters for the PathItems.GetLocalPathItemQueryNull method.
+// PathItemsGetLocalPathItemQueryNullOptions contains the optional parameters for the PathItems.GetLocalPathItemQueryNull
+// method.
 type PathItemsGetLocalPathItemQueryNullOptions struct {
 	// should contain value null
 	LocalStringQuery *string
@@ -208,7 +210,8 @@ type QueriesArrayStringCSVValidOptions struct {
 	ArrayQuery []string
 }
 
-// QueriesArrayStringNoCollectionFormatEmptyOptions contains the optional parameters for the Queries.ArrayStringNoCollectionFormatEmpty method.
+// QueriesArrayStringNoCollectionFormatEmptyOptions contains the optional parameters for the Queries.ArrayStringNoCollectionFormatEmpty
+// method.
 type QueriesArrayStringNoCollectionFormatEmptyOptions struct {
 	// Array-typed query parameter. Pass in ['hello', 'nihao', 'bonjour'].
 	ArrayQuery []string

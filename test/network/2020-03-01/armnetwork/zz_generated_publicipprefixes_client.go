@@ -31,8 +31,9 @@ type PublicIPPrefixesClient struct {
 }
 
 // NewPublicIPPrefixesClient creates a new instance of PublicIPPrefixesClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewPublicIPPrefixesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *PublicIPPrefixesClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewPublicIPPrefixesClient(subscriptionID string, credential azcore.TokenCre
 // resourceGroupName - The name of the resource group.
 // publicIPPrefixName - The name of the public IP prefix.
 // parameters - Parameters supplied to the create or update public IP prefix operation.
-// options - PublicIPPrefixesBeginCreateOrUpdateOptions contains the optional parameters for the PublicIPPrefixes.BeginCreateOrUpdate method.
+// options - PublicIPPrefixesBeginCreateOrUpdateOptions contains the optional parameters for the PublicIPPrefixes.BeginCreateOrUpdate
+// method.
 func (client *PublicIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters PublicIPPrefix, options *PublicIPPrefixesBeginCreateOrUpdateOptions) (PublicIPPrefixesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, publicIPPrefixName, parameters, options)
 	if err != nil {

@@ -57,7 +57,7 @@ func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context, options 
 // getValidCreateRequest creates the GetValid request.
 func (client *PolymorphicrecursiveClient) getValidCreateRequest(ctx context.Context, options *PolymorphicrecursiveGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphicrecursive/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(	host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func (client *PolymorphicrecursiveClient) getValidHandleError(resp *http.Respons
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-		errType := Error{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -89,59 +89,13 @@ func (client *PolymorphicrecursiveClient) getValidHandleError(resp *http.Respons
 
 // PutValid - Put complex types that are polymorphic and have recursive references
 // If the operation fails it returns the *Error error type.
-// complexBody - Please put a salmon that looks like this:
-{
-    "fishtype": "salmon",
-    "species": "king",
-    "length": 1,
-    "age": 1,
-    "location": "alaska",
-    "iswild": true,
-    "siblings": [
-        {
-            "fishtype": "shark",
-            "species": "predator",
-            "length": 20,
-            "age": 6,
-            "siblings": [
-                {
-                    "fishtype": "salmon",
-                    "species": "coho",
-                    "length": 2,
-                    "age": 2,
-                    "location": "atlantic",
-                    "iswild": true,
-                    "siblings": [
-                        {
-                            "fishtype": "shark",
-                            "species": "predator",
-                            "length": 20,
-                            "age": 6
-                        },
-                        {
-                            "fishtype": "sawshark",
-                            "species": "dangerous",
-                            "length": 10,
-                            "age": 105
-                        }
-                    ]
-                },
-                {
-                    "fishtype": "sawshark",
-                    "species": "dangerous",
-                    "length": 10,
-                    "age": 105
-                }
-            ]
-        },
-        {
-            "fishtype": "sawshark",
-            "species": "dangerous",
-            "length": 10,
-            "age": 105
-        }
-    ]
-}
+// complexBody - Please put a salmon that looks like this: { "fishtype": "salmon", "species": "king", "length": 1, "age":
+// 1, "location": "alaska", "iswild": true, "siblings": [ { "fishtype": "shark", "species":
+// "predator", "length": 20, "age": 6, "siblings": [ { "fishtype": "salmon", "species": "coho", "length": 2, "age": 2, "location":
+// "atlantic", "iswild": true, "siblings": [ { "fishtype": "shark",
+// "species": "predator", "length": 20, "age": 6 }, { "fishtype": "sawshark", "species": "dangerous", "length": 10, "age":
+// 105 } ] }, { "fishtype": "sawshark", "species": "dangerous", "length": 10,
+// "age": 105 } ] }, { "fishtype": "sawshark", "species": "dangerous", "length": 10, "age": 105 } ] }
 // options - PolymorphicrecursivePutValidOptions contains the optional parameters for the Polymorphicrecursive.PutValid method.
 func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBody FishClassification, options *PolymorphicrecursivePutValidOptions) (PolymorphicrecursivePutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
@@ -161,7 +115,7 @@ func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexB
 // putValidCreateRequest creates the PutValid request.
 func (client *PolymorphicrecursiveClient) putValidCreateRequest(ctx context.Context, complexBody FishClassification, options *PolymorphicrecursivePutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/polymorphicrecursive/valid"
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(	host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -175,10 +129,9 @@ func (client *PolymorphicrecursiveClient) putValidHandleError(resp *http.Respons
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-		errType := Error{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
 	return runtime.NewResponseError(&errType, resp)
 }
-

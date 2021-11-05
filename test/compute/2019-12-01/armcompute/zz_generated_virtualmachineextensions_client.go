@@ -30,8 +30,9 @@ type VirtualMachineExtensionsClient struct {
 }
 
 // NewVirtualMachineExtensionsClient creates a new instance of VirtualMachineExtensionsClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewVirtualMachineExtensionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualMachineExtensionsClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewVirtualMachineExtensionsClient(subscriptionID string, credential azcore.
 // vmName - The name of the virtual machine where the extension should be created or updated.
 // vmExtensionName - The name of the virtual machine extension.
 // extensionParameters - Parameters supplied to the Create Virtual Machine Extension operation.
-// options - VirtualMachineExtensionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineExtensions.BeginCreateOrUpdate method.
+// options - VirtualMachineExtensionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineExtensions.BeginCreateOrUpdate
+// method.
 func (client *VirtualMachineExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineExtensionsBeginCreateOrUpdateOptions) (VirtualMachineExtensionsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)
 	if err != nil {
@@ -138,7 +140,8 @@ func (client *VirtualMachineExtensionsClient) createOrUpdateHandleError(resp *ht
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine where the extension should be deleted.
 // vmExtensionName - The name of the virtual machine extension.
-// options - VirtualMachineExtensionsBeginDeleteOptions contains the optional parameters for the VirtualMachineExtensions.BeginDelete method.
+// options - VirtualMachineExtensionsBeginDeleteOptions contains the optional parameters for the VirtualMachineExtensions.BeginDelete
+// method.
 func (client *VirtualMachineExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsBeginDeleteOptions) (VirtualMachineExtensionsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vmName, vmExtensionName, options)
 	if err != nil {
@@ -366,7 +369,8 @@ func (client *VirtualMachineExtensionsClient) listHandleError(resp *http.Respons
 // vmName - The name of the virtual machine where the extension should be updated.
 // vmExtensionName - The name of the virtual machine extension.
 // extensionParameters - Parameters supplied to the Update Virtual Machine Extension operation.
-// options - VirtualMachineExtensionsBeginUpdateOptions contains the optional parameters for the VirtualMachineExtensions.BeginUpdate method.
+// options - VirtualMachineExtensionsBeginUpdateOptions contains the optional parameters for the VirtualMachineExtensions.BeginUpdate
+// method.
 func (client *VirtualMachineExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineExtensionsBeginUpdateOptions) (VirtualMachineExtensionsUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)
 	if err != nil {

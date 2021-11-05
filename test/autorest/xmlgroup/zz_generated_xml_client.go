@@ -798,8 +798,8 @@ func (client *XMLClient) getWrappedListsHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// GetXMsText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language' property being 'english' and
-// its 'content' property being 'I am text'
+// GetXMsText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language'
+// property being 'english' and its 'content' property being 'I am text'
 // If the operation fails it returns a generic error.
 // options - XMLGetXMsTextOptions contains the optional parameters for the XML.GetXMsText method.
 func (client *XMLClient) GetXMsText(ctx context.Context, options *XMLGetXMsTextOptions) (XMLGetXMsTextResponse, error) {

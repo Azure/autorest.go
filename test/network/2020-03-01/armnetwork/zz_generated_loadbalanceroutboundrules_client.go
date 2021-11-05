@@ -31,8 +31,9 @@ type LoadBalancerOutboundRulesClient struct {
 }
 
 // NewLoadBalancerOutboundRulesClient creates a new instance of LoadBalancerOutboundRulesClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewLoadBalancerOutboundRulesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *LoadBalancerOutboundRulesClient {
 	cp := arm.ClientOptions{}
@@ -127,7 +128,8 @@ func (client *LoadBalancerOutboundRulesClient) getHandleError(resp *http.Respons
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
-// options - LoadBalancerOutboundRulesListOptions contains the optional parameters for the LoadBalancerOutboundRules.List method.
+// options - LoadBalancerOutboundRulesListOptions contains the optional parameters for the LoadBalancerOutboundRules.List
+// method.
 func (client *LoadBalancerOutboundRulesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerOutboundRulesListOptions) *LoadBalancerOutboundRulesListPager {
 	return &LoadBalancerOutboundRulesListPager{
 		client: client,

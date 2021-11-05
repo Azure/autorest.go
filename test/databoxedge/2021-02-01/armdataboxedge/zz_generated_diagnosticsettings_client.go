@@ -43,11 +43,13 @@ func NewDiagnosticSettingsClient(subscriptionID string, options *azcore.ClientOp
 	return client
 }
 
-// GetDiagnosticProactiveLogCollectionSettings - Gets the proactive log collection settings of the specified Data Box Edge/Data Box Gateway device.
+// GetDiagnosticProactiveLogCollectionSettings - Gets the proactive log collection settings of the specified Data Box Edge/Data
+// Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters for the DiagnosticSettings.GetDiagnosticProactiveLogCollectionSettings method.
+// options - DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters for the
+// DiagnosticSettings.GetDiagnosticProactiveLogCollectionSettings method.
 func (client *DiagnosticSettingsClient) GetDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsOptions) (DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsResponse, error) {
 	req, err := client.getDiagnosticProactiveLogCollectionSettingsCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -111,11 +113,13 @@ func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSetti
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetDiagnosticRemoteSupportSettings - Gets the diagnostic remote support settings of the specified Data Box Edge/Data Box Gateway device.
+// GetDiagnosticRemoteSupportSettings - Gets the diagnostic remote support settings of the specified Data Box Edge/Data Box
+// Gateway device.
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - DiagnosticSettingsGetDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the DiagnosticSettings.GetDiagnosticRemoteSupportSettings method.
+// options - DiagnosticSettingsGetDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the DiagnosticSettings.GetDiagnosticRemoteSupportSettings
+// method.
 func (client *DiagnosticSettingsClient) GetDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsGetDiagnosticRemoteSupportSettingsOptions) (DiagnosticSettingsGetDiagnosticRemoteSupportSettingsResponse, error) {
 	req, err := client.getDiagnosticRemoteSupportSettingsCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -179,12 +183,14 @@ func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsHandle
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// BeginUpdateDiagnosticProactiveLogCollectionSettings - Updates the proactive log collection settings on a Data Box Edge/Data Box Gateway device.
+// BeginUpdateDiagnosticProactiveLogCollectionSettings - Updates the proactive log collection settings on a Data Box Edge/Data
+// Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // proactiveLogCollectionSettings - The proactive log collection settings.
-// options - DiagnosticSettingsBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters for the DiagnosticSettings.BeginUpdateDiagnosticProactiveLogCollectionSettings method.
+// options - DiagnosticSettingsBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters
+// for the DiagnosticSettings.BeginUpdateDiagnosticProactiveLogCollectionSettings method.
 func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (DiagnosticSettingsUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse, error) {
 	resp, err := client.updateDiagnosticProactiveLogCollectionSettings(ctx, deviceName, resourceGroupName, proactiveLogCollectionSettings, options)
 	if err != nil {
@@ -203,7 +209,8 @@ func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticProactiveLogCollect
 	return result, nil
 }
 
-// UpdateDiagnosticProactiveLogCollectionSettings - Updates the proactive log collection settings on a Data Box Edge/Data Box Gateway device.
+// UpdateDiagnosticProactiveLogCollectionSettings - Updates the proactive log collection settings on a Data Box Edge/Data
+// Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
 func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (*http.Response, error) {
 	req, err := client.updateDiagnosticProactiveLogCollectionSettingsCreateRequest(ctx, deviceName, resourceGroupName, proactiveLogCollectionSettings, options)
@@ -259,12 +266,14 @@ func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSe
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// BeginUpdateDiagnosticRemoteSupportSettings - Updates the diagnostic remote support settings on a Data Box Edge/Data Box Gateway device.
+// BeginUpdateDiagnosticRemoteSupportSettings - Updates the diagnostic remote support settings on a Data Box Edge/Data Box
+// Gateway device.
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // diagnosticRemoteSupportSettings - The diagnostic remote support settings.
-// options - DiagnosticSettingsBeginUpdateDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the DiagnosticSettings.BeginUpdateDiagnosticRemoteSupportSettings method.
+// options - DiagnosticSettingsBeginUpdateDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the
+// DiagnosticSettings.BeginUpdateDiagnosticRemoteSupportSettings method.
 func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsBeginUpdateDiagnosticRemoteSupportSettingsOptions) (DiagnosticSettingsUpdateDiagnosticRemoteSupportSettingsPollerResponse, error) {
 	resp, err := client.updateDiagnosticRemoteSupportSettings(ctx, deviceName, resourceGroupName, diagnosticRemoteSupportSettings, options)
 	if err != nil {
@@ -283,7 +292,8 @@ func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticRemoteSupportSettin
 	return result, nil
 }
 
-// UpdateDiagnosticRemoteSupportSettings - Updates the diagnostic remote support settings on a Data Box Edge/Data Box Gateway device.
+// UpdateDiagnosticRemoteSupportSettings - Updates the diagnostic remote support settings on a Data Box Edge/Data Box Gateway
+// device.
 // If the operation fails it returns the *CloudError error type.
 func (client *DiagnosticSettingsClient) updateDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsBeginUpdateDiagnosticRemoteSupportSettingsOptions) (*http.Response, error) {
 	req, err := client.updateDiagnosticRemoteSupportSettingsCreateRequest(ctx, deviceName, resourceGroupName, diagnosticRemoteSupportSettings, options)

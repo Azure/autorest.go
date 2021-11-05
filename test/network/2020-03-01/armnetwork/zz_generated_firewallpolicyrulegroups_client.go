@@ -31,8 +31,9 @@ type FirewallPolicyRuleGroupsClient struct {
 }
 
 // NewFirewallPolicyRuleGroupsClient creates a new instance of FirewallPolicyRuleGroupsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewFirewallPolicyRuleGroupsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *FirewallPolicyRuleGroupsClient {
 	cp := arm.ClientOptions{}
@@ -56,7 +57,8 @@ func NewFirewallPolicyRuleGroupsClient(subscriptionID string, credential azcore.
 // firewallPolicyName - The name of the Firewall Policy.
 // ruleGroupName - The name of the FirewallPolicyRuleGroup.
 // parameters - Parameters supplied to the create or update FirewallPolicyRuleGroup operation.
-// options - FirewallPolicyRuleGroupsBeginCreateOrUpdateOptions contains the optional parameters for the FirewallPolicyRuleGroups.BeginCreateOrUpdate method.
+// options - FirewallPolicyRuleGroupsBeginCreateOrUpdateOptions contains the optional parameters for the FirewallPolicyRuleGroups.BeginCreateOrUpdate
+// method.
 func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, parameters FirewallPolicyRuleGroup, options *FirewallPolicyRuleGroupsBeginCreateOrUpdateOptions) (FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, parameters, options)
 	if err != nil {
@@ -140,7 +142,8 @@ func (client *FirewallPolicyRuleGroupsClient) createOrUpdateHandleError(resp *ht
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.
 // ruleGroupName - The name of the FirewallPolicyRuleGroup.
-// options - FirewallPolicyRuleGroupsBeginDeleteOptions contains the optional parameters for the FirewallPolicyRuleGroups.BeginDelete method.
+// options - FirewallPolicyRuleGroupsBeginDeleteOptions contains the optional parameters for the FirewallPolicyRuleGroups.BeginDelete
+// method.
 func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, options *FirewallPolicyRuleGroupsBeginDeleteOptions) (FirewallPolicyRuleGroupsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, options)
 	if err != nil {

@@ -31,8 +31,9 @@ type VPNLinkConnectionsClient struct {
 }
 
 // NewVPNLinkConnectionsClient creates a new instance of VPNLinkConnectionsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewVPNLinkConnectionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VPNLinkConnectionsClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewVPNLinkConnectionsClient(subscriptionID string, credential azcore.TokenC
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // connectionName - The name of the vpn connection.
-// options - VPNLinkConnectionsListByVPNConnectionOptions contains the optional parameters for the VPNLinkConnections.ListByVPNConnection method.
+// options - VPNLinkConnectionsListByVPNConnectionOptions contains the optional parameters for the VPNLinkConnections.ListByVPNConnection
+// method.
 func (client *VPNLinkConnectionsClient) ListByVPNConnection(resourceGroupName string, gatewayName string, connectionName string, options *VPNLinkConnectionsListByVPNConnectionOptions) *VPNLinkConnectionsListByVPNConnectionPager {
 	return &VPNLinkConnectionsListByVPNConnectionPager{
 		client: client,

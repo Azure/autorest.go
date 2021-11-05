@@ -31,8 +31,9 @@ type ServiceEndpointPoliciesClient struct {
 }
 
 // NewServiceEndpointPoliciesClient creates a new instance of ServiceEndpointPoliciesClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewServiceEndpointPoliciesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ServiceEndpointPoliciesClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewServiceEndpointPoliciesClient(subscriptionID string, credential azcore.T
 // resourceGroupName - The name of the resource group.
 // serviceEndpointPolicyName - The name of the service endpoint policy.
 // parameters - Parameters supplied to the create or update service endpoint policy operation.
-// options - ServiceEndpointPoliciesBeginCreateOrUpdateOptions contains the optional parameters for the ServiceEndpointPolicies.BeginCreateOrUpdate method.
+// options - ServiceEndpointPoliciesBeginCreateOrUpdateOptions contains the optional parameters for the ServiceEndpointPolicies.BeginCreateOrUpdate
+// method.
 func (client *ServiceEndpointPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters ServiceEndpointPolicy, options *ServiceEndpointPoliciesBeginCreateOrUpdateOptions) (ServiceEndpointPoliciesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceEndpointPolicyName, parameters, options)
 	if err != nil {
@@ -134,7 +136,8 @@ func (client *ServiceEndpointPoliciesClient) createOrUpdateHandleError(resp *htt
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // serviceEndpointPolicyName - The name of the service endpoint policy.
-// options - ServiceEndpointPoliciesBeginDeleteOptions contains the optional parameters for the ServiceEndpointPolicies.BeginDelete method.
+// options - ServiceEndpointPoliciesBeginDeleteOptions contains the optional parameters for the ServiceEndpointPolicies.BeginDelete
+// method.
 func (client *ServiceEndpointPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPoliciesBeginDeleteOptions) (ServiceEndpointPoliciesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, serviceEndpointPolicyName, options)
 	if err != nil {
@@ -338,7 +341,8 @@ func (client *ServiceEndpointPoliciesClient) listHandleError(resp *http.Response
 // ListByResourceGroup - Gets all service endpoint Policies in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - ServiceEndpointPoliciesListByResourceGroupOptions contains the optional parameters for the ServiceEndpointPolicies.ListByResourceGroup method.
+// options - ServiceEndpointPoliciesListByResourceGroupOptions contains the optional parameters for the ServiceEndpointPolicies.ListByResourceGroup
+// method.
 func (client *ServiceEndpointPoliciesClient) ListByResourceGroup(resourceGroupName string, options *ServiceEndpointPoliciesListByResourceGroupOptions) *ServiceEndpointPoliciesListByResourceGroupPager {
 	return &ServiceEndpointPoliciesListByResourceGroupPager{
 		client: client,
@@ -400,7 +404,8 @@ func (client *ServiceEndpointPoliciesClient) listByResourceGroupHandleError(resp
 // resourceGroupName - The name of the resource group.
 // serviceEndpointPolicyName - The name of the service endpoint policy.
 // parameters - Parameters supplied to update service endpoint policy tags.
-// options - ServiceEndpointPoliciesUpdateTagsOptions contains the optional parameters for the ServiceEndpointPolicies.UpdateTags method.
+// options - ServiceEndpointPoliciesUpdateTagsOptions contains the optional parameters for the ServiceEndpointPolicies.UpdateTags
+// method.
 func (client *ServiceEndpointPoliciesClient) UpdateTags(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, parameters TagsObject, options *ServiceEndpointPoliciesUpdateTagsOptions) (ServiceEndpointPoliciesUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, parameters, options)
 	if err != nil {

@@ -788,7 +788,8 @@ func (client *PathsClient) getBooleanTrueHandleError(resp *http.Response) error 
 
 // GetIntNegativeOneMillion - Get '-1000000' integer value
 // If the operation fails it returns the *Error error type.
-// options - PathsGetIntNegativeOneMillionOptions contains the optional parameters for the Paths.GetIntNegativeOneMillion method.
+// options - PathsGetIntNegativeOneMillionOptions contains the optional parameters for the Paths.GetIntNegativeOneMillion
+// method.
 func (client *PathsClient) GetIntNegativeOneMillion(ctx context.Context, options *PathsGetIntNegativeOneMillionOptions) (PathsGetIntNegativeOneMillionResponse, error) {
 	req, err := client.getIntNegativeOneMillionCreateRequest(ctx, options)
 	if err != nil {

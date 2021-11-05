@@ -31,8 +31,9 @@ type VPNGatewaysClient struct {
 }
 
 // NewVPNGatewaysClient creates a new instance of VPNGatewaysClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewVPNGatewaysClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VPNGatewaysClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewVPNGatewaysClient(subscriptionID string, credential azcore.TokenCredenti
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // vpnGatewayParameters - Parameters supplied to create or Update a virtual wan vpn gateway.
-// options - VPNGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the VPNGateways.BeginCreateOrUpdate method.
+// options - VPNGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the VPNGateways.BeginCreateOrUpdate
+// method.
 func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VPNGateway, options *VPNGatewaysBeginCreateOrUpdateOptions) (VPNGatewaysCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, vpnGatewayParameters, options)
 	if err != nil {
@@ -335,7 +337,8 @@ func (client *VPNGatewaysClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Lists all the VpnGateways in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnGateway.
-// options - VPNGatewaysListByResourceGroupOptions contains the optional parameters for the VPNGateways.ListByResourceGroup method.
+// options - VPNGatewaysListByResourceGroupOptions contains the optional parameters for the VPNGateways.ListByResourceGroup
+// method.
 func (client *VPNGatewaysClient) ListByResourceGroup(resourceGroupName string, options *VPNGatewaysListByResourceGroupOptions) *VPNGatewaysListByResourceGroupPager {
 	return &VPNGatewaysListByResourceGroupPager{
 		client: client,

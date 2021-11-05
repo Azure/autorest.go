@@ -31,8 +31,9 @@ type FirewallPoliciesClient struct {
 }
 
 // NewFirewallPoliciesClient creates a new instance of FirewallPoliciesClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewFirewallPoliciesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *FirewallPoliciesClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewFirewallPoliciesClient(subscriptionID string, credential azcore.TokenCre
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.
 // parameters - Parameters supplied to the create or update Firewall Policy operation.
-// options - FirewallPoliciesBeginCreateOrUpdateOptions contains the optional parameters for the FirewallPolicies.BeginCreateOrUpdate method.
+// options - FirewallPoliciesBeginCreateOrUpdateOptions contains the optional parameters for the FirewallPolicies.BeginCreateOrUpdate
+// method.
 func (client *FirewallPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters FirewallPolicy, options *FirewallPoliciesBeginCreateOrUpdateOptions) (FirewallPoliciesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, firewallPolicyName, parameters, options)
 	if err != nil {

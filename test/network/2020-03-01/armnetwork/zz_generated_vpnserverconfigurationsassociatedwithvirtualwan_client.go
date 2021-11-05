@@ -31,8 +31,9 @@ type VPNServerConfigurationsAssociatedWithVirtualWanClient struct {
 }
 
 // NewVPNServerConfigurationsAssociatedWithVirtualWanClient creates a new instance of VPNServerConfigurationsAssociatedWithVirtualWanClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VPNServerConfigurationsAssociatedWithVirtualWanClient {
 	cp := arm.ClientOptions{}
@@ -54,7 +55,8 @@ func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(subscriptionID str
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name.
 // virtualWANName - The name of the VirtualWAN whose associated VpnServerConfigurations is needed.
-// options - VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions contains the optional parameters for the VPNServerConfigurationsAssociatedWithVirtualWan.BeginList method.
+// options - VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions contains the optional parameters for the VPNServerConfigurationsAssociatedWithVirtualWan.BeginList
+// method.
 func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse, error) {
 	resp, err := client.listOperation(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {

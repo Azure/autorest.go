@@ -10,7 +10,8 @@ package mediatypesgroup
 
 import "io"
 
-// MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeader method.
+// MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeader
+// method.
 type MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions struct {
 	// Input parameter.
 	Input io.ReadSeekCloser
@@ -29,13 +30,15 @@ type MediaTypesClientAnalyzeBodyOptions struct {
 	Input io.ReadSeekCloser
 }
 
-// MediaTypesClientAnalyzeBodyWithSourcePathOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithSourcePath method.
+// MediaTypesClientAnalyzeBodyWithSourcePathOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithSourcePath
+// method.
 type MediaTypesClientAnalyzeBodyWithSourcePathOptions struct {
 	// Input parameter.
 	Input *SourcePath
 }
 
-// MediaTypesClientContentTypeWithEncodingOptions contains the optional parameters for the MediaTypesClient.ContentTypeWithEncoding method.
+// MediaTypesClientContentTypeWithEncodingOptions contains the optional parameters for the MediaTypesClient.ContentTypeWithEncoding
+// method.
 type MediaTypesClientContentTypeWithEncodingOptions struct {
 	// Input parameter.
 	Input *string

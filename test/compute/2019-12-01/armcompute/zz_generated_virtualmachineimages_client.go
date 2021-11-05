@@ -31,8 +31,9 @@ type VirtualMachineImagesClient struct {
 }
 
 // NewVirtualMachineImagesClient creates a new instance of VirtualMachineImagesClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewVirtualMachineImagesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualMachineImagesClient {
 	cp := arm.ClientOptions{}
@@ -222,7 +223,8 @@ func (client *VirtualMachineImagesClient) listHandleError(resp *http.Response) e
 // If the operation fails it returns a generic error.
 // location - The name of a supported Azure region.
 // publisherName - A valid image publisher.
-// options - VirtualMachineImagesListOffersOptions contains the optional parameters for the VirtualMachineImages.ListOffers method.
+// options - VirtualMachineImagesListOffersOptions contains the optional parameters for the VirtualMachineImages.ListOffers
+// method.
 func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesListOffersOptions) (VirtualMachineImagesListOffersResponse, error) {
 	req, err := client.listOffersCreateRequest(ctx, location, publisherName, options)
 	if err != nil {
@@ -288,7 +290,8 @@ func (client *VirtualMachineImagesClient) listOffersHandleError(resp *http.Respo
 // ListPublishers - Gets a list of virtual machine image publishers for the specified Azure location.
 // If the operation fails it returns a generic error.
 // location - The name of a supported Azure region.
-// options - VirtualMachineImagesListPublishersOptions contains the optional parameters for the VirtualMachineImages.ListPublishers method.
+// options - VirtualMachineImagesListPublishersOptions contains the optional parameters for the VirtualMachineImages.ListPublishers
+// method.
 func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, location string, options *VirtualMachineImagesListPublishersOptions) (VirtualMachineImagesListPublishersResponse, error) {
 	req, err := client.listPublishersCreateRequest(ctx, location, options)
 	if err != nil {

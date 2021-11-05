@@ -198,7 +198,8 @@ func (client *Datetimerfc1123Client) getOverflowHandleError(resp *http.Response)
 
 // GetUTCLowercaseMaxDateTime - Get max datetime value fri, 31 dec 9999 23:59:59 gmt
 // If the operation fails it returns the *Error error type.
-// options - Datetimerfc1123GetUTCLowercaseMaxDateTimeOptions contains the optional parameters for the Datetimerfc1123.GetUTCLowercaseMaxDateTime method.
+// options - Datetimerfc1123GetUTCLowercaseMaxDateTimeOptions contains the optional parameters for the Datetimerfc1123.GetUTCLowercaseMaxDateTime
+// method.
 func (client *Datetimerfc1123Client) GetUTCLowercaseMaxDateTime(ctx context.Context, options *Datetimerfc1123GetUTCLowercaseMaxDateTimeOptions) (Datetimerfc1123GetUTCLowercaseMaxDateTimeResponse, error) {
 	req, err := client.getUTCLowercaseMaxDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -251,7 +252,8 @@ func (client *Datetimerfc1123Client) getUTCLowercaseMaxDateTimeHandleError(resp 
 
 // GetUTCMinDateTime - Get min datetime value Mon, 1 Jan 0001 00:00:00 GMT
 // If the operation fails it returns the *Error error type.
-// options - Datetimerfc1123GetUTCMinDateTimeOptions contains the optional parameters for the Datetimerfc1123.GetUTCMinDateTime method.
+// options - Datetimerfc1123GetUTCMinDateTimeOptions contains the optional parameters for the Datetimerfc1123.GetUTCMinDateTime
+// method.
 func (client *Datetimerfc1123Client) GetUTCMinDateTime(ctx context.Context, options *Datetimerfc1123GetUTCMinDateTimeOptions) (Datetimerfc1123GetUTCMinDateTimeResponse, error) {
 	req, err := client.getUTCMinDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -304,7 +306,8 @@ func (client *Datetimerfc1123Client) getUTCMinDateTimeHandleError(resp *http.Res
 
 // GetUTCUppercaseMaxDateTime - Get max datetime value FRI, 31 DEC 9999 23:59:59 GMT
 // If the operation fails it returns the *Error error type.
-// options - Datetimerfc1123GetUTCUppercaseMaxDateTimeOptions contains the optional parameters for the Datetimerfc1123.GetUTCUppercaseMaxDateTime method.
+// options - Datetimerfc1123GetUTCUppercaseMaxDateTimeOptions contains the optional parameters for the Datetimerfc1123.GetUTCUppercaseMaxDateTime
+// method.
 func (client *Datetimerfc1123Client) GetUTCUppercaseMaxDateTime(ctx context.Context, options *Datetimerfc1123GetUTCUppercaseMaxDateTimeOptions) (Datetimerfc1123GetUTCUppercaseMaxDateTimeResponse, error) {
 	req, err := client.getUTCUppercaseMaxDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -411,7 +414,8 @@ func (client *Datetimerfc1123Client) getUnderflowHandleError(resp *http.Response
 // PutUTCMaxDateTime - Put max datetime value Fri, 31 Dec 9999 23:59:59 GMT
 // If the operation fails it returns the *Error error type.
 // datetimeBody - datetime body
-// options - Datetimerfc1123PutUTCMaxDateTimeOptions contains the optional parameters for the Datetimerfc1123.PutUTCMaxDateTime method.
+// options - Datetimerfc1123PutUTCMaxDateTimeOptions contains the optional parameters for the Datetimerfc1123.PutUTCMaxDateTime
+// method.
 func (client *Datetimerfc1123Client) PutUTCMaxDateTime(ctx context.Context, datetimeBody time.Time, options *Datetimerfc1123PutUTCMaxDateTimeOptions) (Datetimerfc1123PutUTCMaxDateTimeResponse, error) {
 	req, err := client.putUTCMaxDateTimeCreateRequest(ctx, datetimeBody, options)
 	if err != nil {
@@ -455,7 +459,8 @@ func (client *Datetimerfc1123Client) putUTCMaxDateTimeHandleError(resp *http.Res
 // PutUTCMinDateTime - Put min datetime value Mon, 1 Jan 0001 00:00:00 GMT
 // If the operation fails it returns the *Error error type.
 // datetimeBody - datetime body
-// options - Datetimerfc1123PutUTCMinDateTimeOptions contains the optional parameters for the Datetimerfc1123.PutUTCMinDateTime method.
+// options - Datetimerfc1123PutUTCMinDateTimeOptions contains the optional parameters for the Datetimerfc1123.PutUTCMinDateTime
+// method.
 func (client *Datetimerfc1123Client) PutUTCMinDateTime(ctx context.Context, datetimeBody time.Time, options *Datetimerfc1123PutUTCMinDateTimeOptions) (Datetimerfc1123PutUTCMinDateTimeResponse, error) {
 	req, err := client.putUTCMinDateTimeCreateRequest(ctx, datetimeBody, options)
 	if err != nil {

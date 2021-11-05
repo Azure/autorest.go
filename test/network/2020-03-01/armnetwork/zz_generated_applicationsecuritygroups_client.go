@@ -31,8 +31,9 @@ type ApplicationSecurityGroupsClient struct {
 }
 
 // NewApplicationSecurityGroupsClient creates a new instance of ApplicationSecurityGroupsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewApplicationSecurityGroupsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ApplicationSecurityGroupsClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewApplicationSecurityGroupsClient(subscriptionID string, credential azcore
 // resourceGroupName - The name of the resource group.
 // applicationSecurityGroupName - The name of the application security group.
 // parameters - Parameters supplied to the create or update ApplicationSecurityGroup operation.
-// options - ApplicationSecurityGroupsBeginCreateOrUpdateOptions contains the optional parameters for the ApplicationSecurityGroups.BeginCreateOrUpdate method.
+// options - ApplicationSecurityGroupsBeginCreateOrUpdateOptions contains the optional parameters for the ApplicationSecurityGroups.BeginCreateOrUpdate
+// method.
 func (client *ApplicationSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters ApplicationSecurityGroup, options *ApplicationSecurityGroupsBeginCreateOrUpdateOptions) (ApplicationSecurityGroupsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, applicationSecurityGroupName, parameters, options)
 	if err != nil {
@@ -134,7 +136,8 @@ func (client *ApplicationSecurityGroupsClient) createOrUpdateHandleError(resp *h
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // applicationSecurityGroupName - The name of the application security group.
-// options - ApplicationSecurityGroupsBeginDeleteOptions contains the optional parameters for the ApplicationSecurityGroups.BeginDelete method.
+// options - ApplicationSecurityGroupsBeginDeleteOptions contains the optional parameters for the ApplicationSecurityGroups.BeginDelete
+// method.
 func (client *ApplicationSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, options *ApplicationSecurityGroupsBeginDeleteOptions) (ApplicationSecurityGroupsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, applicationSecurityGroupName, options)
 	if err != nil {
@@ -280,7 +283,8 @@ func (client *ApplicationSecurityGroupsClient) getHandleError(resp *http.Respons
 // List - Gets all the application security groups in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - ApplicationSecurityGroupsListOptions contains the optional parameters for the ApplicationSecurityGroups.List method.
+// options - ApplicationSecurityGroupsListOptions contains the optional parameters for the ApplicationSecurityGroups.List
+// method.
 func (client *ApplicationSecurityGroupsClient) List(resourceGroupName string, options *ApplicationSecurityGroupsListOptions) *ApplicationSecurityGroupsListPager {
 	return &ApplicationSecurityGroupsListPager{
 		client: client,
@@ -339,7 +343,8 @@ func (client *ApplicationSecurityGroupsClient) listHandleError(resp *http.Respon
 
 // ListAll - Gets all application security groups in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - ApplicationSecurityGroupsListAllOptions contains the optional parameters for the ApplicationSecurityGroups.ListAll method.
+// options - ApplicationSecurityGroupsListAllOptions contains the optional parameters for the ApplicationSecurityGroups.ListAll
+// method.
 func (client *ApplicationSecurityGroupsClient) ListAll(options *ApplicationSecurityGroupsListAllOptions) *ApplicationSecurityGroupsListAllPager {
 	return &ApplicationSecurityGroupsListAllPager{
 		client: client,
@@ -397,7 +402,8 @@ func (client *ApplicationSecurityGroupsClient) listAllHandleError(resp *http.Res
 // resourceGroupName - The name of the resource group.
 // applicationSecurityGroupName - The name of the application security group.
 // parameters - Parameters supplied to update application security group tags.
-// options - ApplicationSecurityGroupsUpdateTagsOptions contains the optional parameters for the ApplicationSecurityGroups.UpdateTags method.
+// options - ApplicationSecurityGroupsUpdateTagsOptions contains the optional parameters for the ApplicationSecurityGroups.UpdateTags
+// method.
 func (client *ApplicationSecurityGroupsClient) UpdateTags(ctx context.Context, resourceGroupName string, applicationSecurityGroupName string, parameters TagsObject, options *ApplicationSecurityGroupsUpdateTagsOptions) (ApplicationSecurityGroupsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, applicationSecurityGroupName, parameters, options)
 	if err != nil {

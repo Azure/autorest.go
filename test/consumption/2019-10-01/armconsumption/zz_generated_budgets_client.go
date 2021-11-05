@@ -30,7 +30,7 @@ type BudgetsClient struct {
 }
 
 // NewBudgetsClient creates a new instance of BudgetsClient with the specified values.
-// credential - the credential used to authenticate the request.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewBudgetsClient(credential azcore.TokenCredential, options *arm.ClientOptions) *BudgetsClient {
 	cp := arm.ClientOptions{}
@@ -47,11 +47,19 @@ func NewBudgetsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 	return client
 }
 
-// CreateOrUpdate - The operation to create or update a budget. You can optionally provide an eTag if desired as a form of concurrency control. To obtain
-// the latest eTag for a given budget, perform a get operation prior
+// CreateOrUpdate - The operation to create or update a budget. You can optionally provide an eTag if desired as a form of
+// concurrency control. To obtain the latest eTag for a given budget, perform a get operation prior
 // to your put operation.
 // If the operation fails it returns the *ErrorResponse error type.
-// scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for invoiceSection scope.
+// scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
+// scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+// resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope,
+// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope,
+// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount
+// scope,
+// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+// for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
+// for invoiceSection scope.
 // budgetName - Budget Name.
 // parameters - Parameters supplied to the Create Budget operation.
 // options - BudgetsCreateOrUpdateOptions contains the optional parameters for the Budgets.CreateOrUpdate method.
@@ -113,7 +121,15 @@ func (client *BudgetsClient) createOrUpdateHandleError(resp *http.Response) erro
 
 // Delete - The operation to delete a budget.
 // If the operation fails it returns the *ErrorResponse error type.
-// scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for invoiceSection scope.
+// scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
+// scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+// resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope,
+// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope,
+// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount
+// scope,
+// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+// for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
+// for invoiceSection scope.
 // budgetName - Budget Name.
 // options - BudgetsDeleteOptions contains the optional parameters for the Budgets.Delete method.
 func (client *BudgetsClient) Delete(ctx context.Context, scope string, budgetName string, options *BudgetsDeleteOptions) (BudgetsDeleteResponse, error) {
@@ -165,7 +181,15 @@ func (client *BudgetsClient) deleteHandleError(resp *http.Response) error {
 
 // Get - Gets the budget for the scope by budget name.
 // If the operation fails it returns the *ErrorResponse error type.
-// scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for invoiceSection scope.
+// scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
+// scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+// resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope,
+// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope,
+// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount
+// scope,
+// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+// for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
+// for invoiceSection scope.
 // budgetName - Budget Name.
 // options - BudgetsGetOptions contains the optional parameters for the Budgets.Get method.
 func (client *BudgetsClient) Get(ctx context.Context, scope string, budgetName string, options *BudgetsGetOptions) (BudgetsGetResponse, error) {
@@ -226,7 +250,15 @@ func (client *BudgetsClient) getHandleError(resp *http.Response) error {
 
 // List - Lists all budgets for the defined scope.
 // If the operation fails it returns the *ErrorResponse error type.
-// scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for invoiceSection scope.
+// scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
+// scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+// resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope,
+// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope,
+// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount
+// scope,
+// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+// for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
+// for invoiceSection scope.
 // options - BudgetsListOptions contains the optional parameters for the Budgets.List method.
 func (client *BudgetsClient) List(scope string, options *BudgetsListOptions) *BudgetsListPager {
 	return &BudgetsListPager{

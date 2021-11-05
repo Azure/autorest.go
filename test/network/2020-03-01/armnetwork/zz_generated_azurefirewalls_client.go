@@ -31,8 +31,9 @@ type AzureFirewallsClient struct {
 }
 
 // NewAzureFirewallsClient creates a new instance of AzureFirewallsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewAzureFirewallsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *AzureFirewallsClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewAzureFirewallsClient(subscriptionID string, credential azcore.TokenCrede
 // resourceGroupName - The name of the resource group.
 // azureFirewallName - The name of the Azure Firewall.
 // parameters - Parameters supplied to the create or update Azure Firewall operation.
-// options - AzureFirewallsBeginCreateOrUpdateOptions contains the optional parameters for the AzureFirewalls.BeginCreateOrUpdate method.
+// options - AzureFirewallsBeginCreateOrUpdateOptions contains the optional parameters for the AzureFirewalls.BeginCreateOrUpdate
+// method.
 func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsBeginCreateOrUpdateOptions) (AzureFirewallsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, azureFirewallName, parameters, options)
 	if err != nil {
@@ -397,7 +399,8 @@ func (client *AzureFirewallsClient) listAllHandleError(resp *http.Response) erro
 // resourceGroupName - The name of the resource group.
 // azureFirewallName - The name of the Azure Firewall.
 // parameters - Parameters supplied to update azure firewall tags.
-// options - AzureFirewallsBeginUpdateTagsOptions contains the optional parameters for the AzureFirewalls.BeginUpdateTags method.
+// options - AzureFirewallsBeginUpdateTagsOptions contains the optional parameters for the AzureFirewalls.BeginUpdateTags
+// method.
 func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject, options *AzureFirewallsBeginUpdateTagsOptions) (AzureFirewallsUpdateTagsPollerResponse, error) {
 	resp, err := client.updateTags(ctx, resourceGroupName, azureFirewallName, parameters, options)
 	if err != nil {

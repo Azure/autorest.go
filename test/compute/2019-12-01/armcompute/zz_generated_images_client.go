@@ -30,8 +30,9 @@ type ImagesClient struct {
 }
 
 // NewImagesClient creates a new instance of ImagesClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewImagesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ImagesClient {
 	cp := arm.ClientOptions{}
@@ -275,8 +276,8 @@ func (client *ImagesClient) getHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// List - Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images. Do this till nextLink is null
-// to fetch all the Images.
+// List - Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images.
+// Do this till nextLink is null to fetch all the Images.
 // If the operation fails it returns a generic error.
 // options - ImagesListOptions contains the optional parameters for the Images.List method.
 func (client *ImagesClient) List(options *ImagesListOptions) *ImagesListPager {

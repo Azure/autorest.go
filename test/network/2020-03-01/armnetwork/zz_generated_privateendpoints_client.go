@@ -31,8 +31,9 @@ type PrivateEndpointsClient struct {
 }
 
 // NewPrivateEndpointsClient creates a new instance of PrivateEndpointsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewPrivateEndpointsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *PrivateEndpointsClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewPrivateEndpointsClient(subscriptionID string, credential azcore.TokenCre
 // resourceGroupName - The name of the resource group.
 // privateEndpointName - The name of the private endpoint.
 // parameters - Parameters supplied to the create or update private endpoint operation.
-// options - PrivateEndpointsBeginCreateOrUpdateOptions contains the optional parameters for the PrivateEndpoints.BeginCreateOrUpdate method.
+// options - PrivateEndpointsBeginCreateOrUpdateOptions contains the optional parameters for the PrivateEndpoints.BeginCreateOrUpdate
+// method.
 func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsBeginCreateOrUpdateOptions) (PrivateEndpointsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, privateEndpointName, parameters, options)
 	if err != nil {
@@ -342,7 +344,8 @@ func (client *PrivateEndpointsClient) listHandleError(resp *http.Response) error
 
 // ListBySubscription - Gets all private endpoints in a subscription.
 // If the operation fails it returns the *Error error type.
-// options - PrivateEndpointsListBySubscriptionOptions contains the optional parameters for the PrivateEndpoints.ListBySubscription method.
+// options - PrivateEndpointsListBySubscriptionOptions contains the optional parameters for the PrivateEndpoints.ListBySubscription
+// method.
 func (client *PrivateEndpointsClient) ListBySubscription(options *PrivateEndpointsListBySubscriptionOptions) *PrivateEndpointsListBySubscriptionPager {
 	return &PrivateEndpointsListBySubscriptionPager{
 		client: client,

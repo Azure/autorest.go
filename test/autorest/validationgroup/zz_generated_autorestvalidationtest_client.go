@@ -45,7 +45,8 @@ func NewAutoRestValidationTestClient(subscriptionID string, options *azcore.Clie
 
 // GetWithConstantInPath -
 // If the operation fails it returns a generic error.
-// options - AutoRestValidationTestGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTest.GetWithConstantInPath method.
+// options - AutoRestValidationTestGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTest.GetWithConstantInPath
+// method.
 func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Context, options *AutoRestValidationTestGetWithConstantInPathOptions) (AutoRestValidationTestGetWithConstantInPathResponse, error) {
 	req, err := client.getWithConstantInPathCreateRequest(ctx, options)
 	if err != nil {
@@ -86,7 +87,8 @@ func (client *AutoRestValidationTestClient) getWithConstantInPathHandleError(res
 
 // PostWithConstantInBody -
 // If the operation fails it returns a generic error.
-// options - AutoRestValidationTestPostWithConstantInBodyOptions contains the optional parameters for the AutoRestValidationTest.PostWithConstantInBody method.
+// options - AutoRestValidationTestPostWithConstantInBodyOptions contains the optional parameters for the AutoRestValidationTest.PostWithConstantInBody
+// method.
 func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.Context, options *AutoRestValidationTestPostWithConstantInBodyOptions) (AutoRestValidationTestPostWithConstantInBodyResponse, error) {
 	req, err := client.postWithConstantInBodyCreateRequest(ctx, options)
 	if err != nil {
@@ -142,7 +144,8 @@ func (client *AutoRestValidationTestClient) postWithConstantInBodyHandleError(re
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - Required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
 // id - Required int multiple of 10 from 100 to 1000.
-// options - AutoRestValidationTestValidationOfBodyOptions contains the optional parameters for the AutoRestValidationTest.ValidationOfBody method.
+// options - AutoRestValidationTestValidationOfBodyOptions contains the optional parameters for the AutoRestValidationTest.ValidationOfBody
+// method.
 func (client *AutoRestValidationTestClient) ValidationOfBody(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestValidationOfBodyOptions) (AutoRestValidationTestValidationOfBodyResponse, error) {
 	req, err := client.validationOfBodyCreateRequest(ctx, resourceGroupName, id, options)
 	if err != nil {
@@ -210,7 +213,8 @@ func (client *AutoRestValidationTestClient) validationOfBodyHandleError(resp *ht
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - Required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
 // id - Required int multiple of 10 from 100 to 1000.
-// options - AutoRestValidationTestValidationOfMethodParametersOptions contains the optional parameters for the AutoRestValidationTest.ValidationOfMethodParameters method.
+// options - AutoRestValidationTestValidationOfMethodParametersOptions contains the optional parameters for the AutoRestValidationTest.ValidationOfMethodParameters
+// method.
 func (client *AutoRestValidationTestClient) ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestValidationOfMethodParametersOptions) (AutoRestValidationTestValidationOfMethodParametersResponse, error) {
 	req, err := client.validationOfMethodParametersCreateRequest(ctx, resourceGroupName, id, options)
 	if err != nil {

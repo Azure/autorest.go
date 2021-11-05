@@ -48,7 +48,8 @@ func newSparkBatchClient(endpoint string, livyAPIVersion *string, sparkPoolName 
 // CancelSparkBatchJob - Cancels a running spark batch job.
 // If the operation fails it returns a generic error.
 // batchID - Identifier for the batch job.
-// options - SparkBatchCancelSparkBatchJobOptions contains the optional parameters for the SparkBatch.CancelSparkBatchJob method.
+// options - SparkBatchCancelSparkBatchJobOptions contains the optional parameters for the SparkBatch.CancelSparkBatchJob
+// method.
 func (client *sparkBatchClient) CancelSparkBatchJob(ctx context.Context, batchID int32, options *SparkBatchCancelSparkBatchJobOptions) (SparkBatchCancelSparkBatchJobResponse, error) {
 	req, err := client.cancelSparkBatchJobCreateRequest(ctx, batchID, options)
 	if err != nil {
@@ -90,7 +91,8 @@ func (client *sparkBatchClient) cancelSparkBatchJobHandleError(resp *http.Respon
 // CreateSparkBatchJob - Create new spark batch job.
 // If the operation fails it returns a generic error.
 // sparkBatchJobOptions - Livy compatible batch job request payload.
-// options - SparkBatchCreateSparkBatchJobOptions contains the optional parameters for the SparkBatch.CreateSparkBatchJob method.
+// options - SparkBatchCreateSparkBatchJobOptions contains the optional parameters for the SparkBatch.CreateSparkBatchJob
+// method.
 func (client *sparkBatchClient) CreateSparkBatchJob(ctx context.Context, sparkBatchJobOptions SparkBatchJobOptions, options *SparkBatchCreateSparkBatchJobOptions) (SparkBatchCreateSparkBatchJobResponse, error) {
 	req, err := client.createSparkBatchJobCreateRequest(ctx, sparkBatchJobOptions, options)
 	if err != nil {

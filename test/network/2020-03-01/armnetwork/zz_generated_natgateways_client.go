@@ -31,8 +31,9 @@ type NatGatewaysClient struct {
 }
 
 // NewNatGatewaysClient creates a new instance of NatGatewaysClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewNatGatewaysClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NatGatewaysClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewNatGatewaysClient(subscriptionID string, credential azcore.TokenCredenti
 // resourceGroupName - The name of the resource group.
 // natGatewayName - The name of the nat gateway.
 // parameters - Parameters supplied to the create or update nat gateway operation.
-// options - NatGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the NatGateways.BeginCreateOrUpdate method.
+// options - NatGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the NatGateways.BeginCreateOrUpdate
+// method.
 func (client *NatGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, natGatewayName string, parameters NatGateway, options *NatGatewaysBeginCreateOrUpdateOptions) (NatGatewaysCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, natGatewayName, parameters, options)
 	if err != nil {

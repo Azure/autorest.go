@@ -51,7 +51,8 @@ func NewImplicitClient(requiredGlobalPath string, requiredGlobalQuery string, op
 
 // GetOptionalGlobalQuery - Test implicitly optional query parameter
 // If the operation fails it returns the *Error error type.
-// options - ImplicitGetOptionalGlobalQueryOptions contains the optional parameters for the Implicit.GetOptionalGlobalQuery method.
+// options - ImplicitGetOptionalGlobalQueryOptions contains the optional parameters for the Implicit.GetOptionalGlobalQuery
+// method.
 func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context, options *ImplicitGetOptionalGlobalQueryOptions) (ImplicitGetOptionalGlobalQueryResponse, error) {
 	req, err := client.getOptionalGlobalQueryCreateRequest(ctx, options)
 	if err != nil {
@@ -98,7 +99,8 @@ func (client *ImplicitClient) getOptionalGlobalQueryHandleError(resp *http.Respo
 
 // GetRequiredGlobalPath - Test implicitly required path parameter
 // If the operation fails it returns the *Error error type.
-// options - ImplicitGetRequiredGlobalPathOptions contains the optional parameters for the Implicit.GetRequiredGlobalPath method.
+// options - ImplicitGetRequiredGlobalPathOptions contains the optional parameters for the Implicit.GetRequiredGlobalPath
+// method.
 func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context, options *ImplicitGetRequiredGlobalPathOptions) (ImplicitGetRequiredGlobalPathResponse, error) {
 	req, err := client.getRequiredGlobalPathCreateRequest(ctx, options)
 	if err != nil {
@@ -144,7 +146,8 @@ func (client *ImplicitClient) getRequiredGlobalPathHandleError(resp *http.Respon
 
 // GetRequiredGlobalQuery - Test implicitly required query parameter
 // If the operation fails it returns the *Error error type.
-// options - ImplicitGetRequiredGlobalQueryOptions contains the optional parameters for the Implicit.GetRequiredGlobalQuery method.
+// options - ImplicitGetRequiredGlobalQueryOptions contains the optional parameters for the Implicit.GetRequiredGlobalQuery
+// method.
 func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context, options *ImplicitGetRequiredGlobalQueryOptions) (ImplicitGetRequiredGlobalQueryResponse, error) {
 	req, err := client.getRequiredGlobalQueryCreateRequest(ctx, options)
 	if err != nil {
@@ -235,7 +238,8 @@ func (client *ImplicitClient) getRequiredPathHandleError(resp *http.Response) er
 
 // PutOptionalBinaryBody - Test implicitly optional body parameter
 // If the operation fails it returns the *Error error type.
-// options - ImplicitPutOptionalBinaryBodyOptions contains the optional parameters for the Implicit.PutOptionalBinaryBody method.
+// options - ImplicitPutOptionalBinaryBodyOptions contains the optional parameters for the Implicit.PutOptionalBinaryBody
+// method.
 func (client *ImplicitClient) PutOptionalBinaryBody(ctx context.Context, options *ImplicitPutOptionalBinaryBodyOptions) (ImplicitPutOptionalBinaryBodyResponse, error) {
 	req, err := client.putOptionalBinaryBodyCreateRequest(ctx, options)
 	if err != nil {

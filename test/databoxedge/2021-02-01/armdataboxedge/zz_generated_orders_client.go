@@ -274,7 +274,8 @@ func (client *OrdersClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - OrdersListByDataBoxEdgeDeviceOptions contains the optional parameters for the Orders.ListByDataBoxEdgeDevice method.
+// options - OrdersListByDataBoxEdgeDeviceOptions contains the optional parameters for the Orders.ListByDataBoxEdgeDevice
+// method.
 func (client *OrdersClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *OrdersListByDataBoxEdgeDeviceOptions) *OrdersListByDataBoxEdgeDevicePager {
 	return &OrdersListByDataBoxEdgeDevicePager{
 		client: client,

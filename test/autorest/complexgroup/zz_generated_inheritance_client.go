@@ -89,7 +89,9 @@ func (client *InheritanceClient) getValidHandleError(resp *http.Response) error 
 
 // PutValid - Put complex types that extend others
 // If the operation fails it returns the *Error error type.
-// complexBody - Please put a siamese with id=2, name="Siameee", color=green, breed=persion, which hates 2 dogs, the 1st one named "Potato" with id=1 and food="tomato", and the 2nd one named "Tomato" with id=-1 and food="french fries".
+// complexBody - Please put a siamese with id=2, name="Siameee", color=green, breed=persion, which hates 2 dogs, the 1st one
+// named "Potato" with id=1 and food="tomato", and the 2nd one named "Tomato" with id=-1 and
+// food="french fries".
 // options - InheritancePutValidOptions contains the optional parameters for the Inheritance.PutValid method.
 func (client *InheritanceClient) PutValid(ctx context.Context, complexBody Siamese, options *InheritancePutValidOptions) (InheritancePutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)

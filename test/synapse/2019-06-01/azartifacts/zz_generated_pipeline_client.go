@@ -40,7 +40,8 @@ func newPipelineClient(endpoint string, pl runtime.Pipeline) *pipelineClient {
 // If the operation fails it returns the *CloudError error type.
 // pipelineName - The pipeline name.
 // pipeline - Pipeline resource definition.
-// options - PipelineBeginCreateOrUpdatePipelineOptions contains the optional parameters for the Pipeline.BeginCreateOrUpdatePipeline method.
+// options - PipelineBeginCreateOrUpdatePipelineOptions contains the optional parameters for the Pipeline.BeginCreateOrUpdatePipeline
+// method.
 func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (PipelineCreateOrUpdatePipelinePollerResponse, error) {
 	resp, err := client.createOrUpdatePipeline(ctx, pipelineName, pipeline, options)
 	if err != nil {
@@ -315,7 +316,8 @@ func (client *pipelineClient) getPipelineHandleError(resp *http.Response) error 
 
 // GetPipelinesByWorkspace - Lists pipelines.
 // If the operation fails it returns the *CloudError error type.
-// options - PipelineGetPipelinesByWorkspaceOptions contains the optional parameters for the Pipeline.GetPipelinesByWorkspace method.
+// options - PipelineGetPipelinesByWorkspaceOptions contains the optional parameters for the Pipeline.GetPipelinesByWorkspace
+// method.
 func (client *pipelineClient) GetPipelinesByWorkspace(options *PipelineGetPipelinesByWorkspaceOptions) *PipelineGetPipelinesByWorkspacePager {
 	return &PipelineGetPipelinesByWorkspacePager{
 		client: client,

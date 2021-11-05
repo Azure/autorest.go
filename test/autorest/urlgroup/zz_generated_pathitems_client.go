@@ -45,8 +45,8 @@ func NewPathItemsClient(globalStringPath string, globalStringQuery *string, opti
 	return client
 }
 
-// GetAllWithValues - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery',
-// pathItemStringQuery='pathItemStringQuery',
+// GetAllWithValues - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath',
+// globalStringQuery='globalStringQuery', pathItemStringQuery='pathItemStringQuery',
 // localStringQuery='localStringQuery'
 // If the operation fails it returns the *Error error type.
 // pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
@@ -114,13 +114,14 @@ func (client *PathItemsClient) getAllWithValuesHandleError(resp *http.Response) 
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetGlobalAndLocalQueryNull - send globalStringPath=globalStringPath, pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null,
-// pathItemStringQuery='pathItemStringQuery',
+// GetGlobalAndLocalQueryNull - send globalStringPath=globalStringPath, pathItemStringPath='pathItemStringPath', localStringPath='localStringPath',
+// globalStringQuery=null, pathItemStringQuery='pathItemStringQuery',
 // localStringQuery=null
 // If the operation fails it returns the *Error error type.
 // pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
 // localStringPath - should contain value 'localStringPath'
-// options - PathItemsGetGlobalAndLocalQueryNullOptions contains the optional parameters for the PathItems.GetGlobalAndLocalQueryNull method.
+// options - PathItemsGetGlobalAndLocalQueryNullOptions contains the optional parameters for the PathItems.GetGlobalAndLocalQueryNull
+// method.
 func (client *PathItemsClient) GetGlobalAndLocalQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetGlobalAndLocalQueryNullOptions) (PathItemsGetGlobalAndLocalQueryNullResponse, error) {
 	req, err := client.getGlobalAndLocalQueryNullCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {
@@ -183,8 +184,8 @@ func (client *PathItemsClient) getGlobalAndLocalQueryNullHandleError(resp *http.
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetGlobalQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery=null,
-// pathItemStringQuery='pathItemStringQuery',
+// GetGlobalQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath',
+// globalStringQuery=null, pathItemStringQuery='pathItemStringQuery',
 // localStringQuery='localStringQuery'
 // If the operation fails it returns the *Error error type.
 // pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
@@ -252,13 +253,14 @@ func (client *PathItemsClient) getGlobalQueryNullHandleError(resp *http.Response
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// GetLocalPathItemQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath', globalStringQuery='globalStringQuery',
-// pathItemStringQuery=null,
+// GetLocalPathItemQueryNull - send globalStringPath='globalStringPath', pathItemStringPath='pathItemStringPath', localStringPath='localStringPath',
+// globalStringQuery='globalStringQuery', pathItemStringQuery=null,
 // localStringQuery=null
 // If the operation fails it returns the *Error error type.
 // pathItemStringPath - A string value 'pathItemStringPath' that appears in the path
 // localStringPath - should contain value 'localStringPath'
-// options - PathItemsGetLocalPathItemQueryNullOptions contains the optional parameters for the PathItems.GetLocalPathItemQueryNull method.
+// options - PathItemsGetLocalPathItemQueryNullOptions contains the optional parameters for the PathItems.GetLocalPathItemQueryNull
+// method.
 func (client *PathItemsClient) GetLocalPathItemQueryNull(ctx context.Context, pathItemStringPath string, localStringPath string, options *PathItemsGetLocalPathItemQueryNullOptions) (PathItemsGetLocalPathItemQueryNullResponse, error) {
 	req, err := client.getLocalPathItemQueryNullCreateRequest(ctx, pathItemStringPath, localStringPath, options)
 	if err != nil {

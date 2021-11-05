@@ -31,8 +31,9 @@ type ConnectionMonitorsClient struct {
 }
 
 // NewConnectionMonitorsClient creates a new instance of ConnectionMonitorsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewConnectionMonitorsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ConnectionMonitorsClient {
 	cp := arm.ClientOptions{}
@@ -56,7 +57,8 @@ func NewConnectionMonitorsClient(subscriptionID string, credential azcore.TokenC
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
 // parameters - Parameters that define the operation to create a connection monitor.
-// options - ConnectionMonitorsBeginCreateOrUpdateOptions contains the optional parameters for the ConnectionMonitors.BeginCreateOrUpdate method.
+// options - ConnectionMonitorsBeginCreateOrUpdateOptions contains the optional parameters for the ConnectionMonitors.BeginCreateOrUpdate
+// method.
 func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsBeginCreateOrUpdateOptions) (ConnectionMonitorsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, options)
 	if err != nil {
@@ -140,7 +142,8 @@ func (client *ConnectionMonitorsClient) createOrUpdateHandleError(resp *http.Res
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
-// options - ConnectionMonitorsBeginDeleteOptions contains the optional parameters for the ConnectionMonitors.BeginDelete method.
+// options - ConnectionMonitorsBeginDeleteOptions contains the optional parameters for the ConnectionMonitors.BeginDelete
+// method.
 func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginDeleteOptions) (ConnectionMonitorsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {

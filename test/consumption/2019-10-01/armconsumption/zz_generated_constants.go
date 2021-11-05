@@ -249,8 +249,8 @@ func (c EventType) ToPtr() *EventType {
 	return &c
 }
 
-// Grain - The granularity of forecast. Please note that Yearly is not currently supported in this API. The API will provide responses in the Monthly grain
-// if Yearly is selected. To get yearly grain data, please
+// Grain - The granularity of forecast. Please note that Yearly is not currently supported in this API. The API will provide
+// responses in the Monthly grain if Yearly is selected. To get yearly grain data, please
 // use our newer Forecast API.
 type Grain string
 
@@ -450,8 +450,8 @@ func (c ThresholdType) ToPtr() *ThresholdType {
 	return &c
 }
 
-// TimeGrainType - The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual
-// are only supported by WD customers
+// TimeGrainType - The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth,
+// BillingQuarter, and BillingAnnual are only supported by WD customers
 type TimeGrainType string
 
 const (

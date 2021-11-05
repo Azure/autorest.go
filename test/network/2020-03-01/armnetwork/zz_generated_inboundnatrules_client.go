@@ -31,8 +31,9 @@ type InboundNatRulesClient struct {
 }
 
 // NewInboundNatRulesClient creates a new instance of InboundNatRulesClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewInboundNatRulesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *InboundNatRulesClient {
 	cp := arm.ClientOptions{}
@@ -56,7 +57,8 @@ func NewInboundNatRulesClient(subscriptionID string, credential azcore.TokenCred
 // loadBalancerName - The name of the load balancer.
 // inboundNatRuleName - The name of the inbound nat rule.
 // inboundNatRuleParameters - Parameters supplied to the create or update inbound nat rule operation.
-// options - InboundNatRulesBeginCreateOrUpdateOptions contains the optional parameters for the InboundNatRules.BeginCreateOrUpdate method.
+// options - InboundNatRulesBeginCreateOrUpdateOptions contains the optional parameters for the InboundNatRules.BeginCreateOrUpdate
+// method.
 func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesBeginCreateOrUpdateOptions) (InboundNatRulesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, inboundNatRuleParameters, options)
 	if err != nil {

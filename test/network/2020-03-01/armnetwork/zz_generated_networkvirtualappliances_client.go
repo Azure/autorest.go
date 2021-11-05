@@ -31,8 +31,9 @@ type NetworkVirtualAppliancesClient struct {
 }
 
 // NewNetworkVirtualAppliancesClient creates a new instance of NetworkVirtualAppliancesClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewNetworkVirtualAppliancesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NetworkVirtualAppliancesClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewNetworkVirtualAppliancesClient(subscriptionID string, credential azcore.
 // resourceGroupName - The name of the resource group.
 // networkVirtualApplianceName - The name of Network Virtual Appliance.
 // parameters - Parameters supplied to the create or update Network Virtual Appliance.
-// options - NetworkVirtualAppliancesBeginCreateOrUpdateOptions contains the optional parameters for the NetworkVirtualAppliances.BeginCreateOrUpdate method.
+// options - NetworkVirtualAppliancesBeginCreateOrUpdateOptions contains the optional parameters for the NetworkVirtualAppliances.BeginCreateOrUpdate
+// method.
 func (client *NetworkVirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters NetworkVirtualAppliance, options *NetworkVirtualAppliancesBeginCreateOrUpdateOptions) (NetworkVirtualAppliancesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
 	if err != nil {
@@ -134,7 +136,8 @@ func (client *NetworkVirtualAppliancesClient) createOrUpdateHandleError(resp *ht
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkVirtualApplianceName - The name of Network Virtual Appliance.
-// options - NetworkVirtualAppliancesBeginDeleteOptions contains the optional parameters for the NetworkVirtualAppliances.BeginDelete method.
+// options - NetworkVirtualAppliancesBeginDeleteOptions contains the optional parameters for the NetworkVirtualAppliances.BeginDelete
+// method.
 func (client *NetworkVirtualAppliancesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *NetworkVirtualAppliancesBeginDeleteOptions) (NetworkVirtualAppliancesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkVirtualApplianceName, options)
 	if err != nil {
@@ -338,7 +341,8 @@ func (client *NetworkVirtualAppliancesClient) listHandleError(resp *http.Respons
 // ListByResourceGroup - Lists all Network Virtual Appliances in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - NetworkVirtualAppliancesListByResourceGroupOptions contains the optional parameters for the NetworkVirtualAppliances.ListByResourceGroup method.
+// options - NetworkVirtualAppliancesListByResourceGroupOptions contains the optional parameters for the NetworkVirtualAppliances.ListByResourceGroup
+// method.
 func (client *NetworkVirtualAppliancesClient) ListByResourceGroup(resourceGroupName string, options *NetworkVirtualAppliancesListByResourceGroupOptions) *NetworkVirtualAppliancesListByResourceGroupPager {
 	return &NetworkVirtualAppliancesListByResourceGroupPager{
 		client: client,
@@ -400,7 +404,8 @@ func (client *NetworkVirtualAppliancesClient) listByResourceGroupHandleError(res
 // resourceGroupName - The resource group name of Network Virtual Appliance.
 // networkVirtualApplianceName - The name of Network Virtual Appliance being updated.
 // parameters - Parameters supplied to Update Network Virtual Appliance Tags.
-// options - NetworkVirtualAppliancesUpdateTagsOptions contains the optional parameters for the NetworkVirtualAppliances.UpdateTags method.
+// options - NetworkVirtualAppliancesUpdateTagsOptions contains the optional parameters for the NetworkVirtualAppliances.UpdateTags
+// method.
 func (client *NetworkVirtualAppliancesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters TagsObject, options *NetworkVirtualAppliancesUpdateTagsOptions) (NetworkVirtualAppliancesUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
 	if err != nil {

@@ -31,8 +31,9 @@ type LoadBalancerNetworkInterfacesClient struct {
 }
 
 // NewLoadBalancerNetworkInterfacesClient creates a new instance of LoadBalancerNetworkInterfacesClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewLoadBalancerNetworkInterfacesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *LoadBalancerNetworkInterfacesClient {
 	cp := arm.ClientOptions{}
@@ -54,7 +55,8 @@ func NewLoadBalancerNetworkInterfacesClient(subscriptionID string, credential az
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
-// options - LoadBalancerNetworkInterfacesListOptions contains the optional parameters for the LoadBalancerNetworkInterfaces.List method.
+// options - LoadBalancerNetworkInterfacesListOptions contains the optional parameters for the LoadBalancerNetworkInterfaces.List
+// method.
 func (client *LoadBalancerNetworkInterfacesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerNetworkInterfacesListOptions) *LoadBalancerNetworkInterfacesListPager {
 	return &LoadBalancerNetworkInterfacesListPager{
 		client: client,

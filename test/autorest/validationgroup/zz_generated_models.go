@@ -14,17 +14,20 @@ import (
 	"reflect"
 )
 
-// AutoRestValidationTestGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTest.GetWithConstantInPath method.
+// AutoRestValidationTestGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTest.GetWithConstantInPath
+// method.
 type AutoRestValidationTestGetWithConstantInPathOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AutoRestValidationTestPostWithConstantInBodyOptions contains the optional parameters for the AutoRestValidationTest.PostWithConstantInBody method.
+// AutoRestValidationTestPostWithConstantInBodyOptions contains the optional parameters for the AutoRestValidationTest.PostWithConstantInBody
+// method.
 type AutoRestValidationTestPostWithConstantInBodyOptions struct {
 	Body *Product
 }
 
-// AutoRestValidationTestValidationOfBodyOptions contains the optional parameters for the AutoRestValidationTest.ValidationOfBody method.
+// AutoRestValidationTestValidationOfBodyOptions contains the optional parameters for the AutoRestValidationTest.ValidationOfBody
+// method.
 type AutoRestValidationTestValidationOfBodyOptions struct {
 	Body *Product
 }

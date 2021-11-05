@@ -49,7 +49,8 @@ func NewStorageAccountsClient(subscriptionID string, options *azcore.ClientOptio
 // storageAccountName - The StorageAccount name.
 // resourceGroupName - The resource group name.
 // storageAccount - The StorageAccount properties.
-// options - StorageAccountsBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccounts.BeginCreateOrUpdate method.
+// options - StorageAccountsBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccounts.BeginCreateOrUpdate
+// method.
 func (client *StorageAccountsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, storageAccount StorageAccount, options *StorageAccountsBeginCreateOrUpdateOptions) (StorageAccountsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, storageAccountName, resourceGroupName, storageAccount, options)
 	if err != nil {
@@ -289,7 +290,8 @@ func (client *StorageAccountsClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - StorageAccountsListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccounts.ListByDataBoxEdgeDevice method.
+// options - StorageAccountsListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccounts.ListByDataBoxEdgeDevice
+// method.
 func (client *StorageAccountsClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *StorageAccountsListByDataBoxEdgeDeviceOptions) *StorageAccountsListByDataBoxEdgeDevicePager {
 	return &StorageAccountsListByDataBoxEdgeDevicePager{
 		client: client,

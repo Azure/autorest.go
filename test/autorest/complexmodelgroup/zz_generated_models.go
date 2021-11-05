@@ -104,8 +104,8 @@ type Product struct {
 	// Image URL representing the product.
 	Image *string `json:"image,omitempty"`
 
-	// Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id
-	// than uberX in Los Angeles.
+	// Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco
+	// will have a different product_id than uberX in Los Angeles.
 	ProductID *string `json:"product_id,omitempty"`
 }
 

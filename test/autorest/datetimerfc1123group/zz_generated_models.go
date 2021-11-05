@@ -23,7 +23,8 @@ type Datetimerfc1123GetOverflowOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Datetimerfc1123GetUTCLowercaseMaxDateTimeOptions contains the optional parameters for the Datetimerfc1123.GetUTCLowercaseMaxDateTime method.
+// Datetimerfc1123GetUTCLowercaseMaxDateTimeOptions contains the optional parameters for the Datetimerfc1123.GetUTCLowercaseMaxDateTime
+// method.
 type Datetimerfc1123GetUTCLowercaseMaxDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
@@ -33,7 +34,8 @@ type Datetimerfc1123GetUTCMinDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Datetimerfc1123GetUTCUppercaseMaxDateTimeOptions contains the optional parameters for the Datetimerfc1123.GetUTCUppercaseMaxDateTime method.
+// Datetimerfc1123GetUTCUppercaseMaxDateTimeOptions contains the optional parameters for the Datetimerfc1123.GetUTCUppercaseMaxDateTime
+// method.
 type Datetimerfc1123GetUTCUppercaseMaxDateTimeOptions struct {
 	// placeholder for future optional parameters
 }

@@ -30,7 +30,7 @@ type ReservationsDetailsClient struct {
 }
 
 // NewReservationsDetailsClient creates a new instance of ReservationsDetailsClient with the specified values.
-// credential - the credential used to authenticate the request.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewReservationsDetailsClient(credential azcore.TokenCredential, options *arm.ClientOptions) *ReservationsDetailsClient {
 	cp := arm.ClientOptions{}
@@ -49,7 +49,10 @@ func NewReservationsDetailsClient(credential azcore.TokenCredential, options *ar
 
 // List - Lists the reservations details for the defined scope and provided date range.
 // If the operation fails it returns the *ErrorResponse error type.
-// scope - The scope associated with reservations details operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for BillingAccount scope (legacy), and '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope (modern).
+// scope - The scope associated with reservations details operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
+// for BillingAccount scope (legacy), and
+// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile
+// scope (modern).
 // options - ReservationsDetailsListOptions contains the optional parameters for the ReservationsDetails.List method.
 func (client *ReservationsDetailsClient) List(scope string, options *ReservationsDetailsListOptions) *ReservationsDetailsListPager {
 	return &ReservationsDetailsListPager{
@@ -118,8 +121,10 @@ func (client *ReservationsDetailsClient) listHandleError(resp *http.Response) er
 // ListByReservationOrder - Lists the reservations details for provided date range.
 // If the operation fails it returns the *ErrorResponse error type.
 // reservationOrderID - Order Id of the reservation
-// filter - Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'
-// options - ReservationsDetailsListByReservationOrderOptions contains the optional parameters for the ReservationsDetails.ListByReservationOrder method.
+// filter - Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports
+// 'le' and 'ge'
+// options - ReservationsDetailsListByReservationOrderOptions contains the optional parameters for the ReservationsDetails.ListByReservationOrder
+// method.
 func (client *ReservationsDetailsClient) ListByReservationOrder(reservationOrderID string, filter string, options *ReservationsDetailsListByReservationOrderOptions) *ReservationsDetailsListByReservationOrderPager {
 	return &ReservationsDetailsListByReservationOrderPager{
 		client: client,
@@ -177,8 +182,10 @@ func (client *ReservationsDetailsClient) listByReservationOrderHandleError(resp 
 // If the operation fails it returns the *ErrorResponse error type.
 // reservationOrderID - Order Id of the reservation
 // reservationID - Id of the reservation
-// filter - Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'
-// options - ReservationsDetailsListByReservationOrderAndReservationOptions contains the optional parameters for the ReservationsDetails.ListByReservationOrderAndReservation method.
+// filter - Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports
+// 'le' and 'ge'
+// options - ReservationsDetailsListByReservationOrderAndReservationOptions contains the optional parameters for the ReservationsDetails.ListByReservationOrderAndReservation
+// method.
 func (client *ReservationsDetailsClient) ListByReservationOrderAndReservation(reservationOrderID string, reservationID string, filter string, options *ReservationsDetailsListByReservationOrderAndReservationOptions) *ReservationsDetailsListByReservationOrderAndReservationPager {
 	return &ReservationsDetailsListByReservationOrderAndReservationPager{
 		client: client,

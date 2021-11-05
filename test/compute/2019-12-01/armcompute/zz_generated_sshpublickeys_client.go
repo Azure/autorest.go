@@ -30,8 +30,9 @@ type SSHPublicKeysClient struct {
 }
 
 // NewSSHPublicKeysClient creates a new instance of SSHPublicKeysClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewSSHPublicKeysClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *SSHPublicKeysClient {
 	cp := arm.ClientOptions{}
@@ -174,8 +175,8 @@ func (client *SSHPublicKeysClient) deleteHandleError(resp *http.Response) error 
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// GenerateKeyPair - Generates and returns a public/private key pair and populates the SSH public key resource with the public key. The length of the key
-// will be 3072 bits. This operation can only be performed once per
+// GenerateKeyPair - Generates and returns a public/private key pair and populates the SSH public key resource with the public
+// key. The length of the key will be 3072 bits. This operation can only be performed once per
 // SSH public key resource.
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
@@ -310,11 +311,12 @@ func (client *SSHPublicKeysClient) getHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// ListByResourceGroup - Lists all of the SSH public keys in the specified resource group. Use the nextLink property in the response to get the next page
-// of SSH public keys.
+// ListByResourceGroup - Lists all of the SSH public keys in the specified resource group. Use the nextLink property in the
+// response to get the next page of SSH public keys.
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
-// options - SSHPublicKeysListByResourceGroupOptions contains the optional parameters for the SSHPublicKeys.ListByResourceGroup method.
+// options - SSHPublicKeysListByResourceGroupOptions contains the optional parameters for the SSHPublicKeys.ListByResourceGroup
+// method.
 func (client *SSHPublicKeysClient) ListByResourceGroup(resourceGroupName string, options *SSHPublicKeysListByResourceGroupOptions) *SSHPublicKeysListByResourceGroupPager {
 	return &SSHPublicKeysListByResourceGroupPager{
 		client: client,
@@ -370,10 +372,11 @@ func (client *SSHPublicKeysClient) listByResourceGroupHandleError(resp *http.Res
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// ListBySubscription - Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public
-// keys.
+// ListBySubscription - Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to
+// get the next page of SSH public keys.
 // If the operation fails it returns a generic error.
-// options - SSHPublicKeysListBySubscriptionOptions contains the optional parameters for the SSHPublicKeys.ListBySubscription method.
+// options - SSHPublicKeysListBySubscriptionOptions contains the optional parameters for the SSHPublicKeys.ListBySubscription
+// method.
 func (client *SSHPublicKeysClient) ListBySubscription(options *SSHPublicKeysListBySubscriptionOptions) *SSHPublicKeysListBySubscriptionPager {
 	return &SSHPublicKeysListBySubscriptionPager{
 		client: client,

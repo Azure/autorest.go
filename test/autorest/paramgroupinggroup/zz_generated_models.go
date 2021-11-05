@@ -28,12 +28,14 @@ type FirstParameterGroup struct {
 	QueryOne *int32
 }
 
-// ParameterGroupingPostMultiParamGroupsOptions contains the optional parameters for the ParameterGrouping.PostMultiParamGroups method.
+// ParameterGroupingPostMultiParamGroupsOptions contains the optional parameters for the ParameterGrouping.PostMultiParamGroups
+// method.
 type ParameterGroupingPostMultiParamGroupsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParameterGroupingPostMultiParamGroupsSecondParamGroup contains a group of parameters for the ParameterGrouping.PostMultiParamGroups method.
+// ParameterGroupingPostMultiParamGroupsSecondParamGroup contains a group of parameters for the ParameterGrouping.PostMultiParamGroups
+// method.
 type ParameterGroupingPostMultiParamGroupsSecondParamGroup struct {
 	HeaderTwo *string
 	// Query parameter with default
@@ -67,12 +69,14 @@ type ParameterGroupingPostRequiredParameters struct {
 	Query *int32
 }
 
-// ParameterGroupingPostReservedWordsOptions contains the optional parameters for the ParameterGrouping.PostReservedWords method.
+// ParameterGroupingPostReservedWordsOptions contains the optional parameters for the ParameterGrouping.PostReservedWords
+// method.
 type ParameterGroupingPostReservedWordsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParameterGroupingPostReservedWordsParameters contains a group of parameters for the ParameterGrouping.PostReservedWords method.
+// ParameterGroupingPostReservedWordsParameters contains a group of parameters for the ParameterGrouping.PostReservedWords
+// method.
 type ParameterGroupingPostReservedWordsParameters struct {
 	// 'accept' is a reserved word. Pass in 'yes' to pass.
 	Accept *string
@@ -80,7 +84,8 @@ type ParameterGroupingPostReservedWordsParameters struct {
 	From *string
 }
 
-// ParameterGroupingPostSharedParameterGroupObjectOptions contains the optional parameters for the ParameterGrouping.PostSharedParameterGroupObject method.
+// ParameterGroupingPostSharedParameterGroupObjectOptions contains the optional parameters for the ParameterGrouping.PostSharedParameterGroupObject
+// method.
 type ParameterGroupingPostSharedParameterGroupObjectOptions struct {
 	// placeholder for future optional parameters
 }

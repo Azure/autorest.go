@@ -31,8 +31,9 @@ type GalleryImageVersionsClient struct {
 }
 
 // NewGalleryImageVersionsClient creates a new instance of GalleryImageVersionsClient with the specified values.
-// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms
+// part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewGalleryImageVersionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *GalleryImageVersionsClient {
 	cp := arm.ClientOptions{}
@@ -55,9 +56,12 @@ func NewGalleryImageVersionsClient(subscriptionID string, credential azcore.Toke
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery in which the Image Definition resides.
 // galleryImageName - The name of the gallery Image Definition in which the Image Version is to be created.
-// galleryImageVersionName - The name of the gallery Image Version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: <MajorVersion>.<MinorVersion>.<Patch>
+// galleryImageVersionName - The name of the gallery Image Version to be created. Needs to follow semantic version name pattern:
+// The allowed characters are digit and period. Digits must be within the range of a 32-bit integer.
+// Format: ..
 // galleryImageVersion - Parameters supplied to the create or update gallery Image Version operation.
-// options - GalleryImageVersionsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryImageVersions.BeginCreateOrUpdate method.
+// options - GalleryImageVersionsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryImageVersions.BeginCreateOrUpdate
+// method.
 func (client *GalleryImageVersionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersion, options *GalleryImageVersionsBeginCreateOrUpdateOptions) (GalleryImageVersionsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, options)
 	if err != nil {
@@ -146,7 +150,8 @@ func (client *GalleryImageVersionsClient) createOrUpdateHandleError(resp *http.R
 // galleryName - The name of the Shared Image Gallery in which the Image Definition resides.
 // galleryImageName - The name of the gallery Image Definition in which the Image Version resides.
 // galleryImageVersionName - The name of the gallery Image Version to be deleted.
-// options - GalleryImageVersionsBeginDeleteOptions contains the optional parameters for the GalleryImageVersions.BeginDelete method.
+// options - GalleryImageVersionsBeginDeleteOptions contains the optional parameters for the GalleryImageVersions.BeginDelete
+// method.
 func (client *GalleryImageVersionsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsBeginDeleteOptions) (GalleryImageVersionsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, options)
 	if err != nil {
@@ -315,7 +320,8 @@ func (client *GalleryImageVersionsClient) getHandleError(resp *http.Response) er
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery in which the Image Definition resides.
 // galleryImageName - The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed.
-// options - GalleryImageVersionsListByGalleryImageOptions contains the optional parameters for the GalleryImageVersions.ListByGalleryImage method.
+// options - GalleryImageVersionsListByGalleryImageOptions contains the optional parameters for the GalleryImageVersions.ListByGalleryImage
+// method.
 func (client *GalleryImageVersionsClient) ListByGalleryImage(resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImageVersionsListByGalleryImageOptions) *GalleryImageVersionsListByGalleryImagePager {
 	return &GalleryImageVersionsListByGalleryImagePager{
 		client: client,
@@ -385,9 +391,12 @@ func (client *GalleryImageVersionsClient) listByGalleryImageHandleError(resp *ht
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery in which the Image Definition resides.
 // galleryImageName - The name of the gallery Image Definition in which the Image Version is to be updated.
-// galleryImageVersionName - The name of the gallery Image Version to be updated. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: <MajorVersion>.<MinorVersion>.<Patch>
+// galleryImageVersionName - The name of the gallery Image Version to be updated. Needs to follow semantic version name pattern:
+// The allowed characters are digit and period. Digits must be within the range of a 32-bit integer.
+// Format: ..
 // galleryImageVersion - Parameters supplied to the update gallery Image Version operation.
-// options - GalleryImageVersionsBeginUpdateOptions contains the optional parameters for the GalleryImageVersions.BeginUpdate method.
+// options - GalleryImageVersionsBeginUpdateOptions contains the optional parameters for the GalleryImageVersions.BeginUpdate
+// method.
 func (client *GalleryImageVersionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersionUpdate, options *GalleryImageVersionsBeginUpdateOptions) (GalleryImageVersionsUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, options)
 	if err != nil {

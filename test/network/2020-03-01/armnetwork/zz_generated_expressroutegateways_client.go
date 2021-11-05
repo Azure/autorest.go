@@ -31,8 +31,9 @@ type ExpressRouteGatewaysClient struct {
 }
 
 // NewExpressRouteGatewaysClient creates a new instance of ExpressRouteGatewaysClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewExpressRouteGatewaysClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ExpressRouteGatewaysClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewExpressRouteGatewaysClient(subscriptionID string, credential azcore.Toke
 // resourceGroupName - The name of the resource group.
 // expressRouteGatewayName - The name of the ExpressRoute gateway.
 // putExpressRouteGatewayParameters - Parameters required in an ExpressRoute gateway PUT operation.
-// options - ExpressRouteGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteGateways.BeginCreateOrUpdate method.
+// options - ExpressRouteGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteGateways.BeginCreateOrUpdate
+// method.
 func (client *ExpressRouteGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, putExpressRouteGatewayParameters ExpressRouteGateway, options *ExpressRouteGatewaysBeginCreateOrUpdateOptions) (ExpressRouteGatewaysCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters, options)
 	if err != nil {
@@ -130,12 +132,13 @@ func (client *ExpressRouteGatewaysClient) createOrUpdateHandleError(resp *http.R
 	return runtime.NewResponseError(&errType, resp)
 }
 
-// BeginDelete - Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted when there are no
-// connection subresources.
+// BeginDelete - Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only
+// be deleted when there are no connection subresources.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // expressRouteGatewayName - The name of the ExpressRoute gateway.
-// options - ExpressRouteGatewaysBeginDeleteOptions contains the optional parameters for the ExpressRouteGateways.BeginDelete method.
+// options - ExpressRouteGatewaysBeginDeleteOptions contains the optional parameters for the ExpressRouteGateways.BeginDelete
+// method.
 func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, options *ExpressRouteGatewaysBeginDeleteOptions) (ExpressRouteGatewaysDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, expressRouteGatewayName, options)
 	if err != nil {
@@ -154,8 +157,8 @@ func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resou
 	return result, nil
 }
 
-// Delete - Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted when there are no connection
-// subresources.
+// Delete - Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted
+// when there are no connection subresources.
 // If the operation fails it returns the *CloudError error type.
 func (client *ExpressRouteGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, options *ExpressRouteGatewaysBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, options)
@@ -282,7 +285,8 @@ func (client *ExpressRouteGatewaysClient) getHandleError(resp *http.Response) er
 // ListByResourceGroup - Lists ExpressRoute gateways in a given resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - ExpressRouteGatewaysListByResourceGroupOptions contains the optional parameters for the ExpressRouteGateways.ListByResourceGroup method.
+// options - ExpressRouteGatewaysListByResourceGroupOptions contains the optional parameters for the ExpressRouteGateways.ListByResourceGroup
+// method.
 func (client *ExpressRouteGatewaysClient) ListByResourceGroup(ctx context.Context, resourceGroupName string, options *ExpressRouteGatewaysListByResourceGroupOptions) (ExpressRouteGatewaysListByResourceGroupResponse, error) {
 	req, err := client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 	if err != nil {
@@ -344,7 +348,8 @@ func (client *ExpressRouteGatewaysClient) listByResourceGroupHandleError(resp *h
 
 // ListBySubscription - Lists ExpressRoute gateways under a given subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - ExpressRouteGatewaysListBySubscriptionOptions contains the optional parameters for the ExpressRouteGateways.ListBySubscription method.
+// options - ExpressRouteGatewaysListBySubscriptionOptions contains the optional parameters for the ExpressRouteGateways.ListBySubscription
+// method.
 func (client *ExpressRouteGatewaysClient) ListBySubscription(ctx context.Context, options *ExpressRouteGatewaysListBySubscriptionOptions) (ExpressRouteGatewaysListBySubscriptionResponse, error) {
 	req, err := client.listBySubscriptionCreateRequest(ctx, options)
 	if err != nil {

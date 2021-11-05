@@ -129,7 +129,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         for (const clientParam of values(clientParams)) {
           methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
           if (clientParam.language.go!.description) {
-            paramDocs.push(`// ${clientParam.language.go!.name} - ${clientParam.language.go!.description}`);
+            paramDocs.push(comment(`${clientParam.language.go!.name} - ${clientParam.language.go!.description}`, '//', undefined, commentLength));
           }
         }
       }
@@ -142,7 +142,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
       emitClientParams();
       methodParams.push('credential azcore.TokenCredential');
-      paramDocs.push('// credential - the credential used to authenticate the request.');
+      paramDocs.push('// credential - used to authorize requests. Usually a credential from azidentity.');
       methodParams.push(`options *${optionsType}`);
       paramDocs.push('// options - pass nil to accept the default values.');
     } else {
@@ -162,7 +162,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
           const paramName = param.language.go!.name;
           methodParams.push(`${paramName} ${formatParameterTypeName(param)}`);
           if (param.language.go!.description) {
-            paramDocs.push(`// ${param.language.go!.name} - ${param.language.go!.description}`);
+            paramDocs.push(comment(`${param.language.go!.name} - ${param.language.go!.description}`, '//', undefined, commentLength));
           }
         }
       }
@@ -494,7 +494,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
     const methodParams = getMethodParameters(op);
     for (const param of values(methodParams)) {
       if (param.language.go!.description) {
-        text += `// ${param.language.go!.name} - ${param.language.go!.description}\n`;
+        text += `${comment(`${param.language.go!.name} - ${param.language.go!.description}`, '//', undefined, commentLength)}\n`;
       }
     }
   }
@@ -1298,7 +1298,7 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
   const methodParams = getMethodParameters(op);
   for (const param of values(methodParams)) {
     if (param.language.go!.description) {
-      text += `// ${param.language.go!.name} - ${param.language.go!.description}\n`;
+      text += `${comment(`${param.language.go!.name} - ${param.language.go!.description}`, '//', undefined, commentLength)}\n`;
     }
   }
   text += `func (client *${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;

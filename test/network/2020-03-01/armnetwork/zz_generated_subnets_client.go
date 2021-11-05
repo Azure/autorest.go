@@ -31,8 +31,9 @@ type SubnetsClient struct {
 }
 
 // NewSubnetsClient creates a new instance of SubnetsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewSubnetsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *SubnetsClient {
 	cp := arm.ClientOptions{}
@@ -366,7 +367,8 @@ func (client *SubnetsClient) listHandleError(resp *http.Response) error {
 // virtualNetworkName - The name of the virtual network.
 // subnetName - The name of the subnet.
 // prepareNetworkPoliciesRequestParameters - Parameters supplied to prepare subnet by applying network intent policies.
-// options - SubnetsBeginPrepareNetworkPoliciesOptions contains the optional parameters for the Subnets.BeginPrepareNetworkPolicies method.
+// options - SubnetsBeginPrepareNetworkPoliciesOptions contains the optional parameters for the Subnets.BeginPrepareNetworkPolicies
+// method.
 func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest, options *SubnetsBeginPrepareNetworkPoliciesOptions) (SubnetsPrepareNetworkPoliciesPollerResponse, error) {
 	resp, err := client.prepareNetworkPolicies(ctx, resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters, options)
 	if err != nil {
@@ -451,7 +453,8 @@ func (client *SubnetsClient) prepareNetworkPoliciesHandleError(resp *http.Respon
 // virtualNetworkName - The name of the virtual network.
 // subnetName - The name of the subnet.
 // unprepareNetworkPoliciesRequestParameters - Parameters supplied to unprepare subnet to remove network intent policies.
-// options - SubnetsBeginUnprepareNetworkPoliciesOptions contains the optional parameters for the Subnets.BeginUnprepareNetworkPolicies method.
+// options - SubnetsBeginUnprepareNetworkPoliciesOptions contains the optional parameters for the Subnets.BeginUnprepareNetworkPolicies
+// method.
 func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest, options *SubnetsBeginUnprepareNetworkPoliciesOptions) (SubnetsUnprepareNetworkPoliciesPollerResponse, error) {
 	resp, err := client.unprepareNetworkPolicies(ctx, resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters, options)
 	if err != nil {

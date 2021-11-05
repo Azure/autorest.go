@@ -289,7 +289,8 @@ func (client *SharesClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - SharesListByDataBoxEdgeDeviceOptions contains the optional parameters for the Shares.ListByDataBoxEdgeDevice method.
+// options - SharesListByDataBoxEdgeDeviceOptions contains the optional parameters for the Shares.ListByDataBoxEdgeDevice
+// method.
 func (client *SharesClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *SharesListByDataBoxEdgeDeviceOptions) *SharesListByDataBoxEdgeDevicePager {
 	return &SharesListByDataBoxEdgeDevicePager{
 		client: client,

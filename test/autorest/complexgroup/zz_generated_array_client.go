@@ -234,7 +234,8 @@ func (client *ArrayClient) putEmptyHandleError(resp *http.Response) error {
 
 // PutValid - Put complex types with array property
 // If the operation fails it returns the *Error error type.
-// complexBody - Please put an array with 4 items: "1, 2, 3, 4", "", null, "&S#$(*Y", "The quick brown fox jumps over the lazy dog"
+// complexBody - Please put an array with 4 items: "1, 2, 3, 4", "", null, "&S#$(*Y", "The quick brown fox jumps over the
+// lazy dog"
 // options - ArrayPutValidOptions contains the optional parameters for the Array.PutValid method.
 func (client *ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutValidOptions) (ArrayPutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)

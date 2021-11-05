@@ -39,7 +39,8 @@ func newSparkJobDefinitionClient(endpoint string, pl runtime.Pipeline) *sparkJob
 // If the operation fails it returns the *CloudError error type.
 // sparkJobDefinitionName - The spark job definition name.
 // sparkJobDefinition - Spark Job Definition resource definition.
-// options - SparkJobDefinitionBeginCreateOrUpdateSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginCreateOrUpdateSparkJobDefinition method.
+// options - SparkJobDefinitionBeginCreateOrUpdateSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginCreateOrUpdateSparkJobDefinition
+// method.
 func (client *sparkJobDefinitionClient) BeginCreateOrUpdateSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *SparkJobDefinitionBeginCreateOrUpdateSparkJobDefinitionOptions) (SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPollerResponse, error) {
 	resp, err := client.createOrUpdateSparkJobDefinition(ctx, sparkJobDefinitionName, sparkJobDefinition, options)
 	if err != nil {
@@ -112,7 +113,8 @@ func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinitionHandleEr
 // BeginDebugSparkJobDefinition - Debug the spark job definition.
 // If the operation fails it returns the *CloudError error type.
 // sparkJobDefinitionAzureResource - Spark Job Definition resource definition.
-// options - SparkJobDefinitionBeginDebugSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginDebugSparkJobDefinition method.
+// options - SparkJobDefinitionBeginDebugSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginDebugSparkJobDefinition
+// method.
 func (client *sparkJobDefinitionClient) BeginDebugSparkJobDefinition(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource, options *SparkJobDefinitionBeginDebugSparkJobDefinitionOptions) (SparkJobDefinitionDebugSparkJobDefinitionPollerResponse, error) {
 	resp, err := client.debugSparkJobDefinition(ctx, sparkJobDefinitionAzureResource, options)
 	if err != nil {
@@ -178,7 +180,8 @@ func (client *sparkJobDefinitionClient) debugSparkJobDefinitionHandleError(resp 
 // BeginDeleteSparkJobDefinition - Deletes a Spark Job Definition.
 // If the operation fails it returns the *CloudError error type.
 // sparkJobDefinitionName - The spark job definition name.
-// options - SparkJobDefinitionBeginDeleteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginDeleteSparkJobDefinition method.
+// options - SparkJobDefinitionBeginDeleteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginDeleteSparkJobDefinition
+// method.
 func (client *sparkJobDefinitionClient) BeginDeleteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionBeginDeleteSparkJobDefinitionOptions) (SparkJobDefinitionDeleteSparkJobDefinitionPollerResponse, error) {
 	resp, err := client.deleteSparkJobDefinition(ctx, sparkJobDefinitionName, options)
 	if err != nil {
@@ -248,7 +251,8 @@ func (client *sparkJobDefinitionClient) deleteSparkJobDefinitionHandleError(resp
 // BeginExecuteSparkJobDefinition - Executes the spark job definition.
 // If the operation fails it returns the *CloudError error type.
 // sparkJobDefinitionName - The spark job definition name.
-// options - SparkJobDefinitionBeginExecuteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginExecuteSparkJobDefinition method.
+// options - SparkJobDefinitionBeginExecuteSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginExecuteSparkJobDefinition
+// method.
 func (client *sparkJobDefinitionClient) BeginExecuteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionBeginExecuteSparkJobDefinitionOptions) (SparkJobDefinitionExecuteSparkJobDefinitionPollerResponse, error) {
 	resp, err := client.executeSparkJobDefinition(ctx, sparkJobDefinitionName, options)
 	if err != nil {
@@ -318,7 +322,8 @@ func (client *sparkJobDefinitionClient) executeSparkJobDefinitionHandleError(res
 // GetSparkJobDefinition - Gets a Spark Job Definition.
 // If the operation fails it returns the *CloudError error type.
 // sparkJobDefinitionName - The spark job definition name.
-// options - SparkJobDefinitionGetSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.GetSparkJobDefinition method.
+// options - SparkJobDefinitionGetSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.GetSparkJobDefinition
+// method.
 func (client *sparkJobDefinitionClient) GetSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *SparkJobDefinitionGetSparkJobDefinitionOptions) (SparkJobDefinitionGetSparkJobDefinitionResponse, error) {
 	req, err := client.getSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, options)
 	if err != nil {
@@ -379,7 +384,8 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionHandleError(resp *h
 
 // GetSparkJobDefinitionsByWorkspace - Lists spark job definitions.
 // If the operation fails it returns the *CloudError error type.
-// options - SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceOptions contains the optional parameters for the SparkJobDefinition.GetSparkJobDefinitionsByWorkspace method.
+// options - SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceOptions contains the optional parameters for the SparkJobDefinition.GetSparkJobDefinitionsByWorkspace
+// method.
 func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspace(options *SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceOptions) *SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager {
 	return &SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager{
 		client: client,
@@ -432,7 +438,8 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceHandleE
 // If the operation fails it returns the *CloudError error type.
 // sparkJobDefinitionName - The spark job definition name.
 // request - proposed new name.
-// options - SparkJobDefinitionBeginRenameSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginRenameSparkJobDefinition method.
+// options - SparkJobDefinitionBeginRenameSparkJobDefinitionOptions contains the optional parameters for the SparkJobDefinition.BeginRenameSparkJobDefinition
+// method.
 func (client *sparkJobDefinitionClient) BeginRenameSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *SparkJobDefinitionBeginRenameSparkJobDefinitionOptions) (SparkJobDefinitionRenameSparkJobDefinitionPollerResponse, error) {
 	resp, err := client.renameSparkJobDefinition(ctx, sparkJobDefinitionName, request, options)
 	if err != nil {

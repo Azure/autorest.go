@@ -38,7 +38,8 @@ func NewAPIVersionLocalClient(options *azcore.ClientOptions) *APIVersionLocalCli
 
 // GetMethodLocalNull - Get method with api-version modeled in the method. pass in api-version = null to succeed
 // If the operation fails it returns the *Error error type.
-// options - APIVersionLocalGetMethodLocalNullOptions contains the optional parameters for the APIVersionLocal.GetMethodLocalNull method.
+// options - APIVersionLocalGetMethodLocalNullOptions contains the optional parameters for the APIVersionLocal.GetMethodLocalNull
+// method.
 func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, options *APIVersionLocalGetMethodLocalNullOptions) (APIVersionLocalGetMethodLocalNullResponse, error) {
 	req, err := client.getMethodLocalNullCreateRequest(ctx, options)
 	if err != nil {
@@ -85,7 +86,8 @@ func (client *APIVersionLocalClient) getMethodLocalNullHandleError(resp *http.Re
 
 // GetMethodLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
 // If the operation fails it returns the *Error error type.
-// options - APIVersionLocalGetMethodLocalValidOptions contains the optional parameters for the APIVersionLocal.GetMethodLocalValid method.
+// options - APIVersionLocalGetMethodLocalValidOptions contains the optional parameters for the APIVersionLocal.GetMethodLocalValid
+// method.
 func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, options *APIVersionLocalGetMethodLocalValidOptions) (APIVersionLocalGetMethodLocalValidResponse, error) {
 	req, err := client.getMethodLocalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -130,7 +132,8 @@ func (client *APIVersionLocalClient) getMethodLocalValidHandleError(resp *http.R
 
 // GetPathLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
 // If the operation fails it returns the *Error error type.
-// options - APIVersionLocalGetPathLocalValidOptions contains the optional parameters for the APIVersionLocal.GetPathLocalValid method.
+// options - APIVersionLocalGetPathLocalValidOptions contains the optional parameters for the APIVersionLocal.GetPathLocalValid
+// method.
 func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, options *APIVersionLocalGetPathLocalValidOptions) (APIVersionLocalGetPathLocalValidResponse, error) {
 	req, err := client.getPathLocalValidCreateRequest(ctx, options)
 	if err != nil {
@@ -175,7 +178,8 @@ func (client *APIVersionLocalClient) getPathLocalValidHandleError(resp *http.Res
 
 // GetSwaggerLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
 // If the operation fails it returns the *Error error type.
-// options - APIVersionLocalGetSwaggerLocalValidOptions contains the optional parameters for the APIVersionLocal.GetSwaggerLocalValid method.
+// options - APIVersionLocalGetSwaggerLocalValidOptions contains the optional parameters for the APIVersionLocal.GetSwaggerLocalValid
+// method.
 func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, options *APIVersionLocalGetSwaggerLocalValidOptions) (APIVersionLocalGetSwaggerLocalValidResponse, error) {
 	req, err := client.getSwaggerLocalValidCreateRequest(ctx, options)
 	if err != nil {

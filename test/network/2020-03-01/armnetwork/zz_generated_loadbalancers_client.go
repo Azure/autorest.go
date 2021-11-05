@@ -31,8 +31,9 @@ type LoadBalancersClient struct {
 }
 
 // NewLoadBalancersClient creates a new instance of LoadBalancersClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewLoadBalancersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *LoadBalancersClient {
 	cp := arm.ClientOptions{}
@@ -55,7 +56,8 @@ func NewLoadBalancersClient(subscriptionID string, credential azcore.TokenCreden
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // parameters - Parameters supplied to the create or update load balancer operation.
-// options - LoadBalancersBeginCreateOrUpdateOptions contains the optional parameters for the LoadBalancers.BeginCreateOrUpdate method.
+// options - LoadBalancersBeginCreateOrUpdateOptions contains the optional parameters for the LoadBalancers.BeginCreateOrUpdate
+// method.
 func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer, options *LoadBalancersBeginCreateOrUpdateOptions) (LoadBalancersCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, parameters, options)
 	if err != nil {

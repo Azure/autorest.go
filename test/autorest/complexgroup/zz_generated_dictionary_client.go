@@ -285,7 +285,8 @@ func (client *DictionaryClient) putEmptyHandleError(resp *http.Response) error {
 
 // PutValid - Put complex types with dictionary property
 // If the operation fails it returns the *Error error type.
-// complexBody - Please put a dictionary with 5 key-value pairs: "txt":"notepad", "bmp":"mspaint", "xls":"excel", "exe":"", "":null
+// complexBody - Please put a dictionary with 5 key-value pairs: "txt":"notepad", "bmp":"mspaint", "xls":"excel", "exe":"",
+// "":null
 // options - DictionaryPutValidOptions contains the optional parameters for the Dictionary.PutValid method.
 func (client *DictionaryClient) PutValid(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryPutValidOptions) (DictionaryPutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)

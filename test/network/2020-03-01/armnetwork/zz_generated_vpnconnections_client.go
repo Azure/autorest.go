@@ -31,8 +31,9 @@ type VPNConnectionsClient struct {
 }
 
 // NewVPNConnectionsClient creates a new instance of VPNConnectionsClient with the specified values.
-// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
-// credential - the credential used to authenticate the request.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
+// ID forms part of the URI for every service call.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
 func NewVPNConnectionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VPNConnectionsClient {
 	cp := arm.ClientOptions{}
@@ -50,13 +51,15 @@ func NewVPNConnectionsClient(subscriptionID string, credential azcore.TokenCrede
 	return client
 }
 
-// BeginCreateOrUpdate - Creates a vpn connection to a scalable vpn gateway if it doesn't exist else updates the existing connection.
+// BeginCreateOrUpdate - Creates a vpn connection to a scalable vpn gateway if it doesn't exist else updates the existing
+// connection.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // connectionName - The name of the connection.
 // vpnConnectionParameters - Parameters supplied to create or Update a VPN Connection.
-// options - VPNConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the VPNConnections.BeginCreateOrUpdate method.
+// options - VPNConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the VPNConnections.BeginCreateOrUpdate
+// method.
 func (client *VPNConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VPNConnection, options *VPNConnectionsBeginCreateOrUpdateOptions) (VPNConnectionsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, connectionName, vpnConnectionParameters, options)
 	if err != nil {
@@ -296,7 +299,8 @@ func (client *VPNConnectionsClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
-// options - VPNConnectionsListByVPNGatewayOptions contains the optional parameters for the VPNConnections.ListByVPNGateway method.
+// options - VPNConnectionsListByVPNGatewayOptions contains the optional parameters for the VPNConnections.ListByVPNGateway
+// method.
 func (client *VPNConnectionsClient) ListByVPNGateway(resourceGroupName string, gatewayName string, options *VPNConnectionsListByVPNGatewayOptions) *VPNConnectionsListByVPNGatewayPager {
 	return &VPNConnectionsListByVPNGatewayPager{
 		client: client,

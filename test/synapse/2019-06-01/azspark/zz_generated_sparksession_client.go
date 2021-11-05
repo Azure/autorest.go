@@ -48,7 +48,8 @@ func newSparkSessionClient(endpoint string, livyAPIVersion *string, sparkPoolNam
 // CancelSparkSession - Cancels a running spark session.
 // If the operation fails it returns a generic error.
 // sessionID - Identifier for the session.
-// options - SparkSessionCancelSparkSessionOptions contains the optional parameters for the SparkSession.CancelSparkSession method.
+// options - SparkSessionCancelSparkSessionOptions contains the optional parameters for the SparkSession.CancelSparkSession
+// method.
 func (client *sparkSessionClient) CancelSparkSession(ctx context.Context, sessionID int32, options *SparkSessionCancelSparkSessionOptions) (SparkSessionCancelSparkSessionResponse, error) {
 	req, err := client.cancelSparkSessionCreateRequest(ctx, sessionID, options)
 	if err != nil {
@@ -91,7 +92,8 @@ func (client *sparkSessionClient) cancelSparkSessionHandleError(resp *http.Respo
 // If the operation fails it returns a generic error.
 // sessionID - Identifier for the session.
 // statementID - Identifier for the statement.
-// options - SparkSessionCancelSparkStatementOptions contains the optional parameters for the SparkSession.CancelSparkStatement method.
+// options - SparkSessionCancelSparkStatementOptions contains the optional parameters for the SparkSession.CancelSparkStatement
+// method.
 func (client *sparkSessionClient) CancelSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionCancelSparkStatementOptions) (SparkSessionCancelSparkStatementResponse, error) {
 	req, err := client.cancelSparkStatementCreateRequest(ctx, sessionID, statementID, options)
 	if err != nil {
@@ -144,7 +146,8 @@ func (client *sparkSessionClient) cancelSparkStatementHandleError(resp *http.Res
 // CreateSparkSession - Create new spark session.
 // If the operation fails it returns a generic error.
 // sparkSessionOptions - Livy compatible batch job request payload.
-// options - SparkSessionCreateSparkSessionOptions contains the optional parameters for the SparkSession.CreateSparkSession method.
+// options - SparkSessionCreateSparkSessionOptions contains the optional parameters for the SparkSession.CreateSparkSession
+// method.
 func (client *sparkSessionClient) CreateSparkSession(ctx context.Context, sparkSessionOptions SparkSessionOptions, options *SparkSessionCreateSparkSessionOptions) (SparkSessionCreateSparkSessionResponse, error) {
 	req, err := client.createSparkSessionCreateRequest(ctx, sparkSessionOptions, options)
 	if err != nil {
@@ -201,7 +204,8 @@ func (client *sparkSessionClient) createSparkSessionHandleError(resp *http.Respo
 // If the operation fails it returns a generic error.
 // sessionID - Identifier for the session.
 // sparkStatementOptions - Livy compatible batch job request payload.
-// options - SparkSessionCreateSparkStatementOptions contains the optional parameters for the SparkSession.CreateSparkStatement method.
+// options - SparkSessionCreateSparkStatementOptions contains the optional parameters for the SparkSession.CreateSparkStatement
+// method.
 func (client *sparkSessionClient) CreateSparkStatement(ctx context.Context, sessionID int32, sparkStatementOptions SparkStatementOptions, options *SparkSessionCreateSparkStatementOptions) (SparkSessionCreateSparkStatementResponse, error) {
 	req, err := client.createSparkStatementCreateRequest(ctx, sessionID, sparkStatementOptions, options)
 	if err != nil {
@@ -372,7 +376,8 @@ func (client *sparkSessionClient) getSparkSessionsHandleError(resp *http.Respons
 // If the operation fails it returns a generic error.
 // sessionID - Identifier for the session.
 // statementID - Identifier for the statement.
-// options - SparkSessionGetSparkStatementOptions contains the optional parameters for the SparkSession.GetSparkStatement method.
+// options - SparkSessionGetSparkStatementOptions contains the optional parameters for the SparkSession.GetSparkStatement
+// method.
 func (client *sparkSessionClient) GetSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionGetSparkStatementOptions) (SparkSessionGetSparkStatementResponse, error) {
 	req, err := client.getSparkStatementCreateRequest(ctx, sessionID, statementID, options)
 	if err != nil {
@@ -425,7 +430,8 @@ func (client *sparkSessionClient) getSparkStatementHandleError(resp *http.Respon
 // GetSparkStatements - Gets a list of statements within a spark session.
 // If the operation fails it returns a generic error.
 // sessionID - Identifier for the session.
-// options - SparkSessionGetSparkStatementsOptions contains the optional parameters for the SparkSession.GetSparkStatements method.
+// options - SparkSessionGetSparkStatementsOptions contains the optional parameters for the SparkSession.GetSparkStatements
+// method.
 func (client *sparkSessionClient) GetSparkStatements(ctx context.Context, sessionID int32, options *SparkSessionGetSparkStatementsOptions) (SparkSessionGetSparkStatementsResponse, error) {
 	req, err := client.getSparkStatementsCreateRequest(ctx, sessionID, options)
 	if err != nil {
@@ -477,7 +483,8 @@ func (client *sparkSessionClient) getSparkStatementsHandleError(resp *http.Respo
 // ResetSparkSessionTimeout - Sends a keep alive call to the current session to reset the session timeout.
 // If the operation fails it returns a generic error.
 // sessionID - Identifier for the session.
-// options - SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the SparkSession.ResetSparkSessionTimeout method.
+// options - SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the SparkSession.ResetSparkSessionTimeout
+// method.
 func (client *sparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, sessionID int32, options *SparkSessionResetSparkSessionTimeoutOptions) (SparkSessionResetSparkSessionTimeoutResponse, error) {
 	req, err := client.resetSparkSessionTimeoutCreateRequest(ctx, sessionID, options)
 	if err != nil {
