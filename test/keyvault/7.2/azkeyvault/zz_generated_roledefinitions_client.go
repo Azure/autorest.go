@@ -26,6 +26,7 @@ type RoleDefinitionsClient struct {
 }
 
 // NewRoleDefinitionsClient creates a new instance of RoleDefinitionsClient with the specified values.
+// pl - the pipeline used for sending requests and handling responses.
 func NewRoleDefinitionsClient(pl runtime.Pipeline) *RoleDefinitionsClient {
 	client := &RoleDefinitionsClient{
 		pl: pl,
@@ -35,6 +36,11 @@ func NewRoleDefinitionsClient(pl runtime.Pipeline) *RoleDefinitionsClient {
 
 // CreateOrUpdate - Creates or updates a custom role definition.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// scope - The scope of the role definition to create or update. Managed HSM only supports '/'.
+// roleDefinitionName - The name of the role definition to create or update. It can be any valid GUID.
+// parameters - Parameters for the role definition.
+// options - RoleDefinitionsCreateOrUpdateOptions contains the optional parameters for the RoleDefinitions.CreateOrUpdate method.
 func (client *RoleDefinitionsClient) CreateOrUpdate(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, parameters RoleDefinitionCreateParameters, options *RoleDefinitionsCreateOrUpdateOptions) (RoleDefinitionsCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, vaultBaseURL, scope, roleDefinitionName, parameters, options)
 	if err != nil {
@@ -95,6 +101,10 @@ func (client *RoleDefinitionsClient) createOrUpdateHandleError(resp *http.Respon
 
 // Delete - Deletes a custom role definition.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// scope - The scope of the role definition to delete. Managed HSM only supports '/'.
+// roleDefinitionName - The name (GUID) of the role definition to delete.
+// options - RoleDefinitionsDeleteOptions contains the optional parameters for the RoleDefinitions.Delete method.
 func (client *RoleDefinitionsClient) Delete(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, options *RoleDefinitionsDeleteOptions) (RoleDefinitionsDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, vaultBaseURL, scope, roleDefinitionName, options)
 	if err != nil {
@@ -155,6 +165,10 @@ func (client *RoleDefinitionsClient) deleteHandleError(resp *http.Response) erro
 
 // Get - Get the specified role definition.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// scope - The scope of the role definition to get. Managed HSM only supports '/'.
+// roleDefinitionName - The name of the role definition to get.
+// options - RoleDefinitionsGetOptions contains the optional parameters for the RoleDefinitions.Get method.
 func (client *RoleDefinitionsClient) Get(ctx context.Context, vaultBaseURL string, scope string, roleDefinitionName string, options *RoleDefinitionsGetOptions) (RoleDefinitionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, vaultBaseURL, scope, roleDefinitionName, options)
 	if err != nil {
@@ -215,6 +229,9 @@ func (client *RoleDefinitionsClient) getHandleError(resp *http.Response) error {
 
 // List - Get all role definitions that are applicable at scope and above.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// scope - The scope of the role definition.
+// options - RoleDefinitionsListOptions contains the optional parameters for the RoleDefinitions.List method.
 func (client *RoleDefinitionsClient) List(vaultBaseURL string, scope string, options *RoleDefinitionsListOptions) *RoleDefinitionsListPager {
 	return &RoleDefinitionsListPager{
 		client: client,

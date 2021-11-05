@@ -28,6 +28,8 @@ type NodesClient struct {
 }
 
 // NewNodesClient creates a new instance of NodesClient with the specified values.
+// subscriptionID - The subscription ID.
+// options - pass nil to accept the default values.
 func NewNodesClient(subscriptionID string, options *azcore.ClientOptions) *NodesClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -42,6 +44,9 @@ func NewNodesClient(subscriptionID string, options *azcore.ClientOptions) *Nodes
 
 // ListByDataBoxEdgeDevice - Gets all the nodes currently configured under this Data Box Edge device
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// resourceGroupName - The resource group name.
+// options - NodesListByDataBoxEdgeDeviceOptions contains the optional parameters for the Nodes.ListByDataBoxEdgeDevice method.
 func (client *NodesClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *NodesListByDataBoxEdgeDeviceOptions) *NodesListByDataBoxEdgeDevicePager {
 	return &NodesListByDataBoxEdgeDevicePager{
 		client: client,

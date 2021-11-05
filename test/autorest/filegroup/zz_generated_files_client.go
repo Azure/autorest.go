@@ -24,6 +24,7 @@ type FilesClient struct {
 }
 
 // NewFilesClient creates a new instance of FilesClient with the specified values.
+// options - pass nil to accept the default values.
 func NewFilesClient(options *azcore.ClientOptions) *FilesClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewFilesClient(options *azcore.ClientOptions) *FilesClient {
 
 // GetEmptyFile - Get empty file
 // If the operation fails it returns the *Error error type.
+// options - FilesGetEmptyFileOptions contains the optional parameters for the Files.GetEmptyFile method.
 func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesGetEmptyFileOptions) (FilesGetEmptyFileResponse, error) {
 	req, err := client.getEmptyFileCreateRequest(ctx, options)
 	if err != nil {
@@ -79,6 +81,7 @@ func (client *FilesClient) getEmptyFileHandleError(resp *http.Response) error {
 
 // GetFile - Get file
 // If the operation fails it returns the *Error error type.
+// options - FilesGetFileOptions contains the optional parameters for the Files.GetFile method.
 func (client *FilesClient) GetFile(ctx context.Context, options *FilesGetFileOptions) (FilesGetFileResponse, error) {
 	req, err := client.getFileCreateRequest(ctx, options)
 	if err != nil {
@@ -121,6 +124,7 @@ func (client *FilesClient) getFileHandleError(resp *http.Response) error {
 
 // GetFileLarge - Get a large file
 // If the operation fails it returns the *Error error type.
+// options - FilesGetFileLargeOptions contains the optional parameters for the Files.GetFileLarge method.
 func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesGetFileLargeOptions) (FilesGetFileLargeResponse, error) {
 	req, err := client.getFileLargeCreateRequest(ctx, options)
 	if err != nil {

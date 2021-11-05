@@ -25,6 +25,8 @@ type sqlScriptClient struct {
 }
 
 // newSQLScriptClient creates a new instance of sqlScriptClient with the specified values.
+// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+// pl - the pipeline used for sending requests and handling responses.
 func newSQLScriptClient(endpoint string, pl runtime.Pipeline) *sqlScriptClient {
 	client := &sqlScriptClient{
 		endpoint: endpoint,
@@ -35,6 +37,9 @@ func newSQLScriptClient(endpoint string, pl runtime.Pipeline) *sqlScriptClient {
 
 // BeginCreateOrUpdateSQLScript - Creates or updates a Sql Script.
 // If the operation fails it returns the *CloudError error type.
+// sqlScriptName - The sql script name.
+// sqlScript - Sql Script resource definition.
+// options - SQLScriptBeginCreateOrUpdateSQLScriptOptions contains the optional parameters for the SQLScript.BeginCreateOrUpdateSQLScript method.
 func (client *sqlScriptClient) BeginCreateOrUpdateSQLScript(ctx context.Context, sqlScriptName string, sqlScript SQLScriptResource, options *SQLScriptBeginCreateOrUpdateSQLScriptOptions) (SQLScriptCreateOrUpdateSQLScriptPollerResponse, error) {
 	resp, err := client.createOrUpdateSQLScript(ctx, sqlScriptName, sqlScript, options)
 	if err != nil {
@@ -106,6 +111,8 @@ func (client *sqlScriptClient) createOrUpdateSQLScriptHandleError(resp *http.Res
 
 // BeginDeleteSQLScript - Deletes a Sql Script.
 // If the operation fails it returns the *CloudError error type.
+// sqlScriptName - The sql script name.
+// options - SQLScriptBeginDeleteSQLScriptOptions contains the optional parameters for the SQLScript.BeginDeleteSQLScript method.
 func (client *sqlScriptClient) BeginDeleteSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptBeginDeleteSQLScriptOptions) (SQLScriptDeleteSQLScriptPollerResponse, error) {
 	resp, err := client.deleteSQLScript(ctx, sqlScriptName, options)
 	if err != nil {
@@ -174,6 +181,8 @@ func (client *sqlScriptClient) deleteSQLScriptHandleError(resp *http.Response) e
 
 // GetSQLScript - Gets a sql script.
 // If the operation fails it returns the *CloudError error type.
+// sqlScriptName - The sql script name.
+// options - SQLScriptGetSQLScriptOptions contains the optional parameters for the SQLScript.GetSQLScript method.
 func (client *sqlScriptClient) GetSQLScript(ctx context.Context, sqlScriptName string, options *SQLScriptGetSQLScriptOptions) (SQLScriptGetSQLScriptResponse, error) {
 	req, err := client.getSQLScriptCreateRequest(ctx, sqlScriptName, options)
 	if err != nil {
@@ -234,6 +243,7 @@ func (client *sqlScriptClient) getSQLScriptHandleError(resp *http.Response) erro
 
 // GetSQLScriptsByWorkspace - Lists sql scripts.
 // If the operation fails it returns the *CloudError error type.
+// options - SQLScriptGetSQLScriptsByWorkspaceOptions contains the optional parameters for the SQLScript.GetSQLScriptsByWorkspace method.
 func (client *sqlScriptClient) GetSQLScriptsByWorkspace(options *SQLScriptGetSQLScriptsByWorkspaceOptions) *SQLScriptGetSQLScriptsByWorkspacePager {
 	return &SQLScriptGetSQLScriptsByWorkspacePager{
 		client: client,
@@ -284,6 +294,9 @@ func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleError(resp *http.Re
 
 // BeginRenameSQLScript - Renames a sqlScript.
 // If the operation fails it returns the *CloudError error type.
+// sqlScriptName - The sql script name.
+// request - proposed new name.
+// options - SQLScriptBeginRenameSQLScriptOptions contains the optional parameters for the SQLScript.BeginRenameSQLScript method.
 func (client *sqlScriptClient) BeginRenameSQLScript(ctx context.Context, sqlScriptName string, request ArtifactRenameRequest, options *SQLScriptBeginRenameSQLScriptOptions) (SQLScriptRenameSQLScriptPollerResponse, error) {
 	resp, err := client.renameSQLScript(ctx, sqlScriptName, request, options)
 	if err != nil {

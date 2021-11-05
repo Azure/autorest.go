@@ -25,6 +25,8 @@ type integrationRuntimesClient struct {
 }
 
 // newIntegrationRuntimesClient creates a new instance of integrationRuntimesClient with the specified values.
+// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+// pl - the pipeline used for sending requests and handling responses.
 func newIntegrationRuntimesClient(endpoint string, pl runtime.Pipeline) *integrationRuntimesClient {
 	client := &integrationRuntimesClient{
 		endpoint: endpoint,
@@ -35,6 +37,8 @@ func newIntegrationRuntimesClient(endpoint string, pl runtime.Pipeline) *integra
 
 // Get - Get Integration Runtime
 // If the operation fails it returns the *ErrorContract error type.
+// integrationRuntimeName - The Integration Runtime name
+// options - IntegrationRuntimesGetOptions contains the optional parameters for the IntegrationRuntimes.Get method.
 func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesGetOptions) (IntegrationRuntimesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, integrationRuntimeName, options)
 	if err != nil {
@@ -92,6 +96,7 @@ func (client *integrationRuntimesClient) getHandleError(resp *http.Response) err
 
 // List - List Integration Runtimes
 // If the operation fails it returns the *ErrorContract error type.
+// options - IntegrationRuntimesListOptions contains the optional parameters for the IntegrationRuntimes.List method.
 func (client *integrationRuntimesClient) List(ctx context.Context, options *IntegrationRuntimesListOptions) (IntegrationRuntimesListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {

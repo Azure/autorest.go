@@ -31,6 +31,9 @@ type RouteFiltersClient struct {
 }
 
 // NewRouteFiltersClient creates a new instance of RouteFiltersClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewRouteFiltersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *RouteFiltersClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,10 @@ func NewRouteFiltersClient(subscriptionID string, credential azcore.TokenCredent
 
 // BeginCreateOrUpdate - Creates or updates a route filter in a specified resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// routeFilterName - The name of the route filter.
+// routeFilterParameters - Parameters supplied to the create or update route filter operation.
+// options - RouteFiltersBeginCreateOrUpdateOptions contains the optional parameters for the RouteFilters.BeginCreateOrUpdate method.
 func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter, options *RouteFiltersBeginCreateOrUpdateOptions) (RouteFiltersCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeFilterName, routeFilterParameters, options)
 	if err != nil {
@@ -125,6 +132,9 @@ func (client *RouteFiltersClient) createOrUpdateHandleError(resp *http.Response)
 
 // BeginDelete - Deletes the specified route filter.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// routeFilterName - The name of the route filter.
+// options - RouteFiltersBeginDeleteOptions contains the optional parameters for the RouteFilters.BeginDelete method.
 func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersBeginDeleteOptions) (RouteFiltersDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, routeFilterName, options)
 	if err != nil {
@@ -201,6 +211,9 @@ func (client *RouteFiltersClient) deleteHandleError(resp *http.Response) error {
 
 // Get - Gets the specified route filter.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// routeFilterName - The name of the route filter.
+// options - RouteFiltersGetOptions contains the optional parameters for the RouteFilters.Get method.
 func (client *RouteFiltersClient) Get(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersGetOptions) (RouteFiltersGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, routeFilterName, options)
 	if err != nil {
@@ -269,6 +282,7 @@ func (client *RouteFiltersClient) getHandleError(resp *http.Response) error {
 
 // List - Gets all route filters in a subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - RouteFiltersListOptions contains the optional parameters for the RouteFilters.List method.
 func (client *RouteFiltersClient) List(options *RouteFiltersListOptions) *RouteFiltersListPager {
 	return &RouteFiltersListPager{
 		client: client,
@@ -323,6 +337,8 @@ func (client *RouteFiltersClient) listHandleError(resp *http.Response) error {
 
 // ListByResourceGroup - Gets all route filters in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - RouteFiltersListByResourceGroupOptions contains the optional parameters for the RouteFilters.ListByResourceGroup method.
 func (client *RouteFiltersClient) ListByResourceGroup(resourceGroupName string, options *RouteFiltersListByResourceGroupOptions) *RouteFiltersListByResourceGroupPager {
 	return &RouteFiltersListByResourceGroupPager{
 		client: client,
@@ -381,6 +397,10 @@ func (client *RouteFiltersClient) listByResourceGroupHandleError(resp *http.Resp
 
 // UpdateTags - Updates tags of a route filter.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// routeFilterName - The name of the route filter.
+// parameters - Parameters supplied to update route filter tags.
+// options - RouteFiltersUpdateTagsOptions contains the optional parameters for the RouteFilters.UpdateTags method.
 func (client *RouteFiltersClient) UpdateTags(ctx context.Context, resourceGroupName string, routeFilterName string, parameters TagsObject, options *RouteFiltersUpdateTagsOptions) (RouteFiltersUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, routeFilterName, parameters, options)
 	if err != nil {

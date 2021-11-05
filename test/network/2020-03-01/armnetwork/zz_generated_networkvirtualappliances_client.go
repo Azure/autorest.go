@@ -31,6 +31,9 @@ type NetworkVirtualAppliancesClient struct {
 }
 
 // NewNetworkVirtualAppliancesClient creates a new instance of NetworkVirtualAppliancesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewNetworkVirtualAppliancesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NetworkVirtualAppliancesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,10 @@ func NewNetworkVirtualAppliancesClient(subscriptionID string, credential azcore.
 
 // BeginCreateOrUpdate - Creates or updates the specified Network Virtual Appliance.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkVirtualApplianceName - The name of Network Virtual Appliance.
+// parameters - Parameters supplied to the create or update Network Virtual Appliance.
+// options - NetworkVirtualAppliancesBeginCreateOrUpdateOptions contains the optional parameters for the NetworkVirtualAppliances.BeginCreateOrUpdate method.
 func (client *NetworkVirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters NetworkVirtualAppliance, options *NetworkVirtualAppliancesBeginCreateOrUpdateOptions) (NetworkVirtualAppliancesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
 	if err != nil {
@@ -125,6 +132,9 @@ func (client *NetworkVirtualAppliancesClient) createOrUpdateHandleError(resp *ht
 
 // BeginDelete - Deletes the specified Network Virtual Appliance.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkVirtualApplianceName - The name of Network Virtual Appliance.
+// options - NetworkVirtualAppliancesBeginDeleteOptions contains the optional parameters for the NetworkVirtualAppliances.BeginDelete method.
 func (client *NetworkVirtualAppliancesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *NetworkVirtualAppliancesBeginDeleteOptions) (NetworkVirtualAppliancesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkVirtualApplianceName, options)
 	if err != nil {
@@ -201,6 +211,9 @@ func (client *NetworkVirtualAppliancesClient) deleteHandleError(resp *http.Respo
 
 // Get - Gets the specified Network Virtual Appliance.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkVirtualApplianceName - The name of Network Virtual Appliance.
+// options - NetworkVirtualAppliancesGetOptions contains the optional parameters for the NetworkVirtualAppliances.Get method.
 func (client *NetworkVirtualAppliancesClient) Get(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *NetworkVirtualAppliancesGetOptions) (NetworkVirtualAppliancesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, options)
 	if err != nil {
@@ -269,6 +282,7 @@ func (client *NetworkVirtualAppliancesClient) getHandleError(resp *http.Response
 
 // List - Gets all Network Virtual Appliances in a subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - NetworkVirtualAppliancesListOptions contains the optional parameters for the NetworkVirtualAppliances.List method.
 func (client *NetworkVirtualAppliancesClient) List(options *NetworkVirtualAppliancesListOptions) *NetworkVirtualAppliancesListPager {
 	return &NetworkVirtualAppliancesListPager{
 		client: client,
@@ -323,6 +337,8 @@ func (client *NetworkVirtualAppliancesClient) listHandleError(resp *http.Respons
 
 // ListByResourceGroup - Lists all Network Virtual Appliances in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - NetworkVirtualAppliancesListByResourceGroupOptions contains the optional parameters for the NetworkVirtualAppliances.ListByResourceGroup method.
 func (client *NetworkVirtualAppliancesClient) ListByResourceGroup(resourceGroupName string, options *NetworkVirtualAppliancesListByResourceGroupOptions) *NetworkVirtualAppliancesListByResourceGroupPager {
 	return &NetworkVirtualAppliancesListByResourceGroupPager{
 		client: client,
@@ -381,6 +397,10 @@ func (client *NetworkVirtualAppliancesClient) listByResourceGroupHandleError(res
 
 // UpdateTags - Updates a Network Virtual Appliance.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The resource group name of Network Virtual Appliance.
+// networkVirtualApplianceName - The name of Network Virtual Appliance being updated.
+// parameters - Parameters supplied to Update Network Virtual Appliance Tags.
+// options - NetworkVirtualAppliancesUpdateTagsOptions contains the optional parameters for the NetworkVirtualAppliances.UpdateTags method.
 func (client *NetworkVirtualAppliancesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters TagsObject, options *NetworkVirtualAppliancesUpdateTagsOptions) (NetworkVirtualAppliancesUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
 	if err != nil {

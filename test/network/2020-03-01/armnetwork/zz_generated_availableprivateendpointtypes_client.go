@@ -31,6 +31,9 @@ type AvailablePrivateEndpointTypesClient struct {
 }
 
 // NewAvailablePrivateEndpointTypesClient creates a new instance of AvailablePrivateEndpointTypesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewAvailablePrivateEndpointTypesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *AvailablePrivateEndpointTypesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,8 @@ func NewAvailablePrivateEndpointTypesClient(subscriptionID string, credential az
 
 // List - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
 // If the operation fails it returns the *CloudError error type.
+// location - The location of the domain name.
+// options - AvailablePrivateEndpointTypesListOptions contains the optional parameters for the AvailablePrivateEndpointTypes.List method.
 func (client *AvailablePrivateEndpointTypesClient) List(location string, options *AvailablePrivateEndpointTypesListOptions) *AvailablePrivateEndpointTypesListPager {
 	return &AvailablePrivateEndpointTypesListPager{
 		client: client,
@@ -107,6 +112,9 @@ func (client *AvailablePrivateEndpointTypesClient) listHandleError(resp *http.Re
 
 // ListByResourceGroup - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
 // If the operation fails it returns the *CloudError error type.
+// location - The location of the domain name.
+// resourceGroupName - The name of the resource group.
+// options - AvailablePrivateEndpointTypesListByResourceGroupOptions contains the optional parameters for the AvailablePrivateEndpointTypes.ListByResourceGroup method.
 func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroup(location string, resourceGroupName string, options *AvailablePrivateEndpointTypesListByResourceGroupOptions) *AvailablePrivateEndpointTypesListByResourceGroupPager {
 	return &AvailablePrivateEndpointTypesListByResourceGroupPager{
 		client: client,

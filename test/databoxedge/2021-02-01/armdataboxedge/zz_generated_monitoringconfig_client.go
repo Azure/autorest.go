@@ -29,6 +29,8 @@ type MonitoringConfigClient struct {
 }
 
 // NewMonitoringConfigClient creates a new instance of MonitoringConfigClient with the specified values.
+// subscriptionID - The subscription ID.
+// options - pass nil to accept the default values.
 func NewMonitoringConfigClient(subscriptionID string, options *azcore.ClientOptions) *MonitoringConfigClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -43,6 +45,11 @@ func NewMonitoringConfigClient(subscriptionID string, options *azcore.ClientOpti
 
 // BeginCreateOrUpdate - Creates a new metric configuration or updates an existing one for a role.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// roleName - The role name.
+// resourceGroupName - The resource group name.
+// monitoringMetricConfiguration - The metric configuration.
+// options - MonitoringConfigBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfig.BeginCreateOrUpdate method.
 func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigBeginCreateOrUpdateOptions) (MonitoringConfigCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, roleName, resourceGroupName, monitoringMetricConfiguration, options)
 	if err != nil {
@@ -123,6 +130,10 @@ func (client *MonitoringConfigClient) createOrUpdateHandleError(resp *http.Respo
 
 // BeginDelete - deletes a new metric configuration for a role.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// roleName - The role name.
+// resourceGroupName - The resource group name.
+// options - MonitoringConfigBeginDeleteOptions contains the optional parameters for the MonitoringConfig.BeginDelete method.
 func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigBeginDeleteOptions) (MonitoringConfigDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, roleName, resourceGroupName, options)
 	if err != nil {
@@ -203,6 +214,10 @@ func (client *MonitoringConfigClient) deleteHandleError(resp *http.Response) err
 
 // Get - Gets a metric configuration of a role.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// roleName - The role name.
+// resourceGroupName - The resource group name.
+// options - MonitoringConfigGetOptions contains the optional parameters for the MonitoringConfig.Get method.
 func (client *MonitoringConfigClient) Get(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigGetOptions) (MonitoringConfigGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
 	if err != nil {
@@ -272,6 +287,10 @@ func (client *MonitoringConfigClient) getHandleError(resp *http.Response) error 
 
 // List - Lists metric configurations in a role.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// roleName - The role name.
+// resourceGroupName - The resource group name.
+// options - MonitoringConfigListOptions contains the optional parameters for the MonitoringConfig.List method.
 func (client *MonitoringConfigClient) List(deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigListOptions) *MonitoringConfigListPager {
 	return &MonitoringConfigListPager{
 		client: client,

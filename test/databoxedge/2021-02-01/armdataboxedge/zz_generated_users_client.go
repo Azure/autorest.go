@@ -29,6 +29,8 @@ type UsersClient struct {
 }
 
 // NewUsersClient creates a new instance of UsersClient with the specified values.
+// subscriptionID - The subscription ID.
+// options - pass nil to accept the default values.
 func NewUsersClient(subscriptionID string, options *azcore.ClientOptions) *UsersClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -43,6 +45,11 @@ func NewUsersClient(subscriptionID string, options *azcore.ClientOptions) *Users
 
 // BeginCreateOrUpdate - Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// name - The user name.
+// resourceGroupName - The resource group name.
+// userParam - The user details.
+// options - UsersBeginCreateOrUpdateOptions contains the optional parameters for the Users.BeginCreateOrUpdate method.
 func (client *UsersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, userParam User, options *UsersBeginCreateOrUpdateOptions) (UsersCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, userParam, options)
 	if err != nil {
@@ -123,6 +130,10 @@ func (client *UsersClient) createOrUpdateHandleError(resp *http.Response) error 
 
 // BeginDelete - Deletes the user on a databox edge/gateway device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// name - The user name.
+// resourceGroupName - The resource group name.
+// options - UsersBeginDeleteOptions contains the optional parameters for the Users.BeginDelete method.
 func (client *UsersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersBeginDeleteOptions) (UsersDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -203,6 +214,10 @@ func (client *UsersClient) deleteHandleError(resp *http.Response) error {
 
 // Get - Gets the properties of the specified user.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// name - The user name.
+// resourceGroupName - The resource group name.
+// options - UsersGetOptions contains the optional parameters for the Users.Get method.
 func (client *UsersClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersGetOptions) (UsersGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -272,6 +287,9 @@ func (client *UsersClient) getHandleError(resp *http.Response) error {
 
 // ListByDataBoxEdgeDevice - Gets all the users registered on a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// resourceGroupName - The resource group name.
+// options - UsersListByDataBoxEdgeDeviceOptions contains the optional parameters for the Users.ListByDataBoxEdgeDevice method.
 func (client *UsersClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *UsersListByDataBoxEdgeDeviceOptions) *UsersListByDataBoxEdgeDevicePager {
 	return &UsersListByDataBoxEdgeDevicePager{
 		client: client,

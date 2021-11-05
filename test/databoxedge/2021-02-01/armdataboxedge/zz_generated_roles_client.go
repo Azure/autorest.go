@@ -29,6 +29,8 @@ type RolesClient struct {
 }
 
 // NewRolesClient creates a new instance of RolesClient with the specified values.
+// subscriptionID - The subscription ID.
+// options - pass nil to accept the default values.
 func NewRolesClient(subscriptionID string, options *azcore.ClientOptions) *RolesClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -43,6 +45,11 @@ func NewRolesClient(subscriptionID string, options *azcore.ClientOptions) *Roles
 
 // BeginCreateOrUpdate - Create or update a role.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// name - The role name.
+// resourceGroupName - The resource group name.
+// role - The role properties.
+// options - RolesBeginCreateOrUpdateOptions contains the optional parameters for the Roles.BeginCreateOrUpdate method.
 func (client *RolesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, role RoleClassification, options *RolesBeginCreateOrUpdateOptions) (RolesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, role, options)
 	if err != nil {
@@ -123,6 +130,10 @@ func (client *RolesClient) createOrUpdateHandleError(resp *http.Response) error 
 
 // BeginDelete - Deletes the role on the device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// name - The role name.
+// resourceGroupName - The resource group name.
+// options - RolesBeginDeleteOptions contains the optional parameters for the Roles.BeginDelete method.
 func (client *RolesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesBeginDeleteOptions) (RolesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -203,6 +214,10 @@ func (client *RolesClient) deleteHandleError(resp *http.Response) error {
 
 // Get - Gets a specific role by name.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// name - The role name.
+// resourceGroupName - The resource group name.
+// options - RolesGetOptions contains the optional parameters for the Roles.Get method.
 func (client *RolesClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesGetOptions) (RolesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -272,6 +287,9 @@ func (client *RolesClient) getHandleError(resp *http.Response) error {
 
 // ListByDataBoxEdgeDevice - Lists all the roles configured in a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// resourceGroupName - The resource group name.
+// options - RolesListByDataBoxEdgeDeviceOptions contains the optional parameters for the Roles.ListByDataBoxEdgeDevice method.
 func (client *RolesClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *RolesListByDataBoxEdgeDeviceOptions) *RolesListByDataBoxEdgeDevicePager {
 	return &RolesListByDataBoxEdgeDevicePager{
 		client: client,

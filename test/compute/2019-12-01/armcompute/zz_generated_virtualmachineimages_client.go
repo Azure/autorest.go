@@ -31,6 +31,9 @@ type VirtualMachineImagesClient struct {
 }
 
 // NewVirtualMachineImagesClient creates a new instance of VirtualMachineImagesClient with the specified values.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewVirtualMachineImagesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualMachineImagesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,12 @@ func NewVirtualMachineImagesClient(subscriptionID string, credential azcore.Toke
 
 // Get - Gets a virtual machine image.
 // If the operation fails it returns a generic error.
+// location - The name of a supported Azure region.
+// publisherName - A valid image publisher.
+// offer - A valid image publisher offer.
+// skus - A valid image SKU.
+// version - A valid image SKU version.
+// options - VirtualMachineImagesGetOptions contains the optional parameters for the VirtualMachineImages.Get method.
 func (client *VirtualMachineImagesClient) Get(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesGetOptions) (VirtualMachineImagesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, publisherName, offer, skus, version, options)
 	if err != nil {
@@ -125,6 +134,11 @@ func (client *VirtualMachineImagesClient) getHandleError(resp *http.Response) er
 
 // List - Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
 // If the operation fails it returns a generic error.
+// location - The name of a supported Azure region.
+// publisherName - A valid image publisher.
+// offer - A valid image publisher offer.
+// skus - A valid image SKU.
+// options - VirtualMachineImagesListOptions contains the optional parameters for the VirtualMachineImages.List method.
 func (client *VirtualMachineImagesClient) List(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesListOptions) (VirtualMachineImagesListResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, publisherName, offer, skus, options)
 	if err != nil {
@@ -206,6 +220,9 @@ func (client *VirtualMachineImagesClient) listHandleError(resp *http.Response) e
 
 // ListOffers - Gets a list of virtual machine image offers for the specified location and publisher.
 // If the operation fails it returns a generic error.
+// location - The name of a supported Azure region.
+// publisherName - A valid image publisher.
+// options - VirtualMachineImagesListOffersOptions contains the optional parameters for the VirtualMachineImages.ListOffers method.
 func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesListOffersOptions) (VirtualMachineImagesListOffersResponse, error) {
 	req, err := client.listOffersCreateRequest(ctx, location, publisherName, options)
 	if err != nil {
@@ -270,6 +287,8 @@ func (client *VirtualMachineImagesClient) listOffersHandleError(resp *http.Respo
 
 // ListPublishers - Gets a list of virtual machine image publishers for the specified Azure location.
 // If the operation fails it returns a generic error.
+// location - The name of a supported Azure region.
+// options - VirtualMachineImagesListPublishersOptions contains the optional parameters for the VirtualMachineImages.ListPublishers method.
 func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, location string, options *VirtualMachineImagesListPublishersOptions) (VirtualMachineImagesListPublishersResponse, error) {
 	req, err := client.listPublishersCreateRequest(ctx, location, options)
 	if err != nil {
@@ -330,6 +349,10 @@ func (client *VirtualMachineImagesClient) listPublishersHandleError(resp *http.R
 
 // ListSKUs - Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
 // If the operation fails it returns a generic error.
+// location - The name of a supported Azure region.
+// publisherName - A valid image publisher.
+// offer - A valid image publisher offer.
+// options - VirtualMachineImagesListSKUsOptions contains the optional parameters for the VirtualMachineImages.ListSKUs method.
 func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (VirtualMachineImagesListSKUsResponse, error) {
 	req, err := client.listSKUsCreateRequest(ctx, location, publisherName, offer, options)
 	if err != nil {

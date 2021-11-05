@@ -29,6 +29,8 @@ type SupportPackagesClient struct {
 }
 
 // NewSupportPackagesClient creates a new instance of SupportPackagesClient with the specified values.
+// subscriptionID - The subscription ID.
+// options - pass nil to accept the default values.
 func NewSupportPackagesClient(subscriptionID string, options *azcore.ClientOptions) *SupportPackagesClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -43,6 +45,10 @@ func NewSupportPackagesClient(subscriptionID string, options *azcore.ClientOptio
 
 // BeginTriggerSupportPackage - Triggers support package on the device
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// resourceGroupName - The resource group name.
+// triggerSupportPackageRequest - The trigger support package request object
+// options - SupportPackagesBeginTriggerSupportPackageOptions contains the optional parameters for the SupportPackages.BeginTriggerSupportPackage method.
 func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesBeginTriggerSupportPackageOptions) (SupportPackagesTriggerSupportPackagePollerResponse, error) {
 	resp, err := client.triggerSupportPackage(ctx, deviceName, resourceGroupName, triggerSupportPackageRequest, options)
 	if err != nil {

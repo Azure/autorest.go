@@ -31,6 +31,9 @@ type TableClient struct {
 }
 
 // NewTableClient creates a new instance of TableClient with the specified values.
+// endpoint - The URL of the service account or table that is the target of the desired operation.
+// version - Specifies the version of the operation to use for this request.
+// pl - the pipeline used for sending requests and handling responses.
 func NewTableClient(endpoint string, version Enum0, pl runtime.Pipeline) *TableClient {
 	client := &TableClient{
 		endpoint: endpoint,
@@ -42,6 +45,9 @@ func NewTableClient(endpoint string, version Enum0, pl runtime.Pipeline) *TableC
 
 // Create - Creates a new table under the given account.
 // If the operation fails it returns the *TableServiceError error type.
+// dataServiceVersion - Specifies the data service version.
+// tableProperties - The Table properties.
+// options - TableCreateOptions contains the optional parameters for the Table.Create method.
 func (client *TableClient) Create(ctx context.Context, dataServiceVersion Enum1, tableProperties TableProperties, options *TableCreateOptions) (TableCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, dataServiceVersion, tableProperties, options)
 	if err != nil {
@@ -124,6 +130,8 @@ func (client *TableClient) createHandleError(resp *http.Response) error {
 
 // Delete - Operation permanently deletes the specified table.
 // If the operation fails it returns the *TableServiceError error type.
+// table - The name of the table.
+// options - TableDeleteOptions contains the optional parameters for the Table.Delete method.
 func (client *TableClient) Delete(ctx context.Context, table string, options *TableDeleteOptions) (TableDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, table, options)
 	if err != nil {
@@ -195,6 +203,12 @@ func (client *TableClient) deleteHandleError(resp *http.Response) error {
 
 // DeleteEntity - Deletes the specified entity in a table.
 // If the operation fails it returns the *TableServiceError error type.
+// dataServiceVersion - Specifies the data service version.
+// table - The name of the table.
+// partitionKey - The partition key of the entity.
+// rowKey - The row key of the entity.
+// ifMatch - Match condition for an entity to be deleted. If specified and a matching entity is not found, an error will be raised. To force an unconditional delete, set to the wildcard character (*).
+// options - TableDeleteEntityOptions contains the optional parameters for the Table.DeleteEntity method.
 func (client *TableClient) DeleteEntity(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, ifMatch string, options *TableDeleteEntityOptions) (TableDeleteEntityResponse, error) {
 	req, err := client.deleteEntityCreateRequest(ctx, dataServiceVersion, table, partitionKey, rowKey, ifMatch, options)
 	if err != nil {
@@ -284,6 +298,9 @@ func (client *TableClient) deleteEntityHandleError(resp *http.Response) error {
 
 // GetAccessPolicy - Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures.
 // If the operation fails it returns the *TableServiceError error type.
+// table - The name of the table.
+// comp - Required query string to handle stored access policies for the table that may be used with Shared Access Signatures.
+// options - TableGetAccessPolicyOptions contains the optional parameters for the Table.GetAccessPolicy method.
 func (client *TableClient) GetAccessPolicy(ctx context.Context, table string, comp Enum4, options *TableGetAccessPolicyOptions) (TableGetAccessPolicyResponse, error) {
 	req, err := client.getAccessPolicyCreateRequest(ctx, table, comp, options)
 	if err != nil {
@@ -364,6 +381,9 @@ func (client *TableClient) getAccessPolicyHandleError(resp *http.Response) error
 
 // InsertEntity - Insert entity in a table.
 // If the operation fails it returns the *TableServiceError error type.
+// dataServiceVersion - Specifies the data service version.
+// table - The name of the table.
+// options - TableInsertEntityOptions contains the optional parameters for the Table.InsertEntity method.
 func (client *TableClient) InsertEntity(ctx context.Context, dataServiceVersion Enum1, table string, options *TableInsertEntityOptions) (TableInsertEntityResponse, error) {
 	req, err := client.insertEntityCreateRequest(ctx, dataServiceVersion, table, options)
 	if err != nil {
@@ -462,6 +482,11 @@ func (client *TableClient) insertEntityHandleError(resp *http.Response) error {
 
 // MergeEntity - Merge entity in a table.
 // If the operation fails it returns the *TableServiceError error type.
+// dataServiceVersion - Specifies the data service version.
+// table - The name of the table.
+// partitionKey - The partition key of the entity.
+// rowKey - The row key of the entity.
+// options - TableMergeEntityOptions contains the optional parameters for the Table.MergeEntity method.
 func (client *TableClient) MergeEntity(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, options *TableMergeEntityOptions) (TableMergeEntityResponse, error) {
 	req, err := client.mergeEntityCreateRequest(ctx, dataServiceVersion, table, partitionKey, rowKey, options)
 	if err != nil {
@@ -559,6 +584,8 @@ func (client *TableClient) mergeEntityHandleError(resp *http.Response) error {
 
 // Query - Queries tables under the given account.
 // If the operation fails it returns a generic error.
+// dataServiceVersion - Specifies the data service version.
+// options - TableQueryOptions contains the optional parameters for the Table.Query method.
 func (client *TableClient) Query(ctx context.Context, dataServiceVersion Enum1, options *TableQueryOptions) (TableQueryResponseEnvelope, error) {
 	req, err := client.queryCreateRequest(ctx, dataServiceVersion, options)
 	if err != nil {
@@ -649,6 +676,9 @@ func (client *TableClient) queryHandleError(resp *http.Response) error {
 
 // QueryEntities - Queries entities in a table.
 // If the operation fails it returns the *TableServiceError error type.
+// dataServiceVersion - Specifies the data service version.
+// table - The name of the table.
+// options - TableQueryEntitiesOptions contains the optional parameters for the Table.QueryEntities method.
 func (client *TableClient) QueryEntities(ctx context.Context, dataServiceVersion Enum1, table string, options *TableQueryEntitiesOptions) (TableQueryEntitiesResponse, error) {
 	req, err := client.queryEntitiesCreateRequest(ctx, dataServiceVersion, table, options)
 	if err != nil {
@@ -753,6 +783,11 @@ func (client *TableClient) queryEntitiesHandleError(resp *http.Response) error {
 
 // QueryEntityWithPartitionAndRowKey - Queries a single entity in a table.
 // If the operation fails it returns the *TableServiceError error type.
+// dataServiceVersion - Specifies the data service version.
+// table - The name of the table.
+// partitionKey - The partition key of the entity.
+// rowKey - The row key of the entity.
+// options - TableQueryEntityWithPartitionAndRowKeyOptions contains the optional parameters for the Table.QueryEntityWithPartitionAndRowKey method.
 func (client *TableClient) QueryEntityWithPartitionAndRowKey(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, options *TableQueryEntityWithPartitionAndRowKeyOptions) (TableQueryEntityWithPartitionAndRowKeyResponse, error) {
 	req, err := client.queryEntityWithPartitionAndRowKeyCreateRequest(ctx, dataServiceVersion, table, partitionKey, rowKey, options)
 	if err != nil {
@@ -859,6 +894,9 @@ func (client *TableClient) queryEntityWithPartitionAndRowKeyHandleError(resp *ht
 
 // SetAccessPolicy - Sets stored access policies for the table that may be used with Shared Access Signatures.
 // If the operation fails it returns the *TableServiceError error type.
+// table - The name of the table.
+// comp - Required query string to handle stored access policies for the table that may be used with Shared Access Signatures.
+// options - TableSetAccessPolicyOptions contains the optional parameters for the Table.SetAccessPolicy method.
 func (client *TableClient) SetAccessPolicy(ctx context.Context, table string, comp Enum4, options *TableSetAccessPolicyOptions) (TableSetAccessPolicyResponse, error) {
 	req, err := client.setAccessPolicyCreateRequest(ctx, table, comp, options)
 	if err != nil {
@@ -943,6 +981,11 @@ func (client *TableClient) setAccessPolicyHandleError(resp *http.Response) error
 
 // UpdateEntity - Update entity in a table.
 // If the operation fails it returns the *TableServiceError error type.
+// dataServiceVersion - Specifies the data service version.
+// table - The name of the table.
+// partitionKey - The partition key of the entity.
+// rowKey - The row key of the entity.
+// options - TableUpdateEntityOptions contains the optional parameters for the Table.UpdateEntity method.
 func (client *TableClient) UpdateEntity(ctx context.Context, dataServiceVersion Enum1, table string, partitionKey string, rowKey string, options *TableUpdateEntityOptions) (TableUpdateEntityResponse, error) {
 	req, err := client.updateEntityCreateRequest(ctx, dataServiceVersion, table, partitionKey, rowKey, options)
 	if err != nil {

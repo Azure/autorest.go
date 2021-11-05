@@ -31,6 +31,9 @@ type SecurityRulesClient struct {
 }
 
 // NewSecurityRulesClient creates a new instance of SecurityRulesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewSecurityRulesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *SecurityRulesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,11 @@ func NewSecurityRulesClient(subscriptionID string, credential azcore.TokenCreden
 
 // BeginCreateOrUpdate - Creates or updates a security rule in the specified network security group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkSecurityGroupName - The name of the network security group.
+// securityRuleName - The name of the security rule.
+// securityRuleParameters - Parameters supplied to the create or update network security rule operation.
+// options - SecurityRulesBeginCreateOrUpdateOptions contains the optional parameters for the SecurityRules.BeginCreateOrUpdate method.
 func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (SecurityRulesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, options)
 	if err != nil {
@@ -129,6 +137,10 @@ func (client *SecurityRulesClient) createOrUpdateHandleError(resp *http.Response
 
 // BeginDelete - Deletes the specified network security rule.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkSecurityGroupName - The name of the network security group.
+// securityRuleName - The name of the security rule.
+// options - SecurityRulesBeginDeleteOptions contains the optional parameters for the SecurityRules.BeginDelete method.
 func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesBeginDeleteOptions) (SecurityRulesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
@@ -209,6 +221,10 @@ func (client *SecurityRulesClient) deleteHandleError(resp *http.Response) error 
 
 // Get - Get the specified network security rule.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkSecurityGroupName - The name of the network security group.
+// securityRuleName - The name of the security rule.
+// options - SecurityRulesGetOptions contains the optional parameters for the SecurityRules.Get method.
 func (client *SecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesGetOptions) (SecurityRulesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
@@ -278,6 +294,9 @@ func (client *SecurityRulesClient) getHandleError(resp *http.Response) error {
 
 // List - Gets all security rules in a network security group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkSecurityGroupName - The name of the network security group.
+// options - SecurityRulesListOptions contains the optional parameters for the SecurityRules.List method.
 func (client *SecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesListOptions) *SecurityRulesListPager {
 	return &SecurityRulesListPager{
 		client: client,

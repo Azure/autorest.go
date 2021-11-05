@@ -32,6 +32,7 @@ type PathsClientOptions struct {
 }
 
 // NewPathsClient creates a new instance of PathsClient with the specified values.
+// options - pass nil to accept the default values.
 func NewPathsClient(options *PathsClientOptions) *PathsClient {
 	cp := PathsClientOptions{}
 	if options != nil {
@@ -49,6 +50,8 @@ func NewPathsClient(options *PathsClientOptions) *PathsClient {
 
 // GetEmpty - Get a 200 to test a valid base uri
 // If the operation fails it returns the *Error error type.
+// accountName - Account Name
+// options - PathsGetEmptyOptions contains the optional parameters for the Paths.GetEmpty method.
 func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, options *PathsGetEmptyOptions) (PathsGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, accountName, options)
 	if err != nil {

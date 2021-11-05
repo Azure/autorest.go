@@ -31,6 +31,9 @@ type ServiceEndpointPolicyDefinitionsClient struct {
 }
 
 // NewServiceEndpointPolicyDefinitionsClient creates a new instance of ServiceEndpointPolicyDefinitionsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewServiceEndpointPolicyDefinitionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ServiceEndpointPolicyDefinitionsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,11 @@ func NewServiceEndpointPolicyDefinitionsClient(subscriptionID string, credential
 
 // BeginCreateOrUpdate - Creates or updates a service endpoint policy definition in the specified service endpoint policy.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// serviceEndpointPolicyName - The name of the service endpoint policy.
+// serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition name.
+// serviceEndpointPolicyDefinitions - Parameters supplied to the create or update service endpoint policy operation.
+// options - ServiceEndpointPolicyDefinitionsBeginCreateOrUpdateOptions contains the optional parameters for the ServiceEndpointPolicyDefinitions.BeginCreateOrUpdate method.
 func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, serviceEndpointPolicyDefinitions ServiceEndpointPolicyDefinition, options *ServiceEndpointPolicyDefinitionsBeginCreateOrUpdateOptions) (ServiceEndpointPolicyDefinitionsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions, options)
 	if err != nil {
@@ -129,6 +137,10 @@ func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdateHandleError(
 
 // BeginDelete - Deletes the specified ServiceEndpoint policy definitions.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// serviceEndpointPolicyName - The name of the Service Endpoint Policy.
+// serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition.
+// options - ServiceEndpointPolicyDefinitionsBeginDeleteOptions contains the optional parameters for the ServiceEndpointPolicyDefinitions.BeginDelete method.
 func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsBeginDeleteOptions) (ServiceEndpointPolicyDefinitionsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, options)
 	if err != nil {
@@ -209,6 +221,10 @@ func (client *ServiceEndpointPolicyDefinitionsClient) deleteHandleError(resp *ht
 
 // Get - Get the specified service endpoint policy definitions from service endpoint policy.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// serviceEndpointPolicyName - The name of the service endpoint policy name.
+// serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition name.
+// options - ServiceEndpointPolicyDefinitionsGetOptions contains the optional parameters for the ServiceEndpointPolicyDefinitions.Get method.
 func (client *ServiceEndpointPolicyDefinitionsClient) Get(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsGetOptions) (ServiceEndpointPolicyDefinitionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, options)
 	if err != nil {
@@ -278,6 +294,9 @@ func (client *ServiceEndpointPolicyDefinitionsClient) getHandleError(resp *http.
 
 // ListByResourceGroup - Gets all service endpoint policy definitions in a service end point policy.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// serviceEndpointPolicyName - The name of the service endpoint policy name.
+// options - ServiceEndpointPolicyDefinitionsListByResourceGroupOptions contains the optional parameters for the ServiceEndpointPolicyDefinitions.ListByResourceGroup method.
 func (client *ServiceEndpointPolicyDefinitionsClient) ListByResourceGroup(resourceGroupName string, serviceEndpointPolicyName string, options *ServiceEndpointPolicyDefinitionsListByResourceGroupOptions) *ServiceEndpointPolicyDefinitionsListByResourceGroupPager {
 	return &ServiceEndpointPolicyDefinitionsListByResourceGroupPager{
 		client: client,

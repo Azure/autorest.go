@@ -26,6 +26,10 @@ type directoryClient struct {
 }
 
 // newDirectoryClient creates a new instance of directoryClient with the specified values.
+// endpoint - The URL of the service account, container, or blob that is the targe of the desired operation.
+// version - Specifies the version of the operation to use for this request.
+// pathRenameMode - Determines the behavior of the rename operation
+// pl - the pipeline used for sending requests and handling responses.
 func newDirectoryClient(endpoint string, version Enum2, pathRenameMode *PathRenameMode, pl runtime.Pipeline) *directoryClient {
 	client := &directoryClient{
 		endpoint:       endpoint,
@@ -42,6 +46,10 @@ func newDirectoryClient(endpoint string, version Enum2, pathRenameMode *PathRena
 // To
 // fail if the destination already exists, use a conditional request with If-None-Match: "*".
 // If the operation fails it returns the *DataLakeStorageError error type.
+// DirectoryCreateOptions - DirectoryCreateOptions contains the optional parameters for the Directory.Create method.
+// DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the Directory.Create method.
+// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
+// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 func (client *directoryClient) Create(ctx context.Context, resource Enum20, directoryCreateOptions *DirectoryCreateOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, resource, directoryCreateOptions, directoryHTTPHeaders, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -170,6 +178,10 @@ func (client *directoryClient) createHandleError(resp *http.Response) error {
 
 // Delete - Deletes the directory
 // If the operation fails it returns the *DataLakeStorageError error type.
+// recursiveDirectoryDelete - If "true", all paths beneath the directory will be deleted. If "false" and the directory is non-empty, an error occurs.
+// DirectoryDeleteOptions - DirectoryDeleteOptions contains the optional parameters for the Directory.Delete method.
+// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
+// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 func (client *directoryClient) Delete(ctx context.Context, recursiveDirectoryDelete bool, directoryDeleteOptions *DirectoryDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, recursiveDirectoryDelete, directoryDeleteOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -263,6 +275,9 @@ func (client *directoryClient) deleteHandleError(resp *http.Response) error {
 
 // GetAccessControl - Get the owner, group, permissions, or access control list for a directory.
 // If the operation fails it returns the *DataLakeStorageError error type.
+// DirectoryGetAccessControlOptions - DirectoryGetAccessControlOptions contains the optional parameters for the Directory.GetAccessControl method.
+// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
+// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 func (client *directoryClient) GetAccessControl(ctx context.Context, action Enum22, directoryGetAccessControlOptions *DirectoryGetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectoryGetAccessControlResponse, error) {
 	req, err := client.getAccessControlCreateRequest(ctx, action, directoryGetAccessControlOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
@@ -376,6 +391,12 @@ func (client *directoryClient) getAccessControlHandleError(resp *http.Response) 
 // To
 // fail if the destination already exists, use a conditional request with If-None-Match: "*".
 // If the operation fails it returns the *DataLakeStorageError error type.
+// renameSource - The file or directory to be renamed. The value must have the following format: "/{filesysystem}/{path}".  If "x-ms-properties" is specified, the properties will overwrite the existing properties; otherwise, the existing properties will be preserved.
+// DirectoryRenameOptions - DirectoryRenameOptions contains the optional parameters for the Directory.Rename method.
+// DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the Directory.Create method.
+// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
+// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
+// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Directory.Rename method.
 func (client *directoryClient) Rename(ctx context.Context, renameSource string, directoryRenameOptions *DirectoryRenameOptions, directoryHTTPHeaders *DirectoryHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (DirectoryRenameResponse, error) {
 	req, err := client.renameCreateRequest(ctx, renameSource, directoryRenameOptions, directoryHTTPHeaders, leaseAccessConditions, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
@@ -528,6 +549,9 @@ func (client *directoryClient) renameHandleError(resp *http.Response) error {
 
 // SetAccessControl - Set the owner, group, permissions, or access control list for a directory.
 // If the operation fails it returns the *DataLakeStorageError error type.
+// DirectorySetAccessControlOptions - DirectorySetAccessControlOptions contains the optional parameters for the Directory.SetAccessControl method.
+// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
+// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 func (client *directoryClient) SetAccessControl(ctx context.Context, action Enum21, directorySetAccessControlOptions *DirectorySetAccessControlOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (DirectorySetAccessControlResponse, error) {
 	req, err := client.setAccessControlCreateRequest(ctx, action, directorySetAccessControlOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {

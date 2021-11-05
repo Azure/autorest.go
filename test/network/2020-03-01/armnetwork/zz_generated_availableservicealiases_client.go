@@ -31,6 +31,9 @@ type AvailableServiceAliasesClient struct {
 }
 
 // NewAvailableServiceAliasesClient creates a new instance of AvailableServiceAliasesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewAvailableServiceAliasesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *AvailableServiceAliasesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,8 @@ func NewAvailableServiceAliasesClient(subscriptionID string, credential azcore.T
 
 // List - Gets all available service aliases for this subscription in this region.
 // If the operation fails it returns the *CloudError error type.
+// location - The location.
+// options - AvailableServiceAliasesListOptions contains the optional parameters for the AvailableServiceAliases.List method.
 func (client *AvailableServiceAliasesClient) List(location string, options *AvailableServiceAliasesListOptions) *AvailableServiceAliasesListPager {
 	return &AvailableServiceAliasesListPager{
 		client: client,
@@ -107,6 +112,9 @@ func (client *AvailableServiceAliasesClient) listHandleError(resp *http.Response
 
 // ListByResourceGroup - Gets all available service aliases for this resource group in this region.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// location - The location.
+// options - AvailableServiceAliasesListByResourceGroupOptions contains the optional parameters for the AvailableServiceAliases.ListByResourceGroup method.
 func (client *AvailableServiceAliasesClient) ListByResourceGroup(resourceGroupName string, location string, options *AvailableServiceAliasesListByResourceGroupOptions) *AvailableServiceAliasesListByResourceGroupPager {
 	return &AvailableServiceAliasesListByResourceGroupPager{
 		client: client,

@@ -24,6 +24,7 @@ type FlattencomplexClient struct {
 }
 
 // NewFlattencomplexClient creates a new instance of FlattencomplexClient with the specified values.
+// options - pass nil to accept the default values.
 func NewFlattencomplexClient(options *azcore.ClientOptions) *FlattencomplexClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewFlattencomplexClient(options *azcore.ClientOptions) *FlattencomplexClien
 
 // GetValid -
 // If the operation fails it returns a generic error.
+// options - FlattencomplexGetValidOptions contains the optional parameters for the Flattencomplex.GetValid method.
 func (client *FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexGetValidOptions) (FlattencomplexGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {

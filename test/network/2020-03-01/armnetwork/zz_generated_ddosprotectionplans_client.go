@@ -31,6 +31,9 @@ type DdosProtectionPlansClient struct {
 }
 
 // NewDdosProtectionPlansClient creates a new instance of DdosProtectionPlansClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewDdosProtectionPlansClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *DdosProtectionPlansClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,10 @@ func NewDdosProtectionPlansClient(subscriptionID string, credential azcore.Token
 
 // BeginCreateOrUpdate - Creates or updates a DDoS protection plan.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// ddosProtectionPlanName - The name of the DDoS protection plan.
+// parameters - Parameters supplied to the create or update operation.
+// options - DdosProtectionPlansBeginCreateOrUpdateOptions contains the optional parameters for the DdosProtectionPlans.BeginCreateOrUpdate method.
 func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansBeginCreateOrUpdateOptions) (DdosProtectionPlansCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
 	if err != nil {
@@ -125,6 +132,9 @@ func (client *DdosProtectionPlansClient) createOrUpdateHandleError(resp *http.Re
 
 // BeginDelete - Deletes the specified DDoS protection plan.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// ddosProtectionPlanName - The name of the DDoS protection plan.
+// options - DdosProtectionPlansBeginDeleteOptions contains the optional parameters for the DdosProtectionPlans.BeginDelete method.
 func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansBeginDeleteOptions) (DdosProtectionPlansDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
@@ -201,6 +211,9 @@ func (client *DdosProtectionPlansClient) deleteHandleError(resp *http.Response) 
 
 // Get - Gets information about the specified DDoS protection plan.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// ddosProtectionPlanName - The name of the DDoS protection plan.
+// options - DdosProtectionPlansGetOptions contains the optional parameters for the DdosProtectionPlans.Get method.
 func (client *DdosProtectionPlansClient) Get(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansGetOptions) (DdosProtectionPlansGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
@@ -266,6 +279,7 @@ func (client *DdosProtectionPlansClient) getHandleError(resp *http.Response) err
 
 // List - Gets all DDoS protection plans in a subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - DdosProtectionPlansListOptions contains the optional parameters for the DdosProtectionPlans.List method.
 func (client *DdosProtectionPlansClient) List(options *DdosProtectionPlansListOptions) *DdosProtectionPlansListPager {
 	return &DdosProtectionPlansListPager{
 		client: client,
@@ -320,6 +334,8 @@ func (client *DdosProtectionPlansClient) listHandleError(resp *http.Response) er
 
 // ListByResourceGroup - Gets all the DDoS protection plans in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - DdosProtectionPlansListByResourceGroupOptions contains the optional parameters for the DdosProtectionPlans.ListByResourceGroup method.
 func (client *DdosProtectionPlansClient) ListByResourceGroup(resourceGroupName string, options *DdosProtectionPlansListByResourceGroupOptions) *DdosProtectionPlansListByResourceGroupPager {
 	return &DdosProtectionPlansListByResourceGroupPager{
 		client: client,
@@ -378,6 +394,10 @@ func (client *DdosProtectionPlansClient) listByResourceGroupHandleError(resp *ht
 
 // UpdateTags - Update a DDoS protection plan tags.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// ddosProtectionPlanName - The name of the DDoS protection plan.
+// parameters - Parameters supplied to the update DDoS protection plan resource tags.
+// options - DdosProtectionPlansUpdateTagsOptions contains the optional parameters for the DdosProtectionPlans.UpdateTags method.
 func (client *DdosProtectionPlansClient) UpdateTags(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters TagsObject, options *DdosProtectionPlansUpdateTagsOptions) (DdosProtectionPlansUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
 	if err != nil {

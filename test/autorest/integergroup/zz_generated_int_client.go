@@ -25,6 +25,7 @@ type IntClient struct {
 }
 
 // NewIntClient creates a new instance of IntClient with the specified values.
+// options - pass nil to accept the default values.
 func NewIntClient(options *azcore.ClientOptions) *IntClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -38,6 +39,7 @@ func NewIntClient(options *azcore.ClientOptions) *IntClient {
 
 // GetInvalid - Get invalid Int value
 // If the operation fails it returns the *Error error type.
+// options - IntGetInvalidOptions contains the optional parameters for the Int.GetInvalid method.
 func (client *IntClient) GetInvalid(ctx context.Context, options *IntGetInvalidOptions) (IntGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -88,6 +90,7 @@ func (client *IntClient) getInvalidHandleError(resp *http.Response) error {
 
 // GetInvalidUnixTime - Get invalid Unix time value
 // If the operation fails it returns the *Error error type.
+// options - IntGetInvalidUnixTimeOptions contains the optional parameters for the Int.GetInvalidUnixTime method.
 func (client *IntClient) GetInvalidUnixTime(ctx context.Context, options *IntGetInvalidUnixTimeOptions) (IntGetInvalidUnixTimeResponse, error) {
 	req, err := client.getInvalidUnixTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -140,6 +143,7 @@ func (client *IntClient) getInvalidUnixTimeHandleError(resp *http.Response) erro
 
 // GetNull - Get null Int value
 // If the operation fails it returns the *Error error type.
+// options - IntGetNullOptions contains the optional parameters for the Int.GetNull method.
 func (client *IntClient) GetNull(ctx context.Context, options *IntGetNullOptions) (IntGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -190,6 +194,7 @@ func (client *IntClient) getNullHandleError(resp *http.Response) error {
 
 // GetNullUnixTime - Get null Unix time value
 // If the operation fails it returns the *Error error type.
+// options - IntGetNullUnixTimeOptions contains the optional parameters for the Int.GetNullUnixTime method.
 func (client *IntClient) GetNullUnixTime(ctx context.Context, options *IntGetNullUnixTimeOptions) (IntGetNullUnixTimeResponse, error) {
 	req, err := client.getNullUnixTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -242,6 +247,7 @@ func (client *IntClient) getNullUnixTimeHandleError(resp *http.Response) error {
 
 // GetOverflowInt32 - Get overflow Int32 value
 // If the operation fails it returns the *Error error type.
+// options - IntGetOverflowInt32Options contains the optional parameters for the Int.GetOverflowInt32 method.
 func (client *IntClient) GetOverflowInt32(ctx context.Context, options *IntGetOverflowInt32Options) (IntGetOverflowInt32Response, error) {
 	req, err := client.getOverflowInt32CreateRequest(ctx, options)
 	if err != nil {
@@ -292,6 +298,7 @@ func (client *IntClient) getOverflowInt32HandleError(resp *http.Response) error 
 
 // GetOverflowInt64 - Get overflow Int64 value
 // If the operation fails it returns the *Error error type.
+// options - IntGetOverflowInt64Options contains the optional parameters for the Int.GetOverflowInt64 method.
 func (client *IntClient) GetOverflowInt64(ctx context.Context, options *IntGetOverflowInt64Options) (IntGetOverflowInt64Response, error) {
 	req, err := client.getOverflowInt64CreateRequest(ctx, options)
 	if err != nil {
@@ -342,6 +349,7 @@ func (client *IntClient) getOverflowInt64HandleError(resp *http.Response) error 
 
 // GetUnderflowInt32 - Get underflow Int32 value
 // If the operation fails it returns the *Error error type.
+// options - IntGetUnderflowInt32Options contains the optional parameters for the Int.GetUnderflowInt32 method.
 func (client *IntClient) GetUnderflowInt32(ctx context.Context, options *IntGetUnderflowInt32Options) (IntGetUnderflowInt32Response, error) {
 	req, err := client.getUnderflowInt32CreateRequest(ctx, options)
 	if err != nil {
@@ -392,6 +400,7 @@ func (client *IntClient) getUnderflowInt32HandleError(resp *http.Response) error
 
 // GetUnderflowInt64 - Get underflow Int64 value
 // If the operation fails it returns the *Error error type.
+// options - IntGetUnderflowInt64Options contains the optional parameters for the Int.GetUnderflowInt64 method.
 func (client *IntClient) GetUnderflowInt64(ctx context.Context, options *IntGetUnderflowInt64Options) (IntGetUnderflowInt64Response, error) {
 	req, err := client.getUnderflowInt64CreateRequest(ctx, options)
 	if err != nil {
@@ -442,6 +451,7 @@ func (client *IntClient) getUnderflowInt64HandleError(resp *http.Response) error
 
 // GetUnixTime - Get datetime encoded as Unix time value
 // If the operation fails it returns the *Error error type.
+// options - IntGetUnixTimeOptions contains the optional parameters for the Int.GetUnixTime method.
 func (client *IntClient) GetUnixTime(ctx context.Context, options *IntGetUnixTimeOptions) (IntGetUnixTimeResponse, error) {
 	req, err := client.getUnixTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -494,6 +504,8 @@ func (client *IntClient) getUnixTimeHandleError(resp *http.Response) error {
 
 // PutMax32 - Put max int32 value
 // If the operation fails it returns the *Error error type.
+// intBody - int body
+// options - IntPutMax32Options contains the optional parameters for the Int.PutMax32 method.
 func (client *IntClient) PutMax32(ctx context.Context, intBody int32, options *IntPutMax32Options) (IntPutMax32Response, error) {
 	req, err := client.putMax32CreateRequest(ctx, intBody, options)
 	if err != nil {
@@ -535,6 +547,8 @@ func (client *IntClient) putMax32HandleError(resp *http.Response) error {
 
 // PutMax64 - Put max int64 value
 // If the operation fails it returns the *Error error type.
+// intBody - int body
+// options - IntPutMax64Options contains the optional parameters for the Int.PutMax64 method.
 func (client *IntClient) PutMax64(ctx context.Context, intBody int64, options *IntPutMax64Options) (IntPutMax64Response, error) {
 	req, err := client.putMax64CreateRequest(ctx, intBody, options)
 	if err != nil {
@@ -576,6 +590,8 @@ func (client *IntClient) putMax64HandleError(resp *http.Response) error {
 
 // PutMin32 - Put min int32 value
 // If the operation fails it returns the *Error error type.
+// intBody - int body
+// options - IntPutMin32Options contains the optional parameters for the Int.PutMin32 method.
 func (client *IntClient) PutMin32(ctx context.Context, intBody int32, options *IntPutMin32Options) (IntPutMin32Response, error) {
 	req, err := client.putMin32CreateRequest(ctx, intBody, options)
 	if err != nil {
@@ -617,6 +633,8 @@ func (client *IntClient) putMin32HandleError(resp *http.Response) error {
 
 // PutMin64 - Put min int64 value
 // If the operation fails it returns the *Error error type.
+// intBody - int body
+// options - IntPutMin64Options contains the optional parameters for the Int.PutMin64 method.
 func (client *IntClient) PutMin64(ctx context.Context, intBody int64, options *IntPutMin64Options) (IntPutMin64Response, error) {
 	req, err := client.putMin64CreateRequest(ctx, intBody, options)
 	if err != nil {
@@ -658,6 +676,8 @@ func (client *IntClient) putMin64HandleError(resp *http.Response) error {
 
 // PutUnixTimeDate - Put datetime encoded as Unix time
 // If the operation fails it returns the *Error error type.
+// intBody - int body
+// options - IntPutUnixTimeDateOptions contains the optional parameters for the Int.PutUnixTimeDate method.
 func (client *IntClient) PutUnixTimeDate(ctx context.Context, intBody time.Time, options *IntPutUnixTimeDateOptions) (IntPutUnixTimeDateResponse, error) {
 	req, err := client.putUnixTimeDateCreateRequest(ctx, intBody, options)
 	if err != nil {

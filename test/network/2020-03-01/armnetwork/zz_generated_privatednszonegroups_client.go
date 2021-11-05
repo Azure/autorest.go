@@ -31,6 +31,9 @@ type PrivateDNSZoneGroupsClient struct {
 }
 
 // NewPrivateDNSZoneGroupsClient creates a new instance of PrivateDNSZoneGroupsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewPrivateDNSZoneGroupsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *PrivateDNSZoneGroupsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,11 @@ func NewPrivateDNSZoneGroupsClient(subscriptionID string, credential azcore.Toke
 
 // BeginCreateOrUpdate - Creates or updates a private dns zone group in the specified private endpoint.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// privateEndpointName - The name of the private endpoint.
+// privateDNSZoneGroupName - The name of the private dns zone group.
+// parameters - Parameters supplied to the create or update private dns zone group operation.
+// options - PrivateDNSZoneGroupsBeginCreateOrUpdateOptions contains the optional parameters for the PrivateDNSZoneGroups.BeginCreateOrUpdate method.
 func (client *PrivateDNSZoneGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, parameters PrivateDNSZoneGroup, options *PrivateDNSZoneGroupsBeginCreateOrUpdateOptions) (PrivateDNSZoneGroupsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, parameters, options)
 	if err != nil {
@@ -129,6 +137,10 @@ func (client *PrivateDNSZoneGroupsClient) createOrUpdateHandleError(resp *http.R
 
 // BeginDelete - Deletes the specified private dns zone group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// privateEndpointName - The name of the private endpoint.
+// privateDNSZoneGroupName - The name of the private dns zone group.
+// options - PrivateDNSZoneGroupsBeginDeleteOptions contains the optional parameters for the PrivateDNSZoneGroups.BeginDelete method.
 func (client *PrivateDNSZoneGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, options *PrivateDNSZoneGroupsBeginDeleteOptions) (PrivateDNSZoneGroupsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, options)
 	if err != nil {
@@ -209,6 +221,10 @@ func (client *PrivateDNSZoneGroupsClient) deleteHandleError(resp *http.Response)
 
 // Get - Gets the private dns zone group resource by specified private dns zone group name.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// privateEndpointName - The name of the private endpoint.
+// privateDNSZoneGroupName - The name of the private dns zone group.
+// options - PrivateDNSZoneGroupsGetOptions contains the optional parameters for the PrivateDNSZoneGroups.Get method.
 func (client *PrivateDNSZoneGroupsClient) Get(ctx context.Context, resourceGroupName string, privateEndpointName string, privateDNSZoneGroupName string, options *PrivateDNSZoneGroupsGetOptions) (PrivateDNSZoneGroupsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, privateEndpointName, privateDNSZoneGroupName, options)
 	if err != nil {
@@ -278,6 +294,9 @@ func (client *PrivateDNSZoneGroupsClient) getHandleError(resp *http.Response) er
 
 // List - Gets all private dns zone groups in a private endpoint.
 // If the operation fails it returns the *Error error type.
+// privateEndpointName - The name of the private endpoint.
+// resourceGroupName - The name of the resource group.
+// options - PrivateDNSZoneGroupsListOptions contains the optional parameters for the PrivateDNSZoneGroups.List method.
 func (client *PrivateDNSZoneGroupsClient) List(privateEndpointName string, resourceGroupName string, options *PrivateDNSZoneGroupsListOptions) *PrivateDNSZoneGroupsListPager {
 	return &PrivateDNSZoneGroupsListPager{
 		client: client,

@@ -967,6 +967,7 @@ type DedicatedHostsBeginUpdateOptions struct {
 // DedicatedHostsGetOptions contains the optional parameters for the DedicatedHosts.Get method.
 type DedicatedHostsGetOptions struct {
 	// The expand expression to apply on the operation.
+	// Specifying any value will set the value to instanceView.
 	Expand *string
 }
 
@@ -6869,6 +6870,7 @@ type VirtualMachineScaleSetVMsGetInstanceViewOptions struct {
 // VirtualMachineScaleSetVMsGetOptions contains the optional parameters for the VirtualMachineScaleSetVMs.Get method.
 type VirtualMachineScaleSetVMsGetOptions struct {
 	// The expand expression to apply on the operation.
+	// Specifying any value will set the value to instanceView.
 	Expand *string
 }
 
@@ -7172,6 +7174,7 @@ type VirtualMachinesGeneralizeOptions struct {
 // VirtualMachinesGetOptions contains the optional parameters for the VirtualMachines.Get method.
 type VirtualMachinesGetOptions struct {
 	// The expand expression to apply on the operation.
+	// Specifying any value will set the value to instanceView.
 	Expand *string
 }
 

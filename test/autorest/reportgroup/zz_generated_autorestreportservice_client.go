@@ -24,6 +24,7 @@ type AutoRestReportServiceClient struct {
 }
 
 // NewAutoRestReportServiceClient creates a new instance of AutoRestReportServiceClient with the specified values.
+// options - pass nil to accept the default values.
 func NewAutoRestReportServiceClient(options *azcore.ClientOptions) *AutoRestReportServiceClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewAutoRestReportServiceClient(options *azcore.ClientOptions) *AutoRestRepo
 
 // GetOptionalReport - Get optional test coverage report
 // If the operation fails it returns the *Error error type.
+// options - AutoRestReportServiceGetOptionalReportOptions contains the optional parameters for the AutoRestReportService.GetOptionalReport method.
 func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (AutoRestReportServiceGetOptionalReportResponse, error) {
 	req, err := client.getOptionalReportCreateRequest(ctx, options)
 	if err != nil {
@@ -92,6 +94,7 @@ func (client *AutoRestReportServiceClient) getOptionalReportHandleError(resp *ht
 
 // GetReport - Get test coverage report
 // If the operation fails it returns the *Error error type.
+// options - AutoRestReportServiceGetReportOptions contains the optional parameters for the AutoRestReportService.GetReport method.
 func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (AutoRestReportServiceGetReportResponse, error) {
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {

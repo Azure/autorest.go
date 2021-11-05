@@ -35,6 +35,8 @@ type PathsClientOptions struct {
 }
 
 // NewPathsClient creates a new instance of PathsClient with the specified values.
+// subscriptionID - The subscription id with value 'test12'.
+// options - pass nil to accept the default values.
 func NewPathsClient(subscriptionID string, options *PathsClientOptions) *PathsClient {
 	cp := PathsClientOptions{}
 	if options != nil {
@@ -53,6 +55,10 @@ func NewPathsClient(subscriptionID string, options *PathsClientOptions) *PathsCl
 
 // GetEmpty - Get a 200 to test a valid base uri
 // If the operation fails it returns the *Error error type.
+// vault - The vault name, e.g. https://myvault
+// secret - Secret value.
+// keyName - The key name with value 'key1'.
+// options - PathsGetEmptyOptions contains the optional parameters for the Paths.GetEmpty method.
 func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (PathsGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, vault, secret, keyName, options)
 	if err != nil {

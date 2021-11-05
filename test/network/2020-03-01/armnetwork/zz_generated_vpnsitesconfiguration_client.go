@@ -31,6 +31,9 @@ type VPNSitesConfigurationClient struct {
 }
 
 // NewVPNSitesConfigurationClient creates a new instance of VPNSitesConfigurationClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewVPNSitesConfigurationClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VPNSitesConfigurationClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,10 @@ func NewVPNSitesConfigurationClient(subscriptionID string, credential azcore.Tok
 
 // BeginDownload - Gives the sas-url to download the configurations for vpn-sites in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The resource group name.
+// virtualWANName - The name of the VirtualWAN for which configuration of all vpn-sites is needed.
+// request - Parameters supplied to download vpn-sites configuration.
+// options - VPNSitesConfigurationBeginDownloadOptions contains the optional parameters for the VPNSitesConfiguration.BeginDownload method.
 func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (VPNSitesConfigurationDownloadPollerResponse, error) {
 	resp, err := client.download(ctx, resourceGroupName, virtualWANName, request, options)
 	if err != nil {

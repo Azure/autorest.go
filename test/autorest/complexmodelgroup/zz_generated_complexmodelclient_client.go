@@ -27,6 +27,7 @@ type ComplexModelClient struct {
 }
 
 // NewComplexModelClient creates a new instance of ComplexModelClient with the specified values.
+// options - pass nil to accept the default values.
 func NewComplexModelClient(options *azcore.ClientOptions) *ComplexModelClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -40,6 +41,10 @@ func NewComplexModelClient(options *azcore.ClientOptions) *ComplexModelClient {
 
 // Create - Resets products.
 // If the operation fails it returns the *Error error type.
+// subscriptionID - Subscription ID.
+// resourceGroupName - Resource Group ID.
+// bodyParameter - body Parameter
+// options - ComplexModelClientCreateOptions contains the optional parameters for the ComplexModelClient.Create method.
 func (client *ComplexModelClient) Create(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogDictionaryOfArray, options *ComplexModelClientCreateOptions) (ComplexModelClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, subscriptionID, resourceGroupName, bodyParameter, options)
 	if err != nil {
@@ -103,6 +108,8 @@ func (client *ComplexModelClient) createHandleError(resp *http.Response) error {
 // details about each product, and lists the products in
 // the proper display order.
 // If the operation fails it returns the *Error error type.
+// resourceGroupName - Resource Group ID.
+// options - ComplexModelClientListOptions contains the optional parameters for the ComplexModelClient.List method.
 func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (ComplexModelClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, options)
 	if err != nil {
@@ -161,6 +168,10 @@ func (client *ComplexModelClient) listHandleError(resp *http.Response) error {
 
 // Update - Resets products.
 // If the operation fails it returns the *Error error type.
+// subscriptionID - Subscription ID.
+// resourceGroupName - Resource Group ID.
+// bodyParameter - body Parameter
+// options - ComplexModelClientUpdateOptions contains the optional parameters for the ComplexModelClient.Update method.
 func (client *ComplexModelClient) Update(ctx context.Context, subscriptionID string, resourceGroupName string, bodyParameter CatalogArrayOfDictionary, options *ComplexModelClientUpdateOptions) (ComplexModelClientUpdateResponse, error) {
 	req, err := client.updateCreateRequest(ctx, subscriptionID, resourceGroupName, bodyParameter, options)
 	if err != nil {

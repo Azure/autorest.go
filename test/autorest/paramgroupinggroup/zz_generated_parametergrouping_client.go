@@ -28,6 +28,7 @@ type ParameterGroupingClient struct {
 }
 
 // NewParameterGroupingClient creates a new instance of ParameterGroupingClient with the specified values.
+// options - pass nil to accept the default values.
 func NewParameterGroupingClient(options *azcore.ClientOptions) *ParameterGroupingClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -41,6 +42,8 @@ func NewParameterGroupingClient(options *azcore.ClientOptions) *ParameterGroupin
 
 // PostMultiParamGroups - Post parameters from multiple different parameter groups
 // If the operation fails it returns the *Error error type.
+// FirstParameterGroup - FirstParameterGroup contains a group of parameters for the ParameterGrouping.PostMultiParamGroups method.
+// ParameterGroupingPostMultiParamGroupsSecondParamGroup - ParameterGroupingPostMultiParamGroupsSecondParamGroup contains a group of parameters for the ParameterGrouping.PostMultiParamGroups method.
 func (client *ParameterGroupingClient) PostMultiParamGroups(ctx context.Context, firstParameterGroup *FirstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup *ParameterGroupingPostMultiParamGroupsSecondParamGroup) (ParameterGroupingPostMultiParamGroupsResponse, error) {
 	req, err := client.postMultiParamGroupsCreateRequest(ctx, firstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup)
 	if err != nil {
@@ -96,6 +99,7 @@ func (client *ParameterGroupingClient) postMultiParamGroupsHandleError(resp *htt
 
 // PostOptional - Post a bunch of optional parameters grouped
 // If the operation fails it returns the *Error error type.
+// options - ParameterGroupingPostOptionalParameters contains a group of parameters for the ParameterGrouping.PostOptional method.
 func (client *ParameterGroupingClient) PostOptional(ctx context.Context, options *ParameterGroupingPostOptionalParameters) (ParameterGroupingPostOptionalResponse, error) {
 	req, err := client.postOptionalCreateRequest(ctx, options)
 	if err != nil {
@@ -145,6 +149,7 @@ func (client *ParameterGroupingClient) postOptionalHandleError(resp *http.Respon
 
 // PostRequired - Post a bunch of required parameters grouped
 // If the operation fails it returns the *Error error type.
+// ParameterGroupingPostRequiredParameters - ParameterGroupingPostRequiredParameters contains a group of parameters for the ParameterGrouping.PostRequired method.
 func (client *ParameterGroupingClient) PostRequired(ctx context.Context, parameterGroupingPostRequiredParameters ParameterGroupingPostRequiredParameters) (ParameterGroupingPostRequiredResponse, error) {
 	req, err := client.postRequiredCreateRequest(ctx, parameterGroupingPostRequiredParameters)
 	if err != nil {
@@ -198,6 +203,7 @@ func (client *ParameterGroupingClient) postRequiredHandleError(resp *http.Respon
 
 // PostReservedWords - Post a grouped parameters with reserved words
 // If the operation fails it returns the *Error error type.
+// options - ParameterGroupingPostReservedWordsParameters contains a group of parameters for the ParameterGrouping.PostReservedWords method.
 func (client *ParameterGroupingClient) PostReservedWords(ctx context.Context, options *ParameterGroupingPostReservedWordsParameters) (ParameterGroupingPostReservedWordsResponse, error) {
 	req, err := client.postReservedWordsCreateRequest(ctx, options)
 	if err != nil {
@@ -247,6 +253,7 @@ func (client *ParameterGroupingClient) postReservedWordsHandleError(resp *http.R
 
 // PostSharedParameterGroupObject - Post parameters with a shared parameter group object
 // If the operation fails it returns the *Error error type.
+// options - FirstParameterGroup contains a group of parameters for the ParameterGrouping.PostMultiParamGroups method.
 func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx context.Context, options *FirstParameterGroup) (ParameterGroupingPostSharedParameterGroupObjectResponse, error) {
 	req, err := client.postSharedParameterGroupObjectCreateRequest(ctx, options)
 	if err != nil {

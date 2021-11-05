@@ -24,6 +24,7 @@ type OperationsClient struct {
 }
 
 // NewOperationsClient creates a new instance of OperationsClient with the specified values.
+// options - pass nil to accept the default values.
 func NewOperationsClient(options *azcore.ClientOptions) *OperationsClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewOperationsClient(options *azcore.ClientOptions) *OperationsClient {
 
 // List - List all the supported operations.
 // If the operation fails it returns the *CloudError error type.
+// options - OperationsListOptions contains the optional parameters for the Operations.List method.
 func (client *OperationsClient) List(options *OperationsListOptions) *OperationsListPager {
 	return &OperationsListPager{
 		client: client,

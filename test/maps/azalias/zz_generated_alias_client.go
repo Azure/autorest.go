@@ -19,12 +19,17 @@ import (
 )
 
 type aliasClient struct {
-	endpoint   string
+	endpoint string
 	apiVersion *string
-	pl         runtime.Pipeline
+	pl runtime.Pipeline
 }
 
 // newAliasClient creates a new instance of aliasClient with the specified values.
+// geography - This parameter specifies where the Azure Maps Creator resource is located.  Valid values are us and eu.
+// apiVersion - Api Version
+Specifying any value will set the value to 2.0.
+Specifying any value will set the value to 2.0.
+// pl - the pipeline used for sending requests and handling responses.
 func newAliasClient(geography *Geography, apiVersion *string, pl runtime.Pipeline) *aliasClient {
 	hostURL := "https://{geography}.atlas.microsoft.com"
 	if geography == nil {
@@ -33,9 +38,9 @@ func newAliasClient(geography *Geography, apiVersion *string, pl runtime.Pipelin
 	}
 	hostURL = strings.ReplaceAll(hostURL, "{geography}", string(*geography))
 	client := &aliasClient{
-		endpoint:   hostURL,
+		endpoint: hostURL,
 		apiVersion: apiVersion,
-		pl:         pl,
+		pl: pl,
 	}
 	return client
 }
@@ -55,6 +60,7 @@ func newAliasClient(geography *Geography, apiVersion *string, pl runtime.Pipelin
 // "lastUpdatedTimestamp":
 // "2020-02-13T21:19:22.123Z" }
 // If the operation fails it returns a generic error.
+// options - AliasCreateOptions contains the optional parameters for the Alias.Create method.
 func (client *aliasClient) Create(ctx context.Context, options *AliasCreateOptions) (AliasCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, options)
 	if err != nil {
@@ -85,9 +91,9 @@ func (client *aliasClient) createCreateRequest(ctx context.Context, options *Ali
 		reqQP.Set("creatorDataItemId", *options.CreatorDataItemID)
 	}
 	if options != nil && options.GroupBy != nil {
-		for _, qv := range options.GroupBy {
-			reqQP.Add("groupBy", fmt.Sprintf("%d", qv))
-		}
+			for _, qv := range options.GroupBy {
+		reqQP.Add("groupBy", fmt.Sprintf("%d", qv))
+	}
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
@@ -112,11 +118,11 @@ func (client *aliasClient) createHandleError(resp *http.Response) error {
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
+		if len(body) == 0 {
+      return runtime.NewResponseError(errors.New(resp.Status), resp)
+    }
+    return runtime.NewResponseError(errors.New(string(body)), resp)
+    }
 
 // List - Applies to: see pricing tiers [https://aka.ms/AzureMapsPricingTier].
 // Creator makes it possible to develop applications based on your private indoor map data using Azure Maps API and SDK. This [https://docs.microsoft.com/azure/azure-maps/creator-indoor-maps]
@@ -135,7 +141,8 @@ func (client *aliasClient) createHandleError(resp *http.Response) error {
 // null, "lastUpdatedTimestamp":
 // "2020-02-18T19:53:33.123Z" } ] }
 // If the operation fails it returns a generic error.
-func (client *aliasClient) List(options *AliasListOptions) *AliasListPager {
+// options - AliasListOptions contains the optional parameters for the Alias.List method.
+func (client *aliasClient) List(options *AliasListOptions) (*AliasListPager) {
 	return &AliasListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
@@ -159,9 +166,9 @@ func (client *aliasClient) listCreateRequest(ctx context.Context, options *Alias
 		reqQP.Set("api-version", "2.0")
 	}
 	if options != nil && options.GroupBy != nil {
-		for _, qv := range options.GroupBy {
-			reqQP.Add("groupBy", string(qv))
-		}
+			for _, qv := range options.GroupBy {
+		reqQP.Add("groupBy", string(qv))
+	}
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
@@ -183,8 +190,9 @@ func (client *aliasClient) listHandleError(resp *http.Response) error {
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
+		if len(body) == 0 {
+      return runtime.NewResponseError(errors.New(resp.Status), resp)
+    }
+    return runtime.NewResponseError(errors.New(string(body)), resp)
+    }
+

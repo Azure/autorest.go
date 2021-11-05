@@ -24,6 +24,7 @@ type QueriesClient struct {
 }
 
 // NewQueriesClient creates a new instance of QueriesClient with the specified values.
+// options - pass nil to accept the default values.
 func NewQueriesClient(options *azcore.ClientOptions) *QueriesClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewQueriesClient(options *azcore.ClientOptions) *QueriesClient {
 
 // ArrayStringMultiEmpty - Get an empty array [] of string using the multi-array format
 // If the operation fails it returns the *Error error type.
+// options - QueriesArrayStringMultiEmptyOptions contains the optional parameters for the Queries.ArrayStringMultiEmpty method.
 func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options *QueriesArrayStringMultiEmptyOptions) (QueriesArrayStringMultiEmptyResponse, error) {
 	req, err := client.arrayStringMultiEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -85,6 +87,7 @@ func (client *QueriesClient) arrayStringMultiEmptyHandleError(resp *http.Respons
 
 // ArrayStringMultiNull - Get a null array of string using the multi-array format
 // If the operation fails it returns the *Error error type.
+// options - QueriesArrayStringMultiNullOptions contains the optional parameters for the Queries.ArrayStringMultiNull method.
 func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, options *QueriesArrayStringMultiNullOptions) (QueriesArrayStringMultiNullResponse, error) {
 	req, err := client.arrayStringMultiNullCreateRequest(ctx, options)
 	if err != nil {
@@ -133,6 +136,7 @@ func (client *QueriesClient) arrayStringMultiNullHandleError(resp *http.Response
 
 // ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array format
 // If the operation fails it returns the *Error error type.
+// options - QueriesArrayStringMultiValidOptions contains the optional parameters for the Queries.ArrayStringMultiValid method.
 func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options *QueriesArrayStringMultiValidOptions) (QueriesArrayStringMultiValidResponse, error) {
 	req, err := client.arrayStringMultiValidCreateRequest(ctx, options)
 	if err != nil {

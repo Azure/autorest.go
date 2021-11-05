@@ -31,6 +31,9 @@ type RoutesClient struct {
 }
 
 // NewRoutesClient creates a new instance of RoutesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewRoutesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *RoutesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,11 @@ func NewRoutesClient(subscriptionID string, credential azcore.TokenCredential, o
 
 // BeginCreateOrUpdate - Creates or updates a route in the specified route table.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// routeTableName - The name of the route table.
+// routeName - The name of the route.
+// routeParameters - Parameters supplied to the create or update route operation.
+// options - RoutesBeginCreateOrUpdateOptions contains the optional parameters for the Routes.BeginCreateOrUpdate method.
 func (client *RoutesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, options *RoutesBeginCreateOrUpdateOptions) (RoutesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeTableName, routeName, routeParameters, options)
 	if err != nil {
@@ -129,6 +137,10 @@ func (client *RoutesClient) createOrUpdateHandleError(resp *http.Response) error
 
 // BeginDelete - Deletes the specified route from a route table.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// routeTableName - The name of the route table.
+// routeName - The name of the route.
+// options - RoutesBeginDeleteOptions contains the optional parameters for the Routes.BeginDelete method.
 func (client *RoutesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesBeginDeleteOptions) (RoutesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, routeTableName, routeName, options)
 	if err != nil {
@@ -209,6 +221,10 @@ func (client *RoutesClient) deleteHandleError(resp *http.Response) error {
 
 // Get - Gets the specified route from a route table.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// routeTableName - The name of the route table.
+// routeName - The name of the route.
+// options - RoutesGetOptions contains the optional parameters for the Routes.Get method.
 func (client *RoutesClient) Get(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesGetOptions) (RoutesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, routeTableName, routeName, options)
 	if err != nil {
@@ -278,6 +294,9 @@ func (client *RoutesClient) getHandleError(resp *http.Response) error {
 
 // List - Gets all routes in a route table.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// routeTableName - The name of the route table.
+// options - RoutesListOptions contains the optional parameters for the Routes.List method.
 func (client *RoutesClient) List(resourceGroupName string, routeTableName string, options *RoutesListOptions) *RoutesListPager {
 	return &RoutesListPager{
 		client: client,

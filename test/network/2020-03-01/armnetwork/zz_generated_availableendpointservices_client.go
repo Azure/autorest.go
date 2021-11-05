@@ -31,6 +31,9 @@ type AvailableEndpointServicesClient struct {
 }
 
 // NewAvailableEndpointServicesClient creates a new instance of AvailableEndpointServicesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewAvailableEndpointServicesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *AvailableEndpointServicesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,8 @@ func NewAvailableEndpointServicesClient(subscriptionID string, credential azcore
 
 // List - List what values of endpoint services are available for use.
 // If the operation fails it returns the *CloudError error type.
+// location - The location to check available endpoint services.
+// options - AvailableEndpointServicesListOptions contains the optional parameters for the AvailableEndpointServices.List method.
 func (client *AvailableEndpointServicesClient) List(location string, options *AvailableEndpointServicesListOptions) *AvailableEndpointServicesListPager {
 	return &AvailableEndpointServicesListPager{
 		client: client,

@@ -31,6 +31,9 @@ type UsagesClient struct {
 }
 
 // NewUsagesClient creates a new instance of UsagesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewUsagesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *UsagesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,8 @@ func NewUsagesClient(subscriptionID string, credential azcore.TokenCredential, o
 
 // List - List network usages for a subscription.
 // If the operation fails it returns the *CloudError error type.
+// location - The location where resource usage is queried.
+// options - UsagesListOptions contains the optional parameters for the Usages.List method.
 func (client *UsagesClient) List(location string, options *UsagesListOptions) *UsagesListPager {
 	return &UsagesListPager{
 		client: client,

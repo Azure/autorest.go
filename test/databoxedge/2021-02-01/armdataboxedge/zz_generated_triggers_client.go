@@ -29,6 +29,8 @@ type TriggersClient struct {
 }
 
 // NewTriggersClient creates a new instance of TriggersClient with the specified values.
+// subscriptionID - The subscription ID.
+// options - pass nil to accept the default values.
 func NewTriggersClient(subscriptionID string, options *azcore.ClientOptions) *TriggersClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -43,6 +45,11 @@ func NewTriggersClient(subscriptionID string, options *azcore.ClientOptions) *Tr
 
 // BeginCreateOrUpdate - Creates or updates a trigger.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - Creates or updates a trigger
+// name - The trigger name.
+// resourceGroupName - The resource group name.
+// trigger - The trigger.
+// options - TriggersBeginCreateOrUpdateOptions contains the optional parameters for the Triggers.BeginCreateOrUpdate method.
 func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersBeginCreateOrUpdateOptions) (TriggersCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, trigger, options)
 	if err != nil {
@@ -123,6 +130,10 @@ func (client *TriggersClient) createOrUpdateHandleError(resp *http.Response) err
 
 // BeginDelete - Deletes the trigger on the gateway device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// name - The trigger name.
+// resourceGroupName - The resource group name.
+// options - TriggersBeginDeleteOptions contains the optional parameters for the Triggers.BeginDelete method.
 func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersBeginDeleteOptions) (TriggersDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -203,6 +214,10 @@ func (client *TriggersClient) deleteHandleError(resp *http.Response) error {
 
 // Get - Get a specific trigger by name.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// name - The trigger name.
+// resourceGroupName - The resource group name.
+// options - TriggersGetOptions contains the optional parameters for the Triggers.Get method.
 func (client *TriggersClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersGetOptions) (TriggersGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -272,6 +287,9 @@ func (client *TriggersClient) getHandleError(resp *http.Response) error {
 
 // ListByDataBoxEdgeDevice - Lists all the triggers configured in the device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// resourceGroupName - The resource group name.
+// options - TriggersListByDataBoxEdgeDeviceOptions contains the optional parameters for the Triggers.ListByDataBoxEdgeDevice method.
 func (client *TriggersClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *TriggersListByDataBoxEdgeDeviceOptions) *TriggersListByDataBoxEdgeDevicePager {
 	return &TriggersListByDataBoxEdgeDevicePager{
 		client: client,

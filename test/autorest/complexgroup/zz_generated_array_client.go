@@ -24,6 +24,7 @@ type ArrayClient struct {
 }
 
 // NewArrayClient creates a new instance of ArrayClient with the specified values.
+// options - pass nil to accept the default values.
 func NewArrayClient(options *azcore.ClientOptions) *ArrayClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewArrayClient(options *azcore.ClientOptions) *ArrayClient {
 
 // GetEmpty - Get complex types with array property which is empty
 // If the operation fails it returns the *Error error type.
+// options - ArrayGetEmptyOptions contains the optional parameters for the Array.GetEmpty method.
 func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayGetEmptyOptions) (ArrayGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -87,6 +89,7 @@ func (client *ArrayClient) getEmptyHandleError(resp *http.Response) error {
 
 // GetNotProvided - Get complex types with array property while server doesn't provide a response payload
 // If the operation fails it returns the *Error error type.
+// options - ArrayGetNotProvidedOptions contains the optional parameters for the Array.GetNotProvided method.
 func (client *ArrayClient) GetNotProvided(ctx context.Context, options *ArrayGetNotProvidedOptions) (ArrayGetNotProvidedResponse, error) {
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
@@ -137,6 +140,7 @@ func (client *ArrayClient) getNotProvidedHandleError(resp *http.Response) error 
 
 // GetValid - Get complex types with array property
 // If the operation fails it returns the *Error error type.
+// options - ArrayGetValidOptions contains the optional parameters for the Array.GetValid method.
 func (client *ArrayClient) GetValid(ctx context.Context, options *ArrayGetValidOptions) (ArrayGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -187,6 +191,8 @@ func (client *ArrayClient) getValidHandleError(resp *http.Response) error {
 
 // PutEmpty - Put complex types with array property which is empty
 // If the operation fails it returns the *Error error type.
+// complexBody - Please put an empty array
+// options - ArrayPutEmptyOptions contains the optional parameters for the Array.PutEmpty method.
 func (client *ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutEmptyOptions) (ArrayPutEmptyResponse, error) {
 	req, err := client.putEmptyCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -228,6 +234,8 @@ func (client *ArrayClient) putEmptyHandleError(resp *http.Response) error {
 
 // PutValid - Put complex types with array property
 // If the operation fails it returns the *Error error type.
+// complexBody - Please put an array with 4 items: "1, 2, 3, 4", "", null, "&S#$(*Y", "The quick brown fox jumps over the lazy dog"
+// options - ArrayPutValidOptions contains the optional parameters for the Array.PutValid method.
 func (client *ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutValidOptions) (ArrayPutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {

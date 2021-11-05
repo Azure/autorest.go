@@ -31,6 +31,9 @@ type VirtualRouterPeeringsClient struct {
 }
 
 // NewVirtualRouterPeeringsClient creates a new instance of VirtualRouterPeeringsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewVirtualRouterPeeringsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualRouterPeeringsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,11 @@ func NewVirtualRouterPeeringsClient(subscriptionID string, credential azcore.Tok
 
 // BeginCreateOrUpdate - Creates or updates the specified Virtual Router Peering.
 // If the operation fails it returns the *Error error type.
+// resourceGroupName - The name of the resource group.
+// virtualRouterName - The name of the Virtual Router.
+// peeringName - The name of the Virtual Router Peering.
+// parameters - Parameters supplied to the create or update Virtual Router Peering operation.
+// options - VirtualRouterPeeringsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualRouterPeerings.BeginCreateOrUpdate method.
 func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering, options *VirtualRouterPeeringsBeginCreateOrUpdateOptions) (VirtualRouterPeeringsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualRouterName, peeringName, parameters, options)
 	if err != nil {
@@ -129,6 +137,10 @@ func (client *VirtualRouterPeeringsClient) createOrUpdateHandleError(resp *http.
 
 // BeginDelete - Deletes the specified peering from a Virtual Router.
 // If the operation fails it returns the *Error error type.
+// resourceGroupName - The name of the resource group.
+// virtualRouterName - The name of the Virtual Router.
+// peeringName - The name of the peering.
+// options - VirtualRouterPeeringsBeginDeleteOptions contains the optional parameters for the VirtualRouterPeerings.BeginDelete method.
 func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsBeginDeleteOptions) (VirtualRouterPeeringsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualRouterName, peeringName, options)
 	if err != nil {
@@ -209,6 +221,10 @@ func (client *VirtualRouterPeeringsClient) deleteHandleError(resp *http.Response
 
 // Get - Gets the specified Virtual Router Peering.
 // If the operation fails it returns the *Error error type.
+// resourceGroupName - The name of the resource group.
+// virtualRouterName - The name of the Virtual Router.
+// peeringName - The name of the Virtual Router Peering.
+// options - VirtualRouterPeeringsGetOptions contains the optional parameters for the VirtualRouterPeerings.Get method.
 func (client *VirtualRouterPeeringsClient) Get(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsGetOptions) (VirtualRouterPeeringsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualRouterName, peeringName, options)
 	if err != nil {
@@ -278,6 +294,9 @@ func (client *VirtualRouterPeeringsClient) getHandleError(resp *http.Response) e
 
 // List - Lists all Virtual Router Peerings in a Virtual Router resource.
 // If the operation fails it returns the *Error error type.
+// resourceGroupName - The name of the resource group.
+// virtualRouterName - The name of the Virtual Router.
+// options - VirtualRouterPeeringsListOptions contains the optional parameters for the VirtualRouterPeerings.List method.
 func (client *VirtualRouterPeeringsClient) List(resourceGroupName string, virtualRouterName string, options *VirtualRouterPeeringsListOptions) *VirtualRouterPeeringsListPager {
 	return &VirtualRouterPeeringsListPager{
 		client: client,

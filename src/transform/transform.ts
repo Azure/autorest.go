@@ -330,6 +330,12 @@ function processOperationRequests(session: Session<CodeModel>) {
         }
       }
       for (const param of values(aggregateParameters(op))) {
+        if (!param.required && param.schema.type === SchemaType.Constant) {
+          if (param.language.go!.description) {
+            param.language.go!.description += '\n';
+          }
+          param.language.go!.description += `Specifying any value will set the value to ${(<ConstantSchema>param.schema).value.value}.`;
+        }
         // this is to work around M4 bug #202
         // replace the duplicate operation entry in nextLinkOperation with
         // the one from our operation group so that things like parameter

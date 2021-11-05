@@ -27,6 +27,7 @@ type KeyVaultClient struct {
 }
 
 // NewKeyVaultClient creates a new instance of KeyVaultClient with the specified values.
+// pl - the pipeline used for sending requests and handling responses.
 func NewKeyVaultClient(pl runtime.Pipeline) *KeyVaultClient {
 	client := &KeyVaultClient{
 		pl: pl,
@@ -37,6 +38,9 @@ func NewKeyVaultClient(pl runtime.Pipeline) *KeyVaultClient {
 // BackupCertificate - Requests that a backup of the specified certificate be downloaded to the client. All versions of the certificate will be downloaded.
 // This operation requires the certificates/backup permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// certificateName - The name of the certificate.
+// options - KeyVaultClientBackupCertificateOptions contains the optional parameters for the KeyVaultClient.BackupCertificate method.
 func (client *KeyVaultClient) BackupCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientBackupCertificateOptions) (KeyVaultClientBackupCertificateResponse, error) {
 	req, err := client.backupCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
@@ -105,6 +109,9 @@ func (client *KeyVaultClient) backupCertificateHandleError(resp *http.Response) 
 // geographical area. For example, a backup from the US geographical area cannot be restored in an EU geographical area. This operation requires the key/backup
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - The name of the key.
+// options - KeyVaultClientBackupKeyOptions contains the optional parameters for the KeyVaultClient.BackupKey method.
 func (client *KeyVaultClient) BackupKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBackupKeyOptions) (KeyVaultClientBackupKeyResponse, error) {
 	req, err := client.backupKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
@@ -165,6 +172,9 @@ func (client *KeyVaultClient) backupKeyHandleError(resp *http.Response) error {
 // BackupSecret - Requests that a backup of the specified secret be downloaded to the client. All versions of the secret will be downloaded. This operation
 // requires the secrets/backup permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// secretName - The name of the secret.
+// options - KeyVaultClientBackupSecretOptions contains the optional parameters for the KeyVaultClient.BackupSecret method.
 func (client *KeyVaultClient) BackupSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientBackupSecretOptions) (KeyVaultClientBackupSecretResponse, error) {
 	req, err := client.backupSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
@@ -225,6 +235,9 @@ func (client *KeyVaultClient) backupSecretHandleError(resp *http.Response) error
 // BackupStorageAccount - Requests that a backup of the specified storage account be downloaded to the client. This operation requires the storage/backup
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// options - KeyVaultClientBackupStorageAccountOptions contains the optional parameters for the KeyVaultClient.BackupStorageAccount method.
 func (client *KeyVaultClient) BackupStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientBackupStorageAccountOptions) (KeyVaultClientBackupStorageAccountResponse, error) {
 	req, err := client.backupStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
@@ -284,6 +297,10 @@ func (client *KeyVaultClient) backupStorageAccountHandleError(resp *http.Respons
 
 // CreateCertificate - If this is the first version, the certificate resource is created. This operation requires the certificates/create permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// certificateName - The name of the certificate.
+// parameters - The parameters to create a certificate.
+// options - KeyVaultClientCreateCertificateOptions contains the optional parameters for the KeyVaultClient.CreateCertificate method.
 func (client *KeyVaultClient) CreateCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateCreateParameters, options *KeyVaultClientCreateCertificateOptions) (KeyVaultClientCreateCertificateResponse, error) {
 	req, err := client.createCertificateCreateRequest(ctx, vaultBaseURL, certificateName, parameters, options)
 	if err != nil {
@@ -345,6 +362,10 @@ func (client *KeyVaultClient) createCertificateHandleError(resp *http.Response) 
 // a new version of the key. It requires the keys/create
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - The name for the new key. The system will generate the version name for the new key.
+// parameters - The parameters to create a key.
+// options - KeyVaultClientCreateKeyOptions contains the optional parameters for the KeyVaultClient.CreateKey method.
 func (client *KeyVaultClient) CreateKey(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyCreateParameters, options *KeyVaultClientCreateKeyOptions) (KeyVaultClientCreateKeyResponse, error) {
 	req, err := client.createKeyCreateRequest(ctx, vaultBaseURL, keyName, parameters, options)
 	if err != nil {
@@ -408,6 +429,11 @@ func (client *KeyVaultClient) createKeyHandleError(resp *http.Response) error {
 // and symmetric keys stored in Azure Key Vault
 // since it uses the private portion of the key. This operation requires the keys/decrypt permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - The name of the key.
+// keyVersion - The version of the key.
+// parameters - The parameters for the decryption operation.
+// options - KeyVaultClientDecryptOptions contains the optional parameters for the KeyVaultClient.Decrypt method.
 func (client *KeyVaultClient) Decrypt(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientDecryptOptions) (KeyVaultClientDecryptResponse, error) {
 	req, err := client.decryptCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
@@ -473,6 +499,9 @@ func (client *KeyVaultClient) decryptHandleError(resp *http.Response) error {
 // versions of a certificate object. This operation requires the
 // certificates/delete permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// certificateName - The name of the certificate.
+// options - KeyVaultClientDeleteCertificateOptions contains the optional parameters for the KeyVaultClient.DeleteCertificate method.
 func (client *KeyVaultClient) DeleteCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOptions) (KeyVaultClientDeleteCertificateResponse, error) {
 	req, err := client.deleteCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
@@ -533,6 +562,8 @@ func (client *KeyVaultClient) deleteCertificateHandleError(resp *http.Response) 
 // DeleteCertificateContacts - Deletes the certificate contacts for a specified key vault certificate. This operation requires the certificates/managecontacts
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// options - KeyVaultClientDeleteCertificateContactsOptions contains the optional parameters for the KeyVaultClient.DeleteCertificateContacts method.
 func (client *KeyVaultClient) DeleteCertificateContacts(ctx context.Context, vaultBaseURL string, options *KeyVaultClientDeleteCertificateContactsOptions) (KeyVaultClientDeleteCertificateContactsResponse, error) {
 	req, err := client.deleteCertificateContactsCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
@@ -589,6 +620,9 @@ func (client *KeyVaultClient) deleteCertificateContactsHandleError(resp *http.Re
 // DeleteCertificateIssuer - The DeleteCertificateIssuer operation permanently removes the specified certificate issuer from the vault. This operation requires
 // the certificates/manageissuers/deleteissuers permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// issuerName - The name of the issuer.
+// options - KeyVaultClientDeleteCertificateIssuerOptions contains the optional parameters for the KeyVaultClient.DeleteCertificateIssuer method.
 func (client *KeyVaultClient) DeleteCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientDeleteCertificateIssuerOptions) (KeyVaultClientDeleteCertificateIssuerResponse, error) {
 	req, err := client.deleteCertificateIssuerCreateRequest(ctx, vaultBaseURL, issuerName, options)
 	if err != nil {
@@ -649,6 +683,9 @@ func (client *KeyVaultClient) deleteCertificateIssuerHandleError(resp *http.Resp
 // DeleteCertificateOperation - Deletes the creation operation for a specified certificate that is in the process of being created. The certificate is no
 // longer created. This operation requires the certificates/update permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// certificateName - The name of the certificate.
+// options - KeyVaultClientDeleteCertificateOperationOptions contains the optional parameters for the KeyVaultClient.DeleteCertificateOperation method.
 func (client *KeyVaultClient) DeleteCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOperationOptions) (KeyVaultClientDeleteCertificateOperationResponse, error) {
 	req, err := client.deleteCertificateOperationCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
@@ -710,6 +747,9 @@ func (client *KeyVaultClient) deleteCertificateOperationHandleError(resp *http.R
 // with the key, which means the key is not usable for
 // Sign/Verify, Wrap/Unwrap or Encrypt/Decrypt operations. This operation requires the keys/delete permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - The name of the key to delete.
+// options - KeyVaultClientDeleteKeyOptions contains the optional parameters for the KeyVaultClient.DeleteKey method.
 func (client *KeyVaultClient) DeleteKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientDeleteKeyOptions) (KeyVaultClientDeleteKeyResponse, error) {
 	req, err := client.deleteKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
@@ -769,6 +809,10 @@ func (client *KeyVaultClient) deleteKeyHandleError(resp *http.Response) error {
 
 // DeleteSasDefinition - Deletes a SAS definition from a specified storage account. This operation requires the storage/deletesas permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// sasDefinitionName - The name of the SAS definition.
+// options - KeyVaultClientDeleteSasDefinitionOptions contains the optional parameters for the KeyVaultClient.DeleteSasDefinition method.
 func (client *KeyVaultClient) DeleteSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientDeleteSasDefinitionOptions) (KeyVaultClientDeleteSasDefinitionResponse, error) {
 	req, err := client.deleteSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, options)
 	if err != nil {
@@ -833,6 +877,9 @@ func (client *KeyVaultClient) deleteSasDefinitionHandleError(resp *http.Response
 // DeleteSecret - The DELETE operation applies to any secret stored in Azure Key Vault. DELETE cannot be applied to an individual version of a secret. This
 // operation requires the secrets/delete permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// secretName - The name of the secret.
+// options - KeyVaultClientDeleteSecretOptions contains the optional parameters for the KeyVaultClient.DeleteSecret method.
 func (client *KeyVaultClient) DeleteSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientDeleteSecretOptions) (KeyVaultClientDeleteSecretResponse, error) {
 	req, err := client.deleteSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
@@ -892,6 +939,9 @@ func (client *KeyVaultClient) deleteSecretHandleError(resp *http.Response) error
 
 // DeleteStorageAccount - Deletes a storage account. This operation requires the storage/delete permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// options - KeyVaultClientDeleteStorageAccountOptions contains the optional parameters for the KeyVaultClient.DeleteStorageAccount method.
 func (client *KeyVaultClient) DeleteStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientDeleteStorageAccountOptions) (KeyVaultClientDeleteStorageAccountResponse, error) {
 	req, err := client.deleteStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
@@ -957,6 +1007,11 @@ func (client *KeyVaultClient) deleteStorageAccountHandleError(resp *http.Respons
 // a key-reference but do not have access to the
 // public key material. This operation requires the keys/encrypt permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - The name of the key.
+// keyVersion - The version of the key.
+// parameters - The parameters for the encryption operation.
+// options - KeyVaultClientEncryptOptions contains the optional parameters for the KeyVaultClient.Encrypt method.
 func (client *KeyVaultClient) Encrypt(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientEncryptOptions) (KeyVaultClientEncryptResponse, error) {
 	req, err := client.encryptCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
@@ -1020,6 +1075,8 @@ func (client *KeyVaultClient) encryptHandleError(resp *http.Response) error {
 
 // BeginFullBackup - Creates a full backup using a user-provided SAS token to an Azure blob storage container.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// options - KeyVaultClientBeginFullBackupOptions contains the optional parameters for the KeyVaultClient.BeginFullBackup method.
 func (client *KeyVaultClient) BeginFullBackup(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullBackupOptions) (KeyVaultClientFullBackupPollerResponse, error) {
 	resp, err := client.fullBackup(ctx, vaultBaseURL, options)
 	if err != nil {
@@ -1089,6 +1146,9 @@ func (client *KeyVaultClient) fullBackupHandleError(resp *http.Response) error {
 
 // FullBackupStatus - Returns the status of full backup operation
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// jobID - The id returned as part of the backup request
+// options - KeyVaultClientFullBackupStatusOptions contains the optional parameters for the KeyVaultClient.FullBackupStatus method.
 func (client *KeyVaultClient) FullBackupStatus(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientFullBackupStatusOptions) (KeyVaultClientFullBackupStatusResponse, error) {
 	req, err := client.fullBackupStatusCreateRequest(ctx, vaultBaseURL, jobID, options)
 	if err != nil {
@@ -1148,6 +1208,8 @@ func (client *KeyVaultClient) fullBackupStatusHandleError(resp *http.Response) e
 
 // BeginFullRestoreOperation - Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage backup folder
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// options - KeyVaultClientBeginFullRestoreOperationOptions contains the optional parameters for the KeyVaultClient.BeginFullRestoreOperation method.
 func (client *KeyVaultClient) BeginFullRestoreOperation(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullRestoreOperationOptions) (KeyVaultClientFullRestoreOperationPollerResponse, error) {
 	resp, err := client.fullRestoreOperation(ctx, vaultBaseURL, options)
 	if err != nil {
@@ -1217,6 +1279,10 @@ func (client *KeyVaultClient) fullRestoreOperationHandleError(resp *http.Respons
 
 // GetCertificate - Gets information about a specific certificate. This operation requires the certificates/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// certificateName - The name of the certificate in the given vault.
+// certificateVersion - The version of the certificate. This URI fragment is optional. If not specified, the latest version of the certificate is returned.
+// options - KeyVaultClientGetCertificateOptions contains the optional parameters for the KeyVaultClient.GetCertificate method.
 func (client *KeyVaultClient) GetCertificate(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, options *KeyVaultClientGetCertificateOptions) (KeyVaultClientGetCertificateResponse, error) {
 	req, err := client.getCertificateCreateRequest(ctx, vaultBaseURL, certificateName, certificateVersion, options)
 	if err != nil {
@@ -1281,6 +1347,8 @@ func (client *KeyVaultClient) getCertificateHandleError(resp *http.Response) err
 // GetCertificateContacts - The GetCertificateContacts operation returns the set of certificate contact resources in the specified key vault. This operation
 // requires the certificates/managecontacts permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// options - KeyVaultClientGetCertificateContactsOptions contains the optional parameters for the KeyVaultClient.GetCertificateContacts method.
 func (client *KeyVaultClient) GetCertificateContacts(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificateContactsOptions) (KeyVaultClientGetCertificateContactsResponse, error) {
 	req, err := client.getCertificateContactsCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
@@ -1337,6 +1405,9 @@ func (client *KeyVaultClient) getCertificateContactsHandleError(resp *http.Respo
 // GetCertificateIssuer - The GetCertificateIssuer operation returns the specified certificate issuer resources in the specified key vault. This operation
 // requires the certificates/manageissuers/getissuers permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// issuerName - The name of the issuer.
+// options - KeyVaultClientGetCertificateIssuerOptions contains the optional parameters for the KeyVaultClient.GetCertificateIssuer method.
 func (client *KeyVaultClient) GetCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientGetCertificateIssuerOptions) (KeyVaultClientGetCertificateIssuerResponse, error) {
 	req, err := client.getCertificateIssuerCreateRequest(ctx, vaultBaseURL, issuerName, options)
 	if err != nil {
@@ -1397,6 +1468,8 @@ func (client *KeyVaultClient) getCertificateIssuerHandleError(resp *http.Respons
 // GetCertificateIssuers - The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified key vault. This operation
 // requires the certificates/manageissuers/getissuers permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// options - KeyVaultClientGetCertificateIssuersOptions contains the optional parameters for the KeyVaultClient.GetCertificateIssuers method.
 func (client *KeyVaultClient) GetCertificateIssuers(vaultBaseURL string, options *KeyVaultClientGetCertificateIssuersOptions) *KeyVaultClientGetCertificateIssuersPager {
 	return &KeyVaultClientGetCertificateIssuersPager{
 		client: client,
@@ -1452,6 +1525,9 @@ func (client *KeyVaultClient) getCertificateIssuersHandleError(resp *http.Respon
 
 // GetCertificateOperation - Gets the creation operation associated with a specified certificate. This operation requires the certificates/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// certificateName - The name of the certificate.
+// options - KeyVaultClientGetCertificateOperationOptions contains the optional parameters for the KeyVaultClient.GetCertificateOperation method.
 func (client *KeyVaultClient) GetCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateOperationOptions) (KeyVaultClientGetCertificateOperationResponse, error) {
 	req, err := client.getCertificateOperationCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
@@ -1512,6 +1588,9 @@ func (client *KeyVaultClient) getCertificateOperationHandleError(resp *http.Resp
 // GetCertificatePolicy - The GetCertificatePolicy operation returns the specified certificate policy resources in the specified key vault. This operation
 // requires the certificates/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// certificateName - The name of the certificate in a given key vault.
+// options - KeyVaultClientGetCertificatePolicyOptions contains the optional parameters for the KeyVaultClient.GetCertificatePolicy method.
 func (client *KeyVaultClient) GetCertificatePolicy(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificatePolicyOptions) (KeyVaultClientGetCertificatePolicyResponse, error) {
 	req, err := client.getCertificatePolicyCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
@@ -1572,6 +1651,9 @@ func (client *KeyVaultClient) getCertificatePolicyHandleError(resp *http.Respons
 // GetCertificateVersions - The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires
 // the certificates/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// certificateName - The name of the certificate.
+// options - KeyVaultClientGetCertificateVersionsOptions contains the optional parameters for the KeyVaultClient.GetCertificateVersions method.
 func (client *KeyVaultClient) GetCertificateVersions(vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateVersionsOptions) *KeyVaultClientGetCertificateVersionsPager {
 	return &KeyVaultClientGetCertificateVersionsPager{
 		client: client,
@@ -1632,6 +1714,8 @@ func (client *KeyVaultClient) getCertificateVersionsHandleError(resp *http.Respo
 // GetCertificates - The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires the certificates/list
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// options - KeyVaultClientGetCertificatesOptions contains the optional parameters for the KeyVaultClient.GetCertificates method.
 func (client *KeyVaultClient) GetCertificates(vaultBaseURL string, options *KeyVaultClientGetCertificatesOptions) *KeyVaultClientGetCertificatesPager {
 	return &KeyVaultClientGetCertificatesPager{
 		client: client,
@@ -1692,6 +1776,9 @@ func (client *KeyVaultClient) getCertificatesHandleError(resp *http.Response) er
 // scheduled permanent deletion and the current deletion recovery level.
 // This operation requires the certificates/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// certificateName - The name of the certificate
+// options - KeyVaultClientGetDeletedCertificateOptions contains the optional parameters for the KeyVaultClient.GetDeletedCertificate method.
 func (client *KeyVaultClient) GetDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetDeletedCertificateOptions) (KeyVaultClientGetDeletedCertificateResponse, error) {
 	req, err := client.getDeletedCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
@@ -1753,6 +1840,8 @@ func (client *KeyVaultClient) getDeletedCertificateHandleError(resp *http.Respon
 // for recovery or purging. This operation includes deletion-specific
 // information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// options - KeyVaultClientGetDeletedCertificatesOptions contains the optional parameters for the KeyVaultClient.GetDeletedCertificates method.
 func (client *KeyVaultClient) GetDeletedCertificates(vaultBaseURL string, options *KeyVaultClientGetDeletedCertificatesOptions) *KeyVaultClientGetDeletedCertificatesPager {
 	return &KeyVaultClientGetDeletedCertificatesPager{
 		client: client,
@@ -1813,6 +1902,9 @@ func (client *KeyVaultClient) getDeletedCertificatesHandleError(resp *http.Respo
 // return an error if invoked on a non soft-delete enabled vault. This
 // operation requires the keys/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - The name of the key.
+// options - KeyVaultClientGetDeletedKeyOptions contains the optional parameters for the KeyVaultClient.GetDeletedKey method.
 func (client *KeyVaultClient) GetDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientGetDeletedKeyOptions) (KeyVaultClientGetDeletedKeyResponse, error) {
 	req, err := client.getDeletedKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
@@ -1876,6 +1968,8 @@ func (client *KeyVaultClient) getDeletedKeyHandleError(resp *http.Response) erro
 // non soft-delete enabled vault. This operation
 // requires the keys/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// options - KeyVaultClientGetDeletedKeysOptions contains the optional parameters for the KeyVaultClient.GetDeletedKeys method.
 func (client *KeyVaultClient) GetDeletedKeys(vaultBaseURL string, options *KeyVaultClientGetDeletedKeysOptions) *KeyVaultClientGetDeletedKeysPager {
 	return &KeyVaultClientGetDeletedKeysPager{
 		client: client,
@@ -1932,6 +2026,10 @@ func (client *KeyVaultClient) getDeletedKeysHandleError(resp *http.Response) err
 // GetDeletedSasDefinition - The Get Deleted SAS Definition operation returns the specified deleted SAS definition along with its attributes. This operation
 // requires the storage/getsas permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// sasDefinitionName - The name of the SAS definition.
+// options - KeyVaultClientGetDeletedSasDefinitionOptions contains the optional parameters for the KeyVaultClient.GetDeletedSasDefinition method.
 func (client *KeyVaultClient) GetDeletedSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetDeletedSasDefinitionOptions) (KeyVaultClientGetDeletedSasDefinitionResponse, error) {
 	req, err := client.getDeletedSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, options)
 	if err != nil {
@@ -1996,6 +2094,9 @@ func (client *KeyVaultClient) getDeletedSasDefinitionHandleError(resp *http.Resp
 // GetDeletedSasDefinitions - The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete.
 // This operation requires the storage/listsas permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// options - KeyVaultClientGetDeletedSasDefinitionsOptions contains the optional parameters for the KeyVaultClient.GetDeletedSasDefinitions method.
 func (client *KeyVaultClient) GetDeletedSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedSasDefinitionsOptions) *KeyVaultClientGetDeletedSasDefinitionsPager {
 	return &KeyVaultClientGetDeletedSasDefinitionsPager{
 		client: client,
@@ -2056,6 +2157,9 @@ func (client *KeyVaultClient) getDeletedSasDefinitionsHandleError(resp *http.Res
 // GetDeletedSecret - The Get Deleted Secret operation returns the specified deleted secret along with its attributes. This operation requires the secrets/get
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// secretName - The name of the secret.
+// options - KeyVaultClientGetDeletedSecretOptions contains the optional parameters for the KeyVaultClient.GetDeletedSecret method.
 func (client *KeyVaultClient) GetDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientGetDeletedSecretOptions) (KeyVaultClientGetDeletedSecretResponse, error) {
 	req, err := client.getDeletedSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
@@ -2116,6 +2220,8 @@ func (client *KeyVaultClient) getDeletedSecretHandleError(resp *http.Response) e
 // GetDeletedSecrets - The Get Deleted Secrets operation returns the secrets that have been deleted for a vault enabled for soft-delete. This operation
 // requires the secrets/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// options - KeyVaultClientGetDeletedSecretsOptions contains the optional parameters for the KeyVaultClient.GetDeletedSecrets method.
 func (client *KeyVaultClient) GetDeletedSecrets(vaultBaseURL string, options *KeyVaultClientGetDeletedSecretsOptions) *KeyVaultClientGetDeletedSecretsPager {
 	return &KeyVaultClientGetDeletedSecretsPager{
 		client: client,
@@ -2172,6 +2278,9 @@ func (client *KeyVaultClient) getDeletedSecretsHandleError(resp *http.Response) 
 // GetDeletedStorageAccount - The Get Deleted Storage Account operation returns the specified deleted storage account along with its attributes. This operation
 // requires the storage/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// options - KeyVaultClientGetDeletedStorageAccountOptions contains the optional parameters for the KeyVaultClient.GetDeletedStorageAccount method.
 func (client *KeyVaultClient) GetDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedStorageAccountOptions) (KeyVaultClientGetDeletedStorageAccountResponse, error) {
 	req, err := client.getDeletedStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
@@ -2232,6 +2341,8 @@ func (client *KeyVaultClient) getDeletedStorageAccountHandleError(resp *http.Res
 // GetDeletedStorageAccounts - The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete.
 // This operation requires the storage/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// options - KeyVaultClientGetDeletedStorageAccountsOptions contains the optional parameters for the KeyVaultClient.GetDeletedStorageAccounts method.
 func (client *KeyVaultClient) GetDeletedStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetDeletedStorageAccountsOptions) *KeyVaultClientGetDeletedStorageAccountsPager {
 	return &KeyVaultClientGetDeletedStorageAccountsPager{
 		client: client,
@@ -2288,6 +2399,10 @@ func (client *KeyVaultClient) getDeletedStorageAccountsHandleError(resp *http.Re
 // GetKey - The get key operation is applicable to all key types. If the requested key is symmetric, then no key material is released in the response. This
 // operation requires the keys/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - The name of the key to get.
+// keyVersion - Adding the version parameter retrieves a specific version of a key. This URI fragment is optional. If not specified, the latest version of the key is returned.
+// options - KeyVaultClientGetKeyOptions contains the optional parameters for the KeyVaultClient.GetKey method.
 func (client *KeyVaultClient) GetKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, options *KeyVaultClientGetKeyOptions) (KeyVaultClientGetKeyResponse, error) {
 	req, err := client.getKeyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, options)
 	if err != nil {
@@ -2351,6 +2466,9 @@ func (client *KeyVaultClient) getKeyHandleError(resp *http.Response) error {
 
 // GetKeyVersions - The full key identifier, attributes, and tags are provided in the response. This operation requires the keys/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - The name of the key.
+// options - KeyVaultClientGetKeyVersionsOptions contains the optional parameters for the KeyVaultClient.GetKeyVersions method.
 func (client *KeyVaultClient) GetKeyVersions(vaultBaseURL string, keyName string, options *KeyVaultClientGetKeyVersionsOptions) *KeyVaultClientGetKeyVersionsPager {
 	return &KeyVaultClientGetKeyVersionsPager{
 		client: client,
@@ -2413,6 +2531,8 @@ func (client *KeyVaultClient) getKeyVersionsHandleError(resp *http.Response) err
 // identifier, attributes, and tags are provided in the response. Individual versions of a key are not listed in the response. This operation requires the
 // keys/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// options - KeyVaultClientGetKeysOptions contains the optional parameters for the KeyVaultClient.GetKeys method.
 func (client *KeyVaultClient) GetKeys(vaultBaseURL string, options *KeyVaultClientGetKeysOptions) *KeyVaultClientGetKeysPager {
 	return &KeyVaultClientGetKeysPager{
 		client: client,
@@ -2468,6 +2588,10 @@ func (client *KeyVaultClient) getKeysHandleError(resp *http.Response) error {
 
 // GetSasDefinition - Gets information about a SAS definition for the specified storage account. This operation requires the storage/getsas permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// sasDefinitionName - The name of the SAS definition.
+// options - KeyVaultClientGetSasDefinitionOptions contains the optional parameters for the KeyVaultClient.GetSasDefinition method.
 func (client *KeyVaultClient) GetSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetSasDefinitionOptions) (KeyVaultClientGetSasDefinitionResponse, error) {
 	req, err := client.getSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, options)
 	if err != nil {
@@ -2531,6 +2655,9 @@ func (client *KeyVaultClient) getSasDefinitionHandleError(resp *http.Response) e
 
 // GetSasDefinitions - List storage SAS definitions for the given storage account. This operation requires the storage/listsas permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// options - KeyVaultClientGetSasDefinitionsOptions contains the optional parameters for the KeyVaultClient.GetSasDefinitions method.
 func (client *KeyVaultClient) GetSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetSasDefinitionsOptions) *KeyVaultClientGetSasDefinitionsPager {
 	return &KeyVaultClientGetSasDefinitionsPager{
 		client: client,
@@ -2590,6 +2717,10 @@ func (client *KeyVaultClient) getSasDefinitionsHandleError(resp *http.Response) 
 
 // GetSecret - The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// secretName - The name of the secret.
+// secretVersion - The version of the secret. This URI fragment is optional. If not specified, the latest version of the secret is returned.
+// options - KeyVaultClientGetSecretOptions contains the optional parameters for the KeyVaultClient.GetSecret method.
 func (client *KeyVaultClient) GetSecret(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, options *KeyVaultClientGetSecretOptions) (KeyVaultClientGetSecretResponse, error) {
 	req, err := client.getSecretCreateRequest(ctx, vaultBaseURL, secretName, secretVersion, options)
 	if err != nil {
@@ -2654,6 +2785,9 @@ func (client *KeyVaultClient) getSecretHandleError(resp *http.Response) error {
 // GetSecretVersions - The full secret identifier and attributes are provided in the response. No values are returned for the secrets. This operations requires
 // the secrets/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// secretName - The name of the secret.
+// options - KeyVaultClientGetSecretVersionsOptions contains the optional parameters for the KeyVaultClient.GetSecretVersions method.
 func (client *KeyVaultClient) GetSecretVersions(vaultBaseURL string, secretName string, options *KeyVaultClientGetSecretVersionsOptions) *KeyVaultClientGetSecretVersionsPager {
 	return &KeyVaultClientGetSecretVersionsPager{
 		client: client,
@@ -2715,6 +2849,8 @@ func (client *KeyVaultClient) getSecretVersionsHandleError(resp *http.Response) 
 // the response. Individual secret versions are not listed in the
 // response. This operation requires the secrets/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// options - KeyVaultClientGetSecretsOptions contains the optional parameters for the KeyVaultClient.GetSecrets method.
 func (client *KeyVaultClient) GetSecrets(vaultBaseURL string, options *KeyVaultClientGetSecretsOptions) *KeyVaultClientGetSecretsPager {
 	return &KeyVaultClientGetSecretsPager{
 		client: client,
@@ -2770,6 +2906,9 @@ func (client *KeyVaultClient) getSecretsHandleError(resp *http.Response) error {
 
 // GetStorageAccount - Gets information about a specified storage account. This operation requires the storage/get permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// options - KeyVaultClientGetStorageAccountOptions contains the optional parameters for the KeyVaultClient.GetStorageAccount method.
 func (client *KeyVaultClient) GetStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetStorageAccountOptions) (KeyVaultClientGetStorageAccountResponse, error) {
 	req, err := client.getStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
@@ -2829,6 +2968,8 @@ func (client *KeyVaultClient) getStorageAccountHandleError(resp *http.Response) 
 
 // GetStorageAccounts - List storage accounts managed by the specified key vault. This operation requires the storage/list permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// options - KeyVaultClientGetStorageAccountsOptions contains the optional parameters for the KeyVaultClient.GetStorageAccounts method.
 func (client *KeyVaultClient) GetStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetStorageAccountsOptions) *KeyVaultClientGetStorageAccountsPager {
 	return &KeyVaultClientGetStorageAccountsPager{
 		client: client,
@@ -2886,6 +3027,10 @@ func (client *KeyVaultClient) getStorageAccountsHandleError(resp *http.Response)
 // PFX or PEM format. If the certificate is in PEM format the PEM
 // file must contain the key as well as x509 certificates. This operation requires the certificates/import permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// certificateName - The name of the certificate.
+// parameters - The parameters to import the certificate.
+// options - KeyVaultClientImportCertificateOptions contains the optional parameters for the KeyVaultClient.ImportCertificate method.
 func (client *KeyVaultClient) ImportCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateImportParameters, options *KeyVaultClientImportCertificateOptions) (KeyVaultClientImportCertificateResponse, error) {
 	req, err := client.importCertificateCreateRequest(ctx, vaultBaseURL, certificateName, parameters, options)
 	if err != nil {
@@ -2947,6 +3092,10 @@ func (client *KeyVaultClient) importCertificateHandleError(resp *http.Response) 
 // a new version of the key. This operation requires the
 // keys/import permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - Name for the imported key.
+// parameters - The parameters to import a key.
+// options - KeyVaultClientImportKeyOptions contains the optional parameters for the KeyVaultClient.ImportKey method.
 func (client *KeyVaultClient) ImportKey(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyImportParameters, options *KeyVaultClientImportKeyOptions) (KeyVaultClientImportKeyResponse, error) {
 	req, err := client.importKeyCreateRequest(ctx, vaultBaseURL, keyName, parameters, options)
 	if err != nil {
@@ -3008,6 +3157,10 @@ func (client *KeyVaultClient) importKeyHandleError(resp *http.Response) error {
 // service. This operation requires the certificates/create
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// certificateName - The name of the certificate.
+// parameters - The parameters to merge certificate.
+// options - KeyVaultClientMergeCertificateOptions contains the optional parameters for the KeyVaultClient.MergeCertificate method.
 func (client *KeyVaultClient) MergeCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateMergeParameters, options *KeyVaultClientMergeCertificateOptions) (KeyVaultClientMergeCertificateResponse, error) {
 	req, err := client.mergeCertificateCreateRequest(ctx, vaultBaseURL, certificateName, parameters, options)
 	if err != nil {
@@ -3069,6 +3222,9 @@ func (client *KeyVaultClient) mergeCertificateHandleError(resp *http.Response) e
 // recovery. The operation is not available if the recovery level does not
 // specify 'Purgeable'. This operation requires the certificate/purge permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// certificateName - The name of the certificate
+// options - KeyVaultClientPurgeDeletedCertificateOptions contains the optional parameters for the KeyVaultClient.PurgeDeletedCertificate method.
 func (client *KeyVaultClient) PurgeDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientPurgeDeletedCertificateOptions) (KeyVaultClientPurgeDeletedCertificateResponse, error) {
 	req, err := client.purgeDeletedCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
@@ -3121,6 +3277,9 @@ func (client *KeyVaultClient) purgeDeletedCertificateHandleError(resp *http.Resp
 // return an error if invoked on a non soft-delete enabled vault.
 // This operation requires the keys/purge permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - The name of the key
+// options - KeyVaultClientPurgeDeletedKeyOptions contains the optional parameters for the KeyVaultClient.PurgeDeletedKey method.
 func (client *KeyVaultClient) PurgeDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientPurgeDeletedKeyOptions) (KeyVaultClientPurgeDeletedKeyResponse, error) {
 	req, err := client.purgeDeletedKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
@@ -3173,6 +3332,9 @@ func (client *KeyVaultClient) purgeDeletedKeyHandleError(resp *http.Response) er
 // be enabled on a soft-delete enabled vault. This operation requires the
 // secrets/purge permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// secretName - The name of the secret.
+// options - KeyVaultClientPurgeDeletedSecretOptions contains the optional parameters for the KeyVaultClient.PurgeDeletedSecret method.
 func (client *KeyVaultClient) PurgeDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientPurgeDeletedSecretOptions) (KeyVaultClientPurgeDeletedSecretResponse, error) {
 	req, err := client.purgeDeletedSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
@@ -3225,6 +3387,9 @@ func (client *KeyVaultClient) purgeDeletedSecretHandleError(resp *http.Response)
 // can only be performed on a soft-delete enabled vault. This operation
 // requires the storage/purge permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// options - KeyVaultClientPurgeDeletedStorageAccountOptions contains the optional parameters for the KeyVaultClient.PurgeDeletedStorageAccount method.
 func (client *KeyVaultClient) PurgeDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientPurgeDeletedStorageAccountOptions) (KeyVaultClientPurgeDeletedStorageAccountResponse, error) {
 	req, err := client.purgeDeletedStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
@@ -3277,6 +3442,9 @@ func (client *KeyVaultClient) purgeDeletedStorageAccountHandleError(resp *http.R
 // enabled for soft-delete, and must be issued during the retention interval
 // (available in the deleted certificate's attributes). This operation requires the certificates/recover permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// certificateName - The name of the deleted certificate
+// options - KeyVaultClientRecoverDeletedCertificateOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedCertificate method.
 func (client *KeyVaultClient) RecoverDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientRecoverDeletedCertificateOptions) (KeyVaultClientRecoverDeletedCertificateResponse, error) {
 	req, err := client.recoverDeletedCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
@@ -3338,6 +3506,9 @@ func (client *KeyVaultClient) recoverDeletedCertificateHandleError(resp *http.Re
 // to its latest version under /keys. An attempt to recover an non-deleted
 // key will return an error. Consider this the inverse of the delete operation on soft-delete enabled vaults. This operation requires the keys/recover permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - The name of the deleted key.
+// options - KeyVaultClientRecoverDeletedKeyOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedKey method.
 func (client *KeyVaultClient) RecoverDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientRecoverDeletedKeyOptions) (KeyVaultClientRecoverDeletedKeyResponse, error) {
 	req, err := client.recoverDeletedKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
@@ -3398,6 +3569,10 @@ func (client *KeyVaultClient) recoverDeletedKeyHandleError(resp *http.Response) 
 // RecoverDeletedSasDefinition - Recovers the deleted SAS definition for the specified storage account. This operation can only be performed on a soft-delete
 // enabled vault. This operation requires the storage/recover permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// sasDefinitionName - The name of the SAS definition.
+// options - KeyVaultClientRecoverDeletedSasDefinitionOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedSasDefinition method.
 func (client *KeyVaultClient) RecoverDeletedSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientRecoverDeletedSasDefinitionOptions) (KeyVaultClientRecoverDeletedSasDefinitionResponse, error) {
 	req, err := client.recoverDeletedSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, options)
 	if err != nil {
@@ -3462,6 +3637,9 @@ func (client *KeyVaultClient) recoverDeletedSasDefinitionHandleError(resp *http.
 // RecoverDeletedSecret - Recovers the deleted secret in the specified vault. This operation can only be performed on a soft-delete enabled vault. This
 // operation requires the secrets/recover permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// secretName - The name of the deleted secret.
+// options - KeyVaultClientRecoverDeletedSecretOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedSecret method.
 func (client *KeyVaultClient) RecoverDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientRecoverDeletedSecretOptions) (KeyVaultClientRecoverDeletedSecretResponse, error) {
 	req, err := client.recoverDeletedSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
@@ -3522,6 +3700,9 @@ func (client *KeyVaultClient) recoverDeletedSecretHandleError(resp *http.Respons
 // RecoverDeletedStorageAccount - Recovers the deleted storage account in the specified vault. This operation can only be performed on a soft-delete enabled
 // vault. This operation requires the storage/recover permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// options - KeyVaultClientRecoverDeletedStorageAccountOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedStorageAccount method.
 func (client *KeyVaultClient) RecoverDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientRecoverDeletedStorageAccountOptions) (KeyVaultClientRecoverDeletedStorageAccountResponse, error) {
 	req, err := client.recoverDeletedStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
@@ -3581,6 +3762,10 @@ func (client *KeyVaultClient) recoverDeletedStorageAccountHandleError(resp *http
 
 // RegenerateStorageAccountKey - Regenerates the specified key value for the given storage account. This operation requires the storage/regeneratekey permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// parameters - The parameters to regenerate storage account key.
+// options - KeyVaultClientRegenerateStorageAccountKeyOptions contains the optional parameters for the KeyVaultClient.RegenerateStorageAccountKey method.
 func (client *KeyVaultClient) RegenerateStorageAccountKey(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountRegenerteKeyParameters, options *KeyVaultClientRegenerateStorageAccountKeyOptions) (KeyVaultClientRegenerateStorageAccountKeyResponse, error) {
 	req, err := client.regenerateStorageAccountKeyCreateRequest(ctx, vaultBaseURL, storageAccountName, parameters, options)
 	if err != nil {
@@ -3640,6 +3825,9 @@ func (client *KeyVaultClient) regenerateStorageAccountKeyHandleError(resp *http.
 
 // RestoreCertificate - Restores a backed up certificate, and all its versions, to a vault. This operation requires the certificates/restore permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// parameters - The parameters to restore the certificate.
+// options - KeyVaultClientRestoreCertificateOptions contains the optional parameters for the KeyVaultClient.RestoreCertificate method.
 func (client *KeyVaultClient) RestoreCertificate(ctx context.Context, vaultBaseURL string, parameters CertificateRestoreParameters, options *KeyVaultClientRestoreCertificateOptions) (KeyVaultClientRestoreCertificateResponse, error) {
 	req, err := client.restoreCertificateCreateRequest(ctx, vaultBaseURL, parameters, options)
 	if err != nil {
@@ -3703,6 +3891,9 @@ func (client *KeyVaultClient) restoreCertificateHandleError(resp *http.Response)
 // Azure Subscription as the source Key Vault
 // The user must have RESTORE permission in the target Key Vault. This operation requires the keys/restore permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// parameters - The parameters to restore the key.
+// options - KeyVaultClientRestoreKeyOptions contains the optional parameters for the KeyVaultClient.RestoreKey method.
 func (client *KeyVaultClient) RestoreKey(ctx context.Context, vaultBaseURL string, parameters KeyRestoreParameters, options *KeyVaultClientRestoreKeyOptions) (KeyVaultClientRestoreKeyResponse, error) {
 	req, err := client.restoreKeyCreateRequest(ctx, vaultBaseURL, parameters, options)
 	if err != nil {
@@ -3758,6 +3949,9 @@ func (client *KeyVaultClient) restoreKeyHandleError(resp *http.Response) error {
 
 // RestoreSecret - Restores a backed up secret, and all its versions, to a vault. This operation requires the secrets/restore permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// parameters - The parameters to restore the secret.
+// options - KeyVaultClientRestoreSecretOptions contains the optional parameters for the KeyVaultClient.RestoreSecret method.
 func (client *KeyVaultClient) RestoreSecret(ctx context.Context, vaultBaseURL string, parameters SecretRestoreParameters, options *KeyVaultClientRestoreSecretOptions) (KeyVaultClientRestoreSecretResponse, error) {
 	req, err := client.restoreSecretCreateRequest(ctx, vaultBaseURL, parameters, options)
 	if err != nil {
@@ -3813,6 +4007,9 @@ func (client *KeyVaultClient) restoreSecretHandleError(resp *http.Response) erro
 
 // RestoreStatus - Returns the status of restore operation
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// jobID - The Job Id returned part of the restore operation
+// options - KeyVaultClientRestoreStatusOptions contains the optional parameters for the KeyVaultClient.RestoreStatus method.
 func (client *KeyVaultClient) RestoreStatus(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientRestoreStatusOptions) (KeyVaultClientRestoreStatusResponse, error) {
 	req, err := client.restoreStatusCreateRequest(ctx, vaultBaseURL, jobID, options)
 	if err != nil {
@@ -3872,6 +4069,9 @@ func (client *KeyVaultClient) restoreStatusHandleError(resp *http.Response) erro
 
 // RestoreStorageAccount - Restores a backed up storage account to a vault. This operation requires the storage/restore permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// parameters - The parameters to restore the storage account.
+// options - KeyVaultClientRestoreStorageAccountOptions contains the optional parameters for the KeyVaultClient.RestoreStorageAccount method.
 func (client *KeyVaultClient) RestoreStorageAccount(ctx context.Context, vaultBaseURL string, parameters StorageRestoreParameters, options *KeyVaultClientRestoreStorageAccountOptions) (KeyVaultClientRestoreStorageAccountResponse, error) {
 	req, err := client.restoreStorageAccountCreateRequest(ctx, vaultBaseURL, parameters, options)
 	if err != nil {
@@ -3928,6 +4128,9 @@ func (client *KeyVaultClient) restoreStorageAccountHandleError(resp *http.Respon
 // BeginSelectiveKeyRestoreOperation - Restores all key versions of a given key using user supplied SAS token pointing to a previously stored Azure Blob
 // storage backup folder
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - The name of the key to be restored from the user supplied backup
+// options - KeyVaultClientBeginSelectiveKeyRestoreOperationOptions contains the optional parameters for the KeyVaultClient.BeginSelectiveKeyRestoreOperation method.
 func (client *KeyVaultClient) BeginSelectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBeginSelectiveKeyRestoreOperationOptions) (KeyVaultClientSelectiveKeyRestoreOperationPollerResponse, error) {
 	resp, err := client.selectiveKeyRestoreOperation(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
@@ -4002,6 +4205,9 @@ func (client *KeyVaultClient) selectiveKeyRestoreOperationHandleError(resp *http
 
 // SetCertificateContacts - Sets the certificate contacts for the specified key vault. This operation requires the certificates/managecontacts permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// contacts - The contacts for the key vault certificate.
+// options - KeyVaultClientSetCertificateContactsOptions contains the optional parameters for the KeyVaultClient.SetCertificateContacts method.
 func (client *KeyVaultClient) SetCertificateContacts(ctx context.Context, vaultBaseURL string, contacts Contacts, options *KeyVaultClientSetCertificateContactsOptions) (KeyVaultClientSetCertificateContactsResponse, error) {
 	req, err := client.setCertificateContactsCreateRequest(ctx, vaultBaseURL, contacts, options)
 	if err != nil {
@@ -4058,6 +4264,10 @@ func (client *KeyVaultClient) setCertificateContactsHandleError(resp *http.Respo
 // SetCertificateIssuer - The SetCertificateIssuer operation adds or updates the specified certificate issuer. This operation requires the certificates/setissuers
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// issuerName - The name of the issuer.
+// parameter - Certificate issuer set parameter.
+// options - KeyVaultClientSetCertificateIssuerOptions contains the optional parameters for the KeyVaultClient.SetCertificateIssuer method.
 func (client *KeyVaultClient) SetCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerSetParameters, options *KeyVaultClientSetCertificateIssuerOptions) (KeyVaultClientSetCertificateIssuerResponse, error) {
 	req, err := client.setCertificateIssuerCreateRequest(ctx, vaultBaseURL, issuerName, parameter, options)
 	if err != nil {
@@ -4117,6 +4327,11 @@ func (client *KeyVaultClient) setCertificateIssuerHandleError(resp *http.Respons
 
 // SetSasDefinition - Creates or updates a new SAS definition for the specified storage account. This operation requires the storage/setsas permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// sasDefinitionName - The name of the SAS definition.
+// parameters - The parameters to create a SAS definition.
+// options - KeyVaultClientSetSasDefinitionOptions contains the optional parameters for the KeyVaultClient.SetSasDefinition method.
 func (client *KeyVaultClient) SetSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionCreateParameters, options *KeyVaultClientSetSasDefinitionOptions) (KeyVaultClientSetSasDefinitionResponse, error) {
 	req, err := client.setSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, parameters, options)
 	if err != nil {
@@ -4181,6 +4396,10 @@ func (client *KeyVaultClient) setSasDefinitionHandleError(resp *http.Response) e
 // SetSecret - The SET operation adds a secret to the Azure Key Vault. If the named secret already exists, Azure Key Vault creates a new version of that
 // secret. This operation requires the secrets/set permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// secretName - The name of the secret.
+// parameters - The parameters for setting the secret.
+// options - KeyVaultClientSetSecretOptions contains the optional parameters for the KeyVaultClient.SetSecret method.
 func (client *KeyVaultClient) SetSecret(ctx context.Context, vaultBaseURL string, secretName string, parameters SecretSetParameters, options *KeyVaultClientSetSecretOptions) (KeyVaultClientSetSecretResponse, error) {
 	req, err := client.setSecretCreateRequest(ctx, vaultBaseURL, secretName, parameters, options)
 	if err != nil {
@@ -4240,6 +4459,10 @@ func (client *KeyVaultClient) setSecretHandleError(resp *http.Response) error {
 
 // SetStorageAccount - Creates or updates a new storage account. This operation requires the storage/set permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// parameters - The parameters to create a storage account.
+// options - KeyVaultClientSetStorageAccountOptions contains the optional parameters for the KeyVaultClient.SetStorageAccount method.
 func (client *KeyVaultClient) SetStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountCreateParameters, options *KeyVaultClientSetStorageAccountOptions) (KeyVaultClientSetStorageAccountResponse, error) {
 	req, err := client.setStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, parameters, options)
 	if err != nil {
@@ -4300,6 +4523,11 @@ func (client *KeyVaultClient) setStorageAccountHandleError(resp *http.Response) 
 // Sign - The SIGN operation is applicable to asymmetric and symmetric keys stored in Azure Key Vault since this operation uses the private portion of the
 // key. This operation requires the keys/sign permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - The name of the key.
+// keyVersion - The version of the key.
+// parameters - The parameters for the signing operation.
+// options - KeyVaultClientSignOptions contains the optional parameters for the KeyVaultClient.Sign method.
 func (client *KeyVaultClient) Sign(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeySignParameters, options *KeyVaultClientSignOptions) (KeyVaultClientSignResponse, error) {
 	req, err := client.signCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
@@ -4365,6 +4593,11 @@ func (client *KeyVaultClient) signHandleError(resp *http.Response) error {
 // operation. The UNWRAP operation applies to asymmetric and
 // symmetric keys stored in Azure Key Vault since it uses the private portion of the key. This operation requires the keys/unwrapKey permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - The name of the key.
+// keyVersion - The version of the key.
+// parameters - The parameters for the key operation.
+// options - KeyVaultClientUnwrapKeyOptions contains the optional parameters for the KeyVaultClient.UnwrapKey method.
 func (client *KeyVaultClient) UnwrapKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientUnwrapKeyOptions) (KeyVaultClientUnwrapKeyResponse, error) {
 	req, err := client.unwrapKeyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
@@ -4430,6 +4663,11 @@ func (client *KeyVaultClient) unwrapKeyHandleError(resp *http.Response) error {
 // attributes. This operation requires the certificates/update
 // permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// certificateName - The name of the certificate in the given key vault.
+// certificateVersion - The version of the certificate.
+// parameters - The parameters for certificate update.
+// options - KeyVaultClientUpdateCertificateOptions contains the optional parameters for the KeyVaultClient.UpdateCertificate method.
 func (client *KeyVaultClient) UpdateCertificate(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, parameters CertificateUpdateParameters, options *KeyVaultClientUpdateCertificateOptions) (KeyVaultClientUpdateCertificateResponse, error) {
 	req, err := client.updateCertificateCreateRequest(ctx, vaultBaseURL, certificateName, certificateVersion, parameters, options)
 	if err != nil {
@@ -4494,6 +4732,10 @@ func (client *KeyVaultClient) updateCertificateHandleError(resp *http.Response) 
 // UpdateCertificateIssuer - The UpdateCertificateIssuer operation performs an update on the specified certificate issuer entity. This operation requires
 // the certificates/setissuers permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// issuerName - The name of the issuer.
+// parameter - Certificate issuer update parameter.
+// options - KeyVaultClientUpdateCertificateIssuerOptions contains the optional parameters for the KeyVaultClient.UpdateCertificateIssuer method.
 func (client *KeyVaultClient) UpdateCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerUpdateParameters, options *KeyVaultClientUpdateCertificateIssuerOptions) (KeyVaultClientUpdateCertificateIssuerResponse, error) {
 	req, err := client.updateCertificateIssuerCreateRequest(ctx, vaultBaseURL, issuerName, parameter, options)
 	if err != nil {
@@ -4553,6 +4795,10 @@ func (client *KeyVaultClient) updateCertificateIssuerHandleError(resp *http.Resp
 
 // UpdateCertificateOperation - Updates a certificate creation operation that is already in progress. This operation requires the certificates/update permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// certificateName - The name of the certificate.
+// certificateOperation - The certificate operation response.
+// options - KeyVaultClientUpdateCertificateOperationOptions contains the optional parameters for the KeyVaultClient.UpdateCertificateOperation method.
 func (client *KeyVaultClient) UpdateCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, certificateOperation CertificateOperationUpdateParameter, options *KeyVaultClientUpdateCertificateOperationOptions) (KeyVaultClientUpdateCertificateOperationResponse, error) {
 	req, err := client.updateCertificateOperationCreateRequest(ctx, vaultBaseURL, certificateName, certificateOperation, options)
 	if err != nil {
@@ -4612,6 +4858,10 @@ func (client *KeyVaultClient) updateCertificateOperationHandleError(resp *http.R
 
 // UpdateCertificatePolicy - Set specified members in the certificate policy. Leave others as null. This operation requires the certificates/update permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// certificateName - The name of the certificate in the given vault.
+// certificatePolicy - The policy for the certificate.
+// options - KeyVaultClientUpdateCertificatePolicyOptions contains the optional parameters for the KeyVaultClient.UpdateCertificatePolicy method.
 func (client *KeyVaultClient) UpdateCertificatePolicy(ctx context.Context, vaultBaseURL string, certificateName string, certificatePolicy CertificatePolicy, options *KeyVaultClientUpdateCertificatePolicyOptions) (KeyVaultClientUpdateCertificatePolicyResponse, error) {
 	req, err := client.updateCertificatePolicyCreateRequest(ctx, vaultBaseURL, certificateName, certificatePolicy, options)
 	if err != nil {
@@ -4672,6 +4922,11 @@ func (client *KeyVaultClient) updateCertificatePolicyHandleError(resp *http.Resp
 // UpdateKey - In order to perform this operation, the key must already exist in the Key Vault. Note: The cryptographic material of a key itself cannot
 // be changed. This operation requires the keys/update permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - The name of key to update.
+// keyVersion - The version of the key to update.
+// parameters - The parameters of the key to update.
+// options - KeyVaultClientUpdateKeyOptions contains the optional parameters for the KeyVaultClient.UpdateKey method.
 func (client *KeyVaultClient) UpdateKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyUpdateParameters, options *KeyVaultClientUpdateKeyOptions) (KeyVaultClientUpdateKeyResponse, error) {
 	req, err := client.updateKeyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
@@ -4735,6 +4990,11 @@ func (client *KeyVaultClient) updateKeyHandleError(resp *http.Response) error {
 
 // UpdateSasDefinition - Updates the specified attributes associated with the given SAS definition. This operation requires the storage/setsas permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// sasDefinitionName - The name of the SAS definition.
+// parameters - The parameters to update a SAS definition.
+// options - KeyVaultClientUpdateSasDefinitionOptions contains the optional parameters for the KeyVaultClient.UpdateSasDefinition method.
 func (client *KeyVaultClient) UpdateSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionUpdateParameters, options *KeyVaultClientUpdateSasDefinitionOptions) (KeyVaultClientUpdateSasDefinitionResponse, error) {
 	req, err := client.updateSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, parameters, options)
 	if err != nil {
@@ -4800,6 +5060,11 @@ func (client *KeyVaultClient) updateSasDefinitionHandleError(resp *http.Response
 // unchanged. The value of a secret itself cannot be changed.
 // This operation requires the secrets/set permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// secretName - The name of the secret.
+// secretVersion - The version of the secret.
+// parameters - The parameters for update secret operation.
+// options - KeyVaultClientUpdateSecretOptions contains the optional parameters for the KeyVaultClient.UpdateSecret method.
 func (client *KeyVaultClient) UpdateSecret(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, parameters SecretUpdateParameters, options *KeyVaultClientUpdateSecretOptions) (KeyVaultClientUpdateSecretResponse, error) {
 	req, err := client.updateSecretCreateRequest(ctx, vaultBaseURL, secretName, secretVersion, parameters, options)
 	if err != nil {
@@ -4863,6 +5128,10 @@ func (client *KeyVaultClient) updateSecretHandleError(resp *http.Response) error
 
 // UpdateStorageAccount - Updates the specified attributes associated with the given storage account. This operation requires the storage/set/update permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// storageAccountName - The name of the storage account.
+// parameters - The parameters to update a storage account.
+// options - KeyVaultClientUpdateStorageAccountOptions contains the optional parameters for the KeyVaultClient.UpdateStorageAccount method.
 func (client *KeyVaultClient) UpdateStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountUpdateParameters, options *KeyVaultClientUpdateStorageAccountOptions) (KeyVaultClientUpdateStorageAccountResponse, error) {
 	req, err := client.updateStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, parameters, options)
 	if err != nil {
@@ -4926,6 +5195,11 @@ func (client *KeyVaultClient) updateStorageAccountHandleError(resp *http.Respons
 // public portion of the key. This operation requires
 // the keys/verify permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - The name of the key.
+// keyVersion - The version of the key.
+// parameters - The parameters for verify operations.
+// options - KeyVaultClientVerifyOptions contains the optional parameters for the KeyVaultClient.Verify method.
 func (client *KeyVaultClient) Verify(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyVerifyParameters, options *KeyVaultClientVerifyOptions) (KeyVaultClientVerifyResponse, error) {
 	req, err := client.verifyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
@@ -4993,6 +5267,11 @@ func (client *KeyVaultClient) verifyHandleError(resp *http.Response) error {
 // for asymmetric keys as a convenience for
 // callers that have a key-reference but do not have access to the public key material. This operation requires the keys/wrapKey permission.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// keyName - The name of the key.
+// keyVersion - The version of the key.
+// parameters - The parameters for wrap operation.
+// options - KeyVaultClientWrapKeyOptions contains the optional parameters for the KeyVaultClient.WrapKey method.
 func (client *KeyVaultClient) WrapKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientWrapKeyOptions) (KeyVaultClientWrapKeyResponse, error) {
 	req, err := client.wrapKeyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {

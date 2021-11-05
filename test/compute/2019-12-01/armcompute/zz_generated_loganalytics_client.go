@@ -30,6 +30,9 @@ type LogAnalyticsClient struct {
 }
 
 // NewLogAnalyticsClient creates a new instance of LogAnalyticsClient with the specified values.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewLogAnalyticsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *LogAnalyticsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -48,6 +51,9 @@ func NewLogAnalyticsClient(subscriptionID string, credential azcore.TokenCredent
 
 // BeginExportRequestRateByInterval - Export logs that show Api requests made by this subscription in the given time window to show throttling activities.
 // If the operation fails it returns a generic error.
+// location - The location upon which virtual-machine-sizes is queried.
+// parameters - Parameters supplied to the LogAnalytics getRequestRateByInterval Api.
+// options - LogAnalyticsBeginExportRequestRateByIntervalOptions contains the optional parameters for the LogAnalytics.BeginExportRequestRateByInterval method.
 func (client *LogAnalyticsClient) BeginExportRequestRateByInterval(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsBeginExportRequestRateByIntervalOptions) (LogAnalyticsExportRequestRateByIntervalPollerResponse, error) {
 	resp, err := client.exportRequestRateByInterval(ctx, location, parameters, options)
 	if err != nil {
@@ -119,6 +125,9 @@ func (client *LogAnalyticsClient) exportRequestRateByIntervalHandleError(resp *h
 
 // BeginExportThrottledRequests - Export logs that show total throttled Api requests for this subscription in the given time window.
 // If the operation fails it returns a generic error.
+// location - The location upon which virtual-machine-sizes is queried.
+// parameters - Parameters supplied to the LogAnalytics getThrottledRequests Api.
+// options - LogAnalyticsBeginExportThrottledRequestsOptions contains the optional parameters for the LogAnalytics.BeginExportThrottledRequests method.
 func (client *LogAnalyticsClient) BeginExportThrottledRequests(ctx context.Context, location string, parameters ThrottledRequestsInput, options *LogAnalyticsBeginExportThrottledRequestsOptions) (LogAnalyticsExportThrottledRequestsPollerResponse, error) {
 	resp, err := client.exportThrottledRequests(ctx, location, parameters, options)
 	if err != nil {

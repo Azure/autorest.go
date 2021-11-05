@@ -31,6 +31,9 @@ type LoadBalancerOutboundRulesClient struct {
 }
 
 // NewLoadBalancerOutboundRulesClient creates a new instance of LoadBalancerOutboundRulesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewLoadBalancerOutboundRulesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *LoadBalancerOutboundRulesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,10 @@ func NewLoadBalancerOutboundRulesClient(subscriptionID string, credential azcore
 
 // Get - Gets the specified load balancer outbound rule.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// loadBalancerName - The name of the load balancer.
+// outboundRuleName - The name of the outbound rule.
+// options - LoadBalancerOutboundRulesGetOptions contains the optional parameters for the LoadBalancerOutboundRules.Get method.
 func (client *LoadBalancerOutboundRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, outboundRuleName string, options *LoadBalancerOutboundRulesGetOptions) (LoadBalancerOutboundRulesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, outboundRuleName, options)
 	if err != nil {
@@ -118,6 +125,9 @@ func (client *LoadBalancerOutboundRulesClient) getHandleError(resp *http.Respons
 
 // List - Gets all the outbound rules in a load balancer.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// loadBalancerName - The name of the load balancer.
+// options - LoadBalancerOutboundRulesListOptions contains the optional parameters for the LoadBalancerOutboundRules.List method.
 func (client *LoadBalancerOutboundRulesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerOutboundRulesListOptions) *LoadBalancerOutboundRulesListPager {
 	return &LoadBalancerOutboundRulesListPager{
 		client: client,

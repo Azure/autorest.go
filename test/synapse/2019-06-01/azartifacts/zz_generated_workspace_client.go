@@ -22,6 +22,8 @@ type workspaceClient struct {
 }
 
 // newWorkspaceClient creates a new instance of workspaceClient with the specified values.
+// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+// pl - the pipeline used for sending requests and handling responses.
 func newWorkspaceClient(endpoint string, pl runtime.Pipeline) *workspaceClient {
 	client := &workspaceClient{
 		endpoint: endpoint,
@@ -32,6 +34,7 @@ func newWorkspaceClient(endpoint string, pl runtime.Pipeline) *workspaceClient {
 
 // Get - Get Workspace
 // If the operation fails it returns the *ErrorContract error type.
+// options - WorkspaceGetOptions contains the optional parameters for the Workspace.Get method.
 func (client *workspaceClient) Get(ctx context.Context, options *WorkspaceGetOptions) (WorkspaceGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {

@@ -128,17 +128,23 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
         clientParams.sort(sortParametersByRequired);
         for (const clientParam of values(clientParams)) {
           methodParams.push(`${clientParam.language.go!.name} ${formatParameterTypeName(clientParam)}`);
+          if (clientParam.language.go!.description) {
+            paramDocs.push(`// ${clientParam.language.go!.name} - ${clientParam.language.go!.description}`);
+          }
         }
       }
     }
 
     const methodParams = new Array<string>();
+    const paramDocs = new Array<string>();
     if (<boolean>session.model.language.go!.azureARM) {
       // AzureARM is the simplest case, no parametertized host etc
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
       emitClientParams();
       methodParams.push('credential azcore.TokenCredential');
+      paramDocs.push('// credential - the credential used to authenticate the request.');
       methodParams.push(`options *${optionsType}`);
+      paramDocs.push('// options - pass nil to accept the default values.');
     } else {
       // this is the vanilla ARM or data-plane case.  both of them can
       // have parameterized host, however data-plane takes a pipeline
@@ -155,6 +161,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
           }
           const paramName = param.language.go!.name;
           methodParams.push(`${paramName} ${formatParameterTypeName(param)}`);
+          if (param.language.go!.description) {
+            paramDocs.push(`// ${param.language.go!.name} - ${param.language.go!.description}`);
+          }
         }
       }
 
@@ -165,13 +174,18 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       if (isARM) {
         imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
         methodParams.push(`options *${optionsType}`);
+        paramDocs.push('// options - pass nil to accept the default values.');
       } else {
         methodParams.push('pl runtime.Pipeline');
+        paramDocs.push('// pl - the pipeline used for sending requests and handling responses.');
       }
     }
 
     // now build constructor
     clientText += `// ${clientCtor} creates a new instance of ${clientName} with the specified values.\n`;
+    for (const doc of values(paramDocs)) {
+      clientText += `${doc}\n`;
+    }
     clientText += `func ${clientCtor}(${methodParams.join(', ')}) *${clientName} {\n`;
     if (isARM) {
       // data-plane doesn't take client options
@@ -476,6 +490,13 @@ function generateOperation(op: Operation, imports: ImportManager): string {
   let opName = op.language.go!.name;
   if (isLROOperation(op)) {
     opName = info.protocolNaming.internalMethod;
+  } else {
+    const methodParams = getMethodParameters(op);
+    for (const param of values(methodParams)) {
+      if (param.language.go!.description) {
+        text += `// ${param.language.go!.name} - ${param.language.go!.description}\n`;
+      }
+    }
   }
   text += `func (client *${clientName}) ${opName}(${params}) (${returns.join(', ')}) {\n`;
   const reqParams = getCreateRequestParameters(op);
@@ -1274,6 +1295,12 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
     text += `${comment(`Begin${op.language.go!.name} - ${op.language.go!.description}`, "//", undefined, commentLength)}\n`;
   }
   const zeroResp = getZeroReturnValue(op, 'api');
+  const methodParams = getMethodParameters(op);
+  for (const param of values(methodParams)) {
+    if (param.language.go!.description) {
+      text += `// ${param.language.go!.name} - ${param.language.go!.description}\n`;
+    }
+  }
   text += `func (client *${clientName}) Begin${op.language.go!.name}(${params}) (${returns.join(', ')}) {\n`;
   let opName = op.language.go!.name;
   opName = info.protocolNaming.internalMethod;

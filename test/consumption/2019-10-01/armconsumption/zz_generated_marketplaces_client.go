@@ -29,6 +29,8 @@ type MarketplacesClient struct {
 }
 
 // NewMarketplacesClient creates a new instance of MarketplacesClient with the specified values.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewMarketplacesClient(credential azcore.TokenCredential, options *arm.ClientOptions) *MarketplacesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -46,6 +48,8 @@ func NewMarketplacesClient(credential azcore.TokenCredential, options *arm.Clien
 
 // List - Lists the marketplaces for a scope at the defined scope. Marketplaces are available via this API only for May 1, 2014 or later.
 // If the operation fails it returns the *ErrorResponse error type.
+// scope - The scope associated with marketplace operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, '/providers/Microsoft.Billing/departments/{departmentId}' for Department scope, '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope and '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope. For subscription, billing account, department, enrollment account and ManagementGroup, you can also add billing period to the scope using '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g. to specify billing period at department scope use '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
+// options - MarketplacesListOptions contains the optional parameters for the Marketplaces.List method.
 func (client *MarketplacesClient) List(scope string, options *MarketplacesListOptions) *MarketplacesListPager {
 	return &MarketplacesListPager{
 		client: client,

@@ -31,6 +31,9 @@ type ExpressRoutePortsClient struct {
 }
 
 // NewExpressRoutePortsClient creates a new instance of ExpressRoutePortsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewExpressRoutePortsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ExpressRoutePortsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,10 @@ func NewExpressRoutePortsClient(subscriptionID string, credential azcore.TokenCr
 
 // BeginCreateOrUpdate - Creates or updates the specified ExpressRoutePort resource.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// expressRoutePortName - The name of the ExpressRoutePort resource.
+// parameters - Parameters supplied to the create ExpressRoutePort operation.
+// options - ExpressRoutePortsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRoutePorts.BeginCreateOrUpdate method.
 func (client *ExpressRoutePortsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, expressRoutePortName string, parameters ExpressRoutePort, options *ExpressRoutePortsBeginCreateOrUpdateOptions) (ExpressRoutePortsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, expressRoutePortName, parameters, options)
 	if err != nil {
@@ -125,6 +132,9 @@ func (client *ExpressRoutePortsClient) createOrUpdateHandleError(resp *http.Resp
 
 // BeginDelete - Deletes the specified ExpressRoutePort resource.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// expressRoutePortName - The name of the ExpressRoutePort resource.
+// options - ExpressRoutePortsBeginDeleteOptions contains the optional parameters for the ExpressRoutePorts.BeginDelete method.
 func (client *ExpressRoutePortsClient) BeginDelete(ctx context.Context, resourceGroupName string, expressRoutePortName string, options *ExpressRoutePortsBeginDeleteOptions) (ExpressRoutePortsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, expressRoutePortName, options)
 	if err != nil {
@@ -201,6 +211,9 @@ func (client *ExpressRoutePortsClient) deleteHandleError(resp *http.Response) er
 
 // Get - Retrieves the requested ExpressRoutePort resource.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// expressRoutePortName - The name of ExpressRoutePort.
+// options - ExpressRoutePortsGetOptions contains the optional parameters for the ExpressRoutePorts.Get method.
 func (client *ExpressRoutePortsClient) Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, options *ExpressRoutePortsGetOptions) (ExpressRoutePortsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, expressRoutePortName, options)
 	if err != nil {
@@ -266,6 +279,7 @@ func (client *ExpressRoutePortsClient) getHandleError(resp *http.Response) error
 
 // List - List all the ExpressRoutePort resources in the specified subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - ExpressRoutePortsListOptions contains the optional parameters for the ExpressRoutePorts.List method.
 func (client *ExpressRoutePortsClient) List(options *ExpressRoutePortsListOptions) *ExpressRoutePortsListPager {
 	return &ExpressRoutePortsListPager{
 		client: client,
@@ -320,6 +334,8 @@ func (client *ExpressRoutePortsClient) listHandleError(resp *http.Response) erro
 
 // ListByResourceGroup - List all the ExpressRoutePort resources in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - ExpressRoutePortsListByResourceGroupOptions contains the optional parameters for the ExpressRoutePorts.ListByResourceGroup method.
 func (client *ExpressRoutePortsClient) ListByResourceGroup(resourceGroupName string, options *ExpressRoutePortsListByResourceGroupOptions) *ExpressRoutePortsListByResourceGroupPager {
 	return &ExpressRoutePortsListByResourceGroupPager{
 		client: client,
@@ -378,6 +394,10 @@ func (client *ExpressRoutePortsClient) listByResourceGroupHandleError(resp *http
 
 // UpdateTags - Update ExpressRoutePort tags.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// expressRoutePortName - The name of the ExpressRoutePort resource.
+// parameters - Parameters supplied to update ExpressRoutePort resource tags.
+// options - ExpressRoutePortsUpdateTagsOptions contains the optional parameters for the ExpressRoutePorts.UpdateTags method.
 func (client *ExpressRoutePortsClient) UpdateTags(ctx context.Context, resourceGroupName string, expressRoutePortName string, parameters TagsObject, options *ExpressRoutePortsUpdateTagsOptions) (ExpressRoutePortsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, expressRoutePortName, parameters, options)
 	if err != nil {

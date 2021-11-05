@@ -24,6 +24,7 @@ type HeaderClient struct {
 }
 
 // NewHeaderClient creates a new instance of HeaderClient with the specified values.
+// options - pass nil to accept the default values.
 func NewHeaderClient(options *azcore.ClientOptions) *HeaderClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,8 @@ func NewHeaderClient(options *azcore.ClientOptions) *HeaderClient {
 
 // CustomNamedRequestID - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 // If the operation fails it returns the *Error error type.
+// fooClientRequestID - The fooRequestId
+// options - HeaderCustomNamedRequestIDOptions contains the optional parameters for the Header.CustomNamedRequestID method.
 func (client *HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientRequestID string, options *HeaderCustomNamedRequestIDOptions) (HeaderCustomNamedRequestIDResponse, error) {
 	req, err := client.customNamedRequestIDCreateRequest(ctx, fooClientRequestID, options)
 	if err != nil {
@@ -88,6 +91,8 @@ func (client *HeaderClient) customNamedRequestIDHandleError(resp *http.Response)
 
 // CustomNamedRequestIDHead - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 // If the operation fails it returns the *Error error type.
+// fooClientRequestID - The fooRequestId
+// options - HeaderCustomNamedRequestIDHeadOptions contains the optional parameters for the Header.CustomNamedRequestIDHead method.
 func (client *HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooClientRequestID string, options *HeaderCustomNamedRequestIDHeadOptions) (HeaderCustomNamedRequestIDHeadResponse, error) {
 	req, err := client.customNamedRequestIDHeadCreateRequest(ctx, fooClientRequestID, options)
 	if err != nil {
@@ -126,6 +131,7 @@ func (client *HeaderClient) customNamedRequestIDHeadHandleResponse(resp *http.Re
 
 // CustomNamedRequestIDParamGrouping - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request, via a parameter group
 // If the operation fails it returns the *Error error type.
+// HeaderCustomNamedRequestIDParamGroupingParameters - HeaderCustomNamedRequestIDParamGroupingParameters contains a group of parameters for the Header.CustomNamedRequestIDParamGrouping method.
 func (client *HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Context, headerCustomNamedRequestIDParamGroupingParameters HeaderCustomNamedRequestIDParamGroupingParameters) (HeaderCustomNamedRequestIDParamGroupingResponse, error) {
 	req, err := client.customNamedRequestIDParamGroupingCreateRequest(ctx, headerCustomNamedRequestIDParamGroupingParameters)
 	if err != nil {

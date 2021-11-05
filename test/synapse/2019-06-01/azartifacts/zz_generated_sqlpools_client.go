@@ -25,6 +25,8 @@ type sqlPoolsClient struct {
 }
 
 // newSQLPoolsClient creates a new instance of sqlPoolsClient with the specified values.
+// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+// pl - the pipeline used for sending requests and handling responses.
 func newSQLPoolsClient(endpoint string, pl runtime.Pipeline) *sqlPoolsClient {
 	client := &sqlPoolsClient{
 		endpoint: endpoint,
@@ -35,6 +37,8 @@ func newSQLPoolsClient(endpoint string, pl runtime.Pipeline) *sqlPoolsClient {
 
 // Get - Get Sql Pool
 // If the operation fails it returns the *ErrorContract error type.
+// sqlPoolName - The Sql Pool name
+// options - SQLPoolsGetOptions contains the optional parameters for the SQLPools.Get method.
 func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, options *SQLPoolsGetOptions) (SQLPoolsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, sqlPoolName, options)
 	if err != nil {
@@ -92,6 +96,7 @@ func (client *sqlPoolsClient) getHandleError(resp *http.Response) error {
 
 // List - List Sql Pools
 // If the operation fails it returns the *ErrorContract error type.
+// options - SQLPoolsListOptions contains the optional parameters for the SQLPools.List method.
 func (client *sqlPoolsClient) List(ctx context.Context, options *SQLPoolsListOptions) (SQLPoolsListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {

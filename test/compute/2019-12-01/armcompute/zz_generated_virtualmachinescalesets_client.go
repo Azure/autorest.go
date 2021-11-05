@@ -31,6 +31,9 @@ type VirtualMachineScaleSetsClient struct {
 }
 
 // NewVirtualMachineScaleSetsClient creates a new instance of VirtualMachineScaleSetsClient with the specified values.
+// subscriptionID - Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewVirtualMachineScaleSetsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *VirtualMachineScaleSetsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,10 @@ func NewVirtualMachineScaleSetsClient(subscriptionID string, credential azcore.T
 
 // ConvertToSinglePlacementGroup - Converts SinglePlacementGroup property to true for a existing virtual machine scale set.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the virtual machine scale set to create or update.
+// parameters - The input object for ConvertToSinglePlacementGroup API.
+// options - VirtualMachineScaleSetsConvertToSinglePlacementGroupOptions contains the optional parameters for the VirtualMachineScaleSets.ConvertToSinglePlacementGroup method.
 func (client *VirtualMachineScaleSetsClient) ConvertToSinglePlacementGroup(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VMScaleSetConvertToSinglePlacementGroupInput, options *VirtualMachineScaleSetsConvertToSinglePlacementGroupOptions) (VirtualMachineScaleSetsConvertToSinglePlacementGroupResponse, error) {
 	req, err := client.convertToSinglePlacementGroupCreateRequest(ctx, resourceGroupName, vmScaleSetName, parameters, options)
 	if err != nil {
@@ -103,6 +110,10 @@ func (client *VirtualMachineScaleSetsClient) convertToSinglePlacementGroupHandle
 
 // BeginCreateOrUpdate - Create or update a VM scale set.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set to create or update.
+// parameters - The scale set object.
+// options - VirtualMachineScaleSetsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSets.BeginCreateOrUpdate method.
 func (client *VirtualMachineScaleSetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSet, options *VirtualMachineScaleSetsBeginCreateOrUpdateOptions) (VirtualMachineScaleSetsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vmScaleSetName, parameters, options)
 	if err != nil {
@@ -180,6 +191,9 @@ func (client *VirtualMachineScaleSetsClient) createOrUpdateHandleError(resp *htt
 // not billed for the compute resources that this virtual machine
 // scale set deallocates.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set.
+// options - VirtualMachineScaleSetsBeginDeallocateOptions contains the optional parameters for the VirtualMachineScaleSets.BeginDeallocate method.
 func (client *VirtualMachineScaleSetsClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginDeallocateOptions) (VirtualMachineScaleSetsDeallocatePollerResponse, error) {
 	resp, err := client.deallocate(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
@@ -259,6 +273,9 @@ func (client *VirtualMachineScaleSetsClient) deallocateHandleError(resp *http.Re
 
 // BeginDelete - Deletes a VM scale set.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set.
+// options - VirtualMachineScaleSetsBeginDeleteOptions contains the optional parameters for the VirtualMachineScaleSets.BeginDelete method.
 func (client *VirtualMachineScaleSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginDeleteOptions) (VirtualMachineScaleSetsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
@@ -333,6 +350,10 @@ func (client *VirtualMachineScaleSetsClient) deleteHandleError(resp *http.Respon
 
 // BeginDeleteInstances - Deletes virtual machines in a VM scale set.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set.
+// vmInstanceIDs - A list of virtual machine instance IDs from the VM scale set.
+// options - VirtualMachineScaleSetsBeginDeleteInstancesOptions contains the optional parameters for the VirtualMachineScaleSets.BeginDeleteInstances method.
 func (client *VirtualMachineScaleSetsClient) BeginDeleteInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs, options *VirtualMachineScaleSetsBeginDeleteInstancesOptions) (VirtualMachineScaleSetsDeleteInstancesPollerResponse, error) {
 	resp, err := client.deleteInstances(ctx, resourceGroupName, vmScaleSetName, vmInstanceIDs, options)
 	if err != nil {
@@ -408,6 +429,10 @@ func (client *VirtualMachineScaleSetsClient) deleteInstancesHandleError(resp *ht
 // ForceRecoveryServiceFabricPlatformUpdateDomainWalk - Manual platform update domain walk to update virtual machines in a service fabric virtual machine
 // scale set.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set.
+// platformUpdateDomain - The platform update domain for which a manual recovery walk is requested
+// options - VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkOptions contains the optional parameters for the VirtualMachineScaleSets.ForceRecoveryServiceFabricPlatformUpdateDomainWalk method.
 func (client *VirtualMachineScaleSetsClient) ForceRecoveryServiceFabricPlatformUpdateDomainWalk(ctx context.Context, resourceGroupName string, vmScaleSetName string, platformUpdateDomain int32, options *VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkOptions) (VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkResponse, error) {
 	req, err := client.forceRecoveryServiceFabricPlatformUpdateDomainWalkCreateRequest(ctx, resourceGroupName, vmScaleSetName, platformUpdateDomain, options)
 	if err != nil {
@@ -473,6 +498,9 @@ func (client *VirtualMachineScaleSetsClient) forceRecoveryServiceFabricPlatformU
 
 // Get - Display information about a virtual machine scale set.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set.
+// options - VirtualMachineScaleSetsGetOptions contains the optional parameters for the VirtualMachineScaleSets.Get method.
 func (client *VirtualMachineScaleSetsClient) Get(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsGetOptions) (VirtualMachineScaleSetsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
@@ -537,6 +565,9 @@ func (client *VirtualMachineScaleSetsClient) getHandleError(resp *http.Response)
 
 // GetInstanceView - Gets the status of a VM scale set instance.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set.
+// options - VirtualMachineScaleSetsGetInstanceViewOptions contains the optional parameters for the VirtualMachineScaleSets.GetInstanceView method.
 func (client *VirtualMachineScaleSetsClient) GetInstanceView(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsGetInstanceViewOptions) (VirtualMachineScaleSetsGetInstanceViewResponse, error) {
 	req, err := client.getInstanceViewCreateRequest(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
@@ -601,6 +632,9 @@ func (client *VirtualMachineScaleSetsClient) getInstanceViewHandleError(resp *ht
 
 // GetOSUpgradeHistory - Gets list of OS upgrades on a VM scale set instance.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set.
+// options - VirtualMachineScaleSetsGetOSUpgradeHistoryOptions contains the optional parameters for the VirtualMachineScaleSets.GetOSUpgradeHistory method.
 func (client *VirtualMachineScaleSetsClient) GetOSUpgradeHistory(resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsGetOSUpgradeHistoryOptions) *VirtualMachineScaleSetsGetOSUpgradeHistoryPager {
 	return &VirtualMachineScaleSetsGetOSUpgradeHistoryPager{
 		client: client,
@@ -662,6 +696,8 @@ func (client *VirtualMachineScaleSetsClient) getOSUpgradeHistoryHandleError(resp
 
 // List - Gets a list of all VM scale sets under a resource group.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// options - VirtualMachineScaleSetsListOptions contains the optional parameters for the VirtualMachineScaleSets.List method.
 func (client *VirtualMachineScaleSetsClient) List(resourceGroupName string, options *VirtualMachineScaleSetsListOptions) *VirtualMachineScaleSetsListPager {
 	return &VirtualMachineScaleSetsListPager{
 		client: client,
@@ -721,6 +757,7 @@ func (client *VirtualMachineScaleSetsClient) listHandleError(resp *http.Response
 // get the next page of VM Scale Sets. Do this till nextLink is
 // null to fetch all the VM Scale Sets.
 // If the operation fails it returns a generic error.
+// options - VirtualMachineScaleSetsListAllOptions contains the optional parameters for the VirtualMachineScaleSets.ListAll method.
 func (client *VirtualMachineScaleSetsClient) ListAll(options *VirtualMachineScaleSetsListAllOptions) *VirtualMachineScaleSetsListAllPager {
 	return &VirtualMachineScaleSetsListAllPager{
 		client: client,
@@ -774,6 +811,9 @@ func (client *VirtualMachineScaleSetsClient) listAllHandleError(resp *http.Respo
 
 // ListSKUs - Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set.
+// options - VirtualMachineScaleSetsListSKUsOptions contains the optional parameters for the VirtualMachineScaleSets.ListSKUs method.
 func (client *VirtualMachineScaleSetsClient) ListSKUs(resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsListSKUsOptions) *VirtualMachineScaleSetsListSKUsPager {
 	return &VirtualMachineScaleSetsListSKUsPager{
 		client: client,
@@ -837,6 +877,9 @@ func (client *VirtualMachineScaleSetsClient) listSKUsHandleError(resp *http.Resp
 // maintenance will be failed. Please refer to best practices for more
 // details: https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set.
+// options - VirtualMachineScaleSetsBeginPerformMaintenanceOptions contains the optional parameters for the VirtualMachineScaleSets.BeginPerformMaintenance method.
 func (client *VirtualMachineScaleSetsClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginPerformMaintenanceOptions) (VirtualMachineScaleSetsPerformMaintenancePollerResponse, error) {
 	resp, err := client.performMaintenance(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
@@ -918,6 +961,9 @@ func (client *VirtualMachineScaleSetsClient) performMaintenanceHandleError(resp 
 // the resources. Instead, use deallocate to release resources and
 // avoid charges.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set.
+// options - VirtualMachineScaleSetsBeginPowerOffOptions contains the optional parameters for the VirtualMachineScaleSets.BeginPowerOff method.
 func (client *VirtualMachineScaleSetsClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginPowerOffOptions) (VirtualMachineScaleSetsPowerOffPollerResponse, error) {
 	resp, err := client.powerOff(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
@@ -1000,6 +1046,9 @@ func (client *VirtualMachineScaleSetsClient) powerOffHandleError(resp *http.Resp
 
 // BeginRedeploy - Shuts down all the virtual machines in the virtual machine scale set, moves them to a new node, and powers them back on.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set.
+// options - VirtualMachineScaleSetsBeginRedeployOptions contains the optional parameters for the VirtualMachineScaleSets.BeginRedeploy method.
 func (client *VirtualMachineScaleSetsClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginRedeployOptions) (VirtualMachineScaleSetsRedeployPollerResponse, error) {
 	resp, err := client.redeploy(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
@@ -1079,6 +1128,9 @@ func (client *VirtualMachineScaleSetsClient) redeployHandleError(resp *http.Resp
 // machines who have a ephemeral OS disk the virtual machine is
 // reset to initial state.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set.
+// options - VirtualMachineScaleSetsBeginReimageOptions contains the optional parameters for the VirtualMachineScaleSets.BeginReimage method.
 func (client *VirtualMachineScaleSetsClient) BeginReimage(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginReimageOptions) (VirtualMachineScaleSetsReimagePollerResponse, error) {
 	resp, err := client.reimage(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
@@ -1159,6 +1211,9 @@ func (client *VirtualMachineScaleSetsClient) reimageHandleError(resp *http.Respo
 // BeginReimageAll - Reimages all the disks ( including data disks ) in the virtual machines in a VM scale set. This operation is only supported for managed
 // disks.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set.
+// options - VirtualMachineScaleSetsBeginReimageAllOptions contains the optional parameters for the VirtualMachineScaleSets.BeginReimageAll method.
 func (client *VirtualMachineScaleSetsClient) BeginReimageAll(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginReimageAllOptions) (VirtualMachineScaleSetsReimageAllPollerResponse, error) {
 	resp, err := client.reimageAll(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
@@ -1237,6 +1292,9 @@ func (client *VirtualMachineScaleSetsClient) reimageAllHandleError(resp *http.Re
 
 // BeginRestart - Restarts one or more virtual machines in a VM scale set.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set.
+// options - VirtualMachineScaleSetsBeginRestartOptions contains the optional parameters for the VirtualMachineScaleSets.BeginRestart method.
 func (client *VirtualMachineScaleSetsClient) BeginRestart(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginRestartOptions) (VirtualMachineScaleSetsRestartPollerResponse, error) {
 	resp, err := client.restart(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
@@ -1314,6 +1372,10 @@ func (client *VirtualMachineScaleSetsClient) restartHandleError(resp *http.Respo
 
 // BeginSetOrchestrationServiceState - Changes ServiceState property for a given service
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the virtual machine scale set to create or update.
+// parameters - The input object for SetOrchestrationServiceState API.
+// options - VirtualMachineScaleSetsBeginSetOrchestrationServiceStateOptions contains the optional parameters for the VirtualMachineScaleSets.BeginSetOrchestrationServiceState method.
 func (client *VirtualMachineScaleSetsClient) BeginSetOrchestrationServiceState(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters OrchestrationServiceStateInput, options *VirtualMachineScaleSetsBeginSetOrchestrationServiceStateOptions) (VirtualMachineScaleSetsSetOrchestrationServiceStatePollerResponse, error) {
 	resp, err := client.setOrchestrationServiceState(ctx, resourceGroupName, vmScaleSetName, parameters, options)
 	if err != nil {
@@ -1388,6 +1450,9 @@ func (client *VirtualMachineScaleSetsClient) setOrchestrationServiceStateHandleE
 
 // BeginStart - Starts one or more virtual machines in a VM scale set.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set.
+// options - VirtualMachineScaleSetsBeginStartOptions contains the optional parameters for the VirtualMachineScaleSets.BeginStart method.
 func (client *VirtualMachineScaleSetsClient) BeginStart(ctx context.Context, resourceGroupName string, vmScaleSetName string, options *VirtualMachineScaleSetsBeginStartOptions) (VirtualMachineScaleSetsStartPollerResponse, error) {
 	resp, err := client.start(ctx, resourceGroupName, vmScaleSetName, options)
 	if err != nil {
@@ -1465,6 +1530,10 @@ func (client *VirtualMachineScaleSetsClient) startHandleError(resp *http.Respons
 
 // BeginUpdate - Update a VM scale set.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set to create or update.
+// parameters - The scale set object.
+// options - VirtualMachineScaleSetsBeginUpdateOptions contains the optional parameters for the VirtualMachineScaleSets.BeginUpdate method.
 func (client *VirtualMachineScaleSetsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, parameters VirtualMachineScaleSetUpdate, options *VirtualMachineScaleSetsBeginUpdateOptions) (VirtualMachineScaleSetsUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, vmScaleSetName, parameters, options)
 	if err != nil {
@@ -1540,6 +1609,10 @@ func (client *VirtualMachineScaleSetsClient) updateHandleError(resp *http.Respon
 
 // BeginUpdateInstances - Upgrades one or more virtual machines to the latest SKU set in the VM scale set model.
 // If the operation fails it returns a generic error.
+// resourceGroupName - The name of the resource group.
+// vmScaleSetName - The name of the VM scale set.
+// vmInstanceIDs - A list of virtual machine instance IDs from the VM scale set.
+// options - VirtualMachineScaleSetsBeginUpdateInstancesOptions contains the optional parameters for the VirtualMachineScaleSets.BeginUpdateInstances method.
 func (client *VirtualMachineScaleSetsClient) BeginUpdateInstances(ctx context.Context, resourceGroupName string, vmScaleSetName string, vmInstanceIDs VirtualMachineScaleSetVMInstanceRequiredIDs, options *VirtualMachineScaleSetsBeginUpdateInstancesOptions) (VirtualMachineScaleSetsUpdateInstancesPollerResponse, error) {
 	resp, err := client.updateInstances(ctx, resourceGroupName, vmScaleSetName, vmInstanceIDs, options)
 	if err != nil {

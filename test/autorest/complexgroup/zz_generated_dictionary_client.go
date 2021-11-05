@@ -24,6 +24,7 @@ type DictionaryClient struct {
 }
 
 // NewDictionaryClient creates a new instance of DictionaryClient with the specified values.
+// options - pass nil to accept the default values.
 func NewDictionaryClient(options *azcore.ClientOptions) *DictionaryClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewDictionaryClient(options *azcore.ClientOptions) *DictionaryClient {
 
 // GetEmpty - Get complex types with dictionary property which is empty
 // If the operation fails it returns the *Error error type.
+// options - DictionaryGetEmptyOptions contains the optional parameters for the Dictionary.GetEmpty method.
 func (client *DictionaryClient) GetEmpty(ctx context.Context, options *DictionaryGetEmptyOptions) (DictionaryGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -87,6 +89,7 @@ func (client *DictionaryClient) getEmptyHandleError(resp *http.Response) error {
 
 // GetNotProvided - Get complex types with dictionary property while server doesn't provide a response payload
 // If the operation fails it returns the *Error error type.
+// options - DictionaryGetNotProvidedOptions contains the optional parameters for the Dictionary.GetNotProvided method.
 func (client *DictionaryClient) GetNotProvided(ctx context.Context, options *DictionaryGetNotProvidedOptions) (DictionaryGetNotProvidedResponse, error) {
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
@@ -137,6 +140,7 @@ func (client *DictionaryClient) getNotProvidedHandleError(resp *http.Response) e
 
 // GetNull - Get complex types with dictionary property which is null
 // If the operation fails it returns the *Error error type.
+// options - DictionaryGetNullOptions contains the optional parameters for the Dictionary.GetNull method.
 func (client *DictionaryClient) GetNull(ctx context.Context, options *DictionaryGetNullOptions) (DictionaryGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -187,6 +191,7 @@ func (client *DictionaryClient) getNullHandleError(resp *http.Response) error {
 
 // GetValid - Get complex types with dictionary property
 // If the operation fails it returns the *Error error type.
+// options - DictionaryGetValidOptions contains the optional parameters for the Dictionary.GetValid method.
 func (client *DictionaryClient) GetValid(ctx context.Context, options *DictionaryGetValidOptions) (DictionaryGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -237,6 +242,8 @@ func (client *DictionaryClient) getValidHandleError(resp *http.Response) error {
 
 // PutEmpty - Put complex types with dictionary property which is empty
 // If the operation fails it returns the *Error error type.
+// complexBody - Please put an empty dictionary
+// options - DictionaryPutEmptyOptions contains the optional parameters for the Dictionary.PutEmpty method.
 func (client *DictionaryClient) PutEmpty(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryPutEmptyOptions) (DictionaryPutEmptyResponse, error) {
 	req, err := client.putEmptyCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -278,6 +285,8 @@ func (client *DictionaryClient) putEmptyHandleError(resp *http.Response) error {
 
 // PutValid - Put complex types with dictionary property
 // If the operation fails it returns the *Error error type.
+// complexBody - Please put a dictionary with 5 key-value pairs: "txt":"notepad", "bmp":"mspaint", "xls":"excel", "exe":"", "":null
+// options - DictionaryPutValidOptions contains the optional parameters for the Dictionary.PutValid method.
 func (client *DictionaryClient) PutValid(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryPutValidOptions) (DictionaryPutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {

@@ -24,6 +24,7 @@ type DurationClient struct {
 }
 
 // NewDurationClient creates a new instance of DurationClient with the specified values.
+// options - pass nil to accept the default values.
 func NewDurationClient(options *azcore.ClientOptions) *DurationClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewDurationClient(options *azcore.ClientOptions) *DurationClient {
 
 // GetInvalid - Get an invalid duration value
 // If the operation fails it returns the *Error error type.
+// options - DurationGetInvalidOptions contains the optional parameters for the Duration.GetInvalid method.
 func (client *DurationClient) GetInvalid(ctx context.Context, options *DurationGetInvalidOptions) (DurationGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -87,6 +89,7 @@ func (client *DurationClient) getInvalidHandleError(resp *http.Response) error {
 
 // GetNull - Get null duration value
 // If the operation fails it returns the *Error error type.
+// options - DurationGetNullOptions contains the optional parameters for the Duration.GetNull method.
 func (client *DurationClient) GetNull(ctx context.Context, options *DurationGetNullOptions) (DurationGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -137,6 +140,7 @@ func (client *DurationClient) getNullHandleError(resp *http.Response) error {
 
 // GetPositiveDuration - Get a positive duration value
 // If the operation fails it returns the *Error error type.
+// options - DurationGetPositiveDurationOptions contains the optional parameters for the Duration.GetPositiveDuration method.
 func (client *DurationClient) GetPositiveDuration(ctx context.Context, options *DurationGetPositiveDurationOptions) (DurationGetPositiveDurationResponse, error) {
 	req, err := client.getPositiveDurationCreateRequest(ctx, options)
 	if err != nil {
@@ -187,6 +191,8 @@ func (client *DurationClient) getPositiveDurationHandleError(resp *http.Response
 
 // PutPositiveDuration - Put a positive duration value
 // If the operation fails it returns the *Error error type.
+// durationBody - duration body
+// options - DurationPutPositiveDurationOptions contains the optional parameters for the Duration.PutPositiveDuration method.
 func (client *DurationClient) PutPositiveDuration(ctx context.Context, durationBody string, options *DurationPutPositiveDurationOptions) (DurationPutPositiveDurationResponse, error) {
 	req, err := client.putPositiveDurationCreateRequest(ctx, durationBody, options)
 	if err != nil {

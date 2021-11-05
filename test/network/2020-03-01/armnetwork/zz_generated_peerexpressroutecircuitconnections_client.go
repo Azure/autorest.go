@@ -31,6 +31,9 @@ type PeerExpressRouteCircuitConnectionsClient struct {
 }
 
 // NewPeerExpressRouteCircuitConnectionsClient creates a new instance of PeerExpressRouteCircuitConnectionsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewPeerExpressRouteCircuitConnectionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *PeerExpressRouteCircuitConnectionsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,11 @@ func NewPeerExpressRouteCircuitConnectionsClient(subscriptionID string, credenti
 
 // Get - Gets the specified Peer Express Route Circuit Connection from the specified express route circuit.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// circuitName - The name of the express route circuit.
+// peeringName - The name of the peering.
+// connectionName - The name of the peer express route circuit connection.
+// options - PeerExpressRouteCircuitConnectionsGetOptions contains the optional parameters for the PeerExpressRouteCircuitConnections.Get method.
 func (client *PeerExpressRouteCircuitConnectionsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, options *PeerExpressRouteCircuitConnectionsGetOptions) (PeerExpressRouteCircuitConnectionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, peeringName, connectionName, options)
 	if err != nil {
@@ -122,6 +130,10 @@ func (client *PeerExpressRouteCircuitConnectionsClient) getHandleError(resp *htt
 
 // List - Gets all global reach peer connections associated with a private peering in an express route circuit.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// circuitName - The name of the circuit.
+// peeringName - The name of the peering.
+// options - PeerExpressRouteCircuitConnectionsListOptions contains the optional parameters for the PeerExpressRouteCircuitConnections.List method.
 func (client *PeerExpressRouteCircuitConnectionsClient) List(resourceGroupName string, circuitName string, peeringName string, options *PeerExpressRouteCircuitConnectionsListOptions) *PeerExpressRouteCircuitConnectionsListPager {
 	return &PeerExpressRouteCircuitConnectionsListPager{
 		client: client,

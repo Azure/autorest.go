@@ -22,6 +22,8 @@ type workspaceGitRepoManagementClient struct {
 }
 
 // newWorkspaceGitRepoManagementClient creates a new instance of workspaceGitRepoManagementClient with the specified values.
+// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+// pl - the pipeline used for sending requests and handling responses.
 func newWorkspaceGitRepoManagementClient(endpoint string, pl runtime.Pipeline) *workspaceGitRepoManagementClient {
 	client := &workspaceGitRepoManagementClient{
 		endpoint: endpoint,
@@ -32,6 +34,7 @@ func newWorkspaceGitRepoManagementClient(endpoint string, pl runtime.Pipeline) *
 
 // GetGitHubAccessToken - Get the GitHub access token.
 // If the operation fails it returns a generic error.
+// options - WorkspaceGitRepoManagementGetGitHubAccessTokenOptions contains the optional parameters for the WorkspaceGitRepoManagement.GetGitHubAccessToken method.
 func (client *workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementGetGitHubAccessTokenOptions) (WorkspaceGitRepoManagementGetGitHubAccessTokenResponse, error) {
 	req, err := client.getGitHubAccessTokenCreateRequest(ctx, gitHubAccessTokenRequest, options)
 	if err != nil {

@@ -31,6 +31,9 @@ type FirewallPoliciesClient struct {
 }
 
 // NewFirewallPoliciesClient creates a new instance of FirewallPoliciesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewFirewallPoliciesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *FirewallPoliciesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,10 @@ func NewFirewallPoliciesClient(subscriptionID string, credential azcore.TokenCre
 
 // BeginCreateOrUpdate - Creates or updates the specified Firewall Policy.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// firewallPolicyName - The name of the Firewall Policy.
+// parameters - Parameters supplied to the create or update Firewall Policy operation.
+// options - FirewallPoliciesBeginCreateOrUpdateOptions contains the optional parameters for the FirewallPolicies.BeginCreateOrUpdate method.
 func (client *FirewallPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters FirewallPolicy, options *FirewallPoliciesBeginCreateOrUpdateOptions) (FirewallPoliciesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, firewallPolicyName, parameters, options)
 	if err != nil {
@@ -125,6 +132,9 @@ func (client *FirewallPoliciesClient) createOrUpdateHandleError(resp *http.Respo
 
 // BeginDelete - Deletes the specified Firewall Policy.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// firewallPolicyName - The name of the Firewall Policy.
+// options - FirewallPoliciesBeginDeleteOptions contains the optional parameters for the FirewallPolicies.BeginDelete method.
 func (client *FirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesBeginDeleteOptions) (FirewallPoliciesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
@@ -201,6 +211,9 @@ func (client *FirewallPoliciesClient) deleteHandleError(resp *http.Response) err
 
 // Get - Gets the specified Firewall Policy.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// firewallPolicyName - The name of the Firewall Policy.
+// options - FirewallPoliciesGetOptions contains the optional parameters for the FirewallPolicies.Get method.
 func (client *FirewallPoliciesClient) Get(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesGetOptions) (FirewallPoliciesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
@@ -269,6 +282,8 @@ func (client *FirewallPoliciesClient) getHandleError(resp *http.Response) error 
 
 // List - Lists all Firewall Policies in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - FirewallPoliciesListOptions contains the optional parameters for the FirewallPolicies.List method.
 func (client *FirewallPoliciesClient) List(resourceGroupName string, options *FirewallPoliciesListOptions) *FirewallPoliciesListPager {
 	return &FirewallPoliciesListPager{
 		client: client,
@@ -327,6 +342,7 @@ func (client *FirewallPoliciesClient) listHandleError(resp *http.Response) error
 
 // ListAll - Gets all the Firewall Policies in a subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - FirewallPoliciesListAllOptions contains the optional parameters for the FirewallPolicies.ListAll method.
 func (client *FirewallPoliciesClient) ListAll(options *FirewallPoliciesListAllOptions) *FirewallPoliciesListAllPager {
 	return &FirewallPoliciesListAllPager{
 		client: client,

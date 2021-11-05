@@ -25,6 +25,7 @@ type MultipleResponsesClient struct {
 }
 
 // NewMultipleResponsesClient creates a new instance of MultipleResponsesClient with the specified values.
+// options - pass nil to accept the default values.
 func NewMultipleResponsesClient(options *azcore.ClientOptions) *MultipleResponsesClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -38,6 +39,7 @@ func NewMultipleResponsesClient(options *azcore.ClientOptions) *MultipleResponse
 
 // Get200Model201ModelDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
 // If the operation fails it returns the *Error error type.
+// options - MultipleResponsesGet200Model201ModelDefaultError200ValidOptions contains the optional parameters for the MultipleResponses.Get200Model201ModelDefaultError200Valid method.
 func (client *MultipleResponsesClient) Get200Model201ModelDefaultError200Valid(ctx context.Context, options *MultipleResponsesGet200Model201ModelDefaultError200ValidOptions) (MultipleResponsesGet200Model201ModelDefaultError200ValidResponse, error) {
 	req, err := client.get200Model201ModelDefaultError200ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -101,6 +103,7 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError200ValidHa
 
 // Get200Model201ModelDefaultError201Valid - Send a 201 response with valid payload: {'statusCode': '201', 'textStatusCode': 'Created'}
 // If the operation fails it returns the *Error error type.
+// options - MultipleResponsesGet200Model201ModelDefaultError201ValidOptions contains the optional parameters for the MultipleResponses.Get200Model201ModelDefaultError201Valid method.
 func (client *MultipleResponsesClient) Get200Model201ModelDefaultError201Valid(ctx context.Context, options *MultipleResponsesGet200Model201ModelDefaultError201ValidOptions) (MultipleResponsesGet200Model201ModelDefaultError201ValidResponse, error) {
 	req, err := client.get200Model201ModelDefaultError201ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -164,6 +167,7 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError201ValidHa
 
 // Get200Model201ModelDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
 // If the operation fails it returns the *Error error type.
+// options - MultipleResponsesGet200Model201ModelDefaultError400ValidOptions contains the optional parameters for the MultipleResponses.Get200Model201ModelDefaultError400Valid method.
 func (client *MultipleResponsesClient) Get200Model201ModelDefaultError400Valid(ctx context.Context, options *MultipleResponsesGet200Model201ModelDefaultError400ValidOptions) (MultipleResponsesGet200Model201ModelDefaultError400ValidResponse, error) {
 	req, err := client.get200Model201ModelDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -227,6 +231,7 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError400ValidHa
 
 // Get200Model204NoModelDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
 // If the operation fails it returns the *Error error type.
+// options - MultipleResponsesGet200Model204NoModelDefaultError200ValidOptions contains the optional parameters for the MultipleResponses.Get200Model204NoModelDefaultError200Valid method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid(ctx context.Context, options *MultipleResponsesGet200Model204NoModelDefaultError200ValidOptions) (MultipleResponsesGet200Model204NoModelDefaultError200ValidResponse, error) {
 	req, err := client.get200Model204NoModelDefaultError200ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -277,6 +282,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError200Valid
 
 // Get200Model204NoModelDefaultError201Invalid - Send a 201 response with valid payload: {'statusCode': '201'}
 // If the operation fails it returns the *Error error type.
+// options - MultipleResponsesGet200Model204NoModelDefaultError201InvalidOptions contains the optional parameters for the MultipleResponses.Get200Model204NoModelDefaultError201Invalid method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError201Invalid(ctx context.Context, options *MultipleResponsesGet200Model204NoModelDefaultError201InvalidOptions) (MultipleResponsesGet200Model204NoModelDefaultError201InvalidResponse, error) {
 	req, err := client.get200Model204NoModelDefaultError201InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -327,6 +333,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError201Inval
 
 // Get200Model204NoModelDefaultError202None - Send a 202 response with no payload:
 // If the operation fails it returns the *Error error type.
+// options - MultipleResponsesGet200Model204NoModelDefaultError202NoneOptions contains the optional parameters for the MultipleResponses.Get200Model204NoModelDefaultError202None method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError202None(ctx context.Context, options *MultipleResponsesGet200Model204NoModelDefaultError202NoneOptions) (MultipleResponsesGet200Model204NoModelDefaultError202NoneResponse, error) {
 	req, err := client.get200Model204NoModelDefaultError202NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -377,6 +384,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError202NoneH
 
 // Get200Model204NoModelDefaultError204Valid - Send a 204 response with no payload
 // If the operation fails it returns the *Error error type.
+// options - MultipleResponsesGet200Model204NoModelDefaultError204ValidOptions contains the optional parameters for the MultipleResponses.Get200Model204NoModelDefaultError204Valid method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid(ctx context.Context, options *MultipleResponsesGet200Model204NoModelDefaultError204ValidOptions) (MultipleResponsesGet200Model204NoModelDefaultError204ValidResponse, error) {
 	req, err := client.get200Model204NoModelDefaultError204ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -427,6 +435,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError204Valid
 
 // Get200Model204NoModelDefaultError400Valid - Send a 400 response with valid error payload: {'status': 400, 'message': 'client error'}
 // If the operation fails it returns the *Error error type.
+// options - MultipleResponsesGet200Model204NoModelDefaultError400ValidOptions contains the optional parameters for the MultipleResponses.Get200Model204NoModelDefaultError400Valid method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid(ctx context.Context, options *MultipleResponsesGet200Model204NoModelDefaultError400ValidOptions) (MultipleResponsesGet200Model204NoModelDefaultError400ValidResponse, error) {
 	req, err := client.get200Model204NoModelDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -477,6 +486,7 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError400Valid
 
 // Get200ModelA200Invalid - Send a 200 response with invalid payload {'statusCodeInvalid': '200'}
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGet200ModelA200InvalidOptions contains the optional parameters for the MultipleResponses.Get200ModelA200Invalid method.
 func (client *MultipleResponsesClient) Get200ModelA200Invalid(ctx context.Context, options *MultipleResponsesGet200ModelA200InvalidOptions) (MultipleResponsesGet200ModelA200InvalidResponse, error) {
 	req, err := client.get200ModelA200InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -526,6 +536,7 @@ func (client *MultipleResponsesClient) get200ModelA200InvalidHandleError(resp *h
 
 // Get200ModelA200None - Send a 200 response with no payload, when a payload is expected - client should return a null object of thde type for model A
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGet200ModelA200NoneOptions contains the optional parameters for the MultipleResponses.Get200ModelA200None method.
 func (client *MultipleResponsesClient) Get200ModelA200None(ctx context.Context, options *MultipleResponsesGet200ModelA200NoneOptions) (MultipleResponsesGet200ModelA200NoneResponse, error) {
 	req, err := client.get200ModelA200NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -575,6 +586,7 @@ func (client *MultipleResponsesClient) get200ModelA200NoneHandleError(resp *http
 
 // Get200ModelA200Valid - Send a 200 response with payload {'statusCode': '200'}
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGet200ModelA200ValidOptions contains the optional parameters for the MultipleResponses.Get200ModelA200Valid method.
 func (client *MultipleResponsesClient) Get200ModelA200Valid(ctx context.Context, options *MultipleResponsesGet200ModelA200ValidOptions) (MultipleResponsesGet200ModelA200ValidResponse, error) {
 	req, err := client.get200ModelA200ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -624,6 +636,7 @@ func (client *MultipleResponsesClient) get200ModelA200ValidHandleError(resp *htt
 
 // Get200ModelA201ModelC404ModelDDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
 // If the operation fails it returns the *Error error type.
+// options - MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError200ValidOptions contains the optional parameters for the MultipleResponses.Get200ModelA201ModelC404ModelDDefaultError200Valid method.
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError200Valid(ctx context.Context, options *MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError200ValidOptions) (MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError200ValidResponse, error) {
 	req, err := client.get200ModelA201ModelC404ModelDDefaultError200ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -693,6 +706,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 
 // Get200ModelA201ModelC404ModelDDefaultError201Valid - Send a 200 response with valid payload: {'httpCode': '201'}
 // If the operation fails it returns the *Error error type.
+// options - MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError201ValidOptions contains the optional parameters for the MultipleResponses.Get200ModelA201ModelC404ModelDDefaultError201Valid method.
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError201Valid(ctx context.Context, options *MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError201ValidOptions) (MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError201ValidResponse, error) {
 	req, err := client.get200ModelA201ModelC404ModelDDefaultError201ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -762,6 +776,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 
 // Get200ModelA201ModelC404ModelDDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
 // If the operation fails it returns the *Error error type.
+// options - MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError400ValidOptions contains the optional parameters for the MultipleResponses.Get200ModelA201ModelC404ModelDDefaultError400Valid method.
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError400Valid(ctx context.Context, options *MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError400ValidOptions) (MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError400ValidResponse, error) {
 	req, err := client.get200ModelA201ModelC404ModelDDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -831,6 +846,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 
 // Get200ModelA201ModelC404ModelDDefaultError404Valid - Send a 200 response with valid payload: {'httpStatusCode': '404'}
 // If the operation fails it returns the *Error error type.
+// options - MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError404ValidOptions contains the optional parameters for the MultipleResponses.Get200ModelA201ModelC404ModelDDefaultError404Valid method.
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError404Valid(ctx context.Context, options *MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError404ValidOptions) (MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError404ValidResponse, error) {
 	req, err := client.get200ModelA201ModelC404ModelDDefaultError404ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -900,6 +916,7 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 
 // Get200ModelA202Valid - Send a 202 response with payload {'statusCode': '202'}
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGet200ModelA202ValidOptions contains the optional parameters for the MultipleResponses.Get200ModelA202Valid method.
 func (client *MultipleResponsesClient) Get200ModelA202Valid(ctx context.Context, options *MultipleResponsesGet200ModelA202ValidOptions) (MultipleResponsesGet200ModelA202ValidResponse, error) {
 	req, err := client.get200ModelA202ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -949,6 +966,7 @@ func (client *MultipleResponsesClient) get200ModelA202ValidHandleError(resp *htt
 
 // Get200ModelA400Invalid - Send a 200 response with invalid payload {'statusCodeInvalid': '400'}
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGet200ModelA400InvalidOptions contains the optional parameters for the MultipleResponses.Get200ModelA400Invalid method.
 func (client *MultipleResponsesClient) Get200ModelA400Invalid(ctx context.Context, options *MultipleResponsesGet200ModelA400InvalidOptions) (MultipleResponsesGet200ModelA400InvalidResponse, error) {
 	req, err := client.get200ModelA400InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -998,6 +1016,7 @@ func (client *MultipleResponsesClient) get200ModelA400InvalidHandleError(resp *h
 
 // Get200ModelA400None - Send a 400 response with no payload client should treat as an http error with no error model
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGet200ModelA400NoneOptions contains the optional parameters for the MultipleResponses.Get200ModelA400None method.
 func (client *MultipleResponsesClient) Get200ModelA400None(ctx context.Context, options *MultipleResponsesGet200ModelA400NoneOptions) (MultipleResponsesGet200ModelA400NoneResponse, error) {
 	req, err := client.get200ModelA400NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1047,6 +1066,7 @@ func (client *MultipleResponsesClient) get200ModelA400NoneHandleError(resp *http
 
 // Get200ModelA400Valid - Send a 200 response with payload {'statusCode': '400'}
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGet200ModelA400ValidOptions contains the optional parameters for the MultipleResponses.Get200ModelA400Valid method.
 func (client *MultipleResponsesClient) Get200ModelA400Valid(ctx context.Context, options *MultipleResponsesGet200ModelA400ValidOptions) (MultipleResponsesGet200ModelA400ValidResponse, error) {
 	req, err := client.get200ModelA400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1096,6 +1116,7 @@ func (client *MultipleResponsesClient) get200ModelA400ValidHandleError(resp *htt
 
 // Get202None204NoneDefaultError202None - Send a 202 response with no payload
 // If the operation fails it returns the *Error error type.
+// options - MultipleResponsesGet202None204NoneDefaultError202NoneOptions contains the optional parameters for the MultipleResponses.Get202None204NoneDefaultError202None method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultError202None(ctx context.Context, options *MultipleResponsesGet202None204NoneDefaultError202NoneOptions) (MultipleResponsesGet202None204NoneDefaultError202NoneResponse, error) {
 	req, err := client.get202None204NoneDefaultError202NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1137,6 +1158,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError202NoneHandl
 
 // Get202None204NoneDefaultError204None - Send a 204 response with no payload
 // If the operation fails it returns the *Error error type.
+// options - MultipleResponsesGet202None204NoneDefaultError204NoneOptions contains the optional parameters for the MultipleResponses.Get202None204NoneDefaultError204None method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultError204None(ctx context.Context, options *MultipleResponsesGet202None204NoneDefaultError204NoneOptions) (MultipleResponsesGet202None204NoneDefaultError204NoneResponse, error) {
 	req, err := client.get202None204NoneDefaultError204NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1178,6 +1200,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError204NoneHandl
 
 // Get202None204NoneDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
 // If the operation fails it returns the *Error error type.
+// options - MultipleResponsesGet202None204NoneDefaultError400ValidOptions contains the optional parameters for the MultipleResponses.Get202None204NoneDefaultError400Valid method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultError400Valid(ctx context.Context, options *MultipleResponsesGet202None204NoneDefaultError400ValidOptions) (MultipleResponsesGet202None204NoneDefaultError400ValidResponse, error) {
 	req, err := client.get202None204NoneDefaultError400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1219,6 +1242,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError400ValidHand
 
 // Get202None204NoneDefaultNone202Invalid - Send a 202 response with an unexpected payload {'property': 'value'}
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGet202None204NoneDefaultNone202InvalidOptions contains the optional parameters for the MultipleResponses.Get202None204NoneDefaultNone202Invalid method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid(ctx context.Context, options *MultipleResponsesGet202None204NoneDefaultNone202InvalidOptions) (MultipleResponsesGet202None204NoneDefaultNone202InvalidResponse, error) {
 	req, err := client.get202None204NoneDefaultNone202InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -1258,6 +1282,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone202InvalidHan
 
 // Get202None204NoneDefaultNone204None - Send a 204 response with no payload
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGet202None204NoneDefaultNone204NoneOptions contains the optional parameters for the MultipleResponses.Get202None204NoneDefaultNone204None method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultNone204None(ctx context.Context, options *MultipleResponsesGet202None204NoneDefaultNone204NoneOptions) (MultipleResponsesGet202None204NoneDefaultNone204NoneResponse, error) {
 	req, err := client.get202None204NoneDefaultNone204NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1297,6 +1322,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone204NoneHandle
 
 // Get202None204NoneDefaultNone400Invalid - Send a 400 response with an unexpected payload {'property': 'value'}
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGet202None204NoneDefaultNone400InvalidOptions contains the optional parameters for the MultipleResponses.Get202None204NoneDefaultNone400Invalid method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid(ctx context.Context, options *MultipleResponsesGet202None204NoneDefaultNone400InvalidOptions) (MultipleResponsesGet202None204NoneDefaultNone400InvalidResponse, error) {
 	req, err := client.get202None204NoneDefaultNone400InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -1336,6 +1362,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone400InvalidHan
 
 // Get202None204NoneDefaultNone400None - Send a 400 response with no payload
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGet202None204NoneDefaultNone400NoneOptions contains the optional parameters for the MultipleResponses.Get202None204NoneDefaultNone400None method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400None(ctx context.Context, options *MultipleResponsesGet202None204NoneDefaultNone400NoneOptions) (MultipleResponsesGet202None204NoneDefaultNone400NoneResponse, error) {
 	req, err := client.get202None204NoneDefaultNone400NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1375,6 +1402,7 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone400NoneHandle
 
 // GetDefaultModelA200None - Send a 200 response with no payload
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGetDefaultModelA200NoneOptions contains the optional parameters for the MultipleResponses.GetDefaultModelA200None method.
 func (client *MultipleResponsesClient) GetDefaultModelA200None(ctx context.Context, options *MultipleResponsesGetDefaultModelA200NoneOptions) (MultipleResponsesGetDefaultModelA200NoneResponse, error) {
 	req, err := client.getDefaultModelA200NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1424,6 +1452,7 @@ func (client *MultipleResponsesClient) getDefaultModelA200NoneHandleError(resp *
 
 // GetDefaultModelA200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGetDefaultModelA200ValidOptions contains the optional parameters for the MultipleResponses.GetDefaultModelA200Valid method.
 func (client *MultipleResponsesClient) GetDefaultModelA200Valid(ctx context.Context, options *MultipleResponsesGetDefaultModelA200ValidOptions) (MultipleResponsesGetDefaultModelA200ValidResponse, error) {
 	req, err := client.getDefaultModelA200ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1473,6 +1502,7 @@ func (client *MultipleResponsesClient) getDefaultModelA200ValidHandleError(resp 
 
 // GetDefaultModelA400None - Send a 400 response with no payload
 // If the operation fails it returns the *MyException error type.
+// options - MultipleResponsesGetDefaultModelA400NoneOptions contains the optional parameters for the MultipleResponses.GetDefaultModelA400None method.
 func (client *MultipleResponsesClient) GetDefaultModelA400None(ctx context.Context, options *MultipleResponsesGetDefaultModelA400NoneOptions) (MultipleResponsesGetDefaultModelA400NoneResponse, error) {
 	req, err := client.getDefaultModelA400NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1514,6 +1544,7 @@ func (client *MultipleResponsesClient) getDefaultModelA400NoneHandleError(resp *
 
 // GetDefaultModelA400Valid - Send a 400 response with valid payload: {'statusCode': '400'}
 // If the operation fails it returns the *MyException error type.
+// options - MultipleResponsesGetDefaultModelA400ValidOptions contains the optional parameters for the MultipleResponses.GetDefaultModelA400Valid method.
 func (client *MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Context, options *MultipleResponsesGetDefaultModelA400ValidOptions) (MultipleResponsesGetDefaultModelA400ValidResponse, error) {
 	req, err := client.getDefaultModelA400ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1555,6 +1586,7 @@ func (client *MultipleResponsesClient) getDefaultModelA400ValidHandleError(resp 
 
 // GetDefaultNone200Invalid - Send a 200 response with invalid payload: {'statusCode': '200'}
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGetDefaultNone200InvalidOptions contains the optional parameters for the MultipleResponses.GetDefaultNone200Invalid method.
 func (client *MultipleResponsesClient) GetDefaultNone200Invalid(ctx context.Context, options *MultipleResponsesGetDefaultNone200InvalidOptions) (MultipleResponsesGetDefaultNone200InvalidResponse, error) {
 	req, err := client.getDefaultNone200InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -1594,6 +1626,7 @@ func (client *MultipleResponsesClient) getDefaultNone200InvalidHandleError(resp 
 
 // GetDefaultNone200None - Send a 200 response with no payload
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGetDefaultNone200NoneOptions contains the optional parameters for the MultipleResponses.GetDefaultNone200None method.
 func (client *MultipleResponsesClient) GetDefaultNone200None(ctx context.Context, options *MultipleResponsesGetDefaultNone200NoneOptions) (MultipleResponsesGetDefaultNone200NoneResponse, error) {
 	req, err := client.getDefaultNone200NoneCreateRequest(ctx, options)
 	if err != nil {
@@ -1633,6 +1666,7 @@ func (client *MultipleResponsesClient) getDefaultNone200NoneHandleError(resp *ht
 
 // GetDefaultNone400Invalid - Send a 400 response with valid payload: {'statusCode': '400'}
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGetDefaultNone400InvalidOptions contains the optional parameters for the MultipleResponses.GetDefaultNone400Invalid method.
 func (client *MultipleResponsesClient) GetDefaultNone400Invalid(ctx context.Context, options *MultipleResponsesGetDefaultNone400InvalidOptions) (MultipleResponsesGetDefaultNone400InvalidResponse, error) {
 	req, err := client.getDefaultNone400InvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -1672,6 +1706,7 @@ func (client *MultipleResponsesClient) getDefaultNone400InvalidHandleError(resp 
 
 // GetDefaultNone400None - Send a 400 response with no payload
 // If the operation fails it returns a generic error.
+// options - MultipleResponsesGetDefaultNone400NoneOptions contains the optional parameters for the MultipleResponses.GetDefaultNone400None method.
 func (client *MultipleResponsesClient) GetDefaultNone400None(ctx context.Context, options *MultipleResponsesGetDefaultNone400NoneOptions) (MultipleResponsesGetDefaultNone400NoneResponse, error) {
 	req, err := client.getDefaultNone400NoneCreateRequest(ctx, options)
 	if err != nil {

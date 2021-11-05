@@ -31,6 +31,9 @@ type SubnetsClient struct {
 }
 
 // NewSubnetsClient creates a new instance of SubnetsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewSubnetsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *SubnetsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,11 @@ func NewSubnetsClient(subscriptionID string, credential azcore.TokenCredential, 
 
 // BeginCreateOrUpdate - Creates or updates a subnet in the specified virtual network.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// virtualNetworkName - The name of the virtual network.
+// subnetName - The name of the subnet.
+// subnetParameters - Parameters supplied to the create or update subnet operation.
+// options - SubnetsBeginCreateOrUpdateOptions contains the optional parameters for the Subnets.BeginCreateOrUpdate method.
 func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet, options *SubnetsBeginCreateOrUpdateOptions) (SubnetsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, subnetName, subnetParameters, options)
 	if err != nil {
@@ -129,6 +137,10 @@ func (client *SubnetsClient) createOrUpdateHandleError(resp *http.Response) erro
 
 // BeginDelete - Deletes the specified subnet.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// virtualNetworkName - The name of the virtual network.
+// subnetName - The name of the subnet.
+// options - SubnetsBeginDeleteOptions contains the optional parameters for the Subnets.BeginDelete method.
 func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *SubnetsBeginDeleteOptions) (SubnetsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {
@@ -209,6 +221,10 @@ func (client *SubnetsClient) deleteHandleError(resp *http.Response) error {
 
 // Get - Gets the specified subnet by virtual network and resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// virtualNetworkName - The name of the virtual network.
+// subnetName - The name of the subnet.
+// options - SubnetsGetOptions contains the optional parameters for the Subnets.Get method.
 func (client *SubnetsClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *SubnetsGetOptions) (SubnetsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {
@@ -281,6 +297,9 @@ func (client *SubnetsClient) getHandleError(resp *http.Response) error {
 
 // List - Gets all subnets in a virtual network.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// virtualNetworkName - The name of the virtual network.
+// options - SubnetsListOptions contains the optional parameters for the Subnets.List method.
 func (client *SubnetsClient) List(resourceGroupName string, virtualNetworkName string, options *SubnetsListOptions) *SubnetsListPager {
 	return &SubnetsListPager{
 		client: client,
@@ -343,6 +362,11 @@ func (client *SubnetsClient) listHandleError(resp *http.Response) error {
 
 // BeginPrepareNetworkPolicies - Prepares a subnet by applying network intent policies.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// virtualNetworkName - The name of the virtual network.
+// subnetName - The name of the subnet.
+// prepareNetworkPoliciesRequestParameters - Parameters supplied to prepare subnet by applying network intent policies.
+// options - SubnetsBeginPrepareNetworkPoliciesOptions contains the optional parameters for the Subnets.BeginPrepareNetworkPolicies method.
 func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest, options *SubnetsBeginPrepareNetworkPoliciesOptions) (SubnetsPrepareNetworkPoliciesPollerResponse, error) {
 	resp, err := client.prepareNetworkPolicies(ctx, resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters, options)
 	if err != nil {
@@ -423,6 +447,11 @@ func (client *SubnetsClient) prepareNetworkPoliciesHandleError(resp *http.Respon
 
 // BeginUnprepareNetworkPolicies - Unprepares a subnet by removing network intent policies.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// virtualNetworkName - The name of the virtual network.
+// subnetName - The name of the subnet.
+// unprepareNetworkPoliciesRequestParameters - Parameters supplied to unprepare subnet to remove network intent policies.
+// options - SubnetsBeginUnprepareNetworkPoliciesOptions contains the optional parameters for the Subnets.BeginUnprepareNetworkPolicies method.
 func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest, options *SubnetsBeginUnprepareNetworkPoliciesOptions) (SubnetsUnprepareNetworkPoliciesPollerResponse, error) {
 	resp, err := client.unprepareNetworkPolicies(ctx, resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters, options)
 	if err != nil {

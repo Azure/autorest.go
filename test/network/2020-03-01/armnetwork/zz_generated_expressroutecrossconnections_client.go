@@ -31,6 +31,9 @@ type ExpressRouteCrossConnectionsClient struct {
 }
 
 // NewExpressRouteCrossConnectionsClient creates a new instance of ExpressRouteCrossConnectionsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewExpressRouteCrossConnectionsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *ExpressRouteCrossConnectionsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,10 @@ func NewExpressRouteCrossConnectionsClient(subscriptionID string, credential azc
 
 // BeginCreateOrUpdate - Update the specified ExpressRouteCrossConnection.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// crossConnectionName - The name of the ExpressRouteCrossConnection.
+// parameters - Parameters supplied to the update express route crossConnection operation.
+// options - ExpressRouteCrossConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCrossConnections.BeginCreateOrUpdate method.
 func (client *ExpressRouteCrossConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, parameters ExpressRouteCrossConnection, options *ExpressRouteCrossConnectionsBeginCreateOrUpdateOptions) (ExpressRouteCrossConnectionsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, crossConnectionName, parameters, options)
 	if err != nil {
@@ -125,6 +132,9 @@ func (client *ExpressRouteCrossConnectionsClient) createOrUpdateHandleError(resp
 
 // Get - Gets details about the specified ExpressRouteCrossConnection.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group (peering location of the circuit).
+// crossConnectionName - The name of the ExpressRouteCrossConnection (service key of the circuit).
+// options - ExpressRouteCrossConnectionsGetOptions contains the optional parameters for the ExpressRouteCrossConnections.Get method.
 func (client *ExpressRouteCrossConnectionsClient) Get(ctx context.Context, resourceGroupName string, crossConnectionName string, options *ExpressRouteCrossConnectionsGetOptions) (ExpressRouteCrossConnectionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, crossConnectionName, options)
 	if err != nil {
@@ -190,6 +200,7 @@ func (client *ExpressRouteCrossConnectionsClient) getHandleError(resp *http.Resp
 
 // List - Retrieves all the ExpressRouteCrossConnections in a subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - ExpressRouteCrossConnectionsListOptions contains the optional parameters for the ExpressRouteCrossConnections.List method.
 func (client *ExpressRouteCrossConnectionsClient) List(options *ExpressRouteCrossConnectionsListOptions) *ExpressRouteCrossConnectionsListPager {
 	return &ExpressRouteCrossConnectionsListPager{
 		client: client,
@@ -244,6 +255,11 @@ func (client *ExpressRouteCrossConnectionsClient) listHandleError(resp *http.Res
 
 // BeginListArpTable - Gets the currently advertised ARP table associated with the express route cross connection in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// crossConnectionName - The name of the ExpressRouteCrossConnection.
+// peeringName - The name of the peering.
+// devicePath - The path of the device.
+// options - ExpressRouteCrossConnectionsBeginListArpTableOptions contains the optional parameters for the ExpressRouteCrossConnections.BeginListArpTable method.
 func (client *ExpressRouteCrossConnectionsClient) BeginListArpTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsBeginListArpTableOptions) (ExpressRouteCrossConnectionsListArpTablePollerResponse, error) {
 	resp, err := client.listArpTable(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath, options)
 	if err != nil {
@@ -328,6 +344,8 @@ func (client *ExpressRouteCrossConnectionsClient) listArpTableHandleError(resp *
 
 // ListByResourceGroup - Retrieves all the ExpressRouteCrossConnections in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - ExpressRouteCrossConnectionsListByResourceGroupOptions contains the optional parameters for the ExpressRouteCrossConnections.ListByResourceGroup method.
 func (client *ExpressRouteCrossConnectionsClient) ListByResourceGroup(resourceGroupName string, options *ExpressRouteCrossConnectionsListByResourceGroupOptions) *ExpressRouteCrossConnectionsListByResourceGroupPager {
 	return &ExpressRouteCrossConnectionsListByResourceGroupPager{
 		client: client,
@@ -386,6 +404,11 @@ func (client *ExpressRouteCrossConnectionsClient) listByResourceGroupHandleError
 
 // BeginListRoutesTable - Gets the currently advertised routes table associated with the express route cross connection in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// crossConnectionName - The name of the ExpressRouteCrossConnection.
+// peeringName - The name of the peering.
+// devicePath - The path of the device.
+// options - ExpressRouteCrossConnectionsBeginListRoutesTableOptions contains the optional parameters for the ExpressRouteCrossConnections.BeginListRoutesTable method.
 func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTable(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsBeginListRoutesTableOptions) (ExpressRouteCrossConnectionsListRoutesTablePollerResponse, error) {
 	resp, err := client.listRoutesTable(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath, options)
 	if err != nil {
@@ -470,6 +493,11 @@ func (client *ExpressRouteCrossConnectionsClient) listRoutesTableHandleError(res
 
 // BeginListRoutesTableSummary - Gets the route table summary associated with the express route cross connection in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// crossConnectionName - The name of the ExpressRouteCrossConnection.
+// peeringName - The name of the peering.
+// devicePath - The path of the device.
+// options - ExpressRouteCrossConnectionsBeginListRoutesTableSummaryOptions contains the optional parameters for the ExpressRouteCrossConnections.BeginListRoutesTableSummary method.
 func (client *ExpressRouteCrossConnectionsClient) BeginListRoutesTableSummary(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, devicePath string, options *ExpressRouteCrossConnectionsBeginListRoutesTableSummaryOptions) (ExpressRouteCrossConnectionsListRoutesTableSummaryPollerResponse, error) {
 	resp, err := client.listRoutesTableSummary(ctx, resourceGroupName, crossConnectionName, peeringName, devicePath, options)
 	if err != nil {
@@ -554,6 +582,10 @@ func (client *ExpressRouteCrossConnectionsClient) listRoutesTableSummaryHandleEr
 
 // UpdateTags - Updates an express route cross connection tags.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// crossConnectionName - The name of the cross connection.
+// crossConnectionParameters - Parameters supplied to update express route cross connection tags.
+// options - ExpressRouteCrossConnectionsUpdateTagsOptions contains the optional parameters for the ExpressRouteCrossConnections.UpdateTags method.
 func (client *ExpressRouteCrossConnectionsClient) UpdateTags(ctx context.Context, resourceGroupName string, crossConnectionName string, crossConnectionParameters TagsObject, options *ExpressRouteCrossConnectionsUpdateTagsOptions) (ExpressRouteCrossConnectionsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, crossConnectionName, crossConnectionParameters, options)
 	if err != nil {

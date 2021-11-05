@@ -24,6 +24,7 @@ type NumberClient struct {
 }
 
 // NewNumberClient creates a new instance of NumberClient with the specified values.
+// options - pass nil to accept the default values.
 func NewNumberClient(options *azcore.ClientOptions) *NumberClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewNumberClient(options *azcore.ClientOptions) *NumberClient {
 
 // GetBigDecimal - Get big decimal value 2.5976931e+101
 // If the operation fails it returns the *Error error type.
+// options - NumberGetBigDecimalOptions contains the optional parameters for the Number.GetBigDecimal method.
 func (client *NumberClient) GetBigDecimal(ctx context.Context, options *NumberGetBigDecimalOptions) (NumberGetBigDecimalResponse, error) {
 	req, err := client.getBigDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -87,6 +89,7 @@ func (client *NumberClient) getBigDecimalHandleError(resp *http.Response) error 
 
 // GetBigDecimalNegativeDecimal - Get big decimal value -99999999.99
 // If the operation fails it returns the *Error error type.
+// options - NumberGetBigDecimalNegativeDecimalOptions contains the optional parameters for the Number.GetBigDecimalNegativeDecimal method.
 func (client *NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context, options *NumberGetBigDecimalNegativeDecimalOptions) (NumberGetBigDecimalNegativeDecimalResponse, error) {
 	req, err := client.getBigDecimalNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -137,6 +140,7 @@ func (client *NumberClient) getBigDecimalNegativeDecimalHandleError(resp *http.R
 
 // GetBigDecimalPositiveDecimal - Get big decimal value 99999999.99
 // If the operation fails it returns the *Error error type.
+// options - NumberGetBigDecimalPositiveDecimalOptions contains the optional parameters for the Number.GetBigDecimalPositiveDecimal method.
 func (client *NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context, options *NumberGetBigDecimalPositiveDecimalOptions) (NumberGetBigDecimalPositiveDecimalResponse, error) {
 	req, err := client.getBigDecimalPositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -187,6 +191,7 @@ func (client *NumberClient) getBigDecimalPositiveDecimalHandleError(resp *http.R
 
 // GetBigDouble - Get big double value 2.5976931e+101
 // If the operation fails it returns the *Error error type.
+// options - NumberGetBigDoubleOptions contains the optional parameters for the Number.GetBigDouble method.
 func (client *NumberClient) GetBigDouble(ctx context.Context, options *NumberGetBigDoubleOptions) (NumberGetBigDoubleResponse, error) {
 	req, err := client.getBigDoubleCreateRequest(ctx, options)
 	if err != nil {
@@ -237,6 +242,7 @@ func (client *NumberClient) getBigDoubleHandleError(resp *http.Response) error {
 
 // GetBigDoubleNegativeDecimal - Get big double value -99999999.99
 // If the operation fails it returns the *Error error type.
+// options - NumberGetBigDoubleNegativeDecimalOptions contains the optional parameters for the Number.GetBigDoubleNegativeDecimal method.
 func (client *NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context, options *NumberGetBigDoubleNegativeDecimalOptions) (NumberGetBigDoubleNegativeDecimalResponse, error) {
 	req, err := client.getBigDoubleNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -287,6 +293,7 @@ func (client *NumberClient) getBigDoubleNegativeDecimalHandleError(resp *http.Re
 
 // GetBigDoublePositiveDecimal - Get big double value 99999999.99
 // If the operation fails it returns the *Error error type.
+// options - NumberGetBigDoublePositiveDecimalOptions contains the optional parameters for the Number.GetBigDoublePositiveDecimal method.
 func (client *NumberClient) GetBigDoublePositiveDecimal(ctx context.Context, options *NumberGetBigDoublePositiveDecimalOptions) (NumberGetBigDoublePositiveDecimalResponse, error) {
 	req, err := client.getBigDoublePositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -337,6 +344,7 @@ func (client *NumberClient) getBigDoublePositiveDecimalHandleError(resp *http.Re
 
 // GetBigFloat - Get big float value 3.402823e+20
 // If the operation fails it returns the *Error error type.
+// options - NumberGetBigFloatOptions contains the optional parameters for the Number.GetBigFloat method.
 func (client *NumberClient) GetBigFloat(ctx context.Context, options *NumberGetBigFloatOptions) (NumberGetBigFloatResponse, error) {
 	req, err := client.getBigFloatCreateRequest(ctx, options)
 	if err != nil {
@@ -387,6 +395,7 @@ func (client *NumberClient) getBigFloatHandleError(resp *http.Response) error {
 
 // GetInvalidDecimal - Get invalid decimal Number value
 // If the operation fails it returns the *Error error type.
+// options - NumberGetInvalidDecimalOptions contains the optional parameters for the Number.GetInvalidDecimal method.
 func (client *NumberClient) GetInvalidDecimal(ctx context.Context, options *NumberGetInvalidDecimalOptions) (NumberGetInvalidDecimalResponse, error) {
 	req, err := client.getInvalidDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -437,6 +446,7 @@ func (client *NumberClient) getInvalidDecimalHandleError(resp *http.Response) er
 
 // GetInvalidDouble - Get invalid double Number value
 // If the operation fails it returns the *Error error type.
+// options - NumberGetInvalidDoubleOptions contains the optional parameters for the Number.GetInvalidDouble method.
 func (client *NumberClient) GetInvalidDouble(ctx context.Context, options *NumberGetInvalidDoubleOptions) (NumberGetInvalidDoubleResponse, error) {
 	req, err := client.getInvalidDoubleCreateRequest(ctx, options)
 	if err != nil {
@@ -487,6 +497,7 @@ func (client *NumberClient) getInvalidDoubleHandleError(resp *http.Response) err
 
 // GetInvalidFloat - Get invalid float Number value
 // If the operation fails it returns the *Error error type.
+// options - NumberGetInvalidFloatOptions contains the optional parameters for the Number.GetInvalidFloat method.
 func (client *NumberClient) GetInvalidFloat(ctx context.Context, options *NumberGetInvalidFloatOptions) (NumberGetInvalidFloatResponse, error) {
 	req, err := client.getInvalidFloatCreateRequest(ctx, options)
 	if err != nil {
@@ -537,6 +548,7 @@ func (client *NumberClient) getInvalidFloatHandleError(resp *http.Response) erro
 
 // GetNull - Get null Number value
 // If the operation fails it returns the *Error error type.
+// options - NumberGetNullOptions contains the optional parameters for the Number.GetNull method.
 func (client *NumberClient) GetNull(ctx context.Context, options *NumberGetNullOptions) (NumberGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -587,6 +599,7 @@ func (client *NumberClient) getNullHandleError(resp *http.Response) error {
 
 // GetSmallDecimal - Get small decimal value 2.5976931e-101
 // If the operation fails it returns the *Error error type.
+// options - NumberGetSmallDecimalOptions contains the optional parameters for the Number.GetSmallDecimal method.
 func (client *NumberClient) GetSmallDecimal(ctx context.Context, options *NumberGetSmallDecimalOptions) (NumberGetSmallDecimalResponse, error) {
 	req, err := client.getSmallDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -637,6 +650,7 @@ func (client *NumberClient) getSmallDecimalHandleError(resp *http.Response) erro
 
 // GetSmallDouble - Get big double value 2.5976931e-101
 // If the operation fails it returns the *Error error type.
+// options - NumberGetSmallDoubleOptions contains the optional parameters for the Number.GetSmallDouble method.
 func (client *NumberClient) GetSmallDouble(ctx context.Context, options *NumberGetSmallDoubleOptions) (NumberGetSmallDoubleResponse, error) {
 	req, err := client.getSmallDoubleCreateRequest(ctx, options)
 	if err != nil {
@@ -687,6 +701,7 @@ func (client *NumberClient) getSmallDoubleHandleError(resp *http.Response) error
 
 // GetSmallFloat - Get big double value 3.402823e-20
 // If the operation fails it returns the *Error error type.
+// options - NumberGetSmallFloatOptions contains the optional parameters for the Number.GetSmallFloat method.
 func (client *NumberClient) GetSmallFloat(ctx context.Context, options *NumberGetSmallFloatOptions) (NumberGetSmallFloatResponse, error) {
 	req, err := client.getSmallFloatCreateRequest(ctx, options)
 	if err != nil {
@@ -737,6 +752,8 @@ func (client *NumberClient) getSmallFloatHandleError(resp *http.Response) error 
 
 // PutBigDecimal - Put big decimal value 2.5976931e+101
 // If the operation fails it returns the *Error error type.
+// numberBody - number body
+// options - NumberPutBigDecimalOptions contains the optional parameters for the Number.PutBigDecimal method.
 func (client *NumberClient) PutBigDecimal(ctx context.Context, numberBody float64, options *NumberPutBigDecimalOptions) (NumberPutBigDecimalResponse, error) {
 	req, err := client.putBigDecimalCreateRequest(ctx, numberBody, options)
 	if err != nil {
@@ -778,6 +795,7 @@ func (client *NumberClient) putBigDecimalHandleError(resp *http.Response) error 
 
 // PutBigDecimalNegativeDecimal - Put big decimal value -99999999.99
 // If the operation fails it returns the *Error error type.
+// options - NumberPutBigDecimalNegativeDecimalOptions contains the optional parameters for the Number.PutBigDecimalNegativeDecimal method.
 func (client *NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context, options *NumberPutBigDecimalNegativeDecimalOptions) (NumberPutBigDecimalNegativeDecimalResponse, error) {
 	req, err := client.putBigDecimalNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -819,6 +837,7 @@ func (client *NumberClient) putBigDecimalNegativeDecimalHandleError(resp *http.R
 
 // PutBigDecimalPositiveDecimal - Put big decimal value 99999999.99
 // If the operation fails it returns the *Error error type.
+// options - NumberPutBigDecimalPositiveDecimalOptions contains the optional parameters for the Number.PutBigDecimalPositiveDecimal method.
 func (client *NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context, options *NumberPutBigDecimalPositiveDecimalOptions) (NumberPutBigDecimalPositiveDecimalResponse, error) {
 	req, err := client.putBigDecimalPositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -860,6 +879,8 @@ func (client *NumberClient) putBigDecimalPositiveDecimalHandleError(resp *http.R
 
 // PutBigDouble - Put big double value 2.5976931e+101
 // If the operation fails it returns the *Error error type.
+// numberBody - number body
+// options - NumberPutBigDoubleOptions contains the optional parameters for the Number.PutBigDouble method.
 func (client *NumberClient) PutBigDouble(ctx context.Context, numberBody float64, options *NumberPutBigDoubleOptions) (NumberPutBigDoubleResponse, error) {
 	req, err := client.putBigDoubleCreateRequest(ctx, numberBody, options)
 	if err != nil {
@@ -901,6 +922,7 @@ func (client *NumberClient) putBigDoubleHandleError(resp *http.Response) error {
 
 // PutBigDoubleNegativeDecimal - Put big double value -99999999.99
 // If the operation fails it returns the *Error error type.
+// options - NumberPutBigDoubleNegativeDecimalOptions contains the optional parameters for the Number.PutBigDoubleNegativeDecimal method.
 func (client *NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context, options *NumberPutBigDoubleNegativeDecimalOptions) (NumberPutBigDoubleNegativeDecimalResponse, error) {
 	req, err := client.putBigDoubleNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -942,6 +964,7 @@ func (client *NumberClient) putBigDoubleNegativeDecimalHandleError(resp *http.Re
 
 // PutBigDoublePositiveDecimal - Put big double value 99999999.99
 // If the operation fails it returns the *Error error type.
+// options - NumberPutBigDoublePositiveDecimalOptions contains the optional parameters for the Number.PutBigDoublePositiveDecimal method.
 func (client *NumberClient) PutBigDoublePositiveDecimal(ctx context.Context, options *NumberPutBigDoublePositiveDecimalOptions) (NumberPutBigDoublePositiveDecimalResponse, error) {
 	req, err := client.putBigDoublePositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
@@ -983,6 +1006,8 @@ func (client *NumberClient) putBigDoublePositiveDecimalHandleError(resp *http.Re
 
 // PutBigFloat - Put big float value 3.402823e+20
 // If the operation fails it returns the *Error error type.
+// numberBody - number body
+// options - NumberPutBigFloatOptions contains the optional parameters for the Number.PutBigFloat method.
 func (client *NumberClient) PutBigFloat(ctx context.Context, numberBody float32, options *NumberPutBigFloatOptions) (NumberPutBigFloatResponse, error) {
 	req, err := client.putBigFloatCreateRequest(ctx, numberBody, options)
 	if err != nil {
@@ -1024,6 +1049,8 @@ func (client *NumberClient) putBigFloatHandleError(resp *http.Response) error {
 
 // PutSmallDecimal - Put small decimal value 2.5976931e-101
 // If the operation fails it returns the *Error error type.
+// numberBody - number body
+// options - NumberPutSmallDecimalOptions contains the optional parameters for the Number.PutSmallDecimal method.
 func (client *NumberClient) PutSmallDecimal(ctx context.Context, numberBody float64, options *NumberPutSmallDecimalOptions) (NumberPutSmallDecimalResponse, error) {
 	req, err := client.putSmallDecimalCreateRequest(ctx, numberBody, options)
 	if err != nil {
@@ -1065,6 +1092,8 @@ func (client *NumberClient) putSmallDecimalHandleError(resp *http.Response) erro
 
 // PutSmallDouble - Put small double value 2.5976931e-101
 // If the operation fails it returns the *Error error type.
+// numberBody - number body
+// options - NumberPutSmallDoubleOptions contains the optional parameters for the Number.PutSmallDouble method.
 func (client *NumberClient) PutSmallDouble(ctx context.Context, numberBody float64, options *NumberPutSmallDoubleOptions) (NumberPutSmallDoubleResponse, error) {
 	req, err := client.putSmallDoubleCreateRequest(ctx, numberBody, options)
 	if err != nil {
@@ -1106,6 +1135,8 @@ func (client *NumberClient) putSmallDoubleHandleError(resp *http.Response) error
 
 // PutSmallFloat - Put small float value 3.402823e-20
 // If the operation fails it returns the *Error error type.
+// numberBody - number body
+// options - NumberPutSmallFloatOptions contains the optional parameters for the Number.PutSmallFloat method.
 func (client *NumberClient) PutSmallFloat(ctx context.Context, numberBody float32, options *NumberPutSmallFloatOptions) (NumberPutSmallFloatResponse, error) {
 	req, err := client.putSmallFloatCreateRequest(ctx, numberBody, options)
 	if err != nil {

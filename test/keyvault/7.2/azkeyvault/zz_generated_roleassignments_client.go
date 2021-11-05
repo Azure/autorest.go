@@ -26,6 +26,7 @@ type RoleAssignmentsClient struct {
 }
 
 // NewRoleAssignmentsClient creates a new instance of RoleAssignmentsClient with the specified values.
+// pl - the pipeline used for sending requests and handling responses.
 func NewRoleAssignmentsClient(pl runtime.Pipeline) *RoleAssignmentsClient {
 	client := &RoleAssignmentsClient{
 		pl: pl,
@@ -35,6 +36,11 @@ func NewRoleAssignmentsClient(pl runtime.Pipeline) *RoleAssignmentsClient {
 
 // Create - Creates a role assignment.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// scope - The scope of the role assignment to create.
+// roleAssignmentName - The name of the role assignment to create. It can be any valid GUID.
+// parameters - Parameters for the role assignment.
+// options - RoleAssignmentsCreateOptions contains the optional parameters for the RoleAssignments.Create method.
 func (client *RoleAssignmentsClient) Create(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, parameters RoleAssignmentCreateParameters, options *RoleAssignmentsCreateOptions) (RoleAssignmentsCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, vaultBaseURL, scope, roleAssignmentName, parameters, options)
 	if err != nil {
@@ -95,6 +101,10 @@ func (client *RoleAssignmentsClient) createHandleError(resp *http.Response) erro
 
 // Delete - Deletes a role assignment.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// scope - The scope of the role assignment to delete.
+// roleAssignmentName - The name of the role assignment to delete.
+// options - RoleAssignmentsDeleteOptions contains the optional parameters for the RoleAssignments.Delete method.
 func (client *RoleAssignmentsClient) Delete(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsDeleteOptions) (RoleAssignmentsDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, vaultBaseURL, scope, roleAssignmentName, options)
 	if err != nil {
@@ -155,6 +165,10 @@ func (client *RoleAssignmentsClient) deleteHandleError(resp *http.Response) erro
 
 // Get - Get the specified role assignment.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// scope - The scope of the role assignment.
+// roleAssignmentName - The name of the role assignment to get.
+// options - RoleAssignmentsGetOptions contains the optional parameters for the RoleAssignments.Get method.
 func (client *RoleAssignmentsClient) Get(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsGetOptions) (RoleAssignmentsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, vaultBaseURL, scope, roleAssignmentName, options)
 	if err != nil {
@@ -215,6 +229,9 @@ func (client *RoleAssignmentsClient) getHandleError(resp *http.Response) error {
 
 // ListForScope - Gets role assignments for a scope.
 // If the operation fails it returns the *KeyVaultError error type.
+// vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
+// scope - The scope of the role assignments.
+// options - RoleAssignmentsListForScopeOptions contains the optional parameters for the RoleAssignments.ListForScope method.
 func (client *RoleAssignmentsClient) ListForScope(vaultBaseURL string, scope string, options *RoleAssignmentsListForScopeOptions) *RoleAssignmentsListForScopePager {
 	return &RoleAssignmentsListForScopePager{
 		client: client,

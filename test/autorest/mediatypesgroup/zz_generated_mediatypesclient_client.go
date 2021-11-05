@@ -26,6 +26,7 @@ type MediaTypesClient struct {
 }
 
 // NewMediaTypesClient creates a new instance of MediaTypesClient with the specified values.
+// options - pass nil to accept the default values.
 func NewMediaTypesClient(options *azcore.ClientOptions) *MediaTypesClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -39,6 +40,8 @@ func NewMediaTypesClient(options *azcore.ClientOptions) *MediaTypesClient {
 
 // AnalyzeBody - Analyze body, that could be different media types.
 // If the operation fails it returns a generic error.
+// contentType - Upload file type
+// options - MediaTypesClientAnalyzeBodyOptions contains the optional parameters for the MediaTypesClient.AnalyzeBody method.
 func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyOptions) (MediaTypesClientAnalyzeBodyResponse, error) {
 	req, err := client.analyzeBodyCreateRequest(ctx, contentType, options)
 	if err != nil {
@@ -92,6 +95,8 @@ func (client *MediaTypesClient) analyzeBodyHandleError(resp *http.Response) erro
 
 // AnalyzeBodyNoAcceptHeader - Analyze body, that could be different media types. Adds to AnalyzeBody by not having an accept type.
 // If the operation fails it returns a generic error.
+// contentType - Upload file type
+// options - MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeader method.
 func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeader(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions) (MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse, error) {
 	req, err := client.analyzeBodyNoAcceptHeaderCreateRequest(ctx, contentType, options)
 	if err != nil {
@@ -135,6 +140,7 @@ func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderHandleError(resp *http.
 
 // AnalyzeBodyNoAcceptHeaderWithSourcePath - Analyze body, that could be different media types. Adds to AnalyzeBody by not having an accept type.
 // If the operation fails it returns a generic error.
+// options - MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithSourcePath method.
 func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeaderWithSourcePath(ctx context.Context, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathOptions) (MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse, error) {
 	req, err := client.analyzeBodyNoAcceptHeaderWithSourcePathCreateRequest(ctx, options)
 	if err != nil {
@@ -177,6 +183,7 @@ func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithSourcePathHandleErr
 
 // AnalyzeBodyWithSourcePath - Analyze body, that could be different media types.
 // If the operation fails it returns a generic error.
+// options - MediaTypesClientAnalyzeBodyWithSourcePathOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithSourcePath method.
 func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (MediaTypesClientAnalyzeBodyWithSourcePathResponse, error) {
 	req, err := client.analyzeBodyWithSourcePathCreateRequest(ctx, options)
 	if err != nil {
@@ -229,6 +236,7 @@ func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleError(resp *http.
 
 // ContentTypeWithEncoding - Pass in contentType 'text/plain; encoding=UTF-8' to pass test. Value for input does not matter
 // If the operation fails it returns a generic error.
+// options - MediaTypesClientContentTypeWithEncodingOptions contains the optional parameters for the MediaTypesClient.ContentTypeWithEncoding method.
 func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, options *MediaTypesClientContentTypeWithEncodingOptions) (MediaTypesClientContentTypeWithEncodingResponse, error) {
 	req, err := client.contentTypeWithEncodingCreateRequest(ctx, options)
 	if err != nil {

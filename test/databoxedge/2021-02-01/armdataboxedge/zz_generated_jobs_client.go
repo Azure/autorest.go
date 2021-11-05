@@ -28,6 +28,8 @@ type JobsClient struct {
 }
 
 // NewJobsClient creates a new instance of JobsClient with the specified values.
+// subscriptionID - The subscription ID.
+// options - pass nil to accept the default values.
 func NewJobsClient(subscriptionID string, options *azcore.ClientOptions) *JobsClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -42,6 +44,10 @@ func NewJobsClient(subscriptionID string, options *azcore.ClientOptions) *JobsCl
 
 // Get - Gets the details of a specified job on a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// name - The job name.
+// resourceGroupName - The resource group name.
+// options - JobsGetOptions contains the optional parameters for the Jobs.Get method.
 func (client *JobsClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *JobsGetOptions) (JobsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {

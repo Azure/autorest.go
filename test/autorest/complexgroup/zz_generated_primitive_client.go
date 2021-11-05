@@ -24,6 +24,7 @@ type PrimitiveClient struct {
 }
 
 // NewPrimitiveClient creates a new instance of PrimitiveClient with the specified values.
+// options - pass nil to accept the default values.
 func NewPrimitiveClient(options *azcore.ClientOptions) *PrimitiveClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewPrimitiveClient(options *azcore.ClientOptions) *PrimitiveClient {
 
 // GetBool - Get complex types with bool properties
 // If the operation fails it returns the *Error error type.
+// options - PrimitiveGetBoolOptions contains the optional parameters for the Primitive.GetBool method.
 func (client *PrimitiveClient) GetBool(ctx context.Context, options *PrimitiveGetBoolOptions) (PrimitiveGetBoolResponse, error) {
 	req, err := client.getBoolCreateRequest(ctx, options)
 	if err != nil {
@@ -87,6 +89,7 @@ func (client *PrimitiveClient) getBoolHandleError(resp *http.Response) error {
 
 // GetByte - Get complex types with byte properties
 // If the operation fails it returns the *Error error type.
+// options - PrimitiveGetByteOptions contains the optional parameters for the Primitive.GetByte method.
 func (client *PrimitiveClient) GetByte(ctx context.Context, options *PrimitiveGetByteOptions) (PrimitiveGetByteResponse, error) {
 	req, err := client.getByteCreateRequest(ctx, options)
 	if err != nil {
@@ -137,6 +140,7 @@ func (client *PrimitiveClient) getByteHandleError(resp *http.Response) error {
 
 // GetDate - Get complex types with date properties
 // If the operation fails it returns the *Error error type.
+// options - PrimitiveGetDateOptions contains the optional parameters for the Primitive.GetDate method.
 func (client *PrimitiveClient) GetDate(ctx context.Context, options *PrimitiveGetDateOptions) (PrimitiveGetDateResponse, error) {
 	req, err := client.getDateCreateRequest(ctx, options)
 	if err != nil {
@@ -187,6 +191,7 @@ func (client *PrimitiveClient) getDateHandleError(resp *http.Response) error {
 
 // GetDateTime - Get complex types with datetime properties
 // If the operation fails it returns the *Error error type.
+// options - PrimitiveGetDateTimeOptions contains the optional parameters for the Primitive.GetDateTime method.
 func (client *PrimitiveClient) GetDateTime(ctx context.Context, options *PrimitiveGetDateTimeOptions) (PrimitiveGetDateTimeResponse, error) {
 	req, err := client.getDateTimeCreateRequest(ctx, options)
 	if err != nil {
@@ -237,6 +242,7 @@ func (client *PrimitiveClient) getDateTimeHandleError(resp *http.Response) error
 
 // GetDateTimeRFC1123 - Get complex types with datetimeRfc1123 properties
 // If the operation fails it returns the *Error error type.
+// options - PrimitiveGetDateTimeRFC1123Options contains the optional parameters for the Primitive.GetDateTimeRFC1123 method.
 func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *PrimitiveGetDateTimeRFC1123Options) (PrimitiveGetDateTimeRFC1123Response, error) {
 	req, err := client.getDateTimeRFC1123CreateRequest(ctx, options)
 	if err != nil {
@@ -287,6 +293,7 @@ func (client *PrimitiveClient) getDateTimeRFC1123HandleError(resp *http.Response
 
 // GetDouble - Get complex types with double properties
 // If the operation fails it returns the *Error error type.
+// options - PrimitiveGetDoubleOptions contains the optional parameters for the Primitive.GetDouble method.
 func (client *PrimitiveClient) GetDouble(ctx context.Context, options *PrimitiveGetDoubleOptions) (PrimitiveGetDoubleResponse, error) {
 	req, err := client.getDoubleCreateRequest(ctx, options)
 	if err != nil {
@@ -337,6 +344,7 @@ func (client *PrimitiveClient) getDoubleHandleError(resp *http.Response) error {
 
 // GetDuration - Get complex types with duration properties
 // If the operation fails it returns the *Error error type.
+// options - PrimitiveGetDurationOptions contains the optional parameters for the Primitive.GetDuration method.
 func (client *PrimitiveClient) GetDuration(ctx context.Context, options *PrimitiveGetDurationOptions) (PrimitiveGetDurationResponse, error) {
 	req, err := client.getDurationCreateRequest(ctx, options)
 	if err != nil {
@@ -387,6 +395,7 @@ func (client *PrimitiveClient) getDurationHandleError(resp *http.Response) error
 
 // GetFloat - Get complex types with float properties
 // If the operation fails it returns the *Error error type.
+// options - PrimitiveGetFloatOptions contains the optional parameters for the Primitive.GetFloat method.
 func (client *PrimitiveClient) GetFloat(ctx context.Context, options *PrimitiveGetFloatOptions) (PrimitiveGetFloatResponse, error) {
 	req, err := client.getFloatCreateRequest(ctx, options)
 	if err != nil {
@@ -437,6 +446,7 @@ func (client *PrimitiveClient) getFloatHandleError(resp *http.Response) error {
 
 // GetInt - Get complex types with integer properties
 // If the operation fails it returns the *Error error type.
+// options - PrimitiveGetIntOptions contains the optional parameters for the Primitive.GetInt method.
 func (client *PrimitiveClient) GetInt(ctx context.Context, options *PrimitiveGetIntOptions) (PrimitiveGetIntResponse, error) {
 	req, err := client.getIntCreateRequest(ctx, options)
 	if err != nil {
@@ -487,6 +497,7 @@ func (client *PrimitiveClient) getIntHandleError(resp *http.Response) error {
 
 // GetLong - Get complex types with long properties
 // If the operation fails it returns the *Error error type.
+// options - PrimitiveGetLongOptions contains the optional parameters for the Primitive.GetLong method.
 func (client *PrimitiveClient) GetLong(ctx context.Context, options *PrimitiveGetLongOptions) (PrimitiveGetLongResponse, error) {
 	req, err := client.getLongCreateRequest(ctx, options)
 	if err != nil {
@@ -537,6 +548,7 @@ func (client *PrimitiveClient) getLongHandleError(resp *http.Response) error {
 
 // GetString - Get complex types with string properties
 // If the operation fails it returns the *Error error type.
+// options - PrimitiveGetStringOptions contains the optional parameters for the Primitive.GetString method.
 func (client *PrimitiveClient) GetString(ctx context.Context, options *PrimitiveGetStringOptions) (PrimitiveGetStringResponse, error) {
 	req, err := client.getStringCreateRequest(ctx, options)
 	if err != nil {
@@ -587,6 +599,8 @@ func (client *PrimitiveClient) getStringHandleError(resp *http.Response) error {
 
 // PutBool - Put complex types with bool properties
 // If the operation fails it returns the *Error error type.
+// complexBody - Please put true and false
+// options - PrimitivePutBoolOptions contains the optional parameters for the Primitive.PutBool method.
 func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWrapper, options *PrimitivePutBoolOptions) (PrimitivePutBoolResponse, error) {
 	req, err := client.putBoolCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -628,6 +642,8 @@ func (client *PrimitiveClient) putBoolHandleError(resp *http.Response) error {
 
 // PutByte - Put complex types with byte properties
 // If the operation fails it returns the *Error error type.
+// complexBody - Please put non-ascii byte string hex(FF FE FD FC 00 FA F9 F8 F7 F6)
+// options - PrimitivePutByteOptions contains the optional parameters for the Primitive.PutByte method.
 func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapper, options *PrimitivePutByteOptions) (PrimitivePutByteResponse, error) {
 	req, err := client.putByteCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -669,6 +685,8 @@ func (client *PrimitiveClient) putByteHandleError(resp *http.Response) error {
 
 // PutDate - Put complex types with date properties
 // If the operation fails it returns the *Error error type.
+// complexBody - Please put '0001-01-01' and '2016-02-29'
+// options - PrimitivePutDateOptions contains the optional parameters for the Primitive.PutDate method.
 func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper, options *PrimitivePutDateOptions) (PrimitivePutDateResponse, error) {
 	req, err := client.putDateCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -710,6 +728,8 @@ func (client *PrimitiveClient) putDateHandleError(resp *http.Response) error {
 
 // PutDateTime - Put complex types with datetime properties
 // If the operation fails it returns the *Error error type.
+// complexBody - Please put '0001-01-01T12:00:00-04:00' and '2015-05-18T11:38:00-08:00'
+// options - PrimitivePutDateTimeOptions contains the optional parameters for the Primitive.PutDateTime method.
 func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody DatetimeWrapper, options *PrimitivePutDateTimeOptions) (PrimitivePutDateTimeResponse, error) {
 	req, err := client.putDateTimeCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -751,6 +771,8 @@ func (client *PrimitiveClient) putDateTimeHandleError(resp *http.Response) error
 
 // PutDateTimeRFC1123 - Put complex types with datetimeRfc1123 properties
 // If the operation fails it returns the *Error error type.
+// complexBody - Please put 'Mon, 01 Jan 0001 12:00:00 GMT' and 'Mon, 18 May 2015 11:38:00 GMT'
+// options - PrimitivePutDateTimeRFC1123Options contains the optional parameters for the Primitive.PutDateTimeRFC1123 method.
 func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitivePutDateTimeRFC1123Options) (PrimitivePutDateTimeRFC1123Response, error) {
 	req, err := client.putDateTimeRFC1123CreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -792,6 +814,8 @@ func (client *PrimitiveClient) putDateTimeRFC1123HandleError(resp *http.Response
 
 // PutDouble - Put complex types with double properties
 // If the operation fails it returns the *Error error type.
+// complexBody - Please put 3e-100 and -0.000000000000000000000000000000000000000000000000000000005
+// options - PrimitivePutDoubleOptions contains the optional parameters for the Primitive.PutDouble method.
 func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleWrapper, options *PrimitivePutDoubleOptions) (PrimitivePutDoubleResponse, error) {
 	req, err := client.putDoubleCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -833,6 +857,8 @@ func (client *PrimitiveClient) putDoubleHandleError(resp *http.Response) error {
 
 // PutDuration - Put complex types with duration properties
 // If the operation fails it returns the *Error error type.
+// complexBody - Please put 'P123DT22H14M12.011S'
+// options - PrimitivePutDurationOptions contains the optional parameters for the Primitive.PutDuration method.
 func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody DurationWrapper, options *PrimitivePutDurationOptions) (PrimitivePutDurationResponse, error) {
 	req, err := client.putDurationCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -874,6 +900,8 @@ func (client *PrimitiveClient) putDurationHandleError(resp *http.Response) error
 
 // PutFloat - Put complex types with float properties
 // If the operation fails it returns the *Error error type.
+// complexBody - Please put 1.05 and -0.003
+// options - PrimitivePutFloatOptions contains the optional parameters for the Primitive.PutFloat method.
 func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWrapper, options *PrimitivePutFloatOptions) (PrimitivePutFloatResponse, error) {
 	req, err := client.putFloatCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -915,6 +943,8 @@ func (client *PrimitiveClient) putFloatHandleError(resp *http.Response) error {
 
 // PutInt - Put complex types with integer properties
 // If the operation fails it returns the *Error error type.
+// complexBody - Please put -1 and 2
+// options - PrimitivePutIntOptions contains the optional parameters for the Primitive.PutInt method.
 func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper, options *PrimitivePutIntOptions) (PrimitivePutIntResponse, error) {
 	req, err := client.putIntCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -956,6 +986,8 @@ func (client *PrimitiveClient) putIntHandleError(resp *http.Response) error {
 
 // PutLong - Put complex types with long properties
 // If the operation fails it returns the *Error error type.
+// complexBody - Please put 1099511627775 and -999511627788
+// options - PrimitivePutLongOptions contains the optional parameters for the Primitive.PutLong method.
 func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapper, options *PrimitivePutLongOptions) (PrimitivePutLongResponse, error) {
 	req, err := client.putLongCreateRequest(ctx, complexBody, options)
 	if err != nil {
@@ -997,6 +1029,8 @@ func (client *PrimitiveClient) putLongHandleError(resp *http.Response) error {
 
 // PutString - Put complex types with string properties
 // If the operation fails it returns the *Error error type.
+// complexBody - Please put 'goodrequest', '', and null
+// options - PrimitivePutStringOptions contains the optional parameters for the Primitive.PutString method.
 func (client *PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper, options *PrimitivePutStringOptions) (PrimitivePutStringResponse, error) {
 	req, err := client.putStringCreateRequest(ctx, complexBody, options)
 	if err != nil {

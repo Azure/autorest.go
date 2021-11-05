@@ -24,6 +24,7 @@ type ByteClient struct {
 }
 
 // NewByteClient creates a new instance of ByteClient with the specified values.
+// options - pass nil to accept the default values.
 func NewByteClient(options *azcore.ClientOptions) *ByteClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewByteClient(options *azcore.ClientOptions) *ByteClient {
 
 // GetEmpty - Get empty byte value ''
 // If the operation fails it returns the *Error error type.
+// options - ByteGetEmptyOptions contains the optional parameters for the Byte.GetEmpty method.
 func (client *ByteClient) GetEmpty(ctx context.Context, options *ByteGetEmptyOptions) (ByteGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -87,6 +89,7 @@ func (client *ByteClient) getEmptyHandleError(resp *http.Response) error {
 
 // GetInvalid - Get invalid byte value ':::SWAGGER::::'
 // If the operation fails it returns the *Error error type.
+// options - ByteGetInvalidOptions contains the optional parameters for the Byte.GetInvalid method.
 func (client *ByteClient) GetInvalid(ctx context.Context, options *ByteGetInvalidOptions) (ByteGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -137,6 +140,7 @@ func (client *ByteClient) getInvalidHandleError(resp *http.Response) error {
 
 // GetNonASCII - Get non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 // If the operation fails it returns the *Error error type.
+// options - ByteGetNonASCIIOptions contains the optional parameters for the Byte.GetNonASCII method.
 func (client *ByteClient) GetNonASCII(ctx context.Context, options *ByteGetNonASCIIOptions) (ByteGetNonASCIIResponse, error) {
 	req, err := client.getNonASCIICreateRequest(ctx, options)
 	if err != nil {
@@ -187,6 +191,7 @@ func (client *ByteClient) getNonASCIIHandleError(resp *http.Response) error {
 
 // GetNull - Get null byte value
 // If the operation fails it returns the *Error error type.
+// options - ByteGetNullOptions contains the optional parameters for the Byte.GetNull method.
 func (client *ByteClient) GetNull(ctx context.Context, options *ByteGetNullOptions) (ByteGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -237,6 +242,8 @@ func (client *ByteClient) getNullHandleError(resp *http.Response) error {
 
 // PutNonASCII - Put non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 // If the operation fails it returns the *Error error type.
+// byteBody - Base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
+// options - BytePutNonASCIIOptions contains the optional parameters for the Byte.PutNonASCII method.
 func (client *ByteClient) PutNonASCII(ctx context.Context, byteBody []byte, options *BytePutNonASCIIOptions) (BytePutNonASCIIResponse, error) {
 	req, err := client.putNonASCIICreateRequest(ctx, byteBody, options)
 	if err != nil {

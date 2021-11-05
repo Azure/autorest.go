@@ -25,6 +25,7 @@ type XMSClientRequestIDClient struct {
 }
 
 // NewXMSClientRequestIDClient creates a new instance of XMSClientRequestIDClient with the specified values.
+// options - pass nil to accept the default values.
 func NewXMSClientRequestIDClient(options *azcore.ClientOptions) *XMSClientRequestIDClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -38,6 +39,7 @@ func NewXMSClientRequestIDClient(options *azcore.ClientOptions) *XMSClientReques
 
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
 // If the operation fails it returns a generic error.
+// options - XMSClientRequestIDGetOptions contains the optional parameters for the XMSClientRequestID.Get method.
 func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSClientRequestIDGetOptions) (XMSClientRequestIDGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -77,6 +79,8 @@ func (client *XMSClientRequestIDClient) getHandleError(resp *http.Response) erro
 
 // ParamGet - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
 // If the operation fails it returns the *Error error type.
+// xmsClientRequestID - This should appear as a method parameter, use value '9C4D50EE-2D56-4CD3-8152-34347DC9F2B0'
+// options - XMSClientRequestIDParamGetOptions contains the optional parameters for the XMSClientRequestID.ParamGet method.
 func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientRequestID string, options *XMSClientRequestIDParamGetOptions) (XMSClientRequestIDParamGetResponse, error) {
 	req, err := client.paramGetCreateRequest(ctx, xmsClientRequestID, options)
 	if err != nil {

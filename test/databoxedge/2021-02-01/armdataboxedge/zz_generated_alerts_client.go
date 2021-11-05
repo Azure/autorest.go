@@ -28,6 +28,8 @@ type AlertsClient struct {
 }
 
 // NewAlertsClient creates a new instance of AlertsClient with the specified values.
+// subscriptionID - The subscription ID.
+// options - pass nil to accept the default values.
 func NewAlertsClient(subscriptionID string, options *azcore.ClientOptions) *AlertsClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -42,6 +44,10 @@ func NewAlertsClient(subscriptionID string, options *azcore.ClientOptions) *Aler
 
 // Get - Gets an alert by name.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// name - The alert name.
+// resourceGroupName - The resource group name.
+// options - AlertsGetOptions contains the optional parameters for the Alerts.Get method.
 func (client *AlertsClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *AlertsGetOptions) (AlertsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -111,6 +117,9 @@ func (client *AlertsClient) getHandleError(resp *http.Response) error {
 
 // ListByDataBoxEdgeDevice - Gets all the alerts for a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// resourceGroupName - The resource group name.
+// options - AlertsListByDataBoxEdgeDeviceOptions contains the optional parameters for the Alerts.ListByDataBoxEdgeDevice method.
 func (client *AlertsClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *AlertsListByDataBoxEdgeDeviceOptions) *AlertsListByDataBoxEdgeDevicePager {
 	return &AlertsListByDataBoxEdgeDevicePager{
 		client: client,

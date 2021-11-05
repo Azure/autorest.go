@@ -25,6 +25,8 @@ type triggerRunClient struct {
 }
 
 // newTriggerRunClient creates a new instance of triggerRunClient with the specified values.
+// endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
+// pl - the pipeline used for sending requests and handling responses.
 func newTriggerRunClient(endpoint string, pl runtime.Pipeline) *triggerRunClient {
 	client := &triggerRunClient{
 		endpoint: endpoint,
@@ -35,6 +37,9 @@ func newTriggerRunClient(endpoint string, pl runtime.Pipeline) *triggerRunClient
 
 // CancelTriggerInstance - Cancel single trigger instance by runId.
 // If the operation fails it returns the *CloudError error type.
+// triggerName - The trigger name.
+// runID - The pipeline run identifier.
+// options - TriggerRunCancelTriggerInstanceOptions contains the optional parameters for the TriggerRun.CancelTriggerInstance method.
 func (client *triggerRunClient) CancelTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunCancelTriggerInstanceOptions) (TriggerRunCancelTriggerInstanceResponse, error) {
 	req, err := client.cancelTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {
@@ -87,6 +92,8 @@ func (client *triggerRunClient) cancelTriggerInstanceHandleError(resp *http.Resp
 
 // QueryTriggerRunsByWorkspace - Query trigger runs.
 // If the operation fails it returns the *CloudError error type.
+// filterParameters - Parameters to filter the pipeline run.
+// options - TriggerRunQueryTriggerRunsByWorkspaceOptions contains the optional parameters for the TriggerRun.QueryTriggerRunsByWorkspace method.
 func (client *triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunQueryTriggerRunsByWorkspaceOptions) (TriggerRunQueryTriggerRunsByWorkspaceResponse, error) {
 	req, err := client.queryTriggerRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
 	if err != nil {
@@ -140,6 +147,9 @@ func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleError(resp *htt
 
 // RerunTriggerInstance - Rerun single trigger instance by runId.
 // If the operation fails it returns the *CloudError error type.
+// triggerName - The trigger name.
+// runID - The pipeline run identifier.
+// options - TriggerRunRerunTriggerInstanceOptions contains the optional parameters for the TriggerRun.RerunTriggerInstance method.
 func (client *triggerRunClient) RerunTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunRerunTriggerInstanceOptions) (TriggerRunRerunTriggerInstanceResponse, error) {
 	req, err := client.rerunTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
 	if err != nil {

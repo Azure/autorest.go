@@ -24,6 +24,7 @@ type ReadonlypropertyClient struct {
 }
 
 // NewReadonlypropertyClient creates a new instance of ReadonlypropertyClient with the specified values.
+// options - pass nil to accept the default values.
 func NewReadonlypropertyClient(options *azcore.ClientOptions) *ReadonlypropertyClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewReadonlypropertyClient(options *azcore.ClientOptions) *ReadonlypropertyC
 
 // GetValid - Get complex types that have readonly properties
 // If the operation fails it returns the *Error error type.
+// options - ReadonlypropertyGetValidOptions contains the optional parameters for the Readonlyproperty.GetValid method.
 func (client *ReadonlypropertyClient) GetValid(ctx context.Context, options *ReadonlypropertyGetValidOptions) (ReadonlypropertyGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -87,6 +89,7 @@ func (client *ReadonlypropertyClient) getValidHandleError(resp *http.Response) e
 
 // PutValid - Put complex types that have readonly properties
 // If the operation fails it returns the *Error error type.
+// options - ReadonlypropertyPutValidOptions contains the optional parameters for the Readonlyproperty.PutValid method.
 func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyPutValidOptions) (ReadonlypropertyPutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {

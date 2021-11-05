@@ -31,6 +31,9 @@ type BgpServiceCommunitiesClient struct {
 }
 
 // NewBgpServiceCommunitiesClient creates a new instance of BgpServiceCommunitiesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewBgpServiceCommunitiesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *BgpServiceCommunitiesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,7 @@ func NewBgpServiceCommunitiesClient(subscriptionID string, credential azcore.Tok
 
 // List - Gets all the available bgp service communities.
 // If the operation fails it returns the *CloudError error type.
+// options - BgpServiceCommunitiesListOptions contains the optional parameters for the BgpServiceCommunities.List method.
 func (client *BgpServiceCommunitiesClient) List(options *BgpServiceCommunitiesListOptions) *BgpServiceCommunitiesListPager {
 	return &BgpServiceCommunitiesListPager{
 		client: client,

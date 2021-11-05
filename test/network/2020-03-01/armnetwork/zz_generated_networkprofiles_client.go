@@ -31,6 +31,9 @@ type NetworkProfilesClient struct {
 }
 
 // NewNetworkProfilesClient creates a new instance of NetworkProfilesClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewNetworkProfilesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NetworkProfilesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,10 @@ func NewNetworkProfilesClient(subscriptionID string, credential azcore.TokenCred
 
 // CreateOrUpdate - Creates or updates a network profile.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkProfileName - The name of the network profile.
+// parameters - Parameters supplied to the create or update network profile operation.
+// options - NetworkProfilesCreateOrUpdateOptions contains the optional parameters for the NetworkProfiles.CreateOrUpdate method.
 func (client *NetworkProfilesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkProfileName string, parameters NetworkProfile, options *NetworkProfilesCreateOrUpdateOptions) (NetworkProfilesCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkProfileName, parameters, options)
 	if err != nil {
@@ -114,6 +121,9 @@ func (client *NetworkProfilesClient) createOrUpdateHandleError(resp *http.Respon
 
 // BeginDelete - Deletes the specified network profile.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkProfileName - The name of the NetworkProfile.
+// options - NetworkProfilesBeginDeleteOptions contains the optional parameters for the NetworkProfiles.BeginDelete method.
 func (client *NetworkProfilesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesBeginDeleteOptions) (NetworkProfilesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
@@ -190,6 +200,9 @@ func (client *NetworkProfilesClient) deleteHandleError(resp *http.Response) erro
 
 // Get - Gets the specified network profile in a specified resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkProfileName - The name of the public IP prefix.
+// options - NetworkProfilesGetOptions contains the optional parameters for the NetworkProfiles.Get method.
 func (client *NetworkProfilesClient) Get(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesGetOptions) (NetworkProfilesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
@@ -258,6 +271,8 @@ func (client *NetworkProfilesClient) getHandleError(resp *http.Response) error {
 
 // List - Gets all network profiles in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - NetworkProfilesListOptions contains the optional parameters for the NetworkProfiles.List method.
 func (client *NetworkProfilesClient) List(resourceGroupName string, options *NetworkProfilesListOptions) *NetworkProfilesListPager {
 	return &NetworkProfilesListPager{
 		client: client,
@@ -316,6 +331,7 @@ func (client *NetworkProfilesClient) listHandleError(resp *http.Response) error 
 
 // ListAll - Gets all the network profiles in a subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - NetworkProfilesListAllOptions contains the optional parameters for the NetworkProfiles.ListAll method.
 func (client *NetworkProfilesClient) ListAll(options *NetworkProfilesListAllOptions) *NetworkProfilesListAllPager {
 	return &NetworkProfilesListAllPager{
 		client: client,
@@ -370,6 +386,10 @@ func (client *NetworkProfilesClient) listAllHandleError(resp *http.Response) err
 
 // UpdateTags - Updates network profile tags.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkProfileName - The name of the network profile.
+// parameters - Parameters supplied to update network profile tags.
+// options - NetworkProfilesUpdateTagsOptions contains the optional parameters for the NetworkProfiles.UpdateTags method.
 func (client *NetworkProfilesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject, options *NetworkProfilesUpdateTagsOptions) (NetworkProfilesUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkProfileName, parameters, options)
 	if err != nil {

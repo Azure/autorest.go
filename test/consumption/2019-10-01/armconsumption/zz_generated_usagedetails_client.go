@@ -29,6 +29,8 @@ type UsageDetailsClient struct {
 }
 
 // NewUsageDetailsClient creates a new instance of UsageDetailsClient with the specified values.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewUsageDetailsClient(credential azcore.TokenCredential, options *arm.ClientOptions) *UsageDetailsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -48,6 +50,8 @@ func NewUsageDetailsClient(credential azcore.TokenCredential, options *arm.Clien
 // using this API, including how to specify a date range,
 // please see: https://docs.microsoft.com/en-us/azure/cost-management-billing/costs/manage-automation
 // If the operation fails it returns the *ErrorResponse error type.
+// scope - The scope associated with usage details operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, '/providers/Microsoft.Billing/departments/{departmentId}' for Department scope, '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope and '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope. For subscription, billing account, department, enrollment account and management group, you can also add billing period to the scope using '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g. to specify billing period at department scope use '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. Also, Modern Commerce Account scopes are '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for billingAccount scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/invoiceSections/{invoiceSectionId}' for invoiceSection scope, and 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
+// options - UsageDetailsListOptions contains the optional parameters for the UsageDetails.List method.
 func (client *UsageDetailsClient) List(scope string, options *UsageDetailsListOptions) *UsageDetailsListPager {
 	return &UsageDetailsListPager{
 		client: client,

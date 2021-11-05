@@ -31,6 +31,9 @@ type NetworkInterfaceTapConfigurationsClient struct {
 }
 
 // NewNetworkInterfaceTapConfigurationsClient creates a new instance of NetworkInterfaceTapConfigurationsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewNetworkInterfaceTapConfigurationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NetworkInterfaceTapConfigurationsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,11 @@ func NewNetworkInterfaceTapConfigurationsClient(subscriptionID string, credentia
 
 // BeginCreateOrUpdate - Creates or updates a Tap configuration in the specified NetworkInterface.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkInterfaceName - The name of the network interface.
+// tapConfigurationName - The name of the tap configuration.
+// tapConfigurationParameters - Parameters supplied to the create or update tap configuration operation.
+// options - NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.BeginCreateOrUpdate method.
 func (client *NetworkInterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions) (NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, tapConfigurationParameters, options)
 	if err != nil {
@@ -129,6 +137,10 @@ func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdateHandleError
 
 // BeginDelete - Deletes the specified tap configuration from the NetworkInterface.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkInterfaceName - The name of the network interface.
+// tapConfigurationName - The name of the tap configuration.
+// options - NetworkInterfaceTapConfigurationsBeginDeleteOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.BeginDelete method.
 func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsBeginDeleteOptions) (NetworkInterfaceTapConfigurationsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
@@ -209,6 +221,10 @@ func (client *NetworkInterfaceTapConfigurationsClient) deleteHandleError(resp *h
 
 // Get - Get the specified tap configuration on a network interface.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkInterfaceName - The name of the network interface.
+// tapConfigurationName - The name of the tap configuration.
+// options - NetworkInterfaceTapConfigurationsGetOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.Get method.
 func (client *NetworkInterfaceTapConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsGetOptions) (NetworkInterfaceTapConfigurationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
@@ -278,6 +294,9 @@ func (client *NetworkInterfaceTapConfigurationsClient) getHandleError(resp *http
 
 // List - Get all Tap configurations in a network interface.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// networkInterfaceName - The name of the network interface.
+// options - NetworkInterfaceTapConfigurationsListOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.List method.
 func (client *NetworkInterfaceTapConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceTapConfigurationsListOptions) *NetworkInterfaceTapConfigurationsListPager {
 	return &NetworkInterfaceTapConfigurationsListPager{
 		client: client,

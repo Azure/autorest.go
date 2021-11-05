@@ -27,6 +27,9 @@ type ServiceClient struct {
 }
 
 // NewServiceClient creates a new instance of ServiceClient with the specified values.
+// endpoint - The URL of the service account or table that is the target of the desired operation.
+// version - Specifies the version of the operation to use for this request.
+// pl - the pipeline used for sending requests and handling responses.
 func NewServiceClient(endpoint string, version Enum0, pl runtime.Pipeline) *ServiceClient {
 	client := &ServiceClient{
 		endpoint: endpoint,
@@ -38,6 +41,9 @@ func NewServiceClient(endpoint string, version Enum0, pl runtime.Pipeline) *Serv
 
 // GetProperties - Gets the properties of an account's Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules.
 // If the operation fails it returns the *TableServiceError error type.
+// restype - Required query string to set the service properties.
+// comp - Required query string to set the service properties.
+// options - ServiceGetPropertiesOptions contains the optional parameters for the Service.GetProperties method.
 func (client *ServiceClient) GetProperties(ctx context.Context, restype Enum5, comp Enum6, options *ServiceGetPropertiesOptions) (ServiceGetPropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -108,6 +114,9 @@ func (client *ServiceClient) getPropertiesHandleError(resp *http.Response) error
 // GetStatistics - Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access
 // geo-redundant replication is enabled for the account.
 // If the operation fails it returns the *TableServiceError error type.
+// restype - Required query string to get service stats.
+// comp - Required query string to get service stats.
+// options - ServiceGetStatisticsOptions contains the optional parameters for the Service.GetStatistics method.
 func (client *ServiceClient) GetStatistics(ctx context.Context, restype Enum5, comp Enum7, options *ServiceGetStatisticsOptions) (ServiceGetStatisticsResponse, error) {
 	req, err := client.getStatisticsCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -185,6 +194,10 @@ func (client *ServiceClient) getStatisticsHandleError(resp *http.Response) error
 // SetProperties - Sets properties for an account's Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing)
 // rules.
 // If the operation fails it returns the *TableServiceError error type.
+// restype - Required query string to set the service properties.
+// comp - Required query string to set the service properties.
+// tableServiceProperties - The Table Service properties.
+// options - ServiceSetPropertiesOptions contains the optional parameters for the Service.SetProperties method.
 func (client *ServiceClient) SetProperties(ctx context.Context, restype Enum5, comp Enum6, tableServiceProperties TableServiceProperties, options *ServiceSetPropertiesOptions) (ServiceSetPropertiesResponse, error) {
 	req, err := client.setPropertiesCreateRequest(ctx, restype, comp, tableServiceProperties, options)
 	if err != nil {

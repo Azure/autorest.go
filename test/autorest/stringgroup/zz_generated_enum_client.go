@@ -24,6 +24,7 @@ type EnumClient struct {
 }
 
 // NewEnumClient creates a new instance of EnumClient with the specified values.
+// options - pass nil to accept the default values.
 func NewEnumClient(options *azcore.ClientOptions) *EnumClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewEnumClient(options *azcore.ClientOptions) *EnumClient {
 
 // GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 // If the operation fails it returns the *Error error type.
+// options - EnumGetNotExpandableOptions contains the optional parameters for the Enum.GetNotExpandable method.
 func (client *EnumClient) GetNotExpandable(ctx context.Context, options *EnumGetNotExpandableOptions) (EnumGetNotExpandableResponse, error) {
 	req, err := client.getNotExpandableCreateRequest(ctx, options)
 	if err != nil {
@@ -87,6 +89,7 @@ func (client *EnumClient) getNotExpandableHandleError(resp *http.Response) error
 
 // GetReferenced - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 // If the operation fails it returns the *Error error type.
+// options - EnumGetReferencedOptions contains the optional parameters for the Enum.GetReferenced method.
 func (client *EnumClient) GetReferenced(ctx context.Context, options *EnumGetReferencedOptions) (EnumGetReferencedResponse, error) {
 	req, err := client.getReferencedCreateRequest(ctx, options)
 	if err != nil {
@@ -137,6 +140,7 @@ func (client *EnumClient) getReferencedHandleError(resp *http.Response) error {
 
 // GetReferencedConstant - Get value 'green-color' from the constant.
 // If the operation fails it returns the *Error error type.
+// options - EnumGetReferencedConstantOptions contains the optional parameters for the Enum.GetReferencedConstant method.
 func (client *EnumClient) GetReferencedConstant(ctx context.Context, options *EnumGetReferencedConstantOptions) (EnumGetReferencedConstantResponse, error) {
 	req, err := client.getReferencedConstantCreateRequest(ctx, options)
 	if err != nil {
@@ -187,6 +191,8 @@ func (client *EnumClient) getReferencedConstantHandleError(resp *http.Response) 
 
 // PutNotExpandable - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 // If the operation fails it returns the *Error error type.
+// stringBody - string body
+// options - EnumPutNotExpandableOptions contains the optional parameters for the Enum.PutNotExpandable method.
 func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors, options *EnumPutNotExpandableOptions) (EnumPutNotExpandableResponse, error) {
 	req, err := client.putNotExpandableCreateRequest(ctx, stringBody, options)
 	if err != nil {
@@ -228,6 +234,8 @@ func (client *EnumClient) putNotExpandableHandleError(resp *http.Response) error
 
 // PutReferenced - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 // If the operation fails it returns the *Error error type.
+// enumStringBody - enum string body
+// options - EnumPutReferencedOptions contains the optional parameters for the Enum.PutReferenced method.
 func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colors, options *EnumPutReferencedOptions) (EnumPutReferencedResponse, error) {
 	req, err := client.putReferencedCreateRequest(ctx, enumStringBody, options)
 	if err != nil {
@@ -269,6 +277,8 @@ func (client *EnumClient) putReferencedHandleError(resp *http.Response) error {
 
 // PutReferencedConstant - Sends value 'green-color' from a constant
 // If the operation fails it returns the *Error error type.
+// enumStringBody - enum string body
+// options - EnumPutReferencedConstantOptions contains the optional parameters for the Enum.PutReferencedConstant method.
 func (client *EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant, options *EnumPutReferencedConstantOptions) (EnumPutReferencedConstantResponse, error) {
 	req, err := client.putReferencedConstantCreateRequest(ctx, enumStringBody, options)
 	if err != nil {

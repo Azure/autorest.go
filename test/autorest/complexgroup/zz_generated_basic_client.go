@@ -24,6 +24,7 @@ type BasicClient struct {
 }
 
 // NewBasicClient creates a new instance of BasicClient with the specified values.
+// options - pass nil to accept the default values.
 func NewBasicClient(options *azcore.ClientOptions) *BasicClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -37,6 +38,7 @@ func NewBasicClient(options *azcore.ClientOptions) *BasicClient {
 
 // GetEmpty - Get a basic complex type that is empty
 // If the operation fails it returns the *Error error type.
+// options - BasicGetEmptyOptions contains the optional parameters for the Basic.GetEmpty method.
 func (client *BasicClient) GetEmpty(ctx context.Context, options *BasicGetEmptyOptions) (BasicGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -87,6 +89,7 @@ func (client *BasicClient) getEmptyHandleError(resp *http.Response) error {
 
 // GetInvalid - Get a basic complex type that is invalid for the local strong type
 // If the operation fails it returns the *Error error type.
+// options - BasicGetInvalidOptions contains the optional parameters for the Basic.GetInvalid method.
 func (client *BasicClient) GetInvalid(ctx context.Context, options *BasicGetInvalidOptions) (BasicGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -137,6 +140,7 @@ func (client *BasicClient) getInvalidHandleError(resp *http.Response) error {
 
 // GetNotProvided - Get a basic complex type while the server doesn't provide a response payload
 // If the operation fails it returns the *Error error type.
+// options - BasicGetNotProvidedOptions contains the optional parameters for the Basic.GetNotProvided method.
 func (client *BasicClient) GetNotProvided(ctx context.Context, options *BasicGetNotProvidedOptions) (BasicGetNotProvidedResponse, error) {
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
@@ -187,6 +191,7 @@ func (client *BasicClient) getNotProvidedHandleError(resp *http.Response) error 
 
 // GetNull - Get a basic complex type whose properties are null
 // If the operation fails it returns the *Error error type.
+// options - BasicGetNullOptions contains the optional parameters for the Basic.GetNull method.
 func (client *BasicClient) GetNull(ctx context.Context, options *BasicGetNullOptions) (BasicGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -237,6 +242,7 @@ func (client *BasicClient) getNullHandleError(resp *http.Response) error {
 
 // GetValid - Get complex type {id: 2, name: 'abc', color: 'YELLOW'}
 // If the operation fails it returns the *Error error type.
+// options - BasicGetValidOptions contains the optional parameters for the Basic.GetValid method.
 func (client *BasicClient) GetValid(ctx context.Context, options *BasicGetValidOptions) (BasicGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -287,6 +293,8 @@ func (client *BasicClient) getValidHandleError(resp *http.Response) error {
 
 // PutValid - Please put {id: 2, name: 'abc', color: 'Magenta'}
 // If the operation fails it returns the *Error error type.
+// complexBody - Please put {id: 2, name: 'abc', color: 'Magenta'}
+// options - BasicPutValidOptions contains the optional parameters for the Basic.PutValid method.
 func (client *BasicClient) PutValid(ctx context.Context, complexBody Basic, options *BasicPutValidOptions) (BasicPutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {

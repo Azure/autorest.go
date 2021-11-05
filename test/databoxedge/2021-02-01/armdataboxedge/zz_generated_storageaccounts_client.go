@@ -29,6 +29,8 @@ type StorageAccountsClient struct {
 }
 
 // NewStorageAccountsClient creates a new instance of StorageAccountsClient with the specified values.
+// subscriptionID - The subscription ID.
+// options - pass nil to accept the default values.
 func NewStorageAccountsClient(subscriptionID string, options *azcore.ClientOptions) *StorageAccountsClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -43,6 +45,11 @@ func NewStorageAccountsClient(subscriptionID string, options *azcore.ClientOptio
 
 // BeginCreateOrUpdate - Creates a new StorageAccount or updates an existing StorageAccount on the device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// storageAccountName - The StorageAccount name.
+// resourceGroupName - The resource group name.
+// storageAccount - The StorageAccount properties.
+// options - StorageAccountsBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccounts.BeginCreateOrUpdate method.
 func (client *StorageAccountsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, storageAccount StorageAccount, options *StorageAccountsBeginCreateOrUpdateOptions) (StorageAccountsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, storageAccountName, resourceGroupName, storageAccount, options)
 	if err != nil {
@@ -123,6 +130,10 @@ func (client *StorageAccountsClient) createOrUpdateHandleError(resp *http.Respon
 
 // BeginDelete - Deletes the StorageAccount on the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// storageAccountName - The StorageAccount name.
+// resourceGroupName - The resource group name.
+// options - StorageAccountsBeginDeleteOptions contains the optional parameters for the StorageAccounts.BeginDelete method.
 func (client *StorageAccountsClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *StorageAccountsBeginDeleteOptions) (StorageAccountsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, storageAccountName, resourceGroupName, options)
 	if err != nil {
@@ -203,6 +214,10 @@ func (client *StorageAccountsClient) deleteHandleError(resp *http.Response) erro
 
 // Get - Gets a StorageAccount by name.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// storageAccountName - The storage account name.
+// resourceGroupName - The resource group name.
+// options - StorageAccountsGetOptions contains the optional parameters for the StorageAccounts.Get method.
 func (client *StorageAccountsClient) Get(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *StorageAccountsGetOptions) (StorageAccountsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, storageAccountName, resourceGroupName, options)
 	if err != nil {
@@ -272,6 +287,9 @@ func (client *StorageAccountsClient) getHandleError(resp *http.Response) error {
 
 // ListByDataBoxEdgeDevice - Lists all the StorageAccounts in a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// resourceGroupName - The resource group name.
+// options - StorageAccountsListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccounts.ListByDataBoxEdgeDevice method.
 func (client *StorageAccountsClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *StorageAccountsListByDataBoxEdgeDeviceOptions) *StorageAccountsListByDataBoxEdgeDevicePager {
 	return &StorageAccountsListByDataBoxEdgeDevicePager{
 		client: client,

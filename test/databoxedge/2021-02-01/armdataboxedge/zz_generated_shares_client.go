@@ -29,6 +29,8 @@ type SharesClient struct {
 }
 
 // NewSharesClient creates a new instance of SharesClient with the specified values.
+// subscriptionID - The subscription ID.
+// options - pass nil to accept the default values.
 func NewSharesClient(subscriptionID string, options *azcore.ClientOptions) *SharesClient {
 	cp := azcore.ClientOptions{}
 	if options != nil {
@@ -43,6 +45,11 @@ func NewSharesClient(subscriptionID string, options *azcore.ClientOptions) *Shar
 
 // BeginCreateOrUpdate - Creates a new share or updates an existing share on the device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// name - The share name.
+// resourceGroupName - The resource group name.
+// share - The share properties.
+// options - SharesBeginCreateOrUpdateOptions contains the optional parameters for the Shares.BeginCreateOrUpdate method.
 func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesBeginCreateOrUpdateOptions) (SharesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, share, options)
 	if err != nil {
@@ -123,6 +130,10 @@ func (client *SharesClient) createOrUpdateHandleError(resp *http.Response) error
 
 // BeginDelete - Deletes the share on the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// name - The share name.
+// resourceGroupName - The resource group name.
+// options - SharesBeginDeleteOptions contains the optional parameters for the Shares.BeginDelete method.
 func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesBeginDeleteOptions) (SharesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -203,6 +214,10 @@ func (client *SharesClient) deleteHandleError(resp *http.Response) error {
 
 // Get - Gets a share by name.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// name - The share name.
+// resourceGroupName - The resource group name.
+// options - SharesGetOptions contains the optional parameters for the Shares.Get method.
 func (client *SharesClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesGetOptions) (SharesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -272,6 +287,9 @@ func (client *SharesClient) getHandleError(resp *http.Response) error {
 
 // ListByDataBoxEdgeDevice - Lists all the shares in a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// resourceGroupName - The resource group name.
+// options - SharesListByDataBoxEdgeDeviceOptions contains the optional parameters for the Shares.ListByDataBoxEdgeDevice method.
 func (client *SharesClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *SharesListByDataBoxEdgeDeviceOptions) *SharesListByDataBoxEdgeDevicePager {
 	return &SharesListByDataBoxEdgeDevicePager{
 		client: client,
@@ -334,6 +352,10 @@ func (client *SharesClient) listByDataBoxEdgeDeviceHandleError(resp *http.Respon
 
 // BeginRefresh - Refreshes the share metadata with the data from the cloud.
 // If the operation fails it returns the *CloudError error type.
+// deviceName - The device name.
+// name - The share name.
+// resourceGroupName - The resource group name.
+// options - SharesBeginRefreshOptions contains the optional parameters for the Shares.BeginRefresh method.
 func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesBeginRefreshOptions) (SharesRefreshPollerResponse, error) {
 	resp, err := client.refresh(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {

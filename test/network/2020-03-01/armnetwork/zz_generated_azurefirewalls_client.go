@@ -31,6 +31,9 @@ type AzureFirewallsClient struct {
 }
 
 // NewAzureFirewallsClient creates a new instance of AzureFirewallsClient with the specified values.
+// subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
+// credential - the credential used to authenticate the request.
+// options - pass nil to accept the default values.
 func NewAzureFirewallsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *AzureFirewallsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
@@ -49,6 +52,10 @@ func NewAzureFirewallsClient(subscriptionID string, credential azcore.TokenCrede
 
 // BeginCreateOrUpdate - Creates or updates the specified Azure Firewall.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// azureFirewallName - The name of the Azure Firewall.
+// parameters - Parameters supplied to the create or update Azure Firewall operation.
+// options - AzureFirewallsBeginCreateOrUpdateOptions contains the optional parameters for the AzureFirewalls.BeginCreateOrUpdate method.
 func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsBeginCreateOrUpdateOptions) (AzureFirewallsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, azureFirewallName, parameters, options)
 	if err != nil {
@@ -125,6 +132,9 @@ func (client *AzureFirewallsClient) createOrUpdateHandleError(resp *http.Respons
 
 // BeginDelete - Deletes the specified Azure Firewall.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// azureFirewallName - The name of the Azure Firewall.
+// options - AzureFirewallsBeginDeleteOptions contains the optional parameters for the AzureFirewalls.BeginDelete method.
 func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsBeginDeleteOptions) (AzureFirewallsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, azureFirewallName, options)
 	if err != nil {
@@ -201,6 +211,9 @@ func (client *AzureFirewallsClient) deleteHandleError(resp *http.Response) error
 
 // Get - Gets the specified Azure Firewall.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// azureFirewallName - The name of the Azure Firewall.
+// options - AzureFirewallsGetOptions contains the optional parameters for the AzureFirewalls.Get method.
 func (client *AzureFirewallsClient) Get(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsGetOptions) (AzureFirewallsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, azureFirewallName, options)
 	if err != nil {
@@ -266,6 +279,8 @@ func (client *AzureFirewallsClient) getHandleError(resp *http.Response) error {
 
 // List - Lists all Azure Firewalls in a resource group.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// options - AzureFirewallsListOptions contains the optional parameters for the AzureFirewalls.List method.
 func (client *AzureFirewallsClient) List(resourceGroupName string, options *AzureFirewallsListOptions) *AzureFirewallsListPager {
 	return &AzureFirewallsListPager{
 		client: client,
@@ -324,6 +339,7 @@ func (client *AzureFirewallsClient) listHandleError(resp *http.Response) error {
 
 // ListAll - Gets all the Azure Firewalls in a subscription.
 // If the operation fails it returns the *CloudError error type.
+// options - AzureFirewallsListAllOptions contains the optional parameters for the AzureFirewalls.ListAll method.
 func (client *AzureFirewallsClient) ListAll(options *AzureFirewallsListAllOptions) *AzureFirewallsListAllPager {
 	return &AzureFirewallsListAllPager{
 		client: client,
@@ -378,6 +394,10 @@ func (client *AzureFirewallsClient) listAllHandleError(resp *http.Response) erro
 
 // BeginUpdateTags - Updates tags of an Azure Firewall resource.
 // If the operation fails it returns the *CloudError error type.
+// resourceGroupName - The name of the resource group.
+// azureFirewallName - The name of the Azure Firewall.
+// parameters - Parameters supplied to update azure firewall tags.
+// options - AzureFirewallsBeginUpdateTagsOptions contains the optional parameters for the AzureFirewalls.BeginUpdateTags method.
 func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject, options *AzureFirewallsBeginUpdateTagsOptions) (AzureFirewallsUpdateTagsPollerResponse, error) {
 	resp, err := client.updateTags(ctx, resourceGroupName, azureFirewallName, parameters, options)
 	if err != nil {
