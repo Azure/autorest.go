@@ -12,6 +12,7 @@ import (
 	"encoding/json"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"reflect"
+	"time"
 )
 
 // AliasCreateOptions contains the optional parameters for the Alias.Create method.
@@ -241,12 +242,66 @@ func (g *GeoJSONObjectNamedCollection) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// ScheduleCreateOrUpdateProperties - The parameters supplied to the create or update schedule operation.
+type ScheduleCreateOrUpdateProperties struct {
+	// A list of all the previously created aliases.
+	Aliases []*string `json:"aliases,omitempty"`
+
+	// Gets or sets the description of the schedule.
+	Description *string `json:"description,omitempty"`
+
+	// Gets or sets the interval of the schedule.
+	Interval interface{} `json:"interval,omitempty"`
+
+	// Gets or sets the start time of the schedule.
+	StartTime *time.Time `json:"startTime,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ScheduleCreateOrUpdateProperties.
+func (s ScheduleCreateOrUpdateProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "aliases", s.Aliases)
+	populate(objectMap, "description", s.Description)
+	populate(objectMap, "interval", s.Interval)
+	populateTimeRFC3339(objectMap, "startTime", s.StartTime)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ScheduleCreateOrUpdateProperties.
+func (s *ScheduleCreateOrUpdateProperties) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "aliases":
+			err = unpopulate(val, &s.Aliases)
+			delete(rawMsg, key)
+		case "description":
+			err = unpopulate(val, &s.Description)
+			delete(rawMsg, key)
+		case "interval":
+			err = unpopulate(val, &s.Interval)
+			delete(rawMsg, key)
+		case "startTime":
+			err = unpopulateTimeRFC3339(val, &s.StartTime)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func populate(m map[string]interface{}, k string, v interface{}) {
 	if v == nil {
 		return
 	} else if azcore.IsNullValue(v) {
 		m[k] = nil
-	} else if !reflect.ValueOf(v).IsNil() {
+	} else if !reflect.ValueOf(v).IsZero() {
 		m[k] = v
 	}
 }

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"reflect"
 	"testing"
+	"time"
 )
 
 func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
@@ -100,6 +101,76 @@ func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
 	}
 }
 
+func TestInterfaceRoundTrip(t *testing.T) {
+	props1 := ScheduleCreateOrUpdateProperties{
+		Aliases:     []*string{stringPtr("foo")},
+		Description: stringPtr("funky"),
+		Interval:    5,
+		StartTime:   timePtr(time.Now().UTC()),
+	}
+	b, err := json.Marshal(props1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var props2 ScheduleCreateOrUpdateProperties
+	err = json.Unmarshal(b, &props2)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if *props1.Description != *props2.Description {
+		t.Fatalf("expected %v, got %v", *props1.Description, *props2.Description)
+	}
+	i1, ok := props1.Interval.(int)
+	if !ok {
+		t.Fatalf("unexpected type %T", props1.Interval)
+	}
+	i2, ok := props1.Interval.(int)
+	if !ok {
+		t.Fatalf("unexpected type %T", props2.Interval)
+	}
+	if i1 != i2 {
+		t.Fatalf("expected %v, got %v", props1.Interval, props2.Interval)
+	}
+	if *props1.StartTime != *props2.StartTime {
+		t.Fatalf("expected %v, got %v", *props1.StartTime, *props2.StartTime)
+	}
+	if *props1.Aliases[0] != *props2.Aliases[0] {
+		t.Fatalf("expected %v, got %v", *props1.Aliases[0], *props2.Aliases[0])
+	}
+}
+
+func TestInterfaceNil(t *testing.T) {
+	props1 := ScheduleCreateOrUpdateProperties{
+		Description: stringPtr("funky"),
+		StartTime:   timePtr(time.Now().UTC()),
+	}
+	b, err := json.Marshal(props1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var props2 ScheduleCreateOrUpdateProperties
+	err = json.Unmarshal(b, &props2)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if *props1.Description != *props2.Description {
+		t.Fatalf("expected %v, got %v", *props1.Description, *props2.Description)
+	}
+	if *props1.StartTime != *props2.StartTime {
+		t.Fatalf("expected %v, got %v", *props1.StartTime, *props2.StartTime)
+	}
+	if props2.Interval != nil {
+		t.Fatal("expected nil Interval")
+	}
+	if props2.Aliases != nil {
+		t.Fatal("expected nil Aliases")
+	}
+}
+
 func stringPtr(s string) *string {
 	return &s
+}
+
+func timePtr(t time.Time) *time.Time {
+	return &t
 }

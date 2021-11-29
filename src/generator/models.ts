@@ -61,7 +61,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
     text += '\t\treturn\n';
     text += '\t} else if azcore.IsNullValue(v) {\n';
     text += '\t\tm[k] = nil\n';
-    text += '\t} else if !reflect.ValueOf(v).IsNil() {\n';
+    text += '\t} else if !reflect.ValueOf(v).IsZero() {\n';
     text += '\t\tm[k] = v\n';
     text += '\t}\n';
     text += '}\n\n';

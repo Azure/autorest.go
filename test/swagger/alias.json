@@ -430,6 +430,31 @@
           "$ref": "#/definitions/GeoJsonFeatureData"
         }
       ]
+    },
+    "ScheduleCreateOrUpdateProperties": {
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Gets or sets the description of the schedule."
+        },
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Gets or sets the start time of the schedule.",
+          "x-nullable": false
+        },
+        "aliases": {
+          "description": "A list of all the previously created aliases.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "interval": {
+          "description": "Gets or sets the interval of the schedule."
+        }
+      },
+      "description": "The parameters supplied to the create or update schedule operation."
     }
   }
 }
