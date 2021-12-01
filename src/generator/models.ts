@@ -61,7 +61,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
     text += '\t\treturn\n';
     text += '\t} else if azcore.IsNullValue(v) {\n';
     text += '\t\tm[k] = nil\n';
-    text += '\t} else if !reflect.ValueOf(v).IsZero() {\n';
+    text += '\t} else if !reflect.ValueOf(v).IsNil() {\n';
     text += '\t\tm[k] = v\n';
     text += '\t}\n';
     text += '}\n\n';
@@ -403,10 +403,14 @@ function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef, imp
       marshaller += `\tpopulate(objectMap, "${prop.serializedName}", aux)\n`;
     } else {
       let populate = 'populate';
+      let addr = '';
       if (prop.schema.language.go!.internalTimeType) {
         populate += prop.schema.language.go!.internalTimeType.capitalize();
+      } else if (prop.schema.type === SchemaType.Any) {
+        // for fields that are interface{} we pass their address so populate() IsNil() doesn't panic
+        addr = '&';
       }
-      marshaller += `\t${populate}(objectMap, "${prop.serializedName}", ${receiver}.${prop.language.go!.name})\n`;
+      marshaller += `\t${populate}(objectMap, "${prop.serializedName}", ${addr}${receiver}.${prop.language.go!.name})\n`;
     }
   }
   const addlProps = hasAdditionalProperties(obj);

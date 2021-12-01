@@ -262,7 +262,7 @@ func (s ScheduleCreateOrUpdateProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "aliases", s.Aliases)
 	populate(objectMap, "description", s.Description)
-	populate(objectMap, "interval", s.Interval)
+	populate(objectMap, "interval", &s.Interval)
 	populateTimeRFC3339(objectMap, "startTime", s.StartTime)
 	return json.Marshal(objectMap)
 }
@@ -301,7 +301,7 @@ func populate(m map[string]interface{}, k string, v interface{}) {
 		return
 	} else if azcore.IsNullValue(v) {
 		m[k] = nil
-	} else if !reflect.ValueOf(v).IsZero() {
+	} else if !reflect.ValueOf(v).IsNil() {
 		m[k] = v
 	}
 }

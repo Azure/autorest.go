@@ -105,7 +105,7 @@ func TestInterfaceRoundTrip(t *testing.T) {
 	props1 := ScheduleCreateOrUpdateProperties{
 		Aliases:     []*string{stringPtr("foo")},
 		Description: stringPtr("funky"),
-		Interval:    5,
+		Interval:    false,
 		StartTime:   timePtr(time.Now().UTC()),
 	}
 	b, err := json.Marshal(props1)
@@ -117,14 +117,17 @@ func TestInterfaceRoundTrip(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	if props2.Interval == nil {
+		t.Fatal("props2.Interval is nil")
+	}
 	if *props1.Description != *props2.Description {
 		t.Fatalf("expected %v, got %v", *props1.Description, *props2.Description)
 	}
-	i1, ok := props1.Interval.(int)
+	i1, ok := props1.Interval.(bool)
 	if !ok {
 		t.Fatalf("unexpected type %T", props1.Interval)
 	}
-	i2, ok := props1.Interval.(int)
+	i2, ok := props1.Interval.(bool)
 	if !ok {
 		t.Fatalf("unexpected type %T", props2.Interval)
 	}
