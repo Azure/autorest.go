@@ -127,7 +127,7 @@ func TestInterfaceRoundTrip(t *testing.T) {
 	if !ok {
 		t.Fatalf("unexpected type %T", props1.Interval)
 	}
-	i2, ok := props1.Interval.(bool)
+	i2, ok := props2.Interval.(bool)
 	if !ok {
 		t.Fatalf("unexpected type %T", props2.Interval)
 	}
