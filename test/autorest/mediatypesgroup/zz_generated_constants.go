@@ -43,3 +43,26 @@ func PossibleContentTypeValues() []ContentType {
 func (c ContentType) ToPtr() *ContentType {
 	return &c
 }
+
+// ContentType1 - Content type for upload
+type ContentType1 string
+
+const (
+	// ContentType1ApplicationJSON - Content Type 'application/json'
+	ContentType1ApplicationJSON ContentType1 = "application/json"
+	// ContentType1ApplicationOctetStream - Content Type 'application/octet-stream'
+	ContentType1ApplicationOctetStream ContentType1 = "application/octet-stream"
+)
+
+// PossibleContentType1Values returns the possible values for the ContentType1 const type.
+func PossibleContentType1Values() []ContentType1 {
+	return []ContentType1{
+		ContentType1ApplicationJSON,
+		ContentType1ApplicationOctetStream,
+	}
+}
+
+// ToPtr returns a *ContentType1 pointing to the current value.
+func (c ContentType1) ToPtr() *ContentType1 {
+	return &c
+}

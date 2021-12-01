@@ -16,8 +16,8 @@ type MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse struct {
 	RawResponse *http.Response
 }
 
-// MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse contains the response from method MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithSourcePath.
-type MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse struct {
+// MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse contains the response from method MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithJSON.
+type MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
@@ -34,15 +34,51 @@ type MediaTypesClientAnalyzeBodyResult struct {
 	Value *string
 }
 
-// MediaTypesClientAnalyzeBodyWithSourcePathResponse contains the response from method MediaTypesClient.AnalyzeBodyWithSourcePath.
-type MediaTypesClientAnalyzeBodyWithSourcePathResponse struct {
-	MediaTypesClientAnalyzeBodyWithSourcePathResult
+// MediaTypesClientAnalyzeBodyWithJSONResponse contains the response from method MediaTypesClient.AnalyzeBodyWithJSON.
+type MediaTypesClientAnalyzeBodyWithJSONResponse struct {
+	MediaTypesClientAnalyzeBodyWithJSONResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// MediaTypesClientAnalyzeBodyWithSourcePathResult contains the result from method MediaTypesClient.AnalyzeBodyWithSourcePath.
-type MediaTypesClientAnalyzeBodyWithSourcePathResult struct {
+// MediaTypesClientAnalyzeBodyWithJSONResult contains the result from method MediaTypesClient.AnalyzeBodyWithJSON.
+type MediaTypesClientAnalyzeBodyWithJSONResult struct {
+	Value *string
+}
+
+// MediaTypesClientBinaryBodyWithThreeContentTypesResponse contains the response from method MediaTypesClient.BinaryBodyWithThreeContentTypes.
+type MediaTypesClientBinaryBodyWithThreeContentTypesResponse struct {
+	MediaTypesClientBinaryBodyWithThreeContentTypesResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MediaTypesClientBinaryBodyWithThreeContentTypesResult contains the result from method MediaTypesClient.BinaryBodyWithThreeContentTypes.
+type MediaTypesClientBinaryBodyWithThreeContentTypesResult struct {
+	Value *string
+}
+
+// MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse contains the response from method MediaTypesClient.BinaryBodyWithThreeContentTypesWithText.
+type MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse struct {
+	MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResult contains the result from method MediaTypesClient.BinaryBodyWithThreeContentTypesWithText.
+type MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResult struct {
+	Value *string
+}
+
+// MediaTypesClientBinaryBodyWithTwoContentTypesResponse contains the response from method MediaTypesClient.BinaryBodyWithTwoContentTypes.
+type MediaTypesClientBinaryBodyWithTwoContentTypesResponse struct {
+	MediaTypesClientBinaryBodyWithTwoContentTypesResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MediaTypesClientBinaryBodyWithTwoContentTypesResult contains the result from method MediaTypesClient.BinaryBodyWithTwoContentTypes.
+type MediaTypesClientBinaryBodyWithTwoContentTypesResult struct {
 	Value *string
 }
 
@@ -55,5 +91,29 @@ type MediaTypesClientContentTypeWithEncodingResponse struct {
 
 // MediaTypesClientContentTypeWithEncodingResult contains the result from method MediaTypesClient.ContentTypeWithEncoding.
 type MediaTypesClientContentTypeWithEncodingResult struct {
+	Value *string
+}
+
+// MediaTypesClientPutTextAndJSONBodyWithJSONResponse contains the response from method MediaTypesClient.PutTextAndJSONBodyWithJSON.
+type MediaTypesClientPutTextAndJSONBodyWithJSONResponse struct {
+	MediaTypesClientPutTextAndJSONBodyWithJSONResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MediaTypesClientPutTextAndJSONBodyWithJSONResult contains the result from method MediaTypesClient.PutTextAndJSONBodyWithJSON.
+type MediaTypesClientPutTextAndJSONBodyWithJSONResult struct {
+	Value *string
+}
+
+// MediaTypesClientPutTextAndJSONBodyWithTextResponse contains the response from method MediaTypesClient.PutTextAndJSONBodyWithText.
+type MediaTypesClientPutTextAndJSONBodyWithTextResponse struct {
+	MediaTypesClientPutTextAndJSONBodyWithTextResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// MediaTypesClientPutTextAndJSONBodyWithTextResult contains the result from method MediaTypesClient.PutTextAndJSONBodyWithText.
+type MediaTypesClientPutTextAndJSONBodyWithTextResult struct {
 	Value *string
 }

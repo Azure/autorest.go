@@ -6,7 +6,7 @@ dependencies:
   '@azure-tools/codegen': 2.7.0
   '@azure-tools/linq': 3.1.261
   '@azure-tools/tasks': 3.0.252
-  '@microsoft.azure/autorest.testserver': 3.1.5_e58605af5d62eced51e25286a407a18b
+  '@microsoft.azure/autorest.testserver': 3.1.8_e58605af5d62eced51e25286a407a18b
   '@rush-temp/go': 'file:projects/go.tgz'
   '@types/html-to-text': 5.1.2
   '@types/jest': 26.0.24
@@ -853,18 +853,6 @@ packages:
       node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0
     resolution:
       integrity: sha512-yqJPDDseb0mXgKqmNqypCsb85C22K1aY5+LUxh7syIM9n/b0AsaltxNy+o6tt29VcfGDpYEve175bm3uOhcehA==
-  /@jest/types/27.2.4:
-    dependencies:
-      '@types/istanbul-lib-coverage': 2.0.3
-      '@types/istanbul-reports': 3.0.0
-      '@types/node': 12.7.2
-      '@types/yargs': 16.0.4
-      chalk: 4.1.0
-    dev: false
-    engines:
-      node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0
-    resolution:
-      integrity: sha512-IDO2ezTxeMvQAHxzG/ZvEyA47q0aVfzT95rGFl7bZs/Go0aIucvfDbS2rmnoEdXxlLQhcolmoG/wvL/uKx4tKA==
   /@jest/types/27.2.5:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.3
@@ -877,7 +865,7 @@ packages:
       node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0
     resolution:
       integrity: sha512-nmuM4VuDtCZcY+eTpw+0nvstwReMsjPoj7ZR80/BbixulhLaiX+fbv8oeLW8WZlJMcsGQsTmMKT/iTZu1Uy/lQ==
-  /@microsoft.azure/autorest.testserver/3.1.5_e58605af5d62eced51e25286a407a18b:
+  /@microsoft.azure/autorest.testserver/3.1.8_e58605af5d62eced51e25286a407a18b:
     dependencies:
       axios: 0.21.4
       azure-storage: 2.10.5
@@ -907,7 +895,7 @@ packages:
       '@types/jest': '*'
       typescript: '*'
     resolution:
-      integrity: sha512-WWGq9jExT0FOoLMZYv0zJqpPbXZLNH7jMEiRp+dQu6gB1rcs8Man7x2JNS0EFYjR8ybQ6qFb2EqOmyP1VhMmKQ==
+      integrity: sha512-aiYrEB67OdlWAAPQyEgA+e++92DDUt4wtC12FalE5jkQ1lzsGnepM8rphG6CXWBuQTgG0HnNfdPdk9muEg8kMA==
   /@sinonjs/commons/1.8.3:
     dependencies:
       type-detect: 4.0.8
@@ -3990,19 +3978,6 @@ packages:
       node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0
     resolution:
       integrity: sha512-T5ZJCNeFpqcLBpx+Hl9r9KoxBCUqeWlJ1Htli+vryigZVJ1vuLB9j35grEBASp4R13KFkV7jM52bBGnArpJN6A==
-  /jest-util/27.2.4:
-    dependencies:
-      '@jest/types': 27.2.4
-      '@types/node': 12.7.2
-      chalk: 4.1.0
-      graceful-fs: 4.2.4
-      is-ci: 3.0.0
-      picomatch: 2.2.3
-    dev: false
-    engines:
-      node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0
-    resolution:
-      integrity: sha512-mW++4u+fSvAt3YBWm5IpbmRAceUqa2B++JlUZTiuEt2AmNYn0Yw5oay4cP17TGsMINRNPSGiJ2zNnX60g+VbFg==
   /jest-util/27.3.1:
     dependencies:
       '@jest/types': 27.2.5
@@ -5747,7 +5722,7 @@ packages:
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
       jest: 27.3.1
-      jest-util: 27.2.4
+      jest-util: 27.3.1
       json5: 2.2.0
       lodash.memoize: 4.1.2
       make-error: 1.3.6
@@ -6283,7 +6258,7 @@ packages:
       '@azure-tools/codemodel': 4.13.349
       '@azure-tools/linq': 3.1.261
       '@azure-tools/tasks': 3.0.252
-      '@microsoft.azure/autorest.testserver': 3.1.5_e58605af5d62eced51e25286a407a18b
+      '@microsoft.azure/autorest.testserver': 3.1.8_e58605af5d62eced51e25286a407a18b
       '@types/html-to-text': 5.1.2
       '@types/jest': 26.0.24
       '@types/js-yaml': 3.12.1
@@ -6305,7 +6280,7 @@ packages:
     dev: false
     name: '@rush-temp/go'
     resolution:
-      integrity: sha512-lN0R9MOfstPaTeYd+TmFCwZOIHhNiid03OzVrmcqoNWBV3BCE1wGBZXmt77w6w8E8cHcIGL0eagK6hysCAP+pg==
+      integrity: sha512-0XQTNOf/gUR8YvOpTnuouuDF1I121gfXXXKhmrBr2TMuM8tUiy1PCFsVpNs12QsF0EA7ZQDrOPf8L9wQIv4Fgw==
       tarball: 'file:projects/go.tgz'
     version: 0.0.0
 registry: ''
@@ -6317,7 +6292,7 @@ specifiers:
   '@azure-tools/codegen': ~2.7.0
   '@azure-tools/linq': ~3.1.0
   '@azure-tools/tasks': ~3.0.0
-  '@microsoft.azure/autorest.testserver': 3.1.5
+  '@microsoft.azure/autorest.testserver': 3.1.8
   '@rush-temp/go': 'file:./projects/go.tgz'
   '@types/html-to-text': ^5.1.2
   '@types/jest': ~26.0.24
