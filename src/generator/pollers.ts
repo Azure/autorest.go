@@ -7,7 +7,7 @@ import { Session } from '@autorest/extension-base';
 import { CodeModel, ObjectSchema, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { PagerInfo, PollerInfo } from '../common/helpers';
-import { contentPreamble, getFinalResponseEnvelopeName, getResultFieldName, sortAscending, substituteDiscriminatorTypeName } from './helpers';
+import { contentPreamble, discriminatorFinalResponse, getFinalResponseEnvelopeName, getResultFieldName, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 
 // Creates the content in pollers.go
@@ -82,9 +82,7 @@ function finalResp(poller: PollerInfo): string {
     const resultEnv = <Property>finalRespEnv.language.go!.resultEnv;
     text += `\trespType := ${finalRespEnv.language.go!.name}{}\n`;
     if (resultEnv) {
-      // the operation returns a model of some sort, probe further
-      const resultProp = <Property>resultEnv.language.go!.resultField;
-      text += `\tresp, err := p.pt.FinalResponse(ctx, &respType.${substituteDiscriminatorTypeName(resultProp)})\n`;
+      text += `\tresp, err := p.pt.FinalResponse(ctx, &respType.${discriminatorFinalResponse(resultEnv)})\n`;
     } else {
       // the operation doesn't return a model
       text += `\tresp, err := p.pt.FinalResponse(ctx, nil)\n`;

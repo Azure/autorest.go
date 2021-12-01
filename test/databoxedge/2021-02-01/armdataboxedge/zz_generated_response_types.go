@@ -28,7 +28,7 @@ type AddonsCreateOrUpdatePollerResponse struct {
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l AddonsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (AddonsCreateOrUpdateResponse, error) {
 	respType := AddonsCreateOrUpdateResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.AddonClassification)
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.AddonsCreateOrUpdateResult)
 	if err != nil {
 		return respType, err
 	}
@@ -1262,7 +1262,7 @@ type RolesCreateOrUpdatePollerResponse struct {
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l RolesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (RolesCreateOrUpdateResponse, error) {
 	respType := RolesCreateOrUpdateResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.RoleClassification)
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.RolesCreateOrUpdateResult)
 	if err != nil {
 		return respType, err
 	}
@@ -1852,7 +1852,7 @@ type TriggersCreateOrUpdatePollerResponse struct {
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
 func (l TriggersCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (TriggersCreateOrUpdateResponse, error) {
 	respType := TriggersCreateOrUpdateResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.TriggerClassification)
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.TriggersCreateOrUpdateResult)
 	if err != nil {
 		return respType, err
 	}

@@ -103,12 +103,13 @@ export function substituteDiscriminator(schema: Schema, elemByVal: boolean): str
   }
 }
 
-// if a property is a discriminator, return the discriminator interface type name, else the property name
-export function substituteDiscriminatorTypeName(prop: Property): string {
-  if (prop.schema.language.go!.discriminatorInterface) {
-    return prop.schema.language.go!.discriminatorInterface;
+// if an LRO returns a discriminated type, unmarshall the response into the result envelope, else the property field
+export function discriminatorFinalResponse(resultEnv: Property): string {
+  const resultProp = <Property>resultEnv.language.go!.resultField;
+  if (resultProp.schema.language.go!.discriminatorInterface) {
+    return resultEnv.language.go!.name;
   }
-  return prop.language.go!.name;
+  return resultProp.language.go!.name;
 }
 
 // returns the parameters for the internal request creator method.

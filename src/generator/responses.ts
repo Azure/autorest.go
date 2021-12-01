@@ -8,7 +8,7 @@ import { comment } from '@azure-tools/codegen';
 import { CodeModel, ObjectSchema, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { commentLength, isObjectSchema, PagerInfo, PollerInfo } from '../common/helpers';
-import { contentPreamble, emitPoller, getFinalResponseEnvelopeName, sortAscending, substituteDiscriminatorTypeName } from './helpers';
+import { contentPreamble, discriminatorFinalResponse, emitPoller, getFinalResponseEnvelopeName, sortAscending } from './helpers';
 import { ImportManager } from './imports';
 import { generateStruct, StructDef, StructMethod } from './structs';
 
@@ -107,13 +107,11 @@ function generatePollUntilDoneForResponse(structDef: StructDef, isAzureARM: bool
   const finalRespEnv = <ObjectSchema>structDef.Language.pollerInfo.op.language.go!.finalResponseEnv;
   const resultEnv = <Property>finalRespEnv.language.go!.resultEnv;
   if (resultEnv) {
-    // the operation returns a model of some sort, probe further
-    const resultProp = <Property>resultEnv.language.go!.resultField;
     let current = '';
     if (pagedResponse) {
       current = '.current';
     }
-    pollUntilDone += `\tresp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType${current}.${substituteDiscriminatorTypeName(resultProp)})\n`;
+    pollUntilDone += `\tresp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType${current}.${discriminatorFinalResponse(resultEnv)})\n`;
   } else {
     // the operation doesn't return a model
     pollUntilDone += `\tresp, err := l.Poller.pt.PollUntilDone(ctx, freq, nil)\n`;
