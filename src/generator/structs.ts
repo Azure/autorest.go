@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { comment } from '@azure-tools/codegen';
+import { capitalize, comment } from '@azure-tools/codegen';
 import { ConstantSchema, ImplementationLocation, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { commentLength, isArraySchema } from '../common/helpers';
@@ -137,7 +137,7 @@ export class StructDef {
         pointer = '';
       }
       const typeName = substituteDiscriminator(param.schema, elementByValueForParam(param));
-      text += `\t${(<string>param.language.go!.name).capitalize()} ${pointer}${typeName}\n`;
+      text += `\t${capitalize(<string>param.language.go!.name)} ${pointer}${typeName}\n`;
     }
     text += '}\n\n';
     return text;

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { serialize } from '@azure-tools/codegen';
-import { Host, startSession, Session } from '@autorest/extension-base';
+import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
 import { codeModelSchema, CodeModel } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { generateOperations } from './operations';
@@ -29,7 +29,7 @@ async function getModuleVersion(session: Session<CodeModel>): Promise<string> {
 }
 
 // The generator emits Go source code files to disk.
-export async function protocolGen(host: Host) {
+export async function protocolGen(host: AutorestExtensionHost) {
   const debug = await host.GetValue('debug') || false;
 
   try {
@@ -46,47 +46,91 @@ export async function protocolGen(host: Host) {
 
     // output the model to the pipeline.  this must happen after all model
     // updates are complete and before any source files are written.
-    host.WriteFile('code-model-v4.yaml', serialize(session.model), undefined, 'code-model-v4');
+    host.writeFile({
+      filename: 'code-model-v4.yaml',
+      content: serialize(session.model),
+      artifactType: 'code-model-v4'
+    });
 
     for (const op of values(operations)) {
-      host.WriteFile(`${filePrefix}${op.name.toLowerCase()}_client.go`, op.content, undefined, 'source-file-go');
+      host.writeFile({
+        filename: `${filePrefix}${op.name.toLowerCase()}_client.go`,
+        content: op.content,
+        artifactType: 'source-file-go'
+      });
     }
 
     const constants = await generateConstants(session, version);
-    host.WriteFile(`${filePrefix}constants.go`, constants, undefined, 'source-file-go');
+    host.writeFile({
+      filename: `${filePrefix}constants.go`,
+      content: constants,
+      artifactType: 'source-file-go'
+    });
 
     const models = await generateModels(session);
-    host.WriteFile(`${filePrefix}models.go`, models, undefined, 'source-file-go');
+    host.writeFile({
+      filename: `${filePrefix}models.go`,
+      content: models,
+      artifactType: 'source-file-go'
+    });
 
     const responses = await generateResponses(session);
     if (responses.length > 0) {
-      host.WriteFile(`${filePrefix}response_types.go`, responses, undefined, 'source-file-go');
+      host.writeFile({
+        filename: `${filePrefix}response_types.go`,
+        content: responses,
+        artifactType: 'source-file-go'
+      });
     }
 
     const timeHelpers = await generateTimeHelpers(session);
     for (const helper of values(timeHelpers)) {
-      host.WriteFile(`${filePrefix}${helper.name.toLowerCase()}.go`, helper.content, undefined, 'source-file-go');
+      host.writeFile({
+        filename: `${filePrefix}${helper.name.toLowerCase()}.go`,
+        content: helper.content,
+        artifactType: 'source-file-go'
+      });
     }
 
     const pagers = await generatePagers(session);
     if (pagers.length > 0) {
-      host.WriteFile(`${filePrefix}pagers.go`, pagers, undefined, 'source-file-go');
+      host.writeFile({
+        filename: `${filePrefix}pagers.go`,
+        content: pagers,
+        artifactType: 'source-file-go'
+      });
     }
     const pollers = await generatePollers(session);
     if (pollers.length > 0) {
-      host.WriteFile(`${filePrefix}pollers.go`, pollers, undefined, 'source-file-go');
+      host.writeFile({
+        filename: `${filePrefix}pollers.go`,
+        content: pollers,
+        artifactType: 'source-file-go'
+      });
     }
     const polymorphics = await generatePolymorphicHelpers(session);
     if (polymorphics.length > 0) {
-      host.WriteFile(`${filePrefix}polymorphic_helpers.go`, polymorphics, undefined, 'source-file-go');
+      host.writeFile({
+        filename: `${filePrefix}polymorphic_helpers.go`,
+        content: polymorphics,
+        artifactType: 'source-file-go'
+      });
     }
     const gomod = await generateGoModFile(session);
     if (gomod.length > 0) {
-      host.WriteFile('go.mod', gomod, undefined, 'source-file-go');
+      host.writeFile({
+        filename: 'go.mod',
+        content: gomod,
+        artifactType: 'source-file-go'
+      });
     }
     const xmlAddlProps = await generateXMLAdditionalPropsHelpers(session);
     if (xmlAddlProps.length > 0) {
-      host.WriteFile(`${filePrefix}xml_helper.go`, xmlAddlProps, undefined, 'source-file-go');
+      host.writeFile({
+        filename: `${filePrefix}xml_helper.go`,
+        content: xmlAddlProps,
+        artifactType: 'source-file-go'
+      });
     }
   } catch (E) {
     if (debug) {

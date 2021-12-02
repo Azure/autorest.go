@@ -5,7 +5,7 @@
 
 import { Session } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
-import { comment } from '@azure-tools/codegen';
+import { capitalize, comment, uncapitalize } from '@azure-tools/codegen';
 import { aggregateParameters, isLROOperation, isPageableOperation, isSchemaResponse, isMultiRespOperation, PollerInfo } from '../common/helpers';
 import { ArraySchema, CodeModel, DictionarySchema, Language, Parameter, Schema, SchemaType, ObjectSchema, Operation, Property, GroupProperty, ImplementationLocation, SerializationStyle, ByteArraySchema, ConstantSchema, NumberSchema, DateTimeSchema } from '@autorest/codemodel';
 import { ImportManager } from './imports';
@@ -119,7 +119,7 @@ export function getCreateRequestParametersSig(op: Operation): string {
   const params = new Array<string>();
   params.push('ctx context.Context');
   for (const methodParam of values(methodParams)) {
-    params.push(`${(<string>methodParam.language.go!.name).uncapitalize()} ${formatParameterTypeName(methodParam)}`);
+    params.push(`${uncapitalize(methodParam.language.go!.name)} ${formatParameterTypeName(methodParam)}`);
   }
   return params.join(', ');
 }
@@ -194,7 +194,7 @@ export function getParamName(param: Parameter): string {
   if (param.implementation === ImplementationLocation.Client) {
     paramName = `client.${paramName}`;
   } else if (param.language.go!.paramGroup) {
-    paramName = `${(<string>param.language.go!.paramGroup.language.go!.name).uncapitalize()}.${paramName.capitalize()}`;
+    paramName = `${uncapitalize(<string>param.language.go!.paramGroup.language.go!.name)}.${capitalize(paramName)}`;
   }
   if (param.required !== true && !param.language.go!.byValue) {
     paramName = `*${paramName}`;

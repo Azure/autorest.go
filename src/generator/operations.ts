@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { comment, KnownMediaType } from '@azure-tools/codegen';
+import { capitalize, comment, KnownMediaType, uncapitalize } from '@azure-tools/codegen';
 import { ArraySchema, ByteArraySchema, ChoiceSchema, ChoiceValue, CodeModel, ConstantSchema, DateTimeSchema, DictionarySchema, GroupProperty, ImplementationLocation, NumberSchema, ObjectSchema, Operation, OperationGroup, Parameter, Property, Protocols, Response, Schema, SchemaResponse, SchemaType, SealedChoiceSchema } from '@autorest/codemodel';
 import { values } from '@azure-tools/linq';
 import { aggregateParameters, getSchemaResponse, isArraySchema, isMultiRespOperation, isPageableOperation, isSchemaResponse, isTypePassedByValue, PagerInfo, isLROOperation, commentLength } from '../common/helpers';
@@ -115,7 +115,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       }
       clientText += `\t${optionsPkg}.ClientOptions\n`;
       for (const param of values(optionalParams)) {
-        clientText += `\t${param.language.go!.name.capitalize()} ${formatParameterTypeName(param)}\n`;
+        clientText += `\t${capitalize(param.language.go!.name)} ${formatParameterTypeName(param)}\n`;
       }
       clientText += '}\n\n';
     }
@@ -236,7 +236,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
           if (hostParam.clientDefaultValue) {
             pointer = '*';
             if (isARM) {
-              paramName = `options.${hostParam.language.go!.name.capitalize()}`;
+              paramName = `options.${capitalize(hostParam.language.go!.name)}`;
             }
             clientText += `\tif ${paramName} == nil {\n`;
             clientText += `\t\tdefaultValue := ${getClientDefaultValue(hostParam)}\n`;
@@ -291,7 +291,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       if (optionalParam.clientDefaultValue || optionalParam.required === false) {
         let paramName = optionalParam.language.go!.name;
         if (isARM) {
-          paramName = `options.${optionalParam.language.go!.name.capitalize()}`;
+          paramName = `options.${capitalize(optionalParam.language.go!.name)}`;
         }
         clientText += `\tif ${paramName} != nil {\n`;
         clientText += `\t\tclient.${optionalParam.language.go!.name} = *${paramName}\n`;
@@ -375,7 +375,7 @@ function formatHeaderResponseValue(propName: string, header: string, schema: Sch
     return text;
   }
   let text = `\tif val := resp.Header.Get("${header}"); val != "" {\n`;
-  const name = propName.uncapitalize();
+  const name = uncapitalize(propName);
   let byRef = '&';
   switch (schema.type) {
     case SchemaType.Boolean:
@@ -651,7 +651,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
     }
   }
-  text += `\treq, err := runtime.NewRequest(ctx, http.Method${(<string>op.requests![0].protocol.http!.method).capitalize()}, ${hostParam})\n`;
+  text += `\treq, err := runtime.NewRequest(ctx, http.Method${capitalize(<string>op.requests![0].protocol.http!.method)}, ${hostParam})\n`;
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';
   text += '\t}\n';
@@ -661,12 +661,12 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     if (param.implementation === ImplementationLocation.Client) {
       return `\tif client.${param.language.go!.name} != nil {\n`;
     }
-    const paramGroupName = (<string>gp.language.go!.name).uncapitalize();
+    const paramGroupName = uncapitalize(<string>gp.language.go!.name);
     let optionalParamGroupCheck = `${paramGroupName} != nil && `;
     if (gp.required) {
       optionalParamGroupCheck = '';
     }
-    return `\tif ${optionalParamGroupCheck}${paramGroupName}.${(<string>param.language.go!.name).capitalize()} != nil {\n`;
+    return `\tif ${optionalParamGroupCheck}${paramGroupName}.${capitalize(<string>param.language.go!.name)} != nil {\n`;
   }
   if (hasQueryParams) {
     // add query parameters
@@ -802,7 +802,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       text += `\t\tXMLName xml.Name \`xml:"${tagName}"\`\n`;
       let fieldName = bodyParam!.schema.language.go!.name;
       if (isArraySchema(bodyParam!.schema)) {
-        fieldName = (<string>bodyParam!.language.go!.name).capitalize();
+        fieldName = capitalize(<string>bodyParam!.language.go!.name);
         let tag = bodyParam!.schema.elementType.language.go!.name;
         if (bodyParam!.schema.elementType.serialization?.xml?.name) {
           tag = bodyParam!.schema.elementType.serialization.xml.name;
@@ -1244,7 +1244,7 @@ function getAPIParametersSig(op: Operation, imports: ImportManager): string {
     params.push('ctx context.Context');
   }
   for (const methodParam of values(methodParams)) {
-    params.push(`${(<string>methodParam.language.go!.name).uncapitalize()} ${formatParameterTypeName(methodParam)}`);
+    params.push(`${uncapitalize(<string>methodParam.language.go!.name)} ${formatParameterTypeName(methodParam)}`);
   }
   return params.join(', ');
 }

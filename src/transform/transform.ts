@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { comment, KnownMediaType, serialize } from '@azure-tools/codegen';
-import { Host, startSession, Session } from '@autorest/extension-base';
+import { capitalize, comment, KnownMediaType, serialize, uncapitalize } from '@azure-tools/codegen';
+import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
 import { AnySchema, ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, BooleanSchema } from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
 import { aggregateParameters, getSchemaResponse, hasAdditionalProperties, isMultiRespOperation, isTypePassedByValue, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, PollerInfo, isLROOperation } from '../common/helpers';
@@ -13,18 +13,22 @@ import { fromString } from 'html-to-text';
 import { Converter } from 'showdown';
 
 // The transformer adds Go-specific information to the code model.
-export async function transform(host: Host) {
+export async function transform(host: AutorestExtensionHost) {
   const debug = await host.GetValue('debug') || false;
 
   try {
-    const session = await startSession<CodeModel>(host, {}, codeModelSchema);
+    const session = await startSession<CodeModel>(host, codeModelSchema);
 
     // run the namer first, so that any transformations are applied on proper names
     await namer(session);
     await process(session);
 
     // output the model to the pipeline
-    host.WriteFile('code-model-v4-transform.yaml', serialize(session.model), undefined, 'code-model-v4');
+    host.writeFile({
+      filename: 'code-model-v4-transform.yaml',
+      content: serialize(session.model),
+      artifactType: 'code-model-v4'
+    });
 
   } catch (E) {
     if (debug) {
@@ -312,7 +316,7 @@ function processOperationRequests(session: Session<CodeModel>) {
                 suffix = 'XML';
                 break;
               default:
-                suffix = (<string>req.protocol.http!.knownMediaType).capitalize();
+                suffix = capitalize(<string>req.protocol.http!.knownMediaType);
             }
             name = name + 'With' + suffix;
           }
@@ -556,7 +560,7 @@ function processOperationResponses(session: Session<CodeModel>) {
           }
           if (schemaError.discriminator) {
             // if the error is a discriminator we need to create an internal wrapper type
-            schemaError.language.go!.internalErrorType = (<string>schemaError.language.go!.name).uncapitalize();
+            schemaError.language.go!.internalErrorType = uncapitalize(<string>schemaError.language.go!.name);
           }
           if (schemaError.discriminator) {
             for (const dt of values(<Array<string>>schemaError.language.go!.discriminatorTypes)) {
@@ -815,7 +819,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
     }
     if (response.schema.serialization?.xml && response.schema.serialization.xml.name) {
       // always prefer the XML name
-      propName = (<string>response.schema.serialization.xml.name).capitalize();
+      propName = capitalize(<string>response.schema.serialization.xml.name);
     }
     // add any headers to the response type
     addHeadersToSchema(resultEnv);

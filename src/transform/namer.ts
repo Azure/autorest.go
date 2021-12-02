@@ -4,6 +4,7 @@
  *  --------------------------------------------------------------------------------------------  */
 
 import { Session } from '@autorest/extension-base';
+import { capitalize, uncapitalize } from '@azure-tools/codegen';
 import { CodeModel, HttpHeader, Language } from '@autorest/codemodel';
 import { visitor, clone, values } from '@azure-tools/linq';
 import { CommonAcronyms, ReservedWords } from './mappings';
@@ -33,7 +34,7 @@ export class protocolMethods implements protocolNaming {
 
   constructor(name: string) {
     // uncapitalizing runs the risk of reserved name collision, e.g. Import -> import
-    this.internalMethod = getEscapedReservedName(name.uncapitalize(), 'Operation');
+    this.internalMethod = getEscapedReservedName(uncapitalize(name), 'Operation');
     this.requestMethod = ensureNameCase(`${name}${requestMethodSuffix}`, true);
     this.responseMethod = ensureNameCase(`${name}${responseMethodSuffix}`, true);
     this.errorMethod = ensureNameCase(`${name}${errorMethodSuffix}`, true);
@@ -121,7 +122,7 @@ export async function namer(session: Session<CodeModel>) {
     groupDetails.clientCtorName = `New${groupDetails.clientName}`;
     if (!exportClient) {
       groupDetails.clientName = ensureNameCase(<string>groupDetails.clientName, true);
-      groupDetails.clientCtorName = (<string>groupDetails.clientCtorName).uncapitalize();
+      groupDetails.clientCtorName = uncapitalize(<string>groupDetails.clientCtorName);
     }
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;
@@ -163,7 +164,7 @@ export async function namer(session: Session<CodeModel>) {
           op.language.go!.paging.nextLinkName = ensureNameCase((<string>op.language.go!.paging.nextLinkName));
         }
         if (op.language.go!.paging.member) {
-          op.language.go!.paging.member = (<string>op.language.go!.paging.member).uncapitalize();
+          op.language.go!.paging.member = uncapitalize(<string>op.language.go!.paging.member);
         }
       }
       for (const resp of values(op.responses)) {
@@ -263,7 +264,7 @@ export function ensureNameCase(name: string, lowerFirst?: boolean): string {
       }
       // note that capitalize() will convert the following acronyms to all upper-case
       // 'ip', 'os', 'ms', 'vm'
-      word = word.capitalize();
+      word = capitalize(word);
     }
     reconstructed += word;
   }

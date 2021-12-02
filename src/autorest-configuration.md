@@ -8,9 +8,9 @@ AutoRest needs the below config to pick this up as a plug-in - see https://githu
 
 # Pipeline Configuration
 ``` yaml
-version: 3.6.2
+version: 3.7.2
 use-extension:
-  "@autorest/modelerfour" : "4.21.1"
+  "@autorest/modelerfour" : "4.22.1"
 
 modelerfour:
   resolve-schema-name-collisons: true
