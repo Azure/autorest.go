@@ -31,12 +31,12 @@ func TestAnalyzeBody(t *testing.T) {
 	}
 }
 
-func TestAnalyzeBodyWithSourcePath(t *testing.T) {
+func TestAnalyzeBodyWithJSON(t *testing.T) {
 	client := newMediaTypesClient()
 	body := SourcePath{
 		Source: to.StringPtr("test"),
 	}
-	result, err := client.AnalyzeBodyWithSourcePath(context.Background(), &MediaTypesClientAnalyzeBodyWithSourcePathOptions{Input: &body})
+	result, err := client.AnalyzeBodyWithJSON(context.Background(), &MediaTypesClientAnalyzeBodyWithJSONOptions{Input: &body})
 	if err != nil {
 		t.Fatalf("AnalyzeBodyWithSourcePath: %v", err)
 	}
@@ -56,4 +56,20 @@ func TestContentTypeWithEncoding(t *testing.T) {
 	if s := result.RawResponse.StatusCode; s != http.StatusOK {
 		t.Fatalf("unexpected status code %d", s)
 	}
+}
+
+func TestBinaryBodyWithThreeContentTypes(t *testing.T) {
+	t.Skip("no route")
+}
+
+func TestBinaryBodyWithThreeContentTypesWithText(t *testing.T) {
+	t.Skip("no route")
+}
+
+func TestBinaryBodyWithTwoContentTypes(t *testing.T) {
+	t.Skip("no route")
+}
+
+func TestPutTextAndJSONBodyWithJSON(t *testing.T) {
+	t.Skip("no route")
 }

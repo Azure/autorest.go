@@ -869,13 +869,14 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     imports.add('strings');
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming');
     const bodyParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http!.in === 'body'; }).first();
+    const contentType = `"${op.requests![0].protocol.http!.mediaTypes[0]}"`;
     if (bodyParam!.required) {
       text += `\tbody := streaming.NopCloser(strings.NewReader(${bodyParam!.language.go!.name}))\n`;
-      text += `\treturn req, req.SetBody(body, "text/plain; encoding=UTF-8")\n`;
+      text += `\treturn req, req.SetBody(body, ${contentType})\n`;
     } else {
       text += emitParamGroupCheck(<GroupProperty>bodyParam!.language.go!.paramGroup, bodyParam!);
       text += `\tbody := streaming.NopCloser(strings.NewReader(${getParamName(bodyParam!)}))\n`;
-      text += `\treturn req, req.SetBody(body, "text/plain; encoding=UTF-8")\n`;
+      text += `\treturn req, req.SetBody(body, ${contentType})\n`;
       text += '\t}\n';
       text += '\treturn req, nil\n';
     }

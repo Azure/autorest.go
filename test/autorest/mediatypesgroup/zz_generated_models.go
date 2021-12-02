@@ -17,9 +17,9 @@ type MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions struct {
 	Input io.ReadSeekCloser
 }
 
-// MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithSourcePath
+// MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithJSON
 // method.
-type MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathOptions struct {
+type MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions struct {
 	// Input parameter.
 	Input *SourcePath
 }
@@ -30,11 +30,29 @@ type MediaTypesClientAnalyzeBodyOptions struct {
 	Input io.ReadSeekCloser
 }
 
-// MediaTypesClientAnalyzeBodyWithSourcePathOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithSourcePath
+// MediaTypesClientAnalyzeBodyWithJSONOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithJSON
 // method.
-type MediaTypesClientAnalyzeBodyWithSourcePathOptions struct {
+type MediaTypesClientAnalyzeBodyWithJSONOptions struct {
 	// Input parameter.
 	Input *SourcePath
+}
+
+// MediaTypesClientBinaryBodyWithThreeContentTypesOptions contains the optional parameters for the MediaTypesClient.BinaryBodyWithThreeContentTypes
+// method.
+type MediaTypesClientBinaryBodyWithThreeContentTypesOptions struct {
+	// placeholder for future optional parameters
+}
+
+// MediaTypesClientBinaryBodyWithThreeContentTypesWithTextOptions contains the optional parameters for the MediaTypesClient.BinaryBodyWithThreeContentTypesWithText
+// method.
+type MediaTypesClientBinaryBodyWithThreeContentTypesWithTextOptions struct {
+	// placeholder for future optional parameters
+}
+
+// MediaTypesClientBinaryBodyWithTwoContentTypesOptions contains the optional parameters for the MediaTypesClient.BinaryBodyWithTwoContentTypes
+// method.
+type MediaTypesClientBinaryBodyWithTwoContentTypesOptions struct {
+	// placeholder for future optional parameters
 }
 
 // MediaTypesClientContentTypeWithEncodingOptions contains the optional parameters for the MediaTypesClient.ContentTypeWithEncoding
@@ -42,6 +60,18 @@ type MediaTypesClientAnalyzeBodyWithSourcePathOptions struct {
 type MediaTypesClientContentTypeWithEncodingOptions struct {
 	// Input parameter.
 	Input *string
+}
+
+// MediaTypesClientPutTextAndJSONBodyWithJSONOptions contains the optional parameters for the MediaTypesClient.PutTextAndJSONBodyWithJSON
+// method.
+type MediaTypesClientPutTextAndJSONBodyWithJSONOptions struct {
+	// placeholder for future optional parameters
+}
+
+// MediaTypesClientPutTextAndJSONBodyWithTextOptions contains the optional parameters for the MediaTypesClient.PutTextAndJSONBodyWithText
+// method.
+type MediaTypesClientPutTextAndJSONBodyWithTextOptions struct {
+	// placeholder for future optional parameters
 }
 
 // SourcePath - Uri or local path to source data.

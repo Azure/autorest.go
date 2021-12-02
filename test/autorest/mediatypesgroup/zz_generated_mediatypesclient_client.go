@@ -15,6 +15,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/streaming"
+	"io"
 	"net/http"
 	"strings"
 )
@@ -140,28 +141,28 @@ func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderHandleError(resp *http.
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// AnalyzeBodyNoAcceptHeaderWithSourcePath - Analyze body, that could be different media types. Adds to AnalyzeBody by not
-// having an accept type.
+// AnalyzeBodyNoAcceptHeaderWithJSON - Analyze body, that could be different media types. Adds to AnalyzeBody by not having
+// an accept type.
 // If the operation fails it returns a generic error.
-// options - MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithSourcePath
+// options - MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithJSON
 // method.
-func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeaderWithSourcePath(ctx context.Context, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathOptions) (MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse, error) {
-	req, err := client.analyzeBodyNoAcceptHeaderWithSourcePathCreateRequest(ctx, options)
+func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeaderWithJSON(ctx context.Context, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions) (MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse, error) {
+	req, err := client.analyzeBodyNoAcceptHeaderWithJSONCreateRequest(ctx, options)
 	if err != nil {
-		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse{}, err
+		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse{}, err
+		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse{}, client.analyzeBodyNoAcceptHeaderWithSourcePathHandleError(resp)
+		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse{}, client.analyzeBodyNoAcceptHeaderWithJSONHandleError(resp)
 	}
-	return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathResponse{RawResponse: resp}, nil
+	return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse{RawResponse: resp}, nil
 }
 
-// analyzeBodyNoAcceptHeaderWithSourcePathCreateRequest creates the AnalyzeBodyNoAcceptHeaderWithSourcePath request.
-func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithSourcePathCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderWithSourcePathOptions) (*policy.Request, error) {
+// analyzeBodyNoAcceptHeaderWithJSONCreateRequest creates the AnalyzeBodyNoAcceptHeaderWithJSON request.
+func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithJSONCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/analyzeNoAccept"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -173,8 +174,8 @@ func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithSourcePathCreateReq
 	return req, nil
 }
 
-// analyzeBodyNoAcceptHeaderWithSourcePathHandleError handles the AnalyzeBodyNoAcceptHeaderWithSourcePath error response.
-func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithSourcePathHandleError(resp *http.Response) error {
+// analyzeBodyNoAcceptHeaderWithJSONHandleError handles the AnalyzeBodyNoAcceptHeaderWithJSON error response.
+func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithJSONHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -185,27 +186,27 @@ func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithSourcePathHandleErr
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// AnalyzeBodyWithSourcePath - Analyze body, that could be different media types.
+// AnalyzeBodyWithJSON - Analyze body, that could be different media types.
 // If the operation fails it returns a generic error.
-// options - MediaTypesClientAnalyzeBodyWithSourcePathOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithSourcePath
+// options - MediaTypesClientAnalyzeBodyWithJSONOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithJSON
 // method.
-func (client *MediaTypesClient) AnalyzeBodyWithSourcePath(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (MediaTypesClientAnalyzeBodyWithSourcePathResponse, error) {
-	req, err := client.analyzeBodyWithSourcePathCreateRequest(ctx, options)
+func (client *MediaTypesClient) AnalyzeBodyWithJSON(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithJSONOptions) (MediaTypesClientAnalyzeBodyWithJSONResponse, error) {
+	req, err := client.analyzeBodyWithJSONCreateRequest(ctx, options)
 	if err != nil {
-		return MediaTypesClientAnalyzeBodyWithSourcePathResponse{}, err
+		return MediaTypesClientAnalyzeBodyWithJSONResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return MediaTypesClientAnalyzeBodyWithSourcePathResponse{}, err
+		return MediaTypesClientAnalyzeBodyWithJSONResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MediaTypesClientAnalyzeBodyWithSourcePathResponse{}, client.analyzeBodyWithSourcePathHandleError(resp)
+		return MediaTypesClientAnalyzeBodyWithJSONResponse{}, client.analyzeBodyWithJSONHandleError(resp)
 	}
-	return client.analyzeBodyWithSourcePathHandleResponse(resp)
+	return client.analyzeBodyWithJSONHandleResponse(resp)
 }
 
-// analyzeBodyWithSourcePathCreateRequest creates the AnalyzeBodyWithSourcePath request.
-func (client *MediaTypesClient) analyzeBodyWithSourcePathCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithSourcePathOptions) (*policy.Request, error) {
+// analyzeBodyWithJSONCreateRequest creates the AnalyzeBodyWithJSON request.
+func (client *MediaTypesClient) analyzeBodyWithJSONCreateRequest(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithJSONOptions) (*policy.Request, error) {
 	urlPath := "/mediatypes/analyze"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -218,17 +219,17 @@ func (client *MediaTypesClient) analyzeBodyWithSourcePathCreateRequest(ctx conte
 	return req, nil
 }
 
-// analyzeBodyWithSourcePathHandleResponse handles the AnalyzeBodyWithSourcePath response.
-func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleResponse(resp *http.Response) (MediaTypesClientAnalyzeBodyWithSourcePathResponse, error) {
-	result := MediaTypesClientAnalyzeBodyWithSourcePathResponse{RawResponse: resp}
+// analyzeBodyWithJSONHandleResponse handles the AnalyzeBodyWithJSON response.
+func (client *MediaTypesClient) analyzeBodyWithJSONHandleResponse(resp *http.Response) (MediaTypesClientAnalyzeBodyWithJSONResponse, error) {
+	result := MediaTypesClientAnalyzeBodyWithJSONResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return MediaTypesClientAnalyzeBodyWithSourcePathResponse{}, runtime.NewResponseError(err, resp)
+		return MediaTypesClientAnalyzeBodyWithJSONResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
-// analyzeBodyWithSourcePathHandleError handles the AnalyzeBodyWithSourcePath error response.
-func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleError(resp *http.Response) error {
+// analyzeBodyWithJSONHandleError handles the AnalyzeBodyWithJSON error response.
+func (client *MediaTypesClient) analyzeBodyWithJSONHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -239,7 +240,164 @@ func (client *MediaTypesClient) analyzeBodyWithSourcePathHandleError(resp *http.
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
-// ContentTypeWithEncoding - Pass in contentType 'text/plain; encoding=UTF-8' to pass test. Value for input does not matter
+// BinaryBodyWithThreeContentTypes - Binary body with three content types. Pass in string 'hello, world' with content type
+// 'text/plain', {'hello': world'} with content type 'application/json' and a byte string for
+// 'application/octet-stream'.
+// If the operation fails it returns a generic error.
+// contentType - Upload file type
+// message - The payload body.
+// options - MediaTypesClientBinaryBodyWithThreeContentTypesOptions contains the optional parameters for the MediaTypesClient.BinaryBodyWithThreeContentTypes
+// method.
+func (client *MediaTypesClient) BinaryBodyWithThreeContentTypes(ctx context.Context, contentType ContentType1, message io.ReadSeekCloser, options *MediaTypesClientBinaryBodyWithThreeContentTypesOptions) (MediaTypesClientBinaryBodyWithThreeContentTypesResponse, error) {
+	req, err := client.binaryBodyWithThreeContentTypesCreateRequest(ctx, contentType, message, options)
+	if err != nil {
+		return MediaTypesClientBinaryBodyWithThreeContentTypesResponse{}, err
+	}
+	resp, err := client.pl.Do(req)
+	if err != nil {
+		return MediaTypesClientBinaryBodyWithThreeContentTypesResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return MediaTypesClientBinaryBodyWithThreeContentTypesResponse{}, client.binaryBodyWithThreeContentTypesHandleError(resp)
+	}
+	return client.binaryBodyWithThreeContentTypesHandleResponse(resp)
+}
+
+// binaryBodyWithThreeContentTypesCreateRequest creates the BinaryBodyWithThreeContentTypes request.
+func (client *MediaTypesClient) binaryBodyWithThreeContentTypesCreateRequest(ctx context.Context, contentType ContentType1, message io.ReadSeekCloser, options *MediaTypesClientBinaryBodyWithThreeContentTypesOptions) (*policy.Request, error) {
+	urlPath := "/mediatypes/binaryBodyThreeContentTypes"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header.Set("Content-Type", string(contentType))
+	req.Raw().Header.Set("Accept", "text/plain")
+	return req, req.SetBody(message, string(contentType))
+}
+
+// binaryBodyWithThreeContentTypesHandleResponse handles the BinaryBodyWithThreeContentTypes response.
+func (client *MediaTypesClient) binaryBodyWithThreeContentTypesHandleResponse(resp *http.Response) (MediaTypesClientBinaryBodyWithThreeContentTypesResponse, error) {
+	result := MediaTypesClientBinaryBodyWithThreeContentTypesResponse{RawResponse: resp}
+	return result, nil
+}
+
+// binaryBodyWithThreeContentTypesHandleError handles the BinaryBodyWithThreeContentTypes error response.
+func (client *MediaTypesClient) binaryBodyWithThreeContentTypesHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return runtime.NewResponseError(err, resp)
+	}
+	if len(body) == 0 {
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
+	}
+	return runtime.NewResponseError(errors.New(string(body)), resp)
+}
+
+// BinaryBodyWithThreeContentTypesWithText - Binary body with three content types. Pass in string 'hello, world' with content
+// type 'text/plain', {'hello': world'} with content type 'application/json' and a byte string for
+// 'application/octet-stream'.
+// If the operation fails it returns a generic error.
+// message - The payload body.
+// options - MediaTypesClientBinaryBodyWithThreeContentTypesWithTextOptions contains the optional parameters for the MediaTypesClient.BinaryBodyWithThreeContentTypesWithText
+// method.
+func (client *MediaTypesClient) BinaryBodyWithThreeContentTypesWithText(ctx context.Context, message string, options *MediaTypesClientBinaryBodyWithThreeContentTypesWithTextOptions) (MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse, error) {
+	req, err := client.binaryBodyWithThreeContentTypesWithTextCreateRequest(ctx, message, options)
+	if err != nil {
+		return MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse{}, err
+	}
+	resp, err := client.pl.Do(req)
+	if err != nil {
+		return MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse{}, client.binaryBodyWithThreeContentTypesWithTextHandleError(resp)
+	}
+	return client.binaryBodyWithThreeContentTypesWithTextHandleResponse(resp)
+}
+
+// binaryBodyWithThreeContentTypesWithTextCreateRequest creates the BinaryBodyWithThreeContentTypesWithText request.
+func (client *MediaTypesClient) binaryBodyWithThreeContentTypesWithTextCreateRequest(ctx context.Context, message string, options *MediaTypesClientBinaryBodyWithThreeContentTypesWithTextOptions) (*policy.Request, error) {
+	urlPath := "/mediatypes/binaryBodyThreeContentTypes"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header.Set("Accept", "text/plain")
+	body := streaming.NopCloser(strings.NewReader(message))
+	return req, req.SetBody(body, "text/plain")
+}
+
+// binaryBodyWithThreeContentTypesWithTextHandleResponse handles the BinaryBodyWithThreeContentTypesWithText response.
+func (client *MediaTypesClient) binaryBodyWithThreeContentTypesWithTextHandleResponse(resp *http.Response) (MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse, error) {
+	result := MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse{RawResponse: resp}
+	return result, nil
+}
+
+// binaryBodyWithThreeContentTypesWithTextHandleError handles the BinaryBodyWithThreeContentTypesWithText error response.
+func (client *MediaTypesClient) binaryBodyWithThreeContentTypesWithTextHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return runtime.NewResponseError(err, resp)
+	}
+	if len(body) == 0 {
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
+	}
+	return runtime.NewResponseError(errors.New(string(body)), resp)
+}
+
+// BinaryBodyWithTwoContentTypes - Binary body with two content types. Pass in of {'hello': 'world'} for the application/json
+// content type, and a byte stream of 'hello, world!' for application/octet-stream.
+// If the operation fails it returns a generic error.
+// contentType - Upload file type
+// message - The payload body.
+// options - MediaTypesClientBinaryBodyWithTwoContentTypesOptions contains the optional parameters for the MediaTypesClient.BinaryBodyWithTwoContentTypes
+// method.
+func (client *MediaTypesClient) BinaryBodyWithTwoContentTypes(ctx context.Context, contentType ContentType1, message io.ReadSeekCloser, options *MediaTypesClientBinaryBodyWithTwoContentTypesOptions) (MediaTypesClientBinaryBodyWithTwoContentTypesResponse, error) {
+	req, err := client.binaryBodyWithTwoContentTypesCreateRequest(ctx, contentType, message, options)
+	if err != nil {
+		return MediaTypesClientBinaryBodyWithTwoContentTypesResponse{}, err
+	}
+	resp, err := client.pl.Do(req)
+	if err != nil {
+		return MediaTypesClientBinaryBodyWithTwoContentTypesResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return MediaTypesClientBinaryBodyWithTwoContentTypesResponse{}, client.binaryBodyWithTwoContentTypesHandleError(resp)
+	}
+	return client.binaryBodyWithTwoContentTypesHandleResponse(resp)
+}
+
+// binaryBodyWithTwoContentTypesCreateRequest creates the BinaryBodyWithTwoContentTypes request.
+func (client *MediaTypesClient) binaryBodyWithTwoContentTypesCreateRequest(ctx context.Context, contentType ContentType1, message io.ReadSeekCloser, options *MediaTypesClientBinaryBodyWithTwoContentTypesOptions) (*policy.Request, error) {
+	urlPath := "/mediatypes/binaryBodyTwoContentTypes"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header.Set("Content-Type", string(contentType))
+	req.Raw().Header.Set("Accept", "text/plain")
+	return req, req.SetBody(message, string(contentType))
+}
+
+// binaryBodyWithTwoContentTypesHandleResponse handles the BinaryBodyWithTwoContentTypes response.
+func (client *MediaTypesClient) binaryBodyWithTwoContentTypesHandleResponse(resp *http.Response) (MediaTypesClientBinaryBodyWithTwoContentTypesResponse, error) {
+	result := MediaTypesClientBinaryBodyWithTwoContentTypesResponse{RawResponse: resp}
+	return result, nil
+}
+
+// binaryBodyWithTwoContentTypesHandleError handles the BinaryBodyWithTwoContentTypes error response.
+func (client *MediaTypesClient) binaryBodyWithTwoContentTypesHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return runtime.NewResponseError(err, resp)
+	}
+	if len(body) == 0 {
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
+	}
+	return runtime.NewResponseError(errors.New(string(body)), resp)
+}
+
+// ContentTypeWithEncoding - Pass in contentType 'text/plain; charset=UTF-8' to pass test. Value for input does not matter
 // If the operation fails it returns a generic error.
 // options - MediaTypesClientContentTypeWithEncodingOptions contains the optional parameters for the MediaTypesClient.ContentTypeWithEncoding
 // method.
@@ -268,7 +426,7 @@ func (client *MediaTypesClient) contentTypeWithEncodingCreateRequest(ctx context
 	req.Raw().Header.Set("Accept", "application/json")
 	if options != nil && options.Input != nil {
 		body := streaming.NopCloser(strings.NewReader(*options.Input))
-		return req, req.SetBody(body, "text/plain; encoding=UTF-8")
+		return req, req.SetBody(body, "text/plain; charset=UTF-8")
 	}
 	return req, nil
 }
@@ -284,6 +442,105 @@ func (client *MediaTypesClient) contentTypeWithEncodingHandleResponse(resp *http
 
 // contentTypeWithEncodingHandleError handles the ContentTypeWithEncoding error response.
 func (client *MediaTypesClient) contentTypeWithEncodingHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return runtime.NewResponseError(err, resp)
+	}
+	if len(body) == 0 {
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
+	}
+	return runtime.NewResponseError(errors.New(string(body)), resp)
+}
+
+// PutTextAndJSONBodyWithJSON - Body that's either text/plain or application/json
+// If the operation fails it returns a generic error.
+// message - The payload body.
+// options - MediaTypesClientPutTextAndJSONBodyWithJSONOptions contains the optional parameters for the MediaTypesClient.PutTextAndJSONBodyWithJSON
+// method.
+func (client *MediaTypesClient) PutTextAndJSONBodyWithJSON(ctx context.Context, message string, options *MediaTypesClientPutTextAndJSONBodyWithJSONOptions) (MediaTypesClientPutTextAndJSONBodyWithJSONResponse, error) {
+	req, err := client.putTextAndJSONBodyWithJSONCreateRequest(ctx, message, options)
+	if err != nil {
+		return MediaTypesClientPutTextAndJSONBodyWithJSONResponse{}, err
+	}
+	resp, err := client.pl.Do(req)
+	if err != nil {
+		return MediaTypesClientPutTextAndJSONBodyWithJSONResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return MediaTypesClientPutTextAndJSONBodyWithJSONResponse{}, client.putTextAndJSONBodyWithJSONHandleError(resp)
+	}
+	return client.putTextAndJSONBodyWithJSONHandleResponse(resp)
+}
+
+// putTextAndJSONBodyWithJSONCreateRequest creates the PutTextAndJSONBodyWithJSON request.
+func (client *MediaTypesClient) putTextAndJSONBodyWithJSONCreateRequest(ctx context.Context, message string, options *MediaTypesClientPutTextAndJSONBodyWithJSONOptions) (*policy.Request, error) {
+	urlPath := "/mediatypes/textAndJson"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header.Set("Accept", "text/plain")
+	return req, runtime.MarshalAsJSON(req, message)
+}
+
+// putTextAndJSONBodyWithJSONHandleResponse handles the PutTextAndJSONBodyWithJSON response.
+func (client *MediaTypesClient) putTextAndJSONBodyWithJSONHandleResponse(resp *http.Response) (MediaTypesClientPutTextAndJSONBodyWithJSONResponse, error) {
+	result := MediaTypesClientPutTextAndJSONBodyWithJSONResponse{RawResponse: resp}
+	return result, nil
+}
+
+// putTextAndJSONBodyWithJSONHandleError handles the PutTextAndJSONBodyWithJSON error response.
+func (client *MediaTypesClient) putTextAndJSONBodyWithJSONHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return runtime.NewResponseError(err, resp)
+	}
+	if len(body) == 0 {
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
+	}
+	return runtime.NewResponseError(errors.New(string(body)), resp)
+}
+
+// PutTextAndJSONBodyWithText - Body that's either text/plain or application/json
+// If the operation fails it returns a generic error.
+// message - The payload body.
+// options - MediaTypesClientPutTextAndJSONBodyWithTextOptions contains the optional parameters for the MediaTypesClient.PutTextAndJSONBodyWithText
+// method.
+func (client *MediaTypesClient) PutTextAndJSONBodyWithText(ctx context.Context, message string, options *MediaTypesClientPutTextAndJSONBodyWithTextOptions) (MediaTypesClientPutTextAndJSONBodyWithTextResponse, error) {
+	req, err := client.putTextAndJSONBodyWithTextCreateRequest(ctx, message, options)
+	if err != nil {
+		return MediaTypesClientPutTextAndJSONBodyWithTextResponse{}, err
+	}
+	resp, err := client.pl.Do(req)
+	if err != nil {
+		return MediaTypesClientPutTextAndJSONBodyWithTextResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return MediaTypesClientPutTextAndJSONBodyWithTextResponse{}, client.putTextAndJSONBodyWithTextHandleError(resp)
+	}
+	return client.putTextAndJSONBodyWithTextHandleResponse(resp)
+}
+
+// putTextAndJSONBodyWithTextCreateRequest creates the PutTextAndJSONBodyWithText request.
+func (client *MediaTypesClient) putTextAndJSONBodyWithTextCreateRequest(ctx context.Context, message string, options *MediaTypesClientPutTextAndJSONBodyWithTextOptions) (*policy.Request, error) {
+	urlPath := "/mediatypes/textAndJson"
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header.Set("Accept", "text/plain")
+	body := streaming.NopCloser(strings.NewReader(message))
+	return req, req.SetBody(body, "text/plain")
+}
+
+// putTextAndJSONBodyWithTextHandleResponse handles the PutTextAndJSONBodyWithText response.
+func (client *MediaTypesClient) putTextAndJSONBodyWithTextHandleResponse(resp *http.Response) (MediaTypesClientPutTextAndJSONBodyWithTextResponse, error) {
+	result := MediaTypesClientPutTextAndJSONBodyWithTextResponse{RawResponse: resp}
+	return result, nil
+}
+
+// putTextAndJSONBodyWithTextHandleError handles the PutTextAndJSONBodyWithText error response.
+func (client *MediaTypesClient) putTextAndJSONBodyWithTextHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)

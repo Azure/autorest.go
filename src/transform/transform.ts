@@ -300,8 +300,21 @@ function processOperationRequests(session: Session<CodeModel>) {
           const newOp = clone(op);
           newOp.requests = (<Array<Request>>op.requests).filter(r => r === req);
           let name = op.language.go!.name;
-          if (req.protocol.http!.knownMediaType === 'json') {
-            name = name + 'With' + req.parameters![0].schema.language.go!.name;
+          // for the non-binary media types we create a new method with the
+          // media type name as a suffix, e.g. FooAPIWithJSON()
+          if (req.protocol.http!.knownMediaType !== KnownMediaType.Binary) {
+            let suffix: string;
+            switch (req.protocol.http!.knownMediaType) {
+              case KnownMediaType.Json:
+                suffix = 'JSON';
+                break;
+              case KnownMediaType.Xml:
+                suffix = 'XML';
+                break;
+              default:
+                suffix = (<string>req.protocol.http!.knownMediaType).capitalize();
+            }
+            name = name + 'With' + suffix;
           }
           newOp.language.go!.name = name;
           newOp.language.go!.protocolNaming = new protocolMethods(newOp.language.go!.name);
