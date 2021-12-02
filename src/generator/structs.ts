@@ -137,7 +137,7 @@ export class StructDef {
         pointer = '';
       }
       const typeName = substituteDiscriminator(param.schema, elementByValueForParam(param));
-      text += `\t${capitalize(<string>param.language.go!.name)} ${pointer}${typeName}\n`;
+      text += `\t${capitalize(param.language.go!.name)} ${pointer}${typeName}\n`;
     }
     text += '}\n\n';
     return text;

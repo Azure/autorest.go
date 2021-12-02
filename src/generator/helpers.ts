@@ -194,7 +194,7 @@ export function getParamName(param: Parameter): string {
   if (param.implementation === ImplementationLocation.Client) {
     paramName = `client.${paramName}`;
   } else if (param.language.go!.paramGroup) {
-    paramName = `${uncapitalize(<string>param.language.go!.paramGroup.language.go!.name)}.${capitalize(paramName)}`;
+    paramName = `${uncapitalize(param.language.go!.paramGroup.language.go!.name)}.${capitalize(paramName)}`;
   }
   if (param.required !== true && !param.language.go!.byValue) {
     paramName = `*${paramName}`;

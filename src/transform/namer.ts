@@ -122,7 +122,7 @@ export async function namer(session: Session<CodeModel>) {
     groupDetails.clientCtorName = `New${groupDetails.clientName}`;
     if (!exportClient) {
       groupDetails.clientName = ensureNameCase(<string>groupDetails.clientName, true);
-      groupDetails.clientCtorName = uncapitalize(<string>groupDetails.clientCtorName);
+      groupDetails.clientCtorName = uncapitalize(groupDetails.clientCtorName);
     }
     for (const op of values(group.operations)) {
       const details = <OperationNaming>op.language.go;
@@ -164,7 +164,7 @@ export async function namer(session: Session<CodeModel>) {
           op.language.go!.paging.nextLinkName = ensureNameCase((<string>op.language.go!.paging.nextLinkName));
         }
         if (op.language.go!.paging.member) {
-          op.language.go!.paging.member = uncapitalize(<string>op.language.go!.paging.member);
+          op.language.go!.paging.member = uncapitalize(op.language.go!.paging.member);
         }
       }
       for (const resp of values(op.responses)) {

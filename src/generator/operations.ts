@@ -651,7 +651,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       text += `\turlPath = strings.ReplaceAll(urlPath, "{${pp.language.go!.serializedName}}", ${paramValue})\n`;
     }
   }
-  text += `\treq, err := runtime.NewRequest(ctx, http.Method${capitalize(<string>op.requests![0].protocol.http!.method)}, ${hostParam})\n`;
+  text += `\treq, err := runtime.NewRequest(ctx, http.Method${capitalize(op.requests![0].protocol.http!.method)}, ${hostParam})\n`;
   text += '\tif err != nil {\n';
   text += '\t\treturn nil, err\n';
   text += '\t}\n';
@@ -661,12 +661,12 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     if (param.implementation === ImplementationLocation.Client) {
       return `\tif client.${param.language.go!.name} != nil {\n`;
     }
-    const paramGroupName = uncapitalize(<string>gp.language.go!.name);
+    const paramGroupName = uncapitalize(gp.language.go!.name);
     let optionalParamGroupCheck = `${paramGroupName} != nil && `;
     if (gp.required) {
       optionalParamGroupCheck = '';
     }
-    return `\tif ${optionalParamGroupCheck}${paramGroupName}.${capitalize(<string>param.language.go!.name)} != nil {\n`;
+    return `\tif ${optionalParamGroupCheck}${paramGroupName}.${capitalize(param.language.go!.name)} != nil {\n`;
   }
   if (hasQueryParams) {
     // add query parameters
@@ -802,7 +802,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       text += `\t\tXMLName xml.Name \`xml:"${tagName}"\`\n`;
       let fieldName = bodyParam!.schema.language.go!.name;
       if (isArraySchema(bodyParam!.schema)) {
-        fieldName = capitalize(<string>bodyParam!.language.go!.name);
+        fieldName = capitalize(bodyParam!.language.go!.name);
         let tag = bodyParam!.schema.elementType.language.go!.name;
         if (bodyParam!.schema.elementType.serialization?.xml?.name) {
           tag = bodyParam!.schema.elementType.serialization.xml.name;
@@ -1244,7 +1244,7 @@ function getAPIParametersSig(op: Operation, imports: ImportManager): string {
     params.push('ctx context.Context');
   }
   for (const methodParam of values(methodParams)) {
-    params.push(`${uncapitalize(<string>methodParam.language.go!.name)} ${formatParameterTypeName(methodParam)}`);
+    params.push(`${uncapitalize(methodParam.language.go!.name)} ${formatParameterTypeName(methodParam)}`);
   }
   return params.join(', ');
 }

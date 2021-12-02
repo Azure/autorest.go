@@ -316,7 +316,7 @@ function processOperationRequests(session: Session<CodeModel>) {
                 suffix = 'XML';
                 break;
               default:
-                suffix = capitalize(<string>req.protocol.http!.knownMediaType);
+                suffix = capitalize(req.protocol.http!.knownMediaType);
             }
             name = name + 'With' + suffix;
           }
@@ -560,7 +560,7 @@ function processOperationResponses(session: Session<CodeModel>) {
           }
           if (schemaError.discriminator) {
             // if the error is a discriminator we need to create an internal wrapper type
-            schemaError.language.go!.internalErrorType = uncapitalize(<string>schemaError.language.go!.name);
+            schemaError.language.go!.internalErrorType = uncapitalize(schemaError.language.go!.name);
           }
           if (schemaError.discriminator) {
             for (const dt of values(<Array<string>>schemaError.language.go!.discriminatorTypes)) {
@@ -819,7 +819,7 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
     }
     if (response.schema.serialization?.xml && response.schema.serialization.xml.name) {
       // always prefer the XML name
-      propName = capitalize(<string>response.schema.serialization.xml.name);
+      propName = capitalize(response.schema.serialization.xml.name);
     }
     // add any headers to the response type
     addHeadersToSchema(resultEnv);
