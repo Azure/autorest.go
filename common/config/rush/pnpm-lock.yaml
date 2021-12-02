@@ -1,9 +1,9 @@
 dependencies:
   '@autorest/autorest': 3.0.6187
-  '@autorest/codemodel': 4.17.0
-  '@autorest/extension-base': 3.3.1
+  '@autorest/codemodel': 4.17.2
+  '@autorest/extension-base': 3.4.4
   '@azure-tools/async-io': 3.0.252
-  '@azure-tools/codegen': 2.7.0
+  '@azure-tools/codegen': 2.9.0
   '@azure-tools/linq': 3.1.261
   '@azure-tools/tasks': 3.0.252
   '@microsoft.azure/autorest.testserver': 3.1.8_e58605af5d62eced51e25286a407a18b
@@ -33,25 +33,25 @@ packages:
     requiresBuild: true
     resolution:
       integrity: sha512-BUTLfV6GufjgcSp0ysB1wdhMIG8RGQMiY4ZQnP76fHcR2KZW0QinnEAR99mMy7BVOdXiurWkNW7rilEJfKhXWg==
-  /@autorest/codemodel/4.17.0:
+  /@autorest/codemodel/4.17.2:
     dependencies:
-      '@azure-tools/codegen': 2.7.0
+      '@azure-tools/codegen': 2.9.0
       js-yaml: 4.0.0
     dev: false
     engines:
       node: '>=12.0.0'
     resolution:
-      integrity: sha512-Xu3uBvC6k6ktHLa7u9Uc07BB7Dy3mP9mJzGx1BbpRn5FpZTYD/Yrjf8sLrdY6mf3FhH3tlCfcepyMV8tXO9pyg==
-  /@autorest/extension-base/3.3.1:
+      integrity: sha512-ZmTpF8OtP6ouUQ7iIJCLbEe9I4/NMGXv/1KXLFgbLjKoN2wC7j8p+FpB4PLFWdT6hqGSzeWrXNsJwAZ4B0Fg3g==
+  /@autorest/extension-base/3.4.4:
     dependencies:
-      '@azure-tools/codegen': 2.7.0
+      '@azure-tools/codegen': 2.9.0
       js-yaml: 4.0.0
       vscode-jsonrpc: 3.6.2
     dev: false
     engines:
       node: '>=12.0.0'
     resolution:
-      integrity: sha512-1jcKs0/TRBy6VQXRDPyroezMkZPivuZANszLCw+3TtguO59ObrYp8SuHf85CZxqwDePfFOKOdaLJP6+lJRi8KQ==
+      integrity: sha512-u7+3GGzeYwFcafjt8gmpt0JM56UCdgP3Okhb23i5jhoc+5v7AWPEi00n5YmMb27OcR8wNDkb1jqtDjjeTnUHeQ==
   /@azure-tools/async-io/3.0.252:
     dependencies:
       '@azure-tools/tasks': 3.0.252
@@ -98,7 +98,7 @@ packages:
       node: '>=10.13.0'
     resolution:
       integrity: sha512-WOplS0oiNoZ0jWKkAdUJXAuQB8UzbPsIeJin7LnnzJQseGeU05zQLOUjwi63neAFyW6ninyVjXKaIl+GKOQ5mQ==
-  /@azure-tools/codegen/2.7.0:
+  /@azure-tools/codegen/2.9.0:
     dependencies:
       '@azure-tools/async-io': 3.0.252
       js-yaml: 4.0.0
@@ -107,7 +107,7 @@ packages:
     engines:
       node: '>=12.0.0'
     resolution:
-      integrity: sha512-OP83pnc8QMNPnlai+UDTG9E2YR833tHEIFebVULB72ZHLDH8pCnSMHN4VOAgwV75L0kCHG3f5VUYohOzCyt7Rg==
+      integrity: sha512-dWjtdn01jK561RgWVrGz+g8G5hEp2PAuqBTXjwPmrXbuvzNPUMMDoeqCXjZ+d13VhfPY52T21zexftO0aOdf3w==
   /@azure-tools/codemodel/4.13.349:
     dependencies:
       '@azure-tools/autorest-extension-base': 3.1.267
@@ -6250,11 +6250,11 @@ packages:
   'file:projects/go.tgz':
     dependencies:
       '@autorest/autorest': 3.0.6187
-      '@autorest/codemodel': 4.17.0
-      '@autorest/extension-base': 3.3.1
+      '@autorest/codemodel': 4.17.2
+      '@autorest/extension-base': 3.4.4
       '@azure-tools/async-io': 3.0.252
       '@azure-tools/autorest-extension-base': 3.1.266
-      '@azure-tools/codegen': 2.7.0
+      '@azure-tools/codegen': 2.9.0
       '@azure-tools/codemodel': 4.13.349
       '@azure-tools/linq': 3.1.261
       '@azure-tools/tasks': 3.0.252
@@ -6280,16 +6280,16 @@ packages:
     dev: false
     name: '@rush-temp/go'
     resolution:
-      integrity: sha512-0XQTNOf/gUR8YvOpTnuouuDF1I121gfXXXKhmrBr2TMuM8tUiy1PCFsVpNs12QsF0EA7ZQDrOPf8L9wQIv4Fgw==
+      integrity: sha512-AY9ucPZxGDE9fJ02RNyNk/ru800f7mUSsPyOk5c7ALUYFOIlk8YX4vHRs4dUpNrnmTEoAIC/qcoP3YyMRjRWfw==
       tarball: 'file:projects/go.tgz'
     version: 0.0.0
 registry: ''
 specifiers:
   '@autorest/autorest': ~3.0.6173
-  '@autorest/codemodel': ~4.17.0
-  '@autorest/extension-base': ~3.3.1
+  '@autorest/codemodel': ~4.17.2
+  '@autorest/extension-base': ~3.4.4
   '@azure-tools/async-io': ~3.0.0
-  '@azure-tools/codegen': ~2.7.0
+  '@azure-tools/codegen': ~2.9.0
   '@azure-tools/linq': ~3.1.0
   '@azure-tools/tasks': ~3.0.0
   '@microsoft.azure/autorest.testserver': 3.1.8

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Session } from '@autorest/extension-base';
-import { comment } from '@azure-tools/codegen';
+import { capitalize, comment } from '@azure-tools/codegen';
 import { ByteArraySchema, CodeModel, ComplexSchema, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
 import { length, values } from '@azure-tools/linq';
 import { isArraySchema, isDictionarySchema, isObjectSchema, hasAdditionalProperties, hasPolymorphicField, commentLength } from '../common/helpers';
@@ -405,7 +405,7 @@ function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef, imp
       let populate = 'populate';
       let addr = '';
       if (prop.schema.language.go!.internalTimeType) {
-        populate += prop.schema.language.go!.internalTimeType.capitalize();
+        populate += capitalize(prop.schema.language.go!.internalTimeType);
       } else if (prop.schema.type === SchemaType.Any) {
         // for fields that are interface{} we pass their address so populate() IsNil() doesn't panic
         addr = '&';
@@ -509,7 +509,7 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, i
       } else if (isDictionarySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
         unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Map(val)\n`;
       } else if (prop.schema.language.go!.internalTimeType) {
-        unmarshalBody += `\t\t\t\terr = unpopulate${prop.schema.language.go!.internalTimeType.capitalize()}(val, &${receiver}.${prop.language.go!.name})\n`;
+        unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(prop.schema.language.go!.internalTimeType)}(val, &${receiver}.${prop.language.go!.name})\n`;
       } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.internalTimeType) {
         unmarshalBody += `\t\t\tvar aux []*${prop.schema.elementType.language.go!.internalTimeType}\n`;
         unmarshalBody += '\t\t\terr = unpopulate(val, &aux)\n';
