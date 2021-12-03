@@ -55,7 +55,7 @@ func NewLogAnalyticsClient(subscriptionID string, credential azcore.TokenCredent
 // If the operation fails it returns a generic error.
 // location - The location upon which virtual-machine-sizes is queried.
 // parameters - Parameters supplied to the LogAnalytics getRequestRateByInterval Api.
-// options - LogAnalyticsBeginExportRequestRateByIntervalOptions contains the optional parameters for the LogAnalytics.BeginExportRequestRateByInterval
+// options - LogAnalyticsBeginExportRequestRateByIntervalOptions contains the optional parameters for the LogAnalyticsClient.BeginExportRequestRateByInterval
 // method.
 func (client *LogAnalyticsClient) BeginExportRequestRateByInterval(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsBeginExportRequestRateByIntervalOptions) (LogAnalyticsExportRequestRateByIntervalPollerResponse, error) {
 	resp, err := client.exportRequestRateByInterval(ctx, location, parameters, options)
@@ -132,7 +132,7 @@ func (client *LogAnalyticsClient) exportRequestRateByIntervalHandleError(resp *h
 // If the operation fails it returns a generic error.
 // location - The location upon which virtual-machine-sizes is queried.
 // parameters - Parameters supplied to the LogAnalytics getThrottledRequests Api.
-// options - LogAnalyticsBeginExportThrottledRequestsOptions contains the optional parameters for the LogAnalytics.BeginExportThrottledRequests
+// options - LogAnalyticsBeginExportThrottledRequestsOptions contains the optional parameters for the LogAnalyticsClient.BeginExportThrottledRequests
 // method.
 func (client *LogAnalyticsClient) BeginExportThrottledRequests(ctx context.Context, location string, parameters ThrottledRequestsInput, options *LogAnalyticsBeginExportThrottledRequestsOptions) (LogAnalyticsExportThrottledRequestsPollerResponse, error) {
 	resp, err := client.exportThrottledRequests(ctx, location, parameters, options)

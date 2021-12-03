@@ -50,7 +50,7 @@ func NewContainersClient(subscriptionID string, options *azcore.ClientOptions) *
 // containerName - The container name.
 // resourceGroupName - The resource group name.
 // containerParam - The container properties.
-// options - ContainersBeginCreateOrUpdateOptions contains the optional parameters for the Containers.BeginCreateOrUpdate
+// options - ContainersBeginCreateOrUpdateOptions contains the optional parameters for the ContainersClient.BeginCreateOrUpdate
 // method.
 func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersBeginCreateOrUpdateOptions) (ContainersCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, storageAccountName, containerName, resourceGroupName, containerParam, options)
@@ -140,7 +140,7 @@ func (client *ContainersClient) createOrUpdateHandleError(resp *http.Response) e
 // storageAccountName - The Storage Account Name
 // containerName - The container name.
 // resourceGroupName - The resource group name.
-// options - ContainersBeginDeleteOptions contains the optional parameters for the Containers.BeginDelete method.
+// options - ContainersBeginDeleteOptions contains the optional parameters for the ContainersClient.BeginDelete method.
 func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersBeginDeleteOptions) (ContainersDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
@@ -229,7 +229,7 @@ func (client *ContainersClient) deleteHandleError(resp *http.Response) error {
 // storageAccountName - The Storage Account Name
 // containerName - The container Name
 // resourceGroupName - The resource group name.
-// options - ContainersGetOptions contains the optional parameters for the Containers.Get method.
+// options - ContainersGetOptions contains the optional parameters for the ContainersClient.Get method.
 func (client *ContainersClient) Get(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersGetOptions) (ContainersGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
@@ -306,7 +306,7 @@ func (client *ContainersClient) getHandleError(resp *http.Response) error {
 // deviceName - The device name.
 // storageAccountName - The storage Account name.
 // resourceGroupName - The resource group name.
-// options - ContainersListByStorageAccountOptions contains the optional parameters for the Containers.ListByStorageAccount
+// options - ContainersListByStorageAccountOptions contains the optional parameters for the ContainersClient.ListByStorageAccount
 // method.
 func (client *ContainersClient) ListByStorageAccount(deviceName string, storageAccountName string, resourceGroupName string, options *ContainersListByStorageAccountOptions) *ContainersListByStorageAccountPager {
 	return &ContainersListByStorageAccountPager{
@@ -378,7 +378,7 @@ func (client *ContainersClient) listByStorageAccountHandleError(resp *http.Respo
 // storageAccountName - The Storage Account Name
 // containerName - The container name.
 // resourceGroupName - The resource group name.
-// options - ContainersBeginRefreshOptions contains the optional parameters for the Containers.BeginRefresh method.
+// options - ContainersBeginRefreshOptions contains the optional parameters for the ContainersClient.BeginRefresh method.
 func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersBeginRefreshOptions) (ContainersRefreshPollerResponse, error) {
 	resp, err := client.refresh(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {

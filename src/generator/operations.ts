@@ -328,7 +328,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     text += imports.text();
     text += clientText;
     text += opText;
-    operations.push(new OperationGroupContent(group.language.go!.name, text));
+    operations.push(new OperationGroupContent(group.language.go!.clientName, text));
   }
   return operations;
 }
@@ -1094,7 +1094,7 @@ function createProtocolErrHandler(op: Operation, imports: ImportManager): string
     // for wrapped errors, raw is initialized in the unmarshaller.
     // error types other than object obviously don't have a raw field.
     if (!schemaError.language.go!.internalErrorType && schemaError.type === SchemaType.Object) {
-      unmarshaller += `\t${prefix}errType := ${typeName}{raw: string(body)}\n`;
+      unmarshaller += `${prefix}errType := ${typeName}{raw: string(body)}\n`;
     } else {
       unmarshaller += `\tvar errType ${typeName}\n`;
     }

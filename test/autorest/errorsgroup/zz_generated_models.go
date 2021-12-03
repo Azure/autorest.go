@@ -259,17 +259,17 @@ func (p *PetActionError) unmarshalInternal(rawMsg map[string]json.RawMessage) er
 	return nil
 }
 
-// PetDoSomethingOptions contains the optional parameters for the Pet.DoSomething method.
+// PetDoSomethingOptions contains the optional parameters for the PetClient.DoSomething method.
 type PetDoSomethingOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetGetPetByIDOptions contains the optional parameters for the Pet.GetPetByID method.
+// PetGetPetByIDOptions contains the optional parameters for the PetClient.GetPetByID method.
 type PetGetPetByIDOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetHasModelsParamOptions contains the optional parameters for the Pet.HasModelsParam method.
+// PetHasModelsParamOptions contains the optional parameters for the PetClient.HasModelsParam method.
 type PetHasModelsParamOptions struct {
 	// Make sure model deserialization doesn't conflict with this param name, which has input name 'models'. Use client default
 	// value in call

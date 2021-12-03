@@ -51,7 +51,7 @@ func NewPathsClient(options *PathsClientOptions) *PathsClient {
 // GetEmpty - Get a 200 to test a valid base uri
 // If the operation fails it returns the *Error error type.
 // accountName - Account Name
-// options - PathsGetEmptyOptions contains the optional parameters for the Paths.GetEmpty method.
+// options - PathsGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
 func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, options *PathsGetEmptyOptions) (PathsGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, accountName, options)
 	if err != nil {

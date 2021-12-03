@@ -40,7 +40,8 @@ func NewLROsClient(options *azcore.ClientOptions) *LROsClient {
 // BeginDelete202NoRetry204 - Long running delete request, service returns a 202 to the initial request. Polls return this
 // value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginDelete202NoRetry204Options contains the optional parameters for the LROs.BeginDelete202NoRetry204 method.
+// options - LROsBeginDelete202NoRetry204Options contains the optional parameters for the LROsClient.BeginDelete202NoRetry204
+// method.
 func (client *LROsClient) BeginDelete202NoRetry204(ctx context.Context, options *LROsBeginDelete202NoRetry204Options) (LROsDelete202NoRetry204PollerResponse, error) {
 	resp, err := client.delete202NoRetry204(ctx, options)
 	if err != nil {
@@ -104,7 +105,8 @@ func (client *LROsClient) delete202NoRetry204HandleError(resp *http.Response) er
 // BeginDelete202Retry200 - Long running delete request, service returns a 202 to the initial request. Polls return this value
 // until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginDelete202Retry200Options contains the optional parameters for the LROs.BeginDelete202Retry200 method.
+// options - LROsBeginDelete202Retry200Options contains the optional parameters for the LROsClient.BeginDelete202Retry200
+// method.
 func (client *LROsClient) BeginDelete202Retry200(ctx context.Context, options *LROsBeginDelete202Retry200Options) (LROsDelete202Retry200PollerResponse, error) {
 	resp, err := client.delete202Retry200(ctx, options)
 	if err != nil {
@@ -167,7 +169,8 @@ func (client *LROsClient) delete202Retry200HandleError(resp *http.Response) erro
 
 // BeginDelete204Succeeded - Long running delete succeeds and returns right away
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginDelete204SucceededOptions contains the optional parameters for the LROs.BeginDelete204Succeeded method.
+// options - LROsBeginDelete204SucceededOptions contains the optional parameters for the LROsClient.BeginDelete204Succeeded
+// method.
 func (client *LROsClient) BeginDelete204Succeeded(ctx context.Context, options *LROsBeginDelete204SucceededOptions) (LROsDelete204SucceededPollerResponse, error) {
 	resp, err := client.delete204Succeeded(ctx, options)
 	if err != nil {
@@ -230,7 +233,7 @@ func (client *LROsClient) delete204SucceededHandleError(resp *http.Response) err
 // BeginDeleteAsyncNoHeaderInRetry - Long running delete request, service returns an Azure-AsyncOperation header in the initial
 // request. Subsequent calls to operation status do not contain Azure-AsyncOperation header.
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginDeleteAsyncNoHeaderInRetryOptions contains the optional parameters for the LROs.BeginDeleteAsyncNoHeaderInRetry
+// options - LROsBeginDeleteAsyncNoHeaderInRetryOptions contains the optional parameters for the LROsClient.BeginDeleteAsyncNoHeaderInRetry
 // method.
 func (client *LROsClient) BeginDeleteAsyncNoHeaderInRetry(ctx context.Context, options *LROsBeginDeleteAsyncNoHeaderInRetryOptions) (LROsDeleteAsyncNoHeaderInRetryPollerResponse, error) {
 	resp, err := client.deleteAsyncNoHeaderInRetry(ctx, options)
@@ -295,7 +298,7 @@ func (client *LROsClient) deleteAsyncNoHeaderInRetryHandleError(resp *http.Respo
 // BeginDeleteAsyncNoRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the
 // endpoint indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginDeleteAsyncNoRetrySucceededOptions contains the optional parameters for the LROs.BeginDeleteAsyncNoRetrySucceeded
+// options - LROsBeginDeleteAsyncNoRetrySucceededOptions contains the optional parameters for the LROsClient.BeginDeleteAsyncNoRetrySucceeded
 // method.
 func (client *LROsClient) BeginDeleteAsyncNoRetrySucceeded(ctx context.Context, options *LROsBeginDeleteAsyncNoRetrySucceededOptions) (LROsDeleteAsyncNoRetrySucceededPollerResponse, error) {
 	resp, err := client.deleteAsyncNoRetrySucceeded(ctx, options)
@@ -360,7 +363,7 @@ func (client *LROsClient) deleteAsyncNoRetrySucceededHandleError(resp *http.Resp
 // BeginDeleteAsyncRetryFailed - Long running delete request, service returns a 202 to the initial request. Poll the endpoint
 // indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginDeleteAsyncRetryFailedOptions contains the optional parameters for the LROs.BeginDeleteAsyncRetryFailed
+// options - LROsBeginDeleteAsyncRetryFailedOptions contains the optional parameters for the LROsClient.BeginDeleteAsyncRetryFailed
 // method.
 func (client *LROsClient) BeginDeleteAsyncRetryFailed(ctx context.Context, options *LROsBeginDeleteAsyncRetryFailedOptions) (LROsDeleteAsyncRetryFailedPollerResponse, error) {
 	resp, err := client.deleteAsyncRetryFailed(ctx, options)
@@ -425,7 +428,7 @@ func (client *LROsClient) deleteAsyncRetryFailedHandleError(resp *http.Response)
 // BeginDeleteAsyncRetrySucceeded - Long running delete request, service returns a 202 to the initial request. Poll the endpoint
 // indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginDeleteAsyncRetrySucceededOptions contains the optional parameters for the LROs.BeginDeleteAsyncRetrySucceeded
+// options - LROsBeginDeleteAsyncRetrySucceededOptions contains the optional parameters for the LROsClient.BeginDeleteAsyncRetrySucceeded
 // method.
 func (client *LROsClient) BeginDeleteAsyncRetrySucceeded(ctx context.Context, options *LROsBeginDeleteAsyncRetrySucceededOptions) (LROsDeleteAsyncRetrySucceededPollerResponse, error) {
 	resp, err := client.deleteAsyncRetrySucceeded(ctx, options)
@@ -490,7 +493,7 @@ func (client *LROsClient) deleteAsyncRetrySucceededHandleError(resp *http.Respon
 // BeginDeleteAsyncRetrycanceled - Long running delete request, service returns a 202 to the initial request. Poll the endpoint
 // indicated in the Azure-AsyncOperation header for operation status
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginDeleteAsyncRetrycanceledOptions contains the optional parameters for the LROs.BeginDeleteAsyncRetrycanceled
+// options - LROsBeginDeleteAsyncRetrycanceledOptions contains the optional parameters for the LROsClient.BeginDeleteAsyncRetrycanceled
 // method.
 func (client *LROsClient) BeginDeleteAsyncRetrycanceled(ctx context.Context, options *LROsBeginDeleteAsyncRetrycanceledOptions) (LROsDeleteAsyncRetrycanceledPollerResponse, error) {
 	resp, err := client.deleteAsyncRetrycanceled(ctx, options)
@@ -555,7 +558,7 @@ func (client *LROsClient) deleteAsyncRetrycanceledHandleError(resp *http.Respons
 // BeginDeleteNoHeaderInRetry - Long running delete request, service returns a location header in the initial request. Subsequent
 // calls to operation status do not contain location header.
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginDeleteNoHeaderInRetryOptions contains the optional parameters for the LROs.BeginDeleteNoHeaderInRetry
+// options - LROsBeginDeleteNoHeaderInRetryOptions contains the optional parameters for the LROsClient.BeginDeleteNoHeaderInRetry
 // method.
 func (client *LROsClient) BeginDeleteNoHeaderInRetry(ctx context.Context, options *LROsBeginDeleteNoHeaderInRetryOptions) (LROsDeleteNoHeaderInRetryPollerResponse, error) {
 	resp, err := client.deleteNoHeaderInRetry(ctx, options)
@@ -622,7 +625,7 @@ func (client *LROsClient) deleteNoHeaderInRetryHandleError(resp *http.Response) 
 // with
 // ProvisioningState=’Succeeded’
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginDeleteProvisioning202Accepted200SucceededOptions contains the optional parameters for the LROs.BeginDeleteProvisioning202Accepted200Succeeded
+// options - LROsBeginDeleteProvisioning202Accepted200SucceededOptions contains the optional parameters for the LROsClient.BeginDeleteProvisioning202Accepted200Succeeded
 // method.
 func (client *LROsClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LROsBeginDeleteProvisioning202Accepted200SucceededOptions) (LROsDeleteProvisioning202Accepted200SucceededPollerResponse, error) {
 	resp, err := client.deleteProvisioning202Accepted200Succeeded(ctx, options)
@@ -691,7 +694,7 @@ func (client *LROsClient) deleteProvisioning202Accepted200SucceededHandleError(r
 // with
 // ProvisioningState=’Failed’
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginDeleteProvisioning202DeletingFailed200Options contains the optional parameters for the LROs.BeginDeleteProvisioning202DeletingFailed200
+// options - LROsBeginDeleteProvisioning202DeletingFailed200Options contains the optional parameters for the LROsClient.BeginDeleteProvisioning202DeletingFailed200
 // method.
 func (client *LROsClient) BeginDeleteProvisioning202DeletingFailed200(ctx context.Context, options *LROsBeginDeleteProvisioning202DeletingFailed200Options) (LROsDeleteProvisioning202DeletingFailed200PollerResponse, error) {
 	resp, err := client.deleteProvisioning202DeletingFailed200(ctx, options)
@@ -759,7 +762,7 @@ func (client *LROsClient) deleteProvisioning202DeletingFailed200HandleError(resp
 // with
 // ProvisioningState=’Canceled’
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginDeleteProvisioning202Deletingcanceled200Options contains the optional parameters for the LROs.BeginDeleteProvisioning202Deletingcanceled200
+// options - LROsBeginDeleteProvisioning202Deletingcanceled200Options contains the optional parameters for the LROsClient.BeginDeleteProvisioning202Deletingcanceled200
 // method.
 func (client *LROsClient) BeginDeleteProvisioning202Deletingcanceled200(ctx context.Context, options *LROsBeginDeleteProvisioning202Deletingcanceled200Options) (LROsDeleteProvisioning202Deletingcanceled200PollerResponse, error) {
 	resp, err := client.deleteProvisioning202Deletingcanceled200(ctx, options)
@@ -825,7 +828,7 @@ func (client *LROsClient) deleteProvisioning202Deletingcanceled200HandleError(re
 // BeginPatch200SucceededIgnoreHeaders - Long running put request, service returns a 200 to the initial request with location
 // header. We should not have any subsequent calls after receiving this first response.
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPatch200SucceededIgnoreHeadersOptions contains the optional parameters for the LROs.BeginPatch200SucceededIgnoreHeaders
+// options - LROsBeginPatch200SucceededIgnoreHeadersOptions contains the optional parameters for the LROsClient.BeginPatch200SucceededIgnoreHeaders
 // method.
 func (client *LROsClient) BeginPatch200SucceededIgnoreHeaders(ctx context.Context, options *LROsBeginPatch200SucceededIgnoreHeadersOptions) (LROsPatch200SucceededIgnoreHeadersPollerResponse, error) {
 	resp, err := client.patch200SucceededIgnoreHeaders(ctx, options)
@@ -893,7 +896,8 @@ func (client *LROsClient) patch200SucceededIgnoreHeadersHandleError(resp *http.R
 // BeginPost200WithPayload - Long running post request, service returns a 202 to the initial request, with 'Location' header.
 // Poll returns a 200 with a response body after success.
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPost200WithPayloadOptions contains the optional parameters for the LROs.BeginPost200WithPayload method.
+// options - LROsBeginPost200WithPayloadOptions contains the optional parameters for the LROsClient.BeginPost200WithPayload
+// method.
 func (client *LROsClient) BeginPost200WithPayload(ctx context.Context, options *LROsBeginPost200WithPayloadOptions) (LROsPost200WithPayloadPollerResponse, error) {
 	resp, err := client.post200WithPayload(ctx, options)
 	if err != nil {
@@ -957,7 +961,7 @@ func (client *LROsClient) post200WithPayloadHandleError(resp *http.Response) err
 // BeginPost202List - Long running put request, service returns a 202 with empty body to first request, returns a 200 with
 // body [{ 'id': '100', 'name': 'foo' }].
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPost202ListOptions contains the optional parameters for the LROs.BeginPost202List method.
+// options - LROsBeginPost202ListOptions contains the optional parameters for the LROsClient.BeginPost202List method.
 func (client *LROsClient) BeginPost202List(ctx context.Context, options *LROsBeginPost202ListOptions) (LROsPost202ListPollerResponse, error) {
 	resp, err := client.post202List(ctx, options)
 	if err != nil {
@@ -1021,7 +1025,8 @@ func (client *LROsClient) post202ListHandleError(resp *http.Response) error {
 // BeginPost202NoRetry204 - Long running post request, service returns a 202 to the initial request, with 'Location' header,
 // 204 with noresponse body after success
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPost202NoRetry204Options contains the optional parameters for the LROs.BeginPost202NoRetry204 method.
+// options - LROsBeginPost202NoRetry204Options contains the optional parameters for the LROsClient.BeginPost202NoRetry204
+// method.
 func (client *LROsClient) BeginPost202NoRetry204(ctx context.Context, options *LROsBeginPost202NoRetry204Options) (LROsPost202NoRetry204PollerResponse, error) {
 	resp, err := client.post202NoRetry204(ctx, options)
 	if err != nil {
@@ -1088,7 +1093,7 @@ func (client *LROsClient) post202NoRetry204HandleError(resp *http.Response) erro
 // BeginPost202Retry200 - Long running post request, service returns a 202 to the initial request, with 'Location' and 'Retry-After'
 // headers, Polls return a 200 with a response body after success
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPost202Retry200Options contains the optional parameters for the LROs.BeginPost202Retry200 method.
+// options - LROsBeginPost202Retry200Options contains the optional parameters for the LROsClient.BeginPost202Retry200 method.
 func (client *LROsClient) BeginPost202Retry200(ctx context.Context, options *LROsBeginPost202Retry200Options) (LROsPost202Retry200PollerResponse, error) {
 	resp, err := client.post202Retry200(ctx, options)
 	if err != nil {
@@ -1156,7 +1161,7 @@ func (client *LROsClient) post202Retry200HandleError(resp *http.Response) error 
 // that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPostAsyncNoRetrySucceededOptions contains the optional parameters for the LROs.BeginPostAsyncNoRetrySucceeded
+// options - LROsBeginPostAsyncNoRetrySucceededOptions contains the optional parameters for the LROsClient.BeginPostAsyncNoRetrySucceeded
 // method.
 func (client *LROsClient) BeginPostAsyncNoRetrySucceeded(ctx context.Context, options *LROsBeginPostAsyncNoRetrySucceededOptions) (LROsPostAsyncNoRetrySucceededPollerResponse, error) {
 	resp, err := client.postAsyncNoRetrySucceeded(ctx, options)
@@ -1226,7 +1231,7 @@ func (client *LROsClient) postAsyncNoRetrySucceededHandleError(resp *http.Respon
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPostAsyncRetryFailedOptions contains the optional parameters for the LROs.BeginPostAsyncRetryFailed
+// options - LROsBeginPostAsyncRetryFailedOptions contains the optional parameters for the LROsClient.BeginPostAsyncRetryFailed
 // method.
 func (client *LROsClient) BeginPostAsyncRetryFailed(ctx context.Context, options *LROsBeginPostAsyncRetryFailedOptions) (LROsPostAsyncRetryFailedPollerResponse, error) {
 	resp, err := client.postAsyncRetryFailed(ctx, options)
@@ -1296,7 +1301,7 @@ func (client *LROsClient) postAsyncRetryFailedHandleError(resp *http.Response) e
 // that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPostAsyncRetrySucceededOptions contains the optional parameters for the LROs.BeginPostAsyncRetrySucceeded
+// options - LROsBeginPostAsyncRetrySucceededOptions contains the optional parameters for the LROsClient.BeginPostAsyncRetrySucceeded
 // method.
 func (client *LROsClient) BeginPostAsyncRetrySucceeded(ctx context.Context, options *LROsBeginPostAsyncRetrySucceededOptions) (LROsPostAsyncRetrySucceededPollerResponse, error) {
 	resp, err := client.postAsyncRetrySucceeded(ctx, options)
@@ -1366,7 +1371,7 @@ func (client *LROsClient) postAsyncRetrySucceededHandleError(resp *http.Response
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPostAsyncRetrycanceledOptions contains the optional parameters for the LROs.BeginPostAsyncRetrycanceled
+// options - LROsBeginPostAsyncRetrycanceledOptions contains the optional parameters for the LROsClient.BeginPostAsyncRetrycanceled
 // method.
 func (client *LROsClient) BeginPostAsyncRetrycanceled(ctx context.Context, options *LROsBeginPostAsyncRetrycanceledOptions) (LROsPostAsyncRetrycanceledPollerResponse, error) {
 	resp, err := client.postAsyncRetrycanceled(ctx, options)
@@ -1435,7 +1440,7 @@ func (client *LROsClient) postAsyncRetrycanceledHandleError(resp *http.Response)
 // BeginPostDoubleHeadersFinalAzureHeaderGet - Long running post request, service returns a 202 to the initial request with
 // both Location and Azure-Async header. Poll Azure-Async and it's success. Should NOT poll Location to get the final object
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPostDoubleHeadersFinalAzureHeaderGetOptions contains the optional parameters for the LROs.BeginPostDoubleHeadersFinalAzureHeaderGet
+// options - LROsBeginPostDoubleHeadersFinalAzureHeaderGetOptions contains the optional parameters for the LROsClient.BeginPostDoubleHeadersFinalAzureHeaderGet
 // method.
 func (client *LROsClient) BeginPostDoubleHeadersFinalAzureHeaderGet(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalAzureHeaderGetOptions) (LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse, error) {
 	resp, err := client.postDoubleHeadersFinalAzureHeaderGet(ctx, options)
@@ -1502,7 +1507,7 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetHandleError(resp *
 // object
 // if you support initial Autorest behavior.
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPostDoubleHeadersFinalAzureHeaderGetDefaultOptions contains the optional parameters for the LROs.BeginPostDoubleHeadersFinalAzureHeaderGetDefault
+// options - LROsBeginPostDoubleHeadersFinalAzureHeaderGetDefaultOptions contains the optional parameters for the LROsClient.BeginPostDoubleHeadersFinalAzureHeaderGetDefault
 // method.
 func (client *LROsClient) BeginPostDoubleHeadersFinalAzureHeaderGetDefault(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalAzureHeaderGetDefaultOptions) (LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse, error) {
 	resp, err := client.postDoubleHeadersFinalAzureHeaderGetDefault(ctx, options)
@@ -1568,7 +1573,7 @@ func (client *LROsClient) postDoubleHeadersFinalAzureHeaderGetDefaultHandleError
 // BeginPostDoubleHeadersFinalLocationGet - Long running post request, service returns a 202 to the initial request with both
 // Location and Azure-Async header. Poll Azure-Async and it's success. Should poll Location to get the final object
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPostDoubleHeadersFinalLocationGetOptions contains the optional parameters for the LROs.BeginPostDoubleHeadersFinalLocationGet
+// options - LROsBeginPostDoubleHeadersFinalLocationGetOptions contains the optional parameters for the LROsClient.BeginPostDoubleHeadersFinalLocationGet
 // method.
 func (client *LROsClient) BeginPostDoubleHeadersFinalLocationGet(ctx context.Context, options *LROsBeginPostDoubleHeadersFinalLocationGetOptions) (LROsPostDoubleHeadersFinalLocationGetPollerResponse, error) {
 	resp, err := client.postDoubleHeadersFinalLocationGet(ctx, options)
@@ -1634,7 +1639,7 @@ func (client *LROsClient) postDoubleHeadersFinalLocationGetHandleError(resp *htt
 // that contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Canceled’
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPut200Acceptedcanceled200Options contains the optional parameters for the LROs.BeginPut200Acceptedcanceled200
+// options - LROsBeginPut200Acceptedcanceled200Options contains the optional parameters for the LROsClient.BeginPut200Acceptedcanceled200
 // method.
 func (client *LROsClient) BeginPut200Acceptedcanceled200(ctx context.Context, options *LROsBeginPut200Acceptedcanceled200Options) (LROsPut200Acceptedcanceled200PollerResponse, error) {
 	resp, err := client.put200Acceptedcanceled200(ctx, options)
@@ -1703,7 +1708,7 @@ func (client *LROsClient) put200Acceptedcanceled200HandleError(resp *http.Respon
 // BeginPut200Succeeded - Long running put request, service returns a 200 to the initial request, with an entity that contains
 // ProvisioningState=’Succeeded’.
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPut200SucceededOptions contains the optional parameters for the LROs.BeginPut200Succeeded method.
+// options - LROsBeginPut200SucceededOptions contains the optional parameters for the LROsClient.BeginPut200Succeeded method.
 func (client *LROsClient) BeginPut200Succeeded(ctx context.Context, options *LROsBeginPut200SucceededOptions) (LROsPut200SucceededPollerResponse, error) {
 	resp, err := client.put200Succeeded(ctx, options)
 	if err != nil {
@@ -1770,7 +1775,7 @@ func (client *LROsClient) put200SucceededHandleError(resp *http.Response) error 
 // BeginPut200SucceededNoState - Long running put request, service returns a 200 to the initial request, with an entity that
 // does not contain ProvisioningState=’Succeeded’.
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPut200SucceededNoStateOptions contains the optional parameters for the LROs.BeginPut200SucceededNoState
+// options - LROsBeginPut200SucceededNoStateOptions contains the optional parameters for the LROsClient.BeginPut200SucceededNoState
 // method.
 func (client *LROsClient) BeginPut200SucceededNoState(ctx context.Context, options *LROsBeginPut200SucceededNoStateOptions) (LROsPut200SucceededNoStatePollerResponse, error) {
 	resp, err := client.put200SucceededNoState(ctx, options)
@@ -1839,7 +1844,7 @@ func (client *LROsClient) put200SucceededNoStateHandleError(resp *http.Response)
 // that contains ProvisioningState=’Updating’. Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Succeeded’
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPut200UpdatingSucceeded204Options contains the optional parameters for the LROs.BeginPut200UpdatingSucceeded204
+// options - LROsBeginPut200UpdatingSucceeded204Options contains the optional parameters for the LROsClient.BeginPut200UpdatingSucceeded204
 // method.
 func (client *LROsClient) BeginPut200UpdatingSucceeded204(ctx context.Context, options *LROsBeginPut200UpdatingSucceeded204Options) (LROsPut200UpdatingSucceeded204PollerResponse, error) {
 	resp, err := client.put200UpdatingSucceeded204(ctx, options)
@@ -1909,7 +1914,7 @@ func (client *LROsClient) put200UpdatingSucceeded204HandleError(resp *http.Respo
 // contains ProvisioningState=’Created’. Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Failed’
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPut201CreatingFailed200Options contains the optional parameters for the LROs.BeginPut201CreatingFailed200
+// options - LROsBeginPut201CreatingFailed200Options contains the optional parameters for the LROsClient.BeginPut201CreatingFailed200
 // method.
 func (client *LROsClient) BeginPut201CreatingFailed200(ctx context.Context, options *LROsBeginPut201CreatingFailed200Options) (LROsPut201CreatingFailed200PollerResponse, error) {
 	resp, err := client.put201CreatingFailed200(ctx, options)
@@ -1979,7 +1984,7 @@ func (client *LROsClient) put201CreatingFailed200HandleError(resp *http.Response
 // that contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a ‘200’ with
 // ProvisioningState=’Succeeded’
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPut201CreatingSucceeded200Options contains the optional parameters for the LROs.BeginPut201CreatingSucceeded200
+// options - LROsBeginPut201CreatingSucceeded200Options contains the optional parameters for the LROsClient.BeginPut201CreatingSucceeded200
 // method.
 func (client *LROsClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LROsBeginPut201CreatingSucceeded200Options) (LROsPut201CreatingSucceeded200PollerResponse, error) {
 	resp, err := client.put201CreatingSucceeded200(ctx, options)
@@ -2048,7 +2053,7 @@ func (client *LROsClient) put201CreatingSucceeded200HandleError(resp *http.Respo
 // BeginPut201Succeeded - Long running put request, service returns a 201 to the initial request, with an entity that contains
 // ProvisioningState=’Succeeded’.
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPut201SucceededOptions contains the optional parameters for the LROs.BeginPut201Succeeded method.
+// options - LROsBeginPut201SucceededOptions contains the optional parameters for the LROsClient.BeginPut201Succeeded method.
 func (client *LROsClient) BeginPut201Succeeded(ctx context.Context, options *LROsBeginPut201SucceededOptions) (LROsPut201SucceededPollerResponse, error) {
 	resp, err := client.put201Succeeded(ctx, options)
 	if err != nil {
@@ -2115,7 +2120,7 @@ func (client *LROsClient) put201SucceededHandleError(resp *http.Response) error 
 // BeginPut202Retry200 - Long running put request, service returns a 202 to the initial request, with a location header that
 // points to a polling URL that returns a 200 and an entity that doesn't contains ProvisioningState
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPut202Retry200Options contains the optional parameters for the LROs.BeginPut202Retry200 method.
+// options - LROsBeginPut202Retry200Options contains the optional parameters for the LROsClient.BeginPut202Retry200 method.
 func (client *LROsClient) BeginPut202Retry200(ctx context.Context, options *LROsBeginPut202Retry200Options) (LROsPut202Retry200PollerResponse, error) {
 	resp, err := client.put202Retry200(ctx, options)
 	if err != nil {
@@ -2182,7 +2187,7 @@ func (client *LROsClient) put202Retry200HandleError(resp *http.Response) error {
 // BeginPutAsyncNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with Azure-AsyncOperation
 // header. Subsequent calls to operation status do not contain Azure-AsyncOperation header.
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPutAsyncNoHeaderInRetryOptions contains the optional parameters for the LROs.BeginPutAsyncNoHeaderInRetry
+// options - LROsBeginPutAsyncNoHeaderInRetryOptions contains the optional parameters for the LROsClient.BeginPutAsyncNoHeaderInRetry
 // method.
 func (client *LROsClient) BeginPutAsyncNoHeaderInRetry(ctx context.Context, options *LROsBeginPutAsyncNoHeaderInRetryOptions) (LROsPutAsyncNoHeaderInRetryPollerResponse, error) {
 	resp, err := client.putAsyncNoHeaderInRetry(ctx, options)
@@ -2251,7 +2256,7 @@ func (client *LROsClient) putAsyncNoHeaderInRetryHandleError(resp *http.Response
 // that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPutAsyncNoRetrySucceededOptions contains the optional parameters for the LROs.BeginPutAsyncNoRetrySucceeded
+// options - LROsBeginPutAsyncNoRetrySucceededOptions contains the optional parameters for the LROsClient.BeginPutAsyncNoRetrySucceeded
 // method.
 func (client *LROsClient) BeginPutAsyncNoRetrySucceeded(ctx context.Context, options *LROsBeginPutAsyncNoRetrySucceededOptions) (LROsPutAsyncNoRetrySucceededPollerResponse, error) {
 	resp, err := client.putAsyncNoRetrySucceeded(ctx, options)
@@ -2321,7 +2326,7 @@ func (client *LROsClient) putAsyncNoRetrySucceededHandleError(resp *http.Respons
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPutAsyncNoRetrycanceledOptions contains the optional parameters for the LROs.BeginPutAsyncNoRetrycanceled
+// options - LROsBeginPutAsyncNoRetrycanceledOptions contains the optional parameters for the LROsClient.BeginPutAsyncNoRetrycanceled
 // method.
 func (client *LROsClient) BeginPutAsyncNoRetrycanceled(ctx context.Context, options *LROsBeginPutAsyncNoRetrycanceledOptions) (LROsPutAsyncNoRetrycanceledPollerResponse, error) {
 	resp, err := client.putAsyncNoRetrycanceled(ctx, options)
@@ -2389,7 +2394,8 @@ func (client *LROsClient) putAsyncNoRetrycanceledHandleError(resp *http.Response
 
 // BeginPutAsyncNonResource - Long running put request with non resource.
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPutAsyncNonResourceOptions contains the optional parameters for the LROs.BeginPutAsyncNonResource method.
+// options - LROsBeginPutAsyncNonResourceOptions contains the optional parameters for the LROsClient.BeginPutAsyncNonResource
+// method.
 func (client *LROsClient) BeginPutAsyncNonResource(ctx context.Context, options *LROsBeginPutAsyncNonResourceOptions) (LROsPutAsyncNonResourcePollerResponse, error) {
 	resp, err := client.putAsyncNonResource(ctx, options)
 	if err != nil {
@@ -2456,7 +2462,8 @@ func (client *LROsClient) putAsyncNonResourceHandleError(resp *http.Response) er
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPutAsyncRetryFailedOptions contains the optional parameters for the LROs.BeginPutAsyncRetryFailed method.
+// options - LROsBeginPutAsyncRetryFailedOptions contains the optional parameters for the LROsClient.BeginPutAsyncRetryFailed
+// method.
 func (client *LROsClient) BeginPutAsyncRetryFailed(ctx context.Context, options *LROsBeginPutAsyncRetryFailedOptions) (LROsPutAsyncRetryFailedPollerResponse, error) {
 	resp, err := client.putAsyncRetryFailed(ctx, options)
 	if err != nil {
@@ -2525,7 +2532,7 @@ func (client *LROsClient) putAsyncRetryFailedHandleError(resp *http.Response) er
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for
 // operation status
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPutAsyncRetrySucceededOptions contains the optional parameters for the LROs.BeginPutAsyncRetrySucceeded
+// options - LROsBeginPutAsyncRetrySucceededOptions contains the optional parameters for the LROsClient.BeginPutAsyncRetrySucceeded
 // method.
 func (client *LROsClient) BeginPutAsyncRetrySucceeded(ctx context.Context, options *LROsBeginPutAsyncRetrySucceededOptions) (LROsPutAsyncRetrySucceededPollerResponse, error) {
 	resp, err := client.putAsyncRetrySucceeded(ctx, options)
@@ -2593,7 +2600,8 @@ func (client *LROsClient) putAsyncRetrySucceededHandleError(resp *http.Response)
 
 // BeginPutAsyncSubResource - Long running put request with sub resource.
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPutAsyncSubResourceOptions contains the optional parameters for the LROs.BeginPutAsyncSubResource method.
+// options - LROsBeginPutAsyncSubResourceOptions contains the optional parameters for the LROsClient.BeginPutAsyncSubResource
+// method.
 func (client *LROsClient) BeginPutAsyncSubResource(ctx context.Context, options *LROsBeginPutAsyncSubResourceOptions) (LROsPutAsyncSubResourcePollerResponse, error) {
 	resp, err := client.putAsyncSubResource(ctx, options)
 	if err != nil {
@@ -2659,7 +2667,8 @@ func (client *LROsClient) putAsyncSubResourceHandleError(resp *http.Response) er
 // BeginPutNoHeaderInRetry - Long running put request, service returns a 202 to the initial request with location header.
 // Subsequent calls to operation status do not contain location header.
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPutNoHeaderInRetryOptions contains the optional parameters for the LROs.BeginPutNoHeaderInRetry method.
+// options - LROsBeginPutNoHeaderInRetryOptions contains the optional parameters for the LROsClient.BeginPutNoHeaderInRetry
+// method.
 func (client *LROsClient) BeginPutNoHeaderInRetry(ctx context.Context, options *LROsBeginPutNoHeaderInRetryOptions) (LROsPutNoHeaderInRetryPollerResponse, error) {
 	resp, err := client.putNoHeaderInRetry(ctx, options)
 	if err != nil {
@@ -2725,7 +2734,7 @@ func (client *LROsClient) putNoHeaderInRetryHandleError(resp *http.Response) err
 
 // BeginPutNonResource - Long running put request with non resource.
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPutNonResourceOptions contains the optional parameters for the LROs.BeginPutNonResource method.
+// options - LROsBeginPutNonResourceOptions contains the optional parameters for the LROsClient.BeginPutNonResource method.
 func (client *LROsClient) BeginPutNonResource(ctx context.Context, options *LROsBeginPutNonResourceOptions) (LROsPutNonResourcePollerResponse, error) {
 	resp, err := client.putNonResource(ctx, options)
 	if err != nil {
@@ -2790,7 +2799,7 @@ func (client *LROsClient) putNonResourceHandleError(resp *http.Response) error {
 
 // BeginPutSubResource - Long running put request with sub resource.
 // If the operation fails it returns the *CloudError error type.
-// options - LROsBeginPutSubResourceOptions contains the optional parameters for the LROs.BeginPutSubResource method.
+// options - LROsBeginPutSubResourceOptions contains the optional parameters for the LROsClient.BeginPutSubResource method.
 func (client *LROsClient) BeginPutSubResource(ctx context.Context, options *LROsBeginPutSubResourceOptions) (LROsPutSubResourcePollerResponse, error) {
 	resp, err := client.putSubResource(ctx, options)
 	if err != nil {

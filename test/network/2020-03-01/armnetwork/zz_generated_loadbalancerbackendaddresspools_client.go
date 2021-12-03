@@ -56,7 +56,7 @@ func NewLoadBalancerBackendAddressPoolsClient(subscriptionID string, credential 
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // backendAddressPoolName - The name of the backend address pool.
-// options - LoadBalancerBackendAddressPoolsGetOptions contains the optional parameters for the LoadBalancerBackendAddressPools.Get
+// options - LoadBalancerBackendAddressPoolsGetOptions contains the optional parameters for the LoadBalancerBackendAddressPoolsClient.Get
 // method.
 func (client *LoadBalancerBackendAddressPoolsClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, backendAddressPoolName string, options *LoadBalancerBackendAddressPoolsGetOptions) (LoadBalancerBackendAddressPoolsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, backendAddressPoolName, options)
@@ -129,7 +129,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) getHandleError(resp *http.R
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
-// options - LoadBalancerBackendAddressPoolsListOptions contains the optional parameters for the LoadBalancerBackendAddressPools.List
+// options - LoadBalancerBackendAddressPoolsListOptions contains the optional parameters for the LoadBalancerBackendAddressPoolsClient.List
 // method.
 func (client *LoadBalancerBackendAddressPoolsClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerBackendAddressPoolsListOptions) *LoadBalancerBackendAddressPoolsListPager {
 	return &LoadBalancerBackendAddressPoolsListPager{

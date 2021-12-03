@@ -28,17 +28,17 @@ func (e Error) Error() string {
 	return e.raw
 }
 
-// FormdataUploadFileOptions contains the optional parameters for the Formdata.UploadFile method.
+// FormdataUploadFileOptions contains the optional parameters for the FormdataClient.UploadFile method.
 type FormdataUploadFileOptions struct {
 	// placeholder for future optional parameters
 }
 
-// FormdataUploadFileViaBodyOptions contains the optional parameters for the Formdata.UploadFileViaBody method.
+// FormdataUploadFileViaBodyOptions contains the optional parameters for the FormdataClient.UploadFileViaBody method.
 type FormdataUploadFileViaBodyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// FormdataUploadFilesOptions contains the optional parameters for the Formdata.UploadFiles method.
+// FormdataUploadFilesOptions contains the optional parameters for the FormdataClient.UploadFiles method.
 type FormdataUploadFilesOptions struct {
 	// placeholder for future optional parameters
 }

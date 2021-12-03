@@ -1540,27 +1540,28 @@ func (f *FullBackupOperation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// HSMSecurityDomainBeginDownloadOptions contains the optional parameters for the HSMSecurityDomain.BeginDownload method.
+// HSMSecurityDomainBeginDownloadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginDownload method.
 type HSMSecurityDomainBeginDownloadOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HSMSecurityDomainBeginUploadOptions contains the optional parameters for the HSMSecurityDomain.BeginUpload method.
+// HSMSecurityDomainBeginUploadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginUpload method.
 type HSMSecurityDomainBeginUploadOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HSMSecurityDomainDownloadPendingOptions contains the optional parameters for the HSMSecurityDomain.DownloadPending method.
+// HSMSecurityDomainDownloadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.DownloadPending
+// method.
 type HSMSecurityDomainDownloadPendingOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HSMSecurityDomainTransferKeyOptions contains the optional parameters for the HSMSecurityDomain.TransferKey method.
+// HSMSecurityDomainTransferKeyOptions contains the optional parameters for the HSMSecurityDomainClient.TransferKey method.
 type HSMSecurityDomainTransferKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HSMSecurityDomainUploadPendingOptions contains the optional parameters for the HSMSecurityDomain.UploadPending method.
+// HSMSecurityDomainUploadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.UploadPending method.
 type HSMSecurityDomainUploadPendingOptions struct {
 	// placeholder for future optional parameters
 }
@@ -3008,22 +3009,22 @@ type RoleAssignmentPropertiesWithScope struct {
 	Scope *RoleScope `json:"scope,omitempty"`
 }
 
-// RoleAssignmentsCreateOptions contains the optional parameters for the RoleAssignments.Create method.
+// RoleAssignmentsCreateOptions contains the optional parameters for the RoleAssignmentsClient.Create method.
 type RoleAssignmentsCreateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RoleAssignmentsDeleteOptions contains the optional parameters for the RoleAssignments.Delete method.
+// RoleAssignmentsDeleteOptions contains the optional parameters for the RoleAssignmentsClient.Delete method.
 type RoleAssignmentsDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RoleAssignmentsGetOptions contains the optional parameters for the RoleAssignments.Get method.
+// RoleAssignmentsGetOptions contains the optional parameters for the RoleAssignmentsClient.Get method.
 type RoleAssignmentsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RoleAssignmentsListForScopeOptions contains the optional parameters for the RoleAssignments.ListForScope method.
+// RoleAssignmentsListForScopeOptions contains the optional parameters for the RoleAssignmentsClient.ListForScope method.
 type RoleAssignmentsListForScopeOptions struct {
 	// The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId
 	// eq {id} to return all role assignments at, above or below the
@@ -3104,22 +3105,22 @@ func (r RoleDefinitionProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// RoleDefinitionsCreateOrUpdateOptions contains the optional parameters for the RoleDefinitions.CreateOrUpdate method.
+// RoleDefinitionsCreateOrUpdateOptions contains the optional parameters for the RoleDefinitionsClient.CreateOrUpdate method.
 type RoleDefinitionsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RoleDefinitionsDeleteOptions contains the optional parameters for the RoleDefinitions.Delete method.
+// RoleDefinitionsDeleteOptions contains the optional parameters for the RoleDefinitionsClient.Delete method.
 type RoleDefinitionsDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RoleDefinitionsGetOptions contains the optional parameters for the RoleDefinitions.Get method.
+// RoleDefinitionsGetOptions contains the optional parameters for the RoleDefinitionsClient.Get method.
 type RoleDefinitionsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RoleDefinitionsListOptions contains the optional parameters for the RoleDefinitions.List method.
+// RoleDefinitionsListOptions contains the optional parameters for the RoleDefinitionsClient.List method.
 type RoleDefinitionsListOptions struct {
 	// The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well.
 	Filter *string

@@ -38,7 +38,7 @@ func NewHTTPSuccessClient(options *azcore.ClientOptions) *HTTPSuccessClient {
 
 // Delete200 - Delete simple boolean value true returns 200
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessDelete200Options contains the optional parameters for the HTTPSuccess.Delete200 method.
+// options - HTTPSuccessDelete200Options contains the optional parameters for the HTTPSuccessClient.Delete200 method.
 func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuccessDelete200Options) (HTTPSuccessDelete200Response, error) {
 	req, err := client.delete200CreateRequest(ctx, options)
 	if err != nil {
@@ -80,7 +80,7 @@ func (client *HTTPSuccessClient) delete200HandleError(resp *http.Response) error
 
 // Delete202 - Delete true Boolean value in request returns 202 (accepted)
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessDelete202Options contains the optional parameters for the HTTPSuccess.Delete202 method.
+// options - HTTPSuccessDelete202Options contains the optional parameters for the HTTPSuccessClient.Delete202 method.
 func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuccessDelete202Options) (HTTPSuccessDelete202Response, error) {
 	req, err := client.delete202CreateRequest(ctx, options)
 	if err != nil {
@@ -122,7 +122,7 @@ func (client *HTTPSuccessClient) delete202HandleError(resp *http.Response) error
 
 // Delete204 - Delete true Boolean value in request returns 204 (no content)
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessDelete204Options contains the optional parameters for the HTTPSuccess.Delete204 method.
+// options - HTTPSuccessDelete204Options contains the optional parameters for the HTTPSuccessClient.Delete204 method.
 func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuccessDelete204Options) (HTTPSuccessDelete204Response, error) {
 	req, err := client.delete204CreateRequest(ctx, options)
 	if err != nil {
@@ -164,7 +164,7 @@ func (client *HTTPSuccessClient) delete204HandleError(resp *http.Response) error
 
 // Get200 - Get 200 success
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessGet200Options contains the optional parameters for the HTTPSuccess.Get200 method.
+// options - HTTPSuccessGet200Options contains the optional parameters for the HTTPSuccessClient.Get200 method.
 func (client *HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSuccessGet200Options) (HTTPSuccessGet200Response, error) {
 	req, err := client.get200CreateRequest(ctx, options)
 	if err != nil {
@@ -215,7 +215,7 @@ func (client *HTTPSuccessClient) get200HandleError(resp *http.Response) error {
 
 // Head200 - Return 200 status code if successful
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessHead200Options contains the optional parameters for the HTTPSuccess.Head200 method.
+// options - HTTPSuccessHead200Options contains the optional parameters for the HTTPSuccessClient.Head200 method.
 func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessHead200Options) (HTTPSuccessHead200Response, error) {
 	req, err := client.head200CreateRequest(ctx, options)
 	if err != nil {
@@ -245,7 +245,7 @@ func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, optio
 
 // Head204 - Return 204 status code if successful
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessHead204Options contains the optional parameters for the HTTPSuccess.Head204 method.
+// options - HTTPSuccessHead204Options contains the optional parameters for the HTTPSuccessClient.Head204 method.
 func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessHead204Options) (HTTPSuccessHead204Response, error) {
 	req, err := client.head204CreateRequest(ctx, options)
 	if err != nil {
@@ -275,7 +275,7 @@ func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, optio
 
 // Head404 - Return 404 status code
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessHead404Options contains the optional parameters for the HTTPSuccess.Head404 method.
+// options - HTTPSuccessHead404Options contains the optional parameters for the HTTPSuccessClient.Head404 method.
 func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessHead404Options) (HTTPSuccessHead404Response, error) {
 	req, err := client.head404CreateRequest(ctx, options)
 	if err != nil {
@@ -305,7 +305,7 @@ func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, optio
 
 // Options200 - Options 200 success
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessOptions200Options contains the optional parameters for the HTTPSuccess.Options200 method.
+// options - HTTPSuccessOptions200Options contains the optional parameters for the HTTPSuccessClient.Options200 method.
 func (client *HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSuccessOptions200Options) (HTTPSuccessOptions200Response, error) {
 	req, err := client.options200CreateRequest(ctx, options)
 	if err != nil {
@@ -356,7 +356,7 @@ func (client *HTTPSuccessClient) options200HandleError(resp *http.Response) erro
 
 // Patch200 - Patch true Boolean value in request returning 200
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPatch200Options contains the optional parameters for the HTTPSuccess.Patch200 method.
+// options - HTTPSuccessPatch200Options contains the optional parameters for the HTTPSuccessClient.Patch200 method.
 func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSuccessPatch200Options) (HTTPSuccessPatch200Response, error) {
 	req, err := client.patch200CreateRequest(ctx, options)
 	if err != nil {
@@ -398,7 +398,7 @@ func (client *HTTPSuccessClient) patch200HandleError(resp *http.Response) error 
 
 // Patch202 - Patch true Boolean value in request returns 202
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPatch202Options contains the optional parameters for the HTTPSuccess.Patch202 method.
+// options - HTTPSuccessPatch202Options contains the optional parameters for the HTTPSuccessClient.Patch202 method.
 func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSuccessPatch202Options) (HTTPSuccessPatch202Response, error) {
 	req, err := client.patch202CreateRequest(ctx, options)
 	if err != nil {
@@ -440,7 +440,7 @@ func (client *HTTPSuccessClient) patch202HandleError(resp *http.Response) error 
 
 // Patch204 - Patch true Boolean value in request returns 204 (no content)
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPatch204Options contains the optional parameters for the HTTPSuccess.Patch204 method.
+// options - HTTPSuccessPatch204Options contains the optional parameters for the HTTPSuccessClient.Patch204 method.
 func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSuccessPatch204Options) (HTTPSuccessPatch204Response, error) {
 	req, err := client.patch204CreateRequest(ctx, options)
 	if err != nil {
@@ -482,7 +482,7 @@ func (client *HTTPSuccessClient) patch204HandleError(resp *http.Response) error 
 
 // Post200 - Post bollean value true in request that returns a 200
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPost200Options contains the optional parameters for the HTTPSuccess.Post200 method.
+// options - HTTPSuccessPost200Options contains the optional parameters for the HTTPSuccessClient.Post200 method.
 func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSuccessPost200Options) (HTTPSuccessPost200Response, error) {
 	req, err := client.post200CreateRequest(ctx, options)
 	if err != nil {
@@ -524,7 +524,7 @@ func (client *HTTPSuccessClient) post200HandleError(resp *http.Response) error {
 
 // Post201 - Post true Boolean value in request returns 201 (Created)
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPost201Options contains the optional parameters for the HTTPSuccess.Post201 method.
+// options - HTTPSuccessPost201Options contains the optional parameters for the HTTPSuccessClient.Post201 method.
 func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSuccessPost201Options) (HTTPSuccessPost201Response, error) {
 	req, err := client.post201CreateRequest(ctx, options)
 	if err != nil {
@@ -566,7 +566,7 @@ func (client *HTTPSuccessClient) post201HandleError(resp *http.Response) error {
 
 // Post202 - Post true Boolean value in request returns 202 (Accepted)
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPost202Options contains the optional parameters for the HTTPSuccess.Post202 method.
+// options - HTTPSuccessPost202Options contains the optional parameters for the HTTPSuccessClient.Post202 method.
 func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSuccessPost202Options) (HTTPSuccessPost202Response, error) {
 	req, err := client.post202CreateRequest(ctx, options)
 	if err != nil {
@@ -608,7 +608,7 @@ func (client *HTTPSuccessClient) post202HandleError(resp *http.Response) error {
 
 // Post204 - Post true Boolean value in request returns 204 (no content)
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPost204Options contains the optional parameters for the HTTPSuccess.Post204 method.
+// options - HTTPSuccessPost204Options contains the optional parameters for the HTTPSuccessClient.Post204 method.
 func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSuccessPost204Options) (HTTPSuccessPost204Response, error) {
 	req, err := client.post204CreateRequest(ctx, options)
 	if err != nil {
@@ -650,7 +650,7 @@ func (client *HTTPSuccessClient) post204HandleError(resp *http.Response) error {
 
 // Put200 - Put boolean value true returning 200 success
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPut200Options contains the optional parameters for the HTTPSuccess.Put200 method.
+// options - HTTPSuccessPut200Options contains the optional parameters for the HTTPSuccessClient.Put200 method.
 func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSuccessPut200Options) (HTTPSuccessPut200Response, error) {
 	req, err := client.put200CreateRequest(ctx, options)
 	if err != nil {
@@ -692,7 +692,7 @@ func (client *HTTPSuccessClient) put200HandleError(resp *http.Response) error {
 
 // Put201 - Put true Boolean value in request returns 201
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPut201Options contains the optional parameters for the HTTPSuccess.Put201 method.
+// options - HTTPSuccessPut201Options contains the optional parameters for the HTTPSuccessClient.Put201 method.
 func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSuccessPut201Options) (HTTPSuccessPut201Response, error) {
 	req, err := client.put201CreateRequest(ctx, options)
 	if err != nil {
@@ -734,7 +734,7 @@ func (client *HTTPSuccessClient) put201HandleError(resp *http.Response) error {
 
 // Put202 - Put true Boolean value in request returns 202 (Accepted)
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPut202Options contains the optional parameters for the HTTPSuccess.Put202 method.
+// options - HTTPSuccessPut202Options contains the optional parameters for the HTTPSuccessClient.Put202 method.
 func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSuccessPut202Options) (HTTPSuccessPut202Response, error) {
 	req, err := client.put202CreateRequest(ctx, options)
 	if err != nil {
@@ -776,7 +776,7 @@ func (client *HTTPSuccessClient) put202HandleError(resp *http.Response) error {
 
 // Put204 - Put true Boolean value in request returns 204 (no content)
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPut204Options contains the optional parameters for the HTTPSuccess.Put204 method.
+// options - HTTPSuccessPut204Options contains the optional parameters for the HTTPSuccessClient.Put204 method.
 func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSuccessPut204Options) (HTTPSuccessPut204Response, error) {
 	req, err := client.put204CreateRequest(ctx, options)
 	if err != nil {

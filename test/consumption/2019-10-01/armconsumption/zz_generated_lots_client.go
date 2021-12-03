@@ -50,7 +50,7 @@ func NewLotsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 // scope - The scope associated with Lots operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
 // for Billing Profile scope, and
 // 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
-// options - LotsListOptions contains the optional parameters for the Lots.List method.
+// options - LotsListOptions contains the optional parameters for the LotsClient.List method.
 func (client *LotsClient) List(scope string, options *LotsListOptions) *LotsListPager {
 	return &LotsListPager{
 		client: client,

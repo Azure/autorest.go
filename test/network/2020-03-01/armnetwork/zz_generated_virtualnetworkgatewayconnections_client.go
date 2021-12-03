@@ -56,7 +56,7 @@ func NewVirtualNetworkGatewayConnectionsClient(subscriptionID string, credential
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayConnectionName - The name of the virtual network gateway connection.
 // parameters - Parameters supplied to the create or update virtual network gateway connection operation.
-// options - VirtualNetworkGatewayConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkGatewayConnections.BeginCreateOrUpdate
+// options - VirtualNetworkGatewayConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginCreateOrUpdate
 // method.
 func (client *VirtualNetworkGatewayConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VirtualNetworkGatewayConnection, options *VirtualNetworkGatewayConnectionsBeginCreateOrUpdateOptions) (VirtualNetworkGatewayConnectionsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
@@ -136,7 +136,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) createOrUpdateHandleError(
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayConnectionName - The name of the virtual network gateway connection.
-// options - VirtualNetworkGatewayConnectionsBeginDeleteOptions contains the optional parameters for the VirtualNetworkGatewayConnections.BeginDelete
+// options - VirtualNetworkGatewayConnectionsBeginDeleteOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginDelete
 // method.
 func (client *VirtualNetworkGatewayConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsBeginDeleteOptions) (VirtualNetworkGatewayConnectionsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
@@ -216,7 +216,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) deleteHandleError(resp *ht
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayConnectionName - The name of the virtual network gateway connection.
-// options - VirtualNetworkGatewayConnectionsGetOptions contains the optional parameters for the VirtualNetworkGatewayConnections.Get
+// options - VirtualNetworkGatewayConnectionsGetOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.Get
 // method.
 func (client *VirtualNetworkGatewayConnectionsClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsGetOptions) (VirtualNetworkGatewayConnectionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
@@ -286,7 +286,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) getHandleError(resp *http.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayConnectionName - The virtual network gateway connection shared key name.
-// options - VirtualNetworkGatewayConnectionsGetSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewayConnections.GetSharedKey
+// options - VirtualNetworkGatewayConnectionsGetSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.GetSharedKey
 // method.
 func (client *VirtualNetworkGatewayConnectionsClient) GetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsGetSharedKeyOptions) (VirtualNetworkGatewayConnectionsGetSharedKeyResponse, error) {
 	req, err := client.getSharedKeyCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
@@ -354,7 +354,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) getSharedKeyHandleError(re
 // List - The List VirtualNetworkGatewayConnections operation retrieves all the virtual network gateways connections created.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - VirtualNetworkGatewayConnectionsListOptions contains the optional parameters for the VirtualNetworkGatewayConnections.List
+// options - VirtualNetworkGatewayConnectionsListOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.List
 // method.
 func (client *VirtualNetworkGatewayConnectionsClient) List(resourceGroupName string, options *VirtualNetworkGatewayConnectionsListOptions) *VirtualNetworkGatewayConnectionsListPager {
 	return &VirtualNetworkGatewayConnectionsListPager{
@@ -420,7 +420,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) listHandleError(resp *http
 // virtualNetworkGatewayConnectionName - The virtual network gateway connection reset shared key Name.
 // parameters - Parameters supplied to the begin reset virtual network gateway connection shared key operation through network
 // resource provider.
-// options - VirtualNetworkGatewayConnectionsBeginResetSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewayConnections.BeginResetSharedKey
+// options - VirtualNetworkGatewayConnectionsBeginResetSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginResetSharedKey
 // method.
 func (client *VirtualNetworkGatewayConnectionsClient) BeginResetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionResetSharedKey, options *VirtualNetworkGatewayConnectionsBeginResetSharedKeyOptions) (VirtualNetworkGatewayConnectionsResetSharedKeyPollerResponse, error) {
 	resp, err := client.resetSharedKey(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
@@ -506,7 +506,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) resetSharedKeyHandleError(
 // virtualNetworkGatewayConnectionName - The virtual network gateway connection name.
 // parameters - Parameters supplied to the Begin Set Virtual Network Gateway connection Shared key operation throughNetwork
 // resource provider.
-// options - VirtualNetworkGatewayConnectionsBeginSetSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewayConnections.BeginSetSharedKey
+// options - VirtualNetworkGatewayConnectionsBeginSetSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginSetSharedKey
 // method.
 func (client *VirtualNetworkGatewayConnectionsClient) BeginSetSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters ConnectionSharedKey, options *VirtualNetworkGatewayConnectionsBeginSetSharedKeyOptions) (VirtualNetworkGatewayConnectionsSetSharedKeyPollerResponse, error) {
 	resp, err := client.setSharedKey(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
@@ -588,7 +588,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) setSharedKeyHandleError(re
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayConnectionName - The name of the virtual network gateway connection.
-// options - VirtualNetworkGatewayConnectionsBeginStartPacketCaptureOptions contains the optional parameters for the VirtualNetworkGatewayConnections.BeginStartPacketCapture
+// options - VirtualNetworkGatewayConnectionsBeginStartPacketCaptureOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginStartPacketCapture
 // method.
 func (client *VirtualNetworkGatewayConnectionsClient) BeginStartPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, options *VirtualNetworkGatewayConnectionsBeginStartPacketCaptureOptions) (VirtualNetworkGatewayConnectionsStartPacketCapturePollerResponse, error) {
 	resp, err := client.startPacketCapture(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, options)
@@ -672,7 +672,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) startPacketCaptureHandleEr
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayConnectionName - The name of the virtual network gateway Connection.
 // parameters - Virtual network gateway packet capture parameters supplied to stop packet capture on gateway connection.
-// options - VirtualNetworkGatewayConnectionsBeginStopPacketCaptureOptions contains the optional parameters for the VirtualNetworkGatewayConnections.BeginStopPacketCapture
+// options - VirtualNetworkGatewayConnectionsBeginStopPacketCaptureOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginStopPacketCapture
 // method.
 func (client *VirtualNetworkGatewayConnectionsClient) BeginStopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewayConnectionsBeginStopPacketCaptureOptions) (VirtualNetworkGatewayConnectionsStopPacketCapturePollerResponse, error) {
 	resp, err := client.stopPacketCapture(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
@@ -753,7 +753,7 @@ func (client *VirtualNetworkGatewayConnectionsClient) stopPacketCaptureHandleErr
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayConnectionName - The name of the virtual network gateway connection.
 // parameters - Parameters supplied to update virtual network gateway connection tags.
-// options - VirtualNetworkGatewayConnectionsBeginUpdateTagsOptions contains the optional parameters for the VirtualNetworkGatewayConnections.BeginUpdateTags
+// options - VirtualNetworkGatewayConnectionsBeginUpdateTagsOptions contains the optional parameters for the VirtualNetworkGatewayConnectionsClient.BeginUpdateTags
 // method.
 func (client *VirtualNetworkGatewayConnectionsClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters TagsObject, options *VirtualNetworkGatewayConnectionsBeginUpdateTagsOptions) (VirtualNetworkGatewayConnectionsUpdateTagsPollerResponse, error) {
 	resp, err := client.updateTags(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)

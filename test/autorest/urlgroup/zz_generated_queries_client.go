@@ -42,7 +42,8 @@ func NewQueriesClient(options *azcore.ClientOptions) *QueriesClient {
 
 // ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format
 // If the operation fails it returns the *Error error type.
-// options - QueriesArrayStringCSVEmptyOptions contains the optional parameters for the Queries.ArrayStringCSVEmpty method.
+// options - QueriesArrayStringCSVEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringCSVEmpty
+// method.
 func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *QueriesArrayStringCSVEmptyOptions) (QueriesArrayStringCSVEmptyResponse, error) {
 	req, err := client.arrayStringCSVEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -89,7 +90,7 @@ func (client *QueriesClient) arrayStringCSVEmptyHandleError(resp *http.Response)
 
 // ArrayStringCSVNull - Get a null array of string using the csv-array format
 // If the operation fails it returns the *Error error type.
-// options - QueriesArrayStringCSVNullOptions contains the optional parameters for the Queries.ArrayStringCSVNull method.
+// options - QueriesArrayStringCSVNullOptions contains the optional parameters for the QueriesClient.ArrayStringCSVNull method.
 func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *QueriesArrayStringCSVNullOptions) (QueriesArrayStringCSVNullResponse, error) {
 	req, err := client.arrayStringCSVNullCreateRequest(ctx, options)
 	if err != nil {
@@ -137,7 +138,8 @@ func (client *QueriesClient) arrayStringCSVNullHandleError(resp *http.Response) 
 // ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array
 // format
 // If the operation fails it returns the *Error error type.
-// options - QueriesArrayStringCSVValidOptions contains the optional parameters for the Queries.ArrayStringCSVValid method.
+// options - QueriesArrayStringCSVValidOptions contains the optional parameters for the QueriesClient.ArrayStringCSVValid
+// method.
 func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *QueriesArrayStringCSVValidOptions) (QueriesArrayStringCSVValidResponse, error) {
 	req, err := client.arrayStringCSVValidCreateRequest(ctx, options)
 	if err != nil {
@@ -185,7 +187,7 @@ func (client *QueriesClient) arrayStringCSVValidHandleError(resp *http.Response)
 // ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello',
 // 'nihao', 'bonjour'] for the 'arrayQuery' parameter to the service
 // If the operation fails it returns the *Error error type.
-// options - QueriesArrayStringNoCollectionFormatEmptyOptions contains the optional parameters for the Queries.ArrayStringNoCollectionFormatEmpty
+// options - QueriesArrayStringNoCollectionFormatEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringNoCollectionFormatEmpty
 // method.
 func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Context, options *QueriesArrayStringNoCollectionFormatEmptyOptions) (QueriesArrayStringNoCollectionFormatEmptyResponse, error) {
 	req, err := client.arrayStringNoCollectionFormatEmptyCreateRequest(ctx, options)
@@ -234,7 +236,8 @@ func (client *QueriesClient) arrayStringNoCollectionFormatEmptyHandleError(resp 
 // ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array
 // format
 // If the operation fails it returns the *Error error type.
-// options - QueriesArrayStringPipesValidOptions contains the optional parameters for the Queries.ArrayStringPipesValid method.
+// options - QueriesArrayStringPipesValidOptions contains the optional parameters for the QueriesClient.ArrayStringPipesValid
+// method.
 func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options *QueriesArrayStringPipesValidOptions) (QueriesArrayStringPipesValidResponse, error) {
 	req, err := client.arrayStringPipesValidCreateRequest(ctx, options)
 	if err != nil {
@@ -282,7 +285,8 @@ func (client *QueriesClient) arrayStringPipesValidHandleError(resp *http.Respons
 // ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array
 // format
 // If the operation fails it returns the *Error error type.
-// options - QueriesArrayStringSsvValidOptions contains the optional parameters for the Queries.ArrayStringSsvValid method.
+// options - QueriesArrayStringSsvValidOptions contains the optional parameters for the QueriesClient.ArrayStringSsvValid
+// method.
 func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *QueriesArrayStringSsvValidOptions) (QueriesArrayStringSsvValidResponse, error) {
 	req, err := client.arrayStringSsvValidCreateRequest(ctx, options)
 	if err != nil {
@@ -330,7 +334,8 @@ func (client *QueriesClient) arrayStringSsvValidHandleError(resp *http.Response)
 // ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array
 // format
 // If the operation fails it returns the *Error error type.
-// options - QueriesArrayStringTsvValidOptions contains the optional parameters for the Queries.ArrayStringTsvValid method.
+// options - QueriesArrayStringTsvValidOptions contains the optional parameters for the QueriesClient.ArrayStringTsvValid
+// method.
 func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *QueriesArrayStringTsvValidOptions) (QueriesArrayStringTsvValidResponse, error) {
 	req, err := client.arrayStringTsvValidCreateRequest(ctx, options)
 	if err != nil {
@@ -377,7 +382,7 @@ func (client *QueriesClient) arrayStringTsvValidHandleError(resp *http.Response)
 
 // ByteEmpty - Get '' as byte array
 // If the operation fails it returns the *Error error type.
-// options - QueriesByteEmptyOptions contains the optional parameters for the Queries.ByteEmpty method.
+// options - QueriesByteEmptyOptions contains the optional parameters for the QueriesClient.ByteEmpty method.
 func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesByteEmptyOptions) (QueriesByteEmptyResponse, error) {
 	req, err := client.byteEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -422,7 +427,7 @@ func (client *QueriesClient) byteEmptyHandleError(resp *http.Response) error {
 
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 // If the operation fails it returns the *Error error type.
-// options - QueriesByteMultiByteOptions contains the optional parameters for the Queries.ByteMultiByte method.
+// options - QueriesByteMultiByteOptions contains the optional parameters for the QueriesClient.ByteMultiByte method.
 func (client *QueriesClient) ByteMultiByte(ctx context.Context, options *QueriesByteMultiByteOptions) (QueriesByteMultiByteResponse, error) {
 	req, err := client.byteMultiByteCreateRequest(ctx, options)
 	if err != nil {
@@ -469,7 +474,7 @@ func (client *QueriesClient) byteMultiByteHandleError(resp *http.Response) error
 
 // ByteNull - Get null as byte array (no query parameters in uri)
 // If the operation fails it returns the *Error error type.
-// options - QueriesByteNullOptions contains the optional parameters for the Queries.ByteNull method.
+// options - QueriesByteNullOptions contains the optional parameters for the QueriesClient.ByteNull method.
 func (client *QueriesClient) ByteNull(ctx context.Context, options *QueriesByteNullOptions) (QueriesByteNullResponse, error) {
 	req, err := client.byteNullCreateRequest(ctx, options)
 	if err != nil {
@@ -516,7 +521,7 @@ func (client *QueriesClient) byteNullHandleError(resp *http.Response) error {
 
 // DateNull - Get null as date - this should result in no query parameters in uri
 // If the operation fails it returns the *Error error type.
-// options - QueriesDateNullOptions contains the optional parameters for the Queries.DateNull method.
+// options - QueriesDateNullOptions contains the optional parameters for the QueriesClient.DateNull method.
 func (client *QueriesClient) DateNull(ctx context.Context, options *QueriesDateNullOptions) (QueriesDateNullResponse, error) {
 	req, err := client.dateNullCreateRequest(ctx, options)
 	if err != nil {
@@ -563,7 +568,7 @@ func (client *QueriesClient) dateNullHandleError(resp *http.Response) error {
 
 // DateTimeNull - Get null as date-time, should result in no query parameters in uri
 // If the operation fails it returns the *Error error type.
-// options - QueriesDateTimeNullOptions contains the optional parameters for the Queries.DateTimeNull method.
+// options - QueriesDateTimeNullOptions contains the optional parameters for the QueriesClient.DateTimeNull method.
 func (client *QueriesClient) DateTimeNull(ctx context.Context, options *QueriesDateTimeNullOptions) (QueriesDateTimeNullResponse, error) {
 	req, err := client.dateTimeNullCreateRequest(ctx, options)
 	if err != nil {
@@ -610,7 +615,7 @@ func (client *QueriesClient) dateTimeNullHandleError(resp *http.Response) error 
 
 // DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
 // If the operation fails it returns the *Error error type.
-// options - QueriesDateTimeValidOptions contains the optional parameters for the Queries.DateTimeValid method.
+// options - QueriesDateTimeValidOptions contains the optional parameters for the QueriesClient.DateTimeValid method.
 func (client *QueriesClient) DateTimeValid(ctx context.Context, options *QueriesDateTimeValidOptions) (QueriesDateTimeValidResponse, error) {
 	req, err := client.dateTimeValidCreateRequest(ctx, options)
 	if err != nil {
@@ -655,7 +660,7 @@ func (client *QueriesClient) dateTimeValidHandleError(resp *http.Response) error
 
 // DateValid - Get '2012-01-01' as date
 // If the operation fails it returns the *Error error type.
-// options - QueriesDateValidOptions contains the optional parameters for the Queries.DateValid method.
+// options - QueriesDateValidOptions contains the optional parameters for the QueriesClient.DateValid method.
 func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesDateValidOptions) (QueriesDateValidResponse, error) {
 	req, err := client.dateValidCreateRequest(ctx, options)
 	if err != nil {
@@ -700,7 +705,8 @@ func (client *QueriesClient) dateValidHandleError(resp *http.Response) error {
 
 // DoubleDecimalNegative - Get '-9999999.999' numeric value
 // If the operation fails it returns the *Error error type.
-// options - QueriesDoubleDecimalNegativeOptions contains the optional parameters for the Queries.DoubleDecimalNegative method.
+// options - QueriesDoubleDecimalNegativeOptions contains the optional parameters for the QueriesClient.DoubleDecimalNegative
+// method.
 func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options *QueriesDoubleDecimalNegativeOptions) (QueriesDoubleDecimalNegativeResponse, error) {
 	req, err := client.doubleDecimalNegativeCreateRequest(ctx, options)
 	if err != nil {
@@ -745,7 +751,8 @@ func (client *QueriesClient) doubleDecimalNegativeHandleError(resp *http.Respons
 
 // DoubleDecimalPositive - Get '9999999.999' numeric value
 // If the operation fails it returns the *Error error type.
-// options - QueriesDoubleDecimalPositiveOptions contains the optional parameters for the Queries.DoubleDecimalPositive method.
+// options - QueriesDoubleDecimalPositiveOptions contains the optional parameters for the QueriesClient.DoubleDecimalPositive
+// method.
 func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options *QueriesDoubleDecimalPositiveOptions) (QueriesDoubleDecimalPositiveResponse, error) {
 	req, err := client.doubleDecimalPositiveCreateRequest(ctx, options)
 	if err != nil {
@@ -790,7 +797,7 @@ func (client *QueriesClient) doubleDecimalPositiveHandleError(resp *http.Respons
 
 // DoubleNull - Get null numeric value (no query parameter)
 // If the operation fails it returns the *Error error type.
-// options - QueriesDoubleNullOptions contains the optional parameters for the Queries.DoubleNull method.
+// options - QueriesDoubleNullOptions contains the optional parameters for the QueriesClient.DoubleNull method.
 func (client *QueriesClient) DoubleNull(ctx context.Context, options *QueriesDoubleNullOptions) (QueriesDoubleNullResponse, error) {
 	req, err := client.doubleNullCreateRequest(ctx, options)
 	if err != nil {
@@ -837,7 +844,7 @@ func (client *QueriesClient) doubleNullHandleError(resp *http.Response) error {
 
 // EnumNull - Get null (no query parameter in url)
 // If the operation fails it returns the *Error error type.
-// options - QueriesEnumNullOptions contains the optional parameters for the Queries.EnumNull method.
+// options - QueriesEnumNullOptions contains the optional parameters for the QueriesClient.EnumNull method.
 func (client *QueriesClient) EnumNull(ctx context.Context, options *QueriesEnumNullOptions) (QueriesEnumNullResponse, error) {
 	req, err := client.enumNullCreateRequest(ctx, options)
 	if err != nil {
@@ -884,7 +891,7 @@ func (client *QueriesClient) enumNullHandleError(resp *http.Response) error {
 
 // EnumValid - Get using uri with query parameter 'green color'
 // If the operation fails it returns the *Error error type.
-// options - QueriesEnumValidOptions contains the optional parameters for the Queries.EnumValid method.
+// options - QueriesEnumValidOptions contains the optional parameters for the QueriesClient.EnumValid method.
 func (client *QueriesClient) EnumValid(ctx context.Context, options *QueriesEnumValidOptions) (QueriesEnumValidResponse, error) {
 	req, err := client.enumValidCreateRequest(ctx, options)
 	if err != nil {
@@ -931,7 +938,7 @@ func (client *QueriesClient) enumValidHandleError(resp *http.Response) error {
 
 // FloatNull - Get null numeric value (no query parameter)
 // If the operation fails it returns the *Error error type.
-// options - QueriesFloatNullOptions contains the optional parameters for the Queries.FloatNull method.
+// options - QueriesFloatNullOptions contains the optional parameters for the QueriesClient.FloatNull method.
 func (client *QueriesClient) FloatNull(ctx context.Context, options *QueriesFloatNullOptions) (QueriesFloatNullResponse, error) {
 	req, err := client.floatNullCreateRequest(ctx, options)
 	if err != nil {
@@ -978,7 +985,7 @@ func (client *QueriesClient) floatNullHandleError(resp *http.Response) error {
 
 // FloatScientificNegative - Get '-1.034E-20' numeric value
 // If the operation fails it returns the *Error error type.
-// options - QueriesFloatScientificNegativeOptions contains the optional parameters for the Queries.FloatScientificNegative
+// options - QueriesFloatScientificNegativeOptions contains the optional parameters for the QueriesClient.FloatScientificNegative
 // method.
 func (client *QueriesClient) FloatScientificNegative(ctx context.Context, options *QueriesFloatScientificNegativeOptions) (QueriesFloatScientificNegativeResponse, error) {
 	req, err := client.floatScientificNegativeCreateRequest(ctx, options)
@@ -1024,7 +1031,7 @@ func (client *QueriesClient) floatScientificNegativeHandleError(resp *http.Respo
 
 // FloatScientificPositive - Get '1.034E+20' numeric value
 // If the operation fails it returns the *Error error type.
-// options - QueriesFloatScientificPositiveOptions contains the optional parameters for the Queries.FloatScientificPositive
+// options - QueriesFloatScientificPositiveOptions contains the optional parameters for the QueriesClient.FloatScientificPositive
 // method.
 func (client *QueriesClient) FloatScientificPositive(ctx context.Context, options *QueriesFloatScientificPositiveOptions) (QueriesFloatScientificPositiveResponse, error) {
 	req, err := client.floatScientificPositiveCreateRequest(ctx, options)
@@ -1070,7 +1077,7 @@ func (client *QueriesClient) floatScientificPositiveHandleError(resp *http.Respo
 
 // GetBooleanFalse - Get false Boolean value on path
 // If the operation fails it returns the *Error error type.
-// options - QueriesGetBooleanFalseOptions contains the optional parameters for the Queries.GetBooleanFalse method.
+// options - QueriesGetBooleanFalseOptions contains the optional parameters for the QueriesClient.GetBooleanFalse method.
 func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *QueriesGetBooleanFalseOptions) (QueriesGetBooleanFalseResponse, error) {
 	req, err := client.getBooleanFalseCreateRequest(ctx, options)
 	if err != nil {
@@ -1115,7 +1122,7 @@ func (client *QueriesClient) getBooleanFalseHandleError(resp *http.Response) err
 
 // GetBooleanNull - Get null Boolean value on query (query string should be absent)
 // If the operation fails it returns the *Error error type.
-// options - QueriesGetBooleanNullOptions contains the optional parameters for the Queries.GetBooleanNull method.
+// options - QueriesGetBooleanNullOptions contains the optional parameters for the QueriesClient.GetBooleanNull method.
 func (client *QueriesClient) GetBooleanNull(ctx context.Context, options *QueriesGetBooleanNullOptions) (QueriesGetBooleanNullResponse, error) {
 	req, err := client.getBooleanNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1162,7 +1169,7 @@ func (client *QueriesClient) getBooleanNullHandleError(resp *http.Response) erro
 
 // GetBooleanTrue - Get true Boolean value on path
 // If the operation fails it returns the *Error error type.
-// options - QueriesGetBooleanTrueOptions contains the optional parameters for the Queries.GetBooleanTrue method.
+// options - QueriesGetBooleanTrueOptions contains the optional parameters for the QueriesClient.GetBooleanTrue method.
 func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *QueriesGetBooleanTrueOptions) (QueriesGetBooleanTrueResponse, error) {
 	req, err := client.getBooleanTrueCreateRequest(ctx, options)
 	if err != nil {
@@ -1207,7 +1214,7 @@ func (client *QueriesClient) getBooleanTrueHandleError(resp *http.Response) erro
 
 // GetIntNegativeOneMillion - Get '-1000000' integer value
 // If the operation fails it returns the *Error error type.
-// options - QueriesGetIntNegativeOneMillionOptions contains the optional parameters for the Queries.GetIntNegativeOneMillion
+// options - QueriesGetIntNegativeOneMillionOptions contains the optional parameters for the QueriesClient.GetIntNegativeOneMillion
 // method.
 func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, options *QueriesGetIntNegativeOneMillionOptions) (QueriesGetIntNegativeOneMillionResponse, error) {
 	req, err := client.getIntNegativeOneMillionCreateRequest(ctx, options)
@@ -1253,7 +1260,7 @@ func (client *QueriesClient) getIntNegativeOneMillionHandleError(resp *http.Resp
 
 // GetIntNull - Get null integer value (no query parameter)
 // If the operation fails it returns the *Error error type.
-// options - QueriesGetIntNullOptions contains the optional parameters for the Queries.GetIntNull method.
+// options - QueriesGetIntNullOptions contains the optional parameters for the QueriesClient.GetIntNull method.
 func (client *QueriesClient) GetIntNull(ctx context.Context, options *QueriesGetIntNullOptions) (QueriesGetIntNullResponse, error) {
 	req, err := client.getIntNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1300,7 +1307,7 @@ func (client *QueriesClient) getIntNullHandleError(resp *http.Response) error {
 
 // GetIntOneMillion - Get '1000000' integer value
 // If the operation fails it returns the *Error error type.
-// options - QueriesGetIntOneMillionOptions contains the optional parameters for the Queries.GetIntOneMillion method.
+// options - QueriesGetIntOneMillionOptions contains the optional parameters for the QueriesClient.GetIntOneMillion method.
 func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *QueriesGetIntOneMillionOptions) (QueriesGetIntOneMillionResponse, error) {
 	req, err := client.getIntOneMillionCreateRequest(ctx, options)
 	if err != nil {
@@ -1345,7 +1352,7 @@ func (client *QueriesClient) getIntOneMillionHandleError(resp *http.Response) er
 
 // GetLongNull - Get 'null 64 bit integer value (no query param in uri)
 // If the operation fails it returns the *Error error type.
-// options - QueriesGetLongNullOptions contains the optional parameters for the Queries.GetLongNull method.
+// options - QueriesGetLongNullOptions contains the optional parameters for the QueriesClient.GetLongNull method.
 func (client *QueriesClient) GetLongNull(ctx context.Context, options *QueriesGetLongNullOptions) (QueriesGetLongNullResponse, error) {
 	req, err := client.getLongNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1392,7 +1399,8 @@ func (client *QueriesClient) getLongNullHandleError(resp *http.Response) error {
 
 // GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
 // If the operation fails it returns the *Error error type.
-// options - QueriesGetNegativeTenBillionOptions contains the optional parameters for the Queries.GetNegativeTenBillion method.
+// options - QueriesGetNegativeTenBillionOptions contains the optional parameters for the QueriesClient.GetNegativeTenBillion
+// method.
 func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options *QueriesGetNegativeTenBillionOptions) (QueriesGetNegativeTenBillionResponse, error) {
 	req, err := client.getNegativeTenBillionCreateRequest(ctx, options)
 	if err != nil {
@@ -1437,7 +1445,7 @@ func (client *QueriesClient) getNegativeTenBillionHandleError(resp *http.Respons
 
 // GetTenBillion - Get '10000000000' 64 bit integer value
 // If the operation fails it returns the *Error error type.
-// options - QueriesGetTenBillionOptions contains the optional parameters for the Queries.GetTenBillion method.
+// options - QueriesGetTenBillionOptions contains the optional parameters for the QueriesClient.GetTenBillion method.
 func (client *QueriesClient) GetTenBillion(ctx context.Context, options *QueriesGetTenBillionOptions) (QueriesGetTenBillionResponse, error) {
 	req, err := client.getTenBillionCreateRequest(ctx, options)
 	if err != nil {
@@ -1482,7 +1490,7 @@ func (client *QueriesClient) getTenBillionHandleError(resp *http.Response) error
 
 // StringEmpty - Get ''
 // If the operation fails it returns the *Error error type.
-// options - QueriesStringEmptyOptions contains the optional parameters for the Queries.StringEmpty method.
+// options - QueriesStringEmptyOptions contains the optional parameters for the QueriesClient.StringEmpty method.
 func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesStringEmptyOptions) (QueriesStringEmptyResponse, error) {
 	req, err := client.stringEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1527,7 +1535,7 @@ func (client *QueriesClient) stringEmptyHandleError(resp *http.Response) error {
 
 // StringNull - Get null (no query parameter in url)
 // If the operation fails it returns the *Error error type.
-// options - QueriesStringNullOptions contains the optional parameters for the Queries.StringNull method.
+// options - QueriesStringNullOptions contains the optional parameters for the QueriesClient.StringNull method.
 func (client *QueriesClient) StringNull(ctx context.Context, options *QueriesStringNullOptions) (QueriesStringNullResponse, error) {
 	req, err := client.stringNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1574,7 +1582,7 @@ func (client *QueriesClient) stringNullHandleError(resp *http.Response) error {
 
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
 // If the operation fails it returns the *Error error type.
-// options - QueriesStringURLEncodedOptions contains the optional parameters for the Queries.StringURLEncoded method.
+// options - QueriesStringURLEncodedOptions contains the optional parameters for the QueriesClient.StringURLEncoded method.
 func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *QueriesStringURLEncodedOptions) (QueriesStringURLEncodedResponse, error) {
 	req, err := client.stringURLEncodedCreateRequest(ctx, options)
 	if err != nil {
@@ -1619,7 +1627,7 @@ func (client *QueriesClient) stringURLEncodedHandleError(resp *http.Response) er
 
 // StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
 // If the operation fails it returns the *Error error type.
-// options - QueriesStringUnicodeOptions contains the optional parameters for the Queries.StringUnicode method.
+// options - QueriesStringUnicodeOptions contains the optional parameters for the QueriesClient.StringUnicode method.
 func (client *QueriesClient) StringUnicode(ctx context.Context, options *QueriesStringUnicodeOptions) (QueriesStringUnicodeResponse, error) {
 	req, err := client.stringUnicodeCreateRequest(ctx, options)
 	if err != nil {

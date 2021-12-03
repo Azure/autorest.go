@@ -47,7 +47,7 @@ func newBlockBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *bl
 // the most recently uploaded version of the block, whichever list it may
 // belong to.
 // If the operation fails it returns the *StorageError error type.
-// BlockBlobCommitBlockListOptions - BlockBlobCommitBlockListOptions contains the optional parameters for the BlockBlob.CommitBlockList
+// BlockBlobCommitBlockListOptions - BlockBlobCommitBlockListOptions contains the optional parameters for the blockBlobClient.CommitBlockList
 // method.
 // BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the Blob.SetHTTPHeaders method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
@@ -241,7 +241,7 @@ func (client *blockBlobClient) commitBlockListHandleError(resp *http.Response) e
 // GetBlockList - The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob
 // If the operation fails it returns the *StorageError error type.
 // listType - Specifies whether to return the list of committed blocks, the list of uncommitted blocks, or both lists together.
-// BlockBlobGetBlockListOptions - BlockBlobGetBlockListOptions contains the optional parameters for the BlockBlob.GetBlockList
+// BlockBlobGetBlockListOptions - BlockBlobGetBlockListOptions contains the optional parameters for the blockBlobClient.GetBlockList
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
@@ -358,7 +358,7 @@ func (client *blockBlobClient) getBlockListHandleError(resp *http.Response) erro
 // copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 // a page blob snapshot. The value should be URL-encoded as it would appear in a request
 // URI. The source blob must either be public or must be authenticated via a shared access signature.
-// BlockBlobPutBlobFromURLOptions - BlockBlobPutBlobFromURLOptions contains the optional parameters for the BlockBlob.PutBlobFromURL
+// BlockBlobPutBlobFromURLOptions - BlockBlobPutBlobFromURLOptions contains the optional parameters for the blockBlobClient.PutBlobFromURL
 // method.
 // BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the Blob.SetHTTPHeaders method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
@@ -562,7 +562,8 @@ func (client *blockBlobClient) putBlobFromURLHandleError(resp *http.Response) er
 // parameter must be the same size for each block.
 // contentLength - The length of the request.
 // body - Initial data
-// BlockBlobStageBlockOptions - BlockBlobStageBlockOptions contains the optional parameters for the BlockBlob.StageBlock method.
+// BlockBlobStageBlockOptions - BlockBlobStageBlockOptions contains the optional parameters for the blockBlobClient.StageBlock
+// method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
@@ -694,7 +695,7 @@ func (client *blockBlobClient) stageBlockHandleError(resp *http.Response) error 
 // parameter must be the same size for each block.
 // contentLength - The length of the request.
 // sourceURL - Specify a URL to the copy source.
-// BlockBlobStageBlockFromURLOptions - BlockBlobStageBlockFromURLOptions contains the optional parameters for the BlockBlob.StageBlockFromURL
+// BlockBlobStageBlockFromURLOptions - BlockBlobStageBlockFromURLOptions contains the optional parameters for the blockBlobClient.StageBlockFromURL
 // method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
@@ -844,7 +845,7 @@ func (client *blockBlobClient) stageBlockFromURLHandleError(resp *http.Response)
 // If the operation fails it returns the *StorageError error type.
 // contentLength - The length of the request.
 // body - Initial data
-// BlockBlobUploadOptions - BlockBlobUploadOptions contains the optional parameters for the BlockBlob.Upload method.
+// BlockBlobUploadOptions - BlockBlobUploadOptions contains the optional parameters for the blockBlobClient.Upload method.
 // BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the Blob.SetHTTPHeaders method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.

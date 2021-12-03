@@ -56,7 +56,8 @@ func NewServiceAssociationLinksClient(subscriptionID string, credential azcore.T
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // subnetName - The name of the subnet.
-// options - ServiceAssociationLinksListOptions contains the optional parameters for the ServiceAssociationLinks.List method.
+// options - ServiceAssociationLinksListOptions contains the optional parameters for the ServiceAssociationLinksClient.List
+// method.
 func (client *ServiceAssociationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ServiceAssociationLinksListOptions) (ServiceAssociationLinksListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {

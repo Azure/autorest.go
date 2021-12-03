@@ -50,7 +50,7 @@ func NewAddonsClient(subscriptionID string, options *azcore.ClientOptions) *Addo
 // addonName - The addon name.
 // resourceGroupName - The resource group name.
 // addon - The addon properties.
-// options - AddonsBeginCreateOrUpdateOptions contains the optional parameters for the Addons.BeginCreateOrUpdate method.
+// options - AddonsBeginCreateOrUpdateOptions contains the optional parameters for the AddonsClient.BeginCreateOrUpdate method.
 func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsBeginCreateOrUpdateOptions) (AddonsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, roleName, addonName, resourceGroupName, addon, options)
 	if err != nil {
@@ -139,7 +139,7 @@ func (client *AddonsClient) createOrUpdateHandleError(resp *http.Response) error
 // roleName - The role name.
 // addonName - The addon name.
 // resourceGroupName - The resource group name.
-// options - AddonsBeginDeleteOptions contains the optional parameters for the Addons.BeginDelete method.
+// options - AddonsBeginDeleteOptions contains the optional parameters for the AddonsClient.BeginDelete method.
 func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsBeginDeleteOptions) (AddonsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, roleName, addonName, resourceGroupName, options)
 	if err != nil {
@@ -228,7 +228,7 @@ func (client *AddonsClient) deleteHandleError(resp *http.Response) error {
 // roleName - The role name.
 // addonName - The addon name.
 // resourceGroupName - The resource group name.
-// options - AddonsGetOptions contains the optional parameters for the Addons.Get method.
+// options - AddonsGetOptions contains the optional parameters for the AddonsClient.Get method.
 func (client *AddonsClient) Get(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsGetOptions) (AddonsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, roleName, addonName, resourceGroupName, options)
 	if err != nil {
@@ -305,7 +305,7 @@ func (client *AddonsClient) getHandleError(resp *http.Response) error {
 // deviceName - The device name.
 // roleName - The role name.
 // resourceGroupName - The resource group name.
-// options - AddonsListByRoleOptions contains the optional parameters for the Addons.ListByRole method.
+// options - AddonsListByRoleOptions contains the optional parameters for the AddonsClient.ListByRole method.
 func (client *AddonsClient) ListByRole(deviceName string, roleName string, resourceGroupName string, options *AddonsListByRoleOptions) *AddonsListByRolePager {
 	return &AddonsListByRolePager{
 		client: client,

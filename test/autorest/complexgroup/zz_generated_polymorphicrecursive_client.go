@@ -38,7 +38,8 @@ func NewPolymorphicrecursiveClient(options *azcore.ClientOptions) *Polymorphicre
 
 // GetValid - Get complex types that are polymorphic and have recursive references
 // If the operation fails it returns the *Error error type.
-// options - PolymorphicrecursiveGetValidOptions contains the optional parameters for the Polymorphicrecursive.GetValid method.
+// options - PolymorphicrecursiveGetValidOptions contains the optional parameters for the PolymorphicrecursiveClient.GetValid
+// method.
 func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context, options *PolymorphicrecursiveGetValidOptions) (PolymorphicrecursiveGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
@@ -96,7 +97,8 @@ func (client *PolymorphicrecursiveClient) getValidHandleError(resp *http.Respons
 // "species": "predator", "length": 20, "age": 6 }, { "fishtype": "sawshark", "species": "dangerous", "length": 10, "age":
 // 105 } ] }, { "fishtype": "sawshark", "species": "dangerous", "length": 10,
 // "age": 105 } ] }, { "fishtype": "sawshark", "species": "dangerous", "length": 10, "age": 105 } ] }
-// options - PolymorphicrecursivePutValidOptions contains the optional parameters for the Polymorphicrecursive.PutValid method.
+// options - PolymorphicrecursivePutValidOptions contains the optional parameters for the PolymorphicrecursiveClient.PutValid
+// method.
 func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexBody FishClassification, options *PolymorphicrecursivePutValidOptions) (PolymorphicrecursivePutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {

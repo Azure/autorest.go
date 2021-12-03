@@ -57,7 +57,7 @@ func NewConnectionMonitorsClient(subscriptionID string, credential azcore.TokenC
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
 // parameters - Parameters that define the operation to create a connection monitor.
-// options - ConnectionMonitorsBeginCreateOrUpdateOptions contains the optional parameters for the ConnectionMonitors.BeginCreateOrUpdate
+// options - ConnectionMonitorsBeginCreateOrUpdateOptions contains the optional parameters for the ConnectionMonitorsClient.BeginCreateOrUpdate
 // method.
 func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsBeginCreateOrUpdateOptions) (ConnectionMonitorsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, options)
@@ -142,7 +142,7 @@ func (client *ConnectionMonitorsClient) createOrUpdateHandleError(resp *http.Res
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
-// options - ConnectionMonitorsBeginDeleteOptions contains the optional parameters for the ConnectionMonitors.BeginDelete
+// options - ConnectionMonitorsBeginDeleteOptions contains the optional parameters for the ConnectionMonitorsClient.BeginDelete
 // method.
 func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginDeleteOptions) (ConnectionMonitorsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
@@ -227,7 +227,7 @@ func (client *ConnectionMonitorsClient) deleteHandleError(resp *http.Response) e
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
-// options - ConnectionMonitorsGetOptions contains the optional parameters for the ConnectionMonitors.Get method.
+// options - ConnectionMonitorsGetOptions contains the optional parameters for the ConnectionMonitorsClient.Get method.
 func (client *ConnectionMonitorsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsGetOptions) (ConnectionMonitorsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
@@ -299,7 +299,7 @@ func (client *ConnectionMonitorsClient) getHandleError(resp *http.Response) erro
 // If the operation fails it returns the *ErrorResponse error type.
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
-// options - ConnectionMonitorsListOptions contains the optional parameters for the ConnectionMonitors.List method.
+// options - ConnectionMonitorsListOptions contains the optional parameters for the ConnectionMonitorsClient.List method.
 func (client *ConnectionMonitorsClient) List(ctx context.Context, resourceGroupName string, networkWatcherName string, options *ConnectionMonitorsListOptions) (ConnectionMonitorsListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
 	if err != nil {
@@ -368,7 +368,8 @@ func (client *ConnectionMonitorsClient) listHandleError(resp *http.Response) err
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name given to the connection monitor.
-// options - ConnectionMonitorsBeginQueryOptions contains the optional parameters for the ConnectionMonitors.BeginQuery method.
+// options - ConnectionMonitorsBeginQueryOptions contains the optional parameters for the ConnectionMonitorsClient.BeginQuery
+// method.
 func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginQueryOptions) (ConnectionMonitorsQueryPollerResponse, error) {
 	resp, err := client.query(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
@@ -452,7 +453,8 @@ func (client *ConnectionMonitorsClient) queryHandleError(resp *http.Response) er
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
-// options - ConnectionMonitorsBeginStartOptions contains the optional parameters for the ConnectionMonitors.BeginStart method.
+// options - ConnectionMonitorsBeginStartOptions contains the optional parameters for the ConnectionMonitorsClient.BeginStart
+// method.
 func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginStartOptions) (ConnectionMonitorsStartPollerResponse, error) {
 	resp, err := client.start(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
@@ -536,7 +538,8 @@ func (client *ConnectionMonitorsClient) startHandleError(resp *http.Response) er
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
-// options - ConnectionMonitorsBeginStopOptions contains the optional parameters for the ConnectionMonitors.BeginStop method.
+// options - ConnectionMonitorsBeginStopOptions contains the optional parameters for the ConnectionMonitorsClient.BeginStop
+// method.
 func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginStopOptions) (ConnectionMonitorsStopPollerResponse, error) {
 	resp, err := client.stop(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
@@ -621,7 +624,8 @@ func (client *ConnectionMonitorsClient) stopHandleError(resp *http.Response) err
 // networkWatcherName - The name of the network watcher.
 // connectionMonitorName - The name of the connection monitor.
 // parameters - Parameters supplied to update connection monitor tags.
-// options - ConnectionMonitorsUpdateTagsOptions contains the optional parameters for the ConnectionMonitors.UpdateTags method.
+// options - ConnectionMonitorsUpdateTagsOptions contains the optional parameters for the ConnectionMonitorsClient.UpdateTags
+// method.
 func (client *ConnectionMonitorsClient) UpdateTags(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters TagsObject, options *ConnectionMonitorsUpdateTagsOptions) (ConnectionMonitorsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, options)
 	if err != nil {

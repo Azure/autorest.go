@@ -8,32 +8,32 @@
 
 package booleangroup
 
-// BoolGetFalseOptions contains the optional parameters for the Bool.GetFalse method.
+// BoolGetFalseOptions contains the optional parameters for the BoolClient.GetFalse method.
 type BoolGetFalseOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BoolGetInvalidOptions contains the optional parameters for the Bool.GetInvalid method.
+// BoolGetInvalidOptions contains the optional parameters for the BoolClient.GetInvalid method.
 type BoolGetInvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BoolGetNullOptions contains the optional parameters for the Bool.GetNull method.
+// BoolGetNullOptions contains the optional parameters for the BoolClient.GetNull method.
 type BoolGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BoolGetTrueOptions contains the optional parameters for the Bool.GetTrue method.
+// BoolGetTrueOptions contains the optional parameters for the BoolClient.GetTrue method.
 type BoolGetTrueOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BoolPutFalseOptions contains the optional parameters for the Bool.PutFalse method.
+// BoolPutFalseOptions contains the optional parameters for the BoolClient.PutFalse method.
 type BoolPutFalseOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BoolPutTrueOptions contains the optional parameters for the Bool.PutTrue method.
+// BoolPutTrueOptions contains the optional parameters for the BoolClient.PutTrue method.
 type BoolPutTrueOptions struct {
 	// placeholder for future optional parameters
 }

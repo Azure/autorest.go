@@ -56,7 +56,7 @@ func NewExpressRouteLinksClient(subscriptionID string, credential azcore.TokenCr
 // resourceGroupName - The name of the resource group.
 // expressRoutePortName - The name of the ExpressRoutePort resource.
 // linkName - The name of the ExpressRouteLink resource.
-// options - ExpressRouteLinksGetOptions contains the optional parameters for the ExpressRouteLinks.Get method.
+// options - ExpressRouteLinksGetOptions contains the optional parameters for the ExpressRouteLinksClient.Get method.
 func (client *ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupName string, expressRoutePortName string, linkName string, options *ExpressRouteLinksGetOptions) (ExpressRouteLinksGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, expressRoutePortName, linkName, options)
 	if err != nil {
@@ -128,7 +128,7 @@ func (client *ExpressRouteLinksClient) getHandleError(resp *http.Response) error
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // expressRoutePortName - The name of the ExpressRoutePort resource.
-// options - ExpressRouteLinksListOptions contains the optional parameters for the ExpressRouteLinks.List method.
+// options - ExpressRouteLinksListOptions contains the optional parameters for the ExpressRouteLinksClient.List method.
 func (client *ExpressRouteLinksClient) List(resourceGroupName string, expressRoutePortName string, options *ExpressRouteLinksListOptions) *ExpressRouteLinksListPager {
 	return &ExpressRouteLinksListPager{
 		client: client,

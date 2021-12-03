@@ -42,7 +42,8 @@ func newPageBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *pag
 // ClearPages - The Clear Pages operation clears a set of pages from a page blob
 // If the operation fails it returns the *StorageError error type.
 // contentLength - The length of the request.
-// PageBlobClearPagesOptions - PageBlobClearPagesOptions contains the optional parameters for the PageBlob.ClearPages method.
+// PageBlobClearPagesOptions - PageBlobClearPagesOptions contains the optional parameters for the pageBlobClient.ClearPages
+// method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
@@ -203,7 +204,7 @@ func (client *pageBlobClient) clearPagesHandleError(resp *http.Response) error {
 // copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 // a page blob snapshot. The value should be URL-encoded as it would appear in a request
 // URI. The source blob must either be public or must be authenticated via a shared access signature.
-// PageBlobCopyIncrementalOptions - PageBlobCopyIncrementalOptions contains the optional parameters for the PageBlob.CopyIncremental
+// PageBlobCopyIncrementalOptions - PageBlobCopyIncrementalOptions contains the optional parameters for the pageBlobClient.CopyIncremental
 // method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 func (client *pageBlobClient) CopyIncremental(ctx context.Context, comp Enum37, copySource string, pageBlobCopyIncrementalOptions *PageBlobCopyIncrementalOptions, modifiedAccessConditions *ModifiedAccessConditions) (PageBlobCopyIncrementalResponse, error) {
@@ -313,7 +314,7 @@ func (client *pageBlobClient) copyIncrementalHandleError(resp *http.Response) er
 // contentLength - The length of the request.
 // blobContentLength - This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned
 // to a 512-byte boundary.
-// PageBlobCreateOptions - PageBlobCreateOptions contains the optional parameters for the PageBlob.Create method.
+// PageBlobCreateOptions - PageBlobCreateOptions contains the optional parameters for the pageBlobClient.Create method.
 // BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the Blob.SetHTTPHeaders method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
@@ -498,7 +499,7 @@ func (client *pageBlobClient) createHandleError(resp *http.Response) error {
 // GetPageRanges - The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot of a page
 // blob
 // If the operation fails it returns the *StorageError error type.
-// PageBlobGetPageRangesOptions - PageBlobGetPageRangesOptions contains the optional parameters for the PageBlob.GetPageRanges
+// PageBlobGetPageRangesOptions - PageBlobGetPageRangesOptions contains the optional parameters for the pageBlobClient.GetPageRanges
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
@@ -619,7 +620,7 @@ func (client *pageBlobClient) getPageRangesHandleError(resp *http.Response) erro
 // GetPageRangesDiff - The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob that were
 // changed between target blob and previous snapshot.
 // If the operation fails it returns the *StorageError error type.
-// PageBlobGetPageRangesDiffOptions - PageBlobGetPageRangesDiffOptions contains the optional parameters for the PageBlob.GetPageRangesDiff
+// PageBlobGetPageRangesDiffOptions - PageBlobGetPageRangesDiffOptions contains the optional parameters for the pageBlobClient.GetPageRangesDiff
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
@@ -747,7 +748,7 @@ func (client *pageBlobClient) getPageRangesDiffHandleError(resp *http.Response) 
 // If the operation fails it returns the *StorageError error type.
 // blobContentLength - This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned
 // to a 512-byte boundary.
-// PageBlobResizeOptions - PageBlobResizeOptions contains the optional parameters for the PageBlob.Resize method.
+// PageBlobResizeOptions - PageBlobResizeOptions contains the optional parameters for the pageBlobClient.Resize method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
@@ -874,7 +875,7 @@ func (client *pageBlobClient) resizeHandleError(resp *http.Response) error {
 // If the operation fails it returns the *StorageError error type.
 // sequenceNumberAction - Required if the x-ms-blob-sequence-number header is set for the request. This property applies to
 // page blobs only. This property indicates how the service should modify the blob's sequence number
-// PageBlobUpdateSequenceNumberOptions - PageBlobUpdateSequenceNumberOptions contains the optional parameters for the PageBlob.UpdateSequenceNumber
+// PageBlobUpdateSequenceNumberOptions - PageBlobUpdateSequenceNumberOptions contains the optional parameters for the pageBlobClient.UpdateSequenceNumber
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
@@ -991,7 +992,8 @@ func (client *pageBlobClient) updateSequenceNumberHandleError(resp *http.Respons
 // If the operation fails it returns the *StorageError error type.
 // contentLength - The length of the request.
 // body - Initial data
-// PageBlobUploadPagesOptions - PageBlobUploadPagesOptions contains the optional parameters for the PageBlob.UploadPages method.
+// PageBlobUploadPagesOptions - PageBlobUploadPagesOptions contains the optional parameters for the pageBlobClient.UploadPages
+// method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
@@ -1171,7 +1173,7 @@ func (client *pageBlobClient) uploadPagesHandleError(resp *http.Response) error 
 // contentLength - The length of the request.
 // rangeParam - The range of bytes to which the source range would be written. The range should be 512 aligned and range-end
 // is required.
-// PageBlobUploadPagesFromURLOptions - PageBlobUploadPagesFromURLOptions contains the optional parameters for the PageBlob.UploadPagesFromURL
+// PageBlobUploadPagesFromURLOptions - PageBlobUploadPagesFromURLOptions contains the optional parameters for the pageBlobClient.UploadPagesFromURL
 // method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.

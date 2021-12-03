@@ -57,7 +57,7 @@ func NewExpressRouteCircuitPeeringsClient(subscriptionID string, credential azco
 // circuitName - The name of the express route circuit.
 // peeringName - The name of the peering.
 // peeringParameters - Parameters supplied to the create or update express route circuit peering operation.
-// options - ExpressRouteCircuitPeeringsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitPeerings.BeginCreateOrUpdate
+// options - ExpressRouteCircuitPeeringsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitPeeringsClient.BeginCreateOrUpdate
 // method.
 func (client *ExpressRouteCircuitPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, peeringParameters ExpressRouteCircuitPeering, options *ExpressRouteCircuitPeeringsBeginCreateOrUpdateOptions) (ExpressRouteCircuitPeeringsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, peeringName, peeringParameters, options)
@@ -142,7 +142,7 @@ func (client *ExpressRouteCircuitPeeringsClient) createOrUpdateHandleError(resp 
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // peeringName - The name of the peering.
-// options - ExpressRouteCircuitPeeringsBeginDeleteOptions contains the optional parameters for the ExpressRouteCircuitPeerings.BeginDelete
+// options - ExpressRouteCircuitPeeringsBeginDeleteOptions contains the optional parameters for the ExpressRouteCircuitPeeringsClient.BeginDelete
 // method.
 func (client *ExpressRouteCircuitPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitPeeringsBeginDeleteOptions) (ExpressRouteCircuitPeeringsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, peeringName, options)
@@ -227,7 +227,7 @@ func (client *ExpressRouteCircuitPeeringsClient) deleteHandleError(resp *http.Re
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // peeringName - The name of the peering.
-// options - ExpressRouteCircuitPeeringsGetOptions contains the optional parameters for the ExpressRouteCircuitPeerings.Get
+// options - ExpressRouteCircuitPeeringsGetOptions contains the optional parameters for the ExpressRouteCircuitPeeringsClient.Get
 // method.
 func (client *ExpressRouteCircuitPeeringsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, options *ExpressRouteCircuitPeeringsGetOptions) (ExpressRouteCircuitPeeringsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, peeringName, options)
@@ -300,7 +300,7 @@ func (client *ExpressRouteCircuitPeeringsClient) getHandleError(resp *http.Respo
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
-// options - ExpressRouteCircuitPeeringsListOptions contains the optional parameters for the ExpressRouteCircuitPeerings.List
+// options - ExpressRouteCircuitPeeringsListOptions contains the optional parameters for the ExpressRouteCircuitPeeringsClient.List
 // method.
 func (client *ExpressRouteCircuitPeeringsClient) List(resourceGroupName string, circuitName string, options *ExpressRouteCircuitPeeringsListOptions) *ExpressRouteCircuitPeeringsListPager {
 	return &ExpressRouteCircuitPeeringsListPager{

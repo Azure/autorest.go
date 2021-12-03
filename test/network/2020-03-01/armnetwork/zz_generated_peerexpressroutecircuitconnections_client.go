@@ -57,7 +57,7 @@ func NewPeerExpressRouteCircuitConnectionsClient(subscriptionID string, credenti
 // circuitName - The name of the express route circuit.
 // peeringName - The name of the peering.
 // connectionName - The name of the peer express route circuit connection.
-// options - PeerExpressRouteCircuitConnectionsGetOptions contains the optional parameters for the PeerExpressRouteCircuitConnections.Get
+// options - PeerExpressRouteCircuitConnectionsGetOptions contains the optional parameters for the PeerExpressRouteCircuitConnectionsClient.Get
 // method.
 func (client *PeerExpressRouteCircuitConnectionsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, connectionName string, options *PeerExpressRouteCircuitConnectionsGetOptions) (PeerExpressRouteCircuitConnectionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, peeringName, connectionName, options)
@@ -135,7 +135,7 @@ func (client *PeerExpressRouteCircuitConnectionsClient) getHandleError(resp *htt
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the circuit.
 // peeringName - The name of the peering.
-// options - PeerExpressRouteCircuitConnectionsListOptions contains the optional parameters for the PeerExpressRouteCircuitConnections.List
+// options - PeerExpressRouteCircuitConnectionsListOptions contains the optional parameters for the PeerExpressRouteCircuitConnectionsClient.List
 // method.
 func (client *PeerExpressRouteCircuitConnectionsClient) List(resourceGroupName string, circuitName string, peeringName string, options *PeerExpressRouteCircuitConnectionsListOptions) *PeerExpressRouteCircuitConnectionsListPager {
 	return &PeerExpressRouteCircuitConnectionsListPager{

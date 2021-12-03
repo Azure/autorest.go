@@ -48,7 +48,7 @@ func NewOrdersClient(subscriptionID string, options *azcore.ClientOptions) *Orde
 // deviceName - The order details of a device.
 // resourceGroupName - The resource group name.
 // order - The order to be created or updated.
-// options - OrdersBeginCreateOrUpdateOptions contains the optional parameters for the Orders.BeginCreateOrUpdate method.
+// options - OrdersBeginCreateOrUpdateOptions contains the optional parameters for the OrdersClient.BeginCreateOrUpdate method.
 func (client *OrdersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, resourceGroupName string, order Order, options *OrdersBeginCreateOrUpdateOptions) (OrdersCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, resourceGroupName, order, options)
 	if err != nil {
@@ -127,7 +127,7 @@ func (client *OrdersClient) createOrUpdateHandleError(resp *http.Response) error
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - OrdersBeginDeleteOptions contains the optional parameters for the Orders.BeginDelete method.
+// options - OrdersBeginDeleteOptions contains the optional parameters for the OrdersClient.BeginDelete method.
 func (client *OrdersClient) BeginDelete(ctx context.Context, deviceName string, resourceGroupName string, options *OrdersBeginDeleteOptions) (OrdersDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -206,7 +206,7 @@ func (client *OrdersClient) deleteHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - OrdersGetOptions contains the optional parameters for the Orders.Get method.
+// options - OrdersGetOptions contains the optional parameters for the OrdersClient.Get method.
 func (client *OrdersClient) Get(ctx context.Context, deviceName string, resourceGroupName string, options *OrdersGetOptions) (OrdersGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -274,7 +274,7 @@ func (client *OrdersClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - OrdersListByDataBoxEdgeDeviceOptions contains the optional parameters for the Orders.ListByDataBoxEdgeDevice
+// options - OrdersListByDataBoxEdgeDeviceOptions contains the optional parameters for the OrdersClient.ListByDataBoxEdgeDevice
 // method.
 func (client *OrdersClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *OrdersListByDataBoxEdgeDeviceOptions) *OrdersListByDataBoxEdgeDevicePager {
 	return &OrdersListByDataBoxEdgeDevicePager{
@@ -340,7 +340,7 @@ func (client *OrdersClient) listByDataBoxEdgeDeviceHandleError(resp *http.Respon
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name
 // resourceGroupName - The resource group name.
-// options - OrdersListDCAccessCodeOptions contains the optional parameters for the Orders.ListDCAccessCode method.
+// options - OrdersListDCAccessCodeOptions contains the optional parameters for the OrdersClient.ListDCAccessCode method.
 func (client *OrdersClient) ListDCAccessCode(ctx context.Context, deviceName string, resourceGroupName string, options *OrdersListDCAccessCodeOptions) (OrdersListDCAccessCodeResponse, error) {
 	req, err := client.listDCAccessCodeCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {

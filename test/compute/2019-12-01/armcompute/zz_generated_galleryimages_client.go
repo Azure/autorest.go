@@ -59,7 +59,7 @@ func NewGalleryImagesClient(subscriptionID string, credential azcore.TokenCreden
 // and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80
 // characters.
 // galleryImage - Parameters supplied to the create or update gallery image operation.
-// options - GalleryImagesBeginCreateOrUpdateOptions contains the optional parameters for the GalleryImages.BeginCreateOrUpdate
+// options - GalleryImagesBeginCreateOrUpdateOptions contains the optional parameters for the GalleryImagesClient.BeginCreateOrUpdate
 // method.
 func (client *GalleryImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImage, options *GalleryImagesBeginCreateOrUpdateOptions) (GalleryImagesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryImageName, galleryImage, options)
@@ -144,7 +144,7 @@ func (client *GalleryImagesClient) createOrUpdateHandleError(resp *http.Response
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery in which the Image Definition is to be deleted.
 // galleryImageName - The name of the gallery Image Definition to be deleted.
-// options - GalleryImagesBeginDeleteOptions contains the optional parameters for the GalleryImages.BeginDelete method.
+// options - GalleryImagesBeginDeleteOptions contains the optional parameters for the GalleryImagesClient.BeginDelete method.
 func (client *GalleryImagesClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesBeginDeleteOptions) (GalleryImagesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryImageName, options)
 	if err != nil {
@@ -228,7 +228,7 @@ func (client *GalleryImagesClient) deleteHandleError(resp *http.Response) error 
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery from which the Image Definitions are to be retrieved.
 // galleryImageName - The name of the gallery Image Definition to be retrieved.
-// options - GalleryImagesGetOptions contains the optional parameters for the GalleryImages.Get method.
+// options - GalleryImagesGetOptions contains the optional parameters for the GalleryImagesClient.Get method.
 func (client *GalleryImagesClient) Get(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImagesGetOptions) (GalleryImagesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, options)
 	if err != nil {
@@ -300,7 +300,8 @@ func (client *GalleryImagesClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery from which Image Definitions are to be listed.
-// options - GalleryImagesListByGalleryOptions contains the optional parameters for the GalleryImages.ListByGallery method.
+// options - GalleryImagesListByGalleryOptions contains the optional parameters for the GalleryImagesClient.ListByGallery
+// method.
 func (client *GalleryImagesClient) ListByGallery(resourceGroupName string, galleryName string, options *GalleryImagesListByGalleryOptions) *GalleryImagesListByGalleryPager {
 	return &GalleryImagesListByGalleryPager{
 		client: client,
@@ -368,7 +369,7 @@ func (client *GalleryImagesClient) listByGalleryHandleError(resp *http.Response)
 // galleryImageName - The name of the gallery Image Definition to be updated. The allowed characters are alphabets and numbers
 // with dots, dashes, and periods allowed in the middle. The maximum length is 80 characters.
 // galleryImage - Parameters supplied to the update gallery image operation.
-// options - GalleryImagesBeginUpdateOptions contains the optional parameters for the GalleryImages.BeginUpdate method.
+// options - GalleryImagesBeginUpdateOptions contains the optional parameters for the GalleryImagesClient.BeginUpdate method.
 func (client *GalleryImagesClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImage GalleryImageUpdate, options *GalleryImagesBeginUpdateOptions) (GalleryImagesUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, galleryName, galleryImageName, galleryImage, options)
 	if err != nil {

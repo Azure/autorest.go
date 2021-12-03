@@ -38,7 +38,7 @@ func NewHSMSecurityDomainClient(pl runtime.Pipeline) *HSMSecurityDomainClient {
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateInfoObject - The Security Domain download operation requires customer to provide N certificates (minimum 3 and
 // maximum 10) containing a public key in JWK format.
-// options - HSMSecurityDomainBeginDownloadOptions contains the optional parameters for the HSMSecurityDomain.BeginDownload
+// options - HSMSecurityDomainBeginDownloadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginDownload
 // method.
 func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainBeginDownloadOptions) (HSMSecurityDomainDownloadPollerResponse, error) {
 	resp, err := client.download(ctx, vaultBaseURL, certificateInfoObject, options)
@@ -108,7 +108,7 @@ func (client *HSMSecurityDomainClient) downloadHandleError(resp *http.Response) 
 // DownloadPending - Retrieves the Security Domain download operation status
 // If the operation fails it returns the *KeyVaultError error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - HSMSecurityDomainDownloadPendingOptions contains the optional parameters for the HSMSecurityDomain.DownloadPending
+// options - HSMSecurityDomainDownloadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.DownloadPending
 // method.
 func (client *HSMSecurityDomainClient) DownloadPending(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainDownloadPendingOptions) (HSMSecurityDomainDownloadPendingResponse, error) {
 	req, err := client.downloadPendingCreateRequest(ctx, vaultBaseURL, options)
@@ -163,7 +163,8 @@ func (client *HSMSecurityDomainClient) downloadPendingHandleError(resp *http.Res
 // TransferKey - Retrieve Security Domain transfer key
 // If the operation fails it returns the *KeyVaultError error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - HSMSecurityDomainTransferKeyOptions contains the optional parameters for the HSMSecurityDomain.TransferKey method.
+// options - HSMSecurityDomainTransferKeyOptions contains the optional parameters for the HSMSecurityDomainClient.TransferKey
+// method.
 func (client *HSMSecurityDomainClient) TransferKey(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainTransferKeyOptions) (HSMSecurityDomainTransferKeyResponse, error) {
 	req, err := client.transferKeyCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
@@ -221,7 +222,8 @@ func (client *HSMSecurityDomainClient) transferKeyHandleError(resp *http.Respons
 // If the operation fails it returns the *KeyVaultError error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // securityDomain - The Security Domain to be restored.
-// options - HSMSecurityDomainBeginUploadOptions contains the optional parameters for the HSMSecurityDomain.BeginUpload method.
+// options - HSMSecurityDomainBeginUploadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginUpload
+// method.
 func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBaseURL string, securityDomain SecurityDomainObject, options *HSMSecurityDomainBeginUploadOptions) (HSMSecurityDomainUploadPollerResponse, error) {
 	resp, err := client.upload(ctx, vaultBaseURL, securityDomain, options)
 	if err != nil {
@@ -286,7 +288,7 @@ func (client *HSMSecurityDomainClient) uploadHandleError(resp *http.Response) er
 // UploadPending - Get Security Domain upload operation status
 // If the operation fails it returns the *KeyVaultError error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - HSMSecurityDomainUploadPendingOptions contains the optional parameters for the HSMSecurityDomain.UploadPending
+// options - HSMSecurityDomainUploadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.UploadPending
 // method.
 func (client *HSMSecurityDomainClient) UploadPending(ctx context.Context, vaultBaseURL string, options *HSMSecurityDomainUploadPendingOptions) (HSMSecurityDomainUploadPendingResponse, error) {
 	req, err := client.uploadPendingCreateRequest(ctx, vaultBaseURL, options)

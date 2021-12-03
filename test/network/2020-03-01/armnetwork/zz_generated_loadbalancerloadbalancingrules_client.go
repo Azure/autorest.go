@@ -56,7 +56,7 @@ func NewLoadBalancerLoadBalancingRulesClient(subscriptionID string, credential a
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // loadBalancingRuleName - The name of the load balancing rule.
-// options - LoadBalancerLoadBalancingRulesGetOptions contains the optional parameters for the LoadBalancerLoadBalancingRules.Get
+// options - LoadBalancerLoadBalancingRulesGetOptions contains the optional parameters for the LoadBalancerLoadBalancingRulesClient.Get
 // method.
 func (client *LoadBalancerLoadBalancingRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string, options *LoadBalancerLoadBalancingRulesGetOptions) (LoadBalancerLoadBalancingRulesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, loadBalancingRuleName, options)
@@ -129,7 +129,7 @@ func (client *LoadBalancerLoadBalancingRulesClient) getHandleError(resp *http.Re
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
-// options - LoadBalancerLoadBalancingRulesListOptions contains the optional parameters for the LoadBalancerLoadBalancingRules.List
+// options - LoadBalancerLoadBalancingRulesListOptions contains the optional parameters for the LoadBalancerLoadBalancingRulesClient.List
 // method.
 func (client *LoadBalancerLoadBalancingRulesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerLoadBalancingRulesListOptions) *LoadBalancerLoadBalancingRulesListPager {
 	return &LoadBalancerLoadBalancingRulesListPager{

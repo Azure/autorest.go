@@ -142,7 +142,7 @@ function generateResumeForResponse(structDef: StructDef, isARM: boolean, imports
   const clientName = pollerInfo.op.language.go!.clientName;
   const apiMethod = pollerInfo.op.language.go!.name;
   const errorMethod = pollerInfo.op.language.go!.protocolNaming.errorMethod;
-  let resume = `func (l *${structDef.Language.name}) Resume(ctx context.Context, client *${clientName}, token string) error {`;
+  let resume = `func (l *${structDef.Language.name}) Resume(ctx context.Context, client *${clientName}, token string) error {\n`;
   if (isARM) {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime', 'armruntime');
     resume += `\tpt, err := armruntime.NewPollerFromResumeToken("${clientName}.${apiMethod}", token, client.pl, client.${errorMethod})\n`;

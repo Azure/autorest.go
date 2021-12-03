@@ -56,7 +56,7 @@ func NewVPNServerConfigurationsClient(subscriptionID string, credential azcore.T
 // resourceGroupName - The resource group name of the VpnServerConfiguration.
 // vpnServerConfigurationName - The name of the VpnServerConfiguration being created or updated.
 // vpnServerConfigurationParameters - Parameters supplied to create or update VpnServerConfiguration.
-// options - VPNServerConfigurationsBeginCreateOrUpdateOptions contains the optional parameters for the VPNServerConfigurations.BeginCreateOrUpdate
+// options - VPNServerConfigurationsBeginCreateOrUpdateOptions contains the optional parameters for the VPNServerConfigurationsClient.BeginCreateOrUpdate
 // method.
 func (client *VPNServerConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, vpnServerConfigurationParameters VPNServerConfiguration, options *VPNServerConfigurationsBeginCreateOrUpdateOptions) (VPNServerConfigurationsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vpnServerConfigurationName, vpnServerConfigurationParameters, options)
@@ -136,7 +136,7 @@ func (client *VPNServerConfigurationsClient) createOrUpdateHandleError(resp *htt
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnServerConfiguration.
 // vpnServerConfigurationName - The name of the VpnServerConfiguration being deleted.
-// options - VPNServerConfigurationsBeginDeleteOptions contains the optional parameters for the VPNServerConfigurations.BeginDelete
+// options - VPNServerConfigurationsBeginDeleteOptions contains the optional parameters for the VPNServerConfigurationsClient.BeginDelete
 // method.
 func (client *VPNServerConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, options *VPNServerConfigurationsBeginDeleteOptions) (VPNServerConfigurationsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vpnServerConfigurationName, options)
@@ -216,7 +216,8 @@ func (client *VPNServerConfigurationsClient) deleteHandleError(resp *http.Respon
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnServerConfiguration.
 // vpnServerConfigurationName - The name of the VpnServerConfiguration being retrieved.
-// options - VPNServerConfigurationsGetOptions contains the optional parameters for the VPNServerConfigurations.Get method.
+// options - VPNServerConfigurationsGetOptions contains the optional parameters for the VPNServerConfigurationsClient.Get
+// method.
 func (client *VPNServerConfigurationsClient) Get(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, options *VPNServerConfigurationsGetOptions) (VPNServerConfigurationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vpnServerConfigurationName, options)
 	if err != nil {
@@ -282,7 +283,8 @@ func (client *VPNServerConfigurationsClient) getHandleError(resp *http.Response)
 
 // List - Lists all the VpnServerConfigurations in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - VPNServerConfigurationsListOptions contains the optional parameters for the VPNServerConfigurations.List method.
+// options - VPNServerConfigurationsListOptions contains the optional parameters for the VPNServerConfigurationsClient.List
+// method.
 func (client *VPNServerConfigurationsClient) List(options *VPNServerConfigurationsListOptions) *VPNServerConfigurationsListPager {
 	return &VPNServerConfigurationsListPager{
 		client: client,
@@ -338,7 +340,7 @@ func (client *VPNServerConfigurationsClient) listHandleError(resp *http.Response
 // ListByResourceGroup - Lists all the vpnServerConfigurations in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnServerConfiguration.
-// options - VPNServerConfigurationsListByResourceGroupOptions contains the optional parameters for the VPNServerConfigurations.ListByResourceGroup
+// options - VPNServerConfigurationsListByResourceGroupOptions contains the optional parameters for the VPNServerConfigurationsClient.ListByResourceGroup
 // method.
 func (client *VPNServerConfigurationsClient) ListByResourceGroup(resourceGroupName string, options *VPNServerConfigurationsListByResourceGroupOptions) *VPNServerConfigurationsListByResourceGroupPager {
 	return &VPNServerConfigurationsListByResourceGroupPager{
@@ -401,7 +403,7 @@ func (client *VPNServerConfigurationsClient) listByResourceGroupHandleError(resp
 // resourceGroupName - The resource group name of the VpnServerConfiguration.
 // vpnServerConfigurationName - The name of the VpnServerConfiguration being updated.
 // vpnServerConfigurationParameters - Parameters supplied to update VpnServerConfiguration tags.
-// options - VPNServerConfigurationsUpdateTagsOptions contains the optional parameters for the VPNServerConfigurations.UpdateTags
+// options - VPNServerConfigurationsUpdateTagsOptions contains the optional parameters for the VPNServerConfigurationsClient.UpdateTags
 // method.
 func (client *VPNServerConfigurationsClient) UpdateTags(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, vpnServerConfigurationParameters TagsObject, options *VPNServerConfigurationsUpdateTagsOptions) (VPNServerConfigurationsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, vpnServerConfigurationName, vpnServerConfigurationParameters, options)

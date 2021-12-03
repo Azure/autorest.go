@@ -53,7 +53,7 @@ func NewBgpServiceCommunitiesClient(subscriptionID string, credential azcore.Tok
 
 // List - Gets all the available bgp service communities.
 // If the operation fails it returns the *CloudError error type.
-// options - BgpServiceCommunitiesListOptions contains the optional parameters for the BgpServiceCommunities.List method.
+// options - BgpServiceCommunitiesListOptions contains the optional parameters for the BgpServiceCommunitiesClient.List method.
 func (client *BgpServiceCommunitiesClient) List(options *BgpServiceCommunitiesListOptions) *BgpServiceCommunitiesListPager {
 	return &BgpServiceCommunitiesListPager{
 		client: client,

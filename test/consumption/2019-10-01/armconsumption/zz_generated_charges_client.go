@@ -60,7 +60,7 @@ func NewChargesClient(credential azcore.TokenCredential, options *arm.ClientOpti
 // billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/invoiceSections/{invoiceSectionId}'
 // for invoiceSection scope, and
 // 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
-// options - ChargesListOptions contains the optional parameters for the Charges.List method.
+// options - ChargesListOptions contains the optional parameters for the ChargesClient.List method.
 func (client *ChargesClient) List(ctx context.Context, scope string, options *ChargesListOptions) (ChargesListResponse, error) {
 	req, err := client.listCreateRequest(ctx, scope, options)
 	if err != nil {

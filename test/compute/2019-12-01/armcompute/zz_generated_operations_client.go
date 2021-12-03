@@ -46,7 +46,7 @@ func NewOperationsClient(credential azcore.TokenCredential, options *arm.ClientO
 
 // List - Gets a list of compute operations.
 // If the operation fails it returns a generic error.
-// options - OperationsListOptions contains the optional parameters for the Operations.List method.
+// options - OperationsListOptions contains the optional parameters for the OperationsClient.List method.
 func (client *OperationsClient) List(ctx context.Context, options *OperationsListOptions) (OperationsListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {

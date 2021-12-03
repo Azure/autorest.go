@@ -56,7 +56,7 @@ func NewServiceTagsClient(subscriptionID string, credential azcore.TokenCredenti
 // location - The location that will be used as a reference for version (not as a filter based on location, you will get the
 // list of service tags with prefix details across all regions but limited to the cloud that
 // your subscription belongs to).
-// options - ServiceTagsListOptions contains the optional parameters for the ServiceTags.List method.
+// options - ServiceTagsListOptions contains the optional parameters for the ServiceTagsClient.List method.
 func (client *ServiceTagsClient) List(ctx context.Context, location string, options *ServiceTagsListOptions) (ServiceTagsListResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, options)
 	if err != nil {

@@ -44,7 +44,7 @@ func NewServiceClient(endpoint string, version Enum0, pl runtime.Pipeline) *Serv
 // If the operation fails it returns the *TableServiceError error type.
 // restype - Required query string to set the service properties.
 // comp - Required query string to set the service properties.
-// options - ServiceGetPropertiesOptions contains the optional parameters for the Service.GetProperties method.
+// options - ServiceGetPropertiesOptions contains the optional parameters for the ServiceClient.GetProperties method.
 func (client *ServiceClient) GetProperties(ctx context.Context, restype Enum5, comp Enum6, options *ServiceGetPropertiesOptions) (ServiceGetPropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -117,7 +117,7 @@ func (client *ServiceClient) getPropertiesHandleError(resp *http.Response) error
 // If the operation fails it returns the *TableServiceError error type.
 // restype - Required query string to get service stats.
 // comp - Required query string to get service stats.
-// options - ServiceGetStatisticsOptions contains the optional parameters for the Service.GetStatistics method.
+// options - ServiceGetStatisticsOptions contains the optional parameters for the ServiceClient.GetStatistics method.
 func (client *ServiceClient) GetStatistics(ctx context.Context, restype Enum5, comp Enum7, options *ServiceGetStatisticsOptions) (ServiceGetStatisticsResponse, error) {
 	req, err := client.getStatisticsCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -198,7 +198,7 @@ func (client *ServiceClient) getStatisticsHandleError(resp *http.Response) error
 // restype - Required query string to set the service properties.
 // comp - Required query string to set the service properties.
 // tableServiceProperties - The Table Service properties.
-// options - ServiceSetPropertiesOptions contains the optional parameters for the Service.SetProperties method.
+// options - ServiceSetPropertiesOptions contains the optional parameters for the ServiceClient.SetProperties method.
 func (client *ServiceClient) SetProperties(ctx context.Context, restype Enum5, comp Enum6, tableServiceProperties TableServiceProperties, options *ServiceSetPropertiesOptions) (ServiceSetPropertiesResponse, error) {
 	req, err := client.setPropertiesCreateRequest(ctx, restype, comp, tableServiceProperties, options)
 	if err != nil {

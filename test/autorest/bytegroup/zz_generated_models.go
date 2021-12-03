@@ -8,27 +8,27 @@
 
 package bytegroup
 
-// ByteGetEmptyOptions contains the optional parameters for the Byte.GetEmpty method.
+// ByteGetEmptyOptions contains the optional parameters for the ByteClient.GetEmpty method.
 type ByteGetEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ByteGetInvalidOptions contains the optional parameters for the Byte.GetInvalid method.
+// ByteGetInvalidOptions contains the optional parameters for the ByteClient.GetInvalid method.
 type ByteGetInvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ByteGetNonASCIIOptions contains the optional parameters for the Byte.GetNonASCII method.
+// ByteGetNonASCIIOptions contains the optional parameters for the ByteClient.GetNonASCII method.
 type ByteGetNonASCIIOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ByteGetNullOptions contains the optional parameters for the Byte.GetNull method.
+// ByteGetNullOptions contains the optional parameters for the ByteClient.GetNull method.
 type ByteGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BytePutNonASCIIOptions contains the optional parameters for the Byte.PutNonASCII method.
+// BytePutNonASCIIOptions contains the optional parameters for the ByteClient.PutNonASCII method.
 type BytePutNonASCIIOptions struct {
 	// placeholder for future optional parameters
 }

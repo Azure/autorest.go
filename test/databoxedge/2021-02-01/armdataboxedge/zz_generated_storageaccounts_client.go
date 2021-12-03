@@ -49,7 +49,7 @@ func NewStorageAccountsClient(subscriptionID string, options *azcore.ClientOptio
 // storageAccountName - The StorageAccount name.
 // resourceGroupName - The resource group name.
 // storageAccount - The StorageAccount properties.
-// options - StorageAccountsBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccounts.BeginCreateOrUpdate
+// options - StorageAccountsBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountsClient.BeginCreateOrUpdate
 // method.
 func (client *StorageAccountsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, storageAccount StorageAccount, options *StorageAccountsBeginCreateOrUpdateOptions) (StorageAccountsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, storageAccountName, resourceGroupName, storageAccount, options)
@@ -134,7 +134,8 @@ func (client *StorageAccountsClient) createOrUpdateHandleError(resp *http.Respon
 // deviceName - The device name.
 // storageAccountName - The StorageAccount name.
 // resourceGroupName - The resource group name.
-// options - StorageAccountsBeginDeleteOptions contains the optional parameters for the StorageAccounts.BeginDelete method.
+// options - StorageAccountsBeginDeleteOptions contains the optional parameters for the StorageAccountsClient.BeginDelete
+// method.
 func (client *StorageAccountsClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *StorageAccountsBeginDeleteOptions) (StorageAccountsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, storageAccountName, resourceGroupName, options)
 	if err != nil {
@@ -218,7 +219,7 @@ func (client *StorageAccountsClient) deleteHandleError(resp *http.Response) erro
 // deviceName - The device name.
 // storageAccountName - The storage account name.
 // resourceGroupName - The resource group name.
-// options - StorageAccountsGetOptions contains the optional parameters for the StorageAccounts.Get method.
+// options - StorageAccountsGetOptions contains the optional parameters for the StorageAccountsClient.Get method.
 func (client *StorageAccountsClient) Get(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *StorageAccountsGetOptions) (StorageAccountsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, storageAccountName, resourceGroupName, options)
 	if err != nil {
@@ -290,7 +291,7 @@ func (client *StorageAccountsClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - StorageAccountsListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccounts.ListByDataBoxEdgeDevice
+// options - StorageAccountsListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountsClient.ListByDataBoxEdgeDevice
 // method.
 func (client *StorageAccountsClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *StorageAccountsListByDataBoxEdgeDeviceOptions) *StorageAccountsListByDataBoxEdgeDevicePager {
 	return &StorageAccountsListByDataBoxEdgeDevicePager{

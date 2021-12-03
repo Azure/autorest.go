@@ -40,7 +40,7 @@ func NewXMLClient(options *azcore.ClientOptions) *XMLClient {
 
 // GetACLs - Gets storage ACLs for a container.
 // If the operation fails it returns a generic error.
-// options - XMLGetACLsOptions contains the optional parameters for the XML.GetACLs method.
+// options - XMLGetACLsOptions contains the optional parameters for the XMLClient.GetACLs method.
 func (client *XMLClient) GetACLs(ctx context.Context, options *XMLGetACLsOptions) (XMLGetACLsResponse, error) {
 	req, err := client.getACLsCreateRequest(ctx, options)
 	if err != nil {
@@ -94,7 +94,7 @@ func (client *XMLClient) getACLsHandleError(resp *http.Response) error {
 
 // GetBytes - Get an XML document with binary property
 // If the operation fails it returns the *Error error type.
-// options - XMLGetBytesOptions contains the optional parameters for the XML.GetBytes method.
+// options - XMLGetBytesOptions contains the optional parameters for the XMLClient.GetBytes method.
 func (client *XMLClient) GetBytes(ctx context.Context, options *XMLGetBytesOptions) (XMLGetBytesResponse, error) {
 	req, err := client.getBytesCreateRequest(ctx, options)
 	if err != nil {
@@ -145,7 +145,8 @@ func (client *XMLClient) getBytesHandleError(resp *http.Response) error {
 
 // GetComplexTypeRefNoMeta - Get a complex type that has a ref to a complex type with no XML node
 // If the operation fails it returns a generic error.
-// options - XMLGetComplexTypeRefNoMetaOptions contains the optional parameters for the XML.GetComplexTypeRefNoMeta method.
+// options - XMLGetComplexTypeRefNoMetaOptions contains the optional parameters for the XMLClient.GetComplexTypeRefNoMeta
+// method.
 func (client *XMLClient) GetComplexTypeRefNoMeta(ctx context.Context, options *XMLGetComplexTypeRefNoMetaOptions) (XMLGetComplexTypeRefNoMetaResponse, error) {
 	req, err := client.getComplexTypeRefNoMetaCreateRequest(ctx, options)
 	if err != nil {
@@ -195,7 +196,8 @@ func (client *XMLClient) getComplexTypeRefNoMetaHandleError(resp *http.Response)
 
 // GetComplexTypeRefWithMeta - Get a complex type that has a ref to a complex type with XML node
 // If the operation fails it returns a generic error.
-// options - XMLGetComplexTypeRefWithMetaOptions contains the optional parameters for the XML.GetComplexTypeRefWithMeta method.
+// options - XMLGetComplexTypeRefWithMetaOptions contains the optional parameters for the XMLClient.GetComplexTypeRefWithMeta
+// method.
 func (client *XMLClient) GetComplexTypeRefWithMeta(ctx context.Context, options *XMLGetComplexTypeRefWithMetaOptions) (XMLGetComplexTypeRefWithMetaResponse, error) {
 	req, err := client.getComplexTypeRefWithMetaCreateRequest(ctx, options)
 	if err != nil {
@@ -245,7 +247,7 @@ func (client *XMLClient) getComplexTypeRefWithMetaHandleError(resp *http.Respons
 
 // GetEmptyChildElement - Gets an XML document with an empty child element.
 // If the operation fails it returns a generic error.
-// options - XMLGetEmptyChildElementOptions contains the optional parameters for the XML.GetEmptyChildElement method.
+// options - XMLGetEmptyChildElementOptions contains the optional parameters for the XMLClient.GetEmptyChildElement method.
 func (client *XMLClient) GetEmptyChildElement(ctx context.Context, options *XMLGetEmptyChildElementOptions) (XMLGetEmptyChildElementResponse, error) {
 	req, err := client.getEmptyChildElementCreateRequest(ctx, options)
 	if err != nil {
@@ -295,7 +297,7 @@ func (client *XMLClient) getEmptyChildElementHandleError(resp *http.Response) er
 
 // GetEmptyList - Get an empty list.
 // If the operation fails it returns a generic error.
-// options - XMLGetEmptyListOptions contains the optional parameters for the XML.GetEmptyList method.
+// options - XMLGetEmptyListOptions contains the optional parameters for the XMLClient.GetEmptyList method.
 func (client *XMLClient) GetEmptyList(ctx context.Context, options *XMLGetEmptyListOptions) (XMLGetEmptyListResponse, error) {
 	req, err := client.getEmptyListCreateRequest(ctx, options)
 	if err != nil {
@@ -345,7 +347,7 @@ func (client *XMLClient) getEmptyListHandleError(resp *http.Response) error {
 
 // GetEmptyRootList - Gets an empty list as the root element.
 // If the operation fails it returns a generic error.
-// options - XMLGetEmptyRootListOptions contains the optional parameters for the XML.GetEmptyRootList method.
+// options - XMLGetEmptyRootListOptions contains the optional parameters for the XMLClient.GetEmptyRootList method.
 func (client *XMLClient) GetEmptyRootList(ctx context.Context, options *XMLGetEmptyRootListOptions) (XMLGetEmptyRootListResponse, error) {
 	req, err := client.getEmptyRootListCreateRequest(ctx, options)
 	if err != nil {
@@ -395,7 +397,7 @@ func (client *XMLClient) getEmptyRootListHandleError(resp *http.Response) error 
 
 // GetEmptyWrappedLists - Gets some empty wrapped lists.
 // If the operation fails it returns a generic error.
-// options - XMLGetEmptyWrappedListsOptions contains the optional parameters for the XML.GetEmptyWrappedLists method.
+// options - XMLGetEmptyWrappedListsOptions contains the optional parameters for the XMLClient.GetEmptyWrappedLists method.
 func (client *XMLClient) GetEmptyWrappedLists(ctx context.Context, options *XMLGetEmptyWrappedListsOptions) (XMLGetEmptyWrappedListsResponse, error) {
 	req, err := client.getEmptyWrappedListsCreateRequest(ctx, options)
 	if err != nil {
@@ -445,7 +447,7 @@ func (client *XMLClient) getEmptyWrappedListsHandleError(resp *http.Response) er
 
 // GetHeaders - Get strongly-typed response headers.
 // If the operation fails it returns a generic error.
-// options - XMLGetHeadersOptions contains the optional parameters for the XML.GetHeaders method.
+// options - XMLGetHeadersOptions contains the optional parameters for the XMLClient.GetHeaders method.
 func (client *XMLClient) GetHeaders(ctx context.Context, options *XMLGetHeadersOptions) (XMLGetHeadersResponse, error) {
 	req, err := client.getHeadersCreateRequest(ctx, options)
 	if err != nil {
@@ -494,7 +496,7 @@ func (client *XMLClient) getHeadersHandleError(resp *http.Response) error {
 
 // GetRootList - Gets a list as the root element.
 // If the operation fails it returns a generic error.
-// options - XMLGetRootListOptions contains the optional parameters for the XML.GetRootList method.
+// options - XMLGetRootListOptions contains the optional parameters for the XMLClient.GetRootList method.
 func (client *XMLClient) GetRootList(ctx context.Context, options *XMLGetRootListOptions) (XMLGetRootListResponse, error) {
 	req, err := client.getRootListCreateRequest(ctx, options)
 	if err != nil {
@@ -544,7 +546,7 @@ func (client *XMLClient) getRootListHandleError(resp *http.Response) error {
 
 // GetRootListSingleItem - Gets a list with a single item.
 // If the operation fails it returns a generic error.
-// options - XMLGetRootListSingleItemOptions contains the optional parameters for the XML.GetRootListSingleItem method.
+// options - XMLGetRootListSingleItemOptions contains the optional parameters for the XMLClient.GetRootListSingleItem method.
 func (client *XMLClient) GetRootListSingleItem(ctx context.Context, options *XMLGetRootListSingleItemOptions) (XMLGetRootListSingleItemResponse, error) {
 	req, err := client.getRootListSingleItemCreateRequest(ctx, options)
 	if err != nil {
@@ -594,7 +596,7 @@ func (client *XMLClient) getRootListSingleItemHandleError(resp *http.Response) e
 
 // GetServiceProperties - Gets storage service properties.
 // If the operation fails it returns a generic error.
-// options - XMLGetServicePropertiesOptions contains the optional parameters for the XML.GetServiceProperties method.
+// options - XMLGetServicePropertiesOptions contains the optional parameters for the XMLClient.GetServiceProperties method.
 func (client *XMLClient) GetServiceProperties(ctx context.Context, options *XMLGetServicePropertiesOptions) (XMLGetServicePropertiesResponse, error) {
 	req, err := client.getServicePropertiesCreateRequest(ctx, options)
 	if err != nil {
@@ -648,7 +650,7 @@ func (client *XMLClient) getServicePropertiesHandleError(resp *http.Response) er
 
 // GetSimple - Get a simple XML document
 // If the operation fails it returns the *Error error type.
-// options - XMLGetSimpleOptions contains the optional parameters for the XML.GetSimple method.
+// options - XMLGetSimpleOptions contains the optional parameters for the XMLClient.GetSimple method.
 func (client *XMLClient) GetSimple(ctx context.Context, options *XMLGetSimpleOptions) (XMLGetSimpleResponse, error) {
 	req, err := client.getSimpleCreateRequest(ctx, options)
 	if err != nil {
@@ -699,7 +701,7 @@ func (client *XMLClient) getSimpleHandleError(resp *http.Response) error {
 
 // GetURI - Get an XML document with uri property
 // If the operation fails it returns the *Error error type.
-// options - XMLGetURIOptions contains the optional parameters for the XML.GetURI method.
+// options - XMLGetURIOptions contains the optional parameters for the XMLClient.GetURI method.
 func (client *XMLClient) GetURI(ctx context.Context, options *XMLGetURIOptions) (XMLGetURIResponse, error) {
 	req, err := client.getURICreateRequest(ctx, options)
 	if err != nil {
@@ -750,7 +752,7 @@ func (client *XMLClient) getURIHandleError(resp *http.Response) error {
 
 // GetWrappedLists - Get an XML document with multiple wrapped lists
 // If the operation fails it returns a generic error.
-// options - XMLGetWrappedListsOptions contains the optional parameters for the XML.GetWrappedLists method.
+// options - XMLGetWrappedListsOptions contains the optional parameters for the XMLClient.GetWrappedLists method.
 func (client *XMLClient) GetWrappedLists(ctx context.Context, options *XMLGetWrappedListsOptions) (XMLGetWrappedListsResponse, error) {
 	req, err := client.getWrappedListsCreateRequest(ctx, options)
 	if err != nil {
@@ -801,7 +803,7 @@ func (client *XMLClient) getWrappedListsHandleError(resp *http.Response) error {
 // GetXMsText - Get back an XML object with an x-ms-text property, which should translate to the returned object's 'language'
 // property being 'english' and its 'content' property being 'I am text'
 // If the operation fails it returns a generic error.
-// options - XMLGetXMsTextOptions contains the optional parameters for the XML.GetXMsText method.
+// options - XMLGetXMsTextOptions contains the optional parameters for the XMLClient.GetXMsText method.
 func (client *XMLClient) GetXMsText(ctx context.Context, options *XMLGetXMsTextOptions) (XMLGetXMsTextResponse, error) {
 	req, err := client.getXMsTextCreateRequest(ctx, options)
 	if err != nil {
@@ -851,7 +853,7 @@ func (client *XMLClient) getXMsTextHandleError(resp *http.Response) error {
 
 // JSONInput - A Swagger with XML that has one operation that takes JSON as input. You need to send the ID number 42
 // If the operation fails it returns a generic error.
-// options - XMLJSONInputOptions contains the optional parameters for the XML.JSONInput method.
+// options - XMLJSONInputOptions contains the optional parameters for the XMLClient.JSONInput method.
 func (client *XMLClient) JSONInput(ctx context.Context, properties JSONInput, options *XMLJSONInputOptions) (XMLJSONInputResponse, error) {
 	req, err := client.jsonInputCreateRequest(ctx, properties, options)
 	if err != nil {
@@ -891,7 +893,7 @@ func (client *XMLClient) jsonInputHandleError(resp *http.Response) error {
 
 // JSONOutput - A Swagger with XML that has one operation that returns JSON. ID number 42
 // If the operation fails it returns a generic error.
-// options - XMLJSONOutputOptions contains the optional parameters for the XML.JSONOutput method.
+// options - XMLJSONOutputOptions contains the optional parameters for the XMLClient.JSONOutput method.
 func (client *XMLClient) JSONOutput(ctx context.Context, options *XMLJSONOutputOptions) (XMLJSONOutputResponse, error) {
 	req, err := client.jsonOutputCreateRequest(ctx, options)
 	if err != nil {
@@ -941,7 +943,7 @@ func (client *XMLClient) jsonOutputHandleError(resp *http.Response) error {
 
 // ListBlobs - Lists blobs in a storage container.
 // If the operation fails it returns a generic error.
-// options - XMLListBlobsOptions contains the optional parameters for the XML.ListBlobs method.
+// options - XMLListBlobsOptions contains the optional parameters for the XMLClient.ListBlobs method.
 func (client *XMLClient) ListBlobs(ctx context.Context, options *XMLListBlobsOptions) (XMLListBlobsResponse, error) {
 	req, err := client.listBlobsCreateRequest(ctx, options)
 	if err != nil {
@@ -995,7 +997,7 @@ func (client *XMLClient) listBlobsHandleError(resp *http.Response) error {
 
 // ListContainers - Lists containers in a storage account.
 // If the operation fails it returns a generic error.
-// options - XMLListContainersOptions contains the optional parameters for the XML.ListContainers method.
+// options - XMLListContainersOptions contains the optional parameters for the XMLClient.ListContainers method.
 func (client *XMLClient) ListContainers(ctx context.Context, options *XMLListContainersOptions) (XMLListContainersResponse, error) {
 	req, err := client.listContainersCreateRequest(ctx, options)
 	if err != nil {
@@ -1048,7 +1050,7 @@ func (client *XMLClient) listContainersHandleError(resp *http.Response) error {
 
 // PutACLs - Puts storage ACLs for a container.
 // If the operation fails it returns a generic error.
-// options - XMLPutACLsOptions contains the optional parameters for the XML.PutACLs method.
+// options - XMLPutACLsOptions contains the optional parameters for the XMLClient.PutACLs method.
 func (client *XMLClient) PutACLs(ctx context.Context, properties []*SignedIdentifier, options *XMLPutACLsOptions) (XMLPutACLsResponse, error) {
 	req, err := client.putACLsCreateRequest(ctx, properties, options)
 	if err != nil {
@@ -1096,7 +1098,7 @@ func (client *XMLClient) putACLsHandleError(resp *http.Response) error {
 
 // PutBinary - Put an XML document with binary property
 // If the operation fails it returns the *Error error type.
-// options - XMLPutBinaryOptions contains the optional parameters for the XML.PutBinary method.
+// options - XMLPutBinaryOptions contains the optional parameters for the XMLClient.PutBinary method.
 func (client *XMLClient) PutBinary(ctx context.Context, slideshow ModelWithByteProperty, options *XMLPutBinaryOptions) (XMLPutBinaryResponse, error) {
 	req, err := client.putBinaryCreateRequest(ctx, slideshow, options)
 	if err != nil {
@@ -1138,7 +1140,8 @@ func (client *XMLClient) putBinaryHandleError(resp *http.Response) error {
 
 // PutComplexTypeRefNoMeta - Puts a complex type that has a ref to a complex type with no XML node
 // If the operation fails it returns a generic error.
-// options - XMLPutComplexTypeRefNoMetaOptions contains the optional parameters for the XML.PutComplexTypeRefNoMeta method.
+// options - XMLPutComplexTypeRefNoMetaOptions contains the optional parameters for the XMLClient.PutComplexTypeRefNoMeta
+// method.
 func (client *XMLClient) PutComplexTypeRefNoMeta(ctx context.Context, model RootWithRefAndNoMeta, options *XMLPutComplexTypeRefNoMetaOptions) (XMLPutComplexTypeRefNoMetaResponse, error) {
 	req, err := client.putComplexTypeRefNoMetaCreateRequest(ctx, model, options)
 	if err != nil {
@@ -1178,7 +1181,8 @@ func (client *XMLClient) putComplexTypeRefNoMetaHandleError(resp *http.Response)
 
 // PutComplexTypeRefWithMeta - Puts a complex type that has a ref to a complex type with XML node
 // If the operation fails it returns a generic error.
-// options - XMLPutComplexTypeRefWithMetaOptions contains the optional parameters for the XML.PutComplexTypeRefWithMeta method.
+// options - XMLPutComplexTypeRefWithMetaOptions contains the optional parameters for the XMLClient.PutComplexTypeRefWithMeta
+// method.
 func (client *XMLClient) PutComplexTypeRefWithMeta(ctx context.Context, model RootWithRefAndMeta, options *XMLPutComplexTypeRefWithMetaOptions) (XMLPutComplexTypeRefWithMetaResponse, error) {
 	req, err := client.putComplexTypeRefWithMetaCreateRequest(ctx, model, options)
 	if err != nil {
@@ -1218,7 +1222,7 @@ func (client *XMLClient) putComplexTypeRefWithMetaHandleError(resp *http.Respons
 
 // PutEmptyChildElement - Puts a value with an empty child element.
 // If the operation fails it returns a generic error.
-// options - XMLPutEmptyChildElementOptions contains the optional parameters for the XML.PutEmptyChildElement method.
+// options - XMLPutEmptyChildElementOptions contains the optional parameters for the XMLClient.PutEmptyChildElement method.
 func (client *XMLClient) PutEmptyChildElement(ctx context.Context, banana Banana, options *XMLPutEmptyChildElementOptions) (XMLPutEmptyChildElementResponse, error) {
 	req, err := client.putEmptyChildElementCreateRequest(ctx, banana, options)
 	if err != nil {
@@ -1258,7 +1262,7 @@ func (client *XMLClient) putEmptyChildElementHandleError(resp *http.Response) er
 
 // PutEmptyList - Puts an empty list.
 // If the operation fails it returns a generic error.
-// options - XMLPutEmptyListOptions contains the optional parameters for the XML.PutEmptyList method.
+// options - XMLPutEmptyListOptions contains the optional parameters for the XMLClient.PutEmptyList method.
 func (client *XMLClient) PutEmptyList(ctx context.Context, slideshow Slideshow, options *XMLPutEmptyListOptions) (XMLPutEmptyListResponse, error) {
 	req, err := client.putEmptyListCreateRequest(ctx, slideshow, options)
 	if err != nil {
@@ -1298,7 +1302,7 @@ func (client *XMLClient) putEmptyListHandleError(resp *http.Response) error {
 
 // PutEmptyRootList - Puts an empty list as the root element.
 // If the operation fails it returns a generic error.
-// options - XMLPutEmptyRootListOptions contains the optional parameters for the XML.PutEmptyRootList method.
+// options - XMLPutEmptyRootListOptions contains the optional parameters for the XMLClient.PutEmptyRootList method.
 func (client *XMLClient) PutEmptyRootList(ctx context.Context, bananas []*Banana, options *XMLPutEmptyRootListOptions) (XMLPutEmptyRootListResponse, error) {
 	req, err := client.putEmptyRootListCreateRequest(ctx, bananas, options)
 	if err != nil {
@@ -1342,7 +1346,7 @@ func (client *XMLClient) putEmptyRootListHandleError(resp *http.Response) error 
 
 // PutEmptyWrappedLists - Puts some empty wrapped lists.
 // If the operation fails it returns a generic error.
-// options - XMLPutEmptyWrappedListsOptions contains the optional parameters for the XML.PutEmptyWrappedLists method.
+// options - XMLPutEmptyWrappedListsOptions contains the optional parameters for the XMLClient.PutEmptyWrappedLists method.
 func (client *XMLClient) PutEmptyWrappedLists(ctx context.Context, appleBarrel AppleBarrel, options *XMLPutEmptyWrappedListsOptions) (XMLPutEmptyWrappedListsResponse, error) {
 	req, err := client.putEmptyWrappedListsCreateRequest(ctx, appleBarrel, options)
 	if err != nil {
@@ -1382,7 +1386,7 @@ func (client *XMLClient) putEmptyWrappedListsHandleError(resp *http.Response) er
 
 // PutRootList - Puts a list as the root element.
 // If the operation fails it returns a generic error.
-// options - XMLPutRootListOptions contains the optional parameters for the XML.PutRootList method.
+// options - XMLPutRootListOptions contains the optional parameters for the XMLClient.PutRootList method.
 func (client *XMLClient) PutRootList(ctx context.Context, bananas []*Banana, options *XMLPutRootListOptions) (XMLPutRootListResponse, error) {
 	req, err := client.putRootListCreateRequest(ctx, bananas, options)
 	if err != nil {
@@ -1426,7 +1430,7 @@ func (client *XMLClient) putRootListHandleError(resp *http.Response) error {
 
 // PutRootListSingleItem - Puts a list with a single item.
 // If the operation fails it returns a generic error.
-// options - XMLPutRootListSingleItemOptions contains the optional parameters for the XML.PutRootListSingleItem method.
+// options - XMLPutRootListSingleItemOptions contains the optional parameters for the XMLClient.PutRootListSingleItem method.
 func (client *XMLClient) PutRootListSingleItem(ctx context.Context, bananas []*Banana, options *XMLPutRootListSingleItemOptions) (XMLPutRootListSingleItemResponse, error) {
 	req, err := client.putRootListSingleItemCreateRequest(ctx, bananas, options)
 	if err != nil {
@@ -1470,7 +1474,7 @@ func (client *XMLClient) putRootListSingleItemHandleError(resp *http.Response) e
 
 // PutServiceProperties - Puts storage service properties.
 // If the operation fails it returns a generic error.
-// options - XMLPutServicePropertiesOptions contains the optional parameters for the XML.PutServiceProperties method.
+// options - XMLPutServicePropertiesOptions contains the optional parameters for the XMLClient.PutServiceProperties method.
 func (client *XMLClient) PutServiceProperties(ctx context.Context, properties StorageServiceProperties, options *XMLPutServicePropertiesOptions) (XMLPutServicePropertiesResponse, error) {
 	req, err := client.putServicePropertiesCreateRequest(ctx, properties, options)
 	if err != nil {
@@ -1514,7 +1518,7 @@ func (client *XMLClient) putServicePropertiesHandleError(resp *http.Response) er
 
 // PutSimple - Put a simple XML document
 // If the operation fails it returns the *Error error type.
-// options - XMLPutSimpleOptions contains the optional parameters for the XML.PutSimple method.
+// options - XMLPutSimpleOptions contains the optional parameters for the XMLClient.PutSimple method.
 func (client *XMLClient) PutSimple(ctx context.Context, slideshow Slideshow, options *XMLPutSimpleOptions) (XMLPutSimpleResponse, error) {
 	req, err := client.putSimpleCreateRequest(ctx, slideshow, options)
 	if err != nil {
@@ -1556,7 +1560,7 @@ func (client *XMLClient) putSimpleHandleError(resp *http.Response) error {
 
 // PutURI - Put an XML document with uri property
 // If the operation fails it returns the *Error error type.
-// options - XMLPutURIOptions contains the optional parameters for the XML.PutURI method.
+// options - XMLPutURIOptions contains the optional parameters for the XMLClient.PutURI method.
 func (client *XMLClient) PutURI(ctx context.Context, model ModelWithURLProperty, options *XMLPutURIOptions) (XMLPutURIResponse, error) {
 	req, err := client.putURICreateRequest(ctx, model, options)
 	if err != nil {
@@ -1598,7 +1602,7 @@ func (client *XMLClient) putURIHandleError(resp *http.Response) error {
 
 // PutWrappedLists - Put an XML document with multiple wrapped lists
 // If the operation fails it returns the *Error error type.
-// options - XMLPutWrappedListsOptions contains the optional parameters for the XML.PutWrappedLists method.
+// options - XMLPutWrappedListsOptions contains the optional parameters for the XMLClient.PutWrappedLists method.
 func (client *XMLClient) PutWrappedLists(ctx context.Context, wrappedLists AppleBarrel, options *XMLPutWrappedListsOptions) (XMLPutWrappedListsResponse, error) {
 	req, err := client.putWrappedListsCreateRequest(ctx, wrappedLists, options)
 	if err != nil {

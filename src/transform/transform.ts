@@ -453,7 +453,7 @@ function processOperationRequests(session: Session<CodeModel>) {
         // create a type named <OperationGroup><Operation>Options
         const paramGroupName = `${group.language.go!.name}${opName}Options`;
         if (!paramGroups.has(paramGroupName)) {
-          const desc = `${paramGroupName} contains the optional parameters for the ${group.language.go!.name}.${opName} method.`;
+          const desc = `${paramGroupName} contains the optional parameters for the ${group.language.go!.clientName}.${opName} method.`;
           const gp = createGroupProperty(paramGroupName, desc);
           gp.required = false;
           paramGroups.set(paramGroupName, gp);

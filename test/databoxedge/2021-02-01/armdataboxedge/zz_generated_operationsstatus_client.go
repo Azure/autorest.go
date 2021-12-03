@@ -47,7 +47,7 @@ func NewOperationsStatusClient(subscriptionID string, options *azcore.ClientOpti
 // deviceName - The device name.
 // name - The job name.
 // resourceGroupName - The resource group name.
-// options - OperationsStatusGetOptions contains the optional parameters for the OperationsStatus.Get method.
+// options - OperationsStatusGetOptions contains the optional parameters for the OperationsStatusClient.Get method.
 func (client *OperationsStatusClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *OperationsStatusGetOptions) (OperationsStatusGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {

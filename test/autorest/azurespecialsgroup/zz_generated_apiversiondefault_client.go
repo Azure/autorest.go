@@ -38,7 +38,7 @@ func NewAPIVersionDefaultClient(options *azcore.ClientOptions) *APIVersionDefaul
 
 // GetMethodGlobalNotProvidedValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns the *Error error type.
-// options - APIVersionDefaultGetMethodGlobalNotProvidedValidOptions contains the optional parameters for the APIVersionDefault.GetMethodGlobalNotProvidedValid
+// options - APIVersionDefaultGetMethodGlobalNotProvidedValidOptions contains the optional parameters for the APIVersionDefaultClient.GetMethodGlobalNotProvidedValid
 // method.
 func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValid(ctx context.Context, options *APIVersionDefaultGetMethodGlobalNotProvidedValidOptions) (APIVersionDefaultGetMethodGlobalNotProvidedValidResponse, error) {
 	req, err := client.getMethodGlobalNotProvidedValidCreateRequest(ctx, options)
@@ -84,7 +84,7 @@ func (client *APIVersionDefaultClient) getMethodGlobalNotProvidedValidHandleErro
 
 // GetMethodGlobalValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns the *Error error type.
-// options - APIVersionDefaultGetMethodGlobalValidOptions contains the optional parameters for the APIVersionDefault.GetMethodGlobalValid
+// options - APIVersionDefaultGetMethodGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetMethodGlobalValid
 // method.
 func (client *APIVersionDefaultClient) GetMethodGlobalValid(ctx context.Context, options *APIVersionDefaultGetMethodGlobalValidOptions) (APIVersionDefaultGetMethodGlobalValidResponse, error) {
 	req, err := client.getMethodGlobalValidCreateRequest(ctx, options)
@@ -130,7 +130,7 @@ func (client *APIVersionDefaultClient) getMethodGlobalValidHandleError(resp *htt
 
 // GetPathGlobalValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns the *Error error type.
-// options - APIVersionDefaultGetPathGlobalValidOptions contains the optional parameters for the APIVersionDefault.GetPathGlobalValid
+// options - APIVersionDefaultGetPathGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetPathGlobalValid
 // method.
 func (client *APIVersionDefaultClient) GetPathGlobalValid(ctx context.Context, options *APIVersionDefaultGetPathGlobalValidOptions) (APIVersionDefaultGetPathGlobalValidResponse, error) {
 	req, err := client.getPathGlobalValidCreateRequest(ctx, options)
@@ -176,7 +176,7 @@ func (client *APIVersionDefaultClient) getPathGlobalValidHandleError(resp *http.
 
 // GetSwaggerGlobalValid - GET method with api-version modeled in global settings.
 // If the operation fails it returns the *Error error type.
-// options - APIVersionDefaultGetSwaggerGlobalValidOptions contains the optional parameters for the APIVersionDefault.GetSwaggerGlobalValid
+// options - APIVersionDefaultGetSwaggerGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetSwaggerGlobalValid
 // method.
 func (client *APIVersionDefaultClient) GetSwaggerGlobalValid(ctx context.Context, options *APIVersionDefaultGetSwaggerGlobalValidOptions) (APIVersionDefaultGetSwaggerGlobalValidResponse, error) {
 	req, err := client.getSwaggerGlobalValidCreateRequest(ctx, options)

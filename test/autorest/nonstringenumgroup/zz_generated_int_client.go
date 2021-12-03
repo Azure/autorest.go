@@ -38,7 +38,7 @@ func NewIntClient(options *azcore.ClientOptions) *IntClient {
 
 // Get - Get an int enum
 // If the operation fails it returns a generic error.
-// options - IntGetOptions contains the optional parameters for the Int.Get method.
+// options - IntGetOptions contains the optional parameters for the IntClient.Get method.
 func (client *IntClient) Get(ctx context.Context, options *IntGetOptions) (IntGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -88,7 +88,7 @@ func (client *IntClient) getHandleError(resp *http.Response) error {
 
 // Put - Put an int enum
 // If the operation fails it returns a generic error.
-// options - IntPutOptions contains the optional parameters for the Int.Put method.
+// options - IntPutOptions contains the optional parameters for the IntClient.Put method.
 func (client *IntClient) Put(ctx context.Context, options *IntPutOptions) (IntPutResponse, error) {
 	req, err := client.putCreateRequest(ctx, options)
 	if err != nil {

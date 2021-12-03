@@ -56,7 +56,8 @@ func NewVPNSitesClient(subscriptionID string, credential azcore.TokenCredential,
 // resourceGroupName - The resource group name of the VpnSite.
 // vpnSiteName - The name of the VpnSite being created or updated.
 // vpnSiteParameters - Parameters supplied to create or update VpnSite.
-// options - VPNSitesBeginCreateOrUpdateOptions contains the optional parameters for the VPNSites.BeginCreateOrUpdate method.
+// options - VPNSitesBeginCreateOrUpdateOptions contains the optional parameters for the VPNSitesClient.BeginCreateOrUpdate
+// method.
 func (client *VPNSitesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteParameters VPNSite, options *VPNSitesBeginCreateOrUpdateOptions) (VPNSitesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vpnSiteName, vpnSiteParameters, options)
 	if err != nil {
@@ -135,7 +136,7 @@ func (client *VPNSitesClient) createOrUpdateHandleError(resp *http.Response) err
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnSite.
 // vpnSiteName - The name of the VpnSite being deleted.
-// options - VPNSitesBeginDeleteOptions contains the optional parameters for the VPNSites.BeginDelete method.
+// options - VPNSitesBeginDeleteOptions contains the optional parameters for the VPNSitesClient.BeginDelete method.
 func (client *VPNSitesClient) BeginDelete(ctx context.Context, resourceGroupName string, vpnSiteName string, options *VPNSitesBeginDeleteOptions) (VPNSitesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vpnSiteName, options)
 	if err != nil {
@@ -214,7 +215,7 @@ func (client *VPNSitesClient) deleteHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnSite.
 // vpnSiteName - The name of the VpnSite being retrieved.
-// options - VPNSitesGetOptions contains the optional parameters for the VPNSites.Get method.
+// options - VPNSitesGetOptions contains the optional parameters for the VPNSitesClient.Get method.
 func (client *VPNSitesClient) Get(ctx context.Context, resourceGroupName string, vpnSiteName string, options *VPNSitesGetOptions) (VPNSitesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vpnSiteName, options)
 	if err != nil {
@@ -280,7 +281,7 @@ func (client *VPNSitesClient) getHandleError(resp *http.Response) error {
 
 // List - Lists all the VpnSites in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - VPNSitesListOptions contains the optional parameters for the VPNSites.List method.
+// options - VPNSitesListOptions contains the optional parameters for the VPNSitesClient.List method.
 func (client *VPNSitesClient) List(options *VPNSitesListOptions) *VPNSitesListPager {
 	return &VPNSitesListPager{
 		client: client,
@@ -336,7 +337,8 @@ func (client *VPNSitesClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Lists all the vpnSites in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnSite.
-// options - VPNSitesListByResourceGroupOptions contains the optional parameters for the VPNSites.ListByResourceGroup method.
+// options - VPNSitesListByResourceGroupOptions contains the optional parameters for the VPNSitesClient.ListByResourceGroup
+// method.
 func (client *VPNSitesClient) ListByResourceGroup(resourceGroupName string, options *VPNSitesListByResourceGroupOptions) *VPNSitesListByResourceGroupPager {
 	return &VPNSitesListByResourceGroupPager{
 		client: client,
@@ -398,7 +400,7 @@ func (client *VPNSitesClient) listByResourceGroupHandleError(resp *http.Response
 // resourceGroupName - The resource group name of the VpnSite.
 // vpnSiteName - The name of the VpnSite being updated.
 // vpnSiteParameters - Parameters supplied to update VpnSite tags.
-// options - VPNSitesUpdateTagsOptions contains the optional parameters for the VPNSites.UpdateTags method.
+// options - VPNSitesUpdateTagsOptions contains the optional parameters for the VPNSitesClient.UpdateTags method.
 func (client *VPNSitesClient) UpdateTags(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteParameters TagsObject, options *VPNSitesUpdateTagsOptions) (VPNSitesUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, vpnSiteName, vpnSiteParameters, options)
 	if err != nil {

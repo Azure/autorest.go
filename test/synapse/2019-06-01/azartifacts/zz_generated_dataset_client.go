@@ -39,7 +39,7 @@ func newDatasetClient(endpoint string, pl runtime.Pipeline) *datasetClient {
 // If the operation fails it returns the *CloudError error type.
 // datasetName - The dataset name.
 // dataset - Dataset resource definition.
-// options - DatasetBeginCreateOrUpdateDatasetOptions contains the optional parameters for the Dataset.BeginCreateOrUpdateDataset
+// options - DatasetBeginCreateOrUpdateDatasetOptions contains the optional parameters for the datasetClient.BeginCreateOrUpdateDataset
 // method.
 func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *DatasetBeginCreateOrUpdateDatasetOptions) (DatasetCreateOrUpdateDatasetPollerResponse, error) {
 	resp, err := client.createOrUpdateDataset(ctx, datasetName, dataset, options)
@@ -113,7 +113,7 @@ func (client *datasetClient) createOrUpdateDatasetHandleError(resp *http.Respons
 // BeginDeleteDataset - Deletes a dataset.
 // If the operation fails it returns the *CloudError error type.
 // datasetName - The dataset name.
-// options - DatasetBeginDeleteDatasetOptions contains the optional parameters for the Dataset.BeginDeleteDataset method.
+// options - DatasetBeginDeleteDatasetOptions contains the optional parameters for the datasetClient.BeginDeleteDataset method.
 func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName string, options *DatasetBeginDeleteDatasetOptions) (DatasetDeleteDatasetPollerResponse, error) {
 	resp, err := client.deleteDataset(ctx, datasetName, options)
 	if err != nil {
@@ -183,7 +183,7 @@ func (client *datasetClient) deleteDatasetHandleError(resp *http.Response) error
 // GetDataset - Gets a dataset.
 // If the operation fails it returns the *CloudError error type.
 // datasetName - The dataset name.
-// options - DatasetGetDatasetOptions contains the optional parameters for the Dataset.GetDataset method.
+// options - DatasetGetDatasetOptions contains the optional parameters for the datasetClient.GetDataset method.
 func (client *datasetClient) GetDataset(ctx context.Context, datasetName string, options *DatasetGetDatasetOptions) (DatasetGetDatasetResponse, error) {
 	req, err := client.getDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
@@ -244,7 +244,7 @@ func (client *datasetClient) getDatasetHandleError(resp *http.Response) error {
 
 // GetDatasetsByWorkspace - Lists datasets.
 // If the operation fails it returns the *CloudError error type.
-// options - DatasetGetDatasetsByWorkspaceOptions contains the optional parameters for the Dataset.GetDatasetsByWorkspace
+// options - DatasetGetDatasetsByWorkspaceOptions contains the optional parameters for the datasetClient.GetDatasetsByWorkspace
 // method.
 func (client *datasetClient) GetDatasetsByWorkspace(options *DatasetGetDatasetsByWorkspaceOptions) *DatasetGetDatasetsByWorkspacePager {
 	return &DatasetGetDatasetsByWorkspacePager{
@@ -298,7 +298,7 @@ func (client *datasetClient) getDatasetsByWorkspaceHandleError(resp *http.Respon
 // If the operation fails it returns the *CloudError error type.
 // datasetName - The dataset name.
 // request - proposed new name.
-// options - DatasetBeginRenameDatasetOptions contains the optional parameters for the Dataset.BeginRenameDataset method.
+// options - DatasetBeginRenameDatasetOptions contains the optional parameters for the datasetClient.BeginRenameDataset method.
 func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *DatasetBeginRenameDatasetOptions) (DatasetRenameDatasetPollerResponse, error) {
 	resp, err := client.renameDataset(ctx, datasetName, request, options)
 	if err != nil {

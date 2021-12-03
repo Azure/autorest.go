@@ -222,40 +222,40 @@ func (a AvailabilitySetUpdate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// AvailabilitySetsCreateOrUpdateOptions contains the optional parameters for the AvailabilitySets.CreateOrUpdate method.
+// AvailabilitySetsCreateOrUpdateOptions contains the optional parameters for the AvailabilitySetsClient.CreateOrUpdate method.
 type AvailabilitySetsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AvailabilitySetsDeleteOptions contains the optional parameters for the AvailabilitySets.Delete method.
+// AvailabilitySetsDeleteOptions contains the optional parameters for the AvailabilitySetsClient.Delete method.
 type AvailabilitySetsDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AvailabilitySetsGetOptions contains the optional parameters for the AvailabilitySets.Get method.
+// AvailabilitySetsGetOptions contains the optional parameters for the AvailabilitySetsClient.Get method.
 type AvailabilitySetsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AvailabilitySetsListAvailableSizesOptions contains the optional parameters for the AvailabilitySets.ListAvailableSizes
+// AvailabilitySetsListAvailableSizesOptions contains the optional parameters for the AvailabilitySetsClient.ListAvailableSizes
 // method.
 type AvailabilitySetsListAvailableSizesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AvailabilitySetsListBySubscriptionOptions contains the optional parameters for the AvailabilitySets.ListBySubscription
+// AvailabilitySetsListBySubscriptionOptions contains the optional parameters for the AvailabilitySetsClient.ListBySubscription
 // method.
 type AvailabilitySetsListBySubscriptionOptions struct {
 	// The expand expression to apply to the operation. Allowed values are 'instanceView'.
 	Expand *string
 }
 
-// AvailabilitySetsListOptions contains the optional parameters for the AvailabilitySets.List method.
+// AvailabilitySetsListOptions contains the optional parameters for the AvailabilitySetsClient.List method.
 type AvailabilitySetsListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AvailabilitySetsUpdateOptions contains the optional parameters for the AvailabilitySets.Update method.
+// AvailabilitySetsUpdateOptions contains the optional parameters for the AvailabilitySetsClient.Update method.
 type AvailabilitySetsUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -539,29 +539,29 @@ type ContainerServiceWindowsProfile struct {
 	AdminUsername *string `json:"adminUsername,omitempty"`
 }
 
-// ContainerServicesBeginCreateOrUpdateOptions contains the optional parameters for the ContainerServices.BeginCreateOrUpdate
+// ContainerServicesBeginCreateOrUpdateOptions contains the optional parameters for the ContainerServicesClient.BeginCreateOrUpdate
 // method.
 type ContainerServicesBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerServicesBeginDeleteOptions contains the optional parameters for the ContainerServices.BeginDelete method.
+// ContainerServicesBeginDeleteOptions contains the optional parameters for the ContainerServicesClient.BeginDelete method.
 type ContainerServicesBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerServicesGetOptions contains the optional parameters for the ContainerServices.Get method.
+// ContainerServicesGetOptions contains the optional parameters for the ContainerServicesClient.Get method.
 type ContainerServicesGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerServicesListByResourceGroupOptions contains the optional parameters for the ContainerServices.ListByResourceGroup
+// ContainerServicesListByResourceGroupOptions contains the optional parameters for the ContainerServicesClient.ListByResourceGroup
 // method.
 type ContainerServicesListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainerServicesListOptions contains the optional parameters for the ContainerServices.List method.
+// ContainerServicesListOptions contains the optional parameters for the ContainerServicesClient.List method.
 type ContainerServicesListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -794,34 +794,35 @@ func (d DedicatedHostGroupUpdate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// DedicatedHostGroupsCreateOrUpdateOptions contains the optional parameters for the DedicatedHostGroups.CreateOrUpdate method.
+// DedicatedHostGroupsCreateOrUpdateOptions contains the optional parameters for the DedicatedHostGroupsClient.CreateOrUpdate
+// method.
 type DedicatedHostGroupsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DedicatedHostGroupsDeleteOptions contains the optional parameters for the DedicatedHostGroups.Delete method.
+// DedicatedHostGroupsDeleteOptions contains the optional parameters for the DedicatedHostGroupsClient.Delete method.
 type DedicatedHostGroupsDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DedicatedHostGroupsGetOptions contains the optional parameters for the DedicatedHostGroups.Get method.
+// DedicatedHostGroupsGetOptions contains the optional parameters for the DedicatedHostGroupsClient.Get method.
 type DedicatedHostGroupsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DedicatedHostGroupsListByResourceGroupOptions contains the optional parameters for the DedicatedHostGroups.ListByResourceGroup
+// DedicatedHostGroupsListByResourceGroupOptions contains the optional parameters for the DedicatedHostGroupsClient.ListByResourceGroup
 // method.
 type DedicatedHostGroupsListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DedicatedHostGroupsListBySubscriptionOptions contains the optional parameters for the DedicatedHostGroups.ListBySubscription
+// DedicatedHostGroupsListBySubscriptionOptions contains the optional parameters for the DedicatedHostGroupsClient.ListBySubscription
 // method.
 type DedicatedHostGroupsListBySubscriptionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DedicatedHostGroupsUpdateOptions contains the optional parameters for the DedicatedHostGroups.Update method.
+// DedicatedHostGroupsUpdateOptions contains the optional parameters for the DedicatedHostGroupsClient.Update method.
 type DedicatedHostGroupsUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -969,28 +970,29 @@ func (d DedicatedHostUpdate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// DedicatedHostsBeginCreateOrUpdateOptions contains the optional parameters for the DedicatedHosts.BeginCreateOrUpdate method.
+// DedicatedHostsBeginCreateOrUpdateOptions contains the optional parameters for the DedicatedHostsClient.BeginCreateOrUpdate
+// method.
 type DedicatedHostsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DedicatedHostsBeginDeleteOptions contains the optional parameters for the DedicatedHosts.BeginDelete method.
+// DedicatedHostsBeginDeleteOptions contains the optional parameters for the DedicatedHostsClient.BeginDelete method.
 type DedicatedHostsBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DedicatedHostsBeginUpdateOptions contains the optional parameters for the DedicatedHosts.BeginUpdate method.
+// DedicatedHostsBeginUpdateOptions contains the optional parameters for the DedicatedHostsClient.BeginUpdate method.
 type DedicatedHostsBeginUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DedicatedHostsGetOptions contains the optional parameters for the DedicatedHosts.Get method.
+// DedicatedHostsGetOptions contains the optional parameters for the DedicatedHostsClient.Get method.
 type DedicatedHostsGetOptions struct {
 	// The expand expression to apply on the operation.. Specifying any value will set the value to instanceView.
 	Expand *string
 }
 
-// DedicatedHostsListByHostGroupOptions contains the optional parameters for the DedicatedHosts.ListByHostGroup method.
+// DedicatedHostsListByHostGroupOptions contains the optional parameters for the DedicatedHostsClient.ListByHostGroup method.
 type DedicatedHostsListByHostGroupOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1133,34 +1135,34 @@ type DiskEncryptionSetUpdateProperties struct {
 	ActiveKey *KeyVaultAndKeyReference `json:"activeKey,omitempty"`
 }
 
-// DiskEncryptionSetsBeginCreateOrUpdateOptions contains the optional parameters for the DiskEncryptionSets.BeginCreateOrUpdate
+// DiskEncryptionSetsBeginCreateOrUpdateOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginCreateOrUpdate
 // method.
 type DiskEncryptionSetsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DiskEncryptionSetsBeginDeleteOptions contains the optional parameters for the DiskEncryptionSets.BeginDelete method.
+// DiskEncryptionSetsBeginDeleteOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginDelete method.
 type DiskEncryptionSetsBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DiskEncryptionSetsBeginUpdateOptions contains the optional parameters for the DiskEncryptionSets.BeginUpdate method.
+// DiskEncryptionSetsBeginUpdateOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginUpdate method.
 type DiskEncryptionSetsBeginUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DiskEncryptionSetsGetOptions contains the optional parameters for the DiskEncryptionSets.Get method.
+// DiskEncryptionSetsGetOptions contains the optional parameters for the DiskEncryptionSetsClient.Get method.
 type DiskEncryptionSetsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DiskEncryptionSetsListByResourceGroupOptions contains the optional parameters for the DiskEncryptionSets.ListByResourceGroup
+// DiskEncryptionSetsListByResourceGroupOptions contains the optional parameters for the DiskEncryptionSetsClient.ListByResourceGroup
 // method.
 type DiskEncryptionSetsListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DiskEncryptionSetsListOptions contains the optional parameters for the DiskEncryptionSets.List method.
+// DiskEncryptionSetsListOptions contains the optional parameters for the DiskEncryptionSetsClient.List method.
 type DiskEncryptionSetsListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1442,42 +1444,42 @@ type DiskUpdateProperties struct {
 	OSType *OperatingSystemTypes `json:"osType,omitempty"`
 }
 
-// DisksBeginCreateOrUpdateOptions contains the optional parameters for the Disks.BeginCreateOrUpdate method.
+// DisksBeginCreateOrUpdateOptions contains the optional parameters for the DisksClient.BeginCreateOrUpdate method.
 type DisksBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DisksBeginDeleteOptions contains the optional parameters for the Disks.BeginDelete method.
+// DisksBeginDeleteOptions contains the optional parameters for the DisksClient.BeginDelete method.
 type DisksBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DisksBeginGrantAccessOptions contains the optional parameters for the Disks.BeginGrantAccess method.
+// DisksBeginGrantAccessOptions contains the optional parameters for the DisksClient.BeginGrantAccess method.
 type DisksBeginGrantAccessOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DisksBeginRevokeAccessOptions contains the optional parameters for the Disks.BeginRevokeAccess method.
+// DisksBeginRevokeAccessOptions contains the optional parameters for the DisksClient.BeginRevokeAccess method.
 type DisksBeginRevokeAccessOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DisksBeginUpdateOptions contains the optional parameters for the Disks.BeginUpdate method.
+// DisksBeginUpdateOptions contains the optional parameters for the DisksClient.BeginUpdate method.
 type DisksBeginUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DisksGetOptions contains the optional parameters for the Disks.Get method.
+// DisksGetOptions contains the optional parameters for the DisksClient.Get method.
 type DisksGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DisksListByResourceGroupOptions contains the optional parameters for the Disks.ListByResourceGroup method.
+// DisksListByResourceGroupOptions contains the optional parameters for the DisksClient.ListByResourceGroup method.
 type DisksListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DisksListOptions contains the optional parameters for the Disks.List method.
+// DisksListOptions contains the optional parameters for the DisksClient.List method.
 type DisksListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1581,32 +1583,32 @@ type EncryptionSettingsElement struct {
 	KeyEncryptionKey *KeyVaultAndKeyReference `json:"keyEncryptionKey,omitempty"`
 }
 
-// GalleriesBeginCreateOrUpdateOptions contains the optional parameters for the Galleries.BeginCreateOrUpdate method.
+// GalleriesBeginCreateOrUpdateOptions contains the optional parameters for the GalleriesClient.BeginCreateOrUpdate method.
 type GalleriesBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleriesBeginDeleteOptions contains the optional parameters for the Galleries.BeginDelete method.
+// GalleriesBeginDeleteOptions contains the optional parameters for the GalleriesClient.BeginDelete method.
 type GalleriesBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleriesBeginUpdateOptions contains the optional parameters for the Galleries.BeginUpdate method.
+// GalleriesBeginUpdateOptions contains the optional parameters for the GalleriesClient.BeginUpdate method.
 type GalleriesBeginUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleriesGetOptions contains the optional parameters for the Galleries.Get method.
+// GalleriesGetOptions contains the optional parameters for the GalleriesClient.Get method.
 type GalleriesGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleriesListByResourceGroupOptions contains the optional parameters for the Galleries.ListByResourceGroup method.
+// GalleriesListByResourceGroupOptions contains the optional parameters for the GalleriesClient.ListByResourceGroup method.
 type GalleriesListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleriesListOptions contains the optional parameters for the Galleries.List method.
+// GalleriesListOptions contains the optional parameters for the GalleriesClient.List method.
 type GalleriesListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -1856,58 +1858,59 @@ func (g GalleryApplicationVersionUpdate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// GalleryApplicationVersionsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryApplicationVersions.BeginCreateOrUpdate
+// GalleryApplicationVersionsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryApplicationVersionsClient.BeginCreateOrUpdate
 // method.
 type GalleryApplicationVersionsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryApplicationVersionsBeginDeleteOptions contains the optional parameters for the GalleryApplicationVersions.BeginDelete
+// GalleryApplicationVersionsBeginDeleteOptions contains the optional parameters for the GalleryApplicationVersionsClient.BeginDelete
 // method.
 type GalleryApplicationVersionsBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryApplicationVersionsBeginUpdateOptions contains the optional parameters for the GalleryApplicationVersions.BeginUpdate
+// GalleryApplicationVersionsBeginUpdateOptions contains the optional parameters for the GalleryApplicationVersionsClient.BeginUpdate
 // method.
 type GalleryApplicationVersionsBeginUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryApplicationVersionsGetOptions contains the optional parameters for the GalleryApplicationVersions.Get method.
+// GalleryApplicationVersionsGetOptions contains the optional parameters for the GalleryApplicationVersionsClient.Get method.
 type GalleryApplicationVersionsGetOptions struct {
 	// The expand expression to apply on the operation.
 	Expand *ReplicationStatusTypes
 }
 
-// GalleryApplicationVersionsListByGalleryApplicationOptions contains the optional parameters for the GalleryApplicationVersions.ListByGalleryApplication
+// GalleryApplicationVersionsListByGalleryApplicationOptions contains the optional parameters for the GalleryApplicationVersionsClient.ListByGalleryApplication
 // method.
 type GalleryApplicationVersionsListByGalleryApplicationOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryApplicationsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryApplications.BeginCreateOrUpdate
+// GalleryApplicationsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryApplicationsClient.BeginCreateOrUpdate
 // method.
 type GalleryApplicationsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryApplicationsBeginDeleteOptions contains the optional parameters for the GalleryApplications.BeginDelete method.
+// GalleryApplicationsBeginDeleteOptions contains the optional parameters for the GalleryApplicationsClient.BeginDelete method.
 type GalleryApplicationsBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryApplicationsBeginUpdateOptions contains the optional parameters for the GalleryApplications.BeginUpdate method.
+// GalleryApplicationsBeginUpdateOptions contains the optional parameters for the GalleryApplicationsClient.BeginUpdate method.
 type GalleryApplicationsBeginUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryApplicationsGetOptions contains the optional parameters for the GalleryApplications.Get method.
+// GalleryApplicationsGetOptions contains the optional parameters for the GalleryApplicationsClient.Get method.
 type GalleryApplicationsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryApplicationsListByGalleryOptions contains the optional parameters for the GalleryApplications.ListByGallery method.
+// GalleryApplicationsListByGalleryOptions contains the optional parameters for the GalleryApplicationsClient.ListByGallery
+// method.
 type GalleryApplicationsListByGalleryOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2301,55 +2304,58 @@ func (g GalleryImageVersionUpdate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// GalleryImageVersionsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryImageVersions.BeginCreateOrUpdate
+// GalleryImageVersionsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryImageVersionsClient.BeginCreateOrUpdate
 // method.
 type GalleryImageVersionsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryImageVersionsBeginDeleteOptions contains the optional parameters for the GalleryImageVersions.BeginDelete method.
+// GalleryImageVersionsBeginDeleteOptions contains the optional parameters for the GalleryImageVersionsClient.BeginDelete
+// method.
 type GalleryImageVersionsBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryImageVersionsBeginUpdateOptions contains the optional parameters for the GalleryImageVersions.BeginUpdate method.
+// GalleryImageVersionsBeginUpdateOptions contains the optional parameters for the GalleryImageVersionsClient.BeginUpdate
+// method.
 type GalleryImageVersionsBeginUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryImageVersionsGetOptions contains the optional parameters for the GalleryImageVersions.Get method.
+// GalleryImageVersionsGetOptions contains the optional parameters for the GalleryImageVersionsClient.Get method.
 type GalleryImageVersionsGetOptions struct {
 	// The expand expression to apply on the operation.
 	Expand *ReplicationStatusTypes
 }
 
-// GalleryImageVersionsListByGalleryImageOptions contains the optional parameters for the GalleryImageVersions.ListByGalleryImage
+// GalleryImageVersionsListByGalleryImageOptions contains the optional parameters for the GalleryImageVersionsClient.ListByGalleryImage
 // method.
 type GalleryImageVersionsListByGalleryImageOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryImagesBeginCreateOrUpdateOptions contains the optional parameters for the GalleryImages.BeginCreateOrUpdate method.
+// GalleryImagesBeginCreateOrUpdateOptions contains the optional parameters for the GalleryImagesClient.BeginCreateOrUpdate
+// method.
 type GalleryImagesBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryImagesBeginDeleteOptions contains the optional parameters for the GalleryImages.BeginDelete method.
+// GalleryImagesBeginDeleteOptions contains the optional parameters for the GalleryImagesClient.BeginDelete method.
 type GalleryImagesBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryImagesBeginUpdateOptions contains the optional parameters for the GalleryImages.BeginUpdate method.
+// GalleryImagesBeginUpdateOptions contains the optional parameters for the GalleryImagesClient.BeginUpdate method.
 type GalleryImagesBeginUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryImagesGetOptions contains the optional parameters for the GalleryImages.Get method.
+// GalleryImagesGetOptions contains the optional parameters for the GalleryImagesClient.Get method.
 type GalleryImagesGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// GalleryImagesListByGalleryOptions contains the optional parameters for the GalleryImages.ListByGallery method.
+// GalleryImagesListByGalleryOptions contains the optional parameters for the GalleryImagesClient.ListByGallery method.
 type GalleryImagesListByGalleryOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2629,33 +2635,33 @@ func (i ImageUpdate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ImagesBeginCreateOrUpdateOptions contains the optional parameters for the Images.BeginCreateOrUpdate method.
+// ImagesBeginCreateOrUpdateOptions contains the optional parameters for the ImagesClient.BeginCreateOrUpdate method.
 type ImagesBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ImagesBeginDeleteOptions contains the optional parameters for the Images.BeginDelete method.
+// ImagesBeginDeleteOptions contains the optional parameters for the ImagesClient.BeginDelete method.
 type ImagesBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ImagesBeginUpdateOptions contains the optional parameters for the Images.BeginUpdate method.
+// ImagesBeginUpdateOptions contains the optional parameters for the ImagesClient.BeginUpdate method.
 type ImagesBeginUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ImagesGetOptions contains the optional parameters for the Images.Get method.
+// ImagesGetOptions contains the optional parameters for the ImagesClient.Get method.
 type ImagesGetOptions struct {
 	// The expand expression to apply on the operation.
 	Expand *string
 }
 
-// ImagesListByResourceGroupOptions contains the optional parameters for the Images.ListByResourceGroup method.
+// ImagesListByResourceGroupOptions contains the optional parameters for the ImagesClient.ListByResourceGroup method.
 type ImagesListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ImagesListOptions contains the optional parameters for the Images.List method.
+// ImagesListOptions contains the optional parameters for the ImagesClient.List method.
 type ImagesListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -2803,13 +2809,13 @@ func (l ListUsagesResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// LogAnalyticsBeginExportRequestRateByIntervalOptions contains the optional parameters for the LogAnalytics.BeginExportRequestRateByInterval
+// LogAnalyticsBeginExportRequestRateByIntervalOptions contains the optional parameters for the LogAnalyticsClient.BeginExportRequestRateByInterval
 // method.
 type LogAnalyticsBeginExportRequestRateByIntervalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// LogAnalyticsBeginExportThrottledRequestsOptions contains the optional parameters for the LogAnalytics.BeginExportThrottledRequests
+// LogAnalyticsBeginExportThrottledRequestsOptions contains the optional parameters for the LogAnalyticsClient.BeginExportThrottledRequests
 // method.
 type LogAnalyticsBeginExportThrottledRequestsOptions struct {
 	// placeholder for future optional parameters
@@ -3197,7 +3203,7 @@ func (o OSProfile) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// OperationsListOptions contains the optional parameters for the Operations.List method.
+// OperationsListOptions contains the optional parameters for the OperationsClient.List method.
 type OperationsListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -3308,36 +3314,36 @@ type ProximityPlacementGroupUpdate struct {
 	UpdateResource
 }
 
-// ProximityPlacementGroupsCreateOrUpdateOptions contains the optional parameters for the ProximityPlacementGroups.CreateOrUpdate
+// ProximityPlacementGroupsCreateOrUpdateOptions contains the optional parameters for the ProximityPlacementGroupsClient.CreateOrUpdate
 // method.
 type ProximityPlacementGroupsCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ProximityPlacementGroupsDeleteOptions contains the optional parameters for the ProximityPlacementGroups.Delete method.
+// ProximityPlacementGroupsDeleteOptions contains the optional parameters for the ProximityPlacementGroupsClient.Delete method.
 type ProximityPlacementGroupsDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ProximityPlacementGroupsGetOptions contains the optional parameters for the ProximityPlacementGroups.Get method.
+// ProximityPlacementGroupsGetOptions contains the optional parameters for the ProximityPlacementGroupsClient.Get method.
 type ProximityPlacementGroupsGetOptions struct {
 	// includeColocationStatus=true enables fetching the colocation status of all the resources in the proximity placement group.
 	IncludeColocationStatus *string
 }
 
-// ProximityPlacementGroupsListByResourceGroupOptions contains the optional parameters for the ProximityPlacementGroups.ListByResourceGroup
+// ProximityPlacementGroupsListByResourceGroupOptions contains the optional parameters for the ProximityPlacementGroupsClient.ListByResourceGroup
 // method.
 type ProximityPlacementGroupsListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ProximityPlacementGroupsListBySubscriptionOptions contains the optional parameters for the ProximityPlacementGroups.ListBySubscription
+// ProximityPlacementGroupsListBySubscriptionOptions contains the optional parameters for the ProximityPlacementGroupsClient.ListBySubscription
 // method.
 type ProximityPlacementGroupsListBySubscriptionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ProximityPlacementGroupsUpdateOptions contains the optional parameters for the ProximityPlacementGroups.Update method.
+// ProximityPlacementGroupsUpdateOptions contains the optional parameters for the ProximityPlacementGroupsClient.Update method.
 type ProximityPlacementGroupsUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -3665,7 +3671,7 @@ func (r ResourceSKUZoneDetails) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ResourceSKUsListOptions contains the optional parameters for the ResourceSKUs.List method.
+// ResourceSKUsListOptions contains the optional parameters for the ResourceSKUsClient.List method.
 type ResourceSKUsListOptions struct {
 	// The filter to apply on the operation. Only location filter is supported currently.
 	Filter *string
@@ -4048,22 +4054,22 @@ func (s SSHPublicKeyUpdateResource) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SSHPublicKeysCreateOptions contains the optional parameters for the SSHPublicKeys.Create method.
+// SSHPublicKeysCreateOptions contains the optional parameters for the SSHPublicKeysClient.Create method.
 type SSHPublicKeysCreateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SSHPublicKeysDeleteOptions contains the optional parameters for the SSHPublicKeys.Delete method.
+// SSHPublicKeysDeleteOptions contains the optional parameters for the SSHPublicKeysClient.Delete method.
 type SSHPublicKeysDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SSHPublicKeysGenerateKeyPairOptions contains the optional parameters for the SSHPublicKeys.GenerateKeyPair method.
+// SSHPublicKeysGenerateKeyPairOptions contains the optional parameters for the SSHPublicKeysClient.GenerateKeyPair method.
 type SSHPublicKeysGenerateKeyPairOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SSHPublicKeysGetOptions contains the optional parameters for the SSHPublicKeys.Get method.
+// SSHPublicKeysGetOptions contains the optional parameters for the SSHPublicKeysClient.Get method.
 type SSHPublicKeysGetOptions struct {
 	// placeholder for future optional parameters
 }
@@ -4085,17 +4091,19 @@ func (s SSHPublicKeysGroupListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SSHPublicKeysListByResourceGroupOptions contains the optional parameters for the SSHPublicKeys.ListByResourceGroup method.
+// SSHPublicKeysListByResourceGroupOptions contains the optional parameters for the SSHPublicKeysClient.ListByResourceGroup
+// method.
 type SSHPublicKeysListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SSHPublicKeysListBySubscriptionOptions contains the optional parameters for the SSHPublicKeys.ListBySubscription method.
+// SSHPublicKeysListBySubscriptionOptions contains the optional parameters for the SSHPublicKeysClient.ListBySubscription
+// method.
 type SSHPublicKeysListBySubscriptionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SSHPublicKeysUpdateOptions contains the optional parameters for the SSHPublicKeys.Update method.
+// SSHPublicKeysUpdateOptions contains the optional parameters for the SSHPublicKeysClient.Update method.
 type SSHPublicKeysUpdateOptions struct {
 	// placeholder for future optional parameters
 }
@@ -4328,42 +4336,42 @@ type SnapshotUpdateProperties struct {
 	OSType *OperatingSystemTypes `json:"osType,omitempty"`
 }
 
-// SnapshotsBeginCreateOrUpdateOptions contains the optional parameters for the Snapshots.BeginCreateOrUpdate method.
+// SnapshotsBeginCreateOrUpdateOptions contains the optional parameters for the SnapshotsClient.BeginCreateOrUpdate method.
 type SnapshotsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SnapshotsBeginDeleteOptions contains the optional parameters for the Snapshots.BeginDelete method.
+// SnapshotsBeginDeleteOptions contains the optional parameters for the SnapshotsClient.BeginDelete method.
 type SnapshotsBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SnapshotsBeginGrantAccessOptions contains the optional parameters for the Snapshots.BeginGrantAccess method.
+// SnapshotsBeginGrantAccessOptions contains the optional parameters for the SnapshotsClient.BeginGrantAccess method.
 type SnapshotsBeginGrantAccessOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SnapshotsBeginRevokeAccessOptions contains the optional parameters for the Snapshots.BeginRevokeAccess method.
+// SnapshotsBeginRevokeAccessOptions contains the optional parameters for the SnapshotsClient.BeginRevokeAccess method.
 type SnapshotsBeginRevokeAccessOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SnapshotsBeginUpdateOptions contains the optional parameters for the Snapshots.BeginUpdate method.
+// SnapshotsBeginUpdateOptions contains the optional parameters for the SnapshotsClient.BeginUpdate method.
 type SnapshotsBeginUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SnapshotsGetOptions contains the optional parameters for the Snapshots.Get method.
+// SnapshotsGetOptions contains the optional parameters for the SnapshotsClient.Get method.
 type SnapshotsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SnapshotsListByResourceGroupOptions contains the optional parameters for the Snapshots.ListByResourceGroup method.
+// SnapshotsListByResourceGroupOptions contains the optional parameters for the SnapshotsClient.ListByResourceGroup method.
 type SnapshotsListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SnapshotsListOptions contains the optional parameters for the Snapshots.List method.
+// SnapshotsListOptions contains the optional parameters for the SnapshotsClient.List method.
 type SnapshotsListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -4634,7 +4642,7 @@ type Usage struct {
 	Unit *string `json:"unit,omitempty"`
 }
 
-// UsageListOptions contains the optional parameters for the Usage.List method.
+// UsageListOptions contains the optional parameters for the UsageClient.List method.
 type UsageListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -4887,18 +4895,19 @@ type VirtualMachineExtensionImageProperties struct {
 	VMScaleSetEnabled *bool `json:"vmScaleSetEnabled,omitempty"`
 }
 
-// VirtualMachineExtensionImagesGetOptions contains the optional parameters for the VirtualMachineExtensionImages.Get method.
+// VirtualMachineExtensionImagesGetOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.Get
+// method.
 type VirtualMachineExtensionImagesGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineExtensionImagesListTypesOptions contains the optional parameters for the VirtualMachineExtensionImages.ListTypes
+// VirtualMachineExtensionImagesListTypesOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.ListTypes
 // method.
 type VirtualMachineExtensionImagesListTypesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineExtensionImagesListVersionsOptions contains the optional parameters for the VirtualMachineExtensionImages.ListVersions
+// VirtualMachineExtensionImagesListVersionsOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.ListVersions
 // method.
 type VirtualMachineExtensionImagesListVersionsOptions struct {
 	// The filter to apply on the operation.
@@ -5009,31 +5018,31 @@ type VirtualMachineExtensionUpdateProperties struct {
 	TypeHandlerVersion *string `json:"typeHandlerVersion,omitempty"`
 }
 
-// VirtualMachineExtensionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineExtensions.BeginCreateOrUpdate
+// VirtualMachineExtensionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineExtensionsClient.BeginCreateOrUpdate
 // method.
 type VirtualMachineExtensionsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineExtensionsBeginDeleteOptions contains the optional parameters for the VirtualMachineExtensions.BeginDelete
+// VirtualMachineExtensionsBeginDeleteOptions contains the optional parameters for the VirtualMachineExtensionsClient.BeginDelete
 // method.
 type VirtualMachineExtensionsBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineExtensionsBeginUpdateOptions contains the optional parameters for the VirtualMachineExtensions.BeginUpdate
+// VirtualMachineExtensionsBeginUpdateOptions contains the optional parameters for the VirtualMachineExtensionsClient.BeginUpdate
 // method.
 type VirtualMachineExtensionsBeginUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineExtensionsGetOptions contains the optional parameters for the VirtualMachineExtensions.Get method.
+// VirtualMachineExtensionsGetOptions contains the optional parameters for the VirtualMachineExtensionsClient.Get method.
 type VirtualMachineExtensionsGetOptions struct {
 	// The expand expression to apply on the operation.
 	Expand *string
 }
 
-// VirtualMachineExtensionsListOptions contains the optional parameters for the VirtualMachineExtensions.List method.
+// VirtualMachineExtensionsListOptions contains the optional parameters for the VirtualMachineExtensionsClient.List method.
 type VirtualMachineExtensionsListOptions struct {
 	// The expand expression to apply on the operation.
 	Expand *string
@@ -5159,17 +5168,17 @@ func (v VirtualMachineImageResource) marshalInternal(objectMap map[string]interf
 	populate(objectMap, "tags", v.Tags)
 }
 
-// VirtualMachineImagesGetOptions contains the optional parameters for the VirtualMachineImages.Get method.
+// VirtualMachineImagesGetOptions contains the optional parameters for the VirtualMachineImagesClient.Get method.
 type VirtualMachineImagesGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineImagesListOffersOptions contains the optional parameters for the VirtualMachineImages.ListOffers method.
+// VirtualMachineImagesListOffersOptions contains the optional parameters for the VirtualMachineImagesClient.ListOffers method.
 type VirtualMachineImagesListOffersOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineImagesListOptions contains the optional parameters for the VirtualMachineImages.List method.
+// VirtualMachineImagesListOptions contains the optional parameters for the VirtualMachineImagesClient.List method.
 type VirtualMachineImagesListOptions struct {
 	// The expand expression to apply on the operation.
 	Expand  *string
@@ -5177,13 +5186,13 @@ type VirtualMachineImagesListOptions struct {
 	Top     *int32
 }
 
-// VirtualMachineImagesListPublishersOptions contains the optional parameters for the VirtualMachineImages.ListPublishers
+// VirtualMachineImagesListPublishersOptions contains the optional parameters for the VirtualMachineImagesClient.ListPublishers
 // method.
 type VirtualMachineImagesListPublishersOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineImagesListSKUsOptions contains the optional parameters for the VirtualMachineImages.ListSKUs method.
+// VirtualMachineImagesListSKUsOptions contains the optional parameters for the VirtualMachineImagesClient.ListSKUs method.
 type VirtualMachineImagesListSKUsOptions struct {
 	// placeholder for future optional parameters
 }
@@ -5372,12 +5381,12 @@ func (v VirtualMachineReimageParameters) marshalInternal(objectMap map[string]in
 	populate(objectMap, "tempDisk", v.TempDisk)
 }
 
-// VirtualMachineRunCommandsGetOptions contains the optional parameters for the VirtualMachineRunCommands.Get method.
+// VirtualMachineRunCommandsGetOptions contains the optional parameters for the VirtualMachineRunCommandsClient.Get method.
 type VirtualMachineRunCommandsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineRunCommandsListOptions contains the optional parameters for the VirtualMachineRunCommands.List method.
+// VirtualMachineRunCommandsListOptions contains the optional parameters for the VirtualMachineRunCommandsClient.List method.
 type VirtualMachineRunCommandsListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -5582,32 +5591,32 @@ func (v VirtualMachineScaleSetExtensionUpdate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualMachineScaleSetExtensionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSetExtensions.BeginCreateOrUpdate
+// VirtualMachineScaleSetExtensionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSetExtensionsClient.BeginCreateOrUpdate
 // method.
 type VirtualMachineScaleSetExtensionsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetExtensionsBeginDeleteOptions contains the optional parameters for the VirtualMachineScaleSetExtensions.BeginDelete
+// VirtualMachineScaleSetExtensionsBeginDeleteOptions contains the optional parameters for the VirtualMachineScaleSetExtensionsClient.BeginDelete
 // method.
 type VirtualMachineScaleSetExtensionsBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetExtensionsBeginUpdateOptions contains the optional parameters for the VirtualMachineScaleSetExtensions.BeginUpdate
+// VirtualMachineScaleSetExtensionsBeginUpdateOptions contains the optional parameters for the VirtualMachineScaleSetExtensionsClient.BeginUpdate
 // method.
 type VirtualMachineScaleSetExtensionsBeginUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetExtensionsGetOptions contains the optional parameters for the VirtualMachineScaleSetExtensions.Get
+// VirtualMachineScaleSetExtensionsGetOptions contains the optional parameters for the VirtualMachineScaleSetExtensionsClient.Get
 // method.
 type VirtualMachineScaleSetExtensionsGetOptions struct {
 	// The expand expression to apply on the operation.
 	Expand *string
 }
 
-// VirtualMachineScaleSetExtensionsListOptions contains the optional parameters for the VirtualMachineScaleSetExtensions.List
+// VirtualMachineScaleSetExtensionsListOptions contains the optional parameters for the VirtualMachineScaleSetExtensionsClient.List
 // method.
 type VirtualMachineScaleSetExtensionsListOptions struct {
 	// placeholder for future optional parameters
@@ -6184,25 +6193,25 @@ func (v VirtualMachineScaleSetReimageParameters) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualMachineScaleSetRollingUpgradesBeginCancelOptions contains the optional parameters for the VirtualMachineScaleSetRollingUpgrades.BeginCancel
+// VirtualMachineScaleSetRollingUpgradesBeginCancelOptions contains the optional parameters for the VirtualMachineScaleSetRollingUpgradesClient.BeginCancel
 // method.
 type VirtualMachineScaleSetRollingUpgradesBeginCancelOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetRollingUpgradesBeginStartExtensionUpgradeOptions contains the optional parameters for the VirtualMachineScaleSetRollingUpgrades.BeginStartExtensionUpgrade
+// VirtualMachineScaleSetRollingUpgradesBeginStartExtensionUpgradeOptions contains the optional parameters for the VirtualMachineScaleSetRollingUpgradesClient.BeginStartExtensionUpgrade
 // method.
 type VirtualMachineScaleSetRollingUpgradesBeginStartExtensionUpgradeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetRollingUpgradesBeginStartOSUpgradeOptions contains the optional parameters for the VirtualMachineScaleSetRollingUpgrades.BeginStartOSUpgrade
+// VirtualMachineScaleSetRollingUpgradesBeginStartOSUpgradeOptions contains the optional parameters for the VirtualMachineScaleSetRollingUpgradesClient.BeginStartOSUpgrade
 // method.
 type VirtualMachineScaleSetRollingUpgradesBeginStartOSUpgradeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetRollingUpgradesGetLatestOptions contains the optional parameters for the VirtualMachineScaleSetRollingUpgrades.GetLatest
+// VirtualMachineScaleSetRollingUpgradesGetLatestOptions contains the optional parameters for the VirtualMachineScaleSetRollingUpgradesClient.GetLatest
 // method.
 type VirtualMachineScaleSetRollingUpgradesGetLatestOptions struct {
 	// placeholder for future optional parameters
@@ -6635,32 +6644,32 @@ func (v VirtualMachineScaleSetVM) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualMachineScaleSetVMExtensionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.BeginCreateOrUpdate
+// VirtualMachineScaleSetVMExtensionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensionsClient.BeginCreateOrUpdate
 // method.
 type VirtualMachineScaleSetVMExtensionsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMExtensionsBeginDeleteOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.BeginDelete
+// VirtualMachineScaleSetVMExtensionsBeginDeleteOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensionsClient.BeginDelete
 // method.
 type VirtualMachineScaleSetVMExtensionsBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMExtensionsBeginUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.BeginUpdate
+// VirtualMachineScaleSetVMExtensionsBeginUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensionsClient.BeginUpdate
 // method.
 type VirtualMachineScaleSetVMExtensionsBeginUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMExtensionsGetOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.Get
+// VirtualMachineScaleSetVMExtensionsGetOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensionsClient.Get
 // method.
 type VirtualMachineScaleSetVMExtensionsGetOptions struct {
 	// The expand expression to apply on the operation.
 	Expand *string
 }
 
-// VirtualMachineScaleSetVMExtensionsListOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensions.List
+// VirtualMachineScaleSetVMExtensionsListOptions contains the optional parameters for the VirtualMachineScaleSetVMExtensionsClient.List
 // method.
 type VirtualMachineScaleSetVMExtensionsListOptions struct {
 	// The expand expression to apply on the operation.
@@ -6929,25 +6938,25 @@ func (v VirtualMachineScaleSetVMReimageParameters) marshalInternal(objectMap map
 	v.VirtualMachineReimageParameters.marshalInternal(objectMap)
 }
 
-// VirtualMachineScaleSetVMsBeginDeallocateOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginDeallocate
+// VirtualMachineScaleSetVMsBeginDeallocateOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginDeallocate
 // method.
 type VirtualMachineScaleSetVMsBeginDeallocateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMsBeginDeleteOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginDelete
+// VirtualMachineScaleSetVMsBeginDeleteOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginDelete
 // method.
 type VirtualMachineScaleSetVMsBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMsBeginPerformMaintenanceOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginPerformMaintenance
+// VirtualMachineScaleSetVMsBeginPerformMaintenanceOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginPerformMaintenance
 // method.
 type VirtualMachineScaleSetVMsBeginPerformMaintenanceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMsBeginPowerOffOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginPowerOff
+// VirtualMachineScaleSetVMsBeginPowerOffOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginPowerOff
 // method.
 type VirtualMachineScaleSetVMsBeginPowerOffOptions struct {
 	// The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false
@@ -6955,62 +6964,62 @@ type VirtualMachineScaleSetVMsBeginPowerOffOptions struct {
 	SkipShutdown *bool
 }
 
-// VirtualMachineScaleSetVMsBeginRedeployOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginRedeploy
+// VirtualMachineScaleSetVMsBeginRedeployOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginRedeploy
 // method.
 type VirtualMachineScaleSetVMsBeginRedeployOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMsBeginReimageAllOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginReimageAll
+// VirtualMachineScaleSetVMsBeginReimageAllOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginReimageAll
 // method.
 type VirtualMachineScaleSetVMsBeginReimageAllOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMsBeginReimageOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginReimage
+// VirtualMachineScaleSetVMsBeginReimageOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginReimage
 // method.
 type VirtualMachineScaleSetVMsBeginReimageOptions struct {
 	// Parameters for the Reimaging Virtual machine in ScaleSet.
 	VMScaleSetVMReimageInput *VirtualMachineScaleSetVMReimageParameters
 }
 
-// VirtualMachineScaleSetVMsBeginRestartOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginRestart
+// VirtualMachineScaleSetVMsBeginRestartOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginRestart
 // method.
 type VirtualMachineScaleSetVMsBeginRestartOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMsBeginRunCommandOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginRunCommand
+// VirtualMachineScaleSetVMsBeginRunCommandOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginRunCommand
 // method.
 type VirtualMachineScaleSetVMsBeginRunCommandOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMsBeginStartOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginStart
+// VirtualMachineScaleSetVMsBeginStartOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginStart
 // method.
 type VirtualMachineScaleSetVMsBeginStartOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMsBeginUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMs.BeginUpdate
+// VirtualMachineScaleSetVMsBeginUpdateOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginUpdate
 // method.
 type VirtualMachineScaleSetVMsBeginUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMsGetInstanceViewOptions contains the optional parameters for the VirtualMachineScaleSetVMs.GetInstanceView
+// VirtualMachineScaleSetVMsGetInstanceViewOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.GetInstanceView
 // method.
 type VirtualMachineScaleSetVMsGetInstanceViewOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetVMsGetOptions contains the optional parameters for the VirtualMachineScaleSetVMs.Get method.
+// VirtualMachineScaleSetVMsGetOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.Get method.
 type VirtualMachineScaleSetVMsGetOptions struct {
 	// The expand expression to apply on the operation.. Specifying any value will set the value to instanceView.
 	Expand *string
 }
 
-// VirtualMachineScaleSetVMsListOptions contains the optional parameters for the VirtualMachineScaleSetVMs.List method.
+// VirtualMachineScaleSetVMsListOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.List method.
 type VirtualMachineScaleSetVMsListOptions struct {
 	// The expand expression to apply to the operation. Allowed values are 'instanceView'.
 	Expand *string
@@ -7022,45 +7031,45 @@ type VirtualMachineScaleSetVMsListOptions struct {
 	Select *string
 }
 
-// VirtualMachineScaleSetVMsSimulateEvictionOptions contains the optional parameters for the VirtualMachineScaleSetVMs.SimulateEviction
+// VirtualMachineScaleSetVMsSimulateEvictionOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.SimulateEviction
 // method.
 type VirtualMachineScaleSetVMsSimulateEvictionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSets.BeginCreateOrUpdate
+// VirtualMachineScaleSetsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginCreateOrUpdate
 // method.
 type VirtualMachineScaleSetsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsBeginDeallocateOptions contains the optional parameters for the VirtualMachineScaleSets.BeginDeallocate
+// VirtualMachineScaleSetsBeginDeallocateOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginDeallocate
 // method.
 type VirtualMachineScaleSetsBeginDeallocateOptions struct {
 	// A list of virtual machine instance IDs from the VM scale set.
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
 
-// VirtualMachineScaleSetsBeginDeleteInstancesOptions contains the optional parameters for the VirtualMachineScaleSets.BeginDeleteInstances
+// VirtualMachineScaleSetsBeginDeleteInstancesOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginDeleteInstances
 // method.
 type VirtualMachineScaleSetsBeginDeleteInstancesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsBeginDeleteOptions contains the optional parameters for the VirtualMachineScaleSets.BeginDelete
+// VirtualMachineScaleSetsBeginDeleteOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginDelete
 // method.
 type VirtualMachineScaleSetsBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsBeginPerformMaintenanceOptions contains the optional parameters for the VirtualMachineScaleSets.BeginPerformMaintenance
+// VirtualMachineScaleSetsBeginPerformMaintenanceOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginPerformMaintenance
 // method.
 type VirtualMachineScaleSetsBeginPerformMaintenanceOptions struct {
 	// A list of virtual machine instance IDs from the VM scale set.
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
 
-// VirtualMachineScaleSetsBeginPowerOffOptions contains the optional parameters for the VirtualMachineScaleSets.BeginPowerOff
+// VirtualMachineScaleSetsBeginPowerOffOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginPowerOff
 // method.
 type VirtualMachineScaleSetsBeginPowerOffOptions struct {
 	// The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false
@@ -7070,98 +7079,100 @@ type VirtualMachineScaleSetsBeginPowerOffOptions struct {
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
 
-// VirtualMachineScaleSetsBeginRedeployOptions contains the optional parameters for the VirtualMachineScaleSets.BeginRedeploy
+// VirtualMachineScaleSetsBeginRedeployOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginRedeploy
 // method.
 type VirtualMachineScaleSetsBeginRedeployOptions struct {
 	// A list of virtual machine instance IDs from the VM scale set.
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
 
-// VirtualMachineScaleSetsBeginReimageAllOptions contains the optional parameters for the VirtualMachineScaleSets.BeginReimageAll
+// VirtualMachineScaleSetsBeginReimageAllOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginReimageAll
 // method.
 type VirtualMachineScaleSetsBeginReimageAllOptions struct {
 	// A list of virtual machine instance IDs from the VM scale set.
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
 
-// VirtualMachineScaleSetsBeginReimageOptions contains the optional parameters for the VirtualMachineScaleSets.BeginReimage
+// VirtualMachineScaleSetsBeginReimageOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginReimage
 // method.
 type VirtualMachineScaleSetsBeginReimageOptions struct {
 	// Parameters for Reimaging VM ScaleSet.
 	VMScaleSetReimageInput *VirtualMachineScaleSetReimageParameters
 }
 
-// VirtualMachineScaleSetsBeginRestartOptions contains the optional parameters for the VirtualMachineScaleSets.BeginRestart
+// VirtualMachineScaleSetsBeginRestartOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginRestart
 // method.
 type VirtualMachineScaleSetsBeginRestartOptions struct {
 	// A list of virtual machine instance IDs from the VM scale set.
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
 
-// VirtualMachineScaleSetsBeginSetOrchestrationServiceStateOptions contains the optional parameters for the VirtualMachineScaleSets.BeginSetOrchestrationServiceState
+// VirtualMachineScaleSetsBeginSetOrchestrationServiceStateOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginSetOrchestrationServiceState
 // method.
 type VirtualMachineScaleSetsBeginSetOrchestrationServiceStateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsBeginStartOptions contains the optional parameters for the VirtualMachineScaleSets.BeginStart method.
+// VirtualMachineScaleSetsBeginStartOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginStart
+// method.
 type VirtualMachineScaleSetsBeginStartOptions struct {
 	// A list of virtual machine instance IDs from the VM scale set.
 	VMInstanceIDs *VirtualMachineScaleSetVMInstanceIDs
 }
 
-// VirtualMachineScaleSetsBeginUpdateInstancesOptions contains the optional parameters for the VirtualMachineScaleSets.BeginUpdateInstances
+// VirtualMachineScaleSetsBeginUpdateInstancesOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginUpdateInstances
 // method.
 type VirtualMachineScaleSetsBeginUpdateInstancesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsBeginUpdateOptions contains the optional parameters for the VirtualMachineScaleSets.BeginUpdate
+// VirtualMachineScaleSetsBeginUpdateOptions contains the optional parameters for the VirtualMachineScaleSetsClient.BeginUpdate
 // method.
 type VirtualMachineScaleSetsBeginUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsConvertToSinglePlacementGroupOptions contains the optional parameters for the VirtualMachineScaleSets.ConvertToSinglePlacementGroup
+// VirtualMachineScaleSetsConvertToSinglePlacementGroupOptions contains the optional parameters for the VirtualMachineScaleSetsClient.ConvertToSinglePlacementGroup
 // method.
 type VirtualMachineScaleSetsConvertToSinglePlacementGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
 // VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkOptions contains the optional parameters for the
-// VirtualMachineScaleSets.ForceRecoveryServiceFabricPlatformUpdateDomainWalk method.
+// VirtualMachineScaleSetsClient.ForceRecoveryServiceFabricPlatformUpdateDomainWalk method.
 type VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsGetInstanceViewOptions contains the optional parameters for the VirtualMachineScaleSets.GetInstanceView
+// VirtualMachineScaleSetsGetInstanceViewOptions contains the optional parameters for the VirtualMachineScaleSetsClient.GetInstanceView
 // method.
 type VirtualMachineScaleSetsGetInstanceViewOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsGetOSUpgradeHistoryOptions contains the optional parameters for the VirtualMachineScaleSets.GetOSUpgradeHistory
+// VirtualMachineScaleSetsGetOSUpgradeHistoryOptions contains the optional parameters for the VirtualMachineScaleSetsClient.GetOSUpgradeHistory
 // method.
 type VirtualMachineScaleSetsGetOSUpgradeHistoryOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsGetOptions contains the optional parameters for the VirtualMachineScaleSets.Get method.
+// VirtualMachineScaleSetsGetOptions contains the optional parameters for the VirtualMachineScaleSetsClient.Get method.
 type VirtualMachineScaleSetsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsListAllOptions contains the optional parameters for the VirtualMachineScaleSets.ListAll method.
+// VirtualMachineScaleSetsListAllOptions contains the optional parameters for the VirtualMachineScaleSetsClient.ListAll method.
 type VirtualMachineScaleSetsListAllOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsListOptions contains the optional parameters for the VirtualMachineScaleSets.List method.
+// VirtualMachineScaleSetsListOptions contains the optional parameters for the VirtualMachineScaleSetsClient.List method.
 type VirtualMachineScaleSetsListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachineScaleSetsListSKUsOptions contains the optional parameters for the VirtualMachineScaleSets.ListSKUs method.
+// VirtualMachineScaleSetsListSKUsOptions contains the optional parameters for the VirtualMachineScaleSetsClient.ListSKUs
+// method.
 type VirtualMachineScaleSetsListSKUsOptions struct {
 	// placeholder for future optional parameters
 }
@@ -7200,7 +7211,7 @@ func (v VirtualMachineSizeListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualMachineSizesListOptions contains the optional parameters for the VirtualMachineSizes.List method.
+// VirtualMachineSizesListOptions contains the optional parameters for the VirtualMachineSizesClient.List method.
 type VirtualMachineSizesListOptions struct {
 	// placeholder for future optional parameters
 }
@@ -7245,120 +7256,122 @@ func (v VirtualMachineUpdate) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// VirtualMachinesBeginCaptureOptions contains the optional parameters for the VirtualMachines.BeginCapture method.
+// VirtualMachinesBeginCaptureOptions contains the optional parameters for the VirtualMachinesClient.BeginCapture method.
 type VirtualMachinesBeginCaptureOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesBeginConvertToManagedDisksOptions contains the optional parameters for the VirtualMachines.BeginConvertToManagedDisks
+// VirtualMachinesBeginConvertToManagedDisksOptions contains the optional parameters for the VirtualMachinesClient.BeginConvertToManagedDisks
 // method.
 type VirtualMachinesBeginConvertToManagedDisksOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachines.BeginCreateOrUpdate
+// VirtualMachinesBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachinesClient.BeginCreateOrUpdate
 // method.
 type VirtualMachinesBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesBeginDeallocateOptions contains the optional parameters for the VirtualMachines.BeginDeallocate method.
+// VirtualMachinesBeginDeallocateOptions contains the optional parameters for the VirtualMachinesClient.BeginDeallocate method.
 type VirtualMachinesBeginDeallocateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesBeginDeleteOptions contains the optional parameters for the VirtualMachines.BeginDelete method.
+// VirtualMachinesBeginDeleteOptions contains the optional parameters for the VirtualMachinesClient.BeginDelete method.
 type VirtualMachinesBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesBeginPerformMaintenanceOptions contains the optional parameters for the VirtualMachines.BeginPerformMaintenance
+// VirtualMachinesBeginPerformMaintenanceOptions contains the optional parameters for the VirtualMachinesClient.BeginPerformMaintenance
 // method.
 type VirtualMachinesBeginPerformMaintenanceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesBeginPowerOffOptions contains the optional parameters for the VirtualMachines.BeginPowerOff method.
+// VirtualMachinesBeginPowerOffOptions contains the optional parameters for the VirtualMachinesClient.BeginPowerOff method.
 type VirtualMachinesBeginPowerOffOptions struct {
 	// The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false
 	// indicates otherwise. Default value for this flag is false if not specified
 	SkipShutdown *bool
 }
 
-// VirtualMachinesBeginReapplyOptions contains the optional parameters for the VirtualMachines.BeginReapply method.
+// VirtualMachinesBeginReapplyOptions contains the optional parameters for the VirtualMachinesClient.BeginReapply method.
 type VirtualMachinesBeginReapplyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesBeginRedeployOptions contains the optional parameters for the VirtualMachines.BeginRedeploy method.
+// VirtualMachinesBeginRedeployOptions contains the optional parameters for the VirtualMachinesClient.BeginRedeploy method.
 type VirtualMachinesBeginRedeployOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesBeginReimageOptions contains the optional parameters for the VirtualMachines.BeginReimage method.
+// VirtualMachinesBeginReimageOptions contains the optional parameters for the VirtualMachinesClient.BeginReimage method.
 type VirtualMachinesBeginReimageOptions struct {
 	// Parameters supplied to the Reimage Virtual Machine operation.
 	Parameters *VirtualMachineReimageParameters
 }
 
-// VirtualMachinesBeginRestartOptions contains the optional parameters for the VirtualMachines.BeginRestart method.
+// VirtualMachinesBeginRestartOptions contains the optional parameters for the VirtualMachinesClient.BeginRestart method.
 type VirtualMachinesBeginRestartOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesBeginRunCommandOptions contains the optional parameters for the VirtualMachines.BeginRunCommand method.
+// VirtualMachinesBeginRunCommandOptions contains the optional parameters for the VirtualMachinesClient.BeginRunCommand method.
 type VirtualMachinesBeginRunCommandOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesBeginStartOptions contains the optional parameters for the VirtualMachines.BeginStart method.
+// VirtualMachinesBeginStartOptions contains the optional parameters for the VirtualMachinesClient.BeginStart method.
 type VirtualMachinesBeginStartOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesBeginUpdateOptions contains the optional parameters for the VirtualMachines.BeginUpdate method.
+// VirtualMachinesBeginUpdateOptions contains the optional parameters for the VirtualMachinesClient.BeginUpdate method.
 type VirtualMachinesBeginUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesGeneralizeOptions contains the optional parameters for the VirtualMachines.Generalize method.
+// VirtualMachinesGeneralizeOptions contains the optional parameters for the VirtualMachinesClient.Generalize method.
 type VirtualMachinesGeneralizeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesGetOptions contains the optional parameters for the VirtualMachines.Get method.
+// VirtualMachinesGetOptions contains the optional parameters for the VirtualMachinesClient.Get method.
 type VirtualMachinesGetOptions struct {
 	// The expand expression to apply on the operation.. Specifying any value will set the value to instanceView.
 	Expand *string
 }
 
-// VirtualMachinesInstanceViewOptions contains the optional parameters for the VirtualMachines.InstanceView method.
+// VirtualMachinesInstanceViewOptions contains the optional parameters for the VirtualMachinesClient.InstanceView method.
 type VirtualMachinesInstanceViewOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesListAllOptions contains the optional parameters for the VirtualMachines.ListAll method.
+// VirtualMachinesListAllOptions contains the optional parameters for the VirtualMachinesClient.ListAll method.
 type VirtualMachinesListAllOptions struct {
 	// statusOnly=true enables fetching run time status of all Virtual Machines in the subscription.
 	StatusOnly *string
 }
 
-// VirtualMachinesListAvailableSizesOptions contains the optional parameters for the VirtualMachines.ListAvailableSizes method.
+// VirtualMachinesListAvailableSizesOptions contains the optional parameters for the VirtualMachinesClient.ListAvailableSizes
+// method.
 type VirtualMachinesListAvailableSizesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesListByLocationOptions contains the optional parameters for the VirtualMachines.ListByLocation method.
+// VirtualMachinesListByLocationOptions contains the optional parameters for the VirtualMachinesClient.ListByLocation method.
 type VirtualMachinesListByLocationOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesListOptions contains the optional parameters for the VirtualMachines.List method.
+// VirtualMachinesListOptions contains the optional parameters for the VirtualMachinesClient.List method.
 type VirtualMachinesListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// VirtualMachinesSimulateEvictionOptions contains the optional parameters for the VirtualMachines.SimulateEviction method.
+// VirtualMachinesSimulateEvictionOptions contains the optional parameters for the VirtualMachinesClient.SimulateEviction
+// method.
 type VirtualMachinesSimulateEvictionOptions struct {
 	// placeholder for future optional parameters
 }

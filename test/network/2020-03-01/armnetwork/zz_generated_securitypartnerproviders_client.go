@@ -56,7 +56,7 @@ func NewSecurityPartnerProvidersClient(subscriptionID string, credential azcore.
 // resourceGroupName - The name of the resource group.
 // securityPartnerProviderName - The name of the Security Partner Provider.
 // parameters - Parameters supplied to the create or update Security Partner Provider operation.
-// options - SecurityPartnerProvidersBeginCreateOrUpdateOptions contains the optional parameters for the SecurityPartnerProviders.BeginCreateOrUpdate
+// options - SecurityPartnerProvidersBeginCreateOrUpdateOptions contains the optional parameters for the SecurityPartnerProvidersClient.BeginCreateOrUpdate
 // method.
 func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersBeginCreateOrUpdateOptions) (SecurityPartnerProvidersCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
@@ -136,7 +136,7 @@ func (client *SecurityPartnerProvidersClient) createOrUpdateHandleError(resp *ht
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // securityPartnerProviderName - The name of the Security Partner Provider.
-// options - SecurityPartnerProvidersBeginDeleteOptions contains the optional parameters for the SecurityPartnerProviders.BeginDelete
+// options - SecurityPartnerProvidersBeginDeleteOptions contains the optional parameters for the SecurityPartnerProvidersClient.BeginDelete
 // method.
 func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersBeginDeleteOptions) (SecurityPartnerProvidersDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, securityPartnerProviderName, options)
@@ -216,7 +216,8 @@ func (client *SecurityPartnerProvidersClient) deleteHandleError(resp *http.Respo
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // securityPartnerProviderName - The name of the Security Partner Provider.
-// options - SecurityPartnerProvidersGetOptions contains the optional parameters for the SecurityPartnerProviders.Get method.
+// options - SecurityPartnerProvidersGetOptions contains the optional parameters for the SecurityPartnerProvidersClient.Get
+// method.
 func (client *SecurityPartnerProvidersClient) Get(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersGetOptions) (SecurityPartnerProvidersGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, options)
 	if err != nil {
@@ -282,7 +283,8 @@ func (client *SecurityPartnerProvidersClient) getHandleError(resp *http.Response
 
 // List - Gets all the Security Partner Providers in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - SecurityPartnerProvidersListOptions contains the optional parameters for the SecurityPartnerProviders.List method.
+// options - SecurityPartnerProvidersListOptions contains the optional parameters for the SecurityPartnerProvidersClient.List
+// method.
 func (client *SecurityPartnerProvidersClient) List(options *SecurityPartnerProvidersListOptions) *SecurityPartnerProvidersListPager {
 	return &SecurityPartnerProvidersListPager{
 		client: client,
@@ -338,7 +340,7 @@ func (client *SecurityPartnerProvidersClient) listHandleError(resp *http.Respons
 // ListByResourceGroup - Lists all Security Partner Providers in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - SecurityPartnerProvidersListByResourceGroupOptions contains the optional parameters for the SecurityPartnerProviders.ListByResourceGroup
+// options - SecurityPartnerProvidersListByResourceGroupOptions contains the optional parameters for the SecurityPartnerProvidersClient.ListByResourceGroup
 // method.
 func (client *SecurityPartnerProvidersClient) ListByResourceGroup(resourceGroupName string, options *SecurityPartnerProvidersListByResourceGroupOptions) *SecurityPartnerProvidersListByResourceGroupPager {
 	return &SecurityPartnerProvidersListByResourceGroupPager{
@@ -401,7 +403,7 @@ func (client *SecurityPartnerProvidersClient) listByResourceGroupHandleError(res
 // resourceGroupName - The name of the resource group.
 // securityPartnerProviderName - The name of the Security Partner Provider.
 // parameters - Parameters supplied to update Security Partner Provider tags.
-// options - SecurityPartnerProvidersUpdateTagsOptions contains the optional parameters for the SecurityPartnerProviders.UpdateTags
+// options - SecurityPartnerProvidersUpdateTagsOptions contains the optional parameters for the SecurityPartnerProvidersClient.UpdateTags
 // method.
 func (client *SecurityPartnerProvidersClient) UpdateTags(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters TagsObject, options *SecurityPartnerProvidersUpdateTagsOptions) (SecurityPartnerProvidersUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)

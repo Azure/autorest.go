@@ -56,7 +56,7 @@ func NewVirtualWansClient(subscriptionID string, credential azcore.TokenCredenti
 // resourceGroupName - The resource group name of the VirtualWan.
 // virtualWANName - The name of the VirtualWAN being created or updated.
 // wanParameters - Parameters supplied to create or update VirtualWAN.
-// options - VirtualWansBeginCreateOrUpdateOptions contains the optional parameters for the VirtualWans.BeginCreateOrUpdate
+// options - VirtualWansBeginCreateOrUpdateOptions contains the optional parameters for the VirtualWansClient.BeginCreateOrUpdate
 // method.
 func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansBeginCreateOrUpdateOptions) (VirtualWansCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualWANName, wanParameters, options)
@@ -136,7 +136,7 @@ func (client *VirtualWansClient) createOrUpdateHandleError(resp *http.Response) 
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VirtualWan.
 // virtualWANName - The name of the VirtualWAN being deleted.
-// options - VirtualWansBeginDeleteOptions contains the optional parameters for the VirtualWans.BeginDelete method.
+// options - VirtualWansBeginDeleteOptions contains the optional parameters for the VirtualWansClient.BeginDelete method.
 func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansBeginDeleteOptions) (VirtualWansDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
@@ -215,7 +215,7 @@ func (client *VirtualWansClient) deleteHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VirtualWan.
 // virtualWANName - The name of the VirtualWAN being retrieved.
-// options - VirtualWansGetOptions contains the optional parameters for the VirtualWans.Get method.
+// options - VirtualWansGetOptions contains the optional parameters for the VirtualWansClient.Get method.
 func (client *VirtualWansClient) Get(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansGetOptions) (VirtualWansGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
@@ -281,7 +281,7 @@ func (client *VirtualWansClient) getHandleError(resp *http.Response) error {
 
 // List - Lists all the VirtualWANs in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - VirtualWansListOptions contains the optional parameters for the VirtualWans.List method.
+// options - VirtualWansListOptions contains the optional parameters for the VirtualWansClient.List method.
 func (client *VirtualWansClient) List(options *VirtualWansListOptions) *VirtualWansListPager {
 	return &VirtualWansListPager{
 		client: client,
@@ -337,7 +337,7 @@ func (client *VirtualWansClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Lists all the VirtualWANs in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VirtualWan.
-// options - VirtualWansListByResourceGroupOptions contains the optional parameters for the VirtualWans.ListByResourceGroup
+// options - VirtualWansListByResourceGroupOptions contains the optional parameters for the VirtualWansClient.ListByResourceGroup
 // method.
 func (client *VirtualWansClient) ListByResourceGroup(resourceGroupName string, options *VirtualWansListByResourceGroupOptions) *VirtualWansListByResourceGroupPager {
 	return &VirtualWansListByResourceGroupPager{
@@ -400,7 +400,7 @@ func (client *VirtualWansClient) listByResourceGroupHandleError(resp *http.Respo
 // resourceGroupName - The resource group name of the VirtualWan.
 // virtualWANName - The name of the VirtualWAN being updated.
 // wanParameters - Parameters supplied to Update VirtualWAN tags.
-// options - VirtualWansUpdateTagsOptions contains the optional parameters for the VirtualWans.UpdateTags method.
+// options - VirtualWansUpdateTagsOptions contains the optional parameters for the VirtualWansClient.UpdateTags method.
 func (client *VirtualWansClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters TagsObject, options *VirtualWansUpdateTagsOptions) (VirtualWansUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, virtualWANName, wanParameters, options)
 	if err != nil {

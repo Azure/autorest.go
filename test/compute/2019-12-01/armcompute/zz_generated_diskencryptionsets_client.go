@@ -58,7 +58,7 @@ func NewDiskEncryptionSetsClient(subscriptionID string, credential azcore.TokenC
 // disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum
 // name length is 80 characters.
 // diskEncryptionSet - disk encryption set object supplied in the body of the Put disk encryption set operation.
-// options - DiskEncryptionSetsBeginCreateOrUpdateOptions contains the optional parameters for the DiskEncryptionSets.BeginCreateOrUpdate
+// options - DiskEncryptionSetsBeginCreateOrUpdateOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginCreateOrUpdate
 // method.
 func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsBeginCreateOrUpdateOptions) (DiskEncryptionSetsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
@@ -140,7 +140,7 @@ func (client *DiskEncryptionSetsClient) createOrUpdateHandleError(resp *http.Res
 // diskEncryptionSetName - The name of the disk encryption set that is being created. The name can't be changed after the
 // disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum
 // name length is 80 characters.
-// options - DiskEncryptionSetsBeginDeleteOptions contains the optional parameters for the DiskEncryptionSets.BeginDelete
+// options - DiskEncryptionSetsBeginDeleteOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginDelete
 // method.
 func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsBeginDeleteOptions) (DiskEncryptionSetsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, diskEncryptionSetName, options)
@@ -222,7 +222,7 @@ func (client *DiskEncryptionSetsClient) deleteHandleError(resp *http.Response) e
 // diskEncryptionSetName - The name of the disk encryption set that is being created. The name can't be changed after the
 // disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum
 // name length is 80 characters.
-// options - DiskEncryptionSetsGetOptions contains the optional parameters for the DiskEncryptionSets.Get method.
+// options - DiskEncryptionSetsGetOptions contains the optional parameters for the DiskEncryptionSetsClient.Get method.
 func (client *DiskEncryptionSetsClient) Get(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsGetOptions) (DiskEncryptionSetsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, options)
 	if err != nil {
@@ -288,7 +288,7 @@ func (client *DiskEncryptionSetsClient) getHandleError(resp *http.Response) erro
 
 // List - Lists all the disk encryption sets under a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - DiskEncryptionSetsListOptions contains the optional parameters for the DiskEncryptionSets.List method.
+// options - DiskEncryptionSetsListOptions contains the optional parameters for the DiskEncryptionSetsClient.List method.
 func (client *DiskEncryptionSetsClient) List(options *DiskEncryptionSetsListOptions) *DiskEncryptionSetsListPager {
 	return &DiskEncryptionSetsListPager{
 		client: client,
@@ -344,7 +344,7 @@ func (client *DiskEncryptionSetsClient) listHandleError(resp *http.Response) err
 // ListByResourceGroup - Lists all the disk encryption sets under a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - DiskEncryptionSetsListByResourceGroupOptions contains the optional parameters for the DiskEncryptionSets.ListByResourceGroup
+// options - DiskEncryptionSetsListByResourceGroupOptions contains the optional parameters for the DiskEncryptionSetsClient.ListByResourceGroup
 // method.
 func (client *DiskEncryptionSetsClient) ListByResourceGroup(resourceGroupName string, options *DiskEncryptionSetsListByResourceGroupOptions) *DiskEncryptionSetsListByResourceGroupPager {
 	return &DiskEncryptionSetsListByResourceGroupPager{
@@ -409,7 +409,7 @@ func (client *DiskEncryptionSetsClient) listByResourceGroupHandleError(resp *htt
 // disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum
 // name length is 80 characters.
 // diskEncryptionSet - disk encryption set object supplied in the body of the Patch disk encryption set operation.
-// options - DiskEncryptionSetsBeginUpdateOptions contains the optional parameters for the DiskEncryptionSets.BeginUpdate
+// options - DiskEncryptionSetsBeginUpdateOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginUpdate
 // method.
 func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsBeginUpdateOptions) (DiskEncryptionSetsUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)

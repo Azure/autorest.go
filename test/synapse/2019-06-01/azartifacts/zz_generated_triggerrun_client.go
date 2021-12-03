@@ -39,7 +39,7 @@ func newTriggerRunClient(endpoint string, pl runtime.Pipeline) *triggerRunClient
 // If the operation fails it returns the *CloudError error type.
 // triggerName - The trigger name.
 // runID - The pipeline run identifier.
-// options - TriggerRunCancelTriggerInstanceOptions contains the optional parameters for the TriggerRun.CancelTriggerInstance
+// options - TriggerRunCancelTriggerInstanceOptions contains the optional parameters for the triggerRunClient.CancelTriggerInstance
 // method.
 func (client *triggerRunClient) CancelTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunCancelTriggerInstanceOptions) (TriggerRunCancelTriggerInstanceResponse, error) {
 	req, err := client.cancelTriggerInstanceCreateRequest(ctx, triggerName, runID, options)
@@ -94,7 +94,7 @@ func (client *triggerRunClient) cancelTriggerInstanceHandleError(resp *http.Resp
 // QueryTriggerRunsByWorkspace - Query trigger runs.
 // If the operation fails it returns the *CloudError error type.
 // filterParameters - Parameters to filter the pipeline run.
-// options - TriggerRunQueryTriggerRunsByWorkspaceOptions contains the optional parameters for the TriggerRun.QueryTriggerRunsByWorkspace
+// options - TriggerRunQueryTriggerRunsByWorkspaceOptions contains the optional parameters for the triggerRunClient.QueryTriggerRunsByWorkspace
 // method.
 func (client *triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *TriggerRunQueryTriggerRunsByWorkspaceOptions) (TriggerRunQueryTriggerRunsByWorkspaceResponse, error) {
 	req, err := client.queryTriggerRunsByWorkspaceCreateRequest(ctx, filterParameters, options)
@@ -151,7 +151,7 @@ func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleError(resp *htt
 // If the operation fails it returns the *CloudError error type.
 // triggerName - The trigger name.
 // runID - The pipeline run identifier.
-// options - TriggerRunRerunTriggerInstanceOptions contains the optional parameters for the TriggerRun.RerunTriggerInstance
+// options - TriggerRunRerunTriggerInstanceOptions contains the optional parameters for the triggerRunClient.RerunTriggerInstance
 // method.
 func (client *triggerRunClient) RerunTriggerInstance(ctx context.Context, triggerName string, runID string, options *TriggerRunRerunTriggerInstanceOptions) (TriggerRunRerunTriggerInstanceResponse, error) {
 	req, err := client.rerunTriggerInstanceCreateRequest(ctx, triggerName, runID, options)

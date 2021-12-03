@@ -46,7 +46,7 @@ func NewOperationsClient(credential azcore.TokenCredential, options *arm.ClientO
 
 // List - Lists all of the available Network Rest API operations.
 // If the operation fails it returns the *CloudError error type.
-// options - OperationsListOptions contains the optional parameters for the Operations.List method.
+// options - OperationsListOptions contains the optional parameters for the OperationsClient.List method.
 func (client *OperationsClient) List(options *OperationsListOptions) *OperationsListPager {
 	return &OperationsListPager{
 		client: client,

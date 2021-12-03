@@ -60,7 +60,7 @@ func NewGalleryApplicationVersionsClient(subscriptionID string, credential azcor
 // name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit
 // integer. Format: ..
 // galleryApplicationVersion - Parameters supplied to the create or update gallery Application Version operation.
-// options - GalleryApplicationVersionsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryApplicationVersions.BeginCreateOrUpdate
+// options - GalleryApplicationVersionsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryApplicationVersionsClient.BeginCreateOrUpdate
 // method.
 func (client *GalleryApplicationVersionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion GalleryApplicationVersion, options *GalleryApplicationVersionsBeginCreateOrUpdateOptions) (GalleryApplicationVersionsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion, options)
@@ -150,7 +150,7 @@ func (client *GalleryApplicationVersionsClient) createOrUpdateHandleError(resp *
 // galleryName - The name of the Shared Application Gallery in which the Application Definition resides.
 // galleryApplicationName - The name of the gallery Application Definition in which the Application Version resides.
 // galleryApplicationVersionName - The name of the gallery Application Version to be deleted.
-// options - GalleryApplicationVersionsBeginDeleteOptions contains the optional parameters for the GalleryApplicationVersions.BeginDelete
+// options - GalleryApplicationVersionsBeginDeleteOptions contains the optional parameters for the GalleryApplicationVersionsClient.BeginDelete
 // method.
 func (client *GalleryApplicationVersionsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, options *GalleryApplicationVersionsBeginDeleteOptions) (GalleryApplicationVersionsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, options)
@@ -240,7 +240,7 @@ func (client *GalleryApplicationVersionsClient) deleteHandleError(resp *http.Res
 // galleryName - The name of the Shared Application Gallery in which the Application Definition resides.
 // galleryApplicationName - The name of the gallery Application Definition in which the Application Version resides.
 // galleryApplicationVersionName - The name of the gallery Application Version to be retrieved.
-// options - GalleryApplicationVersionsGetOptions contains the optional parameters for the GalleryApplicationVersions.Get
+// options - GalleryApplicationVersionsGetOptions contains the optional parameters for the GalleryApplicationVersionsClient.Get
 // method.
 func (client *GalleryApplicationVersionsClient) Get(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, options *GalleryApplicationVersionsGetOptions) (GalleryApplicationVersionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, options)
@@ -322,7 +322,7 @@ func (client *GalleryApplicationVersionsClient) getHandleError(resp *http.Respon
 // galleryName - The name of the Shared Application Gallery in which the Application Definition resides.
 // galleryApplicationName - The name of the Shared Application Gallery Application Definition from which the Application Versions
 // are to be listed.
-// options - GalleryApplicationVersionsListByGalleryApplicationOptions contains the optional parameters for the GalleryApplicationVersions.ListByGalleryApplication
+// options - GalleryApplicationVersionsListByGalleryApplicationOptions contains the optional parameters for the GalleryApplicationVersionsClient.ListByGalleryApplication
 // method.
 func (client *GalleryApplicationVersionsClient) ListByGalleryApplication(resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationVersionsListByGalleryApplicationOptions) *GalleryApplicationVersionsListByGalleryApplicationPager {
 	return &GalleryApplicationVersionsListByGalleryApplicationPager{
@@ -397,7 +397,7 @@ func (client *GalleryApplicationVersionsClient) listByGalleryApplicationHandleEr
 // name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit
 // integer. Format: ..
 // galleryApplicationVersion - Parameters supplied to the update gallery Application Version operation.
-// options - GalleryApplicationVersionsBeginUpdateOptions contains the optional parameters for the GalleryApplicationVersions.BeginUpdate
+// options - GalleryApplicationVersionsBeginUpdateOptions contains the optional parameters for the GalleryApplicationVersionsClient.BeginUpdate
 // method.
 func (client *GalleryApplicationVersionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion GalleryApplicationVersionUpdate, options *GalleryApplicationVersionsBeginUpdateOptions) (GalleryApplicationVersionsUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion, options)

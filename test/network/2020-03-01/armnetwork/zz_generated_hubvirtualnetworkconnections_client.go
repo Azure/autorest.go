@@ -56,7 +56,7 @@ func NewHubVirtualNetworkConnectionsClient(subscriptionID string, credential azc
 // resourceGroupName - The resource group name of the VirtualHub.
 // virtualHubName - The name of the VirtualHub.
 // connectionName - The name of the vpn connection.
-// options - HubVirtualNetworkConnectionsGetOptions contains the optional parameters for the HubVirtualNetworkConnections.Get
+// options - HubVirtualNetworkConnectionsGetOptions contains the optional parameters for the HubVirtualNetworkConnectionsClient.Get
 // method.
 func (client *HubVirtualNetworkConnectionsClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, connectionName string, options *HubVirtualNetworkConnectionsGetOptions) (HubVirtualNetworkConnectionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualHubName, connectionName, options)
@@ -129,7 +129,7 @@ func (client *HubVirtualNetworkConnectionsClient) getHandleError(resp *http.Resp
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VirtualHub.
 // virtualHubName - The name of the VirtualHub.
-// options - HubVirtualNetworkConnectionsListOptions contains the optional parameters for the HubVirtualNetworkConnections.List
+// options - HubVirtualNetworkConnectionsListOptions contains the optional parameters for the HubVirtualNetworkConnectionsClient.List
 // method.
 func (client *HubVirtualNetworkConnectionsClient) List(resourceGroupName string, virtualHubName string, options *HubVirtualNetworkConnectionsListOptions) *HubVirtualNetworkConnectionsListPager {
 	return &HubVirtualNetworkConnectionsListPager{

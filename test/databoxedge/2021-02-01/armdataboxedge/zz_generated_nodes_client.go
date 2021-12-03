@@ -46,7 +46,8 @@ func NewNodesClient(subscriptionID string, options *azcore.ClientOptions) *Nodes
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - NodesListByDataBoxEdgeDeviceOptions contains the optional parameters for the Nodes.ListByDataBoxEdgeDevice method.
+// options - NodesListByDataBoxEdgeDeviceOptions contains the optional parameters for the NodesClient.ListByDataBoxEdgeDevice
+// method.
 func (client *NodesClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *NodesListByDataBoxEdgeDeviceOptions) *NodesListByDataBoxEdgeDevicePager {
 	return &NodesListByDataBoxEdgeDevicePager{
 		client: client,

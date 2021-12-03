@@ -38,7 +38,7 @@ func NewOperationsClient(options *azcore.ClientOptions) *OperationsClient {
 
 // List - List all the supported operations.
 // If the operation fails it returns the *CloudError error type.
-// options - OperationsListOptions contains the optional parameters for the Operations.List method.
+// options - OperationsListOptions contains the optional parameters for the OperationsClient.List method.
 func (client *OperationsClient) List(options *OperationsListOptions) *OperationsListPager {
 	return &OperationsListPager{
 		client: client,

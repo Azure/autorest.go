@@ -40,7 +40,7 @@ type OperationResult struct {
 	Status *OperationResultStatus `json:"status,omitempty"`
 }
 
-// PagingBeginGetMultiplePagesLROOptions contains the optional parameters for the Paging.BeginGetMultiplePagesLRO method.
+// PagingBeginGetMultiplePagesLROOptions contains the optional parameters for the PagingClient.BeginGetMultiplePagesLRO method.
 type PagingBeginGetMultiplePagesLROOptions struct {
 	ClientRequestID *string
 	// Sets the maximum number of items to return in the response.
@@ -49,34 +49,35 @@ type PagingBeginGetMultiplePagesLROOptions struct {
 	Timeout *int32
 }
 
-// PagingFirstResponseEmptyOptions contains the optional parameters for the Paging.FirstResponseEmpty method.
+// PagingFirstResponseEmptyOptions contains the optional parameters for the PagingClient.FirstResponseEmpty method.
 type PagingFirstResponseEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PagingGetMultiplePagesFailureOptions contains the optional parameters for the Paging.GetMultiplePagesFailure method.
+// PagingGetMultiplePagesFailureOptions contains the optional parameters for the PagingClient.GetMultiplePagesFailure method.
 type PagingGetMultiplePagesFailureOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PagingGetMultiplePagesFailureURIOptions contains the optional parameters for the Paging.GetMultiplePagesFailureURI method.
+// PagingGetMultiplePagesFailureURIOptions contains the optional parameters for the PagingClient.GetMultiplePagesFailureURI
+// method.
 type PagingGetMultiplePagesFailureURIOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PagingGetMultiplePagesFragmentNextLinkOptions contains the optional parameters for the Paging.GetMultiplePagesFragmentNextLink
+// PagingGetMultiplePagesFragmentNextLinkOptions contains the optional parameters for the PagingClient.GetMultiplePagesFragmentNextLink
 // method.
 type PagingGetMultiplePagesFragmentNextLinkOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PagingGetMultiplePagesFragmentWithGroupingNextLinkOptions contains the optional parameters for the Paging.GetMultiplePagesFragmentWithGroupingNextLink
+// PagingGetMultiplePagesFragmentWithGroupingNextLinkOptions contains the optional parameters for the PagingClient.GetMultiplePagesFragmentWithGroupingNextLink
 // method.
 type PagingGetMultiplePagesFragmentWithGroupingNextLinkOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PagingGetMultiplePagesOptions contains the optional parameters for the Paging.GetMultiplePages method.
+// PagingGetMultiplePagesOptions contains the optional parameters for the PagingClient.GetMultiplePages method.
 type PagingGetMultiplePagesOptions struct {
 	ClientRequestID *string
 	// Sets the maximum number of items to return in the response.
@@ -85,17 +86,20 @@ type PagingGetMultiplePagesOptions struct {
 	Timeout *int32
 }
 
-// PagingGetMultiplePagesRetryFirstOptions contains the optional parameters for the Paging.GetMultiplePagesRetryFirst method.
+// PagingGetMultiplePagesRetryFirstOptions contains the optional parameters for the PagingClient.GetMultiplePagesRetryFirst
+// method.
 type PagingGetMultiplePagesRetryFirstOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PagingGetMultiplePagesRetrySecondOptions contains the optional parameters for the Paging.GetMultiplePagesRetrySecond method.
+// PagingGetMultiplePagesRetrySecondOptions contains the optional parameters for the PagingClient.GetMultiplePagesRetrySecond
+// method.
 type PagingGetMultiplePagesRetrySecondOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PagingGetMultiplePagesWithOffsetOptions contains the optional parameters for the Paging.GetMultiplePagesWithOffset method.
+// PagingGetMultiplePagesWithOffsetOptions contains the optional parameters for the PagingClient.GetMultiplePagesWithOffset
+// method.
 type PagingGetMultiplePagesWithOffsetOptions struct {
 	ClientRequestID *string
 	// Sets the maximum number of items to return in the response.
@@ -106,17 +110,17 @@ type PagingGetMultiplePagesWithOffsetOptions struct {
 	Timeout *int32
 }
 
-// PagingGetNoItemNamePagesOptions contains the optional parameters for the Paging.GetNoItemNamePages method.
+// PagingGetNoItemNamePagesOptions contains the optional parameters for the PagingClient.GetNoItemNamePages method.
 type PagingGetNoItemNamePagesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PagingGetNullNextLinkNamePagesOptions contains the optional parameters for the Paging.GetNullNextLinkNamePages method.
+// PagingGetNullNextLinkNamePagesOptions contains the optional parameters for the PagingClient.GetNullNextLinkNamePages method.
 type PagingGetNullNextLinkNamePagesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PagingGetODataMultiplePagesOptions contains the optional parameters for the Paging.GetODataMultiplePages method.
+// PagingGetODataMultiplePagesOptions contains the optional parameters for the PagingClient.GetODataMultiplePages method.
 type PagingGetODataMultiplePagesOptions struct {
 	ClientRequestID *string
 	// Sets the maximum number of items to return in the response.
@@ -125,23 +129,23 @@ type PagingGetODataMultiplePagesOptions struct {
 	Timeout *int32
 }
 
-// PagingGetPagingModelWithItemNameWithXMSClientNameOptions contains the optional parameters for the Paging.GetPagingModelWithItemNameWithXMSClientName
+// PagingGetPagingModelWithItemNameWithXMSClientNameOptions contains the optional parameters for the PagingClient.GetPagingModelWithItemNameWithXMSClientName
 // method.
 type PagingGetPagingModelWithItemNameWithXMSClientNameOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PagingGetSinglePagesFailureOptions contains the optional parameters for the Paging.GetSinglePagesFailure method.
+// PagingGetSinglePagesFailureOptions contains the optional parameters for the PagingClient.GetSinglePagesFailure method.
 type PagingGetSinglePagesFailureOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PagingGetSinglePagesOptions contains the optional parameters for the Paging.GetSinglePages method.
+// PagingGetSinglePagesOptions contains the optional parameters for the PagingClient.GetSinglePages method.
 type PagingGetSinglePagesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PagingGetWithQueryParamsOptions contains the optional parameters for the Paging.GetWithQueryParams method.
+// PagingGetWithQueryParamsOptions contains the optional parameters for the PagingClient.GetWithQueryParams method.
 type PagingGetWithQueryParamsOptions struct {
 	// placeholder for future optional parameters
 }

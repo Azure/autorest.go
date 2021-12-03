@@ -38,7 +38,7 @@ func NewEnumClient(options *azcore.ClientOptions) *EnumClient {
 
 // GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 // If the operation fails it returns the *Error error type.
-// options - EnumGetNotExpandableOptions contains the optional parameters for the Enum.GetNotExpandable method.
+// options - EnumGetNotExpandableOptions contains the optional parameters for the EnumClient.GetNotExpandable method.
 func (client *EnumClient) GetNotExpandable(ctx context.Context, options *EnumGetNotExpandableOptions) (EnumGetNotExpandableResponse, error) {
 	req, err := client.getNotExpandableCreateRequest(ctx, options)
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *EnumClient) getNotExpandableHandleError(resp *http.Response) error
 
 // GetReferenced - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 // If the operation fails it returns the *Error error type.
-// options - EnumGetReferencedOptions contains the optional parameters for the Enum.GetReferenced method.
+// options - EnumGetReferencedOptions contains the optional parameters for the EnumClient.GetReferenced method.
 func (client *EnumClient) GetReferenced(ctx context.Context, options *EnumGetReferencedOptions) (EnumGetReferencedResponse, error) {
 	req, err := client.getReferencedCreateRequest(ctx, options)
 	if err != nil {
@@ -140,7 +140,7 @@ func (client *EnumClient) getReferencedHandleError(resp *http.Response) error {
 
 // GetReferencedConstant - Get value 'green-color' from the constant.
 // If the operation fails it returns the *Error error type.
-// options - EnumGetReferencedConstantOptions contains the optional parameters for the Enum.GetReferencedConstant method.
+// options - EnumGetReferencedConstantOptions contains the optional parameters for the EnumClient.GetReferencedConstant method.
 func (client *EnumClient) GetReferencedConstant(ctx context.Context, options *EnumGetReferencedConstantOptions) (EnumGetReferencedConstantResponse, error) {
 	req, err := client.getReferencedConstantCreateRequest(ctx, options)
 	if err != nil {
@@ -192,7 +192,7 @@ func (client *EnumClient) getReferencedConstantHandleError(resp *http.Response) 
 // PutNotExpandable - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 // If the operation fails it returns the *Error error type.
 // stringBody - string body
-// options - EnumPutNotExpandableOptions contains the optional parameters for the Enum.PutNotExpandable method.
+// options - EnumPutNotExpandableOptions contains the optional parameters for the EnumClient.PutNotExpandable method.
 func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors, options *EnumPutNotExpandableOptions) (EnumPutNotExpandableResponse, error) {
 	req, err := client.putNotExpandableCreateRequest(ctx, stringBody, options)
 	if err != nil {
@@ -235,7 +235,7 @@ func (client *EnumClient) putNotExpandableHandleError(resp *http.Response) error
 // PutReferenced - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 // If the operation fails it returns the *Error error type.
 // enumStringBody - enum string body
-// options - EnumPutReferencedOptions contains the optional parameters for the Enum.PutReferenced method.
+// options - EnumPutReferencedOptions contains the optional parameters for the EnumClient.PutReferenced method.
 func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colors, options *EnumPutReferencedOptions) (EnumPutReferencedResponse, error) {
 	req, err := client.putReferencedCreateRequest(ctx, enumStringBody, options)
 	if err != nil {
@@ -278,7 +278,7 @@ func (client *EnumClient) putReferencedHandleError(resp *http.Response) error {
 // PutReferencedConstant - Sends value 'green-color' from a constant
 // If the operation fails it returns the *Error error type.
 // enumStringBody - enum string body
-// options - EnumPutReferencedConstantOptions contains the optional parameters for the Enum.PutReferencedConstant method.
+// options - EnumPutReferencedConstantOptions contains the optional parameters for the EnumClient.PutReferencedConstant method.
 func (client *EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant, options *EnumPutReferencedConstantOptions) (EnumPutReferencedConstantResponse, error) {
 	req, err := client.putReferencedConstantCreateRequest(ctx, enumStringBody, options)
 	if err != nil {

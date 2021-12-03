@@ -355,33 +355,33 @@ func (p *PetAPTrue) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	return nil
 }
 
-// PetsCreateAPInPropertiesOptions contains the optional parameters for the Pets.CreateAPInProperties method.
+// PetsCreateAPInPropertiesOptions contains the optional parameters for the PetsClient.CreateAPInProperties method.
 type PetsCreateAPInPropertiesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateAPInPropertiesWithAPStringOptions contains the optional parameters for the Pets.CreateAPInPropertiesWithAPString
+// PetsCreateAPInPropertiesWithAPStringOptions contains the optional parameters for the PetsClient.CreateAPInPropertiesWithAPString
 // method.
 type PetsCreateAPInPropertiesWithAPStringOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateAPObjectOptions contains the optional parameters for the Pets.CreateAPObject method.
+// PetsCreateAPObjectOptions contains the optional parameters for the PetsClient.CreateAPObject method.
 type PetsCreateAPObjectOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateAPStringOptions contains the optional parameters for the Pets.CreateAPString method.
+// PetsCreateAPStringOptions contains the optional parameters for the PetsClient.CreateAPString method.
 type PetsCreateAPStringOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateAPTrueOptions contains the optional parameters for the Pets.CreateAPTrue method.
+// PetsCreateAPTrueOptions contains the optional parameters for the PetsClient.CreateAPTrue method.
 type PetsCreateAPTrueOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateCatAPTrueOptions contains the optional parameters for the Pets.CreateCatAPTrue method.
+// PetsCreateCatAPTrueOptions contains the optional parameters for the PetsClient.CreateCatAPTrue method.
 type PetsCreateCatAPTrueOptions struct {
 	// placeholder for future optional parameters
 }

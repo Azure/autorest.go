@@ -56,7 +56,7 @@ func NewVirtualNetworksClient(subscriptionID string, credential azcore.TokenCred
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // ipAddress - The private IP address to be verified.
-// options - VirtualNetworksCheckIPAddressAvailabilityOptions contains the optional parameters for the VirtualNetworks.CheckIPAddressAvailability
+// options - VirtualNetworksCheckIPAddressAvailabilityOptions contains the optional parameters for the VirtualNetworksClient.CheckIPAddressAvailability
 // method.
 func (client *VirtualNetworksClient) CheckIPAddressAvailability(ctx context.Context, resourceGroupName string, virtualNetworkName string, ipAddress string, options *VirtualNetworksCheckIPAddressAvailabilityOptions) (VirtualNetworksCheckIPAddressAvailabilityResponse, error) {
 	req, err := client.checkIPAddressAvailabilityCreateRequest(ctx, resourceGroupName, virtualNetworkName, ipAddress, options)
@@ -127,7 +127,7 @@ func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleError(resp 
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // parameters - Parameters supplied to the create or update virtual network operation.
-// options - VirtualNetworksBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworks.BeginCreateOrUpdate
+// options - VirtualNetworksBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworksClient.BeginCreateOrUpdate
 // method.
 func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksBeginCreateOrUpdateOptions) (VirtualNetworksCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkName, parameters, options)
@@ -207,7 +207,8 @@ func (client *VirtualNetworksClient) createOrUpdateHandleError(resp *http.Respon
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
-// options - VirtualNetworksBeginDeleteOptions contains the optional parameters for the VirtualNetworks.BeginDelete method.
+// options - VirtualNetworksBeginDeleteOptions contains the optional parameters for the VirtualNetworksClient.BeginDelete
+// method.
 func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksBeginDeleteOptions) (VirtualNetworksDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
@@ -286,7 +287,7 @@ func (client *VirtualNetworksClient) deleteHandleError(resp *http.Response) erro
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
-// options - VirtualNetworksGetOptions contains the optional parameters for the VirtualNetworks.Get method.
+// options - VirtualNetworksGetOptions contains the optional parameters for the VirtualNetworksClient.Get method.
 func (client *VirtualNetworksClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksGetOptions) (VirtualNetworksGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
@@ -356,7 +357,7 @@ func (client *VirtualNetworksClient) getHandleError(resp *http.Response) error {
 // List - Gets all virtual networks in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - VirtualNetworksListOptions contains the optional parameters for the VirtualNetworks.List method.
+// options - VirtualNetworksListOptions contains the optional parameters for the VirtualNetworksClient.List method.
 func (client *VirtualNetworksClient) List(resourceGroupName string, options *VirtualNetworksListOptions) *VirtualNetworksListPager {
 	return &VirtualNetworksListPager{
 		client: client,
@@ -415,7 +416,7 @@ func (client *VirtualNetworksClient) listHandleError(resp *http.Response) error 
 
 // ListAll - Gets all virtual networks in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - VirtualNetworksListAllOptions contains the optional parameters for the VirtualNetworks.ListAll method.
+// options - VirtualNetworksListAllOptions contains the optional parameters for the VirtualNetworksClient.ListAll method.
 func (client *VirtualNetworksClient) ListAll(options *VirtualNetworksListAllOptions) *VirtualNetworksListAllPager {
 	return &VirtualNetworksListAllPager{
 		client: client,
@@ -472,7 +473,7 @@ func (client *VirtualNetworksClient) listAllHandleError(resp *http.Response) err
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
-// options - VirtualNetworksListUsageOptions contains the optional parameters for the VirtualNetworks.ListUsage method.
+// options - VirtualNetworksListUsageOptions contains the optional parameters for the VirtualNetworksClient.ListUsage method.
 func (client *VirtualNetworksClient) ListUsage(resourceGroupName string, virtualNetworkName string, options *VirtualNetworksListUsageOptions) *VirtualNetworksListUsagePager {
 	return &VirtualNetworksListUsagePager{
 		client: client,
@@ -538,7 +539,7 @@ func (client *VirtualNetworksClient) listUsageHandleError(resp *http.Response) e
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // parameters - Parameters supplied to update virtual network tags.
-// options - VirtualNetworksUpdateTagsOptions contains the optional parameters for the VirtualNetworks.UpdateTags method.
+// options - VirtualNetworksUpdateTagsOptions contains the optional parameters for the VirtualNetworksClient.UpdateTags method.
 func (client *VirtualNetworksClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters TagsObject, options *VirtualNetworksUpdateTagsOptions) (VirtualNetworksUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 	if err != nil {

@@ -34,7 +34,7 @@ func newWorkspaceClient(endpoint string, pl runtime.Pipeline) *workspaceClient {
 
 // Get - Get Workspace
 // If the operation fails it returns the *ErrorContract error type.
-// options - WorkspaceGetOptions contains the optional parameters for the Workspace.Get method.
+// options - WorkspaceGetOptions contains the optional parameters for the workspaceClient.Get method.
 func (client *workspaceClient) Get(ctx context.Context, options *WorkspaceGetOptions) (WorkspaceGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {

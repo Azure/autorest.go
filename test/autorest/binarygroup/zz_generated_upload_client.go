@@ -40,7 +40,7 @@ func NewUploadClient(options *azcore.ClientOptions) *UploadClient {
 // Binary - Uploading binary file
 // If the operation fails it returns a generic error.
 // fileParam - Non-empty binary file
-// options - UploadBinaryOptions contains the optional parameters for the Upload.Binary method.
+// options - UploadBinaryOptions contains the optional parameters for the UploadClient.Binary method.
 func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadBinaryOptions) (UploadBinaryResponse, error) {
 	req, err := client.binaryCreateRequest(ctx, fileParam, options)
 	if err != nil {
@@ -81,7 +81,7 @@ func (client *UploadClient) binaryHandleError(resp *http.Response) error {
 // File - Uploading json file
 // If the operation fails it returns a generic error.
 // fileParam - JSON file with payload { "more": "cowbell" }
-// options - UploadFileOptions contains the optional parameters for the Upload.File method.
+// options - UploadFileOptions contains the optional parameters for the UploadClient.File method.
 func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadFileOptions) (UploadFileResponse, error) {
 	req, err := client.fileCreateRequest(ctx, fileParam, options)
 	if err != nil {

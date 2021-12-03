@@ -28,7 +28,7 @@ type FirstParameterGroup struct {
 	QueryOne *int32
 }
 
-// ParameterGroupingPostMultiParamGroupsOptions contains the optional parameters for the ParameterGrouping.PostMultiParamGroups
+// ParameterGroupingPostMultiParamGroupsOptions contains the optional parameters for the ParameterGroupingClient.PostMultiParamGroups
 // method.
 type ParameterGroupingPostMultiParamGroupsOptions struct {
 	// placeholder for future optional parameters
@@ -42,7 +42,7 @@ type ParameterGroupingPostMultiParamGroupsSecondParamGroup struct {
 	QueryTwo *int32
 }
 
-// ParameterGroupingPostOptionalOptions contains the optional parameters for the ParameterGrouping.PostOptional method.
+// ParameterGroupingPostOptionalOptions contains the optional parameters for the ParameterGroupingClient.PostOptional method.
 type ParameterGroupingPostOptionalOptions struct {
 	// placeholder for future optional parameters
 }
@@ -54,7 +54,7 @@ type ParameterGroupingPostOptionalParameters struct {
 	Query *int32
 }
 
-// ParameterGroupingPostRequiredOptions contains the optional parameters for the ParameterGrouping.PostRequired method.
+// ParameterGroupingPostRequiredOptions contains the optional parameters for the ParameterGroupingClient.PostRequired method.
 type ParameterGroupingPostRequiredOptions struct {
 	// placeholder for future optional parameters
 }
@@ -69,7 +69,7 @@ type ParameterGroupingPostRequiredParameters struct {
 	Query *int32
 }
 
-// ParameterGroupingPostReservedWordsOptions contains the optional parameters for the ParameterGrouping.PostReservedWords
+// ParameterGroupingPostReservedWordsOptions contains the optional parameters for the ParameterGroupingClient.PostReservedWords
 // method.
 type ParameterGroupingPostReservedWordsOptions struct {
 	// placeholder for future optional parameters
@@ -84,7 +84,7 @@ type ParameterGroupingPostReservedWordsParameters struct {
 	From *string
 }
 
-// ParameterGroupingPostSharedParameterGroupObjectOptions contains the optional parameters for the ParameterGrouping.PostSharedParameterGroupObject
+// ParameterGroupingPostSharedParameterGroupObjectOptions contains the optional parameters for the ParameterGroupingClient.PostSharedParameterGroupObject
 // method.
 type ParameterGroupingPostSharedParameterGroupObjectOptions struct {
 	// placeholder for future optional parameters

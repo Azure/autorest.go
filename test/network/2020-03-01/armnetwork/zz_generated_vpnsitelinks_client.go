@@ -56,7 +56,7 @@ func NewVPNSiteLinksClient(subscriptionID string, credential azcore.TokenCredent
 // resourceGroupName - The resource group name of the VpnSite.
 // vpnSiteName - The name of the VpnSite.
 // vpnSiteLinkName - The name of the VpnSiteLink being retrieved.
-// options - VPNSiteLinksGetOptions contains the optional parameters for the VPNSiteLinks.Get method.
+// options - VPNSiteLinksGetOptions contains the optional parameters for the VPNSiteLinksClient.Get method.
 func (client *VPNSiteLinksClient) Get(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string, options *VPNSiteLinksGetOptions) (VPNSiteLinksGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vpnSiteName, vpnSiteLinkName, options)
 	if err != nil {
@@ -128,7 +128,7 @@ func (client *VPNSiteLinksClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnSite.
 // vpnSiteName - The name of the VpnSite.
-// options - VPNSiteLinksListByVPNSiteOptions contains the optional parameters for the VPNSiteLinks.ListByVPNSite method.
+// options - VPNSiteLinksListByVPNSiteOptions contains the optional parameters for the VPNSiteLinksClient.ListByVPNSite method.
 func (client *VPNSiteLinksClient) ListByVPNSite(resourceGroupName string, vpnSiteName string, options *VPNSiteLinksListByVPNSiteOptions) *VPNSiteLinksListByVPNSitePager {
 	return &VPNSiteLinksListByVPNSitePager{
 		client: client,

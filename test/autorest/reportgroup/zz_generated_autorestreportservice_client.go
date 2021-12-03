@@ -38,7 +38,7 @@ func NewAutoRestReportServiceClient(options *azcore.ClientOptions) *AutoRestRepo
 
 // GetOptionalReport - Get optional test coverage report
 // If the operation fails it returns the *Error error type.
-// options - AutoRestReportServiceGetOptionalReportOptions contains the optional parameters for the AutoRestReportService.GetOptionalReport
+// options - AutoRestReportServiceGetOptionalReportOptions contains the optional parameters for the AutoRestReportServiceClient.GetOptionalReport
 // method.
 func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (AutoRestReportServiceGetOptionalReportResponse, error) {
 	req, err := client.getOptionalReportCreateRequest(ctx, options)
@@ -95,7 +95,7 @@ func (client *AutoRestReportServiceClient) getOptionalReportHandleError(resp *ht
 
 // GetReport - Get test coverage report
 // If the operation fails it returns the *Error error type.
-// options - AutoRestReportServiceGetReportOptions contains the optional parameters for the AutoRestReportService.GetReport
+// options - AutoRestReportServiceGetReportOptions contains the optional parameters for the AutoRestReportServiceClient.GetReport
 // method.
 func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (AutoRestReportServiceGetReportResponse, error) {
 	req, err := client.getReportCreateRequest(ctx, options)

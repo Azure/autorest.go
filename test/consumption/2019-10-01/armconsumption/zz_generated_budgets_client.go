@@ -62,7 +62,7 @@ func NewBudgetsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 // for invoiceSection scope.
 // budgetName - Budget Name.
 // parameters - Parameters supplied to the Create Budget operation.
-// options - BudgetsCreateOrUpdateOptions contains the optional parameters for the Budgets.CreateOrUpdate method.
+// options - BudgetsCreateOrUpdateOptions contains the optional parameters for the BudgetsClient.CreateOrUpdate method.
 func (client *BudgetsClient) CreateOrUpdate(ctx context.Context, scope string, budgetName string, parameters Budget, options *BudgetsCreateOrUpdateOptions) (BudgetsCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, scope, budgetName, parameters, options)
 	if err != nil {
@@ -131,7 +131,7 @@ func (client *BudgetsClient) createOrUpdateHandleError(resp *http.Response) erro
 // for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
 // for invoiceSection scope.
 // budgetName - Budget Name.
-// options - BudgetsDeleteOptions contains the optional parameters for the Budgets.Delete method.
+// options - BudgetsDeleteOptions contains the optional parameters for the BudgetsClient.Delete method.
 func (client *BudgetsClient) Delete(ctx context.Context, scope string, budgetName string, options *BudgetsDeleteOptions) (BudgetsDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, scope, budgetName, options)
 	if err != nil {
@@ -191,7 +191,7 @@ func (client *BudgetsClient) deleteHandleError(resp *http.Response) error {
 // for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
 // for invoiceSection scope.
 // budgetName - Budget Name.
-// options - BudgetsGetOptions contains the optional parameters for the Budgets.Get method.
+// options - BudgetsGetOptions contains the optional parameters for the BudgetsClient.Get method.
 func (client *BudgetsClient) Get(ctx context.Context, scope string, budgetName string, options *BudgetsGetOptions) (BudgetsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, scope, budgetName, options)
 	if err != nil {
@@ -259,7 +259,7 @@ func (client *BudgetsClient) getHandleError(resp *http.Response) error {
 // '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
 // for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
 // for invoiceSection scope.
-// options - BudgetsListOptions contains the optional parameters for the Budgets.List method.
+// options - BudgetsListOptions contains the optional parameters for the BudgetsClient.List method.
 func (client *BudgetsClient) List(scope string, options *BudgetsListOptions) *BudgetsListPager {
 	return &BudgetsListPager{
 		client: client,

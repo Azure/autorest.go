@@ -39,7 +39,7 @@ func newNotebookClient(endpoint string, pl runtime.Pipeline) *notebookClient {
 // If the operation fails it returns the *CloudError error type.
 // notebookName - The notebook name.
 // notebook - Note book resource definition.
-// options - NotebookBeginCreateOrUpdateNotebookOptions contains the optional parameters for the Notebook.BeginCreateOrUpdateNotebook
+// options - NotebookBeginCreateOrUpdateNotebookOptions contains the optional parameters for the notebookClient.BeginCreateOrUpdateNotebook
 // method.
 func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (NotebookCreateOrUpdateNotebookPollerResponse, error) {
 	resp, err := client.createOrUpdateNotebook(ctx, notebookName, notebook, options)
@@ -113,7 +113,8 @@ func (client *notebookClient) createOrUpdateNotebookHandleError(resp *http.Respo
 // BeginDeleteNotebook - Deletes a Note book.
 // If the operation fails it returns the *CloudError error type.
 // notebookName - The notebook name.
-// options - NotebookBeginDeleteNotebookOptions contains the optional parameters for the Notebook.BeginDeleteNotebook method.
+// options - NotebookBeginDeleteNotebookOptions contains the optional parameters for the notebookClient.BeginDeleteNotebook
+// method.
 func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookName string, options *NotebookBeginDeleteNotebookOptions) (NotebookDeleteNotebookPollerResponse, error) {
 	resp, err := client.deleteNotebook(ctx, notebookName, options)
 	if err != nil {
@@ -183,7 +184,7 @@ func (client *notebookClient) deleteNotebookHandleError(resp *http.Response) err
 // GetNotebook - Gets a Note Book.
 // If the operation fails it returns the *CloudError error type.
 // notebookName - The notebook name.
-// options - NotebookGetNotebookOptions contains the optional parameters for the Notebook.GetNotebook method.
+// options - NotebookGetNotebookOptions contains the optional parameters for the notebookClient.GetNotebook method.
 func (client *notebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (NotebookGetNotebookResponse, error) {
 	req, err := client.getNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
@@ -244,7 +245,7 @@ func (client *notebookClient) getNotebookHandleError(resp *http.Response) error 
 
 // GetNotebookSummaryByWorkSpace - Lists a summary of Notebooks.
 // If the operation fails it returns the *CloudError error type.
-// options - NotebookGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the Notebook.GetNotebookSummaryByWorkSpace
+// options - NotebookGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the notebookClient.GetNotebookSummaryByWorkSpace
 // method.
 func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGetNotebookSummaryByWorkSpaceOptions) *NotebookGetNotebookSummaryByWorkSpacePager {
 	return &NotebookGetNotebookSummaryByWorkSpacePager{
@@ -296,7 +297,7 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleError(resp *htt
 
 // GetNotebooksByWorkspace - Lists Notebooks.
 // If the operation fails it returns the *CloudError error type.
-// options - NotebookGetNotebooksByWorkspaceOptions contains the optional parameters for the Notebook.GetNotebooksByWorkspace
+// options - NotebookGetNotebooksByWorkspaceOptions contains the optional parameters for the notebookClient.GetNotebooksByWorkspace
 // method.
 func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebooksByWorkspaceOptions) *NotebookGetNotebooksByWorkspacePager {
 	return &NotebookGetNotebooksByWorkspacePager{
@@ -350,7 +351,8 @@ func (client *notebookClient) getNotebooksByWorkspaceHandleError(resp *http.Resp
 // If the operation fails it returns the *CloudError error type.
 // notebookName - The notebook name.
 // request - proposed new name.
-// options - NotebookBeginRenameNotebookOptions contains the optional parameters for the Notebook.BeginRenameNotebook method.
+// options - NotebookBeginRenameNotebookOptions contains the optional parameters for the notebookClient.BeginRenameNotebook
+// method.
 func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookBeginRenameNotebookOptions) (NotebookRenameNotebookPollerResponse, error) {
 	resp, err := client.renameNotebook(ctx, notebookName, request, options)
 	if err != nil {

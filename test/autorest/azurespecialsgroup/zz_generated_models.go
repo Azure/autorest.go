@@ -8,48 +8,50 @@
 
 package azurespecialsgroup
 
-// APIVersionDefaultGetMethodGlobalNotProvidedValidOptions contains the optional parameters for the APIVersionDefault.GetMethodGlobalNotProvidedValid
+// APIVersionDefaultGetMethodGlobalNotProvidedValidOptions contains the optional parameters for the APIVersionDefaultClient.GetMethodGlobalNotProvidedValid
 // method.
 type APIVersionDefaultGetMethodGlobalNotProvidedValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// APIVersionDefaultGetMethodGlobalValidOptions contains the optional parameters for the APIVersionDefault.GetMethodGlobalValid
+// APIVersionDefaultGetMethodGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetMethodGlobalValid
 // method.
 type APIVersionDefaultGetMethodGlobalValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// APIVersionDefaultGetPathGlobalValidOptions contains the optional parameters for the APIVersionDefault.GetPathGlobalValid
+// APIVersionDefaultGetPathGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetPathGlobalValid
 // method.
 type APIVersionDefaultGetPathGlobalValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// APIVersionDefaultGetSwaggerGlobalValidOptions contains the optional parameters for the APIVersionDefault.GetSwaggerGlobalValid
+// APIVersionDefaultGetSwaggerGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetSwaggerGlobalValid
 // method.
 type APIVersionDefaultGetSwaggerGlobalValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// APIVersionLocalGetMethodLocalNullOptions contains the optional parameters for the APIVersionLocal.GetMethodLocalNull method.
+// APIVersionLocalGetMethodLocalNullOptions contains the optional parameters for the APIVersionLocalClient.GetMethodLocalNull
+// method.
 type APIVersionLocalGetMethodLocalNullOptions struct {
 	// This should appear as a method parameter, use value null, this should result in no serialized parameter
 	APIVersion *string
 }
 
-// APIVersionLocalGetMethodLocalValidOptions contains the optional parameters for the APIVersionLocal.GetMethodLocalValid
+// APIVersionLocalGetMethodLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetMethodLocalValid
 // method.
 type APIVersionLocalGetMethodLocalValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// APIVersionLocalGetPathLocalValidOptions contains the optional parameters for the APIVersionLocal.GetPathLocalValid method.
+// APIVersionLocalGetPathLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetPathLocalValid
+// method.
 type APIVersionLocalGetPathLocalValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// APIVersionLocalGetSwaggerLocalValidOptions contains the optional parameters for the APIVersionLocal.GetSwaggerLocalValid
+// APIVersionLocalGetSwaggerLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetSwaggerLocalValid
 // method.
 type APIVersionLocalGetSwaggerLocalValidOptions struct {
 	// placeholder for future optional parameters
@@ -70,17 +72,17 @@ func (e Error) Error() string {
 	return e.raw
 }
 
-// HeaderCustomNamedRequestIDHeadOptions contains the optional parameters for the Header.CustomNamedRequestIDHead method.
+// HeaderCustomNamedRequestIDHeadOptions contains the optional parameters for the HeaderClient.CustomNamedRequestIDHead method.
 type HeaderCustomNamedRequestIDHeadOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderCustomNamedRequestIDOptions contains the optional parameters for the Header.CustomNamedRequestID method.
+// HeaderCustomNamedRequestIDOptions contains the optional parameters for the HeaderClient.CustomNamedRequestID method.
 type HeaderCustomNamedRequestIDOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderCustomNamedRequestIDParamGroupingOptions contains the optional parameters for the Header.CustomNamedRequestIDParamGrouping
+// HeaderCustomNamedRequestIDParamGroupingOptions contains the optional parameters for the HeaderClient.CustomNamedRequestIDParamGrouping
 // method.
 type HeaderCustomNamedRequestIDParamGroupingOptions struct {
 	// placeholder for future optional parameters
@@ -98,7 +100,7 @@ type ODataFilter struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// ODataGetWithFilterOptions contains the optional parameters for the OData.GetWithFilter method.
+// ODataGetWithFilterOptions contains the optional parameters for the ODataClient.GetWithFilter method.
 type ODataGetWithFilterOptions struct {
 	// The filter parameter with value '$filter=id gt 5 and name eq 'foo''.
 	Filter *string
@@ -108,105 +110,108 @@ type ODataGetWithFilterOptions struct {
 	Top *int32
 }
 
-// SkipURLEncodingGetMethodPathValidOptions contains the optional parameters for the SkipURLEncoding.GetMethodPathValid method.
+// SkipURLEncodingGetMethodPathValidOptions contains the optional parameters for the SkipURLEncodingClient.GetMethodPathValid
+// method.
 type SkipURLEncodingGetMethodPathValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SkipURLEncodingGetMethodQueryNullOptions contains the optional parameters for the SkipURLEncoding.GetMethodQueryNull method.
+// SkipURLEncodingGetMethodQueryNullOptions contains the optional parameters for the SkipURLEncodingClient.GetMethodQueryNull
+// method.
 type SkipURLEncodingGetMethodQueryNullOptions struct {
 	// Unencoded query parameter with value null
 	Q1 *string
 }
 
-// SkipURLEncodingGetMethodQueryValidOptions contains the optional parameters for the SkipURLEncoding.GetMethodQueryValid
+// SkipURLEncodingGetMethodQueryValidOptions contains the optional parameters for the SkipURLEncodingClient.GetMethodQueryValid
 // method.
 type SkipURLEncodingGetMethodQueryValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SkipURLEncodingGetPathQueryValidOptions contains the optional parameters for the SkipURLEncoding.GetPathQueryValid method.
+// SkipURLEncodingGetPathQueryValidOptions contains the optional parameters for the SkipURLEncodingClient.GetPathQueryValid
+// method.
 type SkipURLEncodingGetPathQueryValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SkipURLEncodingGetPathValidOptions contains the optional parameters for the SkipURLEncoding.GetPathValid method.
+// SkipURLEncodingGetPathValidOptions contains the optional parameters for the SkipURLEncodingClient.GetPathValid method.
 type SkipURLEncodingGetPathValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SkipURLEncodingGetSwaggerPathValidOptions contains the optional parameters for the SkipURLEncoding.GetSwaggerPathValid
+// SkipURLEncodingGetSwaggerPathValidOptions contains the optional parameters for the SkipURLEncodingClient.GetSwaggerPathValid
 // method.
 type SkipURLEncodingGetSwaggerPathValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SkipURLEncodingGetSwaggerQueryValidOptions contains the optional parameters for the SkipURLEncoding.GetSwaggerQueryValid
+// SkipURLEncodingGetSwaggerQueryValidOptions contains the optional parameters for the SkipURLEncodingClient.GetSwaggerQueryValid
 // method.
 type SkipURLEncodingGetSwaggerQueryValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SubscriptionInCredentialsPostMethodGlobalNotProvidedValidOptions contains the optional parameters for the SubscriptionInCredentials.PostMethodGlobalNotProvidedValid
+// SubscriptionInCredentialsPostMethodGlobalNotProvidedValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostMethodGlobalNotProvidedValid
 // method.
 type SubscriptionInCredentialsPostMethodGlobalNotProvidedValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SubscriptionInCredentialsPostMethodGlobalNullOptions contains the optional parameters for the SubscriptionInCredentials.PostMethodGlobalNull
+// SubscriptionInCredentialsPostMethodGlobalNullOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostMethodGlobalNull
 // method.
 type SubscriptionInCredentialsPostMethodGlobalNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SubscriptionInCredentialsPostMethodGlobalValidOptions contains the optional parameters for the SubscriptionInCredentials.PostMethodGlobalValid
+// SubscriptionInCredentialsPostMethodGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostMethodGlobalValid
 // method.
 type SubscriptionInCredentialsPostMethodGlobalValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SubscriptionInCredentialsPostPathGlobalValidOptions contains the optional parameters for the SubscriptionInCredentials.PostPathGlobalValid
+// SubscriptionInCredentialsPostPathGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostPathGlobalValid
 // method.
 type SubscriptionInCredentialsPostPathGlobalValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SubscriptionInCredentialsPostSwaggerGlobalValidOptions contains the optional parameters for the SubscriptionInCredentials.PostSwaggerGlobalValid
+// SubscriptionInCredentialsPostSwaggerGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostSwaggerGlobalValid
 // method.
 type SubscriptionInCredentialsPostSwaggerGlobalValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SubscriptionInMethodPostMethodLocalNullOptions contains the optional parameters for the SubscriptionInMethod.PostMethodLocalNull
+// SubscriptionInMethodPostMethodLocalNullOptions contains the optional parameters for the SubscriptionInMethodClient.PostMethodLocalNull
 // method.
 type SubscriptionInMethodPostMethodLocalNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SubscriptionInMethodPostMethodLocalValidOptions contains the optional parameters for the SubscriptionInMethod.PostMethodLocalValid
+// SubscriptionInMethodPostMethodLocalValidOptions contains the optional parameters for the SubscriptionInMethodClient.PostMethodLocalValid
 // method.
 type SubscriptionInMethodPostMethodLocalValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SubscriptionInMethodPostPathLocalValidOptions contains the optional parameters for the SubscriptionInMethod.PostPathLocalValid
+// SubscriptionInMethodPostPathLocalValidOptions contains the optional parameters for the SubscriptionInMethodClient.PostPathLocalValid
 // method.
 type SubscriptionInMethodPostPathLocalValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SubscriptionInMethodPostSwaggerLocalValidOptions contains the optional parameters for the SubscriptionInMethod.PostSwaggerLocalValid
+// SubscriptionInMethodPostSwaggerLocalValidOptions contains the optional parameters for the SubscriptionInMethodClient.PostSwaggerLocalValid
 // method.
 type SubscriptionInMethodPostSwaggerLocalValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// XMSClientRequestIDGetOptions contains the optional parameters for the XMSClientRequestID.Get method.
+// XMSClientRequestIDGetOptions contains the optional parameters for the XMSClientRequestIDClient.Get method.
 type XMSClientRequestIDGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// XMSClientRequestIDParamGetOptions contains the optional parameters for the XMSClientRequestID.ParamGet method.
+// XMSClientRequestIDParamGetOptions contains the optional parameters for the XMSClientRequestIDClient.ParamGet method.
 type XMSClientRequestIDParamGetOptions struct {
 	// placeholder for future optional parameters
 }

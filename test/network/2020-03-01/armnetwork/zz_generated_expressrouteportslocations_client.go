@@ -55,7 +55,7 @@ func NewExpressRoutePortsLocationsClient(subscriptionID string, credential azcor
 // peering location.
 // If the operation fails it returns the *CloudError error type.
 // locationName - Name of the requested ExpressRoutePort peering location.
-// options - ExpressRoutePortsLocationsGetOptions contains the optional parameters for the ExpressRoutePortsLocations.Get
+// options - ExpressRoutePortsLocationsGetOptions contains the optional parameters for the ExpressRoutePortsLocationsClient.Get
 // method.
 func (client *ExpressRoutePortsLocationsClient) Get(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (ExpressRoutePortsLocationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, locationName, options)
@@ -119,7 +119,7 @@ func (client *ExpressRoutePortsLocationsClient) getHandleError(resp *http.Respon
 // List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available
 // bandwidths can only be obtained when retrieving a specific peering location.
 // If the operation fails it returns the *CloudError error type.
-// options - ExpressRoutePortsLocationsListOptions contains the optional parameters for the ExpressRoutePortsLocations.List
+// options - ExpressRoutePortsLocationsListOptions contains the optional parameters for the ExpressRoutePortsLocationsClient.List
 // method.
 func (client *ExpressRoutePortsLocationsClient) List(options *ExpressRoutePortsLocationsListOptions) *ExpressRoutePortsLocationsListPager {
 	return &ExpressRoutePortsLocationsListPager{

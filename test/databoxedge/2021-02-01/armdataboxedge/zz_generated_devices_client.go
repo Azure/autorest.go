@@ -48,7 +48,7 @@ func NewDevicesClient(subscriptionID string, options *azcore.ClientOptions) *Dev
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // dataBoxEdgeDevice - The resource object.
-// options - DevicesCreateOrUpdateOptions contains the optional parameters for the Devices.CreateOrUpdate method.
+// options - DevicesCreateOrUpdateOptions contains the optional parameters for the DevicesClient.CreateOrUpdate method.
 func (client *DevicesClient) CreateOrUpdate(ctx context.Context, deviceName string, resourceGroupName string, dataBoxEdgeDevice DataBoxEdgeDevice, options *DevicesCreateOrUpdateOptions) (DevicesCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, resourceGroupName, dataBoxEdgeDevice, options)
 	if err != nil {
@@ -117,7 +117,7 @@ func (client *DevicesClient) createOrUpdateHandleError(resp *http.Response) erro
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // securitySettings - The security settings.
-// options - DevicesBeginCreateOrUpdateSecuritySettingsOptions contains the optional parameters for the Devices.BeginCreateOrUpdateSecuritySettings
+// options - DevicesBeginCreateOrUpdateSecuritySettingsOptions contains the optional parameters for the DevicesClient.BeginCreateOrUpdateSecuritySettings
 // method.
 func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, options *DevicesBeginCreateOrUpdateSecuritySettingsOptions) (DevicesCreateOrUpdateSecuritySettingsPollerResponse, error) {
 	resp, err := client.createOrUpdateSecuritySettings(ctx, deviceName, resourceGroupName, securitySettings, options)
@@ -197,7 +197,7 @@ func (client *DevicesClient) createOrUpdateSecuritySettingsHandleError(resp *htt
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - DevicesBeginDeleteOptions contains the optional parameters for the Devices.BeginDelete method.
+// options - DevicesBeginDeleteOptions contains the optional parameters for the DevicesClient.BeginDelete method.
 func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesBeginDeleteOptions) (DevicesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -276,7 +276,8 @@ func (client *DevicesClient) deleteHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - DevicesBeginDownloadUpdatesOptions contains the optional parameters for the Devices.BeginDownloadUpdates method.
+// options - DevicesBeginDownloadUpdatesOptions contains the optional parameters for the DevicesClient.BeginDownloadUpdates
+// method.
 func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesBeginDownloadUpdatesOptions) (DevicesDownloadUpdatesPollerResponse, error) {
 	resp, err := client.downloadUpdates(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -355,7 +356,8 @@ func (client *DevicesClient) downloadUpdatesHandleError(resp *http.Response) err
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - DevicesGenerateCertificateOptions contains the optional parameters for the Devices.GenerateCertificate method.
+// options - DevicesGenerateCertificateOptions contains the optional parameters for the DevicesClient.GenerateCertificate
+// method.
 func (client *DevicesClient) GenerateCertificate(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesGenerateCertificateOptions) (DevicesGenerateCertificateResponse, error) {
 	req, err := client.generateCertificateCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -423,7 +425,7 @@ func (client *DevicesClient) generateCertificateHandleError(resp *http.Response)
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - DevicesGetOptions contains the optional parameters for the Devices.Get method.
+// options - DevicesGetOptions contains the optional parameters for the DevicesClient.Get method.
 func (client *DevicesClient) Get(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesGetOptions) (DevicesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -491,7 +493,7 @@ func (client *DevicesClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - DevicesGetExtendedInformationOptions contains the optional parameters for the Devices.GetExtendedInformation
+// options - DevicesGetExtendedInformationOptions contains the optional parameters for the DevicesClient.GetExtendedInformation
 // method.
 func (client *DevicesClient) GetExtendedInformation(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesGetExtendedInformationOptions) (DevicesGetExtendedInformationResponse, error) {
 	req, err := client.getExtendedInformationCreateRequest(ctx, deviceName, resourceGroupName, options)
@@ -560,7 +562,7 @@ func (client *DevicesClient) getExtendedInformationHandleError(resp *http.Respon
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - DevicesGetNetworkSettingsOptions contains the optional parameters for the Devices.GetNetworkSettings method.
+// options - DevicesGetNetworkSettingsOptions contains the optional parameters for the DevicesClient.GetNetworkSettings method.
 func (client *DevicesClient) GetNetworkSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesGetNetworkSettingsOptions) (DevicesGetNetworkSettingsResponse, error) {
 	req, err := client.getNetworkSettingsCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -629,7 +631,7 @@ func (client *DevicesClient) getNetworkSettingsHandleError(resp *http.Response) 
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - DevicesGetUpdateSummaryOptions contains the optional parameters for the Devices.GetUpdateSummary method.
+// options - DevicesGetUpdateSummaryOptions contains the optional parameters for the DevicesClient.GetUpdateSummary method.
 func (client *DevicesClient) GetUpdateSummary(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesGetUpdateSummaryOptions) (DevicesGetUpdateSummaryResponse, error) {
 	req, err := client.getUpdateSummaryCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -697,7 +699,8 @@ func (client *DevicesClient) getUpdateSummaryHandleError(resp *http.Response) er
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - DevicesBeginInstallUpdatesOptions contains the optional parameters for the Devices.BeginInstallUpdates method.
+// options - DevicesBeginInstallUpdatesOptions contains the optional parameters for the DevicesClient.BeginInstallUpdates
+// method.
 func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesBeginInstallUpdatesOptions) (DevicesInstallUpdatesPollerResponse, error) {
 	resp, err := client.installUpdates(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -775,7 +778,8 @@ func (client *DevicesClient) installUpdatesHandleError(resp *http.Response) erro
 // ListByResourceGroup - Gets all the Data Box Edge/Data Box Gateway devices in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name.
-// options - DevicesListByResourceGroupOptions contains the optional parameters for the Devices.ListByResourceGroup method.
+// options - DevicesListByResourceGroupOptions contains the optional parameters for the DevicesClient.ListByResourceGroup
+// method.
 func (client *DevicesClient) ListByResourceGroup(resourceGroupName string, options *DevicesListByResourceGroupOptions) *DevicesListByResourceGroupPager {
 	return &DevicesListByResourceGroupPager{
 		client: client,
@@ -837,7 +841,7 @@ func (client *DevicesClient) listByResourceGroupHandleError(resp *http.Response)
 
 // ListBySubscription - Gets all the Data Box Edge/Data Box Gateway devices in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - DevicesListBySubscriptionOptions contains the optional parameters for the Devices.ListBySubscription method.
+// options - DevicesListBySubscriptionOptions contains the optional parameters for the DevicesClient.ListBySubscription method.
 func (client *DevicesClient) ListBySubscription(options *DevicesListBySubscriptionOptions) *DevicesListBySubscriptionPager {
 	return &DevicesListBySubscriptionPager{
 		client: client,
@@ -897,7 +901,8 @@ func (client *DevicesClient) listBySubscriptionHandleError(resp *http.Response) 
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - DevicesBeginScanForUpdatesOptions contains the optional parameters for the Devices.BeginScanForUpdates method.
+// options - DevicesBeginScanForUpdatesOptions contains the optional parameters for the DevicesClient.BeginScanForUpdates
+// method.
 func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesBeginScanForUpdatesOptions) (DevicesScanForUpdatesPollerResponse, error) {
 	resp, err := client.scanForUpdates(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -977,7 +982,7 @@ func (client *DevicesClient) scanForUpdatesHandleError(resp *http.Response) erro
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // parameters - The resource parameters.
-// options - DevicesUpdateOptions contains the optional parameters for the Devices.Update method.
+// options - DevicesUpdateOptions contains the optional parameters for the DevicesClient.Update method.
 func (client *DevicesClient) Update(ctx context.Context, deviceName string, resourceGroupName string, parameters DataBoxEdgeDevicePatch, options *DevicesUpdateOptions) (DevicesUpdateResponse, error) {
 	req, err := client.updateCreateRequest(ctx, deviceName, resourceGroupName, parameters, options)
 	if err != nil {
@@ -1046,7 +1051,7 @@ func (client *DevicesClient) updateHandleError(resp *http.Response) error {
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // parameters - The patch object.
-// options - DevicesUpdateExtendedInformationOptions contains the optional parameters for the Devices.UpdateExtendedInformation
+// options - DevicesUpdateExtendedInformationOptions contains the optional parameters for the DevicesClient.UpdateExtendedInformation
 // method.
 func (client *DevicesClient) UpdateExtendedInformation(ctx context.Context, deviceName string, resourceGroupName string, parameters DataBoxEdgeDeviceExtendedInfoPatch, options *DevicesUpdateExtendedInformationOptions) (DevicesUpdateExtendedInformationResponse, error) {
 	req, err := client.updateExtendedInformationCreateRequest(ctx, deviceName, resourceGroupName, parameters, options)
@@ -1116,7 +1121,7 @@ func (client *DevicesClient) updateExtendedInformationHandleError(resp *http.Res
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // parameters - The upload certificate request.
-// options - DevicesUploadCertificateOptions contains the optional parameters for the Devices.UploadCertificate method.
+// options - DevicesUploadCertificateOptions contains the optional parameters for the DevicesClient.UploadCertificate method.
 func (client *DevicesClient) UploadCertificate(ctx context.Context, deviceName string, resourceGroupName string, parameters UploadCertificateRequest, options *DevicesUploadCertificateOptions) (DevicesUploadCertificateResponse, error) {
 	req, err := client.uploadCertificateCreateRequest(ctx, deviceName, resourceGroupName, parameters, options)
 	if err != nil {

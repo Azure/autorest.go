@@ -38,7 +38,7 @@ func NewHTTPRedirectsClient(options *azcore.ClientOptions) *HTTPRedirectsClient 
 
 // Delete307 - Delete redirected with 307, resulting in a 200 after redirect
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsDelete307Options contains the optional parameters for the HTTPRedirects.Delete307 method.
+// options - HTTPRedirectsDelete307Options contains the optional parameters for the HTTPRedirectsClient.Delete307 method.
 func (client *HTTPRedirectsClient) Delete307(ctx context.Context, options *HTTPRedirectsDelete307Options) (HTTPRedirectsDelete307Response, error) {
 	req, err := client.delete307CreateRequest(ctx, options)
 	if err != nil {
@@ -80,7 +80,7 @@ func (client *HTTPRedirectsClient) delete307HandleError(resp *http.Response) err
 
 // Get300 - Return 300 status code and redirect to /http/success/200
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsGet300Options contains the optional parameters for the HTTPRedirects.Get300 method.
+// options - HTTPRedirectsGet300Options contains the optional parameters for the HTTPRedirectsClient.Get300 method.
 func (client *HTTPRedirectsClient) Get300(ctx context.Context, options *HTTPRedirectsGet300Options) (HTTPRedirectsGet300Response, error) {
 	req, err := client.get300CreateRequest(ctx, options)
 	if err != nil {
@@ -134,7 +134,7 @@ func (client *HTTPRedirectsClient) get300HandleError(resp *http.Response) error 
 
 // Get301 - Return 301 status code and redirect to /http/success/200
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsGet301Options contains the optional parameters for the HTTPRedirects.Get301 method.
+// options - HTTPRedirectsGet301Options contains the optional parameters for the HTTPRedirectsClient.Get301 method.
 func (client *HTTPRedirectsClient) Get301(ctx context.Context, options *HTTPRedirectsGet301Options) (HTTPRedirectsGet301Response, error) {
 	req, err := client.get301CreateRequest(ctx, options)
 	if err != nil {
@@ -176,7 +176,7 @@ func (client *HTTPRedirectsClient) get301HandleError(resp *http.Response) error 
 
 // Get302 - Return 302 status code and redirect to /http/success/200
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsGet302Options contains the optional parameters for the HTTPRedirects.Get302 method.
+// options - HTTPRedirectsGet302Options contains the optional parameters for the HTTPRedirectsClient.Get302 method.
 func (client *HTTPRedirectsClient) Get302(ctx context.Context, options *HTTPRedirectsGet302Options) (HTTPRedirectsGet302Response, error) {
 	req, err := client.get302CreateRequest(ctx, options)
 	if err != nil {
@@ -218,7 +218,7 @@ func (client *HTTPRedirectsClient) get302HandleError(resp *http.Response) error 
 
 // Get307 - Redirect get with 307, resulting in a 200 success
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsGet307Options contains the optional parameters for the HTTPRedirects.Get307 method.
+// options - HTTPRedirectsGet307Options contains the optional parameters for the HTTPRedirectsClient.Get307 method.
 func (client *HTTPRedirectsClient) Get307(ctx context.Context, options *HTTPRedirectsGet307Options) (HTTPRedirectsGet307Response, error) {
 	req, err := client.get307CreateRequest(ctx, options)
 	if err != nil {
@@ -260,7 +260,7 @@ func (client *HTTPRedirectsClient) get307HandleError(resp *http.Response) error 
 
 // Head300 - Return 300 status code and redirect to /http/success/200
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsHead300Options contains the optional parameters for the HTTPRedirects.Head300 method.
+// options - HTTPRedirectsHead300Options contains the optional parameters for the HTTPRedirectsClient.Head300 method.
 func (client *HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRedirectsHead300Options) (HTTPRedirectsHead300Response, error) {
 	req, err := client.head300CreateRequest(ctx, options)
 	if err != nil {
@@ -298,7 +298,7 @@ func (client *HTTPRedirectsClient) head300HandleResponse(resp *http.Response) (H
 
 // Head301 - Return 301 status code and redirect to /http/success/200
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsHead301Options contains the optional parameters for the HTTPRedirects.Head301 method.
+// options - HTTPRedirectsHead301Options contains the optional parameters for the HTTPRedirectsClient.Head301 method.
 func (client *HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRedirectsHead301Options) (HTTPRedirectsHead301Response, error) {
 	req, err := client.head301CreateRequest(ctx, options)
 	if err != nil {
@@ -328,7 +328,7 @@ func (client *HTTPRedirectsClient) head301CreateRequest(ctx context.Context, opt
 
 // Head302 - Return 302 status code and redirect to /http/success/200
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsHead302Options contains the optional parameters for the HTTPRedirects.Head302 method.
+// options - HTTPRedirectsHead302Options contains the optional parameters for the HTTPRedirectsClient.Head302 method.
 func (client *HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRedirectsHead302Options) (HTTPRedirectsHead302Response, error) {
 	req, err := client.head302CreateRequest(ctx, options)
 	if err != nil {
@@ -358,7 +358,7 @@ func (client *HTTPRedirectsClient) head302CreateRequest(ctx context.Context, opt
 
 // Head307 - Redirect with 307, resulting in a 200 success
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsHead307Options contains the optional parameters for the HTTPRedirects.Head307 method.
+// options - HTTPRedirectsHead307Options contains the optional parameters for the HTTPRedirectsClient.Head307 method.
 func (client *HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRedirectsHead307Options) (HTTPRedirectsHead307Response, error) {
 	req, err := client.head307CreateRequest(ctx, options)
 	if err != nil {
@@ -388,7 +388,7 @@ func (client *HTTPRedirectsClient) head307CreateRequest(ctx context.Context, opt
 
 // Options307 - options redirected with 307, resulting in a 200 after redirect
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsOptions307Options contains the optional parameters for the HTTPRedirects.Options307 method.
+// options - HTTPRedirectsOptions307Options contains the optional parameters for the HTTPRedirectsClient.Options307 method.
 func (client *HTTPRedirectsClient) Options307(ctx context.Context, options *HTTPRedirectsOptions307Options) (HTTPRedirectsOptions307Response, error) {
 	req, err := client.options307CreateRequest(ctx, options)
 	if err != nil {
@@ -431,7 +431,7 @@ func (client *HTTPRedirectsClient) options307HandleError(resp *http.Response) er
 // Patch302 - Patch true Boolean value in request returns 302. This request should not be automatically redirected, but should
 // return the received 302 to the caller for evaluation
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsPatch302Options contains the optional parameters for the HTTPRedirects.Patch302 method.
+// options - HTTPRedirectsPatch302Options contains the optional parameters for the HTTPRedirectsClient.Patch302 method.
 func (client *HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRedirectsPatch302Options) (HTTPRedirectsPatch302Response, error) {
 	req, err := client.patch302CreateRequest(ctx, options)
 	if err != nil {
@@ -482,7 +482,7 @@ func (client *HTTPRedirectsClient) patch302HandleError(resp *http.Response) erro
 
 // Patch307 - Patch redirected with 307, resulting in a 200 after redirect
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsPatch307Options contains the optional parameters for the HTTPRedirects.Patch307 method.
+// options - HTTPRedirectsPatch307Options contains the optional parameters for the HTTPRedirectsClient.Patch307 method.
 func (client *HTTPRedirectsClient) Patch307(ctx context.Context, options *HTTPRedirectsPatch307Options) (HTTPRedirectsPatch307Response, error) {
 	req, err := client.patch307CreateRequest(ctx, options)
 	if err != nil {
@@ -525,7 +525,7 @@ func (client *HTTPRedirectsClient) patch307HandleError(resp *http.Response) erro
 // Post303 - Post true Boolean value in request returns 303. This request should be automatically redirected usign a get,
 // ultimately returning a 200 status code
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsPost303Options contains the optional parameters for the HTTPRedirects.Post303 method.
+// options - HTTPRedirectsPost303Options contains the optional parameters for the HTTPRedirectsClient.Post303 method.
 func (client *HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRedirectsPost303Options) (HTTPRedirectsPost303Response, error) {
 	req, err := client.post303CreateRequest(ctx, options)
 	if err != nil {
@@ -576,7 +576,7 @@ func (client *HTTPRedirectsClient) post303HandleError(resp *http.Response) error
 
 // Post307 - Post redirected with 307, resulting in a 200 after redirect
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsPost307Options contains the optional parameters for the HTTPRedirects.Post307 method.
+// options - HTTPRedirectsPost307Options contains the optional parameters for the HTTPRedirectsClient.Post307 method.
 func (client *HTTPRedirectsClient) Post307(ctx context.Context, options *HTTPRedirectsPost307Options) (HTTPRedirectsPost307Response, error) {
 	req, err := client.post307CreateRequest(ctx, options)
 	if err != nil {
@@ -619,7 +619,7 @@ func (client *HTTPRedirectsClient) post307HandleError(resp *http.Response) error
 // Put301 - Put true Boolean value in request returns 301. This request should not be automatically redirected, but should
 // return the received 301 to the caller for evaluation
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsPut301Options contains the optional parameters for the HTTPRedirects.Put301 method.
+// options - HTTPRedirectsPut301Options contains the optional parameters for the HTTPRedirectsClient.Put301 method.
 func (client *HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedirectsPut301Options) (HTTPRedirectsPut301Response, error) {
 	req, err := client.put301CreateRequest(ctx, options)
 	if err != nil {
@@ -670,7 +670,7 @@ func (client *HTTPRedirectsClient) put301HandleError(resp *http.Response) error 
 
 // Put307 - Put redirected with 307, resulting in a 200 after redirect
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsPut307Options contains the optional parameters for the HTTPRedirects.Put307 method.
+// options - HTTPRedirectsPut307Options contains the optional parameters for the HTTPRedirectsClient.Put307 method.
 func (client *HTTPRedirectsClient) Put307(ctx context.Context, options *HTTPRedirectsPut307Options) (HTTPRedirectsPut307Response, error) {
 	req, err := client.put307CreateRequest(ctx, options)
 	if err != nil {

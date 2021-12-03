@@ -47,7 +47,7 @@ func NewJobsClient(subscriptionID string, options *azcore.ClientOptions) *JobsCl
 // deviceName - The device name.
 // name - The job name.
 // resourceGroupName - The resource group name.
-// options - JobsGetOptions contains the optional parameters for the Jobs.Get method.
+// options - JobsGetOptions contains the optional parameters for the JobsClient.Get method.
 func (client *JobsClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *JobsGetOptions) (JobsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {

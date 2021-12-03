@@ -56,7 +56,8 @@ func NewResourceNavigationLinksClient(subscriptionID string, credential azcore.T
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // subnetName - The name of the subnet.
-// options - ResourceNavigationLinksListOptions contains the optional parameters for the ResourceNavigationLinks.List method.
+// options - ResourceNavigationLinksListOptions contains the optional parameters for the ResourceNavigationLinksClient.List
+// method.
 func (client *ResourceNavigationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (ResourceNavigationLinksListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {

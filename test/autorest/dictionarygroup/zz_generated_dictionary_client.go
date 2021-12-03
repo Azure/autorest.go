@@ -39,7 +39,7 @@ func NewDictionaryClient(options *azcore.ClientOptions) *DictionaryClient {
 
 // GetArrayEmpty - Get an empty dictionary {}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetArrayEmptyOptions contains the optional parameters for the Dictionary.GetArrayEmpty method.
+// options - DictionaryGetArrayEmptyOptions contains the optional parameters for the DictionaryClient.GetArrayEmpty method.
 func (client *DictionaryClient) GetArrayEmpty(ctx context.Context, options *DictionaryGetArrayEmptyOptions) (DictionaryGetArrayEmptyResponse, error) {
 	req, err := client.getArrayEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -90,7 +90,8 @@ func (client *DictionaryClient) getArrayEmptyHandleError(resp *http.Response) er
 
 // GetArrayItemEmpty - Get an array of array of strings [{"0": ["1", "2", "3"], "1": [], "2": ["7", "8", "9"]}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetArrayItemEmptyOptions contains the optional parameters for the Dictionary.GetArrayItemEmpty method.
+// options - DictionaryGetArrayItemEmptyOptions contains the optional parameters for the DictionaryClient.GetArrayItemEmpty
+// method.
 func (client *DictionaryClient) GetArrayItemEmpty(ctx context.Context, options *DictionaryGetArrayItemEmptyOptions) (DictionaryGetArrayItemEmptyResponse, error) {
 	req, err := client.getArrayItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -141,7 +142,8 @@ func (client *DictionaryClient) getArrayItemEmptyHandleError(resp *http.Response
 
 // GetArrayItemNull - Get an dictionary of array of strings {"0": ["1", "2", "3"], "1": null, "2": ["7", "8", "9"]}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetArrayItemNullOptions contains the optional parameters for the Dictionary.GetArrayItemNull method.
+// options - DictionaryGetArrayItemNullOptions contains the optional parameters for the DictionaryClient.GetArrayItemNull
+// method.
 func (client *DictionaryClient) GetArrayItemNull(ctx context.Context, options *DictionaryGetArrayItemNullOptions) (DictionaryGetArrayItemNullResponse, error) {
 	req, err := client.getArrayItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -192,7 +194,7 @@ func (client *DictionaryClient) getArrayItemNullHandleError(resp *http.Response)
 
 // GetArrayNull - Get a null array
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetArrayNullOptions contains the optional parameters for the Dictionary.GetArrayNull method.
+// options - DictionaryGetArrayNullOptions contains the optional parameters for the DictionaryClient.GetArrayNull method.
 func (client *DictionaryClient) GetArrayNull(ctx context.Context, options *DictionaryGetArrayNullOptions) (DictionaryGetArrayNullResponse, error) {
 	req, err := client.getArrayNullCreateRequest(ctx, options)
 	if err != nil {
@@ -243,7 +245,7 @@ func (client *DictionaryClient) getArrayNullHandleError(resp *http.Response) err
 
 // GetArrayValid - Get an array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetArrayValidOptions contains the optional parameters for the Dictionary.GetArrayValid method.
+// options - DictionaryGetArrayValidOptions contains the optional parameters for the DictionaryClient.GetArrayValid method.
 func (client *DictionaryClient) GetArrayValid(ctx context.Context, options *DictionaryGetArrayValidOptions) (DictionaryGetArrayValidResponse, error) {
 	req, err := client.getArrayValidCreateRequest(ctx, options)
 	if err != nil {
@@ -295,7 +297,7 @@ func (client *DictionaryClient) getArrayValidHandleError(resp *http.Response) er
 // GetBase64URL - Get base64url dictionary value {"0": "a string that gets encoded with base64url", "1": "test string", "2":
 // "Lorem ipsum"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetBase64URLOptions contains the optional parameters for the Dictionary.GetBase64URL method.
+// options - DictionaryGetBase64URLOptions contains the optional parameters for the DictionaryClient.GetBase64URL method.
 func (client *DictionaryClient) GetBase64URL(ctx context.Context, options *DictionaryGetBase64URLOptions) (DictionaryGetBase64URLResponse, error) {
 	req, err := client.getBase64URLCreateRequest(ctx, options)
 	if err != nil {
@@ -346,7 +348,7 @@ func (client *DictionaryClient) getBase64URLHandleError(resp *http.Response) err
 
 // GetBooleanInvalidNull - Get boolean dictionary value {"0": true, "1": null, "2": false }
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetBooleanInvalidNullOptions contains the optional parameters for the Dictionary.GetBooleanInvalidNull
+// options - DictionaryGetBooleanInvalidNullOptions contains the optional parameters for the DictionaryClient.GetBooleanInvalidNull
 // method.
 func (client *DictionaryClient) GetBooleanInvalidNull(ctx context.Context, options *DictionaryGetBooleanInvalidNullOptions) (DictionaryGetBooleanInvalidNullResponse, error) {
 	req, err := client.getBooleanInvalidNullCreateRequest(ctx, options)
@@ -398,7 +400,7 @@ func (client *DictionaryClient) getBooleanInvalidNullHandleError(resp *http.Resp
 
 // GetBooleanInvalidString - Get boolean dictionary value '{"0": true, "1": "boolean", "2": false}'
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetBooleanInvalidStringOptions contains the optional parameters for the Dictionary.GetBooleanInvalidString
+// options - DictionaryGetBooleanInvalidStringOptions contains the optional parameters for the DictionaryClient.GetBooleanInvalidString
 // method.
 func (client *DictionaryClient) GetBooleanInvalidString(ctx context.Context, options *DictionaryGetBooleanInvalidStringOptions) (DictionaryGetBooleanInvalidStringResponse, error) {
 	req, err := client.getBooleanInvalidStringCreateRequest(ctx, options)
@@ -450,7 +452,7 @@ func (client *DictionaryClient) getBooleanInvalidStringHandleError(resp *http.Re
 
 // GetBooleanTfft - Get boolean dictionary value {"0": true, "1": false, "2": false, "3": true }
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetBooleanTfftOptions contains the optional parameters for the Dictionary.GetBooleanTfft method.
+// options - DictionaryGetBooleanTfftOptions contains the optional parameters for the DictionaryClient.GetBooleanTfft method.
 func (client *DictionaryClient) GetBooleanTfft(ctx context.Context, options *DictionaryGetBooleanTfftOptions) (DictionaryGetBooleanTfftResponse, error) {
 	req, err := client.getBooleanTfftCreateRequest(ctx, options)
 	if err != nil {
@@ -501,7 +503,8 @@ func (client *DictionaryClient) getBooleanTfftHandleError(resp *http.Response) e
 
 // GetByteInvalidNull - Get byte dictionary value {"0": hex(FF FF FF FA), "1": null} with the first item base64 encoded
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetByteInvalidNullOptions contains the optional parameters for the Dictionary.GetByteInvalidNull method.
+// options - DictionaryGetByteInvalidNullOptions contains the optional parameters for the DictionaryClient.GetByteInvalidNull
+// method.
 func (client *DictionaryClient) GetByteInvalidNull(ctx context.Context, options *DictionaryGetByteInvalidNullOptions) (DictionaryGetByteInvalidNullResponse, error) {
 	req, err := client.getByteInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -553,7 +556,7 @@ func (client *DictionaryClient) getByteInvalidNullHandleError(resp *http.Respons
 // GetByteValid - Get byte dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each item
 // encoded in base64
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetByteValidOptions contains the optional parameters for the Dictionary.GetByteValid method.
+// options - DictionaryGetByteValidOptions contains the optional parameters for the DictionaryClient.GetByteValid method.
 func (client *DictionaryClient) GetByteValid(ctx context.Context, options *DictionaryGetByteValidOptions) (DictionaryGetByteValidResponse, error) {
 	req, err := client.getByteValidCreateRequest(ctx, options)
 	if err != nil {
@@ -604,7 +607,7 @@ func (client *DictionaryClient) getByteValidHandleError(resp *http.Response) err
 
 // GetComplexEmpty - Get empty dictionary of complex type {}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetComplexEmptyOptions contains the optional parameters for the Dictionary.GetComplexEmpty method.
+// options - DictionaryGetComplexEmptyOptions contains the optional parameters for the DictionaryClient.GetComplexEmpty method.
 func (client *DictionaryClient) GetComplexEmpty(ctx context.Context, options *DictionaryGetComplexEmptyOptions) (DictionaryGetComplexEmptyResponse, error) {
 	req, err := client.getComplexEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -656,7 +659,7 @@ func (client *DictionaryClient) getComplexEmptyHandleError(resp *http.Response) 
 // GetComplexItemEmpty - Get dictionary of complex type with empty item {"0": {"integer": 1, "string": "2"}, "1:" {}, "2":
 // {"integer": 5, "string": "6"}}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetComplexItemEmptyOptions contains the optional parameters for the Dictionary.GetComplexItemEmpty
+// options - DictionaryGetComplexItemEmptyOptions contains the optional parameters for the DictionaryClient.GetComplexItemEmpty
 // method.
 func (client *DictionaryClient) GetComplexItemEmpty(ctx context.Context, options *DictionaryGetComplexItemEmptyOptions) (DictionaryGetComplexItemEmptyResponse, error) {
 	req, err := client.getComplexItemEmptyCreateRequest(ctx, options)
@@ -709,7 +712,8 @@ func (client *DictionaryClient) getComplexItemEmptyHandleError(resp *http.Respon
 // GetComplexItemNull - Get dictionary of complex type with null item {"0": {"integer": 1, "string": "2"}, "1": null, "2":
 // {"integer": 5, "string": "6"}}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetComplexItemNullOptions contains the optional parameters for the Dictionary.GetComplexItemNull method.
+// options - DictionaryGetComplexItemNullOptions contains the optional parameters for the DictionaryClient.GetComplexItemNull
+// method.
 func (client *DictionaryClient) GetComplexItemNull(ctx context.Context, options *DictionaryGetComplexItemNullOptions) (DictionaryGetComplexItemNullResponse, error) {
 	req, err := client.getComplexItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -760,7 +764,7 @@ func (client *DictionaryClient) getComplexItemNullHandleError(resp *http.Respons
 
 // GetComplexNull - Get dictionary of complex type null value
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetComplexNullOptions contains the optional parameters for the Dictionary.GetComplexNull method.
+// options - DictionaryGetComplexNullOptions contains the optional parameters for the DictionaryClient.GetComplexNull method.
 func (client *DictionaryClient) GetComplexNull(ctx context.Context, options *DictionaryGetComplexNullOptions) (DictionaryGetComplexNullResponse, error) {
 	req, err := client.getComplexNullCreateRequest(ctx, options)
 	if err != nil {
@@ -812,7 +816,7 @@ func (client *DictionaryClient) getComplexNullHandleError(resp *http.Response) e
 // GetComplexValid - Get dictionary of complex type with {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string":
 // "4"}, "2": {"integer": 5, "string": "6"}}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetComplexValidOptions contains the optional parameters for the Dictionary.GetComplexValid method.
+// options - DictionaryGetComplexValidOptions contains the optional parameters for the DictionaryClient.GetComplexValid method.
 func (client *DictionaryClient) GetComplexValid(ctx context.Context, options *DictionaryGetComplexValidOptions) (DictionaryGetComplexValidResponse, error) {
 	req, err := client.getComplexValidCreateRequest(ctx, options)
 	if err != nil {
@@ -863,7 +867,7 @@ func (client *DictionaryClient) getComplexValidHandleError(resp *http.Response) 
 
 // GetDateInvalidChars - Get date dictionary value {"0": "2011-03-22", "1": "date"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDateInvalidCharsOptions contains the optional parameters for the Dictionary.GetDateInvalidChars
+// options - DictionaryGetDateInvalidCharsOptions contains the optional parameters for the DictionaryClient.GetDateInvalidChars
 // method.
 func (client *DictionaryClient) GetDateInvalidChars(ctx context.Context, options *DictionaryGetDateInvalidCharsOptions) (DictionaryGetDateInvalidCharsResponse, error) {
 	req, err := client.getDateInvalidCharsCreateRequest(ctx, options)
@@ -921,7 +925,8 @@ func (client *DictionaryClient) getDateInvalidCharsHandleError(resp *http.Respon
 
 // GetDateInvalidNull - Get date dictionary value {"0": "2012-01-01", "1": null, "2": "1776-07-04"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDateInvalidNullOptions contains the optional parameters for the Dictionary.GetDateInvalidNull method.
+// options - DictionaryGetDateInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDateInvalidNull
+// method.
 func (client *DictionaryClient) GetDateInvalidNull(ctx context.Context, options *DictionaryGetDateInvalidNullOptions) (DictionaryGetDateInvalidNullResponse, error) {
 	req, err := client.getDateInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -978,7 +983,7 @@ func (client *DictionaryClient) getDateInvalidNullHandleError(resp *http.Respons
 
 // GetDateTimeInvalidChars - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": "date-time"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDateTimeInvalidCharsOptions contains the optional parameters for the Dictionary.GetDateTimeInvalidChars
+// options - DictionaryGetDateTimeInvalidCharsOptions contains the optional parameters for the DictionaryClient.GetDateTimeInvalidChars
 // method.
 func (client *DictionaryClient) GetDateTimeInvalidChars(ctx context.Context, options *DictionaryGetDateTimeInvalidCharsOptions) (DictionaryGetDateTimeInvalidCharsResponse, error) {
 	req, err := client.getDateTimeInvalidCharsCreateRequest(ctx, options)
@@ -1036,7 +1041,7 @@ func (client *DictionaryClient) getDateTimeInvalidCharsHandleError(resp *http.Re
 
 // GetDateTimeInvalidNull - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": null}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDateTimeInvalidNullOptions contains the optional parameters for the Dictionary.GetDateTimeInvalidNull
+// options - DictionaryGetDateTimeInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDateTimeInvalidNull
 // method.
 func (client *DictionaryClient) GetDateTimeInvalidNull(ctx context.Context, options *DictionaryGetDateTimeInvalidNullOptions) (DictionaryGetDateTimeInvalidNullResponse, error) {
 	req, err := client.getDateTimeInvalidNullCreateRequest(ctx, options)
@@ -1095,7 +1100,7 @@ func (client *DictionaryClient) getDateTimeInvalidNullHandleError(resp *http.Res
 // GetDateTimeRFC1123Valid - Get date-time-rfc1123 dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan
 // 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDateTimeRFC1123ValidOptions contains the optional parameters for the Dictionary.GetDateTimeRFC1123Valid
+// options - DictionaryGetDateTimeRFC1123ValidOptions contains the optional parameters for the DictionaryClient.GetDateTimeRFC1123Valid
 // method.
 func (client *DictionaryClient) GetDateTimeRFC1123Valid(ctx context.Context, options *DictionaryGetDateTimeRFC1123ValidOptions) (DictionaryGetDateTimeRFC1123ValidResponse, error) {
 	req, err := client.getDateTimeRFC1123ValidCreateRequest(ctx, options)
@@ -1154,7 +1159,8 @@ func (client *DictionaryClient) getDateTimeRFC1123ValidHandleError(resp *http.Re
 // GetDateTimeValid - Get date-time dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2":
 // "1492-10-12T10:15:01-08:00"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDateTimeValidOptions contains the optional parameters for the Dictionary.GetDateTimeValid method.
+// options - DictionaryGetDateTimeValidOptions contains the optional parameters for the DictionaryClient.GetDateTimeValid
+// method.
 func (client *DictionaryClient) GetDateTimeValid(ctx context.Context, options *DictionaryGetDateTimeValidOptions) (DictionaryGetDateTimeValidResponse, error) {
 	req, err := client.getDateTimeValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1211,7 +1217,7 @@ func (client *DictionaryClient) getDateTimeValidHandleError(resp *http.Response)
 
 // GetDateValid - Get integer dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDateValidOptions contains the optional parameters for the Dictionary.GetDateValid method.
+// options - DictionaryGetDateValidOptions contains the optional parameters for the DictionaryClient.GetDateValid method.
 func (client *DictionaryClient) GetDateValid(ctx context.Context, options *DictionaryGetDateValidOptions) (DictionaryGetDateValidResponse, error) {
 	req, err := client.getDateValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1268,7 +1274,8 @@ func (client *DictionaryClient) getDateValidHandleError(resp *http.Response) err
 
 // GetDictionaryEmpty - Get an dictionaries of dictionaries of type with value {}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDictionaryEmptyOptions contains the optional parameters for the Dictionary.GetDictionaryEmpty method.
+// options - DictionaryGetDictionaryEmptyOptions contains the optional parameters for the DictionaryClient.GetDictionaryEmpty
+// method.
 func (client *DictionaryClient) GetDictionaryEmpty(ctx context.Context, options *DictionaryGetDictionaryEmptyOptions) (DictionaryGetDictionaryEmptyResponse, error) {
 	req, err := client.getDictionaryEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1320,7 +1327,7 @@ func (client *DictionaryClient) getDictionaryEmptyHandleError(resp *http.Respons
 // GetDictionaryItemEmpty - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
 // "1": {}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDictionaryItemEmptyOptions contains the optional parameters for the Dictionary.GetDictionaryItemEmpty
+// options - DictionaryGetDictionaryItemEmptyOptions contains the optional parameters for the DictionaryClient.GetDictionaryItemEmpty
 // method.
 func (client *DictionaryClient) GetDictionaryItemEmpty(ctx context.Context, options *DictionaryGetDictionaryItemEmptyOptions) (DictionaryGetDictionaryItemEmptyResponse, error) {
 	req, err := client.getDictionaryItemEmptyCreateRequest(ctx, options)
@@ -1373,7 +1380,7 @@ func (client *DictionaryClient) getDictionaryItemEmptyHandleError(resp *http.Res
 // GetDictionaryItemNull - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
 // "1": null, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDictionaryItemNullOptions contains the optional parameters for the Dictionary.GetDictionaryItemNull
+// options - DictionaryGetDictionaryItemNullOptions contains the optional parameters for the DictionaryClient.GetDictionaryItemNull
 // method.
 func (client *DictionaryClient) GetDictionaryItemNull(ctx context.Context, options *DictionaryGetDictionaryItemNullOptions) (DictionaryGetDictionaryItemNullResponse, error) {
 	req, err := client.getDictionaryItemNullCreateRequest(ctx, options)
@@ -1425,7 +1432,8 @@ func (client *DictionaryClient) getDictionaryItemNullHandleError(resp *http.Resp
 
 // GetDictionaryNull - Get an dictionaries of dictionaries with value null
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDictionaryNullOptions contains the optional parameters for the Dictionary.GetDictionaryNull method.
+// options - DictionaryGetDictionaryNullOptions contains the optional parameters for the DictionaryClient.GetDictionaryNull
+// method.
 func (client *DictionaryClient) GetDictionaryNull(ctx context.Context, options *DictionaryGetDictionaryNullOptions) (DictionaryGetDictionaryNullResponse, error) {
 	req, err := client.getDictionaryNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1477,7 +1485,8 @@ func (client *DictionaryClient) getDictionaryNullHandleError(resp *http.Response
 // GetDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
 // "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDictionaryValidOptions contains the optional parameters for the Dictionary.GetDictionaryValid method.
+// options - DictionaryGetDictionaryValidOptions contains the optional parameters for the DictionaryClient.GetDictionaryValid
+// method.
 func (client *DictionaryClient) GetDictionaryValid(ctx context.Context, options *DictionaryGetDictionaryValidOptions) (DictionaryGetDictionaryValidResponse, error) {
 	req, err := client.getDictionaryValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1528,7 +1537,7 @@ func (client *DictionaryClient) getDictionaryValidHandleError(resp *http.Respons
 
 // GetDoubleInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDoubleInvalidNullOptions contains the optional parameters for the Dictionary.GetDoubleInvalidNull
+// options - DictionaryGetDoubleInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDoubleInvalidNull
 // method.
 func (client *DictionaryClient) GetDoubleInvalidNull(ctx context.Context, options *DictionaryGetDoubleInvalidNullOptions) (DictionaryGetDoubleInvalidNullResponse, error) {
 	req, err := client.getDoubleInvalidNullCreateRequest(ctx, options)
@@ -1580,7 +1589,7 @@ func (client *DictionaryClient) getDoubleInvalidNullHandleError(resp *http.Respo
 
 // GetDoubleInvalidString - Get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDoubleInvalidStringOptions contains the optional parameters for the Dictionary.GetDoubleInvalidString
+// options - DictionaryGetDoubleInvalidStringOptions contains the optional parameters for the DictionaryClient.GetDoubleInvalidString
 // method.
 func (client *DictionaryClient) GetDoubleInvalidString(ctx context.Context, options *DictionaryGetDoubleInvalidStringOptions) (DictionaryGetDoubleInvalidStringResponse, error) {
 	req, err := client.getDoubleInvalidStringCreateRequest(ctx, options)
@@ -1632,7 +1641,7 @@ func (client *DictionaryClient) getDoubleInvalidStringHandleError(resp *http.Res
 
 // GetDoubleValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDoubleValidOptions contains the optional parameters for the Dictionary.GetDoubleValid method.
+// options - DictionaryGetDoubleValidOptions contains the optional parameters for the DictionaryClient.GetDoubleValid method.
 func (client *DictionaryClient) GetDoubleValid(ctx context.Context, options *DictionaryGetDoubleValidOptions) (DictionaryGetDoubleValidResponse, error) {
 	req, err := client.getDoubleValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1683,7 +1692,8 @@ func (client *DictionaryClient) getDoubleValidHandleError(resp *http.Response) e
 
 // GetDurationValid - Get duration dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDurationValidOptions contains the optional parameters for the Dictionary.GetDurationValid method.
+// options - DictionaryGetDurationValidOptions contains the optional parameters for the DictionaryClient.GetDurationValid
+// method.
 func (client *DictionaryClient) GetDurationValid(ctx context.Context, options *DictionaryGetDurationValidOptions) (DictionaryGetDurationValidResponse, error) {
 	req, err := client.getDurationValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1734,7 +1744,7 @@ func (client *DictionaryClient) getDurationValidHandleError(resp *http.Response)
 
 // GetEmpty - Get empty dictionary value {}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetEmptyOptions contains the optional parameters for the Dictionary.GetEmpty method.
+// options - DictionaryGetEmptyOptions contains the optional parameters for the DictionaryClient.GetEmpty method.
 func (client *DictionaryClient) GetEmpty(ctx context.Context, options *DictionaryGetEmptyOptions) (DictionaryGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1785,7 +1795,8 @@ func (client *DictionaryClient) getEmptyHandleError(resp *http.Response) error {
 
 // GetEmptyStringKey - Get Dictionary with key as empty string
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetEmptyStringKeyOptions contains the optional parameters for the Dictionary.GetEmptyStringKey method.
+// options - DictionaryGetEmptyStringKeyOptions contains the optional parameters for the DictionaryClient.GetEmptyStringKey
+// method.
 func (client *DictionaryClient) GetEmptyStringKey(ctx context.Context, options *DictionaryGetEmptyStringKeyOptions) (DictionaryGetEmptyStringKeyResponse, error) {
 	req, err := client.getEmptyStringKeyCreateRequest(ctx, options)
 	if err != nil {
@@ -1836,7 +1847,7 @@ func (client *DictionaryClient) getEmptyStringKeyHandleError(resp *http.Response
 
 // GetFloatInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetFloatInvalidNullOptions contains the optional parameters for the Dictionary.GetFloatInvalidNull
+// options - DictionaryGetFloatInvalidNullOptions contains the optional parameters for the DictionaryClient.GetFloatInvalidNull
 // method.
 func (client *DictionaryClient) GetFloatInvalidNull(ctx context.Context, options *DictionaryGetFloatInvalidNullOptions) (DictionaryGetFloatInvalidNullResponse, error) {
 	req, err := client.getFloatInvalidNullCreateRequest(ctx, options)
@@ -1888,7 +1899,7 @@ func (client *DictionaryClient) getFloatInvalidNullHandleError(resp *http.Respon
 
 // GetFloatInvalidString - Get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetFloatInvalidStringOptions contains the optional parameters for the Dictionary.GetFloatInvalidString
+// options - DictionaryGetFloatInvalidStringOptions contains the optional parameters for the DictionaryClient.GetFloatInvalidString
 // method.
 func (client *DictionaryClient) GetFloatInvalidString(ctx context.Context, options *DictionaryGetFloatInvalidStringOptions) (DictionaryGetFloatInvalidStringResponse, error) {
 	req, err := client.getFloatInvalidStringCreateRequest(ctx, options)
@@ -1940,7 +1951,7 @@ func (client *DictionaryClient) getFloatInvalidStringHandleError(resp *http.Resp
 
 // GetFloatValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetFloatValidOptions contains the optional parameters for the Dictionary.GetFloatValid method.
+// options - DictionaryGetFloatValidOptions contains the optional parameters for the DictionaryClient.GetFloatValid method.
 func (client *DictionaryClient) GetFloatValid(ctx context.Context, options *DictionaryGetFloatValidOptions) (DictionaryGetFloatValidResponse, error) {
 	req, err := client.getFloatValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1991,7 +2002,8 @@ func (client *DictionaryClient) getFloatValidHandleError(resp *http.Response) er
 
 // GetIntInvalidNull - Get integer dictionary value {"0": 1, "1": null, "2": 0}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetIntInvalidNullOptions contains the optional parameters for the Dictionary.GetIntInvalidNull method.
+// options - DictionaryGetIntInvalidNullOptions contains the optional parameters for the DictionaryClient.GetIntInvalidNull
+// method.
 func (client *DictionaryClient) GetIntInvalidNull(ctx context.Context, options *DictionaryGetIntInvalidNullOptions) (DictionaryGetIntInvalidNullResponse, error) {
 	req, err := client.getIntInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2042,7 +2054,7 @@ func (client *DictionaryClient) getIntInvalidNullHandleError(resp *http.Response
 
 // GetIntInvalidString - Get integer dictionary value {"0": 1, "1": "integer", "2": 0}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetIntInvalidStringOptions contains the optional parameters for the Dictionary.GetIntInvalidString
+// options - DictionaryGetIntInvalidStringOptions contains the optional parameters for the DictionaryClient.GetIntInvalidString
 // method.
 func (client *DictionaryClient) GetIntInvalidString(ctx context.Context, options *DictionaryGetIntInvalidStringOptions) (DictionaryGetIntInvalidStringResponse, error) {
 	req, err := client.getIntInvalidStringCreateRequest(ctx, options)
@@ -2094,7 +2106,7 @@ func (client *DictionaryClient) getIntInvalidStringHandleError(resp *http.Respon
 
 // GetIntegerValid - Get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetIntegerValidOptions contains the optional parameters for the Dictionary.GetIntegerValid method.
+// options - DictionaryGetIntegerValidOptions contains the optional parameters for the DictionaryClient.GetIntegerValid method.
 func (client *DictionaryClient) GetIntegerValid(ctx context.Context, options *DictionaryGetIntegerValidOptions) (DictionaryGetIntegerValidResponse, error) {
 	req, err := client.getIntegerValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2145,7 +2157,7 @@ func (client *DictionaryClient) getIntegerValidHandleError(resp *http.Response) 
 
 // GetInvalid - Get invalid Dictionary value
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetInvalidOptions contains the optional parameters for the Dictionary.GetInvalid method.
+// options - DictionaryGetInvalidOptions contains the optional parameters for the DictionaryClient.GetInvalid method.
 func (client *DictionaryClient) GetInvalid(ctx context.Context, options *DictionaryGetInvalidOptions) (DictionaryGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -2196,7 +2208,8 @@ func (client *DictionaryClient) getInvalidHandleError(resp *http.Response) error
 
 // GetLongInvalidNull - Get long dictionary value {"0": 1, "1": null, "2": 0}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetLongInvalidNullOptions contains the optional parameters for the Dictionary.GetLongInvalidNull method.
+// options - DictionaryGetLongInvalidNullOptions contains the optional parameters for the DictionaryClient.GetLongInvalidNull
+// method.
 func (client *DictionaryClient) GetLongInvalidNull(ctx context.Context, options *DictionaryGetLongInvalidNullOptions) (DictionaryGetLongInvalidNullResponse, error) {
 	req, err := client.getLongInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2247,7 +2260,7 @@ func (client *DictionaryClient) getLongInvalidNullHandleError(resp *http.Respons
 
 // GetLongInvalidString - Get long dictionary value {"0": 1, "1": "integer", "2": 0}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetLongInvalidStringOptions contains the optional parameters for the Dictionary.GetLongInvalidString
+// options - DictionaryGetLongInvalidStringOptions contains the optional parameters for the DictionaryClient.GetLongInvalidString
 // method.
 func (client *DictionaryClient) GetLongInvalidString(ctx context.Context, options *DictionaryGetLongInvalidStringOptions) (DictionaryGetLongInvalidStringResponse, error) {
 	req, err := client.getLongInvalidStringCreateRequest(ctx, options)
@@ -2299,7 +2312,7 @@ func (client *DictionaryClient) getLongInvalidStringHandleError(resp *http.Respo
 
 // GetLongValid - Get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetLongValidOptions contains the optional parameters for the Dictionary.GetLongValid method.
+// options - DictionaryGetLongValidOptions contains the optional parameters for the DictionaryClient.GetLongValid method.
 func (client *DictionaryClient) GetLongValid(ctx context.Context, options *DictionaryGetLongValidOptions) (DictionaryGetLongValidResponse, error) {
 	req, err := client.getLongValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2350,7 +2363,7 @@ func (client *DictionaryClient) getLongValidHandleError(resp *http.Response) err
 
 // GetNull - Get null dictionary value
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetNullOptions contains the optional parameters for the Dictionary.GetNull method.
+// options - DictionaryGetNullOptions contains the optional parameters for the DictionaryClient.GetNull method.
 func (client *DictionaryClient) GetNull(ctx context.Context, options *DictionaryGetNullOptions) (DictionaryGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2401,7 +2414,7 @@ func (client *DictionaryClient) getNullHandleError(resp *http.Response) error {
 
 // GetNullKey - Get Dictionary with null key
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetNullKeyOptions contains the optional parameters for the Dictionary.GetNullKey method.
+// options - DictionaryGetNullKeyOptions contains the optional parameters for the DictionaryClient.GetNullKey method.
 func (client *DictionaryClient) GetNullKey(ctx context.Context, options *DictionaryGetNullKeyOptions) (DictionaryGetNullKeyResponse, error) {
 	req, err := client.getNullKeyCreateRequest(ctx, options)
 	if err != nil {
@@ -2452,7 +2465,7 @@ func (client *DictionaryClient) getNullKeyHandleError(resp *http.Response) error
 
 // GetNullValue - Get Dictionary with null value
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetNullValueOptions contains the optional parameters for the Dictionary.GetNullValue method.
+// options - DictionaryGetNullValueOptions contains the optional parameters for the DictionaryClient.GetNullValue method.
 func (client *DictionaryClient) GetNullValue(ctx context.Context, options *DictionaryGetNullValueOptions) (DictionaryGetNullValueResponse, error) {
 	req, err := client.getNullValueCreateRequest(ctx, options)
 	if err != nil {
@@ -2503,7 +2516,7 @@ func (client *DictionaryClient) getNullValueHandleError(resp *http.Response) err
 
 // GetStringValid - Get string dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetStringValidOptions contains the optional parameters for the Dictionary.GetStringValid method.
+// options - DictionaryGetStringValidOptions contains the optional parameters for the DictionaryClient.GetStringValid method.
 func (client *DictionaryClient) GetStringValid(ctx context.Context, options *DictionaryGetStringValidOptions) (DictionaryGetStringValidResponse, error) {
 	req, err := client.getStringValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2554,7 +2567,7 @@ func (client *DictionaryClient) getStringValidHandleError(resp *http.Response) e
 
 // GetStringWithInvalid - Get string dictionary value {"0": "foo", "1": 123, "2": "foo2"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetStringWithInvalidOptions contains the optional parameters for the Dictionary.GetStringWithInvalid
+// options - DictionaryGetStringWithInvalidOptions contains the optional parameters for the DictionaryClient.GetStringWithInvalid
 // method.
 func (client *DictionaryClient) GetStringWithInvalid(ctx context.Context, options *DictionaryGetStringWithInvalidOptions) (DictionaryGetStringWithInvalidResponse, error) {
 	req, err := client.getStringWithInvalidCreateRequest(ctx, options)
@@ -2606,7 +2619,8 @@ func (client *DictionaryClient) getStringWithInvalidHandleError(resp *http.Respo
 
 // GetStringWithNull - Get string dictionary value {"0": "foo", "1": null, "2": "foo2"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetStringWithNullOptions contains the optional parameters for the Dictionary.GetStringWithNull method.
+// options - DictionaryGetStringWithNullOptions contains the optional parameters for the DictionaryClient.GetStringWithNull
+// method.
 func (client *DictionaryClient) GetStringWithNull(ctx context.Context, options *DictionaryGetStringWithNullOptions) (DictionaryGetStringWithNullResponse, error) {
 	req, err := client.getStringWithNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2657,7 +2671,7 @@ func (client *DictionaryClient) getStringWithNullHandleError(resp *http.Response
 
 // PutArrayValid - Put An array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutArrayValidOptions contains the optional parameters for the Dictionary.PutArrayValid method.
+// options - DictionaryPutArrayValidOptions contains the optional parameters for the DictionaryClient.PutArrayValid method.
 func (client *DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[string][]*string, options *DictionaryPutArrayValidOptions) (DictionaryPutArrayValidResponse, error) {
 	req, err := client.putArrayValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2699,7 +2713,7 @@ func (client *DictionaryClient) putArrayValidHandleError(resp *http.Response) er
 
 // PutBooleanTfft - Set dictionary value empty {"0": true, "1": false, "2": false, "3": true }
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutBooleanTfftOptions contains the optional parameters for the Dictionary.PutBooleanTfft method.
+// options - DictionaryPutBooleanTfftOptions contains the optional parameters for the DictionaryClient.PutBooleanTfft method.
 func (client *DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map[string]*bool, options *DictionaryPutBooleanTfftOptions) (DictionaryPutBooleanTfftResponse, error) {
 	req, err := client.putBooleanTfftCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2742,7 +2756,7 @@ func (client *DictionaryClient) putBooleanTfftHandleError(resp *http.Response) e
 // PutByteValid - Put the dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each elementencoded
 // in base 64
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutByteValidOptions contains the optional parameters for the Dictionary.PutByteValid method.
+// options - DictionaryPutByteValidOptions contains the optional parameters for the DictionaryClient.PutByteValid method.
 func (client *DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[string][]byte, options *DictionaryPutByteValidOptions) (DictionaryPutByteValidResponse, error) {
 	req, err := client.putByteValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2785,7 +2799,7 @@ func (client *DictionaryClient) putByteValidHandleError(resp *http.Response) err
 // PutComplexValid - Put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3,
 // "string": "4"}, "2": {"integer": 5, "string": "6"}}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutComplexValidOptions contains the optional parameters for the Dictionary.PutComplexValid method.
+// options - DictionaryPutComplexValidOptions contains the optional parameters for the DictionaryClient.PutComplexValid method.
 func (client *DictionaryClient) PutComplexValid(ctx context.Context, arrayBody map[string]*Widget, options *DictionaryPutComplexValidOptions) (DictionaryPutComplexValidResponse, error) {
 	req, err := client.putComplexValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2828,7 +2842,7 @@ func (client *DictionaryClient) putComplexValidHandleError(resp *http.Response) 
 // PutDateTimeRFC1123Valid - Set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35
 // GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutDateTimeRFC1123ValidOptions contains the optional parameters for the Dictionary.PutDateTimeRFC1123Valid
+// options - DictionaryPutDateTimeRFC1123ValidOptions contains the optional parameters for the DictionaryClient.PutDateTimeRFC1123Valid
 // method.
 func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (DictionaryPutDateTimeRFC1123ValidResponse, error) {
 	req, err := client.putDateTimeRFC1123ValidCreateRequest(ctx, arrayBody, options)
@@ -2875,7 +2889,8 @@ func (client *DictionaryClient) putDateTimeRFC1123ValidHandleError(resp *http.Re
 
 // PutDateTimeValid - Set dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutDateTimeValidOptions contains the optional parameters for the Dictionary.PutDateTimeValid method.
+// options - DictionaryPutDateTimeValidOptions contains the optional parameters for the DictionaryClient.PutDateTimeValid
+// method.
 func (client *DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateTimeValidOptions) (DictionaryPutDateTimeValidResponse, error) {
 	req, err := client.putDateTimeValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2921,7 +2936,7 @@ func (client *DictionaryClient) putDateTimeValidHandleError(resp *http.Response)
 
 // PutDateValid - Set dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutDateValidOptions contains the optional parameters for the Dictionary.PutDateValid method.
+// options - DictionaryPutDateValidOptions contains the optional parameters for the DictionaryClient.PutDateValid method.
 func (client *DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateValidOptions) (DictionaryPutDateValidResponse, error) {
 	req, err := client.putDateValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2968,7 +2983,8 @@ func (client *DictionaryClient) putDateValidHandleError(resp *http.Response) err
 // PutDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
 // "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutDictionaryValidOptions contains the optional parameters for the Dictionary.PutDictionaryValid method.
+// options - DictionaryPutDictionaryValidOptions contains the optional parameters for the DictionaryClient.PutDictionaryValid
+// method.
 func (client *DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]map[string]*string, options *DictionaryPutDictionaryValidOptions) (DictionaryPutDictionaryValidResponse, error) {
 	req, err := client.putDictionaryValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3010,7 +3026,7 @@ func (client *DictionaryClient) putDictionaryValidHandleError(resp *http.Respons
 
 // PutDoubleValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutDoubleValidOptions contains the optional parameters for the Dictionary.PutDoubleValid method.
+// options - DictionaryPutDoubleValidOptions contains the optional parameters for the DictionaryClient.PutDoubleValid method.
 func (client *DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map[string]*float64, options *DictionaryPutDoubleValidOptions) (DictionaryPutDoubleValidResponse, error) {
 	req, err := client.putDoubleValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3052,7 +3068,8 @@ func (client *DictionaryClient) putDoubleValidHandleError(resp *http.Response) e
 
 // PutDurationValid - Set dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutDurationValidOptions contains the optional parameters for the Dictionary.PutDurationValid method.
+// options - DictionaryPutDurationValidOptions contains the optional parameters for the DictionaryClient.PutDurationValid
+// method.
 func (client *DictionaryClient) PutDurationValid(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutDurationValidOptions) (DictionaryPutDurationValidResponse, error) {
 	req, err := client.putDurationValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3094,7 +3111,7 @@ func (client *DictionaryClient) putDurationValidHandleError(resp *http.Response)
 
 // PutEmpty - Set dictionary value empty {}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutEmptyOptions contains the optional parameters for the Dictionary.PutEmpty method.
+// options - DictionaryPutEmptyOptions contains the optional parameters for the DictionaryClient.PutEmpty method.
 func (client *DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutEmptyOptions) (DictionaryPutEmptyResponse, error) {
 	req, err := client.putEmptyCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3136,7 +3153,7 @@ func (client *DictionaryClient) putEmptyHandleError(resp *http.Response) error {
 
 // PutFloatValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutFloatValidOptions contains the optional parameters for the Dictionary.PutFloatValid method.
+// options - DictionaryPutFloatValidOptions contains the optional parameters for the DictionaryClient.PutFloatValid method.
 func (client *DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[string]*float32, options *DictionaryPutFloatValidOptions) (DictionaryPutFloatValidResponse, error) {
 	req, err := client.putFloatValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3178,7 +3195,7 @@ func (client *DictionaryClient) putFloatValidHandleError(resp *http.Response) er
 
 // PutIntegerValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutIntegerValidOptions contains the optional parameters for the Dictionary.PutIntegerValid method.
+// options - DictionaryPutIntegerValidOptions contains the optional parameters for the DictionaryClient.PutIntegerValid method.
 func (client *DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody map[string]*int32, options *DictionaryPutIntegerValidOptions) (DictionaryPutIntegerValidResponse, error) {
 	req, err := client.putIntegerValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3220,7 +3237,7 @@ func (client *DictionaryClient) putIntegerValidHandleError(resp *http.Response) 
 
 // PutLongValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutLongValidOptions contains the optional parameters for the Dictionary.PutLongValid method.
+// options - DictionaryPutLongValidOptions contains the optional parameters for the DictionaryClient.PutLongValid method.
 func (client *DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[string]*int64, options *DictionaryPutLongValidOptions) (DictionaryPutLongValidResponse, error) {
 	req, err := client.putLongValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3262,7 +3279,7 @@ func (client *DictionaryClient) putLongValidHandleError(resp *http.Response) err
 
 // PutStringValid - Set dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutStringValidOptions contains the optional parameters for the Dictionary.PutStringValid method.
+// options - DictionaryPutStringValidOptions contains the optional parameters for the DictionaryClient.PutStringValid method.
 func (client *DictionaryClient) PutStringValid(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutStringValidOptions) (DictionaryPutStringValidResponse, error) {
 	req, err := client.putStringValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {

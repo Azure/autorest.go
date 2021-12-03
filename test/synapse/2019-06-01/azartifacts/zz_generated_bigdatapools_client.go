@@ -38,7 +38,7 @@ func newBigDataPoolsClient(endpoint string, pl runtime.Pipeline) *bigDataPoolsCl
 // Get - Get Big Data Pool
 // If the operation fails it returns the *ErrorContract error type.
 // bigDataPoolName - The Big Data Pool name
-// options - BigDataPoolsGetOptions contains the optional parameters for the BigDataPools.Get method.
+// options - BigDataPoolsGetOptions contains the optional parameters for the bigDataPoolsClient.Get method.
 func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *BigDataPoolsGetOptions) (BigDataPoolsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, bigDataPoolName, options)
 	if err != nil {
@@ -96,7 +96,7 @@ func (client *bigDataPoolsClient) getHandleError(resp *http.Response) error {
 
 // List - List Big Data Pools
 // If the operation fails it returns the *ErrorContract error type.
-// options - BigDataPoolsListOptions contains the optional parameters for the BigDataPools.List method.
+// options - BigDataPoolsListOptions contains the optional parameters for the bigDataPoolsClient.List method.
 func (client *bigDataPoolsClient) List(ctx context.Context, options *BigDataPoolsListOptions) (BigDataPoolsListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {

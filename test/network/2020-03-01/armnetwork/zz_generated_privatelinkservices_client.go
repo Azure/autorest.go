@@ -55,7 +55,7 @@ func NewPrivateLinkServicesClient(subscriptionID string, credential azcore.Token
 // If the operation fails it returns the *CloudError error type.
 // location - The location of the domain name.
 // parameters - The request body of CheckPrivateLinkService API call.
-// options - PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityOptions contains the optional parameters for the PrivateLinkServices.BeginCheckPrivateLinkServiceVisibility
+// options - PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityOptions contains the optional parameters for the PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibility
 // method.
 func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibility(ctx context.Context, location string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityOptions) (PrivateLinkServicesCheckPrivateLinkServiceVisibilityPollerResponse, error) {
 	resp, err := client.checkPrivateLinkServiceVisibility(ctx, location, parameters, options)
@@ -134,7 +134,7 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityHandle
 // resourceGroupName - The name of the resource group.
 // parameters - The request body of CheckPrivateLinkService API call.
 // options - PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityByResourceGroupOptions contains the optional parameters
-// for the PrivateLinkServices.BeginCheckPrivateLinkServiceVisibilityByResourceGroup method.
+// for the PrivateLinkServicesClient.BeginCheckPrivateLinkServiceVisibilityByResourceGroup method.
 func (client *PrivateLinkServicesClient) BeginCheckPrivateLinkServiceVisibilityByResourceGroup(ctx context.Context, location string, resourceGroupName string, parameters CheckPrivateLinkServiceVisibilityRequest, options *PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityByResourceGroupOptions) (PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse, error) {
 	resp, err := client.checkPrivateLinkServiceVisibilityByResourceGroup(ctx, location, resourceGroupName, parameters, options)
 	if err != nil {
@@ -215,7 +215,7 @@ func (client *PrivateLinkServicesClient) checkPrivateLinkServiceVisibilityByReso
 // resourceGroupName - The name of the resource group.
 // serviceName - The name of the private link service.
 // parameters - Parameters supplied to the create or update private link service operation.
-// options - PrivateLinkServicesBeginCreateOrUpdateOptions contains the optional parameters for the PrivateLinkServices.BeginCreateOrUpdate
+// options - PrivateLinkServicesBeginCreateOrUpdateOptions contains the optional parameters for the PrivateLinkServicesClient.BeginCreateOrUpdate
 // method.
 func (client *PrivateLinkServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, serviceName string, parameters PrivateLinkService, options *PrivateLinkServicesBeginCreateOrUpdateOptions) (PrivateLinkServicesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, serviceName, parameters, options)
@@ -295,7 +295,7 @@ func (client *PrivateLinkServicesClient) createOrUpdateHandleError(resp *http.Re
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
 // serviceName - The name of the private link service.
-// options - PrivateLinkServicesBeginDeleteOptions contains the optional parameters for the PrivateLinkServices.BeginDelete
+// options - PrivateLinkServicesBeginDeleteOptions contains the optional parameters for the PrivateLinkServicesClient.BeginDelete
 // method.
 func (client *PrivateLinkServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesBeginDeleteOptions) (PrivateLinkServicesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, serviceName, options)
@@ -376,7 +376,7 @@ func (client *PrivateLinkServicesClient) deleteHandleError(resp *http.Response) 
 // resourceGroupName - The name of the resource group.
 // serviceName - The name of the private link service.
 // peConnectionName - The name of the private end point connection.
-// options - PrivateLinkServicesBeginDeletePrivateEndpointConnectionOptions contains the optional parameters for the PrivateLinkServices.BeginDeletePrivateEndpointConnection
+// options - PrivateLinkServicesBeginDeletePrivateEndpointConnectionOptions contains the optional parameters for the PrivateLinkServicesClient.BeginDeletePrivateEndpointConnection
 // method.
 func (client *PrivateLinkServicesClient) BeginDeletePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesBeginDeletePrivateEndpointConnectionOptions) (PrivateLinkServicesDeletePrivateEndpointConnectionPollerResponse, error) {
 	resp, err := client.deletePrivateEndpointConnection(ctx, resourceGroupName, serviceName, peConnectionName, options)
@@ -460,7 +460,7 @@ func (client *PrivateLinkServicesClient) deletePrivateEndpointConnectionHandleEr
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
 // serviceName - The name of the private link service.
-// options - PrivateLinkServicesGetOptions contains the optional parameters for the PrivateLinkServices.Get method.
+// options - PrivateLinkServicesGetOptions contains the optional parameters for the PrivateLinkServicesClient.Get method.
 func (client *PrivateLinkServicesClient) Get(ctx context.Context, resourceGroupName string, serviceName string, options *PrivateLinkServicesGetOptions) (PrivateLinkServicesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, serviceName, options)
 	if err != nil {
@@ -533,7 +533,7 @@ func (client *PrivateLinkServicesClient) getHandleError(resp *http.Response) err
 // resourceGroupName - The name of the resource group.
 // serviceName - The name of the private link service.
 // peConnectionName - The name of the private end point connection.
-// options - PrivateLinkServicesGetPrivateEndpointConnectionOptions contains the optional parameters for the PrivateLinkServices.GetPrivateEndpointConnection
+// options - PrivateLinkServicesGetPrivateEndpointConnectionOptions contains the optional parameters for the PrivateLinkServicesClient.GetPrivateEndpointConnection
 // method.
 func (client *PrivateLinkServicesClient) GetPrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, options *PrivateLinkServicesGetPrivateEndpointConnectionOptions) (PrivateLinkServicesGetPrivateEndpointConnectionResponse, error) {
 	req, err := client.getPrivateEndpointConnectionCreateRequest(ctx, resourceGroupName, serviceName, peConnectionName, options)
@@ -608,7 +608,7 @@ func (client *PrivateLinkServicesClient) getPrivateEndpointConnectionHandleError
 // List - Gets all private link services in a resource group.
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
-// options - PrivateLinkServicesListOptions contains the optional parameters for the PrivateLinkServices.List method.
+// options - PrivateLinkServicesListOptions contains the optional parameters for the PrivateLinkServicesClient.List method.
 func (client *PrivateLinkServicesClient) List(resourceGroupName string, options *PrivateLinkServicesListOptions) *PrivateLinkServicesListPager {
 	return &PrivateLinkServicesListPager{
 		client: client,
@@ -669,7 +669,7 @@ func (client *PrivateLinkServicesClient) listHandleError(resp *http.Response) er
 // with auto approved in this subscription in this region.
 // If the operation fails it returns the *CloudError error type.
 // location - The location of the domain name.
-// options - PrivateLinkServicesListAutoApprovedPrivateLinkServicesOptions contains the optional parameters for the PrivateLinkServices.ListAutoApprovedPrivateLinkServices
+// options - PrivateLinkServicesListAutoApprovedPrivateLinkServicesOptions contains the optional parameters for the PrivateLinkServicesClient.ListAutoApprovedPrivateLinkServices
 // method.
 func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServices(location string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesOptions) *PrivateLinkServicesListAutoApprovedPrivateLinkServicesPager {
 	return &PrivateLinkServicesListAutoApprovedPrivateLinkServicesPager{
@@ -733,7 +733,7 @@ func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesHand
 // location - The location of the domain name.
 // resourceGroupName - The name of the resource group.
 // options - PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupOptions contains the optional parameters
-// for the PrivateLinkServices.ListAutoApprovedPrivateLinkServicesByResourceGroup method.
+// for the PrivateLinkServicesClient.ListAutoApprovedPrivateLinkServicesByResourceGroup method.
 func (client *PrivateLinkServicesClient) ListAutoApprovedPrivateLinkServicesByResourceGroup(location string, resourceGroupName string, options *PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupOptions) *PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupPager {
 	return &PrivateLinkServicesListAutoApprovedPrivateLinkServicesByResourceGroupPager{
 		client: client,
@@ -796,7 +796,7 @@ func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesByRe
 
 // ListBySubscription - Gets all private link service in a subscription.
 // If the operation fails it returns the *Error error type.
-// options - PrivateLinkServicesListBySubscriptionOptions contains the optional parameters for the PrivateLinkServices.ListBySubscription
+// options - PrivateLinkServicesListBySubscriptionOptions contains the optional parameters for the PrivateLinkServicesClient.ListBySubscription
 // method.
 func (client *PrivateLinkServicesClient) ListBySubscription(options *PrivateLinkServicesListBySubscriptionOptions) *PrivateLinkServicesListBySubscriptionPager {
 	return &PrivateLinkServicesListBySubscriptionPager{
@@ -854,7 +854,7 @@ func (client *PrivateLinkServicesClient) listBySubscriptionHandleError(resp *htt
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
 // serviceName - The name of the private link service.
-// options - PrivateLinkServicesListPrivateEndpointConnectionsOptions contains the optional parameters for the PrivateLinkServices.ListPrivateEndpointConnections
+// options - PrivateLinkServicesListPrivateEndpointConnectionsOptions contains the optional parameters for the PrivateLinkServicesClient.ListPrivateEndpointConnections
 // method.
 func (client *PrivateLinkServicesClient) ListPrivateEndpointConnections(resourceGroupName string, serviceName string, options *PrivateLinkServicesListPrivateEndpointConnectionsOptions) *PrivateLinkServicesListPrivateEndpointConnectionsPager {
 	return &PrivateLinkServicesListPrivateEndpointConnectionsPager{
@@ -922,7 +922,7 @@ func (client *PrivateLinkServicesClient) listPrivateEndpointConnectionsHandleErr
 // serviceName - The name of the private link service.
 // peConnectionName - The name of the private end point connection.
 // parameters - Parameters supplied to approve or reject the private end point connection.
-// options - PrivateLinkServicesUpdatePrivateEndpointConnectionOptions contains the optional parameters for the PrivateLinkServices.UpdatePrivateEndpointConnection
+// options - PrivateLinkServicesUpdatePrivateEndpointConnectionOptions contains the optional parameters for the PrivateLinkServicesClient.UpdatePrivateEndpointConnection
 // method.
 func (client *PrivateLinkServicesClient) UpdatePrivateEndpointConnection(ctx context.Context, resourceGroupName string, serviceName string, peConnectionName string, parameters PrivateEndpointConnection, options *PrivateLinkServicesUpdatePrivateEndpointConnectionOptions) (PrivateLinkServicesUpdatePrivateEndpointConnectionResponse, error) {
 	req, err := client.updatePrivateEndpointConnectionCreateRequest(ctx, resourceGroupName, serviceName, peConnectionName, parameters, options)

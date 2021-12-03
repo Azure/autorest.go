@@ -53,7 +53,7 @@ func NewVirtualMachineSizesClient(subscriptionID string, credential azcore.Token
 // List - This API is deprecated. Use Resources Skus [https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list]
 // If the operation fails it returns a generic error.
 // location - The location upon which virtual-machine-sizes is queried.
-// options - VirtualMachineSizesListOptions contains the optional parameters for the VirtualMachineSizes.List method.
+// options - VirtualMachineSizesListOptions contains the optional parameters for the VirtualMachineSizesClient.List method.
 func (client *VirtualMachineSizesClient) List(ctx context.Context, location string, options *VirtualMachineSizesListOptions) (VirtualMachineSizesListResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, options)
 	if err != nil {

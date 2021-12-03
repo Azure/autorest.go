@@ -56,7 +56,7 @@ func NewFirewallPoliciesClient(subscriptionID string, credential azcore.TokenCre
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.
 // parameters - Parameters supplied to the create or update Firewall Policy operation.
-// options - FirewallPoliciesBeginCreateOrUpdateOptions contains the optional parameters for the FirewallPolicies.BeginCreateOrUpdate
+// options - FirewallPoliciesBeginCreateOrUpdateOptions contains the optional parameters for the FirewallPoliciesClient.BeginCreateOrUpdate
 // method.
 func (client *FirewallPoliciesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, parameters FirewallPolicy, options *FirewallPoliciesBeginCreateOrUpdateOptions) (FirewallPoliciesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, firewallPolicyName, parameters, options)
@@ -136,7 +136,8 @@ func (client *FirewallPoliciesClient) createOrUpdateHandleError(resp *http.Respo
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.
-// options - FirewallPoliciesBeginDeleteOptions contains the optional parameters for the FirewallPolicies.BeginDelete method.
+// options - FirewallPoliciesBeginDeleteOptions contains the optional parameters for the FirewallPoliciesClient.BeginDelete
+// method.
 func (client *FirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesBeginDeleteOptions) (FirewallPoliciesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
@@ -215,7 +216,7 @@ func (client *FirewallPoliciesClient) deleteHandleError(resp *http.Response) err
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.
-// options - FirewallPoliciesGetOptions contains the optional parameters for the FirewallPolicies.Get method.
+// options - FirewallPoliciesGetOptions contains the optional parameters for the FirewallPoliciesClient.Get method.
 func (client *FirewallPoliciesClient) Get(ctx context.Context, resourceGroupName string, firewallPolicyName string, options *FirewallPoliciesGetOptions) (FirewallPoliciesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, firewallPolicyName, options)
 	if err != nil {
@@ -285,7 +286,7 @@ func (client *FirewallPoliciesClient) getHandleError(resp *http.Response) error 
 // List - Lists all Firewall Policies in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - FirewallPoliciesListOptions contains the optional parameters for the FirewallPolicies.List method.
+// options - FirewallPoliciesListOptions contains the optional parameters for the FirewallPoliciesClient.List method.
 func (client *FirewallPoliciesClient) List(resourceGroupName string, options *FirewallPoliciesListOptions) *FirewallPoliciesListPager {
 	return &FirewallPoliciesListPager{
 		client: client,
@@ -344,7 +345,7 @@ func (client *FirewallPoliciesClient) listHandleError(resp *http.Response) error
 
 // ListAll - Gets all the Firewall Policies in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - FirewallPoliciesListAllOptions contains the optional parameters for the FirewallPolicies.ListAll method.
+// options - FirewallPoliciesListAllOptions contains the optional parameters for the FirewallPoliciesClient.ListAll method.
 func (client *FirewallPoliciesClient) ListAll(options *FirewallPoliciesListAllOptions) *FirewallPoliciesListAllPager {
 	return &FirewallPoliciesListAllPager{
 		client: client,

@@ -57,7 +57,7 @@ func NewInboundNatRulesClient(subscriptionID string, credential azcore.TokenCred
 // loadBalancerName - The name of the load balancer.
 // inboundNatRuleName - The name of the inbound nat rule.
 // inboundNatRuleParameters - Parameters supplied to the create or update inbound nat rule operation.
-// options - InboundNatRulesBeginCreateOrUpdateOptions contains the optional parameters for the InboundNatRules.BeginCreateOrUpdate
+// options - InboundNatRulesBeginCreateOrUpdateOptions contains the optional parameters for the InboundNatRulesClient.BeginCreateOrUpdate
 // method.
 func (client *InboundNatRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, inboundNatRuleParameters InboundNatRule, options *InboundNatRulesBeginCreateOrUpdateOptions) (InboundNatRulesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, inboundNatRuleParameters, options)
@@ -142,7 +142,8 @@ func (client *InboundNatRulesClient) createOrUpdateHandleError(resp *http.Respon
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // inboundNatRuleName - The name of the inbound nat rule.
-// options - InboundNatRulesBeginDeleteOptions contains the optional parameters for the InboundNatRules.BeginDelete method.
+// options - InboundNatRulesBeginDeleteOptions contains the optional parameters for the InboundNatRulesClient.BeginDelete
+// method.
 func (client *InboundNatRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesBeginDeleteOptions) (InboundNatRulesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 	if err != nil {
@@ -226,7 +227,7 @@ func (client *InboundNatRulesClient) deleteHandleError(resp *http.Response) erro
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // inboundNatRuleName - The name of the inbound nat rule.
-// options - InboundNatRulesGetOptions contains the optional parameters for the InboundNatRules.Get method.
+// options - InboundNatRulesGetOptions contains the optional parameters for the InboundNatRulesClient.Get method.
 func (client *InboundNatRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, inboundNatRuleName string, options *InboundNatRulesGetOptions) (InboundNatRulesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, inboundNatRuleName, options)
 	if err != nil {
@@ -301,7 +302,7 @@ func (client *InboundNatRulesClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
-// options - InboundNatRulesListOptions contains the optional parameters for the InboundNatRules.List method.
+// options - InboundNatRulesListOptions contains the optional parameters for the InboundNatRulesClient.List method.
 func (client *InboundNatRulesClient) List(resourceGroupName string, loadBalancerName string, options *InboundNatRulesListOptions) *InboundNatRulesListPager {
 	return &InboundNatRulesListPager{
 		client: client,

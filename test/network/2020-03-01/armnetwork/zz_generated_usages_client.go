@@ -54,7 +54,7 @@ func NewUsagesClient(subscriptionID string, credential azcore.TokenCredential, o
 // List - List network usages for a subscription.
 // If the operation fails it returns the *CloudError error type.
 // location - The location where resource usage is queried.
-// options - UsagesListOptions contains the optional parameters for the Usages.List method.
+// options - UsagesListOptions contains the optional parameters for the UsagesClient.List method.
 func (client *UsagesClient) List(location string, options *UsagesListOptions) *UsagesListPager {
 	return &UsagesListPager{
 		client: client,
