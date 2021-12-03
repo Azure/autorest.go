@@ -56,7 +56,8 @@ func NewLoadBalancerOutboundRulesClient(subscriptionID string, credential azcore
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // outboundRuleName - The name of the outbound rule.
-// options - LoadBalancerOutboundRulesGetOptions contains the optional parameters for the LoadBalancerOutboundRules.Get method.
+// options - LoadBalancerOutboundRulesGetOptions contains the optional parameters for the LoadBalancerOutboundRulesClient.Get
+// method.
 func (client *LoadBalancerOutboundRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, outboundRuleName string, options *LoadBalancerOutboundRulesGetOptions) (LoadBalancerOutboundRulesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, outboundRuleName, options)
 	if err != nil {
@@ -128,7 +129,7 @@ func (client *LoadBalancerOutboundRulesClient) getHandleError(resp *http.Respons
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
-// options - LoadBalancerOutboundRulesListOptions contains the optional parameters for the LoadBalancerOutboundRules.List
+// options - LoadBalancerOutboundRulesListOptions contains the optional parameters for the LoadBalancerOutboundRulesClient.List
 // method.
 func (client *LoadBalancerOutboundRulesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerOutboundRulesListOptions) *LoadBalancerOutboundRulesListPager {
 	return &LoadBalancerOutboundRulesListPager{

@@ -39,7 +39,7 @@ func NewODataClient(options *azcore.ClientOptions) *ODataClient {
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
 // If the operation fails it returns the *Error error type.
-// options - ODataGetWithFilterOptions contains the optional parameters for the OData.GetWithFilter method.
+// options - ODataGetWithFilterOptions contains the optional parameters for the ODataClient.GetWithFilter method.
 func (client *ODataClient) GetWithFilter(ctx context.Context, options *ODataGetWithFilterOptions) (ODataGetWithFilterResponse, error) {
 	req, err := client.getWithFilterCreateRequest(ctx, options)
 	if err != nil {

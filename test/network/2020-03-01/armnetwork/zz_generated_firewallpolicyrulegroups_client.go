@@ -57,7 +57,7 @@ func NewFirewallPolicyRuleGroupsClient(subscriptionID string, credential azcore.
 // firewallPolicyName - The name of the Firewall Policy.
 // ruleGroupName - The name of the FirewallPolicyRuleGroup.
 // parameters - Parameters supplied to the create or update FirewallPolicyRuleGroup operation.
-// options - FirewallPolicyRuleGroupsBeginCreateOrUpdateOptions contains the optional parameters for the FirewallPolicyRuleGroups.BeginCreateOrUpdate
+// options - FirewallPolicyRuleGroupsBeginCreateOrUpdateOptions contains the optional parameters for the FirewallPolicyRuleGroupsClient.BeginCreateOrUpdate
 // method.
 func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, parameters FirewallPolicyRuleGroup, options *FirewallPolicyRuleGroupsBeginCreateOrUpdateOptions) (FirewallPolicyRuleGroupsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, parameters, options)
@@ -142,7 +142,7 @@ func (client *FirewallPolicyRuleGroupsClient) createOrUpdateHandleError(resp *ht
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.
 // ruleGroupName - The name of the FirewallPolicyRuleGroup.
-// options - FirewallPolicyRuleGroupsBeginDeleteOptions contains the optional parameters for the FirewallPolicyRuleGroups.BeginDelete
+// options - FirewallPolicyRuleGroupsBeginDeleteOptions contains the optional parameters for the FirewallPolicyRuleGroupsClient.BeginDelete
 // method.
 func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, options *FirewallPolicyRuleGroupsBeginDeleteOptions) (FirewallPolicyRuleGroupsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, options)
@@ -227,7 +227,8 @@ func (client *FirewallPolicyRuleGroupsClient) deleteHandleError(resp *http.Respo
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.
 // ruleGroupName - The name of the FirewallPolicyRuleGroup.
-// options - FirewallPolicyRuleGroupsGetOptions contains the optional parameters for the FirewallPolicyRuleGroups.Get method.
+// options - FirewallPolicyRuleGroupsGetOptions contains the optional parameters for the FirewallPolicyRuleGroupsClient.Get
+// method.
 func (client *FirewallPolicyRuleGroupsClient) Get(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, options *FirewallPolicyRuleGroupsGetOptions) (FirewallPolicyRuleGroupsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, options)
 	if err != nil {
@@ -299,7 +300,8 @@ func (client *FirewallPolicyRuleGroupsClient) getHandleError(resp *http.Response
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.
-// options - FirewallPolicyRuleGroupsListOptions contains the optional parameters for the FirewallPolicyRuleGroups.List method.
+// options - FirewallPolicyRuleGroupsListOptions contains the optional parameters for the FirewallPolicyRuleGroupsClient.List
+// method.
 func (client *FirewallPolicyRuleGroupsClient) List(resourceGroupName string, firewallPolicyName string, options *FirewallPolicyRuleGroupsListOptions) *FirewallPolicyRuleGroupsListPager {
 	return &FirewallPolicyRuleGroupsListPager{
 		client: client,

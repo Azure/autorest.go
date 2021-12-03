@@ -40,7 +40,7 @@ func NewSkipURLEncodingClient(options *azcore.ClientOptions) *SkipURLEncodingCli
 // GetMethodPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
 // If the operation fails it returns the *Error error type.
 // unencodedPathParam - Unencoded path parameter with value 'path1/path2/path3'
-// options - SkipURLEncodingGetMethodPathValidOptions contains the optional parameters for the SkipURLEncoding.GetMethodPathValid
+// options - SkipURLEncodingGetMethodPathValidOptions contains the optional parameters for the SkipURLEncodingClient.GetMethodPathValid
 // method.
 func (client *SkipURLEncodingClient) GetMethodPathValid(ctx context.Context, unencodedPathParam string, options *SkipURLEncodingGetMethodPathValidOptions) (SkipURLEncodingGetMethodPathValidResponse, error) {
 	req, err := client.getMethodPathValidCreateRequest(ctx, unencodedPathParam, options)
@@ -84,7 +84,7 @@ func (client *SkipURLEncodingClient) getMethodPathValidHandleError(resp *http.Re
 
 // GetMethodQueryNull - Get method with unencoded query parameter with value null
 // If the operation fails it returns the *Error error type.
-// options - SkipURLEncodingGetMethodQueryNullOptions contains the optional parameters for the SkipURLEncoding.GetMethodQueryNull
+// options - SkipURLEncodingGetMethodQueryNullOptions contains the optional parameters for the SkipURLEncodingClient.GetMethodQueryNull
 // method.
 func (client *SkipURLEncodingClient) GetMethodQueryNull(ctx context.Context, options *SkipURLEncodingGetMethodQueryNullOptions) (SkipURLEncodingGetMethodQueryNullResponse, error) {
 	req, err := client.getMethodQueryNullCreateRequest(ctx, options)
@@ -133,7 +133,7 @@ func (client *SkipURLEncodingClient) getMethodQueryNullHandleError(resp *http.Re
 // GetMethodQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
 // If the operation fails it returns the *Error error type.
 // q1 - Unencoded query parameter with value 'value1&q2=value2&q3=value3'
-// options - SkipURLEncodingGetMethodQueryValidOptions contains the optional parameters for the SkipURLEncoding.GetMethodQueryValid
+// options - SkipURLEncodingGetMethodQueryValidOptions contains the optional parameters for the SkipURLEncodingClient.GetMethodQueryValid
 // method.
 func (client *SkipURLEncodingClient) GetMethodQueryValid(ctx context.Context, q1 string, options *SkipURLEncodingGetMethodQueryValidOptions) (SkipURLEncodingGetMethodQueryValidResponse, error) {
 	req, err := client.getMethodQueryValidCreateRequest(ctx, q1, options)
@@ -180,7 +180,7 @@ func (client *SkipURLEncodingClient) getMethodQueryValidHandleError(resp *http.R
 // GetPathQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
 // If the operation fails it returns the *Error error type.
 // q1 - Unencoded query parameter with value 'value1&q2=value2&q3=value3'
-// options - SkipURLEncodingGetPathQueryValidOptions contains the optional parameters for the SkipURLEncoding.GetPathQueryValid
+// options - SkipURLEncodingGetPathQueryValidOptions contains the optional parameters for the SkipURLEncodingClient.GetPathQueryValid
 // method.
 func (client *SkipURLEncodingClient) GetPathQueryValid(ctx context.Context, q1 string, options *SkipURLEncodingGetPathQueryValidOptions) (SkipURLEncodingGetPathQueryValidResponse, error) {
 	req, err := client.getPathQueryValidCreateRequest(ctx, q1, options)
@@ -227,7 +227,8 @@ func (client *SkipURLEncodingClient) getPathQueryValidHandleError(resp *http.Res
 // GetPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
 // If the operation fails it returns the *Error error type.
 // unencodedPathParam - Unencoded path parameter with value 'path1/path2/path3'
-// options - SkipURLEncodingGetPathValidOptions contains the optional parameters for the SkipURLEncoding.GetPathValid method.
+// options - SkipURLEncodingGetPathValidOptions contains the optional parameters for the SkipURLEncodingClient.GetPathValid
+// method.
 func (client *SkipURLEncodingClient) GetPathValid(ctx context.Context, unencodedPathParam string, options *SkipURLEncodingGetPathValidOptions) (SkipURLEncodingGetPathValidResponse, error) {
 	req, err := client.getPathValidCreateRequest(ctx, unencodedPathParam, options)
 	if err != nil {
@@ -270,7 +271,7 @@ func (client *SkipURLEncodingClient) getPathValidHandleError(resp *http.Response
 
 // GetSwaggerPathValid - Get method with unencoded path parameter with value 'path1/path2/path3'
 // If the operation fails it returns the *Error error type.
-// options - SkipURLEncodingGetSwaggerPathValidOptions contains the optional parameters for the SkipURLEncoding.GetSwaggerPathValid
+// options - SkipURLEncodingGetSwaggerPathValidOptions contains the optional parameters for the SkipURLEncodingClient.GetSwaggerPathValid
 // method.
 func (client *SkipURLEncodingClient) GetSwaggerPathValid(ctx context.Context, options *SkipURLEncodingGetSwaggerPathValidOptions) (SkipURLEncodingGetSwaggerPathValidResponse, error) {
 	req, err := client.getSwaggerPathValidCreateRequest(ctx, options)
@@ -314,7 +315,7 @@ func (client *SkipURLEncodingClient) getSwaggerPathValidHandleError(resp *http.R
 
 // GetSwaggerQueryValid - Get method with unencoded query parameter with value 'value1&q2=value2&q3=value3'
 // If the operation fails it returns the *Error error type.
-// options - SkipURLEncodingGetSwaggerQueryValidOptions contains the optional parameters for the SkipURLEncoding.GetSwaggerQueryValid
+// options - SkipURLEncodingGetSwaggerQueryValidOptions contains the optional parameters for the SkipURLEncodingClient.GetSwaggerQueryValid
 // method.
 func (client *SkipURLEncodingClient) GetSwaggerQueryValid(ctx context.Context, options *SkipURLEncodingGetSwaggerQueryValidOptions) (SkipURLEncodingGetSwaggerQueryValidResponse, error) {
 	req, err := client.getSwaggerQueryValidCreateRequest(ctx, options)

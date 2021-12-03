@@ -56,7 +56,7 @@ func NewRouteTablesClient(subscriptionID string, credential azcore.TokenCredenti
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
 // parameters - Parameters supplied to the create or update route table operation.
-// options - RouteTablesBeginCreateOrUpdateOptions contains the optional parameters for the RouteTables.BeginCreateOrUpdate
+// options - RouteTablesBeginCreateOrUpdateOptions contains the optional parameters for the RouteTablesClient.BeginCreateOrUpdate
 // method.
 func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable, options *RouteTablesBeginCreateOrUpdateOptions) (RouteTablesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeTableName, parameters, options)
@@ -136,7 +136,7 @@ func (client *RouteTablesClient) createOrUpdateHandleError(resp *http.Response) 
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
-// options - RouteTablesBeginDeleteOptions contains the optional parameters for the RouteTables.BeginDelete method.
+// options - RouteTablesBeginDeleteOptions contains the optional parameters for the RouteTablesClient.BeginDelete method.
 func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesBeginDeleteOptions) (RouteTablesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
@@ -215,7 +215,7 @@ func (client *RouteTablesClient) deleteHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
-// options - RouteTablesGetOptions contains the optional parameters for the RouteTables.Get method.
+// options - RouteTablesGetOptions contains the optional parameters for the RouteTablesClient.Get method.
 func (client *RouteTablesClient) Get(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesGetOptions) (RouteTablesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
@@ -285,7 +285,7 @@ func (client *RouteTablesClient) getHandleError(resp *http.Response) error {
 // List - Gets all route tables in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - RouteTablesListOptions contains the optional parameters for the RouteTables.List method.
+// options - RouteTablesListOptions contains the optional parameters for the RouteTablesClient.List method.
 func (client *RouteTablesClient) List(resourceGroupName string, options *RouteTablesListOptions) *RouteTablesListPager {
 	return &RouteTablesListPager{
 		client: client,
@@ -344,7 +344,7 @@ func (client *RouteTablesClient) listHandleError(resp *http.Response) error {
 
 // ListAll - Gets all route tables in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - RouteTablesListAllOptions contains the optional parameters for the RouteTables.ListAll method.
+// options - RouteTablesListAllOptions contains the optional parameters for the RouteTablesClient.ListAll method.
 func (client *RouteTablesClient) ListAll(options *RouteTablesListAllOptions) *RouteTablesListAllPager {
 	return &RouteTablesListAllPager{
 		client: client,
@@ -402,7 +402,7 @@ func (client *RouteTablesClient) listAllHandleError(resp *http.Response) error {
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
 // parameters - Parameters supplied to update route table tags.
-// options - RouteTablesUpdateTagsOptions contains the optional parameters for the RouteTables.UpdateTags method.
+// options - RouteTablesUpdateTagsOptions contains the optional parameters for the RouteTablesClient.UpdateTags method.
 func (client *RouteTablesClient) UpdateTags(ctx context.Context, resourceGroupName string, routeTableName string, parameters TagsObject, options *RouteTablesUpdateTagsOptions) (RouteTablesUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, routeTableName, parameters, options)
 	if err != nil {

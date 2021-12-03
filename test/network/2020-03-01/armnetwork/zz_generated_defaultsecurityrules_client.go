@@ -56,7 +56,7 @@ func NewDefaultSecurityRulesClient(subscriptionID string, credential azcore.Toke
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
 // defaultSecurityRuleName - The name of the default security rule.
-// options - DefaultSecurityRulesGetOptions contains the optional parameters for the DefaultSecurityRules.Get method.
+// options - DefaultSecurityRulesGetOptions contains the optional parameters for the DefaultSecurityRulesClient.Get method.
 func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, defaultSecurityRuleName string, options *DefaultSecurityRulesGetOptions) (DefaultSecurityRulesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, defaultSecurityRuleName, options)
 	if err != nil {
@@ -128,7 +128,7 @@ func (client *DefaultSecurityRulesClient) getHandleError(resp *http.Response) er
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
-// options - DefaultSecurityRulesListOptions contains the optional parameters for the DefaultSecurityRules.List method.
+// options - DefaultSecurityRulesListOptions contains the optional parameters for the DefaultSecurityRulesClient.List method.
 func (client *DefaultSecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *DefaultSecurityRulesListOptions) *DefaultSecurityRulesListPager {
 	return &DefaultSecurityRulesListPager{
 		client: client,

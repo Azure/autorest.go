@@ -56,7 +56,8 @@ func NewIPGroupsClient(subscriptionID string, credential azcore.TokenCredential,
 // resourceGroupName - The name of the resource group.
 // ipGroupsName - The name of the ipGroups.
 // parameters - Parameters supplied to the create or update IpGroups operation.
-// options - IPGroupsBeginCreateOrUpdateOptions contains the optional parameters for the IPGroups.BeginCreateOrUpdate method.
+// options - IPGroupsBeginCreateOrUpdateOptions contains the optional parameters for the IPGroupsClient.BeginCreateOrUpdate
+// method.
 func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsBeginCreateOrUpdateOptions) (IPGroupsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ipGroupsName, parameters, options)
 	if err != nil {
@@ -135,7 +136,7 @@ func (client *IPGroupsClient) createOrUpdateHandleError(resp *http.Response) err
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
 // ipGroupsName - The name of the ipGroups.
-// options - IPGroupsBeginDeleteOptions contains the optional parameters for the IPGroups.BeginDelete method.
+// options - IPGroupsBeginDeleteOptions contains the optional parameters for the IPGroupsClient.BeginDelete method.
 func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsBeginDeleteOptions) (IPGroupsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ipGroupsName, options)
 	if err != nil {
@@ -214,7 +215,7 @@ func (client *IPGroupsClient) deleteHandleError(resp *http.Response) error {
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
 // ipGroupsName - The name of the ipGroups.
-// options - IPGroupsGetOptions contains the optional parameters for the IPGroups.Get method.
+// options - IPGroupsGetOptions contains the optional parameters for the IPGroupsClient.Get method.
 func (client *IPGroupsClient) Get(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsGetOptions) (IPGroupsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, ipGroupsName, options)
 	if err != nil {
@@ -283,7 +284,7 @@ func (client *IPGroupsClient) getHandleError(resp *http.Response) error {
 
 // List - Gets all IpGroups in a subscription.
 // If the operation fails it returns the *Error error type.
-// options - IPGroupsListOptions contains the optional parameters for the IPGroups.List method.
+// options - IPGroupsListOptions contains the optional parameters for the IPGroupsClient.List method.
 func (client *IPGroupsClient) List(options *IPGroupsListOptions) *IPGroupsListPager {
 	return &IPGroupsListPager{
 		client: client,
@@ -339,7 +340,8 @@ func (client *IPGroupsClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Gets all IpGroups in a resource group.
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
-// options - IPGroupsListByResourceGroupOptions contains the optional parameters for the IPGroups.ListByResourceGroup method.
+// options - IPGroupsListByResourceGroupOptions contains the optional parameters for the IPGroupsClient.ListByResourceGroup
+// method.
 func (client *IPGroupsClient) ListByResourceGroup(resourceGroupName string, options *IPGroupsListByResourceGroupOptions) *IPGroupsListByResourceGroupPager {
 	return &IPGroupsListByResourceGroupPager{
 		client: client,
@@ -401,7 +403,7 @@ func (client *IPGroupsClient) listByResourceGroupHandleError(resp *http.Response
 // resourceGroupName - The name of the resource group.
 // ipGroupsName - The name of the ipGroups.
 // parameters - Parameters supplied to the update ipGroups operation.
-// options - IPGroupsUpdateGroupsOptions contains the optional parameters for the IPGroups.UpdateGroups method.
+// options - IPGroupsUpdateGroupsOptions contains the optional parameters for the IPGroupsClient.UpdateGroups method.
 func (client *IPGroupsClient) UpdateGroups(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters TagsObject, options *IPGroupsUpdateGroupsOptions) (IPGroupsUpdateGroupsResponse, error) {
 	req, err := client.updateGroupsCreateRequest(ctx, resourceGroupName, ipGroupsName, parameters, options)
 	if err != nil {

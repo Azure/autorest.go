@@ -53,7 +53,7 @@ func NewExpressRouteServiceProvidersClient(subscriptionID string, credential azc
 
 // List - Gets all the available express route service providers.
 // If the operation fails it returns the *CloudError error type.
-// options - ExpressRouteServiceProvidersListOptions contains the optional parameters for the ExpressRouteServiceProviders.List
+// options - ExpressRouteServiceProvidersListOptions contains the optional parameters for the ExpressRouteServiceProvidersClient.List
 // method.
 func (client *ExpressRouteServiceProvidersClient) List(options *ExpressRouteServiceProvidersListOptions) *ExpressRouteServiceProvidersListPager {
 	return &ExpressRouteServiceProvidersListPager{

@@ -60,7 +60,7 @@ func NewGalleryImageVersionsClient(subscriptionID string, credential azcore.Toke
 // The allowed characters are digit and period. Digits must be within the range of a 32-bit integer.
 // Format: ..
 // galleryImageVersion - Parameters supplied to the create or update gallery Image Version operation.
-// options - GalleryImageVersionsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryImageVersions.BeginCreateOrUpdate
+// options - GalleryImageVersionsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryImageVersionsClient.BeginCreateOrUpdate
 // method.
 func (client *GalleryImageVersionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersion, options *GalleryImageVersionsBeginCreateOrUpdateOptions) (GalleryImageVersionsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, options)
@@ -150,7 +150,7 @@ func (client *GalleryImageVersionsClient) createOrUpdateHandleError(resp *http.R
 // galleryName - The name of the Shared Image Gallery in which the Image Definition resides.
 // galleryImageName - The name of the gallery Image Definition in which the Image Version resides.
 // galleryImageVersionName - The name of the gallery Image Version to be deleted.
-// options - GalleryImageVersionsBeginDeleteOptions contains the optional parameters for the GalleryImageVersions.BeginDelete
+// options - GalleryImageVersionsBeginDeleteOptions contains the optional parameters for the GalleryImageVersionsClient.BeginDelete
 // method.
 func (client *GalleryImageVersionsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsBeginDeleteOptions) (GalleryImageVersionsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, options)
@@ -240,7 +240,7 @@ func (client *GalleryImageVersionsClient) deleteHandleError(resp *http.Response)
 // galleryName - The name of the Shared Image Gallery in which the Image Definition resides.
 // galleryImageName - The name of the gallery Image Definition in which the Image Version resides.
 // galleryImageVersionName - The name of the gallery Image Version to be retrieved.
-// options - GalleryImageVersionsGetOptions contains the optional parameters for the GalleryImageVersions.Get method.
+// options - GalleryImageVersionsGetOptions contains the optional parameters for the GalleryImageVersionsClient.Get method.
 func (client *GalleryImageVersionsClient) Get(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsGetOptions) (GalleryImageVersionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, options)
 	if err != nil {
@@ -320,7 +320,7 @@ func (client *GalleryImageVersionsClient) getHandleError(resp *http.Response) er
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery in which the Image Definition resides.
 // galleryImageName - The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed.
-// options - GalleryImageVersionsListByGalleryImageOptions contains the optional parameters for the GalleryImageVersions.ListByGalleryImage
+// options - GalleryImageVersionsListByGalleryImageOptions contains the optional parameters for the GalleryImageVersionsClient.ListByGalleryImage
 // method.
 func (client *GalleryImageVersionsClient) ListByGalleryImage(resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImageVersionsListByGalleryImageOptions) *GalleryImageVersionsListByGalleryImagePager {
 	return &GalleryImageVersionsListByGalleryImagePager{
@@ -395,7 +395,7 @@ func (client *GalleryImageVersionsClient) listByGalleryImageHandleError(resp *ht
 // The allowed characters are digit and period. Digits must be within the range of a 32-bit integer.
 // Format: ..
 // galleryImageVersion - Parameters supplied to the update gallery Image Version operation.
-// options - GalleryImageVersionsBeginUpdateOptions contains the optional parameters for the GalleryImageVersions.BeginUpdate
+// options - GalleryImageVersionsBeginUpdateOptions contains the optional parameters for the GalleryImageVersionsClient.BeginUpdate
 // method.
 func (client *GalleryImageVersionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersionUpdate, options *GalleryImageVersionsBeginUpdateOptions) (GalleryImageVersionsUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, options)

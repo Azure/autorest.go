@@ -56,7 +56,7 @@ func NewNetworkInterfacesClient(subscriptionID string, credential azcore.TokenCr
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // parameters - Parameters supplied to the create or update network interface operation.
-// options - NetworkInterfacesBeginCreateOrUpdateOptions contains the optional parameters for the NetworkInterfaces.BeginCreateOrUpdate
+// options - NetworkInterfacesBeginCreateOrUpdateOptions contains the optional parameters for the NetworkInterfacesClient.BeginCreateOrUpdate
 // method.
 func (client *NetworkInterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters NetworkInterface, options *NetworkInterfacesBeginCreateOrUpdateOptions) (NetworkInterfacesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkInterfaceName, parameters, options)
@@ -136,7 +136,8 @@ func (client *NetworkInterfacesClient) createOrUpdateHandleError(resp *http.Resp
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfacesBeginDeleteOptions contains the optional parameters for the NetworkInterfaces.BeginDelete method.
+// options - NetworkInterfacesBeginDeleteOptions contains the optional parameters for the NetworkInterfacesClient.BeginDelete
+// method.
 func (client *NetworkInterfacesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginDeleteOptions) (NetworkInterfacesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
@@ -215,7 +216,7 @@ func (client *NetworkInterfacesClient) deleteHandleError(resp *http.Response) er
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfacesGetOptions contains the optional parameters for the NetworkInterfaces.Get method.
+// options - NetworkInterfacesGetOptions contains the optional parameters for the NetworkInterfacesClient.Get method.
 func (client *NetworkInterfacesClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesGetOptions) (NetworkInterfacesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
@@ -286,7 +287,7 @@ func (client *NetworkInterfacesClient) getHandleError(resp *http.Response) error
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfacesBeginGetEffectiveRouteTableOptions contains the optional parameters for the NetworkInterfaces.BeginGetEffectiveRouteTable
+// options - NetworkInterfacesBeginGetEffectiveRouteTableOptions contains the optional parameters for the NetworkInterfacesClient.BeginGetEffectiveRouteTable
 // method.
 func (client *NetworkInterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginGetEffectiveRouteTableOptions) (NetworkInterfacesGetEffectiveRouteTablePollerResponse, error) {
 	resp, err := client.getEffectiveRouteTable(ctx, resourceGroupName, networkInterfaceName, options)
@@ -370,7 +371,7 @@ func (client *NetworkInterfacesClient) getEffectiveRouteTableHandleError(resp *h
 // virtualmachineIndex - The virtual machine index.
 // networkInterfaceName - The name of the network interface.
 // ipConfigurationName - The name of the ip configuration.
-// options - NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions contains the optional parameters for the NetworkInterfaces.GetVirtualMachineScaleSetIPConfiguration
+// options - NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions contains the optional parameters for the NetworkInterfacesClient.GetVirtualMachineScaleSetIPConfiguration
 // method.
 func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetIPConfiguration(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions) (NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResponse, error) {
 	req, err := client.getVirtualMachineScaleSetIPConfigurationCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, options)
@@ -456,7 +457,7 @@ func (client *NetworkInterfacesClient) getVirtualMachineScaleSetIPConfigurationH
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // virtualmachineIndex - The virtual machine index.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions contains the optional parameters for the NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterface
+// options - NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions contains the optional parameters for the NetworkInterfacesClient.GetVirtualMachineScaleSetNetworkInterface
 // method.
 func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetNetworkInterface(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions) (NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResponse, error) {
 	req, err := client.getVirtualMachineScaleSetNetworkInterfaceCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, options)
@@ -535,7 +536,7 @@ func (client *NetworkInterfacesClient) getVirtualMachineScaleSetNetworkInterface
 // List - Gets all network interfaces in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - NetworkInterfacesListOptions contains the optional parameters for the NetworkInterfaces.List method.
+// options - NetworkInterfacesListOptions contains the optional parameters for the NetworkInterfacesClient.List method.
 func (client *NetworkInterfacesClient) List(resourceGroupName string, options *NetworkInterfacesListOptions) *NetworkInterfacesListPager {
 	return &NetworkInterfacesListPager{
 		client: client,
@@ -594,7 +595,7 @@ func (client *NetworkInterfacesClient) listHandleError(resp *http.Response) erro
 
 // ListAll - Gets all network interfaces in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - NetworkInterfacesListAllOptions contains the optional parameters for the NetworkInterfaces.ListAll method.
+// options - NetworkInterfacesListAllOptions contains the optional parameters for the NetworkInterfacesClient.ListAll method.
 func (client *NetworkInterfacesClient) ListAll(options *NetworkInterfacesListAllOptions) *NetworkInterfacesListAllPager {
 	return &NetworkInterfacesListAllPager{
 		client: client,
@@ -651,7 +652,7 @@ func (client *NetworkInterfacesClient) listAllHandleError(resp *http.Response) e
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfacesBeginListEffectiveNetworkSecurityGroupsOptions contains the optional parameters for the NetworkInterfaces.BeginListEffectiveNetworkSecurityGroups
+// options - NetworkInterfacesBeginListEffectiveNetworkSecurityGroupsOptions contains the optional parameters for the NetworkInterfacesClient.BeginListEffectiveNetworkSecurityGroups
 // method.
 func (client *NetworkInterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginListEffectiveNetworkSecurityGroupsOptions) (NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse, error) {
 	resp, err := client.listEffectiveNetworkSecurityGroups(ctx, resourceGroupName, networkInterfaceName, options)
@@ -734,7 +735,7 @@ func (client *NetworkInterfacesClient) listEffectiveNetworkSecurityGroupsHandleE
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // virtualmachineIndex - The virtual machine index.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions contains the optional parameters for the NetworkInterfaces.ListVirtualMachineScaleSetIPConfigurations
+// options - NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions contains the optional parameters for the NetworkInterfacesClient.ListVirtualMachineScaleSetIPConfigurations
 // method.
 func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetIPConfigurations(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsPager {
 	return &NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsPager{
@@ -812,7 +813,7 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetIPConfiguration
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // options - NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesOptions contains the optional parameters for the
-// NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfaces method.
+// NetworkInterfacesClient.ListVirtualMachineScaleSetNetworkInterfaces method.
 func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, options *NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesOptions) *NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesPager {
 	return &NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesPager{
 		client: client,
@@ -880,7 +881,7 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetNetworkInterfac
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // virtualmachineIndex - The virtual machine index.
 // options - NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesOptions contains the optional parameters for the
-// NetworkInterfaces.ListVirtualMachineScaleSetVMNetworkInterfaces method.
+// NetworkInterfacesClient.ListVirtualMachineScaleSetVMNetworkInterfaces method.
 func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, options *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesOptions) *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesPager {
 	return &NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesPager{
 		client: client,
@@ -950,7 +951,8 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetVMNetworkInterf
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // parameters - Parameters supplied to update network interface tags.
-// options - NetworkInterfacesUpdateTagsOptions contains the optional parameters for the NetworkInterfaces.UpdateTags method.
+// options - NetworkInterfacesUpdateTagsOptions contains the optional parameters for the NetworkInterfacesClient.UpdateTags
+// method.
 func (client *NetworkInterfacesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters TagsObject, options *NetworkInterfacesUpdateTagsOptions) (NetworkInterfacesUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkInterfaceName, parameters, options)
 	if err != nil {

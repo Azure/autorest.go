@@ -39,7 +39,7 @@ func NewHTTPFailureClient(options *azcore.ClientOptions) *HTTPFailureClient {
 
 // GetEmptyError - Get empty error form server
 // If the operation fails it returns the *Error error type.
-// options - HTTPFailureGetEmptyErrorOptions contains the optional parameters for the HTTPFailure.GetEmptyError method.
+// options - HTTPFailureGetEmptyErrorOptions contains the optional parameters for the HTTPFailureClient.GetEmptyError method.
 func (client *HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTTPFailureGetEmptyErrorOptions) (HTTPFailureGetEmptyErrorResponse, error) {
 	req, err := client.getEmptyErrorCreateRequest(ctx, options)
 	if err != nil {
@@ -90,7 +90,8 @@ func (client *HTTPFailureClient) getEmptyErrorHandleError(resp *http.Response) e
 
 // GetNoModelEmpty - Get empty response from server
 // If the operation fails it returns a generic error.
-// options - HTTPFailureGetNoModelEmptyOptions contains the optional parameters for the HTTPFailure.GetNoModelEmpty method.
+// options - HTTPFailureGetNoModelEmptyOptions contains the optional parameters for the HTTPFailureClient.GetNoModelEmpty
+// method.
 func (client *HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *HTTPFailureGetNoModelEmptyOptions) (HTTPFailureGetNoModelEmptyResponse, error) {
 	req, err := client.getNoModelEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -140,7 +141,8 @@ func (client *HTTPFailureClient) getNoModelEmptyHandleError(resp *http.Response)
 
 // GetNoModelError - Get empty error form server
 // If the operation fails it returns a generic error.
-// options - HTTPFailureGetNoModelErrorOptions contains the optional parameters for the HTTPFailure.GetNoModelError method.
+// options - HTTPFailureGetNoModelErrorOptions contains the optional parameters for the HTTPFailureClient.GetNoModelError
+// method.
 func (client *HTTPFailureClient) GetNoModelError(ctx context.Context, options *HTTPFailureGetNoModelErrorOptions) (HTTPFailureGetNoModelErrorResponse, error) {
 	req, err := client.getNoModelErrorCreateRequest(ctx, options)
 	if err != nil {

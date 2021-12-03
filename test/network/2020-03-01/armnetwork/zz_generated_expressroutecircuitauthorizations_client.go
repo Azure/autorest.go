@@ -57,7 +57,7 @@ func NewExpressRouteCircuitAuthorizationsClient(subscriptionID string, credentia
 // circuitName - The name of the express route circuit.
 // authorizationName - The name of the authorization.
 // authorizationParameters - Parameters supplied to the create or update express route circuit authorization operation.
-// options - ExpressRouteCircuitAuthorizationsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.BeginCreateOrUpdate
+// options - ExpressRouteCircuitAuthorizationsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCircuitAuthorizationsClient.BeginCreateOrUpdate
 // method.
 func (client *ExpressRouteCircuitAuthorizationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, authorizationParameters ExpressRouteCircuitAuthorization, options *ExpressRouteCircuitAuthorizationsBeginCreateOrUpdateOptions) (ExpressRouteCircuitAuthorizationsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, circuitName, authorizationName, authorizationParameters, options)
@@ -142,7 +142,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) createOrUpdateHandleError
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // authorizationName - The name of the authorization.
-// options - ExpressRouteCircuitAuthorizationsBeginDeleteOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.BeginDelete
+// options - ExpressRouteCircuitAuthorizationsBeginDeleteOptions contains the optional parameters for the ExpressRouteCircuitAuthorizationsClient.BeginDelete
 // method.
 func (client *ExpressRouteCircuitAuthorizationsClient) BeginDelete(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsBeginDeleteOptions) (ExpressRouteCircuitAuthorizationsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, circuitName, authorizationName, options)
@@ -227,7 +227,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) deleteHandleError(resp *h
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // authorizationName - The name of the authorization.
-// options - ExpressRouteCircuitAuthorizationsGetOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.Get
+// options - ExpressRouteCircuitAuthorizationsGetOptions contains the optional parameters for the ExpressRouteCircuitAuthorizationsClient.Get
 // method.
 func (client *ExpressRouteCircuitAuthorizationsClient) Get(ctx context.Context, resourceGroupName string, circuitName string, authorizationName string, options *ExpressRouteCircuitAuthorizationsGetOptions) (ExpressRouteCircuitAuthorizationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, circuitName, authorizationName, options)
@@ -300,7 +300,7 @@ func (client *ExpressRouteCircuitAuthorizationsClient) getHandleError(resp *http
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the circuit.
-// options - ExpressRouteCircuitAuthorizationsListOptions contains the optional parameters for the ExpressRouteCircuitAuthorizations.List
+// options - ExpressRouteCircuitAuthorizationsListOptions contains the optional parameters for the ExpressRouteCircuitAuthorizationsClient.List
 // method.
 func (client *ExpressRouteCircuitAuthorizationsClient) List(resourceGroupName string, circuitName string, options *ExpressRouteCircuitAuthorizationsListOptions) *ExpressRouteCircuitAuthorizationsListPager {
 	return &ExpressRouteCircuitAuthorizationsListPager{

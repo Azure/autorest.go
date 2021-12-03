@@ -58,7 +58,7 @@ func newAliasClient(geography *Geography, apiVersion *string, pl runtime.Pipelin
 // "e89aebb9-70a3-8fe1-32bb-1fbd0c725f14", "lastUpdatedTimestamp":
 // "2020-02-13T21:19:22.123Z" }
 // If the operation fails it returns a generic error.
-// options - AliasCreateOptions contains the optional parameters for the Alias.Create method.
+// options - AliasCreateOptions contains the optional parameters for the aliasClient.Create method.
 func (client *aliasClient) Create(ctx context.Context, options *AliasCreateOptions) (AliasCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, options)
 	if err != nil {
@@ -141,7 +141,7 @@ func (client *aliasClient) createHandleError(resp *http.Response) error {
 // "creatorDataItemId": null, "lastUpdatedTimestamp":
 // "2020-02-18T19:53:33.123Z" } ] }
 // If the operation fails it returns a generic error.
-// options - AliasListOptions contains the optional parameters for the Alias.List method.
+// options - AliasListOptions contains the optional parameters for the aliasClient.List method.
 func (client *aliasClient) List(options *AliasListOptions) *AliasListPager {
 	return &AliasListPager{
 		client: client,

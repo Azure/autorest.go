@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-// AliasCreateOptions contains the optional parameters for the Alias.Create method.
+// AliasCreateOptions contains the optional parameters for the aliasClient.Create method.
 type AliasCreateOptions struct {
 	// The unique id that references a creator data item to be aliased.
 	CreatorDataItemID *string
@@ -37,7 +37,7 @@ type AliasListItem struct {
 	LastUpdatedTimestamp *string `json:"lastUpdatedTimestamp,omitempty" azure:"ro"`
 }
 
-// AliasListOptions contains the optional parameters for the Alias.List method.
+// AliasListOptions contains the optional parameters for the aliasClient.List method.
 type AliasListOptions struct {
 	GroupBy []LogMetricsGroupBy
 }

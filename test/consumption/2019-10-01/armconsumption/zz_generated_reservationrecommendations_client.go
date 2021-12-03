@@ -53,7 +53,7 @@ func NewReservationRecommendationsClient(credential azcore.TokenCredential, opti
 // for BillingAccount scope, and
 // '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile
 // scope
-// options - ReservationRecommendationsListOptions contains the optional parameters for the ReservationRecommendations.List
+// options - ReservationRecommendationsListOptions contains the optional parameters for the ReservationRecommendationsClient.List
 // method.
 func (client *ReservationRecommendationsClient) List(scope string, options *ReservationRecommendationsListOptions) *ReservationRecommendationsListPager {
 	return &ReservationRecommendationsListPager{

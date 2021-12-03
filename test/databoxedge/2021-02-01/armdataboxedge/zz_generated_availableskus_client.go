@@ -44,7 +44,7 @@ func NewAvailableSKUsClient(subscriptionID string, options *azcore.ClientOptions
 
 // List - List all the available Skus and information related to them.
 // If the operation fails it returns the *CloudError error type.
-// options - AvailableSKUsListOptions contains the optional parameters for the AvailableSKUs.List method.
+// options - AvailableSKUsListOptions contains the optional parameters for the AvailableSKUsClient.List method.
 func (client *AvailableSKUsClient) List(options *AvailableSKUsListOptions) *AvailableSKUsListPager {
 	return &AvailableSKUsListPager{
 		client: client,

@@ -49,7 +49,7 @@ func NewSharesClient(subscriptionID string, options *azcore.ClientOptions) *Shar
 // name - The share name.
 // resourceGroupName - The resource group name.
 // share - The share properties.
-// options - SharesBeginCreateOrUpdateOptions contains the optional parameters for the Shares.BeginCreateOrUpdate method.
+// options - SharesBeginCreateOrUpdateOptions contains the optional parameters for the SharesClient.BeginCreateOrUpdate method.
 func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesBeginCreateOrUpdateOptions) (SharesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, share, options)
 	if err != nil {
@@ -133,7 +133,7 @@ func (client *SharesClient) createOrUpdateHandleError(resp *http.Response) error
 // deviceName - The device name.
 // name - The share name.
 // resourceGroupName - The resource group name.
-// options - SharesBeginDeleteOptions contains the optional parameters for the Shares.BeginDelete method.
+// options - SharesBeginDeleteOptions contains the optional parameters for the SharesClient.BeginDelete method.
 func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesBeginDeleteOptions) (SharesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -217,7 +217,7 @@ func (client *SharesClient) deleteHandleError(resp *http.Response) error {
 // deviceName - The device name.
 // name - The share name.
 // resourceGroupName - The resource group name.
-// options - SharesGetOptions contains the optional parameters for the Shares.Get method.
+// options - SharesGetOptions contains the optional parameters for the SharesClient.Get method.
 func (client *SharesClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesGetOptions) (SharesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -289,7 +289,7 @@ func (client *SharesClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - SharesListByDataBoxEdgeDeviceOptions contains the optional parameters for the Shares.ListByDataBoxEdgeDevice
+// options - SharesListByDataBoxEdgeDeviceOptions contains the optional parameters for the SharesClient.ListByDataBoxEdgeDevice
 // method.
 func (client *SharesClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *SharesListByDataBoxEdgeDeviceOptions) *SharesListByDataBoxEdgeDevicePager {
 	return &SharesListByDataBoxEdgeDevicePager{
@@ -356,7 +356,7 @@ func (client *SharesClient) listByDataBoxEdgeDeviceHandleError(resp *http.Respon
 // deviceName - The device name.
 // name - The share name.
 // resourceGroupName - The resource group name.
-// options - SharesBeginRefreshOptions contains the optional parameters for the Shares.BeginRefresh method.
+// options - SharesBeginRefreshOptions contains the optional parameters for the SharesClient.BeginRefresh method.
 func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesBeginRefreshOptions) (SharesRefreshPollerResponse, error) {
 	resp, err := client.refresh(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {

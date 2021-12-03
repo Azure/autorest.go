@@ -57,7 +57,7 @@ func NewSecurityRulesClient(subscriptionID string, credential azcore.TokenCreden
 // networkSecurityGroupName - The name of the network security group.
 // securityRuleName - The name of the security rule.
 // securityRuleParameters - Parameters supplied to the create or update network security rule operation.
-// options - SecurityRulesBeginCreateOrUpdateOptions contains the optional parameters for the SecurityRules.BeginCreateOrUpdate
+// options - SecurityRulesBeginCreateOrUpdateOptions contains the optional parameters for the SecurityRulesClient.BeginCreateOrUpdate
 // method.
 func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (SecurityRulesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, options)
@@ -142,7 +142,7 @@ func (client *SecurityRulesClient) createOrUpdateHandleError(resp *http.Response
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
 // securityRuleName - The name of the security rule.
-// options - SecurityRulesBeginDeleteOptions contains the optional parameters for the SecurityRules.BeginDelete method.
+// options - SecurityRulesBeginDeleteOptions contains the optional parameters for the SecurityRulesClient.BeginDelete method.
 func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesBeginDeleteOptions) (SecurityRulesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
@@ -226,7 +226,7 @@ func (client *SecurityRulesClient) deleteHandleError(resp *http.Response) error 
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
 // securityRuleName - The name of the security rule.
-// options - SecurityRulesGetOptions contains the optional parameters for the SecurityRules.Get method.
+// options - SecurityRulesGetOptions contains the optional parameters for the SecurityRulesClient.Get method.
 func (client *SecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesGetOptions) (SecurityRulesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
@@ -298,7 +298,7 @@ func (client *SecurityRulesClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
-// options - SecurityRulesListOptions contains the optional parameters for the SecurityRules.List method.
+// options - SecurityRulesListOptions contains the optional parameters for the SecurityRulesClient.List method.
 func (client *SecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesListOptions) *SecurityRulesListPager {
 	return &SecurityRulesListPager{
 		client: client,

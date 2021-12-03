@@ -55,7 +55,7 @@ func NewApplicationGatewaysClient(subscriptionID string, credential azcore.Token
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // applicationGatewayName - The name of the application gateway.
-// options - ApplicationGatewaysBeginBackendHealthOptions contains the optional parameters for the ApplicationGateways.BeginBackendHealth
+// options - ApplicationGatewaysBeginBackendHealthOptions contains the optional parameters for the ApplicationGatewaysClient.BeginBackendHealth
 // method.
 func (client *ApplicationGatewaysClient) BeginBackendHealth(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginBackendHealthOptions) (ApplicationGatewaysBackendHealthPollerResponse, error) {
 	resp, err := client.backendHealth(ctx, resourceGroupName, applicationGatewayName, options)
@@ -140,7 +140,7 @@ func (client *ApplicationGatewaysClient) backendHealthHandleError(resp *http.Res
 // resourceGroupName - The name of the resource group.
 // applicationGatewayName - The name of the application gateway.
 // probeRequest - Request body for on-demand test probe operation.
-// options - ApplicationGatewaysBeginBackendHealthOnDemandOptions contains the optional parameters for the ApplicationGateways.BeginBackendHealthOnDemand
+// options - ApplicationGatewaysBeginBackendHealthOnDemandOptions contains the optional parameters for the ApplicationGatewaysClient.BeginBackendHealthOnDemand
 // method.
 func (client *ApplicationGatewaysClient) BeginBackendHealthOnDemand(ctx context.Context, resourceGroupName string, applicationGatewayName string, probeRequest ApplicationGatewayOnDemandProbe, options *ApplicationGatewaysBeginBackendHealthOnDemandOptions) (ApplicationGatewaysBackendHealthOnDemandPollerResponse, error) {
 	resp, err := client.backendHealthOnDemand(ctx, resourceGroupName, applicationGatewayName, probeRequest, options)
@@ -225,7 +225,7 @@ func (client *ApplicationGatewaysClient) backendHealthOnDemandHandleError(resp *
 // resourceGroupName - The name of the resource group.
 // applicationGatewayName - The name of the application gateway.
 // parameters - Parameters supplied to the create or update application gateway operation.
-// options - ApplicationGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the ApplicationGateways.BeginCreateOrUpdate
+// options - ApplicationGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the ApplicationGatewaysClient.BeginCreateOrUpdate
 // method.
 func (client *ApplicationGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters ApplicationGateway, options *ApplicationGatewaysBeginCreateOrUpdateOptions) (ApplicationGatewaysCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, applicationGatewayName, parameters, options)
@@ -305,7 +305,7 @@ func (client *ApplicationGatewaysClient) createOrUpdateHandleError(resp *http.Re
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // applicationGatewayName - The name of the application gateway.
-// options - ApplicationGatewaysBeginDeleteOptions contains the optional parameters for the ApplicationGateways.BeginDelete
+// options - ApplicationGatewaysBeginDeleteOptions contains the optional parameters for the ApplicationGatewaysClient.BeginDelete
 // method.
 func (client *ApplicationGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginDeleteOptions) (ApplicationGatewaysDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, applicationGatewayName, options)
@@ -385,7 +385,7 @@ func (client *ApplicationGatewaysClient) deleteHandleError(resp *http.Response) 
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // applicationGatewayName - The name of the application gateway.
-// options - ApplicationGatewaysGetOptions contains the optional parameters for the ApplicationGateways.Get method.
+// options - ApplicationGatewaysGetOptions contains the optional parameters for the ApplicationGatewaysClient.Get method.
 func (client *ApplicationGatewaysClient) Get(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysGetOptions) (ApplicationGatewaysGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
@@ -452,7 +452,7 @@ func (client *ApplicationGatewaysClient) getHandleError(resp *http.Response) err
 // GetSSLPredefinedPolicy - Gets Ssl predefined policy with the specified policy name.
 // If the operation fails it returns the *CloudError error type.
 // predefinedPolicyName - Name of Ssl predefined policy.
-// options - ApplicationGatewaysGetSSLPredefinedPolicyOptions contains the optional parameters for the ApplicationGateways.GetSSLPredefinedPolicy
+// options - ApplicationGatewaysGetSSLPredefinedPolicyOptions contains the optional parameters for the ApplicationGatewaysClient.GetSSLPredefinedPolicy
 // method.
 func (client *ApplicationGatewaysClient) GetSSLPredefinedPolicy(ctx context.Context, predefinedPolicyName string, options *ApplicationGatewaysGetSSLPredefinedPolicyOptions) (ApplicationGatewaysGetSSLPredefinedPolicyResponse, error) {
 	req, err := client.getSSLPredefinedPolicyCreateRequest(ctx, predefinedPolicyName, options)
@@ -516,7 +516,7 @@ func (client *ApplicationGatewaysClient) getSSLPredefinedPolicyHandleError(resp 
 // List - Lists all application gateways in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - ApplicationGatewaysListOptions contains the optional parameters for the ApplicationGateways.List method.
+// options - ApplicationGatewaysListOptions contains the optional parameters for the ApplicationGatewaysClient.List method.
 func (client *ApplicationGatewaysClient) List(resourceGroupName string, options *ApplicationGatewaysListOptions) *ApplicationGatewaysListPager {
 	return &ApplicationGatewaysListPager{
 		client: client,
@@ -575,7 +575,8 @@ func (client *ApplicationGatewaysClient) listHandleError(resp *http.Response) er
 
 // ListAll - Gets all the application gateways in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - ApplicationGatewaysListAllOptions contains the optional parameters for the ApplicationGateways.ListAll method.
+// options - ApplicationGatewaysListAllOptions contains the optional parameters for the ApplicationGatewaysClient.ListAll
+// method.
 func (client *ApplicationGatewaysClient) ListAll(options *ApplicationGatewaysListAllOptions) *ApplicationGatewaysListAllPager {
 	return &ApplicationGatewaysListAllPager{
 		client: client,
@@ -630,7 +631,7 @@ func (client *ApplicationGatewaysClient) listAllHandleError(resp *http.Response)
 
 // ListAvailableRequestHeaders - Lists all available request headers.
 // If the operation fails it returns the *Error error type.
-// options - ApplicationGatewaysListAvailableRequestHeadersOptions contains the optional parameters for the ApplicationGateways.ListAvailableRequestHeaders
+// options - ApplicationGatewaysListAvailableRequestHeadersOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableRequestHeaders
 // method.
 func (client *ApplicationGatewaysClient) ListAvailableRequestHeaders(ctx context.Context, options *ApplicationGatewaysListAvailableRequestHeadersOptions) (ApplicationGatewaysListAvailableRequestHeadersResponse, error) {
 	req, err := client.listAvailableRequestHeadersCreateRequest(ctx, options)
@@ -689,7 +690,7 @@ func (client *ApplicationGatewaysClient) listAvailableRequestHeadersHandleError(
 
 // ListAvailableResponseHeaders - Lists all available response headers.
 // If the operation fails it returns the *Error error type.
-// options - ApplicationGatewaysListAvailableResponseHeadersOptions contains the optional parameters for the ApplicationGateways.ListAvailableResponseHeaders
+// options - ApplicationGatewaysListAvailableResponseHeadersOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableResponseHeaders
 // method.
 func (client *ApplicationGatewaysClient) ListAvailableResponseHeaders(ctx context.Context, options *ApplicationGatewaysListAvailableResponseHeadersOptions) (ApplicationGatewaysListAvailableResponseHeadersResponse, error) {
 	req, err := client.listAvailableResponseHeadersCreateRequest(ctx, options)
@@ -748,7 +749,7 @@ func (client *ApplicationGatewaysClient) listAvailableResponseHeadersHandleError
 
 // ListAvailableSSLOptions - Lists available Ssl options for configuring Ssl policy.
 // If the operation fails it returns the *CloudError error type.
-// options - ApplicationGatewaysListAvailableSSLOptionsOptions contains the optional parameters for the ApplicationGateways.ListAvailableSSLOptions
+// options - ApplicationGatewaysListAvailableSSLOptionsOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableSSLOptions
 // method.
 func (client *ApplicationGatewaysClient) ListAvailableSSLOptions(ctx context.Context, options *ApplicationGatewaysListAvailableSSLOptionsOptions) (ApplicationGatewaysListAvailableSSLOptionsResponse, error) {
 	req, err := client.listAvailableSSLOptionsCreateRequest(ctx, options)
@@ -807,7 +808,7 @@ func (client *ApplicationGatewaysClient) listAvailableSSLOptionsHandleError(resp
 
 // ListAvailableSSLPredefinedPolicies - Lists all SSL predefined policies for configuring Ssl policy.
 // If the operation fails it returns the *CloudError error type.
-// options - ApplicationGatewaysListAvailableSSLPredefinedPoliciesOptions contains the optional parameters for the ApplicationGateways.ListAvailableSSLPredefinedPolicies
+// options - ApplicationGatewaysListAvailableSSLPredefinedPoliciesOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableSSLPredefinedPolicies
 // method.
 func (client *ApplicationGatewaysClient) ListAvailableSSLPredefinedPolicies(options *ApplicationGatewaysListAvailableSSLPredefinedPoliciesOptions) *ApplicationGatewaysListAvailableSSLPredefinedPoliciesPager {
 	return &ApplicationGatewaysListAvailableSSLPredefinedPoliciesPager{
@@ -863,7 +864,7 @@ func (client *ApplicationGatewaysClient) listAvailableSSLPredefinedPoliciesHandl
 
 // ListAvailableServerVariables - Lists all available server variables.
 // If the operation fails it returns the *Error error type.
-// options - ApplicationGatewaysListAvailableServerVariablesOptions contains the optional parameters for the ApplicationGateways.ListAvailableServerVariables
+// options - ApplicationGatewaysListAvailableServerVariablesOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableServerVariables
 // method.
 func (client *ApplicationGatewaysClient) ListAvailableServerVariables(ctx context.Context, options *ApplicationGatewaysListAvailableServerVariablesOptions) (ApplicationGatewaysListAvailableServerVariablesResponse, error) {
 	req, err := client.listAvailableServerVariablesCreateRequest(ctx, options)
@@ -922,7 +923,7 @@ func (client *ApplicationGatewaysClient) listAvailableServerVariablesHandleError
 
 // ListAvailableWafRuleSets - Lists all available web application firewall rule sets.
 // If the operation fails it returns the *CloudError error type.
-// options - ApplicationGatewaysListAvailableWafRuleSetsOptions contains the optional parameters for the ApplicationGateways.ListAvailableWafRuleSets
+// options - ApplicationGatewaysListAvailableWafRuleSetsOptions contains the optional parameters for the ApplicationGatewaysClient.ListAvailableWafRuleSets
 // method.
 func (client *ApplicationGatewaysClient) ListAvailableWafRuleSets(ctx context.Context, options *ApplicationGatewaysListAvailableWafRuleSetsOptions) (ApplicationGatewaysListAvailableWafRuleSetsResponse, error) {
 	req, err := client.listAvailableWafRuleSetsCreateRequest(ctx, options)
@@ -983,7 +984,7 @@ func (client *ApplicationGatewaysClient) listAvailableWafRuleSetsHandleError(res
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // applicationGatewayName - The name of the application gateway.
-// options - ApplicationGatewaysBeginStartOptions contains the optional parameters for the ApplicationGateways.BeginStart
+// options - ApplicationGatewaysBeginStartOptions contains the optional parameters for the ApplicationGatewaysClient.BeginStart
 // method.
 func (client *ApplicationGatewaysClient) BeginStart(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginStartOptions) (ApplicationGatewaysStartPollerResponse, error) {
 	resp, err := client.start(ctx, resourceGroupName, applicationGatewayName, options)
@@ -1063,7 +1064,8 @@ func (client *ApplicationGatewaysClient) startHandleError(resp *http.Response) e
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // applicationGatewayName - The name of the application gateway.
-// options - ApplicationGatewaysBeginStopOptions contains the optional parameters for the ApplicationGateways.BeginStop method.
+// options - ApplicationGatewaysBeginStopOptions contains the optional parameters for the ApplicationGatewaysClient.BeginStop
+// method.
 func (client *ApplicationGatewaysClient) BeginStop(ctx context.Context, resourceGroupName string, applicationGatewayName string, options *ApplicationGatewaysBeginStopOptions) (ApplicationGatewaysStopPollerResponse, error) {
 	resp, err := client.stop(ctx, resourceGroupName, applicationGatewayName, options)
 	if err != nil {
@@ -1143,7 +1145,7 @@ func (client *ApplicationGatewaysClient) stopHandleError(resp *http.Response) er
 // resourceGroupName - The name of the resource group.
 // applicationGatewayName - The name of the application gateway.
 // parameters - Parameters supplied to update application gateway tags.
-// options - ApplicationGatewaysUpdateTagsOptions contains the optional parameters for the ApplicationGateways.UpdateTags
+// options - ApplicationGatewaysUpdateTagsOptions contains the optional parameters for the ApplicationGatewaysClient.UpdateTags
 // method.
 func (client *ApplicationGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, applicationGatewayName string, parameters TagsObject, options *ApplicationGatewaysUpdateTagsOptions) (ApplicationGatewaysUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, applicationGatewayName, parameters, options)

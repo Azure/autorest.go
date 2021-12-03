@@ -39,7 +39,8 @@ func newPipelineRunClient(endpoint string, pl runtime.Pipeline) *pipelineRunClie
 // CancelPipelineRun - Cancel a pipeline run by its run ID.
 // If the operation fails it returns the *CloudError error type.
 // runID - The pipeline run identifier.
-// options - PipelineRunCancelPipelineRunOptions contains the optional parameters for the PipelineRun.CancelPipelineRun method.
+// options - PipelineRunCancelPipelineRunOptions contains the optional parameters for the pipelineRunClient.CancelPipelineRun
+// method.
 func (client *pipelineRunClient) CancelPipelineRun(ctx context.Context, runID string, options *PipelineRunCancelPipelineRunOptions) (PipelineRunCancelPipelineRunResponse, error) {
 	req, err := client.cancelPipelineRunCreateRequest(ctx, runID, options)
 	if err != nil {
@@ -92,7 +93,7 @@ func (client *pipelineRunClient) cancelPipelineRunHandleError(resp *http.Respons
 // GetPipelineRun - Get a pipeline run by its run ID.
 // If the operation fails it returns the *CloudError error type.
 // runID - The pipeline run identifier.
-// options - PipelineRunGetPipelineRunOptions contains the optional parameters for the PipelineRun.GetPipelineRun method.
+// options - PipelineRunGetPipelineRunOptions contains the optional parameters for the pipelineRunClient.GetPipelineRun method.
 func (client *pipelineRunClient) GetPipelineRun(ctx context.Context, runID string, options *PipelineRunGetPipelineRunOptions) (PipelineRunGetPipelineRunResponse, error) {
 	req, err := client.getPipelineRunCreateRequest(ctx, runID, options)
 	if err != nil {
@@ -153,7 +154,8 @@ func (client *pipelineRunClient) getPipelineRunHandleError(resp *http.Response) 
 // pipelineName - The pipeline name.
 // runID - The pipeline run identifier.
 // filterParameters - Parameters to filter the activity runs.
-// options - PipelineRunQueryActivityRunsOptions contains the optional parameters for the PipelineRun.QueryActivityRuns method.
+// options - PipelineRunQueryActivityRunsOptions contains the optional parameters for the pipelineRunClient.QueryActivityRuns
+// method.
 func (client *pipelineRunClient) QueryActivityRuns(ctx context.Context, pipelineName string, runID string, filterParameters RunFilterParameters, options *PipelineRunQueryActivityRunsOptions) (PipelineRunQueryActivityRunsResponse, error) {
 	req, err := client.queryActivityRunsCreateRequest(ctx, pipelineName, runID, filterParameters, options)
 	if err != nil {
@@ -216,7 +218,7 @@ func (client *pipelineRunClient) queryActivityRunsHandleError(resp *http.Respons
 // QueryPipelineRunsByWorkspace - Query pipeline runs in the workspace based on input filter conditions.
 // If the operation fails it returns the *CloudError error type.
 // filterParameters - Parameters to filter the pipeline run.
-// options - PipelineRunQueryPipelineRunsByWorkspaceOptions contains the optional parameters for the PipelineRun.QueryPipelineRunsByWorkspace
+// options - PipelineRunQueryPipelineRunsByWorkspaceOptions contains the optional parameters for the pipelineRunClient.QueryPipelineRunsByWorkspace
 // method.
 func (client *pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Context, filterParameters RunFilterParameters, options *PipelineRunQueryPipelineRunsByWorkspaceOptions) (PipelineRunQueryPipelineRunsByWorkspaceResponse, error) {
 	req, err := client.queryPipelineRunsByWorkspaceCreateRequest(ctx, filterParameters, options)

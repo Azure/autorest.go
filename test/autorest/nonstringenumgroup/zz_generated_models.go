@@ -8,23 +8,23 @@
 
 package nonstringenumgroup
 
-// FloatGetOptions contains the optional parameters for the Float.Get method.
+// FloatGetOptions contains the optional parameters for the FloatClient.Get method.
 type FloatGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// FloatPutOptions contains the optional parameters for the Float.Put method.
+// FloatPutOptions contains the optional parameters for the FloatClient.Put method.
 type FloatPutOptions struct {
 	// Input float enum.
 	Input *FloatEnum
 }
 
-// IntGetOptions contains the optional parameters for the Int.Get method.
+// IntGetOptions contains the optional parameters for the IntClient.Get method.
 type IntGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IntPutOptions contains the optional parameters for the Int.Put method.
+// IntPutOptions contains the optional parameters for the IntClient.Put method.
 type IntPutOptions struct {
 	// Input int enum.
 	Input *IntEnum

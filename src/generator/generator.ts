@@ -53,8 +53,15 @@ export async function protocolGen(host: AutorestExtensionHost) {
     });
 
     for (const op of values(operations)) {
+      let fileName = op.name.toLowerCase();
+      // op.name is the client name, e.g. FooClient.
+      // insert a _ before Client, i.e. Foo_Client
+      // if the name isn't simply Client.
+      if (fileName !== 'client') {
+        fileName = fileName.substr(0, fileName.length-6) + '_client';
+      }
       host.writeFile({
-        filename: `${filePrefix}${op.name.toLowerCase()}_client.go`,
+        filename: `${filePrefix}${fileName}.go`,
         content: op.content,
         artifactType: 'source-file-go'
       });

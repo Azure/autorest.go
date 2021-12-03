@@ -59,7 +59,7 @@ func NewGalleryApplicationsClient(subscriptionID string, credential azcore.Token
 // are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80
 // characters.
 // galleryApplication - Parameters supplied to the create or update gallery Application operation.
-// options - GalleryApplicationsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryApplications.BeginCreateOrUpdate
+// options - GalleryApplicationsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryApplicationsClient.BeginCreateOrUpdate
 // method.
 func (client *GalleryApplicationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication, options *GalleryApplicationsBeginCreateOrUpdateOptions) (GalleryApplicationsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)
@@ -144,7 +144,7 @@ func (client *GalleryApplicationsClient) createOrUpdateHandleError(resp *http.Re
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition is to be deleted.
 // galleryApplicationName - The name of the gallery Application Definition to be deleted.
-// options - GalleryApplicationsBeginDeleteOptions contains the optional parameters for the GalleryApplications.BeginDelete
+// options - GalleryApplicationsBeginDeleteOptions contains the optional parameters for the GalleryApplicationsClient.BeginDelete
 // method.
 func (client *GalleryApplicationsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsBeginDeleteOptions) (GalleryApplicationsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryApplicationName, options)
@@ -229,7 +229,7 @@ func (client *GalleryApplicationsClient) deleteHandleError(resp *http.Response) 
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery from which the Application Definitions are to be retrieved.
 // galleryApplicationName - The name of the gallery Application Definition to be retrieved.
-// options - GalleryApplicationsGetOptions contains the optional parameters for the GalleryApplications.Get method.
+// options - GalleryApplicationsGetOptions contains the optional parameters for the GalleryApplicationsClient.Get method.
 func (client *GalleryApplicationsClient) Get(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsGetOptions) (GalleryApplicationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, options)
 	if err != nil {
@@ -301,7 +301,7 @@ func (client *GalleryApplicationsClient) getHandleError(resp *http.Response) err
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery from which Application Definitions are to be listed.
-// options - GalleryApplicationsListByGalleryOptions contains the optional parameters for the GalleryApplications.ListByGallery
+// options - GalleryApplicationsListByGalleryOptions contains the optional parameters for the GalleryApplicationsClient.ListByGallery
 // method.
 func (client *GalleryApplicationsClient) ListByGallery(resourceGroupName string, galleryName string, options *GalleryApplicationsListByGalleryOptions) *GalleryApplicationsListByGalleryPager {
 	return &GalleryApplicationsListByGalleryPager{
@@ -371,7 +371,7 @@ func (client *GalleryApplicationsClient) listByGalleryHandleError(resp *http.Res
 // and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80
 // characters.
 // galleryApplication - Parameters supplied to the update gallery Application operation.
-// options - GalleryApplicationsBeginUpdateOptions contains the optional parameters for the GalleryApplications.BeginUpdate
+// options - GalleryApplicationsBeginUpdateOptions contains the optional parameters for the GalleryApplicationsClient.BeginUpdate
 // method.
 func (client *GalleryApplicationsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplicationUpdate, options *GalleryApplicationsBeginUpdateOptions) (GalleryApplicationsUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)

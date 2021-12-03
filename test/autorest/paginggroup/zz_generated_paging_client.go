@@ -43,7 +43,7 @@ func NewPagingClient(options *azcore.ClientOptions) *PagingClient {
 // FirstResponseEmpty - A paging operation whose first response's items list is empty, but still returns a next link. Second
 // (and final) call, will give you an items list of 1.
 // If the operation fails it returns a generic error.
-// options - PagingFirstResponseEmptyOptions contains the optional parameters for the Paging.FirstResponseEmpty method.
+// options - PagingFirstResponseEmptyOptions contains the optional parameters for the PagingClient.FirstResponseEmpty method.
 func (client *PagingClient) FirstResponseEmpty(options *PagingFirstResponseEmptyOptions) *PagingFirstResponseEmptyPager {
 	return &PagingFirstResponseEmptyPager{
 		client: client,
@@ -90,7 +90,7 @@ func (client *PagingClient) firstResponseEmptyHandleError(resp *http.Response) e
 
 // GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
 // If the operation fails it returns a generic error.
-// options - PagingGetMultiplePagesOptions contains the optional parameters for the Paging.GetMultiplePages method.
+// options - PagingGetMultiplePagesOptions contains the optional parameters for the PagingClient.GetMultiplePages method.
 func (client *PagingClient) GetMultiplePages(options *PagingGetMultiplePagesOptions) *PagingGetMultiplePagesPager {
 	return &PagingGetMultiplePagesPager{
 		client: client,
@@ -146,7 +146,7 @@ func (client *PagingClient) getMultiplePagesHandleError(resp *http.Response) err
 
 // GetMultiplePagesFailure - A paging operation that receives a 400 on the second call
 // If the operation fails it returns a generic error.
-// options - PagingGetMultiplePagesFailureOptions contains the optional parameters for the Paging.GetMultiplePagesFailure
+// options - PagingGetMultiplePagesFailureOptions contains the optional parameters for the PagingClient.GetMultiplePagesFailure
 // method.
 func (client *PagingClient) GetMultiplePagesFailure(options *PagingGetMultiplePagesFailureOptions) *PagingGetMultiplePagesFailurePager {
 	return &PagingGetMultiplePagesFailurePager{
@@ -194,7 +194,7 @@ func (client *PagingClient) getMultiplePagesFailureHandleError(resp *http.Respon
 
 // GetMultiplePagesFailureURI - A paging operation that receives an invalid nextLink
 // If the operation fails it returns a generic error.
-// options - PagingGetMultiplePagesFailureURIOptions contains the optional parameters for the Paging.GetMultiplePagesFailureURI
+// options - PagingGetMultiplePagesFailureURIOptions contains the optional parameters for the PagingClient.GetMultiplePagesFailureURI
 // method.
 func (client *PagingClient) GetMultiplePagesFailureURI(options *PagingGetMultiplePagesFailureURIOptions) *PagingGetMultiplePagesFailureURIPager {
 	return &PagingGetMultiplePagesFailureURIPager{
@@ -244,7 +244,7 @@ func (client *PagingClient) getMultiplePagesFailureURIHandleError(resp *http.Res
 // If the operation fails it returns a generic error.
 // apiVersion - Sets the api version to use.
 // tenant - Sets the tenant to use.
-// options - PagingGetMultiplePagesFragmentNextLinkOptions contains the optional parameters for the Paging.GetMultiplePagesFragmentNextLink
+// options - PagingGetMultiplePagesFragmentNextLinkOptions contains the optional parameters for the PagingClient.GetMultiplePagesFragmentNextLink
 // method.
 func (client *PagingClient) GetMultiplePagesFragmentNextLink(apiVersion string, tenant string, options *PagingGetMultiplePagesFragmentNextLinkOptions) *PagingGetMultiplePagesFragmentNextLinkPager {
 	return &PagingGetMultiplePagesFragmentNextLinkPager{
@@ -355,7 +355,7 @@ func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkHandleEr
 
 // BeginGetMultiplePagesLRO - A long-running paging operation that includes a nextLink that has 10 pages
 // If the operation fails it returns a generic error.
-// options - PagingBeginGetMultiplePagesLROOptions contains the optional parameters for the Paging.BeginGetMultiplePagesLRO
+// options - PagingBeginGetMultiplePagesLROOptions contains the optional parameters for the PagingClient.BeginGetMultiplePagesLRO
 // method.
 func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, options *PagingBeginGetMultiplePagesLROOptions) (PagingGetMultiplePagesLROPollerResponse, error) {
 	resp, err := client.getMultiplePagesLRO(ctx, options)
@@ -437,7 +437,7 @@ func (client *PagingClient) getMultiplePagesLROHandleError(resp *http.Response) 
 // GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response
 // including a nextLink that has 10 pages
 // If the operation fails it returns a generic error.
-// options - PagingGetMultiplePagesRetryFirstOptions contains the optional parameters for the Paging.GetMultiplePagesRetryFirst
+// options - PagingGetMultiplePagesRetryFirstOptions contains the optional parameters for the PagingClient.GetMultiplePagesRetryFirst
 // method.
 func (client *PagingClient) GetMultiplePagesRetryFirst(options *PagingGetMultiplePagesRetryFirstOptions) *PagingGetMultiplePagesRetryFirstPager {
 	return &PagingGetMultiplePagesRetryFirstPager{
@@ -486,7 +486,7 @@ func (client *PagingClient) getMultiplePagesRetryFirstHandleError(resp *http.Res
 // GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails
 // first with 500. The client should retry and finish all 10 pages eventually.
 // If the operation fails it returns a generic error.
-// options - PagingGetMultiplePagesRetrySecondOptions contains the optional parameters for the Paging.GetMultiplePagesRetrySecond
+// options - PagingGetMultiplePagesRetrySecondOptions contains the optional parameters for the PagingClient.GetMultiplePagesRetrySecond
 // method.
 func (client *PagingClient) GetMultiplePagesRetrySecond(options *PagingGetMultiplePagesRetrySecondOptions) *PagingGetMultiplePagesRetrySecondPager {
 	return &PagingGetMultiplePagesRetrySecondPager{
@@ -535,7 +535,7 @@ func (client *PagingClient) getMultiplePagesRetrySecondHandleError(resp *http.Re
 // GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
 // If the operation fails it returns a generic error.
 // PagingGetMultiplePagesWithOffsetOptions - PagingGetMultiplePagesWithOffsetOptions contains the optional parameters for
-// the Paging.GetMultiplePagesWithOffset method.
+// the PagingClient.GetMultiplePagesWithOffset method.
 func (client *PagingClient) GetMultiplePagesWithOffset(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) *PagingGetMultiplePagesWithOffsetPager {
 	return &PagingGetMultiplePagesWithOffsetPager{
 		client: client,
@@ -592,7 +592,7 @@ func (client *PagingClient) getMultiplePagesWithOffsetHandleError(resp *http.Res
 
 // GetNoItemNamePages - A paging operation that must return result of the default 'value' node.
 // If the operation fails it returns a generic error.
-// options - PagingGetNoItemNamePagesOptions contains the optional parameters for the Paging.GetNoItemNamePages method.
+// options - PagingGetNoItemNamePagesOptions contains the optional parameters for the PagingClient.GetNoItemNamePages method.
 func (client *PagingClient) GetNoItemNamePages(options *PagingGetNoItemNamePagesOptions) *PagingGetNoItemNamePagesPager {
 	return &PagingGetNoItemNamePagesPager{
 		client: client,
@@ -639,7 +639,7 @@ func (client *PagingClient) getNoItemNamePagesHandleError(resp *http.Response) e
 
 // GetNullNextLinkNamePages - A paging operation that must ignore any kind of nextLink, and stop after page 1.
 // If the operation fails it returns a generic error.
-// options - PagingGetNullNextLinkNamePagesOptions contains the optional parameters for the Paging.GetNullNextLinkNamePages
+// options - PagingGetNullNextLinkNamePagesOptions contains the optional parameters for the PagingClient.GetNullNextLinkNamePages
 // method.
 func (client *PagingClient) GetNullNextLinkNamePages(ctx context.Context, options *PagingGetNullNextLinkNamePagesOptions) (PagingGetNullNextLinkNamePagesResponse, error) {
 	req, err := client.getNullNextLinkNamePagesCreateRequest(ctx, options)
@@ -690,7 +690,8 @@ func (client *PagingClient) getNullNextLinkNamePagesHandleError(resp *http.Respo
 
 // GetODataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
 // If the operation fails it returns a generic error.
-// options - PagingGetODataMultiplePagesOptions contains the optional parameters for the Paging.GetODataMultiplePages method.
+// options - PagingGetODataMultiplePagesOptions contains the optional parameters for the PagingClient.GetODataMultiplePages
+// method.
 func (client *PagingClient) GetODataMultiplePages(options *PagingGetODataMultiplePagesOptions) *PagingGetODataMultiplePagesPager {
 	return &PagingGetODataMultiplePagesPager{
 		client: client,
@@ -747,7 +748,7 @@ func (client *PagingClient) getODataMultiplePagesHandleError(resp *http.Response
 // GetPagingModelWithItemNameWithXMSClientName - A paging operation that returns a paging model whose item name is is overriden
 // by x-ms-client-name 'indexes'.
 // If the operation fails it returns a generic error.
-// options - PagingGetPagingModelWithItemNameWithXMSClientNameOptions contains the optional parameters for the Paging.GetPagingModelWithItemNameWithXMSClientName
+// options - PagingGetPagingModelWithItemNameWithXMSClientNameOptions contains the optional parameters for the PagingClient.GetPagingModelWithItemNameWithXMSClientName
 // method.
 func (client *PagingClient) GetPagingModelWithItemNameWithXMSClientName(options *PagingGetPagingModelWithItemNameWithXMSClientNameOptions) *PagingGetPagingModelWithItemNameWithXMSClientNamePager {
 	return &PagingGetPagingModelWithItemNameWithXMSClientNamePager{
@@ -795,7 +796,7 @@ func (client *PagingClient) getPagingModelWithItemNameWithXMSClientNameHandleErr
 
 // GetSinglePages - A paging operation that finishes on the first call without a nextlink
 // If the operation fails it returns a generic error.
-// options - PagingGetSinglePagesOptions contains the optional parameters for the Paging.GetSinglePages method.
+// options - PagingGetSinglePagesOptions contains the optional parameters for the PagingClient.GetSinglePages method.
 func (client *PagingClient) GetSinglePages(options *PagingGetSinglePagesOptions) *PagingGetSinglePagesPager {
 	return &PagingGetSinglePagesPager{
 		client: client,
@@ -842,7 +843,8 @@ func (client *PagingClient) getSinglePagesHandleError(resp *http.Response) error
 
 // GetSinglePagesFailure - A paging operation that receives a 400 on the first call
 // If the operation fails it returns a generic error.
-// options - PagingGetSinglePagesFailureOptions contains the optional parameters for the Paging.GetSinglePagesFailure method.
+// options - PagingGetSinglePagesFailureOptions contains the optional parameters for the PagingClient.GetSinglePagesFailure
+// method.
 func (client *PagingClient) GetSinglePagesFailure(options *PagingGetSinglePagesFailureOptions) *PagingGetSinglePagesFailurePager {
 	return &PagingGetSinglePagesFailurePager{
 		client: client,
@@ -891,7 +893,7 @@ func (client *PagingClient) getSinglePagesFailureHandleError(resp *http.Response
 // operation nextOperationWithQueryParams. Returns a ProductResult
 // If the operation fails it returns a generic error.
 // requiredQueryParameter - A required integer query parameter. Put in value '100' to pass test.
-// options - PagingGetWithQueryParamsOptions contains the optional parameters for the Paging.GetWithQueryParams method.
+// options - PagingGetWithQueryParamsOptions contains the optional parameters for the PagingClient.GetWithQueryParams method.
 func (client *PagingClient) GetWithQueryParams(requiredQueryParameter int32, options *PagingGetWithQueryParamsOptions) *PagingGetWithQueryParamsPager {
 	return &PagingGetWithQueryParamsPager{
 		client: client,

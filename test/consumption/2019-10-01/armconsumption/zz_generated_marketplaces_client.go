@@ -58,7 +58,7 @@ func NewMarketplacesClient(credential azcore.TokenCredential, options *arm.Clien
 // add billing period to the scope using '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g. to specify
 // billing period at department scope use
 // '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
-// options - MarketplacesListOptions contains the optional parameters for the Marketplaces.List method.
+// options - MarketplacesListOptions contains the optional parameters for the MarketplacesClient.List method.
 func (client *MarketplacesClient) List(scope string, options *MarketplacesListOptions) *MarketplacesListPager {
 	return &MarketplacesListPager{
 		client: client,

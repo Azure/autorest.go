@@ -57,7 +57,7 @@ func NewVPNSiteLinkConnectionsClient(subscriptionID string, credential azcore.To
 // gatewayName - The name of the gateway.
 // connectionName - The name of the vpn connection.
 // linkConnectionName - The name of the vpn connection.
-// options - VPNSiteLinkConnectionsGetOptions contains the optional parameters for the VPNSiteLinkConnections.Get method.
+// options - VPNSiteLinkConnectionsGetOptions contains the optional parameters for the VPNSiteLinkConnectionsClient.Get method.
 func (client *VPNSiteLinkConnectionsClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, linkConnectionName string, options *VPNSiteLinkConnectionsGetOptions) (VPNSiteLinkConnectionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, linkConnectionName, options)
 	if err != nil {

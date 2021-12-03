@@ -56,7 +56,7 @@ func NewLoadBalancerFrontendIPConfigurationsClient(subscriptionID string, creden
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // frontendIPConfigurationName - The name of the frontend IP configuration.
-// options - LoadBalancerFrontendIPConfigurationsGetOptions contains the optional parameters for the LoadBalancerFrontendIPConfigurations.Get
+// options - LoadBalancerFrontendIPConfigurationsGetOptions contains the optional parameters for the LoadBalancerFrontendIPConfigurationsClient.Get
 // method.
 func (client *LoadBalancerFrontendIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, frontendIPConfigurationName string, options *LoadBalancerFrontendIPConfigurationsGetOptions) (LoadBalancerFrontendIPConfigurationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, frontendIPConfigurationName, options)
@@ -129,7 +129,7 @@ func (client *LoadBalancerFrontendIPConfigurationsClient) getHandleError(resp *h
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
-// options - LoadBalancerFrontendIPConfigurationsListOptions contains the optional parameters for the LoadBalancerFrontendIPConfigurations.List
+// options - LoadBalancerFrontendIPConfigurationsListOptions contains the optional parameters for the LoadBalancerFrontendIPConfigurationsClient.List
 // method.
 func (client *LoadBalancerFrontendIPConfigurationsClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerFrontendIPConfigurationsListOptions) *LoadBalancerFrontendIPConfigurationsListPager {
 	return &LoadBalancerFrontendIPConfigurationsListPager{

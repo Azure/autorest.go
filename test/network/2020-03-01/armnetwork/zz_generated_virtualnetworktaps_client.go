@@ -56,7 +56,7 @@ func NewVirtualNetworkTapsClient(subscriptionID string, credential azcore.TokenC
 // resourceGroupName - The name of the resource group.
 // tapName - The name of the virtual network tap.
 // parameters - Parameters supplied to the create or update virtual network tap operation.
-// options - VirtualNetworkTapsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkTaps.BeginCreateOrUpdate
+// options - VirtualNetworkTapsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkTapsClient.BeginCreateOrUpdate
 // method.
 func (client *VirtualNetworkTapsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, tapName string, parameters VirtualNetworkTap, options *VirtualNetworkTapsBeginCreateOrUpdateOptions) (VirtualNetworkTapsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, tapName, parameters, options)
@@ -136,7 +136,7 @@ func (client *VirtualNetworkTapsClient) createOrUpdateHandleError(resp *http.Res
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // tapName - The name of the virtual network tap.
-// options - VirtualNetworkTapsBeginDeleteOptions contains the optional parameters for the VirtualNetworkTaps.BeginDelete
+// options - VirtualNetworkTapsBeginDeleteOptions contains the optional parameters for the VirtualNetworkTapsClient.BeginDelete
 // method.
 func (client *VirtualNetworkTapsClient) BeginDelete(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsBeginDeleteOptions) (VirtualNetworkTapsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, tapName, options)
@@ -216,7 +216,7 @@ func (client *VirtualNetworkTapsClient) deleteHandleError(resp *http.Response) e
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // tapName - The name of virtual network tap.
-// options - VirtualNetworkTapsGetOptions contains the optional parameters for the VirtualNetworkTaps.Get method.
+// options - VirtualNetworkTapsGetOptions contains the optional parameters for the VirtualNetworkTapsClient.Get method.
 func (client *VirtualNetworkTapsClient) Get(ctx context.Context, resourceGroupName string, tapName string, options *VirtualNetworkTapsGetOptions) (VirtualNetworkTapsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, tapName, options)
 	if err != nil {
@@ -282,7 +282,7 @@ func (client *VirtualNetworkTapsClient) getHandleError(resp *http.Response) erro
 
 // ListAll - Gets all the VirtualNetworkTaps in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - VirtualNetworkTapsListAllOptions contains the optional parameters for the VirtualNetworkTaps.ListAll method.
+// options - VirtualNetworkTapsListAllOptions contains the optional parameters for the VirtualNetworkTapsClient.ListAll method.
 func (client *VirtualNetworkTapsClient) ListAll(options *VirtualNetworkTapsListAllOptions) *VirtualNetworkTapsListAllPager {
 	return &VirtualNetworkTapsListAllPager{
 		client: client,
@@ -338,7 +338,7 @@ func (client *VirtualNetworkTapsClient) listAllHandleError(resp *http.Response) 
 // ListByResourceGroup - Gets all the VirtualNetworkTaps in a subscription.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - VirtualNetworkTapsListByResourceGroupOptions contains the optional parameters for the VirtualNetworkTaps.ListByResourceGroup
+// options - VirtualNetworkTapsListByResourceGroupOptions contains the optional parameters for the VirtualNetworkTapsClient.ListByResourceGroup
 // method.
 func (client *VirtualNetworkTapsClient) ListByResourceGroup(resourceGroupName string, options *VirtualNetworkTapsListByResourceGroupOptions) *VirtualNetworkTapsListByResourceGroupPager {
 	return &VirtualNetworkTapsListByResourceGroupPager{
@@ -401,7 +401,8 @@ func (client *VirtualNetworkTapsClient) listByResourceGroupHandleError(resp *htt
 // resourceGroupName - The name of the resource group.
 // tapName - The name of the tap.
 // tapParameters - Parameters supplied to update VirtualNetworkTap tags.
-// options - VirtualNetworkTapsUpdateTagsOptions contains the optional parameters for the VirtualNetworkTaps.UpdateTags method.
+// options - VirtualNetworkTapsUpdateTagsOptions contains the optional parameters for the VirtualNetworkTapsClient.UpdateTags
+// method.
 func (client *VirtualNetworkTapsClient) UpdateTags(ctx context.Context, resourceGroupName string, tapName string, tapParameters TagsObject, options *VirtualNetworkTapsUpdateTagsOptions) (VirtualNetworkTapsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, tapName, tapParameters, options)
 	if err != nil {

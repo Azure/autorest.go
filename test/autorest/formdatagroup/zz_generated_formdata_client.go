@@ -41,7 +41,7 @@ func NewFormdataClient(options *azcore.ClientOptions) *FormdataClient {
 // If the operation fails it returns the *Error error type.
 // fileContent - File to upload.
 // fileName - File name to upload. Name has to be spelled exactly as written here.
-// options - FormdataUploadFileOptions contains the optional parameters for the Formdata.UploadFile method.
+// options - FormdataUploadFileOptions contains the optional parameters for the FormdataClient.UploadFile method.
 func (client *FormdataClient) UploadFile(ctx context.Context, fileContent io.ReadSeekCloser, fileName string, options *FormdataUploadFileOptions) (FormdataUploadFileResponse, error) {
 	req, err := client.uploadFileCreateRequest(ctx, fileContent, fileName, options)
 	if err != nil {
@@ -91,7 +91,7 @@ func (client *FormdataClient) uploadFileHandleError(resp *http.Response) error {
 // UploadFileViaBody - Upload file
 // If the operation fails it returns the *Error error type.
 // fileContent - File to upload.
-// options - FormdataUploadFileViaBodyOptions contains the optional parameters for the Formdata.UploadFileViaBody method.
+// options - FormdataUploadFileViaBodyOptions contains the optional parameters for the FormdataClient.UploadFileViaBody method.
 func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent io.ReadSeekCloser, options *FormdataUploadFileViaBodyOptions) (FormdataUploadFileViaBodyResponse, error) {
 	req, err := client.uploadFileViaBodyCreateRequest(ctx, fileContent, options)
 	if err != nil {
@@ -135,7 +135,7 @@ func (client *FormdataClient) uploadFileViaBodyHandleError(resp *http.Response) 
 // UploadFiles - Upload multiple files
 // If the operation fails it returns the *Error error type.
 // fileContent - Files to upload.
-// options - FormdataUploadFilesOptions contains the optional parameters for the Formdata.UploadFiles method.
+// options - FormdataUploadFilesOptions contains the optional parameters for the FormdataClient.UploadFiles method.
 func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []io.ReadSeekCloser, options *FormdataUploadFilesOptions) (FormdataUploadFilesResponse, error) {
 	req, err := client.uploadFilesCreateRequest(ctx, fileContent, options)
 	if err != nil {

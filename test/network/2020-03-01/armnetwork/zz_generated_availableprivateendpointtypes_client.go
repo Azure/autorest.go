@@ -54,7 +54,7 @@ func NewAvailablePrivateEndpointTypesClient(subscriptionID string, credential az
 // List - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
 // If the operation fails it returns the *CloudError error type.
 // location - The location of the domain name.
-// options - AvailablePrivateEndpointTypesListOptions contains the optional parameters for the AvailablePrivateEndpointTypes.List
+// options - AvailablePrivateEndpointTypesListOptions contains the optional parameters for the AvailablePrivateEndpointTypesClient.List
 // method.
 func (client *AvailablePrivateEndpointTypesClient) List(location string, options *AvailablePrivateEndpointTypesListOptions) *AvailablePrivateEndpointTypesListPager {
 	return &AvailablePrivateEndpointTypesListPager{
@@ -117,7 +117,7 @@ func (client *AvailablePrivateEndpointTypesClient) listHandleError(resp *http.Re
 // If the operation fails it returns the *CloudError error type.
 // location - The location of the domain name.
 // resourceGroupName - The name of the resource group.
-// options - AvailablePrivateEndpointTypesListByResourceGroupOptions contains the optional parameters for the AvailablePrivateEndpointTypes.ListByResourceGroup
+// options - AvailablePrivateEndpointTypesListByResourceGroupOptions contains the optional parameters for the AvailablePrivateEndpointTypesClient.ListByResourceGroup
 // method.
 func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroup(location string, resourceGroupName string, options *AvailablePrivateEndpointTypesListByResourceGroupOptions) *AvailablePrivateEndpointTypesListByResourceGroupPager {
 	return &AvailablePrivateEndpointTypesListByResourceGroupPager{

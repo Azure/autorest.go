@@ -56,7 +56,7 @@ func NewVPNSitesConfigurationClient(subscriptionID string, credential azcore.Tok
 // resourceGroupName - The resource group name.
 // virtualWANName - The name of the VirtualWAN for which configuration of all vpn-sites is needed.
 // request - Parameters supplied to download vpn-sites configuration.
-// options - VPNSitesConfigurationBeginDownloadOptions contains the optional parameters for the VPNSitesConfiguration.BeginDownload
+// options - VPNSitesConfigurationBeginDownloadOptions contains the optional parameters for the VPNSitesConfigurationClient.BeginDownload
 // method.
 func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (VPNSitesConfigurationDownloadPollerResponse, error) {
 	resp, err := client.download(ctx, resourceGroupName, virtualWANName, request, options)

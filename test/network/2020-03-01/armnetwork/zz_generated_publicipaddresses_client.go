@@ -56,7 +56,7 @@ func NewPublicIPAddressesClient(subscriptionID string, credential azcore.TokenCr
 // resourceGroupName - The name of the resource group.
 // publicIPAddressName - The name of the public IP address.
 // parameters - Parameters supplied to the create or update public IP address operation.
-// options - PublicIPAddressesBeginCreateOrUpdateOptions contains the optional parameters for the PublicIPAddresses.BeginCreateOrUpdate
+// options - PublicIPAddressesBeginCreateOrUpdateOptions contains the optional parameters for the PublicIPAddressesClient.BeginCreateOrUpdate
 // method.
 func (client *PublicIPAddressesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters PublicIPAddress, options *PublicIPAddressesBeginCreateOrUpdateOptions) (PublicIPAddressesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, publicIPAddressName, parameters, options)
@@ -136,7 +136,8 @@ func (client *PublicIPAddressesClient) createOrUpdateHandleError(resp *http.Resp
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // publicIPAddressName - The name of the subnet.
-// options - PublicIPAddressesBeginDeleteOptions contains the optional parameters for the PublicIPAddresses.BeginDelete method.
+// options - PublicIPAddressesBeginDeleteOptions contains the optional parameters for the PublicIPAddressesClient.BeginDelete
+// method.
 func (client *PublicIPAddressesClient) BeginDelete(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesBeginDeleteOptions) (PublicIPAddressesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, publicIPAddressName, options)
 	if err != nil {
@@ -215,7 +216,7 @@ func (client *PublicIPAddressesClient) deleteHandleError(resp *http.Response) er
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // publicIPAddressName - The name of the subnet.
-// options - PublicIPAddressesGetOptions contains the optional parameters for the PublicIPAddresses.Get method.
+// options - PublicIPAddressesGetOptions contains the optional parameters for the PublicIPAddressesClient.Get method.
 func (client *PublicIPAddressesClient) Get(ctx context.Context, resourceGroupName string, publicIPAddressName string, options *PublicIPAddressesGetOptions) (PublicIPAddressesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, publicIPAddressName, options)
 	if err != nil {
@@ -290,7 +291,7 @@ func (client *PublicIPAddressesClient) getHandleError(resp *http.Response) error
 // networkInterfaceName - The name of the network interface.
 // ipConfigurationName - The name of the IP configuration.
 // publicIPAddressName - The name of the public IP Address.
-// options - PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressOptions contains the optional parameters for the PublicIPAddresses.GetVirtualMachineScaleSetPublicIPAddress
+// options - PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressOptions contains the optional parameters for the PublicIPAddressesClient.GetVirtualMachineScaleSetPublicIPAddress
 // method.
 func (client *PublicIPAddressesClient) GetVirtualMachineScaleSetPublicIPAddress(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, publicIPAddressName string, options *PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressOptions) (PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressResponse, error) {
 	req, err := client.getVirtualMachineScaleSetPublicIPAddressCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, publicIPAddressName, options)
@@ -377,7 +378,7 @@ func (client *PublicIPAddressesClient) getVirtualMachineScaleSetPublicIPAddressH
 // List - Gets all public IP addresses in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - PublicIPAddressesListOptions contains the optional parameters for the PublicIPAddresses.List method.
+// options - PublicIPAddressesListOptions contains the optional parameters for the PublicIPAddressesClient.List method.
 func (client *PublicIPAddressesClient) List(resourceGroupName string, options *PublicIPAddressesListOptions) *PublicIPAddressesListPager {
 	return &PublicIPAddressesListPager{
 		client: client,
@@ -436,7 +437,7 @@ func (client *PublicIPAddressesClient) listHandleError(resp *http.Response) erro
 
 // ListAll - Gets all the public IP addresses in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - PublicIPAddressesListAllOptions contains the optional parameters for the PublicIPAddresses.ListAll method.
+// options - PublicIPAddressesListAllOptions contains the optional parameters for the PublicIPAddressesClient.ListAll method.
 func (client *PublicIPAddressesClient) ListAll(options *PublicIPAddressesListAllOptions) *PublicIPAddressesListAllPager {
 	return &PublicIPAddressesListAllPager{
 		client: client,
@@ -495,7 +496,7 @@ func (client *PublicIPAddressesClient) listAllHandleError(resp *http.Response) e
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // options - PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesOptions contains the optional parameters for the
-// PublicIPAddresses.ListVirtualMachineScaleSetPublicIPAddresses method.
+// PublicIPAddressesClient.ListVirtualMachineScaleSetPublicIPAddresses method.
 func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetPublicIPAddresses(resourceGroupName string, virtualMachineScaleSetName string, options *PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesOptions) *PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesPager {
 	return &PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesPager{
 		client: client,
@@ -565,7 +566,7 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetPublicIPAddress
 // networkInterfaceName - The network interface name.
 // ipConfigurationName - The IP configuration name.
 // options - PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesOptions contains the optional parameters for the
-// PublicIPAddresses.ListVirtualMachineScaleSetVMPublicIPAddresses method.
+// PublicIPAddressesClient.ListVirtualMachineScaleSetVMPublicIPAddresses method.
 func (client *PublicIPAddressesClient) ListVirtualMachineScaleSetVMPublicIPAddresses(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesOptions) *PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesPager {
 	return &PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesPager{
 		client: client,
@@ -643,7 +644,8 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetVMPublicIPAddre
 // resourceGroupName - The name of the resource group.
 // publicIPAddressName - The name of the public IP address.
 // parameters - Parameters supplied to update public IP address tags.
-// options - PublicIPAddressesUpdateTagsOptions contains the optional parameters for the PublicIPAddresses.UpdateTags method.
+// options - PublicIPAddressesUpdateTagsOptions contains the optional parameters for the PublicIPAddressesClient.UpdateTags
+// method.
 func (client *PublicIPAddressesClient) UpdateTags(ctx context.Context, resourceGroupName string, publicIPAddressName string, parameters TagsObject, options *PublicIPAddressesUpdateTagsOptions) (PublicIPAddressesUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, publicIPAddressName, parameters, options)
 	if err != nil {

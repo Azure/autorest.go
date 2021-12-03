@@ -56,7 +56,7 @@ func NewP2SVPNGatewaysClient(subscriptionID string, credential azcore.TokenCrede
 // resourceGroupName - The resource group name of the P2SVpnGateway.
 // gatewayName - The name of the gateway.
 // p2SVPNGatewayParameters - Parameters supplied to create or Update a virtual wan p2s vpn gateway.
-// options - P2SVPNGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the P2SVPNGateways.BeginCreateOrUpdate
+// options - P2SVPNGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginCreateOrUpdate
 // method.
 func (client *P2SVPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters P2SVPNGateway, options *P2SVPNGatewaysBeginCreateOrUpdateOptions) (P2SVPNGatewaysCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, p2SVPNGatewayParameters, options)
@@ -136,7 +136,7 @@ func (client *P2SVPNGatewaysClient) createOrUpdateHandleError(resp *http.Respons
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the P2SVpnGateway.
 // gatewayName - The name of the gateway.
-// options - P2SVPNGatewaysBeginDeleteOptions contains the optional parameters for the P2SVPNGateways.BeginDelete method.
+// options - P2SVPNGatewaysBeginDeleteOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginDelete method.
 func (client *P2SVPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysBeginDeleteOptions) (P2SVPNGatewaysDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
@@ -217,7 +217,7 @@ func (client *P2SVPNGatewaysClient) deleteHandleError(resp *http.Response) error
 // resourceGroupName - The name of the resource group.
 // p2SVPNGatewayName - The name of the P2S Vpn Gateway.
 // request - The parameters are supplied to disconnect p2s vpn connections.
-// options - P2SVPNGatewaysBeginDisconnectP2SVPNConnectionsOptions contains the optional parameters for the P2SVPNGateways.BeginDisconnectP2SVPNConnections
+// options - P2SVPNGatewaysBeginDisconnectP2SVPNConnectionsOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginDisconnectP2SVPNConnections
 // method.
 func (client *P2SVPNGatewaysClient) BeginDisconnectP2SVPNConnections(ctx context.Context, resourceGroupName string, p2SVPNGatewayName string, request P2SVPNConnectionRequest, options *P2SVPNGatewaysBeginDisconnectP2SVPNConnectionsOptions) (P2SVPNGatewaysDisconnectP2SVPNConnectionsPollerResponse, error) {
 	resp, err := client.disconnectP2SVPNConnections(ctx, resourceGroupName, p2SVPNGatewayName, request, options)
@@ -299,7 +299,7 @@ func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnectionsHandleError(resp 
 // resourceGroupName - The name of the resource group.
 // gatewayName - The name of the P2SVpnGateway.
 // parameters - Parameters supplied to the generate P2SVpnGateway VPN client package operation.
-// options - P2SVPNGatewaysBeginGenerateVPNProfileOptions contains the optional parameters for the P2SVPNGateways.BeginGenerateVPNProfile
+// options - P2SVPNGatewaysBeginGenerateVPNProfileOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginGenerateVPNProfile
 // method.
 func (client *P2SVPNGatewaysClient) BeginGenerateVPNProfile(ctx context.Context, resourceGroupName string, gatewayName string, parameters P2SVPNProfileParameters, options *P2SVPNGatewaysBeginGenerateVPNProfileOptions) (P2SVPNGatewaysGenerateVPNProfilePollerResponse, error) {
 	resp, err := client.generateVPNProfile(ctx, resourceGroupName, gatewayName, parameters, options)
@@ -379,7 +379,7 @@ func (client *P2SVPNGatewaysClient) generateVPNProfileHandleError(resp *http.Res
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the P2SVpnGateway.
 // gatewayName - The name of the gateway.
-// options - P2SVPNGatewaysGetOptions contains the optional parameters for the P2SVPNGateways.Get method.
+// options - P2SVPNGatewaysGetOptions contains the optional parameters for the P2SVPNGatewaysClient.Get method.
 func (client *P2SVPNGatewaysClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysGetOptions) (P2SVPNGatewaysGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
@@ -448,7 +448,7 @@ func (client *P2SVPNGatewaysClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // gatewayName - The name of the P2SVpnGateway.
-// options - P2SVPNGatewaysBeginGetP2SVPNConnectionHealthOptions contains the optional parameters for the P2SVPNGateways.BeginGetP2SVPNConnectionHealth
+// options - P2SVPNGatewaysBeginGetP2SVPNConnectionHealthOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealth
 // method.
 func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealth(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysBeginGetP2SVPNConnectionHealthOptions) (P2SVPNGatewaysGetP2SVPNConnectionHealthPollerResponse, error) {
 	resp, err := client.getP2SVPNConnectionHealth(ctx, resourceGroupName, gatewayName, options)
@@ -531,7 +531,7 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthHandleError(resp *h
 // resourceGroupName - The name of the resource group.
 // gatewayName - The name of the P2SVpnGateway.
 // request - Request parameters supplied to get p2s vpn connections detailed health.
-// options - P2SVPNGatewaysBeginGetP2SVPNConnectionHealthDetailedOptions contains the optional parameters for the P2SVPNGateways.BeginGetP2SVPNConnectionHealthDetailed
+// options - P2SVPNGatewaysBeginGetP2SVPNConnectionHealthDetailedOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealthDetailed
 // method.
 func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealthDetailed(ctx context.Context, resourceGroupName string, gatewayName string, request P2SVPNConnectionHealthRequest, options *P2SVPNGatewaysBeginGetP2SVPNConnectionHealthDetailedOptions) (P2SVPNGatewaysGetP2SVPNConnectionHealthDetailedPollerResponse, error) {
 	resp, err := client.getP2SVPNConnectionHealthDetailed(ctx, resourceGroupName, gatewayName, request, options)
@@ -610,7 +610,7 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthDetailedHandleError
 
 // List - Lists all the P2SVpnGateways in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - P2SVPNGatewaysListOptions contains the optional parameters for the P2SVPNGateways.List method.
+// options - P2SVPNGatewaysListOptions contains the optional parameters for the P2SVPNGatewaysClient.List method.
 func (client *P2SVPNGatewaysClient) List(options *P2SVPNGatewaysListOptions) *P2SVPNGatewaysListPager {
 	return &P2SVPNGatewaysListPager{
 		client: client,
@@ -666,7 +666,7 @@ func (client *P2SVPNGatewaysClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Lists all the P2SVpnGateways in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the P2SVpnGateway.
-// options - P2SVPNGatewaysListByResourceGroupOptions contains the optional parameters for the P2SVPNGateways.ListByResourceGroup
+// options - P2SVPNGatewaysListByResourceGroupOptions contains the optional parameters for the P2SVPNGatewaysClient.ListByResourceGroup
 // method.
 func (client *P2SVPNGatewaysClient) ListByResourceGroup(resourceGroupName string, options *P2SVPNGatewaysListByResourceGroupOptions) *P2SVPNGatewaysListByResourceGroupPager {
 	return &P2SVPNGatewaysListByResourceGroupPager{
@@ -729,7 +729,7 @@ func (client *P2SVPNGatewaysClient) listByResourceGroupHandleError(resp *http.Re
 // resourceGroupName - The resource group name of the P2SVpnGateway.
 // gatewayName - The name of the gateway.
 // p2SVPNGatewayParameters - Parameters supplied to update a virtual wan p2s vpn gateway tags.
-// options - P2SVPNGatewaysUpdateTagsOptions contains the optional parameters for the P2SVPNGateways.UpdateTags method.
+// options - P2SVPNGatewaysUpdateTagsOptions contains the optional parameters for the P2SVPNGatewaysClient.UpdateTags method.
 func (client *P2SVPNGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters TagsObject, options *P2SVPNGatewaysUpdateTagsOptions) (P2SVPNGatewaysUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, gatewayName, p2SVPNGatewayParameters, options)
 	if err != nil {

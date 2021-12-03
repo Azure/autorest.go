@@ -39,7 +39,7 @@ func NewArrayClient(options *azcore.ClientOptions) *ArrayClient {
 
 // GetArrayEmpty - Get an empty array []
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetArrayEmptyOptions contains the optional parameters for the Array.GetArrayEmpty method.
+// options - ArrayGetArrayEmptyOptions contains the optional parameters for the ArrayClient.GetArrayEmpty method.
 func (client *ArrayClient) GetArrayEmpty(ctx context.Context, options *ArrayGetArrayEmptyOptions) (ArrayGetArrayEmptyResponse, error) {
 	req, err := client.getArrayEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -90,7 +90,7 @@ func (client *ArrayClient) getArrayEmptyHandleError(resp *http.Response) error {
 
 // GetArrayItemEmpty - Get an array of array of strings [['1', '2', '3'], [], ['7', '8', '9']]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetArrayItemEmptyOptions contains the optional parameters for the Array.GetArrayItemEmpty method.
+// options - ArrayGetArrayItemEmptyOptions contains the optional parameters for the ArrayClient.GetArrayItemEmpty method.
 func (client *ArrayClient) GetArrayItemEmpty(ctx context.Context, options *ArrayGetArrayItemEmptyOptions) (ArrayGetArrayItemEmptyResponse, error) {
 	req, err := client.getArrayItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -141,7 +141,7 @@ func (client *ArrayClient) getArrayItemEmptyHandleError(resp *http.Response) err
 
 // GetArrayItemNull - Get an array of array of strings [['1', '2', '3'], null, ['7', '8', '9']]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetArrayItemNullOptions contains the optional parameters for the Array.GetArrayItemNull method.
+// options - ArrayGetArrayItemNullOptions contains the optional parameters for the ArrayClient.GetArrayItemNull method.
 func (client *ArrayClient) GetArrayItemNull(ctx context.Context, options *ArrayGetArrayItemNullOptions) (ArrayGetArrayItemNullResponse, error) {
 	req, err := client.getArrayItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -192,7 +192,7 @@ func (client *ArrayClient) getArrayItemNullHandleError(resp *http.Response) erro
 
 // GetArrayNull - Get a null array
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetArrayNullOptions contains the optional parameters for the Array.GetArrayNull method.
+// options - ArrayGetArrayNullOptions contains the optional parameters for the ArrayClient.GetArrayNull method.
 func (client *ArrayClient) GetArrayNull(ctx context.Context, options *ArrayGetArrayNullOptions) (ArrayGetArrayNullResponse, error) {
 	req, err := client.getArrayNullCreateRequest(ctx, options)
 	if err != nil {
@@ -243,7 +243,7 @@ func (client *ArrayClient) getArrayNullHandleError(resp *http.Response) error {
 
 // GetArrayValid - Get an array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetArrayValidOptions contains the optional parameters for the Array.GetArrayValid method.
+// options - ArrayGetArrayValidOptions contains the optional parameters for the ArrayClient.GetArrayValid method.
 func (client *ArrayClient) GetArrayValid(ctx context.Context, options *ArrayGetArrayValidOptions) (ArrayGetArrayValidResponse, error) {
 	req, err := client.getArrayValidCreateRequest(ctx, options)
 	if err != nil {
@@ -295,7 +295,7 @@ func (client *ArrayClient) getArrayValidHandleError(resp *http.Response) error {
 // GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items
 // base64url encoded
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetBase64URLOptions contains the optional parameters for the Array.GetBase64URL method.
+// options - ArrayGetBase64URLOptions contains the optional parameters for the ArrayClient.GetBase64URL method.
 func (client *ArrayClient) GetBase64URL(ctx context.Context, options *ArrayGetBase64URLOptions) (ArrayGetBase64URLResponse, error) {
 	req, err := client.getBase64URLCreateRequest(ctx, options)
 	if err != nil {
@@ -346,7 +346,8 @@ func (client *ArrayClient) getBase64URLHandleError(resp *http.Response) error {
 
 // GetBooleanInvalidNull - Get boolean array value [true, null, false]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetBooleanInvalidNullOptions contains the optional parameters for the Array.GetBooleanInvalidNull method.
+// options - ArrayGetBooleanInvalidNullOptions contains the optional parameters for the ArrayClient.GetBooleanInvalidNull
+// method.
 func (client *ArrayClient) GetBooleanInvalidNull(ctx context.Context, options *ArrayGetBooleanInvalidNullOptions) (ArrayGetBooleanInvalidNullResponse, error) {
 	req, err := client.getBooleanInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -397,7 +398,8 @@ func (client *ArrayClient) getBooleanInvalidNullHandleError(resp *http.Response)
 
 // GetBooleanInvalidString - Get boolean array value [true, 'boolean', false]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetBooleanInvalidStringOptions contains the optional parameters for the Array.GetBooleanInvalidString method.
+// options - ArrayGetBooleanInvalidStringOptions contains the optional parameters for the ArrayClient.GetBooleanInvalidString
+// method.
 func (client *ArrayClient) GetBooleanInvalidString(ctx context.Context, options *ArrayGetBooleanInvalidStringOptions) (ArrayGetBooleanInvalidStringResponse, error) {
 	req, err := client.getBooleanInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -448,7 +450,7 @@ func (client *ArrayClient) getBooleanInvalidStringHandleError(resp *http.Respons
 
 // GetBooleanTfft - Get boolean array value [true, false, false, true]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetBooleanTfftOptions contains the optional parameters for the Array.GetBooleanTfft method.
+// options - ArrayGetBooleanTfftOptions contains the optional parameters for the ArrayClient.GetBooleanTfft method.
 func (client *ArrayClient) GetBooleanTfft(ctx context.Context, options *ArrayGetBooleanTfftOptions) (ArrayGetBooleanTfftResponse, error) {
 	req, err := client.getBooleanTfftCreateRequest(ctx, options)
 	if err != nil {
@@ -499,7 +501,7 @@ func (client *ArrayClient) getBooleanTfftHandleError(resp *http.Response) error 
 
 // GetByteInvalidNull - Get byte array value [hex(AB, AC, AD), null] with the first item base64 encoded
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetByteInvalidNullOptions contains the optional parameters for the Array.GetByteInvalidNull method.
+// options - ArrayGetByteInvalidNullOptions contains the optional parameters for the ArrayClient.GetByteInvalidNull method.
 func (client *ArrayClient) GetByteInvalidNull(ctx context.Context, options *ArrayGetByteInvalidNullOptions) (ArrayGetByteInvalidNullResponse, error) {
 	req, err := client.getByteInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -550,7 +552,7 @@ func (client *ArrayClient) getByteInvalidNullHandleError(resp *http.Response) er
 
 // GetByteValid - Get byte array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each item encoded in base64
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetByteValidOptions contains the optional parameters for the Array.GetByteValid method.
+// options - ArrayGetByteValidOptions contains the optional parameters for the ArrayClient.GetByteValid method.
 func (client *ArrayClient) GetByteValid(ctx context.Context, options *ArrayGetByteValidOptions) (ArrayGetByteValidResponse, error) {
 	req, err := client.getByteValidCreateRequest(ctx, options)
 	if err != nil {
@@ -601,7 +603,7 @@ func (client *ArrayClient) getByteValidHandleError(resp *http.Response) error {
 
 // GetComplexEmpty - Get empty array of complex type []
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetComplexEmptyOptions contains the optional parameters for the Array.GetComplexEmpty method.
+// options - ArrayGetComplexEmptyOptions contains the optional parameters for the ArrayClient.GetComplexEmpty method.
 func (client *ArrayClient) GetComplexEmpty(ctx context.Context, options *ArrayGetComplexEmptyOptions) (ArrayGetComplexEmptyResponse, error) {
 	req, err := client.getComplexEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -653,7 +655,7 @@ func (client *ArrayClient) getComplexEmptyHandleError(resp *http.Response) error
 // GetComplexItemEmpty - Get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string':
 // '6'}]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetComplexItemEmptyOptions contains the optional parameters for the Array.GetComplexItemEmpty method.
+// options - ArrayGetComplexItemEmptyOptions contains the optional parameters for the ArrayClient.GetComplexItemEmpty method.
 func (client *ArrayClient) GetComplexItemEmpty(ctx context.Context, options *ArrayGetComplexItemEmptyOptions) (ArrayGetComplexItemEmptyResponse, error) {
 	req, err := client.getComplexItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -705,7 +707,7 @@ func (client *ArrayClient) getComplexItemEmptyHandleError(resp *http.Response) e
 // GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string':
 // '6'}]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetComplexItemNullOptions contains the optional parameters for the Array.GetComplexItemNull method.
+// options - ArrayGetComplexItemNullOptions contains the optional parameters for the ArrayClient.GetComplexItemNull method.
 func (client *ArrayClient) GetComplexItemNull(ctx context.Context, options *ArrayGetComplexItemNullOptions) (ArrayGetComplexItemNullResponse, error) {
 	req, err := client.getComplexItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -756,7 +758,7 @@ func (client *ArrayClient) getComplexItemNullHandleError(resp *http.Response) er
 
 // GetComplexNull - Get array of complex type null value
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetComplexNullOptions contains the optional parameters for the Array.GetComplexNull method.
+// options - ArrayGetComplexNullOptions contains the optional parameters for the ArrayClient.GetComplexNull method.
 func (client *ArrayClient) GetComplexNull(ctx context.Context, options *ArrayGetComplexNullOptions) (ArrayGetComplexNullResponse, error) {
 	req, err := client.getComplexNullCreateRequest(ctx, options)
 	if err != nil {
@@ -808,7 +810,7 @@ func (client *ArrayClient) getComplexNullHandleError(resp *http.Response) error 
 // GetComplexValid - Get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer':
 // 5, 'string': '6'}]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetComplexValidOptions contains the optional parameters for the Array.GetComplexValid method.
+// options - ArrayGetComplexValidOptions contains the optional parameters for the ArrayClient.GetComplexValid method.
 func (client *ArrayClient) GetComplexValid(ctx context.Context, options *ArrayGetComplexValidOptions) (ArrayGetComplexValidResponse, error) {
 	req, err := client.getComplexValidCreateRequest(ctx, options)
 	if err != nil {
@@ -859,7 +861,7 @@ func (client *ArrayClient) getComplexValidHandleError(resp *http.Response) error
 
 // GetDateInvalidChars - Get date array value ['2011-03-22', 'date']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDateInvalidCharsOptions contains the optional parameters for the Array.GetDateInvalidChars method.
+// options - ArrayGetDateInvalidCharsOptions contains the optional parameters for the ArrayClient.GetDateInvalidChars method.
 func (client *ArrayClient) GetDateInvalidChars(ctx context.Context, options *ArrayGetDateInvalidCharsOptions) (ArrayGetDateInvalidCharsResponse, error) {
 	req, err := client.getDateInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
@@ -916,7 +918,7 @@ func (client *ArrayClient) getDateInvalidCharsHandleError(resp *http.Response) e
 
 // GetDateInvalidNull - Get date array value ['2012-01-01', null, '1776-07-04']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDateInvalidNullOptions contains the optional parameters for the Array.GetDateInvalidNull method.
+// options - ArrayGetDateInvalidNullOptions contains the optional parameters for the ArrayClient.GetDateInvalidNull method.
 func (client *ArrayClient) GetDateInvalidNull(ctx context.Context, options *ArrayGetDateInvalidNullOptions) (ArrayGetDateInvalidNullResponse, error) {
 	req, err := client.getDateInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -973,7 +975,8 @@ func (client *ArrayClient) getDateInvalidNullHandleError(resp *http.Response) er
 
 // GetDateTimeInvalidChars - Get date array value ['2000-12-01t00:00:01z', 'date-time']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDateTimeInvalidCharsOptions contains the optional parameters for the Array.GetDateTimeInvalidChars method.
+// options - ArrayGetDateTimeInvalidCharsOptions contains the optional parameters for the ArrayClient.GetDateTimeInvalidChars
+// method.
 func (client *ArrayClient) GetDateTimeInvalidChars(ctx context.Context, options *ArrayGetDateTimeInvalidCharsOptions) (ArrayGetDateTimeInvalidCharsResponse, error) {
 	req, err := client.getDateTimeInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
@@ -1030,7 +1033,8 @@ func (client *ArrayClient) getDateTimeInvalidCharsHandleError(resp *http.Respons
 
 // GetDateTimeInvalidNull - Get date array value ['2000-12-01t00:00:01z', null]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDateTimeInvalidNullOptions contains the optional parameters for the Array.GetDateTimeInvalidNull method.
+// options - ArrayGetDateTimeInvalidNullOptions contains the optional parameters for the ArrayClient.GetDateTimeInvalidNull
+// method.
 func (client *ArrayClient) GetDateTimeInvalidNull(ctx context.Context, options *ArrayGetDateTimeInvalidNullOptions) (ArrayGetDateTimeInvalidNullResponse, error) {
 	req, err := client.getDateTimeInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1088,7 +1092,8 @@ func (client *ArrayClient) getDateTimeInvalidNullHandleError(resp *http.Response
 // GetDateTimeRFC1123Valid - Get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT',
 // 'Wed, 12 Oct 1492 10:15:01 GMT']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDateTimeRFC1123ValidOptions contains the optional parameters for the Array.GetDateTimeRFC1123Valid method.
+// options - ArrayGetDateTimeRFC1123ValidOptions contains the optional parameters for the ArrayClient.GetDateTimeRFC1123Valid
+// method.
 func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context, options *ArrayGetDateTimeRFC1123ValidOptions) (ArrayGetDateTimeRFC1123ValidResponse, error) {
 	req, err := client.getDateTimeRFC1123ValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1145,7 +1150,7 @@ func (client *ArrayClient) getDateTimeRFC1123ValidHandleError(resp *http.Respons
 
 // GetDateTimeValid - Get date-time array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDateTimeValidOptions contains the optional parameters for the Array.GetDateTimeValid method.
+// options - ArrayGetDateTimeValidOptions contains the optional parameters for the ArrayClient.GetDateTimeValid method.
 func (client *ArrayClient) GetDateTimeValid(ctx context.Context, options *ArrayGetDateTimeValidOptions) (ArrayGetDateTimeValidResponse, error) {
 	req, err := client.getDateTimeValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1202,7 +1207,7 @@ func (client *ArrayClient) getDateTimeValidHandleError(resp *http.Response) erro
 
 // GetDateValid - Get integer array value ['2000-12-01', '1980-01-02', '1492-10-12']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDateValidOptions contains the optional parameters for the Array.GetDateValid method.
+// options - ArrayGetDateValidOptions contains the optional parameters for the ArrayClient.GetDateValid method.
 func (client *ArrayClient) GetDateValid(ctx context.Context, options *ArrayGetDateValidOptions) (ArrayGetDateValidResponse, error) {
 	req, err := client.getDateValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1259,7 +1264,7 @@ func (client *ArrayClient) getDateValidHandleError(resp *http.Response) error {
 
 // GetDictionaryEmpty - Get an array of Dictionaries of type with value []
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDictionaryEmptyOptions contains the optional parameters for the Array.GetDictionaryEmpty method.
+// options - ArrayGetDictionaryEmptyOptions contains the optional parameters for the ArrayClient.GetDictionaryEmpty method.
 func (client *ArrayClient) GetDictionaryEmpty(ctx context.Context, options *ArrayGetDictionaryEmptyOptions) (ArrayGetDictionaryEmptyResponse, error) {
 	req, err := client.getDictionaryEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1311,7 +1316,8 @@ func (client *ArrayClient) getDictionaryEmptyHandleError(resp *http.Response) er
 // GetDictionaryItemEmpty - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7':
 // 'seven', '8': 'eight', '9': 'nine'}]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDictionaryItemEmptyOptions contains the optional parameters for the Array.GetDictionaryItemEmpty method.
+// options - ArrayGetDictionaryItemEmptyOptions contains the optional parameters for the ArrayClient.GetDictionaryItemEmpty
+// method.
 func (client *ArrayClient) GetDictionaryItemEmpty(ctx context.Context, options *ArrayGetDictionaryItemEmptyOptions) (ArrayGetDictionaryItemEmptyResponse, error) {
 	req, err := client.getDictionaryItemEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1363,7 +1369,8 @@ func (client *ArrayClient) getDictionaryItemEmptyHandleError(resp *http.Response
 // GetDictionaryItemNull - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, null,
 // {'7': 'seven', '8': 'eight', '9': 'nine'}]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDictionaryItemNullOptions contains the optional parameters for the Array.GetDictionaryItemNull method.
+// options - ArrayGetDictionaryItemNullOptions contains the optional parameters for the ArrayClient.GetDictionaryItemNull
+// method.
 func (client *ArrayClient) GetDictionaryItemNull(ctx context.Context, options *ArrayGetDictionaryItemNullOptions) (ArrayGetDictionaryItemNullResponse, error) {
 	req, err := client.getDictionaryItemNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1414,7 +1421,7 @@ func (client *ArrayClient) getDictionaryItemNullHandleError(resp *http.Response)
 
 // GetDictionaryNull - Get an array of Dictionaries with value null
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDictionaryNullOptions contains the optional parameters for the Array.GetDictionaryNull method.
+// options - ArrayGetDictionaryNullOptions contains the optional parameters for the ArrayClient.GetDictionaryNull method.
 func (client *ArrayClient) GetDictionaryNull(ctx context.Context, options *ArrayGetDictionaryNullOptions) (ArrayGetDictionaryNullResponse, error) {
 	req, err := client.getDictionaryNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1466,7 +1473,7 @@ func (client *ArrayClient) getDictionaryNullHandleError(resp *http.Response) err
 // GetDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four',
 // '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDictionaryValidOptions contains the optional parameters for the Array.GetDictionaryValid method.
+// options - ArrayGetDictionaryValidOptions contains the optional parameters for the ArrayClient.GetDictionaryValid method.
 func (client *ArrayClient) GetDictionaryValid(ctx context.Context, options *ArrayGetDictionaryValidOptions) (ArrayGetDictionaryValidResponse, error) {
 	req, err := client.getDictionaryValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1517,7 +1524,7 @@ func (client *ArrayClient) getDictionaryValidHandleError(resp *http.Response) er
 
 // GetDoubleInvalidNull - Get float array value [0.0, null, -1.2e20]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDoubleInvalidNullOptions contains the optional parameters for the Array.GetDoubleInvalidNull method.
+// options - ArrayGetDoubleInvalidNullOptions contains the optional parameters for the ArrayClient.GetDoubleInvalidNull method.
 func (client *ArrayClient) GetDoubleInvalidNull(ctx context.Context, options *ArrayGetDoubleInvalidNullOptions) (ArrayGetDoubleInvalidNullResponse, error) {
 	req, err := client.getDoubleInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1568,7 +1575,8 @@ func (client *ArrayClient) getDoubleInvalidNullHandleError(resp *http.Response) 
 
 // GetDoubleInvalidString - Get boolean array value [1.0, 'number', 0.0]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDoubleInvalidStringOptions contains the optional parameters for the Array.GetDoubleInvalidString method.
+// options - ArrayGetDoubleInvalidStringOptions contains the optional parameters for the ArrayClient.GetDoubleInvalidString
+// method.
 func (client *ArrayClient) GetDoubleInvalidString(ctx context.Context, options *ArrayGetDoubleInvalidStringOptions) (ArrayGetDoubleInvalidStringResponse, error) {
 	req, err := client.getDoubleInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -1619,7 +1627,7 @@ func (client *ArrayClient) getDoubleInvalidStringHandleError(resp *http.Response
 
 // GetDoubleValid - Get float array value [0, -0.01, 1.2e20]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDoubleValidOptions contains the optional parameters for the Array.GetDoubleValid method.
+// options - ArrayGetDoubleValidOptions contains the optional parameters for the ArrayClient.GetDoubleValid method.
 func (client *ArrayClient) GetDoubleValid(ctx context.Context, options *ArrayGetDoubleValidOptions) (ArrayGetDoubleValidResponse, error) {
 	req, err := client.getDoubleValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1670,7 +1678,7 @@ func (client *ArrayClient) getDoubleValidHandleError(resp *http.Response) error 
 
 // GetDurationValid - Get duration array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDurationValidOptions contains the optional parameters for the Array.GetDurationValid method.
+// options - ArrayGetDurationValidOptions contains the optional parameters for the ArrayClient.GetDurationValid method.
 func (client *ArrayClient) GetDurationValid(ctx context.Context, options *ArrayGetDurationValidOptions) (ArrayGetDurationValidResponse, error) {
 	req, err := client.getDurationValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1721,7 +1729,7 @@ func (client *ArrayClient) getDurationValidHandleError(resp *http.Response) erro
 
 // GetEmpty - Get empty array value []
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetEmptyOptions contains the optional parameters for the Array.GetEmpty method.
+// options - ArrayGetEmptyOptions contains the optional parameters for the ArrayClient.GetEmpty method.
 func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayGetEmptyOptions) (ArrayGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
@@ -1772,7 +1780,7 @@ func (client *ArrayClient) getEmptyHandleError(resp *http.Response) error {
 
 // GetEnumValid - Get enum array value ['foo1', 'foo2', 'foo3']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetEnumValidOptions contains the optional parameters for the Array.GetEnumValid method.
+// options - ArrayGetEnumValidOptions contains the optional parameters for the ArrayClient.GetEnumValid method.
 func (client *ArrayClient) GetEnumValid(ctx context.Context, options *ArrayGetEnumValidOptions) (ArrayGetEnumValidResponse, error) {
 	req, err := client.getEnumValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1823,7 +1831,7 @@ func (client *ArrayClient) getEnumValidHandleError(resp *http.Response) error {
 
 // GetFloatInvalidNull - Get float array value [0.0, null, -1.2e20]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetFloatInvalidNullOptions contains the optional parameters for the Array.GetFloatInvalidNull method.
+// options - ArrayGetFloatInvalidNullOptions contains the optional parameters for the ArrayClient.GetFloatInvalidNull method.
 func (client *ArrayClient) GetFloatInvalidNull(ctx context.Context, options *ArrayGetFloatInvalidNullOptions) (ArrayGetFloatInvalidNullResponse, error) {
 	req, err := client.getFloatInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -1874,7 +1882,8 @@ func (client *ArrayClient) getFloatInvalidNullHandleError(resp *http.Response) e
 
 // GetFloatInvalidString - Get boolean array value [1.0, 'number', 0.0]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetFloatInvalidStringOptions contains the optional parameters for the Array.GetFloatInvalidString method.
+// options - ArrayGetFloatInvalidStringOptions contains the optional parameters for the ArrayClient.GetFloatInvalidString
+// method.
 func (client *ArrayClient) GetFloatInvalidString(ctx context.Context, options *ArrayGetFloatInvalidStringOptions) (ArrayGetFloatInvalidStringResponse, error) {
 	req, err := client.getFloatInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -1925,7 +1934,7 @@ func (client *ArrayClient) getFloatInvalidStringHandleError(resp *http.Response)
 
 // GetFloatValid - Get float array value [0, -0.01, 1.2e20]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetFloatValidOptions contains the optional parameters for the Array.GetFloatValid method.
+// options - ArrayGetFloatValidOptions contains the optional parameters for the ArrayClient.GetFloatValid method.
 func (client *ArrayClient) GetFloatValid(ctx context.Context, options *ArrayGetFloatValidOptions) (ArrayGetFloatValidResponse, error) {
 	req, err := client.getFloatValidCreateRequest(ctx, options)
 	if err != nil {
@@ -1976,7 +1985,7 @@ func (client *ArrayClient) getFloatValidHandleError(resp *http.Response) error {
 
 // GetIntInvalidNull - Get integer array value [1, null, 0]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetIntInvalidNullOptions contains the optional parameters for the Array.GetIntInvalidNull method.
+// options - ArrayGetIntInvalidNullOptions contains the optional parameters for the ArrayClient.GetIntInvalidNull method.
 func (client *ArrayClient) GetIntInvalidNull(ctx context.Context, options *ArrayGetIntInvalidNullOptions) (ArrayGetIntInvalidNullResponse, error) {
 	req, err := client.getIntInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2027,7 +2036,7 @@ func (client *ArrayClient) getIntInvalidNullHandleError(resp *http.Response) err
 
 // GetIntInvalidString - Get integer array value [1, 'integer', 0]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetIntInvalidStringOptions contains the optional parameters for the Array.GetIntInvalidString method.
+// options - ArrayGetIntInvalidStringOptions contains the optional parameters for the ArrayClient.GetIntInvalidString method.
 func (client *ArrayClient) GetIntInvalidString(ctx context.Context, options *ArrayGetIntInvalidStringOptions) (ArrayGetIntInvalidStringResponse, error) {
 	req, err := client.getIntInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -2078,7 +2087,7 @@ func (client *ArrayClient) getIntInvalidStringHandleError(resp *http.Response) e
 
 // GetIntegerValid - Get integer array value [1, -1, 3, 300]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetIntegerValidOptions contains the optional parameters for the Array.GetIntegerValid method.
+// options - ArrayGetIntegerValidOptions contains the optional parameters for the ArrayClient.GetIntegerValid method.
 func (client *ArrayClient) GetIntegerValid(ctx context.Context, options *ArrayGetIntegerValidOptions) (ArrayGetIntegerValidResponse, error) {
 	req, err := client.getIntegerValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2129,7 +2138,7 @@ func (client *ArrayClient) getIntegerValidHandleError(resp *http.Response) error
 
 // GetInvalid - Get invalid array [1, 2, 3
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetInvalidOptions contains the optional parameters for the Array.GetInvalid method.
+// options - ArrayGetInvalidOptions contains the optional parameters for the ArrayClient.GetInvalid method.
 func (client *ArrayClient) GetInvalid(ctx context.Context, options *ArrayGetInvalidOptions) (ArrayGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -2180,7 +2189,7 @@ func (client *ArrayClient) getInvalidHandleError(resp *http.Response) error {
 
 // GetLongInvalidNull - Get long array value [1, null, 0]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetLongInvalidNullOptions contains the optional parameters for the Array.GetLongInvalidNull method.
+// options - ArrayGetLongInvalidNullOptions contains the optional parameters for the ArrayClient.GetLongInvalidNull method.
 func (client *ArrayClient) GetLongInvalidNull(ctx context.Context, options *ArrayGetLongInvalidNullOptions) (ArrayGetLongInvalidNullResponse, error) {
 	req, err := client.getLongInvalidNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2231,7 +2240,7 @@ func (client *ArrayClient) getLongInvalidNullHandleError(resp *http.Response) er
 
 // GetLongInvalidString - Get long array value [1, 'integer', 0]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetLongInvalidStringOptions contains the optional parameters for the Array.GetLongInvalidString method.
+// options - ArrayGetLongInvalidStringOptions contains the optional parameters for the ArrayClient.GetLongInvalidString method.
 func (client *ArrayClient) GetLongInvalidString(ctx context.Context, options *ArrayGetLongInvalidStringOptions) (ArrayGetLongInvalidStringResponse, error) {
 	req, err := client.getLongInvalidStringCreateRequest(ctx, options)
 	if err != nil {
@@ -2282,7 +2291,7 @@ func (client *ArrayClient) getLongInvalidStringHandleError(resp *http.Response) 
 
 // GetLongValid - Get integer array value [1, -1, 3, 300]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetLongValidOptions contains the optional parameters for the Array.GetLongValid method.
+// options - ArrayGetLongValidOptions contains the optional parameters for the ArrayClient.GetLongValid method.
 func (client *ArrayClient) GetLongValid(ctx context.Context, options *ArrayGetLongValidOptions) (ArrayGetLongValidResponse, error) {
 	req, err := client.getLongValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2333,7 +2342,7 @@ func (client *ArrayClient) getLongValidHandleError(resp *http.Response) error {
 
 // GetNull - Get null array value
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetNullOptions contains the optional parameters for the Array.GetNull method.
+// options - ArrayGetNullOptions contains the optional parameters for the ArrayClient.GetNull method.
 func (client *ArrayClient) GetNull(ctx context.Context, options *ArrayGetNullOptions) (ArrayGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2384,7 +2393,7 @@ func (client *ArrayClient) getNullHandleError(resp *http.Response) error {
 
 // GetStringEnumValid - Get enum array value ['foo1', 'foo2', 'foo3']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetStringEnumValidOptions contains the optional parameters for the Array.GetStringEnumValid method.
+// options - ArrayGetStringEnumValidOptions contains the optional parameters for the ArrayClient.GetStringEnumValid method.
 func (client *ArrayClient) GetStringEnumValid(ctx context.Context, options *ArrayGetStringEnumValidOptions) (ArrayGetStringEnumValidResponse, error) {
 	req, err := client.getStringEnumValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2435,7 +2444,7 @@ func (client *ArrayClient) getStringEnumValidHandleError(resp *http.Response) er
 
 // GetStringValid - Get string array value ['foo1', 'foo2', 'foo3']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetStringValidOptions contains the optional parameters for the Array.GetStringValid method.
+// options - ArrayGetStringValidOptions contains the optional parameters for the ArrayClient.GetStringValid method.
 func (client *ArrayClient) GetStringValid(ctx context.Context, options *ArrayGetStringValidOptions) (ArrayGetStringValidResponse, error) {
 	req, err := client.getStringValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2486,7 +2495,7 @@ func (client *ArrayClient) getStringValidHandleError(resp *http.Response) error 
 
 // GetStringWithInvalid - Get string array value ['foo', 123, 'foo2']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetStringWithInvalidOptions contains the optional parameters for the Array.GetStringWithInvalid method.
+// options - ArrayGetStringWithInvalidOptions contains the optional parameters for the ArrayClient.GetStringWithInvalid method.
 func (client *ArrayClient) GetStringWithInvalid(ctx context.Context, options *ArrayGetStringWithInvalidOptions) (ArrayGetStringWithInvalidResponse, error) {
 	req, err := client.getStringWithInvalidCreateRequest(ctx, options)
 	if err != nil {
@@ -2537,7 +2546,7 @@ func (client *ArrayClient) getStringWithInvalidHandleError(resp *http.Response) 
 
 // GetStringWithNull - Get string array value ['foo', null, 'foo2']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetStringWithNullOptions contains the optional parameters for the Array.GetStringWithNull method.
+// options - ArrayGetStringWithNullOptions contains the optional parameters for the ArrayClient.GetStringWithNull method.
 func (client *ArrayClient) GetStringWithNull(ctx context.Context, options *ArrayGetStringWithNullOptions) (ArrayGetStringWithNullResponse, error) {
 	req, err := client.getStringWithNullCreateRequest(ctx, options)
 	if err != nil {
@@ -2588,7 +2597,7 @@ func (client *ArrayClient) getStringWithNullHandleError(resp *http.Response) err
 
 // GetUUIDInvalidChars - Get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'foo']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetUUIDInvalidCharsOptions contains the optional parameters for the Array.GetUUIDInvalidChars method.
+// options - ArrayGetUUIDInvalidCharsOptions contains the optional parameters for the ArrayClient.GetUUIDInvalidChars method.
 func (client *ArrayClient) GetUUIDInvalidChars(ctx context.Context, options *ArrayGetUUIDInvalidCharsOptions) (ArrayGetUUIDInvalidCharsResponse, error) {
 	req, err := client.getUUIDInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
@@ -2639,7 +2648,7 @@ func (client *ArrayClient) getUUIDInvalidCharsHandleError(resp *http.Response) e
 
 // GetUUIDValid - Get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetUUIDValidOptions contains the optional parameters for the Array.GetUUIDValid method.
+// options - ArrayGetUUIDValidOptions contains the optional parameters for the ArrayClient.GetUUIDValid method.
 func (client *ArrayClient) GetUUIDValid(ctx context.Context, options *ArrayGetUUIDValidOptions) (ArrayGetUUIDValidResponse, error) {
 	req, err := client.getUUIDValidCreateRequest(ctx, options)
 	if err != nil {
@@ -2690,7 +2699,7 @@ func (client *ArrayClient) getUUIDValidHandleError(resp *http.Response) error {
 
 // PutArrayValid - Put An array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutArrayValidOptions contains the optional parameters for the Array.PutArrayValid method.
+// options - ArrayPutArrayValidOptions contains the optional parameters for the ArrayClient.PutArrayValid method.
 func (client *ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]*string, options *ArrayPutArrayValidOptions) (ArrayPutArrayValidResponse, error) {
 	req, err := client.putArrayValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2732,7 +2741,7 @@ func (client *ArrayClient) putArrayValidHandleError(resp *http.Response) error {
 
 // PutBooleanTfft - Set array value empty [true, false, false, true]
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutBooleanTfftOptions contains the optional parameters for the Array.PutBooleanTfft method.
+// options - ArrayPutBooleanTfftOptions contains the optional parameters for the ArrayClient.PutBooleanTfft method.
 func (client *ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []*bool, options *ArrayPutBooleanTfftOptions) (ArrayPutBooleanTfftResponse, error) {
 	req, err := client.putBooleanTfftCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2775,7 +2784,7 @@ func (client *ArrayClient) putBooleanTfftHandleError(resp *http.Response) error 
 // PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base
 // 64
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutByteValidOptions contains the optional parameters for the Array.PutByteValid method.
+// options - ArrayPutByteValidOptions contains the optional parameters for the ArrayClient.PutByteValid method.
 func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte, options *ArrayPutByteValidOptions) (ArrayPutByteValidResponse, error) {
 	req, err := client.putByteValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2818,7 +2827,7 @@ func (client *ArrayClient) putByteValidHandleError(resp *http.Response) error {
 // PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'},
 // {'integer': 5, 'string': '6'}]
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutComplexValidOptions contains the optional parameters for the Array.PutComplexValid method.
+// options - ArrayPutComplexValidOptions contains the optional parameters for the ArrayClient.PutComplexValid method.
 func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []*Product, options *ArrayPutComplexValidOptions) (ArrayPutComplexValidResponse, error) {
 	req, err := client.putComplexValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2861,7 +2870,8 @@ func (client *ArrayClient) putComplexValidHandleError(resp *http.Response) error
 // PutDateTimeRFC1123Valid - Set array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct
 // 1492 10:15:01 GMT']
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutDateTimeRFC1123ValidOptions contains the optional parameters for the Array.PutDateTimeRFC1123Valid method.
+// options - ArrayPutDateTimeRFC1123ValidOptions contains the optional parameters for the ArrayClient.PutDateTimeRFC1123Valid
+// method.
 func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateTimeRFC1123ValidOptions) (ArrayPutDateTimeRFC1123ValidResponse, error) {
 	req, err := client.putDateTimeRFC1123ValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2907,7 +2917,7 @@ func (client *ArrayClient) putDateTimeRFC1123ValidHandleError(resp *http.Respons
 
 // PutDateTimeValid - Set array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutDateTimeValidOptions contains the optional parameters for the Array.PutDateTimeValid method.
+// options - ArrayPutDateTimeValidOptions contains the optional parameters for the ArrayClient.PutDateTimeValid method.
 func (client *ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateTimeValidOptions) (ArrayPutDateTimeValidResponse, error) {
 	req, err := client.putDateTimeValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2949,7 +2959,7 @@ func (client *ArrayClient) putDateTimeValidHandleError(resp *http.Response) erro
 
 // PutDateValid - Set array value ['2000-12-01', '1980-01-02', '1492-10-12']
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutDateValidOptions contains the optional parameters for the Array.PutDateValid method.
+// options - ArrayPutDateValidOptions contains the optional parameters for the ArrayClient.PutDateValid method.
 func (client *ArrayClient) PutDateValid(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateValidOptions) (ArrayPutDateValidResponse, error) {
 	req, err := client.putDateValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -2996,7 +3006,7 @@ func (client *ArrayClient) putDateValidHandleError(resp *http.Response) error {
 // PutDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four',
 // '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutDictionaryValidOptions contains the optional parameters for the Array.PutDictionaryValid method.
+// options - ArrayPutDictionaryValidOptions contains the optional parameters for the ArrayClient.PutDictionaryValid method.
 func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []map[string]*string, options *ArrayPutDictionaryValidOptions) (ArrayPutDictionaryValidResponse, error) {
 	req, err := client.putDictionaryValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3038,7 +3048,7 @@ func (client *ArrayClient) putDictionaryValidHandleError(resp *http.Response) er
 
 // PutDoubleValid - Set array value [0, -0.01, 1.2e20]
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutDoubleValidOptions contains the optional parameters for the Array.PutDoubleValid method.
+// options - ArrayPutDoubleValidOptions contains the optional parameters for the ArrayClient.PutDoubleValid method.
 func (client *ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []*float64, options *ArrayPutDoubleValidOptions) (ArrayPutDoubleValidResponse, error) {
 	req, err := client.putDoubleValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3080,7 +3090,7 @@ func (client *ArrayClient) putDoubleValidHandleError(resp *http.Response) error 
 
 // PutDurationValid - Set array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutDurationValidOptions contains the optional parameters for the Array.PutDurationValid method.
+// options - ArrayPutDurationValidOptions contains the optional parameters for the ArrayClient.PutDurationValid method.
 func (client *ArrayClient) PutDurationValid(ctx context.Context, arrayBody []*string, options *ArrayPutDurationValidOptions) (ArrayPutDurationValidResponse, error) {
 	req, err := client.putDurationValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3122,7 +3132,7 @@ func (client *ArrayClient) putDurationValidHandleError(resp *http.Response) erro
 
 // PutEmpty - Set array value empty []
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutEmptyOptions contains the optional parameters for the Array.PutEmpty method.
+// options - ArrayPutEmptyOptions contains the optional parameters for the ArrayClient.PutEmpty method.
 func (client *ArrayClient) PutEmpty(ctx context.Context, arrayBody []*string, options *ArrayPutEmptyOptions) (ArrayPutEmptyResponse, error) {
 	req, err := client.putEmptyCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3164,7 +3174,7 @@ func (client *ArrayClient) putEmptyHandleError(resp *http.Response) error {
 
 // PutEnumValid - Set array value ['foo1', 'foo2', 'foo3']
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutEnumValidOptions contains the optional parameters for the Array.PutEnumValid method.
+// options - ArrayPutEnumValidOptions contains the optional parameters for the ArrayClient.PutEnumValid method.
 func (client *ArrayClient) PutEnumValid(ctx context.Context, arrayBody []*FooEnum, options *ArrayPutEnumValidOptions) (ArrayPutEnumValidResponse, error) {
 	req, err := client.putEnumValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3206,7 +3216,7 @@ func (client *ArrayClient) putEnumValidHandleError(resp *http.Response) error {
 
 // PutFloatValid - Set array value [0, -0.01, 1.2e20]
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutFloatValidOptions contains the optional parameters for the Array.PutFloatValid method.
+// options - ArrayPutFloatValidOptions contains the optional parameters for the ArrayClient.PutFloatValid method.
 func (client *ArrayClient) PutFloatValid(ctx context.Context, arrayBody []*float32, options *ArrayPutFloatValidOptions) (ArrayPutFloatValidResponse, error) {
 	req, err := client.putFloatValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3248,7 +3258,7 @@ func (client *ArrayClient) putFloatValidHandleError(resp *http.Response) error {
 
 // PutIntegerValid - Set array value empty [1, -1, 3, 300]
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutIntegerValidOptions contains the optional parameters for the Array.PutIntegerValid method.
+// options - ArrayPutIntegerValidOptions contains the optional parameters for the ArrayClient.PutIntegerValid method.
 func (client *ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []*int32, options *ArrayPutIntegerValidOptions) (ArrayPutIntegerValidResponse, error) {
 	req, err := client.putIntegerValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3290,7 +3300,7 @@ func (client *ArrayClient) putIntegerValidHandleError(resp *http.Response) error
 
 // PutLongValid - Set array value empty [1, -1, 3, 300]
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutLongValidOptions contains the optional parameters for the Array.PutLongValid method.
+// options - ArrayPutLongValidOptions contains the optional parameters for the ArrayClient.PutLongValid method.
 func (client *ArrayClient) PutLongValid(ctx context.Context, arrayBody []*int64, options *ArrayPutLongValidOptions) (ArrayPutLongValidResponse, error) {
 	req, err := client.putLongValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3332,7 +3342,7 @@ func (client *ArrayClient) putLongValidHandleError(resp *http.Response) error {
 
 // PutStringEnumValid - Set array value ['foo1', 'foo2', 'foo3']
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutStringEnumValidOptions contains the optional parameters for the Array.PutStringEnumValid method.
+// options - ArrayPutStringEnumValidOptions contains the optional parameters for the ArrayClient.PutStringEnumValid method.
 func (client *ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []*Enum1, options *ArrayPutStringEnumValidOptions) (ArrayPutStringEnumValidResponse, error) {
 	req, err := client.putStringEnumValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3374,7 +3384,7 @@ func (client *ArrayClient) putStringEnumValidHandleError(resp *http.Response) er
 
 // PutStringValid - Set array value ['foo1', 'foo2', 'foo3']
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutStringValidOptions contains the optional parameters for the Array.PutStringValid method.
+// options - ArrayPutStringValidOptions contains the optional parameters for the ArrayClient.PutStringValid method.
 func (client *ArrayClient) PutStringValid(ctx context.Context, arrayBody []*string, options *ArrayPutStringValidOptions) (ArrayPutStringValidResponse, error) {
 	req, err := client.putStringValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
@@ -3416,7 +3426,7 @@ func (client *ArrayClient) putStringValidHandleError(resp *http.Response) error 
 
 // PutUUIDValid - Set array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutUUIDValidOptions contains the optional parameters for the Array.PutUUIDValid method.
+// options - ArrayPutUUIDValidOptions contains the optional parameters for the ArrayClient.PutUUIDValid method.
 func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []*string, options *ArrayPutUUIDValidOptions) (ArrayPutUUIDValidResponse, error) {
 	req, err := client.putUUIDValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {

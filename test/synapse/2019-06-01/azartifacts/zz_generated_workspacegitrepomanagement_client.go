@@ -34,7 +34,7 @@ func newWorkspaceGitRepoManagementClient(endpoint string, pl runtime.Pipeline) *
 
 // GetGitHubAccessToken - Get the GitHub access token.
 // If the operation fails it returns a generic error.
-// options - WorkspaceGitRepoManagementGetGitHubAccessTokenOptions contains the optional parameters for the WorkspaceGitRepoManagement.GetGitHubAccessToken
+// options - WorkspaceGitRepoManagementGetGitHubAccessTokenOptions contains the optional parameters for the workspaceGitRepoManagementClient.GetGitHubAccessToken
 // method.
 func (client *workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *WorkspaceGitRepoManagementGetGitHubAccessTokenOptions) (WorkspaceGitRepoManagementGetGitHubAccessTokenResponse, error) {
 	req, err := client.getGitHubAccessTokenCreateRequest(ctx, gitHubAccessTokenRequest, options)

@@ -40,7 +40,7 @@ func newPipelineClient(endpoint string, pl runtime.Pipeline) *pipelineClient {
 // If the operation fails it returns the *CloudError error type.
 // pipelineName - The pipeline name.
 // pipeline - Pipeline resource definition.
-// options - PipelineBeginCreateOrUpdatePipelineOptions contains the optional parameters for the Pipeline.BeginCreateOrUpdatePipeline
+// options - PipelineBeginCreateOrUpdatePipelineOptions contains the optional parameters for the pipelineClient.BeginCreateOrUpdatePipeline
 // method.
 func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (PipelineCreateOrUpdatePipelinePollerResponse, error) {
 	resp, err := client.createOrUpdatePipeline(ctx, pipelineName, pipeline, options)
@@ -114,7 +114,7 @@ func (client *pipelineClient) createOrUpdatePipelineHandleError(resp *http.Respo
 // CreatePipelineRun - Creates a run of a pipeline.
 // If the operation fails it returns the *CloudError error type.
 // pipelineName - The pipeline name.
-// options - PipelineCreatePipelineRunOptions contains the optional parameters for the Pipeline.CreatePipelineRun method.
+// options - PipelineCreatePipelineRunOptions contains the optional parameters for the pipelineClient.CreatePipelineRun method.
 func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, options *PipelineCreatePipelineRunOptions) (PipelineCreatePipelineRunResponse, error) {
 	req, err := client.createPipelineRunCreateRequest(ctx, pipelineName, options)
 	if err != nil {
@@ -185,7 +185,8 @@ func (client *pipelineClient) createPipelineRunHandleError(resp *http.Response) 
 // BeginDeletePipeline - Deletes a pipeline.
 // If the operation fails it returns the *CloudError error type.
 // pipelineName - The pipeline name.
-// options - PipelineBeginDeletePipelineOptions contains the optional parameters for the Pipeline.BeginDeletePipeline method.
+// options - PipelineBeginDeletePipelineOptions contains the optional parameters for the pipelineClient.BeginDeletePipeline
+// method.
 func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (PipelineDeletePipelinePollerResponse, error) {
 	resp, err := client.deletePipeline(ctx, pipelineName, options)
 	if err != nil {
@@ -255,7 +256,7 @@ func (client *pipelineClient) deletePipelineHandleError(resp *http.Response) err
 // GetPipeline - Gets a pipeline.
 // If the operation fails it returns the *CloudError error type.
 // pipelineName - The pipeline name.
-// options - PipelineGetPipelineOptions contains the optional parameters for the Pipeline.GetPipeline method.
+// options - PipelineGetPipelineOptions contains the optional parameters for the pipelineClient.GetPipeline method.
 func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName string, options *PipelineGetPipelineOptions) (PipelineGetPipelineResponse, error) {
 	req, err := client.getPipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
@@ -316,7 +317,7 @@ func (client *pipelineClient) getPipelineHandleError(resp *http.Response) error 
 
 // GetPipelinesByWorkspace - Lists pipelines.
 // If the operation fails it returns the *CloudError error type.
-// options - PipelineGetPipelinesByWorkspaceOptions contains the optional parameters for the Pipeline.GetPipelinesByWorkspace
+// options - PipelineGetPipelinesByWorkspaceOptions contains the optional parameters for the pipelineClient.GetPipelinesByWorkspace
 // method.
 func (client *pipelineClient) GetPipelinesByWorkspace(options *PipelineGetPipelinesByWorkspaceOptions) *PipelineGetPipelinesByWorkspacePager {
 	return &PipelineGetPipelinesByWorkspacePager{
@@ -370,7 +371,8 @@ func (client *pipelineClient) getPipelinesByWorkspaceHandleError(resp *http.Resp
 // If the operation fails it returns the *CloudError error type.
 // pipelineName - The pipeline name.
 // request - proposed new name.
-// options - PipelineBeginRenamePipelineOptions contains the optional parameters for the Pipeline.BeginRenamePipeline method.
+// options - PipelineBeginRenamePipelineOptions contains the optional parameters for the pipelineClient.BeginRenamePipeline
+// method.
 func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (PipelineRenamePipelinePollerResponse, error) {
 	resp, err := client.renamePipeline(ctx, pipelineName, request, options)
 	if err != nil {

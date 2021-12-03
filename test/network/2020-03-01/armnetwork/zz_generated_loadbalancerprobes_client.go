@@ -56,7 +56,7 @@ func NewLoadBalancerProbesClient(subscriptionID string, credential azcore.TokenC
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // probeName - The name of the probe.
-// options - LoadBalancerProbesGetOptions contains the optional parameters for the LoadBalancerProbes.Get method.
+// options - LoadBalancerProbesGetOptions contains the optional parameters for the LoadBalancerProbesClient.Get method.
 func (client *LoadBalancerProbesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string, options *LoadBalancerProbesGetOptions) (LoadBalancerProbesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, probeName, options)
 	if err != nil {
@@ -128,7 +128,7 @@ func (client *LoadBalancerProbesClient) getHandleError(resp *http.Response) erro
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
-// options - LoadBalancerProbesListOptions contains the optional parameters for the LoadBalancerProbes.List method.
+// options - LoadBalancerProbesListOptions contains the optional parameters for the LoadBalancerProbesClient.List method.
 func (client *LoadBalancerProbesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerProbesListOptions) *LoadBalancerProbesListPager {
 	return &LoadBalancerProbesListPager{
 		client: client,

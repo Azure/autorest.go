@@ -54,7 +54,7 @@ func NewUsageClient(subscriptionID string, credential azcore.TokenCredential, op
 // resources under the subscription.
 // If the operation fails it returns a generic error.
 // location - The location for which resource usage is queried.
-// options - UsageListOptions contains the optional parameters for the Usage.List method.
+// options - UsageListOptions contains the optional parameters for the UsageClient.List method.
 func (client *UsageClient) List(location string, options *UsageListOptions) *UsageListPager {
 	return &UsageListPager{
 		client: client,

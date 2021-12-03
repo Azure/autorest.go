@@ -56,7 +56,7 @@ func NewVirtualHubsClient(subscriptionID string, credential azcore.TokenCredenti
 // resourceGroupName - The resource group name of the VirtualHub.
 // virtualHubName - The name of the VirtualHub.
 // virtualHubParameters - Parameters supplied to create or update VirtualHub.
-// options - VirtualHubsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualHubs.BeginCreateOrUpdate
+// options - VirtualHubsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualHubsClient.BeginCreateOrUpdate
 // method.
 func (client *VirtualHubsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters VirtualHub, options *VirtualHubsBeginCreateOrUpdateOptions) (VirtualHubsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualHubName, virtualHubParameters, options)
@@ -136,7 +136,7 @@ func (client *VirtualHubsClient) createOrUpdateHandleError(resp *http.Response) 
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VirtualHub.
 // virtualHubName - The name of the VirtualHub.
-// options - VirtualHubsBeginDeleteOptions contains the optional parameters for the VirtualHubs.BeginDelete method.
+// options - VirtualHubsBeginDeleteOptions contains the optional parameters for the VirtualHubsClient.BeginDelete method.
 func (client *VirtualHubsClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsBeginDeleteOptions) (VirtualHubsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualHubName, options)
 	if err != nil {
@@ -215,7 +215,7 @@ func (client *VirtualHubsClient) deleteHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VirtualHub.
 // virtualHubName - The name of the VirtualHub.
-// options - VirtualHubsGetOptions contains the optional parameters for the VirtualHubs.Get method.
+// options - VirtualHubsGetOptions contains the optional parameters for the VirtualHubsClient.Get method.
 func (client *VirtualHubsClient) Get(ctx context.Context, resourceGroupName string, virtualHubName string, options *VirtualHubsGetOptions) (VirtualHubsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualHubName, options)
 	if err != nil {
@@ -281,7 +281,7 @@ func (client *VirtualHubsClient) getHandleError(resp *http.Response) error {
 
 // List - Lists all the VirtualHubs in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - VirtualHubsListOptions contains the optional parameters for the VirtualHubs.List method.
+// options - VirtualHubsListOptions contains the optional parameters for the VirtualHubsClient.List method.
 func (client *VirtualHubsClient) List(options *VirtualHubsListOptions) *VirtualHubsListPager {
 	return &VirtualHubsListPager{
 		client: client,
@@ -337,7 +337,7 @@ func (client *VirtualHubsClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Lists all the VirtualHubs in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VirtualHub.
-// options - VirtualHubsListByResourceGroupOptions contains the optional parameters for the VirtualHubs.ListByResourceGroup
+// options - VirtualHubsListByResourceGroupOptions contains the optional parameters for the VirtualHubsClient.ListByResourceGroup
 // method.
 func (client *VirtualHubsClient) ListByResourceGroup(resourceGroupName string, options *VirtualHubsListByResourceGroupOptions) *VirtualHubsListByResourceGroupPager {
 	return &VirtualHubsListByResourceGroupPager{
@@ -400,7 +400,7 @@ func (client *VirtualHubsClient) listByResourceGroupHandleError(resp *http.Respo
 // resourceGroupName - The resource group name of the VirtualHub.
 // virtualHubName - The name of the VirtualHub.
 // virtualHubParameters - Parameters supplied to update VirtualHub tags.
-// options - VirtualHubsUpdateTagsOptions contains the optional parameters for the VirtualHubs.UpdateTags method.
+// options - VirtualHubsUpdateTagsOptions contains the optional parameters for the VirtualHubsClient.UpdateTags method.
 func (client *VirtualHubsClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualHubName string, virtualHubParameters TagsObject, options *VirtualHubsUpdateTagsOptions) (VirtualHubsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, virtualHubName, virtualHubParameters, options)
 	if err != nil {

@@ -57,7 +57,7 @@ func NewPacketCapturesClient(subscriptionID string, credential azcore.TokenCrede
 // networkWatcherName - The name of the network watcher.
 // packetCaptureName - The name of the packet capture session.
 // parameters - Parameters that define the create packet capture operation.
-// options - PacketCapturesBeginCreateOptions contains the optional parameters for the PacketCaptures.BeginCreate method.
+// options - PacketCapturesBeginCreateOptions contains the optional parameters for the PacketCapturesClient.BeginCreate method.
 func (client *PacketCapturesClient) BeginCreate(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, parameters PacketCapture, options *PacketCapturesBeginCreateOptions) (PacketCapturesCreatePollerResponse, error) {
 	resp, err := client.create(ctx, resourceGroupName, networkWatcherName, packetCaptureName, parameters, options)
 	if err != nil {
@@ -141,7 +141,7 @@ func (client *PacketCapturesClient) createHandleError(resp *http.Response) error
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // packetCaptureName - The name of the packet capture session.
-// options - PacketCapturesBeginDeleteOptions contains the optional parameters for the PacketCaptures.BeginDelete method.
+// options - PacketCapturesBeginDeleteOptions contains the optional parameters for the PacketCapturesClient.BeginDelete method.
 func (client *PacketCapturesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesBeginDeleteOptions) (PacketCapturesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 	if err != nil {
@@ -225,7 +225,7 @@ func (client *PacketCapturesClient) deleteHandleError(resp *http.Response) error
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // packetCaptureName - The name of the packet capture session.
-// options - PacketCapturesGetOptions contains the optional parameters for the PacketCaptures.Get method.
+// options - PacketCapturesGetOptions contains the optional parameters for the PacketCapturesClient.Get method.
 func (client *PacketCapturesClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesGetOptions) (PacketCapturesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 	if err != nil {
@@ -298,7 +298,8 @@ func (client *PacketCapturesClient) getHandleError(resp *http.Response) error {
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the Network Watcher resource.
 // packetCaptureName - The name given to the packet capture session.
-// options - PacketCapturesBeginGetStatusOptions contains the optional parameters for the PacketCaptures.BeginGetStatus method.
+// options - PacketCapturesBeginGetStatusOptions contains the optional parameters for the PacketCapturesClient.BeginGetStatus
+// method.
 func (client *PacketCapturesClient) BeginGetStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesBeginGetStatusOptions) (PacketCapturesGetStatusPollerResponse, error) {
 	resp, err := client.getStatus(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 	if err != nil {
@@ -381,7 +382,7 @@ func (client *PacketCapturesClient) getStatusHandleError(resp *http.Response) er
 // If the operation fails it returns the *ErrorResponse error type.
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the Network Watcher resource.
-// options - PacketCapturesListOptions contains the optional parameters for the PacketCaptures.List method.
+// options - PacketCapturesListOptions contains the optional parameters for the PacketCapturesClient.List method.
 func (client *PacketCapturesClient) List(ctx context.Context, resourceGroupName string, networkWatcherName string, options *PacketCapturesListOptions) (PacketCapturesListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
 	if err != nil {
@@ -450,7 +451,7 @@ func (client *PacketCapturesClient) listHandleError(resp *http.Response) error {
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // packetCaptureName - The name of the packet capture session.
-// options - PacketCapturesBeginStopOptions contains the optional parameters for the PacketCaptures.BeginStop method.
+// options - PacketCapturesBeginStopOptions contains the optional parameters for the PacketCapturesClient.BeginStop method.
 func (client *PacketCapturesClient) BeginStop(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesBeginStopOptions) (PacketCapturesStopPollerResponse, error) {
 	resp, err := client.stop(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 	if err != nil {

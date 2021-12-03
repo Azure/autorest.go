@@ -56,7 +56,7 @@ func NewLocalNetworkGatewaysClient(subscriptionID string, credential azcore.Toke
 // resourceGroupName - The name of the resource group.
 // localNetworkGatewayName - The name of the local network gateway.
 // parameters - Parameters supplied to the create or update local network gateway operation.
-// options - LocalNetworkGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the LocalNetworkGateways.BeginCreateOrUpdate
+// options - LocalNetworkGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the LocalNetworkGatewaysClient.BeginCreateOrUpdate
 // method.
 func (client *LocalNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters LocalNetworkGateway, options *LocalNetworkGatewaysBeginCreateOrUpdateOptions) (LocalNetworkGatewaysCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)
@@ -136,7 +136,7 @@ func (client *LocalNetworkGatewaysClient) createOrUpdateHandleError(resp *http.R
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // localNetworkGatewayName - The name of the local network gateway.
-// options - LocalNetworkGatewaysBeginDeleteOptions contains the optional parameters for the LocalNetworkGateways.BeginDelete
+// options - LocalNetworkGatewaysBeginDeleteOptions contains the optional parameters for the LocalNetworkGatewaysClient.BeginDelete
 // method.
 func (client *LocalNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysBeginDeleteOptions) (LocalNetworkGatewaysDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, localNetworkGatewayName, options)
@@ -216,7 +216,7 @@ func (client *LocalNetworkGatewaysClient) deleteHandleError(resp *http.Response)
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // localNetworkGatewayName - The name of the local network gateway.
-// options - LocalNetworkGatewaysGetOptions contains the optional parameters for the LocalNetworkGateways.Get method.
+// options - LocalNetworkGatewaysGetOptions contains the optional parameters for the LocalNetworkGatewaysClient.Get method.
 func (client *LocalNetworkGatewaysClient) Get(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, options *LocalNetworkGatewaysGetOptions) (LocalNetworkGatewaysGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, options)
 	if err != nil {
@@ -283,7 +283,7 @@ func (client *LocalNetworkGatewaysClient) getHandleError(resp *http.Response) er
 // List - Gets all the local network gateways in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - LocalNetworkGatewaysListOptions contains the optional parameters for the LocalNetworkGateways.List method.
+// options - LocalNetworkGatewaysListOptions contains the optional parameters for the LocalNetworkGatewaysClient.List method.
 func (client *LocalNetworkGatewaysClient) List(resourceGroupName string, options *LocalNetworkGatewaysListOptions) *LocalNetworkGatewaysListPager {
 	return &LocalNetworkGatewaysListPager{
 		client: client,
@@ -345,7 +345,7 @@ func (client *LocalNetworkGatewaysClient) listHandleError(resp *http.Response) e
 // resourceGroupName - The name of the resource group.
 // localNetworkGatewayName - The name of the local network gateway.
 // parameters - Parameters supplied to update local network gateway tags.
-// options - LocalNetworkGatewaysUpdateTagsOptions contains the optional parameters for the LocalNetworkGateways.UpdateTags
+// options - LocalNetworkGatewaysUpdateTagsOptions contains the optional parameters for the LocalNetworkGatewaysClient.UpdateTags
 // method.
 func (client *LocalNetworkGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, localNetworkGatewayName string, parameters TagsObject, options *LocalNetworkGatewaysUpdateTagsOptions) (LocalNetworkGatewaysUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, localNetworkGatewayName, parameters, options)

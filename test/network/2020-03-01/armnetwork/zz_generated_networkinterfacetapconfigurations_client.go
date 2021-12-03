@@ -57,7 +57,7 @@ func NewNetworkInterfaceTapConfigurationsClient(subscriptionID string, credentia
 // networkInterfaceName - The name of the network interface.
 // tapConfigurationName - The name of the tap configuration.
 // tapConfigurationParameters - Parameters supplied to the create or update tap configuration operation.
-// options - NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.BeginCreateOrUpdate
+// options - NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions contains the optional parameters for the NetworkInterfaceTapConfigurationsClient.BeginCreateOrUpdate
 // method.
 func (client *NetworkInterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions) (NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, tapConfigurationParameters, options)
@@ -142,7 +142,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdateHandleError
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // tapConfigurationName - The name of the tap configuration.
-// options - NetworkInterfaceTapConfigurationsBeginDeleteOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.BeginDelete
+// options - NetworkInterfaceTapConfigurationsBeginDeleteOptions contains the optional parameters for the NetworkInterfaceTapConfigurationsClient.BeginDelete
 // method.
 func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsBeginDeleteOptions) (NetworkInterfaceTapConfigurationsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
@@ -227,7 +227,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) deleteHandleError(resp *h
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // tapConfigurationName - The name of the tap configuration.
-// options - NetworkInterfaceTapConfigurationsGetOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.Get
+// options - NetworkInterfaceTapConfigurationsGetOptions contains the optional parameters for the NetworkInterfaceTapConfigurationsClient.Get
 // method.
 func (client *NetworkInterfaceTapConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsGetOptions) (NetworkInterfaceTapConfigurationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
@@ -300,7 +300,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) getHandleError(resp *http
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfaceTapConfigurationsListOptions contains the optional parameters for the NetworkInterfaceTapConfigurations.List
+// options - NetworkInterfaceTapConfigurationsListOptions contains the optional parameters for the NetworkInterfaceTapConfigurationsClient.List
 // method.
 func (client *NetworkInterfaceTapConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceTapConfigurationsListOptions) *NetworkInterfaceTapConfigurationsListPager {
 	return &NetworkInterfaceTapConfigurationsListPager{

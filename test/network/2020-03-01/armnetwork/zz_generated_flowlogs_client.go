@@ -57,7 +57,8 @@ func NewFlowLogsClient(subscriptionID string, credential azcore.TokenCredential,
 // networkWatcherName - The name of the network watcher.
 // flowLogName - The name of the flow log.
 // parameters - Parameters that define the create or update flow log resource.
-// options - FlowLogsBeginCreateOrUpdateOptions contains the optional parameters for the FlowLogs.BeginCreateOrUpdate method.
+// options - FlowLogsBeginCreateOrUpdateOptions contains the optional parameters for the FlowLogsClient.BeginCreateOrUpdate
+// method.
 func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsBeginCreateOrUpdateOptions) (FlowLogsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkWatcherName, flowLogName, parameters, options)
 	if err != nil {
@@ -141,7 +142,7 @@ func (client *FlowLogsClient) createOrUpdateHandleError(resp *http.Response) err
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // flowLogName - The name of the flow log resource.
-// options - FlowLogsBeginDeleteOptions contains the optional parameters for the FlowLogs.BeginDelete method.
+// options - FlowLogsBeginDeleteOptions contains the optional parameters for the FlowLogsClient.BeginDelete method.
 func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsBeginDeleteOptions) (FlowLogsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
@@ -225,7 +226,7 @@ func (client *FlowLogsClient) deleteHandleError(resp *http.Response) error {
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // flowLogName - The name of the flow log resource.
-// options - FlowLogsGetOptions contains the optional parameters for the FlowLogs.Get method.
+// options - FlowLogsGetOptions contains the optional parameters for the FlowLogsClient.Get method.
 func (client *FlowLogsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsGetOptions) (FlowLogsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
@@ -297,7 +298,7 @@ func (client *FlowLogsClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *ErrorResponse error type.
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
-// options - FlowLogsListOptions contains the optional parameters for the FlowLogs.List method.
+// options - FlowLogsListOptions contains the optional parameters for the FlowLogsClient.List method.
 func (client *FlowLogsClient) List(resourceGroupName string, networkWatcherName string, options *FlowLogsListOptions) *FlowLogsListPager {
 	return &FlowLogsListPager{
 		client: client,

@@ -54,7 +54,8 @@ func NewVirtualMachineRunCommandsClient(subscriptionID string, credential azcore
 // If the operation fails it returns a generic error.
 // location - The location upon which run commands is queried.
 // commandID - The command id.
-// options - VirtualMachineRunCommandsGetOptions contains the optional parameters for the VirtualMachineRunCommands.Get method.
+// options - VirtualMachineRunCommandsGetOptions contains the optional parameters for the VirtualMachineRunCommandsClient.Get
+// method.
 func (client *VirtualMachineRunCommandsClient) Get(ctx context.Context, location string, commandID string, options *VirtualMachineRunCommandsGetOptions) (VirtualMachineRunCommandsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, commandID, options)
 	if err != nil {
@@ -120,7 +121,7 @@ func (client *VirtualMachineRunCommandsClient) getHandleError(resp *http.Respons
 // List - Lists all available run commands for a subscription in a location.
 // If the operation fails it returns a generic error.
 // location - The location upon which run commands is queried.
-// options - VirtualMachineRunCommandsListOptions contains the optional parameters for the VirtualMachineRunCommands.List
+// options - VirtualMachineRunCommandsListOptions contains the optional parameters for the VirtualMachineRunCommandsClient.List
 // method.
 func (client *VirtualMachineRunCommandsClient) List(location string, options *VirtualMachineRunCommandsListOptions) *VirtualMachineRunCommandsListPager {
 	return &VirtualMachineRunCommandsListPager{

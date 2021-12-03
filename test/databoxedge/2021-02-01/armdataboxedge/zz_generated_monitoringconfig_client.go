@@ -49,7 +49,7 @@ func NewMonitoringConfigClient(subscriptionID string, options *azcore.ClientOpti
 // roleName - The role name.
 // resourceGroupName - The resource group name.
 // monitoringMetricConfiguration - The metric configuration.
-// options - MonitoringConfigBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfig.BeginCreateOrUpdate
+// options - MonitoringConfigBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfigClient.BeginCreateOrUpdate
 // method.
 func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigBeginCreateOrUpdateOptions) (MonitoringConfigCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, roleName, resourceGroupName, monitoringMetricConfiguration, options)
@@ -134,7 +134,8 @@ func (client *MonitoringConfigClient) createOrUpdateHandleError(resp *http.Respo
 // deviceName - The device name.
 // roleName - The role name.
 // resourceGroupName - The resource group name.
-// options - MonitoringConfigBeginDeleteOptions contains the optional parameters for the MonitoringConfig.BeginDelete method.
+// options - MonitoringConfigBeginDeleteOptions contains the optional parameters for the MonitoringConfigClient.BeginDelete
+// method.
 func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigBeginDeleteOptions) (MonitoringConfigDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, roleName, resourceGroupName, options)
 	if err != nil {
@@ -218,7 +219,7 @@ func (client *MonitoringConfigClient) deleteHandleError(resp *http.Response) err
 // deviceName - The device name.
 // roleName - The role name.
 // resourceGroupName - The resource group name.
-// options - MonitoringConfigGetOptions contains the optional parameters for the MonitoringConfig.Get method.
+// options - MonitoringConfigGetOptions contains the optional parameters for the MonitoringConfigClient.Get method.
 func (client *MonitoringConfigClient) Get(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigGetOptions) (MonitoringConfigGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
 	if err != nil {
@@ -291,7 +292,7 @@ func (client *MonitoringConfigClient) getHandleError(resp *http.Response) error 
 // deviceName - The device name.
 // roleName - The role name.
 // resourceGroupName - The resource group name.
-// options - MonitoringConfigListOptions contains the optional parameters for the MonitoringConfig.List method.
+// options - MonitoringConfigListOptions contains the optional parameters for the MonitoringConfigClient.List method.
 func (client *MonitoringConfigClient) List(deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigListOptions) *MonitoringConfigListPager {
 	return &MonitoringConfigListPager{
 		client: client,

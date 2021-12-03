@@ -65,7 +65,7 @@ func NewUsageDetailsClient(credential azcore.TokenCredential, options *arm.Clien
 // billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/invoiceSections/{invoiceSectionId}'
 // for invoiceSection scope, and
 // 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
-// options - UsageDetailsListOptions contains the optional parameters for the UsageDetails.List method.
+// options - UsageDetailsListOptions contains the optional parameters for the UsageDetailsClient.List method.
 func (client *UsageDetailsClient) List(scope string, options *UsageDetailsListOptions) *UsageDetailsListPager {
 	return &UsageDetailsListPager{
 		client: client,

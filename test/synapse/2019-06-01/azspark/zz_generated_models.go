@@ -15,24 +15,24 @@ import (
 	"time"
 )
 
-// SparkBatchCancelSparkBatchJobOptions contains the optional parameters for the SparkBatch.CancelSparkBatchJob method.
+// SparkBatchCancelSparkBatchJobOptions contains the optional parameters for the sparkBatchClient.CancelSparkBatchJob method.
 type SparkBatchCancelSparkBatchJobOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SparkBatchCreateSparkBatchJobOptions contains the optional parameters for the SparkBatch.CreateSparkBatchJob method.
+// SparkBatchCreateSparkBatchJobOptions contains the optional parameters for the sparkBatchClient.CreateSparkBatchJob method.
 type SparkBatchCreateSparkBatchJobOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
 	Detailed *bool
 }
 
-// SparkBatchGetSparkBatchJobOptions contains the optional parameters for the SparkBatch.GetSparkBatchJob method.
+// SparkBatchGetSparkBatchJobOptions contains the optional parameters for the sparkBatchClient.GetSparkBatchJob method.
 type SparkBatchGetSparkBatchJobOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
 	Detailed *bool
 }
 
-// SparkBatchGetSparkBatchJobsOptions contains the optional parameters for the SparkBatch.GetSparkBatchJobs method.
+// SparkBatchGetSparkBatchJobsOptions contains the optional parameters for the sparkBatchClient.GetSparkBatchJobs method.
 type SparkBatchGetSparkBatchJobsOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
 	Detailed *bool
@@ -479,12 +479,13 @@ func (s SparkSession) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SparkSessionCancelSparkSessionOptions contains the optional parameters for the SparkSession.CancelSparkSession method.
+// SparkSessionCancelSparkSessionOptions contains the optional parameters for the sparkSessionClient.CancelSparkSession method.
 type SparkSessionCancelSparkSessionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SparkSessionCancelSparkStatementOptions contains the optional parameters for the SparkSession.CancelSparkStatement method.
+// SparkSessionCancelSparkStatementOptions contains the optional parameters for the sparkSessionClient.CancelSparkStatement
+// method.
 type SparkSessionCancelSparkStatementOptions struct {
 	// placeholder for future optional parameters
 }
@@ -507,24 +508,25 @@ func (s SparkSessionCollection) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SparkSessionCreateSparkSessionOptions contains the optional parameters for the SparkSession.CreateSparkSession method.
+// SparkSessionCreateSparkSessionOptions contains the optional parameters for the sparkSessionClient.CreateSparkSession method.
 type SparkSessionCreateSparkSessionOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
 	Detailed *bool
 }
 
-// SparkSessionCreateSparkStatementOptions contains the optional parameters for the SparkSession.CreateSparkStatement method.
+// SparkSessionCreateSparkStatementOptions contains the optional parameters for the sparkSessionClient.CreateSparkStatement
+// method.
 type SparkSessionCreateSparkStatementOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SparkSessionGetSparkSessionOptions contains the optional parameters for the SparkSession.GetSparkSession method.
+// SparkSessionGetSparkSessionOptions contains the optional parameters for the sparkSessionClient.GetSparkSession method.
 type SparkSessionGetSparkSessionOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
 	Detailed *bool
 }
 
-// SparkSessionGetSparkSessionsOptions contains the optional parameters for the SparkSession.GetSparkSessions method.
+// SparkSessionGetSparkSessionsOptions contains the optional parameters for the sparkSessionClient.GetSparkSessions method.
 type SparkSessionGetSparkSessionsOptions struct {
 	// Optional query param specifying whether detailed response is returned beyond plain livy.
 	Detailed *bool
@@ -534,12 +536,12 @@ type SparkSessionGetSparkSessionsOptions struct {
 	Size *int32
 }
 
-// SparkSessionGetSparkStatementOptions contains the optional parameters for the SparkSession.GetSparkStatement method.
+// SparkSessionGetSparkStatementOptions contains the optional parameters for the sparkSessionClient.GetSparkStatement method.
 type SparkSessionGetSparkStatementOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SparkSessionGetSparkStatementsOptions contains the optional parameters for the SparkSession.GetSparkStatements method.
+// SparkSessionGetSparkStatementsOptions contains the optional parameters for the sparkSessionClient.GetSparkStatements method.
 type SparkSessionGetSparkStatementsOptions struct {
 	// placeholder for future optional parameters
 }
@@ -590,7 +592,7 @@ func (s SparkSessionOptions) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the SparkSession.ResetSparkSessionTimeout
+// SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the sparkSessionClient.ResetSparkSessionTimeout
 // method.
 type SparkSessionResetSparkSessionTimeoutOptions struct {
 	// placeholder for future optional parameters

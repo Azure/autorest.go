@@ -56,7 +56,7 @@ func NewLoadBalancersClient(subscriptionID string, credential azcore.TokenCreden
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // parameters - Parameters supplied to the create or update load balancer operation.
-// options - LoadBalancersBeginCreateOrUpdateOptions contains the optional parameters for the LoadBalancers.BeginCreateOrUpdate
+// options - LoadBalancersBeginCreateOrUpdateOptions contains the optional parameters for the LoadBalancersClient.BeginCreateOrUpdate
 // method.
 func (client *LoadBalancersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters LoadBalancer, options *LoadBalancersBeginCreateOrUpdateOptions) (LoadBalancersCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, loadBalancerName, parameters, options)
@@ -136,7 +136,7 @@ func (client *LoadBalancersClient) createOrUpdateHandleError(resp *http.Response
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
-// options - LoadBalancersBeginDeleteOptions contains the optional parameters for the LoadBalancers.BeginDelete method.
+// options - LoadBalancersBeginDeleteOptions contains the optional parameters for the LoadBalancersClient.BeginDelete method.
 func (client *LoadBalancersClient) BeginDelete(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancersBeginDeleteOptions) (LoadBalancersDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, loadBalancerName, options)
 	if err != nil {
@@ -215,7 +215,7 @@ func (client *LoadBalancersClient) deleteHandleError(resp *http.Response) error 
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
-// options - LoadBalancersGetOptions contains the optional parameters for the LoadBalancers.Get method.
+// options - LoadBalancersGetOptions contains the optional parameters for the LoadBalancersClient.Get method.
 func (client *LoadBalancersClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancersGetOptions) (LoadBalancersGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
 	if err != nil {
@@ -285,7 +285,7 @@ func (client *LoadBalancersClient) getHandleError(resp *http.Response) error {
 // List - Gets all the load balancers in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - LoadBalancersListOptions contains the optional parameters for the LoadBalancers.List method.
+// options - LoadBalancersListOptions contains the optional parameters for the LoadBalancersClient.List method.
 func (client *LoadBalancersClient) List(resourceGroupName string, options *LoadBalancersListOptions) *LoadBalancersListPager {
 	return &LoadBalancersListPager{
 		client: client,
@@ -344,7 +344,7 @@ func (client *LoadBalancersClient) listHandleError(resp *http.Response) error {
 
 // ListAll - Gets all the load balancers in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - LoadBalancersListAllOptions contains the optional parameters for the LoadBalancers.ListAll method.
+// options - LoadBalancersListAllOptions contains the optional parameters for the LoadBalancersClient.ListAll method.
 func (client *LoadBalancersClient) ListAll(options *LoadBalancersListAllOptions) *LoadBalancersListAllPager {
 	return &LoadBalancersListAllPager{
 		client: client,
@@ -402,7 +402,7 @@ func (client *LoadBalancersClient) listAllHandleError(resp *http.Response) error
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // parameters - Parameters supplied to update load balancer tags.
-// options - LoadBalancersUpdateTagsOptions contains the optional parameters for the LoadBalancers.UpdateTags method.
+// options - LoadBalancersUpdateTagsOptions contains the optional parameters for the LoadBalancersClient.UpdateTags method.
 func (client *LoadBalancersClient) UpdateTags(ctx context.Context, resourceGroupName string, loadBalancerName string, parameters TagsObject, options *LoadBalancersUpdateTagsOptions) (LoadBalancersUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, loadBalancerName, parameters, options)
 	if err != nil {

@@ -21,7 +21,7 @@ func (e Error) Error() string {
 	return e.raw
 }
 
-// PathsGetEmptyOptions contains the optional parameters for the Paths.GetEmpty method.
+// PathsGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
 type PathsGetEmptyOptions struct {
 	// placeholder for future optional parameters
 }

@@ -46,7 +46,7 @@ func newBlobClient(endpoint string, version Enum2, pathRenameMode *PathRenameMod
 // blob with zero length and full metadata.
 // If the operation fails it returns the *StorageError error type.
 // copyID - The copy identifier provided in the x-ms-copy-id header of the original Copy Blob operation.
-// BlobAbortCopyFromURLOptions - BlobAbortCopyFromURLOptions contains the optional parameters for the Blob.AbortCopyFromURL
+// BlobAbortCopyFromURLOptions - BlobAbortCopyFromURLOptions contains the optional parameters for the blobClient.AbortCopyFromURL
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 func (client *blobClient) AbortCopyFromURL(ctx context.Context, comp Enum30, copyActionAbortConstant Enum31, copyID string, blobAbortCopyFromURLOptions *BlobAbortCopyFromURLOptions, leaseAccessConditions *LeaseAccessConditions) (BlobAbortCopyFromURLResponse, error) {
@@ -126,7 +126,7 @@ func (client *blobClient) abortCopyFromURLHandleError(resp *http.Response) error
 
 // AcquireLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 // If the operation fails it returns the *StorageError error type.
-// BlobAcquireLeaseOptions - BlobAcquireLeaseOptions contains the optional parameters for the Blob.AcquireLease method.
+// BlobAcquireLeaseOptions - BlobAcquireLeaseOptions contains the optional parameters for the blobClient.AcquireLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 func (client *blobClient) AcquireLease(ctx context.Context, comp Enum16, blobAcquireLeaseOptions *BlobAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobAcquireLeaseResponse, error) {
 	req, err := client.acquireLeaseCreateRequest(ctx, comp, blobAcquireLeaseOptions, modifiedAccessConditions)
@@ -235,7 +235,7 @@ func (client *blobClient) acquireLeaseHandleError(resp *http.Response) error {
 
 // BreakLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 // If the operation fails it returns the *StorageError error type.
-// BlobBreakLeaseOptions - BlobBreakLeaseOptions contains the optional parameters for the Blob.BreakLease method.
+// BlobBreakLeaseOptions - BlobBreakLeaseOptions contains the optional parameters for the blobClient.BreakLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 func (client *blobClient) BreakLease(ctx context.Context, comp Enum16, blobBreakLeaseOptions *BlobBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobBreakLeaseResponse, error) {
 	req, err := client.breakLeaseCreateRequest(ctx, comp, blobBreakLeaseOptions, modifiedAccessConditions)
@@ -350,7 +350,7 @@ func (client *blobClient) breakLeaseHandleError(resp *http.Response) error {
 // proposedLeaseID - Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed
 // lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID
 // string formats.
-// BlobChangeLeaseOptions - BlobChangeLeaseOptions contains the optional parameters for the Blob.ChangeLease method.
+// BlobChangeLeaseOptions - BlobChangeLeaseOptions contains the optional parameters for the blobClient.ChangeLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 func (client *blobClient) ChangeLease(ctx context.Context, comp Enum16, leaseID string, proposedLeaseID string, blobChangeLeaseOptions *BlobChangeLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobChangeLeaseResponse, error) {
 	req, err := client.changeLeaseCreateRequest(ctx, comp, leaseID, proposedLeaseID, blobChangeLeaseOptions, modifiedAccessConditions)
@@ -459,7 +459,7 @@ func (client *blobClient) changeLeaseHandleError(resp *http.Response) error {
 // copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 // a page blob snapshot. The value should be URL-encoded as it would appear in a request
 // URI. The source blob must either be public or must be authenticated via a shared access signature.
-// BlobCopyFromURLOptions - BlobCopyFromURLOptions contains the optional parameters for the Blob.CopyFromURL method.
+// BlobCopyFromURLOptions - BlobCopyFromURLOptions contains the optional parameters for the blobClient.CopyFromURL method.
 // SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Directory.Rename
 // method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
@@ -623,7 +623,8 @@ func (client *blobClient) copyFromURLHandleError(resp *http.Response) error {
 
 // CreateSnapshot - The Create Snapshot operation creates a read-only snapshot of a blob
 // If the operation fails it returns the *StorageError error type.
-// BlobCreateSnapshotOptions - BlobCreateSnapshotOptions contains the optional parameters for the Blob.CreateSnapshot method.
+// BlobCreateSnapshotOptions - BlobCreateSnapshotOptions contains the optional parameters for the blobClient.CreateSnapshot
+// method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
@@ -768,7 +769,7 @@ func (client *blobClient) createSnapshotHandleError(resp *http.Response) error {
 // All other operations on a soft-deleted blob or snapshot causes the service to
 // return an HTTP status code of 404 (ResourceNotFound).
 // If the operation fails it returns the *StorageError error type.
-// BlobDeleteOptions - BlobDeleteOptions contains the optional parameters for the Blob.Delete method.
+// BlobDeleteOptions - BlobDeleteOptions contains the optional parameters for the blobClient.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 func (client *blobClient) Delete(ctx context.Context, blobDeleteOptions *BlobDeleteOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlobDeleteResponse, error) {
@@ -872,7 +873,8 @@ func (client *blobClient) deleteHandleError(resp *http.Response) error {
 
 // DeleteImmutabilityPolicy - The Delete Immutability Policy operation deletes the immutability policy on the blob
 // If the operation fails it returns the *StorageError error type.
-// options - BlobDeleteImmutabilityPolicyOptions contains the optional parameters for the Blob.DeleteImmutabilityPolicy method.
+// options - BlobDeleteImmutabilityPolicyOptions contains the optional parameters for the blobClient.DeleteImmutabilityPolicy
+// method.
 func (client *blobClient) DeleteImmutabilityPolicy(ctx context.Context, comp Enum26, options *BlobDeleteImmutabilityPolicyOptions) (BlobDeleteImmutabilityPolicyResponse, error) {
 	req, err := client.deleteImmutabilityPolicyCreateRequest(ctx, comp, options)
 	if err != nil {
@@ -946,7 +948,7 @@ func (client *blobClient) deleteImmutabilityPolicyHandleError(resp *http.Respons
 // Download - The Download operation reads or downloads a blob from the system, including its metadata and properties. You
 // can also call Download to read a snapshot.
 // If the operation fails it returns the *StorageError error type.
-// BlobDownloadOptions - BlobDownloadOptions contains the optional parameters for the Blob.Download method.
+// BlobDownloadOptions - BlobDownloadOptions contains the optional parameters for the blobClient.Download method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
@@ -1252,7 +1254,7 @@ func (client *blobClient) downloadHandleError(resp *http.Response) error {
 
 // GetAccessControl - Get the owner, group, permissions, or access control list for a blob.
 // If the operation fails it returns the *DataLakeStorageError error type.
-// BlobGetAccessControlOptions - BlobGetAccessControlOptions contains the optional parameters for the Blob.GetAccessControl
+// BlobGetAccessControlOptions - BlobGetAccessControlOptions contains the optional parameters for the blobClient.GetAccessControl
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
@@ -1365,7 +1367,7 @@ func (client *blobClient) getAccessControlHandleError(resp *http.Response) error
 
 // GetAccountInfo - Returns the sku name and account kind
 // If the operation fails it returns the *StorageError error type.
-// options - BlobGetAccountInfoOptions contains the optional parameters for the Blob.GetAccountInfo method.
+// options - BlobGetAccountInfoOptions contains the optional parameters for the blobClient.GetAccountInfo method.
 func (client *blobClient) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *BlobGetAccountInfoOptions) (BlobGetAccountInfoResponse, error) {
 	req, err := client.getAccountInfoCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -1440,7 +1442,7 @@ func (client *blobClient) getAccountInfoHandleError(resp *http.Response) error {
 // GetProperties - The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties
 // for the blob. It does not return the content of the blob.
 // If the operation fails it returns the *StorageError error type.
-// BlobGetPropertiesOptions - BlobGetPropertiesOptions contains the optional parameters for the Blob.GetProperties method.
+// BlobGetPropertiesOptions - BlobGetPropertiesOptions contains the optional parameters for the blobClient.GetProperties method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
@@ -1766,7 +1768,7 @@ func (client *blobClient) getPropertiesHandleError(resp *http.Response) error {
 
 // GetTags - The Get Tags operation enables users to get the tags associated with a blob.
 // If the operation fails it returns the *StorageError error type.
-// BlobGetTagsOptions - BlobGetTagsOptions contains the optional parameters for the Blob.GetTags method.
+// BlobGetTagsOptions - BlobGetTagsOptions contains the optional parameters for the blobClient.GetTags method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 func (client *blobClient) GetTags(ctx context.Context, comp Enum42, blobGetTagsOptions *BlobGetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (BlobGetTagsResponse, error) {
@@ -1856,7 +1858,7 @@ func (client *blobClient) getTagsHandleError(resp *http.Response) error {
 
 // Query - The Query operation enables users to select/project on blob data by providing simple query expressions.
 // If the operation fails it returns the *StorageError error type.
-// BlobQueryOptions - BlobQueryOptions contains the optional parameters for the Blob.Query method.
+// BlobQueryOptions - BlobQueryOptions contains the optional parameters for the blobClient.Query method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
@@ -2096,7 +2098,7 @@ func (client *blobClient) queryHandleError(resp *http.Response) error {
 // ReleaseLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 // If the operation fails it returns the *StorageError error type.
 // leaseID - Specifies the current lease ID on the resource.
-// BlobReleaseLeaseOptions - BlobReleaseLeaseOptions contains the optional parameters for the Blob.ReleaseLease method.
+// BlobReleaseLeaseOptions - BlobReleaseLeaseOptions contains the optional parameters for the blobClient.ReleaseLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 func (client *blobClient) ReleaseLease(ctx context.Context, comp Enum16, leaseID string, blobReleaseLeaseOptions *BlobReleaseLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobReleaseLeaseResponse, error) {
 	req, err := client.releaseLeaseCreateRequest(ctx, comp, leaseID, blobReleaseLeaseOptions, modifiedAccessConditions)
@@ -2204,7 +2206,7 @@ func (client *blobClient) releaseLeaseHandleError(resp *http.Response) error {
 // renameSource - The file or directory to be renamed. The value must have the following format: "/{filesysystem}/{path}".
 // If "x-ms-properties" is specified, the properties will overwrite the existing properties;
 // otherwise, the existing properties will be preserved.
-// BlobRenameOptions - BlobRenameOptions contains the optional parameters for the Blob.Rename method.
+// BlobRenameOptions - BlobRenameOptions contains the optional parameters for the blobClient.Rename method.
 // DirectoryHTTPHeaders - DirectoryHTTPHeaders contains a group of parameters for the Directory.Create method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
@@ -2357,7 +2359,7 @@ func (client *blobClient) renameHandleError(resp *http.Response) error {
 // RenewLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
 // If the operation fails it returns the *StorageError error type.
 // leaseID - Specifies the current lease ID on the resource.
-// BlobRenewLeaseOptions - BlobRenewLeaseOptions contains the optional parameters for the Blob.RenewLease method.
+// BlobRenewLeaseOptions - BlobRenewLeaseOptions contains the optional parameters for the blobClient.RenewLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 func (client *blobClient) RenewLease(ctx context.Context, comp Enum16, leaseID string, blobRenewLeaseOptions *BlobRenewLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobRenewLeaseResponse, error) {
 	req, err := client.renewLeaseCreateRequest(ctx, comp, leaseID, blobRenewLeaseOptions, modifiedAccessConditions)
@@ -2461,7 +2463,7 @@ func (client *blobClient) renewLeaseHandleError(resp *http.Response) error {
 
 // SetAccessControl - Set the owner, group, permissions, or access control list for a blob.
 // If the operation fails it returns the *DataLakeStorageError error type.
-// BlobSetAccessControlOptions - BlobSetAccessControlOptions contains the optional parameters for the Blob.SetAccessControl
+// BlobSetAccessControlOptions - BlobSetAccessControlOptions contains the optional parameters for the blobClient.SetAccessControl
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
@@ -2572,7 +2574,7 @@ func (client *blobClient) setAccessControlHandleError(resp *http.Response) error
 // SetExpiry - Sets the time a blob will expire and be deleted.
 // If the operation fails it returns the *StorageError error type.
 // expiryOptions - Required. Indicates mode of the expiry time
-// options - BlobSetExpiryOptions contains the optional parameters for the Blob.SetExpiry method.
+// options - BlobSetExpiryOptions contains the optional parameters for the blobClient.SetExpiry method.
 func (client *blobClient) SetExpiry(ctx context.Context, comp Enum24, expiryOptions BlobExpiryOptions, options *BlobSetExpiryOptions) (BlobSetExpiryResponse, error) {
 	req, err := client.setExpiryCreateRequest(ctx, comp, expiryOptions, options)
 	if err != nil {
@@ -2659,7 +2661,8 @@ func (client *blobClient) setExpiryHandleError(resp *http.Response) error {
 
 // SetHTTPHeaders - The Set HTTP Headers operation sets system properties on the blob
 // If the operation fails it returns the *StorageError error type.
-// BlobSetHTTPHeadersOptions - BlobSetHTTPHeadersOptions contains the optional parameters for the Blob.SetHTTPHeaders method.
+// BlobSetHTTPHeadersOptions - BlobSetHTTPHeadersOptions contains the optional parameters for the blobClient.SetHTTPHeaders
+// method.
 // BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the Blob.SetHTTPHeaders method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
@@ -2788,7 +2791,7 @@ func (client *blobClient) setHTTPHeadersHandleError(resp *http.Response) error {
 
 // SetImmutabilityPolicy - The Set Immutability Policy operation sets the immutability policy on the blob
 // If the operation fails it returns the *StorageError error type.
-// BlobSetImmutabilityPolicyOptions - BlobSetImmutabilityPolicyOptions contains the optional parameters for the Blob.SetImmutabilityPolicy
+// BlobSetImmutabilityPolicyOptions - BlobSetImmutabilityPolicyOptions contains the optional parameters for the blobClient.SetImmutabilityPolicy
 // method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 func (client *blobClient) SetImmutabilityPolicy(ctx context.Context, comp Enum26, blobSetImmutabilityPolicyOptions *BlobSetImmutabilityPolicyOptions, modifiedAccessConditions *ModifiedAccessConditions) (BlobSetImmutabilityPolicyResponse, error) {
@@ -2883,7 +2886,7 @@ func (client *blobClient) setImmutabilityPolicyHandleError(resp *http.Response) 
 // SetLegalHold - The Set Legal Hold operation sets a legal hold on the blob.
 // If the operation fails it returns the *StorageError error type.
 // legalHold - Specified if a legal hold should be set on the blob.
-// options - BlobSetLegalHoldOptions contains the optional parameters for the Blob.SetLegalHold method.
+// options - BlobSetLegalHoldOptions contains the optional parameters for the blobClient.SetLegalHold method.
 func (client *blobClient) SetLegalHold(ctx context.Context, comp Enum27, legalHold bool, options *BlobSetLegalHoldOptions) (BlobSetLegalHoldResponse, error) {
 	req, err := client.setLegalHoldCreateRequest(ctx, comp, legalHold, options)
 	if err != nil {
@@ -2965,7 +2968,7 @@ func (client *blobClient) setLegalHoldHandleError(resp *http.Response) error {
 // SetMetadata - The Set Blob Metadata operation sets user-defined metadata for the specified blob as one or more name-value
 // pairs
 // If the operation fails it returns the *StorageError error type.
-// BlobSetMetadataOptions - BlobSetMetadataOptions contains the optional parameters for the Blob.SetMetadata method.
+// BlobSetMetadataOptions - BlobSetMetadataOptions contains the optional parameters for the blobClient.SetMetadata method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
@@ -3103,7 +3106,7 @@ func (client *blobClient) setMetadataHandleError(resp *http.Response) error {
 
 // SetTags - The Set Tags operation enables users to set tags on a blob.
 // If the operation fails it returns the *StorageError error type.
-// BlobSetTagsOptions - BlobSetTagsOptions contains the optional parameters for the Blob.SetTags method.
+// BlobSetTagsOptions - BlobSetTagsOptions contains the optional parameters for the blobClient.SetTags method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 func (client *blobClient) SetTags(ctx context.Context, comp Enum42, blobSetTagsOptions *BlobSetTagsOptions, modifiedAccessConditions *ModifiedAccessConditions, leaseAccessConditions *LeaseAccessConditions) (BlobSetTagsResponse, error) {
@@ -3200,7 +3203,7 @@ func (client *blobClient) setTagsHandleError(resp *http.Response) error {
 // storage type. This operation does not update the blob's ETag.
 // If the operation fails it returns the *StorageError error type.
 // tier - Indicates the tier to be set on the blob.
-// BlobSetTierOptions - BlobSetTierOptions contains the optional parameters for the Blob.SetTier method.
+// BlobSetTierOptions - BlobSetTierOptions contains the optional parameters for the blobClient.SetTier method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 func (client *blobClient) SetTier(ctx context.Context, comp Enum32, tier AccessTier, blobSetTierOptions *BlobSetTierOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlobSetTierResponse, error) {
@@ -3287,7 +3290,7 @@ func (client *blobClient) setTierHandleError(resp *http.Response) error {
 // copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 // a page blob snapshot. The value should be URL-encoded as it would appear in a request
 // URI. The source blob must either be public or must be authenticated via a shared access signature.
-// BlobStartCopyFromURLOptions - BlobStartCopyFromURLOptions contains the optional parameters for the Blob.StartCopyFromURL
+// BlobStartCopyFromURLOptions - BlobStartCopyFromURLOptions contains the optional parameters for the blobClient.StartCopyFromURL
 // method.
 // SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Directory.Rename
 // method.
@@ -3443,7 +3446,7 @@ func (client *blobClient) startCopyFromURLHandleError(resp *http.Response) error
 
 // Undelete - Undelete a blob that was previously soft deleted
 // If the operation fails it returns the *StorageError error type.
-// options - BlobUndeleteOptions contains the optional parameters for the Blob.Undelete method.
+// options - BlobUndeleteOptions contains the optional parameters for the blobClient.Undelete method.
 func (client *blobClient) Undelete(ctx context.Context, comp Enum14, options *BlobUndeleteOptions) (BlobUndeleteResponse, error) {
 	req, err := client.undeleteCreateRequest(ctx, comp, options)
 	if err != nil {

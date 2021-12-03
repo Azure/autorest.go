@@ -38,7 +38,7 @@ func newIntegrationRuntimesClient(endpoint string, pl runtime.Pipeline) *integra
 // Get - Get Integration Runtime
 // If the operation fails it returns the *ErrorContract error type.
 // integrationRuntimeName - The Integration Runtime name
-// options - IntegrationRuntimesGetOptions contains the optional parameters for the IntegrationRuntimes.Get method.
+// options - IntegrationRuntimesGetOptions contains the optional parameters for the integrationRuntimesClient.Get method.
 func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *IntegrationRuntimesGetOptions) (IntegrationRuntimesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, integrationRuntimeName, options)
 	if err != nil {
@@ -96,7 +96,7 @@ func (client *integrationRuntimesClient) getHandleError(resp *http.Response) err
 
 // List - List Integration Runtimes
 // If the operation fails it returns the *ErrorContract error type.
-// options - IntegrationRuntimesListOptions contains the optional parameters for the IntegrationRuntimes.List method.
+// options - IntegrationRuntimesListOptions contains the optional parameters for the integrationRuntimesClient.List method.
 func (client *integrationRuntimesClient) List(ctx context.Context, options *IntegrationRuntimesListOptions) (IntegrationRuntimesListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {

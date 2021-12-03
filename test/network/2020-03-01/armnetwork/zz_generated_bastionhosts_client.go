@@ -56,7 +56,7 @@ func NewBastionHostsClient(subscriptionID string, credential azcore.TokenCredent
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
 // parameters - Parameters supplied to the create or update Bastion Host operation.
-// options - BastionHostsBeginCreateOrUpdateOptions contains the optional parameters for the BastionHosts.BeginCreateOrUpdate
+// options - BastionHostsBeginCreateOrUpdateOptions contains the optional parameters for the BastionHostsClient.BeginCreateOrUpdate
 // method.
 func (client *BastionHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, bastionHostName string, parameters BastionHost, options *BastionHostsBeginCreateOrUpdateOptions) (BastionHostsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, bastionHostName, parameters, options)
@@ -136,7 +136,7 @@ func (client *BastionHostsClient) createOrUpdateHandleError(resp *http.Response)
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
-// options - BastionHostsBeginDeleteOptions contains the optional parameters for the BastionHosts.BeginDelete method.
+// options - BastionHostsBeginDeleteOptions contains the optional parameters for the BastionHostsClient.BeginDelete method.
 func (client *BastionHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsBeginDeleteOptions) (BastionHostsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
@@ -215,7 +215,7 @@ func (client *BastionHostsClient) deleteHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
-// options - BastionHostsGetOptions contains the optional parameters for the BastionHosts.Get method.
+// options - BastionHostsGetOptions contains the optional parameters for the BastionHostsClient.Get method.
 func (client *BastionHostsClient) Get(ctx context.Context, resourceGroupName string, bastionHostName string, options *BastionHostsGetOptions) (BastionHostsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
@@ -281,7 +281,7 @@ func (client *BastionHostsClient) getHandleError(resp *http.Response) error {
 
 // List - Lists all Bastion Hosts in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - BastionHostsListOptions contains the optional parameters for the BastionHosts.List method.
+// options - BastionHostsListOptions contains the optional parameters for the BastionHostsClient.List method.
 func (client *BastionHostsClient) List(options *BastionHostsListOptions) *BastionHostsListPager {
 	return &BastionHostsListPager{
 		client: client,
@@ -337,7 +337,7 @@ func (client *BastionHostsClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Lists all Bastion Hosts in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - BastionHostsListByResourceGroupOptions contains the optional parameters for the BastionHosts.ListByResourceGroup
+// options - BastionHostsListByResourceGroupOptions contains the optional parameters for the BastionHostsClient.ListByResourceGroup
 // method.
 func (client *BastionHostsClient) ListByResourceGroup(resourceGroupName string, options *BastionHostsListByResourceGroupOptions) *BastionHostsListByResourceGroupPager {
 	return &BastionHostsListByResourceGroupPager{

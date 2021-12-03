@@ -167,7 +167,7 @@ type RetentionPolicy struct {
 	Days *int32 `xml:"Days"`
 }
 
-// ServiceGetPropertiesOptions contains the optional parameters for the Service.GetProperties method.
+// ServiceGetPropertiesOptions contains the optional parameters for the ServiceClient.GetProperties method.
 type ServiceGetPropertiesOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
@@ -176,7 +176,7 @@ type ServiceGetPropertiesOptions struct {
 	Timeout *int32
 }
 
-// ServiceGetStatisticsOptions contains the optional parameters for the Service.GetStatistics method.
+// ServiceGetStatisticsOptions contains the optional parameters for the ServiceClient.GetStatistics method.
 type ServiceGetStatisticsOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
@@ -185,7 +185,7 @@ type ServiceGetStatisticsOptions struct {
 	Timeout *int32
 }
 
-// ServiceSetPropertiesOptions contains the optional parameters for the Service.SetProperties method.
+// ServiceSetPropertiesOptions contains the optional parameters for the ServiceClient.SetProperties method.
 type ServiceSetPropertiesOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
@@ -203,7 +203,7 @@ type SignedIdentifier struct {
 	ID *string `xml:"Id"`
 }
 
-// TableCreateOptions contains the optional parameters for the Table.Create method.
+// TableCreateOptions contains the optional parameters for the TableClient.Create method.
 type TableCreateOptions struct {
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat
@@ -215,7 +215,7 @@ type TableCreateOptions struct {
 	ResponsePreference *ResponseFormat
 }
 
-// TableDeleteEntityOptions contains the optional parameters for the Table.DeleteEntity method.
+// TableDeleteEntityOptions contains the optional parameters for the TableClient.DeleteEntity method.
 type TableDeleteEntityOptions struct {
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat
@@ -226,7 +226,7 @@ type TableDeleteEntityOptions struct {
 	Timeout *int32
 }
 
-// TableDeleteOptions contains the optional parameters for the Table.Delete method.
+// TableDeleteOptions contains the optional parameters for the TableClient.Delete method.
 type TableDeleteOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
@@ -250,7 +250,7 @@ func (t TableEntityQueryResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// TableGetAccessPolicyOptions contains the optional parameters for the Table.GetAccessPolicy method.
+// TableGetAccessPolicyOptions contains the optional parameters for the TableClient.GetAccessPolicy method.
 type TableGetAccessPolicyOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
@@ -259,7 +259,7 @@ type TableGetAccessPolicyOptions struct {
 	Timeout *int32
 }
 
-// TableInsertEntityOptions contains the optional parameters for the Table.InsertEntity method.
+// TableInsertEntityOptions contains the optional parameters for the TableClient.InsertEntity method.
 type TableInsertEntityOptions struct {
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat
@@ -275,7 +275,7 @@ type TableInsertEntityOptions struct {
 	Timeout *int32
 }
 
-// TableMergeEntityOptions contains the optional parameters for the Table.MergeEntity method.
+// TableMergeEntityOptions contains the optional parameters for the TableClient.MergeEntity method.
 type TableMergeEntityOptions struct {
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat
@@ -299,7 +299,7 @@ type TableProperties struct {
 	TableName *string `json:"TableName,omitempty"`
 }
 
-// TableQueryEntitiesOptions contains the optional parameters for the Table.QueryEntities method.
+// TableQueryEntitiesOptions contains the optional parameters for the TableClient.QueryEntities method.
 type TableQueryEntitiesOptions struct {
 	// OData filter expression.
 	Filter *string
@@ -321,7 +321,7 @@ type TableQueryEntitiesOptions struct {
 	Top *int32
 }
 
-// TableQueryEntityWithPartitionAndRowKeyOptions contains the optional parameters for the Table.QueryEntityWithPartitionAndRowKey
+// TableQueryEntityWithPartitionAndRowKeyOptions contains the optional parameters for the TableClient.QueryEntityWithPartitionAndRowKey
 // method.
 type TableQueryEntityWithPartitionAndRowKeyOptions struct {
 	// OData filter expression.
@@ -338,7 +338,7 @@ type TableQueryEntityWithPartitionAndRowKeyOptions struct {
 	Timeout *int32
 }
 
-// TableQueryOptions contains the optional parameters for the Table.Query method.
+// TableQueryOptions contains the optional parameters for the TableClient.Query method.
 type TableQueryOptions struct {
 	// OData filter expression.
 	Filter *string
@@ -446,7 +446,7 @@ type TableServiceStats struct {
 	GeoReplication *GeoReplication `xml:"GeoReplication"`
 }
 
-// TableSetAccessPolicyOptions contains the optional parameters for the Table.SetAccessPolicy method.
+// TableSetAccessPolicyOptions contains the optional parameters for the TableClient.SetAccessPolicy method.
 type TableSetAccessPolicyOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
@@ -457,7 +457,7 @@ type TableSetAccessPolicyOptions struct {
 	Timeout *int32
 }
 
-// TableUpdateEntityOptions contains the optional parameters for the Table.UpdateEntity method.
+// TableUpdateEntityOptions contains the optional parameters for the TableClient.UpdateEntity method.
 type TableUpdateEntityOptions struct {
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat

@@ -54,7 +54,7 @@ func NewAvailableEndpointServicesClient(subscriptionID string, credential azcore
 // List - List what values of endpoint services are available for use.
 // If the operation fails it returns the *CloudError error type.
 // location - The location to check available endpoint services.
-// options - AvailableEndpointServicesListOptions contains the optional parameters for the AvailableEndpointServices.List
+// options - AvailableEndpointServicesListOptions contains the optional parameters for the AvailableEndpointServicesClient.List
 // method.
 func (client *AvailableEndpointServicesClient) List(location string, options *AvailableEndpointServicesListOptions) *AvailableEndpointServicesListPager {
 	return &AvailableEndpointServicesListPager{

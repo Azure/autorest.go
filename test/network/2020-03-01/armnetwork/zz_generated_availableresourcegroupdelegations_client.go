@@ -55,7 +55,7 @@ func NewAvailableResourceGroupDelegationsClient(subscriptionID string, credentia
 // If the operation fails it returns the *CloudError error type.
 // location - The location of the domain name.
 // resourceGroupName - The name of the resource group.
-// options - AvailableResourceGroupDelegationsListOptions contains the optional parameters for the AvailableResourceGroupDelegations.List
+// options - AvailableResourceGroupDelegationsListOptions contains the optional parameters for the AvailableResourceGroupDelegationsClient.List
 // method.
 func (client *AvailableResourceGroupDelegationsClient) List(location string, resourceGroupName string, options *AvailableResourceGroupDelegationsListOptions) *AvailableResourceGroupDelegationsListPager {
 	return &AvailableResourceGroupDelegationsListPager{

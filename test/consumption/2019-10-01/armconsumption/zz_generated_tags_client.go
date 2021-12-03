@@ -54,7 +54,7 @@ func NewTagsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 // '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount
 // scope and
 // '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope..
-// options - TagsGetOptions contains the optional parameters for the Tags.Get method.
+// options - TagsGetOptions contains the optional parameters for the TagsClient.Get method.
 func (client *TagsClient) Get(ctx context.Context, scope string, options *TagsGetOptions) (TagsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, scope, options)
 	if err != nil {

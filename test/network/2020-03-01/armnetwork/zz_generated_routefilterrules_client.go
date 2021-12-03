@@ -57,7 +57,7 @@ func NewRouteFilterRulesClient(subscriptionID string, credential azcore.TokenCre
 // routeFilterName - The name of the route filter.
 // ruleName - The name of the route filter rule.
 // routeFilterRuleParameters - Parameters supplied to the create or update route filter rule operation.
-// options - RouteFilterRulesBeginCreateOrUpdateOptions contains the optional parameters for the RouteFilterRules.BeginCreateOrUpdate
+// options - RouteFilterRulesBeginCreateOrUpdateOptions contains the optional parameters for the RouteFilterRulesClient.BeginCreateOrUpdate
 // method.
 func (client *RouteFilterRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, routeFilterRuleParameters RouteFilterRule, options *RouteFilterRulesBeginCreateOrUpdateOptions) (RouteFilterRulesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeFilterName, ruleName, routeFilterRuleParameters, options)
@@ -142,7 +142,8 @@ func (client *RouteFilterRulesClient) createOrUpdateHandleError(resp *http.Respo
 // resourceGroupName - The name of the resource group.
 // routeFilterName - The name of the route filter.
 // ruleName - The name of the rule.
-// options - RouteFilterRulesBeginDeleteOptions contains the optional parameters for the RouteFilterRules.BeginDelete method.
+// options - RouteFilterRulesBeginDeleteOptions contains the optional parameters for the RouteFilterRulesClient.BeginDelete
+// method.
 func (client *RouteFilterRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, options *RouteFilterRulesBeginDeleteOptions) (RouteFilterRulesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, routeFilterName, ruleName, options)
 	if err != nil {
@@ -226,7 +227,7 @@ func (client *RouteFilterRulesClient) deleteHandleError(resp *http.Response) err
 // resourceGroupName - The name of the resource group.
 // routeFilterName - The name of the route filter.
 // ruleName - The name of the rule.
-// options - RouteFilterRulesGetOptions contains the optional parameters for the RouteFilterRules.Get method.
+// options - RouteFilterRulesGetOptions contains the optional parameters for the RouteFilterRulesClient.Get method.
 func (client *RouteFilterRulesClient) Get(ctx context.Context, resourceGroupName string, routeFilterName string, ruleName string, options *RouteFilterRulesGetOptions) (RouteFilterRulesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, routeFilterName, ruleName, options)
 	if err != nil {
@@ -298,7 +299,7 @@ func (client *RouteFilterRulesClient) getHandleError(resp *http.Response) error 
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // routeFilterName - The name of the route filter.
-// options - RouteFilterRulesListByRouteFilterOptions contains the optional parameters for the RouteFilterRules.ListByRouteFilter
+// options - RouteFilterRulesListByRouteFilterOptions contains the optional parameters for the RouteFilterRulesClient.ListByRouteFilter
 // method.
 func (client *RouteFilterRulesClient) ListByRouteFilter(resourceGroupName string, routeFilterName string, options *RouteFilterRulesListByRouteFilterOptions) *RouteFilterRulesListByRouteFilterPager {
 	return &RouteFilterRulesListByRouteFilterPager{

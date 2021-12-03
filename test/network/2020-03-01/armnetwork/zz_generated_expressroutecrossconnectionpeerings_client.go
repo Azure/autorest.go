@@ -57,7 +57,7 @@ func NewExpressRouteCrossConnectionPeeringsClient(subscriptionID string, credent
 // crossConnectionName - The name of the ExpressRouteCrossConnection.
 // peeringName - The name of the peering.
 // peeringParameters - Parameters supplied to the create or update ExpressRouteCrossConnection peering operation.
-// options - ExpressRouteCrossConnectionPeeringsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCrossConnectionPeerings.BeginCreateOrUpdate
+// options - ExpressRouteCrossConnectionPeeringsBeginCreateOrUpdateOptions contains the optional parameters for the ExpressRouteCrossConnectionPeeringsClient.BeginCreateOrUpdate
 // method.
 func (client *ExpressRouteCrossConnectionPeeringsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, peeringParameters ExpressRouteCrossConnectionPeering, options *ExpressRouteCrossConnectionPeeringsBeginCreateOrUpdateOptions) (ExpressRouteCrossConnectionPeeringsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, crossConnectionName, peeringName, peeringParameters, options)
@@ -142,7 +142,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) createOrUpdateHandleErr
 // resourceGroupName - The name of the resource group.
 // crossConnectionName - The name of the ExpressRouteCrossConnection.
 // peeringName - The name of the peering.
-// options - ExpressRouteCrossConnectionPeeringsBeginDeleteOptions contains the optional parameters for the ExpressRouteCrossConnectionPeerings.BeginDelete
+// options - ExpressRouteCrossConnectionPeeringsBeginDeleteOptions contains the optional parameters for the ExpressRouteCrossConnectionPeeringsClient.BeginDelete
 // method.
 func (client *ExpressRouteCrossConnectionPeeringsClient) BeginDelete(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsBeginDeleteOptions) (ExpressRouteCrossConnectionPeeringsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, crossConnectionName, peeringName, options)
@@ -227,7 +227,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) deleteHandleError(resp 
 // resourceGroupName - The name of the resource group.
 // crossConnectionName - The name of the ExpressRouteCrossConnection.
 // peeringName - The name of the peering.
-// options - ExpressRouteCrossConnectionPeeringsGetOptions contains the optional parameters for the ExpressRouteCrossConnectionPeerings.Get
+// options - ExpressRouteCrossConnectionPeeringsGetOptions contains the optional parameters for the ExpressRouteCrossConnectionPeeringsClient.Get
 // method.
 func (client *ExpressRouteCrossConnectionPeeringsClient) Get(ctx context.Context, resourceGroupName string, crossConnectionName string, peeringName string, options *ExpressRouteCrossConnectionPeeringsGetOptions) (ExpressRouteCrossConnectionPeeringsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, crossConnectionName, peeringName, options)
@@ -300,7 +300,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) getHandleError(resp *ht
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // crossConnectionName - The name of the ExpressRouteCrossConnection.
-// options - ExpressRouteCrossConnectionPeeringsListOptions contains the optional parameters for the ExpressRouteCrossConnectionPeerings.List
+// options - ExpressRouteCrossConnectionPeeringsListOptions contains the optional parameters for the ExpressRouteCrossConnectionPeeringsClient.List
 // method.
 func (client *ExpressRouteCrossConnectionPeeringsClient) List(resourceGroupName string, crossConnectionName string, options *ExpressRouteCrossConnectionPeeringsListOptions) *ExpressRouteCrossConnectionPeeringsListPager {
 	return &ExpressRouteCrossConnectionPeeringsListPager{

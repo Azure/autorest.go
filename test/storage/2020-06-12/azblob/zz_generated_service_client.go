@@ -43,7 +43,7 @@ func newServiceClient(endpoint string, version Enum2, pl runtime.Pipeline) *serv
 // expression. Filter blobs searches across all containers within a storage account but can
 // be scoped within the expression to a single container.
 // If the operation fails it returns the *StorageError error type.
-// options - ServiceFilterBlobsOptions contains the optional parameters for the Service.FilterBlobs method.
+// options - ServiceFilterBlobsOptions contains the optional parameters for the serviceClient.FilterBlobs method.
 func (client *serviceClient) FilterBlobs(ctx context.Context, comp Enum10, options *ServiceFilterBlobsOptions) (ServiceFilterBlobsResponse, error) {
 	req, err := client.filterBlobsCreateRequest(ctx, comp, options)
 	if err != nil {
@@ -128,7 +128,7 @@ func (client *serviceClient) filterBlobsHandleError(resp *http.Response) error {
 
 // GetAccountInfo - Returns the sku name and account kind
 // If the operation fails it returns the *StorageError error type.
-// options - ServiceGetAccountInfoOptions contains the optional parameters for the Service.GetAccountInfo method.
+// options - ServiceGetAccountInfoOptions contains the optional parameters for the serviceClient.GetAccountInfo method.
 func (client *serviceClient) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *ServiceGetAccountInfoOptions) (ServiceGetAccountInfoResponse, error) {
 	req, err := client.getAccountInfoCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -210,7 +210,7 @@ func (client *serviceClient) getAccountInfoHandleError(resp *http.Response) erro
 // GetProperties - gets the properties of a storage account's Blob service, including properties for Storage Analytics and
 // CORS (Cross-Origin Resource Sharing) rules.
 // If the operation fails it returns the *StorageError error type.
-// options - ServiceGetPropertiesOptions contains the optional parameters for the Service.GetProperties method.
+// options - ServiceGetPropertiesOptions contains the optional parameters for the serviceClient.GetProperties method.
 func (client *serviceClient) GetProperties(ctx context.Context, restype Enum0, comp Enum1, options *ServiceGetPropertiesOptions) (ServiceGetPropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -281,7 +281,7 @@ func (client *serviceClient) getPropertiesHandleError(resp *http.Response) error
 // GetStatistics - Retrieves statistics related to replication for the Blob service. It is only available on the secondary
 // location endpoint when read-access geo-redundant replication is enabled for the storage account.
 // If the operation fails it returns the *StorageError error type.
-// options - ServiceGetStatisticsOptions contains the optional parameters for the Service.GetStatistics method.
+// options - ServiceGetStatisticsOptions contains the optional parameters for the serviceClient.GetStatistics method.
 func (client *serviceClient) GetStatistics(ctx context.Context, restype Enum0, comp Enum3, options *ServiceGetStatisticsOptions) (ServiceGetStatisticsResponse, error) {
 	req, err := client.getStatisticsCreateRequest(ctx, restype, comp, options)
 	if err != nil {
@@ -359,7 +359,8 @@ func (client *serviceClient) getStatisticsHandleError(resp *http.Response) error
 // GetUserDelegationKey - Retrieves a user delegation key for the Blob service. This is only a valid operation when using
 // bearer token authentication.
 // If the operation fails it returns the *StorageError error type.
-// options - ServiceGetUserDelegationKeyOptions contains the optional parameters for the Service.GetUserDelegationKey method.
+// options - ServiceGetUserDelegationKeyOptions contains the optional parameters for the serviceClient.GetUserDelegationKey
+// method.
 func (client *serviceClient) GetUserDelegationKey(ctx context.Context, restype Enum0, comp Enum7, keyInfo KeyInfo, options *ServiceGetUserDelegationKeyOptions) (ServiceGetUserDelegationKeyResponse, error) {
 	req, err := client.getUserDelegationKeyCreateRequest(ctx, restype, comp, keyInfo, options)
 	if err != nil {
@@ -436,7 +437,8 @@ func (client *serviceClient) getUserDelegationKeyHandleError(resp *http.Response
 
 // ListContainersSegment - The List Containers Segment operation returns a list of the containers under the specified account
 // If the operation fails it returns the *StorageError error type.
-// options - ServiceListContainersSegmentOptions contains the optional parameters for the Service.ListContainersSegment method.
+// options - ServiceListContainersSegmentOptions contains the optional parameters for the serviceClient.ListContainersSegment
+// method.
 func (client *serviceClient) ListContainersSegment(comp Enum5, options *ServiceListContainersSegmentOptions) *ServiceListContainersSegmentPager {
 	return &ServiceListContainersSegmentPager{
 		client: client,
@@ -516,7 +518,7 @@ func (client *serviceClient) listContainersSegmentHandleError(resp *http.Respons
 // and CORS (Cross-Origin Resource Sharing) rules
 // If the operation fails it returns the *StorageError error type.
 // storageServiceProperties - The StorageService properties.
-// options - ServiceSetPropertiesOptions contains the optional parameters for the Service.SetProperties method.
+// options - ServiceSetPropertiesOptions contains the optional parameters for the serviceClient.SetProperties method.
 func (client *serviceClient) SetProperties(ctx context.Context, restype Enum0, comp Enum1, storageServiceProperties StorageServiceProperties, options *ServiceSetPropertiesOptions) (ServiceSetPropertiesResponse, error) {
 	req, err := client.setPropertiesCreateRequest(ctx, restype, comp, storageServiceProperties, options)
 	if err != nil {
@@ -587,7 +589,7 @@ func (client *serviceClient) setPropertiesHandleError(resp *http.Response) error
 // multipartContentType - Required. The value of this header must be multipart/mixed with a batch boundary. Example header
 // value: multipart/mixed; boundary=batch_
 // body - Initial data
-// options - ServiceSubmitBatchOptions contains the optional parameters for the Service.SubmitBatch method.
+// options - ServiceSubmitBatchOptions contains the optional parameters for the serviceClient.SubmitBatch method.
 func (client *serviceClient) SubmitBatch(ctx context.Context, comp Enum9, contentLength int64, multipartContentType string, body io.ReadSeekCloser, options *ServiceSubmitBatchOptions) (ServiceSubmitBatchResponse, error) {
 	req, err := client.submitBatchCreateRequest(ctx, comp, contentLength, multipartContentType, body, options)
 	if err != nil {

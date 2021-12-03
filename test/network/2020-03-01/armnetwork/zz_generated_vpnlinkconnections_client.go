@@ -56,7 +56,7 @@ func NewVPNLinkConnectionsClient(subscriptionID string, credential azcore.TokenC
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // connectionName - The name of the vpn connection.
-// options - VPNLinkConnectionsListByVPNConnectionOptions contains the optional parameters for the VPNLinkConnections.ListByVPNConnection
+// options - VPNLinkConnectionsListByVPNConnectionOptions contains the optional parameters for the VPNLinkConnectionsClient.ListByVPNConnection
 // method.
 func (client *VPNLinkConnectionsClient) ListByVPNConnection(resourceGroupName string, gatewayName string, connectionName string, options *VPNLinkConnectionsListByVPNConnectionOptions) *VPNLinkConnectionsListByVPNConnectionPager {
 	return &VPNLinkConnectionsListByVPNConnectionPager{

@@ -49,7 +49,7 @@ func NewBandwidthSchedulesClient(subscriptionID string, options *azcore.ClientOp
 // name - The bandwidth schedule name which needs to be added/updated.
 // resourceGroupName - The resource group name.
 // parameters - The bandwidth schedule to be added or updated.
-// options - BandwidthSchedulesBeginCreateOrUpdateOptions contains the optional parameters for the BandwidthSchedules.BeginCreateOrUpdate
+// options - BandwidthSchedulesBeginCreateOrUpdateOptions contains the optional parameters for the BandwidthSchedulesClient.BeginCreateOrUpdate
 // method.
 func (client *BandwidthSchedulesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, parameters BandwidthSchedule, options *BandwidthSchedulesBeginCreateOrUpdateOptions) (BandwidthSchedulesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, parameters, options)
@@ -134,7 +134,7 @@ func (client *BandwidthSchedulesClient) createOrUpdateHandleError(resp *http.Res
 // deviceName - The device name.
 // name - The bandwidth schedule name.
 // resourceGroupName - The resource group name.
-// options - BandwidthSchedulesBeginDeleteOptions contains the optional parameters for the BandwidthSchedules.BeginDelete
+// options - BandwidthSchedulesBeginDeleteOptions contains the optional parameters for the BandwidthSchedulesClient.BeginDelete
 // method.
 func (client *BandwidthSchedulesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesBeginDeleteOptions) (BandwidthSchedulesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
@@ -219,7 +219,7 @@ func (client *BandwidthSchedulesClient) deleteHandleError(resp *http.Response) e
 // deviceName - The device name.
 // name - The bandwidth schedule name.
 // resourceGroupName - The resource group name.
-// options - BandwidthSchedulesGetOptions contains the optional parameters for the BandwidthSchedules.Get method.
+// options - BandwidthSchedulesGetOptions contains the optional parameters for the BandwidthSchedulesClient.Get method.
 func (client *BandwidthSchedulesClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesGetOptions) (BandwidthSchedulesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -291,7 +291,7 @@ func (client *BandwidthSchedulesClient) getHandleError(resp *http.Response) erro
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - BandwidthSchedulesListByDataBoxEdgeDeviceOptions contains the optional parameters for the BandwidthSchedules.ListByDataBoxEdgeDevice
+// options - BandwidthSchedulesListByDataBoxEdgeDeviceOptions contains the optional parameters for the BandwidthSchedulesClient.ListByDataBoxEdgeDevice
 // method.
 func (client *BandwidthSchedulesClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *BandwidthSchedulesListByDataBoxEdgeDeviceOptions) *BandwidthSchedulesListByDataBoxEdgeDevicePager {
 	return &BandwidthSchedulesListByDataBoxEdgeDevicePager{

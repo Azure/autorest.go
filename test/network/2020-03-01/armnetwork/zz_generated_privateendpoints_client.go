@@ -56,7 +56,7 @@ func NewPrivateEndpointsClient(subscriptionID string, credential azcore.TokenCre
 // resourceGroupName - The name of the resource group.
 // privateEndpointName - The name of the private endpoint.
 // parameters - Parameters supplied to the create or update private endpoint operation.
-// options - PrivateEndpointsBeginCreateOrUpdateOptions contains the optional parameters for the PrivateEndpoints.BeginCreateOrUpdate
+// options - PrivateEndpointsBeginCreateOrUpdateOptions contains the optional parameters for the PrivateEndpointsClient.BeginCreateOrUpdate
 // method.
 func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsBeginCreateOrUpdateOptions) (PrivateEndpointsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, privateEndpointName, parameters, options)
@@ -136,7 +136,8 @@ func (client *PrivateEndpointsClient) createOrUpdateHandleError(resp *http.Respo
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
 // privateEndpointName - The name of the private endpoint.
-// options - PrivateEndpointsBeginDeleteOptions contains the optional parameters for the PrivateEndpoints.BeginDelete method.
+// options - PrivateEndpointsBeginDeleteOptions contains the optional parameters for the PrivateEndpointsClient.BeginDelete
+// method.
 func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsBeginDeleteOptions) (PrivateEndpointsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
@@ -215,7 +216,7 @@ func (client *PrivateEndpointsClient) deleteHandleError(resp *http.Response) err
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
 // privateEndpointName - The name of the private endpoint.
-// options - PrivateEndpointsGetOptions contains the optional parameters for the PrivateEndpoints.Get method.
+// options - PrivateEndpointsGetOptions contains the optional parameters for the PrivateEndpointsClient.Get method.
 func (client *PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsGetOptions) (PrivateEndpointsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
@@ -285,7 +286,7 @@ func (client *PrivateEndpointsClient) getHandleError(resp *http.Response) error 
 // List - Gets all private endpoints in a resource group.
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
-// options - PrivateEndpointsListOptions contains the optional parameters for the PrivateEndpoints.List method.
+// options - PrivateEndpointsListOptions contains the optional parameters for the PrivateEndpointsClient.List method.
 func (client *PrivateEndpointsClient) List(resourceGroupName string, options *PrivateEndpointsListOptions) *PrivateEndpointsListPager {
 	return &PrivateEndpointsListPager{
 		client: client,
@@ -344,7 +345,7 @@ func (client *PrivateEndpointsClient) listHandleError(resp *http.Response) error
 
 // ListBySubscription - Gets all private endpoints in a subscription.
 // If the operation fails it returns the *Error error type.
-// options - PrivateEndpointsListBySubscriptionOptions contains the optional parameters for the PrivateEndpoints.ListBySubscription
+// options - PrivateEndpointsListBySubscriptionOptions contains the optional parameters for the PrivateEndpointsClient.ListBySubscription
 // method.
 func (client *PrivateEndpointsClient) ListBySubscription(options *PrivateEndpointsListBySubscriptionOptions) *PrivateEndpointsListBySubscriptionPager {
 	return &PrivateEndpointsListBySubscriptionPager{

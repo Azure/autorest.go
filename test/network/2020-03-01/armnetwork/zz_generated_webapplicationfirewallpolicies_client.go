@@ -56,7 +56,7 @@ func NewWebApplicationFirewallPoliciesClient(subscriptionID string, credential a
 // resourceGroupName - The name of the resource group.
 // policyName - The name of the policy.
 // parameters - Policy to be created.
-// options - WebApplicationFirewallPoliciesCreateOrUpdateOptions contains the optional parameters for the WebApplicationFirewallPolicies.CreateOrUpdate
+// options - WebApplicationFirewallPoliciesCreateOrUpdateOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.CreateOrUpdate
 // method.
 func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, policyName string, parameters WebApplicationFirewallPolicy, options *WebApplicationFirewallPoliciesCreateOrUpdateOptions) (WebApplicationFirewallPoliciesCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, policyName, parameters, options)
@@ -125,7 +125,7 @@ func (client *WebApplicationFirewallPoliciesClient) createOrUpdateHandleError(re
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // policyName - The name of the policy.
-// options - WebApplicationFirewallPoliciesBeginDeleteOptions contains the optional parameters for the WebApplicationFirewallPolicies.BeginDelete
+// options - WebApplicationFirewallPoliciesBeginDeleteOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.BeginDelete
 // method.
 func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Context, resourceGroupName string, policyName string, options *WebApplicationFirewallPoliciesBeginDeleteOptions) (WebApplicationFirewallPoliciesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, policyName, options)
@@ -205,7 +205,7 @@ func (client *WebApplicationFirewallPoliciesClient) deleteHandleError(resp *http
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // policyName - The name of the policy.
-// options - WebApplicationFirewallPoliciesGetOptions contains the optional parameters for the WebApplicationFirewallPolicies.Get
+// options - WebApplicationFirewallPoliciesGetOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.Get
 // method.
 func (client *WebApplicationFirewallPoliciesClient) Get(ctx context.Context, resourceGroupName string, policyName string, options *WebApplicationFirewallPoliciesGetOptions) (WebApplicationFirewallPoliciesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, policyName, options)
@@ -273,7 +273,7 @@ func (client *WebApplicationFirewallPoliciesClient) getHandleError(resp *http.Re
 // List - Lists all of the protection policies within a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - WebApplicationFirewallPoliciesListOptions contains the optional parameters for the WebApplicationFirewallPolicies.List
+// options - WebApplicationFirewallPoliciesListOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.List
 // method.
 func (client *WebApplicationFirewallPoliciesClient) List(resourceGroupName string, options *WebApplicationFirewallPoliciesListOptions) *WebApplicationFirewallPoliciesListPager {
 	return &WebApplicationFirewallPoliciesListPager{
@@ -333,7 +333,7 @@ func (client *WebApplicationFirewallPoliciesClient) listHandleError(resp *http.R
 
 // ListAll - Gets all the WAF policies in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - WebApplicationFirewallPoliciesListAllOptions contains the optional parameters for the WebApplicationFirewallPolicies.ListAll
+// options - WebApplicationFirewallPoliciesListAllOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.ListAll
 // method.
 func (client *WebApplicationFirewallPoliciesClient) ListAll(options *WebApplicationFirewallPoliciesListAllOptions) *WebApplicationFirewallPoliciesListAllPager {
 	return &WebApplicationFirewallPoliciesListAllPager{

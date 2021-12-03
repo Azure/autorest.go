@@ -56,7 +56,7 @@ func NewDedicatedHostsClient(subscriptionID string, credential azcore.TokenCrede
 // hostGroupName - The name of the dedicated host group.
 // hostName - The name of the dedicated host .
 // parameters - Parameters supplied to the Create Dedicated Host.
-// options - DedicatedHostsBeginCreateOrUpdateOptions contains the optional parameters for the DedicatedHosts.BeginCreateOrUpdate
+// options - DedicatedHostsBeginCreateOrUpdateOptions contains the optional parameters for the DedicatedHostsClient.BeginCreateOrUpdate
 // method.
 func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsBeginCreateOrUpdateOptions) (DedicatedHostsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
@@ -140,7 +140,7 @@ func (client *DedicatedHostsClient) createOrUpdateHandleError(resp *http.Respons
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.
 // hostName - The name of the dedicated host.
-// options - DedicatedHostsBeginDeleteOptions contains the optional parameters for the DedicatedHosts.BeginDelete method.
+// options - DedicatedHostsBeginDeleteOptions contains the optional parameters for the DedicatedHostsClient.BeginDelete method.
 func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsBeginDeleteOptions) (DedicatedHostsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, hostGroupName, hostName, options)
 	if err != nil {
@@ -222,7 +222,7 @@ func (client *DedicatedHostsClient) deleteHandleError(resp *http.Response) error
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.
 // hostName - The name of the dedicated host.
-// options - DedicatedHostsGetOptions contains the optional parameters for the DedicatedHosts.Get method.
+// options - DedicatedHostsGetOptions contains the optional parameters for the DedicatedHostsClient.Get method.
 func (client *DedicatedHostsClient) Get(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsGetOptions) (DedicatedHostsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, options)
 	if err != nil {
@@ -297,7 +297,7 @@ func (client *DedicatedHostsClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.
-// options - DedicatedHostsListByHostGroupOptions contains the optional parameters for the DedicatedHosts.ListByHostGroup
+// options - DedicatedHostsListByHostGroupOptions contains the optional parameters for the DedicatedHostsClient.ListByHostGroup
 // method.
 func (client *DedicatedHostsClient) ListByHostGroup(resourceGroupName string, hostGroupName string, options *DedicatedHostsListByHostGroupOptions) *DedicatedHostsListByHostGroupPager {
 	return &DedicatedHostsListByHostGroupPager{
@@ -364,7 +364,7 @@ func (client *DedicatedHostsClient) listByHostGroupHandleError(resp *http.Respon
 // hostGroupName - The name of the dedicated host group.
 // hostName - The name of the dedicated host .
 // parameters - Parameters supplied to the Update Dedicated Host operation.
-// options - DedicatedHostsBeginUpdateOptions contains the optional parameters for the DedicatedHosts.BeginUpdate method.
+// options - DedicatedHostsBeginUpdateOptions contains the optional parameters for the DedicatedHostsClient.BeginUpdate method.
 func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate, options *DedicatedHostsBeginUpdateOptions) (DedicatedHostsUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 	if err != nil {

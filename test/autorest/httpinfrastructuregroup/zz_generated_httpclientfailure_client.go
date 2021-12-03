@@ -38,7 +38,8 @@ func NewHTTPClientFailureClient(options *azcore.ClientOptions) *HTTPClientFailur
 
 // Delete400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureDelete400Options contains the optional parameters for the HTTPClientFailure.Delete400 method.
+// options - HTTPClientFailureDelete400Options contains the optional parameters for the HTTPClientFailureClient.Delete400
+// method.
 func (client *HTTPClientFailureClient) Delete400(ctx context.Context, options *HTTPClientFailureDelete400Options) (HTTPClientFailureDelete400Response, error) {
 	req, err := client.delete400CreateRequest(ctx, options)
 	if err != nil {
@@ -80,7 +81,8 @@ func (client *HTTPClientFailureClient) delete400HandleError(resp *http.Response)
 
 // Delete407 - Return 407 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureDelete407Options contains the optional parameters for the HTTPClientFailure.Delete407 method.
+// options - HTTPClientFailureDelete407Options contains the optional parameters for the HTTPClientFailureClient.Delete407
+// method.
 func (client *HTTPClientFailureClient) Delete407(ctx context.Context, options *HTTPClientFailureDelete407Options) (HTTPClientFailureDelete407Response, error) {
 	req, err := client.delete407CreateRequest(ctx, options)
 	if err != nil {
@@ -122,7 +124,8 @@ func (client *HTTPClientFailureClient) delete407HandleError(resp *http.Response)
 
 // Delete417 - Return 417 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureDelete417Options contains the optional parameters for the HTTPClientFailure.Delete417 method.
+// options - HTTPClientFailureDelete417Options contains the optional parameters for the HTTPClientFailureClient.Delete417
+// method.
 func (client *HTTPClientFailureClient) Delete417(ctx context.Context, options *HTTPClientFailureDelete417Options) (HTTPClientFailureDelete417Response, error) {
 	req, err := client.delete417CreateRequest(ctx, options)
 	if err != nil {
@@ -164,7 +167,7 @@ func (client *HTTPClientFailureClient) delete417HandleError(resp *http.Response)
 
 // Get400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureGet400Options contains the optional parameters for the HTTPClientFailure.Get400 method.
+// options - HTTPClientFailureGet400Options contains the optional parameters for the HTTPClientFailureClient.Get400 method.
 func (client *HTTPClientFailureClient) Get400(ctx context.Context, options *HTTPClientFailureGet400Options) (HTTPClientFailureGet400Response, error) {
 	req, err := client.get400CreateRequest(ctx, options)
 	if err != nil {
@@ -206,7 +209,7 @@ func (client *HTTPClientFailureClient) get400HandleError(resp *http.Response) er
 
 // Get402 - Return 402 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureGet402Options contains the optional parameters for the HTTPClientFailure.Get402 method.
+// options - HTTPClientFailureGet402Options contains the optional parameters for the HTTPClientFailureClient.Get402 method.
 func (client *HTTPClientFailureClient) Get402(ctx context.Context, options *HTTPClientFailureGet402Options) (HTTPClientFailureGet402Response, error) {
 	req, err := client.get402CreateRequest(ctx, options)
 	if err != nil {
@@ -248,7 +251,7 @@ func (client *HTTPClientFailureClient) get402HandleError(resp *http.Response) er
 
 // Get403 - Return 403 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureGet403Options contains the optional parameters for the HTTPClientFailure.Get403 method.
+// options - HTTPClientFailureGet403Options contains the optional parameters for the HTTPClientFailureClient.Get403 method.
 func (client *HTTPClientFailureClient) Get403(ctx context.Context, options *HTTPClientFailureGet403Options) (HTTPClientFailureGet403Response, error) {
 	req, err := client.get403CreateRequest(ctx, options)
 	if err != nil {
@@ -290,7 +293,7 @@ func (client *HTTPClientFailureClient) get403HandleError(resp *http.Response) er
 
 // Get411 - Return 411 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureGet411Options contains the optional parameters for the HTTPClientFailure.Get411 method.
+// options - HTTPClientFailureGet411Options contains the optional parameters for the HTTPClientFailureClient.Get411 method.
 func (client *HTTPClientFailureClient) Get411(ctx context.Context, options *HTTPClientFailureGet411Options) (HTTPClientFailureGet411Response, error) {
 	req, err := client.get411CreateRequest(ctx, options)
 	if err != nil {
@@ -332,7 +335,7 @@ func (client *HTTPClientFailureClient) get411HandleError(resp *http.Response) er
 
 // Get412 - Return 412 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureGet412Options contains the optional parameters for the HTTPClientFailure.Get412 method.
+// options - HTTPClientFailureGet412Options contains the optional parameters for the HTTPClientFailureClient.Get412 method.
 func (client *HTTPClientFailureClient) Get412(ctx context.Context, options *HTTPClientFailureGet412Options) (HTTPClientFailureGet412Response, error) {
 	req, err := client.get412CreateRequest(ctx, options)
 	if err != nil {
@@ -374,7 +377,7 @@ func (client *HTTPClientFailureClient) get412HandleError(resp *http.Response) er
 
 // Get416 - Return 416 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureGet416Options contains the optional parameters for the HTTPClientFailure.Get416 method.
+// options - HTTPClientFailureGet416Options contains the optional parameters for the HTTPClientFailureClient.Get416 method.
 func (client *HTTPClientFailureClient) Get416(ctx context.Context, options *HTTPClientFailureGet416Options) (HTTPClientFailureGet416Response, error) {
 	req, err := client.get416CreateRequest(ctx, options)
 	if err != nil {
@@ -416,7 +419,7 @@ func (client *HTTPClientFailureClient) get416HandleError(resp *http.Response) er
 
 // Head400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureHead400Options contains the optional parameters for the HTTPClientFailure.Head400 method.
+// options - HTTPClientFailureHead400Options contains the optional parameters for the HTTPClientFailureClient.Head400 method.
 func (client *HTTPClientFailureClient) Head400(ctx context.Context, options *HTTPClientFailureHead400Options) (HTTPClientFailureHead400Response, error) {
 	req, err := client.head400CreateRequest(ctx, options)
 	if err != nil {
@@ -446,7 +449,7 @@ func (client *HTTPClientFailureClient) head400CreateRequest(ctx context.Context,
 
 // Head401 - Return 401 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureHead401Options contains the optional parameters for the HTTPClientFailure.Head401 method.
+// options - HTTPClientFailureHead401Options contains the optional parameters for the HTTPClientFailureClient.Head401 method.
 func (client *HTTPClientFailureClient) Head401(ctx context.Context, options *HTTPClientFailureHead401Options) (HTTPClientFailureHead401Response, error) {
 	req, err := client.head401CreateRequest(ctx, options)
 	if err != nil {
@@ -476,7 +479,7 @@ func (client *HTTPClientFailureClient) head401CreateRequest(ctx context.Context,
 
 // Head410 - Return 410 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureHead410Options contains the optional parameters for the HTTPClientFailure.Head410 method.
+// options - HTTPClientFailureHead410Options contains the optional parameters for the HTTPClientFailureClient.Head410 method.
 func (client *HTTPClientFailureClient) Head410(ctx context.Context, options *HTTPClientFailureHead410Options) (HTTPClientFailureHead410Response, error) {
 	req, err := client.head410CreateRequest(ctx, options)
 	if err != nil {
@@ -506,7 +509,7 @@ func (client *HTTPClientFailureClient) head410CreateRequest(ctx context.Context,
 
 // Head429 - Return 429 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureHead429Options contains the optional parameters for the HTTPClientFailure.Head429 method.
+// options - HTTPClientFailureHead429Options contains the optional parameters for the HTTPClientFailureClient.Head429 method.
 func (client *HTTPClientFailureClient) Head429(ctx context.Context, options *HTTPClientFailureHead429Options) (HTTPClientFailureHead429Response, error) {
 	req, err := client.head429CreateRequest(ctx, options)
 	if err != nil {
@@ -536,7 +539,8 @@ func (client *HTTPClientFailureClient) head429CreateRequest(ctx context.Context,
 
 // Options400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureOptions400Options contains the optional parameters for the HTTPClientFailure.Options400 method.
+// options - HTTPClientFailureOptions400Options contains the optional parameters for the HTTPClientFailureClient.Options400
+// method.
 func (client *HTTPClientFailureClient) Options400(ctx context.Context, options *HTTPClientFailureOptions400Options) (HTTPClientFailureOptions400Response, error) {
 	req, err := client.options400CreateRequest(ctx, options)
 	if err != nil {
@@ -578,7 +582,8 @@ func (client *HTTPClientFailureClient) options400HandleError(resp *http.Response
 
 // Options403 - Return 403 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureOptions403Options contains the optional parameters for the HTTPClientFailure.Options403 method.
+// options - HTTPClientFailureOptions403Options contains the optional parameters for the HTTPClientFailureClient.Options403
+// method.
 func (client *HTTPClientFailureClient) Options403(ctx context.Context, options *HTTPClientFailureOptions403Options) (HTTPClientFailureOptions403Response, error) {
 	req, err := client.options403CreateRequest(ctx, options)
 	if err != nil {
@@ -620,7 +625,8 @@ func (client *HTTPClientFailureClient) options403HandleError(resp *http.Response
 
 // Options412 - Return 412 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureOptions412Options contains the optional parameters for the HTTPClientFailure.Options412 method.
+// options - HTTPClientFailureOptions412Options contains the optional parameters for the HTTPClientFailureClient.Options412
+// method.
 func (client *HTTPClientFailureClient) Options412(ctx context.Context, options *HTTPClientFailureOptions412Options) (HTTPClientFailureOptions412Response, error) {
 	req, err := client.options412CreateRequest(ctx, options)
 	if err != nil {
@@ -662,7 +668,7 @@ func (client *HTTPClientFailureClient) options412HandleError(resp *http.Response
 
 // Patch400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePatch400Options contains the optional parameters for the HTTPClientFailure.Patch400 method.
+// options - HTTPClientFailurePatch400Options contains the optional parameters for the HTTPClientFailureClient.Patch400 method.
 func (client *HTTPClientFailureClient) Patch400(ctx context.Context, options *HTTPClientFailurePatch400Options) (HTTPClientFailurePatch400Response, error) {
 	req, err := client.patch400CreateRequest(ctx, options)
 	if err != nil {
@@ -704,7 +710,7 @@ func (client *HTTPClientFailureClient) patch400HandleError(resp *http.Response) 
 
 // Patch405 - Return 405 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePatch405Options contains the optional parameters for the HTTPClientFailure.Patch405 method.
+// options - HTTPClientFailurePatch405Options contains the optional parameters for the HTTPClientFailureClient.Patch405 method.
 func (client *HTTPClientFailureClient) Patch405(ctx context.Context, options *HTTPClientFailurePatch405Options) (HTTPClientFailurePatch405Response, error) {
 	req, err := client.patch405CreateRequest(ctx, options)
 	if err != nil {
@@ -746,7 +752,7 @@ func (client *HTTPClientFailureClient) patch405HandleError(resp *http.Response) 
 
 // Patch414 - Return 414 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePatch414Options contains the optional parameters for the HTTPClientFailure.Patch414 method.
+// options - HTTPClientFailurePatch414Options contains the optional parameters for the HTTPClientFailureClient.Patch414 method.
 func (client *HTTPClientFailureClient) Patch414(ctx context.Context, options *HTTPClientFailurePatch414Options) (HTTPClientFailurePatch414Response, error) {
 	req, err := client.patch414CreateRequest(ctx, options)
 	if err != nil {
@@ -788,7 +794,7 @@ func (client *HTTPClientFailureClient) patch414HandleError(resp *http.Response) 
 
 // Post400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePost400Options contains the optional parameters for the HTTPClientFailure.Post400 method.
+// options - HTTPClientFailurePost400Options contains the optional parameters for the HTTPClientFailureClient.Post400 method.
 func (client *HTTPClientFailureClient) Post400(ctx context.Context, options *HTTPClientFailurePost400Options) (HTTPClientFailurePost400Response, error) {
 	req, err := client.post400CreateRequest(ctx, options)
 	if err != nil {
@@ -830,7 +836,7 @@ func (client *HTTPClientFailureClient) post400HandleError(resp *http.Response) e
 
 // Post406 - Return 406 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePost406Options contains the optional parameters for the HTTPClientFailure.Post406 method.
+// options - HTTPClientFailurePost406Options contains the optional parameters for the HTTPClientFailureClient.Post406 method.
 func (client *HTTPClientFailureClient) Post406(ctx context.Context, options *HTTPClientFailurePost406Options) (HTTPClientFailurePost406Response, error) {
 	req, err := client.post406CreateRequest(ctx, options)
 	if err != nil {
@@ -872,7 +878,7 @@ func (client *HTTPClientFailureClient) post406HandleError(resp *http.Response) e
 
 // Post415 - Return 415 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePost415Options contains the optional parameters for the HTTPClientFailure.Post415 method.
+// options - HTTPClientFailurePost415Options contains the optional parameters for the HTTPClientFailureClient.Post415 method.
 func (client *HTTPClientFailureClient) Post415(ctx context.Context, options *HTTPClientFailurePost415Options) (HTTPClientFailurePost415Response, error) {
 	req, err := client.post415CreateRequest(ctx, options)
 	if err != nil {
@@ -914,7 +920,7 @@ func (client *HTTPClientFailureClient) post415HandleError(resp *http.Response) e
 
 // Put400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePut400Options contains the optional parameters for the HTTPClientFailure.Put400 method.
+// options - HTTPClientFailurePut400Options contains the optional parameters for the HTTPClientFailureClient.Put400 method.
 func (client *HTTPClientFailureClient) Put400(ctx context.Context, options *HTTPClientFailurePut400Options) (HTTPClientFailurePut400Response, error) {
 	req, err := client.put400CreateRequest(ctx, options)
 	if err != nil {
@@ -956,7 +962,7 @@ func (client *HTTPClientFailureClient) put400HandleError(resp *http.Response) er
 
 // Put404 - Return 404 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePut404Options contains the optional parameters for the HTTPClientFailure.Put404 method.
+// options - HTTPClientFailurePut404Options contains the optional parameters for the HTTPClientFailureClient.Put404 method.
 func (client *HTTPClientFailureClient) Put404(ctx context.Context, options *HTTPClientFailurePut404Options) (HTTPClientFailurePut404Response, error) {
 	req, err := client.put404CreateRequest(ctx, options)
 	if err != nil {
@@ -998,7 +1004,7 @@ func (client *HTTPClientFailureClient) put404HandleError(resp *http.Response) er
 
 // Put409 - Return 409 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePut409Options contains the optional parameters for the HTTPClientFailure.Put409 method.
+// options - HTTPClientFailurePut409Options contains the optional parameters for the HTTPClientFailureClient.Put409 method.
 func (client *HTTPClientFailureClient) Put409(ctx context.Context, options *HTTPClientFailurePut409Options) (HTTPClientFailurePut409Response, error) {
 	req, err := client.put409CreateRequest(ctx, options)
 	if err != nil {
@@ -1040,7 +1046,7 @@ func (client *HTTPClientFailureClient) put409HandleError(resp *http.Response) er
 
 // Put413 - Return 413 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePut413Options contains the optional parameters for the HTTPClientFailure.Put413 method.
+// options - HTTPClientFailurePut413Options contains the optional parameters for the HTTPClientFailureClient.Put413 method.
 func (client *HTTPClientFailureClient) Put413(ctx context.Context, options *HTTPClientFailurePut413Options) (HTTPClientFailurePut413Response, error) {
 	req, err := client.put413CreateRequest(ctx, options)
 	if err != nil {

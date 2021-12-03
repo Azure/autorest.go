@@ -50,7 +50,7 @@ func NewUsersClient(subscriptionID string, options *azcore.ClientOptions) *Users
 // name - The user name.
 // resourceGroupName - The resource group name.
 // userParam - The user details.
-// options - UsersBeginCreateOrUpdateOptions contains the optional parameters for the Users.BeginCreateOrUpdate method.
+// options - UsersBeginCreateOrUpdateOptions contains the optional parameters for the UsersClient.BeginCreateOrUpdate method.
 func (client *UsersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, userParam User, options *UsersBeginCreateOrUpdateOptions) (UsersCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, userParam, options)
 	if err != nil {
@@ -134,7 +134,7 @@ func (client *UsersClient) createOrUpdateHandleError(resp *http.Response) error 
 // deviceName - The device name.
 // name - The user name.
 // resourceGroupName - The resource group name.
-// options - UsersBeginDeleteOptions contains the optional parameters for the Users.BeginDelete method.
+// options - UsersBeginDeleteOptions contains the optional parameters for the UsersClient.BeginDelete method.
 func (client *UsersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersBeginDeleteOptions) (UsersDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -218,7 +218,7 @@ func (client *UsersClient) deleteHandleError(resp *http.Response) error {
 // deviceName - The device name.
 // name - The user name.
 // resourceGroupName - The resource group name.
-// options - UsersGetOptions contains the optional parameters for the Users.Get method.
+// options - UsersGetOptions contains the optional parameters for the UsersClient.Get method.
 func (client *UsersClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersGetOptions) (UsersGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -290,7 +290,8 @@ func (client *UsersClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - UsersListByDataBoxEdgeDeviceOptions contains the optional parameters for the Users.ListByDataBoxEdgeDevice method.
+// options - UsersListByDataBoxEdgeDeviceOptions contains the optional parameters for the UsersClient.ListByDataBoxEdgeDevice
+// method.
 func (client *UsersClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *UsersListByDataBoxEdgeDeviceOptions) *UsersListByDataBoxEdgeDevicePager {
 	return &UsersListByDataBoxEdgeDevicePager{
 		client: client,

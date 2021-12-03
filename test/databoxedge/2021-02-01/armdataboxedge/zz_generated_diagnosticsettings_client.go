@@ -49,7 +49,7 @@ func NewDiagnosticSettingsClient(subscriptionID string, options *azcore.ClientOp
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters for the
-// DiagnosticSettings.GetDiagnosticProactiveLogCollectionSettings method.
+// DiagnosticSettingsClient.GetDiagnosticProactiveLogCollectionSettings method.
 func (client *DiagnosticSettingsClient) GetDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsOptions) (DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsResponse, error) {
 	req, err := client.getDiagnosticProactiveLogCollectionSettingsCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -118,7 +118,7 @@ func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSetti
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - DiagnosticSettingsGetDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the DiagnosticSettings.GetDiagnosticRemoteSupportSettings
+// options - DiagnosticSettingsGetDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the DiagnosticSettingsClient.GetDiagnosticRemoteSupportSettings
 // method.
 func (client *DiagnosticSettingsClient) GetDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsGetDiagnosticRemoteSupportSettingsOptions) (DiagnosticSettingsGetDiagnosticRemoteSupportSettingsResponse, error) {
 	req, err := client.getDiagnosticRemoteSupportSettingsCreateRequest(ctx, deviceName, resourceGroupName, options)
@@ -190,7 +190,7 @@ func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsHandle
 // resourceGroupName - The resource group name.
 // proactiveLogCollectionSettings - The proactive log collection settings.
 // options - DiagnosticSettingsBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters
-// for the DiagnosticSettings.BeginUpdateDiagnosticProactiveLogCollectionSettings method.
+// for the DiagnosticSettingsClient.BeginUpdateDiagnosticProactiveLogCollectionSettings method.
 func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (DiagnosticSettingsUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse, error) {
 	resp, err := client.updateDiagnosticProactiveLogCollectionSettings(ctx, deviceName, resourceGroupName, proactiveLogCollectionSettings, options)
 	if err != nil {
@@ -273,7 +273,7 @@ func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSe
 // resourceGroupName - The resource group name.
 // diagnosticRemoteSupportSettings - The diagnostic remote support settings.
 // options - DiagnosticSettingsBeginUpdateDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the
-// DiagnosticSettings.BeginUpdateDiagnosticRemoteSupportSettings method.
+// DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings method.
 func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsBeginUpdateDiagnosticRemoteSupportSettingsOptions) (DiagnosticSettingsUpdateDiagnosticRemoteSupportSettingsPollerResponse, error) {
 	resp, err := client.updateDiagnosticRemoteSupportSettings(ctx, deviceName, resourceGroupName, diagnosticRemoteSupportSettings, options)
 	if err != nil {

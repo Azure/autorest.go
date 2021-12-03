@@ -39,7 +39,8 @@ func NewHeaderClient(options *azcore.ClientOptions) *HeaderClient {
 // CustomNamedRequestID - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 // If the operation fails it returns the *Error error type.
 // fooClientRequestID - The fooRequestId
-// options - HeaderCustomNamedRequestIDOptions contains the optional parameters for the Header.CustomNamedRequestID method.
+// options - HeaderCustomNamedRequestIDOptions contains the optional parameters for the HeaderClient.CustomNamedRequestID
+// method.
 func (client *HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientRequestID string, options *HeaderCustomNamedRequestIDOptions) (HeaderCustomNamedRequestIDResponse, error) {
 	req, err := client.customNamedRequestIDCreateRequest(ctx, fooClientRequestID, options)
 	if err != nil {
@@ -92,7 +93,7 @@ func (client *HeaderClient) customNamedRequestIDHandleError(resp *http.Response)
 // CustomNamedRequestIDHead - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
 // If the operation fails it returns the *Error error type.
 // fooClientRequestID - The fooRequestId
-// options - HeaderCustomNamedRequestIDHeadOptions contains the optional parameters for the Header.CustomNamedRequestIDHead
+// options - HeaderCustomNamedRequestIDHeadOptions contains the optional parameters for the HeaderClient.CustomNamedRequestIDHead
 // method.
 func (client *HeaderClient) CustomNamedRequestIDHead(ctx context.Context, fooClientRequestID string, options *HeaderCustomNamedRequestIDHeadOptions) (HeaderCustomNamedRequestIDHeadResponse, error) {
 	req, err := client.customNamedRequestIDHeadCreateRequest(ctx, fooClientRequestID, options)

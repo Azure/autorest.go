@@ -55,7 +55,7 @@ func NewImagesClient(subscriptionID string, credential azcore.TokenCredential, o
 // resourceGroupName - The name of the resource group.
 // imageName - The name of the image.
 // parameters - Parameters supplied to the Create Image operation.
-// options - ImagesBeginCreateOrUpdateOptions contains the optional parameters for the Images.BeginCreateOrUpdate method.
+// options - ImagesBeginCreateOrUpdateOptions contains the optional parameters for the ImagesClient.BeginCreateOrUpdate method.
 func (client *ImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters Image, options *ImagesBeginCreateOrUpdateOptions) (ImagesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, imageName, parameters, options)
 	if err != nil {
@@ -133,7 +133,7 @@ func (client *ImagesClient) createOrUpdateHandleError(resp *http.Response) error
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // imageName - The name of the image.
-// options - ImagesBeginDeleteOptions contains the optional parameters for the Images.BeginDelete method.
+// options - ImagesBeginDeleteOptions contains the optional parameters for the ImagesClient.BeginDelete method.
 func (client *ImagesClient) BeginDelete(ctx context.Context, resourceGroupName string, imageName string, options *ImagesBeginDeleteOptions) (ImagesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, imageName, options)
 	if err != nil {
@@ -210,7 +210,7 @@ func (client *ImagesClient) deleteHandleError(resp *http.Response) error {
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // imageName - The name of the image.
-// options - ImagesGetOptions contains the optional parameters for the Images.Get method.
+// options - ImagesGetOptions contains the optional parameters for the ImagesClient.Get method.
 func (client *ImagesClient) Get(ctx context.Context, resourceGroupName string, imageName string, options *ImagesGetOptions) (ImagesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, imageName, options)
 	if err != nil {
@@ -279,7 +279,7 @@ func (client *ImagesClient) getHandleError(resp *http.Response) error {
 // List - Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images.
 // Do this till nextLink is null to fetch all the Images.
 // If the operation fails it returns a generic error.
-// options - ImagesListOptions contains the optional parameters for the Images.List method.
+// options - ImagesListOptions contains the optional parameters for the ImagesClient.List method.
 func (client *ImagesClient) List(options *ImagesListOptions) *ImagesListPager {
 	return &ImagesListPager{
 		client: client,
@@ -334,7 +334,7 @@ func (client *ImagesClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Gets the list of images under a resource group.
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
-// options - ImagesListByResourceGroupOptions contains the optional parameters for the Images.ListByResourceGroup method.
+// options - ImagesListByResourceGroupOptions contains the optional parameters for the ImagesClient.ListByResourceGroup method.
 func (client *ImagesClient) ListByResourceGroup(resourceGroupName string, options *ImagesListByResourceGroupOptions) *ImagesListByResourceGroupPager {
 	return &ImagesListByResourceGroupPager{
 		client: client,
@@ -395,7 +395,7 @@ func (client *ImagesClient) listByResourceGroupHandleError(resp *http.Response) 
 // resourceGroupName - The name of the resource group.
 // imageName - The name of the image.
 // parameters - Parameters supplied to the Update Image operation.
-// options - ImagesBeginUpdateOptions contains the optional parameters for the Images.BeginUpdate method.
+// options - ImagesBeginUpdateOptions contains the optional parameters for the ImagesClient.BeginUpdate method.
 func (client *ImagesClient) BeginUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate, options *ImagesBeginUpdateOptions) (ImagesUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, imageName, parameters, options)
 	if err != nil {

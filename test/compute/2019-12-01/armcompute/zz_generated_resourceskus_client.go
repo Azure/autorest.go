@@ -52,7 +52,7 @@ func NewResourceSKUsClient(subscriptionID string, credential azcore.TokenCredent
 
 // List - Gets the list of Microsoft.Compute SKUs available for your Subscription.
 // If the operation fails it returns a generic error.
-// options - ResourceSKUsListOptions contains the optional parameters for the ResourceSKUs.List method.
+// options - ResourceSKUsListOptions contains the optional parameters for the ResourceSKUsClient.List method.
 func (client *ResourceSKUsClient) List(options *ResourceSKUsListOptions) *ResourceSKUsListPager {
 	return &ResourceSKUsListPager{
 		client: client,

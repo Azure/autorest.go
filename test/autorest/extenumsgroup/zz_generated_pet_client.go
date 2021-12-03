@@ -40,7 +40,7 @@ func NewPetClient(options *azcore.ClientOptions) *PetClient {
 
 // AddPet - add pet
 // If the operation fails it returns a generic error.
-// options - PetAddPetOptions contains the optional parameters for the Pet.AddPet method.
+// options - PetAddPetOptions contains the optional parameters for the PetClient.AddPet method.
 func (client *PetClient) AddPet(ctx context.Context, options *PetAddPetOptions) (PetAddPetResponse, error) {
 	req, err := client.addPetCreateRequest(ctx, options)
 	if err != nil {
@@ -94,7 +94,7 @@ func (client *PetClient) addPetHandleError(resp *http.Response) error {
 // GetByPetID - get pet by id
 // If the operation fails it returns a generic error.
 // petID - Pet id
-// options - PetGetByPetIDOptions contains the optional parameters for the Pet.GetByPetID method.
+// options - PetGetByPetIDOptions contains the optional parameters for the PetClient.GetByPetID method.
 func (client *PetClient) GetByPetID(ctx context.Context, petID string, options *PetGetByPetIDOptions) (PetGetByPetIDResponse, error) {
 	req, err := client.getByPetIDCreateRequest(ctx, petID, options)
 	if err != nil {

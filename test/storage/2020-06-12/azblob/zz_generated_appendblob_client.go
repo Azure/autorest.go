@@ -45,7 +45,7 @@ func newAppendBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *a
 // If the operation fails it returns the *StorageError error type.
 // contentLength - The length of the request.
 // body - Initial data
-// AppendBlobAppendBlockOptions - AppendBlobAppendBlockOptions contains the optional parameters for the AppendBlob.AppendBlock
+// AppendBlobAppendBlockOptions - AppendBlobAppendBlockOptions contains the optional parameters for the appendBlobClient.AppendBlock
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the AppendBlob.AppendBlock
@@ -220,7 +220,7 @@ func (client *appendBlobClient) appendBlockHandleError(resp *http.Response) erro
 // If the operation fails it returns the *StorageError error type.
 // sourceURL - Specify a URL to the copy source.
 // contentLength - The length of the request.
-// AppendBlobAppendBlockFromURLOptions - AppendBlobAppendBlockFromURLOptions contains the optional parameters for the AppendBlob.AppendBlockFromURL
+// AppendBlobAppendBlockFromURLOptions - AppendBlobAppendBlockFromURLOptions contains the optional parameters for the appendBlobClient.AppendBlockFromURL
 // method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
 // CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
@@ -410,7 +410,7 @@ func (client *appendBlobClient) appendBlockFromURLHandleError(resp *http.Respons
 // Create - The Create Append Blob operation creates a new append blob.
 // If the operation fails it returns the *StorageError error type.
 // contentLength - The length of the request.
-// AppendBlobCreateOptions - AppendBlobCreateOptions contains the optional parameters for the AppendBlob.Create method.
+// AppendBlobCreateOptions - AppendBlobCreateOptions contains the optional parameters for the appendBlobClient.Create method.
 // BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the Blob.SetHTTPHeaders method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
@@ -588,7 +588,7 @@ func (client *appendBlobClient) createHandleError(resp *http.Response) error {
 // Seal - The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version
 // or later.
 // If the operation fails it returns the *StorageError error type.
-// AppendBlobSealOptions - AppendBlobSealOptions contains the optional parameters for the AppendBlob.Seal method.
+// AppendBlobSealOptions - AppendBlobSealOptions contains the optional parameters for the appendBlobClient.Seal method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
 // AppendPositionAccessConditions - AppendPositionAccessConditions contains a group of parameters for the AppendBlob.AppendBlock

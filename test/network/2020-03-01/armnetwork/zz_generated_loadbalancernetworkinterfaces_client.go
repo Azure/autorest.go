@@ -55,7 +55,7 @@ func NewLoadBalancerNetworkInterfacesClient(subscriptionID string, credential az
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
-// options - LoadBalancerNetworkInterfacesListOptions contains the optional parameters for the LoadBalancerNetworkInterfaces.List
+// options - LoadBalancerNetworkInterfacesListOptions contains the optional parameters for the LoadBalancerNetworkInterfacesClient.List
 // method.
 func (client *LoadBalancerNetworkInterfacesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerNetworkInterfacesListOptions) *LoadBalancerNetworkInterfacesListPager {
 	return &LoadBalancerNetworkInterfacesListPager{

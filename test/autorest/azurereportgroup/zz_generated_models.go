@@ -8,7 +8,7 @@
 
 package azurereportgroup
 
-// AutoRestReportServiceForAzureGetReportOptions contains the optional parameters for the AutoRestReportServiceForAzure.GetReport
+// AutoRestReportServiceForAzureGetReportOptions contains the optional parameters for the AutoRestReportServiceForAzureClient.GetReport
 // method.
 type AutoRestReportServiceForAzureGetReportOptions struct {
 	// If specified, qualifies the generated report further (e.g. '2.7' vs '3.5' in for Python). The only effect is, that generators

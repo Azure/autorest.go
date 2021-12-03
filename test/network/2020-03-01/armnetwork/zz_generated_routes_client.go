@@ -57,7 +57,7 @@ func NewRoutesClient(subscriptionID string, credential azcore.TokenCredential, o
 // routeTableName - The name of the route table.
 // routeName - The name of the route.
 // routeParameters - Parameters supplied to the create or update route operation.
-// options - RoutesBeginCreateOrUpdateOptions contains the optional parameters for the Routes.BeginCreateOrUpdate method.
+// options - RoutesBeginCreateOrUpdateOptions contains the optional parameters for the RoutesClient.BeginCreateOrUpdate method.
 func (client *RoutesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, options *RoutesBeginCreateOrUpdateOptions) (RoutesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeTableName, routeName, routeParameters, options)
 	if err != nil {
@@ -141,7 +141,7 @@ func (client *RoutesClient) createOrUpdateHandleError(resp *http.Response) error
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
 // routeName - The name of the route.
-// options - RoutesBeginDeleteOptions contains the optional parameters for the Routes.BeginDelete method.
+// options - RoutesBeginDeleteOptions contains the optional parameters for the RoutesClient.BeginDelete method.
 func (client *RoutesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesBeginDeleteOptions) (RoutesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, routeTableName, routeName, options)
 	if err != nil {
@@ -225,7 +225,7 @@ func (client *RoutesClient) deleteHandleError(resp *http.Response) error {
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
 // routeName - The name of the route.
-// options - RoutesGetOptions contains the optional parameters for the Routes.Get method.
+// options - RoutesGetOptions contains the optional parameters for the RoutesClient.Get method.
 func (client *RoutesClient) Get(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesGetOptions) (RoutesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, routeTableName, routeName, options)
 	if err != nil {
@@ -297,7 +297,7 @@ func (client *RoutesClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
-// options - RoutesListOptions contains the optional parameters for the Routes.List method.
+// options - RoutesListOptions contains the optional parameters for the RoutesClient.List method.
 func (client *RoutesClient) List(resourceGroupName string, routeTableName string, options *RoutesListOptions) *RoutesListPager {
 	return &RoutesListPager{
 		client: client,

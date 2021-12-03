@@ -47,7 +47,7 @@ func NewAlertsClient(subscriptionID string, options *azcore.ClientOptions) *Aler
 // deviceName - The device name.
 // name - The alert name.
 // resourceGroupName - The resource group name.
-// options - AlertsGetOptions contains the optional parameters for the Alerts.Get method.
+// options - AlertsGetOptions contains the optional parameters for the AlertsClient.Get method.
 func (client *AlertsClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *AlertsGetOptions) (AlertsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -119,7 +119,7 @@ func (client *AlertsClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - AlertsListByDataBoxEdgeDeviceOptions contains the optional parameters for the Alerts.ListByDataBoxEdgeDevice
+// options - AlertsListByDataBoxEdgeDeviceOptions contains the optional parameters for the AlertsClient.ListByDataBoxEdgeDevice
 // method.
 func (client *AlertsClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *AlertsListByDataBoxEdgeDeviceOptions) *AlertsListByDataBoxEdgeDevicePager {
 	return &AlertsListByDataBoxEdgeDevicePager{

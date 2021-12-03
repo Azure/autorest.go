@@ -50,7 +50,7 @@ func NewCreditsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 // scope - The scope associated with credits operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
 // for Billing Profile scope, and
 // 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
-// options - CreditsGetOptions contains the optional parameters for the Credits.Get method.
+// options - CreditsGetOptions contains the optional parameters for the CreditsClient.Get method.
 func (client *CreditsClient) Get(ctx context.Context, scope string, options *CreditsGetOptions) (CreditsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, scope, options)
 	if err != nil {

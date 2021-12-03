@@ -51,7 +51,8 @@ func NewBalancesClient(credential azcore.TokenCredential, options *arm.ClientOpt
 // 1, 2014 or later.
 // If the operation fails it returns the *ErrorResponse error type.
 // billingAccountID - BillingAccount ID
-// options - BalancesGetByBillingAccountOptions contains the optional parameters for the Balances.GetByBillingAccount method.
+// options - BalancesGetByBillingAccountOptions contains the optional parameters for the BalancesClient.GetByBillingAccount
+// method.
 func (client *BalancesClient) GetByBillingAccount(ctx context.Context, billingAccountID string, options *BalancesGetByBillingAccountOptions) (BalancesGetByBillingAccountResponse, error) {
 	req, err := client.getByBillingAccountCreateRequest(ctx, billingAccountID, options)
 	if err != nil {
@@ -112,7 +113,7 @@ func (client *BalancesClient) getByBillingAccountHandleError(resp *http.Response
 // If the operation fails it returns the *ErrorResponse error type.
 // billingAccountID - BillingAccount ID
 // billingPeriodName - Billing Period Name.
-// options - BalancesGetForBillingPeriodByBillingAccountOptions contains the optional parameters for the Balances.GetForBillingPeriodByBillingAccount
+// options - BalancesGetForBillingPeriodByBillingAccountOptions contains the optional parameters for the BalancesClient.GetForBillingPeriodByBillingAccount
 // method.
 func (client *BalancesClient) GetForBillingPeriodByBillingAccount(ctx context.Context, billingAccountID string, billingPeriodName string, options *BalancesGetForBillingPeriodByBillingAccountOptions) (BalancesGetForBillingPeriodByBillingAccountResponse, error) {
 	req, err := client.getForBillingPeriodByBillingAccountCreateRequest(ctx, billingAccountID, billingPeriodName, options)

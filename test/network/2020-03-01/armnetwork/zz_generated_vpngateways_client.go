@@ -56,7 +56,7 @@ func NewVPNGatewaysClient(subscriptionID string, credential azcore.TokenCredenti
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // vpnGatewayParameters - Parameters supplied to create or Update a virtual wan vpn gateway.
-// options - VPNGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the VPNGateways.BeginCreateOrUpdate
+// options - VPNGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the VPNGatewaysClient.BeginCreateOrUpdate
 // method.
 func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VPNGateway, options *VPNGatewaysBeginCreateOrUpdateOptions) (VPNGatewaysCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, vpnGatewayParameters, options)
@@ -136,7 +136,7 @@ func (client *VPNGatewaysClient) createOrUpdateHandleError(resp *http.Response) 
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
-// options - VPNGatewaysBeginDeleteOptions contains the optional parameters for the VPNGateways.BeginDelete method.
+// options - VPNGatewaysBeginDeleteOptions contains the optional parameters for the VPNGatewaysClient.BeginDelete method.
 func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysBeginDeleteOptions) (VPNGatewaysDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
@@ -215,7 +215,7 @@ func (client *VPNGatewaysClient) deleteHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
-// options - VPNGatewaysGetOptions contains the optional parameters for the VPNGateways.Get method.
+// options - VPNGatewaysGetOptions contains the optional parameters for the VPNGatewaysClient.Get method.
 func (client *VPNGatewaysClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysGetOptions) (VPNGatewaysGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
@@ -281,7 +281,7 @@ func (client *VPNGatewaysClient) getHandleError(resp *http.Response) error {
 
 // List - Lists all the VpnGateways in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - VPNGatewaysListOptions contains the optional parameters for the VPNGateways.List method.
+// options - VPNGatewaysListOptions contains the optional parameters for the VPNGatewaysClient.List method.
 func (client *VPNGatewaysClient) List(options *VPNGatewaysListOptions) *VPNGatewaysListPager {
 	return &VPNGatewaysListPager{
 		client: client,
@@ -337,7 +337,7 @@ func (client *VPNGatewaysClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Lists all the VpnGateways in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnGateway.
-// options - VPNGatewaysListByResourceGroupOptions contains the optional parameters for the VPNGateways.ListByResourceGroup
+// options - VPNGatewaysListByResourceGroupOptions contains the optional parameters for the VPNGatewaysClient.ListByResourceGroup
 // method.
 func (client *VPNGatewaysClient) ListByResourceGroup(resourceGroupName string, options *VPNGatewaysListByResourceGroupOptions) *VPNGatewaysListByResourceGroupPager {
 	return &VPNGatewaysListByResourceGroupPager{
@@ -399,7 +399,7 @@ func (client *VPNGatewaysClient) listByResourceGroupHandleError(resp *http.Respo
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
-// options - VPNGatewaysBeginResetOptions contains the optional parameters for the VPNGateways.BeginReset method.
+// options - VPNGatewaysBeginResetOptions contains the optional parameters for the VPNGatewaysClient.BeginReset method.
 func (client *VPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysBeginResetOptions) (VPNGatewaysResetPollerResponse, error) {
 	resp, err := client.reset(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
@@ -479,7 +479,7 @@ func (client *VPNGatewaysClient) resetHandleError(resp *http.Response) error {
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // vpnGatewayParameters - Parameters supplied to update a virtual wan vpn gateway tags.
-// options - VPNGatewaysUpdateTagsOptions contains the optional parameters for the VPNGateways.UpdateTags method.
+// options - VPNGatewaysUpdateTagsOptions contains the optional parameters for the VPNGatewaysClient.UpdateTags method.
 func (client *VPNGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters TagsObject, options *VPNGatewaysUpdateTagsOptions) (VPNGatewaysUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, gatewayName, vpnGatewayParameters, options)
 	if err != nil {

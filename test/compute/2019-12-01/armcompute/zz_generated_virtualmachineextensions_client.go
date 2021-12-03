@@ -56,7 +56,7 @@ func NewVirtualMachineExtensionsClient(subscriptionID string, credential azcore.
 // vmName - The name of the virtual machine where the extension should be created or updated.
 // vmExtensionName - The name of the virtual machine extension.
 // extensionParameters - Parameters supplied to the Create Virtual Machine Extension operation.
-// options - VirtualMachineExtensionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineExtensions.BeginCreateOrUpdate
+// options - VirtualMachineExtensionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineExtensionsClient.BeginCreateOrUpdate
 // method.
 func (client *VirtualMachineExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineExtensionsBeginCreateOrUpdateOptions) (VirtualMachineExtensionsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)
@@ -140,7 +140,7 @@ func (client *VirtualMachineExtensionsClient) createOrUpdateHandleError(resp *ht
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine where the extension should be deleted.
 // vmExtensionName - The name of the virtual machine extension.
-// options - VirtualMachineExtensionsBeginDeleteOptions contains the optional parameters for the VirtualMachineExtensions.BeginDelete
+// options - VirtualMachineExtensionsBeginDeleteOptions contains the optional parameters for the VirtualMachineExtensionsClient.BeginDelete
 // method.
 func (client *VirtualMachineExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsBeginDeleteOptions) (VirtualMachineExtensionsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vmName, vmExtensionName, options)
@@ -223,7 +223,8 @@ func (client *VirtualMachineExtensionsClient) deleteHandleError(resp *http.Respo
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine containing the extension.
 // vmExtensionName - The name of the virtual machine extension.
-// options - VirtualMachineExtensionsGetOptions contains the optional parameters for the VirtualMachineExtensions.Get method.
+// options - VirtualMachineExtensionsGetOptions contains the optional parameters for the VirtualMachineExtensionsClient.Get
+// method.
 func (client *VirtualMachineExtensionsClient) Get(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsGetOptions) (VirtualMachineExtensionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName, options)
 	if err != nil {
@@ -297,7 +298,8 @@ func (client *VirtualMachineExtensionsClient) getHandleError(resp *http.Response
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine containing the extension.
-// options - VirtualMachineExtensionsListOptions contains the optional parameters for the VirtualMachineExtensions.List method.
+// options - VirtualMachineExtensionsListOptions contains the optional parameters for the VirtualMachineExtensionsClient.List
+// method.
 func (client *VirtualMachineExtensionsClient) List(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachineExtensionsListOptions) (VirtualMachineExtensionsListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
@@ -369,7 +371,7 @@ func (client *VirtualMachineExtensionsClient) listHandleError(resp *http.Respons
 // vmName - The name of the virtual machine where the extension should be updated.
 // vmExtensionName - The name of the virtual machine extension.
 // extensionParameters - Parameters supplied to the Update Virtual Machine Extension operation.
-// options - VirtualMachineExtensionsBeginUpdateOptions contains the optional parameters for the VirtualMachineExtensions.BeginUpdate
+// options - VirtualMachineExtensionsBeginUpdateOptions contains the optional parameters for the VirtualMachineExtensionsClient.BeginUpdate
 // method.
 func (client *VirtualMachineExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineExtensionsBeginUpdateOptions) (VirtualMachineExtensionsUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)

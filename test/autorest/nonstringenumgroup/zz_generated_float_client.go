@@ -38,7 +38,7 @@ func NewFloatClient(options *azcore.ClientOptions) *FloatClient {
 
 // Get - Get a float enum
 // If the operation fails it returns a generic error.
-// options - FloatGetOptions contains the optional parameters for the Float.Get method.
+// options - FloatGetOptions contains the optional parameters for the FloatClient.Get method.
 func (client *FloatClient) Get(ctx context.Context, options *FloatGetOptions) (FloatGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
@@ -88,7 +88,7 @@ func (client *FloatClient) getHandleError(resp *http.Response) error {
 
 // Put - Put a float enum
 // If the operation fails it returns a generic error.
-// options - FloatPutOptions contains the optional parameters for the Float.Put method.
+// options - FloatPutOptions contains the optional parameters for the FloatClient.Put method.
 func (client *FloatClient) Put(ctx context.Context, options *FloatPutOptions) (FloatPutResponse, error) {
 	req, err := client.putCreateRequest(ctx, options)
 	if err != nil {

@@ -58,7 +58,7 @@ func NewVirtualMachineImagesClient(subscriptionID string, credential azcore.Toke
 // offer - A valid image publisher offer.
 // skus - A valid image SKU.
 // version - A valid image SKU version.
-// options - VirtualMachineImagesGetOptions contains the optional parameters for the VirtualMachineImages.Get method.
+// options - VirtualMachineImagesGetOptions contains the optional parameters for the VirtualMachineImagesClient.Get method.
 func (client *VirtualMachineImagesClient) Get(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesGetOptions) (VirtualMachineImagesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, publisherName, offer, skus, version, options)
 	if err != nil {
@@ -139,7 +139,7 @@ func (client *VirtualMachineImagesClient) getHandleError(resp *http.Response) er
 // publisherName - A valid image publisher.
 // offer - A valid image publisher offer.
 // skus - A valid image SKU.
-// options - VirtualMachineImagesListOptions contains the optional parameters for the VirtualMachineImages.List method.
+// options - VirtualMachineImagesListOptions contains the optional parameters for the VirtualMachineImagesClient.List method.
 func (client *VirtualMachineImagesClient) List(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesListOptions) (VirtualMachineImagesListResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, publisherName, offer, skus, options)
 	if err != nil {
@@ -223,7 +223,7 @@ func (client *VirtualMachineImagesClient) listHandleError(resp *http.Response) e
 // If the operation fails it returns a generic error.
 // location - The name of a supported Azure region.
 // publisherName - A valid image publisher.
-// options - VirtualMachineImagesListOffersOptions contains the optional parameters for the VirtualMachineImages.ListOffers
+// options - VirtualMachineImagesListOffersOptions contains the optional parameters for the VirtualMachineImagesClient.ListOffers
 // method.
 func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesListOffersOptions) (VirtualMachineImagesListOffersResponse, error) {
 	req, err := client.listOffersCreateRequest(ctx, location, publisherName, options)
@@ -290,7 +290,7 @@ func (client *VirtualMachineImagesClient) listOffersHandleError(resp *http.Respo
 // ListPublishers - Gets a list of virtual machine image publishers for the specified Azure location.
 // If the operation fails it returns a generic error.
 // location - The name of a supported Azure region.
-// options - VirtualMachineImagesListPublishersOptions contains the optional parameters for the VirtualMachineImages.ListPublishers
+// options - VirtualMachineImagesListPublishersOptions contains the optional parameters for the VirtualMachineImagesClient.ListPublishers
 // method.
 func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, location string, options *VirtualMachineImagesListPublishersOptions) (VirtualMachineImagesListPublishersResponse, error) {
 	req, err := client.listPublishersCreateRequest(ctx, location, options)
@@ -355,7 +355,8 @@ func (client *VirtualMachineImagesClient) listPublishersHandleError(resp *http.R
 // location - The name of a supported Azure region.
 // publisherName - A valid image publisher.
 // offer - A valid image publisher offer.
-// options - VirtualMachineImagesListSKUsOptions contains the optional parameters for the VirtualMachineImages.ListSKUs method.
+// options - VirtualMachineImagesListSKUsOptions contains the optional parameters for the VirtualMachineImagesClient.ListSKUs
+// method.
 func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (VirtualMachineImagesListSKUsResponse, error) {
 	req, err := client.listSKUsCreateRequest(ctx, location, publisherName, offer, options)
 	if err != nil {

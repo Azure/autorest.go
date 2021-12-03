@@ -58,7 +58,7 @@ func NewVPNConnectionsClient(subscriptionID string, credential azcore.TokenCrede
 // gatewayName - The name of the gateway.
 // connectionName - The name of the connection.
 // vpnConnectionParameters - Parameters supplied to create or Update a VPN Connection.
-// options - VPNConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the VPNConnections.BeginCreateOrUpdate
+// options - VPNConnectionsBeginCreateOrUpdateOptions contains the optional parameters for the VPNConnectionsClient.BeginCreateOrUpdate
 // method.
 func (client *VPNConnectionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, vpnConnectionParameters VPNConnection, options *VPNConnectionsBeginCreateOrUpdateOptions) (VPNConnectionsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, connectionName, vpnConnectionParameters, options)
@@ -143,7 +143,7 @@ func (client *VPNConnectionsClient) createOrUpdateHandleError(resp *http.Respons
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // connectionName - The name of the connection.
-// options - VPNConnectionsBeginDeleteOptions contains the optional parameters for the VPNConnections.BeginDelete method.
+// options - VPNConnectionsBeginDeleteOptions contains the optional parameters for the VPNConnectionsClient.BeginDelete method.
 func (client *VPNConnectionsClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsBeginDeleteOptions) (VPNConnectionsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, connectionName, options)
 	if err != nil {
@@ -227,7 +227,7 @@ func (client *VPNConnectionsClient) deleteHandleError(resp *http.Response) error
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // connectionName - The name of the vpn connection.
-// options - VPNConnectionsGetOptions contains the optional parameters for the VPNConnections.Get method.
+// options - VPNConnectionsGetOptions contains the optional parameters for the VPNConnectionsClient.Get method.
 func (client *VPNConnectionsClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNConnectionsGetOptions) (VPNConnectionsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, options)
 	if err != nil {
@@ -299,7 +299,7 @@ func (client *VPNConnectionsClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
-// options - VPNConnectionsListByVPNGatewayOptions contains the optional parameters for the VPNConnections.ListByVPNGateway
+// options - VPNConnectionsListByVPNGatewayOptions contains the optional parameters for the VPNConnectionsClient.ListByVPNGateway
 // method.
 func (client *VPNConnectionsClient) ListByVPNGateway(resourceGroupName string, gatewayName string, options *VPNConnectionsListByVPNGatewayOptions) *VPNConnectionsListByVPNGatewayPager {
 	return &VPNConnectionsListByVPNGatewayPager{

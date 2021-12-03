@@ -56,7 +56,7 @@ func NewIPAllocationsClient(subscriptionID string, credential azcore.TokenCreden
 // resourceGroupName - The name of the resource group.
 // ipAllocationName - The name of the IpAllocation.
 // parameters - Parameters supplied to the create or update virtual network operation.
-// options - IPAllocationsBeginCreateOrUpdateOptions contains the optional parameters for the IPAllocations.BeginCreateOrUpdate
+// options - IPAllocationsBeginCreateOrUpdateOptions contains the optional parameters for the IPAllocationsClient.BeginCreateOrUpdate
 // method.
 func (client *IPAllocationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters IPAllocation, options *IPAllocationsBeginCreateOrUpdateOptions) (IPAllocationsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ipAllocationName, parameters, options)
@@ -136,7 +136,7 @@ func (client *IPAllocationsClient) createOrUpdateHandleError(resp *http.Response
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // ipAllocationName - The name of the IpAllocation.
-// options - IPAllocationsBeginDeleteOptions contains the optional parameters for the IPAllocations.BeginDelete method.
+// options - IPAllocationsBeginDeleteOptions contains the optional parameters for the IPAllocationsClient.BeginDelete method.
 func (client *IPAllocationsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsBeginDeleteOptions) (IPAllocationsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ipAllocationName, options)
 	if err != nil {
@@ -215,7 +215,7 @@ func (client *IPAllocationsClient) deleteHandleError(resp *http.Response) error 
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // ipAllocationName - The name of the IpAllocation.
-// options - IPAllocationsGetOptions contains the optional parameters for the IPAllocations.Get method.
+// options - IPAllocationsGetOptions contains the optional parameters for the IPAllocationsClient.Get method.
 func (client *IPAllocationsClient) Get(ctx context.Context, resourceGroupName string, ipAllocationName string, options *IPAllocationsGetOptions) (IPAllocationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, ipAllocationName, options)
 	if err != nil {
@@ -284,7 +284,7 @@ func (client *IPAllocationsClient) getHandleError(resp *http.Response) error {
 
 // List - Gets all IpAllocations in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - IPAllocationsListOptions contains the optional parameters for the IPAllocations.List method.
+// options - IPAllocationsListOptions contains the optional parameters for the IPAllocationsClient.List method.
 func (client *IPAllocationsClient) List(options *IPAllocationsListOptions) *IPAllocationsListPager {
 	return &IPAllocationsListPager{
 		client: client,
@@ -340,7 +340,7 @@ func (client *IPAllocationsClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Gets all IpAllocations in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - IPAllocationsListByResourceGroupOptions contains the optional parameters for the IPAllocations.ListByResourceGroup
+// options - IPAllocationsListByResourceGroupOptions contains the optional parameters for the IPAllocationsClient.ListByResourceGroup
 // method.
 func (client *IPAllocationsClient) ListByResourceGroup(resourceGroupName string, options *IPAllocationsListByResourceGroupOptions) *IPAllocationsListByResourceGroupPager {
 	return &IPAllocationsListByResourceGroupPager{
@@ -403,7 +403,7 @@ func (client *IPAllocationsClient) listByResourceGroupHandleError(resp *http.Res
 // resourceGroupName - The name of the resource group.
 // ipAllocationName - The name of the IpAllocation.
 // parameters - Parameters supplied to update IpAllocation tags.
-// options - IPAllocationsUpdateTagsOptions contains the optional parameters for the IPAllocations.UpdateTags method.
+// options - IPAllocationsUpdateTagsOptions contains the optional parameters for the IPAllocationsClient.UpdateTags method.
 func (client *IPAllocationsClient) UpdateTags(ctx context.Context, resourceGroupName string, ipAllocationName string, parameters TagsObject, options *IPAllocationsUpdateTagsOptions) (IPAllocationsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, ipAllocationName, parameters, options)
 	if err != nil {

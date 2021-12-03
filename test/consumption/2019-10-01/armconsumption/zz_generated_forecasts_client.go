@@ -54,7 +54,7 @@ func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential
 // We recommend using our new Forecast API moving forward:
 // https://docs.microsoft.com/en-us/rest/api/cost-management/forecast/usage.
 // If the operation fails it returns the *ErrorResponse error type.
-// options - ForecastsListOptions contains the optional parameters for the Forecasts.List method.
+// options - ForecastsListOptions contains the optional parameters for the ForecastsClient.List method.
 func (client *ForecastsClient) List(ctx context.Context, options *ForecastsListOptions) (ForecastsListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {

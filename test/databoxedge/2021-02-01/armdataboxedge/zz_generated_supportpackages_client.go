@@ -48,7 +48,7 @@ func NewSupportPackagesClient(subscriptionID string, options *azcore.ClientOptio
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // triggerSupportPackageRequest - The trigger support package request object
-// options - SupportPackagesBeginTriggerSupportPackageOptions contains the optional parameters for the SupportPackages.BeginTriggerSupportPackage
+// options - SupportPackagesBeginTriggerSupportPackageOptions contains the optional parameters for the SupportPackagesClient.BeginTriggerSupportPackage
 // method.
 func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesBeginTriggerSupportPackageOptions) (SupportPackagesTriggerSupportPackagePollerResponse, error) {
 	resp, err := client.triggerSupportPackage(ctx, deviceName, resourceGroupName, triggerSupportPackageRequest, options)
