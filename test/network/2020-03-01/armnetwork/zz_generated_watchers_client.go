@@ -22,20 +22,20 @@ import (
 	"strings"
 )
 
-// NetworkWatchersClient contains the methods for the NetworkWatchers group.
-// Don't use this type directly, use NewNetworkWatchersClient() instead.
-type NetworkWatchersClient struct {
+// WatchersClient contains the methods for the NetworkWatchers group.
+// Don't use this type directly, use NewWatchersClient() instead.
+type WatchersClient struct {
 	host           string
 	subscriptionID string
 	pl             runtime.Pipeline
 }
 
-// NewNetworkWatchersClient creates a new instance of NetworkWatchersClient with the specified values.
+// NewWatchersClient creates a new instance of WatchersClient with the specified values.
 // subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
 // ID forms part of the URI for every service call.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewNetworkWatchersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NetworkWatchersClient {
+func NewWatchersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *WatchersClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
 		cp = *options
@@ -43,7 +43,7 @@ func NewNetworkWatchersClient(subscriptionID string, credential azcore.TokenCred
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	client := &NetworkWatchersClient{
+	client := &WatchersClient{
 		subscriptionID: subscriptionID,
 		host:           string(cp.Host),
 		pl:             armruntime.NewPipeline(module, version, credential, &cp),
@@ -57,9 +57,9 @@ func NewNetworkWatchersClient(subscriptionID string, credential azcore.TokenCred
 // resourceGroupName - The name of the network watcher resource group.
 // networkWatcherName - The name of the network watcher resource.
 // parameters - Parameters that determine how the connectivity check will be performed.
-// options - NetworkWatchersBeginCheckConnectivityOptions contains the optional parameters for the NetworkWatchersClient.BeginCheckConnectivity
+// options - NetworkWatchersBeginCheckConnectivityOptions contains the optional parameters for the WatchersClient.BeginCheckConnectivity
 // method.
-func (client *NetworkWatchersClient) BeginCheckConnectivity(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters, options *NetworkWatchersBeginCheckConnectivityOptions) (NetworkWatchersCheckConnectivityPollerResponse, error) {
+func (client *WatchersClient) BeginCheckConnectivity(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters, options *NetworkWatchersBeginCheckConnectivityOptions) (NetworkWatchersCheckConnectivityPollerResponse, error) {
 	resp, err := client.checkConnectivity(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return NetworkWatchersCheckConnectivityPollerResponse{}, err
@@ -67,7 +67,7 @@ func (client *NetworkWatchersClient) BeginCheckConnectivity(ctx context.Context,
 	result := NetworkWatchersCheckConnectivityPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkWatchersClient.CheckConnectivity", "location", resp, client.pl, client.checkConnectivityHandleError)
+	pt, err := armruntime.NewPoller("WatchersClient.CheckConnectivity", "location", resp, client.pl, client.checkConnectivityHandleError)
 	if err != nil {
 		return NetworkWatchersCheckConnectivityPollerResponse{}, err
 	}
@@ -80,7 +80,7 @@ func (client *NetworkWatchersClient) BeginCheckConnectivity(ctx context.Context,
 // CheckConnectivity - Verifies the possibility of establishing a direct TCP connection from a virtual machine to a given
 // endpoint including another VM or an arbitrary remote server.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *NetworkWatchersClient) checkConnectivity(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters, options *NetworkWatchersBeginCheckConnectivityOptions) (*http.Response, error) {
+func (client *WatchersClient) checkConnectivity(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters, options *NetworkWatchersBeginCheckConnectivityOptions) (*http.Response, error) {
 	req, err := client.checkConnectivityCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -96,7 +96,7 @@ func (client *NetworkWatchersClient) checkConnectivity(ctx context.Context, reso
 }
 
 // checkConnectivityCreateRequest creates the CheckConnectivity request.
-func (client *NetworkWatchersClient) checkConnectivityCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters, options *NetworkWatchersBeginCheckConnectivityOptions) (*policy.Request, error) {
+func (client *WatchersClient) checkConnectivityCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConnectivityParameters, options *NetworkWatchersBeginCheckConnectivityOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectivityCheck"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -122,7 +122,7 @@ func (client *NetworkWatchersClient) checkConnectivityCreateRequest(ctx context.
 }
 
 // checkConnectivityHandleError handles the CheckConnectivity error response.
-func (client *NetworkWatchersClient) checkConnectivityHandleError(resp *http.Response) error {
+func (client *WatchersClient) checkConnectivityHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -139,9 +139,8 @@ func (client *NetworkWatchersClient) checkConnectivityHandleError(resp *http.Res
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // parameters - Parameters that define the network watcher resource.
-// options - NetworkWatchersCreateOrUpdateOptions contains the optional parameters for the NetworkWatchersClient.CreateOrUpdate
-// method.
-func (client *NetworkWatchersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NetworkWatcher, options *NetworkWatchersCreateOrUpdateOptions) (NetworkWatchersCreateOrUpdateResponse, error) {
+// options - NetworkWatchersCreateOrUpdateOptions contains the optional parameters for the WatchersClient.CreateOrUpdate method.
+func (client *WatchersClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters Watcher, options *NetworkWatchersCreateOrUpdateOptions) (NetworkWatchersCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return NetworkWatchersCreateOrUpdateResponse{}, err
@@ -157,7 +156,7 @@ func (client *NetworkWatchersClient) CreateOrUpdate(ctx context.Context, resourc
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *NetworkWatchersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NetworkWatcher, options *NetworkWatchersCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *WatchersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters Watcher, options *NetworkWatchersCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -183,16 +182,16 @@ func (client *NetworkWatchersClient) createOrUpdateCreateRequest(ctx context.Con
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *NetworkWatchersClient) createOrUpdateHandleResponse(resp *http.Response) (NetworkWatchersCreateOrUpdateResponse, error) {
+func (client *WatchersClient) createOrUpdateHandleResponse(resp *http.Response) (NetworkWatchersCreateOrUpdateResponse, error) {
 	result := NetworkWatchersCreateOrUpdateResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkWatcher); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Watcher); err != nil {
 		return NetworkWatchersCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *NetworkWatchersClient) createOrUpdateHandleError(resp *http.Response) error {
+func (client *WatchersClient) createOrUpdateHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -208,9 +207,8 @@ func (client *NetworkWatchersClient) createOrUpdateHandleError(resp *http.Respon
 // If the operation fails it returns the *ErrorResponse error type.
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
-// options - NetworkWatchersBeginDeleteOptions contains the optional parameters for the NetworkWatchersClient.BeginDelete
-// method.
-func (client *NetworkWatchersClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, options *NetworkWatchersBeginDeleteOptions) (NetworkWatchersDeletePollerResponse, error) {
+// options - NetworkWatchersBeginDeleteOptions contains the optional parameters for the WatchersClient.BeginDelete method.
+func (client *WatchersClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, options *NetworkWatchersBeginDeleteOptions) (NetworkWatchersDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, options)
 	if err != nil {
 		return NetworkWatchersDeletePollerResponse{}, err
@@ -218,7 +216,7 @@ func (client *NetworkWatchersClient) BeginDelete(ctx context.Context, resourceGr
 	result := NetworkWatchersDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkWatchersClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("WatchersClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
 		return NetworkWatchersDeletePollerResponse{}, err
 	}
@@ -230,7 +228,7 @@ func (client *NetworkWatchersClient) BeginDelete(ctx context.Context, resourceGr
 
 // Delete - Deletes the specified network watcher resource.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *NetworkWatchersClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, options *NetworkWatchersBeginDeleteOptions) (*http.Response, error) {
+func (client *WatchersClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, options *NetworkWatchersBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
 	if err != nil {
 		return nil, err
@@ -246,7 +244,7 @@ func (client *NetworkWatchersClient) deleteOperation(ctx context.Context, resour
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *NetworkWatchersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, options *NetworkWatchersBeginDeleteOptions) (*policy.Request, error) {
+func (client *WatchersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, options *NetworkWatchersBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -272,7 +270,7 @@ func (client *NetworkWatchersClient) deleteCreateRequest(ctx context.Context, re
 }
 
 // deleteHandleError handles the Delete error response.
-func (client *NetworkWatchersClient) deleteHandleError(resp *http.Response) error {
+func (client *WatchersClient) deleteHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -288,8 +286,8 @@ func (client *NetworkWatchersClient) deleteHandleError(resp *http.Response) erro
 // If the operation fails it returns the *ErrorResponse error type.
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
-// options - NetworkWatchersGetOptions contains the optional parameters for the NetworkWatchersClient.Get method.
-func (client *NetworkWatchersClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, options *NetworkWatchersGetOptions) (NetworkWatchersGetResponse, error) {
+// options - NetworkWatchersGetOptions contains the optional parameters for the WatchersClient.Get method.
+func (client *WatchersClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, options *NetworkWatchersGetOptions) (NetworkWatchersGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
 	if err != nil {
 		return NetworkWatchersGetResponse{}, err
@@ -305,7 +303,7 @@ func (client *NetworkWatchersClient) Get(ctx context.Context, resourceGroupName 
 }
 
 // getCreateRequest creates the Get request.
-func (client *NetworkWatchersClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, options *NetworkWatchersGetOptions) (*policy.Request, error) {
+func (client *WatchersClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, options *NetworkWatchersGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -331,16 +329,16 @@ func (client *NetworkWatchersClient) getCreateRequest(ctx context.Context, resou
 }
 
 // getHandleResponse handles the Get response.
-func (client *NetworkWatchersClient) getHandleResponse(resp *http.Response) (NetworkWatchersGetResponse, error) {
+func (client *WatchersClient) getHandleResponse(resp *http.Response) (NetworkWatchersGetResponse, error) {
 	result := NetworkWatchersGetResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkWatcher); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Watcher); err != nil {
 		return NetworkWatchersGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // getHandleError handles the Get error response.
-func (client *NetworkWatchersClient) getHandleError(resp *http.Response) error {
+func (client *WatchersClient) getHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -358,9 +356,9 @@ func (client *NetworkWatchersClient) getHandleError(resp *http.Response) error {
 // resourceGroupName - The name of the network watcher resource group.
 // networkWatcherName - The name of the network watcher resource.
 // parameters - Parameters that determine Azure reachability report configuration.
-// options - NetworkWatchersBeginGetAzureReachabilityReportOptions contains the optional parameters for the NetworkWatchersClient.BeginGetAzureReachabilityReport
+// options - NetworkWatchersBeginGetAzureReachabilityReportOptions contains the optional parameters for the WatchersClient.BeginGetAzureReachabilityReport
 // method.
-func (client *NetworkWatchersClient) BeginGetAzureReachabilityReport(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters, options *NetworkWatchersBeginGetAzureReachabilityReportOptions) (NetworkWatchersGetAzureReachabilityReportPollerResponse, error) {
+func (client *WatchersClient) BeginGetAzureReachabilityReport(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters, options *NetworkWatchersBeginGetAzureReachabilityReportOptions) (NetworkWatchersGetAzureReachabilityReportPollerResponse, error) {
 	resp, err := client.getAzureReachabilityReport(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return NetworkWatchersGetAzureReachabilityReportPollerResponse{}, err
@@ -368,7 +366,7 @@ func (client *NetworkWatchersClient) BeginGetAzureReachabilityReport(ctx context
 	result := NetworkWatchersGetAzureReachabilityReportPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkWatchersClient.GetAzureReachabilityReport", "location", resp, client.pl, client.getAzureReachabilityReportHandleError)
+	pt, err := armruntime.NewPoller("WatchersClient.GetAzureReachabilityReport", "location", resp, client.pl, client.getAzureReachabilityReportHandleError)
 	if err != nil {
 		return NetworkWatchersGetAzureReachabilityReportPollerResponse{}, err
 	}
@@ -381,7 +379,7 @@ func (client *NetworkWatchersClient) BeginGetAzureReachabilityReport(ctx context
 // GetAzureReachabilityReport - NOTE: This feature is currently in preview and still being tested for stability. Gets the
 // relative latency score for internet service providers from a specified location to Azure regions.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *NetworkWatchersClient) getAzureReachabilityReport(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters, options *NetworkWatchersBeginGetAzureReachabilityReportOptions) (*http.Response, error) {
+func (client *WatchersClient) getAzureReachabilityReport(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters, options *NetworkWatchersBeginGetAzureReachabilityReportOptions) (*http.Response, error) {
 	req, err := client.getAzureReachabilityReportCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -397,7 +395,7 @@ func (client *NetworkWatchersClient) getAzureReachabilityReport(ctx context.Cont
 }
 
 // getAzureReachabilityReportCreateRequest creates the GetAzureReachabilityReport request.
-func (client *NetworkWatchersClient) getAzureReachabilityReportCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters, options *NetworkWatchersBeginGetAzureReachabilityReportOptions) (*policy.Request, error) {
+func (client *WatchersClient) getAzureReachabilityReportCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AzureReachabilityReportParameters, options *NetworkWatchersBeginGetAzureReachabilityReportOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/azureReachabilityReport"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -423,7 +421,7 @@ func (client *NetworkWatchersClient) getAzureReachabilityReportCreateRequest(ctx
 }
 
 // getAzureReachabilityReportHandleError handles the GetAzureReachabilityReport error response.
-func (client *NetworkWatchersClient) getAzureReachabilityReportHandleError(resp *http.Response) error {
+func (client *WatchersClient) getAzureReachabilityReportHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -440,9 +438,9 @@ func (client *NetworkWatchersClient) getAzureReachabilityReportHandleError(resp 
 // resourceGroupName - The name of the network watcher resource group.
 // networkWatcherName - The name of the network watcher resource.
 // parameters - Parameters that define a resource to query flow log and traffic analytics (optional) status.
-// options - NetworkWatchersBeginGetFlowLogStatusOptions contains the optional parameters for the NetworkWatchersClient.BeginGetFlowLogStatus
+// options - NetworkWatchersBeginGetFlowLogStatusOptions contains the optional parameters for the WatchersClient.BeginGetFlowLogStatus
 // method.
-func (client *NetworkWatchersClient) BeginGetFlowLogStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters, options *NetworkWatchersBeginGetFlowLogStatusOptions) (NetworkWatchersGetFlowLogStatusPollerResponse, error) {
+func (client *WatchersClient) BeginGetFlowLogStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters, options *NetworkWatchersBeginGetFlowLogStatusOptions) (NetworkWatchersGetFlowLogStatusPollerResponse, error) {
 	resp, err := client.getFlowLogStatus(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return NetworkWatchersGetFlowLogStatusPollerResponse{}, err
@@ -450,7 +448,7 @@ func (client *NetworkWatchersClient) BeginGetFlowLogStatus(ctx context.Context, 
 	result := NetworkWatchersGetFlowLogStatusPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkWatchersClient.GetFlowLogStatus", "location", resp, client.pl, client.getFlowLogStatusHandleError)
+	pt, err := armruntime.NewPoller("WatchersClient.GetFlowLogStatus", "location", resp, client.pl, client.getFlowLogStatusHandleError)
 	if err != nil {
 		return NetworkWatchersGetFlowLogStatusPollerResponse{}, err
 	}
@@ -462,7 +460,7 @@ func (client *NetworkWatchersClient) BeginGetFlowLogStatus(ctx context.Context, 
 
 // GetFlowLogStatus - Queries status of flow log and traffic analytics (optional) on a specified resource.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *NetworkWatchersClient) getFlowLogStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters, options *NetworkWatchersBeginGetFlowLogStatusOptions) (*http.Response, error) {
+func (client *WatchersClient) getFlowLogStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters, options *NetworkWatchersBeginGetFlowLogStatusOptions) (*http.Response, error) {
 	req, err := client.getFlowLogStatusCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -478,7 +476,7 @@ func (client *NetworkWatchersClient) getFlowLogStatus(ctx context.Context, resou
 }
 
 // getFlowLogStatusCreateRequest creates the GetFlowLogStatus request.
-func (client *NetworkWatchersClient) getFlowLogStatusCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters, options *NetworkWatchersBeginGetFlowLogStatusOptions) (*policy.Request, error) {
+func (client *WatchersClient) getFlowLogStatusCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogStatusParameters, options *NetworkWatchersBeginGetFlowLogStatusOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/queryFlowLogStatus"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -504,7 +502,7 @@ func (client *NetworkWatchersClient) getFlowLogStatusCreateRequest(ctx context.C
 }
 
 // getFlowLogStatusHandleError handles the GetFlowLogStatus error response.
-func (client *NetworkWatchersClient) getFlowLogStatusHandleError(resp *http.Response) error {
+func (client *WatchersClient) getFlowLogStatusHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -525,9 +523,9 @@ func (client *NetworkWatchersClient) getFlowLogStatusHandleError(resp *http.Resp
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // parameters - Parameters to get network configuration diagnostic.
-// options - NetworkWatchersBeginGetNetworkConfigurationDiagnosticOptions contains the optional parameters for the NetworkWatchersClient.BeginGetNetworkConfigurationDiagnostic
+// options - NetworkWatchersBeginGetNetworkConfigurationDiagnosticOptions contains the optional parameters for the WatchersClient.BeginGetNetworkConfigurationDiagnostic
 // method.
-func (client *NetworkWatchersClient) BeginGetNetworkConfigurationDiagnostic(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NetworkConfigurationDiagnosticParameters, options *NetworkWatchersBeginGetNetworkConfigurationDiagnosticOptions) (NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse, error) {
+func (client *WatchersClient) BeginGetNetworkConfigurationDiagnostic(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConfigurationDiagnosticParameters, options *NetworkWatchersBeginGetNetworkConfigurationDiagnosticOptions) (NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse, error) {
 	resp, err := client.getNetworkConfigurationDiagnostic(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse{}, err
@@ -535,7 +533,7 @@ func (client *NetworkWatchersClient) BeginGetNetworkConfigurationDiagnostic(ctx 
 	result := NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkWatchersClient.GetNetworkConfigurationDiagnostic", "location", resp, client.pl, client.getNetworkConfigurationDiagnosticHandleError)
+	pt, err := armruntime.NewPoller("WatchersClient.GetNetworkConfigurationDiagnostic", "location", resp, client.pl, client.getNetworkConfigurationDiagnosticHandleError)
 	if err != nil {
 		return NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse{}, err
 	}
@@ -551,7 +549,7 @@ func (client *NetworkWatchersClient) BeginGetNetworkConfigurationDiagnostic(ctx 
 // The API returns whether traffic was allowed or denied, the rules evaluated for
 // the specified flow and the evaluation results.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *NetworkWatchersClient) getNetworkConfigurationDiagnostic(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NetworkConfigurationDiagnosticParameters, options *NetworkWatchersBeginGetNetworkConfigurationDiagnosticOptions) (*http.Response, error) {
+func (client *WatchersClient) getNetworkConfigurationDiagnostic(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConfigurationDiagnosticParameters, options *NetworkWatchersBeginGetNetworkConfigurationDiagnosticOptions) (*http.Response, error) {
 	req, err := client.getNetworkConfigurationDiagnosticCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -567,7 +565,7 @@ func (client *NetworkWatchersClient) getNetworkConfigurationDiagnostic(ctx conte
 }
 
 // getNetworkConfigurationDiagnosticCreateRequest creates the GetNetworkConfigurationDiagnostic request.
-func (client *NetworkWatchersClient) getNetworkConfigurationDiagnosticCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NetworkConfigurationDiagnosticParameters, options *NetworkWatchersBeginGetNetworkConfigurationDiagnosticOptions) (*policy.Request, error) {
+func (client *WatchersClient) getNetworkConfigurationDiagnosticCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters ConfigurationDiagnosticParameters, options *NetworkWatchersBeginGetNetworkConfigurationDiagnosticOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/networkConfigurationDiagnostic"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -593,7 +591,7 @@ func (client *NetworkWatchersClient) getNetworkConfigurationDiagnosticCreateRequ
 }
 
 // getNetworkConfigurationDiagnosticHandleError handles the GetNetworkConfigurationDiagnostic error response.
-func (client *NetworkWatchersClient) getNetworkConfigurationDiagnosticHandleError(resp *http.Response) error {
+func (client *WatchersClient) getNetworkConfigurationDiagnosticHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -610,9 +608,9 @@ func (client *NetworkWatchersClient) getNetworkConfigurationDiagnosticHandleErro
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // parameters - Parameters that define the source and destination endpoint.
-// options - NetworkWatchersBeginGetNextHopOptions contains the optional parameters for the NetworkWatchersClient.BeginGetNextHop
+// options - NetworkWatchersBeginGetNextHopOptions contains the optional parameters for the WatchersClient.BeginGetNextHop
 // method.
-func (client *NetworkWatchersClient) BeginGetNextHop(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NextHopParameters, options *NetworkWatchersBeginGetNextHopOptions) (NetworkWatchersGetNextHopPollerResponse, error) {
+func (client *WatchersClient) BeginGetNextHop(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NextHopParameters, options *NetworkWatchersBeginGetNextHopOptions) (NetworkWatchersGetNextHopPollerResponse, error) {
 	resp, err := client.getNextHop(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return NetworkWatchersGetNextHopPollerResponse{}, err
@@ -620,7 +618,7 @@ func (client *NetworkWatchersClient) BeginGetNextHop(ctx context.Context, resour
 	result := NetworkWatchersGetNextHopPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkWatchersClient.GetNextHop", "location", resp, client.pl, client.getNextHopHandleError)
+	pt, err := armruntime.NewPoller("WatchersClient.GetNextHop", "location", resp, client.pl, client.getNextHopHandleError)
 	if err != nil {
 		return NetworkWatchersGetNextHopPollerResponse{}, err
 	}
@@ -632,7 +630,7 @@ func (client *NetworkWatchersClient) BeginGetNextHop(ctx context.Context, resour
 
 // GetNextHop - Gets the next hop from the specified VM.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *NetworkWatchersClient) getNextHop(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NextHopParameters, options *NetworkWatchersBeginGetNextHopOptions) (*http.Response, error) {
+func (client *WatchersClient) getNextHop(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NextHopParameters, options *NetworkWatchersBeginGetNextHopOptions) (*http.Response, error) {
 	req, err := client.getNextHopCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -648,7 +646,7 @@ func (client *NetworkWatchersClient) getNextHop(ctx context.Context, resourceGro
 }
 
 // getNextHopCreateRequest creates the GetNextHop request.
-func (client *NetworkWatchersClient) getNextHopCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NextHopParameters, options *NetworkWatchersBeginGetNextHopOptions) (*policy.Request, error) {
+func (client *WatchersClient) getNextHopCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters NextHopParameters, options *NetworkWatchersBeginGetNextHopOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/nextHop"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -674,7 +672,7 @@ func (client *NetworkWatchersClient) getNextHopCreateRequest(ctx context.Context
 }
 
 // getNextHopHandleError handles the GetNextHop error response.
-func (client *NetworkWatchersClient) getNextHopHandleError(resp *http.Response) error {
+func (client *WatchersClient) getNextHopHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -691,9 +689,8 @@ func (client *NetworkWatchersClient) getNextHopHandleError(resp *http.Response) 
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // parameters - Parameters that define the representation of topology.
-// options - NetworkWatchersGetTopologyOptions contains the optional parameters for the NetworkWatchersClient.GetTopology
-// method.
-func (client *NetworkWatchersClient) GetTopology(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TopologyParameters, options *NetworkWatchersGetTopologyOptions) (NetworkWatchersGetTopologyResponse, error) {
+// options - NetworkWatchersGetTopologyOptions contains the optional parameters for the WatchersClient.GetTopology method.
+func (client *WatchersClient) GetTopology(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TopologyParameters, options *NetworkWatchersGetTopologyOptions) (NetworkWatchersGetTopologyResponse, error) {
 	req, err := client.getTopologyCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return NetworkWatchersGetTopologyResponse{}, err
@@ -709,7 +706,7 @@ func (client *NetworkWatchersClient) GetTopology(ctx context.Context, resourceGr
 }
 
 // getTopologyCreateRequest creates the GetTopology request.
-func (client *NetworkWatchersClient) getTopologyCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TopologyParameters, options *NetworkWatchersGetTopologyOptions) (*policy.Request, error) {
+func (client *WatchersClient) getTopologyCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TopologyParameters, options *NetworkWatchersGetTopologyOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/topology"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -735,7 +732,7 @@ func (client *NetworkWatchersClient) getTopologyCreateRequest(ctx context.Contex
 }
 
 // getTopologyHandleResponse handles the GetTopology response.
-func (client *NetworkWatchersClient) getTopologyHandleResponse(resp *http.Response) (NetworkWatchersGetTopologyResponse, error) {
+func (client *WatchersClient) getTopologyHandleResponse(resp *http.Response) (NetworkWatchersGetTopologyResponse, error) {
 	result := NetworkWatchersGetTopologyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Topology); err != nil {
 		return NetworkWatchersGetTopologyResponse{}, runtime.NewResponseError(err, resp)
@@ -744,7 +741,7 @@ func (client *NetworkWatchersClient) getTopologyHandleResponse(resp *http.Respon
 }
 
 // getTopologyHandleError handles the GetTopology error response.
-func (client *NetworkWatchersClient) getTopologyHandleError(resp *http.Response) error {
+func (client *WatchersClient) getTopologyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -761,9 +758,9 @@ func (client *NetworkWatchersClient) getTopologyHandleError(resp *http.Response)
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher resource.
 // parameters - Parameters that define the resource to troubleshoot.
-// options - NetworkWatchersBeginGetTroubleshootingOptions contains the optional parameters for the NetworkWatchersClient.BeginGetTroubleshooting
+// options - NetworkWatchersBeginGetTroubleshootingOptions contains the optional parameters for the WatchersClient.BeginGetTroubleshooting
 // method.
-func (client *NetworkWatchersClient) BeginGetTroubleshooting(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingOptions) (NetworkWatchersGetTroubleshootingPollerResponse, error) {
+func (client *WatchersClient) BeginGetTroubleshooting(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingOptions) (NetworkWatchersGetTroubleshootingPollerResponse, error) {
 	resp, err := client.getTroubleshooting(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return NetworkWatchersGetTroubleshootingPollerResponse{}, err
@@ -771,7 +768,7 @@ func (client *NetworkWatchersClient) BeginGetTroubleshooting(ctx context.Context
 	result := NetworkWatchersGetTroubleshootingPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkWatchersClient.GetTroubleshooting", "location", resp, client.pl, client.getTroubleshootingHandleError)
+	pt, err := armruntime.NewPoller("WatchersClient.GetTroubleshooting", "location", resp, client.pl, client.getTroubleshootingHandleError)
 	if err != nil {
 		return NetworkWatchersGetTroubleshootingPollerResponse{}, err
 	}
@@ -783,7 +780,7 @@ func (client *NetworkWatchersClient) BeginGetTroubleshooting(ctx context.Context
 
 // GetTroubleshooting - Initiate troubleshooting on a specified resource.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *NetworkWatchersClient) getTroubleshooting(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingOptions) (*http.Response, error) {
+func (client *WatchersClient) getTroubleshooting(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingOptions) (*http.Response, error) {
 	req, err := client.getTroubleshootingCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -799,7 +796,7 @@ func (client *NetworkWatchersClient) getTroubleshooting(ctx context.Context, res
 }
 
 // getTroubleshootingCreateRequest creates the GetTroubleshooting request.
-func (client *NetworkWatchersClient) getTroubleshootingCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingOptions) (*policy.Request, error) {
+func (client *WatchersClient) getTroubleshootingCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/troubleshoot"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -825,7 +822,7 @@ func (client *NetworkWatchersClient) getTroubleshootingCreateRequest(ctx context
 }
 
 // getTroubleshootingHandleError handles the GetTroubleshooting error response.
-func (client *NetworkWatchersClient) getTroubleshootingHandleError(resp *http.Response) error {
+func (client *WatchersClient) getTroubleshootingHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -842,9 +839,9 @@ func (client *NetworkWatchersClient) getTroubleshootingHandleError(resp *http.Re
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher resource.
 // parameters - Parameters that define the resource to query the troubleshooting result.
-// options - NetworkWatchersBeginGetTroubleshootingResultOptions contains the optional parameters for the NetworkWatchersClient.BeginGetTroubleshootingResult
+// options - NetworkWatchersBeginGetTroubleshootingResultOptions contains the optional parameters for the WatchersClient.BeginGetTroubleshootingResult
 // method.
-func (client *NetworkWatchersClient) BeginGetTroubleshootingResult(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingResultOptions) (NetworkWatchersGetTroubleshootingResultPollerResponse, error) {
+func (client *WatchersClient) BeginGetTroubleshootingResult(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingResultOptions) (NetworkWatchersGetTroubleshootingResultPollerResponse, error) {
 	resp, err := client.getTroubleshootingResult(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return NetworkWatchersGetTroubleshootingResultPollerResponse{}, err
@@ -852,7 +849,7 @@ func (client *NetworkWatchersClient) BeginGetTroubleshootingResult(ctx context.C
 	result := NetworkWatchersGetTroubleshootingResultPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkWatchersClient.GetTroubleshootingResult", "location", resp, client.pl, client.getTroubleshootingResultHandleError)
+	pt, err := armruntime.NewPoller("WatchersClient.GetTroubleshootingResult", "location", resp, client.pl, client.getTroubleshootingResultHandleError)
 	if err != nil {
 		return NetworkWatchersGetTroubleshootingResultPollerResponse{}, err
 	}
@@ -864,7 +861,7 @@ func (client *NetworkWatchersClient) BeginGetTroubleshootingResult(ctx context.C
 
 // GetTroubleshootingResult - Get the last completed troubleshooting result on a specified resource.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *NetworkWatchersClient) getTroubleshootingResult(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingResultOptions) (*http.Response, error) {
+func (client *WatchersClient) getTroubleshootingResult(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingResultOptions) (*http.Response, error) {
 	req, err := client.getTroubleshootingResultCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -880,7 +877,7 @@ func (client *NetworkWatchersClient) getTroubleshootingResult(ctx context.Contex
 }
 
 // getTroubleshootingResultCreateRequest creates the GetTroubleshootingResult request.
-func (client *NetworkWatchersClient) getTroubleshootingResultCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingResultOptions) (*policy.Request, error) {
+func (client *WatchersClient) getTroubleshootingResultCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters QueryTroubleshootingParameters, options *NetworkWatchersBeginGetTroubleshootingResultOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/queryTroubleshootResult"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -906,7 +903,7 @@ func (client *NetworkWatchersClient) getTroubleshootingResultCreateRequest(ctx c
 }
 
 // getTroubleshootingResultHandleError handles the GetTroubleshootingResult error response.
-func (client *NetworkWatchersClient) getTroubleshootingResultHandleError(resp *http.Response) error {
+func (client *WatchersClient) getTroubleshootingResultHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -923,9 +920,9 @@ func (client *NetworkWatchersClient) getTroubleshootingResultHandleError(resp *h
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // parameters - Parameters that define the VM to check security groups for.
-// options - NetworkWatchersBeginGetVMSecurityRulesOptions contains the optional parameters for the NetworkWatchersClient.BeginGetVMSecurityRules
+// options - NetworkWatchersBeginGetVMSecurityRulesOptions contains the optional parameters for the WatchersClient.BeginGetVMSecurityRules
 // method.
-func (client *NetworkWatchersClient) BeginGetVMSecurityRules(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters SecurityGroupViewParameters, options *NetworkWatchersBeginGetVMSecurityRulesOptions) (NetworkWatchersGetVMSecurityRulesPollerResponse, error) {
+func (client *WatchersClient) BeginGetVMSecurityRules(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters SecurityGroupViewParameters, options *NetworkWatchersBeginGetVMSecurityRulesOptions) (NetworkWatchersGetVMSecurityRulesPollerResponse, error) {
 	resp, err := client.getVMSecurityRules(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return NetworkWatchersGetVMSecurityRulesPollerResponse{}, err
@@ -933,7 +930,7 @@ func (client *NetworkWatchersClient) BeginGetVMSecurityRules(ctx context.Context
 	result := NetworkWatchersGetVMSecurityRulesPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkWatchersClient.GetVMSecurityRules", "location", resp, client.pl, client.getVMSecurityRulesHandleError)
+	pt, err := armruntime.NewPoller("WatchersClient.GetVMSecurityRules", "location", resp, client.pl, client.getVMSecurityRulesHandleError)
 	if err != nil {
 		return NetworkWatchersGetVMSecurityRulesPollerResponse{}, err
 	}
@@ -945,7 +942,7 @@ func (client *NetworkWatchersClient) BeginGetVMSecurityRules(ctx context.Context
 
 // GetVMSecurityRules - Gets the configured and effective security group rules on the specified VM.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *NetworkWatchersClient) getVMSecurityRules(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters SecurityGroupViewParameters, options *NetworkWatchersBeginGetVMSecurityRulesOptions) (*http.Response, error) {
+func (client *WatchersClient) getVMSecurityRules(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters SecurityGroupViewParameters, options *NetworkWatchersBeginGetVMSecurityRulesOptions) (*http.Response, error) {
 	req, err := client.getVMSecurityRulesCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -961,7 +958,7 @@ func (client *NetworkWatchersClient) getVMSecurityRules(ctx context.Context, res
 }
 
 // getVMSecurityRulesCreateRequest creates the GetVMSecurityRules request.
-func (client *NetworkWatchersClient) getVMSecurityRulesCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters SecurityGroupViewParameters, options *NetworkWatchersBeginGetVMSecurityRulesOptions) (*policy.Request, error) {
+func (client *WatchersClient) getVMSecurityRulesCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters SecurityGroupViewParameters, options *NetworkWatchersBeginGetVMSecurityRulesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/securityGroupView"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -987,7 +984,7 @@ func (client *NetworkWatchersClient) getVMSecurityRulesCreateRequest(ctx context
 }
 
 // getVMSecurityRulesHandleError handles the GetVMSecurityRules error response.
-func (client *NetworkWatchersClient) getVMSecurityRulesHandleError(resp *http.Response) error {
+func (client *WatchersClient) getVMSecurityRulesHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -1002,8 +999,8 @@ func (client *NetworkWatchersClient) getVMSecurityRulesHandleError(resp *http.Re
 // List - Gets all network watchers by resource group.
 // If the operation fails it returns the *ErrorResponse error type.
 // resourceGroupName - The name of the resource group.
-// options - NetworkWatchersListOptions contains the optional parameters for the NetworkWatchersClient.List method.
-func (client *NetworkWatchersClient) List(ctx context.Context, resourceGroupName string, options *NetworkWatchersListOptions) (NetworkWatchersListResponse, error) {
+// options - NetworkWatchersListOptions contains the optional parameters for the WatchersClient.List method.
+func (client *WatchersClient) List(ctx context.Context, resourceGroupName string, options *NetworkWatchersListOptions) (NetworkWatchersListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, options)
 	if err != nil {
 		return NetworkWatchersListResponse{}, err
@@ -1019,7 +1016,7 @@ func (client *NetworkWatchersClient) List(ctx context.Context, resourceGroupName
 }
 
 // listCreateRequest creates the List request.
-func (client *NetworkWatchersClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *NetworkWatchersListOptions) (*policy.Request, error) {
+func (client *WatchersClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *NetworkWatchersListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1041,16 +1038,16 @@ func (client *NetworkWatchersClient) listCreateRequest(ctx context.Context, reso
 }
 
 // listHandleResponse handles the List response.
-func (client *NetworkWatchersClient) listHandleResponse(resp *http.Response) (NetworkWatchersListResponse, error) {
+func (client *WatchersClient) listHandleResponse(resp *http.Response) (NetworkWatchersListResponse, error) {
 	result := NetworkWatchersListResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkWatcherListResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.WatcherListResult); err != nil {
 		return NetworkWatchersListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // listHandleError handles the List error response.
-func (client *NetworkWatchersClient) listHandleError(resp *http.Response) error {
+func (client *WatchersClient) listHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -1064,8 +1061,8 @@ func (client *NetworkWatchersClient) listHandleError(resp *http.Response) error 
 
 // ListAll - Gets all network watchers by subscription.
 // If the operation fails it returns the *ErrorResponse error type.
-// options - NetworkWatchersListAllOptions contains the optional parameters for the NetworkWatchersClient.ListAll method.
-func (client *NetworkWatchersClient) ListAll(ctx context.Context, options *NetworkWatchersListAllOptions) (NetworkWatchersListAllResponse, error) {
+// options - NetworkWatchersListAllOptions contains the optional parameters for the WatchersClient.ListAll method.
+func (client *WatchersClient) ListAll(ctx context.Context, options *NetworkWatchersListAllOptions) (NetworkWatchersListAllResponse, error) {
 	req, err := client.listAllCreateRequest(ctx, options)
 	if err != nil {
 		return NetworkWatchersListAllResponse{}, err
@@ -1081,7 +1078,7 @@ func (client *NetworkWatchersClient) ListAll(ctx context.Context, options *Netwo
 }
 
 // listAllCreateRequest creates the ListAll request.
-func (client *NetworkWatchersClient) listAllCreateRequest(ctx context.Context, options *NetworkWatchersListAllOptions) (*policy.Request, error) {
+func (client *WatchersClient) listAllCreateRequest(ctx context.Context, options *NetworkWatchersListAllOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -1099,16 +1096,16 @@ func (client *NetworkWatchersClient) listAllCreateRequest(ctx context.Context, o
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client *NetworkWatchersClient) listAllHandleResponse(resp *http.Response) (NetworkWatchersListAllResponse, error) {
+func (client *WatchersClient) listAllHandleResponse(resp *http.Response) (NetworkWatchersListAllResponse, error) {
 	result := NetworkWatchersListAllResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkWatcherListResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.WatcherListResult); err != nil {
 		return NetworkWatchersListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // listAllHandleError handles the ListAll error response.
-func (client *NetworkWatchersClient) listAllHandleError(resp *http.Response) error {
+func (client *WatchersClient) listAllHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -1126,9 +1123,9 @@ func (client *NetworkWatchersClient) listAllHandleError(resp *http.Response) err
 // resourceGroupName - The name of the network watcher resource group.
 // networkWatcherName - The name of the network watcher resource.
 // parameters - Parameters that scope the list of available providers.
-// options - NetworkWatchersBeginListAvailableProvidersOptions contains the optional parameters for the NetworkWatchersClient.BeginListAvailableProviders
+// options - NetworkWatchersBeginListAvailableProvidersOptions contains the optional parameters for the WatchersClient.BeginListAvailableProviders
 // method.
-func (client *NetworkWatchersClient) BeginListAvailableProviders(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters, options *NetworkWatchersBeginListAvailableProvidersOptions) (NetworkWatchersListAvailableProvidersPollerResponse, error) {
+func (client *WatchersClient) BeginListAvailableProviders(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters, options *NetworkWatchersBeginListAvailableProvidersOptions) (NetworkWatchersListAvailableProvidersPollerResponse, error) {
 	resp, err := client.listAvailableProviders(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return NetworkWatchersListAvailableProvidersPollerResponse{}, err
@@ -1136,7 +1133,7 @@ func (client *NetworkWatchersClient) BeginListAvailableProviders(ctx context.Con
 	result := NetworkWatchersListAvailableProvidersPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkWatchersClient.ListAvailableProviders", "location", resp, client.pl, client.listAvailableProvidersHandleError)
+	pt, err := armruntime.NewPoller("WatchersClient.ListAvailableProviders", "location", resp, client.pl, client.listAvailableProvidersHandleError)
 	if err != nil {
 		return NetworkWatchersListAvailableProvidersPollerResponse{}, err
 	}
@@ -1149,7 +1146,7 @@ func (client *NetworkWatchersClient) BeginListAvailableProviders(ctx context.Con
 // ListAvailableProviders - NOTE: This feature is currently in preview and still being tested for stability. Lists all available
 // internet service providers for a specified Azure region.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *NetworkWatchersClient) listAvailableProviders(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters, options *NetworkWatchersBeginListAvailableProvidersOptions) (*http.Response, error) {
+func (client *WatchersClient) listAvailableProviders(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters, options *NetworkWatchersBeginListAvailableProvidersOptions) (*http.Response, error) {
 	req, err := client.listAvailableProvidersCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -1165,7 +1162,7 @@ func (client *NetworkWatchersClient) listAvailableProviders(ctx context.Context,
 }
 
 // listAvailableProvidersCreateRequest creates the ListAvailableProviders request.
-func (client *NetworkWatchersClient) listAvailableProvidersCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters, options *NetworkWatchersBeginListAvailableProvidersOptions) (*policy.Request, error) {
+func (client *WatchersClient) listAvailableProvidersCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters AvailableProvidersListParameters, options *NetworkWatchersBeginListAvailableProvidersOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/availableProvidersList"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1191,7 +1188,7 @@ func (client *NetworkWatchersClient) listAvailableProvidersCreateRequest(ctx con
 }
 
 // listAvailableProvidersHandleError handles the ListAvailableProviders error response.
-func (client *NetworkWatchersClient) listAvailableProvidersHandleError(resp *http.Response) error {
+func (client *WatchersClient) listAvailableProvidersHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -1208,9 +1205,9 @@ func (client *NetworkWatchersClient) listAvailableProvidersHandleError(resp *htt
 // resourceGroupName - The name of the network watcher resource group.
 // networkWatcherName - The name of the network watcher resource.
 // parameters - Parameters that define the configuration of flow log.
-// options - NetworkWatchersBeginSetFlowLogConfigurationOptions contains the optional parameters for the NetworkWatchersClient.BeginSetFlowLogConfiguration
+// options - NetworkWatchersBeginSetFlowLogConfigurationOptions contains the optional parameters for the WatchersClient.BeginSetFlowLogConfiguration
 // method.
-func (client *NetworkWatchersClient) BeginSetFlowLogConfiguration(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogInformation, options *NetworkWatchersBeginSetFlowLogConfigurationOptions) (NetworkWatchersSetFlowLogConfigurationPollerResponse, error) {
+func (client *WatchersClient) BeginSetFlowLogConfiguration(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogInformation, options *NetworkWatchersBeginSetFlowLogConfigurationOptions) (NetworkWatchersSetFlowLogConfigurationPollerResponse, error) {
 	resp, err := client.setFlowLogConfiguration(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return NetworkWatchersSetFlowLogConfigurationPollerResponse{}, err
@@ -1218,7 +1215,7 @@ func (client *NetworkWatchersClient) BeginSetFlowLogConfiguration(ctx context.Co
 	result := NetworkWatchersSetFlowLogConfigurationPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkWatchersClient.SetFlowLogConfiguration", "location", resp, client.pl, client.setFlowLogConfigurationHandleError)
+	pt, err := armruntime.NewPoller("WatchersClient.SetFlowLogConfiguration", "location", resp, client.pl, client.setFlowLogConfigurationHandleError)
 	if err != nil {
 		return NetworkWatchersSetFlowLogConfigurationPollerResponse{}, err
 	}
@@ -1230,7 +1227,7 @@ func (client *NetworkWatchersClient) BeginSetFlowLogConfiguration(ctx context.Co
 
 // SetFlowLogConfiguration - Configures flow log and traffic analytics (optional) on a specified resource.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *NetworkWatchersClient) setFlowLogConfiguration(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogInformation, options *NetworkWatchersBeginSetFlowLogConfigurationOptions) (*http.Response, error) {
+func (client *WatchersClient) setFlowLogConfiguration(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogInformation, options *NetworkWatchersBeginSetFlowLogConfigurationOptions) (*http.Response, error) {
 	req, err := client.setFlowLogConfigurationCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -1246,7 +1243,7 @@ func (client *NetworkWatchersClient) setFlowLogConfiguration(ctx context.Context
 }
 
 // setFlowLogConfigurationCreateRequest creates the SetFlowLogConfiguration request.
-func (client *NetworkWatchersClient) setFlowLogConfigurationCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogInformation, options *NetworkWatchersBeginSetFlowLogConfigurationOptions) (*policy.Request, error) {
+func (client *WatchersClient) setFlowLogConfigurationCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters FlowLogInformation, options *NetworkWatchersBeginSetFlowLogConfigurationOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/configureFlowLog"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1272,7 +1269,7 @@ func (client *NetworkWatchersClient) setFlowLogConfigurationCreateRequest(ctx co
 }
 
 // setFlowLogConfigurationHandleError handles the SetFlowLogConfiguration error response.
-func (client *NetworkWatchersClient) setFlowLogConfigurationHandleError(resp *http.Response) error {
+func (client *WatchersClient) setFlowLogConfigurationHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -1289,8 +1286,8 @@ func (client *NetworkWatchersClient) setFlowLogConfigurationHandleError(resp *ht
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // parameters - Parameters supplied to update network watcher tags.
-// options - NetworkWatchersUpdateTagsOptions contains the optional parameters for the NetworkWatchersClient.UpdateTags method.
-func (client *NetworkWatchersClient) UpdateTags(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TagsObject, options *NetworkWatchersUpdateTagsOptions) (NetworkWatchersUpdateTagsResponse, error) {
+// options - NetworkWatchersUpdateTagsOptions contains the optional parameters for the WatchersClient.UpdateTags method.
+func (client *WatchersClient) UpdateTags(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TagsObject, options *NetworkWatchersUpdateTagsOptions) (NetworkWatchersUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return NetworkWatchersUpdateTagsResponse{}, err
@@ -1306,7 +1303,7 @@ func (client *NetworkWatchersClient) UpdateTags(ctx context.Context, resourceGro
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *NetworkWatchersClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TagsObject, options *NetworkWatchersUpdateTagsOptions) (*policy.Request, error) {
+func (client *WatchersClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters TagsObject, options *NetworkWatchersUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1332,16 +1329,16 @@ func (client *NetworkWatchersClient) updateTagsCreateRequest(ctx context.Context
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *NetworkWatchersClient) updateTagsHandleResponse(resp *http.Response) (NetworkWatchersUpdateTagsResponse, error) {
+func (client *WatchersClient) updateTagsHandleResponse(resp *http.Response) (NetworkWatchersUpdateTagsResponse, error) {
 	result := NetworkWatchersUpdateTagsResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkWatcher); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Watcher); err != nil {
 		return NetworkWatchersUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.
-func (client *NetworkWatchersClient) updateTagsHandleError(resp *http.Response) error {
+func (client *WatchersClient) updateTagsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -1358,9 +1355,9 @@ func (client *NetworkWatchersClient) updateTagsHandleError(resp *http.Response) 
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // parameters - Parameters that define the IP flow to be verified.
-// options - NetworkWatchersBeginVerifyIPFlowOptions contains the optional parameters for the NetworkWatchersClient.BeginVerifyIPFlow
+// options - NetworkWatchersBeginVerifyIPFlowOptions contains the optional parameters for the WatchersClient.BeginVerifyIPFlow
 // method.
-func (client *NetworkWatchersClient) BeginVerifyIPFlow(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters VerificationIPFlowParameters, options *NetworkWatchersBeginVerifyIPFlowOptions) (NetworkWatchersVerifyIPFlowPollerResponse, error) {
+func (client *WatchersClient) BeginVerifyIPFlow(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters VerificationIPFlowParameters, options *NetworkWatchersBeginVerifyIPFlowOptions) (NetworkWatchersVerifyIPFlowPollerResponse, error) {
 	resp, err := client.verifyIPFlow(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return NetworkWatchersVerifyIPFlowPollerResponse{}, err
@@ -1368,7 +1365,7 @@ func (client *NetworkWatchersClient) BeginVerifyIPFlow(ctx context.Context, reso
 	result := NetworkWatchersVerifyIPFlowPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkWatchersClient.VerifyIPFlow", "location", resp, client.pl, client.verifyIPFlowHandleError)
+	pt, err := armruntime.NewPoller("WatchersClient.VerifyIPFlow", "location", resp, client.pl, client.verifyIPFlowHandleError)
 	if err != nil {
 		return NetworkWatchersVerifyIPFlowPollerResponse{}, err
 	}
@@ -1380,7 +1377,7 @@ func (client *NetworkWatchersClient) BeginVerifyIPFlow(ctx context.Context, reso
 
 // VerifyIPFlow - Verify IP flow from the specified VM to a location given the currently configured NSG rules.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *NetworkWatchersClient) verifyIPFlow(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters VerificationIPFlowParameters, options *NetworkWatchersBeginVerifyIPFlowOptions) (*http.Response, error) {
+func (client *WatchersClient) verifyIPFlow(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters VerificationIPFlowParameters, options *NetworkWatchersBeginVerifyIPFlowOptions) (*http.Response, error) {
 	req, err := client.verifyIPFlowCreateRequest(ctx, resourceGroupName, networkWatcherName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -1396,7 +1393,7 @@ func (client *NetworkWatchersClient) verifyIPFlow(ctx context.Context, resourceG
 }
 
 // verifyIPFlowCreateRequest creates the VerifyIPFlow request.
-func (client *NetworkWatchersClient) verifyIPFlowCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters VerificationIPFlowParameters, options *NetworkWatchersBeginVerifyIPFlowOptions) (*policy.Request, error) {
+func (client *WatchersClient) verifyIPFlowCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, parameters VerificationIPFlowParameters, options *NetworkWatchersBeginVerifyIPFlowOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/ipFlowVerify"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1422,7 +1419,7 @@ func (client *NetworkWatchersClient) verifyIPFlowCreateRequest(ctx context.Conte
 }
 
 // verifyIPFlowHandleError handles the VerifyIPFlow error response.
-func (client *NetworkWatchersClient) verifyIPFlowHandleError(resp *http.Response) error {
+func (client *WatchersClient) verifyIPFlowHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)

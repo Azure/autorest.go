@@ -83,7 +83,7 @@ func unmarshalFirewallPolicyRuleConditionClassification(rawMsg json.RawMessage) 
 	case string(FirewallPolicyRuleConditionTypeNatRuleCondition):
 		b = &NatRuleCondition{}
 	case string(FirewallPolicyRuleConditionTypeNetworkRuleCondition):
-		b = &NetworkRuleCondition{}
+		b = &RuleCondition{}
 	default:
 		b = &FirewallPolicyRuleCondition{}
 	}

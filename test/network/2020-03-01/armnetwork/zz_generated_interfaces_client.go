@@ -22,20 +22,20 @@ import (
 	"strings"
 )
 
-// NetworkInterfacesClient contains the methods for the NetworkInterfaces group.
-// Don't use this type directly, use NewNetworkInterfacesClient() instead.
-type NetworkInterfacesClient struct {
+// InterfacesClient contains the methods for the NetworkInterfaces group.
+// Don't use this type directly, use NewInterfacesClient() instead.
+type InterfacesClient struct {
 	host           string
 	subscriptionID string
 	pl             runtime.Pipeline
 }
 
-// NewNetworkInterfacesClient creates a new instance of NetworkInterfacesClient with the specified values.
+// NewInterfacesClient creates a new instance of InterfacesClient with the specified values.
 // subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
 // ID forms part of the URI for every service call.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewNetworkInterfacesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NetworkInterfacesClient {
+func NewInterfacesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *InterfacesClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
 		cp = *options
@@ -43,7 +43,7 @@ func NewNetworkInterfacesClient(subscriptionID string, credential azcore.TokenCr
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	client := &NetworkInterfacesClient{
+	client := &InterfacesClient{
 		subscriptionID: subscriptionID,
 		host:           string(cp.Host),
 		pl:             armruntime.NewPipeline(module, version, credential, &cp),
@@ -56,9 +56,9 @@ func NewNetworkInterfacesClient(subscriptionID string, credential azcore.TokenCr
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // parameters - Parameters supplied to the create or update network interface operation.
-// options - NetworkInterfacesBeginCreateOrUpdateOptions contains the optional parameters for the NetworkInterfacesClient.BeginCreateOrUpdate
+// options - NetworkInterfacesBeginCreateOrUpdateOptions contains the optional parameters for the InterfacesClient.BeginCreateOrUpdate
 // method.
-func (client *NetworkInterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters NetworkInterface, options *NetworkInterfacesBeginCreateOrUpdateOptions) (NetworkInterfacesCreateOrUpdatePollerResponse, error) {
+func (client *InterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters Interface, options *NetworkInterfacesBeginCreateOrUpdateOptions) (NetworkInterfacesCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkInterfaceName, parameters, options)
 	if err != nil {
 		return NetworkInterfacesCreateOrUpdatePollerResponse{}, err
@@ -66,7 +66,7 @@ func (client *NetworkInterfacesClient) BeginCreateOrUpdate(ctx context.Context, 
 	result := NetworkInterfacesCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkInterfacesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("InterfacesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
 		return NetworkInterfacesCreateOrUpdatePollerResponse{}, err
 	}
@@ -78,7 +78,7 @@ func (client *NetworkInterfacesClient) BeginCreateOrUpdate(ctx context.Context, 
 
 // CreateOrUpdate - Creates or updates a network interface.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkInterfacesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters NetworkInterface, options *NetworkInterfacesBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *InterfacesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters Interface, options *NetworkInterfacesBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkInterfaceName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *NetworkInterfacesClient) createOrUpdate(ctx context.Context, resou
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *NetworkInterfacesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters NetworkInterface, options *NetworkInterfacesBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *InterfacesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters Interface, options *NetworkInterfacesBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -120,7 +120,7 @@ func (client *NetworkInterfacesClient) createOrUpdateCreateRequest(ctx context.C
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *NetworkInterfacesClient) createOrUpdateHandleError(resp *http.Response) error {
+func (client *InterfacesClient) createOrUpdateHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -136,9 +136,8 @@ func (client *NetworkInterfacesClient) createOrUpdateHandleError(resp *http.Resp
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfacesBeginDeleteOptions contains the optional parameters for the NetworkInterfacesClient.BeginDelete
-// method.
-func (client *NetworkInterfacesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginDeleteOptions) (NetworkInterfacesDeletePollerResponse, error) {
+// options - NetworkInterfacesBeginDeleteOptions contains the optional parameters for the InterfacesClient.BeginDelete method.
+func (client *InterfacesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginDeleteOptions) (NetworkInterfacesDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
 		return NetworkInterfacesDeletePollerResponse{}, err
@@ -146,7 +145,7 @@ func (client *NetworkInterfacesClient) BeginDelete(ctx context.Context, resource
 	result := NetworkInterfacesDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkInterfacesClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("InterfacesClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
 		return NetworkInterfacesDeletePollerResponse{}, err
 	}
@@ -158,7 +157,7 @@ func (client *NetworkInterfacesClient) BeginDelete(ctx context.Context, resource
 
 // Delete - Deletes the specified network interface.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkInterfacesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginDeleteOptions) (*http.Response, error) {
+func (client *InterfacesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
 		return nil, err
@@ -174,7 +173,7 @@ func (client *NetworkInterfacesClient) deleteOperation(ctx context.Context, reso
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *NetworkInterfacesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginDeleteOptions) (*policy.Request, error) {
+func (client *InterfacesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -200,7 +199,7 @@ func (client *NetworkInterfacesClient) deleteCreateRequest(ctx context.Context, 
 }
 
 // deleteHandleError handles the Delete error response.
-func (client *NetworkInterfacesClient) deleteHandleError(resp *http.Response) error {
+func (client *InterfacesClient) deleteHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -216,8 +215,8 @@ func (client *NetworkInterfacesClient) deleteHandleError(resp *http.Response) er
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfacesGetOptions contains the optional parameters for the NetworkInterfacesClient.Get method.
-func (client *NetworkInterfacesClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesGetOptions) (NetworkInterfacesGetResponse, error) {
+// options - NetworkInterfacesGetOptions contains the optional parameters for the InterfacesClient.Get method.
+func (client *InterfacesClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesGetOptions) (NetworkInterfacesGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
 		return NetworkInterfacesGetResponse{}, err
@@ -233,7 +232,7 @@ func (client *NetworkInterfacesClient) Get(ctx context.Context, resourceGroupNam
 }
 
 // getCreateRequest creates the Get request.
-func (client *NetworkInterfacesClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesGetOptions) (*policy.Request, error) {
+func (client *InterfacesClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -262,16 +261,16 @@ func (client *NetworkInterfacesClient) getCreateRequest(ctx context.Context, res
 }
 
 // getHandleResponse handles the Get response.
-func (client *NetworkInterfacesClient) getHandleResponse(resp *http.Response) (NetworkInterfacesGetResponse, error) {
+func (client *InterfacesClient) getHandleResponse(resp *http.Response) (NetworkInterfacesGetResponse, error) {
 	result := NetworkInterfacesGetResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterface); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Interface); err != nil {
 		return NetworkInterfacesGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // getHandleError handles the Get error response.
-func (client *NetworkInterfacesClient) getHandleError(resp *http.Response) error {
+func (client *InterfacesClient) getHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -287,9 +286,9 @@ func (client *NetworkInterfacesClient) getHandleError(resp *http.Response) error
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfacesBeginGetEffectiveRouteTableOptions contains the optional parameters for the NetworkInterfacesClient.BeginGetEffectiveRouteTable
+// options - NetworkInterfacesBeginGetEffectiveRouteTableOptions contains the optional parameters for the InterfacesClient.BeginGetEffectiveRouteTable
 // method.
-func (client *NetworkInterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginGetEffectiveRouteTableOptions) (NetworkInterfacesGetEffectiveRouteTablePollerResponse, error) {
+func (client *InterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginGetEffectiveRouteTableOptions) (NetworkInterfacesGetEffectiveRouteTablePollerResponse, error) {
 	resp, err := client.getEffectiveRouteTable(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
 		return NetworkInterfacesGetEffectiveRouteTablePollerResponse{}, err
@@ -297,7 +296,7 @@ func (client *NetworkInterfacesClient) BeginGetEffectiveRouteTable(ctx context.C
 	result := NetworkInterfacesGetEffectiveRouteTablePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkInterfacesClient.GetEffectiveRouteTable", "location", resp, client.pl, client.getEffectiveRouteTableHandleError)
+	pt, err := armruntime.NewPoller("InterfacesClient.GetEffectiveRouteTable", "location", resp, client.pl, client.getEffectiveRouteTableHandleError)
 	if err != nil {
 		return NetworkInterfacesGetEffectiveRouteTablePollerResponse{}, err
 	}
@@ -309,7 +308,7 @@ func (client *NetworkInterfacesClient) BeginGetEffectiveRouteTable(ctx context.C
 
 // GetEffectiveRouteTable - Gets all route tables applied to a network interface.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkInterfacesClient) getEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginGetEffectiveRouteTableOptions) (*http.Response, error) {
+func (client *InterfacesClient) getEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginGetEffectiveRouteTableOptions) (*http.Response, error) {
 	req, err := client.getEffectiveRouteTableCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
 		return nil, err
@@ -325,7 +324,7 @@ func (client *NetworkInterfacesClient) getEffectiveRouteTable(ctx context.Contex
 }
 
 // getEffectiveRouteTableCreateRequest creates the GetEffectiveRouteTable request.
-func (client *NetworkInterfacesClient) getEffectiveRouteTableCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginGetEffectiveRouteTableOptions) (*policy.Request, error) {
+func (client *InterfacesClient) getEffectiveRouteTableCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginGetEffectiveRouteTableOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveRouteTable"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -351,7 +350,7 @@ func (client *NetworkInterfacesClient) getEffectiveRouteTableCreateRequest(ctx c
 }
 
 // getEffectiveRouteTableHandleError handles the GetEffectiveRouteTable error response.
-func (client *NetworkInterfacesClient) getEffectiveRouteTableHandleError(resp *http.Response) error {
+func (client *InterfacesClient) getEffectiveRouteTableHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -371,9 +370,9 @@ func (client *NetworkInterfacesClient) getEffectiveRouteTableHandleError(resp *h
 // virtualmachineIndex - The virtual machine index.
 // networkInterfaceName - The name of the network interface.
 // ipConfigurationName - The name of the ip configuration.
-// options - NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions contains the optional parameters for the NetworkInterfacesClient.GetVirtualMachineScaleSetIPConfiguration
+// options - NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions contains the optional parameters for the InterfacesClient.GetVirtualMachineScaleSetIPConfiguration
 // method.
-func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetIPConfiguration(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions) (NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResponse, error) {
+func (client *InterfacesClient) GetVirtualMachineScaleSetIPConfiguration(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions) (NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResponse, error) {
 	req, err := client.getVirtualMachineScaleSetIPConfigurationCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, options)
 	if err != nil {
 		return NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResponse{}, err
@@ -389,7 +388,7 @@ func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetIPConfiguration(
 }
 
 // getVirtualMachineScaleSetIPConfigurationCreateRequest creates the GetVirtualMachineScaleSetIPConfiguration request.
-func (client *NetworkInterfacesClient) getVirtualMachineScaleSetIPConfigurationCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions) (*policy.Request, error) {
+func (client *InterfacesClient) getVirtualMachineScaleSetIPConfigurationCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -430,16 +429,16 @@ func (client *NetworkInterfacesClient) getVirtualMachineScaleSetIPConfigurationC
 }
 
 // getVirtualMachineScaleSetIPConfigurationHandleResponse handles the GetVirtualMachineScaleSetIPConfiguration response.
-func (client *NetworkInterfacesClient) getVirtualMachineScaleSetIPConfigurationHandleResponse(resp *http.Response) (NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResponse, error) {
+func (client *InterfacesClient) getVirtualMachineScaleSetIPConfigurationHandleResponse(resp *http.Response) (NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResponse, error) {
 	result := NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceIPConfiguration); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceIPConfiguration); err != nil {
 		return NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // getVirtualMachineScaleSetIPConfigurationHandleError handles the GetVirtualMachineScaleSetIPConfiguration error response.
-func (client *NetworkInterfacesClient) getVirtualMachineScaleSetIPConfigurationHandleError(resp *http.Response) error {
+func (client *InterfacesClient) getVirtualMachineScaleSetIPConfigurationHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -457,9 +456,9 @@ func (client *NetworkInterfacesClient) getVirtualMachineScaleSetIPConfigurationH
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // virtualmachineIndex - The virtual machine index.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions contains the optional parameters for the NetworkInterfacesClient.GetVirtualMachineScaleSetNetworkInterface
+// options - NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions contains the optional parameters for the InterfacesClient.GetVirtualMachineScaleSetNetworkInterface
 // method.
-func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetNetworkInterface(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions) (NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResponse, error) {
+func (client *InterfacesClient) GetVirtualMachineScaleSetNetworkInterface(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions) (NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResponse, error) {
 	req, err := client.getVirtualMachineScaleSetNetworkInterfaceCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, options)
 	if err != nil {
 		return NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResponse{}, err
@@ -475,7 +474,7 @@ func (client *NetworkInterfacesClient) GetVirtualMachineScaleSetNetworkInterface
 }
 
 // getVirtualMachineScaleSetNetworkInterfaceCreateRequest creates the GetVirtualMachineScaleSetNetworkInterface request.
-func (client *NetworkInterfacesClient) getVirtualMachineScaleSetNetworkInterfaceCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions) (*policy.Request, error) {
+func (client *InterfacesClient) getVirtualMachineScaleSetNetworkInterfaceCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -512,16 +511,16 @@ func (client *NetworkInterfacesClient) getVirtualMachineScaleSetNetworkInterface
 }
 
 // getVirtualMachineScaleSetNetworkInterfaceHandleResponse handles the GetVirtualMachineScaleSetNetworkInterface response.
-func (client *NetworkInterfacesClient) getVirtualMachineScaleSetNetworkInterfaceHandleResponse(resp *http.Response) (NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResponse, error) {
+func (client *InterfacesClient) getVirtualMachineScaleSetNetworkInterfaceHandleResponse(resp *http.Response) (NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResponse, error) {
 	result := NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterface); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Interface); err != nil {
 		return NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // getVirtualMachineScaleSetNetworkInterfaceHandleError handles the GetVirtualMachineScaleSetNetworkInterface error response.
-func (client *NetworkInterfacesClient) getVirtualMachineScaleSetNetworkInterfaceHandleError(resp *http.Response) error {
+func (client *InterfacesClient) getVirtualMachineScaleSetNetworkInterfaceHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -536,21 +535,21 @@ func (client *NetworkInterfacesClient) getVirtualMachineScaleSetNetworkInterface
 // List - Gets all network interfaces in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - NetworkInterfacesListOptions contains the optional parameters for the NetworkInterfacesClient.List method.
-func (client *NetworkInterfacesClient) List(resourceGroupName string, options *NetworkInterfacesListOptions) *NetworkInterfacesListPager {
+// options - NetworkInterfacesListOptions contains the optional parameters for the InterfacesClient.List method.
+func (client *InterfacesClient) List(resourceGroupName string, options *NetworkInterfacesListOptions) *NetworkInterfacesListPager {
 	return &NetworkInterfacesListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
 		},
 		advancer: func(ctx context.Context, resp NetworkInterfacesListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceListResult.NextLink)
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.InterfaceListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *NetworkInterfacesClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *NetworkInterfacesListOptions) (*policy.Request, error) {
+func (client *InterfacesClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *NetworkInterfacesListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -572,16 +571,16 @@ func (client *NetworkInterfacesClient) listCreateRequest(ctx context.Context, re
 }
 
 // listHandleResponse handles the List response.
-func (client *NetworkInterfacesClient) listHandleResponse(resp *http.Response) (NetworkInterfacesListResponse, error) {
+func (client *InterfacesClient) listHandleResponse(resp *http.Response) (NetworkInterfacesListResponse, error) {
 	result := NetworkInterfacesListResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceListResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceListResult); err != nil {
 		return NetworkInterfacesListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // listHandleError handles the List error response.
-func (client *NetworkInterfacesClient) listHandleError(resp *http.Response) error {
+func (client *InterfacesClient) listHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -595,21 +594,21 @@ func (client *NetworkInterfacesClient) listHandleError(resp *http.Response) erro
 
 // ListAll - Gets all network interfaces in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - NetworkInterfacesListAllOptions contains the optional parameters for the NetworkInterfacesClient.ListAll method.
-func (client *NetworkInterfacesClient) ListAll(options *NetworkInterfacesListAllOptions) *NetworkInterfacesListAllPager {
+// options - NetworkInterfacesListAllOptions contains the optional parameters for the InterfacesClient.ListAll method.
+func (client *InterfacesClient) ListAll(options *NetworkInterfacesListAllOptions) *NetworkInterfacesListAllPager {
 	return &NetworkInterfacesListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
 		},
 		advancer: func(ctx context.Context, resp NetworkInterfacesListAllResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceListResult.NextLink)
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.InterfaceListResult.NextLink)
 		},
 	}
 }
 
 // listAllCreateRequest creates the ListAll request.
-func (client *NetworkInterfacesClient) listAllCreateRequest(ctx context.Context, options *NetworkInterfacesListAllOptions) (*policy.Request, error) {
+func (client *InterfacesClient) listAllCreateRequest(ctx context.Context, options *NetworkInterfacesListAllOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -627,16 +626,16 @@ func (client *NetworkInterfacesClient) listAllCreateRequest(ctx context.Context,
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client *NetworkInterfacesClient) listAllHandleResponse(resp *http.Response) (NetworkInterfacesListAllResponse, error) {
+func (client *InterfacesClient) listAllHandleResponse(resp *http.Response) (NetworkInterfacesListAllResponse, error) {
 	result := NetworkInterfacesListAllResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceListResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceListResult); err != nil {
 		return NetworkInterfacesListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // listAllHandleError handles the ListAll error response.
-func (client *NetworkInterfacesClient) listAllHandleError(resp *http.Response) error {
+func (client *InterfacesClient) listAllHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -652,9 +651,9 @@ func (client *NetworkInterfacesClient) listAllHandleError(resp *http.Response) e
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfacesBeginListEffectiveNetworkSecurityGroupsOptions contains the optional parameters for the NetworkInterfacesClient.BeginListEffectiveNetworkSecurityGroups
+// options - NetworkInterfacesBeginListEffectiveNetworkSecurityGroupsOptions contains the optional parameters for the InterfacesClient.BeginListEffectiveNetworkSecurityGroups
 // method.
-func (client *NetworkInterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginListEffectiveNetworkSecurityGroupsOptions) (NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse, error) {
+func (client *InterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginListEffectiveNetworkSecurityGroupsOptions) (NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse, error) {
 	resp, err := client.listEffectiveNetworkSecurityGroups(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
 		return NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse{}, err
@@ -662,7 +661,7 @@ func (client *NetworkInterfacesClient) BeginListEffectiveNetworkSecurityGroups(c
 	result := NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkInterfacesClient.ListEffectiveNetworkSecurityGroups", "location", resp, client.pl, client.listEffectiveNetworkSecurityGroupsHandleError)
+	pt, err := armruntime.NewPoller("InterfacesClient.ListEffectiveNetworkSecurityGroups", "location", resp, client.pl, client.listEffectiveNetworkSecurityGroupsHandleError)
 	if err != nil {
 		return NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse{}, err
 	}
@@ -674,7 +673,7 @@ func (client *NetworkInterfacesClient) BeginListEffectiveNetworkSecurityGroups(c
 
 // ListEffectiveNetworkSecurityGroups - Gets all network security groups applied to a network interface.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkInterfacesClient) listEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginListEffectiveNetworkSecurityGroupsOptions) (*http.Response, error) {
+func (client *InterfacesClient) listEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginListEffectiveNetworkSecurityGroupsOptions) (*http.Response, error) {
 	req, err := client.listEffectiveNetworkSecurityGroupsCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
 		return nil, err
@@ -690,7 +689,7 @@ func (client *NetworkInterfacesClient) listEffectiveNetworkSecurityGroups(ctx co
 }
 
 // listEffectiveNetworkSecurityGroupsCreateRequest creates the ListEffectiveNetworkSecurityGroups request.
-func (client *NetworkInterfacesClient) listEffectiveNetworkSecurityGroupsCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginListEffectiveNetworkSecurityGroupsOptions) (*policy.Request, error) {
+func (client *InterfacesClient) listEffectiveNetworkSecurityGroupsCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfacesBeginListEffectiveNetworkSecurityGroupsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveNetworkSecurityGroups"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -716,7 +715,7 @@ func (client *NetworkInterfacesClient) listEffectiveNetworkSecurityGroupsCreateR
 }
 
 // listEffectiveNetworkSecurityGroupsHandleError handles the ListEffectiveNetworkSecurityGroups error response.
-func (client *NetworkInterfacesClient) listEffectiveNetworkSecurityGroupsHandleError(resp *http.Response) error {
+func (client *InterfacesClient) listEffectiveNetworkSecurityGroupsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -735,22 +734,22 @@ func (client *NetworkInterfacesClient) listEffectiveNetworkSecurityGroupsHandleE
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // virtualmachineIndex - The virtual machine index.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions contains the optional parameters for the NetworkInterfacesClient.ListVirtualMachineScaleSetIPConfigurations
+// options - NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions contains the optional parameters for the InterfacesClient.ListVirtualMachineScaleSetIPConfigurations
 // method.
-func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetIPConfigurations(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsPager {
+func (client *InterfacesClient) ListVirtualMachineScaleSetIPConfigurations(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsPager {
 	return &NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listVirtualMachineScaleSetIPConfigurationsCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, options)
 		},
 		advancer: func(ctx context.Context, resp NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceIPConfigurationListResult.NextLink)
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.InterfaceIPConfigurationListResult.NextLink)
 		},
 	}
 }
 
 // listVirtualMachineScaleSetIPConfigurationsCreateRequest creates the ListVirtualMachineScaleSetIPConfigurations request.
-func (client *NetworkInterfacesClient) listVirtualMachineScaleSetIPConfigurationsCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) (*policy.Request, error) {
+func (client *InterfacesClient) listVirtualMachineScaleSetIPConfigurationsCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, networkInterfaceName string, options *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipConfigurations"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -787,16 +786,16 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetIPConfiguration
 }
 
 // listVirtualMachineScaleSetIPConfigurationsHandleResponse handles the ListVirtualMachineScaleSetIPConfigurations response.
-func (client *NetworkInterfacesClient) listVirtualMachineScaleSetIPConfigurationsHandleResponse(resp *http.Response) (NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResponse, error) {
+func (client *InterfacesClient) listVirtualMachineScaleSetIPConfigurationsHandleResponse(resp *http.Response) (NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResponse, error) {
 	result := NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceIPConfigurationListResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceIPConfigurationListResult); err != nil {
 		return NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // listVirtualMachineScaleSetIPConfigurationsHandleError handles the ListVirtualMachineScaleSetIPConfigurations error response.
-func (client *NetworkInterfacesClient) listVirtualMachineScaleSetIPConfigurationsHandleError(resp *http.Response) error {
+func (client *InterfacesClient) listVirtualMachineScaleSetIPConfigurationsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -813,21 +812,21 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetIPConfiguration
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // options - NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesOptions contains the optional parameters for the
-// NetworkInterfacesClient.ListVirtualMachineScaleSetNetworkInterfaces method.
-func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, options *NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesOptions) *NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesPager {
+// InterfacesClient.ListVirtualMachineScaleSetNetworkInterfaces method.
+func (client *InterfacesClient) ListVirtualMachineScaleSetNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, options *NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesOptions) *NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesPager {
 	return &NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listVirtualMachineScaleSetNetworkInterfacesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, options)
 		},
 		advancer: func(ctx context.Context, resp NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceListResult.NextLink)
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.InterfaceListResult.NextLink)
 		},
 	}
 }
 
 // listVirtualMachineScaleSetNetworkInterfacesCreateRequest creates the ListVirtualMachineScaleSetNetworkInterfaces request.
-func (client *NetworkInterfacesClient) listVirtualMachineScaleSetNetworkInterfacesCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, options *NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesOptions) (*policy.Request, error) {
+func (client *InterfacesClient) listVirtualMachineScaleSetNetworkInterfacesCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, options *NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/networkInterfaces"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -853,16 +852,16 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetNetworkInterfac
 }
 
 // listVirtualMachineScaleSetNetworkInterfacesHandleResponse handles the ListVirtualMachineScaleSetNetworkInterfaces response.
-func (client *NetworkInterfacesClient) listVirtualMachineScaleSetNetworkInterfacesHandleResponse(resp *http.Response) (NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResponse, error) {
+func (client *InterfacesClient) listVirtualMachineScaleSetNetworkInterfacesHandleResponse(resp *http.Response) (NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResponse, error) {
 	result := NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceListResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceListResult); err != nil {
 		return NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // listVirtualMachineScaleSetNetworkInterfacesHandleError handles the ListVirtualMachineScaleSetNetworkInterfaces error response.
-func (client *NetworkInterfacesClient) listVirtualMachineScaleSetNetworkInterfacesHandleError(resp *http.Response) error {
+func (client *InterfacesClient) listVirtualMachineScaleSetNetworkInterfacesHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -881,21 +880,21 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetNetworkInterfac
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // virtualmachineIndex - The virtual machine index.
 // options - NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesOptions contains the optional parameters for the
-// NetworkInterfacesClient.ListVirtualMachineScaleSetVMNetworkInterfaces method.
-func (client *NetworkInterfacesClient) ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, options *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesOptions) *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesPager {
+// InterfacesClient.ListVirtualMachineScaleSetVMNetworkInterfaces method.
+func (client *InterfacesClient) ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, options *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesOptions) *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesPager {
 	return &NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listVirtualMachineScaleSetVMNetworkInterfacesCreateRequest(ctx, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, options)
 		},
 		advancer: func(ctx context.Context, resp NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceListResult.NextLink)
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.InterfaceListResult.NextLink)
 		},
 	}
 }
 
 // listVirtualMachineScaleSetVMNetworkInterfacesCreateRequest creates the ListVirtualMachineScaleSetVMNetworkInterfaces request.
-func (client *NetworkInterfacesClient) listVirtualMachineScaleSetVMNetworkInterfacesCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, options *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesOptions) (*policy.Request, error) {
+func (client *InterfacesClient) listVirtualMachineScaleSetVMNetworkInterfacesCreateRequest(ctx context.Context, resourceGroupName string, virtualMachineScaleSetName string, virtualmachineIndex string, options *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -925,16 +924,16 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetVMNetworkInterf
 }
 
 // listVirtualMachineScaleSetVMNetworkInterfacesHandleResponse handles the ListVirtualMachineScaleSetVMNetworkInterfaces response.
-func (client *NetworkInterfacesClient) listVirtualMachineScaleSetVMNetworkInterfacesHandleResponse(resp *http.Response) (NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResponse, error) {
+func (client *InterfacesClient) listVirtualMachineScaleSetVMNetworkInterfacesHandleResponse(resp *http.Response) (NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResponse, error) {
 	result := NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceListResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceListResult); err != nil {
 		return NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // listVirtualMachineScaleSetVMNetworkInterfacesHandleError handles the ListVirtualMachineScaleSetVMNetworkInterfaces error response.
-func (client *NetworkInterfacesClient) listVirtualMachineScaleSetVMNetworkInterfacesHandleError(resp *http.Response) error {
+func (client *InterfacesClient) listVirtualMachineScaleSetVMNetworkInterfacesHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -951,9 +950,8 @@ func (client *NetworkInterfacesClient) listVirtualMachineScaleSetVMNetworkInterf
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // parameters - Parameters supplied to update network interface tags.
-// options - NetworkInterfacesUpdateTagsOptions contains the optional parameters for the NetworkInterfacesClient.UpdateTags
-// method.
-func (client *NetworkInterfacesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters TagsObject, options *NetworkInterfacesUpdateTagsOptions) (NetworkInterfacesUpdateTagsResponse, error) {
+// options - NetworkInterfacesUpdateTagsOptions contains the optional parameters for the InterfacesClient.UpdateTags method.
+func (client *InterfacesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters TagsObject, options *NetworkInterfacesUpdateTagsOptions) (NetworkInterfacesUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkInterfaceName, parameters, options)
 	if err != nil {
 		return NetworkInterfacesUpdateTagsResponse{}, err
@@ -969,7 +967,7 @@ func (client *NetworkInterfacesClient) UpdateTags(ctx context.Context, resourceG
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *NetworkInterfacesClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters TagsObject, options *NetworkInterfacesUpdateTagsOptions) (*policy.Request, error) {
+func (client *InterfacesClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters TagsObject, options *NetworkInterfacesUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -995,16 +993,16 @@ func (client *NetworkInterfacesClient) updateTagsCreateRequest(ctx context.Conte
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *NetworkInterfacesClient) updateTagsHandleResponse(resp *http.Response) (NetworkInterfacesUpdateTagsResponse, error) {
+func (client *InterfacesClient) updateTagsHandleResponse(resp *http.Response) (NetworkInterfacesUpdateTagsResponse, error) {
 	result := NetworkInterfacesUpdateTagsResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterface); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Interface); err != nil {
 		return NetworkInterfacesUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.
-func (client *NetworkInterfacesClient) updateTagsHandleError(resp *http.Response) error {
+func (client *InterfacesClient) updateTagsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)

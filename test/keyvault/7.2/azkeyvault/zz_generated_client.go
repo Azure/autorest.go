@@ -20,16 +20,16 @@ import (
 	"strings"
 )
 
-// KeyVaultClient contains the methods for the KeyVaultClient group.
-// Don't use this type directly, use NewKeyVaultClient() instead.
-type KeyVaultClient struct {
+// Client contains the methods for the KeyVaultClient group.
+// Don't use this type directly, use NewClient() instead.
+type Client struct {
 	pl runtime.Pipeline
 }
 
-// NewKeyVaultClient creates a new instance of KeyVaultClient with the specified values.
+// NewClient creates a new instance of Client with the specified values.
 // pl - the pipeline used for sending requests and handling responses.
-func NewKeyVaultClient(pl runtime.Pipeline) *KeyVaultClient {
-	client := &KeyVaultClient{
+func NewClient(pl runtime.Pipeline) *Client {
+	client := &Client{
 		pl: pl,
 	}
 	return client
@@ -37,12 +37,11 @@ func NewKeyVaultClient(pl runtime.Pipeline) *KeyVaultClient {
 
 // BackupCertificate - Requests that a backup of the specified certificate be downloaded to the client. All versions of the
 // certificate will be downloaded. This operation requires the certificates/backup permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
-// options - KeyVaultClientBackupCertificateOptions contains the optional parameters for the KeyVaultClient.BackupCertificate
-// method.
-func (client *KeyVaultClient) BackupCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientBackupCertificateOptions) (KeyVaultClientBackupCertificateResponse, error) {
+// options - KeyVaultClientBackupCertificateOptions contains the optional parameters for the Client.BackupCertificate method.
+func (client *Client) BackupCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientBackupCertificateOptions) (KeyVaultClientBackupCertificateResponse, error) {
 	req, err := client.backupCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
 		return KeyVaultClientBackupCertificateResponse{}, err
@@ -58,7 +57,7 @@ func (client *KeyVaultClient) BackupCertificate(ctx context.Context, vaultBaseUR
 }
 
 // backupCertificateCreateRequest creates the BackupCertificate request.
-func (client *KeyVaultClient) backupCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientBackupCertificateOptions) (*policy.Request, error) {
+func (client *Client) backupCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientBackupCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/backup"
@@ -78,7 +77,7 @@ func (client *KeyVaultClient) backupCertificateCreateRequest(ctx context.Context
 }
 
 // backupCertificateHandleResponse handles the BackupCertificate response.
-func (client *KeyVaultClient) backupCertificateHandleResponse(resp *http.Response) (KeyVaultClientBackupCertificateResponse, error) {
+func (client *Client) backupCertificateHandleResponse(resp *http.Response) (KeyVaultClientBackupCertificateResponse, error) {
 	result := KeyVaultClientBackupCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BackupCertificateResult); err != nil {
 		return KeyVaultClientBackupCertificateResponse{}, runtime.NewResponseError(err, resp)
@@ -87,12 +86,12 @@ func (client *KeyVaultClient) backupCertificateHandleResponse(resp *http.Respons
 }
 
 // backupCertificateHandleError handles the BackupCertificate error response.
-func (client *KeyVaultClient) backupCertificateHandleError(resp *http.Response) error {
+func (client *Client) backupCertificateHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -109,11 +108,11 @@ func (client *KeyVaultClient) backupCertificateHandleError(resp *http.Response) 
 // a BACKUP from one geographical area cannot be restored to another
 // geographical area. For example, a backup from the US geographical area cannot be restored in an EU geographical area. This
 // operation requires the key/backup permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
-// options - KeyVaultClientBackupKeyOptions contains the optional parameters for the KeyVaultClient.BackupKey method.
-func (client *KeyVaultClient) BackupKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBackupKeyOptions) (KeyVaultClientBackupKeyResponse, error) {
+// options - KeyVaultClientBackupKeyOptions contains the optional parameters for the Client.BackupKey method.
+func (client *Client) BackupKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBackupKeyOptions) (KeyVaultClientBackupKeyResponse, error) {
 	req, err := client.backupKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
 		return KeyVaultClientBackupKeyResponse{}, err
@@ -129,7 +128,7 @@ func (client *KeyVaultClient) BackupKey(ctx context.Context, vaultBaseURL string
 }
 
 // backupKeyCreateRequest creates the BackupKey request.
-func (client *KeyVaultClient) backupKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBackupKeyOptions) (*policy.Request, error) {
+func (client *Client) backupKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBackupKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/backup"
@@ -149,7 +148,7 @@ func (client *KeyVaultClient) backupKeyCreateRequest(ctx context.Context, vaultB
 }
 
 // backupKeyHandleResponse handles the BackupKey response.
-func (client *KeyVaultClient) backupKeyHandleResponse(resp *http.Response) (KeyVaultClientBackupKeyResponse, error) {
+func (client *Client) backupKeyHandleResponse(resp *http.Response) (KeyVaultClientBackupKeyResponse, error) {
 	result := KeyVaultClientBackupKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BackupKeyResult); err != nil {
 		return KeyVaultClientBackupKeyResponse{}, runtime.NewResponseError(err, resp)
@@ -158,12 +157,12 @@ func (client *KeyVaultClient) backupKeyHandleResponse(resp *http.Response) (KeyV
 }
 
 // backupKeyHandleError handles the BackupKey error response.
-func (client *KeyVaultClient) backupKeyHandleError(resp *http.Response) error {
+func (client *Client) backupKeyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -172,11 +171,11 @@ func (client *KeyVaultClient) backupKeyHandleError(resp *http.Response) error {
 
 // BackupSecret - Requests that a backup of the specified secret be downloaded to the client. All versions of the secret will
 // be downloaded. This operation requires the secrets/backup permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
-// options - KeyVaultClientBackupSecretOptions contains the optional parameters for the KeyVaultClient.BackupSecret method.
-func (client *KeyVaultClient) BackupSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientBackupSecretOptions) (KeyVaultClientBackupSecretResponse, error) {
+// options - KeyVaultClientBackupSecretOptions contains the optional parameters for the Client.BackupSecret method.
+func (client *Client) BackupSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientBackupSecretOptions) (KeyVaultClientBackupSecretResponse, error) {
 	req, err := client.backupSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
 		return KeyVaultClientBackupSecretResponse{}, err
@@ -192,7 +191,7 @@ func (client *KeyVaultClient) BackupSecret(ctx context.Context, vaultBaseURL str
 }
 
 // backupSecretCreateRequest creates the BackupSecret request.
-func (client *KeyVaultClient) backupSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientBackupSecretOptions) (*policy.Request, error) {
+func (client *Client) backupSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientBackupSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}/backup"
@@ -212,7 +211,7 @@ func (client *KeyVaultClient) backupSecretCreateRequest(ctx context.Context, vau
 }
 
 // backupSecretHandleResponse handles the BackupSecret response.
-func (client *KeyVaultClient) backupSecretHandleResponse(resp *http.Response) (KeyVaultClientBackupSecretResponse, error) {
+func (client *Client) backupSecretHandleResponse(resp *http.Response) (KeyVaultClientBackupSecretResponse, error) {
 	result := KeyVaultClientBackupSecretResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BackupSecretResult); err != nil {
 		return KeyVaultClientBackupSecretResponse{}, runtime.NewResponseError(err, resp)
@@ -221,12 +220,12 @@ func (client *KeyVaultClient) backupSecretHandleResponse(resp *http.Response) (K
 }
 
 // backupSecretHandleError handles the BackupSecret error response.
-func (client *KeyVaultClient) backupSecretHandleError(resp *http.Response) error {
+func (client *Client) backupSecretHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -235,12 +234,12 @@ func (client *KeyVaultClient) backupSecretHandleError(resp *http.Response) error
 
 // BackupStorageAccount - Requests that a backup of the specified storage account be downloaded to the client. This operation
 // requires the storage/backup permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
-// options - KeyVaultClientBackupStorageAccountOptions contains the optional parameters for the KeyVaultClient.BackupStorageAccount
+// options - KeyVaultClientBackupStorageAccountOptions contains the optional parameters for the Client.BackupStorageAccount
 // method.
-func (client *KeyVaultClient) BackupStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientBackupStorageAccountOptions) (KeyVaultClientBackupStorageAccountResponse, error) {
+func (client *Client) BackupStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientBackupStorageAccountOptions) (KeyVaultClientBackupStorageAccountResponse, error) {
 	req, err := client.backupStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
 		return KeyVaultClientBackupStorageAccountResponse{}, err
@@ -256,7 +255,7 @@ func (client *KeyVaultClient) BackupStorageAccount(ctx context.Context, vaultBas
 }
 
 // backupStorageAccountCreateRequest creates the BackupStorageAccount request.
-func (client *KeyVaultClient) backupStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientBackupStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) backupStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientBackupStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/backup"
@@ -276,7 +275,7 @@ func (client *KeyVaultClient) backupStorageAccountCreateRequest(ctx context.Cont
 }
 
 // backupStorageAccountHandleResponse handles the BackupStorageAccount response.
-func (client *KeyVaultClient) backupStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientBackupStorageAccountResponse, error) {
+func (client *Client) backupStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientBackupStorageAccountResponse, error) {
 	result := KeyVaultClientBackupStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BackupStorageResult); err != nil {
 		return KeyVaultClientBackupStorageAccountResponse{}, runtime.NewResponseError(err, resp)
@@ -285,12 +284,12 @@ func (client *KeyVaultClient) backupStorageAccountHandleResponse(resp *http.Resp
 }
 
 // backupStorageAccountHandleError handles the BackupStorageAccount error response.
-func (client *KeyVaultClient) backupStorageAccountHandleError(resp *http.Response) error {
+func (client *Client) backupStorageAccountHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -299,13 +298,12 @@ func (client *KeyVaultClient) backupStorageAccountHandleError(resp *http.Respons
 
 // CreateCertificate - If this is the first version, the certificate resource is created. This operation requires the certificates/create
 // permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
 // parameters - The parameters to create a certificate.
-// options - KeyVaultClientCreateCertificateOptions contains the optional parameters for the KeyVaultClient.CreateCertificate
-// method.
-func (client *KeyVaultClient) CreateCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateCreateParameters, options *KeyVaultClientCreateCertificateOptions) (KeyVaultClientCreateCertificateResponse, error) {
+// options - KeyVaultClientCreateCertificateOptions contains the optional parameters for the Client.CreateCertificate method.
+func (client *Client) CreateCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateCreateParameters, options *KeyVaultClientCreateCertificateOptions) (KeyVaultClientCreateCertificateResponse, error) {
 	req, err := client.createCertificateCreateRequest(ctx, vaultBaseURL, certificateName, parameters, options)
 	if err != nil {
 		return KeyVaultClientCreateCertificateResponse{}, err
@@ -321,7 +319,7 @@ func (client *KeyVaultClient) CreateCertificate(ctx context.Context, vaultBaseUR
 }
 
 // createCertificateCreateRequest creates the CreateCertificate request.
-func (client *KeyVaultClient) createCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateCreateParameters, options *KeyVaultClientCreateCertificateOptions) (*policy.Request, error) {
+func (client *Client) createCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateCreateParameters, options *KeyVaultClientCreateCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/create"
@@ -341,7 +339,7 @@ func (client *KeyVaultClient) createCertificateCreateRequest(ctx context.Context
 }
 
 // createCertificateHandleResponse handles the CreateCertificate response.
-func (client *KeyVaultClient) createCertificateHandleResponse(resp *http.Response) (KeyVaultClientCreateCertificateResponse, error) {
+func (client *Client) createCertificateHandleResponse(resp *http.Response) (KeyVaultClientCreateCertificateResponse, error) {
 	result := KeyVaultClientCreateCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateOperation); err != nil {
 		return KeyVaultClientCreateCertificateResponse{}, runtime.NewResponseError(err, resp)
@@ -350,12 +348,12 @@ func (client *KeyVaultClient) createCertificateHandleResponse(resp *http.Respons
 }
 
 // createCertificateHandleError handles the CreateCertificate error response.
-func (client *KeyVaultClient) createCertificateHandleError(resp *http.Response) error {
+func (client *Client) createCertificateHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -365,12 +363,12 @@ func (client *KeyVaultClient) createCertificateHandleError(resp *http.Response) 
 // CreateKey - The create key operation can be used to create any key type in Azure Key Vault. If the named key already exists,
 // Azure Key Vault creates a new version of the key. It requires the keys/create
 // permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name for the new key. The system will generate the version name for the new key.
 // parameters - The parameters to create a key.
-// options - KeyVaultClientCreateKeyOptions contains the optional parameters for the KeyVaultClient.CreateKey method.
-func (client *KeyVaultClient) CreateKey(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyCreateParameters, options *KeyVaultClientCreateKeyOptions) (KeyVaultClientCreateKeyResponse, error) {
+// options - KeyVaultClientCreateKeyOptions contains the optional parameters for the Client.CreateKey method.
+func (client *Client) CreateKey(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyCreateParameters, options *KeyVaultClientCreateKeyOptions) (KeyVaultClientCreateKeyResponse, error) {
 	req, err := client.createKeyCreateRequest(ctx, vaultBaseURL, keyName, parameters, options)
 	if err != nil {
 		return KeyVaultClientCreateKeyResponse{}, err
@@ -386,7 +384,7 @@ func (client *KeyVaultClient) CreateKey(ctx context.Context, vaultBaseURL string
 }
 
 // createKeyCreateRequest creates the CreateKey request.
-func (client *KeyVaultClient) createKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyCreateParameters, options *KeyVaultClientCreateKeyOptions) (*policy.Request, error) {
+func (client *Client) createKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyCreateParameters, options *KeyVaultClientCreateKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/create"
@@ -406,7 +404,7 @@ func (client *KeyVaultClient) createKeyCreateRequest(ctx context.Context, vaultB
 }
 
 // createKeyHandleResponse handles the CreateKey response.
-func (client *KeyVaultClient) createKeyHandleResponse(resp *http.Response) (KeyVaultClientCreateKeyResponse, error) {
+func (client *Client) createKeyHandleResponse(resp *http.Response) (KeyVaultClientCreateKeyResponse, error) {
 	result := KeyVaultClientCreateKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return KeyVaultClientCreateKeyResponse{}, runtime.NewResponseError(err, resp)
@@ -415,12 +413,12 @@ func (client *KeyVaultClient) createKeyHandleResponse(resp *http.Response) (KeyV
 }
 
 // createKeyHandleError handles the CreateKey error response.
-func (client *KeyVaultClient) createKeyHandleError(resp *http.Response) error {
+func (client *Client) createKeyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -432,13 +430,13 @@ func (client *KeyVaultClient) createKeyHandleError(resp *http.Response) error {
 // data may be decrypted, the size of this block is dependent on the target key and the algorithm to be used. The DECRYPT
 // operation applies to asymmetric and symmetric keys stored in Azure Key Vault
 // since it uses the private portion of the key. This operation requires the keys/decrypt permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // keyVersion - The version of the key.
 // parameters - The parameters for the decryption operation.
-// options - KeyVaultClientDecryptOptions contains the optional parameters for the KeyVaultClient.Decrypt method.
-func (client *KeyVaultClient) Decrypt(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientDecryptOptions) (KeyVaultClientDecryptResponse, error) {
+// options - KeyVaultClientDecryptOptions contains the optional parameters for the Client.Decrypt method.
+func (client *Client) Decrypt(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientDecryptOptions) (KeyVaultClientDecryptResponse, error) {
 	req, err := client.decryptCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
 		return KeyVaultClientDecryptResponse{}, err
@@ -454,7 +452,7 @@ func (client *KeyVaultClient) Decrypt(ctx context.Context, vaultBaseURL string, 
 }
 
 // decryptCreateRequest creates the Decrypt request.
-func (client *KeyVaultClient) decryptCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientDecryptOptions) (*policy.Request, error) {
+func (client *Client) decryptCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientDecryptOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/decrypt"
@@ -478,7 +476,7 @@ func (client *KeyVaultClient) decryptCreateRequest(ctx context.Context, vaultBas
 }
 
 // decryptHandleResponse handles the Decrypt response.
-func (client *KeyVaultClient) decryptHandleResponse(resp *http.Response) (KeyVaultClientDecryptResponse, error) {
+func (client *Client) decryptHandleResponse(resp *http.Response) (KeyVaultClientDecryptResponse, error) {
 	result := KeyVaultClientDecryptResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
 		return KeyVaultClientDecryptResponse{}, runtime.NewResponseError(err, resp)
@@ -487,12 +485,12 @@ func (client *KeyVaultClient) decryptHandleResponse(resp *http.Response) (KeyVau
 }
 
 // decryptHandleError handles the Decrypt error response.
-func (client *KeyVaultClient) decryptHandleError(resp *http.Response) error {
+func (client *Client) decryptHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -502,12 +500,11 @@ func (client *KeyVaultClient) decryptHandleError(resp *http.Response) error {
 // DeleteCertificate - Deletes all versions of a certificate object along with its associated policy. Delete certificate cannot
 // be used to remove individual versions of a certificate object. This operation requires the
 // certificates/delete permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
-// options - KeyVaultClientDeleteCertificateOptions contains the optional parameters for the KeyVaultClient.DeleteCertificate
-// method.
-func (client *KeyVaultClient) DeleteCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOptions) (KeyVaultClientDeleteCertificateResponse, error) {
+// options - KeyVaultClientDeleteCertificateOptions contains the optional parameters for the Client.DeleteCertificate method.
+func (client *Client) DeleteCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOptions) (KeyVaultClientDeleteCertificateResponse, error) {
 	req, err := client.deleteCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
 		return KeyVaultClientDeleteCertificateResponse{}, err
@@ -523,7 +520,7 @@ func (client *KeyVaultClient) DeleteCertificate(ctx context.Context, vaultBaseUR
 }
 
 // deleteCertificateCreateRequest creates the DeleteCertificate request.
-func (client *KeyVaultClient) deleteCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOptions) (*policy.Request, error) {
+func (client *Client) deleteCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}"
@@ -543,7 +540,7 @@ func (client *KeyVaultClient) deleteCertificateCreateRequest(ctx context.Context
 }
 
 // deleteCertificateHandleResponse handles the DeleteCertificate response.
-func (client *KeyVaultClient) deleteCertificateHandleResponse(resp *http.Response) (KeyVaultClientDeleteCertificateResponse, error) {
+func (client *Client) deleteCertificateHandleResponse(resp *http.Response) (KeyVaultClientDeleteCertificateResponse, error) {
 	result := KeyVaultClientDeleteCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedCertificateBundle); err != nil {
 		return KeyVaultClientDeleteCertificateResponse{}, runtime.NewResponseError(err, resp)
@@ -552,12 +549,12 @@ func (client *KeyVaultClient) deleteCertificateHandleResponse(resp *http.Respons
 }
 
 // deleteCertificateHandleError handles the DeleteCertificate error response.
-func (client *KeyVaultClient) deleteCertificateHandleError(resp *http.Response) error {
+func (client *Client) deleteCertificateHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -566,11 +563,11 @@ func (client *KeyVaultClient) deleteCertificateHandleError(resp *http.Response) 
 
 // DeleteCertificateContacts - Deletes the certificate contacts for a specified key vault certificate. This operation requires
 // the certificates/managecontacts permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - KeyVaultClientDeleteCertificateContactsOptions contains the optional parameters for the KeyVaultClient.DeleteCertificateContacts
+// options - KeyVaultClientDeleteCertificateContactsOptions contains the optional parameters for the Client.DeleteCertificateContacts
 // method.
-func (client *KeyVaultClient) DeleteCertificateContacts(ctx context.Context, vaultBaseURL string, options *KeyVaultClientDeleteCertificateContactsOptions) (KeyVaultClientDeleteCertificateContactsResponse, error) {
+func (client *Client) DeleteCertificateContacts(ctx context.Context, vaultBaseURL string, options *KeyVaultClientDeleteCertificateContactsOptions) (KeyVaultClientDeleteCertificateContactsResponse, error) {
 	req, err := client.deleteCertificateContactsCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
 		return KeyVaultClientDeleteCertificateContactsResponse{}, err
@@ -586,7 +583,7 @@ func (client *KeyVaultClient) DeleteCertificateContacts(ctx context.Context, vau
 }
 
 // deleteCertificateContactsCreateRequest creates the DeleteCertificateContacts request.
-func (client *KeyVaultClient) deleteCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientDeleteCertificateContactsOptions) (*policy.Request, error) {
+func (client *Client) deleteCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientDeleteCertificateContactsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/contacts"
@@ -602,7 +599,7 @@ func (client *KeyVaultClient) deleteCertificateContactsCreateRequest(ctx context
 }
 
 // deleteCertificateContactsHandleResponse handles the DeleteCertificateContacts response.
-func (client *KeyVaultClient) deleteCertificateContactsHandleResponse(resp *http.Response) (KeyVaultClientDeleteCertificateContactsResponse, error) {
+func (client *Client) deleteCertificateContactsHandleResponse(resp *http.Response) (KeyVaultClientDeleteCertificateContactsResponse, error) {
 	result := KeyVaultClientDeleteCertificateContactsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Contacts); err != nil {
 		return KeyVaultClientDeleteCertificateContactsResponse{}, runtime.NewResponseError(err, resp)
@@ -611,12 +608,12 @@ func (client *KeyVaultClient) deleteCertificateContactsHandleResponse(resp *http
 }
 
 // deleteCertificateContactsHandleError handles the DeleteCertificateContacts error response.
-func (client *KeyVaultClient) deleteCertificateContactsHandleError(resp *http.Response) error {
+func (client *Client) deleteCertificateContactsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -625,12 +622,12 @@ func (client *KeyVaultClient) deleteCertificateContactsHandleError(resp *http.Re
 
 // DeleteCertificateIssuer - The DeleteCertificateIssuer operation permanently removes the specified certificate issuer from
 // the vault. This operation requires the certificates/manageissuers/deleteissuers permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // issuerName - The name of the issuer.
-// options - KeyVaultClientDeleteCertificateIssuerOptions contains the optional parameters for the KeyVaultClient.DeleteCertificateIssuer
+// options - KeyVaultClientDeleteCertificateIssuerOptions contains the optional parameters for the Client.DeleteCertificateIssuer
 // method.
-func (client *KeyVaultClient) DeleteCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientDeleteCertificateIssuerOptions) (KeyVaultClientDeleteCertificateIssuerResponse, error) {
+func (client *Client) DeleteCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientDeleteCertificateIssuerOptions) (KeyVaultClientDeleteCertificateIssuerResponse, error) {
 	req, err := client.deleteCertificateIssuerCreateRequest(ctx, vaultBaseURL, issuerName, options)
 	if err != nil {
 		return KeyVaultClientDeleteCertificateIssuerResponse{}, err
@@ -646,7 +643,7 @@ func (client *KeyVaultClient) DeleteCertificateIssuer(ctx context.Context, vault
 }
 
 // deleteCertificateIssuerCreateRequest creates the DeleteCertificateIssuer request.
-func (client *KeyVaultClient) deleteCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientDeleteCertificateIssuerOptions) (*policy.Request, error) {
+func (client *Client) deleteCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientDeleteCertificateIssuerOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/issuers/{issuer-name}"
@@ -666,7 +663,7 @@ func (client *KeyVaultClient) deleteCertificateIssuerCreateRequest(ctx context.C
 }
 
 // deleteCertificateIssuerHandleResponse handles the DeleteCertificateIssuer response.
-func (client *KeyVaultClient) deleteCertificateIssuerHandleResponse(resp *http.Response) (KeyVaultClientDeleteCertificateIssuerResponse, error) {
+func (client *Client) deleteCertificateIssuerHandleResponse(resp *http.Response) (KeyVaultClientDeleteCertificateIssuerResponse, error) {
 	result := KeyVaultClientDeleteCertificateIssuerResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IssuerBundle); err != nil {
 		return KeyVaultClientDeleteCertificateIssuerResponse{}, runtime.NewResponseError(err, resp)
@@ -675,12 +672,12 @@ func (client *KeyVaultClient) deleteCertificateIssuerHandleResponse(resp *http.R
 }
 
 // deleteCertificateIssuerHandleError handles the DeleteCertificateIssuer error response.
-func (client *KeyVaultClient) deleteCertificateIssuerHandleError(resp *http.Response) error {
+func (client *Client) deleteCertificateIssuerHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -689,12 +686,12 @@ func (client *KeyVaultClient) deleteCertificateIssuerHandleError(resp *http.Resp
 
 // DeleteCertificateOperation - Deletes the creation operation for a specified certificate that is in the process of being
 // created. The certificate is no longer created. This operation requires the certificates/update permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
-// options - KeyVaultClientDeleteCertificateOperationOptions contains the optional parameters for the KeyVaultClient.DeleteCertificateOperation
+// options - KeyVaultClientDeleteCertificateOperationOptions contains the optional parameters for the Client.DeleteCertificateOperation
 // method.
-func (client *KeyVaultClient) DeleteCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOperationOptions) (KeyVaultClientDeleteCertificateOperationResponse, error) {
+func (client *Client) DeleteCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOperationOptions) (KeyVaultClientDeleteCertificateOperationResponse, error) {
 	req, err := client.deleteCertificateOperationCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
 		return KeyVaultClientDeleteCertificateOperationResponse{}, err
@@ -710,7 +707,7 @@ func (client *KeyVaultClient) DeleteCertificateOperation(ctx context.Context, va
 }
 
 // deleteCertificateOperationCreateRequest creates the DeleteCertificateOperation request.
-func (client *KeyVaultClient) deleteCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOperationOptions) (*policy.Request, error) {
+func (client *Client) deleteCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientDeleteCertificateOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/pending"
@@ -730,7 +727,7 @@ func (client *KeyVaultClient) deleteCertificateOperationCreateRequest(ctx contex
 }
 
 // deleteCertificateOperationHandleResponse handles the DeleteCertificateOperation response.
-func (client *KeyVaultClient) deleteCertificateOperationHandleResponse(resp *http.Response) (KeyVaultClientDeleteCertificateOperationResponse, error) {
+func (client *Client) deleteCertificateOperationHandleResponse(resp *http.Response) (KeyVaultClientDeleteCertificateOperationResponse, error) {
 	result := KeyVaultClientDeleteCertificateOperationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateOperation); err != nil {
 		return KeyVaultClientDeleteCertificateOperationResponse{}, runtime.NewResponseError(err, resp)
@@ -739,12 +736,12 @@ func (client *KeyVaultClient) deleteCertificateOperationHandleResponse(resp *htt
 }
 
 // deleteCertificateOperationHandleError handles the DeleteCertificateOperation error response.
-func (client *KeyVaultClient) deleteCertificateOperationHandleError(resp *http.Response) error {
+func (client *Client) deleteCertificateOperationHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -754,11 +751,11 @@ func (client *KeyVaultClient) deleteCertificateOperationHandleError(resp *http.R
 // DeleteKey - The delete key operation cannot be used to remove individual versions of a key. This operation removes the
 // cryptographic material associated with the key, which means the key is not usable for
 // Sign/Verify, Wrap/Unwrap or Encrypt/Decrypt operations. This operation requires the keys/delete permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key to delete.
-// options - KeyVaultClientDeleteKeyOptions contains the optional parameters for the KeyVaultClient.DeleteKey method.
-func (client *KeyVaultClient) DeleteKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientDeleteKeyOptions) (KeyVaultClientDeleteKeyResponse, error) {
+// options - KeyVaultClientDeleteKeyOptions contains the optional parameters for the Client.DeleteKey method.
+func (client *Client) DeleteKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientDeleteKeyOptions) (KeyVaultClientDeleteKeyResponse, error) {
 	req, err := client.deleteKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
 		return KeyVaultClientDeleteKeyResponse{}, err
@@ -774,7 +771,7 @@ func (client *KeyVaultClient) DeleteKey(ctx context.Context, vaultBaseURL string
 }
 
 // deleteKeyCreateRequest creates the DeleteKey request.
-func (client *KeyVaultClient) deleteKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientDeleteKeyOptions) (*policy.Request, error) {
+func (client *Client) deleteKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientDeleteKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}"
@@ -794,7 +791,7 @@ func (client *KeyVaultClient) deleteKeyCreateRequest(ctx context.Context, vaultB
 }
 
 // deleteKeyHandleResponse handles the DeleteKey response.
-func (client *KeyVaultClient) deleteKeyHandleResponse(resp *http.Response) (KeyVaultClientDeleteKeyResponse, error) {
+func (client *Client) deleteKeyHandleResponse(resp *http.Response) (KeyVaultClientDeleteKeyResponse, error) {
 	result := KeyVaultClientDeleteKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKeyBundle); err != nil {
 		return KeyVaultClientDeleteKeyResponse{}, runtime.NewResponseError(err, resp)
@@ -803,12 +800,12 @@ func (client *KeyVaultClient) deleteKeyHandleResponse(resp *http.Response) (KeyV
 }
 
 // deleteKeyHandleError handles the DeleteKey error response.
-func (client *KeyVaultClient) deleteKeyHandleError(resp *http.Response) error {
+func (client *Client) deleteKeyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -817,13 +814,13 @@ func (client *KeyVaultClient) deleteKeyHandleError(resp *http.Response) error {
 
 // DeleteSasDefinition - Deletes a SAS definition from a specified storage account. This operation requires the storage/deletesas
 // permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // sasDefinitionName - The name of the SAS definition.
-// options - KeyVaultClientDeleteSasDefinitionOptions contains the optional parameters for the KeyVaultClient.DeleteSasDefinition
+// options - KeyVaultClientDeleteSasDefinitionOptions contains the optional parameters for the Client.DeleteSasDefinition
 // method.
-func (client *KeyVaultClient) DeleteSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientDeleteSasDefinitionOptions) (KeyVaultClientDeleteSasDefinitionResponse, error) {
+func (client *Client) DeleteSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientDeleteSasDefinitionOptions) (KeyVaultClientDeleteSasDefinitionResponse, error) {
 	req, err := client.deleteSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, options)
 	if err != nil {
 		return KeyVaultClientDeleteSasDefinitionResponse{}, err
@@ -839,7 +836,7 @@ func (client *KeyVaultClient) DeleteSasDefinition(ctx context.Context, vaultBase
 }
 
 // deleteSasDefinitionCreateRequest creates the DeleteSasDefinition request.
-func (client *KeyVaultClient) deleteSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientDeleteSasDefinitionOptions) (*policy.Request, error) {
+func (client *Client) deleteSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientDeleteSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/sas/{sas-definition-name}"
@@ -863,7 +860,7 @@ func (client *KeyVaultClient) deleteSasDefinitionCreateRequest(ctx context.Conte
 }
 
 // deleteSasDefinitionHandleResponse handles the DeleteSasDefinition response.
-func (client *KeyVaultClient) deleteSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientDeleteSasDefinitionResponse, error) {
+func (client *Client) deleteSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientDeleteSasDefinitionResponse, error) {
 	result := KeyVaultClientDeleteSasDefinitionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSasDefinitionBundle); err != nil {
 		return KeyVaultClientDeleteSasDefinitionResponse{}, runtime.NewResponseError(err, resp)
@@ -872,12 +869,12 @@ func (client *KeyVaultClient) deleteSasDefinitionHandleResponse(resp *http.Respo
 }
 
 // deleteSasDefinitionHandleError handles the DeleteSasDefinition error response.
-func (client *KeyVaultClient) deleteSasDefinitionHandleError(resp *http.Response) error {
+func (client *Client) deleteSasDefinitionHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -886,11 +883,11 @@ func (client *KeyVaultClient) deleteSasDefinitionHandleError(resp *http.Response
 
 // DeleteSecret - The DELETE operation applies to any secret stored in Azure Key Vault. DELETE cannot be applied to an individual
 // version of a secret. This operation requires the secrets/delete permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
-// options - KeyVaultClientDeleteSecretOptions contains the optional parameters for the KeyVaultClient.DeleteSecret method.
-func (client *KeyVaultClient) DeleteSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientDeleteSecretOptions) (KeyVaultClientDeleteSecretResponse, error) {
+// options - KeyVaultClientDeleteSecretOptions contains the optional parameters for the Client.DeleteSecret method.
+func (client *Client) DeleteSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientDeleteSecretOptions) (KeyVaultClientDeleteSecretResponse, error) {
 	req, err := client.deleteSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
 		return KeyVaultClientDeleteSecretResponse{}, err
@@ -906,7 +903,7 @@ func (client *KeyVaultClient) DeleteSecret(ctx context.Context, vaultBaseURL str
 }
 
 // deleteSecretCreateRequest creates the DeleteSecret request.
-func (client *KeyVaultClient) deleteSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientDeleteSecretOptions) (*policy.Request, error) {
+func (client *Client) deleteSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientDeleteSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}"
@@ -926,7 +923,7 @@ func (client *KeyVaultClient) deleteSecretCreateRequest(ctx context.Context, vau
 }
 
 // deleteSecretHandleResponse handles the DeleteSecret response.
-func (client *KeyVaultClient) deleteSecretHandleResponse(resp *http.Response) (KeyVaultClientDeleteSecretResponse, error) {
+func (client *Client) deleteSecretHandleResponse(resp *http.Response) (KeyVaultClientDeleteSecretResponse, error) {
 	result := KeyVaultClientDeleteSecretResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSecretBundle); err != nil {
 		return KeyVaultClientDeleteSecretResponse{}, runtime.NewResponseError(err, resp)
@@ -935,12 +932,12 @@ func (client *KeyVaultClient) deleteSecretHandleResponse(resp *http.Response) (K
 }
 
 // deleteSecretHandleError handles the DeleteSecret error response.
-func (client *KeyVaultClient) deleteSecretHandleError(resp *http.Response) error {
+func (client *Client) deleteSecretHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -948,12 +945,12 @@ func (client *KeyVaultClient) deleteSecretHandleError(resp *http.Response) error
 }
 
 // DeleteStorageAccount - Deletes a storage account. This operation requires the storage/delete permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
-// options - KeyVaultClientDeleteStorageAccountOptions contains the optional parameters for the KeyVaultClient.DeleteStorageAccount
+// options - KeyVaultClientDeleteStorageAccountOptions contains the optional parameters for the Client.DeleteStorageAccount
 // method.
-func (client *KeyVaultClient) DeleteStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientDeleteStorageAccountOptions) (KeyVaultClientDeleteStorageAccountResponse, error) {
+func (client *Client) DeleteStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientDeleteStorageAccountOptions) (KeyVaultClientDeleteStorageAccountResponse, error) {
 	req, err := client.deleteStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
 		return KeyVaultClientDeleteStorageAccountResponse{}, err
@@ -969,7 +966,7 @@ func (client *KeyVaultClient) DeleteStorageAccount(ctx context.Context, vaultBas
 }
 
 // deleteStorageAccountCreateRequest creates the DeleteStorageAccount request.
-func (client *KeyVaultClient) deleteStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientDeleteStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) deleteStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientDeleteStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}"
@@ -989,7 +986,7 @@ func (client *KeyVaultClient) deleteStorageAccountCreateRequest(ctx context.Cont
 }
 
 // deleteStorageAccountHandleResponse handles the DeleteStorageAccount response.
-func (client *KeyVaultClient) deleteStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientDeleteStorageAccountResponse, error) {
+func (client *Client) deleteStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientDeleteStorageAccountResponse, error) {
 	result := KeyVaultClientDeleteStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedStorageBundle); err != nil {
 		return KeyVaultClientDeleteStorageAccountResponse{}, runtime.NewResponseError(err, resp)
@@ -998,12 +995,12 @@ func (client *KeyVaultClient) deleteStorageAccountHandleResponse(resp *http.Resp
 }
 
 // deleteStorageAccountHandleError handles the DeleteStorageAccount error response.
-func (client *KeyVaultClient) deleteStorageAccountHandleError(resp *http.Response) error {
+func (client *Client) deleteStorageAccountHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -1017,13 +1014,13 @@ func (client *KeyVaultClient) deleteStorageAccountHandleError(resp *http.Respons
 // asymmetric key can be performed using public portion of the key. This operation is supported for asymmetric keys as a convenience
 // for callers that have a key-reference but do not have access to the
 // public key material. This operation requires the keys/encrypt permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // keyVersion - The version of the key.
 // parameters - The parameters for the encryption operation.
-// options - KeyVaultClientEncryptOptions contains the optional parameters for the KeyVaultClient.Encrypt method.
-func (client *KeyVaultClient) Encrypt(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientEncryptOptions) (KeyVaultClientEncryptResponse, error) {
+// options - KeyVaultClientEncryptOptions contains the optional parameters for the Client.Encrypt method.
+func (client *Client) Encrypt(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientEncryptOptions) (KeyVaultClientEncryptResponse, error) {
 	req, err := client.encryptCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
 		return KeyVaultClientEncryptResponse{}, err
@@ -1039,7 +1036,7 @@ func (client *KeyVaultClient) Encrypt(ctx context.Context, vaultBaseURL string, 
 }
 
 // encryptCreateRequest creates the Encrypt request.
-func (client *KeyVaultClient) encryptCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientEncryptOptions) (*policy.Request, error) {
+func (client *Client) encryptCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientEncryptOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/encrypt"
@@ -1063,7 +1060,7 @@ func (client *KeyVaultClient) encryptCreateRequest(ctx context.Context, vaultBas
 }
 
 // encryptHandleResponse handles the Encrypt response.
-func (client *KeyVaultClient) encryptHandleResponse(resp *http.Response) (KeyVaultClientEncryptResponse, error) {
+func (client *Client) encryptHandleResponse(resp *http.Response) (KeyVaultClientEncryptResponse, error) {
 	result := KeyVaultClientEncryptResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
 		return KeyVaultClientEncryptResponse{}, runtime.NewResponseError(err, resp)
@@ -1072,12 +1069,12 @@ func (client *KeyVaultClient) encryptHandleResponse(resp *http.Response) (KeyVau
 }
 
 // encryptHandleError handles the Encrypt error response.
-func (client *KeyVaultClient) encryptHandleError(resp *http.Response) error {
+func (client *Client) encryptHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -1085,11 +1082,10 @@ func (client *KeyVaultClient) encryptHandleError(resp *http.Response) error {
 }
 
 // BeginFullBackup - Creates a full backup using a user-provided SAS token to an Azure blob storage container.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - KeyVaultClientBeginFullBackupOptions contains the optional parameters for the KeyVaultClient.BeginFullBackup
-// method.
-func (client *KeyVaultClient) BeginFullBackup(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullBackupOptions) (KeyVaultClientFullBackupPollerResponse, error) {
+// options - KeyVaultClientBeginFullBackupOptions contains the optional parameters for the Client.BeginFullBackup method.
+func (client *Client) BeginFullBackup(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullBackupOptions) (KeyVaultClientFullBackupPollerResponse, error) {
 	resp, err := client.fullBackup(ctx, vaultBaseURL, options)
 	if err != nil {
 		return KeyVaultClientFullBackupPollerResponse{}, err
@@ -1097,7 +1093,7 @@ func (client *KeyVaultClient) BeginFullBackup(ctx context.Context, vaultBaseURL 
 	result := KeyVaultClientFullBackupPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("KeyVaultClient.FullBackup", resp, client.pl, client.fullBackupHandleError)
+	pt, err := runtime.NewPoller("Client.FullBackup", resp, client.pl, client.fullBackupHandleError)
 	if err != nil {
 		return KeyVaultClientFullBackupPollerResponse{}, err
 	}
@@ -1108,8 +1104,8 @@ func (client *KeyVaultClient) BeginFullBackup(ctx context.Context, vaultBaseURL 
 }
 
 // FullBackup - Creates a full backup using a user-provided SAS token to an Azure blob storage container.
-// If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) fullBackup(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullBackupOptions) (*http.Response, error) {
+// If the operation fails it returns the *Error error type.
+func (client *Client) fullBackup(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullBackupOptions) (*http.Response, error) {
 	req, err := client.fullBackupCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
 		return nil, err
@@ -1125,7 +1121,7 @@ func (client *KeyVaultClient) fullBackup(ctx context.Context, vaultBaseURL strin
 }
 
 // fullBackupCreateRequest creates the FullBackup request.
-func (client *KeyVaultClient) fullBackupCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullBackupOptions) (*policy.Request, error) {
+func (client *Client) fullBackupCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullBackupOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/backup"
@@ -1144,12 +1140,12 @@ func (client *KeyVaultClient) fullBackupCreateRequest(ctx context.Context, vault
 }
 
 // fullBackupHandleError handles the FullBackup error response.
-func (client *KeyVaultClient) fullBackupHandleError(resp *http.Response) error {
+func (client *Client) fullBackupHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -1157,12 +1153,11 @@ func (client *KeyVaultClient) fullBackupHandleError(resp *http.Response) error {
 }
 
 // FullBackupStatus - Returns the status of full backup operation
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // jobID - The id returned as part of the backup request
-// options - KeyVaultClientFullBackupStatusOptions contains the optional parameters for the KeyVaultClient.FullBackupStatus
-// method.
-func (client *KeyVaultClient) FullBackupStatus(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientFullBackupStatusOptions) (KeyVaultClientFullBackupStatusResponse, error) {
+// options - KeyVaultClientFullBackupStatusOptions contains the optional parameters for the Client.FullBackupStatus method.
+func (client *Client) FullBackupStatus(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientFullBackupStatusOptions) (KeyVaultClientFullBackupStatusResponse, error) {
 	req, err := client.fullBackupStatusCreateRequest(ctx, vaultBaseURL, jobID, options)
 	if err != nil {
 		return KeyVaultClientFullBackupStatusResponse{}, err
@@ -1178,7 +1173,7 @@ func (client *KeyVaultClient) FullBackupStatus(ctx context.Context, vaultBaseURL
 }
 
 // fullBackupStatusCreateRequest creates the FullBackupStatus request.
-func (client *KeyVaultClient) fullBackupStatusCreateRequest(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientFullBackupStatusOptions) (*policy.Request, error) {
+func (client *Client) fullBackupStatusCreateRequest(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientFullBackupStatusOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/backup/{jobId}/pending"
@@ -1198,7 +1193,7 @@ func (client *KeyVaultClient) fullBackupStatusCreateRequest(ctx context.Context,
 }
 
 // fullBackupStatusHandleResponse handles the FullBackupStatus response.
-func (client *KeyVaultClient) fullBackupStatusHandleResponse(resp *http.Response) (KeyVaultClientFullBackupStatusResponse, error) {
+func (client *Client) fullBackupStatusHandleResponse(resp *http.Response) (KeyVaultClientFullBackupStatusResponse, error) {
 	result := KeyVaultClientFullBackupStatusResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FullBackupOperation); err != nil {
 		return KeyVaultClientFullBackupStatusResponse{}, runtime.NewResponseError(err, resp)
@@ -1207,12 +1202,12 @@ func (client *KeyVaultClient) fullBackupStatusHandleResponse(resp *http.Response
 }
 
 // fullBackupStatusHandleError handles the FullBackupStatus error response.
-func (client *KeyVaultClient) fullBackupStatusHandleError(resp *http.Response) error {
+func (client *Client) fullBackupStatusHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -1221,11 +1216,11 @@ func (client *KeyVaultClient) fullBackupStatusHandleError(resp *http.Response) e
 
 // BeginFullRestoreOperation - Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage
 // backup folder
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - KeyVaultClientBeginFullRestoreOperationOptions contains the optional parameters for the KeyVaultClient.BeginFullRestoreOperation
+// options - KeyVaultClientBeginFullRestoreOperationOptions contains the optional parameters for the Client.BeginFullRestoreOperation
 // method.
-func (client *KeyVaultClient) BeginFullRestoreOperation(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullRestoreOperationOptions) (KeyVaultClientFullRestoreOperationPollerResponse, error) {
+func (client *Client) BeginFullRestoreOperation(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullRestoreOperationOptions) (KeyVaultClientFullRestoreOperationPollerResponse, error) {
 	resp, err := client.fullRestoreOperation(ctx, vaultBaseURL, options)
 	if err != nil {
 		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
@@ -1233,7 +1228,7 @@ func (client *KeyVaultClient) BeginFullRestoreOperation(ctx context.Context, vau
 	result := KeyVaultClientFullRestoreOperationPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("KeyVaultClient.FullRestoreOperation", resp, client.pl, client.fullRestoreOperationHandleError)
+	pt, err := runtime.NewPoller("Client.FullRestoreOperation", resp, client.pl, client.fullRestoreOperationHandleError)
 	if err != nil {
 		return KeyVaultClientFullRestoreOperationPollerResponse{}, err
 	}
@@ -1245,8 +1240,8 @@ func (client *KeyVaultClient) BeginFullRestoreOperation(ctx context.Context, vau
 
 // FullRestoreOperation - Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage
 // backup folder
-// If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) fullRestoreOperation(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullRestoreOperationOptions) (*http.Response, error) {
+// If the operation fails it returns the *Error error type.
+func (client *Client) fullRestoreOperation(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullRestoreOperationOptions) (*http.Response, error) {
 	req, err := client.fullRestoreOperationCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
 		return nil, err
@@ -1262,7 +1257,7 @@ func (client *KeyVaultClient) fullRestoreOperation(ctx context.Context, vaultBas
 }
 
 // fullRestoreOperationCreateRequest creates the FullRestoreOperation request.
-func (client *KeyVaultClient) fullRestoreOperationCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullRestoreOperationOptions) (*policy.Request, error) {
+func (client *Client) fullRestoreOperationCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientBeginFullRestoreOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/restore"
@@ -1281,12 +1276,12 @@ func (client *KeyVaultClient) fullRestoreOperationCreateRequest(ctx context.Cont
 }
 
 // fullRestoreOperationHandleError handles the FullRestoreOperation error response.
-func (client *KeyVaultClient) fullRestoreOperationHandleError(resp *http.Response) error {
+func (client *Client) fullRestoreOperationHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -1294,13 +1289,13 @@ func (client *KeyVaultClient) fullRestoreOperationHandleError(resp *http.Respons
 }
 
 // GetCertificate - Gets information about a specific certificate. This operation requires the certificates/get permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate in the given vault.
 // certificateVersion - The version of the certificate. This URI fragment is optional. If not specified, the latest version
 // of the certificate is returned.
-// options - KeyVaultClientGetCertificateOptions contains the optional parameters for the KeyVaultClient.GetCertificate method.
-func (client *KeyVaultClient) GetCertificate(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, options *KeyVaultClientGetCertificateOptions) (KeyVaultClientGetCertificateResponse, error) {
+// options - KeyVaultClientGetCertificateOptions contains the optional parameters for the Client.GetCertificate method.
+func (client *Client) GetCertificate(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, options *KeyVaultClientGetCertificateOptions) (KeyVaultClientGetCertificateResponse, error) {
 	req, err := client.getCertificateCreateRequest(ctx, vaultBaseURL, certificateName, certificateVersion, options)
 	if err != nil {
 		return KeyVaultClientGetCertificateResponse{}, err
@@ -1316,7 +1311,7 @@ func (client *KeyVaultClient) GetCertificate(ctx context.Context, vaultBaseURL s
 }
 
 // getCertificateCreateRequest creates the GetCertificate request.
-func (client *KeyVaultClient) getCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, options *KeyVaultClientGetCertificateOptions) (*policy.Request, error) {
+func (client *Client) getCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, options *KeyVaultClientGetCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/{certificate-version}"
@@ -1340,7 +1335,7 @@ func (client *KeyVaultClient) getCertificateCreateRequest(ctx context.Context, v
 }
 
 // getCertificateHandleResponse handles the GetCertificate response.
-func (client *KeyVaultClient) getCertificateHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateResponse, error) {
+func (client *Client) getCertificateHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateResponse, error) {
 	result := KeyVaultClientGetCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return KeyVaultClientGetCertificateResponse{}, runtime.NewResponseError(err, resp)
@@ -1349,12 +1344,12 @@ func (client *KeyVaultClient) getCertificateHandleResponse(resp *http.Response) 
 }
 
 // getCertificateHandleError handles the GetCertificate error response.
-func (client *KeyVaultClient) getCertificateHandleError(resp *http.Response) error {
+func (client *Client) getCertificateHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -1363,11 +1358,11 @@ func (client *KeyVaultClient) getCertificateHandleError(resp *http.Response) err
 
 // GetCertificateContacts - The GetCertificateContacts operation returns the set of certificate contact resources in the specified
 // key vault. This operation requires the certificates/managecontacts permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - KeyVaultClientGetCertificateContactsOptions contains the optional parameters for the KeyVaultClient.GetCertificateContacts
+// options - KeyVaultClientGetCertificateContactsOptions contains the optional parameters for the Client.GetCertificateContacts
 // method.
-func (client *KeyVaultClient) GetCertificateContacts(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificateContactsOptions) (KeyVaultClientGetCertificateContactsResponse, error) {
+func (client *Client) GetCertificateContacts(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificateContactsOptions) (KeyVaultClientGetCertificateContactsResponse, error) {
 	req, err := client.getCertificateContactsCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
 		return KeyVaultClientGetCertificateContactsResponse{}, err
@@ -1383,7 +1378,7 @@ func (client *KeyVaultClient) GetCertificateContacts(ctx context.Context, vaultB
 }
 
 // getCertificateContactsCreateRequest creates the GetCertificateContacts request.
-func (client *KeyVaultClient) getCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificateContactsOptions) (*policy.Request, error) {
+func (client *Client) getCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificateContactsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/contacts"
@@ -1399,7 +1394,7 @@ func (client *KeyVaultClient) getCertificateContactsCreateRequest(ctx context.Co
 }
 
 // getCertificateContactsHandleResponse handles the GetCertificateContacts response.
-func (client *KeyVaultClient) getCertificateContactsHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateContactsResponse, error) {
+func (client *Client) getCertificateContactsHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateContactsResponse, error) {
 	result := KeyVaultClientGetCertificateContactsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Contacts); err != nil {
 		return KeyVaultClientGetCertificateContactsResponse{}, runtime.NewResponseError(err, resp)
@@ -1408,12 +1403,12 @@ func (client *KeyVaultClient) getCertificateContactsHandleResponse(resp *http.Re
 }
 
 // getCertificateContactsHandleError handles the GetCertificateContacts error response.
-func (client *KeyVaultClient) getCertificateContactsHandleError(resp *http.Response) error {
+func (client *Client) getCertificateContactsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -1422,12 +1417,12 @@ func (client *KeyVaultClient) getCertificateContactsHandleError(resp *http.Respo
 
 // GetCertificateIssuer - The GetCertificateIssuer operation returns the specified certificate issuer resources in the specified
 // key vault. This operation requires the certificates/manageissuers/getissuers permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // issuerName - The name of the issuer.
-// options - KeyVaultClientGetCertificateIssuerOptions contains the optional parameters for the KeyVaultClient.GetCertificateIssuer
+// options - KeyVaultClientGetCertificateIssuerOptions contains the optional parameters for the Client.GetCertificateIssuer
 // method.
-func (client *KeyVaultClient) GetCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientGetCertificateIssuerOptions) (KeyVaultClientGetCertificateIssuerResponse, error) {
+func (client *Client) GetCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientGetCertificateIssuerOptions) (KeyVaultClientGetCertificateIssuerResponse, error) {
 	req, err := client.getCertificateIssuerCreateRequest(ctx, vaultBaseURL, issuerName, options)
 	if err != nil {
 		return KeyVaultClientGetCertificateIssuerResponse{}, err
@@ -1443,7 +1438,7 @@ func (client *KeyVaultClient) GetCertificateIssuer(ctx context.Context, vaultBas
 }
 
 // getCertificateIssuerCreateRequest creates the GetCertificateIssuer request.
-func (client *KeyVaultClient) getCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientGetCertificateIssuerOptions) (*policy.Request, error) {
+func (client *Client) getCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, options *KeyVaultClientGetCertificateIssuerOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/issuers/{issuer-name}"
@@ -1463,7 +1458,7 @@ func (client *KeyVaultClient) getCertificateIssuerCreateRequest(ctx context.Cont
 }
 
 // getCertificateIssuerHandleResponse handles the GetCertificateIssuer response.
-func (client *KeyVaultClient) getCertificateIssuerHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateIssuerResponse, error) {
+func (client *Client) getCertificateIssuerHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateIssuerResponse, error) {
 	result := KeyVaultClientGetCertificateIssuerResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IssuerBundle); err != nil {
 		return KeyVaultClientGetCertificateIssuerResponse{}, runtime.NewResponseError(err, resp)
@@ -1472,12 +1467,12 @@ func (client *KeyVaultClient) getCertificateIssuerHandleResponse(resp *http.Resp
 }
 
 // getCertificateIssuerHandleError handles the GetCertificateIssuer error response.
-func (client *KeyVaultClient) getCertificateIssuerHandleError(resp *http.Response) error {
+func (client *Client) getCertificateIssuerHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -1486,11 +1481,11 @@ func (client *KeyVaultClient) getCertificateIssuerHandleError(resp *http.Respons
 
 // GetCertificateIssuers - The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified
 // key vault. This operation requires the certificates/manageissuers/getissuers permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - KeyVaultClientGetCertificateIssuersOptions contains the optional parameters for the KeyVaultClient.GetCertificateIssuers
+// options - KeyVaultClientGetCertificateIssuersOptions contains the optional parameters for the Client.GetCertificateIssuers
 // method.
-func (client *KeyVaultClient) GetCertificateIssuers(vaultBaseURL string, options *KeyVaultClientGetCertificateIssuersOptions) *KeyVaultClientGetCertificateIssuersPager {
+func (client *Client) GetCertificateIssuers(vaultBaseURL string, options *KeyVaultClientGetCertificateIssuersOptions) *KeyVaultClientGetCertificateIssuersPager {
 	return &KeyVaultClientGetCertificateIssuersPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
@@ -1503,7 +1498,7 @@ func (client *KeyVaultClient) GetCertificateIssuers(vaultBaseURL string, options
 }
 
 // getCertificateIssuersCreateRequest creates the GetCertificateIssuers request.
-func (client *KeyVaultClient) getCertificateIssuersCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificateIssuersOptions) (*policy.Request, error) {
+func (client *Client) getCertificateIssuersCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificateIssuersOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/issuers"
@@ -1522,7 +1517,7 @@ func (client *KeyVaultClient) getCertificateIssuersCreateRequest(ctx context.Con
 }
 
 // getCertificateIssuersHandleResponse handles the GetCertificateIssuers response.
-func (client *KeyVaultClient) getCertificateIssuersHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateIssuersResponse, error) {
+func (client *Client) getCertificateIssuersHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateIssuersResponse, error) {
 	result := KeyVaultClientGetCertificateIssuersResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateIssuerListResult); err != nil {
 		return KeyVaultClientGetCertificateIssuersResponse{}, runtime.NewResponseError(err, resp)
@@ -1531,12 +1526,12 @@ func (client *KeyVaultClient) getCertificateIssuersHandleResponse(resp *http.Res
 }
 
 // getCertificateIssuersHandleError handles the GetCertificateIssuers error response.
-func (client *KeyVaultClient) getCertificateIssuersHandleError(resp *http.Response) error {
+func (client *Client) getCertificateIssuersHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -1545,12 +1540,12 @@ func (client *KeyVaultClient) getCertificateIssuersHandleError(resp *http.Respon
 
 // GetCertificateOperation - Gets the creation operation associated with a specified certificate. This operation requires
 // the certificates/get permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
-// options - KeyVaultClientGetCertificateOperationOptions contains the optional parameters for the KeyVaultClient.GetCertificateOperation
+// options - KeyVaultClientGetCertificateOperationOptions contains the optional parameters for the Client.GetCertificateOperation
 // method.
-func (client *KeyVaultClient) GetCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateOperationOptions) (KeyVaultClientGetCertificateOperationResponse, error) {
+func (client *Client) GetCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateOperationOptions) (KeyVaultClientGetCertificateOperationResponse, error) {
 	req, err := client.getCertificateOperationCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
 		return KeyVaultClientGetCertificateOperationResponse{}, err
@@ -1566,7 +1561,7 @@ func (client *KeyVaultClient) GetCertificateOperation(ctx context.Context, vault
 }
 
 // getCertificateOperationCreateRequest creates the GetCertificateOperation request.
-func (client *KeyVaultClient) getCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateOperationOptions) (*policy.Request, error) {
+func (client *Client) getCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/pending"
@@ -1586,7 +1581,7 @@ func (client *KeyVaultClient) getCertificateOperationCreateRequest(ctx context.C
 }
 
 // getCertificateOperationHandleResponse handles the GetCertificateOperation response.
-func (client *KeyVaultClient) getCertificateOperationHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateOperationResponse, error) {
+func (client *Client) getCertificateOperationHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateOperationResponse, error) {
 	result := KeyVaultClientGetCertificateOperationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateOperation); err != nil {
 		return KeyVaultClientGetCertificateOperationResponse{}, runtime.NewResponseError(err, resp)
@@ -1595,12 +1590,12 @@ func (client *KeyVaultClient) getCertificateOperationHandleResponse(resp *http.R
 }
 
 // getCertificateOperationHandleError handles the GetCertificateOperation error response.
-func (client *KeyVaultClient) getCertificateOperationHandleError(resp *http.Response) error {
+func (client *Client) getCertificateOperationHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -1609,12 +1604,12 @@ func (client *KeyVaultClient) getCertificateOperationHandleError(resp *http.Resp
 
 // GetCertificatePolicy - The GetCertificatePolicy operation returns the specified certificate policy resources in the specified
 // key vault. This operation requires the certificates/get permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate in a given key vault.
-// options - KeyVaultClientGetCertificatePolicyOptions contains the optional parameters for the KeyVaultClient.GetCertificatePolicy
+// options - KeyVaultClientGetCertificatePolicyOptions contains the optional parameters for the Client.GetCertificatePolicy
 // method.
-func (client *KeyVaultClient) GetCertificatePolicy(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificatePolicyOptions) (KeyVaultClientGetCertificatePolicyResponse, error) {
+func (client *Client) GetCertificatePolicy(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificatePolicyOptions) (KeyVaultClientGetCertificatePolicyResponse, error) {
 	req, err := client.getCertificatePolicyCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
 		return KeyVaultClientGetCertificatePolicyResponse{}, err
@@ -1630,7 +1625,7 @@ func (client *KeyVaultClient) GetCertificatePolicy(ctx context.Context, vaultBas
 }
 
 // getCertificatePolicyCreateRequest creates the GetCertificatePolicy request.
-func (client *KeyVaultClient) getCertificatePolicyCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificatePolicyOptions) (*policy.Request, error) {
+func (client *Client) getCertificatePolicyCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificatePolicyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/policy"
@@ -1650,7 +1645,7 @@ func (client *KeyVaultClient) getCertificatePolicyCreateRequest(ctx context.Cont
 }
 
 // getCertificatePolicyHandleResponse handles the GetCertificatePolicy response.
-func (client *KeyVaultClient) getCertificatePolicyHandleResponse(resp *http.Response) (KeyVaultClientGetCertificatePolicyResponse, error) {
+func (client *Client) getCertificatePolicyHandleResponse(resp *http.Response) (KeyVaultClientGetCertificatePolicyResponse, error) {
 	result := KeyVaultClientGetCertificatePolicyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificatePolicy); err != nil {
 		return KeyVaultClientGetCertificatePolicyResponse{}, runtime.NewResponseError(err, resp)
@@ -1659,12 +1654,12 @@ func (client *KeyVaultClient) getCertificatePolicyHandleResponse(resp *http.Resp
 }
 
 // getCertificatePolicyHandleError handles the GetCertificatePolicy error response.
-func (client *KeyVaultClient) getCertificatePolicyHandleError(resp *http.Response) error {
+func (client *Client) getCertificatePolicyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -1673,12 +1668,12 @@ func (client *KeyVaultClient) getCertificatePolicyHandleError(resp *http.Respons
 
 // GetCertificateVersions - The GetCertificateVersions operation returns the versions of a certificate in the specified key
 // vault. This operation requires the certificates/list permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
-// options - KeyVaultClientGetCertificateVersionsOptions contains the optional parameters for the KeyVaultClient.GetCertificateVersions
+// options - KeyVaultClientGetCertificateVersionsOptions contains the optional parameters for the Client.GetCertificateVersions
 // method.
-func (client *KeyVaultClient) GetCertificateVersions(vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateVersionsOptions) *KeyVaultClientGetCertificateVersionsPager {
+func (client *Client) GetCertificateVersions(vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateVersionsOptions) *KeyVaultClientGetCertificateVersionsPager {
 	return &KeyVaultClientGetCertificateVersionsPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
@@ -1691,7 +1686,7 @@ func (client *KeyVaultClient) GetCertificateVersions(vaultBaseURL string, certif
 }
 
 // getCertificateVersionsCreateRequest creates the GetCertificateVersions request.
-func (client *KeyVaultClient) getCertificateVersionsCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateVersionsOptions) (*policy.Request, error) {
+func (client *Client) getCertificateVersionsCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetCertificateVersionsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/versions"
@@ -1714,7 +1709,7 @@ func (client *KeyVaultClient) getCertificateVersionsCreateRequest(ctx context.Co
 }
 
 // getCertificateVersionsHandleResponse handles the GetCertificateVersions response.
-func (client *KeyVaultClient) getCertificateVersionsHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateVersionsResponse, error) {
+func (client *Client) getCertificateVersionsHandleResponse(resp *http.Response) (KeyVaultClientGetCertificateVersionsResponse, error) {
 	result := KeyVaultClientGetCertificateVersionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateListResult); err != nil {
 		return KeyVaultClientGetCertificateVersionsResponse{}, runtime.NewResponseError(err, resp)
@@ -1723,12 +1718,12 @@ func (client *KeyVaultClient) getCertificateVersionsHandleResponse(resp *http.Re
 }
 
 // getCertificateVersionsHandleError handles the GetCertificateVersions error response.
-func (client *KeyVaultClient) getCertificateVersionsHandleError(resp *http.Response) error {
+func (client *Client) getCertificateVersionsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -1737,11 +1732,10 @@ func (client *KeyVaultClient) getCertificateVersionsHandleError(resp *http.Respo
 
 // GetCertificates - The GetCertificates operation returns the set of certificates resources in the specified key vault. This
 // operation requires the certificates/list permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - KeyVaultClientGetCertificatesOptions contains the optional parameters for the KeyVaultClient.GetCertificates
-// method.
-func (client *KeyVaultClient) GetCertificates(vaultBaseURL string, options *KeyVaultClientGetCertificatesOptions) *KeyVaultClientGetCertificatesPager {
+// options - KeyVaultClientGetCertificatesOptions contains the optional parameters for the Client.GetCertificates method.
+func (client *Client) GetCertificates(vaultBaseURL string, options *KeyVaultClientGetCertificatesOptions) *KeyVaultClientGetCertificatesPager {
 	return &KeyVaultClientGetCertificatesPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
@@ -1754,7 +1748,7 @@ func (client *KeyVaultClient) GetCertificates(vaultBaseURL string, options *KeyV
 }
 
 // getCertificatesCreateRequest creates the GetCertificates request.
-func (client *KeyVaultClient) getCertificatesCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificatesOptions) (*policy.Request, error) {
+func (client *Client) getCertificatesCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetCertificatesOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates"
@@ -1776,7 +1770,7 @@ func (client *KeyVaultClient) getCertificatesCreateRequest(ctx context.Context, 
 }
 
 // getCertificatesHandleResponse handles the GetCertificates response.
-func (client *KeyVaultClient) getCertificatesHandleResponse(resp *http.Response) (KeyVaultClientGetCertificatesResponse, error) {
+func (client *Client) getCertificatesHandleResponse(resp *http.Response) (KeyVaultClientGetCertificatesResponse, error) {
 	result := KeyVaultClientGetCertificatesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateListResult); err != nil {
 		return KeyVaultClientGetCertificatesResponse{}, runtime.NewResponseError(err, resp)
@@ -1785,12 +1779,12 @@ func (client *KeyVaultClient) getCertificatesHandleResponse(resp *http.Response)
 }
 
 // getCertificatesHandleError handles the GetCertificates error response.
-func (client *KeyVaultClient) getCertificatesHandleError(resp *http.Response) error {
+func (client *Client) getCertificatesHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -1800,12 +1794,12 @@ func (client *KeyVaultClient) getCertificatesHandleError(resp *http.Response) er
 // GetDeletedCertificate - The GetDeletedCertificate operation retrieves the deleted certificate information plus its attributes,
 // such as retention interval, scheduled permanent deletion and the current deletion recovery level.
 // This operation requires the certificates/get permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate
-// options - KeyVaultClientGetDeletedCertificateOptions contains the optional parameters for the KeyVaultClient.GetDeletedCertificate
+// options - KeyVaultClientGetDeletedCertificateOptions contains the optional parameters for the Client.GetDeletedCertificate
 // method.
-func (client *KeyVaultClient) GetDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetDeletedCertificateOptions) (KeyVaultClientGetDeletedCertificateResponse, error) {
+func (client *Client) GetDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetDeletedCertificateOptions) (KeyVaultClientGetDeletedCertificateResponse, error) {
 	req, err := client.getDeletedCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
 		return KeyVaultClientGetDeletedCertificateResponse{}, err
@@ -1821,7 +1815,7 @@ func (client *KeyVaultClient) GetDeletedCertificate(ctx context.Context, vaultBa
 }
 
 // getDeletedCertificateCreateRequest creates the GetDeletedCertificate request.
-func (client *KeyVaultClient) getDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetDeletedCertificateOptions) (*policy.Request, error) {
+func (client *Client) getDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientGetDeletedCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedcertificates/{certificate-name}"
@@ -1841,7 +1835,7 @@ func (client *KeyVaultClient) getDeletedCertificateCreateRequest(ctx context.Con
 }
 
 // getDeletedCertificateHandleResponse handles the GetDeletedCertificate response.
-func (client *KeyVaultClient) getDeletedCertificateHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedCertificateResponse, error) {
+func (client *Client) getDeletedCertificateHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedCertificateResponse, error) {
 	result := KeyVaultClientGetDeletedCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedCertificateBundle); err != nil {
 		return KeyVaultClientGetDeletedCertificateResponse{}, runtime.NewResponseError(err, resp)
@@ -1850,12 +1844,12 @@ func (client *KeyVaultClient) getDeletedCertificateHandleResponse(resp *http.Res
 }
 
 // getDeletedCertificateHandleError handles the GetDeletedCertificate error response.
-func (client *KeyVaultClient) getDeletedCertificateHandleError(resp *http.Response) error {
+func (client *Client) getDeletedCertificateHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -1866,11 +1860,11 @@ func (client *KeyVaultClient) getDeletedCertificateHandleError(resp *http.Respon
 // in a deleted state and ready for recovery or purging. This operation includes deletion-specific
 // information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete
 // enabled vaults.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - KeyVaultClientGetDeletedCertificatesOptions contains the optional parameters for the KeyVaultClient.GetDeletedCertificates
+// options - KeyVaultClientGetDeletedCertificatesOptions contains the optional parameters for the Client.GetDeletedCertificates
 // method.
-func (client *KeyVaultClient) GetDeletedCertificates(vaultBaseURL string, options *KeyVaultClientGetDeletedCertificatesOptions) *KeyVaultClientGetDeletedCertificatesPager {
+func (client *Client) GetDeletedCertificates(vaultBaseURL string, options *KeyVaultClientGetDeletedCertificatesOptions) *KeyVaultClientGetDeletedCertificatesPager {
 	return &KeyVaultClientGetDeletedCertificatesPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
@@ -1883,7 +1877,7 @@ func (client *KeyVaultClient) GetDeletedCertificates(vaultBaseURL string, option
 }
 
 // getDeletedCertificatesCreateRequest creates the GetDeletedCertificates request.
-func (client *KeyVaultClient) getDeletedCertificatesCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetDeletedCertificatesOptions) (*policy.Request, error) {
+func (client *Client) getDeletedCertificatesCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetDeletedCertificatesOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedcertificates"
@@ -1905,7 +1899,7 @@ func (client *KeyVaultClient) getDeletedCertificatesCreateRequest(ctx context.Co
 }
 
 // getDeletedCertificatesHandleResponse handles the GetDeletedCertificates response.
-func (client *KeyVaultClient) getDeletedCertificatesHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedCertificatesResponse, error) {
+func (client *Client) getDeletedCertificatesHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedCertificatesResponse, error) {
 	result := KeyVaultClientGetDeletedCertificatesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedCertificateListResult); err != nil {
 		return KeyVaultClientGetDeletedCertificatesResponse{}, runtime.NewResponseError(err, resp)
@@ -1914,12 +1908,12 @@ func (client *KeyVaultClient) getDeletedCertificatesHandleResponse(resp *http.Re
 }
 
 // getDeletedCertificatesHandleError handles the GetDeletedCertificates error response.
-func (client *KeyVaultClient) getDeletedCertificatesHandleError(resp *http.Response) error {
+func (client *Client) getDeletedCertificatesHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -1929,11 +1923,11 @@ func (client *KeyVaultClient) getDeletedCertificatesHandleError(resp *http.Respo
 // GetDeletedKey - The Get Deleted Key operation is applicable for soft-delete enabled vaults. While the operation can be
 // invoked on any vault, it will return an error if invoked on a non soft-delete enabled vault. This
 // operation requires the keys/get permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
-// options - KeyVaultClientGetDeletedKeyOptions contains the optional parameters for the KeyVaultClient.GetDeletedKey method.
-func (client *KeyVaultClient) GetDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientGetDeletedKeyOptions) (KeyVaultClientGetDeletedKeyResponse, error) {
+// options - KeyVaultClientGetDeletedKeyOptions contains the optional parameters for the Client.GetDeletedKey method.
+func (client *Client) GetDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientGetDeletedKeyOptions) (KeyVaultClientGetDeletedKeyResponse, error) {
 	req, err := client.getDeletedKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
 		return KeyVaultClientGetDeletedKeyResponse{}, err
@@ -1949,7 +1943,7 @@ func (client *KeyVaultClient) GetDeletedKey(ctx context.Context, vaultBaseURL st
 }
 
 // getDeletedKeyCreateRequest creates the GetDeletedKey request.
-func (client *KeyVaultClient) getDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientGetDeletedKeyOptions) (*policy.Request, error) {
+func (client *Client) getDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientGetDeletedKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedkeys/{key-name}"
@@ -1969,7 +1963,7 @@ func (client *KeyVaultClient) getDeletedKeyCreateRequest(ctx context.Context, va
 }
 
 // getDeletedKeyHandleResponse handles the GetDeletedKey response.
-func (client *KeyVaultClient) getDeletedKeyHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedKeyResponse, error) {
+func (client *Client) getDeletedKeyHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedKeyResponse, error) {
 	result := KeyVaultClientGetDeletedKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKeyBundle); err != nil {
 		return KeyVaultClientGetDeletedKeyResponse{}, runtime.NewResponseError(err, resp)
@@ -1978,12 +1972,12 @@ func (client *KeyVaultClient) getDeletedKeyHandleResponse(resp *http.Response) (
 }
 
 // getDeletedKeyHandleError handles the GetDeletedKey error response.
-func (client *KeyVaultClient) getDeletedKeyHandleError(resp *http.Response) error {
+func (client *Client) getDeletedKeyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -1995,10 +1989,10 @@ func (client *KeyVaultClient) getDeletedKeyHandleError(resp *http.Response) erro
 // operation is applicable for vaults enabled for soft-delete. While the operation can be invoked on any vault, it will return
 // an error if invoked on a non soft-delete enabled vault. This operation
 // requires the keys/list permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - KeyVaultClientGetDeletedKeysOptions contains the optional parameters for the KeyVaultClient.GetDeletedKeys method.
-func (client *KeyVaultClient) GetDeletedKeys(vaultBaseURL string, options *KeyVaultClientGetDeletedKeysOptions) *KeyVaultClientGetDeletedKeysPager {
+// options - KeyVaultClientGetDeletedKeysOptions contains the optional parameters for the Client.GetDeletedKeys method.
+func (client *Client) GetDeletedKeys(vaultBaseURL string, options *KeyVaultClientGetDeletedKeysOptions) *KeyVaultClientGetDeletedKeysPager {
 	return &KeyVaultClientGetDeletedKeysPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
@@ -2011,7 +2005,7 @@ func (client *KeyVaultClient) GetDeletedKeys(vaultBaseURL string, options *KeyVa
 }
 
 // getDeletedKeysCreateRequest creates the GetDeletedKeys request.
-func (client *KeyVaultClient) getDeletedKeysCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetDeletedKeysOptions) (*policy.Request, error) {
+func (client *Client) getDeletedKeysCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetDeletedKeysOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedkeys"
@@ -2030,7 +2024,7 @@ func (client *KeyVaultClient) getDeletedKeysCreateRequest(ctx context.Context, v
 }
 
 // getDeletedKeysHandleResponse handles the GetDeletedKeys response.
-func (client *KeyVaultClient) getDeletedKeysHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedKeysResponse, error) {
+func (client *Client) getDeletedKeysHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedKeysResponse, error) {
 	result := KeyVaultClientGetDeletedKeysResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKeyListResult); err != nil {
 		return KeyVaultClientGetDeletedKeysResponse{}, runtime.NewResponseError(err, resp)
@@ -2039,12 +2033,12 @@ func (client *KeyVaultClient) getDeletedKeysHandleResponse(resp *http.Response) 
 }
 
 // getDeletedKeysHandleError handles the GetDeletedKeys error response.
-func (client *KeyVaultClient) getDeletedKeysHandleError(resp *http.Response) error {
+func (client *Client) getDeletedKeysHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -2053,13 +2047,13 @@ func (client *KeyVaultClient) getDeletedKeysHandleError(resp *http.Response) err
 
 // GetDeletedSasDefinition - The Get Deleted SAS Definition operation returns the specified deleted SAS definition along with
 // its attributes. This operation requires the storage/getsas permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // sasDefinitionName - The name of the SAS definition.
-// options - KeyVaultClientGetDeletedSasDefinitionOptions contains the optional parameters for the KeyVaultClient.GetDeletedSasDefinition
+// options - KeyVaultClientGetDeletedSasDefinitionOptions contains the optional parameters for the Client.GetDeletedSasDefinition
 // method.
-func (client *KeyVaultClient) GetDeletedSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetDeletedSasDefinitionOptions) (KeyVaultClientGetDeletedSasDefinitionResponse, error) {
+func (client *Client) GetDeletedSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetDeletedSasDefinitionOptions) (KeyVaultClientGetDeletedSasDefinitionResponse, error) {
 	req, err := client.getDeletedSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, options)
 	if err != nil {
 		return KeyVaultClientGetDeletedSasDefinitionResponse{}, err
@@ -2075,7 +2069,7 @@ func (client *KeyVaultClient) GetDeletedSasDefinition(ctx context.Context, vault
 }
 
 // getDeletedSasDefinitionCreateRequest creates the GetDeletedSasDefinition request.
-func (client *KeyVaultClient) getDeletedSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetDeletedSasDefinitionOptions) (*policy.Request, error) {
+func (client *Client) getDeletedSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetDeletedSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}/sas/{sas-definition-name}"
@@ -2099,7 +2093,7 @@ func (client *KeyVaultClient) getDeletedSasDefinitionCreateRequest(ctx context.C
 }
 
 // getDeletedSasDefinitionHandleResponse handles the GetDeletedSasDefinition response.
-func (client *KeyVaultClient) getDeletedSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedSasDefinitionResponse, error) {
+func (client *Client) getDeletedSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedSasDefinitionResponse, error) {
 	result := KeyVaultClientGetDeletedSasDefinitionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSasDefinitionBundle); err != nil {
 		return KeyVaultClientGetDeletedSasDefinitionResponse{}, runtime.NewResponseError(err, resp)
@@ -2108,12 +2102,12 @@ func (client *KeyVaultClient) getDeletedSasDefinitionHandleResponse(resp *http.R
 }
 
 // getDeletedSasDefinitionHandleError handles the GetDeletedSasDefinition error response.
-func (client *KeyVaultClient) getDeletedSasDefinitionHandleError(resp *http.Response) error {
+func (client *Client) getDeletedSasDefinitionHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -2122,12 +2116,12 @@ func (client *KeyVaultClient) getDeletedSasDefinitionHandleError(resp *http.Resp
 
 // GetDeletedSasDefinitions - The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted
 // for a vault enabled for soft-delete. This operation requires the storage/listsas permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
-// options - KeyVaultClientGetDeletedSasDefinitionsOptions contains the optional parameters for the KeyVaultClient.GetDeletedSasDefinitions
+// options - KeyVaultClientGetDeletedSasDefinitionsOptions contains the optional parameters for the Client.GetDeletedSasDefinitions
 // method.
-func (client *KeyVaultClient) GetDeletedSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedSasDefinitionsOptions) *KeyVaultClientGetDeletedSasDefinitionsPager {
+func (client *Client) GetDeletedSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedSasDefinitionsOptions) *KeyVaultClientGetDeletedSasDefinitionsPager {
 	return &KeyVaultClientGetDeletedSasDefinitionsPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
@@ -2140,7 +2134,7 @@ func (client *KeyVaultClient) GetDeletedSasDefinitions(vaultBaseURL string, stor
 }
 
 // getDeletedSasDefinitionsCreateRequest creates the GetDeletedSasDefinitions request.
-func (client *KeyVaultClient) getDeletedSasDefinitionsCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedSasDefinitionsOptions) (*policy.Request, error) {
+func (client *Client) getDeletedSasDefinitionsCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedSasDefinitionsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}/sas"
@@ -2163,7 +2157,7 @@ func (client *KeyVaultClient) getDeletedSasDefinitionsCreateRequest(ctx context.
 }
 
 // getDeletedSasDefinitionsHandleResponse handles the GetDeletedSasDefinitions response.
-func (client *KeyVaultClient) getDeletedSasDefinitionsHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedSasDefinitionsResponse, error) {
+func (client *Client) getDeletedSasDefinitionsHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedSasDefinitionsResponse, error) {
 	result := KeyVaultClientGetDeletedSasDefinitionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSasDefinitionListResult); err != nil {
 		return KeyVaultClientGetDeletedSasDefinitionsResponse{}, runtime.NewResponseError(err, resp)
@@ -2172,12 +2166,12 @@ func (client *KeyVaultClient) getDeletedSasDefinitionsHandleResponse(resp *http.
 }
 
 // getDeletedSasDefinitionsHandleError handles the GetDeletedSasDefinitions error response.
-func (client *KeyVaultClient) getDeletedSasDefinitionsHandleError(resp *http.Response) error {
+func (client *Client) getDeletedSasDefinitionsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -2186,12 +2180,11 @@ func (client *KeyVaultClient) getDeletedSasDefinitionsHandleError(resp *http.Res
 
 // GetDeletedSecret - The Get Deleted Secret operation returns the specified deleted secret along with its attributes. This
 // operation requires the secrets/get permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
-// options - KeyVaultClientGetDeletedSecretOptions contains the optional parameters for the KeyVaultClient.GetDeletedSecret
-// method.
-func (client *KeyVaultClient) GetDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientGetDeletedSecretOptions) (KeyVaultClientGetDeletedSecretResponse, error) {
+// options - KeyVaultClientGetDeletedSecretOptions contains the optional parameters for the Client.GetDeletedSecret method.
+func (client *Client) GetDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientGetDeletedSecretOptions) (KeyVaultClientGetDeletedSecretResponse, error) {
 	req, err := client.getDeletedSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
 		return KeyVaultClientGetDeletedSecretResponse{}, err
@@ -2207,7 +2200,7 @@ func (client *KeyVaultClient) GetDeletedSecret(ctx context.Context, vaultBaseURL
 }
 
 // getDeletedSecretCreateRequest creates the GetDeletedSecret request.
-func (client *KeyVaultClient) getDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientGetDeletedSecretOptions) (*policy.Request, error) {
+func (client *Client) getDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientGetDeletedSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedsecrets/{secret-name}"
@@ -2227,7 +2220,7 @@ func (client *KeyVaultClient) getDeletedSecretCreateRequest(ctx context.Context,
 }
 
 // getDeletedSecretHandleResponse handles the GetDeletedSecret response.
-func (client *KeyVaultClient) getDeletedSecretHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedSecretResponse, error) {
+func (client *Client) getDeletedSecretHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedSecretResponse, error) {
 	result := KeyVaultClientGetDeletedSecretResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSecretBundle); err != nil {
 		return KeyVaultClientGetDeletedSecretResponse{}, runtime.NewResponseError(err, resp)
@@ -2236,12 +2229,12 @@ func (client *KeyVaultClient) getDeletedSecretHandleResponse(resp *http.Response
 }
 
 // getDeletedSecretHandleError handles the GetDeletedSecret error response.
-func (client *KeyVaultClient) getDeletedSecretHandleError(resp *http.Response) error {
+func (client *Client) getDeletedSecretHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -2250,11 +2243,10 @@ func (client *KeyVaultClient) getDeletedSecretHandleError(resp *http.Response) e
 
 // GetDeletedSecrets - The Get Deleted Secrets operation returns the secrets that have been deleted for a vault enabled for
 // soft-delete. This operation requires the secrets/list permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - KeyVaultClientGetDeletedSecretsOptions contains the optional parameters for the KeyVaultClient.GetDeletedSecrets
-// method.
-func (client *KeyVaultClient) GetDeletedSecrets(vaultBaseURL string, options *KeyVaultClientGetDeletedSecretsOptions) *KeyVaultClientGetDeletedSecretsPager {
+// options - KeyVaultClientGetDeletedSecretsOptions contains the optional parameters for the Client.GetDeletedSecrets method.
+func (client *Client) GetDeletedSecrets(vaultBaseURL string, options *KeyVaultClientGetDeletedSecretsOptions) *KeyVaultClientGetDeletedSecretsPager {
 	return &KeyVaultClientGetDeletedSecretsPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
@@ -2267,7 +2259,7 @@ func (client *KeyVaultClient) GetDeletedSecrets(vaultBaseURL string, options *Ke
 }
 
 // getDeletedSecretsCreateRequest creates the GetDeletedSecrets request.
-func (client *KeyVaultClient) getDeletedSecretsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetDeletedSecretsOptions) (*policy.Request, error) {
+func (client *Client) getDeletedSecretsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetDeletedSecretsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedsecrets"
@@ -2286,7 +2278,7 @@ func (client *KeyVaultClient) getDeletedSecretsCreateRequest(ctx context.Context
 }
 
 // getDeletedSecretsHandleResponse handles the GetDeletedSecrets response.
-func (client *KeyVaultClient) getDeletedSecretsHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedSecretsResponse, error) {
+func (client *Client) getDeletedSecretsHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedSecretsResponse, error) {
 	result := KeyVaultClientGetDeletedSecretsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSecretListResult); err != nil {
 		return KeyVaultClientGetDeletedSecretsResponse{}, runtime.NewResponseError(err, resp)
@@ -2295,12 +2287,12 @@ func (client *KeyVaultClient) getDeletedSecretsHandleResponse(resp *http.Respons
 }
 
 // getDeletedSecretsHandleError handles the GetDeletedSecrets error response.
-func (client *KeyVaultClient) getDeletedSecretsHandleError(resp *http.Response) error {
+func (client *Client) getDeletedSecretsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -2309,12 +2301,12 @@ func (client *KeyVaultClient) getDeletedSecretsHandleError(resp *http.Response) 
 
 // GetDeletedStorageAccount - The Get Deleted Storage Account operation returns the specified deleted storage account along
 // with its attributes. This operation requires the storage/get permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
-// options - KeyVaultClientGetDeletedStorageAccountOptions contains the optional parameters for the KeyVaultClient.GetDeletedStorageAccount
+// options - KeyVaultClientGetDeletedStorageAccountOptions contains the optional parameters for the Client.GetDeletedStorageAccount
 // method.
-func (client *KeyVaultClient) GetDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedStorageAccountOptions) (KeyVaultClientGetDeletedStorageAccountResponse, error) {
+func (client *Client) GetDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedStorageAccountOptions) (KeyVaultClientGetDeletedStorageAccountResponse, error) {
 	req, err := client.getDeletedStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
 		return KeyVaultClientGetDeletedStorageAccountResponse{}, err
@@ -2330,7 +2322,7 @@ func (client *KeyVaultClient) GetDeletedStorageAccount(ctx context.Context, vaul
 }
 
 // getDeletedStorageAccountCreateRequest creates the GetDeletedStorageAccount request.
-func (client *KeyVaultClient) getDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) getDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetDeletedStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}"
@@ -2350,7 +2342,7 @@ func (client *KeyVaultClient) getDeletedStorageAccountCreateRequest(ctx context.
 }
 
 // getDeletedStorageAccountHandleResponse handles the GetDeletedStorageAccount response.
-func (client *KeyVaultClient) getDeletedStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedStorageAccountResponse, error) {
+func (client *Client) getDeletedStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedStorageAccountResponse, error) {
 	result := KeyVaultClientGetDeletedStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedStorageBundle); err != nil {
 		return KeyVaultClientGetDeletedStorageAccountResponse{}, runtime.NewResponseError(err, resp)
@@ -2359,12 +2351,12 @@ func (client *KeyVaultClient) getDeletedStorageAccountHandleResponse(resp *http.
 }
 
 // getDeletedStorageAccountHandleError handles the GetDeletedStorageAccount error response.
-func (client *KeyVaultClient) getDeletedStorageAccountHandleError(resp *http.Response) error {
+func (client *Client) getDeletedStorageAccountHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -2373,11 +2365,11 @@ func (client *KeyVaultClient) getDeletedStorageAccountHandleError(resp *http.Res
 
 // GetDeletedStorageAccounts - The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted
 // for a vault enabled for soft-delete. This operation requires the storage/list permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - KeyVaultClientGetDeletedStorageAccountsOptions contains the optional parameters for the KeyVaultClient.GetDeletedStorageAccounts
+// options - KeyVaultClientGetDeletedStorageAccountsOptions contains the optional parameters for the Client.GetDeletedStorageAccounts
 // method.
-func (client *KeyVaultClient) GetDeletedStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetDeletedStorageAccountsOptions) *KeyVaultClientGetDeletedStorageAccountsPager {
+func (client *Client) GetDeletedStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetDeletedStorageAccountsOptions) *KeyVaultClientGetDeletedStorageAccountsPager {
 	return &KeyVaultClientGetDeletedStorageAccountsPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
@@ -2390,7 +2382,7 @@ func (client *KeyVaultClient) GetDeletedStorageAccounts(vaultBaseURL string, opt
 }
 
 // getDeletedStorageAccountsCreateRequest creates the GetDeletedStorageAccounts request.
-func (client *KeyVaultClient) getDeletedStorageAccountsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetDeletedStorageAccountsOptions) (*policy.Request, error) {
+func (client *Client) getDeletedStorageAccountsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetDeletedStorageAccountsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage"
@@ -2409,7 +2401,7 @@ func (client *KeyVaultClient) getDeletedStorageAccountsCreateRequest(ctx context
 }
 
 // getDeletedStorageAccountsHandleResponse handles the GetDeletedStorageAccounts response.
-func (client *KeyVaultClient) getDeletedStorageAccountsHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedStorageAccountsResponse, error) {
+func (client *Client) getDeletedStorageAccountsHandleResponse(resp *http.Response) (KeyVaultClientGetDeletedStorageAccountsResponse, error) {
 	result := KeyVaultClientGetDeletedStorageAccountsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedStorageListResult); err != nil {
 		return KeyVaultClientGetDeletedStorageAccountsResponse{}, runtime.NewResponseError(err, resp)
@@ -2418,12 +2410,12 @@ func (client *KeyVaultClient) getDeletedStorageAccountsHandleResponse(resp *http
 }
 
 // getDeletedStorageAccountsHandleError handles the GetDeletedStorageAccounts error response.
-func (client *KeyVaultClient) getDeletedStorageAccountsHandleError(resp *http.Response) error {
+func (client *Client) getDeletedStorageAccountsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -2432,13 +2424,13 @@ func (client *KeyVaultClient) getDeletedStorageAccountsHandleError(resp *http.Re
 
 // GetKey - The get key operation is applicable to all key types. If the requested key is symmetric, then no key material
 // is released in the response. This operation requires the keys/get permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key to get.
 // keyVersion - Adding the version parameter retrieves a specific version of a key. This URI fragment is optional. If not
 // specified, the latest version of the key is returned.
-// options - KeyVaultClientGetKeyOptions contains the optional parameters for the KeyVaultClient.GetKey method.
-func (client *KeyVaultClient) GetKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, options *KeyVaultClientGetKeyOptions) (KeyVaultClientGetKeyResponse, error) {
+// options - KeyVaultClientGetKeyOptions contains the optional parameters for the Client.GetKey method.
+func (client *Client) GetKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, options *KeyVaultClientGetKeyOptions) (KeyVaultClientGetKeyResponse, error) {
 	req, err := client.getKeyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, options)
 	if err != nil {
 		return KeyVaultClientGetKeyResponse{}, err
@@ -2454,7 +2446,7 @@ func (client *KeyVaultClient) GetKey(ctx context.Context, vaultBaseURL string, k
 }
 
 // getKeyCreateRequest creates the GetKey request.
-func (client *KeyVaultClient) getKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, options *KeyVaultClientGetKeyOptions) (*policy.Request, error) {
+func (client *Client) getKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, options *KeyVaultClientGetKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}"
@@ -2478,7 +2470,7 @@ func (client *KeyVaultClient) getKeyCreateRequest(ctx context.Context, vaultBase
 }
 
 // getKeyHandleResponse handles the GetKey response.
-func (client *KeyVaultClient) getKeyHandleResponse(resp *http.Response) (KeyVaultClientGetKeyResponse, error) {
+func (client *Client) getKeyHandleResponse(resp *http.Response) (KeyVaultClientGetKeyResponse, error) {
 	result := KeyVaultClientGetKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return KeyVaultClientGetKeyResponse{}, runtime.NewResponseError(err, resp)
@@ -2487,12 +2479,12 @@ func (client *KeyVaultClient) getKeyHandleResponse(resp *http.Response) (KeyVaul
 }
 
 // getKeyHandleError handles the GetKey error response.
-func (client *KeyVaultClient) getKeyHandleError(resp *http.Response) error {
+func (client *Client) getKeyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -2501,11 +2493,11 @@ func (client *KeyVaultClient) getKeyHandleError(resp *http.Response) error {
 
 // GetKeyVersions - The full key identifier, attributes, and tags are provided in the response. This operation requires the
 // keys/list permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
-// options - KeyVaultClientGetKeyVersionsOptions contains the optional parameters for the KeyVaultClient.GetKeyVersions method.
-func (client *KeyVaultClient) GetKeyVersions(vaultBaseURL string, keyName string, options *KeyVaultClientGetKeyVersionsOptions) *KeyVaultClientGetKeyVersionsPager {
+// options - KeyVaultClientGetKeyVersionsOptions contains the optional parameters for the Client.GetKeyVersions method.
+func (client *Client) GetKeyVersions(vaultBaseURL string, keyName string, options *KeyVaultClientGetKeyVersionsOptions) *KeyVaultClientGetKeyVersionsPager {
 	return &KeyVaultClientGetKeyVersionsPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
@@ -2518,7 +2510,7 @@ func (client *KeyVaultClient) GetKeyVersions(vaultBaseURL string, keyName string
 }
 
 // getKeyVersionsCreateRequest creates the GetKeyVersions request.
-func (client *KeyVaultClient) getKeyVersionsCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientGetKeyVersionsOptions) (*policy.Request, error) {
+func (client *Client) getKeyVersionsCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientGetKeyVersionsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/versions"
@@ -2541,7 +2533,7 @@ func (client *KeyVaultClient) getKeyVersionsCreateRequest(ctx context.Context, v
 }
 
 // getKeyVersionsHandleResponse handles the GetKeyVersions response.
-func (client *KeyVaultClient) getKeyVersionsHandleResponse(resp *http.Response) (KeyVaultClientGetKeyVersionsResponse, error) {
+func (client *Client) getKeyVersionsHandleResponse(resp *http.Response) (KeyVaultClientGetKeyVersionsResponse, error) {
 	result := KeyVaultClientGetKeyVersionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyListResult); err != nil {
 		return KeyVaultClientGetKeyVersionsResponse{}, runtime.NewResponseError(err, resp)
@@ -2550,12 +2542,12 @@ func (client *KeyVaultClient) getKeyVersionsHandleResponse(resp *http.Response) 
 }
 
 // getKeyVersionsHandleError handles the GetKeyVersions error response.
-func (client *KeyVaultClient) getKeyVersionsHandleError(resp *http.Response) error {
+func (client *Client) getKeyVersionsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -2566,10 +2558,10 @@ func (client *KeyVaultClient) getKeyVersionsHandleError(resp *http.Response) err
 // key. The LIST operation is applicable to all key types, however only the base key
 // identifier, attributes, and tags are provided in the response. Individual versions of a key are not listed in the response.
 // This operation requires the keys/list permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - KeyVaultClientGetKeysOptions contains the optional parameters for the KeyVaultClient.GetKeys method.
-func (client *KeyVaultClient) GetKeys(vaultBaseURL string, options *KeyVaultClientGetKeysOptions) *KeyVaultClientGetKeysPager {
+// options - KeyVaultClientGetKeysOptions contains the optional parameters for the Client.GetKeys method.
+func (client *Client) GetKeys(vaultBaseURL string, options *KeyVaultClientGetKeysOptions) *KeyVaultClientGetKeysPager {
 	return &KeyVaultClientGetKeysPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
@@ -2582,7 +2574,7 @@ func (client *KeyVaultClient) GetKeys(vaultBaseURL string, options *KeyVaultClie
 }
 
 // getKeysCreateRequest creates the GetKeys request.
-func (client *KeyVaultClient) getKeysCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetKeysOptions) (*policy.Request, error) {
+func (client *Client) getKeysCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetKeysOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys"
@@ -2601,7 +2593,7 @@ func (client *KeyVaultClient) getKeysCreateRequest(ctx context.Context, vaultBas
 }
 
 // getKeysHandleResponse handles the GetKeys response.
-func (client *KeyVaultClient) getKeysHandleResponse(resp *http.Response) (KeyVaultClientGetKeysResponse, error) {
+func (client *Client) getKeysHandleResponse(resp *http.Response) (KeyVaultClientGetKeysResponse, error) {
 	result := KeyVaultClientGetKeysResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyListResult); err != nil {
 		return KeyVaultClientGetKeysResponse{}, runtime.NewResponseError(err, resp)
@@ -2610,12 +2602,12 @@ func (client *KeyVaultClient) getKeysHandleResponse(resp *http.Response) (KeyVau
 }
 
 // getKeysHandleError handles the GetKeys error response.
-func (client *KeyVaultClient) getKeysHandleError(resp *http.Response) error {
+func (client *Client) getKeysHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -2624,13 +2616,12 @@ func (client *KeyVaultClient) getKeysHandleError(resp *http.Response) error {
 
 // GetSasDefinition - Gets information about a SAS definition for the specified storage account. This operation requires the
 // storage/getsas permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // sasDefinitionName - The name of the SAS definition.
-// options - KeyVaultClientGetSasDefinitionOptions contains the optional parameters for the KeyVaultClient.GetSasDefinition
-// method.
-func (client *KeyVaultClient) GetSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetSasDefinitionOptions) (KeyVaultClientGetSasDefinitionResponse, error) {
+// options - KeyVaultClientGetSasDefinitionOptions contains the optional parameters for the Client.GetSasDefinition method.
+func (client *Client) GetSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetSasDefinitionOptions) (KeyVaultClientGetSasDefinitionResponse, error) {
 	req, err := client.getSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, options)
 	if err != nil {
 		return KeyVaultClientGetSasDefinitionResponse{}, err
@@ -2646,7 +2637,7 @@ func (client *KeyVaultClient) GetSasDefinition(ctx context.Context, vaultBaseURL
 }
 
 // getSasDefinitionCreateRequest creates the GetSasDefinition request.
-func (client *KeyVaultClient) getSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetSasDefinitionOptions) (*policy.Request, error) {
+func (client *Client) getSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientGetSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/sas/{sas-definition-name}"
@@ -2670,7 +2661,7 @@ func (client *KeyVaultClient) getSasDefinitionCreateRequest(ctx context.Context,
 }
 
 // getSasDefinitionHandleResponse handles the GetSasDefinition response.
-func (client *KeyVaultClient) getSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientGetSasDefinitionResponse, error) {
+func (client *Client) getSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientGetSasDefinitionResponse, error) {
 	result := KeyVaultClientGetSasDefinitionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionBundle); err != nil {
 		return KeyVaultClientGetSasDefinitionResponse{}, runtime.NewResponseError(err, resp)
@@ -2679,12 +2670,12 @@ func (client *KeyVaultClient) getSasDefinitionHandleResponse(resp *http.Response
 }
 
 // getSasDefinitionHandleError handles the GetSasDefinition error response.
-func (client *KeyVaultClient) getSasDefinitionHandleError(resp *http.Response) error {
+func (client *Client) getSasDefinitionHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -2693,12 +2684,11 @@ func (client *KeyVaultClient) getSasDefinitionHandleError(resp *http.Response) e
 
 // GetSasDefinitions - List storage SAS definitions for the given storage account. This operation requires the storage/listsas
 // permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
-// options - KeyVaultClientGetSasDefinitionsOptions contains the optional parameters for the KeyVaultClient.GetSasDefinitions
-// method.
-func (client *KeyVaultClient) GetSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetSasDefinitionsOptions) *KeyVaultClientGetSasDefinitionsPager {
+// options - KeyVaultClientGetSasDefinitionsOptions contains the optional parameters for the Client.GetSasDefinitions method.
+func (client *Client) GetSasDefinitions(vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetSasDefinitionsOptions) *KeyVaultClientGetSasDefinitionsPager {
 	return &KeyVaultClientGetSasDefinitionsPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
@@ -2711,7 +2701,7 @@ func (client *KeyVaultClient) GetSasDefinitions(vaultBaseURL string, storageAcco
 }
 
 // getSasDefinitionsCreateRequest creates the GetSasDefinitions request.
-func (client *KeyVaultClient) getSasDefinitionsCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetSasDefinitionsOptions) (*policy.Request, error) {
+func (client *Client) getSasDefinitionsCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetSasDefinitionsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/sas"
@@ -2734,7 +2724,7 @@ func (client *KeyVaultClient) getSasDefinitionsCreateRequest(ctx context.Context
 }
 
 // getSasDefinitionsHandleResponse handles the GetSasDefinitions response.
-func (client *KeyVaultClient) getSasDefinitionsHandleResponse(resp *http.Response) (KeyVaultClientGetSasDefinitionsResponse, error) {
+func (client *Client) getSasDefinitionsHandleResponse(resp *http.Response) (KeyVaultClientGetSasDefinitionsResponse, error) {
 	result := KeyVaultClientGetSasDefinitionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionListResult); err != nil {
 		return KeyVaultClientGetSasDefinitionsResponse{}, runtime.NewResponseError(err, resp)
@@ -2743,12 +2733,12 @@ func (client *KeyVaultClient) getSasDefinitionsHandleResponse(resp *http.Respons
 }
 
 // getSasDefinitionsHandleError handles the GetSasDefinitions error response.
-func (client *KeyVaultClient) getSasDefinitionsHandleError(resp *http.Response) error {
+func (client *Client) getSasDefinitionsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -2757,13 +2747,13 @@ func (client *KeyVaultClient) getSasDefinitionsHandleError(resp *http.Response) 
 
 // GetSecret - The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get
 // permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
 // secretVersion - The version of the secret. This URI fragment is optional. If not specified, the latest version of the secret
 // is returned.
-// options - KeyVaultClientGetSecretOptions contains the optional parameters for the KeyVaultClient.GetSecret method.
-func (client *KeyVaultClient) GetSecret(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, options *KeyVaultClientGetSecretOptions) (KeyVaultClientGetSecretResponse, error) {
+// options - KeyVaultClientGetSecretOptions contains the optional parameters for the Client.GetSecret method.
+func (client *Client) GetSecret(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, options *KeyVaultClientGetSecretOptions) (KeyVaultClientGetSecretResponse, error) {
 	req, err := client.getSecretCreateRequest(ctx, vaultBaseURL, secretName, secretVersion, options)
 	if err != nil {
 		return KeyVaultClientGetSecretResponse{}, err
@@ -2779,7 +2769,7 @@ func (client *KeyVaultClient) GetSecret(ctx context.Context, vaultBaseURL string
 }
 
 // getSecretCreateRequest creates the GetSecret request.
-func (client *KeyVaultClient) getSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, options *KeyVaultClientGetSecretOptions) (*policy.Request, error) {
+func (client *Client) getSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, options *KeyVaultClientGetSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}/{secret-version}"
@@ -2803,7 +2793,7 @@ func (client *KeyVaultClient) getSecretCreateRequest(ctx context.Context, vaultB
 }
 
 // getSecretHandleResponse handles the GetSecret response.
-func (client *KeyVaultClient) getSecretHandleResponse(resp *http.Response) (KeyVaultClientGetSecretResponse, error) {
+func (client *Client) getSecretHandleResponse(resp *http.Response) (KeyVaultClientGetSecretResponse, error) {
 	result := KeyVaultClientGetSecretResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
 		return KeyVaultClientGetSecretResponse{}, runtime.NewResponseError(err, resp)
@@ -2812,12 +2802,12 @@ func (client *KeyVaultClient) getSecretHandleResponse(resp *http.Response) (KeyV
 }
 
 // getSecretHandleError handles the GetSecret error response.
-func (client *KeyVaultClient) getSecretHandleError(resp *http.Response) error {
+func (client *Client) getSecretHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -2826,12 +2816,11 @@ func (client *KeyVaultClient) getSecretHandleError(resp *http.Response) error {
 
 // GetSecretVersions - The full secret identifier and attributes are provided in the response. No values are returned for
 // the secrets. This operations requires the secrets/list permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
-// options - KeyVaultClientGetSecretVersionsOptions contains the optional parameters for the KeyVaultClient.GetSecretVersions
-// method.
-func (client *KeyVaultClient) GetSecretVersions(vaultBaseURL string, secretName string, options *KeyVaultClientGetSecretVersionsOptions) *KeyVaultClientGetSecretVersionsPager {
+// options - KeyVaultClientGetSecretVersionsOptions contains the optional parameters for the Client.GetSecretVersions method.
+func (client *Client) GetSecretVersions(vaultBaseURL string, secretName string, options *KeyVaultClientGetSecretVersionsOptions) *KeyVaultClientGetSecretVersionsPager {
 	return &KeyVaultClientGetSecretVersionsPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
@@ -2844,7 +2833,7 @@ func (client *KeyVaultClient) GetSecretVersions(vaultBaseURL string, secretName 
 }
 
 // getSecretVersionsCreateRequest creates the GetSecretVersions request.
-func (client *KeyVaultClient) getSecretVersionsCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientGetSecretVersionsOptions) (*policy.Request, error) {
+func (client *Client) getSecretVersionsCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientGetSecretVersionsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}/versions"
@@ -2867,7 +2856,7 @@ func (client *KeyVaultClient) getSecretVersionsCreateRequest(ctx context.Context
 }
 
 // getSecretVersionsHandleResponse handles the GetSecretVersions response.
-func (client *KeyVaultClient) getSecretVersionsHandleResponse(resp *http.Response) (KeyVaultClientGetSecretVersionsResponse, error) {
+func (client *Client) getSecretVersionsHandleResponse(resp *http.Response) (KeyVaultClientGetSecretVersionsResponse, error) {
 	result := KeyVaultClientGetSecretVersionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretListResult); err != nil {
 		return KeyVaultClientGetSecretVersionsResponse{}, runtime.NewResponseError(err, resp)
@@ -2876,12 +2865,12 @@ func (client *KeyVaultClient) getSecretVersionsHandleResponse(resp *http.Respons
 }
 
 // getSecretVersionsHandleError handles the GetSecretVersions error response.
-func (client *KeyVaultClient) getSecretVersionsHandleError(resp *http.Response) error {
+func (client *Client) getSecretVersionsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -2891,10 +2880,10 @@ func (client *KeyVaultClient) getSecretVersionsHandleError(resp *http.Response) 
 // GetSecrets - The Get Secrets operation is applicable to the entire vault. However, only the base secret identifier and
 // its attributes are provided in the response. Individual secret versions are not listed in the
 // response. This operation requires the secrets/list permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - KeyVaultClientGetSecretsOptions contains the optional parameters for the KeyVaultClient.GetSecrets method.
-func (client *KeyVaultClient) GetSecrets(vaultBaseURL string, options *KeyVaultClientGetSecretsOptions) *KeyVaultClientGetSecretsPager {
+// options - KeyVaultClientGetSecretsOptions contains the optional parameters for the Client.GetSecrets method.
+func (client *Client) GetSecrets(vaultBaseURL string, options *KeyVaultClientGetSecretsOptions) *KeyVaultClientGetSecretsPager {
 	return &KeyVaultClientGetSecretsPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
@@ -2907,7 +2896,7 @@ func (client *KeyVaultClient) GetSecrets(vaultBaseURL string, options *KeyVaultC
 }
 
 // getSecretsCreateRequest creates the GetSecrets request.
-func (client *KeyVaultClient) getSecretsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetSecretsOptions) (*policy.Request, error) {
+func (client *Client) getSecretsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetSecretsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets"
@@ -2926,7 +2915,7 @@ func (client *KeyVaultClient) getSecretsCreateRequest(ctx context.Context, vault
 }
 
 // getSecretsHandleResponse handles the GetSecrets response.
-func (client *KeyVaultClient) getSecretsHandleResponse(resp *http.Response) (KeyVaultClientGetSecretsResponse, error) {
+func (client *Client) getSecretsHandleResponse(resp *http.Response) (KeyVaultClientGetSecretsResponse, error) {
 	result := KeyVaultClientGetSecretsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretListResult); err != nil {
 		return KeyVaultClientGetSecretsResponse{}, runtime.NewResponseError(err, resp)
@@ -2935,12 +2924,12 @@ func (client *KeyVaultClient) getSecretsHandleResponse(resp *http.Response) (Key
 }
 
 // getSecretsHandleError handles the GetSecrets error response.
-func (client *KeyVaultClient) getSecretsHandleError(resp *http.Response) error {
+func (client *Client) getSecretsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -2948,12 +2937,11 @@ func (client *KeyVaultClient) getSecretsHandleError(resp *http.Response) error {
 }
 
 // GetStorageAccount - Gets information about a specified storage account. This operation requires the storage/get permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
-// options - KeyVaultClientGetStorageAccountOptions contains the optional parameters for the KeyVaultClient.GetStorageAccount
-// method.
-func (client *KeyVaultClient) GetStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetStorageAccountOptions) (KeyVaultClientGetStorageAccountResponse, error) {
+// options - KeyVaultClientGetStorageAccountOptions contains the optional parameters for the Client.GetStorageAccount method.
+func (client *Client) GetStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetStorageAccountOptions) (KeyVaultClientGetStorageAccountResponse, error) {
 	req, err := client.getStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
 		return KeyVaultClientGetStorageAccountResponse{}, err
@@ -2969,7 +2957,7 @@ func (client *KeyVaultClient) GetStorageAccount(ctx context.Context, vaultBaseUR
 }
 
 // getStorageAccountCreateRequest creates the GetStorageAccount request.
-func (client *KeyVaultClient) getStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) getStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientGetStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}"
@@ -2989,7 +2977,7 @@ func (client *KeyVaultClient) getStorageAccountCreateRequest(ctx context.Context
 }
 
 // getStorageAccountHandleResponse handles the GetStorageAccount response.
-func (client *KeyVaultClient) getStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientGetStorageAccountResponse, error) {
+func (client *Client) getStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientGetStorageAccountResponse, error) {
 	result := KeyVaultClientGetStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return KeyVaultClientGetStorageAccountResponse{}, runtime.NewResponseError(err, resp)
@@ -2998,12 +2986,12 @@ func (client *KeyVaultClient) getStorageAccountHandleResponse(resp *http.Respons
 }
 
 // getStorageAccountHandleError handles the GetStorageAccount error response.
-func (client *KeyVaultClient) getStorageAccountHandleError(resp *http.Response) error {
+func (client *Client) getStorageAccountHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -3012,11 +3000,10 @@ func (client *KeyVaultClient) getStorageAccountHandleError(resp *http.Response) 
 
 // GetStorageAccounts - List storage accounts managed by the specified key vault. This operation requires the storage/list
 // permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
-// options - KeyVaultClientGetStorageAccountsOptions contains the optional parameters for the KeyVaultClient.GetStorageAccounts
-// method.
-func (client *KeyVaultClient) GetStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetStorageAccountsOptions) *KeyVaultClientGetStorageAccountsPager {
+// options - KeyVaultClientGetStorageAccountsOptions contains the optional parameters for the Client.GetStorageAccounts method.
+func (client *Client) GetStorageAccounts(vaultBaseURL string, options *KeyVaultClientGetStorageAccountsOptions) *KeyVaultClientGetStorageAccountsPager {
 	return &KeyVaultClientGetStorageAccountsPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
@@ -3029,7 +3016,7 @@ func (client *KeyVaultClient) GetStorageAccounts(vaultBaseURL string, options *K
 }
 
 // getStorageAccountsCreateRequest creates the GetStorageAccounts request.
-func (client *KeyVaultClient) getStorageAccountsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetStorageAccountsOptions) (*policy.Request, error) {
+func (client *Client) getStorageAccountsCreateRequest(ctx context.Context, vaultBaseURL string, options *KeyVaultClientGetStorageAccountsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage"
@@ -3048,7 +3035,7 @@ func (client *KeyVaultClient) getStorageAccountsCreateRequest(ctx context.Contex
 }
 
 // getStorageAccountsHandleResponse handles the GetStorageAccounts response.
-func (client *KeyVaultClient) getStorageAccountsHandleResponse(resp *http.Response) (KeyVaultClientGetStorageAccountsResponse, error) {
+func (client *Client) getStorageAccountsHandleResponse(resp *http.Response) (KeyVaultClientGetStorageAccountsResponse, error) {
 	result := KeyVaultClientGetStorageAccountsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageListResult); err != nil {
 		return KeyVaultClientGetStorageAccountsResponse{}, runtime.NewResponseError(err, resp)
@@ -3057,12 +3044,12 @@ func (client *KeyVaultClient) getStorageAccountsHandleResponse(resp *http.Respon
 }
 
 // getStorageAccountsHandleError handles the GetStorageAccounts error response.
-func (client *KeyVaultClient) getStorageAccountsHandleError(resp *http.Response) error {
+func (client *Client) getStorageAccountsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -3072,13 +3059,12 @@ func (client *KeyVaultClient) getStorageAccountsHandleError(resp *http.Response)
 // ImportCertificate - Imports an existing valid certificate, containing a private key, into Azure Key Vault. The certificate
 // to be imported can be in either PFX or PEM format. If the certificate is in PEM format the PEM
 // file must contain the key as well as x509 certificates. This operation requires the certificates/import permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
 // parameters - The parameters to import the certificate.
-// options - KeyVaultClientImportCertificateOptions contains the optional parameters for the KeyVaultClient.ImportCertificate
-// method.
-func (client *KeyVaultClient) ImportCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateImportParameters, options *KeyVaultClientImportCertificateOptions) (KeyVaultClientImportCertificateResponse, error) {
+// options - KeyVaultClientImportCertificateOptions contains the optional parameters for the Client.ImportCertificate method.
+func (client *Client) ImportCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateImportParameters, options *KeyVaultClientImportCertificateOptions) (KeyVaultClientImportCertificateResponse, error) {
 	req, err := client.importCertificateCreateRequest(ctx, vaultBaseURL, certificateName, parameters, options)
 	if err != nil {
 		return KeyVaultClientImportCertificateResponse{}, err
@@ -3094,7 +3080,7 @@ func (client *KeyVaultClient) ImportCertificate(ctx context.Context, vaultBaseUR
 }
 
 // importCertificateCreateRequest creates the ImportCertificate request.
-func (client *KeyVaultClient) importCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateImportParameters, options *KeyVaultClientImportCertificateOptions) (*policy.Request, error) {
+func (client *Client) importCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateImportParameters, options *KeyVaultClientImportCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/import"
@@ -3114,7 +3100,7 @@ func (client *KeyVaultClient) importCertificateCreateRequest(ctx context.Context
 }
 
 // importCertificateHandleResponse handles the ImportCertificate response.
-func (client *KeyVaultClient) importCertificateHandleResponse(resp *http.Response) (KeyVaultClientImportCertificateResponse, error) {
+func (client *Client) importCertificateHandleResponse(resp *http.Response) (KeyVaultClientImportCertificateResponse, error) {
 	result := KeyVaultClientImportCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return KeyVaultClientImportCertificateResponse{}, runtime.NewResponseError(err, resp)
@@ -3123,12 +3109,12 @@ func (client *KeyVaultClient) importCertificateHandleResponse(resp *http.Respons
 }
 
 // importCertificateHandleError handles the ImportCertificate error response.
-func (client *KeyVaultClient) importCertificateHandleError(resp *http.Response) error {
+func (client *Client) importCertificateHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -3138,12 +3124,12 @@ func (client *KeyVaultClient) importCertificateHandleError(resp *http.Response) 
 // ImportKey - The import key operation may be used to import any key type into an Azure Key Vault. If the named key already
 // exists, Azure Key Vault creates a new version of the key. This operation requires the
 // keys/import permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - Name for the imported key.
 // parameters - The parameters to import a key.
-// options - KeyVaultClientImportKeyOptions contains the optional parameters for the KeyVaultClient.ImportKey method.
-func (client *KeyVaultClient) ImportKey(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyImportParameters, options *KeyVaultClientImportKeyOptions) (KeyVaultClientImportKeyResponse, error) {
+// options - KeyVaultClientImportKeyOptions contains the optional parameters for the Client.ImportKey method.
+func (client *Client) ImportKey(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyImportParameters, options *KeyVaultClientImportKeyOptions) (KeyVaultClientImportKeyResponse, error) {
 	req, err := client.importKeyCreateRequest(ctx, vaultBaseURL, keyName, parameters, options)
 	if err != nil {
 		return KeyVaultClientImportKeyResponse{}, err
@@ -3159,7 +3145,7 @@ func (client *KeyVaultClient) ImportKey(ctx context.Context, vaultBaseURL string
 }
 
 // importKeyCreateRequest creates the ImportKey request.
-func (client *KeyVaultClient) importKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyImportParameters, options *KeyVaultClientImportKeyOptions) (*policy.Request, error) {
+func (client *Client) importKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, parameters KeyImportParameters, options *KeyVaultClientImportKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}"
@@ -3179,7 +3165,7 @@ func (client *KeyVaultClient) importKeyCreateRequest(ctx context.Context, vaultB
 }
 
 // importKeyHandleResponse handles the ImportKey response.
-func (client *KeyVaultClient) importKeyHandleResponse(resp *http.Response) (KeyVaultClientImportKeyResponse, error) {
+func (client *Client) importKeyHandleResponse(resp *http.Response) (KeyVaultClientImportKeyResponse, error) {
 	result := KeyVaultClientImportKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return KeyVaultClientImportKeyResponse{}, runtime.NewResponseError(err, resp)
@@ -3188,12 +3174,12 @@ func (client *KeyVaultClient) importKeyHandleResponse(resp *http.Response) (KeyV
 }
 
 // importKeyHandleError handles the ImportKey error response.
-func (client *KeyVaultClient) importKeyHandleError(resp *http.Response) error {
+func (client *Client) importKeyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -3203,13 +3189,12 @@ func (client *KeyVaultClient) importKeyHandleError(resp *http.Response) error {
 // MergeCertificate - The MergeCertificate operation performs the merging of a certificate or certificate chain with a key
 // pair currently available in the service. This operation requires the certificates/create
 // permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
 // parameters - The parameters to merge certificate.
-// options - KeyVaultClientMergeCertificateOptions contains the optional parameters for the KeyVaultClient.MergeCertificate
-// method.
-func (client *KeyVaultClient) MergeCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateMergeParameters, options *KeyVaultClientMergeCertificateOptions) (KeyVaultClientMergeCertificateResponse, error) {
+// options - KeyVaultClientMergeCertificateOptions contains the optional parameters for the Client.MergeCertificate method.
+func (client *Client) MergeCertificate(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateMergeParameters, options *KeyVaultClientMergeCertificateOptions) (KeyVaultClientMergeCertificateResponse, error) {
 	req, err := client.mergeCertificateCreateRequest(ctx, vaultBaseURL, certificateName, parameters, options)
 	if err != nil {
 		return KeyVaultClientMergeCertificateResponse{}, err
@@ -3225,7 +3210,7 @@ func (client *KeyVaultClient) MergeCertificate(ctx context.Context, vaultBaseURL
 }
 
 // mergeCertificateCreateRequest creates the MergeCertificate request.
-func (client *KeyVaultClient) mergeCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateMergeParameters, options *KeyVaultClientMergeCertificateOptions) (*policy.Request, error) {
+func (client *Client) mergeCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, parameters CertificateMergeParameters, options *KeyVaultClientMergeCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/pending/merge"
@@ -3245,7 +3230,7 @@ func (client *KeyVaultClient) mergeCertificateCreateRequest(ctx context.Context,
 }
 
 // mergeCertificateHandleResponse handles the MergeCertificate response.
-func (client *KeyVaultClient) mergeCertificateHandleResponse(resp *http.Response) (KeyVaultClientMergeCertificateResponse, error) {
+func (client *Client) mergeCertificateHandleResponse(resp *http.Response) (KeyVaultClientMergeCertificateResponse, error) {
 	result := KeyVaultClientMergeCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return KeyVaultClientMergeCertificateResponse{}, runtime.NewResponseError(err, resp)
@@ -3254,12 +3239,12 @@ func (client *KeyVaultClient) mergeCertificateHandleResponse(resp *http.Response
 }
 
 // mergeCertificateHandleError handles the MergeCertificate error response.
-func (client *KeyVaultClient) mergeCertificateHandleError(resp *http.Response) error {
+func (client *Client) mergeCertificateHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -3269,12 +3254,12 @@ func (client *KeyVaultClient) mergeCertificateHandleError(resp *http.Response) e
 // PurgeDeletedCertificate - The PurgeDeletedCertificate operation performs an irreversible deletion of the specified certificate,
 // without possibility for recovery. The operation is not available if the recovery level does not
 // specify 'Purgeable'. This operation requires the certificate/purge permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate
-// options - KeyVaultClientPurgeDeletedCertificateOptions contains the optional parameters for the KeyVaultClient.PurgeDeletedCertificate
+// options - KeyVaultClientPurgeDeletedCertificateOptions contains the optional parameters for the Client.PurgeDeletedCertificate
 // method.
-func (client *KeyVaultClient) PurgeDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientPurgeDeletedCertificateOptions) (KeyVaultClientPurgeDeletedCertificateResponse, error) {
+func (client *Client) PurgeDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientPurgeDeletedCertificateOptions) (KeyVaultClientPurgeDeletedCertificateResponse, error) {
 	req, err := client.purgeDeletedCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
 		return KeyVaultClientPurgeDeletedCertificateResponse{}, err
@@ -3290,7 +3275,7 @@ func (client *KeyVaultClient) PurgeDeletedCertificate(ctx context.Context, vault
 }
 
 // purgeDeletedCertificateCreateRequest creates the PurgeDeletedCertificate request.
-func (client *KeyVaultClient) purgeDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientPurgeDeletedCertificateOptions) (*policy.Request, error) {
+func (client *Client) purgeDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientPurgeDeletedCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedcertificates/{certificate-name}"
@@ -3310,12 +3295,12 @@ func (client *KeyVaultClient) purgeDeletedCertificateCreateRequest(ctx context.C
 }
 
 // purgeDeletedCertificateHandleError handles the PurgeDeletedCertificate error response.
-func (client *KeyVaultClient) purgeDeletedCertificateHandleError(resp *http.Response) error {
+func (client *Client) purgeDeletedCertificateHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -3325,12 +3310,11 @@ func (client *KeyVaultClient) purgeDeletedCertificateHandleError(resp *http.Resp
 // PurgeDeletedKey - The Purge Deleted Key operation is applicable for soft-delete enabled vaults. While the operation can
 // be invoked on any vault, it will return an error if invoked on a non soft-delete enabled vault.
 // This operation requires the keys/purge permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key
-// options - KeyVaultClientPurgeDeletedKeyOptions contains the optional parameters for the KeyVaultClient.PurgeDeletedKey
-// method.
-func (client *KeyVaultClient) PurgeDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientPurgeDeletedKeyOptions) (KeyVaultClientPurgeDeletedKeyResponse, error) {
+// options - KeyVaultClientPurgeDeletedKeyOptions contains the optional parameters for the Client.PurgeDeletedKey method.
+func (client *Client) PurgeDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientPurgeDeletedKeyOptions) (KeyVaultClientPurgeDeletedKeyResponse, error) {
 	req, err := client.purgeDeletedKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
 		return KeyVaultClientPurgeDeletedKeyResponse{}, err
@@ -3346,7 +3330,7 @@ func (client *KeyVaultClient) PurgeDeletedKey(ctx context.Context, vaultBaseURL 
 }
 
 // purgeDeletedKeyCreateRequest creates the PurgeDeletedKey request.
-func (client *KeyVaultClient) purgeDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientPurgeDeletedKeyOptions) (*policy.Request, error) {
+func (client *Client) purgeDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientPurgeDeletedKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedkeys/{key-name}"
@@ -3366,12 +3350,12 @@ func (client *KeyVaultClient) purgeDeletedKeyCreateRequest(ctx context.Context, 
 }
 
 // purgeDeletedKeyHandleError handles the PurgeDeletedKey error response.
-func (client *KeyVaultClient) purgeDeletedKeyHandleError(resp *http.Response) error {
+func (client *Client) purgeDeletedKeyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -3381,12 +3365,11 @@ func (client *KeyVaultClient) purgeDeletedKeyHandleError(resp *http.Response) er
 // PurgeDeletedSecret - The purge deleted secret operation removes the secret permanently, without the possibility of recovery.
 // This operation can only be enabled on a soft-delete enabled vault. This operation requires the
 // secrets/purge permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
-// options - KeyVaultClientPurgeDeletedSecretOptions contains the optional parameters for the KeyVaultClient.PurgeDeletedSecret
-// method.
-func (client *KeyVaultClient) PurgeDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientPurgeDeletedSecretOptions) (KeyVaultClientPurgeDeletedSecretResponse, error) {
+// options - KeyVaultClientPurgeDeletedSecretOptions contains the optional parameters for the Client.PurgeDeletedSecret method.
+func (client *Client) PurgeDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientPurgeDeletedSecretOptions) (KeyVaultClientPurgeDeletedSecretResponse, error) {
 	req, err := client.purgeDeletedSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
 		return KeyVaultClientPurgeDeletedSecretResponse{}, err
@@ -3402,7 +3385,7 @@ func (client *KeyVaultClient) PurgeDeletedSecret(ctx context.Context, vaultBaseU
 }
 
 // purgeDeletedSecretCreateRequest creates the PurgeDeletedSecret request.
-func (client *KeyVaultClient) purgeDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientPurgeDeletedSecretOptions) (*policy.Request, error) {
+func (client *Client) purgeDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientPurgeDeletedSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedsecrets/{secret-name}"
@@ -3422,12 +3405,12 @@ func (client *KeyVaultClient) purgeDeletedSecretCreateRequest(ctx context.Contex
 }
 
 // purgeDeletedSecretHandleError handles the PurgeDeletedSecret error response.
-func (client *KeyVaultClient) purgeDeletedSecretHandleError(resp *http.Response) error {
+func (client *Client) purgeDeletedSecretHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -3437,12 +3420,12 @@ func (client *KeyVaultClient) purgeDeletedSecretHandleError(resp *http.Response)
 // PurgeDeletedStorageAccount - The purge deleted storage account operation removes the secret permanently, without the possibility
 // of recovery. This operation can only be performed on a soft-delete enabled vault. This operation
 // requires the storage/purge permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
-// options - KeyVaultClientPurgeDeletedStorageAccountOptions contains the optional parameters for the KeyVaultClient.PurgeDeletedStorageAccount
+// options - KeyVaultClientPurgeDeletedStorageAccountOptions contains the optional parameters for the Client.PurgeDeletedStorageAccount
 // method.
-func (client *KeyVaultClient) PurgeDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientPurgeDeletedStorageAccountOptions) (KeyVaultClientPurgeDeletedStorageAccountResponse, error) {
+func (client *Client) PurgeDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientPurgeDeletedStorageAccountOptions) (KeyVaultClientPurgeDeletedStorageAccountResponse, error) {
 	req, err := client.purgeDeletedStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
 		return KeyVaultClientPurgeDeletedStorageAccountResponse{}, err
@@ -3458,7 +3441,7 @@ func (client *KeyVaultClient) PurgeDeletedStorageAccount(ctx context.Context, va
 }
 
 // purgeDeletedStorageAccountCreateRequest creates the PurgeDeletedStorageAccount request.
-func (client *KeyVaultClient) purgeDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientPurgeDeletedStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) purgeDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientPurgeDeletedStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}"
@@ -3478,12 +3461,12 @@ func (client *KeyVaultClient) purgeDeletedStorageAccountCreateRequest(ctx contex
 }
 
 // purgeDeletedStorageAccountHandleError handles the PurgeDeletedStorageAccount error response.
-func (client *KeyVaultClient) purgeDeletedStorageAccountHandleError(resp *http.Response) error {
+func (client *Client) purgeDeletedStorageAccountHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -3493,12 +3476,12 @@ func (client *KeyVaultClient) purgeDeletedStorageAccountHandleError(resp *http.R
 // RecoverDeletedCertificate - The RecoverDeletedCertificate operation performs the reversal of the Delete operation. The
 // operation is applicable in vaults enabled for soft-delete, and must be issued during the retention interval
 // (available in the deleted certificate's attributes). This operation requires the certificates/recover permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the deleted certificate
-// options - KeyVaultClientRecoverDeletedCertificateOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedCertificate
+// options - KeyVaultClientRecoverDeletedCertificateOptions contains the optional parameters for the Client.RecoverDeletedCertificate
 // method.
-func (client *KeyVaultClient) RecoverDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientRecoverDeletedCertificateOptions) (KeyVaultClientRecoverDeletedCertificateResponse, error) {
+func (client *Client) RecoverDeletedCertificate(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientRecoverDeletedCertificateOptions) (KeyVaultClientRecoverDeletedCertificateResponse, error) {
 	req, err := client.recoverDeletedCertificateCreateRequest(ctx, vaultBaseURL, certificateName, options)
 	if err != nil {
 		return KeyVaultClientRecoverDeletedCertificateResponse{}, err
@@ -3514,7 +3497,7 @@ func (client *KeyVaultClient) RecoverDeletedCertificate(ctx context.Context, vau
 }
 
 // recoverDeletedCertificateCreateRequest creates the RecoverDeletedCertificate request.
-func (client *KeyVaultClient) recoverDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientRecoverDeletedCertificateOptions) (*policy.Request, error) {
+func (client *Client) recoverDeletedCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, options *KeyVaultClientRecoverDeletedCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedcertificates/{certificate-name}/recover"
@@ -3534,7 +3517,7 @@ func (client *KeyVaultClient) recoverDeletedCertificateCreateRequest(ctx context
 }
 
 // recoverDeletedCertificateHandleResponse handles the RecoverDeletedCertificate response.
-func (client *KeyVaultClient) recoverDeletedCertificateHandleResponse(resp *http.Response) (KeyVaultClientRecoverDeletedCertificateResponse, error) {
+func (client *Client) recoverDeletedCertificateHandleResponse(resp *http.Response) (KeyVaultClientRecoverDeletedCertificateResponse, error) {
 	result := KeyVaultClientRecoverDeletedCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return KeyVaultClientRecoverDeletedCertificateResponse{}, runtime.NewResponseError(err, resp)
@@ -3543,12 +3526,12 @@ func (client *KeyVaultClient) recoverDeletedCertificateHandleResponse(resp *http
 }
 
 // recoverDeletedCertificateHandleError handles the RecoverDeletedCertificate error response.
-func (client *KeyVaultClient) recoverDeletedCertificateHandleError(resp *http.Response) error {
+func (client *Client) recoverDeletedCertificateHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -3559,12 +3542,11 @@ func (client *KeyVaultClient) recoverDeletedCertificateHandleError(resp *http.Re
 // recovers the deleted key back to its latest version under /keys. An attempt to recover an non-deleted
 // key will return an error. Consider this the inverse of the delete operation on soft-delete enabled vaults. This operation
 // requires the keys/recover permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the deleted key.
-// options - KeyVaultClientRecoverDeletedKeyOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedKey
-// method.
-func (client *KeyVaultClient) RecoverDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientRecoverDeletedKeyOptions) (KeyVaultClientRecoverDeletedKeyResponse, error) {
+// options - KeyVaultClientRecoverDeletedKeyOptions contains the optional parameters for the Client.RecoverDeletedKey method.
+func (client *Client) RecoverDeletedKey(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientRecoverDeletedKeyOptions) (KeyVaultClientRecoverDeletedKeyResponse, error) {
 	req, err := client.recoverDeletedKeyCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
 		return KeyVaultClientRecoverDeletedKeyResponse{}, err
@@ -3580,7 +3562,7 @@ func (client *KeyVaultClient) RecoverDeletedKey(ctx context.Context, vaultBaseUR
 }
 
 // recoverDeletedKeyCreateRequest creates the RecoverDeletedKey request.
-func (client *KeyVaultClient) recoverDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientRecoverDeletedKeyOptions) (*policy.Request, error) {
+func (client *Client) recoverDeletedKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientRecoverDeletedKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedkeys/{key-name}/recover"
@@ -3600,7 +3582,7 @@ func (client *KeyVaultClient) recoverDeletedKeyCreateRequest(ctx context.Context
 }
 
 // recoverDeletedKeyHandleResponse handles the RecoverDeletedKey response.
-func (client *KeyVaultClient) recoverDeletedKeyHandleResponse(resp *http.Response) (KeyVaultClientRecoverDeletedKeyResponse, error) {
+func (client *Client) recoverDeletedKeyHandleResponse(resp *http.Response) (KeyVaultClientRecoverDeletedKeyResponse, error) {
 	result := KeyVaultClientRecoverDeletedKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return KeyVaultClientRecoverDeletedKeyResponse{}, runtime.NewResponseError(err, resp)
@@ -3609,12 +3591,12 @@ func (client *KeyVaultClient) recoverDeletedKeyHandleResponse(resp *http.Respons
 }
 
 // recoverDeletedKeyHandleError handles the RecoverDeletedKey error response.
-func (client *KeyVaultClient) recoverDeletedKeyHandleError(resp *http.Response) error {
+func (client *Client) recoverDeletedKeyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -3623,13 +3605,13 @@ func (client *KeyVaultClient) recoverDeletedKeyHandleError(resp *http.Response) 
 
 // RecoverDeletedSasDefinition - Recovers the deleted SAS definition for the specified storage account. This operation can
 // only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // sasDefinitionName - The name of the SAS definition.
-// options - KeyVaultClientRecoverDeletedSasDefinitionOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedSasDefinition
+// options - KeyVaultClientRecoverDeletedSasDefinitionOptions contains the optional parameters for the Client.RecoverDeletedSasDefinition
 // method.
-func (client *KeyVaultClient) RecoverDeletedSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientRecoverDeletedSasDefinitionOptions) (KeyVaultClientRecoverDeletedSasDefinitionResponse, error) {
+func (client *Client) RecoverDeletedSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientRecoverDeletedSasDefinitionOptions) (KeyVaultClientRecoverDeletedSasDefinitionResponse, error) {
 	req, err := client.recoverDeletedSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, options)
 	if err != nil {
 		return KeyVaultClientRecoverDeletedSasDefinitionResponse{}, err
@@ -3645,7 +3627,7 @@ func (client *KeyVaultClient) RecoverDeletedSasDefinition(ctx context.Context, v
 }
 
 // recoverDeletedSasDefinitionCreateRequest creates the RecoverDeletedSasDefinition request.
-func (client *KeyVaultClient) recoverDeletedSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientRecoverDeletedSasDefinitionOptions) (*policy.Request, error) {
+func (client *Client) recoverDeletedSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, options *KeyVaultClientRecoverDeletedSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}/sas/{sas-definition-name}/recover"
@@ -3669,7 +3651,7 @@ func (client *KeyVaultClient) recoverDeletedSasDefinitionCreateRequest(ctx conte
 }
 
 // recoverDeletedSasDefinitionHandleResponse handles the RecoverDeletedSasDefinition response.
-func (client *KeyVaultClient) recoverDeletedSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientRecoverDeletedSasDefinitionResponse, error) {
+func (client *Client) recoverDeletedSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientRecoverDeletedSasDefinitionResponse, error) {
 	result := KeyVaultClientRecoverDeletedSasDefinitionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionBundle); err != nil {
 		return KeyVaultClientRecoverDeletedSasDefinitionResponse{}, runtime.NewResponseError(err, resp)
@@ -3678,12 +3660,12 @@ func (client *KeyVaultClient) recoverDeletedSasDefinitionHandleResponse(resp *ht
 }
 
 // recoverDeletedSasDefinitionHandleError handles the RecoverDeletedSasDefinition error response.
-func (client *KeyVaultClient) recoverDeletedSasDefinitionHandleError(resp *http.Response) error {
+func (client *Client) recoverDeletedSasDefinitionHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -3692,12 +3674,12 @@ func (client *KeyVaultClient) recoverDeletedSasDefinitionHandleError(resp *http.
 
 // RecoverDeletedSecret - Recovers the deleted secret in the specified vault. This operation can only be performed on a soft-delete
 // enabled vault. This operation requires the secrets/recover permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the deleted secret.
-// options - KeyVaultClientRecoverDeletedSecretOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedSecret
+// options - KeyVaultClientRecoverDeletedSecretOptions contains the optional parameters for the Client.RecoverDeletedSecret
 // method.
-func (client *KeyVaultClient) RecoverDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientRecoverDeletedSecretOptions) (KeyVaultClientRecoverDeletedSecretResponse, error) {
+func (client *Client) RecoverDeletedSecret(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientRecoverDeletedSecretOptions) (KeyVaultClientRecoverDeletedSecretResponse, error) {
 	req, err := client.recoverDeletedSecretCreateRequest(ctx, vaultBaseURL, secretName, options)
 	if err != nil {
 		return KeyVaultClientRecoverDeletedSecretResponse{}, err
@@ -3713,7 +3695,7 @@ func (client *KeyVaultClient) RecoverDeletedSecret(ctx context.Context, vaultBas
 }
 
 // recoverDeletedSecretCreateRequest creates the RecoverDeletedSecret request.
-func (client *KeyVaultClient) recoverDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientRecoverDeletedSecretOptions) (*policy.Request, error) {
+func (client *Client) recoverDeletedSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, options *KeyVaultClientRecoverDeletedSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedsecrets/{secret-name}/recover"
@@ -3733,7 +3715,7 @@ func (client *KeyVaultClient) recoverDeletedSecretCreateRequest(ctx context.Cont
 }
 
 // recoverDeletedSecretHandleResponse handles the RecoverDeletedSecret response.
-func (client *KeyVaultClient) recoverDeletedSecretHandleResponse(resp *http.Response) (KeyVaultClientRecoverDeletedSecretResponse, error) {
+func (client *Client) recoverDeletedSecretHandleResponse(resp *http.Response) (KeyVaultClientRecoverDeletedSecretResponse, error) {
 	result := KeyVaultClientRecoverDeletedSecretResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
 		return KeyVaultClientRecoverDeletedSecretResponse{}, runtime.NewResponseError(err, resp)
@@ -3742,12 +3724,12 @@ func (client *KeyVaultClient) recoverDeletedSecretHandleResponse(resp *http.Resp
 }
 
 // recoverDeletedSecretHandleError handles the RecoverDeletedSecret error response.
-func (client *KeyVaultClient) recoverDeletedSecretHandleError(resp *http.Response) error {
+func (client *Client) recoverDeletedSecretHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -3756,12 +3738,12 @@ func (client *KeyVaultClient) recoverDeletedSecretHandleError(resp *http.Respons
 
 // RecoverDeletedStorageAccount - Recovers the deleted storage account in the specified vault. This operation can only be
 // performed on a soft-delete enabled vault. This operation requires the storage/recover permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
-// options - KeyVaultClientRecoverDeletedStorageAccountOptions contains the optional parameters for the KeyVaultClient.RecoverDeletedStorageAccount
+// options - KeyVaultClientRecoverDeletedStorageAccountOptions contains the optional parameters for the Client.RecoverDeletedStorageAccount
 // method.
-func (client *KeyVaultClient) RecoverDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientRecoverDeletedStorageAccountOptions) (KeyVaultClientRecoverDeletedStorageAccountResponse, error) {
+func (client *Client) RecoverDeletedStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientRecoverDeletedStorageAccountOptions) (KeyVaultClientRecoverDeletedStorageAccountResponse, error) {
 	req, err := client.recoverDeletedStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, options)
 	if err != nil {
 		return KeyVaultClientRecoverDeletedStorageAccountResponse{}, err
@@ -3777,7 +3759,7 @@ func (client *KeyVaultClient) RecoverDeletedStorageAccount(ctx context.Context, 
 }
 
 // recoverDeletedStorageAccountCreateRequest creates the RecoverDeletedStorageAccount request.
-func (client *KeyVaultClient) recoverDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientRecoverDeletedStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) recoverDeletedStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, options *KeyVaultClientRecoverDeletedStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/deletedstorage/{storage-account-name}/recover"
@@ -3797,7 +3779,7 @@ func (client *KeyVaultClient) recoverDeletedStorageAccountCreateRequest(ctx cont
 }
 
 // recoverDeletedStorageAccountHandleResponse handles the RecoverDeletedStorageAccount response.
-func (client *KeyVaultClient) recoverDeletedStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientRecoverDeletedStorageAccountResponse, error) {
+func (client *Client) recoverDeletedStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientRecoverDeletedStorageAccountResponse, error) {
 	result := KeyVaultClientRecoverDeletedStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return KeyVaultClientRecoverDeletedStorageAccountResponse{}, runtime.NewResponseError(err, resp)
@@ -3806,12 +3788,12 @@ func (client *KeyVaultClient) recoverDeletedStorageAccountHandleResponse(resp *h
 }
 
 // recoverDeletedStorageAccountHandleError handles the RecoverDeletedStorageAccount error response.
-func (client *KeyVaultClient) recoverDeletedStorageAccountHandleError(resp *http.Response) error {
+func (client *Client) recoverDeletedStorageAccountHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -3820,13 +3802,13 @@ func (client *KeyVaultClient) recoverDeletedStorageAccountHandleError(resp *http
 
 // RegenerateStorageAccountKey - Regenerates the specified key value for the given storage account. This operation requires
 // the storage/regeneratekey permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // parameters - The parameters to regenerate storage account key.
-// options - KeyVaultClientRegenerateStorageAccountKeyOptions contains the optional parameters for the KeyVaultClient.RegenerateStorageAccountKey
+// options - KeyVaultClientRegenerateStorageAccountKeyOptions contains the optional parameters for the Client.RegenerateStorageAccountKey
 // method.
-func (client *KeyVaultClient) RegenerateStorageAccountKey(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountRegenerteKeyParameters, options *KeyVaultClientRegenerateStorageAccountKeyOptions) (KeyVaultClientRegenerateStorageAccountKeyResponse, error) {
+func (client *Client) RegenerateStorageAccountKey(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountRegenerteKeyParameters, options *KeyVaultClientRegenerateStorageAccountKeyOptions) (KeyVaultClientRegenerateStorageAccountKeyResponse, error) {
 	req, err := client.regenerateStorageAccountKeyCreateRequest(ctx, vaultBaseURL, storageAccountName, parameters, options)
 	if err != nil {
 		return KeyVaultClientRegenerateStorageAccountKeyResponse{}, err
@@ -3842,7 +3824,7 @@ func (client *KeyVaultClient) RegenerateStorageAccountKey(ctx context.Context, v
 }
 
 // regenerateStorageAccountKeyCreateRequest creates the RegenerateStorageAccountKey request.
-func (client *KeyVaultClient) regenerateStorageAccountKeyCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountRegenerteKeyParameters, options *KeyVaultClientRegenerateStorageAccountKeyOptions) (*policy.Request, error) {
+func (client *Client) regenerateStorageAccountKeyCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountRegenerteKeyParameters, options *KeyVaultClientRegenerateStorageAccountKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/regeneratekey"
@@ -3862,7 +3844,7 @@ func (client *KeyVaultClient) regenerateStorageAccountKeyCreateRequest(ctx conte
 }
 
 // regenerateStorageAccountKeyHandleResponse handles the RegenerateStorageAccountKey response.
-func (client *KeyVaultClient) regenerateStorageAccountKeyHandleResponse(resp *http.Response) (KeyVaultClientRegenerateStorageAccountKeyResponse, error) {
+func (client *Client) regenerateStorageAccountKeyHandleResponse(resp *http.Response) (KeyVaultClientRegenerateStorageAccountKeyResponse, error) {
 	result := KeyVaultClientRegenerateStorageAccountKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return KeyVaultClientRegenerateStorageAccountKeyResponse{}, runtime.NewResponseError(err, resp)
@@ -3871,12 +3853,12 @@ func (client *KeyVaultClient) regenerateStorageAccountKeyHandleResponse(resp *ht
 }
 
 // regenerateStorageAccountKeyHandleError handles the RegenerateStorageAccountKey error response.
-func (client *KeyVaultClient) regenerateStorageAccountKeyHandleError(resp *http.Response) error {
+func (client *Client) regenerateStorageAccountKeyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -3885,12 +3867,11 @@ func (client *KeyVaultClient) regenerateStorageAccountKeyHandleError(resp *http.
 
 // RestoreCertificate - Restores a backed up certificate, and all its versions, to a vault. This operation requires the certificates/restore
 // permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // parameters - The parameters to restore the certificate.
-// options - KeyVaultClientRestoreCertificateOptions contains the optional parameters for the KeyVaultClient.RestoreCertificate
-// method.
-func (client *KeyVaultClient) RestoreCertificate(ctx context.Context, vaultBaseURL string, parameters CertificateRestoreParameters, options *KeyVaultClientRestoreCertificateOptions) (KeyVaultClientRestoreCertificateResponse, error) {
+// options - KeyVaultClientRestoreCertificateOptions contains the optional parameters for the Client.RestoreCertificate method.
+func (client *Client) RestoreCertificate(ctx context.Context, vaultBaseURL string, parameters CertificateRestoreParameters, options *KeyVaultClientRestoreCertificateOptions) (KeyVaultClientRestoreCertificateResponse, error) {
 	req, err := client.restoreCertificateCreateRequest(ctx, vaultBaseURL, parameters, options)
 	if err != nil {
 		return KeyVaultClientRestoreCertificateResponse{}, err
@@ -3906,7 +3887,7 @@ func (client *KeyVaultClient) RestoreCertificate(ctx context.Context, vaultBaseU
 }
 
 // restoreCertificateCreateRequest creates the RestoreCertificate request.
-func (client *KeyVaultClient) restoreCertificateCreateRequest(ctx context.Context, vaultBaseURL string, parameters CertificateRestoreParameters, options *KeyVaultClientRestoreCertificateOptions) (*policy.Request, error) {
+func (client *Client) restoreCertificateCreateRequest(ctx context.Context, vaultBaseURL string, parameters CertificateRestoreParameters, options *KeyVaultClientRestoreCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/restore"
@@ -3922,7 +3903,7 @@ func (client *KeyVaultClient) restoreCertificateCreateRequest(ctx context.Contex
 }
 
 // restoreCertificateHandleResponse handles the RestoreCertificate response.
-func (client *KeyVaultClient) restoreCertificateHandleResponse(resp *http.Response) (KeyVaultClientRestoreCertificateResponse, error) {
+func (client *Client) restoreCertificateHandleResponse(resp *http.Response) (KeyVaultClientRestoreCertificateResponse, error) {
 	result := KeyVaultClientRestoreCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return KeyVaultClientRestoreCertificateResponse{}, runtime.NewResponseError(err, resp)
@@ -3931,12 +3912,12 @@ func (client *KeyVaultClient) restoreCertificateHandleResponse(resp *http.Respon
 }
 
 // restoreCertificateHandleError handles the RestoreCertificate error response.
-func (client *KeyVaultClient) restoreCertificateHandleError(resp *http.Response) error {
+func (client *Client) restoreCertificateHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -3952,11 +3933,11 @@ func (client *KeyVaultClient) restoreCertificateHandleError(resp *http.Response)
 // versions and preserve version identifiers. The RESTORE operation is subject to security constraints: The target Key Vault
 // must be owned by the same Microsoft Azure Subscription as the source Key Vault
 // The user must have RESTORE permission in the target Key Vault. This operation requires the keys/restore permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // parameters - The parameters to restore the key.
-// options - KeyVaultClientRestoreKeyOptions contains the optional parameters for the KeyVaultClient.RestoreKey method.
-func (client *KeyVaultClient) RestoreKey(ctx context.Context, vaultBaseURL string, parameters KeyRestoreParameters, options *KeyVaultClientRestoreKeyOptions) (KeyVaultClientRestoreKeyResponse, error) {
+// options - KeyVaultClientRestoreKeyOptions contains the optional parameters for the Client.RestoreKey method.
+func (client *Client) RestoreKey(ctx context.Context, vaultBaseURL string, parameters KeyRestoreParameters, options *KeyVaultClientRestoreKeyOptions) (KeyVaultClientRestoreKeyResponse, error) {
 	req, err := client.restoreKeyCreateRequest(ctx, vaultBaseURL, parameters, options)
 	if err != nil {
 		return KeyVaultClientRestoreKeyResponse{}, err
@@ -3972,7 +3953,7 @@ func (client *KeyVaultClient) RestoreKey(ctx context.Context, vaultBaseURL strin
 }
 
 // restoreKeyCreateRequest creates the RestoreKey request.
-func (client *KeyVaultClient) restoreKeyCreateRequest(ctx context.Context, vaultBaseURL string, parameters KeyRestoreParameters, options *KeyVaultClientRestoreKeyOptions) (*policy.Request, error) {
+func (client *Client) restoreKeyCreateRequest(ctx context.Context, vaultBaseURL string, parameters KeyRestoreParameters, options *KeyVaultClientRestoreKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/restore"
@@ -3988,7 +3969,7 @@ func (client *KeyVaultClient) restoreKeyCreateRequest(ctx context.Context, vault
 }
 
 // restoreKeyHandleResponse handles the RestoreKey response.
-func (client *KeyVaultClient) restoreKeyHandleResponse(resp *http.Response) (KeyVaultClientRestoreKeyResponse, error) {
+func (client *Client) restoreKeyHandleResponse(resp *http.Response) (KeyVaultClientRestoreKeyResponse, error) {
 	result := KeyVaultClientRestoreKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return KeyVaultClientRestoreKeyResponse{}, runtime.NewResponseError(err, resp)
@@ -3997,12 +3978,12 @@ func (client *KeyVaultClient) restoreKeyHandleResponse(resp *http.Response) (Key
 }
 
 // restoreKeyHandleError handles the RestoreKey error response.
-func (client *KeyVaultClient) restoreKeyHandleError(resp *http.Response) error {
+func (client *Client) restoreKeyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -4011,11 +3992,11 @@ func (client *KeyVaultClient) restoreKeyHandleError(resp *http.Response) error {
 
 // RestoreSecret - Restores a backed up secret, and all its versions, to a vault. This operation requires the secrets/restore
 // permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // parameters - The parameters to restore the secret.
-// options - KeyVaultClientRestoreSecretOptions contains the optional parameters for the KeyVaultClient.RestoreSecret method.
-func (client *KeyVaultClient) RestoreSecret(ctx context.Context, vaultBaseURL string, parameters SecretRestoreParameters, options *KeyVaultClientRestoreSecretOptions) (KeyVaultClientRestoreSecretResponse, error) {
+// options - KeyVaultClientRestoreSecretOptions contains the optional parameters for the Client.RestoreSecret method.
+func (client *Client) RestoreSecret(ctx context.Context, vaultBaseURL string, parameters SecretRestoreParameters, options *KeyVaultClientRestoreSecretOptions) (KeyVaultClientRestoreSecretResponse, error) {
 	req, err := client.restoreSecretCreateRequest(ctx, vaultBaseURL, parameters, options)
 	if err != nil {
 		return KeyVaultClientRestoreSecretResponse{}, err
@@ -4031,7 +4012,7 @@ func (client *KeyVaultClient) RestoreSecret(ctx context.Context, vaultBaseURL st
 }
 
 // restoreSecretCreateRequest creates the RestoreSecret request.
-func (client *KeyVaultClient) restoreSecretCreateRequest(ctx context.Context, vaultBaseURL string, parameters SecretRestoreParameters, options *KeyVaultClientRestoreSecretOptions) (*policy.Request, error) {
+func (client *Client) restoreSecretCreateRequest(ctx context.Context, vaultBaseURL string, parameters SecretRestoreParameters, options *KeyVaultClientRestoreSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/restore"
@@ -4047,7 +4028,7 @@ func (client *KeyVaultClient) restoreSecretCreateRequest(ctx context.Context, va
 }
 
 // restoreSecretHandleResponse handles the RestoreSecret response.
-func (client *KeyVaultClient) restoreSecretHandleResponse(resp *http.Response) (KeyVaultClientRestoreSecretResponse, error) {
+func (client *Client) restoreSecretHandleResponse(resp *http.Response) (KeyVaultClientRestoreSecretResponse, error) {
 	result := KeyVaultClientRestoreSecretResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
 		return KeyVaultClientRestoreSecretResponse{}, runtime.NewResponseError(err, resp)
@@ -4056,12 +4037,12 @@ func (client *KeyVaultClient) restoreSecretHandleResponse(resp *http.Response) (
 }
 
 // restoreSecretHandleError handles the RestoreSecret error response.
-func (client *KeyVaultClient) restoreSecretHandleError(resp *http.Response) error {
+func (client *Client) restoreSecretHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -4069,11 +4050,11 @@ func (client *KeyVaultClient) restoreSecretHandleError(resp *http.Response) erro
 }
 
 // RestoreStatus - Returns the status of restore operation
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // jobID - The Job Id returned part of the restore operation
-// options - KeyVaultClientRestoreStatusOptions contains the optional parameters for the KeyVaultClient.RestoreStatus method.
-func (client *KeyVaultClient) RestoreStatus(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientRestoreStatusOptions) (KeyVaultClientRestoreStatusResponse, error) {
+// options - KeyVaultClientRestoreStatusOptions contains the optional parameters for the Client.RestoreStatus method.
+func (client *Client) RestoreStatus(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientRestoreStatusOptions) (KeyVaultClientRestoreStatusResponse, error) {
 	req, err := client.restoreStatusCreateRequest(ctx, vaultBaseURL, jobID, options)
 	if err != nil {
 		return KeyVaultClientRestoreStatusResponse{}, err
@@ -4089,7 +4070,7 @@ func (client *KeyVaultClient) RestoreStatus(ctx context.Context, vaultBaseURL st
 }
 
 // restoreStatusCreateRequest creates the RestoreStatus request.
-func (client *KeyVaultClient) restoreStatusCreateRequest(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientRestoreStatusOptions) (*policy.Request, error) {
+func (client *Client) restoreStatusCreateRequest(ctx context.Context, vaultBaseURL string, jobID string, options *KeyVaultClientRestoreStatusOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/restore/{jobId}/pending"
@@ -4109,7 +4090,7 @@ func (client *KeyVaultClient) restoreStatusCreateRequest(ctx context.Context, va
 }
 
 // restoreStatusHandleResponse handles the RestoreStatus response.
-func (client *KeyVaultClient) restoreStatusHandleResponse(resp *http.Response) (KeyVaultClientRestoreStatusResponse, error) {
+func (client *Client) restoreStatusHandleResponse(resp *http.Response) (KeyVaultClientRestoreStatusResponse, error) {
 	result := KeyVaultClientRestoreStatusResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RestoreOperation); err != nil {
 		return KeyVaultClientRestoreStatusResponse{}, runtime.NewResponseError(err, resp)
@@ -4118,12 +4099,12 @@ func (client *KeyVaultClient) restoreStatusHandleResponse(resp *http.Response) (
 }
 
 // restoreStatusHandleError handles the RestoreStatus error response.
-func (client *KeyVaultClient) restoreStatusHandleError(resp *http.Response) error {
+func (client *Client) restoreStatusHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -4131,12 +4112,12 @@ func (client *KeyVaultClient) restoreStatusHandleError(resp *http.Response) erro
 }
 
 // RestoreStorageAccount - Restores a backed up storage account to a vault. This operation requires the storage/restore permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // parameters - The parameters to restore the storage account.
-// options - KeyVaultClientRestoreStorageAccountOptions contains the optional parameters for the KeyVaultClient.RestoreStorageAccount
+// options - KeyVaultClientRestoreStorageAccountOptions contains the optional parameters for the Client.RestoreStorageAccount
 // method.
-func (client *KeyVaultClient) RestoreStorageAccount(ctx context.Context, vaultBaseURL string, parameters StorageRestoreParameters, options *KeyVaultClientRestoreStorageAccountOptions) (KeyVaultClientRestoreStorageAccountResponse, error) {
+func (client *Client) RestoreStorageAccount(ctx context.Context, vaultBaseURL string, parameters StorageRestoreParameters, options *KeyVaultClientRestoreStorageAccountOptions) (KeyVaultClientRestoreStorageAccountResponse, error) {
 	req, err := client.restoreStorageAccountCreateRequest(ctx, vaultBaseURL, parameters, options)
 	if err != nil {
 		return KeyVaultClientRestoreStorageAccountResponse{}, err
@@ -4152,7 +4133,7 @@ func (client *KeyVaultClient) RestoreStorageAccount(ctx context.Context, vaultBa
 }
 
 // restoreStorageAccountCreateRequest creates the RestoreStorageAccount request.
-func (client *KeyVaultClient) restoreStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, parameters StorageRestoreParameters, options *KeyVaultClientRestoreStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) restoreStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, parameters StorageRestoreParameters, options *KeyVaultClientRestoreStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/restore"
@@ -4168,7 +4149,7 @@ func (client *KeyVaultClient) restoreStorageAccountCreateRequest(ctx context.Con
 }
 
 // restoreStorageAccountHandleResponse handles the RestoreStorageAccount response.
-func (client *KeyVaultClient) restoreStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientRestoreStorageAccountResponse, error) {
+func (client *Client) restoreStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientRestoreStorageAccountResponse, error) {
 	result := KeyVaultClientRestoreStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return KeyVaultClientRestoreStorageAccountResponse{}, runtime.NewResponseError(err, resp)
@@ -4177,12 +4158,12 @@ func (client *KeyVaultClient) restoreStorageAccountHandleResponse(resp *http.Res
 }
 
 // restoreStorageAccountHandleError handles the RestoreStorageAccount error response.
-func (client *KeyVaultClient) restoreStorageAccountHandleError(resp *http.Response) error {
+func (client *Client) restoreStorageAccountHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -4191,12 +4172,12 @@ func (client *KeyVaultClient) restoreStorageAccountHandleError(resp *http.Respon
 
 // BeginSelectiveKeyRestoreOperation - Restores all key versions of a given key using user supplied SAS token pointing to
 // a previously stored Azure Blob storage backup folder
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key to be restored from the user supplied backup
-// options - KeyVaultClientBeginSelectiveKeyRestoreOperationOptions contains the optional parameters for the KeyVaultClient.BeginSelectiveKeyRestoreOperation
+// options - KeyVaultClientBeginSelectiveKeyRestoreOperationOptions contains the optional parameters for the Client.BeginSelectiveKeyRestoreOperation
 // method.
-func (client *KeyVaultClient) BeginSelectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBeginSelectiveKeyRestoreOperationOptions) (KeyVaultClientSelectiveKeyRestoreOperationPollerResponse, error) {
+func (client *Client) BeginSelectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBeginSelectiveKeyRestoreOperationOptions) (KeyVaultClientSelectiveKeyRestoreOperationPollerResponse, error) {
 	resp, err := client.selectiveKeyRestoreOperation(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
 		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
@@ -4204,7 +4185,7 @@ func (client *KeyVaultClient) BeginSelectiveKeyRestoreOperation(ctx context.Cont
 	result := KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("KeyVaultClient.SelectiveKeyRestoreOperation", resp, client.pl, client.selectiveKeyRestoreOperationHandleError)
+	pt, err := runtime.NewPoller("Client.SelectiveKeyRestoreOperation", resp, client.pl, client.selectiveKeyRestoreOperationHandleError)
 	if err != nil {
 		return KeyVaultClientSelectiveKeyRestoreOperationPollerResponse{}, err
 	}
@@ -4216,8 +4197,8 @@ func (client *KeyVaultClient) BeginSelectiveKeyRestoreOperation(ctx context.Cont
 
 // SelectiveKeyRestoreOperation - Restores all key versions of a given key using user supplied SAS token pointing to a previously
 // stored Azure Blob storage backup folder
-// If the operation fails it returns the *KeyVaultError error type.
-func (client *KeyVaultClient) selectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBeginSelectiveKeyRestoreOperationOptions) (*http.Response, error) {
+// If the operation fails it returns the *Error error type.
+func (client *Client) selectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBeginSelectiveKeyRestoreOperationOptions) (*http.Response, error) {
 	req, err := client.selectiveKeyRestoreOperationCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
 		return nil, err
@@ -4233,7 +4214,7 @@ func (client *KeyVaultClient) selectiveKeyRestoreOperation(ctx context.Context, 
 }
 
 // selectiveKeyRestoreOperationCreateRequest creates the SelectiveKeyRestoreOperation request.
-func (client *KeyVaultClient) selectiveKeyRestoreOperationCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBeginSelectiveKeyRestoreOperationOptions) (*policy.Request, error) {
+func (client *Client) selectiveKeyRestoreOperationCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, options *KeyVaultClientBeginSelectiveKeyRestoreOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{keyName}/restore"
@@ -4256,12 +4237,12 @@ func (client *KeyVaultClient) selectiveKeyRestoreOperationCreateRequest(ctx cont
 }
 
 // selectiveKeyRestoreOperationHandleError handles the SelectiveKeyRestoreOperation error response.
-func (client *KeyVaultClient) selectiveKeyRestoreOperationHandleError(resp *http.Response) error {
+func (client *Client) selectiveKeyRestoreOperationHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -4270,12 +4251,12 @@ func (client *KeyVaultClient) selectiveKeyRestoreOperationHandleError(resp *http
 
 // SetCertificateContacts - Sets the certificate contacts for the specified key vault. This operation requires the certificates/managecontacts
 // permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // contacts - The contacts for the key vault certificate.
-// options - KeyVaultClientSetCertificateContactsOptions contains the optional parameters for the KeyVaultClient.SetCertificateContacts
+// options - KeyVaultClientSetCertificateContactsOptions contains the optional parameters for the Client.SetCertificateContacts
 // method.
-func (client *KeyVaultClient) SetCertificateContacts(ctx context.Context, vaultBaseURL string, contacts Contacts, options *KeyVaultClientSetCertificateContactsOptions) (KeyVaultClientSetCertificateContactsResponse, error) {
+func (client *Client) SetCertificateContacts(ctx context.Context, vaultBaseURL string, contacts Contacts, options *KeyVaultClientSetCertificateContactsOptions) (KeyVaultClientSetCertificateContactsResponse, error) {
 	req, err := client.setCertificateContactsCreateRequest(ctx, vaultBaseURL, contacts, options)
 	if err != nil {
 		return KeyVaultClientSetCertificateContactsResponse{}, err
@@ -4291,7 +4272,7 @@ func (client *KeyVaultClient) SetCertificateContacts(ctx context.Context, vaultB
 }
 
 // setCertificateContactsCreateRequest creates the SetCertificateContacts request.
-func (client *KeyVaultClient) setCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, contacts Contacts, options *KeyVaultClientSetCertificateContactsOptions) (*policy.Request, error) {
+func (client *Client) setCertificateContactsCreateRequest(ctx context.Context, vaultBaseURL string, contacts Contacts, options *KeyVaultClientSetCertificateContactsOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/contacts"
@@ -4307,7 +4288,7 @@ func (client *KeyVaultClient) setCertificateContactsCreateRequest(ctx context.Co
 }
 
 // setCertificateContactsHandleResponse handles the SetCertificateContacts response.
-func (client *KeyVaultClient) setCertificateContactsHandleResponse(resp *http.Response) (KeyVaultClientSetCertificateContactsResponse, error) {
+func (client *Client) setCertificateContactsHandleResponse(resp *http.Response) (KeyVaultClientSetCertificateContactsResponse, error) {
 	result := KeyVaultClientSetCertificateContactsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Contacts); err != nil {
 		return KeyVaultClientSetCertificateContactsResponse{}, runtime.NewResponseError(err, resp)
@@ -4316,12 +4297,12 @@ func (client *KeyVaultClient) setCertificateContactsHandleResponse(resp *http.Re
 }
 
 // setCertificateContactsHandleError handles the SetCertificateContacts error response.
-func (client *KeyVaultClient) setCertificateContactsHandleError(resp *http.Response) error {
+func (client *Client) setCertificateContactsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -4330,13 +4311,13 @@ func (client *KeyVaultClient) setCertificateContactsHandleError(resp *http.Respo
 
 // SetCertificateIssuer - The SetCertificateIssuer operation adds or updates the specified certificate issuer. This operation
 // requires the certificates/setissuers permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // issuerName - The name of the issuer.
 // parameter - Certificate issuer set parameter.
-// options - KeyVaultClientSetCertificateIssuerOptions contains the optional parameters for the KeyVaultClient.SetCertificateIssuer
+// options - KeyVaultClientSetCertificateIssuerOptions contains the optional parameters for the Client.SetCertificateIssuer
 // method.
-func (client *KeyVaultClient) SetCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerSetParameters, options *KeyVaultClientSetCertificateIssuerOptions) (KeyVaultClientSetCertificateIssuerResponse, error) {
+func (client *Client) SetCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerSetParameters, options *KeyVaultClientSetCertificateIssuerOptions) (KeyVaultClientSetCertificateIssuerResponse, error) {
 	req, err := client.setCertificateIssuerCreateRequest(ctx, vaultBaseURL, issuerName, parameter, options)
 	if err != nil {
 		return KeyVaultClientSetCertificateIssuerResponse{}, err
@@ -4352,7 +4333,7 @@ func (client *KeyVaultClient) SetCertificateIssuer(ctx context.Context, vaultBas
 }
 
 // setCertificateIssuerCreateRequest creates the SetCertificateIssuer request.
-func (client *KeyVaultClient) setCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerSetParameters, options *KeyVaultClientSetCertificateIssuerOptions) (*policy.Request, error) {
+func (client *Client) setCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerSetParameters, options *KeyVaultClientSetCertificateIssuerOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/issuers/{issuer-name}"
@@ -4372,7 +4353,7 @@ func (client *KeyVaultClient) setCertificateIssuerCreateRequest(ctx context.Cont
 }
 
 // setCertificateIssuerHandleResponse handles the SetCertificateIssuer response.
-func (client *KeyVaultClient) setCertificateIssuerHandleResponse(resp *http.Response) (KeyVaultClientSetCertificateIssuerResponse, error) {
+func (client *Client) setCertificateIssuerHandleResponse(resp *http.Response) (KeyVaultClientSetCertificateIssuerResponse, error) {
 	result := KeyVaultClientSetCertificateIssuerResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IssuerBundle); err != nil {
 		return KeyVaultClientSetCertificateIssuerResponse{}, runtime.NewResponseError(err, resp)
@@ -4381,12 +4362,12 @@ func (client *KeyVaultClient) setCertificateIssuerHandleResponse(resp *http.Resp
 }
 
 // setCertificateIssuerHandleError handles the SetCertificateIssuer error response.
-func (client *KeyVaultClient) setCertificateIssuerHandleError(resp *http.Response) error {
+func (client *Client) setCertificateIssuerHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -4395,14 +4376,13 @@ func (client *KeyVaultClient) setCertificateIssuerHandleError(resp *http.Respons
 
 // SetSasDefinition - Creates or updates a new SAS definition for the specified storage account. This operation requires the
 // storage/setsas permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // sasDefinitionName - The name of the SAS definition.
 // parameters - The parameters to create a SAS definition.
-// options - KeyVaultClientSetSasDefinitionOptions contains the optional parameters for the KeyVaultClient.SetSasDefinition
-// method.
-func (client *KeyVaultClient) SetSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionCreateParameters, options *KeyVaultClientSetSasDefinitionOptions) (KeyVaultClientSetSasDefinitionResponse, error) {
+// options - KeyVaultClientSetSasDefinitionOptions contains the optional parameters for the Client.SetSasDefinition method.
+func (client *Client) SetSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionCreateParameters, options *KeyVaultClientSetSasDefinitionOptions) (KeyVaultClientSetSasDefinitionResponse, error) {
 	req, err := client.setSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, parameters, options)
 	if err != nil {
 		return KeyVaultClientSetSasDefinitionResponse{}, err
@@ -4418,7 +4398,7 @@ func (client *KeyVaultClient) SetSasDefinition(ctx context.Context, vaultBaseURL
 }
 
 // setSasDefinitionCreateRequest creates the SetSasDefinition request.
-func (client *KeyVaultClient) setSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionCreateParameters, options *KeyVaultClientSetSasDefinitionOptions) (*policy.Request, error) {
+func (client *Client) setSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionCreateParameters, options *KeyVaultClientSetSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/sas/{sas-definition-name}"
@@ -4442,7 +4422,7 @@ func (client *KeyVaultClient) setSasDefinitionCreateRequest(ctx context.Context,
 }
 
 // setSasDefinitionHandleResponse handles the SetSasDefinition response.
-func (client *KeyVaultClient) setSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientSetSasDefinitionResponse, error) {
+func (client *Client) setSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientSetSasDefinitionResponse, error) {
 	result := KeyVaultClientSetSasDefinitionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionBundle); err != nil {
 		return KeyVaultClientSetSasDefinitionResponse{}, runtime.NewResponseError(err, resp)
@@ -4451,12 +4431,12 @@ func (client *KeyVaultClient) setSasDefinitionHandleResponse(resp *http.Response
 }
 
 // setSasDefinitionHandleError handles the SetSasDefinition error response.
-func (client *KeyVaultClient) setSasDefinitionHandleError(resp *http.Response) error {
+func (client *Client) setSasDefinitionHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -4465,12 +4445,12 @@ func (client *KeyVaultClient) setSasDefinitionHandleError(resp *http.Response) e
 
 // SetSecret - The SET operation adds a secret to the Azure Key Vault. If the named secret already exists, Azure Key Vault
 // creates a new version of that secret. This operation requires the secrets/set permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
 // parameters - The parameters for setting the secret.
-// options - KeyVaultClientSetSecretOptions contains the optional parameters for the KeyVaultClient.SetSecret method.
-func (client *KeyVaultClient) SetSecret(ctx context.Context, vaultBaseURL string, secretName string, parameters SecretSetParameters, options *KeyVaultClientSetSecretOptions) (KeyVaultClientSetSecretResponse, error) {
+// options - KeyVaultClientSetSecretOptions contains the optional parameters for the Client.SetSecret method.
+func (client *Client) SetSecret(ctx context.Context, vaultBaseURL string, secretName string, parameters SecretSetParameters, options *KeyVaultClientSetSecretOptions) (KeyVaultClientSetSecretResponse, error) {
 	req, err := client.setSecretCreateRequest(ctx, vaultBaseURL, secretName, parameters, options)
 	if err != nil {
 		return KeyVaultClientSetSecretResponse{}, err
@@ -4486,7 +4466,7 @@ func (client *KeyVaultClient) SetSecret(ctx context.Context, vaultBaseURL string
 }
 
 // setSecretCreateRequest creates the SetSecret request.
-func (client *KeyVaultClient) setSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, parameters SecretSetParameters, options *KeyVaultClientSetSecretOptions) (*policy.Request, error) {
+func (client *Client) setSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, parameters SecretSetParameters, options *KeyVaultClientSetSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}"
@@ -4506,7 +4486,7 @@ func (client *KeyVaultClient) setSecretCreateRequest(ctx context.Context, vaultB
 }
 
 // setSecretHandleResponse handles the SetSecret response.
-func (client *KeyVaultClient) setSecretHandleResponse(resp *http.Response) (KeyVaultClientSetSecretResponse, error) {
+func (client *Client) setSecretHandleResponse(resp *http.Response) (KeyVaultClientSetSecretResponse, error) {
 	result := KeyVaultClientSetSecretResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
 		return KeyVaultClientSetSecretResponse{}, runtime.NewResponseError(err, resp)
@@ -4515,12 +4495,12 @@ func (client *KeyVaultClient) setSecretHandleResponse(resp *http.Response) (KeyV
 }
 
 // setSecretHandleError handles the SetSecret error response.
-func (client *KeyVaultClient) setSecretHandleError(resp *http.Response) error {
+func (client *Client) setSecretHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -4528,13 +4508,12 @@ func (client *KeyVaultClient) setSecretHandleError(resp *http.Response) error {
 }
 
 // SetStorageAccount - Creates or updates a new storage account. This operation requires the storage/set permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // parameters - The parameters to create a storage account.
-// options - KeyVaultClientSetStorageAccountOptions contains the optional parameters for the KeyVaultClient.SetStorageAccount
-// method.
-func (client *KeyVaultClient) SetStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountCreateParameters, options *KeyVaultClientSetStorageAccountOptions) (KeyVaultClientSetStorageAccountResponse, error) {
+// options - KeyVaultClientSetStorageAccountOptions contains the optional parameters for the Client.SetStorageAccount method.
+func (client *Client) SetStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountCreateParameters, options *KeyVaultClientSetStorageAccountOptions) (KeyVaultClientSetStorageAccountResponse, error) {
 	req, err := client.setStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, parameters, options)
 	if err != nil {
 		return KeyVaultClientSetStorageAccountResponse{}, err
@@ -4550,7 +4529,7 @@ func (client *KeyVaultClient) SetStorageAccount(ctx context.Context, vaultBaseUR
 }
 
 // setStorageAccountCreateRequest creates the SetStorageAccount request.
-func (client *KeyVaultClient) setStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountCreateParameters, options *KeyVaultClientSetStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) setStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountCreateParameters, options *KeyVaultClientSetStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}"
@@ -4570,7 +4549,7 @@ func (client *KeyVaultClient) setStorageAccountCreateRequest(ctx context.Context
 }
 
 // setStorageAccountHandleResponse handles the SetStorageAccount response.
-func (client *KeyVaultClient) setStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientSetStorageAccountResponse, error) {
+func (client *Client) setStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientSetStorageAccountResponse, error) {
 	result := KeyVaultClientSetStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return KeyVaultClientSetStorageAccountResponse{}, runtime.NewResponseError(err, resp)
@@ -4579,12 +4558,12 @@ func (client *KeyVaultClient) setStorageAccountHandleResponse(resp *http.Respons
 }
 
 // setStorageAccountHandleError handles the SetStorageAccount error response.
-func (client *KeyVaultClient) setStorageAccountHandleError(resp *http.Response) error {
+func (client *Client) setStorageAccountHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -4593,13 +4572,13 @@ func (client *KeyVaultClient) setStorageAccountHandleError(resp *http.Response) 
 
 // Sign - The SIGN operation is applicable to asymmetric and symmetric keys stored in Azure Key Vault since this operation
 // uses the private portion of the key. This operation requires the keys/sign permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // keyVersion - The version of the key.
 // parameters - The parameters for the signing operation.
-// options - KeyVaultClientSignOptions contains the optional parameters for the KeyVaultClient.Sign method.
-func (client *KeyVaultClient) Sign(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeySignParameters, options *KeyVaultClientSignOptions) (KeyVaultClientSignResponse, error) {
+// options - KeyVaultClientSignOptions contains the optional parameters for the Client.Sign method.
+func (client *Client) Sign(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeySignParameters, options *KeyVaultClientSignOptions) (KeyVaultClientSignResponse, error) {
 	req, err := client.signCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
 		return KeyVaultClientSignResponse{}, err
@@ -4615,7 +4594,7 @@ func (client *KeyVaultClient) Sign(ctx context.Context, vaultBaseURL string, key
 }
 
 // signCreateRequest creates the Sign request.
-func (client *KeyVaultClient) signCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeySignParameters, options *KeyVaultClientSignOptions) (*policy.Request, error) {
+func (client *Client) signCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeySignParameters, options *KeyVaultClientSignOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/sign"
@@ -4639,7 +4618,7 @@ func (client *KeyVaultClient) signCreateRequest(ctx context.Context, vaultBaseUR
 }
 
 // signHandleResponse handles the Sign response.
-func (client *KeyVaultClient) signHandleResponse(resp *http.Response) (KeyVaultClientSignResponse, error) {
+func (client *Client) signHandleResponse(resp *http.Response) (KeyVaultClientSignResponse, error) {
 	result := KeyVaultClientSignResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
 		return KeyVaultClientSignResponse{}, runtime.NewResponseError(err, resp)
@@ -4648,12 +4627,12 @@ func (client *KeyVaultClient) signHandleResponse(resp *http.Response) (KeyVaultC
 }
 
 // signHandleError handles the Sign error response.
-func (client *KeyVaultClient) signHandleError(resp *http.Response) error {
+func (client *Client) signHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -4664,13 +4643,13 @@ func (client *KeyVaultClient) signHandleError(resp *http.Response) error {
 // is the reverse of the WRAP operation. The UNWRAP operation applies to asymmetric and
 // symmetric keys stored in Azure Key Vault since it uses the private portion of the key. This operation requires the keys/unwrapKey
 // permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // keyVersion - The version of the key.
 // parameters - The parameters for the key operation.
-// options - KeyVaultClientUnwrapKeyOptions contains the optional parameters for the KeyVaultClient.UnwrapKey method.
-func (client *KeyVaultClient) UnwrapKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientUnwrapKeyOptions) (KeyVaultClientUnwrapKeyResponse, error) {
+// options - KeyVaultClientUnwrapKeyOptions contains the optional parameters for the Client.UnwrapKey method.
+func (client *Client) UnwrapKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientUnwrapKeyOptions) (KeyVaultClientUnwrapKeyResponse, error) {
 	req, err := client.unwrapKeyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
 		return KeyVaultClientUnwrapKeyResponse{}, err
@@ -4686,7 +4665,7 @@ func (client *KeyVaultClient) UnwrapKey(ctx context.Context, vaultBaseURL string
 }
 
 // unwrapKeyCreateRequest creates the UnwrapKey request.
-func (client *KeyVaultClient) unwrapKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientUnwrapKeyOptions) (*policy.Request, error) {
+func (client *Client) unwrapKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientUnwrapKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/unwrapkey"
@@ -4710,7 +4689,7 @@ func (client *KeyVaultClient) unwrapKeyCreateRequest(ctx context.Context, vaultB
 }
 
 // unwrapKeyHandleResponse handles the UnwrapKey response.
-func (client *KeyVaultClient) unwrapKeyHandleResponse(resp *http.Response) (KeyVaultClientUnwrapKeyResponse, error) {
+func (client *Client) unwrapKeyHandleResponse(resp *http.Response) (KeyVaultClientUnwrapKeyResponse, error) {
 	result := KeyVaultClientUnwrapKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
 		return KeyVaultClientUnwrapKeyResponse{}, runtime.NewResponseError(err, resp)
@@ -4719,12 +4698,12 @@ func (client *KeyVaultClient) unwrapKeyHandleResponse(resp *http.Response) (KeyV
 }
 
 // unwrapKeyHandleError handles the UnwrapKey error response.
-func (client *KeyVaultClient) unwrapKeyHandleError(resp *http.Response) error {
+func (client *Client) unwrapKeyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -4734,14 +4713,13 @@ func (client *KeyVaultClient) unwrapKeyHandleError(resp *http.Response) error {
 // UpdateCertificate - The UpdateCertificate operation applies the specified update on the given certificate; the only elements
 // updated are the certificate's attributes. This operation requires the certificates/update
 // permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate in the given key vault.
 // certificateVersion - The version of the certificate.
 // parameters - The parameters for certificate update.
-// options - KeyVaultClientUpdateCertificateOptions contains the optional parameters for the KeyVaultClient.UpdateCertificate
-// method.
-func (client *KeyVaultClient) UpdateCertificate(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, parameters CertificateUpdateParameters, options *KeyVaultClientUpdateCertificateOptions) (KeyVaultClientUpdateCertificateResponse, error) {
+// options - KeyVaultClientUpdateCertificateOptions contains the optional parameters for the Client.UpdateCertificate method.
+func (client *Client) UpdateCertificate(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, parameters CertificateUpdateParameters, options *KeyVaultClientUpdateCertificateOptions) (KeyVaultClientUpdateCertificateResponse, error) {
 	req, err := client.updateCertificateCreateRequest(ctx, vaultBaseURL, certificateName, certificateVersion, parameters, options)
 	if err != nil {
 		return KeyVaultClientUpdateCertificateResponse{}, err
@@ -4757,7 +4735,7 @@ func (client *KeyVaultClient) UpdateCertificate(ctx context.Context, vaultBaseUR
 }
 
 // updateCertificateCreateRequest creates the UpdateCertificate request.
-func (client *KeyVaultClient) updateCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, parameters CertificateUpdateParameters, options *KeyVaultClientUpdateCertificateOptions) (*policy.Request, error) {
+func (client *Client) updateCertificateCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateVersion string, parameters CertificateUpdateParameters, options *KeyVaultClientUpdateCertificateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/{certificate-version}"
@@ -4781,7 +4759,7 @@ func (client *KeyVaultClient) updateCertificateCreateRequest(ctx context.Context
 }
 
 // updateCertificateHandleResponse handles the UpdateCertificate response.
-func (client *KeyVaultClient) updateCertificateHandleResponse(resp *http.Response) (KeyVaultClientUpdateCertificateResponse, error) {
+func (client *Client) updateCertificateHandleResponse(resp *http.Response) (KeyVaultClientUpdateCertificateResponse, error) {
 	result := KeyVaultClientUpdateCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
 		return KeyVaultClientUpdateCertificateResponse{}, runtime.NewResponseError(err, resp)
@@ -4790,12 +4768,12 @@ func (client *KeyVaultClient) updateCertificateHandleResponse(resp *http.Respons
 }
 
 // updateCertificateHandleError handles the UpdateCertificate error response.
-func (client *KeyVaultClient) updateCertificateHandleError(resp *http.Response) error {
+func (client *Client) updateCertificateHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -4804,13 +4782,13 @@ func (client *KeyVaultClient) updateCertificateHandleError(resp *http.Response) 
 
 // UpdateCertificateIssuer - The UpdateCertificateIssuer operation performs an update on the specified certificate issuer
 // entity. This operation requires the certificates/setissuers permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // issuerName - The name of the issuer.
 // parameter - Certificate issuer update parameter.
-// options - KeyVaultClientUpdateCertificateIssuerOptions contains the optional parameters for the KeyVaultClient.UpdateCertificateIssuer
+// options - KeyVaultClientUpdateCertificateIssuerOptions contains the optional parameters for the Client.UpdateCertificateIssuer
 // method.
-func (client *KeyVaultClient) UpdateCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerUpdateParameters, options *KeyVaultClientUpdateCertificateIssuerOptions) (KeyVaultClientUpdateCertificateIssuerResponse, error) {
+func (client *Client) UpdateCertificateIssuer(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerUpdateParameters, options *KeyVaultClientUpdateCertificateIssuerOptions) (KeyVaultClientUpdateCertificateIssuerResponse, error) {
 	req, err := client.updateCertificateIssuerCreateRequest(ctx, vaultBaseURL, issuerName, parameter, options)
 	if err != nil {
 		return KeyVaultClientUpdateCertificateIssuerResponse{}, err
@@ -4826,7 +4804,7 @@ func (client *KeyVaultClient) UpdateCertificateIssuer(ctx context.Context, vault
 }
 
 // updateCertificateIssuerCreateRequest creates the UpdateCertificateIssuer request.
-func (client *KeyVaultClient) updateCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerUpdateParameters, options *KeyVaultClientUpdateCertificateIssuerOptions) (*policy.Request, error) {
+func (client *Client) updateCertificateIssuerCreateRequest(ctx context.Context, vaultBaseURL string, issuerName string, parameter CertificateIssuerUpdateParameters, options *KeyVaultClientUpdateCertificateIssuerOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/issuers/{issuer-name}"
@@ -4846,7 +4824,7 @@ func (client *KeyVaultClient) updateCertificateIssuerCreateRequest(ctx context.C
 }
 
 // updateCertificateIssuerHandleResponse handles the UpdateCertificateIssuer response.
-func (client *KeyVaultClient) updateCertificateIssuerHandleResponse(resp *http.Response) (KeyVaultClientUpdateCertificateIssuerResponse, error) {
+func (client *Client) updateCertificateIssuerHandleResponse(resp *http.Response) (KeyVaultClientUpdateCertificateIssuerResponse, error) {
 	result := KeyVaultClientUpdateCertificateIssuerResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IssuerBundle); err != nil {
 		return KeyVaultClientUpdateCertificateIssuerResponse{}, runtime.NewResponseError(err, resp)
@@ -4855,12 +4833,12 @@ func (client *KeyVaultClient) updateCertificateIssuerHandleResponse(resp *http.R
 }
 
 // updateCertificateIssuerHandleError handles the UpdateCertificateIssuer error response.
-func (client *KeyVaultClient) updateCertificateIssuerHandleError(resp *http.Response) error {
+func (client *Client) updateCertificateIssuerHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -4869,13 +4847,13 @@ func (client *KeyVaultClient) updateCertificateIssuerHandleError(resp *http.Resp
 
 // UpdateCertificateOperation - Updates a certificate creation operation that is already in progress. This operation requires
 // the certificates/update permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
 // certificateOperation - The certificate operation response.
-// options - KeyVaultClientUpdateCertificateOperationOptions contains the optional parameters for the KeyVaultClient.UpdateCertificateOperation
+// options - KeyVaultClientUpdateCertificateOperationOptions contains the optional parameters for the Client.UpdateCertificateOperation
 // method.
-func (client *KeyVaultClient) UpdateCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, certificateOperation CertificateOperationUpdateParameter, options *KeyVaultClientUpdateCertificateOperationOptions) (KeyVaultClientUpdateCertificateOperationResponse, error) {
+func (client *Client) UpdateCertificateOperation(ctx context.Context, vaultBaseURL string, certificateName string, certificateOperation CertificateOperationUpdateParameter, options *KeyVaultClientUpdateCertificateOperationOptions) (KeyVaultClientUpdateCertificateOperationResponse, error) {
 	req, err := client.updateCertificateOperationCreateRequest(ctx, vaultBaseURL, certificateName, certificateOperation, options)
 	if err != nil {
 		return KeyVaultClientUpdateCertificateOperationResponse{}, err
@@ -4891,7 +4869,7 @@ func (client *KeyVaultClient) UpdateCertificateOperation(ctx context.Context, va
 }
 
 // updateCertificateOperationCreateRequest creates the UpdateCertificateOperation request.
-func (client *KeyVaultClient) updateCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateOperation CertificateOperationUpdateParameter, options *KeyVaultClientUpdateCertificateOperationOptions) (*policy.Request, error) {
+func (client *Client) updateCertificateOperationCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificateOperation CertificateOperationUpdateParameter, options *KeyVaultClientUpdateCertificateOperationOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/pending"
@@ -4911,7 +4889,7 @@ func (client *KeyVaultClient) updateCertificateOperationCreateRequest(ctx contex
 }
 
 // updateCertificateOperationHandleResponse handles the UpdateCertificateOperation response.
-func (client *KeyVaultClient) updateCertificateOperationHandleResponse(resp *http.Response) (KeyVaultClientUpdateCertificateOperationResponse, error) {
+func (client *Client) updateCertificateOperationHandleResponse(resp *http.Response) (KeyVaultClientUpdateCertificateOperationResponse, error) {
 	result := KeyVaultClientUpdateCertificateOperationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateOperation); err != nil {
 		return KeyVaultClientUpdateCertificateOperationResponse{}, runtime.NewResponseError(err, resp)
@@ -4920,12 +4898,12 @@ func (client *KeyVaultClient) updateCertificateOperationHandleResponse(resp *htt
 }
 
 // updateCertificateOperationHandleError handles the UpdateCertificateOperation error response.
-func (client *KeyVaultClient) updateCertificateOperationHandleError(resp *http.Response) error {
+func (client *Client) updateCertificateOperationHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -4934,13 +4912,13 @@ func (client *KeyVaultClient) updateCertificateOperationHandleError(resp *http.R
 
 // UpdateCertificatePolicy - Set specified members in the certificate policy. Leave others as null. This operation requires
 // the certificates/update permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate in the given vault.
 // certificatePolicy - The policy for the certificate.
-// options - KeyVaultClientUpdateCertificatePolicyOptions contains the optional parameters for the KeyVaultClient.UpdateCertificatePolicy
+// options - KeyVaultClientUpdateCertificatePolicyOptions contains the optional parameters for the Client.UpdateCertificatePolicy
 // method.
-func (client *KeyVaultClient) UpdateCertificatePolicy(ctx context.Context, vaultBaseURL string, certificateName string, certificatePolicy CertificatePolicy, options *KeyVaultClientUpdateCertificatePolicyOptions) (KeyVaultClientUpdateCertificatePolicyResponse, error) {
+func (client *Client) UpdateCertificatePolicy(ctx context.Context, vaultBaseURL string, certificateName string, certificatePolicy CertificatePolicy, options *KeyVaultClientUpdateCertificatePolicyOptions) (KeyVaultClientUpdateCertificatePolicyResponse, error) {
 	req, err := client.updateCertificatePolicyCreateRequest(ctx, vaultBaseURL, certificateName, certificatePolicy, options)
 	if err != nil {
 		return KeyVaultClientUpdateCertificatePolicyResponse{}, err
@@ -4956,7 +4934,7 @@ func (client *KeyVaultClient) UpdateCertificatePolicy(ctx context.Context, vault
 }
 
 // updateCertificatePolicyCreateRequest creates the UpdateCertificatePolicy request.
-func (client *KeyVaultClient) updateCertificatePolicyCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificatePolicy CertificatePolicy, options *KeyVaultClientUpdateCertificatePolicyOptions) (*policy.Request, error) {
+func (client *Client) updateCertificatePolicyCreateRequest(ctx context.Context, vaultBaseURL string, certificateName string, certificatePolicy CertificatePolicy, options *KeyVaultClientUpdateCertificatePolicyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/certificates/{certificate-name}/policy"
@@ -4976,7 +4954,7 @@ func (client *KeyVaultClient) updateCertificatePolicyCreateRequest(ctx context.C
 }
 
 // updateCertificatePolicyHandleResponse handles the UpdateCertificatePolicy response.
-func (client *KeyVaultClient) updateCertificatePolicyHandleResponse(resp *http.Response) (KeyVaultClientUpdateCertificatePolicyResponse, error) {
+func (client *Client) updateCertificatePolicyHandleResponse(resp *http.Response) (KeyVaultClientUpdateCertificatePolicyResponse, error) {
 	result := KeyVaultClientUpdateCertificatePolicyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificatePolicy); err != nil {
 		return KeyVaultClientUpdateCertificatePolicyResponse{}, runtime.NewResponseError(err, resp)
@@ -4985,12 +4963,12 @@ func (client *KeyVaultClient) updateCertificatePolicyHandleResponse(resp *http.R
 }
 
 // updateCertificatePolicyHandleError handles the UpdateCertificatePolicy error response.
-func (client *KeyVaultClient) updateCertificatePolicyHandleError(resp *http.Response) error {
+func (client *Client) updateCertificatePolicyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -4999,13 +4977,13 @@ func (client *KeyVaultClient) updateCertificatePolicyHandleError(resp *http.Resp
 
 // UpdateKey - In order to perform this operation, the key must already exist in the Key Vault. Note: The cryptographic material
 // of a key itself cannot be changed. This operation requires the keys/update permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of key to update.
 // keyVersion - The version of the key to update.
 // parameters - The parameters of the key to update.
-// options - KeyVaultClientUpdateKeyOptions contains the optional parameters for the KeyVaultClient.UpdateKey method.
-func (client *KeyVaultClient) UpdateKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyUpdateParameters, options *KeyVaultClientUpdateKeyOptions) (KeyVaultClientUpdateKeyResponse, error) {
+// options - KeyVaultClientUpdateKeyOptions contains the optional parameters for the Client.UpdateKey method.
+func (client *Client) UpdateKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyUpdateParameters, options *KeyVaultClientUpdateKeyOptions) (KeyVaultClientUpdateKeyResponse, error) {
 	req, err := client.updateKeyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
 		return KeyVaultClientUpdateKeyResponse{}, err
@@ -5021,7 +4999,7 @@ func (client *KeyVaultClient) UpdateKey(ctx context.Context, vaultBaseURL string
 }
 
 // updateKeyCreateRequest creates the UpdateKey request.
-func (client *KeyVaultClient) updateKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyUpdateParameters, options *KeyVaultClientUpdateKeyOptions) (*policy.Request, error) {
+func (client *Client) updateKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyUpdateParameters, options *KeyVaultClientUpdateKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}"
@@ -5045,7 +5023,7 @@ func (client *KeyVaultClient) updateKeyCreateRequest(ctx context.Context, vaultB
 }
 
 // updateKeyHandleResponse handles the UpdateKey response.
-func (client *KeyVaultClient) updateKeyHandleResponse(resp *http.Response) (KeyVaultClientUpdateKeyResponse, error) {
+func (client *Client) updateKeyHandleResponse(resp *http.Response) (KeyVaultClientUpdateKeyResponse, error) {
 	result := KeyVaultClientUpdateKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
 		return KeyVaultClientUpdateKeyResponse{}, runtime.NewResponseError(err, resp)
@@ -5054,12 +5032,12 @@ func (client *KeyVaultClient) updateKeyHandleResponse(resp *http.Response) (KeyV
 }
 
 // updateKeyHandleError handles the UpdateKey error response.
-func (client *KeyVaultClient) updateKeyHandleError(resp *http.Response) error {
+func (client *Client) updateKeyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -5068,14 +5046,14 @@ func (client *KeyVaultClient) updateKeyHandleError(resp *http.Response) error {
 
 // UpdateSasDefinition - Updates the specified attributes associated with the given SAS definition. This operation requires
 // the storage/setsas permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // sasDefinitionName - The name of the SAS definition.
 // parameters - The parameters to update a SAS definition.
-// options - KeyVaultClientUpdateSasDefinitionOptions contains the optional parameters for the KeyVaultClient.UpdateSasDefinition
+// options - KeyVaultClientUpdateSasDefinitionOptions contains the optional parameters for the Client.UpdateSasDefinition
 // method.
-func (client *KeyVaultClient) UpdateSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionUpdateParameters, options *KeyVaultClientUpdateSasDefinitionOptions) (KeyVaultClientUpdateSasDefinitionResponse, error) {
+func (client *Client) UpdateSasDefinition(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionUpdateParameters, options *KeyVaultClientUpdateSasDefinitionOptions) (KeyVaultClientUpdateSasDefinitionResponse, error) {
 	req, err := client.updateSasDefinitionCreateRequest(ctx, vaultBaseURL, storageAccountName, sasDefinitionName, parameters, options)
 	if err != nil {
 		return KeyVaultClientUpdateSasDefinitionResponse{}, err
@@ -5091,7 +5069,7 @@ func (client *KeyVaultClient) UpdateSasDefinition(ctx context.Context, vaultBase
 }
 
 // updateSasDefinitionCreateRequest creates the UpdateSasDefinition request.
-func (client *KeyVaultClient) updateSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionUpdateParameters, options *KeyVaultClientUpdateSasDefinitionOptions) (*policy.Request, error) {
+func (client *Client) updateSasDefinitionCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, sasDefinitionName string, parameters SasDefinitionUpdateParameters, options *KeyVaultClientUpdateSasDefinitionOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}/sas/{sas-definition-name}"
@@ -5115,7 +5093,7 @@ func (client *KeyVaultClient) updateSasDefinitionCreateRequest(ctx context.Conte
 }
 
 // updateSasDefinitionHandleResponse handles the UpdateSasDefinition response.
-func (client *KeyVaultClient) updateSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientUpdateSasDefinitionResponse, error) {
+func (client *Client) updateSasDefinitionHandleResponse(resp *http.Response) (KeyVaultClientUpdateSasDefinitionResponse, error) {
 	result := KeyVaultClientUpdateSasDefinitionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionBundle); err != nil {
 		return KeyVaultClientUpdateSasDefinitionResponse{}, runtime.NewResponseError(err, resp)
@@ -5124,12 +5102,12 @@ func (client *KeyVaultClient) updateSasDefinitionHandleResponse(resp *http.Respo
 }
 
 // updateSasDefinitionHandleError handles the UpdateSasDefinition error response.
-func (client *KeyVaultClient) updateSasDefinitionHandleError(resp *http.Response) error {
+func (client *Client) updateSasDefinitionHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -5139,13 +5117,13 @@ func (client *KeyVaultClient) updateSasDefinitionHandleError(resp *http.Response
 // UpdateSecret - The UPDATE operation changes specified attributes of an existing stored secret. Attributes that are not
 // specified in the request are left unchanged. The value of a secret itself cannot be changed.
 // This operation requires the secrets/set permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
 // secretVersion - The version of the secret.
 // parameters - The parameters for update secret operation.
-// options - KeyVaultClientUpdateSecretOptions contains the optional parameters for the KeyVaultClient.UpdateSecret method.
-func (client *KeyVaultClient) UpdateSecret(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, parameters SecretUpdateParameters, options *KeyVaultClientUpdateSecretOptions) (KeyVaultClientUpdateSecretResponse, error) {
+// options - KeyVaultClientUpdateSecretOptions contains the optional parameters for the Client.UpdateSecret method.
+func (client *Client) UpdateSecret(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, parameters SecretUpdateParameters, options *KeyVaultClientUpdateSecretOptions) (KeyVaultClientUpdateSecretResponse, error) {
 	req, err := client.updateSecretCreateRequest(ctx, vaultBaseURL, secretName, secretVersion, parameters, options)
 	if err != nil {
 		return KeyVaultClientUpdateSecretResponse{}, err
@@ -5161,7 +5139,7 @@ func (client *KeyVaultClient) UpdateSecret(ctx context.Context, vaultBaseURL str
 }
 
 // updateSecretCreateRequest creates the UpdateSecret request.
-func (client *KeyVaultClient) updateSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, parameters SecretUpdateParameters, options *KeyVaultClientUpdateSecretOptions) (*policy.Request, error) {
+func (client *Client) updateSecretCreateRequest(ctx context.Context, vaultBaseURL string, secretName string, secretVersion string, parameters SecretUpdateParameters, options *KeyVaultClientUpdateSecretOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/secrets/{secret-name}/{secret-version}"
@@ -5185,7 +5163,7 @@ func (client *KeyVaultClient) updateSecretCreateRequest(ctx context.Context, vau
 }
 
 // updateSecretHandleResponse handles the UpdateSecret response.
-func (client *KeyVaultClient) updateSecretHandleResponse(resp *http.Response) (KeyVaultClientUpdateSecretResponse, error) {
+func (client *Client) updateSecretHandleResponse(resp *http.Response) (KeyVaultClientUpdateSecretResponse, error) {
 	result := KeyVaultClientUpdateSecretResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
 		return KeyVaultClientUpdateSecretResponse{}, runtime.NewResponseError(err, resp)
@@ -5194,12 +5172,12 @@ func (client *KeyVaultClient) updateSecretHandleResponse(resp *http.Response) (K
 }
 
 // updateSecretHandleError handles the UpdateSecret error response.
-func (client *KeyVaultClient) updateSecretHandleError(resp *http.Response) error {
+func (client *Client) updateSecretHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -5208,13 +5186,13 @@ func (client *KeyVaultClient) updateSecretHandleError(resp *http.Response) error
 
 // UpdateStorageAccount - Updates the specified attributes associated with the given storage account. This operation requires
 // the storage/set/update permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // parameters - The parameters to update a storage account.
-// options - KeyVaultClientUpdateStorageAccountOptions contains the optional parameters for the KeyVaultClient.UpdateStorageAccount
+// options - KeyVaultClientUpdateStorageAccountOptions contains the optional parameters for the Client.UpdateStorageAccount
 // method.
-func (client *KeyVaultClient) UpdateStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountUpdateParameters, options *KeyVaultClientUpdateStorageAccountOptions) (KeyVaultClientUpdateStorageAccountResponse, error) {
+func (client *Client) UpdateStorageAccount(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountUpdateParameters, options *KeyVaultClientUpdateStorageAccountOptions) (KeyVaultClientUpdateStorageAccountResponse, error) {
 	req, err := client.updateStorageAccountCreateRequest(ctx, vaultBaseURL, storageAccountName, parameters, options)
 	if err != nil {
 		return KeyVaultClientUpdateStorageAccountResponse{}, err
@@ -5230,7 +5208,7 @@ func (client *KeyVaultClient) UpdateStorageAccount(ctx context.Context, vaultBas
 }
 
 // updateStorageAccountCreateRequest creates the UpdateStorageAccount request.
-func (client *KeyVaultClient) updateStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountUpdateParameters, options *KeyVaultClientUpdateStorageAccountOptions) (*policy.Request, error) {
+func (client *Client) updateStorageAccountCreateRequest(ctx context.Context, vaultBaseURL string, storageAccountName string, parameters StorageAccountUpdateParameters, options *KeyVaultClientUpdateStorageAccountOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/storage/{storage-account-name}"
@@ -5250,7 +5228,7 @@ func (client *KeyVaultClient) updateStorageAccountCreateRequest(ctx context.Cont
 }
 
 // updateStorageAccountHandleResponse handles the UpdateStorageAccount response.
-func (client *KeyVaultClient) updateStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientUpdateStorageAccountResponse, error) {
+func (client *Client) updateStorageAccountHandleResponse(resp *http.Response) (KeyVaultClientUpdateStorageAccountResponse, error) {
 	result := KeyVaultClientUpdateStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
 		return KeyVaultClientUpdateStorageAccountResponse{}, runtime.NewResponseError(err, resp)
@@ -5259,12 +5237,12 @@ func (client *KeyVaultClient) updateStorageAccountHandleResponse(resp *http.Resp
 }
 
 // updateStorageAccountHandleError handles the UpdateStorageAccount error response.
-func (client *KeyVaultClient) updateStorageAccountHandleError(resp *http.Response) error {
+func (client *Client) updateStorageAccountHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -5276,13 +5254,13 @@ func (client *KeyVaultClient) updateStorageAccountHandleError(resp *http.Respons
 // performed using the public portion of the key but this operation is supported as a convenience for callers that only have
 // a key-reference and not the public portion of the key. This operation requires
 // the keys/verify permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // keyVersion - The version of the key.
 // parameters - The parameters for verify operations.
-// options - KeyVaultClientVerifyOptions contains the optional parameters for the KeyVaultClient.Verify method.
-func (client *KeyVaultClient) Verify(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyVerifyParameters, options *KeyVaultClientVerifyOptions) (KeyVaultClientVerifyResponse, error) {
+// options - KeyVaultClientVerifyOptions contains the optional parameters for the Client.Verify method.
+func (client *Client) Verify(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyVerifyParameters, options *KeyVaultClientVerifyOptions) (KeyVaultClientVerifyResponse, error) {
 	req, err := client.verifyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
 		return KeyVaultClientVerifyResponse{}, err
@@ -5298,7 +5276,7 @@ func (client *KeyVaultClient) Verify(ctx context.Context, vaultBaseURL string, k
 }
 
 // verifyCreateRequest creates the Verify request.
-func (client *KeyVaultClient) verifyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyVerifyParameters, options *KeyVaultClientVerifyOptions) (*policy.Request, error) {
+func (client *Client) verifyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyVerifyParameters, options *KeyVaultClientVerifyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/verify"
@@ -5322,7 +5300,7 @@ func (client *KeyVaultClient) verifyCreateRequest(ctx context.Context, vaultBase
 }
 
 // verifyHandleResponse handles the Verify response.
-func (client *KeyVaultClient) verifyHandleResponse(resp *http.Response) (KeyVaultClientVerifyResponse, error) {
+func (client *Client) verifyHandleResponse(resp *http.Response) (KeyVaultClientVerifyResponse, error) {
 	result := KeyVaultClientVerifyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyVerifyResult); err != nil {
 		return KeyVaultClientVerifyResponse{}, runtime.NewResponseError(err, resp)
@@ -5331,12 +5309,12 @@ func (client *KeyVaultClient) verifyHandleResponse(resp *http.Response) (KeyVaul
 }
 
 // verifyHandleError handles the Verify error response.
-func (client *KeyVaultClient) verifyHandleError(resp *http.Response) error {
+func (client *Client) verifyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -5349,13 +5327,13 @@ func (client *KeyVaultClient) verifyHandleError(resp *http.Response) error {
 // key. This operation is supported for asymmetric keys as a convenience for
 // callers that have a key-reference but do not have access to the public key material. This operation requires the keys/wrapKey
 // permission.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // keyVersion - The version of the key.
 // parameters - The parameters for wrap operation.
-// options - KeyVaultClientWrapKeyOptions contains the optional parameters for the KeyVaultClient.WrapKey method.
-func (client *KeyVaultClient) WrapKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientWrapKeyOptions) (KeyVaultClientWrapKeyResponse, error) {
+// options - KeyVaultClientWrapKeyOptions contains the optional parameters for the Client.WrapKey method.
+func (client *Client) WrapKey(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientWrapKeyOptions) (KeyVaultClientWrapKeyResponse, error) {
 	req, err := client.wrapKeyCreateRequest(ctx, vaultBaseURL, keyName, keyVersion, parameters, options)
 	if err != nil {
 		return KeyVaultClientWrapKeyResponse{}, err
@@ -5371,7 +5349,7 @@ func (client *KeyVaultClient) WrapKey(ctx context.Context, vaultBaseURL string, 
 }
 
 // wrapKeyCreateRequest creates the WrapKey request.
-func (client *KeyVaultClient) wrapKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientWrapKeyOptions) (*policy.Request, error) {
+func (client *Client) wrapKeyCreateRequest(ctx context.Context, vaultBaseURL string, keyName string, keyVersion string, parameters KeyOperationsParameters, options *KeyVaultClientWrapKeyOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/keys/{key-name}/{key-version}/wrapkey"
@@ -5395,7 +5373,7 @@ func (client *KeyVaultClient) wrapKeyCreateRequest(ctx context.Context, vaultBas
 }
 
 // wrapKeyHandleResponse handles the WrapKey response.
-func (client *KeyVaultClient) wrapKeyHandleResponse(resp *http.Response) (KeyVaultClientWrapKeyResponse, error) {
+func (client *Client) wrapKeyHandleResponse(resp *http.Response) (KeyVaultClientWrapKeyResponse, error) {
 	result := KeyVaultClientWrapKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
 		return KeyVaultClientWrapKeyResponse{}, runtime.NewResponseError(err, resp)
@@ -5404,12 +5382,12 @@ func (client *KeyVaultClient) wrapKeyHandleResponse(resp *http.Response) (KeyVau
 }
 
 // wrapKeyHandleError handles the WrapKey error response.
-func (client *KeyVaultClient) wrapKeyHandleError(resp *http.Response) error {
+func (client *Client) wrapKeyHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}

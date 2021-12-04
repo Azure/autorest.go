@@ -15,48 +15,16 @@ import (
 	"time"
 )
 
-// AliasCreateOptions contains the optional parameters for the aliasClient.Create method.
+// AliasCreateOptions contains the optional parameters for the client.Create method.
 type AliasCreateOptions struct {
 	// The unique id that references a creator data item to be aliased.
 	CreatorDataItemID *string
 	GroupBy           []SomethingCount
 }
 
-// AliasListItem - Detailed information for the alias.
-type AliasListItem struct {
-	// READ-ONLY; The id for the alias.
-	AliasID *string `json:"aliasId,omitempty" azure:"ro"`
-
-	// READ-ONLY; The created timestamp for the alias.
-	CreatedTimestamp *string `json:"createdTimestamp,omitempty" azure:"ro"`
-
-	// READ-ONLY; The id for the creator data item that this alias references (could be null if the alias has not been assigned).
-	CreatorDataItemID *string `json:"creatorDataItemId,omitempty" azure:"ro"`
-
-	// READ-ONLY; The timestamp of the last time the alias was assigned.
-	LastUpdatedTimestamp *string `json:"lastUpdatedTimestamp,omitempty" azure:"ro"`
-}
-
-// AliasListOptions contains the optional parameters for the aliasClient.List method.
+// AliasListOptions contains the optional parameters for the client.List method.
 type AliasListOptions struct {
 	GroupBy []LogMetricsGroupBy
-}
-
-// AliasListResponse - The response model for the List API. Returns a list of all the previously created aliases.
-type AliasListResponse struct {
-	// READ-ONLY; A list of all the previously created aliases.
-	Aliases []*AliasListItem `json:"aliases,omitempty" azure:"ro"`
-
-	// READ-ONLY; If present, the location of the next page of data.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type AliasListResponse.
-func (a AliasListResponse) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "aliases", a.Aliases)
-	populate(objectMap, "nextLink", a.NextLink)
-	return json.Marshal(objectMap)
 }
 
 // AliasesCreateResponse - The response model for the Alias Create API for the case when the alias was successfully created.
@@ -240,6 +208,38 @@ func (g *GeoJSONObjectNamedCollection) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// ListItem - Detailed information for the alias.
+type ListItem struct {
+	// READ-ONLY; The id for the alias.
+	AliasID *string `json:"aliasId,omitempty" azure:"ro"`
+
+	// READ-ONLY; The created timestamp for the alias.
+	CreatedTimestamp *string `json:"createdTimestamp,omitempty" azure:"ro"`
+
+	// READ-ONLY; The id for the creator data item that this alias references (could be null if the alias has not been assigned).
+	CreatorDataItemID *string `json:"creatorDataItemId,omitempty" azure:"ro"`
+
+	// READ-ONLY; The timestamp of the last time the alias was assigned.
+	LastUpdatedTimestamp *string `json:"lastUpdatedTimestamp,omitempty" azure:"ro"`
+}
+
+// ListResponse - The response model for the List API. Returns a list of all the previously created aliases.
+type ListResponse struct {
+	// READ-ONLY; A list of all the previously created aliases.
+	Aliases []*ListItem `json:"aliases,omitempty" azure:"ro"`
+
+	// READ-ONLY; If present, the location of the next page of data.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ListResponse.
+func (l ListResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "aliases", l.Aliases)
+	populate(objectMap, "nextLink", l.NextLink)
+	return json.Marshal(objectMap)
 }
 
 // ScheduleCreateOrUpdateProperties - The parameters supplied to the create or update schedule operation.

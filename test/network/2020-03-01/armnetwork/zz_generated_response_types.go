@@ -4019,7 +4019,7 @@ type LoadBalancerNetworkInterfacesListResponse struct {
 
 // LoadBalancerNetworkInterfacesListResult contains the result from method LoadBalancerNetworkInterfaces.List.
 type LoadBalancerNetworkInterfacesListResult struct {
-	NetworkInterfaceListResult
+	InterfaceListResult
 }
 
 // LoadBalancerOutboundRulesGetResponse contains the response from method LoadBalancerOutboundRules.Get.
@@ -4505,7 +4505,7 @@ type NetworkInterfaceIPConfigurationsGetResponse struct {
 
 // NetworkInterfaceIPConfigurationsGetResult contains the result from method NetworkInterfaceIPConfigurations.Get.
 type NetworkInterfaceIPConfigurationsGetResult struct {
-	NetworkInterfaceIPConfiguration
+	InterfaceIPConfiguration
 }
 
 // NetworkInterfaceIPConfigurationsListResponse contains the response from method NetworkInterfaceIPConfigurations.List.
@@ -4517,7 +4517,7 @@ type NetworkInterfaceIPConfigurationsListResponse struct {
 
 // NetworkInterfaceIPConfigurationsListResult contains the result from method NetworkInterfaceIPConfigurations.List.
 type NetworkInterfaceIPConfigurationsListResult struct {
-	NetworkInterfaceIPConfigurationListResult
+	InterfaceIPConfigurationListResult
 }
 
 // NetworkInterfaceLoadBalancersListResponse contains the response from method NetworkInterfaceLoadBalancers.List.
@@ -4529,7 +4529,7 @@ type NetworkInterfaceLoadBalancersListResponse struct {
 
 // NetworkInterfaceLoadBalancersListResult contains the result from method NetworkInterfaceLoadBalancers.List.
 type NetworkInterfaceLoadBalancersListResult struct {
-	NetworkInterfaceLoadBalancerListResult
+	InterfaceLoadBalancerListResult
 }
 
 // NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse contains the response from method NetworkInterfaceTapConfigurations.CreateOrUpdate.
@@ -4546,7 +4546,7 @@ type NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse struct {
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkInterfaceTapConfigurationsCreateOrUpdateResponse, error) {
 	respType := NetworkInterfaceTapConfigurationsCreateOrUpdateResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.NetworkInterfaceTapConfiguration)
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.InterfaceTapConfiguration)
 	if err != nil {
 		return respType, err
 	}
@@ -4555,8 +4555,8 @@ func (l NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse) PollUntil
 }
 
 // Resume rehydrates a NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse from the provided client and resume token.
-func (l *NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *NetworkInterfaceTapConfigurationsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkInterfaceTapConfigurationsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+func (l *NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *InterfaceTapConfigurationsClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("InterfaceTapConfigurationsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
 		return err
 	}
@@ -4581,7 +4581,7 @@ type NetworkInterfaceTapConfigurationsCreateOrUpdateResponse struct {
 
 // NetworkInterfaceTapConfigurationsCreateOrUpdateResult contains the result from method NetworkInterfaceTapConfigurations.CreateOrUpdate.
 type NetworkInterfaceTapConfigurationsCreateOrUpdateResult struct {
-	NetworkInterfaceTapConfiguration
+	InterfaceTapConfiguration
 }
 
 // NetworkInterfaceTapConfigurationsDeletePollerResponse contains the response from method NetworkInterfaceTapConfigurations.Delete.
@@ -4607,8 +4607,8 @@ func (l NetworkInterfaceTapConfigurationsDeletePollerResponse) PollUntilDone(ctx
 }
 
 // Resume rehydrates a NetworkInterfaceTapConfigurationsDeletePollerResponse from the provided client and resume token.
-func (l *NetworkInterfaceTapConfigurationsDeletePollerResponse) Resume(ctx context.Context, client *NetworkInterfaceTapConfigurationsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkInterfaceTapConfigurationsClient.Delete", token, client.pl, client.deleteHandleError)
+func (l *NetworkInterfaceTapConfigurationsDeletePollerResponse) Resume(ctx context.Context, client *InterfaceTapConfigurationsClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("InterfaceTapConfigurationsClient.Delete", token, client.pl, client.deleteHandleError)
 	if err != nil {
 		return err
 	}
@@ -4639,7 +4639,7 @@ type NetworkInterfaceTapConfigurationsGetResponse struct {
 
 // NetworkInterfaceTapConfigurationsGetResult contains the result from method NetworkInterfaceTapConfigurations.Get.
 type NetworkInterfaceTapConfigurationsGetResult struct {
-	NetworkInterfaceTapConfiguration
+	InterfaceTapConfiguration
 }
 
 // NetworkInterfaceTapConfigurationsListResponse contains the response from method NetworkInterfaceTapConfigurations.List.
@@ -4651,7 +4651,7 @@ type NetworkInterfaceTapConfigurationsListResponse struct {
 
 // NetworkInterfaceTapConfigurationsListResult contains the result from method NetworkInterfaceTapConfigurations.List.
 type NetworkInterfaceTapConfigurationsListResult struct {
-	NetworkInterfaceTapConfigurationListResult
+	InterfaceTapConfigurationListResult
 }
 
 // NetworkInterfacesCreateOrUpdatePollerResponse contains the response from method NetworkInterfaces.CreateOrUpdate.
@@ -4668,7 +4668,7 @@ type NetworkInterfacesCreateOrUpdatePollerResponse struct {
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkInterfacesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkInterfacesCreateOrUpdateResponse, error) {
 	respType := NetworkInterfacesCreateOrUpdateResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.NetworkInterface)
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.Interface)
 	if err != nil {
 		return respType, err
 	}
@@ -4677,8 +4677,8 @@ func (l NetworkInterfacesCreateOrUpdatePollerResponse) PollUntilDone(ctx context
 }
 
 // Resume rehydrates a NetworkInterfacesCreateOrUpdatePollerResponse from the provided client and resume token.
-func (l *NetworkInterfacesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *NetworkInterfacesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkInterfacesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+func (l *NetworkInterfacesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *InterfacesClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("InterfacesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
 		return err
 	}
@@ -4703,7 +4703,7 @@ type NetworkInterfacesCreateOrUpdateResponse struct {
 
 // NetworkInterfacesCreateOrUpdateResult contains the result from method NetworkInterfaces.CreateOrUpdate.
 type NetworkInterfacesCreateOrUpdateResult struct {
-	NetworkInterface
+	Interface
 }
 
 // NetworkInterfacesDeletePollerResponse contains the response from method NetworkInterfaces.Delete.
@@ -4729,8 +4729,8 @@ func (l NetworkInterfacesDeletePollerResponse) PollUntilDone(ctx context.Context
 }
 
 // Resume rehydrates a NetworkInterfacesDeletePollerResponse from the provided client and resume token.
-func (l *NetworkInterfacesDeletePollerResponse) Resume(ctx context.Context, client *NetworkInterfacesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkInterfacesClient.Delete", token, client.pl, client.deleteHandleError)
+func (l *NetworkInterfacesDeletePollerResponse) Resume(ctx context.Context, client *InterfacesClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("InterfacesClient.Delete", token, client.pl, client.deleteHandleError)
 	if err != nil {
 		return err
 	}
@@ -4775,8 +4775,8 @@ func (l NetworkInterfacesGetEffectiveRouteTablePollerResponse) PollUntilDone(ctx
 }
 
 // Resume rehydrates a NetworkInterfacesGetEffectiveRouteTablePollerResponse from the provided client and resume token.
-func (l *NetworkInterfacesGetEffectiveRouteTablePollerResponse) Resume(ctx context.Context, client *NetworkInterfacesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkInterfacesClient.GetEffectiveRouteTable", token, client.pl, client.getEffectiveRouteTableHandleError)
+func (l *NetworkInterfacesGetEffectiveRouteTablePollerResponse) Resume(ctx context.Context, client *InterfacesClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("InterfacesClient.GetEffectiveRouteTable", token, client.pl, client.getEffectiveRouteTableHandleError)
 	if err != nil {
 		return err
 	}
@@ -4813,7 +4813,7 @@ type NetworkInterfacesGetResponse struct {
 
 // NetworkInterfacesGetResult contains the result from method NetworkInterfaces.Get.
 type NetworkInterfacesGetResult struct {
-	NetworkInterface
+	Interface
 }
 
 // NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResponse contains the response from method NetworkInterfaces.GetVirtualMachineScaleSetIPConfiguration.
@@ -4825,7 +4825,7 @@ type NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResponse struct {
 
 // NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResult contains the result from method NetworkInterfaces.GetVirtualMachineScaleSetIPConfiguration.
 type NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationResult struct {
-	NetworkInterfaceIPConfiguration
+	InterfaceIPConfiguration
 }
 
 // NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResponse contains the response from method NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterface.
@@ -4837,7 +4837,7 @@ type NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResponse struct {
 
 // NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResult contains the result from method NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterface.
 type NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceResult struct {
-	NetworkInterface
+	Interface
 }
 
 // NetworkInterfacesListAllResponse contains the response from method NetworkInterfaces.ListAll.
@@ -4849,7 +4849,7 @@ type NetworkInterfacesListAllResponse struct {
 
 // NetworkInterfacesListAllResult contains the result from method NetworkInterfaces.ListAll.
 type NetworkInterfacesListAllResult struct {
-	NetworkInterfaceListResult
+	InterfaceListResult
 }
 
 // NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse contains the response from method NetworkInterfaces.ListEffectiveNetworkSecurityGroups.
@@ -4876,8 +4876,8 @@ func (l NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse) PollU
 
 // Resume rehydrates a NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse from the provided client and resume
 // token.
-func (l *NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse) Resume(ctx context.Context, client *NetworkInterfacesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkInterfacesClient.ListEffectiveNetworkSecurityGroups", token, client.pl, client.listEffectiveNetworkSecurityGroupsHandleError)
+func (l *NetworkInterfacesListEffectiveNetworkSecurityGroupsPollerResponse) Resume(ctx context.Context, client *InterfacesClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("InterfacesClient.ListEffectiveNetworkSecurityGroups", token, client.pl, client.listEffectiveNetworkSecurityGroupsHandleError)
 	if err != nil {
 		return err
 	}
@@ -4914,7 +4914,7 @@ type NetworkInterfacesListResponse struct {
 
 // NetworkInterfacesListResult contains the result from method NetworkInterfaces.List.
 type NetworkInterfacesListResult struct {
-	NetworkInterfaceListResult
+	InterfaceListResult
 }
 
 // NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResponse contains the response from method NetworkInterfaces.ListVirtualMachineScaleSetIPConfigurations.
@@ -4926,7 +4926,7 @@ type NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResponse struct 
 
 // NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResult contains the result from method NetworkInterfaces.ListVirtualMachineScaleSetIPConfigurations.
 type NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResult struct {
-	NetworkInterfaceIPConfigurationListResult
+	InterfaceIPConfigurationListResult
 }
 
 // NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResponse contains the response from method NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfaces.
@@ -4938,7 +4938,7 @@ type NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResponse struct
 
 // NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResult contains the result from method NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfaces.
 type NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResult struct {
-	NetworkInterfaceListResult
+	InterfaceListResult
 }
 
 // NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResponse contains the response from method NetworkInterfaces.ListVirtualMachineScaleSetVMNetworkInterfaces.
@@ -4950,7 +4950,7 @@ type NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResponse stru
 
 // NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResult contains the result from method NetworkInterfaces.ListVirtualMachineScaleSetVMNetworkInterfaces.
 type NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResult struct {
-	NetworkInterfaceListResult
+	InterfaceListResult
 }
 
 // NetworkInterfacesUpdateTagsResponse contains the response from method NetworkInterfaces.UpdateTags.
@@ -4962,7 +4962,7 @@ type NetworkInterfacesUpdateTagsResponse struct {
 
 // NetworkInterfacesUpdateTagsResult contains the result from method NetworkInterfaces.UpdateTags.
 type NetworkInterfacesUpdateTagsResult struct {
-	NetworkInterface
+	Interface
 }
 
 // NetworkManagementClientCheckDNSNameAvailabilityResponse contains the response from method NetworkManagementClient.CheckDNSNameAvailability.
@@ -5001,8 +5001,8 @@ func (l NetworkManagementClientDeleteBastionShareableLinkPollerResponse) PollUnt
 
 // Resume rehydrates a NetworkManagementClientDeleteBastionShareableLinkPollerResponse from the provided client and resume
 // token.
-func (l *NetworkManagementClientDeleteBastionShareableLinkPollerResponse) Resume(ctx context.Context, client *NetworkManagementClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkManagementClient.DeleteBastionShareableLink", token, client.pl, client.deleteBastionShareableLinkHandleError)
+func (l *NetworkManagementClientDeleteBastionShareableLinkPollerResponse) Resume(ctx context.Context, client *ManagementClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("ManagementClient.DeleteBastionShareableLink", token, client.pl, client.deleteBastionShareableLinkHandleError)
 	if err != nil {
 		return err
 	}
@@ -5061,8 +5061,8 @@ func (l NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofil
 
 // Resume rehydrates a NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse from the provided
 // client and resume token.
-func (l *NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse) Resume(ctx context.Context, client *NetworkManagementClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", token, client.pl, client.generatevirtualwanvpnserverconfigurationvpnprofileHandleError)
+func (l *NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse) Resume(ctx context.Context, client *ManagementClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("ManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", token, client.pl, client.generatevirtualwanvpnserverconfigurationvpnprofileHandleError)
 	if err != nil {
 		return err
 	}
@@ -5114,8 +5114,8 @@ func (l NetworkManagementClientGetActiveSessionsPollerResponse) PollUntilDone(ct
 }
 
 // Resume rehydrates a NetworkManagementClientGetActiveSessionsPollerResponse from the provided client and resume token.
-func (l *NetworkManagementClientGetActiveSessionsPollerResponse) Resume(ctx context.Context, client *NetworkManagementClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkManagementClient.GetActiveSessions", token, client.pl, client.getActiveSessionsHandleError)
+func (l *NetworkManagementClientGetActiveSessionsPollerResponse) Resume(ctx context.Context, client *ManagementClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("ManagementClient.GetActiveSessions", token, client.pl, client.getActiveSessionsHandleError)
 	if err != nil {
 		return err
 	}
@@ -5180,8 +5180,8 @@ func (l NetworkManagementClientPutBastionShareableLinkPollerResponse) PollUntilD
 }
 
 // Resume rehydrates a NetworkManagementClientPutBastionShareableLinkPollerResponse from the provided client and resume token.
-func (l *NetworkManagementClientPutBastionShareableLinkPollerResponse) Resume(ctx context.Context, client *NetworkManagementClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkManagementClient.PutBastionShareableLink", token, client.pl, client.putBastionShareableLinkHandleError)
+func (l *NetworkManagementClientPutBastionShareableLinkPollerResponse) Resume(ctx context.Context, client *ManagementClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("ManagementClient.PutBastionShareableLink", token, client.pl, client.putBastionShareableLinkHandleError)
 	if err != nil {
 		return err
 	}
@@ -5231,7 +5231,7 @@ type NetworkProfilesCreateOrUpdateResponse struct {
 
 // NetworkProfilesCreateOrUpdateResult contains the result from method NetworkProfiles.CreateOrUpdate.
 type NetworkProfilesCreateOrUpdateResult struct {
-	NetworkProfile
+	Profile
 }
 
 // NetworkProfilesDeletePollerResponse contains the response from method NetworkProfiles.Delete.
@@ -5257,8 +5257,8 @@ func (l NetworkProfilesDeletePollerResponse) PollUntilDone(ctx context.Context, 
 }
 
 // Resume rehydrates a NetworkProfilesDeletePollerResponse from the provided client and resume token.
-func (l *NetworkProfilesDeletePollerResponse) Resume(ctx context.Context, client *NetworkProfilesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkProfilesClient.Delete", token, client.pl, client.deleteHandleError)
+func (l *NetworkProfilesDeletePollerResponse) Resume(ctx context.Context, client *ProfilesClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("ProfilesClient.Delete", token, client.pl, client.deleteHandleError)
 	if err != nil {
 		return err
 	}
@@ -5289,7 +5289,7 @@ type NetworkProfilesGetResponse struct {
 
 // NetworkProfilesGetResult contains the result from method NetworkProfiles.Get.
 type NetworkProfilesGetResult struct {
-	NetworkProfile
+	Profile
 }
 
 // NetworkProfilesListAllResponse contains the response from method NetworkProfiles.ListAll.
@@ -5301,7 +5301,7 @@ type NetworkProfilesListAllResponse struct {
 
 // NetworkProfilesListAllResult contains the result from method NetworkProfiles.ListAll.
 type NetworkProfilesListAllResult struct {
-	NetworkProfileListResult
+	ProfileListResult
 }
 
 // NetworkProfilesListResponse contains the response from method NetworkProfiles.List.
@@ -5313,7 +5313,7 @@ type NetworkProfilesListResponse struct {
 
 // NetworkProfilesListResult contains the result from method NetworkProfiles.List.
 type NetworkProfilesListResult struct {
-	NetworkProfileListResult
+	ProfileListResult
 }
 
 // NetworkProfilesUpdateTagsResponse contains the response from method NetworkProfiles.UpdateTags.
@@ -5325,7 +5325,7 @@ type NetworkProfilesUpdateTagsResponse struct {
 
 // NetworkProfilesUpdateTagsResult contains the result from method NetworkProfiles.UpdateTags.
 type NetworkProfilesUpdateTagsResult struct {
-	NetworkProfile
+	Profile
 }
 
 // NetworkSecurityGroupsCreateOrUpdatePollerResponse contains the response from method NetworkSecurityGroups.CreateOrUpdate.
@@ -5342,7 +5342,7 @@ type NetworkSecurityGroupsCreateOrUpdatePollerResponse struct {
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkSecurityGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkSecurityGroupsCreateOrUpdateResponse, error) {
 	respType := NetworkSecurityGroupsCreateOrUpdateResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.NetworkSecurityGroup)
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.SecurityGroup)
 	if err != nil {
 		return respType, err
 	}
@@ -5351,8 +5351,8 @@ func (l NetworkSecurityGroupsCreateOrUpdatePollerResponse) PollUntilDone(ctx con
 }
 
 // Resume rehydrates a NetworkSecurityGroupsCreateOrUpdatePollerResponse from the provided client and resume token.
-func (l *NetworkSecurityGroupsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *NetworkSecurityGroupsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkSecurityGroupsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+func (l *NetworkSecurityGroupsCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *SecurityGroupsClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("SecurityGroupsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
 		return err
 	}
@@ -5377,7 +5377,7 @@ type NetworkSecurityGroupsCreateOrUpdateResponse struct {
 
 // NetworkSecurityGroupsCreateOrUpdateResult contains the result from method NetworkSecurityGroups.CreateOrUpdate.
 type NetworkSecurityGroupsCreateOrUpdateResult struct {
-	NetworkSecurityGroup
+	SecurityGroup
 }
 
 // NetworkSecurityGroupsDeletePollerResponse contains the response from method NetworkSecurityGroups.Delete.
@@ -5403,8 +5403,8 @@ func (l NetworkSecurityGroupsDeletePollerResponse) PollUntilDone(ctx context.Con
 }
 
 // Resume rehydrates a NetworkSecurityGroupsDeletePollerResponse from the provided client and resume token.
-func (l *NetworkSecurityGroupsDeletePollerResponse) Resume(ctx context.Context, client *NetworkSecurityGroupsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkSecurityGroupsClient.Delete", token, client.pl, client.deleteHandleError)
+func (l *NetworkSecurityGroupsDeletePollerResponse) Resume(ctx context.Context, client *SecurityGroupsClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("SecurityGroupsClient.Delete", token, client.pl, client.deleteHandleError)
 	if err != nil {
 		return err
 	}
@@ -5435,7 +5435,7 @@ type NetworkSecurityGroupsGetResponse struct {
 
 // NetworkSecurityGroupsGetResult contains the result from method NetworkSecurityGroups.Get.
 type NetworkSecurityGroupsGetResult struct {
-	NetworkSecurityGroup
+	SecurityGroup
 }
 
 // NetworkSecurityGroupsListAllResponse contains the response from method NetworkSecurityGroups.ListAll.
@@ -5447,7 +5447,7 @@ type NetworkSecurityGroupsListAllResponse struct {
 
 // NetworkSecurityGroupsListAllResult contains the result from method NetworkSecurityGroups.ListAll.
 type NetworkSecurityGroupsListAllResult struct {
-	NetworkSecurityGroupListResult
+	SecurityGroupListResult
 }
 
 // NetworkSecurityGroupsListResponse contains the response from method NetworkSecurityGroups.List.
@@ -5459,7 +5459,7 @@ type NetworkSecurityGroupsListResponse struct {
 
 // NetworkSecurityGroupsListResult contains the result from method NetworkSecurityGroups.List.
 type NetworkSecurityGroupsListResult struct {
-	NetworkSecurityGroupListResult
+	SecurityGroupListResult
 }
 
 // NetworkSecurityGroupsUpdateTagsResponse contains the response from method NetworkSecurityGroups.UpdateTags.
@@ -5471,7 +5471,7 @@ type NetworkSecurityGroupsUpdateTagsResponse struct {
 
 // NetworkSecurityGroupsUpdateTagsResult contains the result from method NetworkSecurityGroups.UpdateTags.
 type NetworkSecurityGroupsUpdateTagsResult struct {
-	NetworkSecurityGroup
+	SecurityGroup
 }
 
 // NetworkVirtualAppliancesCreateOrUpdatePollerResponse contains the response from method NetworkVirtualAppliances.CreateOrUpdate.
@@ -5488,7 +5488,7 @@ type NetworkVirtualAppliancesCreateOrUpdatePollerResponse struct {
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkVirtualAppliancesCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkVirtualAppliancesCreateOrUpdateResponse, error) {
 	respType := NetworkVirtualAppliancesCreateOrUpdateResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.NetworkVirtualAppliance)
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.VirtualAppliance)
 	if err != nil {
 		return respType, err
 	}
@@ -5497,8 +5497,8 @@ func (l NetworkVirtualAppliancesCreateOrUpdatePollerResponse) PollUntilDone(ctx 
 }
 
 // Resume rehydrates a NetworkVirtualAppliancesCreateOrUpdatePollerResponse from the provided client and resume token.
-func (l *NetworkVirtualAppliancesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *NetworkVirtualAppliancesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkVirtualAppliancesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+func (l *NetworkVirtualAppliancesCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualAppliancesClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualAppliancesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
 		return err
 	}
@@ -5523,7 +5523,7 @@ type NetworkVirtualAppliancesCreateOrUpdateResponse struct {
 
 // NetworkVirtualAppliancesCreateOrUpdateResult contains the result from method NetworkVirtualAppliances.CreateOrUpdate.
 type NetworkVirtualAppliancesCreateOrUpdateResult struct {
-	NetworkVirtualAppliance
+	VirtualAppliance
 }
 
 // NetworkVirtualAppliancesDeletePollerResponse contains the response from method NetworkVirtualAppliances.Delete.
@@ -5549,8 +5549,8 @@ func (l NetworkVirtualAppliancesDeletePollerResponse) PollUntilDone(ctx context.
 }
 
 // Resume rehydrates a NetworkVirtualAppliancesDeletePollerResponse from the provided client and resume token.
-func (l *NetworkVirtualAppliancesDeletePollerResponse) Resume(ctx context.Context, client *NetworkVirtualAppliancesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkVirtualAppliancesClient.Delete", token, client.pl, client.deleteHandleError)
+func (l *NetworkVirtualAppliancesDeletePollerResponse) Resume(ctx context.Context, client *VirtualAppliancesClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualAppliancesClient.Delete", token, client.pl, client.deleteHandleError)
 	if err != nil {
 		return err
 	}
@@ -5581,7 +5581,7 @@ type NetworkVirtualAppliancesGetResponse struct {
 
 // NetworkVirtualAppliancesGetResult contains the result from method NetworkVirtualAppliances.Get.
 type NetworkVirtualAppliancesGetResult struct {
-	NetworkVirtualAppliance
+	VirtualAppliance
 }
 
 // NetworkVirtualAppliancesListByResourceGroupResponse contains the response from method NetworkVirtualAppliances.ListByResourceGroup.
@@ -5593,7 +5593,7 @@ type NetworkVirtualAppliancesListByResourceGroupResponse struct {
 
 // NetworkVirtualAppliancesListByResourceGroupResult contains the result from method NetworkVirtualAppliances.ListByResourceGroup.
 type NetworkVirtualAppliancesListByResourceGroupResult struct {
-	NetworkVirtualApplianceListResult
+	VirtualApplianceListResult
 }
 
 // NetworkVirtualAppliancesListResponse contains the response from method NetworkVirtualAppliances.List.
@@ -5605,7 +5605,7 @@ type NetworkVirtualAppliancesListResponse struct {
 
 // NetworkVirtualAppliancesListResult contains the result from method NetworkVirtualAppliances.List.
 type NetworkVirtualAppliancesListResult struct {
-	NetworkVirtualApplianceListResult
+	VirtualApplianceListResult
 }
 
 // NetworkVirtualAppliancesUpdateTagsResponse contains the response from method NetworkVirtualAppliances.UpdateTags.
@@ -5617,7 +5617,7 @@ type NetworkVirtualAppliancesUpdateTagsResponse struct {
 
 // NetworkVirtualAppliancesUpdateTagsResult contains the result from method NetworkVirtualAppliances.UpdateTags.
 type NetworkVirtualAppliancesUpdateTagsResult struct {
-	NetworkVirtualAppliance
+	VirtualAppliance
 }
 
 // NetworkWatchersCheckConnectivityPollerResponse contains the response from method NetworkWatchers.CheckConnectivity.
@@ -5643,8 +5643,8 @@ func (l NetworkWatchersCheckConnectivityPollerResponse) PollUntilDone(ctx contex
 }
 
 // Resume rehydrates a NetworkWatchersCheckConnectivityPollerResponse from the provided client and resume token.
-func (l *NetworkWatchersCheckConnectivityPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkWatchersClient.CheckConnectivity", token, client.pl, client.checkConnectivityHandleError)
+func (l *NetworkWatchersCheckConnectivityPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.CheckConnectivity", token, client.pl, client.checkConnectivityHandleError)
 	if err != nil {
 		return err
 	}
@@ -5681,7 +5681,7 @@ type NetworkWatchersCreateOrUpdateResponse struct {
 
 // NetworkWatchersCreateOrUpdateResult contains the result from method NetworkWatchers.CreateOrUpdate.
 type NetworkWatchersCreateOrUpdateResult struct {
-	NetworkWatcher
+	Watcher
 }
 
 // NetworkWatchersDeletePollerResponse contains the response from method NetworkWatchers.Delete.
@@ -5707,8 +5707,8 @@ func (l NetworkWatchersDeletePollerResponse) PollUntilDone(ctx context.Context, 
 }
 
 // Resume rehydrates a NetworkWatchersDeletePollerResponse from the provided client and resume token.
-func (l *NetworkWatchersDeletePollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkWatchersClient.Delete", token, client.pl, client.deleteHandleError)
+func (l *NetworkWatchersDeletePollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.Delete", token, client.pl, client.deleteHandleError)
 	if err != nil {
 		return err
 	}
@@ -5753,8 +5753,8 @@ func (l NetworkWatchersGetAzureReachabilityReportPollerResponse) PollUntilDone(c
 }
 
 // Resume rehydrates a NetworkWatchersGetAzureReachabilityReportPollerResponse from the provided client and resume token.
-func (l *NetworkWatchersGetAzureReachabilityReportPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkWatchersClient.GetAzureReachabilityReport", token, client.pl, client.getAzureReachabilityReportHandleError)
+func (l *NetworkWatchersGetAzureReachabilityReportPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetAzureReachabilityReport", token, client.pl, client.getAzureReachabilityReportHandleError)
 	if err != nil {
 		return err
 	}
@@ -5805,8 +5805,8 @@ func (l NetworkWatchersGetFlowLogStatusPollerResponse) PollUntilDone(ctx context
 }
 
 // Resume rehydrates a NetworkWatchersGetFlowLogStatusPollerResponse from the provided client and resume token.
-func (l *NetworkWatchersGetFlowLogStatusPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkWatchersClient.GetFlowLogStatus", token, client.pl, client.getFlowLogStatusHandleError)
+func (l *NetworkWatchersGetFlowLogStatusPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetFlowLogStatus", token, client.pl, client.getFlowLogStatusHandleError)
 	if err != nil {
 		return err
 	}
@@ -5848,7 +5848,7 @@ type NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse struct {
 // A good starting value is 30 seconds. Note that some resources might benefit from a different value.
 func (l NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (NetworkWatchersGetNetworkConfigurationDiagnosticResponse, error) {
 	respType := NetworkWatchersGetNetworkConfigurationDiagnosticResponse{}
-	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.NetworkConfigurationDiagnosticResponse)
+	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.ConfigurationDiagnosticResponse)
 	if err != nil {
 		return respType, err
 	}
@@ -5858,8 +5858,8 @@ func (l NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse) PollUnti
 
 // Resume rehydrates a NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse from the provided client and resume
 // token.
-func (l *NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkWatchersClient.GetNetworkConfigurationDiagnostic", token, client.pl, client.getNetworkConfigurationDiagnosticHandleError)
+func (l *NetworkWatchersGetNetworkConfigurationDiagnosticPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetNetworkConfigurationDiagnostic", token, client.pl, client.getNetworkConfigurationDiagnosticHandleError)
 	if err != nil {
 		return err
 	}
@@ -5884,7 +5884,7 @@ type NetworkWatchersGetNetworkConfigurationDiagnosticResponse struct {
 
 // NetworkWatchersGetNetworkConfigurationDiagnosticResult contains the result from method NetworkWatchers.GetNetworkConfigurationDiagnostic.
 type NetworkWatchersGetNetworkConfigurationDiagnosticResult struct {
-	NetworkConfigurationDiagnosticResponse
+	ConfigurationDiagnosticResponse
 }
 
 // NetworkWatchersGetNextHopPollerResponse contains the response from method NetworkWatchers.GetNextHop.
@@ -5910,8 +5910,8 @@ func (l NetworkWatchersGetNextHopPollerResponse) PollUntilDone(ctx context.Conte
 }
 
 // Resume rehydrates a NetworkWatchersGetNextHopPollerResponse from the provided client and resume token.
-func (l *NetworkWatchersGetNextHopPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkWatchersClient.GetNextHop", token, client.pl, client.getNextHopHandleError)
+func (l *NetworkWatchersGetNextHopPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetNextHop", token, client.pl, client.getNextHopHandleError)
 	if err != nil {
 		return err
 	}
@@ -5948,7 +5948,7 @@ type NetworkWatchersGetResponse struct {
 
 // NetworkWatchersGetResult contains the result from method NetworkWatchers.Get.
 type NetworkWatchersGetResult struct {
-	NetworkWatcher
+	Watcher
 }
 
 // NetworkWatchersGetTopologyResponse contains the response from method NetworkWatchers.GetTopology.
@@ -5986,8 +5986,8 @@ func (l NetworkWatchersGetTroubleshootingPollerResponse) PollUntilDone(ctx conte
 }
 
 // Resume rehydrates a NetworkWatchersGetTroubleshootingPollerResponse from the provided client and resume token.
-func (l *NetworkWatchersGetTroubleshootingPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkWatchersClient.GetTroubleshooting", token, client.pl, client.getTroubleshootingHandleError)
+func (l *NetworkWatchersGetTroubleshootingPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetTroubleshooting", token, client.pl, client.getTroubleshootingHandleError)
 	if err != nil {
 		return err
 	}
@@ -6038,8 +6038,8 @@ func (l NetworkWatchersGetTroubleshootingResultPollerResponse) PollUntilDone(ctx
 }
 
 // Resume rehydrates a NetworkWatchersGetTroubleshootingResultPollerResponse from the provided client and resume token.
-func (l *NetworkWatchersGetTroubleshootingResultPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkWatchersClient.GetTroubleshootingResult", token, client.pl, client.getTroubleshootingResultHandleError)
+func (l *NetworkWatchersGetTroubleshootingResultPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetTroubleshootingResult", token, client.pl, client.getTroubleshootingResultHandleError)
 	if err != nil {
 		return err
 	}
@@ -6090,8 +6090,8 @@ func (l NetworkWatchersGetVMSecurityRulesPollerResponse) PollUntilDone(ctx conte
 }
 
 // Resume rehydrates a NetworkWatchersGetVMSecurityRulesPollerResponse from the provided client and resume token.
-func (l *NetworkWatchersGetVMSecurityRulesPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkWatchersClient.GetVMSecurityRules", token, client.pl, client.getVMSecurityRulesHandleError)
+func (l *NetworkWatchersGetVMSecurityRulesPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetVMSecurityRules", token, client.pl, client.getVMSecurityRulesHandleError)
 	if err != nil {
 		return err
 	}
@@ -6128,7 +6128,7 @@ type NetworkWatchersListAllResponse struct {
 
 // NetworkWatchersListAllResult contains the result from method NetworkWatchers.ListAll.
 type NetworkWatchersListAllResult struct {
-	NetworkWatcherListResult
+	WatcherListResult
 }
 
 // NetworkWatchersListAvailableProvidersPollerResponse contains the response from method NetworkWatchers.ListAvailableProviders.
@@ -6154,8 +6154,8 @@ func (l NetworkWatchersListAvailableProvidersPollerResponse) PollUntilDone(ctx c
 }
 
 // Resume rehydrates a NetworkWatchersListAvailableProvidersPollerResponse from the provided client and resume token.
-func (l *NetworkWatchersListAvailableProvidersPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkWatchersClient.ListAvailableProviders", token, client.pl, client.listAvailableProvidersHandleError)
+func (l *NetworkWatchersListAvailableProvidersPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.ListAvailableProviders", token, client.pl, client.listAvailableProvidersHandleError)
 	if err != nil {
 		return err
 	}
@@ -6192,7 +6192,7 @@ type NetworkWatchersListResponse struct {
 
 // NetworkWatchersListResult contains the result from method NetworkWatchers.List.
 type NetworkWatchersListResult struct {
-	NetworkWatcherListResult
+	WatcherListResult
 }
 
 // NetworkWatchersSetFlowLogConfigurationPollerResponse contains the response from method NetworkWatchers.SetFlowLogConfiguration.
@@ -6218,8 +6218,8 @@ func (l NetworkWatchersSetFlowLogConfigurationPollerResponse) PollUntilDone(ctx 
 }
 
 // Resume rehydrates a NetworkWatchersSetFlowLogConfigurationPollerResponse from the provided client and resume token.
-func (l *NetworkWatchersSetFlowLogConfigurationPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkWatchersClient.SetFlowLogConfiguration", token, client.pl, client.setFlowLogConfigurationHandleError)
+func (l *NetworkWatchersSetFlowLogConfigurationPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.SetFlowLogConfiguration", token, client.pl, client.setFlowLogConfigurationHandleError)
 	if err != nil {
 		return err
 	}
@@ -6256,7 +6256,7 @@ type NetworkWatchersUpdateTagsResponse struct {
 
 // NetworkWatchersUpdateTagsResult contains the result from method NetworkWatchers.UpdateTags.
 type NetworkWatchersUpdateTagsResult struct {
-	NetworkWatcher
+	Watcher
 }
 
 // NetworkWatchersVerifyIPFlowPollerResponse contains the response from method NetworkWatchers.VerifyIPFlow.
@@ -6282,8 +6282,8 @@ func (l NetworkWatchersVerifyIPFlowPollerResponse) PollUntilDone(ctx context.Con
 }
 
 // Resume rehydrates a NetworkWatchersVerifyIPFlowPollerResponse from the provided client and resume token.
-func (l *NetworkWatchersVerifyIPFlowPollerResponse) Resume(ctx context.Context, client *NetworkWatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NetworkWatchersClient.VerifyIPFlow", token, client.pl, client.verifyIPFlowHandleError)
+func (l *NetworkWatchersVerifyIPFlowPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.VerifyIPFlow", token, client.pl, client.verifyIPFlowHandleError)
 	if err != nil {
 		return err
 	}

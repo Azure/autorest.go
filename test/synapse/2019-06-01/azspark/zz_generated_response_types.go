@@ -25,7 +25,7 @@ type SparkBatchCreateSparkBatchJobResponse struct {
 
 // SparkBatchCreateSparkBatchJobResult contains the result from method SparkBatch.CreateSparkBatchJob.
 type SparkBatchCreateSparkBatchJobResult struct {
-	SparkBatchJob
+	BatchJob
 }
 
 // SparkBatchGetSparkBatchJobResponse contains the response from method SparkBatch.GetSparkBatchJob.
@@ -37,7 +37,7 @@ type SparkBatchGetSparkBatchJobResponse struct {
 
 // SparkBatchGetSparkBatchJobResult contains the result from method SparkBatch.GetSparkBatchJob.
 type SparkBatchGetSparkBatchJobResult struct {
-	SparkBatchJob
+	BatchJob
 }
 
 // SparkBatchGetSparkBatchJobsResponse contains the response from method SparkBatch.GetSparkBatchJobs.
@@ -49,7 +49,7 @@ type SparkBatchGetSparkBatchJobsResponse struct {
 
 // SparkBatchGetSparkBatchJobsResult contains the result from method SparkBatch.GetSparkBatchJobs.
 type SparkBatchGetSparkBatchJobsResult struct {
-	SparkBatchJobCollection
+	BatchJobCollection
 }
 
 // SparkSessionCancelSparkSessionResponse contains the response from method SparkSession.CancelSparkSession.
@@ -67,7 +67,7 @@ type SparkSessionCancelSparkStatementResponse struct {
 
 // SparkSessionCancelSparkStatementResult contains the result from method SparkSession.CancelSparkStatement.
 type SparkSessionCancelSparkStatementResult struct {
-	SparkStatementCancellationResult
+	StatementCancellationResult
 }
 
 // SparkSessionCreateSparkSessionResponse contains the response from method SparkSession.CreateSparkSession.
@@ -79,7 +79,7 @@ type SparkSessionCreateSparkSessionResponse struct {
 
 // SparkSessionCreateSparkSessionResult contains the result from method SparkSession.CreateSparkSession.
 type SparkSessionCreateSparkSessionResult struct {
-	SparkSession
+	Session
 }
 
 // SparkSessionCreateSparkStatementResponse contains the response from method SparkSession.CreateSparkStatement.
@@ -91,7 +91,7 @@ type SparkSessionCreateSparkStatementResponse struct {
 
 // SparkSessionCreateSparkStatementResult contains the result from method SparkSession.CreateSparkStatement.
 type SparkSessionCreateSparkStatementResult struct {
-	SparkStatement
+	Statement
 }
 
 // SparkSessionGetSparkSessionResponse contains the response from method SparkSession.GetSparkSession.
@@ -103,7 +103,7 @@ type SparkSessionGetSparkSessionResponse struct {
 
 // SparkSessionGetSparkSessionResult contains the result from method SparkSession.GetSparkSession.
 type SparkSessionGetSparkSessionResult struct {
-	SparkSession
+	Session
 }
 
 // SparkSessionGetSparkSessionsResponse contains the response from method SparkSession.GetSparkSessions.
@@ -115,7 +115,7 @@ type SparkSessionGetSparkSessionsResponse struct {
 
 // SparkSessionGetSparkSessionsResult contains the result from method SparkSession.GetSparkSessions.
 type SparkSessionGetSparkSessionsResult struct {
-	SparkSessionCollection
+	SessionCollection
 }
 
 // SparkSessionGetSparkStatementResponse contains the response from method SparkSession.GetSparkStatement.
@@ -127,7 +127,7 @@ type SparkSessionGetSparkStatementResponse struct {
 
 // SparkSessionGetSparkStatementResult contains the result from method SparkSession.GetSparkStatement.
 type SparkSessionGetSparkStatementResult struct {
-	SparkStatement
+	Statement
 }
 
 // SparkSessionGetSparkStatementsResponse contains the response from method SparkSession.GetSparkStatements.
@@ -139,7 +139,7 @@ type SparkSessionGetSparkStatementsResponse struct {
 
 // SparkSessionGetSparkStatementsResult contains the result from method SparkSession.GetSparkStatements.
 type SparkSessionGetSparkStatementsResult struct {
-	SparkStatementCollection
+	StatementCollection
 }
 
 // SparkSessionResetSparkSessionTimeoutResponse contains the response from method SparkSession.ResetSparkSessionTimeout.

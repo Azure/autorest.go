@@ -64,7 +64,7 @@ func (client *LoadBalancerNetworkInterfacesClient) List(resourceGroupName string
 			return client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
 		},
 		advancer: func(ctx context.Context, resp LoadBalancerNetworkInterfacesListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceListResult.NextLink)
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.InterfaceListResult.NextLink)
 		},
 	}
 }
@@ -98,7 +98,7 @@ func (client *LoadBalancerNetworkInterfacesClient) listCreateRequest(ctx context
 // listHandleResponse handles the List response.
 func (client *LoadBalancerNetworkInterfacesClient) listHandleResponse(resp *http.Response) (LoadBalancerNetworkInterfacesListResponse, error) {
 	result := LoadBalancerNetworkInterfacesListResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceListResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceListResult); err != nil {
 		return LoadBalancerNetworkInterfacesListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil

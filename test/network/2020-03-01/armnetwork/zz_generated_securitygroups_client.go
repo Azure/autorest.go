@@ -22,20 +22,20 @@ import (
 	"strings"
 )
 
-// NetworkSecurityGroupsClient contains the methods for the NetworkSecurityGroups group.
-// Don't use this type directly, use NewNetworkSecurityGroupsClient() instead.
-type NetworkSecurityGroupsClient struct {
+// SecurityGroupsClient contains the methods for the NetworkSecurityGroups group.
+// Don't use this type directly, use NewSecurityGroupsClient() instead.
+type SecurityGroupsClient struct {
 	host           string
 	subscriptionID string
 	pl             runtime.Pipeline
 }
 
-// NewNetworkSecurityGroupsClient creates a new instance of NetworkSecurityGroupsClient with the specified values.
+// NewSecurityGroupsClient creates a new instance of SecurityGroupsClient with the specified values.
 // subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
 // ID forms part of the URI for every service call.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewNetworkSecurityGroupsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NetworkSecurityGroupsClient {
+func NewSecurityGroupsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *SecurityGroupsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
 		cp = *options
@@ -43,7 +43,7 @@ func NewNetworkSecurityGroupsClient(subscriptionID string, credential azcore.Tok
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	client := &NetworkSecurityGroupsClient{
+	client := &SecurityGroupsClient{
 		subscriptionID: subscriptionID,
 		host:           string(cp.Host),
 		pl:             armruntime.NewPipeline(module, version, credential, &cp),
@@ -56,9 +56,9 @@ func NewNetworkSecurityGroupsClient(subscriptionID string, credential azcore.Tok
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
 // parameters - Parameters supplied to the create or update network security group operation.
-// options - NetworkSecurityGroupsBeginCreateOrUpdateOptions contains the optional parameters for the NetworkSecurityGroupsClient.BeginCreateOrUpdate
+// options - NetworkSecurityGroupsBeginCreateOrUpdateOptions contains the optional parameters for the SecurityGroupsClient.BeginCreateOrUpdate
 // method.
-func (client *NetworkSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters NetworkSecurityGroup, options *NetworkSecurityGroupsBeginCreateOrUpdateOptions) (NetworkSecurityGroupsCreateOrUpdatePollerResponse, error) {
+func (client *SecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters SecurityGroup, options *NetworkSecurityGroupsBeginCreateOrUpdateOptions) (NetworkSecurityGroupsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, parameters, options)
 	if err != nil {
 		return NetworkSecurityGroupsCreateOrUpdatePollerResponse{}, err
@@ -66,7 +66,7 @@ func (client *NetworkSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Conte
 	result := NetworkSecurityGroupsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkSecurityGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("SecurityGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
 		return NetworkSecurityGroupsCreateOrUpdatePollerResponse{}, err
 	}
@@ -78,7 +78,7 @@ func (client *NetworkSecurityGroupsClient) BeginCreateOrUpdate(ctx context.Conte
 
 // CreateOrUpdate - Creates or updates a network security group in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkSecurityGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters NetworkSecurityGroup, options *NetworkSecurityGroupsBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *SecurityGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters SecurityGroup, options *NetworkSecurityGroupsBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *NetworkSecurityGroupsClient) createOrUpdate(ctx context.Context, r
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *NetworkSecurityGroupsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters NetworkSecurityGroup, options *NetworkSecurityGroupsBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *SecurityGroupsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters SecurityGroup, options *NetworkSecurityGroupsBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -120,7 +120,7 @@ func (client *NetworkSecurityGroupsClient) createOrUpdateCreateRequest(ctx conte
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *NetworkSecurityGroupsClient) createOrUpdateHandleError(resp *http.Response) error {
+func (client *SecurityGroupsClient) createOrUpdateHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -136,9 +136,9 @@ func (client *NetworkSecurityGroupsClient) createOrUpdateHandleError(resp *http.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
-// options - NetworkSecurityGroupsBeginDeleteOptions contains the optional parameters for the NetworkSecurityGroupsClient.BeginDelete
+// options - NetworkSecurityGroupsBeginDeleteOptions contains the optional parameters for the SecurityGroupsClient.BeginDelete
 // method.
-func (client *NetworkSecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *NetworkSecurityGroupsBeginDeleteOptions) (NetworkSecurityGroupsDeletePollerResponse, error) {
+func (client *SecurityGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *NetworkSecurityGroupsBeginDeleteOptions) (NetworkSecurityGroupsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkSecurityGroupName, options)
 	if err != nil {
 		return NetworkSecurityGroupsDeletePollerResponse{}, err
@@ -146,7 +146,7 @@ func (client *NetworkSecurityGroupsClient) BeginDelete(ctx context.Context, reso
 	result := NetworkSecurityGroupsDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkSecurityGroupsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("SecurityGroupsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
 		return NetworkSecurityGroupsDeletePollerResponse{}, err
 	}
@@ -158,7 +158,7 @@ func (client *NetworkSecurityGroupsClient) BeginDelete(ctx context.Context, reso
 
 // Delete - Deletes the specified network security group.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkSecurityGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *NetworkSecurityGroupsBeginDeleteOptions) (*http.Response, error) {
+func (client *SecurityGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *NetworkSecurityGroupsBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, options)
 	if err != nil {
 		return nil, err
@@ -174,7 +174,7 @@ func (client *NetworkSecurityGroupsClient) deleteOperation(ctx context.Context, 
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *NetworkSecurityGroupsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *NetworkSecurityGroupsBeginDeleteOptions) (*policy.Request, error) {
+func (client *SecurityGroupsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *NetworkSecurityGroupsBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -200,7 +200,7 @@ func (client *NetworkSecurityGroupsClient) deleteCreateRequest(ctx context.Conte
 }
 
 // deleteHandleError handles the Delete error response.
-func (client *NetworkSecurityGroupsClient) deleteHandleError(resp *http.Response) error {
+func (client *SecurityGroupsClient) deleteHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -216,8 +216,8 @@ func (client *NetworkSecurityGroupsClient) deleteHandleError(resp *http.Response
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
-// options - NetworkSecurityGroupsGetOptions contains the optional parameters for the NetworkSecurityGroupsClient.Get method.
-func (client *NetworkSecurityGroupsClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *NetworkSecurityGroupsGetOptions) (NetworkSecurityGroupsGetResponse, error) {
+// options - NetworkSecurityGroupsGetOptions contains the optional parameters for the SecurityGroupsClient.Get method.
+func (client *SecurityGroupsClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *NetworkSecurityGroupsGetOptions) (NetworkSecurityGroupsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, options)
 	if err != nil {
 		return NetworkSecurityGroupsGetResponse{}, err
@@ -233,7 +233,7 @@ func (client *NetworkSecurityGroupsClient) Get(ctx context.Context, resourceGrou
 }
 
 // getCreateRequest creates the Get request.
-func (client *NetworkSecurityGroupsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *NetworkSecurityGroupsGetOptions) (*policy.Request, error) {
+func (client *SecurityGroupsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *NetworkSecurityGroupsGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -262,16 +262,16 @@ func (client *NetworkSecurityGroupsClient) getCreateRequest(ctx context.Context,
 }
 
 // getHandleResponse handles the Get response.
-func (client *NetworkSecurityGroupsClient) getHandleResponse(resp *http.Response) (NetworkSecurityGroupsGetResponse, error) {
+func (client *SecurityGroupsClient) getHandleResponse(resp *http.Response) (NetworkSecurityGroupsGetResponse, error) {
 	result := NetworkSecurityGroupsGetResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkSecurityGroup); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityGroup); err != nil {
 		return NetworkSecurityGroupsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // getHandleError handles the Get error response.
-func (client *NetworkSecurityGroupsClient) getHandleError(resp *http.Response) error {
+func (client *SecurityGroupsClient) getHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -286,21 +286,21 @@ func (client *NetworkSecurityGroupsClient) getHandleError(resp *http.Response) e
 // List - Gets all network security groups in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - NetworkSecurityGroupsListOptions contains the optional parameters for the NetworkSecurityGroupsClient.List method.
-func (client *NetworkSecurityGroupsClient) List(resourceGroupName string, options *NetworkSecurityGroupsListOptions) *NetworkSecurityGroupsListPager {
+// options - NetworkSecurityGroupsListOptions contains the optional parameters for the SecurityGroupsClient.List method.
+func (client *SecurityGroupsClient) List(resourceGroupName string, options *NetworkSecurityGroupsListOptions) *NetworkSecurityGroupsListPager {
 	return &NetworkSecurityGroupsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
 		},
 		advancer: func(ctx context.Context, resp NetworkSecurityGroupsListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.NetworkSecurityGroupListResult.NextLink)
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.SecurityGroupListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *NetworkSecurityGroupsClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *NetworkSecurityGroupsListOptions) (*policy.Request, error) {
+func (client *SecurityGroupsClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *NetworkSecurityGroupsListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -322,16 +322,16 @@ func (client *NetworkSecurityGroupsClient) listCreateRequest(ctx context.Context
 }
 
 // listHandleResponse handles the List response.
-func (client *NetworkSecurityGroupsClient) listHandleResponse(resp *http.Response) (NetworkSecurityGroupsListResponse, error) {
+func (client *SecurityGroupsClient) listHandleResponse(resp *http.Response) (NetworkSecurityGroupsListResponse, error) {
 	result := NetworkSecurityGroupsListResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkSecurityGroupListResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityGroupListResult); err != nil {
 		return NetworkSecurityGroupsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // listHandleError handles the List error response.
-func (client *NetworkSecurityGroupsClient) listHandleError(resp *http.Response) error {
+func (client *SecurityGroupsClient) listHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -345,22 +345,21 @@ func (client *NetworkSecurityGroupsClient) listHandleError(resp *http.Response) 
 
 // ListAll - Gets all network security groups in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - NetworkSecurityGroupsListAllOptions contains the optional parameters for the NetworkSecurityGroupsClient.ListAll
-// method.
-func (client *NetworkSecurityGroupsClient) ListAll(options *NetworkSecurityGroupsListAllOptions) *NetworkSecurityGroupsListAllPager {
+// options - NetworkSecurityGroupsListAllOptions contains the optional parameters for the SecurityGroupsClient.ListAll method.
+func (client *SecurityGroupsClient) ListAll(options *NetworkSecurityGroupsListAllOptions) *NetworkSecurityGroupsListAllPager {
 	return &NetworkSecurityGroupsListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
 		},
 		advancer: func(ctx context.Context, resp NetworkSecurityGroupsListAllResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.NetworkSecurityGroupListResult.NextLink)
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.SecurityGroupListResult.NextLink)
 		},
 	}
 }
 
 // listAllCreateRequest creates the ListAll request.
-func (client *NetworkSecurityGroupsClient) listAllCreateRequest(ctx context.Context, options *NetworkSecurityGroupsListAllOptions) (*policy.Request, error) {
+func (client *SecurityGroupsClient) listAllCreateRequest(ctx context.Context, options *NetworkSecurityGroupsListAllOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -378,16 +377,16 @@ func (client *NetworkSecurityGroupsClient) listAllCreateRequest(ctx context.Cont
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client *NetworkSecurityGroupsClient) listAllHandleResponse(resp *http.Response) (NetworkSecurityGroupsListAllResponse, error) {
+func (client *SecurityGroupsClient) listAllHandleResponse(resp *http.Response) (NetworkSecurityGroupsListAllResponse, error) {
 	result := NetworkSecurityGroupsListAllResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkSecurityGroupListResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityGroupListResult); err != nil {
 		return NetworkSecurityGroupsListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // listAllHandleError handles the ListAll error response.
-func (client *NetworkSecurityGroupsClient) listAllHandleError(resp *http.Response) error {
+func (client *SecurityGroupsClient) listAllHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -404,9 +403,9 @@ func (client *NetworkSecurityGroupsClient) listAllHandleError(resp *http.Respons
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
 // parameters - Parameters supplied to update network security group tags.
-// options - NetworkSecurityGroupsUpdateTagsOptions contains the optional parameters for the NetworkSecurityGroupsClient.UpdateTags
+// options - NetworkSecurityGroupsUpdateTagsOptions contains the optional parameters for the SecurityGroupsClient.UpdateTags
 // method.
-func (client *NetworkSecurityGroupsClient) UpdateTags(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters TagsObject, options *NetworkSecurityGroupsUpdateTagsOptions) (NetworkSecurityGroupsUpdateTagsResponse, error) {
+func (client *SecurityGroupsClient) UpdateTags(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters TagsObject, options *NetworkSecurityGroupsUpdateTagsOptions) (NetworkSecurityGroupsUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, parameters, options)
 	if err != nil {
 		return NetworkSecurityGroupsUpdateTagsResponse{}, err
@@ -422,7 +421,7 @@ func (client *NetworkSecurityGroupsClient) UpdateTags(ctx context.Context, resou
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *NetworkSecurityGroupsClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters TagsObject, options *NetworkSecurityGroupsUpdateTagsOptions) (*policy.Request, error) {
+func (client *SecurityGroupsClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters TagsObject, options *NetworkSecurityGroupsUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -448,16 +447,16 @@ func (client *NetworkSecurityGroupsClient) updateTagsCreateRequest(ctx context.C
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *NetworkSecurityGroupsClient) updateTagsHandleResponse(resp *http.Response) (NetworkSecurityGroupsUpdateTagsResponse, error) {
+func (client *SecurityGroupsClient) updateTagsHandleResponse(resp *http.Response) (NetworkSecurityGroupsUpdateTagsResponse, error) {
 	result := NetworkSecurityGroupsUpdateTagsResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkSecurityGroup); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityGroup); err != nil {
 		return NetworkSecurityGroupsUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // updateTagsHandleError handles the UpdateTags error response.
-func (client *NetworkSecurityGroupsClient) updateTagsHandleError(resp *http.Response) error {
+func (client *SecurityGroupsClient) updateTagsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)

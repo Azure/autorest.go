@@ -69,6 +69,18 @@ export async function namer(session: Session<CodeModel>) {
   const outputFolder = await session.getValue<string>('output-folder');
   model.language.go!.packageName = packageNameFromOutputFolder(outputFolder);
 
+  // default to the package name
+  let stutteringPrefix = <string>model.language.go!.packageName;
+  // if there's a well-known prefix, remove it
+  if (stutteringPrefix.startsWith('arm')) {
+    stutteringPrefix = stutteringPrefix.substr(3);
+  } else if (stutteringPrefix.startsWith('az')) {
+    stutteringPrefix = stutteringPrefix.substr(2);
+  }
+  // use the user-specified value if available
+  stutteringPrefix = await session.getValue<string>('stutter', stutteringPrefix);
+  stutteringPrefix = stutteringPrefix.toUpperCase();
+
   const specType = await session.getValue('openapi-type');
   model.language.go!.openApiType = specType;
   const azureARM = await session.getValue('azure-arm', false);
@@ -83,7 +95,7 @@ export async function namer(session: Session<CodeModel>) {
   // pascal-case and capitzalize acronym names of objects and their fields
   for (const obj of values(model.schemas.objects)) {
     const details = <Language>obj.language.go;
-    details.name = ensureNameCase(details.name);
+    details.name = trimPackagePrefix(stutteringPrefix, ensureNameCase(details.name));
     if (obj.discriminator) {
       // if this is a discriminator add the interface name
       details.discriminatorInterface = createPolymorphicInterfaceName(details.name);
@@ -114,14 +126,15 @@ export async function namer(session: Session<CodeModel>) {
       groupDetails.name = session.model.info.title;
     }
     groupDetails.name = ensureNameCase(groupDetails.name);
-    groupDetails.clientName = `${groupDetails.name}Client`;
-    if (groupDetails.name.endsWith('Client')) {
-      // don't generate a name like FooClientClient
-      groupDetails.clientName = groupDetails.name;
+    groupDetails.clientName = groupDetails.name;
+    // don't generate a name like FooClientClient
+    if (!groupDetails.clientName.endsWith('Client')) {
+      groupDetails.clientName = `${groupDetails.name}Client`;
     }
+    groupDetails.clientName = trimPackagePrefix(stutteringPrefix, groupDetails.clientName);
     groupDetails.clientCtorName = `New${groupDetails.clientName}`;
     if (!exportClient) {
-      groupDetails.clientName = ensureNameCase(<string>groupDetails.clientName, true);
+      groupDetails.clientName = ensureNameCase(groupDetails.clientName, true);
       groupDetails.clientCtorName = uncapitalize(groupDetails.clientCtorName);
     }
     for (const op of values(group.operations)) {
@@ -144,9 +157,9 @@ export async function namer(session: Session<CodeModel>) {
         // fix up any param group names
         if (param.extensions?.['x-ms-parameter-grouping'] && groupParameters) {
           if (param.extensions['x-ms-parameter-grouping'].name) {
-            param.extensions['x-ms-parameter-grouping'].name = ensureNameCase(<string>param.extensions['x-ms-parameter-grouping'].name);
+            param.extensions['x-ms-parameter-grouping'].name = ensureNameCase(param.extensions['x-ms-parameter-grouping'].name);
           } else if (param.extensions['x-ms-parameter-grouping'].postfix) {
-            param.extensions['x-ms-parameter-grouping'].postfix = ensureNameCase(<string>param.extensions['x-ms-parameter-grouping'].postfix);
+            param.extensions['x-ms-parameter-grouping'].postfix = ensureNameCase(param.extensions['x-ms-parameter-grouping'].postfix);
           }
         } else {
           // only escape the name if it's not in a parameter group struct
@@ -161,7 +174,7 @@ export async function namer(session: Session<CodeModel>) {
         }
         if (op.language.go!.paging.nextLinkName !== null) {
           // apply same naming logic as per struct fields
-          op.language.go!.paging.nextLinkName = ensureNameCase((<string>op.language.go!.paging.nextLinkName));
+          op.language.go!.paging.nextLinkName = ensureNameCase(op.language.go!.paging.nextLinkName);
         }
         if (op.language.go!.paging.member) {
           op.language.go!.paging.member = uncapitalize(op.language.go!.paging.member);
@@ -235,7 +248,7 @@ function deconstruct(identifier: string): string[] {
     split(/[\W|_|\.|@|-|\s|\$]+/);
 }
 
-export function ensureNameCase(name: string, lowerFirst?: boolean): string {
+function ensureNameCase(name: string, lowerFirst?: boolean): string {
   if (gRenamed.has(name) && gRenamed.get(name) === lowerFirst) {
     return name;
   }
@@ -274,4 +287,26 @@ export function ensureNameCase(name: string, lowerFirst?: boolean): string {
 
 function createPolymorphicInterfaceName(base: string): string {
   return base + 'Classification';
+}
+
+// removes pkg from val based on some heuristics
+function trimPackagePrefix(pkg: string, val: string): string {
+  // foo.Foo doesn't stutter.
+  if (val.length <= pkg.length) {
+    return val;
+  }
+
+  // pkg is already upper-case
+  if (pkg !== val.substr(0, pkg.length).toUpperCase()) {
+    return val;
+  }
+
+  // we cannot simply remove pkg from val, consider the following case:
+  //   pkg = tables, val = TableServicesClient; we'd end up with ervicesClient
+  // we have to ensure that pkg ends on a word-boundary, i.e. the next
+  // character is upper-case.
+  if (val.charAt(pkg.length) !== val.charAt(pkg.length).toUpperCase()) {
+    return val;
+  }
+  return val.substr(pkg.length);
 }

@@ -881,8 +881,14 @@ type DCAccessCodeProperties struct {
 	AuthCode *string `json:"authCode,omitempty"`
 }
 
-// DataBoxEdgeDevice - The Data Box Edge/Gateway device.
-type DataBoxEdgeDevice struct {
+// DataResidency - Wraps data-residency related information for edge-resource and this should be used with ARM layer.
+type DataResidency struct {
+	// DataResidencyType enum
+	Type *DataResidencyType `json:"type,omitempty"`
+}
+
+// Device - The Data Box Edge/Gateway device.
+type Device struct {
 	ARMBaseModel
 	// REQUIRED; The location of the device. This is a supported and registered Azure geographical region (for example, West US,
 	// East US, or Southeast Asia). The geographical region of a device cannot be changed once
@@ -899,10 +905,10 @@ type DataBoxEdgeDevice struct {
 	Kind *DataBoxEdgeDeviceKind `json:"kind,omitempty"`
 
 	// The properties of the Data Box Edge/Gateway device.
-	Properties *DataBoxEdgeDeviceProperties `json:"properties,omitempty"`
+	Properties *DeviceProperties `json:"properties,omitempty"`
 
 	// The SKU type.
-	SKU *SKU `json:"sku,omitempty"`
+	SKU *SKUType `json:"sku,omitempty"`
 
 	// The list of tags that describe the device. These tags can be used to view and group this device (across resource groups).
 	Tags map[string]*string `json:"tags,omitempty"`
@@ -911,8 +917,8 @@ type DataBoxEdgeDevice struct {
 	SystemData *SystemData `json:"systemData,omitempty" azure:"ro"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type DataBoxEdgeDevice.
-func (d DataBoxEdgeDevice) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type Device.
+func (d Device) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	d.ARMBaseModel.marshalInternal(objectMap)
 	populate(objectMap, "etag", d.Etag)
@@ -926,8 +932,8 @@ func (d DataBoxEdgeDevice) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type DataBoxEdgeDevice.
-func (d *DataBoxEdgeDevice) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type Device.
+func (d *Device) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -970,23 +976,23 @@ func (d *DataBoxEdgeDevice) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// DataBoxEdgeDeviceExtendedInfo - The extended Info of the Data Box Edge/Gateway device.
-type DataBoxEdgeDeviceExtendedInfo struct {
+// DeviceExtendedInfo - The extended Info of the Data Box Edge/Gateway device.
+type DeviceExtendedInfo struct {
 	ARMBaseModel
 	// The extended info properties.
-	Properties *DataBoxEdgeDeviceExtendedInfoProperties `json:"properties,omitempty"`
+	Properties *DeviceExtendedInfoProperties `json:"properties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type DataBoxEdgeDeviceExtendedInfo.
-func (d DataBoxEdgeDeviceExtendedInfo) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type DeviceExtendedInfo.
+func (d DeviceExtendedInfo) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	d.ARMBaseModel.marshalInternal(objectMap)
 	populate(objectMap, "properties", d.Properties)
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type DataBoxEdgeDeviceExtendedInfo.
-func (d *DataBoxEdgeDeviceExtendedInfo) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type DeviceExtendedInfo.
+func (d *DeviceExtendedInfo) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -1008,8 +1014,8 @@ func (d *DataBoxEdgeDeviceExtendedInfo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// DataBoxEdgeDeviceExtendedInfoPatch - The Data Box Edge/Gateway device extended info patch.
-type DataBoxEdgeDeviceExtendedInfoPatch struct {
+// DeviceExtendedInfoPatch - The Data Box Edge/Gateway device extended info patch.
+type DeviceExtendedInfoPatch struct {
 	// The name for Channel Integrity Key stored in the Client Key Vault
 	ChannelIntegrityKeyName *string `json:"channelIntegrityKeyName,omitempty"`
 
@@ -1027,8 +1033,8 @@ type DataBoxEdgeDeviceExtendedInfoPatch struct {
 	SyncStatus *KeyVaultSyncStatus `json:"syncStatus,omitempty"`
 }
 
-// DataBoxEdgeDeviceExtendedInfoProperties - The properties of the Data Box Edge/Gateway device extended info.
-type DataBoxEdgeDeviceExtendedInfoProperties struct {
+// DeviceExtendedInfoProperties - The properties of the Data Box Edge/Gateway device extended info.
+type DeviceExtendedInfoProperties struct {
 	// The name of Channel Integrity Key stored in the Client Key Vault
 	ChannelIntegrityKeyName *string `json:"channelIntegrityKeyName,omitempty"`
 
@@ -1057,8 +1063,8 @@ type DataBoxEdgeDeviceExtendedInfoProperties struct {
 	ResourceKey *string `json:"resourceKey,omitempty" azure:"ro"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type DataBoxEdgeDeviceExtendedInfoProperties.
-func (d DataBoxEdgeDeviceExtendedInfoProperties) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type DeviceExtendedInfoProperties.
+func (d DeviceExtendedInfoProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "channelIntegrityKeyName", d.ChannelIntegrityKeyName)
 	populate(objectMap, "channelIntegrityKeyVersion", d.ChannelIntegrityKeyVersion)
@@ -1072,37 +1078,37 @@ func (d DataBoxEdgeDeviceExtendedInfoProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// DataBoxEdgeDeviceList - The collection of Data Box Edge/Gateway devices.
-type DataBoxEdgeDeviceList struct {
+// DeviceList - The collection of Data Box Edge/Gateway devices.
+type DeviceList struct {
 	// READ-ONLY; Link to the next set of results.
 	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
 
 	// READ-ONLY; The list of Data Box Edge/Gateway devices.
-	Value []*DataBoxEdgeDevice `json:"value,omitempty" azure:"ro"`
+	Value []*Device `json:"value,omitempty" azure:"ro"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type DataBoxEdgeDeviceList.
-func (d DataBoxEdgeDeviceList) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type DeviceList.
+func (d DeviceList) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "nextLink", d.NextLink)
 	populate(objectMap, "value", d.Value)
 	return json.Marshal(objectMap)
 }
 
-// DataBoxEdgeDevicePatch - The Data Box Edge/Gateway device patch.
-type DataBoxEdgeDevicePatch struct {
+// DevicePatch - The Data Box Edge/Gateway device patch.
+type DevicePatch struct {
 	// Msi identity of the resource
 	Identity *ResourceIdentity `json:"identity,omitempty"`
 
 	// The properties associated with the Data Box Edge/Gateway resource
-	Properties *DataBoxEdgeDevicePropertiesPatch `json:"properties,omitempty"`
+	Properties *DevicePropertiesPatch `json:"properties,omitempty"`
 
 	// The tags attached to the Data Box Edge/Gateway resource.
 	Tags map[string]*string `json:"tags,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type DataBoxEdgeDevicePatch.
-func (d DataBoxEdgeDevicePatch) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type DevicePatch.
+func (d DevicePatch) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "identity", d.Identity)
 	populate(objectMap, "properties", d.Properties)
@@ -1110,8 +1116,8 @@ func (d DataBoxEdgeDevicePatch) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// DataBoxEdgeDeviceProperties - The properties of the Data Box Edge/Gateway device.
-type DataBoxEdgeDeviceProperties struct {
+// DeviceProperties - The properties of the Data Box Edge/Gateway device.
+type DeviceProperties struct {
 	// The status of the Data Box Edge/Gateway device.
 	DataBoxEdgeDeviceStatus *DataBoxEdgeDeviceStatus `json:"dataBoxEdgeDeviceStatus,omitempty"`
 
@@ -1167,8 +1173,8 @@ type DataBoxEdgeDeviceProperties struct {
 	TimeZone *string `json:"timeZone,omitempty" azure:"ro"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type DataBoxEdgeDeviceProperties.
-func (d DataBoxEdgeDeviceProperties) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type DeviceProperties.
+func (d DeviceProperties) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "configuredRoleTypes", d.ConfiguredRoleTypes)
 	populate(objectMap, "culture", d.Culture)
@@ -1191,119 +1197,10 @@ func (d DataBoxEdgeDeviceProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// DataBoxEdgeDevicePropertiesPatch - The Data Box Edge/Gateway device properties patch.
-type DataBoxEdgeDevicePropertiesPatch struct {
+// DevicePropertiesPatch - The Data Box Edge/Gateway device properties patch.
+type DevicePropertiesPatch struct {
 	// Edge Profile property of the Data Box Edge/Gateway device
 	EdgeProfile *EdgeProfilePatch `json:"edgeProfile,omitempty"`
-}
-
-// DataBoxEdgeMoveRequest - Resource Move details
-type DataBoxEdgeMoveRequest struct {
-	// REQUIRED; List of resources to be moved
-	Resources []*string `json:"resources,omitempty"`
-
-	// REQUIRED; Target resource group ARMId
-	TargetResourceGroup *string `json:"targetResourceGroup,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type DataBoxEdgeMoveRequest.
-func (d DataBoxEdgeMoveRequest) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "resources", d.Resources)
-	populate(objectMap, "targetResourceGroup", d.TargetResourceGroup)
-	return json.Marshal(objectMap)
-}
-
-// DataBoxEdgeSKU - The Sku information.
-type DataBoxEdgeSKU struct {
-	// READ-ONLY; The API versions in which Sku is available.
-	APIVersions []*string `json:"apiVersions,omitempty" azure:"ro"`
-
-	// READ-ONLY; Links to the next set of results
-	Availability *SKUAvailability `json:"availability,omitempty" azure:"ro"`
-
-	// READ-ONLY; The capability info of the SKU.
-	Capabilities []*SKUCapability `json:"capabilities,omitempty" azure:"ro"`
-
-	// READ-ONLY; The pricing info of the Sku.
-	Costs []*SKUCost `json:"costs,omitempty" azure:"ro"`
-
-	// READ-ONLY; The Sku family.
-	Family *string `json:"family,omitempty" azure:"ro"`
-
-	// READ-ONLY; The Sku kind.
-	Kind *string `json:"kind,omitempty" azure:"ro"`
-
-	// READ-ONLY; Availability of the Sku for the location/zone/site.
-	LocationInfo []*SKULocationInfo `json:"locationInfo,omitempty" azure:"ro"`
-
-	// READ-ONLY; Availability of the Sku for the region.
-	Locations []*string `json:"locations,omitempty" azure:"ro"`
-
-	// READ-ONLY; The Sku name.
-	Name *SKUName `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; The type of the resource.
-	ResourceType *string `json:"resourceType,omitempty" azure:"ro"`
-
-	// READ-ONLY; List of Shipment Types supported by this SKU
-	ShipmentTypes []*ShipmentType `json:"shipmentTypes,omitempty" azure:"ro"`
-
-	// READ-ONLY; Sku can be signed up by customer or not.
-	SignupOption *SKUSignupOption `json:"signupOption,omitempty" azure:"ro"`
-
-	// READ-ONLY; The Sku kind.
-	Size *string `json:"size,omitempty" azure:"ro"`
-
-	// READ-ONLY; The Sku tier.
-	Tier *SKUTier `json:"tier,omitempty" azure:"ro"`
-
-	// READ-ONLY; Availability of the Sku as preview/stable.
-	Version *SKUVersion `json:"version,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type DataBoxEdgeSKU.
-func (d DataBoxEdgeSKU) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "apiVersions", d.APIVersions)
-	populate(objectMap, "availability", d.Availability)
-	populate(objectMap, "capabilities", d.Capabilities)
-	populate(objectMap, "costs", d.Costs)
-	populate(objectMap, "family", d.Family)
-	populate(objectMap, "kind", d.Kind)
-	populate(objectMap, "locationInfo", d.LocationInfo)
-	populate(objectMap, "locations", d.Locations)
-	populate(objectMap, "name", d.Name)
-	populate(objectMap, "resourceType", d.ResourceType)
-	populate(objectMap, "shipmentTypes", d.ShipmentTypes)
-	populate(objectMap, "signupOption", d.SignupOption)
-	populate(objectMap, "size", d.Size)
-	populate(objectMap, "tier", d.Tier)
-	populate(objectMap, "version", d.Version)
-	return json.Marshal(objectMap)
-}
-
-// DataBoxEdgeSKUList - List of SKU Information objects.
-type DataBoxEdgeSKUList struct {
-	// READ-ONLY; Links to the next set of results
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
-	// READ-ONLY; List of ResourceType Sku
-	Value []*DataBoxEdgeSKU `json:"value,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type DataBoxEdgeSKUList.
-func (d DataBoxEdgeSKUList) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "nextLink", d.NextLink)
-	populate(objectMap, "value", d.Value)
-	return json.Marshal(objectMap)
-}
-
-// DataResidency - Wraps data-residency related information for edge-resource and this should be used with ARM layer.
-type DataResidency struct {
-	// DataResidencyType enum
-	Type *DataResidencyType `json:"type,omitempty"`
 }
 
 // DevicesBeginCreateOrUpdateSecuritySettingsOptions contains the optional parameters for the DevicesClient.BeginCreateOrUpdateSecuritySettings
@@ -2470,6 +2367,23 @@ type MountPointMap struct {
 	RoleType *RoleTypes `json:"roleType,omitempty" azure:"ro"`
 }
 
+// MoveRequest - Resource Move details
+type MoveRequest struct {
+	// REQUIRED; List of resources to be moved
+	Resources []*string `json:"resources,omitempty"`
+
+	// REQUIRED; Target resource group ARMId
+	TargetResourceGroup *string `json:"targetResourceGroup,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type MoveRequest.
+func (m MoveRequest) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "resources", m.Resources)
+	populate(objectMap, "targetResourceGroup", m.TargetResourceGroup)
+	return json.Marshal(objectMap)
+}
+
 // NetworkAdapter - Represents the networkAdapter on a device.
 type NetworkAdapter struct {
 	// Value indicating whether this adapter has DHCP enabled.
@@ -3384,13 +3298,73 @@ type RolesListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SKU - The SKU type.
+// SKU - The Sku information.
 type SKU struct {
-	// SKU name.
-	Name *SKUName `json:"name,omitempty"`
+	// READ-ONLY; The API versions in which Sku is available.
+	APIVersions []*string `json:"apiVersions,omitempty" azure:"ro"`
 
-	// The SKU tier. This is based on the SKU name.
-	Tier *SKUTier `json:"tier,omitempty"`
+	// READ-ONLY; Links to the next set of results
+	Availability *SKUAvailability `json:"availability,omitempty" azure:"ro"`
+
+	// READ-ONLY; The capability info of the SKU.
+	Capabilities []*SKUCapability `json:"capabilities,omitempty" azure:"ro"`
+
+	// READ-ONLY; The pricing info of the Sku.
+	Costs []*SKUCost `json:"costs,omitempty" azure:"ro"`
+
+	// READ-ONLY; The Sku family.
+	Family *string `json:"family,omitempty" azure:"ro"`
+
+	// READ-ONLY; The Sku kind.
+	Kind *string `json:"kind,omitempty" azure:"ro"`
+
+	// READ-ONLY; Availability of the Sku for the location/zone/site.
+	LocationInfo []*SKULocationInfo `json:"locationInfo,omitempty" azure:"ro"`
+
+	// READ-ONLY; Availability of the Sku for the region.
+	Locations []*string `json:"locations,omitempty" azure:"ro"`
+
+	// READ-ONLY; The Sku name.
+	Name *SKUName `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; The type of the resource.
+	ResourceType *string `json:"resourceType,omitempty" azure:"ro"`
+
+	// READ-ONLY; List of Shipment Types supported by this SKU
+	ShipmentTypes []*ShipmentType `json:"shipmentTypes,omitempty" azure:"ro"`
+
+	// READ-ONLY; Sku can be signed up by customer or not.
+	SignupOption *SKUSignupOption `json:"signupOption,omitempty" azure:"ro"`
+
+	// READ-ONLY; The Sku kind.
+	Size *string `json:"size,omitempty" azure:"ro"`
+
+	// READ-ONLY; The Sku tier.
+	Tier *SKUTier `json:"tier,omitempty" azure:"ro"`
+
+	// READ-ONLY; Availability of the Sku as preview/stable.
+	Version *SKUVersion `json:"version,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SKU.
+func (s SKU) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "apiVersions", s.APIVersions)
+	populate(objectMap, "availability", s.Availability)
+	populate(objectMap, "capabilities", s.Capabilities)
+	populate(objectMap, "costs", s.Costs)
+	populate(objectMap, "family", s.Family)
+	populate(objectMap, "kind", s.Kind)
+	populate(objectMap, "locationInfo", s.LocationInfo)
+	populate(objectMap, "locations", s.Locations)
+	populate(objectMap, "name", s.Name)
+	populate(objectMap, "resourceType", s.ResourceType)
+	populate(objectMap, "shipmentTypes", s.ShipmentTypes)
+	populate(objectMap, "signupOption", s.SignupOption)
+	populate(objectMap, "size", s.Size)
+	populate(objectMap, "tier", s.Tier)
+	populate(objectMap, "version", s.Version)
+	return json.Marshal(objectMap)
 }
 
 // SKUCapability - The metadata to describe the capability.
@@ -3476,6 +3450,23 @@ func (s SKUInformationList) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// SKUList - List of SKU Information objects.
+type SKUList struct {
+	// READ-ONLY; Links to the next set of results
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+
+	// READ-ONLY; List of ResourceType Sku
+	Value []*SKU `json:"value,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SKUList.
+func (s SKUList) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", s.NextLink)
+	populate(objectMap, "value", s.Value)
+	return json.Marshal(objectMap)
+}
+
 // SKULocationInfo - The location info.
 type SKULocationInfo struct {
 	// READ-ONLY; The location.
@@ -3495,6 +3486,15 @@ func (s SKULocationInfo) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "sites", s.Sites)
 	populate(objectMap, "zones", s.Zones)
 	return json.Marshal(objectMap)
+}
+
+// SKUType - The SKU type.
+type SKUType struct {
+	// SKU name.
+	Name *SKUName `json:"name,omitempty"`
+
+	// The SKU tier. This is based on the SKU name.
+	Tier *SKUTier `json:"tier,omitempty"`
 }
 
 // Secret - Holds device secret either as a KeyVault reference or as an encrypted value.

@@ -18,7 +18,7 @@ import (
 
 // KeyVaultClientGetCertificateIssuersPager provides operations for iterating over paged responses.
 type KeyVaultClientGetCertificateIssuersPager struct {
-	client    *KeyVaultClient
+	client    *Client
 	current   KeyVaultClientGetCertificateIssuersResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -72,7 +72,7 @@ func (p *KeyVaultClientGetCertificateIssuersPager) PageResponse() KeyVaultClient
 
 // KeyVaultClientGetCertificateVersionsPager provides operations for iterating over paged responses.
 type KeyVaultClientGetCertificateVersionsPager struct {
-	client    *KeyVaultClient
+	client    *Client
 	current   KeyVaultClientGetCertificateVersionsResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -126,7 +126,7 @@ func (p *KeyVaultClientGetCertificateVersionsPager) PageResponse() KeyVaultClien
 
 // KeyVaultClientGetCertificatesPager provides operations for iterating over paged responses.
 type KeyVaultClientGetCertificatesPager struct {
-	client    *KeyVaultClient
+	client    *Client
 	current   KeyVaultClientGetCertificatesResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -180,7 +180,7 @@ func (p *KeyVaultClientGetCertificatesPager) PageResponse() KeyVaultClientGetCer
 
 // KeyVaultClientGetDeletedCertificatesPager provides operations for iterating over paged responses.
 type KeyVaultClientGetDeletedCertificatesPager struct {
-	client    *KeyVaultClient
+	client    *Client
 	current   KeyVaultClientGetDeletedCertificatesResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -234,7 +234,7 @@ func (p *KeyVaultClientGetDeletedCertificatesPager) PageResponse() KeyVaultClien
 
 // KeyVaultClientGetDeletedKeysPager provides operations for iterating over paged responses.
 type KeyVaultClientGetDeletedKeysPager struct {
-	client    *KeyVaultClient
+	client    *Client
 	current   KeyVaultClientGetDeletedKeysResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -288,7 +288,7 @@ func (p *KeyVaultClientGetDeletedKeysPager) PageResponse() KeyVaultClientGetDele
 
 // KeyVaultClientGetDeletedSasDefinitionsPager provides operations for iterating over paged responses.
 type KeyVaultClientGetDeletedSasDefinitionsPager struct {
-	client    *KeyVaultClient
+	client    *Client
 	current   KeyVaultClientGetDeletedSasDefinitionsResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -342,7 +342,7 @@ func (p *KeyVaultClientGetDeletedSasDefinitionsPager) PageResponse() KeyVaultCli
 
 // KeyVaultClientGetDeletedSecretsPager provides operations for iterating over paged responses.
 type KeyVaultClientGetDeletedSecretsPager struct {
-	client    *KeyVaultClient
+	client    *Client
 	current   KeyVaultClientGetDeletedSecretsResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -396,7 +396,7 @@ func (p *KeyVaultClientGetDeletedSecretsPager) PageResponse() KeyVaultClientGetD
 
 // KeyVaultClientGetDeletedStorageAccountsPager provides operations for iterating over paged responses.
 type KeyVaultClientGetDeletedStorageAccountsPager struct {
-	client    *KeyVaultClient
+	client    *Client
 	current   KeyVaultClientGetDeletedStorageAccountsResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -450,7 +450,7 @@ func (p *KeyVaultClientGetDeletedStorageAccountsPager) PageResponse() KeyVaultCl
 
 // KeyVaultClientGetKeyVersionsPager provides operations for iterating over paged responses.
 type KeyVaultClientGetKeyVersionsPager struct {
-	client    *KeyVaultClient
+	client    *Client
 	current   KeyVaultClientGetKeyVersionsResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -504,7 +504,7 @@ func (p *KeyVaultClientGetKeyVersionsPager) PageResponse() KeyVaultClientGetKeyV
 
 // KeyVaultClientGetKeysPager provides operations for iterating over paged responses.
 type KeyVaultClientGetKeysPager struct {
-	client    *KeyVaultClient
+	client    *Client
 	current   KeyVaultClientGetKeysResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -558,7 +558,7 @@ func (p *KeyVaultClientGetKeysPager) PageResponse() KeyVaultClientGetKeysRespons
 
 // KeyVaultClientGetSasDefinitionsPager provides operations for iterating over paged responses.
 type KeyVaultClientGetSasDefinitionsPager struct {
-	client    *KeyVaultClient
+	client    *Client
 	current   KeyVaultClientGetSasDefinitionsResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -612,7 +612,7 @@ func (p *KeyVaultClientGetSasDefinitionsPager) PageResponse() KeyVaultClientGetS
 
 // KeyVaultClientGetSecretVersionsPager provides operations for iterating over paged responses.
 type KeyVaultClientGetSecretVersionsPager struct {
-	client    *KeyVaultClient
+	client    *Client
 	current   KeyVaultClientGetSecretVersionsResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -666,7 +666,7 @@ func (p *KeyVaultClientGetSecretVersionsPager) PageResponse() KeyVaultClientGetS
 
 // KeyVaultClientGetSecretsPager provides operations for iterating over paged responses.
 type KeyVaultClientGetSecretsPager struct {
-	client    *KeyVaultClient
+	client    *Client
 	current   KeyVaultClientGetSecretsResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -720,7 +720,7 @@ func (p *KeyVaultClientGetSecretsPager) PageResponse() KeyVaultClientGetSecretsR
 
 // KeyVaultClientGetStorageAccountsPager provides operations for iterating over paged responses.
 type KeyVaultClientGetStorageAccountsPager struct {
-	client    *KeyVaultClient
+	client    *Client
 	current   KeyVaultClientGetStorageAccountsResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)

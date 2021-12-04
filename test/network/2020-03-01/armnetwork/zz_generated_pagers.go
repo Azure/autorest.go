@@ -2574,7 +2574,7 @@ func (p *LoadBalancerNetworkInterfacesListPager) NextPage(ctx context.Context) b
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.NetworkInterfaceListResult.NextLink == nil || len(*p.current.NetworkInterfaceListResult.NextLink) == 0 {
+		if p.current.InterfaceListResult.NextLink == nil || len(*p.current.InterfaceListResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -2988,7 +2988,7 @@ func (p *NatGatewaysListPager) PageResponse() NatGatewaysListResponse {
 
 // NetworkInterfaceIPConfigurationsListPager provides operations for iterating over paged responses.
 type NetworkInterfaceIPConfigurationsListPager struct {
-	client    *NetworkInterfaceIPConfigurationsClient
+	client    *InterfaceIPConfigurationsClient
 	current   NetworkInterfaceIPConfigurationsListResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -3006,7 +3006,7 @@ func (p *NetworkInterfaceIPConfigurationsListPager) NextPage(ctx context.Context
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.NetworkInterfaceIPConfigurationListResult.NextLink == nil || len(*p.current.NetworkInterfaceIPConfigurationListResult.NextLink) == 0 {
+		if p.current.InterfaceIPConfigurationListResult.NextLink == nil || len(*p.current.InterfaceIPConfigurationListResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -3042,7 +3042,7 @@ func (p *NetworkInterfaceIPConfigurationsListPager) PageResponse() NetworkInterf
 
 // NetworkInterfaceLoadBalancersListPager provides operations for iterating over paged responses.
 type NetworkInterfaceLoadBalancersListPager struct {
-	client    *NetworkInterfaceLoadBalancersClient
+	client    *InterfaceLoadBalancersClient
 	current   NetworkInterfaceLoadBalancersListResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -3060,7 +3060,7 @@ func (p *NetworkInterfaceLoadBalancersListPager) NextPage(ctx context.Context) b
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.NetworkInterfaceLoadBalancerListResult.NextLink == nil || len(*p.current.NetworkInterfaceLoadBalancerListResult.NextLink) == 0 {
+		if p.current.InterfaceLoadBalancerListResult.NextLink == nil || len(*p.current.InterfaceLoadBalancerListResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -3096,7 +3096,7 @@ func (p *NetworkInterfaceLoadBalancersListPager) PageResponse() NetworkInterface
 
 // NetworkInterfaceTapConfigurationsListPager provides operations for iterating over paged responses.
 type NetworkInterfaceTapConfigurationsListPager struct {
-	client    *NetworkInterfaceTapConfigurationsClient
+	client    *InterfaceTapConfigurationsClient
 	current   NetworkInterfaceTapConfigurationsListResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -3114,7 +3114,7 @@ func (p *NetworkInterfaceTapConfigurationsListPager) NextPage(ctx context.Contex
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.NetworkInterfaceTapConfigurationListResult.NextLink == nil || len(*p.current.NetworkInterfaceTapConfigurationListResult.NextLink) == 0 {
+		if p.current.InterfaceTapConfigurationListResult.NextLink == nil || len(*p.current.InterfaceTapConfigurationListResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -3150,7 +3150,7 @@ func (p *NetworkInterfaceTapConfigurationsListPager) PageResponse() NetworkInter
 
 // NetworkInterfacesListAllPager provides operations for iterating over paged responses.
 type NetworkInterfacesListAllPager struct {
-	client    *NetworkInterfacesClient
+	client    *InterfacesClient
 	current   NetworkInterfacesListAllResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -3168,7 +3168,7 @@ func (p *NetworkInterfacesListAllPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.NetworkInterfaceListResult.NextLink == nil || len(*p.current.NetworkInterfaceListResult.NextLink) == 0 {
+		if p.current.InterfaceListResult.NextLink == nil || len(*p.current.InterfaceListResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -3204,7 +3204,7 @@ func (p *NetworkInterfacesListAllPager) PageResponse() NetworkInterfacesListAllR
 
 // NetworkInterfacesListPager provides operations for iterating over paged responses.
 type NetworkInterfacesListPager struct {
-	client    *NetworkInterfacesClient
+	client    *InterfacesClient
 	current   NetworkInterfacesListResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -3222,7 +3222,7 @@ func (p *NetworkInterfacesListPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.NetworkInterfaceListResult.NextLink == nil || len(*p.current.NetworkInterfaceListResult.NextLink) == 0 {
+		if p.current.InterfaceListResult.NextLink == nil || len(*p.current.InterfaceListResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -3258,7 +3258,7 @@ func (p *NetworkInterfacesListPager) PageResponse() NetworkInterfacesListRespons
 
 // NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsPager provides operations for iterating over paged responses.
 type NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsPager struct {
-	client    *NetworkInterfacesClient
+	client    *InterfacesClient
 	current   NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -3276,7 +3276,7 @@ func (p *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsPager) NextP
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.NetworkInterfaceIPConfigurationListResult.NextLink == nil || len(*p.current.NetworkInterfaceIPConfigurationListResult.NextLink) == 0 {
+		if p.current.InterfaceIPConfigurationListResult.NextLink == nil || len(*p.current.InterfaceIPConfigurationListResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -3312,7 +3312,7 @@ func (p *NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsPager) PageR
 
 // NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesPager provides operations for iterating over paged responses.
 type NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesPager struct {
-	client    *NetworkInterfacesClient
+	client    *InterfacesClient
 	current   NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -3330,7 +3330,7 @@ func (p *NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesPager) Next
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.NetworkInterfaceListResult.NextLink == nil || len(*p.current.NetworkInterfaceListResult.NextLink) == 0 {
+		if p.current.InterfaceListResult.NextLink == nil || len(*p.current.InterfaceListResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -3366,7 +3366,7 @@ func (p *NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesPager) Page
 
 // NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesPager provides operations for iterating over paged responses.
 type NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesPager struct {
-	client    *NetworkInterfacesClient
+	client    *InterfacesClient
 	current   NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -3384,7 +3384,7 @@ func (p *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesPager) Ne
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.NetworkInterfaceListResult.NextLink == nil || len(*p.current.NetworkInterfaceListResult.NextLink) == 0 {
+		if p.current.InterfaceListResult.NextLink == nil || len(*p.current.InterfaceListResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -3420,7 +3420,7 @@ func (p *NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesPager) Pa
 
 // NetworkManagementClientDisconnectActiveSessionsPager provides operations for iterating over paged responses.
 type NetworkManagementClientDisconnectActiveSessionsPager struct {
-	client    *NetworkManagementClient
+	client    *ManagementClient
 	current   NetworkManagementClientDisconnectActiveSessionsResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -3474,7 +3474,7 @@ func (p *NetworkManagementClientDisconnectActiveSessionsPager) PageResponse() Ne
 
 // NetworkManagementClientGetActiveSessionsPager provides operations for iterating over paged responses.
 type NetworkManagementClientGetActiveSessionsPager struct {
-	client  *NetworkManagementClient
+	client  *ManagementClient
 	current NetworkManagementClientGetActiveSessionsResponse
 	err     error
 	second  bool
@@ -3526,7 +3526,7 @@ func (p *NetworkManagementClientGetActiveSessionsPager) PageResponse() NetworkMa
 
 // NetworkManagementClientGetBastionShareableLinkPager provides operations for iterating over paged responses.
 type NetworkManagementClientGetBastionShareableLinkPager struct {
-	client    *NetworkManagementClient
+	client    *ManagementClient
 	current   NetworkManagementClientGetBastionShareableLinkResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -3580,7 +3580,7 @@ func (p *NetworkManagementClientGetBastionShareableLinkPager) PageResponse() Net
 
 // NetworkManagementClientPutBastionShareableLinkPager provides operations for iterating over paged responses.
 type NetworkManagementClientPutBastionShareableLinkPager struct {
-	client  *NetworkManagementClient
+	client  *ManagementClient
 	current NetworkManagementClientPutBastionShareableLinkResponse
 	err     error
 	second  bool
@@ -3632,7 +3632,7 @@ func (p *NetworkManagementClientPutBastionShareableLinkPager) PageResponse() Net
 
 // NetworkProfilesListAllPager provides operations for iterating over paged responses.
 type NetworkProfilesListAllPager struct {
-	client    *NetworkProfilesClient
+	client    *ProfilesClient
 	current   NetworkProfilesListAllResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -3650,7 +3650,7 @@ func (p *NetworkProfilesListAllPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.NetworkProfileListResult.NextLink == nil || len(*p.current.NetworkProfileListResult.NextLink) == 0 {
+		if p.current.ProfileListResult.NextLink == nil || len(*p.current.ProfileListResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -3686,7 +3686,7 @@ func (p *NetworkProfilesListAllPager) PageResponse() NetworkProfilesListAllRespo
 
 // NetworkProfilesListPager provides operations for iterating over paged responses.
 type NetworkProfilesListPager struct {
-	client    *NetworkProfilesClient
+	client    *ProfilesClient
 	current   NetworkProfilesListResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -3704,7 +3704,7 @@ func (p *NetworkProfilesListPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.NetworkProfileListResult.NextLink == nil || len(*p.current.NetworkProfileListResult.NextLink) == 0 {
+		if p.current.ProfileListResult.NextLink == nil || len(*p.current.ProfileListResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -3740,7 +3740,7 @@ func (p *NetworkProfilesListPager) PageResponse() NetworkProfilesListResponse {
 
 // NetworkSecurityGroupsListAllPager provides operations for iterating over paged responses.
 type NetworkSecurityGroupsListAllPager struct {
-	client    *NetworkSecurityGroupsClient
+	client    *SecurityGroupsClient
 	current   NetworkSecurityGroupsListAllResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -3758,7 +3758,7 @@ func (p *NetworkSecurityGroupsListAllPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.NetworkSecurityGroupListResult.NextLink == nil || len(*p.current.NetworkSecurityGroupListResult.NextLink) == 0 {
+		if p.current.SecurityGroupListResult.NextLink == nil || len(*p.current.SecurityGroupListResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -3794,7 +3794,7 @@ func (p *NetworkSecurityGroupsListAllPager) PageResponse() NetworkSecurityGroups
 
 // NetworkSecurityGroupsListPager provides operations for iterating over paged responses.
 type NetworkSecurityGroupsListPager struct {
-	client    *NetworkSecurityGroupsClient
+	client    *SecurityGroupsClient
 	current   NetworkSecurityGroupsListResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -3812,7 +3812,7 @@ func (p *NetworkSecurityGroupsListPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.NetworkSecurityGroupListResult.NextLink == nil || len(*p.current.NetworkSecurityGroupListResult.NextLink) == 0 {
+		if p.current.SecurityGroupListResult.NextLink == nil || len(*p.current.SecurityGroupListResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -3848,7 +3848,7 @@ func (p *NetworkSecurityGroupsListPager) PageResponse() NetworkSecurityGroupsLis
 
 // NetworkVirtualAppliancesListByResourceGroupPager provides operations for iterating over paged responses.
 type NetworkVirtualAppliancesListByResourceGroupPager struct {
-	client    *NetworkVirtualAppliancesClient
+	client    *VirtualAppliancesClient
 	current   NetworkVirtualAppliancesListByResourceGroupResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -3866,7 +3866,7 @@ func (p *NetworkVirtualAppliancesListByResourceGroupPager) NextPage(ctx context.
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.NetworkVirtualApplianceListResult.NextLink == nil || len(*p.current.NetworkVirtualApplianceListResult.NextLink) == 0 {
+		if p.current.VirtualApplianceListResult.NextLink == nil || len(*p.current.VirtualApplianceListResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -3902,7 +3902,7 @@ func (p *NetworkVirtualAppliancesListByResourceGroupPager) PageResponse() Networ
 
 // NetworkVirtualAppliancesListPager provides operations for iterating over paged responses.
 type NetworkVirtualAppliancesListPager struct {
-	client    *NetworkVirtualAppliancesClient
+	client    *VirtualAppliancesClient
 	current   NetworkVirtualAppliancesListResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
@@ -3920,7 +3920,7 @@ func (p *NetworkVirtualAppliancesListPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.NetworkVirtualApplianceListResult.NextLink == nil || len(*p.current.NetworkVirtualApplianceListResult.NextLink) == 0 {
+		if p.current.VirtualApplianceListResult.NextLink == nil || len(*p.current.VirtualApplianceListResult.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)

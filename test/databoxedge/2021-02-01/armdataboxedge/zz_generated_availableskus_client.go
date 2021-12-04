@@ -13,6 +13,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -23,21 +25,27 @@ import (
 // AvailableSKUsClient contains the methods for the AvailableSKUs group.
 // Don't use this type directly, use NewAvailableSKUsClient() instead.
 type AvailableSKUsClient struct {
+	host           string
 	subscriptionID string
 	pl             runtime.Pipeline
 }
 
 // NewAvailableSKUsClient creates a new instance of AvailableSKUsClient with the specified values.
 // subscriptionID - The subscription ID.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewAvailableSKUsClient(subscriptionID string, options *azcore.ClientOptions) *AvailableSKUsClient {
-	cp := azcore.ClientOptions{}
+func NewAvailableSKUsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *AvailableSKUsClient {
+	cp := arm.ClientOptions{}
 	if options != nil {
 		cp = *options
 	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
 	client := &AvailableSKUsClient{
 		subscriptionID: subscriptionID,
-		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
 	}
 	return client
 }
@@ -52,7 +60,7 @@ func (client *AvailableSKUsClient) List(options *AvailableSKUsListOptions) *Avai
 			return client.listCreateRequest(ctx, options)
 		},
 		advancer: func(ctx context.Context, resp AvailableSKUsListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.DataBoxEdgeSKUList.NextLink)
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.SKUList.NextLink)
 		},
 	}
 }
@@ -64,7 +72,7 @@ func (client *AvailableSKUsClient) listCreateRequest(ctx context.Context, option
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +86,7 @@ func (client *AvailableSKUsClient) listCreateRequest(ctx context.Context, option
 // listHandleResponse handles the List response.
 func (client *AvailableSKUsClient) listHandleResponse(resp *http.Response) (AvailableSKUsListResponse, error) {
 	result := AvailableSKUsListResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.DataBoxEdgeSKUList); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.SKUList); err != nil {
 		return AvailableSKUsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil

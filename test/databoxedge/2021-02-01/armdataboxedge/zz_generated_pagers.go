@@ -144,7 +144,7 @@ func (p *AvailableSKUsListPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.DataBoxEdgeSKUList.NextLink == nil || len(*p.current.DataBoxEdgeSKUList.NextLink) == 0 {
+		if p.current.SKUList.NextLink == nil || len(*p.current.SKUList.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -306,7 +306,7 @@ func (p *DevicesListByResourceGroupPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.DataBoxEdgeDeviceList.NextLink == nil || len(*p.current.DataBoxEdgeDeviceList.NextLink) == 0 {
+		if p.current.DeviceList.NextLink == nil || len(*p.current.DeviceList.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -360,7 +360,7 @@ func (p *DevicesListBySubscriptionPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.DataBoxEdgeDeviceList.NextLink == nil || len(*p.current.DataBoxEdgeDeviceList.NextLink) == 0 {
+		if p.current.DeviceList.NextLink == nil || len(*p.current.DeviceList.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)

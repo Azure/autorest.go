@@ -24,8 +24,8 @@ type AliasCreateResult struct {
 	AccessControlExposeHeaders *string
 }
 
-// AliasListResponseEnvelope contains the response from method Alias.List.
-type AliasListResponseEnvelope struct {
+// AliasListResponse contains the response from method Alias.List.
+type AliasListResponse struct {
 	AliasListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -33,5 +33,5 @@ type AliasListResponseEnvelope struct {
 
 // AliasListResult contains the result from method Alias.List.
 type AliasListResult struct {
-	AliasListResponse
+	ListResponse
 }

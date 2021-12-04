@@ -2752,7 +2752,7 @@ func (p *NetworkInterfaceTapConfigurationsCreateOrUpdatePoller) Poll(ctx context
 // If the final GET succeeded then the final NetworkInterfaceTapConfigurationsCreateOrUpdateResponse will be returned.
 func (p *NetworkInterfaceTapConfigurationsCreateOrUpdatePoller) FinalResponse(ctx context.Context) (NetworkInterfaceTapConfigurationsCreateOrUpdateResponse, error) {
 	respType := NetworkInterfaceTapConfigurationsCreateOrUpdateResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.NetworkInterfaceTapConfiguration)
+	resp, err := p.pt.FinalResponse(ctx, &respType.InterfaceTapConfiguration)
 	if err != nil {
 		return NetworkInterfaceTapConfigurationsCreateOrUpdateResponse{}, err
 	}
@@ -2838,7 +2838,7 @@ func (p *NetworkInterfacesCreateOrUpdatePoller) Poll(ctx context.Context) (*http
 // If the final GET succeeded then the final NetworkInterfacesCreateOrUpdateResponse will be returned.
 func (p *NetworkInterfacesCreateOrUpdatePoller) FinalResponse(ctx context.Context) (NetworkInterfacesCreateOrUpdateResponse, error) {
 	respType := NetworkInterfacesCreateOrUpdateResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.NetworkInterface)
+	resp, err := p.pt.FinalResponse(ctx, &respType.Interface)
 	if err != nil {
 		return NetworkInterfacesCreateOrUpdateResponse{}, err
 	}
@@ -3070,7 +3070,7 @@ func (p *NetworkManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofi
 // NetworkManagementClientGetActiveSessionsPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkManagementClientGetActiveSessionsPoller struct {
 	pt     *azcore.Poller
-	client *NetworkManagementClient
+	client *ManagementClient
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3112,7 +3112,7 @@ func (p *NetworkManagementClientGetActiveSessionsPoller) ResumeToken() (string, 
 // NetworkManagementClientPutBastionShareableLinkPoller provides polling facilities until the operation reaches a terminal state.
 type NetworkManagementClientPutBastionShareableLinkPoller struct {
 	pt     *azcore.Poller
-	client *NetworkManagementClient
+	client *ManagementClient
 }
 
 // Done returns true if the LRO has reached a terminal state.
@@ -3223,7 +3223,7 @@ func (p *NetworkSecurityGroupsCreateOrUpdatePoller) Poll(ctx context.Context) (*
 // If the final GET succeeded then the final NetworkSecurityGroupsCreateOrUpdateResponse will be returned.
 func (p *NetworkSecurityGroupsCreateOrUpdatePoller) FinalResponse(ctx context.Context) (NetworkSecurityGroupsCreateOrUpdateResponse, error) {
 	respType := NetworkSecurityGroupsCreateOrUpdateResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.NetworkSecurityGroup)
+	resp, err := p.pt.FinalResponse(ctx, &respType.SecurityGroup)
 	if err != nil {
 		return NetworkSecurityGroupsCreateOrUpdateResponse{}, err
 	}
@@ -3309,7 +3309,7 @@ func (p *NetworkVirtualAppliancesCreateOrUpdatePoller) Poll(ctx context.Context)
 // If the final GET succeeded then the final NetworkVirtualAppliancesCreateOrUpdateResponse will be returned.
 func (p *NetworkVirtualAppliancesCreateOrUpdatePoller) FinalResponse(ctx context.Context) (NetworkVirtualAppliancesCreateOrUpdateResponse, error) {
 	respType := NetworkVirtualAppliancesCreateOrUpdateResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.NetworkVirtualAppliance)
+	resp, err := p.pt.FinalResponse(ctx, &respType.VirtualAppliance)
 	if err != nil {
 		return NetworkVirtualAppliancesCreateOrUpdateResponse{}, err
 	}
@@ -3567,7 +3567,7 @@ func (p *NetworkWatchersGetNetworkConfigurationDiagnosticPoller) Poll(ctx contex
 // If the final GET succeeded then the final NetworkWatchersGetNetworkConfigurationDiagnosticResponse will be returned.
 func (p *NetworkWatchersGetNetworkConfigurationDiagnosticPoller) FinalResponse(ctx context.Context) (NetworkWatchersGetNetworkConfigurationDiagnosticResponse, error) {
 	respType := NetworkWatchersGetNetworkConfigurationDiagnosticResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.NetworkConfigurationDiagnosticResponse)
+	resp, err := p.pt.FinalResponse(ctx, &respType.ConfigurationDiagnosticResponse)
 	if err != nil {
 		return NetworkWatchersGetNetworkConfigurationDiagnosticResponse{}, err
 	}
