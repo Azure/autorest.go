@@ -28,25 +28,6 @@ func unmarshalGeoJSONObjectClassification(rawMsg json.RawMessage) (GeoJSONObject
 	return b, json.Unmarshal(rawMsg, b)
 }
 
-func unmarshalGeoJSONObjectClassificationArray(rawMsg json.RawMessage) ([]GeoJSONObjectClassification, error) {
-	if rawMsg == nil {
-		return nil, nil
-	}
-	var rawMessages []json.RawMessage
-	if err := json.Unmarshal(rawMsg, &rawMessages); err != nil {
-		return nil, err
-	}
-	fArray := make([]GeoJSONObjectClassification, len(rawMessages))
-	for index, rawMessage := range rawMessages {
-		f, err := unmarshalGeoJSONObjectClassification(rawMessage)
-		if err != nil {
-			return nil, err
-		}
-		fArray[index] = f
-	}
-	return fArray, nil
-}
-
 func unmarshalGeoJSONObjectClassificationMap(rawMsg json.RawMessage) (map[string]GeoJSONObjectClassification, error) {
 	if rawMsg == nil {
 		return nil, nil
