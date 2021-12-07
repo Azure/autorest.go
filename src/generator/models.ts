@@ -247,7 +247,7 @@ function aggregateProperties(obj: ObjectSchema): Array<Property> {
   return allProps;
 }
 
-// generates discriminator marker method, internal marshaller and internal unmarshaller
+// generates discriminator marker method
 function generateDiscriminatorMarkerMethod(obj: ObjectSchema, structDef: StructDef) {
   const typeName = obj.language.go!.name;
   const receiver = structDef.receiverName();
