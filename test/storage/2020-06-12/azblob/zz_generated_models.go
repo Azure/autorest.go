@@ -168,7 +168,7 @@ type ArrowField struct {
 	Scale     *int32  `xml:"Scale"`
 }
 
-// BlobAbortCopyFromURLOptions contains the optional parameters for the blobClient.AbortCopyFromURL method.
+// BlobAbortCopyFromURLOptions contains the optional parameters for the client.AbortCopyFromURL method.
 type BlobAbortCopyFromURLOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -178,7 +178,7 @@ type BlobAbortCopyFromURLOptions struct {
 	Timeout *int32
 }
 
-// BlobAcquireLeaseOptions contains the optional parameters for the blobClient.AcquireLease method.
+// BlobAcquireLeaseOptions contains the optional parameters for the client.AcquireLease method.
 type BlobAcquireLeaseOptions struct {
 	// Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease
 	// can be between 15 and 60 seconds. A lease duration cannot be changed using
@@ -196,7 +196,7 @@ type BlobAcquireLeaseOptions struct {
 	Timeout *int32
 }
 
-// BlobBreakLeaseOptions contains the optional parameters for the blobClient.BreakLease method.
+// BlobBreakLeaseOptions contains the optional parameters for the client.BreakLease method.
 type BlobBreakLeaseOptions struct {
 	// For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This
 	// break period is only used if it is shorter than the time remaining on the
@@ -213,7 +213,7 @@ type BlobBreakLeaseOptions struct {
 	Timeout *int32
 }
 
-// BlobChangeLeaseOptions contains the optional parameters for the blobClient.ChangeLease method.
+// BlobChangeLeaseOptions contains the optional parameters for the client.ChangeLease method.
 type BlobChangeLeaseOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -223,7 +223,7 @@ type BlobChangeLeaseOptions struct {
 	Timeout *int32
 }
 
-// BlobCopyFromURLOptions contains the optional parameters for the blobClient.CopyFromURL method.
+// BlobCopyFromURLOptions contains the optional parameters for the client.CopyFromURL method.
 type BlobCopyFromURLOptions struct {
 	// Optional. Used to set blob tags in various blob operations.
 	BlobTagsString *string
@@ -252,7 +252,7 @@ type BlobCopyFromURLOptions struct {
 	Timeout *int32
 }
 
-// BlobCreateSnapshotOptions contains the optional parameters for the blobClient.CreateSnapshot method.
+// BlobCreateSnapshotOptions contains the optional parameters for the client.CreateSnapshot method.
 type BlobCreateSnapshotOptions struct {
 	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the
 	// operation will copy the metadata from the source blob or file to the destination
@@ -269,7 +269,7 @@ type BlobCreateSnapshotOptions struct {
 	Timeout *int32
 }
 
-// BlobDeleteImmutabilityPolicyOptions contains the optional parameters for the blobClient.DeleteImmutabilityPolicy method.
+// BlobDeleteImmutabilityPolicyOptions contains the optional parameters for the client.DeleteImmutabilityPolicy method.
 type BlobDeleteImmutabilityPolicyOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -279,7 +279,7 @@ type BlobDeleteImmutabilityPolicyOptions struct {
 	Timeout *int32
 }
 
-// BlobDeleteOptions contains the optional parameters for the blobClient.Delete method.
+// BlobDeleteOptions contains the optional parameters for the client.Delete method.
 type BlobDeleteOptions struct {
 	// Optional. Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled..
 	// Specifying any value will set the value to Permanent.
@@ -303,7 +303,7 @@ type BlobDeleteOptions struct {
 	VersionID *string
 }
 
-// BlobDownloadOptions contains the optional parameters for the blobClient.Download method.
+// BlobDownloadOptions contains the optional parameters for the client.Download method.
 type BlobDownloadOptions struct {
 	// Return only the bytes of the blob in the specified range.
 	Range *string
@@ -328,27 +328,7 @@ type BlobDownloadOptions struct {
 	VersionID *string
 }
 
-type BlobFlatListSegment struct {
-	// REQUIRED
-	BlobItems []*BlobItemInternal `xml:"Blob"`
-}
-
-// MarshalXML implements the xml.Marshaller interface for type BlobFlatListSegment.
-func (b BlobFlatListSegment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type alias BlobFlatListSegment
-	aux := &struct {
-		*alias
-		BlobItems *[]*BlobItemInternal `xml:"Blob"`
-	}{
-		alias: (*alias)(&b),
-	}
-	if b.BlobItems != nil {
-		aux.BlobItems = &b.BlobItems
-	}
-	return e.EncodeElement(aux, start)
-}
-
-// BlobGetAccessControlOptions contains the optional parameters for the blobClient.GetAccessControl method.
+// BlobGetAccessControlOptions contains the optional parameters for the client.GetAccessControl method.
 type BlobGetAccessControlOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -363,12 +343,12 @@ type BlobGetAccessControlOptions struct {
 	Upn *bool
 }
 
-// BlobGetAccountInfoOptions contains the optional parameters for the blobClient.GetAccountInfo method.
+// BlobGetAccountInfoOptions contains the optional parameters for the client.GetAccountInfo method.
 type BlobGetAccountInfoOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BlobGetPropertiesOptions contains the optional parameters for the blobClient.GetProperties method.
+// BlobGetPropertiesOptions contains the optional parameters for the client.GetProperties method.
 type BlobGetPropertiesOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -385,7 +365,7 @@ type BlobGetPropertiesOptions struct {
 	VersionID *string
 }
 
-// BlobGetTagsOptions contains the optional parameters for the blobClient.GetTags method.
+// BlobGetTagsOptions contains the optional parameters for the client.GetTags method.
 type BlobGetTagsOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -421,199 +401,7 @@ type BlobHTTPHeaders struct {
 	BlobContentType *string
 }
 
-type BlobHierarchyListSegment struct {
-	// REQUIRED
-	BlobItems    []*BlobItemInternal `xml:"Blob"`
-	BlobPrefixes []*BlobPrefix       `xml:"BlobPrefix"`
-}
-
-// MarshalXML implements the xml.Marshaller interface for type BlobHierarchyListSegment.
-func (b BlobHierarchyListSegment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type alias BlobHierarchyListSegment
-	aux := &struct {
-		*alias
-		BlobItems    *[]*BlobItemInternal `xml:"Blob"`
-		BlobPrefixes *[]*BlobPrefix       `xml:"BlobPrefix"`
-	}{
-		alias: (*alias)(&b),
-	}
-	if b.BlobItems != nil {
-		aux.BlobItems = &b.BlobItems
-	}
-	if b.BlobPrefixes != nil {
-		aux.BlobPrefixes = &b.BlobPrefixes
-	}
-	return e.EncodeElement(aux, start)
-}
-
-// BlobItemInternal - An Azure Storage blob
-type BlobItemInternal struct {
-	// REQUIRED
-	Deleted *bool `xml:"Deleted"`
-
-	// REQUIRED
-	Name *string `xml:"Name"`
-
-	// REQUIRED; Properties of a blob
-	Properties *BlobPropertiesInternal `xml:"Properties"`
-
-	// REQUIRED
-	Snapshot *string `xml:"Snapshot"`
-
-	// Blob tags
-	BlobTags         *BlobTags     `xml:"Tags"`
-	IsCurrentVersion *bool         `xml:"IsCurrentVersion"`
-	Metadata         *BlobMetadata `xml:"Metadata"`
-
-	// Dictionary of
-	ObjectReplicationMetadata map[string]*string `xml:"OrMetadata"`
-	VersionID                 *string            `xml:"VersionId"`
-}
-
-// UnmarshalXML implements the xml.Unmarshaller interface for type BlobItemInternal.
-func (b *BlobItemInternal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type alias BlobItemInternal
-	aux := &struct {
-		*alias
-		ObjectReplicationMetadata additionalProperties `xml:"OrMetadata"`
-	}{
-		alias: (*alias)(b),
-	}
-	if err := d.DecodeElement(aux, &start); err != nil {
-		return err
-	}
-	b.ObjectReplicationMetadata = (map[string]*string)(aux.ObjectReplicationMetadata)
-	return nil
-}
-
-type BlobMetadata struct {
-	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
-	AdditionalProperties map[string]*string
-	Encrypted            *string `xml:"Encrypted,attr"`
-}
-
-type BlobPrefix struct {
-	// REQUIRED
-	Name *string `xml:"Name"`
-}
-
-// BlobPropertiesInternal - Properties of a blob
-type BlobPropertiesInternal struct {
-	// REQUIRED
-	Etag *string `xml:"Etag"`
-
-	// REQUIRED
-	LastModified         *time.Time     `xml:"Last-Modified"`
-	AccessTier           *AccessTier    `xml:"AccessTier"`
-	AccessTierChangeTime *time.Time     `xml:"AccessTierChangeTime"`
-	AccessTierInferred   *bool          `xml:"AccessTierInferred"`
-	ArchiveStatus        *ArchiveStatus `xml:"ArchiveStatus"`
-	BlobSequenceNumber   *int64         `xml:"x-ms-blob-sequence-number"`
-	BlobType             *BlobType      `xml:"BlobType"`
-	CacheControl         *string        `xml:"Cache-Control"`
-	ContentDisposition   *string        `xml:"Content-Disposition"`
-	ContentEncoding      *string        `xml:"Content-Encoding"`
-	ContentLanguage      *string        `xml:"Content-Language"`
-
-	// Size in bytes
-	ContentLength             *int64          `xml:"Content-Length"`
-	ContentMD5                []byte          `xml:"Content-MD5"`
-	ContentType               *string         `xml:"Content-Type"`
-	CopyCompletionTime        *time.Time      `xml:"CopyCompletionTime"`
-	CopyID                    *string         `xml:"CopyId"`
-	CopyProgress              *string         `xml:"CopyProgress"`
-	CopySource                *string         `xml:"CopySource"`
-	CopyStatus                *CopyStatusType `xml:"CopyStatus"`
-	CopyStatusDescription     *string         `xml:"CopyStatusDescription"`
-	CreationTime              *time.Time      `xml:"Creation-Time"`
-	CustomerProvidedKeySHA256 *string         `xml:"CustomerProvidedKeySha256"`
-	DeletedTime               *time.Time      `xml:"DeletedTime"`
-	DestinationSnapshot       *string         `xml:"DestinationSnapshot"`
-
-	// The name of the encryption scope under which the blob is encrypted.
-	EncryptionScope             *string                     `xml:"EncryptionScope"`
-	ExpiresOn                   *time.Time                  `xml:"Expiry-Time"`
-	ImmutabilityPolicyExpiresOn *time.Time                  `xml:"ImmutabilityPolicyUntilDate"`
-	ImmutabilityPolicyMode      *BlobImmutabilityPolicyMode `xml:"ImmutabilityPolicyMode"`
-	IncrementalCopy             *bool                       `xml:"IncrementalCopy"`
-	IsSealed                    *bool                       `xml:"Sealed"`
-	LastAccessedOn              *time.Time                  `xml:"LastAccessTime"`
-	LeaseDuration               *LeaseDurationType          `xml:"LeaseDuration"`
-	LeaseState                  *LeaseStateType             `xml:"LeaseState"`
-	LeaseStatus                 *LeaseStatusType            `xml:"LeaseStatus"`
-	LegalHold                   *bool                       `xml:"LegalHold"`
-
-	// If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High
-	// and Standard.
-	RehydratePriority      *RehydratePriority `xml:"RehydratePriority"`
-	RemainingRetentionDays *int32             `xml:"RemainingRetentionDays"`
-	ServerEncrypted        *bool              `xml:"ServerEncrypted"`
-	TagCount               *int32             `xml:"TagCount"`
-}
-
-// MarshalXML implements the xml.Marshaller interface for type BlobPropertiesInternal.
-func (b BlobPropertiesInternal) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type alias BlobPropertiesInternal
-	aux := &struct {
-		*alias
-		AccessTierChangeTime        *timeRFC1123 `xml:"AccessTierChangeTime"`
-		ContentMD5                  *[]byte      `xml:"Content-MD5"`
-		CopyCompletionTime          *timeRFC1123 `xml:"CopyCompletionTime"`
-		CreationTime                *timeRFC1123 `xml:"Creation-Time"`
-		DeletedTime                 *timeRFC1123 `xml:"DeletedTime"`
-		ExpiresOn                   *timeRFC1123 `xml:"Expiry-Time"`
-		ImmutabilityPolicyExpiresOn *timeRFC1123 `xml:"ImmutabilityPolicyUntilDate"`
-		LastAccessedOn              *timeRFC1123 `xml:"LastAccessTime"`
-		LastModified                *timeRFC1123 `xml:"Last-Modified"`
-	}{
-		alias:                       (*alias)(&b),
-		AccessTierChangeTime:        (*timeRFC1123)(b.AccessTierChangeTime),
-		CopyCompletionTime:          (*timeRFC1123)(b.CopyCompletionTime),
-		CreationTime:                (*timeRFC1123)(b.CreationTime),
-		DeletedTime:                 (*timeRFC1123)(b.DeletedTime),
-		ExpiresOn:                   (*timeRFC1123)(b.ExpiresOn),
-		ImmutabilityPolicyExpiresOn: (*timeRFC1123)(b.ImmutabilityPolicyExpiresOn),
-		LastAccessedOn:              (*timeRFC1123)(b.LastAccessedOn),
-		LastModified:                (*timeRFC1123)(b.LastModified),
-	}
-	if b.ContentMD5 != nil {
-		aux.ContentMD5 = &b.ContentMD5
-	}
-	return e.EncodeElement(aux, start)
-}
-
-// UnmarshalXML implements the xml.Unmarshaller interface for type BlobPropertiesInternal.
-func (b *BlobPropertiesInternal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type alias BlobPropertiesInternal
-	aux := &struct {
-		*alias
-		AccessTierChangeTime        *timeRFC1123 `xml:"AccessTierChangeTime"`
-		ContentMD5                  *[]byte      `xml:"Content-MD5"`
-		CopyCompletionTime          *timeRFC1123 `xml:"CopyCompletionTime"`
-		CreationTime                *timeRFC1123 `xml:"Creation-Time"`
-		DeletedTime                 *timeRFC1123 `xml:"DeletedTime"`
-		ExpiresOn                   *timeRFC1123 `xml:"Expiry-Time"`
-		ImmutabilityPolicyExpiresOn *timeRFC1123 `xml:"ImmutabilityPolicyUntilDate"`
-		LastAccessedOn              *timeRFC1123 `xml:"LastAccessTime"`
-		LastModified                *timeRFC1123 `xml:"Last-Modified"`
-	}{
-		alias: (*alias)(b),
-	}
-	if err := d.DecodeElement(aux, &start); err != nil {
-		return err
-	}
-	b.AccessTierChangeTime = (*time.Time)(aux.AccessTierChangeTime)
-	b.CopyCompletionTime = (*time.Time)(aux.CopyCompletionTime)
-	b.CreationTime = (*time.Time)(aux.CreationTime)
-	b.DeletedTime = (*time.Time)(aux.DeletedTime)
-	b.ExpiresOn = (*time.Time)(aux.ExpiresOn)
-	b.ImmutabilityPolicyExpiresOn = (*time.Time)(aux.ImmutabilityPolicyExpiresOn)
-	b.LastAccessedOn = (*time.Time)(aux.LastAccessedOn)
-	b.LastModified = (*time.Time)(aux.LastModified)
-	return nil
-}
-
-// BlobQueryOptions contains the optional parameters for the blobClient.Query method.
+// BlobQueryOptions contains the optional parameters for the client.Query method.
 type BlobQueryOptions struct {
 	// the query request
 	QueryRequest *QueryRequest
@@ -629,7 +417,7 @@ type BlobQueryOptions struct {
 	Timeout *int32
 }
 
-// BlobReleaseLeaseOptions contains the optional parameters for the blobClient.ReleaseLease method.
+// BlobReleaseLeaseOptions contains the optional parameters for the client.ReleaseLease method.
 type BlobReleaseLeaseOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -639,7 +427,7 @@ type BlobReleaseLeaseOptions struct {
 	Timeout *int32
 }
 
-// BlobRenameOptions contains the optional parameters for the blobClient.Rename method.
+// BlobRenameOptions contains the optional parameters for the client.Rename method.
 type BlobRenameOptions struct {
 	// Optional. User-defined properties to be stored with the file or directory, in the format of a comma-separated list of name
 	// and value pairs "n1=v1, n2=v2, …", where each value is base64 encoded.
@@ -665,7 +453,7 @@ type BlobRenameOptions struct {
 	Timeout *int32
 }
 
-// BlobRenewLeaseOptions contains the optional parameters for the blobClient.RenewLease method.
+// BlobRenewLeaseOptions contains the optional parameters for the client.RenewLease method.
 type BlobRenewLeaseOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -675,7 +463,7 @@ type BlobRenewLeaseOptions struct {
 	Timeout *int32
 }
 
-// BlobSetAccessControlOptions contains the optional parameters for the blobClient.SetAccessControl method.
+// BlobSetAccessControlOptions contains the optional parameters for the client.SetAccessControl method.
 type BlobSetAccessControlOptions struct {
 	// Optional. The owning group of the blob or directory.
 	Group *string
@@ -698,7 +486,7 @@ type BlobSetAccessControlOptions struct {
 	Timeout *int32
 }
 
-// BlobSetExpiryOptions contains the optional parameters for the blobClient.SetExpiry method.
+// BlobSetExpiryOptions contains the optional parameters for the client.SetExpiry method.
 type BlobSetExpiryOptions struct {
 	// The time to set the blob to expiry
 	ExpiresOn *string
@@ -710,7 +498,7 @@ type BlobSetExpiryOptions struct {
 	Timeout *int32
 }
 
-// BlobSetHTTPHeadersOptions contains the optional parameters for the blobClient.SetHTTPHeaders method.
+// BlobSetHTTPHeadersOptions contains the optional parameters for the client.SetHTTPHeaders method.
 type BlobSetHTTPHeadersOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -720,7 +508,7 @@ type BlobSetHTTPHeadersOptions struct {
 	Timeout *int32
 }
 
-// BlobSetImmutabilityPolicyOptions contains the optional parameters for the blobClient.SetImmutabilityPolicy method.
+// BlobSetImmutabilityPolicyOptions contains the optional parameters for the client.SetImmutabilityPolicy method.
 type BlobSetImmutabilityPolicyOptions struct {
 	// Specifies the date time when the blobs immutability policy is set to expire.
 	ImmutabilityPolicyExpiry *time.Time
@@ -734,7 +522,7 @@ type BlobSetImmutabilityPolicyOptions struct {
 	Timeout *int32
 }
 
-// BlobSetLegalHoldOptions contains the optional parameters for the blobClient.SetLegalHold method.
+// BlobSetLegalHoldOptions contains the optional parameters for the client.SetLegalHold method.
 type BlobSetLegalHoldOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -744,7 +532,7 @@ type BlobSetLegalHoldOptions struct {
 	Timeout *int32
 }
 
-// BlobSetMetadataOptions contains the optional parameters for the blobClient.SetMetadata method.
+// BlobSetMetadataOptions contains the optional parameters for the client.SetMetadata method.
 type BlobSetMetadataOptions struct {
 	// Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the
 	// operation will copy the metadata from the source blob or file to the destination
@@ -761,13 +549,13 @@ type BlobSetMetadataOptions struct {
 	Timeout *int32
 }
 
-// BlobSetTagsOptions contains the optional parameters for the blobClient.SetTags method.
+// BlobSetTagsOptions contains the optional parameters for the client.SetTags method.
 type BlobSetTagsOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
 	RequestID *string
 	// Blob tags
-	Tags *BlobTags
+	Tags *Tags
 	// The timeout parameter is expressed in seconds. For more information, see Setting Timeouts for Blob Service Operations.
 	// [https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations]
 	Timeout *int32
@@ -780,7 +568,7 @@ type BlobSetTagsOptions struct {
 	VersionID *string
 }
 
-// BlobSetTierOptions contains the optional parameters for the blobClient.SetTier method.
+// BlobSetTierOptions contains the optional parameters for the client.SetTier method.
 type BlobSetTierOptions struct {
 	// Optional: Indicates the priority with which to rehydrate an archived blob.
 	RehydratePriority *RehydratePriority
@@ -799,7 +587,7 @@ type BlobSetTierOptions struct {
 	VersionID *string
 }
 
-// BlobStartCopyFromURLOptions contains the optional parameters for the blobClient.StartCopyFromURL method.
+// BlobStartCopyFromURLOptions contains the optional parameters for the client.StartCopyFromURL method.
 type BlobStartCopyFromURLOptions struct {
 	// Optional. Used to set blob tags in various blob operations.
 	BlobTagsString *string
@@ -830,37 +618,7 @@ type BlobStartCopyFromURLOptions struct {
 	Timeout *int32
 }
 
-type BlobTag struct {
-	// REQUIRED
-	Key *string `xml:"Key"`
-
-	// REQUIRED
-	Value *string `xml:"Value"`
-}
-
-// BlobTags - Blob tags
-type BlobTags struct {
-	// REQUIRED
-	BlobTagSet []*BlobTag `xml:"TagSet>Tag"`
-}
-
-// MarshalXML implements the xml.Marshaller interface for type BlobTags.
-func (b BlobTags) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	start.Name.Local = "Tags"
-	type alias BlobTags
-	aux := &struct {
-		*alias
-		BlobTagSet *[]*BlobTag `xml:"TagSet>Tag"`
-	}{
-		alias: (*alias)(&b),
-	}
-	if b.BlobTagSet != nil {
-		aux.BlobTagSet = &b.BlobTagSet
-	}
-	return e.EncodeElement(aux, start)
-}
-
-// BlobUndeleteOptions contains the optional parameters for the blobClient.Undelete method.
+// BlobUndeleteOptions contains the optional parameters for the client.Undelete method.
 type BlobUndeleteOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage
 	// analytics logging is enabled.
@@ -1623,7 +1381,7 @@ type FilterBlobItem struct {
 	Name *string `xml:"Name"`
 
 	// Blob tags
-	Tags *BlobTags `xml:"Tags"`
+	Tags *Tags `xml:"Tags"`
 }
 
 // FilterBlobSegment - The result of a Filter Blobs API call
@@ -1650,6 +1408,26 @@ func (f FilterBlobSegment) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	}
 	if f.Blobs != nil {
 		aux.Blobs = &f.Blobs
+	}
+	return e.EncodeElement(aux, start)
+}
+
+type FlatListSegment struct {
+	// REQUIRED
+	BlobItems []*ItemInternal `xml:"Blob"`
+}
+
+// MarshalXML implements the xml.Marshaller interface for type FlatListSegment.
+func (f FlatListSegment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type alias FlatListSegment
+	aux := &struct {
+		*alias
+		BlobItems *[]*ItemInternal `xml:"Blob"`
+	}{
+		alias: (*alias)(&f),
+	}
+	if f.BlobItems != nil {
+		aux.BlobItems = &f.BlobItems
 	}
 	return e.EncodeElement(aux, start)
 }
@@ -1694,6 +1472,71 @@ func (g *GeoReplication) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	return nil
 }
 
+type HierarchyListSegment struct {
+	// REQUIRED
+	BlobItems    []*ItemInternal `xml:"Blob"`
+	BlobPrefixes []*Prefix       `xml:"Prefix"`
+}
+
+// MarshalXML implements the xml.Marshaller interface for type HierarchyListSegment.
+func (h HierarchyListSegment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type alias HierarchyListSegment
+	aux := &struct {
+		*alias
+		BlobItems    *[]*ItemInternal `xml:"Blob"`
+		BlobPrefixes *[]*Prefix       `xml:"Prefix"`
+	}{
+		alias: (*alias)(&h),
+	}
+	if h.BlobItems != nil {
+		aux.BlobItems = &h.BlobItems
+	}
+	if h.BlobPrefixes != nil {
+		aux.BlobPrefixes = &h.BlobPrefixes
+	}
+	return e.EncodeElement(aux, start)
+}
+
+// ItemInternal - An Azure Storage blob
+type ItemInternal struct {
+	// REQUIRED
+	Deleted *bool `xml:"Deleted"`
+
+	// REQUIRED
+	Name *string `xml:"Name"`
+
+	// REQUIRED; Properties of a blob
+	Properties *PropertiesInternal `xml:"Properties"`
+
+	// REQUIRED
+	Snapshot *string `xml:"Snapshot"`
+
+	// Blob tags
+	BlobTags         *Tags     `xml:"Tags"`
+	IsCurrentVersion *bool     `xml:"IsCurrentVersion"`
+	Metadata         *Metadata `xml:"Metadata"`
+
+	// Dictionary of
+	ObjectReplicationMetadata map[string]*string `xml:"OrMetadata"`
+	VersionID                 *string            `xml:"VersionId"`
+}
+
+// UnmarshalXML implements the xml.Unmarshaller interface for type ItemInternal.
+func (i *ItemInternal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type alias ItemInternal
+	aux := &struct {
+		*alias
+		ObjectReplicationMetadata additionalProperties `xml:"OrMetadata"`
+	}{
+		alias: (*alias)(i),
+	}
+	if err := d.DecodeElement(aux, &start); err != nil {
+		return err
+	}
+	i.ObjectReplicationMetadata = (map[string]*string)(aux.ObjectReplicationMetadata)
+	return nil
+}
+
 // JSONTextConfiguration - json text configuration
 type JSONTextConfiguration struct {
 	// REQUIRED; record separator
@@ -1721,7 +1564,7 @@ type ListBlobsFlatSegmentResponse struct {
 	ContainerName *string `xml:"ContainerName,attr"`
 
 	// REQUIRED
-	Segment *BlobFlatListSegment `xml:"Blobs"`
+	Segment *FlatListSegment `xml:"Blobs"`
 
 	// REQUIRED
 	ServiceEndpoint *string `xml:"ServiceEndpoint,attr"`
@@ -1737,7 +1580,7 @@ type ListBlobsHierarchySegmentResponse struct {
 	ContainerName *string `xml:"ContainerName,attr"`
 
 	// REQUIRED
-	Segment *BlobHierarchyListSegment `xml:"Blobs"`
+	Segment *HierarchyListSegment `xml:"Blobs"`
 
 	// REQUIRED
 	ServiceEndpoint *string `xml:"ServiceEndpoint,attr"`
@@ -1792,6 +1635,12 @@ type Logging struct {
 
 	// REQUIRED; Indicates whether all write requests should be logged.
 	Write *bool `xml:"Write"`
+}
+
+type Metadata struct {
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]*string
+	Encrypted            *string `xml:"Encrypted,attr"`
 }
 
 // Metrics - a summary of request statistics grouped by API in hour or minute aggregates for blobs
@@ -2001,6 +1850,127 @@ type PageRange struct {
 
 	// REQUIRED
 	Start *int64 `xml:"Start"`
+}
+
+type Prefix struct {
+	// REQUIRED
+	Name *string `xml:"Name"`
+}
+
+// PropertiesInternal - Properties of a blob
+type PropertiesInternal struct {
+	// REQUIRED
+	Etag *string `xml:"Etag"`
+
+	// REQUIRED
+	LastModified         *time.Time     `xml:"Last-Modified"`
+	AccessTier           *AccessTier    `xml:"AccessTier"`
+	AccessTierChangeTime *time.Time     `xml:"AccessTierChangeTime"`
+	AccessTierInferred   *bool          `xml:"AccessTierInferred"`
+	ArchiveStatus        *ArchiveStatus `xml:"ArchiveStatus"`
+	BlobSequenceNumber   *int64         `xml:"x-ms-blob-sequence-number"`
+	BlobType             *BlobType      `xml:"BlobType"`
+	CacheControl         *string        `xml:"Cache-Control"`
+	ContentDisposition   *string        `xml:"Content-Disposition"`
+	ContentEncoding      *string        `xml:"Content-Encoding"`
+	ContentLanguage      *string        `xml:"Content-Language"`
+
+	// Size in bytes
+	ContentLength             *int64          `xml:"Content-Length"`
+	ContentMD5                []byte          `xml:"Content-MD5"`
+	ContentType               *string         `xml:"Content-Type"`
+	CopyCompletionTime        *time.Time      `xml:"CopyCompletionTime"`
+	CopyID                    *string         `xml:"CopyId"`
+	CopyProgress              *string         `xml:"CopyProgress"`
+	CopySource                *string         `xml:"CopySource"`
+	CopyStatus                *CopyStatusType `xml:"CopyStatus"`
+	CopyStatusDescription     *string         `xml:"CopyStatusDescription"`
+	CreationTime              *time.Time      `xml:"Creation-Time"`
+	CustomerProvidedKeySHA256 *string         `xml:"CustomerProvidedKeySha256"`
+	DeletedTime               *time.Time      `xml:"DeletedTime"`
+	DestinationSnapshot       *string         `xml:"DestinationSnapshot"`
+
+	// The name of the encryption scope under which the blob is encrypted.
+	EncryptionScope             *string                     `xml:"EncryptionScope"`
+	ExpiresOn                   *time.Time                  `xml:"Expiry-Time"`
+	ImmutabilityPolicyExpiresOn *time.Time                  `xml:"ImmutabilityPolicyUntilDate"`
+	ImmutabilityPolicyMode      *BlobImmutabilityPolicyMode `xml:"ImmutabilityPolicyMode"`
+	IncrementalCopy             *bool                       `xml:"IncrementalCopy"`
+	IsSealed                    *bool                       `xml:"Sealed"`
+	LastAccessedOn              *time.Time                  `xml:"LastAccessTime"`
+	LeaseDuration               *LeaseDurationType          `xml:"LeaseDuration"`
+	LeaseState                  *LeaseStateType             `xml:"LeaseState"`
+	LeaseStatus                 *LeaseStatusType            `xml:"LeaseStatus"`
+	LegalHold                   *bool                       `xml:"LegalHold"`
+
+	// If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High
+	// and Standard.
+	RehydratePriority      *RehydratePriority `xml:"RehydratePriority"`
+	RemainingRetentionDays *int32             `xml:"RemainingRetentionDays"`
+	ServerEncrypted        *bool              `xml:"ServerEncrypted"`
+	TagCount               *int32             `xml:"TagCount"`
+}
+
+// MarshalXML implements the xml.Marshaller interface for type PropertiesInternal.
+func (p PropertiesInternal) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	type alias PropertiesInternal
+	aux := &struct {
+		*alias
+		AccessTierChangeTime        *timeRFC1123 `xml:"AccessTierChangeTime"`
+		ContentMD5                  *[]byte      `xml:"Content-MD5"`
+		CopyCompletionTime          *timeRFC1123 `xml:"CopyCompletionTime"`
+		CreationTime                *timeRFC1123 `xml:"Creation-Time"`
+		DeletedTime                 *timeRFC1123 `xml:"DeletedTime"`
+		ExpiresOn                   *timeRFC1123 `xml:"Expiry-Time"`
+		ImmutabilityPolicyExpiresOn *timeRFC1123 `xml:"ImmutabilityPolicyUntilDate"`
+		LastAccessedOn              *timeRFC1123 `xml:"LastAccessTime"`
+		LastModified                *timeRFC1123 `xml:"Last-Modified"`
+	}{
+		alias:                       (*alias)(&p),
+		AccessTierChangeTime:        (*timeRFC1123)(p.AccessTierChangeTime),
+		CopyCompletionTime:          (*timeRFC1123)(p.CopyCompletionTime),
+		CreationTime:                (*timeRFC1123)(p.CreationTime),
+		DeletedTime:                 (*timeRFC1123)(p.DeletedTime),
+		ExpiresOn:                   (*timeRFC1123)(p.ExpiresOn),
+		ImmutabilityPolicyExpiresOn: (*timeRFC1123)(p.ImmutabilityPolicyExpiresOn),
+		LastAccessedOn:              (*timeRFC1123)(p.LastAccessedOn),
+		LastModified:                (*timeRFC1123)(p.LastModified),
+	}
+	if p.ContentMD5 != nil {
+		aux.ContentMD5 = &p.ContentMD5
+	}
+	return e.EncodeElement(aux, start)
+}
+
+// UnmarshalXML implements the xml.Unmarshaller interface for type PropertiesInternal.
+func (p *PropertiesInternal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	type alias PropertiesInternal
+	aux := &struct {
+		*alias
+		AccessTierChangeTime        *timeRFC1123 `xml:"AccessTierChangeTime"`
+		ContentMD5                  *[]byte      `xml:"Content-MD5"`
+		CopyCompletionTime          *timeRFC1123 `xml:"CopyCompletionTime"`
+		CreationTime                *timeRFC1123 `xml:"Creation-Time"`
+		DeletedTime                 *timeRFC1123 `xml:"DeletedTime"`
+		ExpiresOn                   *timeRFC1123 `xml:"Expiry-Time"`
+		ImmutabilityPolicyExpiresOn *timeRFC1123 `xml:"ImmutabilityPolicyUntilDate"`
+		LastAccessedOn              *timeRFC1123 `xml:"LastAccessTime"`
+		LastModified                *timeRFC1123 `xml:"Last-Modified"`
+	}{
+		alias: (*alias)(p),
+	}
+	if err := d.DecodeElement(aux, &start); err != nil {
+		return err
+	}
+	p.AccessTierChangeTime = (*time.Time)(aux.AccessTierChangeTime)
+	p.CopyCompletionTime = (*time.Time)(aux.CopyCompletionTime)
+	p.CreationTime = (*time.Time)(aux.CreationTime)
+	p.DeletedTime = (*time.Time)(aux.DeletedTime)
+	p.ExpiresOn = (*time.Time)(aux.ExpiresOn)
+	p.ImmutabilityPolicyExpiresOn = (*time.Time)(aux.ImmutabilityPolicyExpiresOn)
+	p.LastAccessedOn = (*time.Time)(aux.LastAccessedOn)
+	p.LastModified = (*time.Time)(aux.LastModified)
+	return nil
 }
 
 type QueryFormat struct {
@@ -2267,6 +2237,36 @@ func (s StorageServiceProperties) MarshalXML(e *xml.Encoder, start xml.StartElem
 type StorageServiceStats struct {
 	// Geo-Replication information for the Secondary Storage Service
 	GeoReplication *GeoReplication `xml:"GeoReplication"`
+}
+
+type Tag struct {
+	// REQUIRED
+	Key *string `xml:"Key"`
+
+	// REQUIRED
+	Value *string `xml:"Value"`
+}
+
+// Tags - Blob tags
+type Tags struct {
+	// REQUIRED
+	BlobTagSet []*Tag `xml:"TagSet>Tag"`
+}
+
+// MarshalXML implements the xml.Marshaller interface for type Tags.
+func (t Tags) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "Tags"
+	type alias Tags
+	aux := &struct {
+		*alias
+		BlobTagSet *[]*Tag `xml:"TagSet>Tag"`
+	}{
+		alias: (*alias)(&t),
+	}
+	if t.BlobTagSet != nil {
+		aux.BlobTagSet = &t.BlobTagSet
+	}
+	return e.EncodeElement(aux, start)
 }
 
 // UserDelegationKey - A user delegation key

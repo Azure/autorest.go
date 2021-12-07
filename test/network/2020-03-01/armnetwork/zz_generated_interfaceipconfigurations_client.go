@@ -22,20 +22,20 @@ import (
 	"strings"
 )
 
-// NetworkInterfaceIPConfigurationsClient contains the methods for the NetworkInterfaceIPConfigurations group.
-// Don't use this type directly, use NewNetworkInterfaceIPConfigurationsClient() instead.
-type NetworkInterfaceIPConfigurationsClient struct {
+// InterfaceIPConfigurationsClient contains the methods for the NetworkInterfaceIPConfigurations group.
+// Don't use this type directly, use NewInterfaceIPConfigurationsClient() instead.
+type InterfaceIPConfigurationsClient struct {
 	host           string
 	subscriptionID string
 	pl             runtime.Pipeline
 }
 
-// NewNetworkInterfaceIPConfigurationsClient creates a new instance of NetworkInterfaceIPConfigurationsClient with the specified values.
+// NewInterfaceIPConfigurationsClient creates a new instance of InterfaceIPConfigurationsClient with the specified values.
 // subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
 // ID forms part of the URI for every service call.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewNetworkInterfaceIPConfigurationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NetworkInterfaceIPConfigurationsClient {
+func NewInterfaceIPConfigurationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *InterfaceIPConfigurationsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
 		cp = *options
@@ -43,7 +43,7 @@ func NewNetworkInterfaceIPConfigurationsClient(subscriptionID string, credential
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	client := &NetworkInterfaceIPConfigurationsClient{
+	client := &InterfaceIPConfigurationsClient{
 		subscriptionID: subscriptionID,
 		host:           string(cp.Host),
 		pl:             armruntime.NewPipeline(module, version, credential, &cp),
@@ -56,9 +56,9 @@ func NewNetworkInterfaceIPConfigurationsClient(subscriptionID string, credential
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // ipConfigurationName - The name of the ip configuration name.
-// options - NetworkInterfaceIPConfigurationsGetOptions contains the optional parameters for the NetworkInterfaceIPConfigurationsClient.Get
+// options - NetworkInterfaceIPConfigurationsGetOptions contains the optional parameters for the InterfaceIPConfigurationsClient.Get
 // method.
-func (client *NetworkInterfaceIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfaceIPConfigurationsGetOptions) (NetworkInterfaceIPConfigurationsGetResponse, error) {
+func (client *InterfaceIPConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfaceIPConfigurationsGetOptions) (NetworkInterfaceIPConfigurationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkInterfaceName, ipConfigurationName, options)
 	if err != nil {
 		return NetworkInterfaceIPConfigurationsGetResponse{}, err
@@ -74,7 +74,7 @@ func (client *NetworkInterfaceIPConfigurationsClient) Get(ctx context.Context, r
 }
 
 // getCreateRequest creates the Get request.
-func (client *NetworkInterfaceIPConfigurationsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfaceIPConfigurationsGetOptions) (*policy.Request, error) {
+func (client *InterfaceIPConfigurationsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, ipConfigurationName string, options *NetworkInterfaceIPConfigurationsGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -104,16 +104,16 @@ func (client *NetworkInterfaceIPConfigurationsClient) getCreateRequest(ctx conte
 }
 
 // getHandleResponse handles the Get response.
-func (client *NetworkInterfaceIPConfigurationsClient) getHandleResponse(resp *http.Response) (NetworkInterfaceIPConfigurationsGetResponse, error) {
+func (client *InterfaceIPConfigurationsClient) getHandleResponse(resp *http.Response) (NetworkInterfaceIPConfigurationsGetResponse, error) {
 	result := NetworkInterfaceIPConfigurationsGetResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceIPConfiguration); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceIPConfiguration); err != nil {
 		return NetworkInterfaceIPConfigurationsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // getHandleError handles the Get error response.
-func (client *NetworkInterfaceIPConfigurationsClient) getHandleError(resp *http.Response) error {
+func (client *InterfaceIPConfigurationsClient) getHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -129,22 +129,22 @@ func (client *NetworkInterfaceIPConfigurationsClient) getHandleError(resp *http.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfaceIPConfigurationsListOptions contains the optional parameters for the NetworkInterfaceIPConfigurationsClient.List
+// options - NetworkInterfaceIPConfigurationsListOptions contains the optional parameters for the InterfaceIPConfigurationsClient.List
 // method.
-func (client *NetworkInterfaceIPConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceIPConfigurationsListOptions) *NetworkInterfaceIPConfigurationsListPager {
+func (client *InterfaceIPConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceIPConfigurationsListOptions) *NetworkInterfaceIPConfigurationsListPager {
 	return &NetworkInterfaceIPConfigurationsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 		},
 		advancer: func(ctx context.Context, resp NetworkInterfaceIPConfigurationsListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceIPConfigurationListResult.NextLink)
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.InterfaceIPConfigurationListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *NetworkInterfaceIPConfigurationsClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceIPConfigurationsListOptions) (*policy.Request, error) {
+func (client *InterfaceIPConfigurationsClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceIPConfigurationsListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -170,16 +170,16 @@ func (client *NetworkInterfaceIPConfigurationsClient) listCreateRequest(ctx cont
 }
 
 // listHandleResponse handles the List response.
-func (client *NetworkInterfaceIPConfigurationsClient) listHandleResponse(resp *http.Response) (NetworkInterfaceIPConfigurationsListResponse, error) {
+func (client *InterfaceIPConfigurationsClient) listHandleResponse(resp *http.Response) (NetworkInterfaceIPConfigurationsListResponse, error) {
 	result := NetworkInterfaceIPConfigurationsListResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceIPConfigurationListResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceIPConfigurationListResult); err != nil {
 		return NetworkInterfaceIPConfigurationsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // listHandleError handles the List error response.
-func (client *NetworkInterfaceIPConfigurationsClient) listHandleError(resp *http.Response) error {
+func (client *InterfaceIPConfigurationsClient) listHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)

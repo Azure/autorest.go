@@ -22,7 +22,7 @@ type ServiceGetPropertiesResponse struct {
 
 // ServiceGetPropertiesResult contains the result from method Service.GetProperties.
 type ServiceGetPropertiesResult struct {
-	TableServiceProperties
+	ServiceProperties
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
 
@@ -42,7 +42,7 @@ type ServiceGetStatisticsResponse struct {
 
 // ServiceGetStatisticsResult contains the result from method Service.GetStatistics.
 type ServiceGetStatisticsResult struct {
-	TableServiceStats
+	ServiceStats
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
 
@@ -84,7 +84,7 @@ type TableCreateResponse struct {
 
 // TableCreateResult contains the result from method Table.Create.
 type TableCreateResult struct {
-	TableResponse
+	Response
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string
 
@@ -238,7 +238,7 @@ type TableQueryEntitiesResponse struct {
 
 // TableQueryEntitiesResult contains the result from method Table.QueryEntities.
 type TableQueryEntitiesResult struct {
-	TableEntityQueryResponse
+	EntityQueryResponse
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string
 
@@ -292,8 +292,8 @@ type TableQueryEntityWithPartitionAndRowKeyResult struct {
 	XMSContinuationNextRowKey *string
 }
 
-// TableQueryResponseEnvelope contains the response from method Table.Query.
-type TableQueryResponseEnvelope struct {
+// TableQueryResponse contains the response from method Table.Query.
+type TableQueryResponse struct {
 	TableQueryResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -301,7 +301,7 @@ type TableQueryResponseEnvelope struct {
 
 // TableQueryResult contains the result from method Table.Query.
 type TableQueryResult struct {
-	TableQueryResponse
+	QueryResponse
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string
 

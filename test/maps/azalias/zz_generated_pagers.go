@@ -18,11 +18,11 @@ import (
 
 // AliasListPager provides operations for iterating over paged responses.
 type AliasListPager struct {
-	client    *aliasClient
-	current   AliasListResponseEnvelope
+	client    *client
+	current   AliasListResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, AliasListResponseEnvelope) (*policy.Request, error)
+	advancer  func(context.Context, AliasListResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
@@ -36,7 +36,7 @@ func (p *AliasListPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.AliasListResponse.NextLink == nil || len(*p.current.AliasListResponse.NextLink) == 0 {
+		if p.current.ListResponse.NextLink == nil || len(*p.current.ListResponse.NextLink) == 0 {
 			return false
 		}
 		req, err = p.advancer(ctx, p.current)
@@ -65,7 +65,7 @@ func (p *AliasListPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-// PageResponse returns the current AliasListResponseEnvelope page.
-func (p *AliasListPager) PageResponse() AliasListResponseEnvelope {
+// PageResponse returns the current AliasListResponse page.
+func (p *AliasListPager) PageResponse() AliasListResponse {
 	return p.current
 }

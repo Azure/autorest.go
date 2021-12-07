@@ -791,7 +791,7 @@ type BlobGetTagsResponse struct {
 
 // BlobGetTagsResult contains the result from method Blob.GetTags.
 type BlobGetTagsResult struct {
-	BlobTags
+	Tags
 	// ClientRequestID contains the information returned from the x-ms-client-request-id header response.
 	ClientRequestID *string `xml:"ClientRequestID"`
 

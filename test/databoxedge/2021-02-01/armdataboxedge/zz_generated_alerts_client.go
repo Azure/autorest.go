@@ -13,6 +13,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -23,21 +25,27 @@ import (
 // AlertsClient contains the methods for the Alerts group.
 // Don't use this type directly, use NewAlertsClient() instead.
 type AlertsClient struct {
+	host           string
 	subscriptionID string
 	pl             runtime.Pipeline
 }
 
 // NewAlertsClient creates a new instance of AlertsClient with the specified values.
 // subscriptionID - The subscription ID.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewAlertsClient(subscriptionID string, options *azcore.ClientOptions) *AlertsClient {
-	cp := azcore.ClientOptions{}
+func NewAlertsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *AlertsClient {
+	cp := arm.ClientOptions{}
 	if options != nil {
 		cp = *options
 	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
 	client := &AlertsClient{
 		subscriptionID: subscriptionID,
-		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
 	}
 	return client
 }
@@ -82,7 +90,7 @@ func (client *AlertsClient) getCreateRequest(ctx context.Context, deviceName str
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +156,7 @@ func (client *AlertsClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Con
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

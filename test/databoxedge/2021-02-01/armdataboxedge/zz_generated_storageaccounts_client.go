@@ -13,6 +13,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -24,21 +25,27 @@ import (
 // StorageAccountsClient contains the methods for the StorageAccounts group.
 // Don't use this type directly, use NewStorageAccountsClient() instead.
 type StorageAccountsClient struct {
+	host           string
 	subscriptionID string
 	pl             runtime.Pipeline
 }
 
 // NewStorageAccountsClient creates a new instance of StorageAccountsClient with the specified values.
 // subscriptionID - The subscription ID.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewStorageAccountsClient(subscriptionID string, options *azcore.ClientOptions) *StorageAccountsClient {
-	cp := azcore.ClientOptions{}
+func NewStorageAccountsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *StorageAccountsClient {
+	cp := arm.ClientOptions{}
 	if options != nil {
 		cp = *options
 	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
 	client := &StorageAccountsClient{
 		subscriptionID: subscriptionID,
-		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
 	}
 	return client
 }
@@ -105,7 +112,7 @@ func (client *StorageAccountsClient) createOrUpdateCreateRequest(ctx context.Con
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +197,7 @@ func (client *StorageAccountsClient) deleteCreateRequest(ctx context.Context, de
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -254,7 +261,7 @@ func (client *StorageAccountsClient) getCreateRequest(ctx context.Context, devic
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -320,7 +327,7 @@ func (client *StorageAccountsClient) listByDataBoxEdgeDeviceCreateRequest(ctx co
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

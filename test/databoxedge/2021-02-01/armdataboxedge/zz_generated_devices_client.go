@@ -13,6 +13,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -24,21 +25,27 @@ import (
 // DevicesClient contains the methods for the Devices group.
 // Don't use this type directly, use NewDevicesClient() instead.
 type DevicesClient struct {
+	host           string
 	subscriptionID string
 	pl             runtime.Pipeline
 }
 
 // NewDevicesClient creates a new instance of DevicesClient with the specified values.
 // subscriptionID - The subscription ID.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewDevicesClient(subscriptionID string, options *azcore.ClientOptions) *DevicesClient {
-	cp := azcore.ClientOptions{}
+func NewDevicesClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *DevicesClient {
+	cp := arm.ClientOptions{}
 	if options != nil {
 		cp = *options
 	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
 	client := &DevicesClient{
 		subscriptionID: subscriptionID,
-		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
 	}
 	return client
 }
@@ -49,7 +56,7 @@ func NewDevicesClient(subscriptionID string, options *azcore.ClientOptions) *Dev
 // resourceGroupName - The resource group name.
 // dataBoxEdgeDevice - The resource object.
 // options - DevicesCreateOrUpdateOptions contains the optional parameters for the DevicesClient.CreateOrUpdate method.
-func (client *DevicesClient) CreateOrUpdate(ctx context.Context, deviceName string, resourceGroupName string, dataBoxEdgeDevice DataBoxEdgeDevice, options *DevicesCreateOrUpdateOptions) (DevicesCreateOrUpdateResponse, error) {
+func (client *DevicesClient) CreateOrUpdate(ctx context.Context, deviceName string, resourceGroupName string, dataBoxEdgeDevice Device, options *DevicesCreateOrUpdateOptions) (DevicesCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, resourceGroupName, dataBoxEdgeDevice, options)
 	if err != nil {
 		return DevicesCreateOrUpdateResponse{}, err
@@ -65,7 +72,7 @@ func (client *DevicesClient) CreateOrUpdate(ctx context.Context, deviceName stri
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *DevicesClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, dataBoxEdgeDevice DataBoxEdgeDevice, options *DevicesCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *DevicesClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, dataBoxEdgeDevice Device, options *DevicesCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -79,7 +86,7 @@ func (client *DevicesClient) createOrUpdateCreateRequest(ctx context.Context, de
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +100,7 @@ func (client *DevicesClient) createOrUpdateCreateRequest(ctx context.Context, de
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
 func (client *DevicesClient) createOrUpdateHandleResponse(resp *http.Response) (DevicesCreateOrUpdateResponse, error) {
 	result := DevicesCreateOrUpdateResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.DataBoxEdgeDevice); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Device); err != nil {
 		return DevicesCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
@@ -169,7 +176,7 @@ func (client *DevicesClient) createOrUpdateSecuritySettingsCreateRequest(ctx con
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -248,7 +255,7 @@ func (client *DevicesClient) deleteCreateRequest(ctx context.Context, deviceName
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -328,7 +335,7 @@ func (client *DevicesClient) downloadUpdatesCreateRequest(ctx context.Context, d
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -388,7 +395,7 @@ func (client *DevicesClient) generateCertificateCreateRequest(ctx context.Contex
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -456,7 +463,7 @@ func (client *DevicesClient) getCreateRequest(ctx context.Context, deviceName st
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -470,7 +477,7 @@ func (client *DevicesClient) getCreateRequest(ctx context.Context, deviceName st
 // getHandleResponse handles the Get response.
 func (client *DevicesClient) getHandleResponse(resp *http.Response) (DevicesGetResponse, error) {
 	result := DevicesGetResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.DataBoxEdgeDevice); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Device); err != nil {
 		return DevicesGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
@@ -525,7 +532,7 @@ func (client *DevicesClient) getExtendedInformationCreateRequest(ctx context.Con
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -539,7 +546,7 @@ func (client *DevicesClient) getExtendedInformationCreateRequest(ctx context.Con
 // getExtendedInformationHandleResponse handles the GetExtendedInformation response.
 func (client *DevicesClient) getExtendedInformationHandleResponse(resp *http.Response) (DevicesGetExtendedInformationResponse, error) {
 	result := DevicesGetExtendedInformationResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.DataBoxEdgeDeviceExtendedInfo); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeviceExtendedInfo); err != nil {
 		return DevicesGetExtendedInformationResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
@@ -593,7 +600,7 @@ func (client *DevicesClient) getNetworkSettingsCreateRequest(ctx context.Context
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -662,7 +669,7 @@ func (client *DevicesClient) getUpdateSummaryCreateRequest(ctx context.Context, 
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -751,7 +758,7 @@ func (client *DevicesClient) installUpdatesCreateRequest(ctx context.Context, de
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -787,7 +794,7 @@ func (client *DevicesClient) ListByResourceGroup(resourceGroupName string, optio
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
 		advancer: func(ctx context.Context, resp DevicesListByResourceGroupResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.DataBoxEdgeDeviceList.NextLink)
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.DeviceList.NextLink)
 		},
 	}
 }
@@ -803,7 +810,7 @@ func (client *DevicesClient) listByResourceGroupCreateRequest(ctx context.Contex
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -820,7 +827,7 @@ func (client *DevicesClient) listByResourceGroupCreateRequest(ctx context.Contex
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
 func (client *DevicesClient) listByResourceGroupHandleResponse(resp *http.Response) (DevicesListByResourceGroupResponse, error) {
 	result := DevicesListByResourceGroupResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.DataBoxEdgeDeviceList); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeviceList); err != nil {
 		return DevicesListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
@@ -849,7 +856,7 @@ func (client *DevicesClient) ListBySubscription(options *DevicesListBySubscripti
 			return client.listBySubscriptionCreateRequest(ctx, options)
 		},
 		advancer: func(ctx context.Context, resp DevicesListBySubscriptionResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.DataBoxEdgeDeviceList.NextLink)
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.DeviceList.NextLink)
 		},
 	}
 }
@@ -861,7 +868,7 @@ func (client *DevicesClient) listBySubscriptionCreateRequest(ctx context.Context
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{subscriptionId}", url.PathEscape(client.subscriptionID))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -878,7 +885,7 @@ func (client *DevicesClient) listBySubscriptionCreateRequest(ctx context.Context
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
 func (client *DevicesClient) listBySubscriptionHandleResponse(resp *http.Response) (DevicesListBySubscriptionResponse, error) {
 	result := DevicesListBySubscriptionResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.DataBoxEdgeDeviceList); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeviceList); err != nil {
 		return DevicesListBySubscriptionResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
@@ -953,7 +960,7 @@ func (client *DevicesClient) scanForUpdatesCreateRequest(ctx context.Context, de
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -983,7 +990,7 @@ func (client *DevicesClient) scanForUpdatesHandleError(resp *http.Response) erro
 // resourceGroupName - The resource group name.
 // parameters - The resource parameters.
 // options - DevicesUpdateOptions contains the optional parameters for the DevicesClient.Update method.
-func (client *DevicesClient) Update(ctx context.Context, deviceName string, resourceGroupName string, parameters DataBoxEdgeDevicePatch, options *DevicesUpdateOptions) (DevicesUpdateResponse, error) {
+func (client *DevicesClient) Update(ctx context.Context, deviceName string, resourceGroupName string, parameters DevicePatch, options *DevicesUpdateOptions) (DevicesUpdateResponse, error) {
 	req, err := client.updateCreateRequest(ctx, deviceName, resourceGroupName, parameters, options)
 	if err != nil {
 		return DevicesUpdateResponse{}, err
@@ -999,7 +1006,7 @@ func (client *DevicesClient) Update(ctx context.Context, deviceName string, reso
 }
 
 // updateCreateRequest creates the Update request.
-func (client *DevicesClient) updateCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, parameters DataBoxEdgeDevicePatch, options *DevicesUpdateOptions) (*policy.Request, error) {
+func (client *DevicesClient) updateCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, parameters DevicePatch, options *DevicesUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -1013,7 +1020,7 @@ func (client *DevicesClient) updateCreateRequest(ctx context.Context, deviceName
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1027,7 +1034,7 @@ func (client *DevicesClient) updateCreateRequest(ctx context.Context, deviceName
 // updateHandleResponse handles the Update response.
 func (client *DevicesClient) updateHandleResponse(resp *http.Response) (DevicesUpdateResponse, error) {
 	result := DevicesUpdateResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.DataBoxEdgeDevice); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Device); err != nil {
 		return DevicesUpdateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
@@ -1053,7 +1060,7 @@ func (client *DevicesClient) updateHandleError(resp *http.Response) error {
 // parameters - The patch object.
 // options - DevicesUpdateExtendedInformationOptions contains the optional parameters for the DevicesClient.UpdateExtendedInformation
 // method.
-func (client *DevicesClient) UpdateExtendedInformation(ctx context.Context, deviceName string, resourceGroupName string, parameters DataBoxEdgeDeviceExtendedInfoPatch, options *DevicesUpdateExtendedInformationOptions) (DevicesUpdateExtendedInformationResponse, error) {
+func (client *DevicesClient) UpdateExtendedInformation(ctx context.Context, deviceName string, resourceGroupName string, parameters DeviceExtendedInfoPatch, options *DevicesUpdateExtendedInformationOptions) (DevicesUpdateExtendedInformationResponse, error) {
 	req, err := client.updateExtendedInformationCreateRequest(ctx, deviceName, resourceGroupName, parameters, options)
 	if err != nil {
 		return DevicesUpdateExtendedInformationResponse{}, err
@@ -1069,7 +1076,7 @@ func (client *DevicesClient) UpdateExtendedInformation(ctx context.Context, devi
 }
 
 // updateExtendedInformationCreateRequest creates the UpdateExtendedInformation request.
-func (client *DevicesClient) updateExtendedInformationCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, parameters DataBoxEdgeDeviceExtendedInfoPatch, options *DevicesUpdateExtendedInformationOptions) (*policy.Request, error) {
+func (client *DevicesClient) updateExtendedInformationCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, parameters DeviceExtendedInfoPatch, options *DevicesUpdateExtendedInformationOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/updateExtendedInformation"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -1083,7 +1090,7 @@ func (client *DevicesClient) updateExtendedInformationCreateRequest(ctx context.
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -1097,7 +1104,7 @@ func (client *DevicesClient) updateExtendedInformationCreateRequest(ctx context.
 // updateExtendedInformationHandleResponse handles the UpdateExtendedInformation response.
 func (client *DevicesClient) updateExtendedInformationHandleResponse(resp *http.Response) (DevicesUpdateExtendedInformationResponse, error) {
 	result := DevicesUpdateExtendedInformationResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.DataBoxEdgeDeviceExtendedInfo); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.DeviceExtendedInfo); err != nil {
 		return DevicesUpdateExtendedInformationResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
@@ -1152,7 +1159,7 @@ func (client *DevicesClient) uploadCertificateCreateRequest(ctx context.Context,
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

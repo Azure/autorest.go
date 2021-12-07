@@ -108,16 +108,16 @@ const synapseSpark = 'https://raw.githubusercontent.com/Azure/azure-rest-api-spe
 generateFromReadme("azspark", synapseSpark, 'package-spark-2019-11-01-preview', 'test/synapse/2019-06-01/azspark', '--security=AADToken --security-scopes="https://dev.azuresynapse.net/.default" --module="azspark" --openapi-type="data-plane"');
 
 const tables = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/228cf296647f6e41182cee7d1a403990e6a8fe3c/specification/cosmos-db/data-plane/readme.md';
-generateFromReadme("aztables", tables, 'package-2019-02', 'test/tables/2019-02-02/aztables', '--security=AADToken --security-scopes="https://tables.azure.com/.default" --module=aztables --openapi-type="data-plane" --export-clients --azure-validator=false --group-parameters=false');
+generateFromReadme("aztables", tables, 'package-2019-02', 'test/tables/2019-02-02/aztables', '--security=AADToken --security-scopes="https://tables.azure.com/.default" --module=aztables --openapi-type="data-plane" --export-clients --azure-validator=false --group-parameters=false --stutter=table');
 
-const keyvault = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/1e2c9f3ec93078da8078389941531359e274f32a/specification/keyvault/data-plane/readme.md';
-generateFromReadme("azkeyvault", keyvault, 'package-7.2', 'test/keyvault/7.2/azkeyvault', '--security=AADToken --security-scopes="https://vault.azure.net/.default" --module=azkeyvault --openapi-type="data-plane" --export-clients');
+const keyvault = fullPath('test/keyvault/7.2/azkeyvault/autorest.md');
+generateFromReadme("azkeyvault", keyvault, 'package-7.2', 'test/keyvault/7.2/azkeyvault');
 
 const consumption = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/3865f04d22e82db481be0727b406021d29cd2b70/specification/consumption/resource-manager/readme.md';
 generateFromReadme("armconsumption", consumption, 'package-2019-10', 'test/consumption/2019-10-01/armconsumption', '--module=armconsumption --azure-arm=true');
 
-const databoxedge = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/3865f04d22e82db481be0727b406021d29cd2b70/specification/databoxedge/resource-manager/readme.md';
-generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/2021-02-01/armdataboxedge', '--module=armdataboxedge ---azure-arm=true');
+const databoxedge = fullPath('test/databoxedge/2021-02-01/armdataboxedge/autorest.md');
+generateFromReadme("armdataboxedge", databoxedge, 'package-2021-02-01', 'test/databoxedge/2021-02-01/armdataboxedge');
 
 generate("azalias", 'test/swagger/alias.json', 'test/maps/azalias', '--security=AzureKey --module="azalias" --openapi-type="data-plane"');
 
@@ -139,6 +139,9 @@ function generate(name, inputFile, outputDir, additionalArgs) {
     if (!should_generate(name)) {
         return
     }
+    if (additionalArgs === undefined) {
+        additionalArgs = '';
+    }
     sem.take(function() {
         console.log('generating ' + inputFile);
         outputDir = fullPath(outputDir);
@@ -150,6 +153,9 @@ function generate(name, inputFile, outputDir, additionalArgs) {
 function generateFromReadme(name, readme, tag, outputDir, additionalArgs) {
     if (!should_generate(name)) {
         return
+    }
+    if (additionalArgs === undefined) {
+        additionalArgs = '';
     }
     sem.take(function() {
         console.log('generating ' + readme);

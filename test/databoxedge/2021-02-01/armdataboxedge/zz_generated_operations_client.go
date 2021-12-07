@@ -12,6 +12,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
+	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -20,18 +22,24 @@ import (
 // OperationsClient contains the methods for the Operations group.
 // Don't use this type directly, use NewOperationsClient() instead.
 type OperationsClient struct {
-	pl runtime.Pipeline
+	host string
+	pl   runtime.Pipeline
 }
 
 // NewOperationsClient creates a new instance of OperationsClient with the specified values.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewOperationsClient(options *azcore.ClientOptions) *OperationsClient {
-	cp := azcore.ClientOptions{}
+func NewOperationsClient(credential azcore.TokenCredential, options *arm.ClientOptions) *OperationsClient {
+	cp := arm.ClientOptions{}
 	if options != nil {
 		cp = *options
 	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
 	client := &OperationsClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		host: string(cp.Host),
+		pl:   armruntime.NewPipeline(module, version, credential, &cp),
 	}
 	return client
 }
@@ -54,7 +62,7 @@ func (client *OperationsClient) List(options *OperationsListOptions) *Operations
 // listCreateRequest creates the List request.
 func (client *OperationsClient) listCreateRequest(ctx context.Context, options *OperationsListOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.DataBoxEdge/operations"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

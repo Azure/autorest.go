@@ -13,6 +13,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -24,21 +25,27 @@ import (
 // MonitoringConfigClient contains the methods for the MonitoringConfig group.
 // Don't use this type directly, use NewMonitoringConfigClient() instead.
 type MonitoringConfigClient struct {
+	host           string
 	subscriptionID string
 	pl             runtime.Pipeline
 }
 
 // NewMonitoringConfigClient creates a new instance of MonitoringConfigClient with the specified values.
 // subscriptionID - The subscription ID.
+// credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewMonitoringConfigClient(subscriptionID string, options *azcore.ClientOptions) *MonitoringConfigClient {
-	cp := azcore.ClientOptions{}
+func NewMonitoringConfigClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *MonitoringConfigClient {
+	cp := arm.ClientOptions{}
 	if options != nil {
 		cp = *options
 	}
+	if len(cp.Host) == 0 {
+		cp.Host = arm.AzurePublicCloud
+	}
 	client := &MonitoringConfigClient{
 		subscriptionID: subscriptionID,
-		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+		host:           string(cp.Host),
+		pl:             armruntime.NewPipeline(module, version, credential, &cp),
 	}
 	return client
 }
@@ -105,7 +112,7 @@ func (client *MonitoringConfigClient) createOrUpdateCreateRequest(ctx context.Co
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +197,7 @@ func (client *MonitoringConfigClient) deleteCreateRequest(ctx context.Context, d
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -254,7 +261,7 @@ func (client *MonitoringConfigClient) getCreateRequest(ctx context.Context, devi
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}
@@ -324,7 +331,7 @@ func (client *MonitoringConfigClient) listCreateRequest(ctx context.Context, dev
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
 	}
 	urlPath = strings.ReplaceAll(urlPath, "{resourceGroupName}", url.PathEscape(resourceGroupName))
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
 		return nil, err
 	}

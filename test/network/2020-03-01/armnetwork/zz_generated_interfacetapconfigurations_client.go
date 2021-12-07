@@ -22,20 +22,20 @@ import (
 	"strings"
 )
 
-// NetworkInterfaceTapConfigurationsClient contains the methods for the NetworkInterfaceTapConfigurations group.
-// Don't use this type directly, use NewNetworkInterfaceTapConfigurationsClient() instead.
-type NetworkInterfaceTapConfigurationsClient struct {
+// InterfaceTapConfigurationsClient contains the methods for the NetworkInterfaceTapConfigurations group.
+// Don't use this type directly, use NewInterfaceTapConfigurationsClient() instead.
+type InterfaceTapConfigurationsClient struct {
 	host           string
 	subscriptionID string
 	pl             runtime.Pipeline
 }
 
-// NewNetworkInterfaceTapConfigurationsClient creates a new instance of NetworkInterfaceTapConfigurationsClient with the specified values.
+// NewInterfaceTapConfigurationsClient creates a new instance of InterfaceTapConfigurationsClient with the specified values.
 // subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
 // ID forms part of the URI for every service call.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewNetworkInterfaceTapConfigurationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NetworkInterfaceTapConfigurationsClient {
+func NewInterfaceTapConfigurationsClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *InterfaceTapConfigurationsClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
 		cp = *options
@@ -43,7 +43,7 @@ func NewNetworkInterfaceTapConfigurationsClient(subscriptionID string, credentia
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	client := &NetworkInterfaceTapConfigurationsClient{
+	client := &InterfaceTapConfigurationsClient{
 		subscriptionID: subscriptionID,
 		host:           string(cp.Host),
 		pl:             armruntime.NewPipeline(module, version, credential, &cp),
@@ -57,9 +57,9 @@ func NewNetworkInterfaceTapConfigurationsClient(subscriptionID string, credentia
 // networkInterfaceName - The name of the network interface.
 // tapConfigurationName - The name of the tap configuration.
 // tapConfigurationParameters - Parameters supplied to the create or update tap configuration operation.
-// options - NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions contains the optional parameters for the NetworkInterfaceTapConfigurationsClient.BeginCreateOrUpdate
+// options - NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions contains the optional parameters for the InterfaceTapConfigurationsClient.BeginCreateOrUpdate
 // method.
-func (client *NetworkInterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions) (NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse, error) {
+func (client *InterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters InterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions) (NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, tapConfigurationParameters, options)
 	if err != nil {
 		return NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse{}, err
@@ -67,7 +67,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx c
 	result := NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkInterfaceTapConfigurationsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("InterfaceTapConfigurationsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
 		return NetworkInterfaceTapConfigurationsCreateOrUpdatePollerResponse{}, err
 	}
@@ -79,7 +79,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) BeginCreateOrUpdate(ctx c
 
 // CreateOrUpdate - Creates or updates a Tap configuration in the specified NetworkInterface.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *InterfaceTapConfigurationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters InterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, tapConfigurationParameters, options)
 	if err != nil {
 		return nil, err
@@ -95,7 +95,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdate(ctx contex
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters NetworkInterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *InterfaceTapConfigurationsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, tapConfigurationParameters InterfaceTapConfiguration, options *NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -125,7 +125,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdateCreateReque
 }
 
 // createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdateHandleError(resp *http.Response) error {
+func (client *InterfaceTapConfigurationsClient) createOrUpdateHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -142,9 +142,9 @@ func (client *NetworkInterfaceTapConfigurationsClient) createOrUpdateHandleError
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // tapConfigurationName - The name of the tap configuration.
-// options - NetworkInterfaceTapConfigurationsBeginDeleteOptions contains the optional parameters for the NetworkInterfaceTapConfigurationsClient.BeginDelete
+// options - NetworkInterfaceTapConfigurationsBeginDeleteOptions contains the optional parameters for the InterfaceTapConfigurationsClient.BeginDelete
 // method.
-func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsBeginDeleteOptions) (NetworkInterfaceTapConfigurationsDeletePollerResponse, error) {
+func (client *InterfaceTapConfigurationsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsBeginDeleteOptions) (NetworkInterfaceTapConfigurationsDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
 		return NetworkInterfaceTapConfigurationsDeletePollerResponse{}, err
@@ -152,7 +152,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.C
 	result := NetworkInterfaceTapConfigurationsDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("NetworkInterfaceTapConfigurationsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("InterfaceTapConfigurationsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
 		return NetworkInterfaceTapConfigurationsDeletePollerResponse{}, err
 	}
@@ -164,7 +164,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) BeginDelete(ctx context.C
 
 // Delete - Deletes the specified tap configuration from the NetworkInterface.
 // If the operation fails it returns the *CloudError error type.
-func (client *NetworkInterfaceTapConfigurationsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsBeginDeleteOptions) (*http.Response, error) {
+func (client *InterfaceTapConfigurationsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
 		return nil, err
@@ -180,7 +180,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) deleteOperation(ctx conte
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *NetworkInterfaceTapConfigurationsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsBeginDeleteOptions) (*policy.Request, error) {
+func (client *InterfaceTapConfigurationsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -210,7 +210,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) deleteCreateRequest(ctx c
 }
 
 // deleteHandleError handles the Delete error response.
-func (client *NetworkInterfaceTapConfigurationsClient) deleteHandleError(resp *http.Response) error {
+func (client *InterfaceTapConfigurationsClient) deleteHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -227,9 +227,9 @@ func (client *NetworkInterfaceTapConfigurationsClient) deleteHandleError(resp *h
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // tapConfigurationName - The name of the tap configuration.
-// options - NetworkInterfaceTapConfigurationsGetOptions contains the optional parameters for the NetworkInterfaceTapConfigurationsClient.Get
+// options - NetworkInterfaceTapConfigurationsGetOptions contains the optional parameters for the InterfaceTapConfigurationsClient.Get
 // method.
-func (client *NetworkInterfaceTapConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsGetOptions) (NetworkInterfaceTapConfigurationsGetResponse, error) {
+func (client *InterfaceTapConfigurationsClient) Get(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsGetOptions) (NetworkInterfaceTapConfigurationsGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkInterfaceName, tapConfigurationName, options)
 	if err != nil {
 		return NetworkInterfaceTapConfigurationsGetResponse{}, err
@@ -245,7 +245,7 @@ func (client *NetworkInterfaceTapConfigurationsClient) Get(ctx context.Context, 
 }
 
 // getCreateRequest creates the Get request.
-func (client *NetworkInterfaceTapConfigurationsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsGetOptions) (*policy.Request, error) {
+func (client *InterfaceTapConfigurationsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, tapConfigurationName string, options *NetworkInterfaceTapConfigurationsGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -275,16 +275,16 @@ func (client *NetworkInterfaceTapConfigurationsClient) getCreateRequest(ctx cont
 }
 
 // getHandleResponse handles the Get response.
-func (client *NetworkInterfaceTapConfigurationsClient) getHandleResponse(resp *http.Response) (NetworkInterfaceTapConfigurationsGetResponse, error) {
+func (client *InterfaceTapConfigurationsClient) getHandleResponse(resp *http.Response) (NetworkInterfaceTapConfigurationsGetResponse, error) {
 	result := NetworkInterfaceTapConfigurationsGetResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceTapConfiguration); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceTapConfiguration); err != nil {
 		return NetworkInterfaceTapConfigurationsGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // getHandleError handles the Get error response.
-func (client *NetworkInterfaceTapConfigurationsClient) getHandleError(resp *http.Response) error {
+func (client *InterfaceTapConfigurationsClient) getHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -300,22 +300,22 @@ func (client *NetworkInterfaceTapConfigurationsClient) getHandleError(resp *http
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfaceTapConfigurationsListOptions contains the optional parameters for the NetworkInterfaceTapConfigurationsClient.List
+// options - NetworkInterfaceTapConfigurationsListOptions contains the optional parameters for the InterfaceTapConfigurationsClient.List
 // method.
-func (client *NetworkInterfaceTapConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceTapConfigurationsListOptions) *NetworkInterfaceTapConfigurationsListPager {
+func (client *InterfaceTapConfigurationsClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceTapConfigurationsListOptions) *NetworkInterfaceTapConfigurationsListPager {
 	return &NetworkInterfaceTapConfigurationsListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 		},
 		advancer: func(ctx context.Context, resp NetworkInterfaceTapConfigurationsListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceTapConfigurationListResult.NextLink)
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.InterfaceTapConfigurationListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *NetworkInterfaceTapConfigurationsClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceTapConfigurationsListOptions) (*policy.Request, error) {
+func (client *InterfaceTapConfigurationsClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceTapConfigurationsListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -341,16 +341,16 @@ func (client *NetworkInterfaceTapConfigurationsClient) listCreateRequest(ctx con
 }
 
 // listHandleResponse handles the List response.
-func (client *NetworkInterfaceTapConfigurationsClient) listHandleResponse(resp *http.Response) (NetworkInterfaceTapConfigurationsListResponse, error) {
+func (client *InterfaceTapConfigurationsClient) listHandleResponse(resp *http.Response) (NetworkInterfaceTapConfigurationsListResponse, error) {
 	result := NetworkInterfaceTapConfigurationsListResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceTapConfigurationListResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceTapConfigurationListResult); err != nil {
 		return NetworkInterfaceTapConfigurationsListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // listHandleError handles the List error response.
-func (client *NetworkInterfaceTapConfigurationsClient) listHandleError(resp *http.Response) error {
+func (client *InterfaceTapConfigurationsClient) listHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)

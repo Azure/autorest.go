@@ -34,7 +34,7 @@ func NewHSMSecurityDomainClient(pl runtime.Pipeline) *HSMSecurityDomainClient {
 
 // BeginDownload - Retrieves the Security Domain from the managed HSM. Calling this endpoint can be used to activate a provisioned
 // managed HSM resource.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateInfoObject - The Security Domain download operation requires customer to provide N certificates (minimum 3 and
 // maximum 10) containing a public key in JWK format.
@@ -60,7 +60,7 @@ func (client *HSMSecurityDomainClient) BeginDownload(ctx context.Context, vaultB
 
 // Download - Retrieves the Security Domain from the managed HSM. Calling this endpoint can be used to activate a provisioned
 // managed HSM resource.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 func (client *HSMSecurityDomainClient) download(ctx context.Context, vaultBaseURL string, certificateInfoObject CertificateInfoObject, options *HSMSecurityDomainBeginDownloadOptions) (*http.Response, error) {
 	req, err := client.downloadCreateRequest(ctx, vaultBaseURL, certificateInfoObject, options)
 	if err != nil {
@@ -98,7 +98,7 @@ func (client *HSMSecurityDomainClient) downloadHandleError(resp *http.Response) 
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -106,7 +106,7 @@ func (client *HSMSecurityDomainClient) downloadHandleError(resp *http.Response) 
 }
 
 // DownloadPending - Retrieves the Security Domain download operation status
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - HSMSecurityDomainDownloadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.DownloadPending
 // method.
@@ -153,7 +153,7 @@ func (client *HSMSecurityDomainClient) downloadPendingHandleError(resp *http.Res
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -161,7 +161,7 @@ func (client *HSMSecurityDomainClient) downloadPendingHandleError(resp *http.Res
 }
 
 // TransferKey - Retrieve Security Domain transfer key
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - HSMSecurityDomainTransferKeyOptions contains the optional parameters for the HSMSecurityDomainClient.TransferKey
 // method.
@@ -211,7 +211,7 @@ func (client *HSMSecurityDomainClient) transferKeyHandleError(resp *http.Respons
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -219,7 +219,7 @@ func (client *HSMSecurityDomainClient) transferKeyHandleError(resp *http.Respons
 }
 
 // BeginUpload - Restore the provided Security Domain.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // securityDomain - The Security Domain to be restored.
 // options - HSMSecurityDomainBeginUploadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginUpload
@@ -243,7 +243,7 @@ func (client *HSMSecurityDomainClient) BeginUpload(ctx context.Context, vaultBas
 }
 
 // Upload - Restore the provided Security Domain.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 func (client *HSMSecurityDomainClient) upload(ctx context.Context, vaultBaseURL string, securityDomain SecurityDomainObject, options *HSMSecurityDomainBeginUploadOptions) (*http.Response, error) {
 	req, err := client.uploadCreateRequest(ctx, vaultBaseURL, securityDomain, options)
 	if err != nil {
@@ -278,7 +278,7 @@ func (client *HSMSecurityDomainClient) uploadHandleError(resp *http.Response) er
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -286,7 +286,7 @@ func (client *HSMSecurityDomainClient) uploadHandleError(resp *http.Response) er
 }
 
 // UploadPending - Get Security Domain upload operation status
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - HSMSecurityDomainUploadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.UploadPending
 // method.
@@ -333,7 +333,7 @@ func (client *HSMSecurityDomainClient) uploadPendingHandleError(resp *http.Respo
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}

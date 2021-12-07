@@ -35,7 +35,7 @@ func NewRoleAssignmentsClient(pl runtime.Pipeline) *RoleAssignmentsClient {
 }
 
 // Create - Creates a role assignment.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignment to create.
 // roleAssignmentName - The name of the role assignment to create. It can be any valid GUID.
@@ -92,7 +92,7 @@ func (client *RoleAssignmentsClient) createHandleError(resp *http.Response) erro
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -100,7 +100,7 @@ func (client *RoleAssignmentsClient) createHandleError(resp *http.Response) erro
 }
 
 // Delete - Deletes a role assignment.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignment to delete.
 // roleAssignmentName - The name of the role assignment to delete.
@@ -156,7 +156,7 @@ func (client *RoleAssignmentsClient) deleteHandleError(resp *http.Response) erro
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -164,7 +164,7 @@ func (client *RoleAssignmentsClient) deleteHandleError(resp *http.Response) erro
 }
 
 // Get - Get the specified role assignment.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignment.
 // roleAssignmentName - The name of the role assignment to get.
@@ -220,7 +220,7 @@ func (client *RoleAssignmentsClient) getHandleError(resp *http.Response) error {
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}
@@ -228,7 +228,7 @@ func (client *RoleAssignmentsClient) getHandleError(resp *http.Response) error {
 }
 
 // ListForScope - Gets role assignments for a scope.
-// If the operation fails it returns the *KeyVaultError error type.
+// If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignments.
 // options - RoleAssignmentsListForScopeOptions contains the optional parameters for the RoleAssignmentsClient.ListForScope
@@ -280,7 +280,7 @@ func (client *RoleAssignmentsClient) listForScopeHandleError(resp *http.Response
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
 	}
-	errType := KeyVaultError{raw: string(body)}
+	errType := Error{raw: string(body)}
 	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
 		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
 	}

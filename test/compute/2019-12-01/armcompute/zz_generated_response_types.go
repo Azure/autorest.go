@@ -2118,7 +2118,7 @@ type OperationsListResponse struct {
 
 // OperationsListResult contains the result from method Operations.List.
 type OperationsListResult struct {
-	ComputeOperationListResult
+	OperationListResult
 }
 
 // ProximityPlacementGroupsCreateOrUpdateResponse contains the response from method ProximityPlacementGroups.CreateOrUpdate.

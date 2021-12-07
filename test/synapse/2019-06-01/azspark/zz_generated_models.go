@@ -15,34 +15,7 @@ import (
 	"time"
 )
 
-// SparkBatchCancelSparkBatchJobOptions contains the optional parameters for the sparkBatchClient.CancelSparkBatchJob method.
-type SparkBatchCancelSparkBatchJobOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SparkBatchCreateSparkBatchJobOptions contains the optional parameters for the sparkBatchClient.CreateSparkBatchJob method.
-type SparkBatchCreateSparkBatchJobOptions struct {
-	// Optional query param specifying whether detailed response is returned beyond plain livy.
-	Detailed *bool
-}
-
-// SparkBatchGetSparkBatchJobOptions contains the optional parameters for the sparkBatchClient.GetSparkBatchJob method.
-type SparkBatchGetSparkBatchJobOptions struct {
-	// Optional query param specifying whether detailed response is returned beyond plain livy.
-	Detailed *bool
-}
-
-// SparkBatchGetSparkBatchJobsOptions contains the optional parameters for the sparkBatchClient.GetSparkBatchJobs method.
-type SparkBatchGetSparkBatchJobsOptions struct {
-	// Optional query param specifying whether detailed response is returned beyond plain livy.
-	Detailed *bool
-	// Optional param specifying which index the list should begin from.
-	From *int32
-	// Optional param specifying the size of the returned list. By default it is 20 and that is the maximum.
-	Size *int32
-}
-
-type SparkBatchJob struct {
+type BatchJob struct {
 	// REQUIRED; The session Id.
 	ID *int32 `json:"id,omitempty"`
 
@@ -56,11 +29,11 @@ type SparkBatchJob struct {
 	ArtifactID *string `json:"artifactId,omitempty"`
 
 	// The error information.
-	Errors []*SparkServiceError `json:"errorInfo,omitempty"`
+	Errors []*ServiceError `json:"errorInfo,omitempty"`
 
 	// The job type.
-	JobType  *SparkJobType       `json:"jobType,omitempty"`
-	LivyInfo *SparkBatchJobState `json:"livyInfo,omitempty"`
+	JobType  *SparkJobType  `json:"jobType,omitempty"`
+	LivyInfo *BatchJobState `json:"livyInfo,omitempty"`
 
 	// The log lines.
 	LogLines []*string `json:"log,omitempty"`
@@ -69,13 +42,13 @@ type SparkBatchJob struct {
 	Name *string `json:"name,omitempty"`
 
 	// The plugin information.
-	Plugin *SparkServicePlugin `json:"pluginInfo,omitempty"`
+	Plugin *ServicePlugin `json:"pluginInfo,omitempty"`
 
 	// The Spark batch job result.
 	Result *SparkBatchJobResultType `json:"result,omitempty"`
 
 	// The scheduler information.
-	Scheduler *SparkScheduler `json:"schedulerInfo,omitempty"`
+	Scheduler *Scheduler `json:"schedulerInfo,omitempty"`
 
 	// The Spark pool name.
 	SparkPoolName *string `json:"sparkPoolName,omitempty"`
@@ -96,32 +69,32 @@ type SparkBatchJob struct {
 	WorkspaceName *string `json:"workspaceName,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SparkBatchJob.
-func (s SparkBatchJob) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type BatchJob.
+func (b BatchJob) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populate(objectMap, "appId", s.AppID)
-	populate(objectMap, "appInfo", s.AppInfo)
-	populate(objectMap, "artifactId", s.ArtifactID)
-	populate(objectMap, "errorInfo", s.Errors)
-	populate(objectMap, "id", s.ID)
-	populate(objectMap, "jobType", s.JobType)
-	populate(objectMap, "livyInfo", s.LivyInfo)
-	populate(objectMap, "log", s.LogLines)
-	populate(objectMap, "name", s.Name)
-	populate(objectMap, "pluginInfo", s.Plugin)
-	populate(objectMap, "result", s.Result)
-	populate(objectMap, "schedulerInfo", s.Scheduler)
-	populate(objectMap, "sparkPoolName", s.SparkPoolName)
-	populate(objectMap, "state", s.State)
-	populate(objectMap, "submitterId", s.SubmitterID)
-	populate(objectMap, "submitterName", s.SubmitterName)
-	populate(objectMap, "tags", s.Tags)
-	populate(objectMap, "workspaceName", s.WorkspaceName)
+	populate(objectMap, "appId", b.AppID)
+	populate(objectMap, "appInfo", b.AppInfo)
+	populate(objectMap, "artifactId", b.ArtifactID)
+	populate(objectMap, "errorInfo", b.Errors)
+	populate(objectMap, "id", b.ID)
+	populate(objectMap, "jobType", b.JobType)
+	populate(objectMap, "livyInfo", b.LivyInfo)
+	populate(objectMap, "log", b.LogLines)
+	populate(objectMap, "name", b.Name)
+	populate(objectMap, "pluginInfo", b.Plugin)
+	populate(objectMap, "result", b.Result)
+	populate(objectMap, "schedulerInfo", b.Scheduler)
+	populate(objectMap, "sparkPoolName", b.SparkPoolName)
+	populate(objectMap, "state", b.State)
+	populate(objectMap, "submitterId", b.SubmitterID)
+	populate(objectMap, "submitterName", b.SubmitterName)
+	populate(objectMap, "tags", b.Tags)
+	populate(objectMap, "workspaceName", b.WorkspaceName)
 	return json.Marshal(objectMap)
 }
 
-// SparkBatchJobCollection - Response for batch list operation.
-type SparkBatchJobCollection struct {
+// BatchJobCollection - Response for batch list operation.
+type BatchJobCollection struct {
 	// REQUIRED; The start index of fetched sessions.
 	From *int32 `json:"from,omitempty"`
 
@@ -129,19 +102,19 @@ type SparkBatchJobCollection struct {
 	Total *int32 `json:"total,omitempty"`
 
 	// Batch list
-	Sessions []*SparkBatchJob `json:"sessions,omitempty"`
+	Sessions []*BatchJob `json:"sessions,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SparkBatchJobCollection.
-func (s SparkBatchJobCollection) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type BatchJobCollection.
+func (b BatchJobCollection) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populate(objectMap, "from", s.From)
-	populate(objectMap, "sessions", s.Sessions)
-	populate(objectMap, "total", s.Total)
+	populate(objectMap, "from", b.From)
+	populate(objectMap, "sessions", b.Sessions)
+	populate(objectMap, "total", b.Total)
 	return json.Marshal(objectMap)
 }
 
-type SparkBatchJobOptions struct {
+type BatchJobOptions struct {
 	// REQUIRED
 	File *string `json:"file,omitempty"`
 
@@ -167,35 +140,35 @@ type SparkBatchJobOptions struct {
 	Tags map[string]*string `json:"tags,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SparkBatchJobOptions.
-func (s SparkBatchJobOptions) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type BatchJobOptions.
+func (b BatchJobOptions) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populate(objectMap, "archives", s.Archives)
-	populate(objectMap, "args", s.Arguments)
-	populate(objectMap, "artifactId", s.ArtifactID)
-	populate(objectMap, "className", s.ClassName)
-	populate(objectMap, "conf", s.Configuration)
-	populate(objectMap, "driverCores", s.DriverCores)
-	populate(objectMap, "driverMemory", s.DriverMemory)
-	populate(objectMap, "executorCores", s.ExecutorCores)
-	populate(objectMap, "numExecutors", s.ExecutorCount)
-	populate(objectMap, "executorMemory", s.ExecutorMemory)
-	populate(objectMap, "file", s.File)
-	populate(objectMap, "files", s.Files)
-	populate(objectMap, "jars", s.Jars)
-	populate(objectMap, "name", s.Name)
-	populate(objectMap, "pyFiles", s.PythonFiles)
-	populate(objectMap, "tags", s.Tags)
+	populate(objectMap, "archives", b.Archives)
+	populate(objectMap, "args", b.Arguments)
+	populate(objectMap, "artifactId", b.ArtifactID)
+	populate(objectMap, "className", b.ClassName)
+	populate(objectMap, "conf", b.Configuration)
+	populate(objectMap, "driverCores", b.DriverCores)
+	populate(objectMap, "driverMemory", b.DriverMemory)
+	populate(objectMap, "executorCores", b.ExecutorCores)
+	populate(objectMap, "numExecutors", b.ExecutorCount)
+	populate(objectMap, "executorMemory", b.ExecutorMemory)
+	populate(objectMap, "file", b.File)
+	populate(objectMap, "files", b.Files)
+	populate(objectMap, "jars", b.Jars)
+	populate(objectMap, "name", b.Name)
+	populate(objectMap, "pyFiles", b.PythonFiles)
+	populate(objectMap, "tags", b.Tags)
 	return json.Marshal(objectMap)
 }
 
-type SparkBatchJobState struct {
+type BatchJobState struct {
 	// the Spark job state.
 	CurrentState *string `json:"currentState,omitempty"`
 
 	// time that at which "dead" livy state was first seen.
-	DeadAt             *time.Time    `json:"deadAt,omitempty"`
-	JobCreationRequest *SparkRequest `json:"jobCreationRequest,omitempty"`
+	DeadAt             *time.Time `json:"deadAt,omitempty"`
+	JobCreationRequest *Request   `json:"jobCreationRequest,omitempty"`
 
 	// the time that at which "not_started" livy state was first seen.
 	NotStartedAt *time.Time `json:"notStartedAt,omitempty"`
@@ -216,23 +189,23 @@ type SparkBatchJobState struct {
 	TerminatedAt *time.Time `json:"killedAt,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SparkBatchJobState.
-func (s SparkBatchJobState) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type BatchJobState.
+func (b BatchJobState) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populate(objectMap, "currentState", s.CurrentState)
-	populateTimeRFC3339(objectMap, "deadAt", s.DeadAt)
-	populate(objectMap, "jobCreationRequest", s.JobCreationRequest)
-	populateTimeRFC3339(objectMap, "notStartedAt", s.NotStartedAt)
-	populateTimeRFC3339(objectMap, "recoveringAt", s.RecoveringAt)
-	populateTimeRFC3339(objectMap, "runningAt", s.RunningAt)
-	populateTimeRFC3339(objectMap, "startingAt", s.StartingAt)
-	populateTimeRFC3339(objectMap, "successAt", s.SuccessAt)
-	populateTimeRFC3339(objectMap, "killedAt", s.TerminatedAt)
+	populate(objectMap, "currentState", b.CurrentState)
+	populateTimeRFC3339(objectMap, "deadAt", b.DeadAt)
+	populate(objectMap, "jobCreationRequest", b.JobCreationRequest)
+	populateTimeRFC3339(objectMap, "notStartedAt", b.NotStartedAt)
+	populateTimeRFC3339(objectMap, "recoveringAt", b.RecoveringAt)
+	populateTimeRFC3339(objectMap, "runningAt", b.RunningAt)
+	populateTimeRFC3339(objectMap, "startingAt", b.StartingAt)
+	populateTimeRFC3339(objectMap, "successAt", b.SuccessAt)
+	populateTimeRFC3339(objectMap, "killedAt", b.TerminatedAt)
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type SparkBatchJobState.
-func (s *SparkBatchJobState) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type BatchJobState.
+func (b *BatchJobState) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -241,31 +214,31 @@ func (s *SparkBatchJobState) UnmarshalJSON(data []byte) error {
 		var err error
 		switch key {
 		case "currentState":
-			err = unpopulate(val, &s.CurrentState)
+			err = unpopulate(val, &b.CurrentState)
 			delete(rawMsg, key)
 		case "deadAt":
-			err = unpopulateTimeRFC3339(val, &s.DeadAt)
+			err = unpopulateTimeRFC3339(val, &b.DeadAt)
 			delete(rawMsg, key)
 		case "jobCreationRequest":
-			err = unpopulate(val, &s.JobCreationRequest)
+			err = unpopulate(val, &b.JobCreationRequest)
 			delete(rawMsg, key)
 		case "notStartedAt":
-			err = unpopulateTimeRFC3339(val, &s.NotStartedAt)
+			err = unpopulateTimeRFC3339(val, &b.NotStartedAt)
 			delete(rawMsg, key)
 		case "recoveringAt":
-			err = unpopulateTimeRFC3339(val, &s.RecoveringAt)
+			err = unpopulateTimeRFC3339(val, &b.RecoveringAt)
 			delete(rawMsg, key)
 		case "runningAt":
-			err = unpopulateTimeRFC3339(val, &s.RunningAt)
+			err = unpopulateTimeRFC3339(val, &b.RunningAt)
 			delete(rawMsg, key)
 		case "startingAt":
-			err = unpopulateTimeRFC3339(val, &s.StartingAt)
+			err = unpopulateTimeRFC3339(val, &b.StartingAt)
 			delete(rawMsg, key)
 		case "successAt":
-			err = unpopulateTimeRFC3339(val, &s.SuccessAt)
+			err = unpopulateTimeRFC3339(val, &b.SuccessAt)
 			delete(rawMsg, key)
 		case "killedAt":
-			err = unpopulateTimeRFC3339(val, &s.TerminatedAt)
+			err = unpopulateTimeRFC3339(val, &b.TerminatedAt)
 			delete(rawMsg, key)
 		}
 		if err != nil {
@@ -275,7 +248,7 @@ func (s *SparkBatchJobState) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type SparkRequest struct {
+type Request struct {
 	Archives  []*string `json:"archives,omitempty"`
 	Arguments []*string `json:"args,omitempty"`
 	ClassName *string   `json:"className,omitempty"`
@@ -294,27 +267,27 @@ type SparkRequest struct {
 	PythonFiles    []*string          `json:"pyFiles,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SparkRequest.
-func (s SparkRequest) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type Request.
+func (r Request) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populate(objectMap, "archives", s.Archives)
-	populate(objectMap, "args", s.Arguments)
-	populate(objectMap, "className", s.ClassName)
-	populate(objectMap, "conf", s.Configuration)
-	populate(objectMap, "driverCores", s.DriverCores)
-	populate(objectMap, "driverMemory", s.DriverMemory)
-	populate(objectMap, "executorCores", s.ExecutorCores)
-	populate(objectMap, "numExecutors", s.ExecutorCount)
-	populate(objectMap, "executorMemory", s.ExecutorMemory)
-	populate(objectMap, "file", s.File)
-	populate(objectMap, "files", s.Files)
-	populate(objectMap, "jars", s.Jars)
-	populate(objectMap, "name", s.Name)
-	populate(objectMap, "pyFiles", s.PythonFiles)
+	populate(objectMap, "archives", r.Archives)
+	populate(objectMap, "args", r.Arguments)
+	populate(objectMap, "className", r.ClassName)
+	populate(objectMap, "conf", r.Configuration)
+	populate(objectMap, "driverCores", r.DriverCores)
+	populate(objectMap, "driverMemory", r.DriverMemory)
+	populate(objectMap, "executorCores", r.ExecutorCores)
+	populate(objectMap, "numExecutors", r.ExecutorCount)
+	populate(objectMap, "executorMemory", r.ExecutorMemory)
+	populate(objectMap, "file", r.File)
+	populate(objectMap, "files", r.Files)
+	populate(objectMap, "jars", r.Jars)
+	populate(objectMap, "name", r.Name)
+	populate(objectMap, "pyFiles", r.PythonFiles)
 	return json.Marshal(objectMap)
 }
 
-type SparkScheduler struct {
+type Scheduler struct {
 	CancellationRequestedAt *time.Time             `json:"cancellationRequestedAt,omitempty"`
 	CurrentState            *SchedulerCurrentState `json:"currentState,omitempty"`
 	EndedAt                 *time.Time             `json:"endedAt,omitempty"`
@@ -322,8 +295,8 @@ type SparkScheduler struct {
 	SubmittedAt             *time.Time             `json:"submittedAt,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SparkScheduler.
-func (s SparkScheduler) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type Scheduler.
+func (s Scheduler) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populateTimeRFC3339(objectMap, "cancellationRequestedAt", s.CancellationRequestedAt)
 	populate(objectMap, "currentState", s.CurrentState)
@@ -333,8 +306,8 @@ func (s SparkScheduler) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type SparkScheduler.
-func (s *SparkScheduler) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type Scheduler.
+func (s *Scheduler) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -365,13 +338,13 @@ func (s *SparkScheduler) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type SparkServiceError struct {
+type ServiceError struct {
 	ErrorCode *string           `json:"errorCode,omitempty"`
 	Message   *string           `json:"message,omitempty"`
 	Source    *SparkErrorSource `json:"source,omitempty"`
 }
 
-type SparkServicePlugin struct {
+type ServicePlugin struct {
 	CleanupStartedAt             *time.Time          `json:"cleanupStartedAt,omitempty"`
 	CurrentState                 *PluginCurrentState `json:"currentState,omitempty"`
 	MonitoringStartedAt          *time.Time          `json:"monitoringStartedAt,omitempty"`
@@ -380,8 +353,8 @@ type SparkServicePlugin struct {
 	SubmissionStartedAt          *time.Time          `json:"submissionStartedAt,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SparkServicePlugin.
-func (s SparkServicePlugin) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type ServicePlugin.
+func (s ServicePlugin) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populateTimeRFC3339(objectMap, "cleanupStartedAt", s.CleanupStartedAt)
 	populate(objectMap, "currentState", s.CurrentState)
@@ -392,8 +365,8 @@ func (s SparkServicePlugin) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type SparkServicePlugin.
-func (s *SparkServicePlugin) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type ServicePlugin.
+func (s *ServicePlugin) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -427,24 +400,24 @@ func (s *SparkServicePlugin) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type SparkSession struct {
+type Session struct {
 	// REQUIRED
 	ID    *int32  `json:"id,omitempty"`
 	AppID *string `json:"appId,omitempty"`
 
 	// Dictionary of
-	AppInfo    map[string]*string   `json:"appInfo,omitempty"`
-	ArtifactID *string              `json:"artifactId,omitempty"`
-	Errors     []*SparkServiceError `json:"errorInfo,omitempty"`
+	AppInfo    map[string]*string `json:"appInfo,omitempty"`
+	ArtifactID *string            `json:"artifactId,omitempty"`
+	Errors     []*ServiceError    `json:"errorInfo,omitempty"`
 
 	// The job type.
 	JobType       *SparkJobType           `json:"jobType,omitempty"`
-	LivyInfo      *SparkSessionState      `json:"livyInfo,omitempty"`
+	LivyInfo      *SessionState           `json:"livyInfo,omitempty"`
 	LogLines      []*string               `json:"log,omitempty"`
 	Name          *string                 `json:"name,omitempty"`
-	Plugin        *SparkServicePlugin     `json:"pluginInfo,omitempty"`
+	Plugin        *ServicePlugin          `json:"pluginInfo,omitempty"`
 	Result        *SparkSessionResultType `json:"result,omitempty"`
-	Scheduler     *SparkScheduler         `json:"schedulerInfo,omitempty"`
+	Scheduler     *Scheduler              `json:"schedulerInfo,omitempty"`
 	SparkPoolName *string                 `json:"sparkPoolName,omitempty"`
 	State         *string                 `json:"state,omitempty"`
 	SubmitterID   *string                 `json:"submitterId,omitempty"`
@@ -455,8 +428,8 @@ type SparkSession struct {
 	WorkspaceName *string            `json:"workspaceName,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SparkSession.
-func (s SparkSession) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type Session.
+func (s Session) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "appId", s.AppID)
 	populate(objectMap, "appInfo", s.AppInfo)
@@ -479,28 +452,17 @@ func (s SparkSession) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SparkSessionCancelSparkSessionOptions contains the optional parameters for the sparkSessionClient.CancelSparkSession method.
-type SparkSessionCancelSparkSessionOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SparkSessionCancelSparkStatementOptions contains the optional parameters for the sparkSessionClient.CancelSparkStatement
-// method.
-type SparkSessionCancelSparkStatementOptions struct {
-	// placeholder for future optional parameters
-}
-
-type SparkSessionCollection struct {
+type SessionCollection struct {
 	// REQUIRED
 	From *int32 `json:"from,omitempty"`
 
 	// REQUIRED
-	Total    *int32          `json:"total,omitempty"`
-	Sessions []*SparkSession `json:"sessions,omitempty"`
+	Total    *int32     `json:"total,omitempty"`
+	Sessions []*Session `json:"sessions,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SparkSessionCollection.
-func (s SparkSessionCollection) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type SessionCollection.
+func (s SessionCollection) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "from", s.From)
 	populate(objectMap, "sessions", s.Sessions)
@@ -508,45 +470,7 @@ func (s SparkSessionCollection) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SparkSessionCreateSparkSessionOptions contains the optional parameters for the sparkSessionClient.CreateSparkSession method.
-type SparkSessionCreateSparkSessionOptions struct {
-	// Optional query param specifying whether detailed response is returned beyond plain livy.
-	Detailed *bool
-}
-
-// SparkSessionCreateSparkStatementOptions contains the optional parameters for the sparkSessionClient.CreateSparkStatement
-// method.
-type SparkSessionCreateSparkStatementOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SparkSessionGetSparkSessionOptions contains the optional parameters for the sparkSessionClient.GetSparkSession method.
-type SparkSessionGetSparkSessionOptions struct {
-	// Optional query param specifying whether detailed response is returned beyond plain livy.
-	Detailed *bool
-}
-
-// SparkSessionGetSparkSessionsOptions contains the optional parameters for the sparkSessionClient.GetSparkSessions method.
-type SparkSessionGetSparkSessionsOptions struct {
-	// Optional query param specifying whether detailed response is returned beyond plain livy.
-	Detailed *bool
-	// Optional param specifying which index the list should begin from.
-	From *int32
-	// Optional param specifying the size of the returned list. By default it is 20 and that is the maximum.
-	Size *int32
-}
-
-// SparkSessionGetSparkStatementOptions contains the optional parameters for the sparkSessionClient.GetSparkStatement method.
-type SparkSessionGetSparkStatementOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SparkSessionGetSparkStatementsOptions contains the optional parameters for the sparkSessionClient.GetSparkStatements method.
-type SparkSessionGetSparkStatementsOptions struct {
-	// placeholder for future optional parameters
-}
-
-type SparkSessionOptions struct {
+type SessionOptions struct {
 	// REQUIRED
 	Name       *string   `json:"name,omitempty"`
 	Archives   []*string `json:"archives,omitempty"`
@@ -570,8 +494,8 @@ type SparkSessionOptions struct {
 	Tags map[string]*string `json:"tags,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SparkSessionOptions.
-func (s SparkSessionOptions) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type SessionOptions.
+func (s SessionOptions) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "archives", s.Archives)
 	populate(objectMap, "args", s.Arguments)
@@ -592,28 +516,22 @@ func (s SparkSessionOptions) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the sparkSessionClient.ResetSparkSessionTimeout
-// method.
-type SparkSessionResetSparkSessionTimeoutOptions struct {
-	// placeholder for future optional parameters
+type SessionState struct {
+	BusyAt             *time.Time `json:"busyAt,omitempty"`
+	CurrentState       *string    `json:"currentState,omitempty"`
+	DeadAt             *time.Time `json:"deadAt,omitempty"`
+	ErrorAt            *time.Time `json:"errorAt,omitempty"`
+	IdleAt             *time.Time `json:"idleAt,omitempty"`
+	JobCreationRequest *Request   `json:"jobCreationRequest,omitempty"`
+	NotStartedAt       *time.Time `json:"notStartedAt,omitempty"`
+	RecoveringAt       *time.Time `json:"recoveringAt,omitempty"`
+	ShuttingDownAt     *time.Time `json:"shuttingDownAt,omitempty"`
+	StartingAt         *time.Time `json:"startingAt,omitempty"`
+	TerminatedAt       *time.Time `json:"killedAt,omitempty"`
 }
 
-type SparkSessionState struct {
-	BusyAt             *time.Time    `json:"busyAt,omitempty"`
-	CurrentState       *string       `json:"currentState,omitempty"`
-	DeadAt             *time.Time    `json:"deadAt,omitempty"`
-	ErrorAt            *time.Time    `json:"errorAt,omitempty"`
-	IdleAt             *time.Time    `json:"idleAt,omitempty"`
-	JobCreationRequest *SparkRequest `json:"jobCreationRequest,omitempty"`
-	NotStartedAt       *time.Time    `json:"notStartedAt,omitempty"`
-	RecoveringAt       *time.Time    `json:"recoveringAt,omitempty"`
-	ShuttingDownAt     *time.Time    `json:"shuttingDownAt,omitempty"`
-	StartingAt         *time.Time    `json:"startingAt,omitempty"`
-	TerminatedAt       *time.Time    `json:"killedAt,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type SparkSessionState.
-func (s SparkSessionState) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type SessionState.
+func (s SessionState) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populateTimeRFC3339(objectMap, "busyAt", s.BusyAt)
 	populate(objectMap, "currentState", s.CurrentState)
@@ -629,8 +547,8 @@ func (s SparkSessionState) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type SparkSessionState.
-func (s *SparkSessionState) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type SessionState.
+func (s *SessionState) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
@@ -679,39 +597,119 @@ func (s *SparkSessionState) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type SparkStatement struct {
-	// REQUIRED
-	ID     *int32                `json:"id,omitempty"`
-	Code   *string               `json:"code,omitempty"`
-	Output *SparkStatementOutput `json:"output,omitempty"`
-	State  *string               `json:"state,omitempty"`
+// SparkBatchCancelSparkBatchJobOptions contains the optional parameters for the batchClient.CancelSparkBatchJob method.
+type SparkBatchCancelSparkBatchJobOptions struct {
+	// placeholder for future optional parameters
 }
 
-type SparkStatementCancellationResult struct {
+// SparkBatchCreateSparkBatchJobOptions contains the optional parameters for the batchClient.CreateSparkBatchJob method.
+type SparkBatchCreateSparkBatchJobOptions struct {
+	// Optional query param specifying whether detailed response is returned beyond plain livy.
+	Detailed *bool
+}
+
+// SparkBatchGetSparkBatchJobOptions contains the optional parameters for the batchClient.GetSparkBatchJob method.
+type SparkBatchGetSparkBatchJobOptions struct {
+	// Optional query param specifying whether detailed response is returned beyond plain livy.
+	Detailed *bool
+}
+
+// SparkBatchGetSparkBatchJobsOptions contains the optional parameters for the batchClient.GetSparkBatchJobs method.
+type SparkBatchGetSparkBatchJobsOptions struct {
+	// Optional query param specifying whether detailed response is returned beyond plain livy.
+	Detailed *bool
+	// Optional param specifying which index the list should begin from.
+	From *int32
+	// Optional param specifying the size of the returned list. By default it is 20 and that is the maximum.
+	Size *int32
+}
+
+// SparkSessionCancelSparkSessionOptions contains the optional parameters for the sessionClient.CancelSparkSession method.
+type SparkSessionCancelSparkSessionOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SparkSessionCancelSparkStatementOptions contains the optional parameters for the sessionClient.CancelSparkStatement method.
+type SparkSessionCancelSparkStatementOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SparkSessionCreateSparkSessionOptions contains the optional parameters for the sessionClient.CreateSparkSession method.
+type SparkSessionCreateSparkSessionOptions struct {
+	// Optional query param specifying whether detailed response is returned beyond plain livy.
+	Detailed *bool
+}
+
+// SparkSessionCreateSparkStatementOptions contains the optional parameters for the sessionClient.CreateSparkStatement method.
+type SparkSessionCreateSparkStatementOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SparkSessionGetSparkSessionOptions contains the optional parameters for the sessionClient.GetSparkSession method.
+type SparkSessionGetSparkSessionOptions struct {
+	// Optional query param specifying whether detailed response is returned beyond plain livy.
+	Detailed *bool
+}
+
+// SparkSessionGetSparkSessionsOptions contains the optional parameters for the sessionClient.GetSparkSessions method.
+type SparkSessionGetSparkSessionsOptions struct {
+	// Optional query param specifying whether detailed response is returned beyond plain livy.
+	Detailed *bool
+	// Optional param specifying which index the list should begin from.
+	From *int32
+	// Optional param specifying the size of the returned list. By default it is 20 and that is the maximum.
+	Size *int32
+}
+
+// SparkSessionGetSparkStatementOptions contains the optional parameters for the sessionClient.GetSparkStatement method.
+type SparkSessionGetSparkStatementOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SparkSessionGetSparkStatementsOptions contains the optional parameters for the sessionClient.GetSparkStatements method.
+type SparkSessionGetSparkStatementsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the sessionClient.ResetSparkSessionTimeout
+// method.
+type SparkSessionResetSparkSessionTimeoutOptions struct {
+	// placeholder for future optional parameters
+}
+
+type Statement struct {
+	// REQUIRED
+	ID     *int32           `json:"id,omitempty"`
+	Code   *string          `json:"code,omitempty"`
+	Output *StatementOutput `json:"output,omitempty"`
+	State  *string          `json:"state,omitempty"`
+}
+
+type StatementCancellationResult struct {
 	// The msg property from the Livy API. The value is always "canceled".
 	Message *string `json:"msg,omitempty"`
 }
 
-type SparkStatementCollection struct {
+type StatementCollection struct {
 	// REQUIRED
-	Total      *int32            `json:"total_statements,omitempty"`
-	Statements []*SparkStatement `json:"statements,omitempty"`
+	Total      *int32       `json:"total_statements,omitempty"`
+	Statements []*Statement `json:"statements,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SparkStatementCollection.
-func (s SparkStatementCollection) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type StatementCollection.
+func (s StatementCollection) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "statements", s.Statements)
 	populate(objectMap, "total_statements", s.Total)
 	return json.Marshal(objectMap)
 }
 
-type SparkStatementOptions struct {
+type StatementOptions struct {
 	Code *string                     `json:"code,omitempty"`
 	Kind *SparkStatementLanguageType `json:"kind,omitempty"`
 }
 
-type SparkStatementOutput struct {
+type StatementOutput struct {
 	// REQUIRED
 	ExecutionCount *int32 `json:"execution_count,omitempty"`
 
@@ -723,8 +721,8 @@ type SparkStatementOutput struct {
 	Traceback  []*string              `json:"traceback,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SparkStatementOutput.
-func (s SparkStatementOutput) MarshalJSON() ([]byte, error) {
+// MarshalJSON implements the json.Marshaller interface for type StatementOutput.
+func (s StatementOutput) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "data", s.Data)
 	populate(objectMap, "ename", s.ErrorName)

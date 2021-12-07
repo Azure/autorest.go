@@ -317,46 +317,6 @@ func (e CloudError) Error() string {
 	return e.raw
 }
 
-// ComputeOperationListResult - The List Compute Operation operation response.
-type ComputeOperationListResult struct {
-	// READ-ONLY; The list of compute operations
-	Value []*ComputeOperationValue `json:"value,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type ComputeOperationListResult.
-func (c ComputeOperationListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "value", c.Value)
-	return json.Marshal(objectMap)
-}
-
-// ComputeOperationValue - Describes the properties of a Compute Operation value.
-type ComputeOperationValue struct {
-	// Describes the properties of a Compute Operation Value Display.
-	Display *ComputeOperationValueDisplay `json:"display,omitempty"`
-
-	// READ-ONLY; The name of the compute operation.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; The origin of the compute operation.
-	Origin *string `json:"origin,omitempty" azure:"ro"`
-}
-
-// ComputeOperationValueDisplay - Describes the properties of a Compute Operation Value Display.
-type ComputeOperationValueDisplay struct {
-	// READ-ONLY; The description of the operation.
-	Description *string `json:"description,omitempty" azure:"ro"`
-
-	// READ-ONLY; The display name of the compute operation.
-	Operation *string `json:"operation,omitempty" azure:"ro"`
-
-	// READ-ONLY; The resource provider for the operation.
-	Provider *string `json:"provider,omitempty" azure:"ro"`
-
-	// READ-ONLY; The display name of the resource the operation applies to.
-	Resource *string `json:"resource,omitempty" azure:"ro"`
-}
-
 // ContainerService - Container service.
 type ContainerService struct {
 	Resource
@@ -3201,6 +3161,46 @@ func (o OSProfile) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "secrets", o.Secrets)
 	populate(objectMap, "windowsConfiguration", o.WindowsConfiguration)
 	return json.Marshal(objectMap)
+}
+
+// OperationListResult - The List Compute Operation operation response.
+type OperationListResult struct {
+	// READ-ONLY; The list of compute operations
+	Value []*OperationValue `json:"value,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type OperationListResult.
+func (o OperationListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "value", o.Value)
+	return json.Marshal(objectMap)
+}
+
+// OperationValue - Describes the properties of a Compute Operation value.
+type OperationValue struct {
+	// Describes the properties of a Compute Operation Value Display.
+	Display *OperationValueDisplay `json:"display,omitempty"`
+
+	// READ-ONLY; The name of the compute operation.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; The origin of the compute operation.
+	Origin *string `json:"origin,omitempty" azure:"ro"`
+}
+
+// OperationValueDisplay - Describes the properties of a Compute Operation Value Display.
+type OperationValueDisplay struct {
+	// READ-ONLY; The description of the operation.
+	Description *string `json:"description,omitempty" azure:"ro"`
+
+	// READ-ONLY; The display name of the compute operation.
+	Operation *string `json:"operation,omitempty" azure:"ro"`
+
+	// READ-ONLY; The resource provider for the operation.
+	Provider *string `json:"provider,omitempty" azure:"ro"`
+
+	// READ-ONLY; The display name of the resource the operation applies to.
+	Resource *string `json:"resource,omitempty" azure:"ro"`
 }
 
 // OperationsListOptions contains the optional parameters for the OperationsClient.List method.

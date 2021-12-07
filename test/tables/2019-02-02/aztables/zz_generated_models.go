@@ -86,6 +86,23 @@ type CorsRule struct {
 	MaxAgeInSeconds *int32 `xml:"MaxAgeInSeconds"`
 }
 
+// EntityQueryResponse - The properties for the table entity query response.
+type EntityQueryResponse struct {
+	// The metadata response of the table.
+	ODataMetadata *string `json:"odata.metadata,omitempty"`
+
+	// List of table entities.
+	Value []map[string]interface{} `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type EntityQueryResponse.
+func (e EntityQueryResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "odata.metadata", e.ODataMetadata)
+	populate(objectMap, "value", e.Value)
+	return json.Marshal(objectMap)
+}
+
 type GeoReplication struct {
 	// REQUIRED; A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available
 	// for read operations at the secondary. Primary writes after this point in time may or may
@@ -157,6 +174,51 @@ type Metrics struct {
 	Version *string `xml:"Version"`
 }
 
+// Properties - The properties for creating a table.
+type Properties struct {
+	// The name of the table to create.
+	TableName *string `json:"TableName,omitempty"`
+}
+
+// QueryResponse - The properties for the table query response.
+type QueryResponse struct {
+	// The metadata response of the table.
+	ODataMetadata *string `json:"odata.metadata,omitempty"`
+
+	// List of tables.
+	Value []*ResponseProperties `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type QueryResponse.
+func (q QueryResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "odata.metadata", q.ODataMetadata)
+	populate(objectMap, "value", q.Value)
+	return json.Marshal(objectMap)
+}
+
+// Response - The response for a single table.
+type Response struct {
+	ResponseProperties
+	// The metadata response of the table.
+	ODataMetadata *string `json:"odata.metadata,omitempty"`
+}
+
+// ResponseProperties - The properties for the table response.
+type ResponseProperties struct {
+	// The edit link of the table.
+	ODataEditLink *string `json:"odata.editLink,omitempty"`
+
+	// The id of the table.
+	ODataID *string `json:"odata.id,omitempty"`
+
+	// The odata type of the table.
+	ODataType *string `json:"odata.type,omitempty"`
+
+	// The name of the table.
+	TableName *string `json:"TableName,omitempty"`
+}
+
 // RetentionPolicy - The retention policy.
 type RetentionPolicy struct {
 	// REQUIRED; Indicates whether a retention policy is enabled for the service.
@@ -165,6 +227,20 @@ type RetentionPolicy struct {
 	// Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this
 	// value will be deleted.
 	Days *int32 `xml:"Days"`
+}
+
+// ServiceError - Table Service error.
+// Implements the error and azcore.HTTPResponse interfaces.
+type ServiceError struct {
+	raw string
+	// The error message.
+	Message *string `json:"Message,omitempty"`
+}
+
+// Error implements the error interface for type ServiceError.
+// The contents of the error text are not contractual and subject to change.
+func (e ServiceError) Error() string {
+	return e.raw
 }
 
 // ServiceGetPropertiesOptions contains the optional parameters for the ServiceClient.GetProperties method.
@@ -185,6 +261,37 @@ type ServiceGetStatisticsOptions struct {
 	Timeout *int32
 }
 
+// ServiceProperties - Table Service Properties.
+type ServiceProperties struct {
+	// The set of CORS rules.
+	Cors []*CorsRule `xml:"Cors>CorsRule"`
+
+	// A summary of request statistics grouped by API in hourly aggregates for tables.
+	HourMetrics *Metrics `xml:"HourMetrics"`
+
+	// Azure Analytics Logging settings.
+	Logging *Logging `xml:"Logging"`
+
+	// A summary of request statistics grouped by API in minute aggregates for tables.
+	MinuteMetrics *Metrics `xml:"MinuteMetrics"`
+}
+
+// MarshalXML implements the xml.Marshaller interface for type ServiceProperties.
+func (s ServiceProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "StorageServiceProperties"
+	type alias ServiceProperties
+	aux := &struct {
+		*alias
+		Cors *[]*CorsRule `xml:"Cors>CorsRule"`
+	}{
+		alias: (*alias)(&s),
+	}
+	if s.Cors != nil {
+		aux.Cors = &s.Cors
+	}
+	return e.EncodeElement(aux, start)
+}
+
 // ServiceSetPropertiesOptions contains the optional parameters for the ServiceClient.SetProperties method.
 type ServiceSetPropertiesOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
@@ -192,6 +299,12 @@ type ServiceSetPropertiesOptions struct {
 	RequestID *string
 	// The timeout parameter is expressed in seconds.
 	Timeout *int32
+}
+
+// ServiceStats - Stats for the service.
+type ServiceStats struct {
+	// Geo-Replication information for the Secondary Storage Service.
+	GeoReplication *GeoReplication `xml:"GeoReplication"`
 }
 
 // SignedIdentifier - A signed identifier.
@@ -203,7 +316,7 @@ type SignedIdentifier struct {
 	ID *string `xml:"Id"`
 }
 
-// TableCreateOptions contains the optional parameters for the TableClient.Create method.
+// TableCreateOptions contains the optional parameters for the Client.Create method.
 type TableCreateOptions struct {
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat
@@ -215,7 +328,7 @@ type TableCreateOptions struct {
 	ResponsePreference *ResponseFormat
 }
 
-// TableDeleteEntityOptions contains the optional parameters for the TableClient.DeleteEntity method.
+// TableDeleteEntityOptions contains the optional parameters for the Client.DeleteEntity method.
 type TableDeleteEntityOptions struct {
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat
@@ -226,31 +339,14 @@ type TableDeleteEntityOptions struct {
 	Timeout *int32
 }
 
-// TableDeleteOptions contains the optional parameters for the TableClient.Delete method.
+// TableDeleteOptions contains the optional parameters for the Client.Delete method.
 type TableDeleteOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
 	RequestID *string
 }
 
-// TableEntityQueryResponse - The properties for the table entity query response.
-type TableEntityQueryResponse struct {
-	// The metadata response of the table.
-	ODataMetadata *string `json:"odata.metadata,omitempty"`
-
-	// List of table entities.
-	Value []map[string]interface{} `json:"value,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type TableEntityQueryResponse.
-func (t TableEntityQueryResponse) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "odata.metadata", t.ODataMetadata)
-	populate(objectMap, "value", t.Value)
-	return json.Marshal(objectMap)
-}
-
-// TableGetAccessPolicyOptions contains the optional parameters for the TableClient.GetAccessPolicy method.
+// TableGetAccessPolicyOptions contains the optional parameters for the Client.GetAccessPolicy method.
 type TableGetAccessPolicyOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
@@ -259,7 +355,7 @@ type TableGetAccessPolicyOptions struct {
 	Timeout *int32
 }
 
-// TableInsertEntityOptions contains the optional parameters for the TableClient.InsertEntity method.
+// TableInsertEntityOptions contains the optional parameters for the Client.InsertEntity method.
 type TableInsertEntityOptions struct {
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat
@@ -275,7 +371,7 @@ type TableInsertEntityOptions struct {
 	Timeout *int32
 }
 
-// TableMergeEntityOptions contains the optional parameters for the TableClient.MergeEntity method.
+// TableMergeEntityOptions contains the optional parameters for the Client.MergeEntity method.
 type TableMergeEntityOptions struct {
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat
@@ -293,13 +389,7 @@ type TableMergeEntityOptions struct {
 	Timeout *int32
 }
 
-// TableProperties - The properties for creating a table.
-type TableProperties struct {
-	// The name of the table to create.
-	TableName *string `json:"TableName,omitempty"`
-}
-
-// TableQueryEntitiesOptions contains the optional parameters for the TableClient.QueryEntities method.
+// TableQueryEntitiesOptions contains the optional parameters for the Client.QueryEntities method.
 type TableQueryEntitiesOptions struct {
 	// OData filter expression.
 	Filter *string
@@ -321,7 +411,7 @@ type TableQueryEntitiesOptions struct {
 	Top *int32
 }
 
-// TableQueryEntityWithPartitionAndRowKeyOptions contains the optional parameters for the TableClient.QueryEntityWithPartitionAndRowKey
+// TableQueryEntityWithPartitionAndRowKeyOptions contains the optional parameters for the Client.QueryEntityWithPartitionAndRowKey
 // method.
 type TableQueryEntityWithPartitionAndRowKeyOptions struct {
 	// OData filter expression.
@@ -338,7 +428,7 @@ type TableQueryEntityWithPartitionAndRowKeyOptions struct {
 	Timeout *int32
 }
 
-// TableQueryOptions contains the optional parameters for the TableClient.Query method.
+// TableQueryOptions contains the optional parameters for the Client.Query method.
 type TableQueryOptions struct {
 	// OData filter expression.
 	Filter *string
@@ -356,97 +446,7 @@ type TableQueryOptions struct {
 	Top *int32
 }
 
-// TableQueryResponse - The properties for the table query response.
-type TableQueryResponse struct {
-	// The metadata response of the table.
-	ODataMetadata *string `json:"odata.metadata,omitempty"`
-
-	// List of tables.
-	Value []*TableResponseProperties `json:"value,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type TableQueryResponse.
-func (t TableQueryResponse) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "odata.metadata", t.ODataMetadata)
-	populate(objectMap, "value", t.Value)
-	return json.Marshal(objectMap)
-}
-
-// TableResponse - The response for a single table.
-type TableResponse struct {
-	TableResponseProperties
-	// The metadata response of the table.
-	ODataMetadata *string `json:"odata.metadata,omitempty"`
-}
-
-// TableResponseProperties - The properties for the table response.
-type TableResponseProperties struct {
-	// The edit link of the table.
-	ODataEditLink *string `json:"odata.editLink,omitempty"`
-
-	// The id of the table.
-	ODataID *string `json:"odata.id,omitempty"`
-
-	// The odata type of the table.
-	ODataType *string `json:"odata.type,omitempty"`
-
-	// The name of the table.
-	TableName *string `json:"TableName,omitempty"`
-}
-
-// TableServiceError - Table Service error.
-// Implements the error and azcore.HTTPResponse interfaces.
-type TableServiceError struct {
-	raw string
-	// The error message.
-	Message *string `json:"Message,omitempty"`
-}
-
-// Error implements the error interface for type TableServiceError.
-// The contents of the error text are not contractual and subject to change.
-func (e TableServiceError) Error() string {
-	return e.raw
-}
-
-// TableServiceProperties - Table Service Properties.
-type TableServiceProperties struct {
-	// The set of CORS rules.
-	Cors []*CorsRule `xml:"Cors>CorsRule"`
-
-	// A summary of request statistics grouped by API in hourly aggregates for tables.
-	HourMetrics *Metrics `xml:"HourMetrics"`
-
-	// Azure Analytics Logging settings.
-	Logging *Logging `xml:"Logging"`
-
-	// A summary of request statistics grouped by API in minute aggregates for tables.
-	MinuteMetrics *Metrics `xml:"MinuteMetrics"`
-}
-
-// MarshalXML implements the xml.Marshaller interface for type TableServiceProperties.
-func (t TableServiceProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	start.Name.Local = "StorageServiceProperties"
-	type alias TableServiceProperties
-	aux := &struct {
-		*alias
-		Cors *[]*CorsRule `xml:"Cors>CorsRule"`
-	}{
-		alias: (*alias)(&t),
-	}
-	if t.Cors != nil {
-		aux.Cors = &t.Cors
-	}
-	return e.EncodeElement(aux, start)
-}
-
-// TableServiceStats - Stats for the service.
-type TableServiceStats struct {
-	// Geo-Replication information for the Secondary Storage Service.
-	GeoReplication *GeoReplication `xml:"GeoReplication"`
-}
-
-// TableSetAccessPolicyOptions contains the optional parameters for the TableClient.SetAccessPolicy method.
+// TableSetAccessPolicyOptions contains the optional parameters for the Client.SetAccessPolicy method.
 type TableSetAccessPolicyOptions struct {
 	// Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when analytics
 	// logging is enabled.
@@ -457,7 +457,7 @@ type TableSetAccessPolicyOptions struct {
 	Timeout *int32
 }
 
-// TableUpdateEntityOptions contains the optional parameters for the TableClient.UpdateEntity method.
+// TableUpdateEntityOptions contains the optional parameters for the Client.UpdateEntity method.
 type TableUpdateEntityOptions struct {
 	// Specifies the media type for the response.
 	Format *ODataMetadataFormat

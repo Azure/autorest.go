@@ -22,20 +22,20 @@ import (
 	"strings"
 )
 
-// NetworkInterfaceLoadBalancersClient contains the methods for the NetworkInterfaceLoadBalancers group.
-// Don't use this type directly, use NewNetworkInterfaceLoadBalancersClient() instead.
-type NetworkInterfaceLoadBalancersClient struct {
+// InterfaceLoadBalancersClient contains the methods for the NetworkInterfaceLoadBalancers group.
+// Don't use this type directly, use NewInterfaceLoadBalancersClient() instead.
+type InterfaceLoadBalancersClient struct {
 	host           string
 	subscriptionID string
 	pl             runtime.Pipeline
 }
 
-// NewNetworkInterfaceLoadBalancersClient creates a new instance of NetworkInterfaceLoadBalancersClient with the specified values.
+// NewInterfaceLoadBalancersClient creates a new instance of InterfaceLoadBalancersClient with the specified values.
 // subscriptionID - The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription
 // ID forms part of the URI for every service call.
 // credential - used to authorize requests. Usually a credential from azidentity.
 // options - pass nil to accept the default values.
-func NewNetworkInterfaceLoadBalancersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *NetworkInterfaceLoadBalancersClient {
+func NewInterfaceLoadBalancersClient(subscriptionID string, credential azcore.TokenCredential, options *arm.ClientOptions) *InterfaceLoadBalancersClient {
 	cp := arm.ClientOptions{}
 	if options != nil {
 		cp = *options
@@ -43,7 +43,7 @@ func NewNetworkInterfaceLoadBalancersClient(subscriptionID string, credential az
 	if len(cp.Host) == 0 {
 		cp.Host = arm.AzurePublicCloud
 	}
-	client := &NetworkInterfaceLoadBalancersClient{
+	client := &InterfaceLoadBalancersClient{
 		subscriptionID: subscriptionID,
 		host:           string(cp.Host),
 		pl:             armruntime.NewPipeline(module, version, credential, &cp),
@@ -55,22 +55,22 @@ func NewNetworkInterfaceLoadBalancersClient(subscriptionID string, credential az
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
-// options - NetworkInterfaceLoadBalancersListOptions contains the optional parameters for the NetworkInterfaceLoadBalancersClient.List
+// options - NetworkInterfaceLoadBalancersListOptions contains the optional parameters for the InterfaceLoadBalancersClient.List
 // method.
-func (client *NetworkInterfaceLoadBalancersClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceLoadBalancersListOptions) *NetworkInterfaceLoadBalancersListPager {
+func (client *InterfaceLoadBalancersClient) List(resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceLoadBalancersListOptions) *NetworkInterfaceLoadBalancersListPager {
 	return &NetworkInterfaceLoadBalancersListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 		},
 		advancer: func(ctx context.Context, resp NetworkInterfaceLoadBalancersListResponse) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.NetworkInterfaceLoadBalancerListResult.NextLink)
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.InterfaceLoadBalancerListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *NetworkInterfaceLoadBalancersClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceLoadBalancersListOptions) (*policy.Request, error) {
+func (client *InterfaceLoadBalancersClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *NetworkInterfaceLoadBalancersListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/loadBalancers"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -96,16 +96,16 @@ func (client *NetworkInterfaceLoadBalancersClient) listCreateRequest(ctx context
 }
 
 // listHandleResponse handles the List response.
-func (client *NetworkInterfaceLoadBalancersClient) listHandleResponse(resp *http.Response) (NetworkInterfaceLoadBalancersListResponse, error) {
+func (client *InterfaceLoadBalancersClient) listHandleResponse(resp *http.Response) (NetworkInterfaceLoadBalancersListResponse, error) {
 	result := NetworkInterfaceLoadBalancersListResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkInterfaceLoadBalancerListResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceLoadBalancerListResult); err != nil {
 		return NetworkInterfaceLoadBalancersListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // listHandleError handles the List error response.
-func (client *NetworkInterfaceLoadBalancersClient) listHandleError(resp *http.Response) error {
+func (client *InterfaceLoadBalancersClient) listHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)

@@ -74,4 +74,7 @@ help-content:
       - key: group-parameters
         description: Enables parameter grouping via x-ms-parameter-grouping, defaults to true.
         type: boolean
+      - key: stutter
+        type: string
+        description: Uses the specified value to remove stuttering from types and funcs instead of the built-in algorithm.
 ```

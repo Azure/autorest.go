@@ -18,24 +18,24 @@ import (
 	"strings"
 )
 
-type aliasClient struct {
+type client struct {
 	endpoint   string
 	apiVersion *string
 	pl         runtime.Pipeline
 }
 
-// newAliasClient creates a new instance of aliasClient with the specified values.
+// newClient creates a new instance of client with the specified values.
 // geography - This parameter specifies where the Azure Maps Creator resource is located. Valid values are us and eu.
 // apiVersion - Api Version. Specifying any value will set the value to 2.0.
 // pl - the pipeline used for sending requests and handling responses.
-func newAliasClient(geography *Geography, apiVersion *string, pl runtime.Pipeline) *aliasClient {
+func newClient(geography *Geography, apiVersion *string, pl runtime.Pipeline) *client {
 	hostURL := "https://{geography}.atlas.microsoft.com"
 	if geography == nil {
 		defaultValue := GeographyUs
 		geography = &defaultValue
 	}
 	hostURL = strings.ReplaceAll(hostURL, "{geography}", string(*geography))
-	client := &aliasClient{
+	client := &client{
 		endpoint:   hostURL,
 		apiVersion: apiVersion,
 		pl:         pl,
@@ -58,8 +58,8 @@ func newAliasClient(geography *Geography, apiVersion *string, pl runtime.Pipelin
 // "e89aebb9-70a3-8fe1-32bb-1fbd0c725f14", "lastUpdatedTimestamp":
 // "2020-02-13T21:19:22.123Z" }
 // If the operation fails it returns a generic error.
-// options - AliasCreateOptions contains the optional parameters for the aliasClient.Create method.
-func (client *aliasClient) Create(ctx context.Context, options *AliasCreateOptions) (AliasCreateResponse, error) {
+// options - AliasCreateOptions contains the optional parameters for the client.Create method.
+func (client *client) Create(ctx context.Context, options *AliasCreateOptions) (AliasCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, options)
 	if err != nil {
 		return AliasCreateResponse{}, err
@@ -75,7 +75,7 @@ func (client *aliasClient) Create(ctx context.Context, options *AliasCreateOptio
 }
 
 // createCreateRequest creates the Create request.
-func (client *aliasClient) createCreateRequest(ctx context.Context, options *AliasCreateOptions) (*policy.Request, error) {
+func (client *client) createCreateRequest(ctx context.Context, options *AliasCreateOptions) (*policy.Request, error) {
 	urlPath := "/aliases"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -99,7 +99,7 @@ func (client *aliasClient) createCreateRequest(ctx context.Context, options *Ali
 }
 
 // createHandleResponse handles the Create response.
-func (client *aliasClient) createHandleResponse(resp *http.Response) (AliasCreateResponse, error) {
+func (client *client) createHandleResponse(resp *http.Response) (AliasCreateResponse, error) {
 	result := AliasCreateResponse{RawResponse: resp}
 	if val := resp.Header.Get("Access-Control-Expose-Headers"); val != "" {
 		result.AccessControlExposeHeaders = &val
@@ -111,7 +111,7 @@ func (client *aliasClient) createHandleResponse(resp *http.Response) (AliasCreat
 }
 
 // createHandleError handles the Create error response.
-func (client *aliasClient) createHandleError(resp *http.Response) error {
+func (client *client) createHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -141,21 +141,21 @@ func (client *aliasClient) createHandleError(resp *http.Response) error {
 // "creatorDataItemId": null, "lastUpdatedTimestamp":
 // "2020-02-18T19:53:33.123Z" } ] }
 // If the operation fails it returns a generic error.
-// options - AliasListOptions contains the optional parameters for the aliasClient.List method.
-func (client *aliasClient) List(options *AliasListOptions) *AliasListPager {
+// options - AliasListOptions contains the optional parameters for the client.List method.
+func (client *client) List(options *AliasListOptions) *AliasListPager {
 	return &AliasListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp AliasListResponseEnvelope) (*policy.Request, error) {
-			return runtime.NewRequest(ctx, http.MethodGet, *resp.AliasListResponse.NextLink)
+		advancer: func(ctx context.Context, resp AliasListResponse) (*policy.Request, error) {
+			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListResponse.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *aliasClient) listCreateRequest(ctx context.Context, options *AliasListOptions) (*policy.Request, error) {
+func (client *client) listCreateRequest(ctx context.Context, options *AliasListOptions) (*policy.Request, error) {
 	urlPath := "/aliases"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -176,16 +176,16 @@ func (client *aliasClient) listCreateRequest(ctx context.Context, options *Alias
 }
 
 // listHandleResponse handles the List response.
-func (client *aliasClient) listHandleResponse(resp *http.Response) (AliasListResponseEnvelope, error) {
-	result := AliasListResponseEnvelope{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AliasListResponse); err != nil {
-		return AliasListResponseEnvelope{}, runtime.NewResponseError(err, resp)
+func (client *client) listHandleResponse(resp *http.Response) (AliasListResponse, error) {
+	result := AliasListResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.ListResponse); err != nil {
+		return AliasListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // listHandleError handles the List error response.
-func (client *aliasClient) listHandleError(resp *http.Response) error {
+func (client *client) listHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)

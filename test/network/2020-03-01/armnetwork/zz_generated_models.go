@@ -225,7 +225,7 @@ type ApplicationGatewayBackendAddressPoolPropertiesFormat struct {
 	BackendAddresses []*ApplicationGatewayBackendAddress `json:"backendAddresses,omitempty"`
 
 	// READ-ONLY; Collection of references to IPs defined in network interfaces.
-	BackendIPConfigurations []*NetworkInterfaceIPConfiguration `json:"backendIPConfigurations,omitempty" azure:"ro"`
+	BackendIPConfigurations []*InterfaceIPConfiguration `json:"backendIPConfigurations,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the backend address pool resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -401,7 +401,7 @@ type ApplicationGatewayBackendHealthServer struct {
 	HealthProbeLog *string `json:"healthProbeLog,omitempty"`
 
 	// Reference to IP configuration of backend server.
-	IPConfiguration *NetworkInterfaceIPConfiguration `json:"ipConfiguration,omitempty"`
+	IPConfiguration *InterfaceIPConfiguration `json:"ipConfiguration,omitempty"`
 }
 
 // ApplicationGatewayConnectionDraining - Connection draining allows open connections to a backend server to be active for
@@ -2890,7 +2890,7 @@ func (b BackendAddressPool) MarshalJSON() ([]byte, error) {
 // BackendAddressPoolPropertiesFormat - Properties of the backend address pool.
 type BackendAddressPoolPropertiesFormat struct {
 	// READ-ONLY; An array of references to IP addresses defined in network interfaces.
-	BackendIPConfigurations []*NetworkInterfaceIPConfiguration `json:"backendIPConfigurations,omitempty" azure:"ro"`
+	BackendIPConfigurations []*InterfaceIPConfiguration `json:"backendIPConfigurations,omitempty" azure:"ro"`
 
 	// READ-ONLY; An array of references to load balancing rules that use this backend address pool.
 	LoadBalancingRules []*SubResource `json:"loadBalancingRules,omitempty" azure:"ro"`
@@ -3339,6 +3339,68 @@ type Components1Jq1T4ISchemasManagedserviceidentityPropertiesUserassignedidentit
 
 	// READ-ONLY; The principal id of user assigned identity.
 	PrincipalID *string `json:"principalId,omitempty" azure:"ro"`
+}
+
+// ConfigurationDiagnosticParameters - Parameters to get network configuration diagnostic.
+type ConfigurationDiagnosticParameters struct {
+	// REQUIRED; List of network configuration diagnostic profiles.
+	Profiles []*ConfigurationDiagnosticProfile `json:"profiles,omitempty"`
+
+	// REQUIRED; The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface,
+	// VMSS/NetworkInterface and Application Gateway.
+	TargetResourceID *string `json:"targetResourceId,omitempty"`
+
+	// Verbosity level.
+	VerbosityLevel *VerbosityLevel `json:"verbosityLevel,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ConfigurationDiagnosticParameters.
+func (c ConfigurationDiagnosticParameters) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "profiles", c.Profiles)
+	populate(objectMap, "targetResourceId", c.TargetResourceID)
+	populate(objectMap, "verbosityLevel", c.VerbosityLevel)
+	return json.Marshal(objectMap)
+}
+
+// ConfigurationDiagnosticProfile - Parameters to compare with network configuration.
+type ConfigurationDiagnosticProfile struct {
+	// REQUIRED; Traffic destination. Accepted values are: '*', IP Address/CIDR, Service Tag.
+	Destination *string `json:"destination,omitempty"`
+
+	// REQUIRED; Traffic destination port. Accepted values are '*' and a single port in the range (0 - 65535).
+	DestinationPort *string `json:"destinationPort,omitempty"`
+
+	// REQUIRED; The direction of the traffic.
+	Direction *Direction `json:"direction,omitempty"`
+
+	// REQUIRED; Protocol to be verified on. Accepted values are '*', TCP, UDP.
+	Protocol *string `json:"protocol,omitempty"`
+
+	// REQUIRED; Traffic source. Accepted values are '*', IP Address/CIDR, Service Tag.
+	Source *string `json:"source,omitempty"`
+}
+
+// ConfigurationDiagnosticResponse - Results of network configuration diagnostic on the target resource.
+type ConfigurationDiagnosticResponse struct {
+	// READ-ONLY; List of network configuration diagnostic results.
+	Results []*ConfigurationDiagnosticResult `json:"results,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ConfigurationDiagnosticResponse.
+func (c ConfigurationDiagnosticResponse) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "results", c.Results)
+	return json.Marshal(objectMap)
+}
+
+// ConfigurationDiagnosticResult - Network configuration diagnostic result corresponded to provided traffic query.
+type ConfigurationDiagnosticResult struct {
+	// Network security group result.
+	NetworkSecurityGroupResult *SecurityGroupResult `json:"networkSecurityGroupResult,omitempty"`
+
+	// Network configuration diagnostic profile.
+	Profile *ConfigurationDiagnosticProfile `json:"profile,omitempty"`
 }
 
 // ConnectionMonitor - Parameters that define the operation to create a connection monitor.
@@ -4752,7 +4814,7 @@ type EvaluatedNetworkSecurityGroup struct {
 	NetworkSecurityGroupID *string `json:"networkSecurityGroupId,omitempty"`
 
 	// READ-ONLY; List of network security rules evaluation results.
-	RulesEvaluationResult []*NetworkSecurityRulesEvaluationResult `json:"rulesEvaluationResult,omitempty" azure:"ro"`
+	RulesEvaluationResult []*SecurityRulesEvaluationResult `json:"rulesEvaluationResult,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type EvaluatedNetworkSecurityGroup.
@@ -7580,7 +7642,7 @@ type InboundNatRulePropertiesFormat struct {
 
 	// READ-ONLY; A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port
 	// of each of the frontend IP configurations is forwarded to the backend IP.
-	BackendIPConfiguration *NetworkInterfaceIPConfiguration `json:"backendIPConfiguration,omitempty" azure:"ro"`
+	BackendIPConfiguration *InterfaceIPConfiguration `json:"backendIPConfiguration,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the inbound NAT rule resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -7606,6 +7668,371 @@ type InboundNatRulesGetOptions struct {
 // InboundNatRulesListOptions contains the optional parameters for the InboundNatRulesClient.List method.
 type InboundNatRulesListOptions struct {
 	// placeholder for future optional parameters
+}
+
+// IntentPolicy - Network Intent Policy resource.
+type IntentPolicy struct {
+	Resource
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type IntentPolicy.
+func (i IntentPolicy) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	i.Resource.marshalInternal(objectMap)
+	populate(objectMap, "etag", i.Etag)
+	return json.Marshal(objectMap)
+}
+
+// IntentPolicyConfiguration - Details of NetworkIntentPolicyConfiguration for PrepareNetworkPoliciesRequest.
+type IntentPolicyConfiguration struct {
+	// The name of the Network Intent Policy for storing in target subscription.
+	NetworkIntentPolicyName *string `json:"networkIntentPolicyName,omitempty"`
+
+	// Source network intent policy.
+	SourceNetworkIntentPolicy *IntentPolicy `json:"sourceNetworkIntentPolicy,omitempty"`
+}
+
+// Interface - A network interface in a resource group.
+type Interface struct {
+	Resource
+	// Properties of the network interface.
+	Properties *InterfacePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Interface.
+func (i Interface) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	i.Resource.marshalInternal(objectMap)
+	populate(objectMap, "etag", i.Etag)
+	populate(objectMap, "properties", i.Properties)
+	return json.Marshal(objectMap)
+}
+
+// InterfaceAssociation - Network interface and its custom security rules.
+type InterfaceAssociation struct {
+	// Collection of custom security rules.
+	SecurityRules []*SecurityRule `json:"securityRules,omitempty"`
+
+	// READ-ONLY; Network interface ID.
+	ID *string `json:"id,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type InterfaceAssociation.
+func (i InterfaceAssociation) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "id", i.ID)
+	populate(objectMap, "securityRules", i.SecurityRules)
+	return json.Marshal(objectMap)
+}
+
+// InterfaceDNSSettings - DNS settings of a network interface.
+type InterfaceDNSSettings struct {
+	// List of DNS servers IP addresses. Use 'AzureProvidedDNS' to switch to azure provided DNS resolution. 'AzureProvidedDNS'
+	// value cannot be combined with other IPs, it must be the only value in dnsServers
+	// collection.
+	DNSServers []*string `json:"dnsServers,omitempty"`
+
+	// Relative DNS name for this NIC used for internal communications between VMs in the same virtual network.
+	InternalDNSNameLabel *string `json:"internalDnsNameLabel,omitempty"`
+
+	// READ-ONLY; If the VM that uses this NIC is part of an Availability Set, then this list will have the union of all DNS servers
+	// from all NICs that are part of the Availability Set. This property is what is
+	// configured on each of those VMs.
+	AppliedDNSServers []*string `json:"appliedDnsServers,omitempty" azure:"ro"`
+
+	// READ-ONLY; Even if internalDnsNameLabel is not specified, a DNS entry is created for the primary NIC of the VM. This DNS
+	// name can be constructed by concatenating the VM name with the value of
+	// internalDomainNameSuffix.
+	InternalDomainNameSuffix *string `json:"internalDomainNameSuffix,omitempty" azure:"ro"`
+
+	// READ-ONLY; Fully qualified DNS name supporting internal communications between VMs in the same virtual network.
+	InternalFqdn *string `json:"internalFqdn,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type InterfaceDNSSettings.
+func (i InterfaceDNSSettings) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "appliedDnsServers", i.AppliedDNSServers)
+	populate(objectMap, "dnsServers", i.DNSServers)
+	populate(objectMap, "internalDnsNameLabel", i.InternalDNSNameLabel)
+	populate(objectMap, "internalDomainNameSuffix", i.InternalDomainNameSuffix)
+	populate(objectMap, "internalFqdn", i.InternalFqdn)
+	return json.Marshal(objectMap)
+}
+
+// InterfaceIPConfiguration - IPConfiguration in a network interface.
+type InterfaceIPConfiguration struct {
+	SubResource
+	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
+	Name *string `json:"name,omitempty"`
+
+	// Network interface IP configuration properties.
+	Properties *InterfaceIPConfigurationPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type InterfaceIPConfiguration.
+func (i InterfaceIPConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	i.SubResource.marshalInternal(objectMap)
+	populate(objectMap, "etag", i.Etag)
+	populate(objectMap, "name", i.Name)
+	populate(objectMap, "properties", i.Properties)
+	return json.Marshal(objectMap)
+}
+
+// InterfaceIPConfigurationListResult - Response for list ip configurations API service call.
+type InterfaceIPConfigurationListResult struct {
+	// A list of ip configurations.
+	Value []*InterfaceIPConfiguration `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type InterfaceIPConfigurationListResult.
+func (i InterfaceIPConfigurationListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", i.NextLink)
+	populate(objectMap, "value", i.Value)
+	return json.Marshal(objectMap)
+}
+
+// InterfaceIPConfigurationPrivateLinkConnectionProperties - PrivateLinkConnection properties for the network interface.
+type InterfaceIPConfigurationPrivateLinkConnectionProperties struct {
+	// READ-ONLY; List of FQDNs for current private link connection.
+	Fqdns []*string `json:"fqdns,omitempty" azure:"ro"`
+
+	// READ-ONLY; The group ID for current private link connection.
+	GroupID *string `json:"groupId,omitempty" azure:"ro"`
+
+	// READ-ONLY; The required member name for current private link connection.
+	RequiredMemberName *string `json:"requiredMemberName,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type InterfaceIPConfigurationPrivateLinkConnectionProperties.
+func (i InterfaceIPConfigurationPrivateLinkConnectionProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "fqdns", i.Fqdns)
+	populate(objectMap, "groupId", i.GroupID)
+	populate(objectMap, "requiredMemberName", i.RequiredMemberName)
+	return json.Marshal(objectMap)
+}
+
+// InterfaceIPConfigurationPropertiesFormat - Properties of IP configuration.
+type InterfaceIPConfigurationPropertiesFormat struct {
+	// The reference to ApplicationGatewayBackendAddressPool resource.
+	ApplicationGatewayBackendAddressPools []*ApplicationGatewayBackendAddressPool `json:"applicationGatewayBackendAddressPools,omitempty"`
+
+	// Application security groups in which the IP configuration is included.
+	ApplicationSecurityGroups []*ApplicationSecurityGroup `json:"applicationSecurityGroups,omitempty"`
+
+	// The reference to LoadBalancerBackendAddressPool resource.
+	LoadBalancerBackendAddressPools []*BackendAddressPool `json:"loadBalancerBackendAddressPools,omitempty"`
+
+	// A list of references of LoadBalancerInboundNatRules.
+	LoadBalancerInboundNatRules []*InboundNatRule `json:"loadBalancerInboundNatRules,omitempty"`
+
+	// Whether this is a primary customer address on the network interface.
+	Primary *bool `json:"primary,omitempty"`
+
+	// Private IP address of the IP configuration.
+	PrivateIPAddress *string `json:"privateIPAddress,omitempty"`
+
+	// Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4.
+	PrivateIPAddressVersion *IPVersion `json:"privateIPAddressVersion,omitempty"`
+
+	// The private IP address allocation method.
+	PrivateIPAllocationMethod *IPAllocationMethod `json:"privateIPAllocationMethod,omitempty"`
+
+	// Public IP address bound to the IP configuration.
+	PublicIPAddress *PublicIPAddress `json:"publicIPAddress,omitempty"`
+
+	// Subnet bound to the IP configuration.
+	Subnet *Subnet `json:"subnet,omitempty"`
+
+	// The reference to Virtual Network Taps.
+	VirtualNetworkTaps []*VirtualNetworkTap `json:"virtualNetworkTaps,omitempty"`
+
+	// READ-ONLY; PrivateLinkConnection properties for the network interface.
+	PrivateLinkConnectionProperties *InterfaceIPConfigurationPrivateLinkConnectionProperties `json:"privateLinkConnectionProperties,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the network interface IP configuration.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type InterfaceIPConfigurationPropertiesFormat.
+func (i InterfaceIPConfigurationPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "applicationGatewayBackendAddressPools", i.ApplicationGatewayBackendAddressPools)
+	populate(objectMap, "applicationSecurityGroups", i.ApplicationSecurityGroups)
+	populate(objectMap, "loadBalancerBackendAddressPools", i.LoadBalancerBackendAddressPools)
+	populate(objectMap, "loadBalancerInboundNatRules", i.LoadBalancerInboundNatRules)
+	populate(objectMap, "primary", i.Primary)
+	populate(objectMap, "privateIPAddress", i.PrivateIPAddress)
+	populate(objectMap, "privateIPAddressVersion", i.PrivateIPAddressVersion)
+	populate(objectMap, "privateIPAllocationMethod", i.PrivateIPAllocationMethod)
+	populate(objectMap, "privateLinkConnectionProperties", i.PrivateLinkConnectionProperties)
+	populate(objectMap, "provisioningState", i.ProvisioningState)
+	populate(objectMap, "publicIPAddress", i.PublicIPAddress)
+	populate(objectMap, "subnet", i.Subnet)
+	populate(objectMap, "virtualNetworkTaps", i.VirtualNetworkTaps)
+	return json.Marshal(objectMap)
+}
+
+// InterfaceListResult - Response for the ListNetworkInterface API service call.
+type InterfaceListResult struct {
+	// A list of network interfaces in a resource group.
+	Value []*Interface `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type InterfaceListResult.
+func (i InterfaceListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", i.NextLink)
+	populate(objectMap, "value", i.Value)
+	return json.Marshal(objectMap)
+}
+
+// InterfaceLoadBalancerListResult - Response for list ip configurations API service call.
+type InterfaceLoadBalancerListResult struct {
+	// A list of load balancers.
+	Value []*LoadBalancer `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type InterfaceLoadBalancerListResult.
+func (i InterfaceLoadBalancerListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", i.NextLink)
+	populate(objectMap, "value", i.Value)
+	return json.Marshal(objectMap)
+}
+
+// InterfacePropertiesFormat - NetworkInterface properties.
+type InterfacePropertiesFormat struct {
+	// The DNS settings in network interface.
+	DNSSettings *InterfaceDNSSettings `json:"dnsSettings,omitempty"`
+
+	// If the network interface is accelerated networking enabled.
+	EnableAcceleratedNetworking *bool `json:"enableAcceleratedNetworking,omitempty"`
+
+	// Indicates whether IP forwarding is enabled on this network interface.
+	EnableIPForwarding *bool `json:"enableIPForwarding,omitempty"`
+
+	// A list of IPConfigurations of the network interface.
+	IPConfigurations []*InterfaceIPConfiguration `json:"ipConfigurations,omitempty"`
+
+	// The reference to the NetworkSecurityGroup resource.
+	NetworkSecurityGroup *SecurityGroup `json:"networkSecurityGroup,omitempty"`
+
+	// READ-ONLY; A list of references to linked BareMetal resources.
+	HostedWorkloads []*string `json:"hostedWorkloads,omitempty" azure:"ro"`
+
+	// READ-ONLY; The MAC address of the network interface.
+	MacAddress *string `json:"macAddress,omitempty" azure:"ro"`
+
+	// READ-ONLY; Whether this is a primary network interface on a virtual machine.
+	Primary *bool `json:"primary,omitempty" azure:"ro"`
+
+	// READ-ONLY; A reference to the private endpoint to which the network interface is linked.
+	PrivateEndpoint *PrivateEndpoint `json:"privateEndpoint,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the network interface resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// READ-ONLY; The resource GUID property of the network interface resource.
+	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
+
+	// READ-ONLY; A list of TapConfigurations of the network interface.
+	TapConfigurations []*InterfaceTapConfiguration `json:"tapConfigurations,omitempty" azure:"ro"`
+
+	// READ-ONLY; The reference to a virtual machine.
+	VirtualMachine *SubResource `json:"virtualMachine,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type InterfacePropertiesFormat.
+func (i InterfacePropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "dnsSettings", i.DNSSettings)
+	populate(objectMap, "enableAcceleratedNetworking", i.EnableAcceleratedNetworking)
+	populate(objectMap, "enableIPForwarding", i.EnableIPForwarding)
+	populate(objectMap, "hostedWorkloads", i.HostedWorkloads)
+	populate(objectMap, "ipConfigurations", i.IPConfigurations)
+	populate(objectMap, "macAddress", i.MacAddress)
+	populate(objectMap, "networkSecurityGroup", i.NetworkSecurityGroup)
+	populate(objectMap, "primary", i.Primary)
+	populate(objectMap, "privateEndpoint", i.PrivateEndpoint)
+	populate(objectMap, "provisioningState", i.ProvisioningState)
+	populate(objectMap, "resourceGuid", i.ResourceGUID)
+	populate(objectMap, "tapConfigurations", i.TapConfigurations)
+	populate(objectMap, "virtualMachine", i.VirtualMachine)
+	return json.Marshal(objectMap)
+}
+
+// InterfaceTapConfiguration - Tap configuration in a Network Interface.
+type InterfaceTapConfiguration struct {
+	SubResource
+	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
+	Name *string `json:"name,omitempty"`
+
+	// Properties of the Virtual Network Tap configuration.
+	Properties *InterfaceTapConfigurationPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Sub Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type InterfaceTapConfiguration.
+func (i InterfaceTapConfiguration) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	i.SubResource.marshalInternal(objectMap)
+	populate(objectMap, "etag", i.Etag)
+	populate(objectMap, "name", i.Name)
+	populate(objectMap, "properties", i.Properties)
+	populate(objectMap, "type", i.Type)
+	return json.Marshal(objectMap)
+}
+
+// InterfaceTapConfigurationListResult - Response for list tap configurations API service call.
+type InterfaceTapConfigurationListResult struct {
+	// A list of tap configurations.
+	Value []*InterfaceTapConfiguration `json:"value,omitempty"`
+
+	// READ-ONLY; The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type InterfaceTapConfigurationListResult.
+func (i InterfaceTapConfigurationListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", i.NextLink)
+	populate(objectMap, "value", i.Value)
+	return json.Marshal(objectMap)
+}
+
+// InterfaceTapConfigurationPropertiesFormat - Properties of Virtual Network Tap configuration.
+type InterfaceTapConfigurationPropertiesFormat struct {
+	// The reference to the Virtual Network Tap resource.
+	VirtualNetworkTap *VirtualNetworkTap `json:"virtualNetworkTap,omitempty"`
+
+	// READ-ONLY; The provisioning state of the network interface tap configuration resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // ListHubVirtualNetworkConnectionsResult - List of HubVirtualNetworkConnections and a URL nextLink to get the next set of
@@ -8639,1156 +9066,364 @@ func (n *NatRuleCondition) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// NetworkConfigurationDiagnosticParameters - Parameters to get network configuration diagnostic.
-type NetworkConfigurationDiagnosticParameters struct {
-	// REQUIRED; List of network configuration diagnostic profiles.
-	Profiles []*NetworkConfigurationDiagnosticProfile `json:"profiles,omitempty"`
-
-	// REQUIRED; The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface,
-	// VMSS/NetworkInterface and Application Gateway.
-	TargetResourceID *string `json:"targetResourceId,omitempty"`
-
-	// Verbosity level.
-	VerbosityLevel *VerbosityLevel `json:"verbosityLevel,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkConfigurationDiagnosticParameters.
-func (n NetworkConfigurationDiagnosticParameters) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "profiles", n.Profiles)
-	populate(objectMap, "targetResourceId", n.TargetResourceID)
-	populate(objectMap, "verbosityLevel", n.VerbosityLevel)
-	return json.Marshal(objectMap)
-}
-
-// NetworkConfigurationDiagnosticProfile - Parameters to compare with network configuration.
-type NetworkConfigurationDiagnosticProfile struct {
-	// REQUIRED; Traffic destination. Accepted values are: '*', IP Address/CIDR, Service Tag.
-	Destination *string `json:"destination,omitempty"`
-
-	// REQUIRED; Traffic destination port. Accepted values are '*' and a single port in the range (0 - 65535).
-	DestinationPort *string `json:"destinationPort,omitempty"`
-
-	// REQUIRED; The direction of the traffic.
-	Direction *Direction `json:"direction,omitempty"`
-
-	// REQUIRED; Protocol to be verified on. Accepted values are '*', TCP, UDP.
-	Protocol *string `json:"protocol,omitempty"`
-
-	// REQUIRED; Traffic source. Accepted values are '*', IP Address/CIDR, Service Tag.
-	Source *string `json:"source,omitempty"`
-}
-
-// NetworkConfigurationDiagnosticResponse - Results of network configuration diagnostic on the target resource.
-type NetworkConfigurationDiagnosticResponse struct {
-	// READ-ONLY; List of network configuration diagnostic results.
-	Results []*NetworkConfigurationDiagnosticResult `json:"results,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkConfigurationDiagnosticResponse.
-func (n NetworkConfigurationDiagnosticResponse) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "results", n.Results)
-	return json.Marshal(objectMap)
-}
-
-// NetworkConfigurationDiagnosticResult - Network configuration diagnostic result corresponded to provided traffic query.
-type NetworkConfigurationDiagnosticResult struct {
-	// Network security group result.
-	NetworkSecurityGroupResult *NetworkSecurityGroupResult `json:"networkSecurityGroupResult,omitempty"`
-
-	// Network configuration diagnostic profile.
-	Profile *NetworkConfigurationDiagnosticProfile `json:"profile,omitempty"`
-}
-
-// NetworkIntentPolicy - Network Intent Policy resource.
-type NetworkIntentPolicy struct {
-	Resource
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkIntentPolicy.
-func (n NetworkIntentPolicy) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	n.Resource.marshalInternal(objectMap)
-	populate(objectMap, "etag", n.Etag)
-	return json.Marshal(objectMap)
-}
-
-// NetworkIntentPolicyConfiguration - Details of NetworkIntentPolicyConfiguration for PrepareNetworkPoliciesRequest.
-type NetworkIntentPolicyConfiguration struct {
-	// The name of the Network Intent Policy for storing in target subscription.
-	NetworkIntentPolicyName *string `json:"networkIntentPolicyName,omitempty"`
-
-	// Source network intent policy.
-	SourceNetworkIntentPolicy *NetworkIntentPolicy `json:"sourceNetworkIntentPolicy,omitempty"`
-}
-
-// NetworkInterface - A network interface in a resource group.
-type NetworkInterface struct {
-	Resource
-	// Properties of the network interface.
-	Properties *NetworkInterfacePropertiesFormat `json:"properties,omitempty"`
-
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkInterface.
-func (n NetworkInterface) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	n.Resource.marshalInternal(objectMap)
-	populate(objectMap, "etag", n.Etag)
-	populate(objectMap, "properties", n.Properties)
-	return json.Marshal(objectMap)
-}
-
-// NetworkInterfaceAssociation - Network interface and its custom security rules.
-type NetworkInterfaceAssociation struct {
-	// Collection of custom security rules.
-	SecurityRules []*SecurityRule `json:"securityRules,omitempty"`
-
-	// READ-ONLY; Network interface ID.
-	ID *string `json:"id,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceAssociation.
-func (n NetworkInterfaceAssociation) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "id", n.ID)
-	populate(objectMap, "securityRules", n.SecurityRules)
-	return json.Marshal(objectMap)
-}
-
-// NetworkInterfaceDNSSettings - DNS settings of a network interface.
-type NetworkInterfaceDNSSettings struct {
-	// List of DNS servers IP addresses. Use 'AzureProvidedDNS' to switch to azure provided DNS resolution. 'AzureProvidedDNS'
-	// value cannot be combined with other IPs, it must be the only value in dnsServers
-	// collection.
-	DNSServers []*string `json:"dnsServers,omitempty"`
-
-	// Relative DNS name for this NIC used for internal communications between VMs in the same virtual network.
-	InternalDNSNameLabel *string `json:"internalDnsNameLabel,omitempty"`
-
-	// READ-ONLY; If the VM that uses this NIC is part of an Availability Set, then this list will have the union of all DNS servers
-	// from all NICs that are part of the Availability Set. This property is what is
-	// configured on each of those VMs.
-	AppliedDNSServers []*string `json:"appliedDnsServers,omitempty" azure:"ro"`
-
-	// READ-ONLY; Even if internalDnsNameLabel is not specified, a DNS entry is created for the primary NIC of the VM. This DNS
-	// name can be constructed by concatenating the VM name with the value of
-	// internalDomainNameSuffix.
-	InternalDomainNameSuffix *string `json:"internalDomainNameSuffix,omitempty" azure:"ro"`
-
-	// READ-ONLY; Fully qualified DNS name supporting internal communications between VMs in the same virtual network.
-	InternalFqdn *string `json:"internalFqdn,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceDNSSettings.
-func (n NetworkInterfaceDNSSettings) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "appliedDnsServers", n.AppliedDNSServers)
-	populate(objectMap, "dnsServers", n.DNSServers)
-	populate(objectMap, "internalDnsNameLabel", n.InternalDNSNameLabel)
-	populate(objectMap, "internalDomainNameSuffix", n.InternalDomainNameSuffix)
-	populate(objectMap, "internalFqdn", n.InternalFqdn)
-	return json.Marshal(objectMap)
-}
-
-// NetworkInterfaceIPConfiguration - IPConfiguration in a network interface.
-type NetworkInterfaceIPConfiguration struct {
-	SubResource
-	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
-	Name *string `json:"name,omitempty"`
-
-	// Network interface IP configuration properties.
-	Properties *NetworkInterfaceIPConfigurationPropertiesFormat `json:"properties,omitempty"`
-
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceIPConfiguration.
-func (n NetworkInterfaceIPConfiguration) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	n.SubResource.marshalInternal(objectMap)
-	populate(objectMap, "etag", n.Etag)
-	populate(objectMap, "name", n.Name)
-	populate(objectMap, "properties", n.Properties)
-	return json.Marshal(objectMap)
-}
-
-// NetworkInterfaceIPConfigurationListResult - Response for list ip configurations API service call.
-type NetworkInterfaceIPConfigurationListResult struct {
-	// A list of ip configurations.
-	Value []*NetworkInterfaceIPConfiguration `json:"value,omitempty"`
-
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceIPConfigurationListResult.
-func (n NetworkInterfaceIPConfigurationListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "nextLink", n.NextLink)
-	populate(objectMap, "value", n.Value)
-	return json.Marshal(objectMap)
-}
-
-// NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties - PrivateLinkConnection properties for the network interface.
-type NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties struct {
-	// READ-ONLY; List of FQDNs for current private link connection.
-	Fqdns []*string `json:"fqdns,omitempty" azure:"ro"`
-
-	// READ-ONLY; The group ID for current private link connection.
-	GroupID *string `json:"groupId,omitempty" azure:"ro"`
-
-	// READ-ONLY; The required member name for current private link connection.
-	RequiredMemberName *string `json:"requiredMemberName,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties.
-func (n NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "fqdns", n.Fqdns)
-	populate(objectMap, "groupId", n.GroupID)
-	populate(objectMap, "requiredMemberName", n.RequiredMemberName)
-	return json.Marshal(objectMap)
-}
-
-// NetworkInterfaceIPConfigurationPropertiesFormat - Properties of IP configuration.
-type NetworkInterfaceIPConfigurationPropertiesFormat struct {
-	// The reference to ApplicationGatewayBackendAddressPool resource.
-	ApplicationGatewayBackendAddressPools []*ApplicationGatewayBackendAddressPool `json:"applicationGatewayBackendAddressPools,omitempty"`
-
-	// Application security groups in which the IP configuration is included.
-	ApplicationSecurityGroups []*ApplicationSecurityGroup `json:"applicationSecurityGroups,omitempty"`
-
-	// The reference to LoadBalancerBackendAddressPool resource.
-	LoadBalancerBackendAddressPools []*BackendAddressPool `json:"loadBalancerBackendAddressPools,omitempty"`
-
-	// A list of references of LoadBalancerInboundNatRules.
-	LoadBalancerInboundNatRules []*InboundNatRule `json:"loadBalancerInboundNatRules,omitempty"`
-
-	// Whether this is a primary customer address on the network interface.
-	Primary *bool `json:"primary,omitempty"`
-
-	// Private IP address of the IP configuration.
-	PrivateIPAddress *string `json:"privateIPAddress,omitempty"`
-
-	// Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4.
-	PrivateIPAddressVersion *IPVersion `json:"privateIPAddressVersion,omitempty"`
-
-	// The private IP address allocation method.
-	PrivateIPAllocationMethod *IPAllocationMethod `json:"privateIPAllocationMethod,omitempty"`
-
-	// Public IP address bound to the IP configuration.
-	PublicIPAddress *PublicIPAddress `json:"publicIPAddress,omitempty"`
-
-	// Subnet bound to the IP configuration.
-	Subnet *Subnet `json:"subnet,omitempty"`
-
-	// The reference to Virtual Network Taps.
-	VirtualNetworkTaps []*VirtualNetworkTap `json:"virtualNetworkTaps,omitempty"`
-
-	// READ-ONLY; PrivateLinkConnection properties for the network interface.
-	PrivateLinkConnectionProperties *NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties `json:"privateLinkConnectionProperties,omitempty" azure:"ro"`
-
-	// READ-ONLY; The provisioning state of the network interface IP configuration.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceIPConfigurationPropertiesFormat.
-func (n NetworkInterfaceIPConfigurationPropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "applicationGatewayBackendAddressPools", n.ApplicationGatewayBackendAddressPools)
-	populate(objectMap, "applicationSecurityGroups", n.ApplicationSecurityGroups)
-	populate(objectMap, "loadBalancerBackendAddressPools", n.LoadBalancerBackendAddressPools)
-	populate(objectMap, "loadBalancerInboundNatRules", n.LoadBalancerInboundNatRules)
-	populate(objectMap, "primary", n.Primary)
-	populate(objectMap, "privateIPAddress", n.PrivateIPAddress)
-	populate(objectMap, "privateIPAddressVersion", n.PrivateIPAddressVersion)
-	populate(objectMap, "privateIPAllocationMethod", n.PrivateIPAllocationMethod)
-	populate(objectMap, "privateLinkConnectionProperties", n.PrivateLinkConnectionProperties)
-	populate(objectMap, "provisioningState", n.ProvisioningState)
-	populate(objectMap, "publicIPAddress", n.PublicIPAddress)
-	populate(objectMap, "subnet", n.Subnet)
-	populate(objectMap, "virtualNetworkTaps", n.VirtualNetworkTaps)
-	return json.Marshal(objectMap)
-}
-
-// NetworkInterfaceIPConfigurationsGetOptions contains the optional parameters for the NetworkInterfaceIPConfigurationsClient.Get
+// NetworkInterfaceIPConfigurationsGetOptions contains the optional parameters for the InterfaceIPConfigurationsClient.Get
 // method.
 type NetworkInterfaceIPConfigurationsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfaceIPConfigurationsListOptions contains the optional parameters for the NetworkInterfaceIPConfigurationsClient.List
+// NetworkInterfaceIPConfigurationsListOptions contains the optional parameters for the InterfaceIPConfigurationsClient.List
 // method.
 type NetworkInterfaceIPConfigurationsListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfaceListResult - Response for the ListNetworkInterface API service call.
-type NetworkInterfaceListResult struct {
-	// A list of network interfaces in a resource group.
-	Value []*NetworkInterface `json:"value,omitempty"`
-
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceListResult.
-func (n NetworkInterfaceListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "nextLink", n.NextLink)
-	populate(objectMap, "value", n.Value)
-	return json.Marshal(objectMap)
-}
-
-// NetworkInterfaceLoadBalancerListResult - Response for list ip configurations API service call.
-type NetworkInterfaceLoadBalancerListResult struct {
-	// A list of load balancers.
-	Value []*LoadBalancer `json:"value,omitempty"`
-
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceLoadBalancerListResult.
-func (n NetworkInterfaceLoadBalancerListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "nextLink", n.NextLink)
-	populate(objectMap, "value", n.Value)
-	return json.Marshal(objectMap)
-}
-
-// NetworkInterfaceLoadBalancersListOptions contains the optional parameters for the NetworkInterfaceLoadBalancersClient.List
-// method.
+// NetworkInterfaceLoadBalancersListOptions contains the optional parameters for the InterfaceLoadBalancersClient.List method.
 type NetworkInterfaceLoadBalancersListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfacePropertiesFormat - NetworkInterface properties.
-type NetworkInterfacePropertiesFormat struct {
-	// The DNS settings in network interface.
-	DNSSettings *NetworkInterfaceDNSSettings `json:"dnsSettings,omitempty"`
-
-	// If the network interface is accelerated networking enabled.
-	EnableAcceleratedNetworking *bool `json:"enableAcceleratedNetworking,omitempty"`
-
-	// Indicates whether IP forwarding is enabled on this network interface.
-	EnableIPForwarding *bool `json:"enableIPForwarding,omitempty"`
-
-	// A list of IPConfigurations of the network interface.
-	IPConfigurations []*NetworkInterfaceIPConfiguration `json:"ipConfigurations,omitempty"`
-
-	// The reference to the NetworkSecurityGroup resource.
-	NetworkSecurityGroup *NetworkSecurityGroup `json:"networkSecurityGroup,omitempty"`
-
-	// READ-ONLY; A list of references to linked BareMetal resources.
-	HostedWorkloads []*string `json:"hostedWorkloads,omitempty" azure:"ro"`
-
-	// READ-ONLY; The MAC address of the network interface.
-	MacAddress *string `json:"macAddress,omitempty" azure:"ro"`
-
-	// READ-ONLY; Whether this is a primary network interface on a virtual machine.
-	Primary *bool `json:"primary,omitempty" azure:"ro"`
-
-	// READ-ONLY; A reference to the private endpoint to which the network interface is linked.
-	PrivateEndpoint *PrivateEndpoint `json:"privateEndpoint,omitempty" azure:"ro"`
-
-	// READ-ONLY; The provisioning state of the network interface resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// READ-ONLY; The resource GUID property of the network interface resource.
-	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
-
-	// READ-ONLY; A list of TapConfigurations of the network interface.
-	TapConfigurations []*NetworkInterfaceTapConfiguration `json:"tapConfigurations,omitempty" azure:"ro"`
-
-	// READ-ONLY; The reference to a virtual machine.
-	VirtualMachine *SubResource `json:"virtualMachine,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkInterfacePropertiesFormat.
-func (n NetworkInterfacePropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "dnsSettings", n.DNSSettings)
-	populate(objectMap, "enableAcceleratedNetworking", n.EnableAcceleratedNetworking)
-	populate(objectMap, "enableIPForwarding", n.EnableIPForwarding)
-	populate(objectMap, "hostedWorkloads", n.HostedWorkloads)
-	populate(objectMap, "ipConfigurations", n.IPConfigurations)
-	populate(objectMap, "macAddress", n.MacAddress)
-	populate(objectMap, "networkSecurityGroup", n.NetworkSecurityGroup)
-	populate(objectMap, "primary", n.Primary)
-	populate(objectMap, "privateEndpoint", n.PrivateEndpoint)
-	populate(objectMap, "provisioningState", n.ProvisioningState)
-	populate(objectMap, "resourceGuid", n.ResourceGUID)
-	populate(objectMap, "tapConfigurations", n.TapConfigurations)
-	populate(objectMap, "virtualMachine", n.VirtualMachine)
-	return json.Marshal(objectMap)
-}
-
-// NetworkInterfaceTapConfiguration - Tap configuration in a Network Interface.
-type NetworkInterfaceTapConfiguration struct {
-	SubResource
-	// The name of the resource that is unique within a resource group. This name can be used to access the resource.
-	Name *string `json:"name,omitempty"`
-
-	// Properties of the Virtual Network Tap configuration.
-	Properties *NetworkInterfaceTapConfigurationPropertiesFormat `json:"properties,omitempty"`
-
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-
-	// READ-ONLY; Sub Resource type.
-	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceTapConfiguration.
-func (n NetworkInterfaceTapConfiguration) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	n.SubResource.marshalInternal(objectMap)
-	populate(objectMap, "etag", n.Etag)
-	populate(objectMap, "name", n.Name)
-	populate(objectMap, "properties", n.Properties)
-	populate(objectMap, "type", n.Type)
-	return json.Marshal(objectMap)
-}
-
-// NetworkInterfaceTapConfigurationListResult - Response for list tap configurations API service call.
-type NetworkInterfaceTapConfigurationListResult struct {
-	// A list of tap configurations.
-	Value []*NetworkInterfaceTapConfiguration `json:"value,omitempty"`
-
-	// READ-ONLY; The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceTapConfigurationListResult.
-func (n NetworkInterfaceTapConfigurationListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "nextLink", n.NextLink)
-	populate(objectMap, "value", n.Value)
-	return json.Marshal(objectMap)
-}
-
-// NetworkInterfaceTapConfigurationPropertiesFormat - Properties of Virtual Network Tap configuration.
-type NetworkInterfaceTapConfigurationPropertiesFormat struct {
-	// The reference to the Virtual Network Tap resource.
-	VirtualNetworkTap *VirtualNetworkTap `json:"virtualNetworkTap,omitempty"`
-
-	// READ-ONLY; The provisioning state of the network interface tap configuration resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-}
-
-// NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions contains the optional parameters for the NetworkInterfaceTapConfigurationsClient.BeginCreateOrUpdate
+// NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions contains the optional parameters for the InterfaceTapConfigurationsClient.BeginCreateOrUpdate
 // method.
 type NetworkInterfaceTapConfigurationsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfaceTapConfigurationsBeginDeleteOptions contains the optional parameters for the NetworkInterfaceTapConfigurationsClient.BeginDelete
+// NetworkInterfaceTapConfigurationsBeginDeleteOptions contains the optional parameters for the InterfaceTapConfigurationsClient.BeginDelete
 // method.
 type NetworkInterfaceTapConfigurationsBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfaceTapConfigurationsGetOptions contains the optional parameters for the NetworkInterfaceTapConfigurationsClient.Get
+// NetworkInterfaceTapConfigurationsGetOptions contains the optional parameters for the InterfaceTapConfigurationsClient.Get
 // method.
 type NetworkInterfaceTapConfigurationsGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfaceTapConfigurationsListOptions contains the optional parameters for the NetworkInterfaceTapConfigurationsClient.List
+// NetworkInterfaceTapConfigurationsListOptions contains the optional parameters for the InterfaceTapConfigurationsClient.List
 // method.
 type NetworkInterfaceTapConfigurationsListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfacesBeginCreateOrUpdateOptions contains the optional parameters for the NetworkInterfacesClient.BeginCreateOrUpdate
+// NetworkInterfacesBeginCreateOrUpdateOptions contains the optional parameters for the InterfacesClient.BeginCreateOrUpdate
 // method.
 type NetworkInterfacesBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfacesBeginDeleteOptions contains the optional parameters for the NetworkInterfacesClient.BeginDelete method.
+// NetworkInterfacesBeginDeleteOptions contains the optional parameters for the InterfacesClient.BeginDelete method.
 type NetworkInterfacesBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfacesBeginGetEffectiveRouteTableOptions contains the optional parameters for the NetworkInterfacesClient.BeginGetEffectiveRouteTable
+// NetworkInterfacesBeginGetEffectiveRouteTableOptions contains the optional parameters for the InterfacesClient.BeginGetEffectiveRouteTable
 // method.
 type NetworkInterfacesBeginGetEffectiveRouteTableOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfacesBeginListEffectiveNetworkSecurityGroupsOptions contains the optional parameters for the NetworkInterfacesClient.BeginListEffectiveNetworkSecurityGroups
+// NetworkInterfacesBeginListEffectiveNetworkSecurityGroupsOptions contains the optional parameters for the InterfacesClient.BeginListEffectiveNetworkSecurityGroups
 // method.
 type NetworkInterfacesBeginListEffectiveNetworkSecurityGroupsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfacesGetOptions contains the optional parameters for the NetworkInterfacesClient.Get method.
+// NetworkInterfacesGetOptions contains the optional parameters for the InterfacesClient.Get method.
 type NetworkInterfacesGetOptions struct {
 	// Expands referenced resources.
 	Expand *string
 }
 
-// NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions contains the optional parameters for the NetworkInterfacesClient.GetVirtualMachineScaleSetIPConfiguration
+// NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions contains the optional parameters for the InterfacesClient.GetVirtualMachineScaleSetIPConfiguration
 // method.
 type NetworkInterfacesGetVirtualMachineScaleSetIPConfigurationOptions struct {
 	// Expands referenced resources.
 	Expand *string
 }
 
-// NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions contains the optional parameters for the NetworkInterfacesClient.GetVirtualMachineScaleSetNetworkInterface
+// NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions contains the optional parameters for the InterfacesClient.GetVirtualMachineScaleSetNetworkInterface
 // method.
 type NetworkInterfacesGetVirtualMachineScaleSetNetworkInterfaceOptions struct {
 	// Expands referenced resources.
 	Expand *string
 }
 
-// NetworkInterfacesListAllOptions contains the optional parameters for the NetworkInterfacesClient.ListAll method.
+// NetworkInterfacesListAllOptions contains the optional parameters for the InterfacesClient.ListAll method.
 type NetworkInterfacesListAllOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfacesListOptions contains the optional parameters for the NetworkInterfacesClient.List method.
+// NetworkInterfacesListOptions contains the optional parameters for the InterfacesClient.List method.
 type NetworkInterfacesListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions contains the optional parameters for the NetworkInterfacesClient.ListVirtualMachineScaleSetIPConfigurations
+// NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions contains the optional parameters for the InterfacesClient.ListVirtualMachineScaleSetIPConfigurations
 // method.
 type NetworkInterfacesListVirtualMachineScaleSetIPConfigurationsOptions struct {
 	// Expands referenced resources.
 	Expand *string
 }
 
-// NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesOptions contains the optional parameters for the NetworkInterfacesClient.ListVirtualMachineScaleSetNetworkInterfaces
+// NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesOptions contains the optional parameters for the InterfacesClient.ListVirtualMachineScaleSetNetworkInterfaces
 // method.
 type NetworkInterfacesListVirtualMachineScaleSetNetworkInterfacesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesOptions contains the optional parameters for the NetworkInterfacesClient.ListVirtualMachineScaleSetVMNetworkInterfaces
+// NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesOptions contains the optional parameters for the InterfacesClient.ListVirtualMachineScaleSetVMNetworkInterfaces
 // method.
 type NetworkInterfacesListVirtualMachineScaleSetVMNetworkInterfacesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkInterfacesUpdateTagsOptions contains the optional parameters for the NetworkInterfacesClient.UpdateTags method.
+// NetworkInterfacesUpdateTagsOptions contains the optional parameters for the InterfacesClient.UpdateTags method.
 type NetworkInterfacesUpdateTagsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkManagementClientBeginDeleteBastionShareableLinkOptions contains the optional parameters for the NetworkManagementClient.BeginDeleteBastionShareableLink
+// NetworkManagementClientBeginDeleteBastionShareableLinkOptions contains the optional parameters for the ManagementClient.BeginDeleteBastionShareableLink
 // method.
 type NetworkManagementClientBeginDeleteBastionShareableLinkOptions struct {
 	// placeholder for future optional parameters
 }
 
 // NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions contains the optional parameters
-// for the NetworkManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile method.
+// for the ManagementClient.BeginGeneratevirtualwanvpnserverconfigurationvpnprofile method.
 type NetworkManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkManagementClientBeginGetActiveSessionsOptions contains the optional parameters for the NetworkManagementClient.BeginGetActiveSessions
+// NetworkManagementClientBeginGetActiveSessionsOptions contains the optional parameters for the ManagementClient.BeginGetActiveSessions
 // method.
 type NetworkManagementClientBeginGetActiveSessionsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkManagementClientBeginPutBastionShareableLinkOptions contains the optional parameters for the NetworkManagementClient.BeginPutBastionShareableLink
+// NetworkManagementClientBeginPutBastionShareableLinkOptions contains the optional parameters for the ManagementClient.BeginPutBastionShareableLink
 // method.
 type NetworkManagementClientBeginPutBastionShareableLinkOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkManagementClientCheckDNSNameAvailabilityOptions contains the optional parameters for the NetworkManagementClient.CheckDNSNameAvailability
+// NetworkManagementClientCheckDNSNameAvailabilityOptions contains the optional parameters for the ManagementClient.CheckDNSNameAvailability
 // method.
 type NetworkManagementClientCheckDNSNameAvailabilityOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkManagementClientDisconnectActiveSessionsOptions contains the optional parameters for the NetworkManagementClient.DisconnectActiveSessions
+// NetworkManagementClientDisconnectActiveSessionsOptions contains the optional parameters for the ManagementClient.DisconnectActiveSessions
 // method.
 type NetworkManagementClientDisconnectActiveSessionsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkManagementClientGetBastionShareableLinkOptions contains the optional parameters for the NetworkManagementClient.GetBastionShareableLink
+// NetworkManagementClientGetBastionShareableLinkOptions contains the optional parameters for the ManagementClient.GetBastionShareableLink
 // method.
 type NetworkManagementClientGetBastionShareableLinkOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkManagementClientSupportedSecurityProvidersOptions contains the optional parameters for the NetworkManagementClient.SupportedSecurityProviders
+// NetworkManagementClientSupportedSecurityProvidersOptions contains the optional parameters for the ManagementClient.SupportedSecurityProviders
 // method.
 type NetworkManagementClientSupportedSecurityProvidersOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkProfile - Network profile resource.
-type NetworkProfile struct {
-	Resource
-	// Network profile properties.
-	Properties *NetworkProfilePropertiesFormat `json:"properties,omitempty"`
-
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkProfile.
-func (n NetworkProfile) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	n.Resource.marshalInternal(objectMap)
-	populate(objectMap, "etag", n.Etag)
-	populate(objectMap, "properties", n.Properties)
-	return json.Marshal(objectMap)
-}
-
-// NetworkProfileListResult - Response for ListNetworkProfiles API service call.
-type NetworkProfileListResult struct {
-	// The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty"`
-
-	// A list of network profiles that exist in a resource group.
-	Value []*NetworkProfile `json:"value,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkProfileListResult.
-func (n NetworkProfileListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "nextLink", n.NextLink)
-	populate(objectMap, "value", n.Value)
-	return json.Marshal(objectMap)
-}
-
-// NetworkProfilePropertiesFormat - Network profile properties.
-type NetworkProfilePropertiesFormat struct {
-	// List of chid container network interface configurations.
-	ContainerNetworkInterfaceConfigurations []*ContainerNetworkInterfaceConfiguration `json:"containerNetworkInterfaceConfigurations,omitempty"`
-
-	// READ-ONLY; List of child container network interfaces.
-	ContainerNetworkInterfaces []*ContainerNetworkInterface `json:"containerNetworkInterfaces,omitempty" azure:"ro"`
-
-	// READ-ONLY; The provisioning state of the network profile resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// READ-ONLY; The resource GUID property of the network profile resource.
-	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkProfilePropertiesFormat.
-func (n NetworkProfilePropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "containerNetworkInterfaceConfigurations", n.ContainerNetworkInterfaceConfigurations)
-	populate(objectMap, "containerNetworkInterfaces", n.ContainerNetworkInterfaces)
-	populate(objectMap, "provisioningState", n.ProvisioningState)
-	populate(objectMap, "resourceGuid", n.ResourceGUID)
-	return json.Marshal(objectMap)
-}
-
-// NetworkProfilesBeginDeleteOptions contains the optional parameters for the NetworkProfilesClient.BeginDelete method.
+// NetworkProfilesBeginDeleteOptions contains the optional parameters for the ProfilesClient.BeginDelete method.
 type NetworkProfilesBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkProfilesCreateOrUpdateOptions contains the optional parameters for the NetworkProfilesClient.CreateOrUpdate method.
+// NetworkProfilesCreateOrUpdateOptions contains the optional parameters for the ProfilesClient.CreateOrUpdate method.
 type NetworkProfilesCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkProfilesGetOptions contains the optional parameters for the NetworkProfilesClient.Get method.
+// NetworkProfilesGetOptions contains the optional parameters for the ProfilesClient.Get method.
 type NetworkProfilesGetOptions struct {
 	// Expands referenced resources.
 	Expand *string
 }
 
-// NetworkProfilesListAllOptions contains the optional parameters for the NetworkProfilesClient.ListAll method.
+// NetworkProfilesListAllOptions contains the optional parameters for the ProfilesClient.ListAll method.
 type NetworkProfilesListAllOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkProfilesListOptions contains the optional parameters for the NetworkProfilesClient.List method.
+// NetworkProfilesListOptions contains the optional parameters for the ProfilesClient.List method.
 type NetworkProfilesListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkProfilesUpdateTagsOptions contains the optional parameters for the NetworkProfilesClient.UpdateTags method.
+// NetworkProfilesUpdateTagsOptions contains the optional parameters for the ProfilesClient.UpdateTags method.
 type NetworkProfilesUpdateTagsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkRuleCondition - Rule condition of type network.
-type NetworkRuleCondition struct {
-	FirewallPolicyRuleCondition
-	// List of destination IP addresses or Service Tags.
-	DestinationAddresses []*string `json:"destinationAddresses,omitempty"`
-
-	// List of destination IpGroups for this rule.
-	DestinationIPGroups []*string `json:"destinationIpGroups,omitempty"`
-
-	// List of destination ports.
-	DestinationPorts []*string `json:"destinationPorts,omitempty"`
-
-	// Array of FirewallPolicyRuleConditionNetworkProtocols.
-	IPProtocols []*FirewallPolicyRuleConditionNetworkProtocol `json:"ipProtocols,omitempty"`
-
-	// List of source IP addresses for this rule.
-	SourceAddresses []*string `json:"sourceAddresses,omitempty"`
-
-	// List of source IpGroups for this rule.
-	SourceIPGroups []*string `json:"sourceIpGroups,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkRuleCondition.
-func (n NetworkRuleCondition) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	n.FirewallPolicyRuleCondition.marshalInternal(objectMap, FirewallPolicyRuleConditionTypeNetworkRuleCondition)
-	populate(objectMap, "destinationAddresses", n.DestinationAddresses)
-	populate(objectMap, "destinationIpGroups", n.DestinationIPGroups)
-	populate(objectMap, "destinationPorts", n.DestinationPorts)
-	populate(objectMap, "ipProtocols", n.IPProtocols)
-	populate(objectMap, "sourceAddresses", n.SourceAddresses)
-	populate(objectMap, "sourceIpGroups", n.SourceIPGroups)
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type NetworkRuleCondition.
-func (n *NetworkRuleCondition) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "destinationAddresses":
-			err = unpopulate(val, &n.DestinationAddresses)
-			delete(rawMsg, key)
-		case "destinationIpGroups":
-			err = unpopulate(val, &n.DestinationIPGroups)
-			delete(rawMsg, key)
-		case "destinationPorts":
-			err = unpopulate(val, &n.DestinationPorts)
-			delete(rawMsg, key)
-		case "ipProtocols":
-			err = unpopulate(val, &n.IPProtocols)
-			delete(rawMsg, key)
-		case "sourceAddresses":
-			err = unpopulate(val, &n.SourceAddresses)
-			delete(rawMsg, key)
-		case "sourceIpGroups":
-			err = unpopulate(val, &n.SourceIPGroups)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	if err := n.FirewallPolicyRuleCondition.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NetworkSecurityGroup resource.
-type NetworkSecurityGroup struct {
-	Resource
-	// Properties of the network security group.
-	Properties *NetworkSecurityGroupPropertiesFormat `json:"properties,omitempty"`
-
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkSecurityGroup.
-func (n NetworkSecurityGroup) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	n.Resource.marshalInternal(objectMap)
-	populate(objectMap, "etag", n.Etag)
-	populate(objectMap, "properties", n.Properties)
-	return json.Marshal(objectMap)
-}
-
-// NetworkSecurityGroupListResult - Response for ListNetworkSecurityGroups API service call.
-type NetworkSecurityGroupListResult struct {
-	// The URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty"`
-
-	// A list of NetworkSecurityGroup resources.
-	Value []*NetworkSecurityGroup `json:"value,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkSecurityGroupListResult.
-func (n NetworkSecurityGroupListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "nextLink", n.NextLink)
-	populate(objectMap, "value", n.Value)
-	return json.Marshal(objectMap)
-}
-
-// NetworkSecurityGroupPropertiesFormat - Network Security Group resource.
-type NetworkSecurityGroupPropertiesFormat struct {
-	// A collection of security rules of the network security group.
-	SecurityRules []*SecurityRule `json:"securityRules,omitempty"`
-
-	// READ-ONLY; The default security rules of network security group.
-	DefaultSecurityRules []*SecurityRule `json:"defaultSecurityRules,omitempty" azure:"ro"`
-
-	// READ-ONLY; A collection of references to flow log resources.
-	FlowLogs []*FlowLog `json:"flowLogs,omitempty" azure:"ro"`
-
-	// READ-ONLY; A collection of references to network interfaces.
-	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty" azure:"ro"`
-
-	// READ-ONLY; The provisioning state of the network security group resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// READ-ONLY; The resource GUID property of the network security group resource.
-	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
-
-	// READ-ONLY; A collection of references to subnets.
-	Subnets []*Subnet `json:"subnets,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkSecurityGroupPropertiesFormat.
-func (n NetworkSecurityGroupPropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "defaultSecurityRules", n.DefaultSecurityRules)
-	populate(objectMap, "flowLogs", n.FlowLogs)
-	populate(objectMap, "networkInterfaces", n.NetworkInterfaces)
-	populate(objectMap, "provisioningState", n.ProvisioningState)
-	populate(objectMap, "resourceGuid", n.ResourceGUID)
-	populate(objectMap, "securityRules", n.SecurityRules)
-	populate(objectMap, "subnets", n.Subnets)
-	return json.Marshal(objectMap)
-}
-
-// NetworkSecurityGroupResult - Network configuration diagnostic result corresponded provided traffic query.
-type NetworkSecurityGroupResult struct {
-	// The network traffic is allowed or denied.
-	SecurityRuleAccessResult *SecurityRuleAccess `json:"securityRuleAccessResult,omitempty"`
-
-	// READ-ONLY; List of results network security groups diagnostic.
-	EvaluatedNetworkSecurityGroups []*EvaluatedNetworkSecurityGroup `json:"evaluatedNetworkSecurityGroups,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkSecurityGroupResult.
-func (n NetworkSecurityGroupResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "evaluatedNetworkSecurityGroups", n.EvaluatedNetworkSecurityGroups)
-	populate(objectMap, "securityRuleAccessResult", n.SecurityRuleAccessResult)
-	return json.Marshal(objectMap)
-}
-
-// NetworkSecurityGroupsBeginCreateOrUpdateOptions contains the optional parameters for the NetworkSecurityGroupsClient.BeginCreateOrUpdate
+// NetworkSecurityGroupsBeginCreateOrUpdateOptions contains the optional parameters for the SecurityGroupsClient.BeginCreateOrUpdate
 // method.
 type NetworkSecurityGroupsBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkSecurityGroupsBeginDeleteOptions contains the optional parameters for the NetworkSecurityGroupsClient.BeginDelete
-// method.
+// NetworkSecurityGroupsBeginDeleteOptions contains the optional parameters for the SecurityGroupsClient.BeginDelete method.
 type NetworkSecurityGroupsBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkSecurityGroupsGetOptions contains the optional parameters for the NetworkSecurityGroupsClient.Get method.
+// NetworkSecurityGroupsGetOptions contains the optional parameters for the SecurityGroupsClient.Get method.
 type NetworkSecurityGroupsGetOptions struct {
 	// Expands referenced resources.
 	Expand *string
 }
 
-// NetworkSecurityGroupsListAllOptions contains the optional parameters for the NetworkSecurityGroupsClient.ListAll method.
+// NetworkSecurityGroupsListAllOptions contains the optional parameters for the SecurityGroupsClient.ListAll method.
 type NetworkSecurityGroupsListAllOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkSecurityGroupsListOptions contains the optional parameters for the NetworkSecurityGroupsClient.List method.
+// NetworkSecurityGroupsListOptions contains the optional parameters for the SecurityGroupsClient.List method.
 type NetworkSecurityGroupsListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkSecurityGroupsUpdateTagsOptions contains the optional parameters for the NetworkSecurityGroupsClient.UpdateTags
-// method.
+// NetworkSecurityGroupsUpdateTagsOptions contains the optional parameters for the SecurityGroupsClient.UpdateTags method.
 type NetworkSecurityGroupsUpdateTagsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkSecurityRulesEvaluationResult - Network security rules evaluation result.
-type NetworkSecurityRulesEvaluationResult struct {
-	// Value indicating whether destination is matched.
-	DestinationMatched *bool `json:"destinationMatched,omitempty"`
-
-	// Value indicating whether destination port is matched.
-	DestinationPortMatched *bool `json:"destinationPortMatched,omitempty"`
-
-	// Name of the network security rule.
-	Name *string `json:"name,omitempty"`
-
-	// Value indicating whether protocol is matched.
-	ProtocolMatched *bool `json:"protocolMatched,omitempty"`
-
-	// Value indicating whether source is matched.
-	SourceMatched *bool `json:"sourceMatched,omitempty"`
-
-	// Value indicating whether source port is matched.
-	SourcePortMatched *bool `json:"sourcePortMatched,omitempty"`
-}
-
-// NetworkVirtualAppliance Resource.
-type NetworkVirtualAppliance struct {
-	Resource
-	// The service principal that has read access to cloud-init and config blob.
-	Identity *ManagedServiceIdentity `json:"identity,omitempty"`
-
-	// Properties of the Network Virtual Appliance.
-	Properties *NetworkVirtualAppliancePropertiesFormat `json:"properties,omitempty"`
-
-	// Network Virtual Appliance SKU.
-	SKU *VirtualApplianceSKUProperties `json:"sku,omitempty"`
-
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkVirtualAppliance.
-func (n NetworkVirtualAppliance) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	n.Resource.marshalInternal(objectMap)
-	populate(objectMap, "etag", n.Etag)
-	populate(objectMap, "identity", n.Identity)
-	populate(objectMap, "properties", n.Properties)
-	populate(objectMap, "sku", n.SKU)
-	return json.Marshal(objectMap)
-}
-
-// NetworkVirtualApplianceListResult - Response for ListNetworkVirtualAppliances API service call.
-type NetworkVirtualApplianceListResult struct {
-	// URL to get the next set of results.
-	NextLink *string `json:"nextLink,omitempty"`
-
-	// List of Network Virtual Appliances.
-	Value []*NetworkVirtualAppliance `json:"value,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkVirtualApplianceListResult.
-func (n NetworkVirtualApplianceListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "nextLink", n.NextLink)
-	populate(objectMap, "value", n.Value)
-	return json.Marshal(objectMap)
-}
-
-// NetworkVirtualAppliancePropertiesFormat - Network Virtual Appliance definition.
-type NetworkVirtualAppliancePropertiesFormat struct {
-	// BootStrapConfigurationBlob storage URLs.
-	BootStrapConfigurationBlob []*string `json:"bootStrapConfigurationBlob,omitempty"`
-
-	// CloudInitConfigurationBlob storage URLs.
-	CloudInitConfigurationBlob []*string `json:"cloudInitConfigurationBlob,omitempty"`
-
-	// VirtualAppliance ASN.
-	VirtualApplianceAsn *int64 `json:"virtualApplianceAsn,omitempty"`
-
-	// The Virtual Hub where Network Virtual Appliance is being deployed.
-	VirtualHub *SubResource `json:"virtualHub,omitempty"`
-
-	// READ-ONLY; The provisioning state of the resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-
-	// READ-ONLY; List of Virtual Appliance Network Interfaces.
-	VirtualApplianceNics []*VirtualApplianceNicProperties `json:"virtualApplianceNics,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkVirtualAppliancePropertiesFormat.
-func (n NetworkVirtualAppliancePropertiesFormat) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "bootStrapConfigurationBlob", n.BootStrapConfigurationBlob)
-	populate(objectMap, "cloudInitConfigurationBlob", n.CloudInitConfigurationBlob)
-	populate(objectMap, "provisioningState", n.ProvisioningState)
-	populate(objectMap, "virtualApplianceAsn", n.VirtualApplianceAsn)
-	populate(objectMap, "virtualApplianceNics", n.VirtualApplianceNics)
-	populate(objectMap, "virtualHub", n.VirtualHub)
-	return json.Marshal(objectMap)
-}
-
-// NetworkVirtualAppliancesBeginCreateOrUpdateOptions contains the optional parameters for the NetworkVirtualAppliancesClient.BeginCreateOrUpdate
+// NetworkVirtualAppliancesBeginCreateOrUpdateOptions contains the optional parameters for the VirtualAppliancesClient.BeginCreateOrUpdate
 // method.
 type NetworkVirtualAppliancesBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkVirtualAppliancesBeginDeleteOptions contains the optional parameters for the NetworkVirtualAppliancesClient.BeginDelete
+// NetworkVirtualAppliancesBeginDeleteOptions contains the optional parameters for the VirtualAppliancesClient.BeginDelete
 // method.
 type NetworkVirtualAppliancesBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkVirtualAppliancesGetOptions contains the optional parameters for the NetworkVirtualAppliancesClient.Get method.
+// NetworkVirtualAppliancesGetOptions contains the optional parameters for the VirtualAppliancesClient.Get method.
 type NetworkVirtualAppliancesGetOptions struct {
 	// Expands referenced resources.
 	Expand *string
 }
 
-// NetworkVirtualAppliancesListByResourceGroupOptions contains the optional parameters for the NetworkVirtualAppliancesClient.ListByResourceGroup
+// NetworkVirtualAppliancesListByResourceGroupOptions contains the optional parameters for the VirtualAppliancesClient.ListByResourceGroup
 // method.
 type NetworkVirtualAppliancesListByResourceGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkVirtualAppliancesListOptions contains the optional parameters for the NetworkVirtualAppliancesClient.List method.
+// NetworkVirtualAppliancesListOptions contains the optional parameters for the VirtualAppliancesClient.List method.
 type NetworkVirtualAppliancesListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkVirtualAppliancesUpdateTagsOptions contains the optional parameters for the NetworkVirtualAppliancesClient.UpdateTags
-// method.
+// NetworkVirtualAppliancesUpdateTagsOptions contains the optional parameters for the VirtualAppliancesClient.UpdateTags method.
 type NetworkVirtualAppliancesUpdateTagsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatcher - Network watcher in a resource group.
-type NetworkWatcher struct {
-	Resource
-	// Properties of the network watcher.
-	Properties *NetworkWatcherPropertiesFormat `json:"properties,omitempty"`
-
-	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
-	Etag *string `json:"etag,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkWatcher.
-func (n NetworkWatcher) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	n.Resource.marshalInternal(objectMap)
-	populate(objectMap, "etag", n.Etag)
-	populate(objectMap, "properties", n.Properties)
-	return json.Marshal(objectMap)
-}
-
-// NetworkWatcherListResult - Response for ListNetworkWatchers API service call.
-type NetworkWatcherListResult struct {
-	// List of network watcher resources.
-	Value []*NetworkWatcher `json:"value,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkWatcherListResult.
-func (n NetworkWatcherListResult) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "value", n.Value)
-	return json.Marshal(objectMap)
-}
-
-// NetworkWatcherPropertiesFormat - The network watcher properties.
-type NetworkWatcherPropertiesFormat struct {
-	// READ-ONLY; The provisioning state of the network watcher resource.
-	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
-}
-
-// NetworkWatchersBeginCheckConnectivityOptions contains the optional parameters for the NetworkWatchersClient.BeginCheckConnectivity
+// NetworkWatchersBeginCheckConnectivityOptions contains the optional parameters for the WatchersClient.BeginCheckConnectivity
 // method.
 type NetworkWatchersBeginCheckConnectivityOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersBeginDeleteOptions contains the optional parameters for the NetworkWatchersClient.BeginDelete method.
+// NetworkWatchersBeginDeleteOptions contains the optional parameters for the WatchersClient.BeginDelete method.
 type NetworkWatchersBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersBeginGetAzureReachabilityReportOptions contains the optional parameters for the NetworkWatchersClient.BeginGetAzureReachabilityReport
+// NetworkWatchersBeginGetAzureReachabilityReportOptions contains the optional parameters for the WatchersClient.BeginGetAzureReachabilityReport
 // method.
 type NetworkWatchersBeginGetAzureReachabilityReportOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersBeginGetFlowLogStatusOptions contains the optional parameters for the NetworkWatchersClient.BeginGetFlowLogStatus
+// NetworkWatchersBeginGetFlowLogStatusOptions contains the optional parameters for the WatchersClient.BeginGetFlowLogStatus
 // method.
 type NetworkWatchersBeginGetFlowLogStatusOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersBeginGetNetworkConfigurationDiagnosticOptions contains the optional parameters for the NetworkWatchersClient.BeginGetNetworkConfigurationDiagnostic
+// NetworkWatchersBeginGetNetworkConfigurationDiagnosticOptions contains the optional parameters for the WatchersClient.BeginGetNetworkConfigurationDiagnostic
 // method.
 type NetworkWatchersBeginGetNetworkConfigurationDiagnosticOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersBeginGetNextHopOptions contains the optional parameters for the NetworkWatchersClient.BeginGetNextHop method.
+// NetworkWatchersBeginGetNextHopOptions contains the optional parameters for the WatchersClient.BeginGetNextHop method.
 type NetworkWatchersBeginGetNextHopOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersBeginGetTroubleshootingOptions contains the optional parameters for the NetworkWatchersClient.BeginGetTroubleshooting
+// NetworkWatchersBeginGetTroubleshootingOptions contains the optional parameters for the WatchersClient.BeginGetTroubleshooting
 // method.
 type NetworkWatchersBeginGetTroubleshootingOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersBeginGetTroubleshootingResultOptions contains the optional parameters for the NetworkWatchersClient.BeginGetTroubleshootingResult
+// NetworkWatchersBeginGetTroubleshootingResultOptions contains the optional parameters for the WatchersClient.BeginGetTroubleshootingResult
 // method.
 type NetworkWatchersBeginGetTroubleshootingResultOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersBeginGetVMSecurityRulesOptions contains the optional parameters for the NetworkWatchersClient.BeginGetVMSecurityRules
+// NetworkWatchersBeginGetVMSecurityRulesOptions contains the optional parameters for the WatchersClient.BeginGetVMSecurityRules
 // method.
 type NetworkWatchersBeginGetVMSecurityRulesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersBeginListAvailableProvidersOptions contains the optional parameters for the NetworkWatchersClient.BeginListAvailableProviders
+// NetworkWatchersBeginListAvailableProvidersOptions contains the optional parameters for the WatchersClient.BeginListAvailableProviders
 // method.
 type NetworkWatchersBeginListAvailableProvidersOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersBeginSetFlowLogConfigurationOptions contains the optional parameters for the NetworkWatchersClient.BeginSetFlowLogConfiguration
+// NetworkWatchersBeginSetFlowLogConfigurationOptions contains the optional parameters for the WatchersClient.BeginSetFlowLogConfiguration
 // method.
 type NetworkWatchersBeginSetFlowLogConfigurationOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersBeginVerifyIPFlowOptions contains the optional parameters for the NetworkWatchersClient.BeginVerifyIPFlow
-// method.
+// NetworkWatchersBeginVerifyIPFlowOptions contains the optional parameters for the WatchersClient.BeginVerifyIPFlow method.
 type NetworkWatchersBeginVerifyIPFlowOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersCreateOrUpdateOptions contains the optional parameters for the NetworkWatchersClient.CreateOrUpdate method.
+// NetworkWatchersCreateOrUpdateOptions contains the optional parameters for the WatchersClient.CreateOrUpdate method.
 type NetworkWatchersCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersGetOptions contains the optional parameters for the NetworkWatchersClient.Get method.
+// NetworkWatchersGetOptions contains the optional parameters for the WatchersClient.Get method.
 type NetworkWatchersGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersGetTopologyOptions contains the optional parameters for the NetworkWatchersClient.GetTopology method.
+// NetworkWatchersGetTopologyOptions contains the optional parameters for the WatchersClient.GetTopology method.
 type NetworkWatchersGetTopologyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersListAllOptions contains the optional parameters for the NetworkWatchersClient.ListAll method.
+// NetworkWatchersListAllOptions contains the optional parameters for the WatchersClient.ListAll method.
 type NetworkWatchersListAllOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersListOptions contains the optional parameters for the NetworkWatchersClient.List method.
+// NetworkWatchersListOptions contains the optional parameters for the WatchersClient.List method.
 type NetworkWatchersListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NetworkWatchersUpdateTagsOptions contains the optional parameters for the NetworkWatchersClient.UpdateTags method.
+// NetworkWatchersUpdateTagsOptions contains the optional parameters for the WatchersClient.UpdateTags method.
 type NetworkWatchersUpdateTagsOptions struct {
 	// placeholder for future optional parameters
 }
@@ -10542,7 +10177,7 @@ type PolicySettings struct {
 // PrepareNetworkPoliciesRequest - Details of PrepareNetworkPolicies for Subnet.
 type PrepareNetworkPoliciesRequest struct {
 	// A list of NetworkIntentPolicyConfiguration.
-	NetworkIntentPolicyConfigurations []*NetworkIntentPolicyConfiguration `json:"networkIntentPolicyConfigurations,omitempty"`
+	NetworkIntentPolicyConfigurations []*IntentPolicyConfiguration `json:"networkIntentPolicyConfigurations,omitempty"`
 
 	// The name of the service for which subnet is being prepared for.
 	ServiceName *string `json:"serviceName,omitempty"`
@@ -10772,7 +10407,7 @@ type PrivateEndpointProperties struct {
 	Subnet *Subnet `json:"subnet,omitempty"`
 
 	// READ-ONLY; An array of references to the network interfaces created for this private endpoint.
-	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty" azure:"ro"`
+	NetworkInterfaces []*Interface `json:"networkInterfaces,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the private endpoint resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -10995,7 +10630,7 @@ type PrivateLinkServiceProperties struct {
 	Alias *string `json:"alias,omitempty" azure:"ro"`
 
 	// READ-ONLY; An array of references to the network interfaces created for this private link service.
-	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty" azure:"ro"`
+	NetworkInterfaces []*Interface `json:"networkInterfaces,omitempty" azure:"ro"`
 
 	// READ-ONLY; An array of list about connections to the private endpoint.
 	PrivateEndpointConnections []*PrivateEndpointConnection `json:"privateEndpointConnections,omitempty" azure:"ro"`
@@ -11182,6 +10817,67 @@ func (p ProbePropertiesFormat) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "protocol", p.Protocol)
 	populate(objectMap, "provisioningState", p.ProvisioningState)
 	populate(objectMap, "requestPath", p.RequestPath)
+	return json.Marshal(objectMap)
+}
+
+// Profile - Network profile resource.
+type Profile struct {
+	Resource
+	// Network profile properties.
+	Properties *ProfilePropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Profile.
+func (p Profile) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	p.Resource.marshalInternal(objectMap)
+	populate(objectMap, "etag", p.Etag)
+	populate(objectMap, "properties", p.Properties)
+	return json.Marshal(objectMap)
+}
+
+// ProfileListResult - Response for ListNetworkProfiles API service call.
+type ProfileListResult struct {
+	// The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty"`
+
+	// A list of network profiles that exist in a resource group.
+	Value []*Profile `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ProfileListResult.
+func (p ProfileListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", p.NextLink)
+	populate(objectMap, "value", p.Value)
+	return json.Marshal(objectMap)
+}
+
+// ProfilePropertiesFormat - Network profile properties.
+type ProfilePropertiesFormat struct {
+	// List of chid container network interface configurations.
+	ContainerNetworkInterfaceConfigurations []*ContainerNetworkInterfaceConfiguration `json:"containerNetworkInterfaceConfigurations,omitempty"`
+
+	// READ-ONLY; List of child container network interfaces.
+	ContainerNetworkInterfaces []*ContainerNetworkInterface `json:"containerNetworkInterfaces,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the network profile resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// READ-ONLY; The resource GUID property of the network profile resource.
+	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ProfilePropertiesFormat.
+func (p ProfilePropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "containerNetworkInterfaceConfigurations", p.ContainerNetworkInterfaceConfigurations)
+	populate(objectMap, "containerNetworkInterfaces", p.ContainerNetworkInterfaces)
+	populate(objectMap, "provisioningState", p.ProvisioningState)
+	populate(objectMap, "resourceGuid", p.ResourceGUID)
 	return json.Marshal(objectMap)
 }
 
@@ -12032,6 +11728,115 @@ type RoutesListOptions struct {
 	// placeholder for future optional parameters
 }
 
+// RuleCondition - Rule condition of type network.
+type RuleCondition struct {
+	FirewallPolicyRuleCondition
+	// List of destination IP addresses or Service Tags.
+	DestinationAddresses []*string `json:"destinationAddresses,omitempty"`
+
+	// List of destination IpGroups for this rule.
+	DestinationIPGroups []*string `json:"destinationIpGroups,omitempty"`
+
+	// List of destination ports.
+	DestinationPorts []*string `json:"destinationPorts,omitempty"`
+
+	// Array of FirewallPolicyRuleConditionNetworkProtocols.
+	IPProtocols []*FirewallPolicyRuleConditionNetworkProtocol `json:"ipProtocols,omitempty"`
+
+	// List of source IP addresses for this rule.
+	SourceAddresses []*string `json:"sourceAddresses,omitempty"`
+
+	// List of source IpGroups for this rule.
+	SourceIPGroups []*string `json:"sourceIpGroups,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type RuleCondition.
+func (r RuleCondition) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	r.FirewallPolicyRuleCondition.marshalInternal(objectMap, FirewallPolicyRuleConditionTypeNetworkRuleCondition)
+	populate(objectMap, "destinationAddresses", r.DestinationAddresses)
+	populate(objectMap, "destinationIpGroups", r.DestinationIPGroups)
+	populate(objectMap, "destinationPorts", r.DestinationPorts)
+	populate(objectMap, "ipProtocols", r.IPProtocols)
+	populate(objectMap, "sourceAddresses", r.SourceAddresses)
+	populate(objectMap, "sourceIpGroups", r.SourceIPGroups)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type RuleCondition.
+func (r *RuleCondition) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "destinationAddresses":
+			err = unpopulate(val, &r.DestinationAddresses)
+			delete(rawMsg, key)
+		case "destinationIpGroups":
+			err = unpopulate(val, &r.DestinationIPGroups)
+			delete(rawMsg, key)
+		case "destinationPorts":
+			err = unpopulate(val, &r.DestinationPorts)
+			delete(rawMsg, key)
+		case "ipProtocols":
+			err = unpopulate(val, &r.IPProtocols)
+			delete(rawMsg, key)
+		case "sourceAddresses":
+			err = unpopulate(val, &r.SourceAddresses)
+			delete(rawMsg, key)
+		case "sourceIpGroups":
+			err = unpopulate(val, &r.SourceIPGroups)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	if err := r.FirewallPolicyRuleCondition.unmarshalInternal(rawMsg); err != nil {
+		return err
+	}
+	return nil
+}
+
+// SecurityGroup - NetworkSecurityGroup resource.
+type SecurityGroup struct {
+	Resource
+	// Properties of the network security group.
+	Properties *SecurityGroupPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SecurityGroup.
+func (s SecurityGroup) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	s.Resource.marshalInternal(objectMap)
+	populate(objectMap, "etag", s.Etag)
+	populate(objectMap, "properties", s.Properties)
+	return json.Marshal(objectMap)
+}
+
+// SecurityGroupListResult - Response for ListNetworkSecurityGroups API service call.
+type SecurityGroupListResult struct {
+	// The URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty"`
+
+	// A list of NetworkSecurityGroup resources.
+	Value []*SecurityGroup `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SecurityGroupListResult.
+func (s SecurityGroupListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", s.NextLink)
+	populate(objectMap, "value", s.Value)
+	return json.Marshal(objectMap)
+}
+
 // SecurityGroupNetworkInterface - Network interface and all its associated security rules.
 type SecurityGroupNetworkInterface struct {
 	// ID of the network interface.
@@ -12039,6 +11844,60 @@ type SecurityGroupNetworkInterface struct {
 
 	// All security rules associated with the network interface.
 	SecurityRuleAssociations *SecurityRuleAssociations `json:"securityRuleAssociations,omitempty"`
+}
+
+// SecurityGroupPropertiesFormat - Network Security Group resource.
+type SecurityGroupPropertiesFormat struct {
+	// A collection of security rules of the network security group.
+	SecurityRules []*SecurityRule `json:"securityRules,omitempty"`
+
+	// READ-ONLY; The default security rules of network security group.
+	DefaultSecurityRules []*SecurityRule `json:"defaultSecurityRules,omitempty" azure:"ro"`
+
+	// READ-ONLY; A collection of references to flow log resources.
+	FlowLogs []*FlowLog `json:"flowLogs,omitempty" azure:"ro"`
+
+	// READ-ONLY; A collection of references to network interfaces.
+	NetworkInterfaces []*Interface `json:"networkInterfaces,omitempty" azure:"ro"`
+
+	// READ-ONLY; The provisioning state of the network security group resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// READ-ONLY; The resource GUID property of the network security group resource.
+	ResourceGUID *string `json:"resourceGuid,omitempty" azure:"ro"`
+
+	// READ-ONLY; A collection of references to subnets.
+	Subnets []*Subnet `json:"subnets,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SecurityGroupPropertiesFormat.
+func (s SecurityGroupPropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "defaultSecurityRules", s.DefaultSecurityRules)
+	populate(objectMap, "flowLogs", s.FlowLogs)
+	populate(objectMap, "networkInterfaces", s.NetworkInterfaces)
+	populate(objectMap, "provisioningState", s.ProvisioningState)
+	populate(objectMap, "resourceGuid", s.ResourceGUID)
+	populate(objectMap, "securityRules", s.SecurityRules)
+	populate(objectMap, "subnets", s.Subnets)
+	return json.Marshal(objectMap)
+}
+
+// SecurityGroupResult - Network configuration diagnostic result corresponded provided traffic query.
+type SecurityGroupResult struct {
+	// The network traffic is allowed or denied.
+	SecurityRuleAccessResult *SecurityRuleAccess `json:"securityRuleAccessResult,omitempty"`
+
+	// READ-ONLY; List of results network security groups diagnostic.
+	EvaluatedNetworkSecurityGroups []*EvaluatedNetworkSecurityGroup `json:"evaluatedNetworkSecurityGroups,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type SecurityGroupResult.
+func (s SecurityGroupResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "evaluatedNetworkSecurityGroups", s.EvaluatedNetworkSecurityGroups)
+	populate(objectMap, "securityRuleAccessResult", s.SecurityRuleAccessResult)
+	return json.Marshal(objectMap)
 }
 
 // SecurityGroupViewParameters - Parameters that define the VM to check security groups for.
@@ -12177,7 +12036,7 @@ type SecurityRuleAssociations struct {
 	EffectiveSecurityRules []*EffectiveNetworkSecurityRule `json:"effectiveSecurityRules,omitempty"`
 
 	// Network interface and it's custom security rules.
-	NetworkInterfaceAssociation *NetworkInterfaceAssociation `json:"networkInterfaceAssociation,omitempty"`
+	NetworkInterfaceAssociation *InterfaceAssociation `json:"networkInterfaceAssociation,omitempty"`
 
 	// Subnet and it's custom security rules.
 	SubnetAssociation *SubnetAssociation `json:"subnetAssociation,omitempty"`
@@ -12298,6 +12157,27 @@ type SecurityRulesBeginCreateOrUpdateOptions struct {
 // SecurityRulesBeginDeleteOptions contains the optional parameters for the SecurityRulesClient.BeginDelete method.
 type SecurityRulesBeginDeleteOptions struct {
 	// placeholder for future optional parameters
+}
+
+// SecurityRulesEvaluationResult - Network security rules evaluation result.
+type SecurityRulesEvaluationResult struct {
+	// Value indicating whether destination is matched.
+	DestinationMatched *bool `json:"destinationMatched,omitempty"`
+
+	// Value indicating whether destination port is matched.
+	DestinationPortMatched *bool `json:"destinationPortMatched,omitempty"`
+
+	// Name of the network security rule.
+	Name *string `json:"name,omitempty"`
+
+	// Value indicating whether protocol is matched.
+	ProtocolMatched *bool `json:"protocolMatched,omitempty"`
+
+	// Value indicating whether source is matched.
+	SourceMatched *bool `json:"sourceMatched,omitempty"`
+
+	// Value indicating whether source port is matched.
+	SourcePortMatched *bool `json:"sourcePortMatched,omitempty"`
 }
 
 // SecurityRulesGetOptions contains the optional parameters for the SecurityRulesClient.Get method.
@@ -12796,7 +12676,7 @@ type SubnetPropertiesFormat struct {
 	NatGateway *SubResource `json:"natGateway,omitempty"`
 
 	// The reference to the NetworkSecurityGroup resource.
-	NetworkSecurityGroup *NetworkSecurityGroup `json:"networkSecurityGroup,omitempty"`
+	NetworkSecurityGroup *SecurityGroup `json:"networkSecurityGroup,omitempty"`
 
 	// Enable or Disable apply network policies on private end point in the subnet.
 	PrivateEndpointNetworkPolicies *string `json:"privateEndpointNetworkPolicies,omitempty"`
@@ -14226,6 +14106,50 @@ type VerificationIPFlowResult struct {
 	RuleName *string `json:"ruleName,omitempty"`
 }
 
+// VirtualAppliance - NetworkVirtualAppliance Resource.
+type VirtualAppliance struct {
+	Resource
+	// The service principal that has read access to cloud-init and config blob.
+	Identity *ManagedServiceIdentity `json:"identity,omitempty"`
+
+	// Properties of the Network Virtual Appliance.
+	Properties *VirtualAppliancePropertiesFormat `json:"properties,omitempty"`
+
+	// Network Virtual Appliance SKU.
+	SKU *VirtualApplianceSKUProperties `json:"sku,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualAppliance.
+func (v VirtualAppliance) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	v.Resource.marshalInternal(objectMap)
+	populate(objectMap, "etag", v.Etag)
+	populate(objectMap, "identity", v.Identity)
+	populate(objectMap, "properties", v.Properties)
+	populate(objectMap, "sku", v.SKU)
+	return json.Marshal(objectMap)
+}
+
+// VirtualApplianceListResult - Response for ListNetworkVirtualAppliances API service call.
+type VirtualApplianceListResult struct {
+	// URL to get the next set of results.
+	NextLink *string `json:"nextLink,omitempty"`
+
+	// List of Network Virtual Appliances.
+	Value []*VirtualAppliance `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualApplianceListResult.
+func (v VirtualApplianceListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "nextLink", v.NextLink)
+	populate(objectMap, "value", v.Value)
+	return json.Marshal(objectMap)
+}
+
 // VirtualApplianceNicProperties - Network Virtual Appliance NIC properties.
 type VirtualApplianceNicProperties struct {
 	// READ-ONLY; NIC name.
@@ -14236,6 +14160,39 @@ type VirtualApplianceNicProperties struct {
 
 	// READ-ONLY; Public IP address.
 	PublicIPAddress *string `json:"publicIpAddress,omitempty" azure:"ro"`
+}
+
+// VirtualAppliancePropertiesFormat - Network Virtual Appliance definition.
+type VirtualAppliancePropertiesFormat struct {
+	// BootStrapConfigurationBlob storage URLs.
+	BootStrapConfigurationBlob []*string `json:"bootStrapConfigurationBlob,omitempty"`
+
+	// CloudInitConfigurationBlob storage URLs.
+	CloudInitConfigurationBlob []*string `json:"cloudInitConfigurationBlob,omitempty"`
+
+	// VirtualAppliance ASN.
+	VirtualApplianceAsn *int64 `json:"virtualApplianceAsn,omitempty"`
+
+	// The Virtual Hub where Network Virtual Appliance is being deployed.
+	VirtualHub *SubResource `json:"virtualHub,omitempty"`
+
+	// READ-ONLY; The provisioning state of the resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
+
+	// READ-ONLY; List of Virtual Appliance Network Interfaces.
+	VirtualApplianceNics []*VirtualApplianceNicProperties `json:"virtualApplianceNics,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type VirtualAppliancePropertiesFormat.
+func (v VirtualAppliancePropertiesFormat) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "bootStrapConfigurationBlob", v.BootStrapConfigurationBlob)
+	populate(objectMap, "cloudInitConfigurationBlob", v.CloudInitConfigurationBlob)
+	populate(objectMap, "provisioningState", v.ProvisioningState)
+	populate(objectMap, "virtualApplianceAsn", v.VirtualApplianceAsn)
+	populate(objectMap, "virtualApplianceNics", v.VirtualApplianceNics)
+	populate(objectMap, "virtualHub", v.VirtualHub)
+	return json.Marshal(objectMap)
 }
 
 // VirtualApplianceSKUProperties - Network Virtual Appliance Sku Properties.
@@ -15364,13 +15321,13 @@ type VirtualNetworkTapPropertiesFormat struct {
 	DestinationLoadBalancerFrontEndIPConfiguration *FrontendIPConfiguration `json:"destinationLoadBalancerFrontEndIPConfiguration,omitempty"`
 
 	// The reference to the private IP Address of the collector nic that will receive the tap.
-	DestinationNetworkInterfaceIPConfiguration *NetworkInterfaceIPConfiguration `json:"destinationNetworkInterfaceIPConfiguration,omitempty"`
+	DestinationNetworkInterfaceIPConfiguration *InterfaceIPConfiguration `json:"destinationNetworkInterfaceIPConfiguration,omitempty"`
 
 	// The VXLAN destination port that will receive the tapped traffic.
 	DestinationPort *int32 `json:"destinationPort,omitempty"`
 
 	// READ-ONLY; Specifies the list of resource IDs for the network interface IP configuration that needs to be tapped.
-	NetworkInterfaceTapConfigurations []*NetworkInterfaceTapConfiguration `json:"networkInterfaceTapConfigurations,omitempty" azure:"ro"`
+	NetworkInterfaceTapConfigurations []*InterfaceTapConfiguration `json:"networkInterfaceTapConfigurations,omitempty" azure:"ro"`
 
 	// READ-ONLY; The provisioning state of the virtual network tap resource.
 	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
@@ -15790,6 +15747,44 @@ type VirtualWansListOptions struct {
 // VirtualWansUpdateTagsOptions contains the optional parameters for the VirtualWansClient.UpdateTags method.
 type VirtualWansUpdateTagsOptions struct {
 	// placeholder for future optional parameters
+}
+
+// Watcher - Network watcher in a resource group.
+type Watcher struct {
+	Resource
+	// Properties of the network watcher.
+	Properties *WatcherPropertiesFormat `json:"properties,omitempty"`
+
+	// READ-ONLY; A unique read-only string that changes whenever the resource is updated.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type Watcher.
+func (w Watcher) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	w.Resource.marshalInternal(objectMap)
+	populate(objectMap, "etag", w.Etag)
+	populate(objectMap, "properties", w.Properties)
+	return json.Marshal(objectMap)
+}
+
+// WatcherListResult - Response for ListNetworkWatchers API service call.
+type WatcherListResult struct {
+	// List of network watcher resources.
+	Value []*Watcher `json:"value,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type WatcherListResult.
+func (w WatcherListResult) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "value", w.Value)
+	return json.Marshal(objectMap)
+}
+
+// WatcherPropertiesFormat - The network watcher properties.
+type WatcherPropertiesFormat struct {
+	// READ-ONLY; The provisioning state of the network watcher resource.
+	ProvisioningState *ProvisioningState `json:"provisioningState,omitempty" azure:"ro"`
 }
 
 // WebApplicationFirewallCustomRule - Defines contents of a web application rule.

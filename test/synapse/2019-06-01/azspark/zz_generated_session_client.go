@@ -19,17 +19,17 @@ import (
 	"strings"
 )
 
-type sparkSessionClient struct {
+type sessionClient struct {
 	endpoint string
 	pl       runtime.Pipeline
 }
 
-// newSparkSessionClient creates a new instance of sparkSessionClient with the specified values.
+// newSessionClient creates a new instance of sessionClient with the specified values.
 // endpoint - The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.
 // livyAPIVersion - Valid api-version for the request.
 // sparkPoolName - Name of the spark pool.
 // pl - the pipeline used for sending requests and handling responses.
-func newSparkSessionClient(endpoint string, livyAPIVersion *string, sparkPoolName string, pl runtime.Pipeline) *sparkSessionClient {
+func newSessionClient(endpoint string, livyAPIVersion *string, sparkPoolName string, pl runtime.Pipeline) *sessionClient {
 	hostURL := "{endpoint}/livyApi/versions/{livyApiVersion}/sparkPools/{sparkPoolName}"
 	hostURL = strings.ReplaceAll(hostURL, "{endpoint}", endpoint)
 	if livyAPIVersion == nil {
@@ -38,7 +38,7 @@ func newSparkSessionClient(endpoint string, livyAPIVersion *string, sparkPoolNam
 	}
 	hostURL = strings.ReplaceAll(hostURL, "{livyApiVersion}", *livyAPIVersion)
 	hostURL = strings.ReplaceAll(hostURL, "{sparkPoolName}", sparkPoolName)
-	client := &sparkSessionClient{
+	client := &sessionClient{
 		endpoint: hostURL,
 		pl:       pl,
 	}
@@ -48,9 +48,9 @@ func newSparkSessionClient(endpoint string, livyAPIVersion *string, sparkPoolNam
 // CancelSparkSession - Cancels a running spark session.
 // If the operation fails it returns a generic error.
 // sessionID - Identifier for the session.
-// options - SparkSessionCancelSparkSessionOptions contains the optional parameters for the sparkSessionClient.CancelSparkSession
+// options - SparkSessionCancelSparkSessionOptions contains the optional parameters for the sessionClient.CancelSparkSession
 // method.
-func (client *sparkSessionClient) CancelSparkSession(ctx context.Context, sessionID int32, options *SparkSessionCancelSparkSessionOptions) (SparkSessionCancelSparkSessionResponse, error) {
+func (client *sessionClient) CancelSparkSession(ctx context.Context, sessionID int32, options *SparkSessionCancelSparkSessionOptions) (SparkSessionCancelSparkSessionResponse, error) {
 	req, err := client.cancelSparkSessionCreateRequest(ctx, sessionID, options)
 	if err != nil {
 		return SparkSessionCancelSparkSessionResponse{}, err
@@ -66,7 +66,7 @@ func (client *sparkSessionClient) CancelSparkSession(ctx context.Context, sessio
 }
 
 // cancelSparkSessionCreateRequest creates the CancelSparkSession request.
-func (client *sparkSessionClient) cancelSparkSessionCreateRequest(ctx context.Context, sessionID int32, options *SparkSessionCancelSparkSessionOptions) (*policy.Request, error) {
+func (client *sessionClient) cancelSparkSessionCreateRequest(ctx context.Context, sessionID int32, options *SparkSessionCancelSparkSessionOptions) (*policy.Request, error) {
 	urlPath := "/sessions/{sessionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionID), 10)))
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(client.endpoint, urlPath))
@@ -77,7 +77,7 @@ func (client *sparkSessionClient) cancelSparkSessionCreateRequest(ctx context.Co
 }
 
 // cancelSparkSessionHandleError handles the CancelSparkSession error response.
-func (client *sparkSessionClient) cancelSparkSessionHandleError(resp *http.Response) error {
+func (client *sessionClient) cancelSparkSessionHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -92,9 +92,9 @@ func (client *sparkSessionClient) cancelSparkSessionHandleError(resp *http.Respo
 // If the operation fails it returns a generic error.
 // sessionID - Identifier for the session.
 // statementID - Identifier for the statement.
-// options - SparkSessionCancelSparkStatementOptions contains the optional parameters for the sparkSessionClient.CancelSparkStatement
+// options - SparkSessionCancelSparkStatementOptions contains the optional parameters for the sessionClient.CancelSparkStatement
 // method.
-func (client *sparkSessionClient) CancelSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionCancelSparkStatementOptions) (SparkSessionCancelSparkStatementResponse, error) {
+func (client *sessionClient) CancelSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionCancelSparkStatementOptions) (SparkSessionCancelSparkStatementResponse, error) {
 	req, err := client.cancelSparkStatementCreateRequest(ctx, sessionID, statementID, options)
 	if err != nil {
 		return SparkSessionCancelSparkStatementResponse{}, err
@@ -110,7 +110,7 @@ func (client *sparkSessionClient) CancelSparkStatement(ctx context.Context, sess
 }
 
 // cancelSparkStatementCreateRequest creates the CancelSparkStatement request.
-func (client *sparkSessionClient) cancelSparkStatementCreateRequest(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionCancelSparkStatementOptions) (*policy.Request, error) {
+func (client *sessionClient) cancelSparkStatementCreateRequest(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionCancelSparkStatementOptions) (*policy.Request, error) {
 	urlPath := "/sessions/{sessionId}/statements/{statementId}/cancel"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionID), 10)))
 	urlPath = strings.ReplaceAll(urlPath, "{statementId}", url.PathEscape(strconv.FormatInt(int64(statementID), 10)))
@@ -123,16 +123,16 @@ func (client *sparkSessionClient) cancelSparkStatementCreateRequest(ctx context.
 }
 
 // cancelSparkStatementHandleResponse handles the CancelSparkStatement response.
-func (client *sparkSessionClient) cancelSparkStatementHandleResponse(resp *http.Response) (SparkSessionCancelSparkStatementResponse, error) {
+func (client *sessionClient) cancelSparkStatementHandleResponse(resp *http.Response) (SparkSessionCancelSparkStatementResponse, error) {
 	result := SparkSessionCancelSparkStatementResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.SparkStatementCancellationResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.StatementCancellationResult); err != nil {
 		return SparkSessionCancelSparkStatementResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // cancelSparkStatementHandleError handles the CancelSparkStatement error response.
-func (client *sparkSessionClient) cancelSparkStatementHandleError(resp *http.Response) error {
+func (client *sessionClient) cancelSparkStatementHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -146,9 +146,9 @@ func (client *sparkSessionClient) cancelSparkStatementHandleError(resp *http.Res
 // CreateSparkSession - Create new spark session.
 // If the operation fails it returns a generic error.
 // sparkSessionOptions - Livy compatible batch job request payload.
-// options - SparkSessionCreateSparkSessionOptions contains the optional parameters for the sparkSessionClient.CreateSparkSession
+// options - SparkSessionCreateSparkSessionOptions contains the optional parameters for the sessionClient.CreateSparkSession
 // method.
-func (client *sparkSessionClient) CreateSparkSession(ctx context.Context, sparkSessionOptions SparkSessionOptions, options *SparkSessionCreateSparkSessionOptions) (SparkSessionCreateSparkSessionResponse, error) {
+func (client *sessionClient) CreateSparkSession(ctx context.Context, sparkSessionOptions SessionOptions, options *SparkSessionCreateSparkSessionOptions) (SparkSessionCreateSparkSessionResponse, error) {
 	req, err := client.createSparkSessionCreateRequest(ctx, sparkSessionOptions, options)
 	if err != nil {
 		return SparkSessionCreateSparkSessionResponse{}, err
@@ -164,7 +164,7 @@ func (client *sparkSessionClient) CreateSparkSession(ctx context.Context, sparkS
 }
 
 // createSparkSessionCreateRequest creates the CreateSparkSession request.
-func (client *sparkSessionClient) createSparkSessionCreateRequest(ctx context.Context, sparkSessionOptions SparkSessionOptions, options *SparkSessionCreateSparkSessionOptions) (*policy.Request, error) {
+func (client *sessionClient) createSparkSessionCreateRequest(ctx context.Context, sparkSessionOptions SessionOptions, options *SparkSessionCreateSparkSessionOptions) (*policy.Request, error) {
 	urlPath := "/sessions"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -180,16 +180,16 @@ func (client *sparkSessionClient) createSparkSessionCreateRequest(ctx context.Co
 }
 
 // createSparkSessionHandleResponse handles the CreateSparkSession response.
-func (client *sparkSessionClient) createSparkSessionHandleResponse(resp *http.Response) (SparkSessionCreateSparkSessionResponse, error) {
+func (client *sessionClient) createSparkSessionHandleResponse(resp *http.Response) (SparkSessionCreateSparkSessionResponse, error) {
 	result := SparkSessionCreateSparkSessionResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.SparkSession); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Session); err != nil {
 		return SparkSessionCreateSparkSessionResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // createSparkSessionHandleError handles the CreateSparkSession error response.
-func (client *sparkSessionClient) createSparkSessionHandleError(resp *http.Response) error {
+func (client *sessionClient) createSparkSessionHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -204,9 +204,9 @@ func (client *sparkSessionClient) createSparkSessionHandleError(resp *http.Respo
 // If the operation fails it returns a generic error.
 // sessionID - Identifier for the session.
 // sparkStatementOptions - Livy compatible batch job request payload.
-// options - SparkSessionCreateSparkStatementOptions contains the optional parameters for the sparkSessionClient.CreateSparkStatement
+// options - SparkSessionCreateSparkStatementOptions contains the optional parameters for the sessionClient.CreateSparkStatement
 // method.
-func (client *sparkSessionClient) CreateSparkStatement(ctx context.Context, sessionID int32, sparkStatementOptions SparkStatementOptions, options *SparkSessionCreateSparkStatementOptions) (SparkSessionCreateSparkStatementResponse, error) {
+func (client *sessionClient) CreateSparkStatement(ctx context.Context, sessionID int32, sparkStatementOptions StatementOptions, options *SparkSessionCreateSparkStatementOptions) (SparkSessionCreateSparkStatementResponse, error) {
 	req, err := client.createSparkStatementCreateRequest(ctx, sessionID, sparkStatementOptions, options)
 	if err != nil {
 		return SparkSessionCreateSparkStatementResponse{}, err
@@ -222,7 +222,7 @@ func (client *sparkSessionClient) CreateSparkStatement(ctx context.Context, sess
 }
 
 // createSparkStatementCreateRequest creates the CreateSparkStatement request.
-func (client *sparkSessionClient) createSparkStatementCreateRequest(ctx context.Context, sessionID int32, sparkStatementOptions SparkStatementOptions, options *SparkSessionCreateSparkStatementOptions) (*policy.Request, error) {
+func (client *sessionClient) createSparkStatementCreateRequest(ctx context.Context, sessionID int32, sparkStatementOptions StatementOptions, options *SparkSessionCreateSparkStatementOptions) (*policy.Request, error) {
 	urlPath := "/sessions/{sessionId}/statements"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionID), 10)))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
@@ -234,16 +234,16 @@ func (client *sparkSessionClient) createSparkStatementCreateRequest(ctx context.
 }
 
 // createSparkStatementHandleResponse handles the CreateSparkStatement response.
-func (client *sparkSessionClient) createSparkStatementHandleResponse(resp *http.Response) (SparkSessionCreateSparkStatementResponse, error) {
+func (client *sessionClient) createSparkStatementHandleResponse(resp *http.Response) (SparkSessionCreateSparkStatementResponse, error) {
 	result := SparkSessionCreateSparkStatementResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.SparkStatement); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Statement); err != nil {
 		return SparkSessionCreateSparkStatementResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // createSparkStatementHandleError handles the CreateSparkStatement error response.
-func (client *sparkSessionClient) createSparkStatementHandleError(resp *http.Response) error {
+func (client *sessionClient) createSparkStatementHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -257,9 +257,8 @@ func (client *sparkSessionClient) createSparkStatementHandleError(resp *http.Res
 // GetSparkSession - Gets a single spark session.
 // If the operation fails it returns a generic error.
 // sessionID - Identifier for the session.
-// options - SparkSessionGetSparkSessionOptions contains the optional parameters for the sparkSessionClient.GetSparkSession
-// method.
-func (client *sparkSessionClient) GetSparkSession(ctx context.Context, sessionID int32, options *SparkSessionGetSparkSessionOptions) (SparkSessionGetSparkSessionResponse, error) {
+// options - SparkSessionGetSparkSessionOptions contains the optional parameters for the sessionClient.GetSparkSession method.
+func (client *sessionClient) GetSparkSession(ctx context.Context, sessionID int32, options *SparkSessionGetSparkSessionOptions) (SparkSessionGetSparkSessionResponse, error) {
 	req, err := client.getSparkSessionCreateRequest(ctx, sessionID, options)
 	if err != nil {
 		return SparkSessionGetSparkSessionResponse{}, err
@@ -275,7 +274,7 @@ func (client *sparkSessionClient) GetSparkSession(ctx context.Context, sessionID
 }
 
 // getSparkSessionCreateRequest creates the GetSparkSession request.
-func (client *sparkSessionClient) getSparkSessionCreateRequest(ctx context.Context, sessionID int32, options *SparkSessionGetSparkSessionOptions) (*policy.Request, error) {
+func (client *sessionClient) getSparkSessionCreateRequest(ctx context.Context, sessionID int32, options *SparkSessionGetSparkSessionOptions) (*policy.Request, error) {
 	urlPath := "/sessions/{sessionId}"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionID), 10)))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
@@ -292,16 +291,16 @@ func (client *sparkSessionClient) getSparkSessionCreateRequest(ctx context.Conte
 }
 
 // getSparkSessionHandleResponse handles the GetSparkSession response.
-func (client *sparkSessionClient) getSparkSessionHandleResponse(resp *http.Response) (SparkSessionGetSparkSessionResponse, error) {
+func (client *sessionClient) getSparkSessionHandleResponse(resp *http.Response) (SparkSessionGetSparkSessionResponse, error) {
 	result := SparkSessionGetSparkSessionResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.SparkSession); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Session); err != nil {
 		return SparkSessionGetSparkSessionResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // getSparkSessionHandleError handles the GetSparkSession error response.
-func (client *sparkSessionClient) getSparkSessionHandleError(resp *http.Response) error {
+func (client *sessionClient) getSparkSessionHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -314,9 +313,8 @@ func (client *sparkSessionClient) getSparkSessionHandleError(resp *http.Response
 
 // GetSparkSessions - List all spark sessions which are running under a particular spark pool.
 // If the operation fails it returns a generic error.
-// options - SparkSessionGetSparkSessionsOptions contains the optional parameters for the sparkSessionClient.GetSparkSessions
-// method.
-func (client *sparkSessionClient) GetSparkSessions(ctx context.Context, options *SparkSessionGetSparkSessionsOptions) (SparkSessionGetSparkSessionsResponse, error) {
+// options - SparkSessionGetSparkSessionsOptions contains the optional parameters for the sessionClient.GetSparkSessions method.
+func (client *sessionClient) GetSparkSessions(ctx context.Context, options *SparkSessionGetSparkSessionsOptions) (SparkSessionGetSparkSessionsResponse, error) {
 	req, err := client.getSparkSessionsCreateRequest(ctx, options)
 	if err != nil {
 		return SparkSessionGetSparkSessionsResponse{}, err
@@ -332,7 +330,7 @@ func (client *sparkSessionClient) GetSparkSessions(ctx context.Context, options 
 }
 
 // getSparkSessionsCreateRequest creates the GetSparkSessions request.
-func (client *sparkSessionClient) getSparkSessionsCreateRequest(ctx context.Context, options *SparkSessionGetSparkSessionsOptions) (*policy.Request, error) {
+func (client *sessionClient) getSparkSessionsCreateRequest(ctx context.Context, options *SparkSessionGetSparkSessionsOptions) (*policy.Request, error) {
 	urlPath := "/sessions"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -354,16 +352,16 @@ func (client *sparkSessionClient) getSparkSessionsCreateRequest(ctx context.Cont
 }
 
 // getSparkSessionsHandleResponse handles the GetSparkSessions response.
-func (client *sparkSessionClient) getSparkSessionsHandleResponse(resp *http.Response) (SparkSessionGetSparkSessionsResponse, error) {
+func (client *sessionClient) getSparkSessionsHandleResponse(resp *http.Response) (SparkSessionGetSparkSessionsResponse, error) {
 	result := SparkSessionGetSparkSessionsResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.SparkSessionCollection); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.SessionCollection); err != nil {
 		return SparkSessionGetSparkSessionsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // getSparkSessionsHandleError handles the GetSparkSessions error response.
-func (client *sparkSessionClient) getSparkSessionsHandleError(resp *http.Response) error {
+func (client *sessionClient) getSparkSessionsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -378,9 +376,9 @@ func (client *sparkSessionClient) getSparkSessionsHandleError(resp *http.Respons
 // If the operation fails it returns a generic error.
 // sessionID - Identifier for the session.
 // statementID - Identifier for the statement.
-// options - SparkSessionGetSparkStatementOptions contains the optional parameters for the sparkSessionClient.GetSparkStatement
+// options - SparkSessionGetSparkStatementOptions contains the optional parameters for the sessionClient.GetSparkStatement
 // method.
-func (client *sparkSessionClient) GetSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionGetSparkStatementOptions) (SparkSessionGetSparkStatementResponse, error) {
+func (client *sessionClient) GetSparkStatement(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionGetSparkStatementOptions) (SparkSessionGetSparkStatementResponse, error) {
 	req, err := client.getSparkStatementCreateRequest(ctx, sessionID, statementID, options)
 	if err != nil {
 		return SparkSessionGetSparkStatementResponse{}, err
@@ -396,7 +394,7 @@ func (client *sparkSessionClient) GetSparkStatement(ctx context.Context, session
 }
 
 // getSparkStatementCreateRequest creates the GetSparkStatement request.
-func (client *sparkSessionClient) getSparkStatementCreateRequest(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionGetSparkStatementOptions) (*policy.Request, error) {
+func (client *sessionClient) getSparkStatementCreateRequest(ctx context.Context, sessionID int32, statementID int32, options *SparkSessionGetSparkStatementOptions) (*policy.Request, error) {
 	urlPath := "/sessions/{sessionId}/statements/{statementId}"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionID), 10)))
 	urlPath = strings.ReplaceAll(urlPath, "{statementId}", url.PathEscape(strconv.FormatInt(int64(statementID), 10)))
@@ -409,16 +407,16 @@ func (client *sparkSessionClient) getSparkStatementCreateRequest(ctx context.Con
 }
 
 // getSparkStatementHandleResponse handles the GetSparkStatement response.
-func (client *sparkSessionClient) getSparkStatementHandleResponse(resp *http.Response) (SparkSessionGetSparkStatementResponse, error) {
+func (client *sessionClient) getSparkStatementHandleResponse(resp *http.Response) (SparkSessionGetSparkStatementResponse, error) {
 	result := SparkSessionGetSparkStatementResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.SparkStatement); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.Statement); err != nil {
 		return SparkSessionGetSparkStatementResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // getSparkStatementHandleError handles the GetSparkStatement error response.
-func (client *sparkSessionClient) getSparkStatementHandleError(resp *http.Response) error {
+func (client *sessionClient) getSparkStatementHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -432,9 +430,9 @@ func (client *sparkSessionClient) getSparkStatementHandleError(resp *http.Respon
 // GetSparkStatements - Gets a list of statements within a spark session.
 // If the operation fails it returns a generic error.
 // sessionID - Identifier for the session.
-// options - SparkSessionGetSparkStatementsOptions contains the optional parameters for the sparkSessionClient.GetSparkStatements
+// options - SparkSessionGetSparkStatementsOptions contains the optional parameters for the sessionClient.GetSparkStatements
 // method.
-func (client *sparkSessionClient) GetSparkStatements(ctx context.Context, sessionID int32, options *SparkSessionGetSparkStatementsOptions) (SparkSessionGetSparkStatementsResponse, error) {
+func (client *sessionClient) GetSparkStatements(ctx context.Context, sessionID int32, options *SparkSessionGetSparkStatementsOptions) (SparkSessionGetSparkStatementsResponse, error) {
 	req, err := client.getSparkStatementsCreateRequest(ctx, sessionID, options)
 	if err != nil {
 		return SparkSessionGetSparkStatementsResponse{}, err
@@ -450,7 +448,7 @@ func (client *sparkSessionClient) GetSparkStatements(ctx context.Context, sessio
 }
 
 // getSparkStatementsCreateRequest creates the GetSparkStatements request.
-func (client *sparkSessionClient) getSparkStatementsCreateRequest(ctx context.Context, sessionID int32, options *SparkSessionGetSparkStatementsOptions) (*policy.Request, error) {
+func (client *sessionClient) getSparkStatementsCreateRequest(ctx context.Context, sessionID int32, options *SparkSessionGetSparkStatementsOptions) (*policy.Request, error) {
 	urlPath := "/sessions/{sessionId}/statements"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionID), 10)))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
@@ -462,16 +460,16 @@ func (client *sparkSessionClient) getSparkStatementsCreateRequest(ctx context.Co
 }
 
 // getSparkStatementsHandleResponse handles the GetSparkStatements response.
-func (client *sparkSessionClient) getSparkStatementsHandleResponse(resp *http.Response) (SparkSessionGetSparkStatementsResponse, error) {
+func (client *sessionClient) getSparkStatementsHandleResponse(resp *http.Response) (SparkSessionGetSparkStatementsResponse, error) {
 	result := SparkSessionGetSparkStatementsResponse{RawResponse: resp}
-	if err := runtime.UnmarshalAsJSON(resp, &result.SparkStatementCollection); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.StatementCollection); err != nil {
 		return SparkSessionGetSparkStatementsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
 
 // getSparkStatementsHandleError handles the GetSparkStatements error response.
-func (client *sparkSessionClient) getSparkStatementsHandleError(resp *http.Response) error {
+func (client *sessionClient) getSparkStatementsHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
@@ -485,9 +483,9 @@ func (client *sparkSessionClient) getSparkStatementsHandleError(resp *http.Respo
 // ResetSparkSessionTimeout - Sends a keep alive call to the current session to reset the session timeout.
 // If the operation fails it returns a generic error.
 // sessionID - Identifier for the session.
-// options - SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the sparkSessionClient.ResetSparkSessionTimeout
+// options - SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the sessionClient.ResetSparkSessionTimeout
 // method.
-func (client *sparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, sessionID int32, options *SparkSessionResetSparkSessionTimeoutOptions) (SparkSessionResetSparkSessionTimeoutResponse, error) {
+func (client *sessionClient) ResetSparkSessionTimeout(ctx context.Context, sessionID int32, options *SparkSessionResetSparkSessionTimeoutOptions) (SparkSessionResetSparkSessionTimeoutResponse, error) {
 	req, err := client.resetSparkSessionTimeoutCreateRequest(ctx, sessionID, options)
 	if err != nil {
 		return SparkSessionResetSparkSessionTimeoutResponse{}, err
@@ -503,7 +501,7 @@ func (client *sparkSessionClient) ResetSparkSessionTimeout(ctx context.Context, 
 }
 
 // resetSparkSessionTimeoutCreateRequest creates the ResetSparkSessionTimeout request.
-func (client *sparkSessionClient) resetSparkSessionTimeoutCreateRequest(ctx context.Context, sessionID int32, options *SparkSessionResetSparkSessionTimeoutOptions) (*policy.Request, error) {
+func (client *sessionClient) resetSparkSessionTimeoutCreateRequest(ctx context.Context, sessionID int32, options *SparkSessionResetSparkSessionTimeoutOptions) (*policy.Request, error) {
 	urlPath := "/sessions/{sessionId}/reset-timeout"
 	urlPath = strings.ReplaceAll(urlPath, "{sessionId}", url.PathEscape(strconv.FormatInt(int64(sessionID), 10)))
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
@@ -514,7 +512,7 @@ func (client *sparkSessionClient) resetSparkSessionTimeoutCreateRequest(ctx cont
 }
 
 // resetSparkSessionTimeoutHandleError handles the ResetSparkSessionTimeout error response.
-func (client *sparkSessionClient) resetSparkSessionTimeoutHandleError(resp *http.Response) error {
+func (client *sessionClient) resetSparkSessionTimeoutHandleError(resp *http.Response) error {
 	body, err := runtime.Payload(resp)
 	if err != nil {
 		return runtime.NewResponseError(err, resp)
