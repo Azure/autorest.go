@@ -34,7 +34,7 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
   for (const disc of values(discriminators)) {
     // generate unmarshallers for each discriminator
     const discName = disc.language.go!.discriminatorInterface;
-    if (disc.language.go!.errorType) {
+    if (disc.language.go!.internalErrorType) {
       text += `type ${disc.language.go!.internalErrorType} struct {\n`;
       text += `\twrapped ${discName}\n`;
       text += '}\n\n';

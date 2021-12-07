@@ -126,10 +126,8 @@ func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pr.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
@@ -170,10 +168,8 @@ func TestBeginPutAsyncRetrySucceeded(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pr.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},

@@ -199,9 +199,20 @@ func (q QueryResponse) MarshalJSON() ([]byte, error) {
 
 // Response - The response for a single table.
 type Response struct {
-	ResponseProperties
+	// The edit link of the table.
+	ODataEditLink *string `json:"odata.editLink,omitempty"`
+
+	// The id of the table.
+	ODataID *string `json:"odata.id,omitempty"`
+
 	// The metadata response of the table.
 	ODataMetadata *string `json:"odata.metadata,omitempty"`
+
+	// The odata type of the table.
+	ODataType *string `json:"odata.type,omitempty"`
+
+	// The name of the table.
+	TableName *string `json:"TableName,omitempty"`
 }
 
 // ResponseProperties - The properties for the table response.

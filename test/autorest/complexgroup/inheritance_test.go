@@ -23,27 +23,19 @@ func TestInheritanceGetValid(t *testing.T) {
 		t.Fatalf("GetValid: %v", err)
 	}
 	if r := cmp.Diff(result.Siamese, Siamese{
-		Cat: Cat{
-			Pet: Pet{
-				ID:   to.Int32Ptr(2),
-				Name: to.StringPtr("Siameeee"),
+		ID:    to.Int32Ptr(2),
+		Name:  to.StringPtr("Siameeee"),
+		Color: to.StringPtr("green"),
+		Hates: []*Dog{
+			{
+				ID:   to.Int32Ptr(1),
+				Name: to.StringPtr("Potato"),
+				Food: to.StringPtr("tomato"),
 			},
-			Color: to.StringPtr("green"),
-			Hates: []*Dog{
-				{
-					Pet: Pet{
-						ID:   to.Int32Ptr(1),
-						Name: to.StringPtr("Potato"),
-					},
-					Food: to.StringPtr("tomato"),
-				},
-				{
-					Pet: Pet{
-						ID:   to.Int32Ptr(-1),
-						Name: to.StringPtr("Tomato"),
-					},
-					Food: to.StringPtr("french fries"),
-				},
+			{
+				ID:   to.Int32Ptr(-1),
+				Name: to.StringPtr("Tomato"),
+				Food: to.StringPtr("french fries"),
 			},
 		},
 		Breed: to.StringPtr("persian"),
@@ -55,27 +47,19 @@ func TestInheritanceGetValid(t *testing.T) {
 func TestInheritancePutValid(t *testing.T) {
 	client := newInheritanceClient()
 	result, err := client.PutValid(context.Background(), Siamese{
-		Cat: Cat{
-			Pet: Pet{
-				ID:   to.Int32Ptr(2),
-				Name: to.StringPtr("Siameeee"),
+		ID:    to.Int32Ptr(2),
+		Name:  to.StringPtr("Siameeee"),
+		Color: to.StringPtr("green"),
+		Hates: []*Dog{
+			{
+				ID:   to.Int32Ptr(1),
+				Name: to.StringPtr("Potato"),
+				Food: to.StringPtr("tomato"),
 			},
-			Color: to.StringPtr("green"),
-			Hates: []*Dog{
-				{
-					Pet: Pet{
-						ID:   to.Int32Ptr(1),
-						Name: to.StringPtr("Potato"),
-					},
-					Food: to.StringPtr("tomato"),
-				},
-				{
-					Pet: Pet{
-						ID:   to.Int32Ptr(-1),
-						Name: to.StringPtr("Tomato"),
-					},
-					Food: to.StringPtr("french fries"),
-				},
+			{
+				ID:   to.Int32Ptr(-1),
+				Name: to.StringPtr("Tomato"),
+				Food: to.StringPtr("french fries"),
 			},
 		},
 		Breed: to.StringPtr("persian"),

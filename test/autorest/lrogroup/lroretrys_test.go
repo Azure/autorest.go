@@ -92,10 +92,8 @@ func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(res.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
@@ -175,10 +173,8 @@ func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(res.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
@@ -210,10 +206,8 @@ func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(res.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},

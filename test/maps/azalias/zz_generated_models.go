@@ -54,19 +54,11 @@ type ErrorResponse struct {
 // GeoJSONFeature - A valid GeoJSON Feature object type. Please refer to RFC 7946 [https://tools.ietf.org/html/rfc7946#section-3.2]
 // for details.
 type GeoJSONFeature struct {
-	GeoJSONFeatureData
-	GeoJSONObject
-}
+	// REQUIRED; Specifies the GeoJSON type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString,
+	// MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and
+	// FeatureCollection.
+	Type *GeoJSONObjectType `json:"type,omitempty"`
 
-// MarshalJSON implements the json.Marshaller interface for type GeoJSONFeature.
-func (g GeoJSONFeature) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	g.GeoJSONObject.marshalInternal(objectMap, GeoJSONObjectTypeGeoJSONFeature)
-	g.GeoJSONFeatureData.marshalInternal(objectMap)
-	return json.Marshal(objectMap)
-}
-
-type GeoJSONFeatureData struct {
 	// The type of the feature. The value depends on the data model the current feature is part of. Some data models may have
 	// an empty value.
 	FeatureType *string `json:"featureType,omitempty"`
@@ -78,29 +70,29 @@ type GeoJSONFeatureData struct {
 	Properties map[string]interface{} `json:"properties,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type GeoJSONFeatureData.
-func (g GeoJSONFeatureData) MarshalJSON() ([]byte, error) {
+// GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONFeature.
+func (g *GeoJSONFeature) GetGeoJSONObject() *GeoJSONObject {
+	return &GeoJSONObject{
+		Type: g.Type,
+	}
+}
+
+// MarshalJSON implements the json.Marshaller interface for type GeoJSONFeature.
+func (g GeoJSONFeature) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	g.marshalInternal(objectMap)
+	populate(objectMap, "featureType", g.FeatureType)
+	populate(objectMap, "id", g.ID)
+	populate(objectMap, "properties", g.Properties)
+	objectMap["type"] = GeoJSONObjectTypeGeoJSONFeature
 	return json.Marshal(objectMap)
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type GeoJSONFeatureData.
-func (g *GeoJSONFeatureData) UnmarshalJSON(data []byte) error {
+// UnmarshalJSON implements the json.Unmarshaller interface for type GeoJSONFeature.
+func (g *GeoJSONFeature) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	return g.unmarshalInternal(rawMsg)
-}
-
-func (g GeoJSONFeatureData) marshalInternal(objectMap map[string]interface{}) {
-	populate(objectMap, "featureType", g.FeatureType)
-	populate(objectMap, "id", g.ID)
-	populate(objectMap, "properties", g.Properties)
-}
-
-func (g *GeoJSONFeatureData) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -113,12 +105,27 @@ func (g *GeoJSONFeatureData) unmarshalInternal(rawMsg map[string]json.RawMessage
 		case "properties":
 			err = unpopulate(val, &g.Properties)
 			delete(rawMsg, key)
+		case "type":
+			err = unpopulate(val, &g.Type)
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
 	}
 	return nil
+}
+
+type GeoJSONFeatureData struct {
+	// The type of the feature. The value depends on the data model the current feature is part of. Some data models may have
+	// an empty value.
+	FeatureType *string `json:"featureType,omitempty"`
+
+	// Identifier for the feature.
+	ID *string `json:"id,omitempty"`
+
+	// Properties can contain any additional metadata about the Feature. Value can be any JSON object or a JSON null value
+	Properties map[string]interface{} `json:"properties,omitempty"`
 }
 
 // GeoJSONObjectClassification provides polymorphic access to related types.
@@ -140,35 +147,6 @@ type GeoJSONObject struct {
 
 // GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONObject.
 func (g *GeoJSONObject) GetGeoJSONObject() *GeoJSONObject { return g }
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type GeoJSONObject.
-func (g *GeoJSONObject) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	return g.unmarshalInternal(rawMsg)
-}
-
-func (g GeoJSONObject) marshalInternal(objectMap map[string]interface{}, discValue GeoJSONObjectType) {
-	g.Type = &discValue
-	objectMap["type"] = g.Type
-}
-
-func (g *GeoJSONObject) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "type":
-			err = unpopulate(val, &g.Type)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
 
 // GeoJSONObjectNamedCollection - A named collection of GeoJSON object
 type GeoJSONObjectNamedCollection struct {

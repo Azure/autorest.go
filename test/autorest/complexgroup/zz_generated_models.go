@@ -129,33 +129,103 @@ func (b *ByteWrapper) UnmarshalJSON(data []byte) error {
 }
 
 type Cat struct {
-	Pet
 	Color *string `json:"color,omitempty"`
 	Hates []*Dog  `json:"hates,omitempty"`
+	ID    *int32  `json:"id,omitempty"`
+	Name  *string `json:"name,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Cat.
 func (c Cat) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	c.marshalInternal(objectMap)
+	populate(objectMap, "color", c.Color)
+	populate(objectMap, "hates", c.Hates)
+	populate(objectMap, "id", c.ID)
+	populate(objectMap, "name", c.Name)
 	return json.Marshal(objectMap)
 }
 
-func (c Cat) marshalInternal(objectMap map[string]interface{}) {
-	c.Pet.marshalInternal(objectMap)
-	populate(objectMap, "color", c.Color)
-	populate(objectMap, "hates", c.Hates)
+type Cookiecuttershark struct {
+	// REQUIRED
+	Birthday *time.Time `json:"birthday,omitempty"`
+
+	// REQUIRED
+	Fishtype *string `json:"fishtype,omitempty"`
+
+	// REQUIRED
+	Length   *float32             `json:"length,omitempty"`
+	Age      *int32               `json:"age,omitempty"`
+	Siblings []FishClassification `json:"siblings,omitempty"`
+	Species  *string              `json:"species,omitempty"`
 }
 
-type Cookiecuttershark struct {
-	Shark
+// GetFish implements the FishClassification interface for type Cookiecuttershark.
+func (c *Cookiecuttershark) GetFish() *Fish {
+	return &Fish{
+		Fishtype: c.Fishtype,
+		Species:  c.Species,
+		Length:   c.Length,
+		Siblings: c.Siblings,
+	}
+}
+
+// GetShark implements the SharkClassification interface for type Cookiecuttershark.
+func (c *Cookiecuttershark) GetShark() *Shark {
+	return &Shark{
+		Age:      c.Age,
+		Birthday: c.Birthday,
+		Fishtype: c.Fishtype,
+		Species:  c.Species,
+		Length:   c.Length,
+		Siblings: c.Siblings,
+	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Cookiecuttershark.
 func (c Cookiecuttershark) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	c.Shark.marshalInternal(objectMap, "cookiecuttershark")
+	populate(objectMap, "age", c.Age)
+	populateTimeRFC3339(objectMap, "birthday", c.Birthday)
+	objectMap["fishtype"] = "cookiecuttershark"
+	populate(objectMap, "length", c.Length)
+	populate(objectMap, "siblings", c.Siblings)
+	populate(objectMap, "species", c.Species)
 	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type Cookiecuttershark.
+func (c *Cookiecuttershark) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "age":
+			err = unpopulate(val, &c.Age)
+			delete(rawMsg, key)
+		case "birthday":
+			err = unpopulateTimeRFC3339(val, &c.Birthday)
+			delete(rawMsg, key)
+		case "fishtype":
+			err = unpopulate(val, &c.Fishtype)
+			delete(rawMsg, key)
+		case "length":
+			err = unpopulate(val, &c.Length)
+			delete(rawMsg, key)
+		case "siblings":
+			c.Siblings, err = unmarshalFishClassificationArray(val)
+			delete(rawMsg, key)
+		case "species":
+			err = unpopulate(val, &c.Species)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 type DateWrapper struct {
@@ -309,16 +379,9 @@ func (d DictionaryWrapper) MarshalJSON() ([]byte, error) {
 }
 
 type Dog struct {
-	Pet
 	Food *string `json:"food,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type Dog.
-func (d Dog) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	d.Pet.marshalInternal(objectMap)
-	populate(objectMap, "food", d.Food)
-	return json.Marshal(objectMap)
+	ID   *int32  `json:"id,omitempty"`
+	Name *string `json:"name,omitempty"`
 }
 
 // DotFishClassification provides polymorphic access to related types.
@@ -338,39 +401,6 @@ type DotFish struct {
 
 // GetDotFish implements the DotFishClassification interface for type DotFish.
 func (d *DotFish) GetDotFish() *DotFish { return d }
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type DotFish.
-func (d *DotFish) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	return d.unmarshalInternal(rawMsg)
-}
-
-func (d DotFish) marshalInternal(objectMap map[string]interface{}, discValue string) {
-	d.FishType = &discValue
-	objectMap["fish.type"] = d.FishType
-	populate(objectMap, "species", d.Species)
-}
-
-func (d *DotFish) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "fish.type":
-			err = unpopulate(val, &d.FishType)
-			delete(rawMsg, key)
-		case "species":
-			err = unpopulate(val, &d.Species)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
 
 type DotFishMarket struct {
 	Fishes       []DotFishClassification `json:"fishes,omitempty"`
@@ -419,17 +449,28 @@ func (d *DotFishMarket) UnmarshalJSON(data []byte) error {
 }
 
 type DotSalmon struct {
-	DotFish
+	// REQUIRED
+	FishType *string `json:"fish.type,omitempty"`
 	Iswild   *bool   `json:"iswild,omitempty"`
 	Location *string `json:"location,omitempty"`
+	Species  *string `json:"species,omitempty"`
+}
+
+// GetDotFish implements the DotFishClassification interface for type DotSalmon.
+func (d *DotSalmon) GetDotFish() *DotFish {
+	return &DotFish{
+		FishType: d.FishType,
+		Species:  d.Species,
+	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DotSalmon.
 func (d DotSalmon) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	d.DotFish.marshalInternal(objectMap, "DotSalmon")
+	objectMap["fish.type"] = "DotSalmon"
 	populate(objectMap, "iswild", d.Iswild)
 	populate(objectMap, "location", d.Location)
+	populate(objectMap, "species", d.Species)
 	return json.Marshal(objectMap)
 }
 
@@ -442,19 +483,22 @@ func (d *DotSalmon) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "fish.type":
+			err = unpopulate(val, &d.FishType)
+			delete(rawMsg, key)
 		case "iswild":
 			err = unpopulate(val, &d.Iswild)
 			delete(rawMsg, key)
 		case "location":
 			err = unpopulate(val, &d.Location)
 			delete(rawMsg, key)
+		case "species":
+			err = unpopulate(val, &d.Species)
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
-	}
-	if err := d.DotFish.unmarshalInternal(rawMsg); err != nil {
-		return err
 	}
 	return nil
 }
@@ -503,24 +547,22 @@ type Fish struct {
 // GetFish implements the FishClassification interface for type Fish.
 func (f *Fish) GetFish() *Fish { return f }
 
+// MarshalJSON implements the json.Marshaller interface for type Fish.
+func (f Fish) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	objectMap["fishtype"] = f.Fishtype
+	populate(objectMap, "length", f.Length)
+	populate(objectMap, "siblings", f.Siblings)
+	populate(objectMap, "species", f.Species)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type Fish.
 func (f *Fish) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	return f.unmarshalInternal(rawMsg)
-}
-
-func (f Fish) marshalInternal(objectMap map[string]interface{}, discValue string) {
-	f.Fishtype = &discValue
-	objectMap["fishtype"] = f.Fishtype
-	populate(objectMap, "length", f.Length)
-	populate(objectMap, "siblings", f.Siblings)
-	populate(objectMap, "species", f.Species)
-}
-
-func (f *Fish) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -555,18 +597,56 @@ type FloatWrapper struct {
 }
 
 type Goblinshark struct {
-	Shark
+	// REQUIRED
+	Birthday *time.Time `json:"birthday,omitempty"`
+
+	// REQUIRED
+	Fishtype *string `json:"fishtype,omitempty"`
+
+	// REQUIRED
+	Length *float32 `json:"length,omitempty"`
+	Age    *int32   `json:"age,omitempty"`
+
 	// Colors possible
-	Color   *GoblinSharkColor `json:"color,omitempty"`
-	Jawsize *int32            `json:"jawsize,omitempty"`
+	Color    *GoblinSharkColor    `json:"color,omitempty"`
+	Jawsize  *int32               `json:"jawsize,omitempty"`
+	Siblings []FishClassification `json:"siblings,omitempty"`
+	Species  *string              `json:"species,omitempty"`
+}
+
+// GetFish implements the FishClassification interface for type Goblinshark.
+func (g *Goblinshark) GetFish() *Fish {
+	return &Fish{
+		Fishtype: g.Fishtype,
+		Species:  g.Species,
+		Length:   g.Length,
+		Siblings: g.Siblings,
+	}
+}
+
+// GetShark implements the SharkClassification interface for type Goblinshark.
+func (g *Goblinshark) GetShark() *Shark {
+	return &Shark{
+		Age:      g.Age,
+		Birthday: g.Birthday,
+		Fishtype: g.Fishtype,
+		Species:  g.Species,
+		Length:   g.Length,
+		Siblings: g.Siblings,
+	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Goblinshark.
 func (g Goblinshark) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	g.Shark.marshalInternal(objectMap, "goblin")
+	populate(objectMap, "age", g.Age)
+	populateTimeRFC3339(objectMap, "birthday", g.Birthday)
 	populate(objectMap, "color", g.Color)
+	objectMap["fishtype"] = "goblin"
 	populate(objectMap, "jawsize", g.Jawsize)
+	populate(objectMap, "length", g.Length)
+	populate(objectMap, "siblings", g.Siblings)
+	populate(objectMap, "species", g.Species)
 	return json.Marshal(objectMap)
 }
 
@@ -579,19 +659,34 @@ func (g *Goblinshark) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "age":
+			err = unpopulate(val, &g.Age)
+			delete(rawMsg, key)
+		case "birthday":
+			err = unpopulateTimeRFC3339(val, &g.Birthday)
+			delete(rawMsg, key)
 		case "color":
 			err = unpopulate(val, &g.Color)
 			delete(rawMsg, key)
+		case "fishtype":
+			err = unpopulate(val, &g.Fishtype)
+			delete(rawMsg, key)
 		case "jawsize":
 			err = unpopulate(val, &g.Jawsize)
+			delete(rawMsg, key)
+		case "length":
+			err = unpopulate(val, &g.Length)
+			delete(rawMsg, key)
+		case "siblings":
+			g.Siblings, err = unmarshalFishClassificationArray(val)
+			delete(rawMsg, key)
+		case "species":
+			err = unpopulate(val, &g.Species)
 			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
-	}
-	if err := g.Shark.unmarshalInternal(rawMsg); err != nil {
-		return err
 	}
 	return nil
 }
@@ -639,52 +734,29 @@ type MyBaseType struct {
 // GetMyBaseType implements the MyBaseTypeClassification interface for type MyBaseType.
 func (m *MyBaseType) GetMyBaseType() *MyBaseType { return m }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type MyBaseType.
-func (m *MyBaseType) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	return m.unmarshalInternal(rawMsg)
-}
-
-func (m MyBaseType) marshalInternal(objectMap map[string]interface{}, discValue MyKind) {
-	populate(objectMap, "helper", m.Helper)
-	m.Kind = &discValue
-	objectMap["kind"] = m.Kind
-	populate(objectMap, "propB1", m.PropB1)
-}
-
-func (m *MyBaseType) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "helper":
-			err = unpopulate(val, &m.Helper)
-			delete(rawMsg, key)
-		case "kind":
-			err = unpopulate(val, &m.Kind)
-			delete(rawMsg, key)
-		case "propB1":
-			err = unpopulate(val, &m.PropB1)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
 type MyDerivedType struct {
-	MyBaseType
-	PropD1 *string `json:"propD1,omitempty"`
+	// REQUIRED
+	Kind   *MyKind           `json:"kind,omitempty"`
+	Helper *MyBaseHelperType `json:"helper,omitempty"`
+	PropB1 *string           `json:"propB1,omitempty"`
+	PropD1 *string           `json:"propD1,omitempty"`
+}
+
+// GetMyBaseType implements the MyBaseTypeClassification interface for type MyDerivedType.
+func (m *MyDerivedType) GetMyBaseType() *MyBaseType {
+	return &MyBaseType{
+		Kind:   m.Kind,
+		PropB1: m.PropB1,
+		Helper: m.Helper,
+	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type MyDerivedType.
 func (m MyDerivedType) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	m.MyBaseType.marshalInternal(objectMap, MyKindKind1)
+	populate(objectMap, "helper", m.Helper)
+	objectMap["kind"] = MyKindKind1
+	populate(objectMap, "propB1", m.PropB1)
 	populate(objectMap, "propD1", m.PropD1)
 	return json.Marshal(objectMap)
 }
@@ -698,6 +770,15 @@ func (m *MyDerivedType) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "helper":
+			err = unpopulate(val, &m.Helper)
+			delete(rawMsg, key)
+		case "kind":
+			err = unpopulate(val, &m.Kind)
+			delete(rawMsg, key)
+		case "propB1":
+			err = unpopulate(val, &m.PropB1)
+			delete(rawMsg, key)
 		case "propD1":
 			err = unpopulate(val, &m.PropD1)
 			delete(rawMsg, key)
@@ -706,27 +787,12 @@ func (m *MyDerivedType) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	if err := m.MyBaseType.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
 	return nil
 }
 
 type Pet struct {
 	ID   *int32  `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type Pet.
-func (p Pet) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	p.marshalInternal(objectMap)
-	return json.Marshal(objectMap)
-}
-
-func (p Pet) marshalInternal(objectMap map[string]interface{}) {
-	populate(objectMap, "id", p.ID)
-	populate(objectMap, "name", p.Name)
 }
 
 // PolymorphicrecursiveGetValidOptions contains the optional parameters for the PolymorphicrecursiveClient.GetValid method.
@@ -926,9 +992,25 @@ type SalmonClassification interface {
 }
 
 type Salmon struct {
-	Fish
-	Iswild   *bool   `json:"iswild,omitempty"`
-	Location *string `json:"location,omitempty"`
+	// REQUIRED
+	Fishtype *string `json:"fishtype,omitempty"`
+
+	// REQUIRED
+	Length   *float32             `json:"length,omitempty"`
+	Iswild   *bool                `json:"iswild,omitempty"`
+	Location *string              `json:"location,omitempty"`
+	Siblings []FishClassification `json:"siblings,omitempty"`
+	Species  *string              `json:"species,omitempty"`
+}
+
+// GetFish implements the FishClassification interface for type Salmon.
+func (s *Salmon) GetFish() *Fish {
+	return &Fish{
+		Fishtype: s.Fishtype,
+		Species:  s.Species,
+		Length:   s.Length,
+		Siblings: s.Siblings,
+	}
 }
 
 // GetSalmon implements the SalmonClassification interface for type Salmon.
@@ -937,7 +1019,12 @@ func (s *Salmon) GetSalmon() *Salmon { return s }
 // MarshalJSON implements the json.Marshaller interface for type Salmon.
 func (s Salmon) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	s.marshalInternal(objectMap, "salmon")
+	objectMap["fishtype"] = "salmon"
+	populate(objectMap, "iswild", s.Iswild)
+	populate(objectMap, "length", s.Length)
+	populate(objectMap, "location", s.Location)
+	populate(objectMap, "siblings", s.Siblings)
+	populate(objectMap, "species", s.Species)
 	return json.Marshal(objectMap)
 }
 
@@ -947,46 +1034,82 @@ func (s *Salmon) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	return s.unmarshalInternal(rawMsg)
-}
-
-func (s Salmon) marshalInternal(objectMap map[string]interface{}, discValue string) {
-	s.Fish.marshalInternal(objectMap, discValue)
-	populate(objectMap, "iswild", s.Iswild)
-	populate(objectMap, "location", s.Location)
-}
-
-func (s *Salmon) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "fishtype":
+			err = unpopulate(val, &s.Fishtype)
+			delete(rawMsg, key)
 		case "iswild":
 			err = unpopulate(val, &s.Iswild)
 			delete(rawMsg, key)
+		case "length":
+			err = unpopulate(val, &s.Length)
+			delete(rawMsg, key)
 		case "location":
 			err = unpopulate(val, &s.Location)
+			delete(rawMsg, key)
+		case "siblings":
+			s.Siblings, err = unmarshalFishClassificationArray(val)
+			delete(rawMsg, key)
+		case "species":
+			err = unpopulate(val, &s.Species)
 			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
 	}
-	if err := s.Fish.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
 	return nil
 }
 
 type Sawshark struct {
-	Shark
-	Picture []byte `json:"picture,omitempty"`
+	// REQUIRED
+	Birthday *time.Time `json:"birthday,omitempty"`
+
+	// REQUIRED
+	Fishtype *string `json:"fishtype,omitempty"`
+
+	// REQUIRED
+	Length   *float32             `json:"length,omitempty"`
+	Age      *int32               `json:"age,omitempty"`
+	Picture  []byte               `json:"picture,omitempty"`
+	Siblings []FishClassification `json:"siblings,omitempty"`
+	Species  *string              `json:"species,omitempty"`
+}
+
+// GetFish implements the FishClassification interface for type Sawshark.
+func (s *Sawshark) GetFish() *Fish {
+	return &Fish{
+		Fishtype: s.Fishtype,
+		Species:  s.Species,
+		Length:   s.Length,
+		Siblings: s.Siblings,
+	}
+}
+
+// GetShark implements the SharkClassification interface for type Sawshark.
+func (s *Sawshark) GetShark() *Shark {
+	return &Shark{
+		Age:      s.Age,
+		Birthday: s.Birthday,
+		Fishtype: s.Fishtype,
+		Species:  s.Species,
+		Length:   s.Length,
+		Siblings: s.Siblings,
+	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Sawshark.
 func (s Sawshark) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	s.Shark.marshalInternal(objectMap, "sawshark")
+	populate(objectMap, "age", s.Age)
+	populateTimeRFC3339(objectMap, "birthday", s.Birthday)
+	objectMap["fishtype"] = "sawshark"
+	populate(objectMap, "length", s.Length)
 	populateByteArray(objectMap, "picture", s.Picture, runtime.Base64StdFormat)
+	populate(objectMap, "siblings", s.Siblings)
+	populate(objectMap, "species", s.Species)
 	return json.Marshal(objectMap)
 }
 
@@ -999,16 +1122,31 @@ func (s *Sawshark) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "age":
+			err = unpopulate(val, &s.Age)
+			delete(rawMsg, key)
+		case "birthday":
+			err = unpopulateTimeRFC3339(val, &s.Birthday)
+			delete(rawMsg, key)
+		case "fishtype":
+			err = unpopulate(val, &s.Fishtype)
+			delete(rawMsg, key)
+		case "length":
+			err = unpopulate(val, &s.Length)
+			delete(rawMsg, key)
 		case "picture":
 			err = runtime.DecodeByteArray(string(val), &s.Picture, runtime.Base64StdFormat)
+			delete(rawMsg, key)
+		case "siblings":
+			s.Siblings, err = unmarshalFishClassificationArray(val)
+			delete(rawMsg, key)
+		case "species":
+			err = unpopulate(val, &s.Species)
 			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
-	}
-	if err := s.Shark.unmarshalInternal(rawMsg); err != nil {
-		return err
 	}
 	return nil
 }
@@ -1024,10 +1162,27 @@ type SharkClassification interface {
 }
 
 type Shark struct {
-	Fish
 	// REQUIRED
 	Birthday *time.Time `json:"birthday,omitempty"`
-	Age      *int32     `json:"age,omitempty"`
+
+	// REQUIRED
+	Fishtype *string `json:"fishtype,omitempty"`
+
+	// REQUIRED
+	Length   *float32             `json:"length,omitempty"`
+	Age      *int32               `json:"age,omitempty"`
+	Siblings []FishClassification `json:"siblings,omitempty"`
+	Species  *string              `json:"species,omitempty"`
+}
+
+// GetFish implements the FishClassification interface for type Shark.
+func (s *Shark) GetFish() *Fish {
+	return &Fish{
+		Fishtype: s.Fishtype,
+		Species:  s.Species,
+		Length:   s.Length,
+		Siblings: s.Siblings,
+	}
 }
 
 // GetShark implements the SharkClassification interface for type Shark.
@@ -1036,7 +1191,12 @@ func (s *Shark) GetShark() *Shark { return s }
 // MarshalJSON implements the json.Marshaller interface for type Shark.
 func (s Shark) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	s.marshalInternal(objectMap, "shark")
+	populate(objectMap, "age", s.Age)
+	populateTimeRFC3339(objectMap, "birthday", s.Birthday)
+	objectMap["fishtype"] = "shark"
+	populate(objectMap, "length", s.Length)
+	populate(objectMap, "siblings", s.Siblings)
+	populate(objectMap, "species", s.Species)
 	return json.Marshal(objectMap)
 }
 
@@ -1046,16 +1206,6 @@ func (s *Shark) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	return s.unmarshalInternal(rawMsg)
-}
-
-func (s Shark) marshalInternal(objectMap map[string]interface{}, discValue string) {
-	s.Fish.marshalInternal(objectMap, discValue)
-	populate(objectMap, "age", s.Age)
-	populateTimeRFC3339(objectMap, "birthday", s.Birthday)
-}
-
-func (s *Shark) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -1065,42 +1215,93 @@ func (s *Shark) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 		case "birthday":
 			err = unpopulateTimeRFC3339(val, &s.Birthday)
 			delete(rawMsg, key)
+		case "fishtype":
+			err = unpopulate(val, &s.Fishtype)
+			delete(rawMsg, key)
+		case "length":
+			err = unpopulate(val, &s.Length)
+			delete(rawMsg, key)
+		case "siblings":
+			s.Siblings, err = unmarshalFishClassificationArray(val)
+			delete(rawMsg, key)
+		case "species":
+			err = unpopulate(val, &s.Species)
+			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
 	}
-	if err := s.Fish.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
 	return nil
 }
 
 type Siamese struct {
-	Cat
 	Breed *string `json:"breed,omitempty"`
+	Color *string `json:"color,omitempty"`
+	Hates []*Dog  `json:"hates,omitempty"`
+	ID    *int32  `json:"id,omitempty"`
+	Name  *string `json:"name,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Siamese.
 func (s Siamese) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	s.Cat.marshalInternal(objectMap)
 	populate(objectMap, "breed", s.Breed)
+	populate(objectMap, "color", s.Color)
+	populate(objectMap, "hates", s.Hates)
+	populate(objectMap, "id", s.ID)
+	populate(objectMap, "name", s.Name)
 	return json.Marshal(objectMap)
 }
 
 type SmartSalmon struct {
-	Salmon
+	// REQUIRED
+	Fishtype *string `json:"fishtype,omitempty"`
+
+	// REQUIRED
+	Length *float32 `json:"length,omitempty"`
+
 	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
 	AdditionalProperties map[string]interface{}
-	CollegeDegree        *string `json:"college_degree,omitempty"`
+	CollegeDegree        *string              `json:"college_degree,omitempty"`
+	Iswild               *bool                `json:"iswild,omitempty"`
+	Location             *string              `json:"location,omitempty"`
+	Siblings             []FishClassification `json:"siblings,omitempty"`
+	Species              *string              `json:"species,omitempty"`
+}
+
+// GetFish implements the FishClassification interface for type SmartSalmon.
+func (s *SmartSalmon) GetFish() *Fish {
+	return &Fish{
+		Fishtype: s.Fishtype,
+		Species:  s.Species,
+		Length:   s.Length,
+		Siblings: s.Siblings,
+	}
+}
+
+// GetSalmon implements the SalmonClassification interface for type SmartSalmon.
+func (s *SmartSalmon) GetSalmon() *Salmon {
+	return &Salmon{
+		Location: s.Location,
+		Iswild:   s.Iswild,
+		Fishtype: s.Fishtype,
+		Species:  s.Species,
+		Length:   s.Length,
+		Siblings: s.Siblings,
+	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SmartSalmon.
 func (s SmartSalmon) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	s.Salmon.marshalInternal(objectMap, "smart_salmon")
 	populate(objectMap, "college_degree", s.CollegeDegree)
+	objectMap["fishtype"] = "smart_salmon"
+	populate(objectMap, "iswild", s.Iswild)
+	populate(objectMap, "length", s.Length)
+	populate(objectMap, "location", s.Location)
+	populate(objectMap, "siblings", s.Siblings)
+	populate(objectMap, "species", s.Species)
 	if s.AdditionalProperties != nil {
 		for key, val := range s.AdditionalProperties {
 			objectMap[key] = val
@@ -1121,25 +1322,35 @@ func (s *SmartSalmon) UnmarshalJSON(data []byte) error {
 		case "college_degree":
 			err = unpopulate(val, &s.CollegeDegree)
 			delete(rawMsg, key)
+		case "fishtype":
+			err = unpopulate(val, &s.Fishtype)
+			delete(rawMsg, key)
+		case "iswild":
+			err = unpopulate(val, &s.Iswild)
+			delete(rawMsg, key)
+		case "length":
+			err = unpopulate(val, &s.Length)
+			delete(rawMsg, key)
+		case "location":
+			err = unpopulate(val, &s.Location)
+			delete(rawMsg, key)
+		case "siblings":
+			s.Siblings, err = unmarshalFishClassificationArray(val)
+			delete(rawMsg, key)
+		case "species":
+			err = unpopulate(val, &s.Species)
+			delete(rawMsg, key)
+		default:
+			if s.AdditionalProperties == nil {
+				s.AdditionalProperties = map[string]interface{}{}
+			}
+			if val != nil {
+				var aux interface{}
+				err = json.Unmarshal(val, &aux)
+				s.AdditionalProperties[key] = aux
+			}
+			delete(rawMsg, key)
 		}
-		if err != nil {
-			return err
-		}
-	}
-	if err := s.Salmon.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		if s.AdditionalProperties == nil {
-			s.AdditionalProperties = map[string]interface{}{}
-		}
-		if val != nil {
-			var aux interface{}
-			err = json.Unmarshal(val, &aux)
-			s.AdditionalProperties[key] = aux
-		}
-		delete(rawMsg, key)
 		if err != nil {
 			return err
 		}

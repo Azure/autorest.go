@@ -23,13 +23,9 @@ func TestGetCat(t *testing.T) {
 		t.Fatal(err)
 	}
 	if r := cmp.Diff(result.Cat, Cat{
-		Feline: Feline{
-			Hisses: to.BoolPtr(true),
-			Meows:  to.BoolPtr(true),
-		},
-		Pet: Pet{
-			Name: to.StringPtr("Whiskers"),
-		},
+		Hisses:    to.BoolPtr(true),
+		Meows:     to.BoolPtr(true),
+		Name:      to.StringPtr("Whiskers"),
 		LikesMilk: to.BoolPtr(true),
 	}); r != "" {
 		t.Fatal(r)
@@ -59,9 +55,7 @@ func TestGetHorse(t *testing.T) {
 		t.Fatal(err)
 	}
 	if r := cmp.Diff(result.Horse, Horse{
-		Pet: Pet{
-			Name: to.StringPtr("Fred"),
-		},
+		Name:         to.StringPtr("Fred"),
 		IsAShowHorse: to.BoolPtr(true),
 	}); r != "" {
 		t.Fatal(r)
@@ -76,16 +70,10 @@ func TestGetKitten(t *testing.T) {
 		t.Fatal(err)
 	}
 	if r := cmp.Diff(result.Kitten, Kitten{
-		Cat: Cat{
-			Feline: Feline{
-				Hisses: to.BoolPtr(true),
-				Meows:  to.BoolPtr(true),
-			},
-			Pet: Pet{
-				Name: to.StringPtr("Gatito"),
-			},
-			LikesMilk: to.BoolPtr(true),
-		},
+		Hisses:      to.BoolPtr(true),
+		Meows:       to.BoolPtr(true),
+		Name:        to.StringPtr("Gatito"),
+		LikesMilk:   to.BoolPtr(true),
 		EatsMiceYet: to.BoolPtr(false),
 	}); r != "" {
 		t.Fatal(r)
@@ -110,13 +98,9 @@ func TestGetPet(t *testing.T) {
 func TestPutCat(t *testing.T) {
 	client := newMultipleInheritanceServiceClient()
 	result, err := client.PutCat(context.Background(), Cat{
-		Feline: Feline{
-			Hisses: to.BoolPtr(false),
-			Meows:  to.BoolPtr(true),
-		},
-		Pet: Pet{
-			Name: to.StringPtr("Boots"),
-		},
+		Hisses:    to.BoolPtr(false),
+		Meows:     to.BoolPtr(true),
+		Name:      to.StringPtr("Boots"),
 		LikesMilk: to.BoolPtr(false),
 	}, nil)
 	if err != nil {
@@ -146,9 +130,7 @@ func TestPutFeline(t *testing.T) {
 func TestPutHorse(t *testing.T) {
 	client := newMultipleInheritanceServiceClient()
 	result, err := client.PutHorse(context.Background(), Horse{
-		Pet: Pet{
-			Name: to.StringPtr("General"),
-		},
+		Name:         to.StringPtr("General"),
 		IsAShowHorse: to.BoolPtr(false),
 	}, nil)
 	if err != nil {
@@ -163,16 +145,10 @@ func TestPutHorse(t *testing.T) {
 func TestPutKitten(t *testing.T) {
 	client := newMultipleInheritanceServiceClient()
 	result, err := client.PutKitten(context.Background(), Kitten{
-		Cat: Cat{
-			Feline: Feline{
-				Hisses: to.BoolPtr(false),
-				Meows:  to.BoolPtr(true),
-			},
-			Pet: Pet{
-				Name: to.StringPtr("Kitty"),
-			},
-			LikesMilk: to.BoolPtr(false),
-		},
+		Hisses:      to.BoolPtr(false),
+		Meows:       to.BoolPtr(true),
+		Name:        to.StringPtr("Kitty"),
+		LikesMilk:   to.BoolPtr(false),
 		EatsMiceYet: to.BoolPtr(true),
 	}, nil)
 	if err != nil {

@@ -136,7 +136,9 @@ type AutomaticRepairsPolicy struct {
 // Currently, a VM can only be added to availability set at creation time. An existing VM cannot be added to an availability
 // set.
 type AvailabilitySet struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// The instance view of a resource.
 	Properties *AvailabilitySetProperties `json:"properties,omitempty"`
 
@@ -144,14 +146,30 @@ type AvailabilitySet struct {
 	// 'Aligned' for virtual machines with managed disks and 'Classic' for virtual
 	// machines with unmanaged disks. Default value is 'Classic'.
 	SKU *SKU `json:"sku,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AvailabilitySet.
 func (a AvailabilitySet) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	a.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", a.ID)
+	populate(objectMap, "location", a.Location)
+	populate(objectMap, "name", a.Name)
 	populate(objectMap, "properties", a.Properties)
 	populate(objectMap, "sku", a.SKU)
+	populate(objectMap, "tags", a.Tags)
+	populate(objectMap, "type", a.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -205,20 +223,22 @@ func (a AvailabilitySetProperties) MarshalJSON() ([]byte, error) {
 // AvailabilitySetUpdate - Specifies information about the availability set that the virtual machine should be assigned to.
 // Only tags may be updated.
 type AvailabilitySetUpdate struct {
-	UpdateResource
 	// The instance view of a resource.
 	Properties *AvailabilitySetProperties `json:"properties,omitempty"`
 
 	// Sku of the availability set
 	SKU *SKU `json:"sku,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type AvailabilitySetUpdate.
 func (a AvailabilitySetUpdate) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	a.UpdateResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", a.Properties)
 	populate(objectMap, "sku", a.SKU)
+	populate(objectMap, "tags", a.Tags)
 	return json.Marshal(objectMap)
 }
 
@@ -319,16 +339,34 @@ func (e CloudError) Error() string {
 
 // ContainerService - Container service.
 type ContainerService struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// Properties of the container service.
 	Properties *ContainerServiceProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ContainerService.
 func (c ContainerService) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	c.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", c.ID)
+	populate(objectMap, "location", c.Location)
+	populate(objectMap, "name", c.Name)
 	populate(objectMap, "properties", c.Properties)
+	populate(objectMap, "tags", c.Tags)
+	populate(objectMap, "type", c.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -624,30 +662,50 @@ type DataDiskImage struct {
 
 // DataDiskImageEncryption - Contains encryption settings for a data disk image.
 type DataDiskImageEncryption struct {
-	DiskImageEncryption
 	// REQUIRED; This property specifies the logical unit number of the data disk. This value is used to identify data disks within
 	// the Virtual Machine and therefore must be unique for each data disk attached to the
 	// Virtual Machine.
 	Lun *int32 `json:"lun,omitempty"`
+
+	// A relative URI containing the resource ID of the disk encryption set.
+	DiskEncryptionSetID *string `json:"diskEncryptionSetId,omitempty"`
 }
 
 // DedicatedHost - Specifies information about the Dedicated host.
 type DedicatedHost struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// REQUIRED; SKU of the dedicated host for Hardware Generation and VM family. Only name is required to be set. List Microsoft.Compute
 	// SKUs for a list of possible values.
 	SKU *SKU `json:"sku,omitempty"`
 
 	// Properties of the dedicated host.
 	Properties *DedicatedHostProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DedicatedHost.
 func (d DedicatedHost) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	d.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", d.ID)
+	populate(objectMap, "location", d.Location)
+	populate(objectMap, "name", d.Name)
 	populate(objectMap, "properties", d.Properties)
 	populate(objectMap, "sku", d.SKU)
+	populate(objectMap, "tags", d.Tags)
+	populate(objectMap, "type", d.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -678,21 +736,39 @@ func (d DedicatedHostAvailableCapacity) MarshalJSON() ([]byte, error) {
 // Currently, a dedicated host can only be added to a dedicated host group at creation time. An existing dedicated host cannot
 // be added to another dedicated host group.
 type DedicatedHostGroup struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// Dedicated Host Group Properties.
 	Properties *DedicatedHostGroupProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
 
 	// Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation.
 	// If not provided, the group supports all zones in the region. If provided,
 	// enforces each host in the group to be in the same zone.
 	Zones []*string `json:"zones,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DedicatedHostGroup.
 func (d DedicatedHostGroup) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	d.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", d.ID)
+	populate(objectMap, "location", d.Location)
+	populate(objectMap, "name", d.Name)
 	populate(objectMap, "properties", d.Properties)
+	populate(objectMap, "tags", d.Tags)
+	populate(objectMap, "type", d.Type)
 	populate(objectMap, "zones", d.Zones)
 	return json.Marshal(objectMap)
 }
@@ -735,9 +811,11 @@ func (d DedicatedHostGroupProperties) MarshalJSON() ([]byte, error) {
 // DedicatedHostGroupUpdate - Specifies information about the dedicated host group that the dedicated host should be assigned
 // to. Only tags may be updated.
 type DedicatedHostGroupUpdate struct {
-	UpdateResource
 	// Dedicated Host Group Properties.
 	Properties *DedicatedHostGroupProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
 
 	// Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation.
 	// If not provided, the group supports all zones in the region. If provided,
@@ -748,8 +826,8 @@ type DedicatedHostGroupUpdate struct {
 // MarshalJSON implements the json.Marshaller interface for type DedicatedHostGroupUpdate.
 func (d DedicatedHostGroupUpdate) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	d.UpdateResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", d.Properties)
+	populate(objectMap, "tags", d.Tags)
 	populate(objectMap, "zones", d.Zones)
 	return json.Marshal(objectMap)
 }
@@ -917,16 +995,18 @@ func (d *DedicatedHostProperties) UnmarshalJSON(data []byte) error {
 // DedicatedHostUpdate - Specifies information about the dedicated host. Only tags, autoReplaceOnFailure and licenseType may
 // be updated.
 type DedicatedHostUpdate struct {
-	UpdateResource
 	// Properties of the dedicated host.
 	Properties *DedicatedHostProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DedicatedHostUpdate.
 func (d DedicatedHostUpdate) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	d.UpdateResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", d.Properties)
+	populate(objectMap, "tags", d.Tags)
 	return json.Marshal(objectMap)
 }
 
@@ -998,15 +1078,23 @@ func (d Disallowed) MarshalJSON() ([]byte, error) {
 
 // Disk resource.
 type Disk struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// Disk resource properties.
 	Properties *DiskProperties `json:"properties,omitempty"`
 
 	// The disks sku name. Can be StandardLRS, PremiumLRS, StandardSSDLRS, or UltraSSDLRS.
 	SKU *DiskSKU `json:"sku,omitempty"`
 
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
 	// The Logical zone list for Disk.
 	Zones []*string `json:"zones,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
 
 	// READ-ONLY; A relative URI containing the ID of the VM that has the disk attached.
 	ManagedBy *string `json:"managedBy,omitempty" azure:"ro"`
@@ -1014,35 +1102,63 @@ type Disk struct {
 	// READ-ONLY; List of relative URIs containing the IDs of the VMs that have the disk attached. maxShares should be set to
 	// a value greater than one for disks to allow attaching them to multiple VMs.
 	ManagedByExtended []*string `json:"managedByExtended,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Disk.
 func (d Disk) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	d.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", d.ID)
+	populate(objectMap, "location", d.Location)
 	populate(objectMap, "managedBy", d.ManagedBy)
 	populate(objectMap, "managedByExtended", d.ManagedByExtended)
+	populate(objectMap, "name", d.Name)
 	populate(objectMap, "properties", d.Properties)
 	populate(objectMap, "sku", d.SKU)
+	populate(objectMap, "tags", d.Tags)
+	populate(objectMap, "type", d.Type)
 	populate(objectMap, "zones", d.Zones)
 	return json.Marshal(objectMap)
 }
 
 // DiskEncryptionSet - disk encryption set resource.
 type DiskEncryptionSet struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used
 	// to encrypt disks.
 	Identity   *EncryptionSetIdentity   `json:"identity,omitempty"`
 	Properties *EncryptionSetProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type DiskEncryptionSet.
 func (d DiskEncryptionSet) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	d.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", d.ID)
 	populate(objectMap, "identity", d.Identity)
+	populate(objectMap, "location", d.Location)
+	populate(objectMap, "name", d.Name)
 	populate(objectMap, "properties", d.Properties)
+	populate(objectMap, "tags", d.Tags)
+	populate(objectMap, "type", d.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -1069,7 +1185,8 @@ func (d DiskEncryptionSetList) MarshalJSON() ([]byte, error) {
 // NOTE: The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview
 // for more details.
 type DiskEncryptionSetParameters struct {
-	SubResource
+	// Resource Id
+	ID *string `json:"id,omitempty"`
 }
 
 // DiskEncryptionSetUpdate - disk encryption set update resource.
@@ -1575,31 +1692,67 @@ type GalleriesListOptions struct {
 
 // Gallery - Specifies information about the Shared Image Gallery that you want to create or update.
 type Gallery struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// Describes the properties of a Shared Image Gallery.
 	Properties *GalleryProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Gallery.
 func (g Gallery) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	g.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", g.ID)
+	populate(objectMap, "location", g.Location)
+	populate(objectMap, "name", g.Name)
 	populate(objectMap, "properties", g.Properties)
+	populate(objectMap, "tags", g.Tags)
+	populate(objectMap, "type", g.Type)
 	return json.Marshal(objectMap)
 }
 
 // GalleryApplication - Specifies information about the gallery Application Definition that you want to create or update.
 type GalleryApplication struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// Describes the properties of a gallery Application Definition.
 	Properties *GalleryApplicationProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryApplication.
 func (g GalleryApplication) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	g.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", g.ID)
+	populate(objectMap, "location", g.Location)
+	populate(objectMap, "name", g.Name)
 	populate(objectMap, "properties", g.Properties)
+	populate(objectMap, "tags", g.Tags)
+	populate(objectMap, "type", g.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -1695,31 +1848,63 @@ func (g *GalleryApplicationProperties) UnmarshalJSON(data []byte) error {
 
 // GalleryApplicationUpdate - Specifies information about the gallery Application Definition that you want to update.
 type GalleryApplicationUpdate struct {
-	UpdateResourceDefinition
 	// Describes the properties of a gallery Application Definition.
 	Properties *GalleryApplicationProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryApplicationUpdate.
 func (g GalleryApplicationUpdate) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	g.UpdateResourceDefinition.marshalInternal(objectMap)
+	populate(objectMap, "id", g.ID)
+	populate(objectMap, "name", g.Name)
 	populate(objectMap, "properties", g.Properties)
+	populate(objectMap, "tags", g.Tags)
+	populate(objectMap, "type", g.Type)
 	return json.Marshal(objectMap)
 }
 
 // GalleryApplicationVersion - Specifies information about the gallery Application Version that you want to create or update.
 type GalleryApplicationVersion struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// Describes the properties of a gallery Image Version.
 	Properties *GalleryApplicationVersionProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryApplicationVersion.
 func (g GalleryApplicationVersion) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	g.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", g.ID)
+	populate(objectMap, "location", g.Location)
+	populate(objectMap, "name", g.Name)
 	populate(objectMap, "properties", g.Properties)
+	populate(objectMap, "tags", g.Tags)
+	populate(objectMap, "type", g.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -1755,22 +1940,46 @@ type GalleryApplicationVersionProperties struct {
 
 // GalleryApplicationVersionPublishingProfile - The publishing profile of a gallery image version.
 type GalleryApplicationVersionPublishingProfile struct {
-	GalleryArtifactPublishingProfileBase
 	// REQUIRED; The source image from which the Image Version is going to be created.
 	Source *UserArtifactSource `json:"source,omitempty"`
 
 	// Optional. Whether or not this application reports health.
-	EnableHealthCheck *bool               `json:"enableHealthCheck,omitempty"`
+	EnableHealthCheck *bool `json:"enableHealthCheck,omitempty"`
+
+	// The end of life date of the gallery Image Version. This property can be used for decommissioning purposes. This property
+	// is updatable.
+	EndOfLifeDate *time.Time `json:"endOfLifeDate,omitempty"`
+
+	// If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version.
+	ExcludeFromLatest *bool               `json:"excludeFromLatest,omitempty"`
 	ManageActions     *UserArtifactManage `json:"manageActions,omitempty"`
+
+	// The number of replicas of the Image Version to be created per region. This property would take effect for a region when
+	// regionalReplicaCount is not specified. This property is updatable.
+	ReplicaCount *int32 `json:"replicaCount,omitempty"`
+
+	// Specifies the storage account type to be used to store the image. This property is not updatable.
+	StorageAccountType *StorageAccountType `json:"storageAccountType,omitempty"`
+
+	// The target regions where the Image Version is going to be replicated to. This property is updatable.
+	TargetRegions []*TargetRegion `json:"targetRegions,omitempty"`
+
+	// READ-ONLY; The timestamp for when the gallery Image Version is published.
+	PublishedDate *time.Time `json:"publishedDate,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryApplicationVersionPublishingProfile.
 func (g GalleryApplicationVersionPublishingProfile) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	g.GalleryArtifactPublishingProfileBase.marshalInternal(objectMap)
 	populate(objectMap, "enableHealthCheck", g.EnableHealthCheck)
+	populateTimeRFC3339(objectMap, "endOfLifeDate", g.EndOfLifeDate)
+	populate(objectMap, "excludeFromLatest", g.ExcludeFromLatest)
 	populate(objectMap, "manageActions", g.ManageActions)
+	populateTimeRFC3339(objectMap, "publishedDate", g.PublishedDate)
+	populate(objectMap, "replicaCount", g.ReplicaCount)
 	populate(objectMap, "source", g.Source)
+	populate(objectMap, "storageAccountType", g.StorageAccountType)
+	populate(objectMap, "targetRegions", g.TargetRegions)
 	return json.Marshal(objectMap)
 }
 
@@ -1786,35 +1995,64 @@ func (g *GalleryApplicationVersionPublishingProfile) UnmarshalJSON(data []byte) 
 		case "enableHealthCheck":
 			err = unpopulate(val, &g.EnableHealthCheck)
 			delete(rawMsg, key)
+		case "endOfLifeDate":
+			err = unpopulateTimeRFC3339(val, &g.EndOfLifeDate)
+			delete(rawMsg, key)
+		case "excludeFromLatest":
+			err = unpopulate(val, &g.ExcludeFromLatest)
+			delete(rawMsg, key)
 		case "manageActions":
 			err = unpopulate(val, &g.ManageActions)
 			delete(rawMsg, key)
+		case "publishedDate":
+			err = unpopulateTimeRFC3339(val, &g.PublishedDate)
+			delete(rawMsg, key)
+		case "replicaCount":
+			err = unpopulate(val, &g.ReplicaCount)
+			delete(rawMsg, key)
 		case "source":
 			err = unpopulate(val, &g.Source)
+			delete(rawMsg, key)
+		case "storageAccountType":
+			err = unpopulate(val, &g.StorageAccountType)
+			delete(rawMsg, key)
+		case "targetRegions":
+			err = unpopulate(val, &g.TargetRegions)
 			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
 	}
-	if err := g.GalleryArtifactPublishingProfileBase.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
 	return nil
 }
 
 // GalleryApplicationVersionUpdate - Specifies information about the gallery Application Version that you want to update.
 type GalleryApplicationVersionUpdate struct {
-	UpdateResourceDefinition
 	// Describes the properties of a gallery Image Version.
 	Properties *GalleryApplicationVersionProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryApplicationVersionUpdate.
 func (g GalleryApplicationVersionUpdate) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	g.UpdateResourceDefinition.marshalInternal(objectMap)
+	populate(objectMap, "id", g.ID)
+	populate(objectMap, "name", g.Name)
 	populate(objectMap, "properties", g.Properties)
+	populate(objectMap, "tags", g.Tags)
+	populate(objectMap, "type", g.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -1901,7 +2139,12 @@ type GalleryArtifactPublishingProfileBase struct {
 // MarshalJSON implements the json.Marshaller interface for type GalleryArtifactPublishingProfileBase.
 func (g GalleryArtifactPublishingProfileBase) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	g.marshalInternal(objectMap)
+	populateTimeRFC3339(objectMap, "endOfLifeDate", g.EndOfLifeDate)
+	populate(objectMap, "excludeFromLatest", g.ExcludeFromLatest)
+	populateTimeRFC3339(objectMap, "publishedDate", g.PublishedDate)
+	populate(objectMap, "replicaCount", g.ReplicaCount)
+	populate(objectMap, "storageAccountType", g.StorageAccountType)
+	populate(objectMap, "targetRegions", g.TargetRegions)
 	return json.Marshal(objectMap)
 }
 
@@ -1911,19 +2154,6 @@ func (g *GalleryArtifactPublishingProfileBase) UnmarshalJSON(data []byte) error 
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	return g.unmarshalInternal(rawMsg)
-}
-
-func (g GalleryArtifactPublishingProfileBase) marshalInternal(objectMap map[string]interface{}) {
-	populateTimeRFC3339(objectMap, "endOfLifeDate", g.EndOfLifeDate)
-	populate(objectMap, "excludeFromLatest", g.ExcludeFromLatest)
-	populateTimeRFC3339(objectMap, "publishedDate", g.PublishedDate)
-	populate(objectMap, "replicaCount", g.ReplicaCount)
-	populate(objectMap, "storageAccountType", g.StorageAccountType)
-	populate(objectMap, "targetRegions", g.TargetRegions)
-}
-
-func (g *GalleryArtifactPublishingProfileBase) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -1967,11 +2197,19 @@ type GalleryArtifactVersionSource struct {
 
 // GalleryDataDiskImage - This is the data disk image.
 type GalleryDataDiskImage struct {
-	GalleryDiskImage
 	// REQUIRED; This property specifies the logical unit number of the data disk. This value is used to identify data disks within
 	// the Virtual Machine and therefore must be unique for each data disk attached to the
 	// Virtual Machine.
 	Lun *int32 `json:"lun,omitempty"`
+
+	// The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'
+	HostCaching *HostCaching `json:"hostCaching,omitempty"`
+
+	// The gallery artifact version source.
+	Source *GalleryArtifactVersionSource `json:"source,omitempty"`
+
+	// READ-ONLY; This property indicates the size of the VHD to be created.
+	SizeInGB *int32 `json:"sizeInGB,omitempty" azure:"ro"`
 }
 
 // GalleryDiskImage - This is the disk image base class.
@@ -1994,16 +2232,34 @@ type GalleryIdentifier struct {
 
 // GalleryImage - Specifies information about the gallery Image Definition that you want to create or update.
 type GalleryImage struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// Describes the properties of a gallery Image Definition.
 	Properties *GalleryImageProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryImage.
 func (g GalleryImage) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	g.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", g.ID)
+	populate(objectMap, "location", g.Location)
+	populate(objectMap, "name", g.Name)
 	populate(objectMap, "properties", g.Properties)
+	populate(objectMap, "tags", g.Tags)
+	populate(objectMap, "type", g.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -2162,31 +2418,63 @@ func (g *GalleryImageProperties) UnmarshalJSON(data []byte) error {
 
 // GalleryImageUpdate - Specifies information about the gallery Image Definition that you want to update.
 type GalleryImageUpdate struct {
-	UpdateResourceDefinition
 	// Describes the properties of a gallery Image Definition.
 	Properties *GalleryImageProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryImageUpdate.
 func (g GalleryImageUpdate) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	g.UpdateResourceDefinition.marshalInternal(objectMap)
+	populate(objectMap, "id", g.ID)
+	populate(objectMap, "name", g.Name)
 	populate(objectMap, "properties", g.Properties)
+	populate(objectMap, "tags", g.Tags)
+	populate(objectMap, "type", g.Type)
 	return json.Marshal(objectMap)
 }
 
 // GalleryImageVersion - Specifies information about the gallery Image Version that you want to create or update.
 type GalleryImageVersion struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// Describes the properties of a gallery Image Version.
 	Properties *GalleryImageVersionProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryImageVersion.
 func (g GalleryImageVersion) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	g.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", g.ID)
+	populate(objectMap, "location", g.Location)
+	populate(objectMap, "name", g.Name)
 	populate(objectMap, "properties", g.Properties)
+	populate(objectMap, "tags", g.Tags)
+	populate(objectMap, "type", g.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -2225,7 +2513,72 @@ type GalleryImageVersionProperties struct {
 
 // GalleryImageVersionPublishingProfile - The publishing profile of a gallery Image Version.
 type GalleryImageVersionPublishingProfile struct {
-	GalleryArtifactPublishingProfileBase
+	// The end of life date of the gallery Image Version. This property can be used for decommissioning purposes. This property
+	// is updatable.
+	EndOfLifeDate *time.Time `json:"endOfLifeDate,omitempty"`
+
+	// If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version.
+	ExcludeFromLatest *bool `json:"excludeFromLatest,omitempty"`
+
+	// The number of replicas of the Image Version to be created per region. This property would take effect for a region when
+	// regionalReplicaCount is not specified. This property is updatable.
+	ReplicaCount *int32 `json:"replicaCount,omitempty"`
+
+	// Specifies the storage account type to be used to store the image. This property is not updatable.
+	StorageAccountType *StorageAccountType `json:"storageAccountType,omitempty"`
+
+	// The target regions where the Image Version is going to be replicated to. This property is updatable.
+	TargetRegions []*TargetRegion `json:"targetRegions,omitempty"`
+
+	// READ-ONLY; The timestamp for when the gallery Image Version is published.
+	PublishedDate *time.Time `json:"publishedDate,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type GalleryImageVersionPublishingProfile.
+func (g GalleryImageVersionPublishingProfile) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populateTimeRFC3339(objectMap, "endOfLifeDate", g.EndOfLifeDate)
+	populate(objectMap, "excludeFromLatest", g.ExcludeFromLatest)
+	populateTimeRFC3339(objectMap, "publishedDate", g.PublishedDate)
+	populate(objectMap, "replicaCount", g.ReplicaCount)
+	populate(objectMap, "storageAccountType", g.StorageAccountType)
+	populate(objectMap, "targetRegions", g.TargetRegions)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type GalleryImageVersionPublishingProfile.
+func (g *GalleryImageVersionPublishingProfile) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "endOfLifeDate":
+			err = unpopulateTimeRFC3339(val, &g.EndOfLifeDate)
+			delete(rawMsg, key)
+		case "excludeFromLatest":
+			err = unpopulate(val, &g.ExcludeFromLatest)
+			delete(rawMsg, key)
+		case "publishedDate":
+			err = unpopulateTimeRFC3339(val, &g.PublishedDate)
+			delete(rawMsg, key)
+		case "replicaCount":
+			err = unpopulate(val, &g.ReplicaCount)
+			delete(rawMsg, key)
+		case "storageAccountType":
+			err = unpopulate(val, &g.StorageAccountType)
+			delete(rawMsg, key)
+		case "targetRegions":
+			err = unpopulate(val, &g.TargetRegions)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // GalleryImageVersionStorageProfile - This is the storage profile of a Gallery Image Version.
@@ -2251,16 +2604,30 @@ func (g GalleryImageVersionStorageProfile) MarshalJSON() ([]byte, error) {
 
 // GalleryImageVersionUpdate - Specifies information about the gallery Image Version that you want to update.
 type GalleryImageVersionUpdate struct {
-	UpdateResourceDefinition
 	// Describes the properties of a gallery Image Version.
 	Properties *GalleryImageVersionProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryImageVersionUpdate.
 func (g GalleryImageVersionUpdate) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	g.UpdateResourceDefinition.marshalInternal(objectMap)
+	populate(objectMap, "id", g.ID)
+	populate(objectMap, "name", g.Name)
 	populate(objectMap, "properties", g.Properties)
+	populate(objectMap, "tags", g.Tags)
+	populate(objectMap, "type", g.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -2339,7 +2706,14 @@ func (g GalleryList) MarshalJSON() ([]byte, error) {
 
 // GalleryOSDiskImage - This is the OS disk image.
 type GalleryOSDiskImage struct {
-	GalleryDiskImage
+	// The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'
+	HostCaching *HostCaching `json:"hostCaching,omitempty"`
+
+	// The gallery artifact version source.
+	Source *GalleryArtifactVersionSource `json:"source,omitempty"`
+
+	// READ-ONLY; This property indicates the size of the VHD to be created.
+	SizeInGB *int32 `json:"sizeInGB,omitempty" azure:"ro"`
 }
 
 // GalleryProperties - Describes the properties of a Shared Image Gallery.
@@ -2356,16 +2730,30 @@ type GalleryProperties struct {
 
 // GalleryUpdate - Specifies information about the Shared Image Gallery that you want to update.
 type GalleryUpdate struct {
-	UpdateResourceDefinition
 	// Describes the properties of a Shared Image Gallery.
 	Properties *GalleryProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type GalleryUpdate.
 func (g GalleryUpdate) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	g.UpdateResourceDefinition.marshalInternal(objectMap)
+	populate(objectMap, "id", g.ID)
+	populate(objectMap, "name", g.Name)
 	populate(objectMap, "properties", g.Properties)
+	populate(objectMap, "tags", g.Tags)
+	populate(objectMap, "type", g.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -2393,25 +2781,71 @@ type HardwareProfile struct {
 // machine. If SourceImage is provided, the destination virtual hard drive must not
 // exist.
 type Image struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// Describes the properties of an Image.
 	Properties *ImageProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Image.
 func (i Image) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	i.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", i.ID)
+	populate(objectMap, "location", i.Location)
+	populate(objectMap, "name", i.Name)
 	populate(objectMap, "properties", i.Properties)
+	populate(objectMap, "tags", i.Tags)
+	populate(objectMap, "type", i.Type)
 	return json.Marshal(objectMap)
 }
 
 // ImageDataDisk - Describes a data disk.
 type ImageDataDisk struct {
-	ImageDisk
 	// REQUIRED; Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and
 	// therefore must be unique for each data disk attached to a VM.
 	Lun *int32 `json:"lun,omitempty"`
+
+	// The Virtual Hard Disk.
+	BlobURI *string `json:"blobUri,omitempty"`
+
+	// Specifies the caching requirements.
+	// Possible values are:
+	// None
+	// ReadOnly
+	// ReadWrite
+	// Default: None for Standard storage. ReadOnly for Premium storage
+	Caching *CachingTypes `json:"caching,omitempty"`
+
+	// Specifies the customer managed disk encryption set resource id for the managed image disk.
+	DiskEncryptionSet *DiskEncryptionSetParameters `json:"diskEncryptionSet,omitempty"`
+
+	// Specifies the size of empty data disks in gigabytes. This element can be used to overwrite the name of the disk in a virtual
+	// machine image.
+	// This value cannot be larger than 1023 GB
+	DiskSizeGB *int32 `json:"diskSizeGB,omitempty"`
+
+	// The managedDisk.
+	ManagedDisk *SubResource `json:"managedDisk,omitempty"`
+
+	// The snapshot.
+	Snapshot *SubResource `json:"snapshot,omitempty"`
+
+	// Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot
+	// be used with OS Disk.
+	StorageAccountType *StorageAccountTypes `json:"storageAccountType,omitempty"`
 }
 
 // ImageDisk - Describes a image disk.
@@ -2475,7 +2909,6 @@ func (i ImageListResult) MarshalJSON() ([]byte, error) {
 
 // ImageOSDisk - Describes an Operating System disk.
 type ImageOSDisk struct {
-	ImageDisk
 	// REQUIRED; The OS State.
 	OSState *OperatingSystemStateTypes `json:"osState,omitempty"`
 
@@ -2485,6 +2918,35 @@ type ImageOSDisk struct {
 	// Windows
 	// Linux
 	OSType *OperatingSystemTypes `json:"osType,omitempty"`
+
+	// The Virtual Hard Disk.
+	BlobURI *string `json:"blobUri,omitempty"`
+
+	// Specifies the caching requirements.
+	// Possible values are:
+	// None
+	// ReadOnly
+	// ReadWrite
+	// Default: None for Standard storage. ReadOnly for Premium storage
+	Caching *CachingTypes `json:"caching,omitempty"`
+
+	// Specifies the customer managed disk encryption set resource id for the managed image disk.
+	DiskEncryptionSet *DiskEncryptionSetParameters `json:"diskEncryptionSet,omitempty"`
+
+	// Specifies the size of empty data disks in gigabytes. This element can be used to overwrite the name of the disk in a virtual
+	// machine image.
+	// This value cannot be larger than 1023 GB
+	DiskSizeGB *int32 `json:"diskSizeGB,omitempty"`
+
+	// The managedDisk.
+	ManagedDisk *SubResource `json:"managedDisk,omitempty"`
+
+	// The snapshot.
+	Snapshot *SubResource `json:"snapshot,omitempty"`
+
+	// Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot
+	// be used with OS Disk.
+	StorageAccountType *StorageAccountTypes `json:"storageAccountType,omitempty"`
 }
 
 // ImageProperties - Describes the properties of an Image.
@@ -2519,7 +2981,9 @@ type ImagePurchasePlan struct {
 // image, marketplace image, or virtual machine image, but is not used in other creation operations. NOTE: Image reference
 // publisher and offer can only be set when you create the scale set.
 type ImageReference struct {
-	SubResource
+	// Resource Id
+	ID *string `json:"id,omitempty"`
+
 	// Specifies the offer of the platform image or marketplace image used to create the virtual machine.
 	Offer *string `json:"offer,omitempty"`
 
@@ -2540,18 +3004,6 @@ type ImageReference struct {
 	// machine. This readonly field differs from 'version', only if the value specified in
 	// 'version' field is 'latest'.
 	ExactVersion *string `json:"exactVersion,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type ImageReference.
-func (i ImageReference) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	i.SubResource.marshalInternal(objectMap)
-	populate(objectMap, "exactVersion", i.ExactVersion)
-	populate(objectMap, "offer", i.Offer)
-	populate(objectMap, "publisher", i.Publisher)
-	populate(objectMap, "sku", i.SKU)
-	populate(objectMap, "version", i.Version)
-	return json.Marshal(objectMap)
 }
 
 // ImageStorageProfile - Describes a storage profile.
@@ -2582,16 +3034,18 @@ func (i ImageStorageProfile) MarshalJSON() ([]byte, error) {
 
 // ImageUpdate - The source user image virtual hard disk. Only tags may be updated.
 type ImageUpdate struct {
-	UpdateResource
 	// Describes the properties of an Image.
 	Properties *ImageProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ImageUpdate.
 func (i ImageUpdate) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	i.UpdateResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", i.Properties)
+	populate(objectMap, "tags", i.Tags)
 	return json.Marshal(objectMap)
 }
 
@@ -2805,7 +3259,12 @@ type LogAnalyticsInputBase struct {
 // MarshalJSON implements the json.Marshaller interface for type LogAnalyticsInputBase.
 func (l LogAnalyticsInputBase) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	l.marshalInternal(objectMap)
+	populate(objectMap, "blobContainerSasUri", l.BlobContainerSasURI)
+	populateTimeRFC3339(objectMap, "fromTime", l.FromTime)
+	populate(objectMap, "groupByOperationName", l.GroupByOperationName)
+	populate(objectMap, "groupByResourceName", l.GroupByResourceName)
+	populate(objectMap, "groupByThrottlePolicy", l.GroupByThrottlePolicy)
+	populateTimeRFC3339(objectMap, "toTime", l.ToTime)
 	return json.Marshal(objectMap)
 }
 
@@ -2815,19 +3274,6 @@ func (l *LogAnalyticsInputBase) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	return l.unmarshalInternal(rawMsg)
-}
-
-func (l LogAnalyticsInputBase) marshalInternal(objectMap map[string]interface{}) {
-	populate(objectMap, "blobContainerSasUri", l.BlobContainerSasURI)
-	populateTimeRFC3339(objectMap, "fromTime", l.FromTime)
-	populate(objectMap, "groupByOperationName", l.GroupByOperationName)
-	populate(objectMap, "groupByResourceName", l.GroupByResourceName)
-	populate(objectMap, "groupByThrottlePolicy", l.GroupByThrottlePolicy)
-	populateTimeRFC3339(objectMap, "toTime", l.ToTime)
-}
-
-func (l *LogAnalyticsInputBase) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -2952,37 +3398,24 @@ type ManagedArtifact struct {
 
 // ManagedDiskParameters - The parameters of a managed disk.
 type ManagedDiskParameters struct {
-	SubResource
 	// Specifies the customer managed disk encryption set resource id for the managed disk.
 	DiskEncryptionSet *DiskEncryptionSetParameters `json:"diskEncryptionSet,omitempty"`
+
+	// Resource Id
+	ID *string `json:"id,omitempty"`
 
 	// Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot
 	// be used with OS Disk.
 	StorageAccountType *StorageAccountTypes `json:"storageAccountType,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type ManagedDiskParameters.
-func (m ManagedDiskParameters) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	m.SubResource.marshalInternal(objectMap)
-	populate(objectMap, "diskEncryptionSet", m.DiskEncryptionSet)
-	populate(objectMap, "storageAccountType", m.StorageAccountType)
-	return json.Marshal(objectMap)
-}
-
 // NetworkInterfaceReference - Describes a network interface reference.
 type NetworkInterfaceReference struct {
-	SubResource
+	// Resource Id
+	ID *string `json:"id,omitempty"`
+
 	// Describes a network interface reference properties.
 	Properties *NetworkInterfaceReferenceProperties `json:"properties,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type NetworkInterfaceReference.
-func (n NetworkInterfaceReference) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	n.SubResource.marshalInternal(objectMap)
-	populate(objectMap, "properties", n.Properties)
-	return json.Marshal(objectMap)
 }
 
 // NetworkInterfaceReferenceProperties - Describes a network interface reference properties.
@@ -3069,7 +3502,8 @@ type OSDiskImage struct {
 
 // OSDiskImageEncryption - Contains encryption settings for an OS disk image.
 type OSDiskImageEncryption struct {
-	DiskImageEncryption
+	// A relative URI containing the resource ID of the disk encryption set.
+	DiskEncryptionSetID *string `json:"diskEncryptionSetId,omitempty"`
 }
 
 // OSProfile - Specifies the operating system settings for the virtual machine. Some of the settings cannot be changed once
@@ -3247,16 +3681,34 @@ type Plan struct {
 
 // ProximityPlacementGroup - Specifies information about the proximity placement group.
 type ProximityPlacementGroup struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// Describes the properties of a Proximity Placement Group.
 	Properties *ProximityPlacementGroupProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ProximityPlacementGroup.
 func (p ProximityPlacementGroup) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	p.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", p.ID)
+	populate(objectMap, "location", p.Location)
+	populate(objectMap, "name", p.Name)
 	populate(objectMap, "properties", p.Properties)
+	populate(objectMap, "tags", p.Tags)
+	populate(objectMap, "type", p.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -3311,7 +3763,15 @@ func (p ProximityPlacementGroupProperties) MarshalJSON() ([]byte, error) {
 
 // ProximityPlacementGroupUpdate - Specifies information about the proximity placement group.
 type ProximityPlacementGroupUpdate struct {
-	UpdateResource
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ProximityPlacementGroupUpdate.
+func (p ProximityPlacementGroupUpdate) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "tags", p.Tags)
+	return json.Marshal(objectMap)
 }
 
 // ProximityPlacementGroupsCreateOrUpdateOptions contains the optional parameters for the ProximityPlacementGroupsClient.CreateOrUpdate
@@ -3414,16 +3874,38 @@ func (r ReplicationStatus) MarshalJSON() ([]byte, error) {
 
 // RequestRateByIntervalInput - Api request input for LogAnalytics getRequestRateByInterval Api.
 type RequestRateByIntervalInput struct {
-	LogAnalyticsInputBase
+	// REQUIRED; SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to.
+	BlobContainerSasURI *string `json:"blobContainerSasUri,omitempty"`
+
+	// REQUIRED; From time of the query
+	FromTime *time.Time `json:"fromTime,omitempty"`
+
 	// REQUIRED; Interval value in minutes used to create LogAnalytics call rate logs.
 	IntervalLength *IntervalInMins `json:"intervalLength,omitempty"`
+
+	// REQUIRED; To time of the query
+	ToTime *time.Time `json:"toTime,omitempty"`
+
+	// Group query result by Operation Name.
+	GroupByOperationName *bool `json:"groupByOperationName,omitempty"`
+
+	// Group query result by Resource Name.
+	GroupByResourceName *bool `json:"groupByResourceName,omitempty"`
+
+	// Group query result by Throttle Policy applied.
+	GroupByThrottlePolicy *bool `json:"groupByThrottlePolicy,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type RequestRateByIntervalInput.
 func (r RequestRateByIntervalInput) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	r.LogAnalyticsInputBase.marshalInternal(objectMap)
+	populate(objectMap, "blobContainerSasUri", r.BlobContainerSasURI)
+	populateTimeRFC3339(objectMap, "fromTime", r.FromTime)
+	populate(objectMap, "groupByOperationName", r.GroupByOperationName)
+	populate(objectMap, "groupByResourceName", r.GroupByResourceName)
+	populate(objectMap, "groupByThrottlePolicy", r.GroupByThrottlePolicy)
 	populate(objectMap, "intervalLength", r.IntervalLength)
+	populateTimeRFC3339(objectMap, "toTime", r.ToTime)
 	return json.Marshal(objectMap)
 }
 
@@ -3436,16 +3918,31 @@ func (r *RequestRateByIntervalInput) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "blobContainerSasUri":
+			err = unpopulate(val, &r.BlobContainerSasURI)
+			delete(rawMsg, key)
+		case "fromTime":
+			err = unpopulateTimeRFC3339(val, &r.FromTime)
+			delete(rawMsg, key)
+		case "groupByOperationName":
+			err = unpopulate(val, &r.GroupByOperationName)
+			delete(rawMsg, key)
+		case "groupByResourceName":
+			err = unpopulate(val, &r.GroupByResourceName)
+			delete(rawMsg, key)
+		case "groupByThrottlePolicy":
+			err = unpopulate(val, &r.GroupByThrottlePolicy)
+			delete(rawMsg, key)
 		case "intervalLength":
 			err = unpopulate(val, &r.IntervalLength)
+			delete(rawMsg, key)
+		case "toTime":
+			err = unpopulateTimeRFC3339(val, &r.ToTime)
 			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
-	}
-	if err := r.LogAnalyticsInputBase.unmarshalInternal(rawMsg); err != nil {
-		return err
 	}
 	return nil
 }
@@ -3471,16 +3968,12 @@ type Resource struct {
 // MarshalJSON implements the json.Marshaller interface for type Resource.
 func (r Resource) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	r.marshalInternal(objectMap)
-	return json.Marshal(objectMap)
-}
-
-func (r Resource) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "id", r.ID)
 	populate(objectMap, "location", r.Location)
 	populate(objectMap, "name", r.Name)
 	populate(objectMap, "tags", r.Tags)
 	populate(objectMap, "type", r.Type)
+	return json.Marshal(objectMap)
 }
 
 // ResourceRange - Describes the resource range.
@@ -3802,16 +4295,34 @@ func (r *RollingUpgradeRunningStatus) UnmarshalJSON(data []byte) error {
 
 // RollingUpgradeStatusInfo - The status of the latest virtual machine scale set rolling upgrade.
 type RollingUpgradeStatusInfo struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// The status of the latest virtual machine scale set rolling upgrade.
 	Properties *RollingUpgradeStatusInfoProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type RollingUpgradeStatusInfo.
 func (r RollingUpgradeStatusInfo) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	r.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", r.ID)
+	populate(objectMap, "location", r.Location)
+	populate(objectMap, "name", r.Name)
 	populate(objectMap, "properties", r.Properties)
+	populate(objectMap, "tags", r.Tags)
+	populate(objectMap, "type", r.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -3832,7 +4343,21 @@ type RollingUpgradeStatusInfoProperties struct {
 
 // RunCommandDocument - Describes the properties of a Run Command.
 type RunCommandDocument struct {
-	RunCommandDocumentBase
+	// REQUIRED; The VM run command description.
+	Description *string `json:"description,omitempty"`
+
+	// REQUIRED; The VM run command id.
+	ID *string `json:"id,omitempty"`
+
+	// REQUIRED; The VM run command label.
+	Label *string `json:"label,omitempty"`
+
+	// REQUIRED; The Operating System type.
+	OSType *OperatingSystemTypes `json:"osType,omitempty"`
+
+	// REQUIRED; The VM run command schema.
+	Schema *string `json:"$schema,omitempty"`
+
 	// REQUIRED; The script to be executed.
 	Script []*string `json:"script,omitempty"`
 
@@ -3843,8 +4368,12 @@ type RunCommandDocument struct {
 // MarshalJSON implements the json.Marshaller interface for type RunCommandDocument.
 func (r RunCommandDocument) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	r.RunCommandDocumentBase.marshalInternal(objectMap)
+	populate(objectMap, "description", r.Description)
+	populate(objectMap, "id", r.ID)
+	populate(objectMap, "label", r.Label)
+	populate(objectMap, "osType", r.OSType)
 	populate(objectMap, "parameters", r.Parameters)
+	populate(objectMap, "$schema", r.Schema)
 	populate(objectMap, "script", r.Script)
 	return json.Marshal(objectMap)
 }
@@ -3865,21 +4394,6 @@ type RunCommandDocumentBase struct {
 
 	// REQUIRED; The VM run command schema.
 	Schema *string `json:"$schema,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type RunCommandDocumentBase.
-func (r RunCommandDocumentBase) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	r.marshalInternal(objectMap)
-	return json.Marshal(objectMap)
-}
-
-func (r RunCommandDocumentBase) marshalInternal(objectMap map[string]interface{}) {
-	populate(objectMap, "description", r.Description)
-	populate(objectMap, "id", r.ID)
-	populate(objectMap, "label", r.Label)
-	populate(objectMap, "osType", r.OSType)
-	populate(objectMap, "$schema", r.Schema)
 }
 
 // RunCommandInput - Capture Virtual Machine parameters.
@@ -4017,16 +4531,34 @@ type SSHPublicKeyGenerateKeyPairResult struct {
 
 // SSHPublicKeyResource - Specifies information about the SSH public key.
 type SSHPublicKeyResource struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// Properties of the SSH public key.
 	Properties *SSHPublicKeyResourceProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SSHPublicKeyResource.
 func (s SSHPublicKeyResource) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	s.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", s.ID)
+	populate(objectMap, "location", s.Location)
+	populate(objectMap, "name", s.Name)
 	populate(objectMap, "properties", s.Properties)
+	populate(objectMap, "tags", s.Tags)
+	populate(objectMap, "type", s.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -4041,16 +4573,18 @@ type SSHPublicKeyResourceProperties struct {
 
 // SSHPublicKeyUpdateResource - Specifies information about the SSH public key.
 type SSHPublicKeyUpdateResource struct {
-	UpdateResource
 	// Properties of the SSH public key.
 	Properties *SSHPublicKeyResourceProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type SSHPublicKeyUpdateResource.
 func (s SSHPublicKeyUpdateResource) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	s.UpdateResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", s.Properties)
+	populate(objectMap, "tags", s.Tags)
 	return json.Marshal(objectMap)
 }
 
@@ -4145,24 +4679,42 @@ type ShareInfoElement struct {
 
 // Snapshot resource.
 type Snapshot struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// Snapshot resource properties.
 	Properties *SnapshotProperties `json:"properties,omitempty"`
 
 	// The snapshots sku name. Can be StandardLRS, PremiumLRS, or Standard_ZRS.
 	SKU *SnapshotSKU `json:"sku,omitempty"`
 
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
 	// READ-ONLY; Unused. Always Null.
 	ManagedBy *string `json:"managedBy,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Snapshot.
 func (s Snapshot) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	s.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", s.ID)
+	populate(objectMap, "location", s.Location)
 	populate(objectMap, "managedBy", s.ManagedBy)
+	populate(objectMap, "name", s.Name)
 	populate(objectMap, "properties", s.Properties)
 	populate(objectMap, "sku", s.SKU)
+	populate(objectMap, "tags", s.Tags)
+	populate(objectMap, "type", s.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -4414,45 +4966,17 @@ type SubResource struct {
 	ID *string `json:"id,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SubResource.
-func (s SubResource) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	s.marshalInternal(objectMap)
-	return json.Marshal(objectMap)
-}
-
-func (s SubResource) marshalInternal(objectMap map[string]interface{}) {
-	populate(objectMap, "id", s.ID)
-}
-
 type SubResourceReadOnly struct {
 	// READ-ONLY; Resource Id
 	ID *string `json:"id,omitempty" azure:"ro"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type SubResourceReadOnly.
-func (s SubResourceReadOnly) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	s.marshalInternal(objectMap)
-	return json.Marshal(objectMap)
-}
-
-func (s SubResourceReadOnly) marshalInternal(objectMap map[string]interface{}) {
-	populate(objectMap, "id", s.ID)
-}
-
 type SubResourceWithColocationStatus struct {
-	SubResource
 	// Describes colocation status of a resource in the Proximity Placement Group.
 	ColocationStatus *InstanceViewStatus `json:"colocationStatus,omitempty"`
-}
 
-// MarshalJSON implements the json.Marshaller interface for type SubResourceWithColocationStatus.
-func (s SubResourceWithColocationStatus) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	s.SubResource.marshalInternal(objectMap)
-	populate(objectMap, "colocationStatus", s.ColocationStatus)
-	return json.Marshal(objectMap)
+	// Resource Id
+	ID *string `json:"id,omitempty"`
 }
 
 // TargetRegion - Describes the target region information.
@@ -4482,7 +5006,70 @@ type TerminateNotificationProfile struct {
 
 // ThrottledRequestsInput - Api request input for LogAnalytics getThrottledRequests Api.
 type ThrottledRequestsInput struct {
-	LogAnalyticsInputBase
+	// REQUIRED; SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to.
+	BlobContainerSasURI *string `json:"blobContainerSasUri,omitempty"`
+
+	// REQUIRED; From time of the query
+	FromTime *time.Time `json:"fromTime,omitempty"`
+
+	// REQUIRED; To time of the query
+	ToTime *time.Time `json:"toTime,omitempty"`
+
+	// Group query result by Operation Name.
+	GroupByOperationName *bool `json:"groupByOperationName,omitempty"`
+
+	// Group query result by Resource Name.
+	GroupByResourceName *bool `json:"groupByResourceName,omitempty"`
+
+	// Group query result by Throttle Policy applied.
+	GroupByThrottlePolicy *bool `json:"groupByThrottlePolicy,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type ThrottledRequestsInput.
+func (t ThrottledRequestsInput) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "blobContainerSasUri", t.BlobContainerSasURI)
+	populateTimeRFC3339(objectMap, "fromTime", t.FromTime)
+	populate(objectMap, "groupByOperationName", t.GroupByOperationName)
+	populate(objectMap, "groupByResourceName", t.GroupByResourceName)
+	populate(objectMap, "groupByThrottlePolicy", t.GroupByThrottlePolicy)
+	populateTimeRFC3339(objectMap, "toTime", t.ToTime)
+	return json.Marshal(objectMap)
+}
+
+// UnmarshalJSON implements the json.Unmarshaller interface for type ThrottledRequestsInput.
+func (t *ThrottledRequestsInput) UnmarshalJSON(data []byte) error {
+	var rawMsg map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawMsg); err != nil {
+		return err
+	}
+	for key, val := range rawMsg {
+		var err error
+		switch key {
+		case "blobContainerSasUri":
+			err = unpopulate(val, &t.BlobContainerSasURI)
+			delete(rawMsg, key)
+		case "fromTime":
+			err = unpopulateTimeRFC3339(val, &t.FromTime)
+			delete(rawMsg, key)
+		case "groupByOperationName":
+			err = unpopulate(val, &t.GroupByOperationName)
+			delete(rawMsg, key)
+		case "groupByResourceName":
+			err = unpopulate(val, &t.GroupByResourceName)
+			delete(rawMsg, key)
+		case "groupByThrottlePolicy":
+			err = unpopulate(val, &t.GroupByThrottlePolicy)
+			delete(rawMsg, key)
+		case "toTime":
+			err = unpopulateTimeRFC3339(val, &t.ToTime)
+			delete(rawMsg, key)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // UpdateResource - The Update Resource model definition.
@@ -4494,12 +5081,8 @@ type UpdateResource struct {
 // MarshalJSON implements the json.Marshaller interface for type UpdateResource.
 func (u UpdateResource) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	u.marshalInternal(objectMap)
-	return json.Marshal(objectMap)
-}
-
-func (u UpdateResource) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "tags", u.Tags)
+	return json.Marshal(objectMap)
 }
 
 // UpdateResourceDefinition - The Update Resource model definition.
@@ -4520,15 +5103,11 @@ type UpdateResourceDefinition struct {
 // MarshalJSON implements the json.Marshaller interface for type UpdateResourceDefinition.
 func (u UpdateResourceDefinition) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	u.marshalInternal(objectMap)
-	return json.Marshal(objectMap)
-}
-
-func (u UpdateResourceDefinition) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "id", u.ID)
 	populate(objectMap, "name", u.Name)
 	populate(objectMap, "tags", u.Tags)
 	populate(objectMap, "type", u.Type)
+	return json.Marshal(objectMap)
 }
 
 // UpgradeOperationHistoricalStatusInfo - Virtual Machine Scale Set OS Upgrade History operation response.
@@ -4740,7 +5319,9 @@ type VirtualHardDisk struct {
 
 // VirtualMachine - Describes a Virtual Machine.
 type VirtualMachine struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// The identity of the virtual machine, if configured.
 	Identity *VirtualMachineIdentity `json:"identity,omitempty"`
 
@@ -4754,21 +5335,37 @@ type VirtualMachine struct {
 	// Describes the properties of a Virtual Machine.
 	Properties *VirtualMachineProperties `json:"properties,omitempty"`
 
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
 	// The virtual machine zones.
 	Zones []*string `json:"zones,omitempty"`
 
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
 	// READ-ONLY; The virtual machine child extension resources.
 	Resources []*VirtualMachineExtension `json:"resources,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachine.
 func (v VirtualMachine) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	v.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", v.ID)
 	populate(objectMap, "identity", v.Identity)
+	populate(objectMap, "location", v.Location)
+	populate(objectMap, "name", v.Name)
 	populate(objectMap, "plan", v.Plan)
 	populate(objectMap, "properties", v.Properties)
 	populate(objectMap, "resources", v.Resources)
+	populate(objectMap, "tags", v.Tags)
+	populate(objectMap, "type", v.Type)
 	populate(objectMap, "zones", v.Zones)
 	return json.Marshal(objectMap)
 }
@@ -4808,7 +5405,9 @@ type VirtualMachineCaptureParameters struct {
 
 // VirtualMachineCaptureResult - Output of virtual machine capture operation.
 type VirtualMachineCaptureResult struct {
-	SubResource
+	// Resource Id
+	ID *string `json:"id,omitempty"`
+
 	// READ-ONLY; the version of the content
 	ContentVersion *string `json:"contentVersion,omitempty" azure:"ro"`
 
@@ -4825,8 +5424,8 @@ type VirtualMachineCaptureResult struct {
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineCaptureResult.
 func (v VirtualMachineCaptureResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	v.SubResource.marshalInternal(objectMap)
 	populate(objectMap, "contentVersion", v.ContentVersion)
+	populate(objectMap, "id", v.ID)
 	populate(objectMap, "parameters", v.Parameters)
 	populate(objectMap, "resources", v.Resources)
 	populate(objectMap, "$schema", v.Schema)
@@ -4835,16 +5434,34 @@ func (v VirtualMachineCaptureResult) MarshalJSON() ([]byte, error) {
 
 // VirtualMachineExtension - Describes a Virtual Machine Extension.
 type VirtualMachineExtension struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// Describes the properties of a Virtual Machine Extension.
 	Properties *VirtualMachineExtensionProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineExtension.
 func (v VirtualMachineExtension) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	v.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", v.ID)
+	populate(objectMap, "location", v.Location)
+	populate(objectMap, "name", v.Name)
 	populate(objectMap, "properties", v.Properties)
+	populate(objectMap, "tags", v.Tags)
+	populate(objectMap, "type", v.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -4862,16 +5479,34 @@ type VirtualMachineExtensionHandlerInstanceView struct {
 
 // VirtualMachineExtensionImage - Describes a Virtual Machine Extension Image.
 type VirtualMachineExtensionImage struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// Describes the properties of a Virtual Machine Extension Image.
 	Properties *VirtualMachineExtensionImageProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineExtensionImage.
 func (v VirtualMachineExtensionImage) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	v.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", v.ID)
+	populate(objectMap, "location", v.Location)
+	populate(objectMap, "name", v.Name)
 	populate(objectMap, "properties", v.Properties)
+	populate(objectMap, "tags", v.Tags)
+	populate(objectMap, "type", v.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -4979,16 +5614,18 @@ type VirtualMachineExtensionProperties struct {
 
 // VirtualMachineExtensionUpdate - Describes a Virtual Machine Extension.
 type VirtualMachineExtensionUpdate struct {
-	UpdateResource
 	// Describes the properties of a Virtual Machine Extension.
 	Properties *VirtualMachineExtensionUpdateProperties `json:"properties,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineExtensionUpdate.
 func (v VirtualMachineExtensionUpdate) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	v.UpdateResource.marshalInternal(objectMap)
 	populate(objectMap, "properties", v.Properties)
+	populate(objectMap, "tags", v.Tags)
 	return json.Marshal(objectMap)
 }
 
@@ -5099,16 +5736,32 @@ func (v VirtualMachineIdentity) MarshalJSON() ([]byte, error) {
 
 // VirtualMachineImage - Describes a Virtual Machine Image.
 type VirtualMachineImage struct {
-	VirtualMachineImageResource
+	// REQUIRED; The supported Azure location of the resource.
+	Location *string `json:"location,omitempty"`
+
+	// REQUIRED; The name of the resource.
+	Name *string `json:"name,omitempty"`
+
+	// Resource Id
+	ID *string `json:"id,omitempty"`
+
 	// Describes the properties of a Virtual Machine Image.
 	Properties *VirtualMachineImageProperties `json:"properties,omitempty"`
+
+	// Specifies the tags that are assigned to the virtual machine. For more information about using tags, see Using tags to organize
+	// your Azure resources
+	// [https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md].
+	Tags map[string]*string `json:"tags,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineImage.
 func (v VirtualMachineImage) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	v.VirtualMachineImageResource.marshalInternal(objectMap)
+	populate(objectMap, "id", v.ID)
+	populate(objectMap, "location", v.Location)
+	populate(objectMap, "name", v.Name)
 	populate(objectMap, "properties", v.Properties)
+	populate(objectMap, "tags", v.Tags)
 	return json.Marshal(objectMap)
 }
 
@@ -5141,12 +5794,14 @@ func (v VirtualMachineImageProperties) MarshalJSON() ([]byte, error) {
 
 // VirtualMachineImageResource - Virtual machine image resource information.
 type VirtualMachineImageResource struct {
-	SubResource
 	// REQUIRED; The supported Azure location of the resource.
 	Location *string `json:"location,omitempty"`
 
 	// REQUIRED; The name of the resource.
 	Name *string `json:"name,omitempty"`
+
+	// Resource Id
+	ID *string `json:"id,omitempty"`
 
 	// Specifies the tags that are assigned to the virtual machine. For more information about using tags, see Using tags to organize
 	// your Azure resources
@@ -5157,15 +5812,11 @@ type VirtualMachineImageResource struct {
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineImageResource.
 func (v VirtualMachineImageResource) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	v.marshalInternal(objectMap)
-	return json.Marshal(objectMap)
-}
-
-func (v VirtualMachineImageResource) marshalInternal(objectMap map[string]interface{}) {
-	v.SubResource.marshalInternal(objectMap)
+	populate(objectMap, "id", v.ID)
 	populate(objectMap, "location", v.Location)
 	populate(objectMap, "name", v.Name)
 	populate(objectMap, "tags", v.Tags)
+	return json.Marshal(objectMap)
 }
 
 // VirtualMachineImagesGetOptions contains the optional parameters for the VirtualMachineImagesClient.Get method.
@@ -5370,17 +6021,6 @@ type VirtualMachineReimageParameters struct {
 	TempDisk *bool `json:"tempDisk,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaller interface for type VirtualMachineReimageParameters.
-func (v VirtualMachineReimageParameters) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	v.marshalInternal(objectMap)
-	return json.Marshal(objectMap)
-}
-
-func (v VirtualMachineReimageParameters) marshalInternal(objectMap map[string]interface{}) {
-	populate(objectMap, "tempDisk", v.TempDisk)
-}
-
 // VirtualMachineRunCommandsGetOptions contains the optional parameters for the VirtualMachineRunCommandsClient.Get method.
 type VirtualMachineRunCommandsGetOptions struct {
 	// placeholder for future optional parameters
@@ -5393,7 +6033,9 @@ type VirtualMachineRunCommandsListOptions struct {
 
 // VirtualMachineScaleSet - Describes a Virtual Machine Scale Set.
 type VirtualMachineScaleSet struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// The identity of the virtual machine scale set, if configured.
 	Identity *VirtualMachineScaleSetIdentity `json:"identity,omitempty"`
 
@@ -5410,18 +6052,34 @@ type VirtualMachineScaleSet struct {
 	// The virtual machine scale set sku.
 	SKU *SKU `json:"sku,omitempty"`
 
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
 	// The virtual machine scale set zones. NOTE: Availability zones can only be set when you create the scale set
 	Zones []*string `json:"zones,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSet.
 func (v VirtualMachineScaleSet) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	v.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", v.ID)
 	populate(objectMap, "identity", v.Identity)
+	populate(objectMap, "location", v.Location)
+	populate(objectMap, "name", v.Name)
 	populate(objectMap, "plan", v.Plan)
 	populate(objectMap, "properties", v.Properties)
 	populate(objectMap, "sku", v.SKU)
+	populate(objectMap, "tags", v.Tags)
+	populate(objectMap, "type", v.Type)
 	populate(objectMap, "zones", v.Zones)
 	return json.Marshal(objectMap)
 }
@@ -5468,25 +6126,17 @@ type VirtualMachineScaleSetDataDisk struct {
 
 // VirtualMachineScaleSetExtension - Describes a Virtual Machine Scale Set Extension.
 type VirtualMachineScaleSetExtension struct {
-	SubResourceReadOnly
 	// The name of the extension.
 	Name *string `json:"name,omitempty"`
 
 	// Describes the properties of a Virtual Machine Scale Set Extension.
 	Properties *VirtualMachineScaleSetExtensionProperties `json:"properties,omitempty"`
 
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
 	// READ-ONLY; Resource type
 	Type *string `json:"type,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetExtension.
-func (v VirtualMachineScaleSetExtension) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	v.SubResourceReadOnly.marshalInternal(objectMap)
-	populate(objectMap, "name", v.Name)
-	populate(objectMap, "properties", v.Properties)
-	populate(objectMap, "type", v.Type)
-	return json.Marshal(objectMap)
 }
 
 // VirtualMachineScaleSetExtensionListResult - The List VM scale set extension operation response.
@@ -5570,9 +6220,11 @@ func (v VirtualMachineScaleSetExtensionProperties) MarshalJSON() ([]byte, error)
 
 // VirtualMachineScaleSetExtensionUpdate - Describes a Virtual Machine Scale Set Extension.
 type VirtualMachineScaleSetExtensionUpdate struct {
-	SubResourceReadOnly
 	// Describes the properties of a Virtual Machine Scale Set Extension.
 	Properties *VirtualMachineScaleSetExtensionProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
 
 	// READ-ONLY; The name of the extension.
 	Name *string `json:"name,omitempty" azure:"ro"`
@@ -5584,7 +6236,7 @@ type VirtualMachineScaleSetExtensionUpdate struct {
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetExtensionUpdate.
 func (v VirtualMachineScaleSetExtensionUpdate) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	v.SubResourceReadOnly.marshalInternal(objectMap)
+	populate(objectMap, "id", v.ID)
 	populate(objectMap, "name", v.Name)
 	populate(objectMap, "properties", v.Properties)
 	populate(objectMap, "type", v.Type)
@@ -5624,21 +6276,14 @@ type VirtualMachineScaleSetExtensionsListOptions struct {
 
 // VirtualMachineScaleSetIPConfiguration - Describes a virtual machine scale set network profile's IP configuration.
 type VirtualMachineScaleSetIPConfiguration struct {
-	SubResource
 	// REQUIRED; The IP configuration name.
 	Name *string `json:"name,omitempty"`
 
+	// Resource Id
+	ID *string `json:"id,omitempty"`
+
 	// Describes a virtual machine scale set network profile's IP configuration properties.
 	Properties *VirtualMachineScaleSetIPConfigurationProperties `json:"properties,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetIPConfiguration.
-func (v VirtualMachineScaleSetIPConfiguration) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	v.SubResource.marshalInternal(objectMap)
-	populate(objectMap, "name", v.Name)
-	populate(objectMap, "properties", v.Properties)
-	return json.Marshal(objectMap)
 }
 
 // VirtualMachineScaleSetIPConfigurationProperties - Describes a virtual machine scale set network profile's IP configuration
@@ -5859,21 +6504,14 @@ type VirtualMachineScaleSetManagedDiskParameters struct {
 
 // VirtualMachineScaleSetNetworkConfiguration - Describes a virtual machine scale set network profile's network configurations.
 type VirtualMachineScaleSetNetworkConfiguration struct {
-	SubResource
 	// REQUIRED; The network configuration name.
 	Name *string `json:"name,omitempty"`
 
+	// Resource Id
+	ID *string `json:"id,omitempty"`
+
 	// Describes a virtual machine scale set network profile's IP configuration.
 	Properties *VirtualMachineScaleSetNetworkConfigurationProperties `json:"properties,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetNetworkConfiguration.
-func (v VirtualMachineScaleSetNetworkConfiguration) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	v.SubResource.marshalInternal(objectMap)
-	populate(objectMap, "name", v.Name)
-	populate(objectMap, "properties", v.Properties)
-	return json.Marshal(objectMap)
 }
 
 // VirtualMachineScaleSetNetworkConfigurationDNSSettings - Describes a virtual machines scale sets network configuration's
@@ -6179,17 +6817,20 @@ func (v VirtualMachineScaleSetPublicIPAddressConfigurationProperties) MarshalJSO
 
 // VirtualMachineScaleSetReimageParameters - Describes a Virtual Machine Scale Set VM Reimage Parameters.
 type VirtualMachineScaleSetReimageParameters struct {
-	VirtualMachineScaleSetVMReimageParameters
 	// The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation
 	// being performed on all virtual machines in the virtual machine scale set.
 	InstanceIDs []*string `json:"instanceIds,omitempty"`
+
+	// Specifies whether to reimage temp disk. Default value: false. Note: This temp disk reimage parameter is only supported
+	// for VM/VMSS with Ephemeral OS disk.
+	TempDisk *bool `json:"tempDisk,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetReimageParameters.
 func (v VirtualMachineScaleSetReimageParameters) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	v.VirtualMachineScaleSetVMReimageParameters.marshalInternal(objectMap)
 	populate(objectMap, "instanceIds", v.InstanceIDs)
+	populate(objectMap, "tempDisk", v.TempDisk)
 	return json.Marshal(objectMap)
 }
 
@@ -6273,7 +6914,6 @@ func (v VirtualMachineScaleSetStorageProfile) MarshalJSON() ([]byte, error) {
 
 // VirtualMachineScaleSetUpdate - Describes a Virtual Machine Scale Set.
 type VirtualMachineScaleSetUpdate struct {
-	UpdateResource
 	// The identity of the virtual machine scale set, if configured.
 	Identity *VirtualMachineScaleSetIdentity `json:"identity,omitempty"`
 
@@ -6285,16 +6925,19 @@ type VirtualMachineScaleSetUpdate struct {
 
 	// The virtual machine scale set sku.
 	SKU *SKU `json:"sku,omitempty"`
+
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetUpdate.
 func (v VirtualMachineScaleSetUpdate) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	v.UpdateResource.marshalInternal(objectMap)
 	populate(objectMap, "identity", v.Identity)
 	populate(objectMap, "plan", v.Plan)
 	populate(objectMap, "properties", v.Properties)
 	populate(objectMap, "sku", v.SKU)
+	populate(objectMap, "tags", v.Tags)
 	return json.Marshal(objectMap)
 }
 
@@ -6302,21 +6945,14 @@ func (v VirtualMachineScaleSetUpdate) MarshalJSON() ([]byte, error) {
 // NOTE: The subnet of a scale set may be modified as long as the original subnet and the new subnet are in the same virtual
 // network
 type VirtualMachineScaleSetUpdateIPConfiguration struct {
-	SubResource
+	// Resource Id
+	ID *string `json:"id,omitempty"`
+
 	// The IP configuration name.
 	Name *string `json:"name,omitempty"`
 
 	// Describes a virtual machine scale set network profile's IP configuration properties.
 	Properties *VirtualMachineScaleSetUpdateIPConfigurationProperties `json:"properties,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetUpdateIPConfiguration.
-func (v VirtualMachineScaleSetUpdateIPConfiguration) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	v.SubResource.marshalInternal(objectMap)
-	populate(objectMap, "name", v.Name)
-	populate(objectMap, "properties", v.Properties)
-	return json.Marshal(objectMap)
 }
 
 // VirtualMachineScaleSetUpdateIPConfigurationProperties - Describes a virtual machine scale set network profile's IP configuration
@@ -6364,22 +7000,15 @@ func (v VirtualMachineScaleSetUpdateIPConfigurationProperties) MarshalJSON() ([]
 
 // VirtualMachineScaleSetUpdateNetworkConfiguration - Describes a virtual machine scale set network profile's network configurations.
 type VirtualMachineScaleSetUpdateNetworkConfiguration struct {
-	SubResource
+	// Resource Id
+	ID *string `json:"id,omitempty"`
+
 	// The network configuration name.
 	Name *string `json:"name,omitempty"`
 
 	// Describes a virtual machine scale set updatable network profile's IP configuration.Use this object for updating network
 	// profile's IP Configuration.
 	Properties *VirtualMachineScaleSetUpdateNetworkConfigurationProperties `json:"properties,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetUpdateNetworkConfiguration.
-func (v VirtualMachineScaleSetUpdateNetworkConfiguration) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	v.SubResource.marshalInternal(objectMap)
-	populate(objectMap, "name", v.Name)
-	populate(objectMap, "properties", v.Properties)
-	return json.Marshal(objectMap)
 }
 
 // VirtualMachineScaleSetUpdateNetworkConfigurationProperties - Describes a virtual machine scale set updatable network profile's
@@ -6607,7 +7236,9 @@ type VirtualMachineScaleSetUpdateVMProfile struct {
 
 // VirtualMachineScaleSetVM - Describes a virtual machine scale set virtual machine.
 type VirtualMachineScaleSetVM struct {
-	Resource
+	// REQUIRED; Resource location
+	Location *string `json:"location,omitempty"`
+
 	// Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace
 	// images. Before you can use a marketplace image from an API, you must
 	// enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click
@@ -6618,14 +7249,26 @@ type VirtualMachineScaleSetVM struct {
 	// Describes the properties of a virtual machine scale set virtual machine.
 	Properties *VirtualMachineScaleSetVMProperties `json:"properties,omitempty"`
 
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
 	// READ-ONLY; The virtual machine instance ID.
 	InstanceID *string `json:"instanceId,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name
+	Name *string `json:"name,omitempty" azure:"ro"`
 
 	// READ-ONLY; The virtual machine child extension resources.
 	Resources []*VirtualMachineExtension `json:"resources,omitempty" azure:"ro"`
 
 	// READ-ONLY; The virtual machine SKU.
 	SKU *SKU `json:"sku,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type
+	Type *string `json:"type,omitempty" azure:"ro"`
 
 	// READ-ONLY; The virtual machine zones.
 	Zones []*string `json:"zones,omitempty" azure:"ro"`
@@ -6634,12 +7277,16 @@ type VirtualMachineScaleSetVM struct {
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineScaleSetVM.
 func (v VirtualMachineScaleSetVM) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	v.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", v.ID)
 	populate(objectMap, "instanceId", v.InstanceID)
+	populate(objectMap, "location", v.Location)
+	populate(objectMap, "name", v.Name)
 	populate(objectMap, "plan", v.Plan)
 	populate(objectMap, "properties", v.Properties)
 	populate(objectMap, "resources", v.Resources)
 	populate(objectMap, "sku", v.SKU)
+	populate(objectMap, "tags", v.Tags)
+	populate(objectMap, "type", v.Type)
 	populate(objectMap, "zones", v.Zones)
 	return json.Marshal(objectMap)
 }
@@ -6931,11 +7578,9 @@ type VirtualMachineScaleSetVMProtectionPolicy struct {
 
 // VirtualMachineScaleSetVMReimageParameters - Describes a Virtual Machine Scale Set VM Reimage Parameters.
 type VirtualMachineScaleSetVMReimageParameters struct {
-	VirtualMachineReimageParameters
-}
-
-func (v VirtualMachineScaleSetVMReimageParameters) marshalInternal(objectMap map[string]interface{}) {
-	v.VirtualMachineReimageParameters.marshalInternal(objectMap)
+	// Specifies whether to reimage temp disk. Default value: false. Note: This temp disk reimage parameter is only supported
+	// for VM/VMSS with Ephemeral OS disk.
+	TempDisk *bool `json:"tempDisk,omitempty"`
 }
 
 // VirtualMachineScaleSetVMsBeginDeallocateOptions contains the optional parameters for the VirtualMachineScaleSetVMsClient.BeginDeallocate
@@ -7227,7 +7872,6 @@ type VirtualMachineStatusCodeCount struct {
 
 // VirtualMachineUpdate - Describes a Virtual Machine Update.
 type VirtualMachineUpdate struct {
-	UpdateResource
 	// The identity of the virtual machine, if configured.
 	Identity *VirtualMachineIdentity `json:"identity,omitempty"`
 
@@ -7241,6 +7885,9 @@ type VirtualMachineUpdate struct {
 	// Describes the properties of a Virtual Machine.
 	Properties *VirtualMachineProperties `json:"properties,omitempty"`
 
+	// Resource tags
+	Tags map[string]*string `json:"tags,omitempty"`
+
 	// The virtual machine zones.
 	Zones []*string `json:"zones,omitempty"`
 }
@@ -7248,10 +7895,10 @@ type VirtualMachineUpdate struct {
 // MarshalJSON implements the json.Marshaller interface for type VirtualMachineUpdate.
 func (v VirtualMachineUpdate) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	v.UpdateResource.marshalInternal(objectMap)
 	populate(objectMap, "identity", v.Identity)
 	populate(objectMap, "plan", v.Plan)
 	populate(objectMap, "properties", v.Properties)
+	populate(objectMap, "tags", v.Tags)
 	populate(objectMap, "zones", v.Zones)
 	return json.Marshal(objectMap)
 }

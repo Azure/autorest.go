@@ -393,10 +393,8 @@ func TestLROBeginPost202List(t *testing.T) {
 	}
 	if r := cmp.Diff(pollResp.ProductArray, []*Product{
 		{
-			Resource: Resource{
-				ID:   to.StringPtr("100"),
-				Name: to.StringPtr("foo"),
-			},
+			ID:   to.StringPtr("100"),
+			Name: to.StringPtr("foo"),
 		},
 	}); r != "" {
 		t.Fatal(r)
@@ -474,10 +472,8 @@ func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
@@ -543,10 +539,8 @@ func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
@@ -612,9 +606,7 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
-		Resource: Resource{
-			ID: to.StringPtr("100"),
-		},
+		ID: to.StringPtr("100"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -643,10 +635,8 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -675,10 +665,8 @@ func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -729,10 +717,8 @@ func TestLROBeginPut200Succeeded(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
@@ -760,10 +746,8 @@ func TestLROBeginPut200SucceededNoState(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -793,10 +777,8 @@ func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
@@ -854,10 +836,8 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
@@ -889,10 +869,8 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -921,10 +899,8 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
@@ -956,10 +932,8 @@ func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
@@ -1089,10 +1063,8 @@ func TestLROBeginPutAsyncRetrySucceeded(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
-		Resource: Resource{
-			ID:   to.StringPtr("100"),
-			Name: to.StringPtr("foo"),
-		},
+		ID:   to.StringPtr("100"),
+		Name: to.StringPtr("foo"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
@@ -1124,9 +1096,7 @@ func TestLROBeginPutAsyncSubResource(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.SubProduct, SubProduct{
-		SubResource: SubResource{
-			ID: to.StringPtr("100"),
-		},
+		ID: to.StringPtr("100"),
 		Properties: &SubProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
@@ -1159,9 +1129,7 @@ func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.Product, Product{
-		Resource: Resource{
-			ID: to.StringPtr("100"),
-		},
+		ID: to.StringPtr("100"),
 		Properties: &ProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
@@ -1225,9 +1193,7 @@ func TestLROBeginPutSubResource(t *testing.T) {
 		t.Fatalf("unexpected status code %d", s)
 	}
 	if r := cmp.Diff(pollResp.SubProduct, SubProduct{
-		SubResource: SubResource{
-			ID: to.StringPtr("100"),
-		},
+		ID: to.StringPtr("100"),
 		Properties: &SubProductProperties{
 			ProvisioningState: to.StringPtr("Succeeded"),
 		},
