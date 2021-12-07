@@ -160,33 +160,6 @@ func (e NotFoundErrorBase) Error() string {
 // GetNotFoundErrorBase implements the NotFoundErrorBaseClassification interface for type NotFoundErrorBase.
 func (n *NotFoundErrorBase) GetNotFoundErrorBase() *NotFoundErrorBase { return n }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type NotFoundErrorBase.
-func (n *NotFoundErrorBase) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	n.raw = string(data)
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "reason":
-			err = unpopulate(val, &n.Reason)
-			delete(rawMsg, key)
-		case "someBaseProp":
-			err = unpopulate(val, &n.SomeBaseProp)
-			delete(rawMsg, key)
-		case "whatNotFound":
-			err = unpopulate(val, &n.WhatNotFound)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
 type Pet struct {
 	AniType *string `json:"aniType,omitempty"`
 
@@ -230,33 +203,6 @@ func (e PetActionError) Error() string {
 
 // GetPetActionError implements the PetActionErrorClassification interface for type PetActionError.
 func (p *PetActionError) GetPetActionError() *PetActionError { return p }
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type PetActionError.
-func (p *PetActionError) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	p.raw = string(data)
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "actionResponse":
-			err = unpopulate(val, &p.ActionResponse)
-			delete(rawMsg, key)
-		case "errorMessage":
-			err = unpopulate(val, &p.ErrorMessage)
-			delete(rawMsg, key)
-		case "errorType":
-			err = unpopulate(val, &p.ErrorType)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
 
 // PetDoSomethingOptions contains the optional parameters for the PetClient.DoSomething method.
 type PetDoSomethingOptions struct {

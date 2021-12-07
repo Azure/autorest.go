@@ -61,7 +61,7 @@ func (a Activity) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "dependsOn", a.DependsOn)
 	populate(objectMap, "description", a.Description)
 	populate(objectMap, "name", a.Name)
-	objectMap["type"] = "Activity"
+	objectMap["type"] = a.Type
 	populate(objectMap, "userProperties", a.UserProperties)
 	if a.AdditionalProperties != nil {
 		for key, val := range a.AdditionalProperties {
@@ -13492,7 +13492,7 @@ func (c CopySink) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "maxConcurrentConnections", c.MaxConcurrentConnections)
 	populate(objectMap, "sinkRetryCount", c.SinkRetryCount)
 	populate(objectMap, "sinkRetryWait", c.SinkRetryWait)
-	objectMap["type"] = "CopySink"
+	objectMap["type"] = c.Type
 	populate(objectMap, "writeBatchSize", c.WriteBatchSize)
 	populate(objectMap, "writeBatchTimeout", c.WriteBatchTimeout)
 	if c.AdditionalProperties != nil {
@@ -13596,7 +13596,7 @@ func (c CopySource) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "maxConcurrentConnections", c.MaxConcurrentConnections)
 	populate(objectMap, "sourceRetryCount", c.SourceRetryCount)
 	populate(objectMap, "sourceRetryWait", c.SourceRetryWait)
-	objectMap["type"] = "CopySource"
+	objectMap["type"] = c.Type
 	if c.AdditionalProperties != nil {
 		for key, val := range c.AdditionalProperties {
 			objectMap[key] = val
@@ -13668,7 +13668,7 @@ func (c *CopyTranslator) GetCopyTranslator() *CopyTranslator { return c }
 // MarshalJSON implements the json.Marshaller interface for type CopyTranslator.
 func (c CopyTranslator) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	objectMap["type"] = "CopyTranslator"
+	objectMap["type"] = c.Type
 	if c.AdditionalProperties != nil {
 		for key, val := range c.AdditionalProperties {
 			objectMap[key] = val
@@ -16859,7 +16859,7 @@ func (d Dataset) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "parameters", d.Parameters)
 	populate(objectMap, "schema", d.Schema)
 	populate(objectMap, "structure", d.Structure)
-	objectMap["type"] = "Dataset"
+	objectMap["type"] = d.Type
 	if d.AdditionalProperties != nil {
 		for key, val := range d.AdditionalProperties {
 			objectMap[key] = val
@@ -17020,7 +17020,7 @@ func (d *DatasetCompression) GetDatasetCompression() *DatasetCompression { retur
 // MarshalJSON implements the json.Marshaller interface for type DatasetCompression.
 func (d DatasetCompression) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	objectMap["type"] = "DatasetCompression"
+	objectMap["type"] = d.Type
 	if d.AdditionalProperties != nil {
 		for key, val := range d.AdditionalProperties {
 			objectMap[key] = val
@@ -17309,7 +17309,7 @@ func (d DatasetLocation) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "fileName", d.FileName)
 	populate(objectMap, "folderPath", d.FolderPath)
-	objectMap["type"] = "DatasetLocation"
+	objectMap["type"] = d.Type
 	if d.AdditionalProperties != nil {
 		for key, val := range d.AdditionalProperties {
 			objectMap[key] = val
@@ -17526,7 +17526,7 @@ func (d DatasetStorageFormat) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "deserializer", d.Deserializer)
 	populate(objectMap, "serializer", d.Serializer)
-	objectMap["type"] = "DatasetStorageFormat"
+	objectMap["type"] = d.Type
 	if d.AdditionalProperties != nil {
 		for key, val := range d.AdditionalProperties {
 			objectMap[key] = val
@@ -23096,7 +23096,7 @@ func (f *FormatReadSettings) GetFormatReadSettings() *FormatReadSettings { retur
 // MarshalJSON implements the json.Marshaller interface for type FormatReadSettings.
 func (f FormatReadSettings) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	objectMap["type"] = "FormatReadSettings"
+	objectMap["type"] = f.Type
 	if f.AdditionalProperties != nil {
 		for key, val := range f.AdditionalProperties {
 			objectMap[key] = val
@@ -23159,7 +23159,7 @@ func (f *FormatWriteSettings) GetFormatWriteSettings() *FormatWriteSettings { re
 // MarshalJSON implements the json.Marshaller interface for type FormatWriteSettings.
 func (f FormatWriteSettings) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	objectMap["type"] = "FormatWriteSettings"
+	objectMap["type"] = f.Type
 	if f.AdditionalProperties != nil {
 		for key, val := range f.AdditionalProperties {
 			objectMap[key] = val
@@ -30135,7 +30135,7 @@ func (i *IntegrationRuntime) GetIntegrationRuntime() *IntegrationRuntime { retur
 func (i IntegrationRuntime) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "description", i.Description)
-	objectMap["type"] = "IntegrationRuntime"
+	objectMap["type"] = i.Type
 	if i.AdditionalProperties != nil {
 		for key, val := range i.AdditionalProperties {
 			objectMap[key] = val
@@ -32080,7 +32080,7 @@ func (l LinkedService) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "connectVia", l.ConnectVia)
 	populate(objectMap, "description", l.Description)
 	populate(objectMap, "parameters", l.Parameters)
-	objectMap["type"] = "LinkedService"
+	objectMap["type"] = l.Type
 	if l.AdditionalProperties != nil {
 		for key, val := range l.AdditionalProperties {
 			objectMap[key] = val
@@ -53994,7 +53994,7 @@ func (s *StoreReadSettings) GetStoreReadSettings() *StoreReadSettings { return s
 func (s StoreReadSettings) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "maxConcurrentConnections", s.MaxConcurrentConnections)
-	objectMap["type"] = "StoreReadSettings"
+	objectMap["type"] = s.Type
 	if s.AdditionalProperties != nil {
 		for key, val := range s.AdditionalProperties {
 			objectMap[key] = val
@@ -54069,7 +54069,7 @@ func (s StoreWriteSettings) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "copyBehavior", s.CopyBehavior)
 	populate(objectMap, "maxConcurrentConnections", s.MaxConcurrentConnections)
-	objectMap["type"] = "StoreWriteSettings"
+	objectMap["type"] = s.Type
 	if s.AdditionalProperties != nil {
 		for key, val := range s.AdditionalProperties {
 			objectMap[key] = val
@@ -55920,7 +55920,7 @@ func (t Trigger) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "annotations", t.Annotations)
 	populate(objectMap, "description", t.Description)
 	populate(objectMap, "runtimeState", t.RuntimeState)
-	objectMap["type"] = "Trigger"
+	objectMap["type"] = t.Type
 	if t.AdditionalProperties != nil {
 		for key, val := range t.AdditionalProperties {
 			objectMap[key] = val

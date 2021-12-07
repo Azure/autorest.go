@@ -152,11 +152,11 @@ function mergeMarshallers(lhs: Marshallers, rhs: Marshallers): Marshallers {
   }
 }
 
-// determines the marshallers need for the specified object.
-// it examines the object and its immediate parents.
+// determines the marshallers needed for the specified object.
+// it examines the object and all its parents.
 function determineMarshallers(obj: ObjectSchema): Marshallers {
   let result = determineMarshallersForObj(obj);
-  for (const parent of values(obj.parents?.immediate)) {
+  for (const parent of values(obj.parents?.all)) {
     if (isObjectSchema(parent)) {
       result = mergeMarshallers(result, determineMarshallersForObj(parent))
     }

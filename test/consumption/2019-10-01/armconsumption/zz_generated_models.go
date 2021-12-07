@@ -417,46 +417,11 @@ func (c ChargeSummary) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "etag", c.Etag)
 	populate(objectMap, "id", c.ID)
-	objectMap["kind"] = "ChargeSummary"
+	objectMap["kind"] = c.Kind
 	populate(objectMap, "name", c.Name)
 	populate(objectMap, "tags", c.Tags)
 	populate(objectMap, "type", c.Type)
 	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type ChargeSummary.
-func (c *ChargeSummary) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "etag":
-			err = unpopulate(val, &c.Etag)
-			delete(rawMsg, key)
-		case "id":
-			err = unpopulate(val, &c.ID)
-			delete(rawMsg, key)
-		case "kind":
-			err = unpopulate(val, &c.Kind)
-			delete(rawMsg, key)
-		case "name":
-			err = unpopulate(val, &c.Name)
-			delete(rawMsg, key)
-		case "tags":
-			err = unpopulate(val, &c.Tags)
-			delete(rawMsg, key)
-		case "type":
-			err = unpopulate(val, &c.Type)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
 }
 
 // ChargesListOptions contains the optional parameters for the ChargesClient.List method.
@@ -1336,6 +1301,17 @@ type LegacyReservationTransaction struct {
 
 	// READ-ONLY; Resource type.
 	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LegacyReservationTransaction.
+func (l LegacyReservationTransaction) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "id", l.ID)
+	populate(objectMap, "name", l.Name)
+	populate(objectMap, "properties", l.Properties)
+	populate(objectMap, "tags", l.Tags)
+	populate(objectMap, "type", l.Type)
+	return json.Marshal(objectMap)
 }
 
 // LegacyReservationTransactionProperties - The properties of a legacy reservation transaction.
@@ -4156,54 +4132,13 @@ func (r ReservationRecommendation) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "etag", r.Etag)
 	populate(objectMap, "id", r.ID)
-	objectMap["kind"] = "ReservationRecommendation"
+	objectMap["kind"] = r.Kind
 	populate(objectMap, "location", r.Location)
 	populate(objectMap, "name", r.Name)
 	populate(objectMap, "sku", r.SKU)
 	populate(objectMap, "tags", r.Tags)
 	populate(objectMap, "type", r.Type)
 	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type ReservationRecommendation.
-func (r *ReservationRecommendation) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "etag":
-			err = unpopulate(val, &r.Etag)
-			delete(rawMsg, key)
-		case "id":
-			err = unpopulate(val, &r.ID)
-			delete(rawMsg, key)
-		case "kind":
-			err = unpopulate(val, &r.Kind)
-			delete(rawMsg, key)
-		case "location":
-			err = unpopulate(val, &r.Location)
-			delete(rawMsg, key)
-		case "name":
-			err = unpopulate(val, &r.Name)
-			delete(rawMsg, key)
-		case "sku":
-			err = unpopulate(val, &r.SKU)
-			delete(rawMsg, key)
-		case "tags":
-			err = unpopulate(val, &r.Tags)
-			delete(rawMsg, key)
-		case "type":
-			err = unpopulate(val, &r.Type)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
 }
 
 // ReservationRecommendationDetailsCalculatedSavingsProperties - Details of estimated savings.
@@ -4944,46 +4879,11 @@ func (u UsageDetail) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "etag", u.Etag)
 	populate(objectMap, "id", u.ID)
-	objectMap["kind"] = "UsageDetail"
+	objectMap["kind"] = u.Kind
 	populate(objectMap, "name", u.Name)
 	populate(objectMap, "tags", u.Tags)
 	populate(objectMap, "type", u.Type)
 	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type UsageDetail.
-func (u *UsageDetail) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "etag":
-			err = unpopulate(val, &u.Etag)
-			delete(rawMsg, key)
-		case "id":
-			err = unpopulate(val, &u.ID)
-			delete(rawMsg, key)
-		case "kind":
-			err = unpopulate(val, &u.Kind)
-			delete(rawMsg, key)
-		case "name":
-			err = unpopulate(val, &u.Name)
-			delete(rawMsg, key)
-		case "tags":
-			err = unpopulate(val, &u.Tags)
-			delete(rawMsg, key)
-		case "type":
-			err = unpopulate(val, &u.Type)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
 }
 
 // UsageDetailsListOptions contains the optional parameters for the UsageDetailsClient.List method.

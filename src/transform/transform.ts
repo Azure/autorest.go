@@ -72,18 +72,6 @@ async function process(session: Session<CodeModel>) {
         // fix up discriminator value to use the enum type if available
         const discriminatorEnums = getDiscriminatorEnums(rootDiscriminator);
         // for each child type in the hierarchy, fix up the discriminator value
-        if (obj.discriminatorValue) {
-          let discValue = getEnumForDiscriminatorValue(obj.discriminatorValue!, discriminatorEnums);
-          if (!discValue) {
-            // this happens when there are intermediate types in the hierarchy that aren't discriminators.
-            // e.g. BaseType -> GenericProps -> DerivedType
-            // here, GenericProps is just a collection of standard properties common to various objects.
-            // M4 gives it a discriminatorValue of "GenericProps" that won't exist in the enum defined
-            // in BaseType.  unclear if this is desirable, but for now we just embed that value directly.
-            discValue = quoteString(obj.discriminatorValue!);
-          }
-          obj.discriminatorValue = discValue;
-        }
         for (const child of values(rootDiscriminator.children?.all)) {
           const asObj = <ObjectSchema>child;
           let discValue = getEnumForDiscriminatorValue(asObj.discriminatorValue!, discriminatorEnums);
@@ -553,6 +541,7 @@ function processOperationResponses(session: Session<CodeModel>) {
               schemaError.language.go!.flattenedErr = prop.language.go!.name;
             }
           }
+          // propagate error flag to all child types
           for (const child of values(schemaError.children?.all)) {
             if (isObjectSchema(child)) {
               child.language.go!.errorType = true;
