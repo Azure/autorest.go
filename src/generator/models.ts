@@ -5,8 +5,8 @@
 
 import { Session } from '@autorest/extension-base';
 import { capitalize, comment } from '@azure-tools/codegen';
-import { ByteArraySchema, CodeModel, ComplexSchema, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
-import { length, values } from '@azure-tools/linq';
+import { ByteArraySchema, CodeModel, DictionarySchema, GroupProperty, ObjectSchema, Language, SchemaType, Parameter, Property } from '@autorest/codemodel';
+import { values } from '@azure-tools/linq';
 import { isArraySchema, isDictionarySchema, isObjectSchema, hasAdditionalProperties, hasPolymorphicField, commentLength } from '../common/helpers';
 import { contentPreamble, sortAscending } from './helpers';
 import { ImportManager } from './imports';
@@ -92,14 +92,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
 function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): StructDef[] {
   const structTypes = new Array<StructDef>();
   for (const obj of values(objects)) {
-    const structDef = generateStruct(imports, obj.language.go!, obj.properties);
-    // now add the parent type
-    for (const parent of values(obj.parents?.immediate)) {
-      if (isObjectSchema(parent)) {
-        structDef.ComposedOf.push(parent.language.go!.name);
-      }
-    }
-    structDef.ComposedOf.sort();
+    const structDef = generateStruct(imports, obj.language.go!, aggregateProperties(obj));
     if (obj.language.go!.errorType) {
       // add Error() method
       let text = `func (e ${obj.language.go!.name}) Error() string {\n`;
@@ -121,16 +114,14 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
       continue;
     }
     if (obj.discriminator) {
-      // only need to generate interface method and internal marshaller for discriminators (Fish, Salmon, Shark)
       generateDiscriminatorMarkerMethod(obj, structDef);
     }
+    for (const parent of values(obj.parents?.all)) {
+      if (isObjectSchema(parent) && parent.discriminator) {
+        generateDiscriminatorMarkerMethod(parent, structDef);
+      }
+    }
     const needs = determineMarshallers(obj);
-    if (needs.intM) {
-      generateInternalMarshaller(obj, structDef, imports);
-    }
-    if (needs.intU) {
-      generateInternalUnmarshaller(obj, structDef, imports);
-    }
     if (needs.M) {
       imports.add('reflect');
       imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore');
@@ -150,29 +141,27 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
 }
 
 interface Marshallers {
-  intM: boolean
-  intU: boolean
   M: boolean
   U: boolean
 }
 
 function mergeMarshallers(lhs: Marshallers, rhs: Marshallers): Marshallers {
   return {
-    intM: lhs.intM || rhs.intM,
-    intU: lhs.intU || rhs.intU,
     M: lhs.M || rhs.M,
     U: lhs.U || rhs.U
   }
 }
 
-// determines the marshallers need for the specified object.
-// it examines the complete inheritance graph to make the determination.
+// determines the marshallers needed for the specified object.
+// it examines the object and all its parents.
 function determineMarshallers(obj: ObjectSchema): Marshallers {
-  // things that require internal marshallers and/or unmarshallers:
-  //   inheritance
-  //   discriminated types
-
-  return recursiveDetermineMarshallers(obj, new Array<string>());
+  let result = determineMarshallersForObj(obj);
+  for (const parent of values(obj.parents?.all)) {
+    if (isObjectSchema(parent)) {
+      result = mergeMarshallers(result, determineMarshallersForObj(parent))
+    }
+  }
+  return result;
 }
 
 // determines the marshallers needed for this specific object.
@@ -203,65 +192,9 @@ function determineMarshallersForObj(obj: ObjectSchema): Marshallers {
     needsM = true;
   }
   return {
-    intM: false,
-    intU: false,
     M: needsM,
     U: needsU,
   }
-}
-
-// walks the inheritance graph of obj to determine marshallers.
-// visited tracks the name of the nodes that have been visited.
-function recursiveDetermineMarshallers(obj: ObjectSchema, visited: Array<string>): Marshallers {
-  // first check ourselves
-  let result = determineMarshallersForObj(obj);
-  visited.push(obj.language.go!.name);
-
-  const visit = function (immediate: ComplexSchema[] | undefined) {
-    for (const c of values(immediate)) {
-      if (!isObjectSchema(c)) {
-        continue;
-      }
-      if (visited.includes(c.language.go!.name)) {
-        // prevent infinite recursion
-        continue;
-      }
-      // if we already know we need all kinds don't bother to keep walking the hierarchy
-      if (!result.M || !result.U || !result.intM || !result.intU) {
-        const other = recursiveDetermineMarshallers(c, visited);
-        result = mergeMarshallers(result, other);
-      }
-    }
-  }
-
-  // now check children/parents
-  visit(obj.parents?.immediate);
-  visit(obj.children?.immediate);
-
-  // finally, understand our place in the hierarchy
-  if (obj.children && obj.parents) {
-    // parent needs both
-    result.intM = result.M;
-    result.intU = result.U;
-  } else if (obj.children) {
-    // root also needs both
-    if (!result.intM) {
-      // there's a corner-case here where result.M will be false for
-      // the root discriminator, however we already know we need an
-      // internal marshaller.  don't stomp over result.intM when true.
-      result.intM = result.M;
-    }
-    result.intU = result.U;
-  } else if (obj.parents) {
-    // leaf requires no internal marshallers
-    result.intM = result.intU = false;
-  }
-  // the root type doesn't get a marshaller as callers don't instantiate instances of it
-  if (obj.language.go!.rootDiscriminator) {
-    result.M = false;
-  }
-
-  return result;
 }
 
 function needsXMLDictionaryUnmarshalling(obj: ObjectSchema): boolean {
@@ -290,57 +223,53 @@ function generateParamGroupStruct(imports: ImportManager, lang: Language, params
   return st;
 }
 
-// generates discriminator marker method, internal marshaller and internal unmarshaller
+// aggregate the properties from the provided type and its parent types
+function aggregateProperties(obj: ObjectSchema): Array<Property> {
+  const allProps = new Array<Property>();
+  for (const prop of values(obj.properties)) {
+    allProps.push(prop);
+  }
+  for (const parent of values(obj.parents?.all)) {
+    if (isObjectSchema(parent)) {
+      for (const parentProp of values(parent.properties)) {
+        // ensure that the parent doesn't contain any properties with the same name but different type
+        const exists = values(allProps).where(p => { return p.language.go!.name === parentProp.language.go!.name}).first();
+        if (exists) {
+          if (exists.schema.language.go!.name !== parentProp.schema.language.go!.name) {
+            const msg = `type ${obj.language.go!.name} contains duplicate property ${exists.language.go!.name} with mismatched types`;
+            throw new Error(msg);
+          }
+        }
+        allProps.push(parentProp);
+      }
+    }
+  }
+  return allProps;
+}
+
+// generates discriminator marker method
 function generateDiscriminatorMarkerMethod(obj: ObjectSchema, structDef: StructDef) {
   const typeName = obj.language.go!.name;
   const receiver = structDef.receiverName();
   const interfaceMethod = `Get${typeName}`;
-  const method = `func (${receiver} *${typeName}) ${interfaceMethod}() *${typeName} { return ${receiver} }\n\n`;
-  structDef.Methods.push({ name: interfaceMethod, desc: `${interfaceMethod} implements the ${obj.language.go!.discriminatorInterface} interface for type ${typeName}.`, text: method });
-}
-
-function generateInternalMarshaller(obj: ObjectSchema, structDef: StructDef, imports: ImportManager) {
-  if (obj.language.go!.errorType || obj.language.go!.inheritedErrorType) {
-    // errors don't need custom marshallers
-    return;
-  }
-  const typeName = obj.language.go!.name;
-  const receiver = structDef.receiverName();
-  // marshalInternal doesn't have any params in the non-discriminated type inheritence case
-  let paramType = '';
-  let paramName = '';
-  if (obj.discriminator) {
-    paramType = ' ' + obj.discriminator.property.schema.language.go!.name;
-    paramName = ', discValue';
-  }
-  let marshalInternal = `func (${receiver} ${typeName}) marshalInternal(objectMap map[string]interface{}${paramName}${paramType}) {\n`;
-  for (const parent of values(obj.parents?.immediate)) {
-    let parentParam = '';
-    if (isObjectSchema(parent)) {
-      // if we have a discriminator value and the parent is a discriminator then we
-      // know we need to call the marshalInternal() method with the discriminator value
-      if (obj.discriminatorValue && parent.discriminator) {
-        parentParam = paramName;
-      }
-      marshalInternal += `\t${receiver}.${parent.language.go!.name}.marshalInternal(objectMap${parentParam})\n`;
+  let method = `func (${receiver} *${structDef.Language.name}) ${interfaceMethod}() *${typeName} {`;
+  if (obj.language.go!.name === structDef.Language.name) {
+    // the marker method is on the discriminator itself, so just return the receiver
+    method += ` return ${receiver} }\n\n`;
+  } else {
+    // the marker method is on a child type, so return an instance of the parent
+    // type by copying the parent values into a new instance.
+    method += `\n\treturn &${obj.language.go!.name}{\n`;
+    for (const prop of values(aggregateProperties(obj))) {
+      method += `\t\t${prop.language.go!.name}: ${structDef.receiverName()}.${prop.language.go!.name},\n`;
     }
+    method += '\t}\n}\n\n';
   }
-  marshalInternal += generateJSONMarshallerBody(obj, structDef, imports);
-  marshalInternal += '}\n\n';
-  structDef.Methods.push({ name: 'marshalInternal', desc: '', text: marshalInternal });
-}
-
-function generateInternalUnmarshaller(obj: ObjectSchema, structDef: StructDef, imports: ImportManager) {
-  const typeName = obj.language.go!.name;
-  const receiver = structDef.receiverName();
-  let unmarshalInternall = `func (${receiver} *${typeName}) unmarshalInternal(rawMsg map[string]json.RawMessage) error {\n`;
-  unmarshalInternall += generateJSONUnmarshallerBody(obj, structDef, imports);
-  unmarshalInternall += '}\n\n';
-  structDef.Methods.push({ name: 'unmarshalInternal', desc: '', text: unmarshalInternall });
+  structDef.Methods.push({ name: interfaceMethod, desc: `${interfaceMethod} implements the ${obj.language.go!.discriminatorInterface} interface for type ${structDef.Language.name}.`, text: method });
 }
 
 function generateJSONMarshaller(imports: ImportManager, obj: ObjectSchema, structDef: StructDef) {
-  if (obj.language.go!.errorType || obj.language.go!.inheritedErrorType) {
+  if (obj.language.go!.errorType) {
     // errors don't need custom marshallers
     return;
   } else if (!obj.discriminatorValue && (!structDef.Properties || structDef.Properties.length === 0)) {
@@ -353,25 +282,7 @@ function generateJSONMarshaller(imports: ImportManager, obj: ObjectSchema, struc
   const receiver = structDef.receiverName();
   let marshaller = `func (${receiver} ${typeName}) MarshalJSON() ([]byte, error) {\n`;
   marshaller += '\tobjectMap := make(map[string]interface{})\n';
-  if (obj.discriminator) {
-    marshaller += `\t${receiver}.marshalInternal(objectMap, ${obj.discriminatorValue})\n`;
-  } else if (obj.children?.immediate && isObjectSchema(obj.children.immediate[0])) {
-    // non-discriminated type inheritence case (no param)
-    marshaller += `\t${receiver}.marshalInternal(objectMap)\n`;
-  } else {
-    for (const parent of values(obj.parents?.immediate)) {
-      if (isObjectSchema(parent)) {
-        let internalParamName = '';
-        // if we have a discriminator value and the parent is a discriminator then we
-        // know we need to call the marshalInternal() method with the discriminator value
-        if (obj.discriminatorValue && parent.discriminator) {
-          internalParamName = ', ' + obj.discriminatorValue;
-        }
-        marshaller += `\t${receiver}.${parent.language.go!.name}.marshalInternal(objectMap${internalParamName})\n`;
-      }
-    }
-    marshaller += generateJSONMarshallerBody(obj, structDef, imports);
-  }
+  marshaller += generateJSONMarshallerBody(obj, structDef, imports);
   marshaller += '\treturn json.Marshal(objectMap)\n';
   marshaller += '}\n\n';
   structDef.Methods.push({ name: 'MarshalJSON', desc: `MarshalJSON implements the json.Marshaller interface for type ${typeName}.`, text: marshaller });
@@ -380,13 +291,20 @@ function generateJSONMarshaller(imports: ImportManager, obj: ObjectSchema, struc
 function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef, imports: ImportManager): string {
   const receiver = structDef.receiverName();
   let marshaller = '';
+  let addlProps: DictionarySchema | undefined;
   for (const prop of values(structDef.Properties)) {
     if (prop.language.go!.isAdditionalProperties) {
+      addlProps = <DictionarySchema>prop.schema;
       continue;
     }
     if (prop.isDiscriminator) {
-      marshaller += `\t${receiver}.${prop.language.go!.name} = &discValue\n`;
-      marshaller += `\tobjectMap["${prop.serializedName}"] = ${receiver}.${prop.language.go!.name}\n`;
+      if (obj.discriminatorValue) {
+        marshaller += `\tobjectMap["${prop.serializedName}"] = ${obj.discriminatorValue}\n`;
+      } else {
+        // if there's no discriminator value (e.g. Fish in test server), use the field's value.
+        // this will enable support for custom types that aren't (yet) described in the swagger.
+        marshaller += `\tobjectMap["${prop.serializedName}"] = ${receiver}.${prop.language.go!.name}\n`;
+      }
     } else if (prop.schema.type === SchemaType.ByteArray) {
       let base64Format = 'Std';
       if ((<ByteArraySchema>prop.schema).format === 'base64url') {
@@ -413,7 +331,6 @@ function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef, imp
       marshaller += `\t${populate}(objectMap, "${prop.serializedName}", ${addr}${receiver}.${prop.language.go!.name})\n`;
     }
   }
-  const addlProps = hasAdditionalProperties(obj);
   if (addlProps) {
     marshaller += `\tif ${receiver}.AdditionalProperties != nil {\n`;
     marshaller += `\t\tfor key, val := range ${receiver}.AdditionalProperties {\n`;
@@ -442,23 +359,16 @@ function generateJSONUnmarshaller(imports: ImportManager, obj: ObjectSchema, str
   unmarshaller += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';
   unmarshaller += '\t\treturn err\n';
   unmarshaller += '\t}\n';
-  // the raw field won't exist on parents of the errorType
-  if (obj.language.go!.errorType || obj.language.go!.inheritedErrorType === 'child') {
+  if (obj.language.go!.errorType) {
     unmarshaller += `\t${receiver}.raw = string(data)\n`;
   }
-  // checking obj.discriminator isn't enough, also check that there are actual child types
-  if ((obj.discriminator && length(obj.discriminator.all) > 0) || obj.children?.immediate && isObjectSchema(obj.children.immediate[0])) {
-    unmarshaller += `\treturn ${receiver}.unmarshalInternal(rawMsg)\n`;
-  } else {
-    unmarshaller += generateJSONUnmarshallerBody(obj, structDef, imports);
-  }
+  unmarshaller += generateJSONUnmarshallerBody(structDef, imports);
   unmarshaller += '}\n\n';
   structDef.Methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });
 }
 
-function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, imports: ImportManager): string {
+function generateJSONUnmarshallerBody(structDef: StructDef, imports: ImportManager): string {
   const receiver = structDef.receiverName();
-  const addlProps = hasAdditionalProperties(obj);
   const emitAddlProps = function (tab: string, addlProps: DictionarySchema): string {
     let addlPropsText = `${tab}\t\tif ${receiver}.AdditionalProperties == nil {\n`;
     let ptr = '', ref = '';
@@ -482,82 +392,52 @@ function generateJSONUnmarshallerBody(obj: ObjectSchema, structDef: StructDef, i
     addlPropsText += `${tab}\t\tdelete(rawMsg, key)\n`;
     return addlPropsText;
   }
-  let hasParentType = false;
-  for (const parent of values(obj.parents?.immediate)) {
-    if (isObjectSchema(parent)) {
-      hasParentType = true;
-      break;
-    }
-  }
   let unmarshalBody = '';
-  // handle the case where the type in the hierarchy doesn't contain any fields.
-  // e.g. parent->intermediate->child and intermediate has no fields
-  if (addlProps || (structDef.Properties && structDef.Properties.length > 0)) {
-    unmarshalBody = '\tfor key, val := range rawMsg {\n';
-    unmarshalBody += '\t\tvar err error\n';
-    unmarshalBody += '\t\tswitch key {\n';
-    // unmarshal content for the current type
-    for (const prop of values(structDef.Properties)) {
-      if (prop.language.go!.isAdditionalProperties) {
-        continue;
-      }
-      unmarshalBody += `\t\tcase "${prop.serializedName}":\n`;
-      if (prop.schema.language.go!.discriminatorInterface) {
-        unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.language.go!.discriminatorInterface}(val)\n`;
-      } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
-        unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Array(val)\n`;
-      } else if (isDictionarySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
-        unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Map(val)\n`;
-      } else if (prop.schema.language.go!.internalTimeType) {
-        unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(prop.schema.language.go!.internalTimeType)}(val, &${receiver}.${prop.language.go!.name})\n`;
-      } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.internalTimeType) {
-        unmarshalBody += `\t\t\tvar aux []*${prop.schema.elementType.language.go!.internalTimeType}\n`;
-        unmarshalBody += '\t\t\terr = unpopulate(val, &aux)\n';
-        unmarshalBody += '\t\t\tfor _, au := range aux {\n';
-        unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name} = append(${receiver}.${prop.language.go!.name}, (*time.Time)(au))\n`;
-        unmarshalBody += '\t\t\t}\n';
-      } else if (prop.schema.type === SchemaType.ByteArray) {
-        let base64Format = 'Std';
-        if ((<ByteArraySchema>prop.schema).format === 'base64url') {
-          base64Format = 'URL';
-        }
-        imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-        unmarshalBody += `\t\t\terr = runtime.DecodeByteArray(string(val), &${receiver}.${prop.language.go!.name}, runtime.Base64${base64Format}Format)\n`;
-      } else {
-        unmarshalBody += `\t\t\t\terr = unpopulate(val, &${receiver}.${prop.language.go!.name})\n`;
-      }
-      unmarshalBody += '\t\t\t\tdelete(rawMsg, key)\n';
+  unmarshalBody = '\tfor key, val := range rawMsg {\n';
+  unmarshalBody += '\t\tvar err error\n';
+  unmarshalBody += '\t\tswitch key {\n';
+  let addlProps: DictionarySchema | undefined;
+  for (const prop of values(structDef.Properties)) {
+    if (prop.language.go!.isAdditionalProperties) {
+      addlProps = <DictionarySchema>prop.schema;
+      continue;
     }
-    // if there's no parent type it's safe to unmarshal additional properties right here
-    if (addlProps && !hasParentType) {
-      unmarshalBody += '\t\tdefault:\n';
-      unmarshalBody += emitAddlProps('\t', addlProps);
+    unmarshalBody += `\t\tcase "${prop.serializedName}":\n`;
+    if (prop.schema.language.go!.discriminatorInterface) {
+      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.language.go!.discriminatorInterface}(val)\n`;
+    } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
+      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Array(val)\n`;
+    } else if (isDictionarySchema(prop.schema) && prop.schema.elementType.language.go!.discriminatorInterface) {
+      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name}, err = unmarshal${prop.schema.elementType.language.go!.discriminatorInterface}Map(val)\n`;
+    } else if (prop.schema.language.go!.internalTimeType) {
+      unmarshalBody += `\t\t\t\terr = unpopulate${capitalize(prop.schema.language.go!.internalTimeType)}(val, &${receiver}.${prop.language.go!.name})\n`;
+    } else if (isArraySchema(prop.schema) && prop.schema.elementType.language.go!.internalTimeType) {
+      unmarshalBody += `\t\t\tvar aux []*${prop.schema.elementType.language.go!.internalTimeType}\n`;
+      unmarshalBody += '\t\t\terr = unpopulate(val, &aux)\n';
+      unmarshalBody += '\t\t\tfor _, au := range aux {\n';
+      unmarshalBody += `\t\t\t\t${receiver}.${prop.language.go!.name} = append(${receiver}.${prop.language.go!.name}, (*time.Time)(au))\n`;
+      unmarshalBody += '\t\t\t}\n';
+    } else if (prop.schema.type === SchemaType.ByteArray) {
+      let base64Format = 'Std';
+      if ((<ByteArraySchema>prop.schema).format === 'base64url') {
+        base64Format = 'URL';
+      }
+      imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
+      unmarshalBody += `\t\t\terr = runtime.DecodeByteArray(string(val), &${receiver}.${prop.language.go!.name}, runtime.Base64${base64Format}Format)\n`;
+    } else {
+      unmarshalBody += `\t\t\t\terr = unpopulate(val, &${receiver}.${prop.language.go!.name})\n`;
     }
-    unmarshalBody += '\t\t}\n';
-    unmarshalBody += '\t\tif err != nil {\n';
-    unmarshalBody += '\t\t\treturn err\n';
-    unmarshalBody += '\t\t}\n';
-    unmarshalBody += '\t}\n'; // end for key, val := range rawMsg
+    unmarshalBody += '\t\t\t\tdelete(rawMsg, key)\n';
   }
-  if (hasParentType) {
-    for (const parent of values(obj.parents?.immediate)) {
-      if (isObjectSchema(parent)) {
-        unmarshalBody += `\tif err := ${receiver}.${parent.language.go!.name}.unmarshalInternal(rawMsg); err != nil {\n`;
-        unmarshalBody += '\t\treturn err\n';
-        unmarshalBody += '\t}\n';
-      }
-    }
-    if (addlProps) {
-      // now unmarshal additional properties
-      unmarshalBody += '\tfor key, val := range rawMsg {\n';
-      unmarshalBody += '\tvar err error\n';
-      unmarshalBody += emitAddlProps('', addlProps);
-      unmarshalBody += '\t\tif err != nil {\n';
-      unmarshalBody += '\t\t\treturn err\n';
-      unmarshalBody += '\t\t}\n';
-      unmarshalBody += '\t}\n'; // end for key, val := range rawMsg
-    }
+  if (addlProps) {
+    unmarshalBody += '\t\tdefault:\n';
+    unmarshalBody += emitAddlProps('\t', addlProps);
   }
+  unmarshalBody += '\t\t}\n';
+  unmarshalBody += '\t\tif err != nil {\n';
+  unmarshalBody += '\t\t\treturn err\n';
+  unmarshalBody += '\t\t}\n';
+  unmarshalBody += '\t}\n'; // end for key, val := range rawMsg
   unmarshalBody += '\treturn nil\n';
   return unmarshalBody;
 }

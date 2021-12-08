@@ -52,11 +52,9 @@ func TestGet200Model201ModelDefaultError201Valid(t *testing.T) {
 		t.Fatalf("unexpected response type %T", result)
 	}
 	if r := cmp.Diff(r, B{
-		MyException: MyException{
-			StatusCode: to.StringPtr("201"),
-		},
+		StatusCode:     to.StringPtr("201"),
 		TextStatusCode: to.StringPtr("Created"),
-	}, cmpopts.IgnoreUnexported(MyException{})); r != "" {
+	}, cmpopts.IgnoreUnexported(B{})); r != "" {
 		t.Fatal(r)
 	}
 }

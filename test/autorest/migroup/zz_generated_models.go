@@ -9,9 +9,11 @@
 package migroup
 
 type Cat struct {
-	Feline
-	Pet
-	LikesMilk *bool `json:"likesMilk,omitempty"`
+	// REQUIRED
+	Name      *string `json:"name,omitempty"`
+	Hisses    *bool   `json:"hisses,omitempty"`
+	LikesMilk *bool   `json:"likesMilk,omitempty"`
+	Meows     *bool   `json:"meows,omitempty"`
 }
 
 // Implements the error and azcore.HTTPResponse interfaces.
@@ -33,13 +35,18 @@ type Feline struct {
 }
 
 type Horse struct {
-	Pet
-	IsAShowHorse *bool `json:"isAShowHorse,omitempty"`
+	// REQUIRED
+	Name         *string `json:"name,omitempty"`
+	IsAShowHorse *bool   `json:"isAShowHorse,omitempty"`
 }
 
 type Kitten struct {
-	Cat
-	EatsMiceYet *bool `json:"eatsMiceYet,omitempty"`
+	// REQUIRED
+	Name        *string `json:"name,omitempty"`
+	EatsMiceYet *bool   `json:"eatsMiceYet,omitempty"`
+	Hisses      *bool   `json:"hisses,omitempty"`
+	LikesMilk   *bool   `json:"likesMilk,omitempty"`
+	Meows       *bool   `json:"meows,omitempty"`
 }
 
 // MultipleInheritanceServiceClientGetCatOptions contains the optional parameters for the MultipleInheritanceServiceClient.GetCat

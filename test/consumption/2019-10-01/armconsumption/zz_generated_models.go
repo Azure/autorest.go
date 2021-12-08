@@ -41,50 +41,50 @@ type Amount struct {
 
 // AmountWithExchangeRate - Reseller details
 type AmountWithExchangeRate struct {
-	Amount
+	// READ-ONLY; Amount currency.
+	Currency *string `json:"currency,omitempty" azure:"ro"`
+
 	// READ-ONLY; Exchange Rate.
 	ExchangeRate *float64 `json:"exchangeRate,omitempty" azure:"ro"`
 
 	// READ-ONLY; Exchange rate month.
 	ExchangeRateMonth *float32 `json:"exchangeRateMonth,omitempty" azure:"ro"`
+
+	// READ-ONLY; Amount.
+	Value *float64 `json:"value,omitempty" azure:"ro"`
 }
 
 // Balance - A balance resource.
 type Balance struct {
-	Resource
 	// The properties of the balance.
 	Properties *BalanceProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Balance.
 func (b Balance) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	b.Resource.marshalInternal(objectMap)
+	populate(objectMap, "etag", b.Etag)
+	populate(objectMap, "id", b.ID)
+	populate(objectMap, "name", b.Name)
 	populate(objectMap, "properties", b.Properties)
+	populate(objectMap, "tags", b.Tags)
+	populate(objectMap, "type", b.Type)
 	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type Balance.
-func (b *Balance) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "properties":
-			err = unpopulate(val, &b.Properties)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	if err := b.Resource.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	return nil
 }
 
 // BalanceProperties - The properties of the balance.
@@ -185,9 +185,21 @@ type BalancesGetForBillingPeriodByBillingAccountOptions struct {
 
 // Budget - A budget resource.
 type Budget struct {
-	ProxyResource
+	// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating
+	// the latest version or not.
+	ETag *string `json:"eTag,omitempty"`
+
 	// The properties of the budget.
 	Properties *BudgetProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // BudgetComparisonExpression - The comparison expression to be used in the budgets.
@@ -378,45 +390,38 @@ type ChargeSummaryClassification interface {
 
 // ChargeSummary - A charge summary resource.
 type ChargeSummary struct {
-	Resource
 	// REQUIRED; Specifies the kind of charge summary.
 	Kind *ChargeSummaryKind `json:"kind,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // GetChargeSummary implements the ChargeSummaryClassification interface for type ChargeSummary.
 func (c *ChargeSummary) GetChargeSummary() *ChargeSummary { return c }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type ChargeSummary.
-func (c *ChargeSummary) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	return c.unmarshalInternal(rawMsg)
-}
-
-func (c ChargeSummary) marshalInternal(objectMap map[string]interface{}, discValue ChargeSummaryKind) {
-	c.Resource.marshalInternal(objectMap)
-	c.Kind = &discValue
+// MarshalJSON implements the json.Marshaller interface for type ChargeSummary.
+func (c ChargeSummary) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "etag", c.Etag)
+	populate(objectMap, "id", c.ID)
 	objectMap["kind"] = c.Kind
-}
-
-func (c *ChargeSummary) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "kind":
-			err = unpopulate(val, &c.Kind)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	if err := c.Resource.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	return nil
+	populate(objectMap, "name", c.Name)
+	populate(objectMap, "tags", c.Tags)
+	populate(objectMap, "type", c.Type)
+	return json.Marshal(objectMap)
 }
 
 // ChargesListOptions contains the optional parameters for the ChargesClient.List method.
@@ -485,40 +490,35 @@ type CreditBalanceSummary struct {
 
 // CreditSummary - A credit summary resource.
 type CreditSummary struct {
-	Resource
 	// The properties of the credit summary.
 	Properties *CreditSummaryProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type CreditSummary.
 func (c CreditSummary) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	c.Resource.marshalInternal(objectMap)
+	populate(objectMap, "etag", c.Etag)
+	populate(objectMap, "id", c.ID)
+	populate(objectMap, "name", c.Name)
 	populate(objectMap, "properties", c.Properties)
+	populate(objectMap, "tags", c.Tags)
+	populate(objectMap, "type", c.Type)
 	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type CreditSummary.
-func (c *CreditSummary) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "properties":
-			err = unpopulate(val, &c.Properties)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	if err := c.Resource.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	return nil
 }
 
 // CreditSummaryProperties - The properties of the credit summary.
@@ -746,40 +746,35 @@ func (e *EventProperties) UnmarshalJSON(data []byte) error {
 
 // EventSummary - An event summary resource.
 type EventSummary struct {
-	Resource
 	// The event properties.
 	Properties *EventProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type EventSummary.
 func (e EventSummary) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	e.Resource.marshalInternal(objectMap)
+	populate(objectMap, "etag", e.Etag)
+	populate(objectMap, "id", e.ID)
+	populate(objectMap, "name", e.Name)
 	populate(objectMap, "properties", e.Properties)
+	populate(objectMap, "tags", e.Tags)
+	populate(objectMap, "type", e.Type)
 	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type EventSummary.
-func (e *EventSummary) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "properties":
-			err = unpopulate(val, &e.Properties)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	if err := e.Resource.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	return nil
 }
 
 // Events - Result of listing event summary.
@@ -806,40 +801,35 @@ type EventsListOptions struct {
 
 // Forecast - A forecast resource.
 type Forecast struct {
-	Resource
 	// The properties of the forecast charge.
 	Properties *ForecastProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Forecast.
 func (f Forecast) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	f.Resource.marshalInternal(objectMap)
+	populate(objectMap, "etag", f.Etag)
+	populate(objectMap, "id", f.ID)
+	populate(objectMap, "name", f.Name)
 	populate(objectMap, "properties", f.Properties)
+	populate(objectMap, "tags", f.Tags)
+	populate(objectMap, "type", f.Type)
 	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type Forecast.
-func (f *Forecast) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "properties":
-			err = unpopulate(val, &f.Properties)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	if err := f.Resource.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	return nil
 }
 
 // ForecastProperties - The properties of the forecast charge.
@@ -952,16 +942,50 @@ func (e HighCasedErrorResponse) Error() string {
 
 // LegacyChargeSummary - Legacy charge summary.
 type LegacyChargeSummary struct {
-	ChargeSummary
+	// REQUIRED; Specifies the kind of charge summary.
+	Kind *ChargeSummaryKind `json:"kind,omitempty"`
+
 	// REQUIRED; Properties for legacy charge summary
 	Properties *LegacyChargeSummaryProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// GetChargeSummary implements the ChargeSummaryClassification interface for type LegacyChargeSummary.
+func (l *LegacyChargeSummary) GetChargeSummary() *ChargeSummary {
+	return &ChargeSummary{
+		Kind: l.Kind,
+		ID:   l.ID,
+		Name: l.Name,
+		Type: l.Type,
+		Etag: l.Etag,
+		Tags: l.Tags,
+	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LegacyChargeSummary.
 func (l LegacyChargeSummary) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	l.ChargeSummary.marshalInternal(objectMap, ChargeSummaryKindLegacy)
+	populate(objectMap, "etag", l.Etag)
+	populate(objectMap, "id", l.ID)
+	objectMap["kind"] = ChargeSummaryKindLegacy
+	populate(objectMap, "name", l.Name)
 	populate(objectMap, "properties", l.Properties)
+	populate(objectMap, "tags", l.Tags)
+	populate(objectMap, "type", l.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -974,16 +998,31 @@ func (l *LegacyChargeSummary) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "etag":
+			err = unpopulate(val, &l.Etag)
+			delete(rawMsg, key)
+		case "id":
+			err = unpopulate(val, &l.ID)
+			delete(rawMsg, key)
+		case "kind":
+			err = unpopulate(val, &l.Kind)
+			delete(rawMsg, key)
+		case "name":
+			err = unpopulate(val, &l.Name)
+			delete(rawMsg, key)
 		case "properties":
 			err = unpopulate(val, &l.Properties)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &l.Tags)
+			delete(rawMsg, key)
+		case "type":
+			err = unpopulate(val, &l.Type)
 			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
-	}
-	if err := l.ChargeSummary.unmarshalInternal(rawMsg); err != nil {
-		return err
 	}
 	return nil
 }
@@ -1014,16 +1053,60 @@ type LegacyChargeSummaryProperties struct {
 
 // LegacyReservationRecommendation - Legacy reservation recommendation.
 type LegacyReservationRecommendation struct {
-	ReservationRecommendation
+	// REQUIRED; Specifies the kind of reservation recommendation.
+	Kind *ReservationRecommendationKind `json:"kind,omitempty"`
+
 	// REQUIRED; Properties for legacy reservation recommendation
 	Properties *LegacyReservationRecommendationProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource location
+	Location *string `json:"location,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource sku
+	SKU *string `json:"sku,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// GetReservationRecommendation implements the ReservationRecommendationClassification interface for type LegacyReservationRecommendation.
+func (l *LegacyReservationRecommendation) GetReservationRecommendation() *ReservationRecommendation {
+	return &ReservationRecommendation{
+		Kind:     l.Kind,
+		ID:       l.ID,
+		Name:     l.Name,
+		Type:     l.Type,
+		Etag:     l.Etag,
+		Tags:     l.Tags,
+		Location: l.Location,
+		SKU:      l.SKU,
+	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LegacyReservationRecommendation.
 func (l LegacyReservationRecommendation) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	l.ReservationRecommendation.marshalInternal(objectMap, ReservationRecommendationKindLegacy)
+	populate(objectMap, "etag", l.Etag)
+	populate(objectMap, "id", l.ID)
+	objectMap["kind"] = ReservationRecommendationKindLegacy
+	populate(objectMap, "location", l.Location)
+	populate(objectMap, "name", l.Name)
 	populate(objectMap, "properties", l.Properties)
+	populate(objectMap, "sku", l.SKU)
+	populate(objectMap, "tags", l.Tags)
+	populate(objectMap, "type", l.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -1036,16 +1119,37 @@ func (l *LegacyReservationRecommendation) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "etag":
+			err = unpopulate(val, &l.Etag)
+			delete(rawMsg, key)
+		case "id":
+			err = unpopulate(val, &l.ID)
+			delete(rawMsg, key)
+		case "kind":
+			err = unpopulate(val, &l.Kind)
+			delete(rawMsg, key)
+		case "location":
+			err = unpopulate(val, &l.Location)
+			delete(rawMsg, key)
+		case "name":
+			err = unpopulate(val, &l.Name)
+			delete(rawMsg, key)
 		case "properties":
 			err = unpopulate(val, &l.Properties)
+			delete(rawMsg, key)
+		case "sku":
+			err = unpopulate(val, &l.SKU)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &l.Tags)
+			delete(rawMsg, key)
+		case "type":
+			err = unpopulate(val, &l.Type)
 			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
-	}
-	if err := l.ReservationRecommendation.unmarshalInternal(rawMsg); err != nil {
-		return err
 	}
 	return nil
 }
@@ -1183,7 +1287,31 @@ func (l *LegacyReservationRecommendationProperties) UnmarshalJSON(data []byte) e
 
 // LegacyReservationTransaction - Legacy Reservation transaction resource.
 type LegacyReservationTransaction struct {
-	ReservationTransaction
+	// The properties of a legacy reservation transaction.
+	Properties *LegacyReservationTransactionProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags []*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type LegacyReservationTransaction.
+func (l LegacyReservationTransaction) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "id", l.ID)
+	populate(objectMap, "name", l.Name)
+	populate(objectMap, "properties", l.Properties)
+	populate(objectMap, "tags", l.Tags)
+	populate(objectMap, "type", l.Type)
+	return json.Marshal(objectMap)
 }
 
 // LegacyReservationTransactionProperties - The properties of a legacy reservation transaction.
@@ -1356,16 +1484,50 @@ func (l *LegacyReservationTransactionProperties) UnmarshalJSON(data []byte) erro
 
 // LegacyUsageDetail - Legacy usage detail.
 type LegacyUsageDetail struct {
-	UsageDetail
+	// REQUIRED; Specifies the kind of usage details.
+	Kind *UsageDetailsKind `json:"kind,omitempty"`
+
 	// REQUIRED; Properties for legacy usage details
 	Properties *LegacyUsageDetailProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// GetUsageDetail implements the UsageDetailClassification interface for type LegacyUsageDetail.
+func (l *LegacyUsageDetail) GetUsageDetail() *UsageDetail {
+	return &UsageDetail{
+		Kind: l.Kind,
+		ID:   l.ID,
+		Name: l.Name,
+		Type: l.Type,
+		Etag: l.Etag,
+		Tags: l.Tags,
+	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LegacyUsageDetail.
 func (l LegacyUsageDetail) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	l.UsageDetail.marshalInternal(objectMap, UsageDetailsKindLegacy)
+	populate(objectMap, "etag", l.Etag)
+	populate(objectMap, "id", l.ID)
+	objectMap["kind"] = UsageDetailsKindLegacy
+	populate(objectMap, "name", l.Name)
 	populate(objectMap, "properties", l.Properties)
+	populate(objectMap, "tags", l.Tags)
+	populate(objectMap, "type", l.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -1378,16 +1540,31 @@ func (l *LegacyUsageDetail) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "etag":
+			err = unpopulate(val, &l.Etag)
+			delete(rawMsg, key)
+		case "id":
+			err = unpopulate(val, &l.ID)
+			delete(rawMsg, key)
+		case "kind":
+			err = unpopulate(val, &l.Kind)
+			delete(rawMsg, key)
+		case "name":
+			err = unpopulate(val, &l.Name)
+			delete(rawMsg, key)
 		case "properties":
 			err = unpopulate(val, &l.Properties)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &l.Tags)
+			delete(rawMsg, key)
+		case "type":
+			err = unpopulate(val, &l.Type)
 			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
-	}
-	if err := l.UsageDetail.unmarshalInternal(rawMsg); err != nil {
-		return err
 	}
 	return nil
 }
@@ -1825,40 +2002,35 @@ func (l *LotProperties) UnmarshalJSON(data []byte) error {
 
 // LotSummary - A lot summary resource.
 type LotSummary struct {
-	Resource
 	// The lot properties.
 	Properties *LotProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type LotSummary.
 func (l LotSummary) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	l.Resource.marshalInternal(objectMap)
+	populate(objectMap, "etag", l.Etag)
+	populate(objectMap, "id", l.ID)
+	populate(objectMap, "name", l.Name)
 	populate(objectMap, "properties", l.Properties)
+	populate(objectMap, "tags", l.Tags)
+	populate(objectMap, "type", l.Type)
 	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type LotSummary.
-func (l *LotSummary) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "properties":
-			err = unpopulate(val, &l.Properties)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	if err := l.Resource.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	return nil
 }
 
 // Lots - Result of listing lot summary.
@@ -1981,78 +2153,68 @@ func (m *ManagementGroupAggregatedCostProperties) UnmarshalJSON(data []byte) err
 
 // ManagementGroupAggregatedCostResult - A management group aggregated cost resource.
 type ManagementGroupAggregatedCostResult struct {
-	Resource
 	// The properties of the Management Group Aggregated Cost.
 	Properties *ManagementGroupAggregatedCostProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ManagementGroupAggregatedCostResult.
 func (m ManagementGroupAggregatedCostResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	m.Resource.marshalInternal(objectMap)
+	populate(objectMap, "etag", m.Etag)
+	populate(objectMap, "id", m.ID)
+	populate(objectMap, "name", m.Name)
 	populate(objectMap, "properties", m.Properties)
+	populate(objectMap, "tags", m.Tags)
+	populate(objectMap, "type", m.Type)
 	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type ManagementGroupAggregatedCostResult.
-func (m *ManagementGroupAggregatedCostResult) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "properties":
-			err = unpopulate(val, &m.Properties)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	if err := m.Resource.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	return nil
 }
 
 // Marketplace - An marketplace resource.
 type Marketplace struct {
-	Resource
 	// The properties of the marketplace usage detail.
 	Properties *MarketplaceProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Marketplace.
 func (m Marketplace) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	m.Resource.marshalInternal(objectMap)
+	populate(objectMap, "etag", m.Etag)
+	populate(objectMap, "id", m.ID)
+	populate(objectMap, "name", m.Name)
 	populate(objectMap, "properties", m.Properties)
+	populate(objectMap, "tags", m.Tags)
+	populate(objectMap, "type", m.Type)
 	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type Marketplace.
-func (m *Marketplace) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "properties":
-			err = unpopulate(val, &m.Properties)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	if err := m.Resource.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	return nil
 }
 
 // MarketplaceProperties - The properties of the marketplace usage detail.
@@ -2345,16 +2507,50 @@ type MeterDetailsResponse struct {
 
 // ModernChargeSummary - Modern charge summary.
 type ModernChargeSummary struct {
-	ChargeSummary
+	// REQUIRED; Specifies the kind of charge summary.
+	Kind *ChargeSummaryKind `json:"kind,omitempty"`
+
 	// REQUIRED; Properties for modern charge summary
 	Properties *ModernChargeSummaryProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// GetChargeSummary implements the ChargeSummaryClassification interface for type ModernChargeSummary.
+func (m *ModernChargeSummary) GetChargeSummary() *ChargeSummary {
+	return &ChargeSummary{
+		Kind: m.Kind,
+		ID:   m.ID,
+		Name: m.Name,
+		Type: m.Type,
+		Etag: m.Etag,
+		Tags: m.Tags,
+	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ModernChargeSummary.
 func (m ModernChargeSummary) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	m.ChargeSummary.marshalInternal(objectMap, ChargeSummaryKindModern)
+	populate(objectMap, "etag", m.Etag)
+	populate(objectMap, "id", m.ID)
+	objectMap["kind"] = ChargeSummaryKindModern
+	populate(objectMap, "name", m.Name)
 	populate(objectMap, "properties", m.Properties)
+	populate(objectMap, "tags", m.Tags)
+	populate(objectMap, "type", m.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -2367,16 +2563,31 @@ func (m *ModernChargeSummary) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "etag":
+			err = unpopulate(val, &m.Etag)
+			delete(rawMsg, key)
+		case "id":
+			err = unpopulate(val, &m.ID)
+			delete(rawMsg, key)
+		case "kind":
+			err = unpopulate(val, &m.Kind)
+			delete(rawMsg, key)
+		case "name":
+			err = unpopulate(val, &m.Name)
+			delete(rawMsg, key)
 		case "properties":
 			err = unpopulate(val, &m.Properties)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &m.Tags)
+			delete(rawMsg, key)
+		case "type":
+			err = unpopulate(val, &m.Type)
 			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
-	}
-	if err := m.ChargeSummary.unmarshalInternal(rawMsg); err != nil {
-		return err
 	}
 	return nil
 }
@@ -2419,20 +2630,64 @@ type ModernChargeSummaryProperties struct {
 
 // ModernReservationRecommendation - Modern reservation recommendation.
 type ModernReservationRecommendation struct {
-	ReservationRecommendation
+	// REQUIRED; Specifies the kind of reservation recommendation.
+	Kind *ReservationRecommendationKind `json:"kind,omitempty"`
+
 	// REQUIRED; Properties for modern reservation recommendation
 	Properties *ModernReservationRecommendationProperties `json:"properties,omitempty"`
 
 	// READ-ONLY; Resource eTag.
 	ETag *string `json:"eTag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource location
+	Location *string `json:"location,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource sku
+	SKU *string `json:"sku,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// GetReservationRecommendation implements the ReservationRecommendationClassification interface for type ModernReservationRecommendation.
+func (m *ModernReservationRecommendation) GetReservationRecommendation() *ReservationRecommendation {
+	return &ReservationRecommendation{
+		Kind:     m.Kind,
+		ID:       m.ID,
+		Name:     m.Name,
+		Type:     m.Type,
+		Etag:     m.Etag,
+		Tags:     m.Tags,
+		Location: m.Location,
+		SKU:      m.SKU,
+	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ModernReservationRecommendation.
 func (m ModernReservationRecommendation) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	m.ReservationRecommendation.marshalInternal(objectMap, ReservationRecommendationKindModern)
 	populate(objectMap, "eTag", m.ETag)
+	populate(objectMap, "etag", m.Etag)
+	populate(objectMap, "id", m.ID)
+	objectMap["kind"] = ReservationRecommendationKindModern
+	populate(objectMap, "location", m.Location)
+	populate(objectMap, "name", m.Name)
 	populate(objectMap, "properties", m.Properties)
+	populate(objectMap, "sku", m.SKU)
+	populate(objectMap, "tags", m.Tags)
+	populate(objectMap, "type", m.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -2448,16 +2703,37 @@ func (m *ModernReservationRecommendation) UnmarshalJSON(data []byte) error {
 		case "eTag":
 			err = unpopulate(val, &m.ETag)
 			delete(rawMsg, key)
+		case "etag":
+			err = unpopulate(val, &m.Etag)
+			delete(rawMsg, key)
+		case "id":
+			err = unpopulate(val, &m.ID)
+			delete(rawMsg, key)
+		case "kind":
+			err = unpopulate(val, &m.Kind)
+			delete(rawMsg, key)
+		case "location":
+			err = unpopulate(val, &m.Location)
+			delete(rawMsg, key)
+		case "name":
+			err = unpopulate(val, &m.Name)
+			delete(rawMsg, key)
 		case "properties":
 			err = unpopulate(val, &m.Properties)
+			delete(rawMsg, key)
+		case "sku":
+			err = unpopulate(val, &m.SKU)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &m.Tags)
+			delete(rawMsg, key)
+		case "type":
+			err = unpopulate(val, &m.Type)
 			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
-	}
-	if err := m.ReservationRecommendation.unmarshalInternal(rawMsg); err != nil {
-		return err
 	}
 	return nil
 }
@@ -2616,16 +2892,30 @@ func (m *ModernReservationRecommendationProperties) UnmarshalJSON(data []byte) e
 
 // ModernReservationTransaction - Modern Reservation transaction resource.
 type ModernReservationTransaction struct {
-	ReservationTransactionResource
 	// REQUIRED; The properties of a modern reservation transaction.
 	Properties *ModernReservationTransactionProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags []*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ModernReservationTransaction.
 func (m ModernReservationTransaction) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	m.ReservationTransactionResource.marshalInternal(objectMap)
+	populate(objectMap, "id", m.ID)
+	populate(objectMap, "name", m.Name)
 	populate(objectMap, "properties", m.Properties)
+	populate(objectMap, "tags", m.Tags)
+	populate(objectMap, "type", m.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -2816,16 +3106,50 @@ func (m ModernReservationTransactionsListResult) MarshalJSON() ([]byte, error) {
 
 // ModernUsageDetail - Modern usage detail.
 type ModernUsageDetail struct {
-	UsageDetail
+	// REQUIRED; Specifies the kind of usage details.
+	Kind *UsageDetailsKind `json:"kind,omitempty"`
+
 	// REQUIRED; Properties for modern usage details
 	Properties *ModernUsageDetailProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
+}
+
+// GetUsageDetail implements the UsageDetailClassification interface for type ModernUsageDetail.
+func (m *ModernUsageDetail) GetUsageDetail() *UsageDetail {
+	return &UsageDetail{
+		Kind: m.Kind,
+		ID:   m.ID,
+		Name: m.Name,
+		Type: m.Type,
+		Etag: m.Etag,
+		Tags: m.Tags,
+	}
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ModernUsageDetail.
 func (m ModernUsageDetail) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	m.UsageDetail.marshalInternal(objectMap, UsageDetailsKindModern)
+	populate(objectMap, "etag", m.Etag)
+	populate(objectMap, "id", m.ID)
+	objectMap["kind"] = UsageDetailsKindModern
+	populate(objectMap, "name", m.Name)
 	populate(objectMap, "properties", m.Properties)
+	populate(objectMap, "tags", m.Tags)
+	populate(objectMap, "type", m.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -2838,16 +3162,31 @@ func (m *ModernUsageDetail) UnmarshalJSON(data []byte) error {
 	for key, val := range rawMsg {
 		var err error
 		switch key {
+		case "etag":
+			err = unpopulate(val, &m.Etag)
+			delete(rawMsg, key)
+		case "id":
+			err = unpopulate(val, &m.ID)
+			delete(rawMsg, key)
+		case "kind":
+			err = unpopulate(val, &m.Kind)
+			delete(rawMsg, key)
+		case "name":
+			err = unpopulate(val, &m.Name)
+			delete(rawMsg, key)
 		case "properties":
 			err = unpopulate(val, &m.Properties)
+			delete(rawMsg, key)
+		case "tags":
+			err = unpopulate(val, &m.Tags)
+			delete(rawMsg, key)
+		case "type":
+			err = unpopulate(val, &m.Type)
 			delete(rawMsg, key)
 		}
 		if err != nil {
 			return err
 		}
-	}
-	if err := m.UsageDetail.unmarshalInternal(rawMsg); err != nil {
-		return err
 	}
 	return nil
 }
@@ -3533,40 +3872,35 @@ type PriceSheetProperties struct {
 
 // PriceSheetResult - An pricesheet resource.
 type PriceSheetResult struct {
-	Resource
 	// price sheet result. It contains the pricesheet associated with billing period
 	Properties *PriceSheetModel `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type PriceSheetResult.
 func (p PriceSheetResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	p.Resource.marshalInternal(objectMap)
+	populate(objectMap, "etag", p.Etag)
+	populate(objectMap, "id", p.ID)
+	populate(objectMap, "name", p.Name)
 	populate(objectMap, "properties", p.Properties)
+	populate(objectMap, "tags", p.Tags)
+	populate(objectMap, "type", p.Type)
 	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type PriceSheetResult.
-func (p *PriceSheetResult) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "properties":
-			err = unpopulate(val, &p.Properties)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	if err := p.Resource.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	return nil
 }
 
 // ProxyResource - The Resource model definition.
@@ -3596,40 +3930,35 @@ type Reseller struct {
 
 // ReservationDetail - reservation detail resource.
 type ReservationDetail struct {
-	Resource
 	// The properties of the reservation detail.
 	Properties *ReservationDetailProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ReservationDetail.
 func (r ReservationDetail) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	r.Resource.marshalInternal(objectMap)
+	populate(objectMap, "etag", r.Etag)
+	populate(objectMap, "id", r.ID)
+	populate(objectMap, "name", r.Name)
 	populate(objectMap, "properties", r.Properties)
+	populate(objectMap, "tags", r.Tags)
+	populate(objectMap, "type", r.Type)
 	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type ReservationDetail.
-func (r *ReservationDetail) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "properties":
-			err = unpopulate(val, &r.Properties)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	if err := r.Resource.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	return nil
 }
 
 // ReservationDetailProperties - The properties of the reservation detail.
@@ -3768,10 +4097,29 @@ type ReservationRecommendationClassification interface {
 
 // ReservationRecommendation - A reservation recommendation resource.
 type ReservationRecommendation struct {
-	Resource
-	ResourceAttributes
 	// REQUIRED; Specifies the kind of reservation recommendation.
 	Kind *ReservationRecommendationKind `json:"kind,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource location
+	Location *string `json:"location,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource sku
+	SKU *string `json:"sku,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // GetReservationRecommendation implements the ReservationRecommendationClassification interface for type ReservationRecommendation.
@@ -3779,41 +4127,18 @@ func (r *ReservationRecommendation) GetReservationRecommendation() *ReservationR
 	return r
 }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type ReservationRecommendation.
-func (r *ReservationRecommendation) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	return r.unmarshalInternal(rawMsg)
-}
-
-func (r ReservationRecommendation) marshalInternal(objectMap map[string]interface{}, discValue ReservationRecommendationKind) {
-	r.Resource.marshalInternal(objectMap)
-	r.ResourceAttributes.marshalInternal(objectMap)
-	r.Kind = &discValue
+// MarshalJSON implements the json.Marshaller interface for type ReservationRecommendation.
+func (r ReservationRecommendation) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "etag", r.Etag)
+	populate(objectMap, "id", r.ID)
 	objectMap["kind"] = r.Kind
-}
-
-func (r *ReservationRecommendation) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "kind":
-			err = unpopulate(val, &r.Kind)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	if err := r.Resource.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	if err := r.ResourceAttributes.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	return nil
+	populate(objectMap, "location", r.Location)
+	populate(objectMap, "name", r.Name)
+	populate(objectMap, "sku", r.SKU)
+	populate(objectMap, "tags", r.Tags)
+	populate(objectMap, "type", r.Type)
+	return json.Marshal(objectMap)
 }
 
 // ReservationRecommendationDetailsCalculatedSavingsProperties - Details of estimated savings.
@@ -3848,7 +4173,6 @@ type ReservationRecommendationDetailsGetOptions struct {
 
 // ReservationRecommendationDetailsModel - Reservation recommendation details.
 type ReservationRecommendationDetailsModel struct {
-	Resource
 	// Resource eTag.
 	ETag *string `json:"eTag,omitempty"`
 
@@ -3860,49 +4184,36 @@ type ReservationRecommendationDetailsModel struct {
 
 	// Resource sku
 	SKU *string `json:"sku,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ReservationRecommendationDetailsModel.
 func (r ReservationRecommendationDetailsModel) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	r.Resource.marshalInternal(objectMap)
 	populate(objectMap, "eTag", r.ETag)
+	populate(objectMap, "etag", r.Etag)
+	populate(objectMap, "id", r.ID)
 	populate(objectMap, "location", r.Location)
+	populate(objectMap, "name", r.Name)
 	populate(objectMap, "properties", r.Properties)
 	populate(objectMap, "sku", r.SKU)
+	populate(objectMap, "tags", r.Tags)
+	populate(objectMap, "type", r.Type)
 	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type ReservationRecommendationDetailsModel.
-func (r *ReservationRecommendationDetailsModel) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "eTag":
-			err = unpopulate(val, &r.ETag)
-			delete(rawMsg, key)
-		case "location":
-			err = unpopulate(val, &r.Location)
-			delete(rawMsg, key)
-		case "properties":
-			err = unpopulate(val, &r.Properties)
-			delete(rawMsg, key)
-		case "sku":
-			err = unpopulate(val, &r.SKU)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	if err := r.Resource.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	return nil
 }
 
 // ReservationRecommendationDetailsProperties - The properties of the reservation recommendation.
@@ -4108,40 +4419,35 @@ func (r ReservationSummariesListResult) MarshalJSON() ([]byte, error) {
 
 // ReservationSummary - reservation summary resource.
 type ReservationSummary struct {
-	Resource
 	// The properties of the reservation summary.
 	Properties *ReservationSummaryProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ReservationSummary.
 func (r ReservationSummary) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	r.Resource.marshalInternal(objectMap)
+	populate(objectMap, "etag", r.Etag)
+	populate(objectMap, "id", r.ID)
+	populate(objectMap, "name", r.Name)
 	populate(objectMap, "properties", r.Properties)
+	populate(objectMap, "tags", r.Tags)
+	populate(objectMap, "type", r.Type)
 	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type ReservationSummary.
-func (r *ReservationSummary) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "properties":
-			err = unpopulate(val, &r.Properties)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	if err := r.Resource.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	return nil
 }
 
 // ReservationSummaryProperties - The properties of the reservation summary.
@@ -4286,21 +4592,31 @@ func (r *ReservationSummaryProperties) UnmarshalJSON(data []byte) error {
 
 // ReservationTransaction - Reservation transaction resource.
 type ReservationTransaction struct {
-	ReservationTransactionResource
 	// The properties of a legacy reservation transaction.
 	Properties *LegacyReservationTransactionProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags []*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type ReservationTransaction.
 func (r ReservationTransaction) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	r.marshalInternal(objectMap)
-	return json.Marshal(objectMap)
-}
-
-func (r ReservationTransaction) marshalInternal(objectMap map[string]interface{}) {
-	r.ReservationTransactionResource.marshalInternal(objectMap)
+	populate(objectMap, "id", r.ID)
+	populate(objectMap, "name", r.Name)
 	populate(objectMap, "properties", r.Properties)
+	populate(objectMap, "tags", r.Tags)
+	populate(objectMap, "type", r.Type)
+	return json.Marshal(objectMap)
 }
 
 // ReservationTransactionResource - The Resource model definition.
@@ -4321,15 +4637,11 @@ type ReservationTransactionResource struct {
 // MarshalJSON implements the json.Marshaller interface for type ReservationTransactionResource.
 func (r ReservationTransactionResource) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	r.marshalInternal(objectMap)
-	return json.Marshal(objectMap)
-}
-
-func (r ReservationTransactionResource) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "id", r.ID)
 	populate(objectMap, "name", r.Name)
 	populate(objectMap, "tags", r.Tags)
 	populate(objectMap, "type", r.Type)
+	return json.Marshal(objectMap)
 }
 
 // ReservationTransactionsListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.ListByBillingProfile
@@ -4441,52 +4753,12 @@ type Resource struct {
 // MarshalJSON implements the json.Marshaller interface for type Resource.
 func (r Resource) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	r.marshalInternal(objectMap)
-	return json.Marshal(objectMap)
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type Resource.
-func (r *Resource) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	return r.unmarshalInternal(rawMsg)
-}
-
-func (r Resource) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "etag", r.Etag)
 	populate(objectMap, "id", r.ID)
 	populate(objectMap, "name", r.Name)
 	populate(objectMap, "tags", r.Tags)
 	populate(objectMap, "type", r.Type)
-}
-
-func (r *Resource) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "etag":
-			err = unpopulate(val, &r.Etag)
-			delete(rawMsg, key)
-		case "id":
-			err = unpopulate(val, &r.ID)
-			delete(rawMsg, key)
-		case "name":
-			err = unpopulate(val, &r.Name)
-			delete(rawMsg, key)
-		case "tags":
-			err = unpopulate(val, &r.Tags)
-			delete(rawMsg, key)
-		case "type":
-			err = unpopulate(val, &r.Type)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
+	return json.Marshal(objectMap)
 }
 
 // ResourceAttributes - The Resource model definition.
@@ -4496,38 +4768,6 @@ type ResourceAttributes struct {
 
 	// READ-ONLY; Resource sku
 	SKU *string `json:"sku,omitempty" azure:"ro"`
-}
-
-// UnmarshalJSON implements the json.Unmarshaller interface for type ResourceAttributes.
-func (r *ResourceAttributes) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	return r.unmarshalInternal(rawMsg)
-}
-
-func (r ResourceAttributes) marshalInternal(objectMap map[string]interface{}) {
-	populate(objectMap, "location", r.Location)
-	populate(objectMap, "sku", r.SKU)
-}
-
-func (r *ResourceAttributes) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "location":
-			err = unpopulate(val, &r.Location)
-			delete(rawMsg, key)
-		case "sku":
-			err = unpopulate(val, &r.SKU)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	return nil
 }
 
 // SKUProperty - The Sku property
@@ -4584,9 +4824,21 @@ type TagsGetOptions struct {
 
 // TagsResult - A resource listing all tags.
 type TagsResult struct {
-	ProxyResource
+	// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating
+	// the latest version or not.
+	ETag *string `json:"eTag,omitempty"`
+
 	// The properties of the tag.
 	Properties *TagProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // UsageDetailClassification provides polymorphic access to related types.
@@ -4600,45 +4852,38 @@ type UsageDetailClassification interface {
 
 // UsageDetail - An usage detail resource.
 type UsageDetail struct {
-	Resource
 	// REQUIRED; Specifies the kind of usage details.
 	Kind *UsageDetailsKind `json:"kind,omitempty"`
+
+	// READ-ONLY; Resource etag.
+	Etag *string `json:"etag,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Id.
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource name.
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource tags.
+	Tags map[string]*string `json:"tags,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource type.
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // GetUsageDetail implements the UsageDetailClassification interface for type UsageDetail.
 func (u *UsageDetail) GetUsageDetail() *UsageDetail { return u }
 
-// UnmarshalJSON implements the json.Unmarshaller interface for type UsageDetail.
-func (u *UsageDetail) UnmarshalJSON(data []byte) error {
-	var rawMsg map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawMsg); err != nil {
-		return err
-	}
-	return u.unmarshalInternal(rawMsg)
-}
-
-func (u UsageDetail) marshalInternal(objectMap map[string]interface{}, discValue UsageDetailsKind) {
-	u.Resource.marshalInternal(objectMap)
-	u.Kind = &discValue
+// MarshalJSON implements the json.Marshaller interface for type UsageDetail.
+func (u UsageDetail) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "etag", u.Etag)
+	populate(objectMap, "id", u.ID)
 	objectMap["kind"] = u.Kind
-}
-
-func (u *UsageDetail) unmarshalInternal(rawMsg map[string]json.RawMessage) error {
-	for key, val := range rawMsg {
-		var err error
-		switch key {
-		case "kind":
-			err = unpopulate(val, &u.Kind)
-			delete(rawMsg, key)
-		}
-		if err != nil {
-			return err
-		}
-	}
-	if err := u.Resource.unmarshalInternal(rawMsg); err != nil {
-		return err
-	}
-	return nil
+	populate(objectMap, "name", u.Name)
+	populate(objectMap, "tags", u.Tags)
+	populate(objectMap, "type", u.Type)
+	return json.Marshal(objectMap)
 }
 
 // UsageDetailsListOptions contains the optional parameters for the UsageDetailsClient.List method.

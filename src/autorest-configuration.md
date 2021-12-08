@@ -10,7 +10,7 @@ AutoRest needs the below config to pick this up as a plug-in - see https://githu
 ``` yaml
 version: 3.7.2
 use-extension:
-  "@autorest/modelerfour" : "4.22.1"
+  "@autorest/modelerfour" : "4.22.3"
 
 modelerfour:
   resolve-schema-name-collisons: true

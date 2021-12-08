@@ -30,13 +30,9 @@ func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
 			CollectionName: stringPtr("all"),
 			Objects: map[string]GeoJSONObjectClassification{
 				"feature": &GeoJSONFeature{
-					GeoJSONObject: GeoJSONObject{
-						Type: GeoJSONObjectTypeGeoJSONFeature.ToPtr(),
-					},
-					GeoJSONFeatureData: GeoJSONFeatureData{
-						ID:          stringPtr("id/feature"),
-						FeatureType: stringPtr("some type"),
-					},
+					Type:        GeoJSONObjectTypeGeoJSONFeature.ToPtr(),
+					ID:          stringPtr("id/feature"),
+					FeatureType: stringPtr("some type"),
 				},
 				"object": &GeoJSONObject{},
 			},
@@ -47,13 +43,9 @@ func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
 			CollectionName: stringPtr("all"),
 			Objects: map[string]GeoJSONObjectClassification{
 				"feature": &GeoJSONFeature{
-					GeoJSONObject: GeoJSONObject{
-						Type: GeoJSONObjectTypeGeoJSONFeature.ToPtr(),
-					},
-					GeoJSONFeatureData: GeoJSONFeatureData{
-						ID:          stringPtr("id/feature"),
-						FeatureType: stringPtr("some type"),
-					},
+					Type:        GeoJSONObjectTypeGeoJSONFeature.ToPtr(),
+					ID:          stringPtr("id/feature"),
+					FeatureType: stringPtr("some type"),
 				},
 				"object": &GeoJSONObject{},
 			},
@@ -62,13 +54,9 @@ func TestGeoObjectNamedCollectionRoundTrip(t *testing.T) {
 			CollectionName: stringPtr("all"),
 			Objects: map[string]GeoJSONObjectClassification{
 				"feature": &GeoJSONFeature{
-					GeoJSONObject: GeoJSONObject{
-						Type: GeoJSONObjectTypeGeoJSONFeature.ToPtr(),
-					},
-					GeoJSONFeatureData: GeoJSONFeatureData{
-						ID:          stringPtr("id/feature"),
-						FeatureType: stringPtr("some type"),
-					},
+					Type:        GeoJSONObjectTypeGeoJSONFeature.ToPtr(),
+					ID:          stringPtr("id/feature"),
+					FeatureType: stringPtr("some type"),
 				},
 				"object": &GeoJSONObject{},
 			},

@@ -195,14 +195,12 @@ func TestCreateAPTrue(t *testing.T) {
 func TestCreateCatAPTrue(t *testing.T) {
 	client := newPetsClient()
 	result, err := client.CreateCatAPTrue(context.Background(), CatAPTrue{
-		PetAPTrue: PetAPTrue{
-			ID:   to.Int32Ptr(1),
-			Name: to.StringPtr("Lisa"),
-			AdditionalProperties: map[string]interface{}{
-				"birthdate": "2017-12-13T02:29:51Z",
-				"complexProperty": map[string]interface{}{
-					"color": "Red",
-				},
+		ID:   to.Int32Ptr(1),
+		Name: to.StringPtr("Lisa"),
+		AdditionalProperties: map[string]interface{}{
+			"birthdate": "2017-12-13T02:29:51Z",
+			"complexProperty": map[string]interface{}{
+				"color": "Red",
 			},
 		},
 		Friendly: to.BoolPtr(true),
@@ -211,15 +209,13 @@ func TestCreateCatAPTrue(t *testing.T) {
 		t.Fatal(err)
 	}
 	if r := cmp.Diff(result.CatAPTrue, CatAPTrue{
-		PetAPTrue: PetAPTrue{
-			ID:     to.Int32Ptr(1),
-			Name:   to.StringPtr("Lisa"),
-			Status: to.BoolPtr(true),
-			AdditionalProperties: map[string]interface{}{
-				"birthdate": "2017-12-13T02:29:51Z",
-				"complexProperty": map[string]interface{}{
-					"color": "Red",
-				},
+		ID:     to.Int32Ptr(1),
+		Name:   to.StringPtr("Lisa"),
+		Status: to.BoolPtr(true),
+		AdditionalProperties: map[string]interface{}{
+			"birthdate": "2017-12-13T02:29:51Z",
+			"complexProperty": map[string]interface{}{
+				"color": "Red",
 			},
 		},
 		Friendly: to.BoolPtr(true),

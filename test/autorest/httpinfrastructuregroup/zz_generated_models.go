@@ -8,9 +8,17 @@
 
 package httpinfrastructuregroup
 
+// Implements the error and azcore.HTTPResponse interfaces.
 type B struct {
-	MyException
+	raw            string
+	StatusCode     *string `json:"statusCode,omitempty"`
 	TextStatusCode *string `json:"textStatusCode,omitempty"`
+}
+
+// Error implements the error interface for type B.
+// The contents of the error text are not contractual and subject to change.
+func (e B) Error() string {
+	return e.raw
 }
 
 type C struct {

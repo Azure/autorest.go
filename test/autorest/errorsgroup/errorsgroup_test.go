@@ -44,15 +44,11 @@ func TestDoSomethingError1(t *testing.T) {
 		t.Fatalf("expected PetSadError: %v", err)
 	}
 	if r := cmp.Diff(sadErr, &PetSadError{
-		PetActionError: PetActionError{
-			PetAction: PetAction{
-				ActionResponse: to.StringPtr("grrrr"),
-			},
-			ErrorMessage: to.StringPtr("casper aint happy"),
-			ErrorType:    to.StringPtr("PetSadError"),
-		},
-		Reason: to.StringPtr("need more treats"),
-	}, cmpopts.IgnoreUnexported(PetActionError{})); r != "" {
+		ActionResponse: to.StringPtr("grrrr"),
+		ErrorMessage:   to.StringPtr("casper aint happy"),
+		ErrorType:      to.StringPtr("PetSadError"),
+		Reason:         to.StringPtr("need more treats"),
+	}, cmpopts.IgnoreUnexported(PetSadError{})); r != "" {
 		t.Fatal(r)
 	}
 	if !reflect.ValueOf(result).IsZero() {
@@ -68,18 +64,12 @@ func TestDoSomethingError2(t *testing.T) {
 		t.Fatal("expected PetHungryOrThirstyError")
 	}
 	if r := cmp.Diff(hungrErr, &PetHungryOrThirstyError{
-		PetSadError: PetSadError{
-			PetActionError: PetActionError{
-				PetAction: PetAction{
-					ActionResponse: to.StringPtr("howl"),
-				},
-				ErrorMessage: to.StringPtr("scooby is low"),
-				ErrorType:    to.StringPtr("PetHungryOrThirstyError"),
-			},
-			Reason: to.StringPtr("need more everything"),
-		},
+		ActionResponse:  to.StringPtr("howl"),
+		ErrorMessage:    to.StringPtr("scooby is low"),
+		ErrorType:       to.StringPtr("PetHungryOrThirstyError"),
+		Reason:          to.StringPtr("need more everything"),
 		HungryOrThirsty: to.StringPtr("hungry and thirsty"),
-	}, cmpopts.IgnoreUnexported(PetActionError{})); r != "" {
+	}, cmpopts.IgnoreUnexported(PetHungryOrThirstyError{})); r != "" {
 		t.Fatal(r)
 	}
 	if !reflect.ValueOf(result).IsZero() {
@@ -110,10 +100,8 @@ func TestGetPetByIDSuccess1(t *testing.T) {
 		t.Fatal(err)
 	}
 	if r := cmp.Diff(result.Pet, Pet{
-		Animal: Animal{
-			AniType: to.StringPtr("Dog"),
-		},
-		Name: to.StringPtr("Tommy Tomson"),
+		AniType: to.StringPtr("Dog"),
+		Name:    to.StringPtr("Tommy Tomson"),
 	}); r != "" {
 		t.Fatal(r)
 	}
@@ -138,15 +126,11 @@ func TestGetPetByIDError1(t *testing.T) {
 		t.Fatal("expected AnimalNotFoundError")
 	}
 	if r := cmp.Diff(anfe, &AnimalNotFound{
-		NotFoundErrorBase: NotFoundErrorBase{
-			BaseError: BaseError{
-				SomeBaseProp: to.StringPtr("problem finding animal"),
-			},
-			Reason:       to.StringPtr("the type of animal requested is not available"),
-			WhatNotFound: to.StringPtr("AnimalNotFound"),
-		},
-		Name: to.StringPtr("coyote"),
-	}, cmpopts.IgnoreUnexported(NotFoundErrorBase{})); r != "" {
+		SomeBaseProp: to.StringPtr("problem finding animal"),
+		Reason:       to.StringPtr("the type of animal requested is not available"),
+		WhatNotFound: to.StringPtr("AnimalNotFound"),
+		Name:         to.StringPtr("coyote"),
+	}, cmpopts.IgnoreUnexported(AnimalNotFound{})); r != "" {
 		t.Fatal(r)
 	}
 	if !reflect.ValueOf(result).IsZero() {
@@ -162,15 +146,11 @@ func TestGetPetByIDError2(t *testing.T) {
 		t.Fatal("expected LinkNotFoundError")
 	}
 	if r := cmp.Diff(lnfe, &LinkNotFound{
-		NotFoundErrorBase: NotFoundErrorBase{
-			BaseError: BaseError{
-				SomeBaseProp: to.StringPtr("problem finding pet"),
-			},
-			Reason:       to.StringPtr("link to pet not found"),
-			WhatNotFound: to.StringPtr("InvalidResourceLink"),
-		},
+		SomeBaseProp:   to.StringPtr("problem finding pet"),
+		Reason:         to.StringPtr("link to pet not found"),
+		WhatNotFound:   to.StringPtr("InvalidResourceLink"),
 		WhatSubAddress: to.StringPtr("pet/yourpet was not found"),
-	}, cmpopts.IgnoreUnexported(NotFoundErrorBase{})); r != "" {
+	}, cmpopts.IgnoreUnexported(LinkNotFound{})); r != "" {
 		t.Fatal(r)
 	}
 	if !reflect.ValueOf(result).IsZero() {

@@ -542,15 +542,32 @@ type OperationResultError struct {
 }
 
 type Product struct {
-	Resource
+	// Resource Location
+	Location   *string            `json:"location,omitempty"`
 	Properties *ProductProperties `json:"properties,omitempty"`
+
+	// Dictionary of
+	Tags map[string]*string `json:"tags,omitempty"`
+
+	// READ-ONLY; Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Name
+	Name *string `json:"name,omitempty" azure:"ro"`
+
+	// READ-ONLY; Resource Type
+	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type Product.
 func (p Product) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	p.Resource.marshalInternal(objectMap)
+	populate(objectMap, "id", p.ID)
+	populate(objectMap, "location", p.Location)
+	populate(objectMap, "name", p.Name)
 	populate(objectMap, "properties", p.Properties)
+	populate(objectMap, "tags", p.Tags)
+	populate(objectMap, "type", p.Type)
 	return json.Marshal(objectMap)
 }
 
@@ -581,16 +598,12 @@ type Resource struct {
 // MarshalJSON implements the json.Marshaller interface for type Resource.
 func (r Resource) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	r.marshalInternal(objectMap)
-	return json.Marshal(objectMap)
-}
-
-func (r Resource) marshalInternal(objectMap map[string]interface{}) {
 	populate(objectMap, "id", r.ID)
 	populate(objectMap, "location", r.Location)
 	populate(objectMap, "name", r.Name)
 	populate(objectMap, "tags", r.Tags)
 	populate(objectMap, "type", r.Type)
+	return json.Marshal(objectMap)
 }
 
 type SKU struct {
@@ -599,8 +612,10 @@ type SKU struct {
 }
 
 type SubProduct struct {
-	SubResource
 	Properties *SubProductProperties `json:"properties,omitempty"`
+
+	// READ-ONLY; Sub Resource Id
+	ID *string `json:"id,omitempty" azure:"ro"`
 }
 
 type SubProductProperties struct {
