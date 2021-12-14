@@ -394,6 +394,10 @@
               }
             ]
           }
+        },
+        "id": {
+          "description": "Identifier for the feature.",
+          "type": "string"
         }
       }
     },

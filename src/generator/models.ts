@@ -239,6 +239,8 @@ function aggregateProperties(obj: ObjectSchema): Array<Property> {
             const msg = `type ${obj.language.go!.name} contains duplicate property ${exists.language.go!.name} with mismatched types`;
             throw new Error(msg);
           }
+          // don't add the duplicate
+          continue;
         }
         allProps.push(parentProp);
       }
