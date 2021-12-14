@@ -74,6 +74,7 @@ type GeoJSONFeature struct {
 func (g *GeoJSONFeature) GetGeoJSONObject() *GeoJSONObject {
 	return &GeoJSONObject{
 		Type: g.Type,
+		ID:   g.ID,
 	}
 }
 
@@ -143,6 +144,9 @@ type GeoJSONObject struct {
 	// MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and
 	// FeatureCollection.
 	Type *GeoJSONObjectType `json:"type,omitempty"`
+
+	// Identifier for the feature.
+	ID *string `json:"id,omitempty"`
 }
 
 // GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONObject.
