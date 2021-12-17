@@ -332,26 +332,18 @@ type CpkScopeInfo struct {
 	EncryptionScope *string
 }
 
-// Implements the error and azcore.HTTPResponse interfaces.
 type DataLakeStorageError struct {
-	raw string
 	// The service error response object.
-	DataLakeStorageErrorDetails *DataLakeStorageErrorError `xml:"error"`
-}
-
-// Error implements the error interface for type DataLakeStorageError.
-// The contents of the error text are not contractual and subject to change.
-func (e DataLakeStorageError) Error() string {
-	return e.raw
+	DataLakeStorageErrorDetails *DataLakeStorageErrorError `json:"error,omitempty"`
 }
 
 // DataLakeStorageErrorError - The service error response object.
 type DataLakeStorageErrorError struct {
 	// The service error code.
-	Code *string `xml:"Code"`
+	Code *string `json:"Code,omitempty"`
 
 	// The service error message.
-	Message *string `xml:"Message"`
+	Message *string `json:"Message,omitempty"`
 }
 
 // DelimitedTextConfiguration - delimited text configuration
@@ -943,16 +935,8 @@ type StaticWebsite struct {
 	IndexDocument *string `xml:"IndexDocument"`
 }
 
-// Implements the error and azcore.HTTPResponse interfaces.
 type StorageError struct {
-	raw     string
-	Message *string `xml:"Message"`
-}
-
-// Error implements the error interface for type StorageError.
-// The contents of the error text are not contractual and subject to change.
-func (e StorageError) Error() string {
-	return e.raw
+	Message *string `json:"Message,omitempty"`
 }
 
 // StorageServiceProperties - Storage Service Properties.

@@ -11,7 +11,6 @@ package azkeyvault
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -37,7 +36,7 @@ func NewClient(pl runtime.Pipeline) *Client {
 
 // BackupCertificate - Requests that a backup of the specified certificate be downloaded to the client. All versions of the
 // certificate will be downloaded. This operation requires the certificates/backup permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
 // options - ClientBackupCertificateOptions contains the optional parameters for the Client.BackupCertificate method.
@@ -51,7 +50,7 @@ func (client *Client) BackupCertificate(ctx context.Context, vaultBaseURL string
 		return ClientBackupCertificateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientBackupCertificateResponse{}, client.backupCertificateHandleError(resp)
+		return ClientBackupCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.backupCertificateHandleResponse(resp)
 }
@@ -80,22 +79,9 @@ func (client *Client) backupCertificateCreateRequest(ctx context.Context, vaultB
 func (client *Client) backupCertificateHandleResponse(resp *http.Response) (ClientBackupCertificateResponse, error) {
 	result := ClientBackupCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BackupCertificateResult); err != nil {
-		return ClientBackupCertificateResponse{}, runtime.NewResponseError(err, resp)
+		return ClientBackupCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// backupCertificateHandleError handles the BackupCertificate error response.
-func (client *Client) backupCertificateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // BackupKey - The Key Backup operation exports a key from Azure Key Vault in a protected form. Note that this operation does
@@ -108,7 +94,7 @@ func (client *Client) backupCertificateHandleError(resp *http.Response) error {
 // a BACKUP from one geographical area cannot be restored to another
 // geographical area. For example, a backup from the US geographical area cannot be restored in an EU geographical area. This
 // operation requires the key/backup permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // options - ClientBackupKeyOptions contains the optional parameters for the Client.BackupKey method.
@@ -122,7 +108,7 @@ func (client *Client) BackupKey(ctx context.Context, vaultBaseURL string, keyNam
 		return ClientBackupKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientBackupKeyResponse{}, client.backupKeyHandleError(resp)
+		return ClientBackupKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.backupKeyHandleResponse(resp)
 }
@@ -151,27 +137,14 @@ func (client *Client) backupKeyCreateRequest(ctx context.Context, vaultBaseURL s
 func (client *Client) backupKeyHandleResponse(resp *http.Response) (ClientBackupKeyResponse, error) {
 	result := ClientBackupKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BackupKeyResult); err != nil {
-		return ClientBackupKeyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientBackupKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// backupKeyHandleError handles the BackupKey error response.
-func (client *Client) backupKeyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BackupSecret - Requests that a backup of the specified secret be downloaded to the client. All versions of the secret will
 // be downloaded. This operation requires the secrets/backup permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
 // options - ClientBackupSecretOptions contains the optional parameters for the Client.BackupSecret method.
@@ -185,7 +158,7 @@ func (client *Client) BackupSecret(ctx context.Context, vaultBaseURL string, sec
 		return ClientBackupSecretResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientBackupSecretResponse{}, client.backupSecretHandleError(resp)
+		return ClientBackupSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.backupSecretHandleResponse(resp)
 }
@@ -214,27 +187,14 @@ func (client *Client) backupSecretCreateRequest(ctx context.Context, vaultBaseUR
 func (client *Client) backupSecretHandleResponse(resp *http.Response) (ClientBackupSecretResponse, error) {
 	result := ClientBackupSecretResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BackupSecretResult); err != nil {
-		return ClientBackupSecretResponse{}, runtime.NewResponseError(err, resp)
+		return ClientBackupSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// backupSecretHandleError handles the BackupSecret error response.
-func (client *Client) backupSecretHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BackupStorageAccount - Requests that a backup of the specified storage account be downloaded to the client. This operation
 // requires the storage/backup permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // options - ClientBackupStorageAccountOptions contains the optional parameters for the Client.BackupStorageAccount method.
@@ -248,7 +208,7 @@ func (client *Client) BackupStorageAccount(ctx context.Context, vaultBaseURL str
 		return ClientBackupStorageAccountResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientBackupStorageAccountResponse{}, client.backupStorageAccountHandleError(resp)
+		return ClientBackupStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.backupStorageAccountHandleResponse(resp)
 }
@@ -277,27 +237,14 @@ func (client *Client) backupStorageAccountCreateRequest(ctx context.Context, vau
 func (client *Client) backupStorageAccountHandleResponse(resp *http.Response) (ClientBackupStorageAccountResponse, error) {
 	result := ClientBackupStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BackupStorageResult); err != nil {
-		return ClientBackupStorageAccountResponse{}, runtime.NewResponseError(err, resp)
+		return ClientBackupStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// backupStorageAccountHandleError handles the BackupStorageAccount error response.
-func (client *Client) backupStorageAccountHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // CreateCertificate - If this is the first version, the certificate resource is created. This operation requires the certificates/create
 // permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
 // parameters - The parameters to create a certificate.
@@ -312,7 +259,7 @@ func (client *Client) CreateCertificate(ctx context.Context, vaultBaseURL string
 		return ClientCreateCertificateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return ClientCreateCertificateResponse{}, client.createCertificateHandleError(resp)
+		return ClientCreateCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createCertificateHandleResponse(resp)
 }
@@ -341,28 +288,15 @@ func (client *Client) createCertificateCreateRequest(ctx context.Context, vaultB
 func (client *Client) createCertificateHandleResponse(resp *http.Response) (ClientCreateCertificateResponse, error) {
 	result := ClientCreateCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateOperation); err != nil {
-		return ClientCreateCertificateResponse{}, runtime.NewResponseError(err, resp)
+		return ClientCreateCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// createCertificateHandleError handles the CreateCertificate error response.
-func (client *Client) createCertificateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // CreateKey - The create key operation can be used to create any key type in Azure Key Vault. If the named key already exists,
 // Azure Key Vault creates a new version of the key. It requires the keys/create
 // permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name for the new key. The system will generate the version name for the new key.
 // parameters - The parameters to create a key.
@@ -377,7 +311,7 @@ func (client *Client) CreateKey(ctx context.Context, vaultBaseURL string, keyNam
 		return ClientCreateKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientCreateKeyResponse{}, client.createKeyHandleError(resp)
+		return ClientCreateKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createKeyHandleResponse(resp)
 }
@@ -406,22 +340,9 @@ func (client *Client) createKeyCreateRequest(ctx context.Context, vaultBaseURL s
 func (client *Client) createKeyHandleResponse(resp *http.Response) (ClientCreateKeyResponse, error) {
 	result := ClientCreateKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
-		return ClientCreateKeyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientCreateKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// createKeyHandleError handles the CreateKey error response.
-func (client *Client) createKeyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // Decrypt - The DECRYPT operation decrypts a well-formed block of ciphertext using the target encryption key and specified
@@ -429,7 +350,7 @@ func (client *Client) createKeyHandleError(resp *http.Response) error {
 // data may be decrypted, the size of this block is dependent on the target key and the algorithm to be used. The DECRYPT
 // operation applies to asymmetric and symmetric keys stored in Azure Key Vault
 // since it uses the private portion of the key. This operation requires the keys/decrypt permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // keyVersion - The version of the key.
@@ -445,7 +366,7 @@ func (client *Client) Decrypt(ctx context.Context, vaultBaseURL string, keyName 
 		return ClientDecryptResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientDecryptResponse{}, client.decryptHandleError(resp)
+		return ClientDecryptResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.decryptHandleResponse(resp)
 }
@@ -478,28 +399,15 @@ func (client *Client) decryptCreateRequest(ctx context.Context, vaultBaseURL str
 func (client *Client) decryptHandleResponse(resp *http.Response) (ClientDecryptResponse, error) {
 	result := ClientDecryptResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
-		return ClientDecryptResponse{}, runtime.NewResponseError(err, resp)
+		return ClientDecryptResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// decryptHandleError handles the Decrypt error response.
-func (client *Client) decryptHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // DeleteCertificate - Deletes all versions of a certificate object along with its associated policy. Delete certificate cannot
 // be used to remove individual versions of a certificate object. This operation requires the
 // certificates/delete permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
 // options - ClientDeleteCertificateOptions contains the optional parameters for the Client.DeleteCertificate method.
@@ -513,7 +421,7 @@ func (client *Client) DeleteCertificate(ctx context.Context, vaultBaseURL string
 		return ClientDeleteCertificateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientDeleteCertificateResponse{}, client.deleteCertificateHandleError(resp)
+		return ClientDeleteCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteCertificateHandleResponse(resp)
 }
@@ -542,27 +450,14 @@ func (client *Client) deleteCertificateCreateRequest(ctx context.Context, vaultB
 func (client *Client) deleteCertificateHandleResponse(resp *http.Response) (ClientDeleteCertificateResponse, error) {
 	result := ClientDeleteCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedCertificateBundle); err != nil {
-		return ClientDeleteCertificateResponse{}, runtime.NewResponseError(err, resp)
+		return ClientDeleteCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// deleteCertificateHandleError handles the DeleteCertificate error response.
-func (client *Client) deleteCertificateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DeleteCertificateContacts - Deletes the certificate contacts for a specified key vault certificate. This operation requires
 // the certificates/managecontacts permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientDeleteCertificateContactsOptions contains the optional parameters for the Client.DeleteCertificateContacts
 // method.
@@ -576,7 +471,7 @@ func (client *Client) DeleteCertificateContacts(ctx context.Context, vaultBaseUR
 		return ClientDeleteCertificateContactsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientDeleteCertificateContactsResponse{}, client.deleteCertificateContactsHandleError(resp)
+		return ClientDeleteCertificateContactsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteCertificateContactsHandleResponse(resp)
 }
@@ -601,27 +496,14 @@ func (client *Client) deleteCertificateContactsCreateRequest(ctx context.Context
 func (client *Client) deleteCertificateContactsHandleResponse(resp *http.Response) (ClientDeleteCertificateContactsResponse, error) {
 	result := ClientDeleteCertificateContactsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Contacts); err != nil {
-		return ClientDeleteCertificateContactsResponse{}, runtime.NewResponseError(err, resp)
+		return ClientDeleteCertificateContactsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// deleteCertificateContactsHandleError handles the DeleteCertificateContacts error response.
-func (client *Client) deleteCertificateContactsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DeleteCertificateIssuer - The DeleteCertificateIssuer operation permanently removes the specified certificate issuer from
 // the vault. This operation requires the certificates/manageissuers/deleteissuers permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // issuerName - The name of the issuer.
 // options - ClientDeleteCertificateIssuerOptions contains the optional parameters for the Client.DeleteCertificateIssuer
@@ -636,7 +518,7 @@ func (client *Client) DeleteCertificateIssuer(ctx context.Context, vaultBaseURL 
 		return ClientDeleteCertificateIssuerResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientDeleteCertificateIssuerResponse{}, client.deleteCertificateIssuerHandleError(resp)
+		return ClientDeleteCertificateIssuerResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteCertificateIssuerHandleResponse(resp)
 }
@@ -665,27 +547,14 @@ func (client *Client) deleteCertificateIssuerCreateRequest(ctx context.Context, 
 func (client *Client) deleteCertificateIssuerHandleResponse(resp *http.Response) (ClientDeleteCertificateIssuerResponse, error) {
 	result := ClientDeleteCertificateIssuerResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IssuerBundle); err != nil {
-		return ClientDeleteCertificateIssuerResponse{}, runtime.NewResponseError(err, resp)
+		return ClientDeleteCertificateIssuerResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// deleteCertificateIssuerHandleError handles the DeleteCertificateIssuer error response.
-func (client *Client) deleteCertificateIssuerHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DeleteCertificateOperation - Deletes the creation operation for a specified certificate that is in the process of being
 // created. The certificate is no longer created. This operation requires the certificates/update permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
 // options - ClientDeleteCertificateOperationOptions contains the optional parameters for the Client.DeleteCertificateOperation
@@ -700,7 +569,7 @@ func (client *Client) DeleteCertificateOperation(ctx context.Context, vaultBaseU
 		return ClientDeleteCertificateOperationResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientDeleteCertificateOperationResponse{}, client.deleteCertificateOperationHandleError(resp)
+		return ClientDeleteCertificateOperationResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteCertificateOperationHandleResponse(resp)
 }
@@ -729,28 +598,15 @@ func (client *Client) deleteCertificateOperationCreateRequest(ctx context.Contex
 func (client *Client) deleteCertificateOperationHandleResponse(resp *http.Response) (ClientDeleteCertificateOperationResponse, error) {
 	result := ClientDeleteCertificateOperationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateOperation); err != nil {
-		return ClientDeleteCertificateOperationResponse{}, runtime.NewResponseError(err, resp)
+		return ClientDeleteCertificateOperationResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// deleteCertificateOperationHandleError handles the DeleteCertificateOperation error response.
-func (client *Client) deleteCertificateOperationHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // DeleteKey - The delete key operation cannot be used to remove individual versions of a key. This operation removes the
 // cryptographic material associated with the key, which means the key is not usable for
 // Sign/Verify, Wrap/Unwrap or Encrypt/Decrypt operations. This operation requires the keys/delete permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key to delete.
 // options - ClientDeleteKeyOptions contains the optional parameters for the Client.DeleteKey method.
@@ -764,7 +620,7 @@ func (client *Client) DeleteKey(ctx context.Context, vaultBaseURL string, keyNam
 		return ClientDeleteKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientDeleteKeyResponse{}, client.deleteKeyHandleError(resp)
+		return ClientDeleteKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteKeyHandleResponse(resp)
 }
@@ -793,27 +649,14 @@ func (client *Client) deleteKeyCreateRequest(ctx context.Context, vaultBaseURL s
 func (client *Client) deleteKeyHandleResponse(resp *http.Response) (ClientDeleteKeyResponse, error) {
 	result := ClientDeleteKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKeyBundle); err != nil {
-		return ClientDeleteKeyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientDeleteKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// deleteKeyHandleError handles the DeleteKey error response.
-func (client *Client) deleteKeyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DeleteSasDefinition - Deletes a SAS definition from a specified storage account. This operation requires the storage/deletesas
 // permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // sasDefinitionName - The name of the SAS definition.
@@ -828,7 +671,7 @@ func (client *Client) DeleteSasDefinition(ctx context.Context, vaultBaseURL stri
 		return ClientDeleteSasDefinitionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientDeleteSasDefinitionResponse{}, client.deleteSasDefinitionHandleError(resp)
+		return ClientDeleteSasDefinitionResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteSasDefinitionHandleResponse(resp)
 }
@@ -861,27 +704,14 @@ func (client *Client) deleteSasDefinitionCreateRequest(ctx context.Context, vaul
 func (client *Client) deleteSasDefinitionHandleResponse(resp *http.Response) (ClientDeleteSasDefinitionResponse, error) {
 	result := ClientDeleteSasDefinitionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSasDefinitionBundle); err != nil {
-		return ClientDeleteSasDefinitionResponse{}, runtime.NewResponseError(err, resp)
+		return ClientDeleteSasDefinitionResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// deleteSasDefinitionHandleError handles the DeleteSasDefinition error response.
-func (client *Client) deleteSasDefinitionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DeleteSecret - The DELETE operation applies to any secret stored in Azure Key Vault. DELETE cannot be applied to an individual
 // version of a secret. This operation requires the secrets/delete permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
 // options - ClientDeleteSecretOptions contains the optional parameters for the Client.DeleteSecret method.
@@ -895,7 +725,7 @@ func (client *Client) DeleteSecret(ctx context.Context, vaultBaseURL string, sec
 		return ClientDeleteSecretResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientDeleteSecretResponse{}, client.deleteSecretHandleError(resp)
+		return ClientDeleteSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteSecretHandleResponse(resp)
 }
@@ -924,26 +754,13 @@ func (client *Client) deleteSecretCreateRequest(ctx context.Context, vaultBaseUR
 func (client *Client) deleteSecretHandleResponse(resp *http.Response) (ClientDeleteSecretResponse, error) {
 	result := ClientDeleteSecretResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSecretBundle); err != nil {
-		return ClientDeleteSecretResponse{}, runtime.NewResponseError(err, resp)
+		return ClientDeleteSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// deleteSecretHandleError handles the DeleteSecret error response.
-func (client *Client) deleteSecretHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DeleteStorageAccount - Deletes a storage account. This operation requires the storage/delete permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // options - ClientDeleteStorageAccountOptions contains the optional parameters for the Client.DeleteStorageAccount method.
@@ -957,7 +774,7 @@ func (client *Client) DeleteStorageAccount(ctx context.Context, vaultBaseURL str
 		return ClientDeleteStorageAccountResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientDeleteStorageAccountResponse{}, client.deleteStorageAccountHandleError(resp)
+		return ClientDeleteStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteStorageAccountHandleResponse(resp)
 }
@@ -986,22 +803,9 @@ func (client *Client) deleteStorageAccountCreateRequest(ctx context.Context, vau
 func (client *Client) deleteStorageAccountHandleResponse(resp *http.Response) (ClientDeleteStorageAccountResponse, error) {
 	result := ClientDeleteStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedStorageBundle); err != nil {
-		return ClientDeleteStorageAccountResponse{}, runtime.NewResponseError(err, resp)
+		return ClientDeleteStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// deleteStorageAccountHandleError handles the DeleteStorageAccount error response.
-func (client *Client) deleteStorageAccountHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // Encrypt - The ENCRYPT operation encrypts an arbitrary sequence of bytes using an encryption key that is stored in Azure
@@ -1011,7 +815,7 @@ func (client *Client) deleteStorageAccountHandleError(resp *http.Response) error
 // asymmetric key can be performed using public portion of the key. This operation is supported for asymmetric keys as a convenience
 // for callers that have a key-reference but do not have access to the
 // public key material. This operation requires the keys/encrypt permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // keyVersion - The version of the key.
@@ -1027,7 +831,7 @@ func (client *Client) Encrypt(ctx context.Context, vaultBaseURL string, keyName 
 		return ClientEncryptResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientEncryptResponse{}, client.encryptHandleError(resp)
+		return ClientEncryptResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.encryptHandleResponse(resp)
 }
@@ -1060,26 +864,13 @@ func (client *Client) encryptCreateRequest(ctx context.Context, vaultBaseURL str
 func (client *Client) encryptHandleResponse(resp *http.Response) (ClientEncryptResponse, error) {
 	result := ClientEncryptResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
-		return ClientEncryptResponse{}, runtime.NewResponseError(err, resp)
+		return ClientEncryptResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// encryptHandleError handles the Encrypt error response.
-func (client *Client) encryptHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginFullBackup - Creates a full backup using a user-provided SAS token to an Azure blob storage container.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientBeginFullBackupOptions contains the optional parameters for the Client.BeginFullBackup method.
 func (client *Client) BeginFullBackup(ctx context.Context, vaultBaseURL string, options *ClientBeginFullBackupOptions) (ClientFullBackupPollerResponse, error) {
@@ -1090,7 +881,7 @@ func (client *Client) BeginFullBackup(ctx context.Context, vaultBaseURL string, 
 	result := ClientFullBackupPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("Client.FullBackup", resp, client.pl, client.fullBackupHandleError)
+	pt, err := runtime.NewPoller("Client.FullBackup", resp, client.pl)
 	if err != nil {
 		return ClientFullBackupPollerResponse{}, err
 	}
@@ -1101,7 +892,7 @@ func (client *Client) BeginFullBackup(ctx context.Context, vaultBaseURL string, 
 }
 
 // FullBackup - Creates a full backup using a user-provided SAS token to an Azure blob storage container.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *Client) fullBackup(ctx context.Context, vaultBaseURL string, options *ClientBeginFullBackupOptions) (*http.Response, error) {
 	req, err := client.fullBackupCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
@@ -1112,7 +903,7 @@ func (client *Client) fullBackup(ctx context.Context, vaultBaseURL string, optio
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return nil, client.fullBackupHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -1136,21 +927,8 @@ func (client *Client) fullBackupCreateRequest(ctx context.Context, vaultBaseURL 
 	return req, nil
 }
 
-// fullBackupHandleError handles the FullBackup error response.
-func (client *Client) fullBackupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // FullBackupStatus - Returns the status of full backup operation
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // jobID - The id returned as part of the backup request
 // options - ClientFullBackupStatusOptions contains the optional parameters for the Client.FullBackupStatus method.
@@ -1164,7 +942,7 @@ func (client *Client) FullBackupStatus(ctx context.Context, vaultBaseURL string,
 		return ClientFullBackupStatusResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientFullBackupStatusResponse{}, client.fullBackupStatusHandleError(resp)
+		return ClientFullBackupStatusResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.fullBackupStatusHandleResponse(resp)
 }
@@ -1193,27 +971,14 @@ func (client *Client) fullBackupStatusCreateRequest(ctx context.Context, vaultBa
 func (client *Client) fullBackupStatusHandleResponse(resp *http.Response) (ClientFullBackupStatusResponse, error) {
 	result := ClientFullBackupStatusResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FullBackupOperation); err != nil {
-		return ClientFullBackupStatusResponse{}, runtime.NewResponseError(err, resp)
+		return ClientFullBackupStatusResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// fullBackupStatusHandleError handles the FullBackupStatus error response.
-func (client *Client) fullBackupStatusHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginFullRestoreOperation - Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage
 // backup folder
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientBeginFullRestoreOperationOptions contains the optional parameters for the Client.BeginFullRestoreOperation
 // method.
@@ -1225,7 +990,7 @@ func (client *Client) BeginFullRestoreOperation(ctx context.Context, vaultBaseUR
 	result := ClientFullRestoreOperationPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("Client.FullRestoreOperation", resp, client.pl, client.fullRestoreOperationHandleError)
+	pt, err := runtime.NewPoller("Client.FullRestoreOperation", resp, client.pl)
 	if err != nil {
 		return ClientFullRestoreOperationPollerResponse{}, err
 	}
@@ -1237,7 +1002,7 @@ func (client *Client) BeginFullRestoreOperation(ctx context.Context, vaultBaseUR
 
 // FullRestoreOperation - Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage
 // backup folder
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *Client) fullRestoreOperation(ctx context.Context, vaultBaseURL string, options *ClientBeginFullRestoreOperationOptions) (*http.Response, error) {
 	req, err := client.fullRestoreOperationCreateRequest(ctx, vaultBaseURL, options)
 	if err != nil {
@@ -1248,7 +1013,7 @@ func (client *Client) fullRestoreOperation(ctx context.Context, vaultBaseURL str
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return nil, client.fullRestoreOperationHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -1272,21 +1037,8 @@ func (client *Client) fullRestoreOperationCreateRequest(ctx context.Context, vau
 	return req, nil
 }
 
-// fullRestoreOperationHandleError handles the FullRestoreOperation error response.
-func (client *Client) fullRestoreOperationHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetCertificate - Gets information about a specific certificate. This operation requires the certificates/get permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate in the given vault.
 // certificateVersion - The version of the certificate. This URI fragment is optional. If not specified, the latest version
@@ -1302,7 +1054,7 @@ func (client *Client) GetCertificate(ctx context.Context, vaultBaseURL string, c
 		return ClientGetCertificateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetCertificateResponse{}, client.getCertificateHandleError(resp)
+		return ClientGetCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getCertificateHandleResponse(resp)
 }
@@ -1335,27 +1087,14 @@ func (client *Client) getCertificateCreateRequest(ctx context.Context, vaultBase
 func (client *Client) getCertificateHandleResponse(resp *http.Response) (ClientGetCertificateResponse, error) {
 	result := ClientGetCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
-		return ClientGetCertificateResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getCertificateHandleError handles the GetCertificate error response.
-func (client *Client) getCertificateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetCertificateContacts - The GetCertificateContacts operation returns the set of certificate contact resources in the specified
 // key vault. This operation requires the certificates/managecontacts permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetCertificateContactsOptions contains the optional parameters for the Client.GetCertificateContacts method.
 func (client *Client) GetCertificateContacts(ctx context.Context, vaultBaseURL string, options *ClientGetCertificateContactsOptions) (ClientGetCertificateContactsResponse, error) {
@@ -1368,7 +1107,7 @@ func (client *Client) GetCertificateContacts(ctx context.Context, vaultBaseURL s
 		return ClientGetCertificateContactsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetCertificateContactsResponse{}, client.getCertificateContactsHandleError(resp)
+		return ClientGetCertificateContactsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getCertificateContactsHandleResponse(resp)
 }
@@ -1393,27 +1132,14 @@ func (client *Client) getCertificateContactsCreateRequest(ctx context.Context, v
 func (client *Client) getCertificateContactsHandleResponse(resp *http.Response) (ClientGetCertificateContactsResponse, error) {
 	result := ClientGetCertificateContactsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Contacts); err != nil {
-		return ClientGetCertificateContactsResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetCertificateContactsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getCertificateContactsHandleError handles the GetCertificateContacts error response.
-func (client *Client) getCertificateContactsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetCertificateIssuer - The GetCertificateIssuer operation returns the specified certificate issuer resources in the specified
 // key vault. This operation requires the certificates/manageissuers/getissuers permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // issuerName - The name of the issuer.
 // options - ClientGetCertificateIssuerOptions contains the optional parameters for the Client.GetCertificateIssuer method.
@@ -1427,7 +1153,7 @@ func (client *Client) GetCertificateIssuer(ctx context.Context, vaultBaseURL str
 		return ClientGetCertificateIssuerResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetCertificateIssuerResponse{}, client.getCertificateIssuerHandleError(resp)
+		return ClientGetCertificateIssuerResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getCertificateIssuerHandleResponse(resp)
 }
@@ -1456,27 +1182,14 @@ func (client *Client) getCertificateIssuerCreateRequest(ctx context.Context, vau
 func (client *Client) getCertificateIssuerHandleResponse(resp *http.Response) (ClientGetCertificateIssuerResponse, error) {
 	result := ClientGetCertificateIssuerResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IssuerBundle); err != nil {
-		return ClientGetCertificateIssuerResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetCertificateIssuerResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getCertificateIssuerHandleError handles the GetCertificateIssuer error response.
-func (client *Client) getCertificateIssuerHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetCertificateIssuers - The GetCertificateIssuers operation returns the set of certificate issuer resources in the specified
 // key vault. This operation requires the certificates/manageissuers/getissuers permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetCertificateIssuersOptions contains the optional parameters for the Client.GetCertificateIssuers method.
 func (client *Client) GetCertificateIssuers(vaultBaseURL string, options *ClientGetCertificateIssuersOptions) *ClientGetCertificateIssuersPager {
@@ -1514,27 +1227,14 @@ func (client *Client) getCertificateIssuersCreateRequest(ctx context.Context, va
 func (client *Client) getCertificateIssuersHandleResponse(resp *http.Response) (ClientGetCertificateIssuersResponse, error) {
 	result := ClientGetCertificateIssuersResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateIssuerListResult); err != nil {
-		return ClientGetCertificateIssuersResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetCertificateIssuersResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getCertificateIssuersHandleError handles the GetCertificateIssuers error response.
-func (client *Client) getCertificateIssuersHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetCertificateOperation - Gets the creation operation associated with a specified certificate. This operation requires
 // the certificates/get permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
 // options - ClientGetCertificateOperationOptions contains the optional parameters for the Client.GetCertificateOperation
@@ -1549,7 +1249,7 @@ func (client *Client) GetCertificateOperation(ctx context.Context, vaultBaseURL 
 		return ClientGetCertificateOperationResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetCertificateOperationResponse{}, client.getCertificateOperationHandleError(resp)
+		return ClientGetCertificateOperationResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getCertificateOperationHandleResponse(resp)
 }
@@ -1578,27 +1278,14 @@ func (client *Client) getCertificateOperationCreateRequest(ctx context.Context, 
 func (client *Client) getCertificateOperationHandleResponse(resp *http.Response) (ClientGetCertificateOperationResponse, error) {
 	result := ClientGetCertificateOperationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateOperation); err != nil {
-		return ClientGetCertificateOperationResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetCertificateOperationResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getCertificateOperationHandleError handles the GetCertificateOperation error response.
-func (client *Client) getCertificateOperationHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetCertificatePolicy - The GetCertificatePolicy operation returns the specified certificate policy resources in the specified
 // key vault. This operation requires the certificates/get permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate in a given key vault.
 // options - ClientGetCertificatePolicyOptions contains the optional parameters for the Client.GetCertificatePolicy method.
@@ -1612,7 +1299,7 @@ func (client *Client) GetCertificatePolicy(ctx context.Context, vaultBaseURL str
 		return ClientGetCertificatePolicyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetCertificatePolicyResponse{}, client.getCertificatePolicyHandleError(resp)
+		return ClientGetCertificatePolicyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getCertificatePolicyHandleResponse(resp)
 }
@@ -1641,27 +1328,14 @@ func (client *Client) getCertificatePolicyCreateRequest(ctx context.Context, vau
 func (client *Client) getCertificatePolicyHandleResponse(resp *http.Response) (ClientGetCertificatePolicyResponse, error) {
 	result := ClientGetCertificatePolicyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificatePolicy); err != nil {
-		return ClientGetCertificatePolicyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetCertificatePolicyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getCertificatePolicyHandleError handles the GetCertificatePolicy error response.
-func (client *Client) getCertificatePolicyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetCertificateVersions - The GetCertificateVersions operation returns the versions of a certificate in the specified key
 // vault. This operation requires the certificates/list permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
 // options - ClientGetCertificateVersionsOptions contains the optional parameters for the Client.GetCertificateVersions method.
@@ -1704,27 +1378,14 @@ func (client *Client) getCertificateVersionsCreateRequest(ctx context.Context, v
 func (client *Client) getCertificateVersionsHandleResponse(resp *http.Response) (ClientGetCertificateVersionsResponse, error) {
 	result := ClientGetCertificateVersionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateListResult); err != nil {
-		return ClientGetCertificateVersionsResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetCertificateVersionsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getCertificateVersionsHandleError handles the GetCertificateVersions error response.
-func (client *Client) getCertificateVersionsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetCertificates - The GetCertificates operation returns the set of certificates resources in the specified key vault. This
 // operation requires the certificates/list permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetCertificatesOptions contains the optional parameters for the Client.GetCertificates method.
 func (client *Client) GetCertificates(vaultBaseURL string, options *ClientGetCertificatesOptions) *ClientGetCertificatesPager {
@@ -1765,28 +1426,15 @@ func (client *Client) getCertificatesCreateRequest(ctx context.Context, vaultBas
 func (client *Client) getCertificatesHandleResponse(resp *http.Response) (ClientGetCertificatesResponse, error) {
 	result := ClientGetCertificatesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateListResult); err != nil {
-		return ClientGetCertificatesResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetCertificatesResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// getCertificatesHandleError handles the GetCertificates error response.
-func (client *Client) getCertificatesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDeletedCertificate - The GetDeletedCertificate operation retrieves the deleted certificate information plus its attributes,
 // such as retention interval, scheduled permanent deletion and the current deletion recovery level.
 // This operation requires the certificates/get permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate
 // options - ClientGetDeletedCertificateOptions contains the optional parameters for the Client.GetDeletedCertificate method.
@@ -1800,7 +1448,7 @@ func (client *Client) GetDeletedCertificate(ctx context.Context, vaultBaseURL st
 		return ClientGetDeletedCertificateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetDeletedCertificateResponse{}, client.getDeletedCertificateHandleError(resp)
+		return ClientGetDeletedCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDeletedCertificateHandleResponse(resp)
 }
@@ -1829,29 +1477,16 @@ func (client *Client) getDeletedCertificateCreateRequest(ctx context.Context, va
 func (client *Client) getDeletedCertificateHandleResponse(resp *http.Response) (ClientGetDeletedCertificateResponse, error) {
 	result := ClientGetDeletedCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedCertificateBundle); err != nil {
-		return ClientGetDeletedCertificateResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetDeletedCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// getDeletedCertificateHandleError handles the GetDeletedCertificate error response.
-func (client *Client) getDeletedCertificateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDeletedCertificates - The GetDeletedCertificates operation retrieves the certificates in the current vault which are
 // in a deleted state and ready for recovery or purging. This operation includes deletion-specific
 // information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete
 // enabled vaults.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedCertificatesOptions contains the optional parameters for the Client.GetDeletedCertificates method.
 func (client *Client) GetDeletedCertificates(vaultBaseURL string, options *ClientGetDeletedCertificatesOptions) *ClientGetDeletedCertificatesPager {
@@ -1892,28 +1527,15 @@ func (client *Client) getDeletedCertificatesCreateRequest(ctx context.Context, v
 func (client *Client) getDeletedCertificatesHandleResponse(resp *http.Response) (ClientGetDeletedCertificatesResponse, error) {
 	result := ClientGetDeletedCertificatesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedCertificateListResult); err != nil {
-		return ClientGetDeletedCertificatesResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetDeletedCertificatesResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// getDeletedCertificatesHandleError handles the GetDeletedCertificates error response.
-func (client *Client) getDeletedCertificatesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDeletedKey - The Get Deleted Key operation is applicable for soft-delete enabled vaults. While the operation can be
 // invoked on any vault, it will return an error if invoked on a non soft-delete enabled vault. This
 // operation requires the keys/get permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // options - ClientGetDeletedKeyOptions contains the optional parameters for the Client.GetDeletedKey method.
@@ -1927,7 +1549,7 @@ func (client *Client) GetDeletedKey(ctx context.Context, vaultBaseURL string, ke
 		return ClientGetDeletedKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetDeletedKeyResponse{}, client.getDeletedKeyHandleError(resp)
+		return ClientGetDeletedKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDeletedKeyHandleResponse(resp)
 }
@@ -1956,22 +1578,9 @@ func (client *Client) getDeletedKeyCreateRequest(ctx context.Context, vaultBaseU
 func (client *Client) getDeletedKeyHandleResponse(resp *http.Response) (ClientGetDeletedKeyResponse, error) {
 	result := ClientGetDeletedKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKeyBundle); err != nil {
-		return ClientGetDeletedKeyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetDeletedKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// getDeletedKeyHandleError handles the GetDeletedKey error response.
-func (client *Client) getDeletedKeyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetDeletedKeys - Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public part
@@ -1979,7 +1588,7 @@ func (client *Client) getDeletedKeyHandleError(resp *http.Response) error {
 // operation is applicable for vaults enabled for soft-delete. While the operation can be invoked on any vault, it will return
 // an error if invoked on a non soft-delete enabled vault. This operation
 // requires the keys/list permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedKeysOptions contains the optional parameters for the Client.GetDeletedKeys method.
 func (client *Client) GetDeletedKeys(vaultBaseURL string, options *ClientGetDeletedKeysOptions) *ClientGetDeletedKeysPager {
@@ -2017,27 +1626,14 @@ func (client *Client) getDeletedKeysCreateRequest(ctx context.Context, vaultBase
 func (client *Client) getDeletedKeysHandleResponse(resp *http.Response) (ClientGetDeletedKeysResponse, error) {
 	result := ClientGetDeletedKeysResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedKeyListResult); err != nil {
-		return ClientGetDeletedKeysResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetDeletedKeysResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDeletedKeysHandleError handles the GetDeletedKeys error response.
-func (client *Client) getDeletedKeysHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDeletedSasDefinition - The Get Deleted SAS Definition operation returns the specified deleted SAS definition along with
 // its attributes. This operation requires the storage/getsas permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // sasDefinitionName - The name of the SAS definition.
@@ -2053,7 +1649,7 @@ func (client *Client) GetDeletedSasDefinition(ctx context.Context, vaultBaseURL 
 		return ClientGetDeletedSasDefinitionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetDeletedSasDefinitionResponse{}, client.getDeletedSasDefinitionHandleError(resp)
+		return ClientGetDeletedSasDefinitionResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDeletedSasDefinitionHandleResponse(resp)
 }
@@ -2086,27 +1682,14 @@ func (client *Client) getDeletedSasDefinitionCreateRequest(ctx context.Context, 
 func (client *Client) getDeletedSasDefinitionHandleResponse(resp *http.Response) (ClientGetDeletedSasDefinitionResponse, error) {
 	result := ClientGetDeletedSasDefinitionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSasDefinitionBundle); err != nil {
-		return ClientGetDeletedSasDefinitionResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetDeletedSasDefinitionResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDeletedSasDefinitionHandleError handles the GetDeletedSasDefinition error response.
-func (client *Client) getDeletedSasDefinitionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDeletedSasDefinitions - The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted
 // for a vault enabled for soft-delete. This operation requires the storage/listsas permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // options - ClientGetDeletedSasDefinitionsOptions contains the optional parameters for the Client.GetDeletedSasDefinitions
@@ -2150,27 +1733,14 @@ func (client *Client) getDeletedSasDefinitionsCreateRequest(ctx context.Context,
 func (client *Client) getDeletedSasDefinitionsHandleResponse(resp *http.Response) (ClientGetDeletedSasDefinitionsResponse, error) {
 	result := ClientGetDeletedSasDefinitionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSasDefinitionListResult); err != nil {
-		return ClientGetDeletedSasDefinitionsResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetDeletedSasDefinitionsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDeletedSasDefinitionsHandleError handles the GetDeletedSasDefinitions error response.
-func (client *Client) getDeletedSasDefinitionsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDeletedSecret - The Get Deleted Secret operation returns the specified deleted secret along with its attributes. This
 // operation requires the secrets/get permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
 // options - ClientGetDeletedSecretOptions contains the optional parameters for the Client.GetDeletedSecret method.
@@ -2184,7 +1754,7 @@ func (client *Client) GetDeletedSecret(ctx context.Context, vaultBaseURL string,
 		return ClientGetDeletedSecretResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetDeletedSecretResponse{}, client.getDeletedSecretHandleError(resp)
+		return ClientGetDeletedSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDeletedSecretHandleResponse(resp)
 }
@@ -2213,27 +1783,14 @@ func (client *Client) getDeletedSecretCreateRequest(ctx context.Context, vaultBa
 func (client *Client) getDeletedSecretHandleResponse(resp *http.Response) (ClientGetDeletedSecretResponse, error) {
 	result := ClientGetDeletedSecretResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSecretBundle); err != nil {
-		return ClientGetDeletedSecretResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetDeletedSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDeletedSecretHandleError handles the GetDeletedSecret error response.
-func (client *Client) getDeletedSecretHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDeletedSecrets - The Get Deleted Secrets operation returns the secrets that have been deleted for a vault enabled for
 // soft-delete. This operation requires the secrets/list permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedSecretsOptions contains the optional parameters for the Client.GetDeletedSecrets method.
 func (client *Client) GetDeletedSecrets(vaultBaseURL string, options *ClientGetDeletedSecretsOptions) *ClientGetDeletedSecretsPager {
@@ -2271,27 +1828,14 @@ func (client *Client) getDeletedSecretsCreateRequest(ctx context.Context, vaultB
 func (client *Client) getDeletedSecretsHandleResponse(resp *http.Response) (ClientGetDeletedSecretsResponse, error) {
 	result := ClientGetDeletedSecretsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedSecretListResult); err != nil {
-		return ClientGetDeletedSecretsResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetDeletedSecretsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDeletedSecretsHandleError handles the GetDeletedSecrets error response.
-func (client *Client) getDeletedSecretsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDeletedStorageAccount - The Get Deleted Storage Account operation returns the specified deleted storage account along
 // with its attributes. This operation requires the storage/get permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // options - ClientGetDeletedStorageAccountOptions contains the optional parameters for the Client.GetDeletedStorageAccount
@@ -2306,7 +1850,7 @@ func (client *Client) GetDeletedStorageAccount(ctx context.Context, vaultBaseURL
 		return ClientGetDeletedStorageAccountResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetDeletedStorageAccountResponse{}, client.getDeletedStorageAccountHandleError(resp)
+		return ClientGetDeletedStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDeletedStorageAccountHandleResponse(resp)
 }
@@ -2335,27 +1879,14 @@ func (client *Client) getDeletedStorageAccountCreateRequest(ctx context.Context,
 func (client *Client) getDeletedStorageAccountHandleResponse(resp *http.Response) (ClientGetDeletedStorageAccountResponse, error) {
 	result := ClientGetDeletedStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedStorageBundle); err != nil {
-		return ClientGetDeletedStorageAccountResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetDeletedStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDeletedStorageAccountHandleError handles the GetDeletedStorageAccount error response.
-func (client *Client) getDeletedStorageAccountHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDeletedStorageAccounts - The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted
 // for a vault enabled for soft-delete. This operation requires the storage/list permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetDeletedStorageAccountsOptions contains the optional parameters for the Client.GetDeletedStorageAccounts
 // method.
@@ -2394,27 +1925,14 @@ func (client *Client) getDeletedStorageAccountsCreateRequest(ctx context.Context
 func (client *Client) getDeletedStorageAccountsHandleResponse(resp *http.Response) (ClientGetDeletedStorageAccountsResponse, error) {
 	result := ClientGetDeletedStorageAccountsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeletedStorageListResult); err != nil {
-		return ClientGetDeletedStorageAccountsResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetDeletedStorageAccountsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDeletedStorageAccountsHandleError handles the GetDeletedStorageAccounts error response.
-func (client *Client) getDeletedStorageAccountsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetKey - The get key operation is applicable to all key types. If the requested key is symmetric, then no key material
 // is released in the response. This operation requires the keys/get permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key to get.
 // keyVersion - Adding the version parameter retrieves a specific version of a key. This URI fragment is optional. If not
@@ -2430,7 +1948,7 @@ func (client *Client) GetKey(ctx context.Context, vaultBaseURL string, keyName s
 		return ClientGetKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetKeyResponse{}, client.getKeyHandleError(resp)
+		return ClientGetKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getKeyHandleResponse(resp)
 }
@@ -2463,27 +1981,14 @@ func (client *Client) getKeyCreateRequest(ctx context.Context, vaultBaseURL stri
 func (client *Client) getKeyHandleResponse(resp *http.Response) (ClientGetKeyResponse, error) {
 	result := ClientGetKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
-		return ClientGetKeyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getKeyHandleError handles the GetKey error response.
-func (client *Client) getKeyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetKeyVersions - The full key identifier, attributes, and tags are provided in the response. This operation requires the
 // keys/list permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // options - ClientGetKeyVersionsOptions contains the optional parameters for the Client.GetKeyVersions method.
@@ -2526,29 +2031,16 @@ func (client *Client) getKeyVersionsCreateRequest(ctx context.Context, vaultBase
 func (client *Client) getKeyVersionsHandleResponse(resp *http.Response) (ClientGetKeyVersionsResponse, error) {
 	result := ClientGetKeyVersionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyListResult); err != nil {
-		return ClientGetKeyVersionsResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetKeyVersionsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// getKeyVersionsHandleError handles the GetKeyVersions error response.
-func (client *Client) getKeyVersionsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetKeys - Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public part of a stored
 // key. The LIST operation is applicable to all key types, however only the base key
 // identifier, attributes, and tags are provided in the response. Individual versions of a key are not listed in the response.
 // This operation requires the keys/list permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetKeysOptions contains the optional parameters for the Client.GetKeys method.
 func (client *Client) GetKeys(vaultBaseURL string, options *ClientGetKeysOptions) *ClientGetKeysPager {
@@ -2586,27 +2078,14 @@ func (client *Client) getKeysCreateRequest(ctx context.Context, vaultBaseURL str
 func (client *Client) getKeysHandleResponse(resp *http.Response) (ClientGetKeysResponse, error) {
 	result := ClientGetKeysResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyListResult); err != nil {
-		return ClientGetKeysResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetKeysResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getKeysHandleError handles the GetKeys error response.
-func (client *Client) getKeysHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetSasDefinition - Gets information about a SAS definition for the specified storage account. This operation requires the
 // storage/getsas permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // sasDefinitionName - The name of the SAS definition.
@@ -2621,7 +2100,7 @@ func (client *Client) GetSasDefinition(ctx context.Context, vaultBaseURL string,
 		return ClientGetSasDefinitionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetSasDefinitionResponse{}, client.getSasDefinitionHandleError(resp)
+		return ClientGetSasDefinitionResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getSasDefinitionHandleResponse(resp)
 }
@@ -2654,27 +2133,14 @@ func (client *Client) getSasDefinitionCreateRequest(ctx context.Context, vaultBa
 func (client *Client) getSasDefinitionHandleResponse(resp *http.Response) (ClientGetSasDefinitionResponse, error) {
 	result := ClientGetSasDefinitionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionBundle); err != nil {
-		return ClientGetSasDefinitionResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetSasDefinitionResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getSasDefinitionHandleError handles the GetSasDefinition error response.
-func (client *Client) getSasDefinitionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetSasDefinitions - List storage SAS definitions for the given storage account. This operation requires the storage/listsas
 // permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // options - ClientGetSasDefinitionsOptions contains the optional parameters for the Client.GetSasDefinitions method.
@@ -2717,27 +2183,14 @@ func (client *Client) getSasDefinitionsCreateRequest(ctx context.Context, vaultB
 func (client *Client) getSasDefinitionsHandleResponse(resp *http.Response) (ClientGetSasDefinitionsResponse, error) {
 	result := ClientGetSasDefinitionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionListResult); err != nil {
-		return ClientGetSasDefinitionsResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetSasDefinitionsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getSasDefinitionsHandleError handles the GetSasDefinitions error response.
-func (client *Client) getSasDefinitionsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetSecret - The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get
 // permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
 // secretVersion - The version of the secret. This URI fragment is optional. If not specified, the latest version of the secret
@@ -2753,7 +2206,7 @@ func (client *Client) GetSecret(ctx context.Context, vaultBaseURL string, secret
 		return ClientGetSecretResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetSecretResponse{}, client.getSecretHandleError(resp)
+		return ClientGetSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getSecretHandleResponse(resp)
 }
@@ -2786,27 +2239,14 @@ func (client *Client) getSecretCreateRequest(ctx context.Context, vaultBaseURL s
 func (client *Client) getSecretHandleResponse(resp *http.Response) (ClientGetSecretResponse, error) {
 	result := ClientGetSecretResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
-		return ClientGetSecretResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getSecretHandleError handles the GetSecret error response.
-func (client *Client) getSecretHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetSecretVersions - The full secret identifier and attributes are provided in the response. No values are returned for
 // the secrets. This operations requires the secrets/list permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
 // options - ClientGetSecretVersionsOptions contains the optional parameters for the Client.GetSecretVersions method.
@@ -2849,28 +2289,15 @@ func (client *Client) getSecretVersionsCreateRequest(ctx context.Context, vaultB
 func (client *Client) getSecretVersionsHandleResponse(resp *http.Response) (ClientGetSecretVersionsResponse, error) {
 	result := ClientGetSecretVersionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretListResult); err != nil {
-		return ClientGetSecretVersionsResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetSecretVersionsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// getSecretVersionsHandleError handles the GetSecretVersions error response.
-func (client *Client) getSecretVersionsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // GetSecrets - The Get Secrets operation is applicable to the entire vault. However, only the base secret identifier and
 // its attributes are provided in the response. Individual secret versions are not listed in the
 // response. This operation requires the secrets/list permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetSecretsOptions contains the optional parameters for the Client.GetSecrets method.
 func (client *Client) GetSecrets(vaultBaseURL string, options *ClientGetSecretsOptions) *ClientGetSecretsPager {
@@ -2908,26 +2335,13 @@ func (client *Client) getSecretsCreateRequest(ctx context.Context, vaultBaseURL 
 func (client *Client) getSecretsHandleResponse(resp *http.Response) (ClientGetSecretsResponse, error) {
 	result := ClientGetSecretsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretListResult); err != nil {
-		return ClientGetSecretsResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetSecretsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getSecretsHandleError handles the GetSecrets error response.
-func (client *Client) getSecretsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetStorageAccount - Gets information about a specified storage account. This operation requires the storage/get permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // options - ClientGetStorageAccountOptions contains the optional parameters for the Client.GetStorageAccount method.
@@ -2941,7 +2355,7 @@ func (client *Client) GetStorageAccount(ctx context.Context, vaultBaseURL string
 		return ClientGetStorageAccountResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetStorageAccountResponse{}, client.getStorageAccountHandleError(resp)
+		return ClientGetStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getStorageAccountHandleResponse(resp)
 }
@@ -2970,27 +2384,14 @@ func (client *Client) getStorageAccountCreateRequest(ctx context.Context, vaultB
 func (client *Client) getStorageAccountHandleResponse(resp *http.Response) (ClientGetStorageAccountResponse, error) {
 	result := ClientGetStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
-		return ClientGetStorageAccountResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getStorageAccountHandleError handles the GetStorageAccount error response.
-func (client *Client) getStorageAccountHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetStorageAccounts - List storage accounts managed by the specified key vault. This operation requires the storage/list
 // permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // options - ClientGetStorageAccountsOptions contains the optional parameters for the Client.GetStorageAccounts method.
 func (client *Client) GetStorageAccounts(vaultBaseURL string, options *ClientGetStorageAccountsOptions) *ClientGetStorageAccountsPager {
@@ -3028,28 +2429,15 @@ func (client *Client) getStorageAccountsCreateRequest(ctx context.Context, vault
 func (client *Client) getStorageAccountsHandleResponse(resp *http.Response) (ClientGetStorageAccountsResponse, error) {
 	result := ClientGetStorageAccountsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageListResult); err != nil {
-		return ClientGetStorageAccountsResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetStorageAccountsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// getStorageAccountsHandleError handles the GetStorageAccounts error response.
-func (client *Client) getStorageAccountsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // ImportCertificate - Imports an existing valid certificate, containing a private key, into Azure Key Vault. The certificate
 // to be imported can be in either PFX or PEM format. If the certificate is in PEM format the PEM
 // file must contain the key as well as x509 certificates. This operation requires the certificates/import permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
 // parameters - The parameters to import the certificate.
@@ -3064,7 +2452,7 @@ func (client *Client) ImportCertificate(ctx context.Context, vaultBaseURL string
 		return ClientImportCertificateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientImportCertificateResponse{}, client.importCertificateHandleError(resp)
+		return ClientImportCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.importCertificateHandleResponse(resp)
 }
@@ -3093,28 +2481,15 @@ func (client *Client) importCertificateCreateRequest(ctx context.Context, vaultB
 func (client *Client) importCertificateHandleResponse(resp *http.Response) (ClientImportCertificateResponse, error) {
 	result := ClientImportCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
-		return ClientImportCertificateResponse{}, runtime.NewResponseError(err, resp)
+		return ClientImportCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// importCertificateHandleError handles the ImportCertificate error response.
-func (client *Client) importCertificateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // ImportKey - The import key operation may be used to import any key type into an Azure Key Vault. If the named key already
 // exists, Azure Key Vault creates a new version of the key. This operation requires the
 // keys/import permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - Name for the imported key.
 // parameters - The parameters to import a key.
@@ -3129,7 +2504,7 @@ func (client *Client) ImportKey(ctx context.Context, vaultBaseURL string, keyNam
 		return ClientImportKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientImportKeyResponse{}, client.importKeyHandleError(resp)
+		return ClientImportKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.importKeyHandleResponse(resp)
 }
@@ -3158,28 +2533,15 @@ func (client *Client) importKeyCreateRequest(ctx context.Context, vaultBaseURL s
 func (client *Client) importKeyHandleResponse(resp *http.Response) (ClientImportKeyResponse, error) {
 	result := ClientImportKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
-		return ClientImportKeyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientImportKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// importKeyHandleError handles the ImportKey error response.
-func (client *Client) importKeyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // MergeCertificate - The MergeCertificate operation performs the merging of a certificate or certificate chain with a key
 // pair currently available in the service. This operation requires the certificates/create
 // permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
 // parameters - The parameters to merge certificate.
@@ -3194,7 +2556,7 @@ func (client *Client) MergeCertificate(ctx context.Context, vaultBaseURL string,
 		return ClientMergeCertificateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return ClientMergeCertificateResponse{}, client.mergeCertificateHandleError(resp)
+		return ClientMergeCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.mergeCertificateHandleResponse(resp)
 }
@@ -3223,28 +2585,15 @@ func (client *Client) mergeCertificateCreateRequest(ctx context.Context, vaultBa
 func (client *Client) mergeCertificateHandleResponse(resp *http.Response) (ClientMergeCertificateResponse, error) {
 	result := ClientMergeCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
-		return ClientMergeCertificateResponse{}, runtime.NewResponseError(err, resp)
+		return ClientMergeCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// mergeCertificateHandleError handles the MergeCertificate error response.
-func (client *Client) mergeCertificateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // PurgeDeletedCertificate - The PurgeDeletedCertificate operation performs an irreversible deletion of the specified certificate,
 // without possibility for recovery. The operation is not available if the recovery level does not
 // specify 'Purgeable'. This operation requires the certificate/purge permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate
 // options - ClientPurgeDeletedCertificateOptions contains the optional parameters for the Client.PurgeDeletedCertificate
@@ -3259,7 +2608,7 @@ func (client *Client) PurgeDeletedCertificate(ctx context.Context, vaultBaseURL 
 		return ClientPurgeDeletedCertificateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ClientPurgeDeletedCertificateResponse{}, client.purgeDeletedCertificateHandleError(resp)
+		return ClientPurgeDeletedCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return ClientPurgeDeletedCertificateResponse{RawResponse: resp}, nil
 }
@@ -3284,23 +2633,10 @@ func (client *Client) purgeDeletedCertificateCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// purgeDeletedCertificateHandleError handles the PurgeDeletedCertificate error response.
-func (client *Client) purgeDeletedCertificateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PurgeDeletedKey - The Purge Deleted Key operation is applicable for soft-delete enabled vaults. While the operation can
 // be invoked on any vault, it will return an error if invoked on a non soft-delete enabled vault.
 // This operation requires the keys/purge permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key
 // options - ClientPurgeDeletedKeyOptions contains the optional parameters for the Client.PurgeDeletedKey method.
@@ -3314,7 +2650,7 @@ func (client *Client) PurgeDeletedKey(ctx context.Context, vaultBaseURL string, 
 		return ClientPurgeDeletedKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ClientPurgeDeletedKeyResponse{}, client.purgeDeletedKeyHandleError(resp)
+		return ClientPurgeDeletedKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return ClientPurgeDeletedKeyResponse{RawResponse: resp}, nil
 }
@@ -3339,23 +2675,10 @@ func (client *Client) purgeDeletedKeyCreateRequest(ctx context.Context, vaultBas
 	return req, nil
 }
 
-// purgeDeletedKeyHandleError handles the PurgeDeletedKey error response.
-func (client *Client) purgeDeletedKeyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PurgeDeletedSecret - The purge deleted secret operation removes the secret permanently, without the possibility of recovery.
 // This operation can only be enabled on a soft-delete enabled vault. This operation requires the
 // secrets/purge permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
 // options - ClientPurgeDeletedSecretOptions contains the optional parameters for the Client.PurgeDeletedSecret method.
@@ -3369,7 +2692,7 @@ func (client *Client) PurgeDeletedSecret(ctx context.Context, vaultBaseURL strin
 		return ClientPurgeDeletedSecretResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ClientPurgeDeletedSecretResponse{}, client.purgeDeletedSecretHandleError(resp)
+		return ClientPurgeDeletedSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return ClientPurgeDeletedSecretResponse{RawResponse: resp}, nil
 }
@@ -3394,23 +2717,10 @@ func (client *Client) purgeDeletedSecretCreateRequest(ctx context.Context, vault
 	return req, nil
 }
 
-// purgeDeletedSecretHandleError handles the PurgeDeletedSecret error response.
-func (client *Client) purgeDeletedSecretHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PurgeDeletedStorageAccount - The purge deleted storage account operation removes the secret permanently, without the possibility
 // of recovery. This operation can only be performed on a soft-delete enabled vault. This operation
 // requires the storage/purge permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // options - ClientPurgeDeletedStorageAccountOptions contains the optional parameters for the Client.PurgeDeletedStorageAccount
@@ -3425,7 +2735,7 @@ func (client *Client) PurgeDeletedStorageAccount(ctx context.Context, vaultBaseU
 		return ClientPurgeDeletedStorageAccountResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ClientPurgeDeletedStorageAccountResponse{}, client.purgeDeletedStorageAccountHandleError(resp)
+		return ClientPurgeDeletedStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return ClientPurgeDeletedStorageAccountResponse{RawResponse: resp}, nil
 }
@@ -3450,23 +2760,10 @@ func (client *Client) purgeDeletedStorageAccountCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// purgeDeletedStorageAccountHandleError handles the PurgeDeletedStorageAccount error response.
-func (client *Client) purgeDeletedStorageAccountHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // RecoverDeletedCertificate - The RecoverDeletedCertificate operation performs the reversal of the Delete operation. The
 // operation is applicable in vaults enabled for soft-delete, and must be issued during the retention interval
 // (available in the deleted certificate's attributes). This operation requires the certificates/recover permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the deleted certificate
 // options - ClientRecoverDeletedCertificateOptions contains the optional parameters for the Client.RecoverDeletedCertificate
@@ -3481,7 +2778,7 @@ func (client *Client) RecoverDeletedCertificate(ctx context.Context, vaultBaseUR
 		return ClientRecoverDeletedCertificateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientRecoverDeletedCertificateResponse{}, client.recoverDeletedCertificateHandleError(resp)
+		return ClientRecoverDeletedCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.recoverDeletedCertificateHandleResponse(resp)
 }
@@ -3510,29 +2807,16 @@ func (client *Client) recoverDeletedCertificateCreateRequest(ctx context.Context
 func (client *Client) recoverDeletedCertificateHandleResponse(resp *http.Response) (ClientRecoverDeletedCertificateResponse, error) {
 	result := ClientRecoverDeletedCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
-		return ClientRecoverDeletedCertificateResponse{}, runtime.NewResponseError(err, resp)
+		return ClientRecoverDeletedCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// recoverDeletedCertificateHandleError handles the RecoverDeletedCertificate error response.
-func (client *Client) recoverDeletedCertificateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // RecoverDeletedKey - The Recover Deleted Key operation is applicable for deleted keys in soft-delete enabled vaults. It
 // recovers the deleted key back to its latest version under /keys. An attempt to recover an non-deleted
 // key will return an error. Consider this the inverse of the delete operation on soft-delete enabled vaults. This operation
 // requires the keys/recover permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the deleted key.
 // options - ClientRecoverDeletedKeyOptions contains the optional parameters for the Client.RecoverDeletedKey method.
@@ -3546,7 +2830,7 @@ func (client *Client) RecoverDeletedKey(ctx context.Context, vaultBaseURL string
 		return ClientRecoverDeletedKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientRecoverDeletedKeyResponse{}, client.recoverDeletedKeyHandleError(resp)
+		return ClientRecoverDeletedKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.recoverDeletedKeyHandleResponse(resp)
 }
@@ -3575,27 +2859,14 @@ func (client *Client) recoverDeletedKeyCreateRequest(ctx context.Context, vaultB
 func (client *Client) recoverDeletedKeyHandleResponse(resp *http.Response) (ClientRecoverDeletedKeyResponse, error) {
 	result := ClientRecoverDeletedKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
-		return ClientRecoverDeletedKeyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientRecoverDeletedKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// recoverDeletedKeyHandleError handles the RecoverDeletedKey error response.
-func (client *Client) recoverDeletedKeyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // RecoverDeletedSasDefinition - Recovers the deleted SAS definition for the specified storage account. This operation can
 // only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // sasDefinitionName - The name of the SAS definition.
@@ -3611,7 +2882,7 @@ func (client *Client) RecoverDeletedSasDefinition(ctx context.Context, vaultBase
 		return ClientRecoverDeletedSasDefinitionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientRecoverDeletedSasDefinitionResponse{}, client.recoverDeletedSasDefinitionHandleError(resp)
+		return ClientRecoverDeletedSasDefinitionResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.recoverDeletedSasDefinitionHandleResponse(resp)
 }
@@ -3644,27 +2915,14 @@ func (client *Client) recoverDeletedSasDefinitionCreateRequest(ctx context.Conte
 func (client *Client) recoverDeletedSasDefinitionHandleResponse(resp *http.Response) (ClientRecoverDeletedSasDefinitionResponse, error) {
 	result := ClientRecoverDeletedSasDefinitionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionBundle); err != nil {
-		return ClientRecoverDeletedSasDefinitionResponse{}, runtime.NewResponseError(err, resp)
+		return ClientRecoverDeletedSasDefinitionResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// recoverDeletedSasDefinitionHandleError handles the RecoverDeletedSasDefinition error response.
-func (client *Client) recoverDeletedSasDefinitionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // RecoverDeletedSecret - Recovers the deleted secret in the specified vault. This operation can only be performed on a soft-delete
 // enabled vault. This operation requires the secrets/recover permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the deleted secret.
 // options - ClientRecoverDeletedSecretOptions contains the optional parameters for the Client.RecoverDeletedSecret method.
@@ -3678,7 +2936,7 @@ func (client *Client) RecoverDeletedSecret(ctx context.Context, vaultBaseURL str
 		return ClientRecoverDeletedSecretResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientRecoverDeletedSecretResponse{}, client.recoverDeletedSecretHandleError(resp)
+		return ClientRecoverDeletedSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.recoverDeletedSecretHandleResponse(resp)
 }
@@ -3707,27 +2965,14 @@ func (client *Client) recoverDeletedSecretCreateRequest(ctx context.Context, vau
 func (client *Client) recoverDeletedSecretHandleResponse(resp *http.Response) (ClientRecoverDeletedSecretResponse, error) {
 	result := ClientRecoverDeletedSecretResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
-		return ClientRecoverDeletedSecretResponse{}, runtime.NewResponseError(err, resp)
+		return ClientRecoverDeletedSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// recoverDeletedSecretHandleError handles the RecoverDeletedSecret error response.
-func (client *Client) recoverDeletedSecretHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // RecoverDeletedStorageAccount - Recovers the deleted storage account in the specified vault. This operation can only be
 // performed on a soft-delete enabled vault. This operation requires the storage/recover permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // options - ClientRecoverDeletedStorageAccountOptions contains the optional parameters for the Client.RecoverDeletedStorageAccount
@@ -3742,7 +2987,7 @@ func (client *Client) RecoverDeletedStorageAccount(ctx context.Context, vaultBas
 		return ClientRecoverDeletedStorageAccountResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientRecoverDeletedStorageAccountResponse{}, client.recoverDeletedStorageAccountHandleError(resp)
+		return ClientRecoverDeletedStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.recoverDeletedStorageAccountHandleResponse(resp)
 }
@@ -3771,27 +3016,14 @@ func (client *Client) recoverDeletedStorageAccountCreateRequest(ctx context.Cont
 func (client *Client) recoverDeletedStorageAccountHandleResponse(resp *http.Response) (ClientRecoverDeletedStorageAccountResponse, error) {
 	result := ClientRecoverDeletedStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
-		return ClientRecoverDeletedStorageAccountResponse{}, runtime.NewResponseError(err, resp)
+		return ClientRecoverDeletedStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// recoverDeletedStorageAccountHandleError handles the RecoverDeletedStorageAccount error response.
-func (client *Client) recoverDeletedStorageAccountHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // RegenerateStorageAccountKey - Regenerates the specified key value for the given storage account. This operation requires
 // the storage/regeneratekey permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // parameters - The parameters to regenerate storage account key.
@@ -3807,7 +3039,7 @@ func (client *Client) RegenerateStorageAccountKey(ctx context.Context, vaultBase
 		return ClientRegenerateStorageAccountKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientRegenerateStorageAccountKeyResponse{}, client.regenerateStorageAccountKeyHandleError(resp)
+		return ClientRegenerateStorageAccountKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.regenerateStorageAccountKeyHandleResponse(resp)
 }
@@ -3836,27 +3068,14 @@ func (client *Client) regenerateStorageAccountKeyCreateRequest(ctx context.Conte
 func (client *Client) regenerateStorageAccountKeyHandleResponse(resp *http.Response) (ClientRegenerateStorageAccountKeyResponse, error) {
 	result := ClientRegenerateStorageAccountKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
-		return ClientRegenerateStorageAccountKeyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientRegenerateStorageAccountKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// regenerateStorageAccountKeyHandleError handles the RegenerateStorageAccountKey error response.
-func (client *Client) regenerateStorageAccountKeyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // RestoreCertificate - Restores a backed up certificate, and all its versions, to a vault. This operation requires the certificates/restore
 // permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // parameters - The parameters to restore the certificate.
 // options - ClientRestoreCertificateOptions contains the optional parameters for the Client.RestoreCertificate method.
@@ -3870,7 +3089,7 @@ func (client *Client) RestoreCertificate(ctx context.Context, vaultBaseURL strin
 		return ClientRestoreCertificateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientRestoreCertificateResponse{}, client.restoreCertificateHandleError(resp)
+		return ClientRestoreCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.restoreCertificateHandleResponse(resp)
 }
@@ -3895,22 +3114,9 @@ func (client *Client) restoreCertificateCreateRequest(ctx context.Context, vault
 func (client *Client) restoreCertificateHandleResponse(resp *http.Response) (ClientRestoreCertificateResponse, error) {
 	result := ClientRestoreCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
-		return ClientRestoreCertificateResponse{}, runtime.NewResponseError(err, resp)
+		return ClientRestoreCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// restoreCertificateHandleError handles the RestoreCertificate error response.
-func (client *Client) restoreCertificateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // RestoreKey - Imports a previously backed up key into Azure Key Vault, restoring the key, its key identifier, attributes
@@ -3922,7 +3128,7 @@ func (client *Client) restoreCertificateHandleError(resp *http.Response) error {
 // versions and preserve version identifiers. The RESTORE operation is subject to security constraints: The target Key Vault
 // must be owned by the same Microsoft Azure Subscription as the source Key Vault
 // The user must have RESTORE permission in the target Key Vault. This operation requires the keys/restore permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // parameters - The parameters to restore the key.
 // options - ClientRestoreKeyOptions contains the optional parameters for the Client.RestoreKey method.
@@ -3936,7 +3142,7 @@ func (client *Client) RestoreKey(ctx context.Context, vaultBaseURL string, param
 		return ClientRestoreKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientRestoreKeyResponse{}, client.restoreKeyHandleError(resp)
+		return ClientRestoreKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.restoreKeyHandleResponse(resp)
 }
@@ -3961,27 +3167,14 @@ func (client *Client) restoreKeyCreateRequest(ctx context.Context, vaultBaseURL 
 func (client *Client) restoreKeyHandleResponse(resp *http.Response) (ClientRestoreKeyResponse, error) {
 	result := ClientRestoreKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
-		return ClientRestoreKeyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientRestoreKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// restoreKeyHandleError handles the RestoreKey error response.
-func (client *Client) restoreKeyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // RestoreSecret - Restores a backed up secret, and all its versions, to a vault. This operation requires the secrets/restore
 // permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // parameters - The parameters to restore the secret.
 // options - ClientRestoreSecretOptions contains the optional parameters for the Client.RestoreSecret method.
@@ -3995,7 +3188,7 @@ func (client *Client) RestoreSecret(ctx context.Context, vaultBaseURL string, pa
 		return ClientRestoreSecretResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientRestoreSecretResponse{}, client.restoreSecretHandleError(resp)
+		return ClientRestoreSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.restoreSecretHandleResponse(resp)
 }
@@ -4020,26 +3213,13 @@ func (client *Client) restoreSecretCreateRequest(ctx context.Context, vaultBaseU
 func (client *Client) restoreSecretHandleResponse(resp *http.Response) (ClientRestoreSecretResponse, error) {
 	result := ClientRestoreSecretResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
-		return ClientRestoreSecretResponse{}, runtime.NewResponseError(err, resp)
+		return ClientRestoreSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// restoreSecretHandleError handles the RestoreSecret error response.
-func (client *Client) restoreSecretHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // RestoreStatus - Returns the status of restore operation
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // jobID - The Job Id returned part of the restore operation
 // options - ClientRestoreStatusOptions contains the optional parameters for the Client.RestoreStatus method.
@@ -4053,7 +3233,7 @@ func (client *Client) RestoreStatus(ctx context.Context, vaultBaseURL string, jo
 		return ClientRestoreStatusResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientRestoreStatusResponse{}, client.restoreStatusHandleError(resp)
+		return ClientRestoreStatusResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.restoreStatusHandleResponse(resp)
 }
@@ -4082,26 +3262,13 @@ func (client *Client) restoreStatusCreateRequest(ctx context.Context, vaultBaseU
 func (client *Client) restoreStatusHandleResponse(resp *http.Response) (ClientRestoreStatusResponse, error) {
 	result := ClientRestoreStatusResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RestoreOperation); err != nil {
-		return ClientRestoreStatusResponse{}, runtime.NewResponseError(err, resp)
+		return ClientRestoreStatusResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// restoreStatusHandleError handles the RestoreStatus error response.
-func (client *Client) restoreStatusHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // RestoreStorageAccount - Restores a backed up storage account to a vault. This operation requires the storage/restore permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // parameters - The parameters to restore the storage account.
 // options - ClientRestoreStorageAccountOptions contains the optional parameters for the Client.RestoreStorageAccount method.
@@ -4115,7 +3282,7 @@ func (client *Client) RestoreStorageAccount(ctx context.Context, vaultBaseURL st
 		return ClientRestoreStorageAccountResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientRestoreStorageAccountResponse{}, client.restoreStorageAccountHandleError(resp)
+		return ClientRestoreStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.restoreStorageAccountHandleResponse(resp)
 }
@@ -4140,27 +3307,14 @@ func (client *Client) restoreStorageAccountCreateRequest(ctx context.Context, va
 func (client *Client) restoreStorageAccountHandleResponse(resp *http.Response) (ClientRestoreStorageAccountResponse, error) {
 	result := ClientRestoreStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
-		return ClientRestoreStorageAccountResponse{}, runtime.NewResponseError(err, resp)
+		return ClientRestoreStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// restoreStorageAccountHandleError handles the RestoreStorageAccount error response.
-func (client *Client) restoreStorageAccountHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginSelectiveKeyRestoreOperation - Restores all key versions of a given key using user supplied SAS token pointing to
 // a previously stored Azure Blob storage backup folder
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key to be restored from the user supplied backup
 // options - ClientBeginSelectiveKeyRestoreOperationOptions contains the optional parameters for the Client.BeginSelectiveKeyRestoreOperation
@@ -4173,7 +3327,7 @@ func (client *Client) BeginSelectiveKeyRestoreOperation(ctx context.Context, vau
 	result := ClientSelectiveKeyRestoreOperationPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("Client.SelectiveKeyRestoreOperation", resp, client.pl, client.selectiveKeyRestoreOperationHandleError)
+	pt, err := runtime.NewPoller("Client.SelectiveKeyRestoreOperation", resp, client.pl)
 	if err != nil {
 		return ClientSelectiveKeyRestoreOperationPollerResponse{}, err
 	}
@@ -4185,7 +3339,7 @@ func (client *Client) BeginSelectiveKeyRestoreOperation(ctx context.Context, vau
 
 // SelectiveKeyRestoreOperation - Restores all key versions of a given key using user supplied SAS token pointing to a previously
 // stored Azure Blob storage backup folder
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *Client) selectiveKeyRestoreOperation(ctx context.Context, vaultBaseURL string, keyName string, options *ClientBeginSelectiveKeyRestoreOperationOptions) (*http.Response, error) {
 	req, err := client.selectiveKeyRestoreOperationCreateRequest(ctx, vaultBaseURL, keyName, options)
 	if err != nil {
@@ -4196,7 +3350,7 @@ func (client *Client) selectiveKeyRestoreOperation(ctx context.Context, vaultBas
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return nil, client.selectiveKeyRestoreOperationHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -4224,22 +3378,9 @@ func (client *Client) selectiveKeyRestoreOperationCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// selectiveKeyRestoreOperationHandleError handles the SelectiveKeyRestoreOperation error response.
-func (client *Client) selectiveKeyRestoreOperationHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetCertificateContacts - Sets the certificate contacts for the specified key vault. This operation requires the certificates/managecontacts
 // permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // contacts - The contacts for the key vault certificate.
 // options - ClientSetCertificateContactsOptions contains the optional parameters for the Client.SetCertificateContacts method.
@@ -4253,7 +3394,7 @@ func (client *Client) SetCertificateContacts(ctx context.Context, vaultBaseURL s
 		return ClientSetCertificateContactsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientSetCertificateContactsResponse{}, client.setCertificateContactsHandleError(resp)
+		return ClientSetCertificateContactsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setCertificateContactsHandleResponse(resp)
 }
@@ -4278,27 +3419,14 @@ func (client *Client) setCertificateContactsCreateRequest(ctx context.Context, v
 func (client *Client) setCertificateContactsHandleResponse(resp *http.Response) (ClientSetCertificateContactsResponse, error) {
 	result := ClientSetCertificateContactsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Contacts); err != nil {
-		return ClientSetCertificateContactsResponse{}, runtime.NewResponseError(err, resp)
+		return ClientSetCertificateContactsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// setCertificateContactsHandleError handles the SetCertificateContacts error response.
-func (client *Client) setCertificateContactsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetCertificateIssuer - The SetCertificateIssuer operation adds or updates the specified certificate issuer. This operation
 // requires the certificates/setissuers permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // issuerName - The name of the issuer.
 // parameter - Certificate issuer set parameter.
@@ -4313,7 +3441,7 @@ func (client *Client) SetCertificateIssuer(ctx context.Context, vaultBaseURL str
 		return ClientSetCertificateIssuerResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientSetCertificateIssuerResponse{}, client.setCertificateIssuerHandleError(resp)
+		return ClientSetCertificateIssuerResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setCertificateIssuerHandleResponse(resp)
 }
@@ -4342,27 +3470,14 @@ func (client *Client) setCertificateIssuerCreateRequest(ctx context.Context, vau
 func (client *Client) setCertificateIssuerHandleResponse(resp *http.Response) (ClientSetCertificateIssuerResponse, error) {
 	result := ClientSetCertificateIssuerResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IssuerBundle); err != nil {
-		return ClientSetCertificateIssuerResponse{}, runtime.NewResponseError(err, resp)
+		return ClientSetCertificateIssuerResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// setCertificateIssuerHandleError handles the SetCertificateIssuer error response.
-func (client *Client) setCertificateIssuerHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetSasDefinition - Creates or updates a new SAS definition for the specified storage account. This operation requires the
 // storage/setsas permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // sasDefinitionName - The name of the SAS definition.
@@ -4378,7 +3493,7 @@ func (client *Client) SetSasDefinition(ctx context.Context, vaultBaseURL string,
 		return ClientSetSasDefinitionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientSetSasDefinitionResponse{}, client.setSasDefinitionHandleError(resp)
+		return ClientSetSasDefinitionResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setSasDefinitionHandleResponse(resp)
 }
@@ -4411,27 +3526,14 @@ func (client *Client) setSasDefinitionCreateRequest(ctx context.Context, vaultBa
 func (client *Client) setSasDefinitionHandleResponse(resp *http.Response) (ClientSetSasDefinitionResponse, error) {
 	result := ClientSetSasDefinitionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionBundle); err != nil {
-		return ClientSetSasDefinitionResponse{}, runtime.NewResponseError(err, resp)
+		return ClientSetSasDefinitionResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// setSasDefinitionHandleError handles the SetSasDefinition error response.
-func (client *Client) setSasDefinitionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetSecret - The SET operation adds a secret to the Azure Key Vault. If the named secret already exists, Azure Key Vault
 // creates a new version of that secret. This operation requires the secrets/set permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
 // parameters - The parameters for setting the secret.
@@ -4446,7 +3548,7 @@ func (client *Client) SetSecret(ctx context.Context, vaultBaseURL string, secret
 		return ClientSetSecretResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientSetSecretResponse{}, client.setSecretHandleError(resp)
+		return ClientSetSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setSecretHandleResponse(resp)
 }
@@ -4475,26 +3577,13 @@ func (client *Client) setSecretCreateRequest(ctx context.Context, vaultBaseURL s
 func (client *Client) setSecretHandleResponse(resp *http.Response) (ClientSetSecretResponse, error) {
 	result := ClientSetSecretResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
-		return ClientSetSecretResponse{}, runtime.NewResponseError(err, resp)
+		return ClientSetSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// setSecretHandleError handles the SetSecret error response.
-func (client *Client) setSecretHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetStorageAccount - Creates or updates a new storage account. This operation requires the storage/set permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // parameters - The parameters to create a storage account.
@@ -4509,7 +3598,7 @@ func (client *Client) SetStorageAccount(ctx context.Context, vaultBaseURL string
 		return ClientSetStorageAccountResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientSetStorageAccountResponse{}, client.setStorageAccountHandleError(resp)
+		return ClientSetStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setStorageAccountHandleResponse(resp)
 }
@@ -4538,27 +3627,14 @@ func (client *Client) setStorageAccountCreateRequest(ctx context.Context, vaultB
 func (client *Client) setStorageAccountHandleResponse(resp *http.Response) (ClientSetStorageAccountResponse, error) {
 	result := ClientSetStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
-		return ClientSetStorageAccountResponse{}, runtime.NewResponseError(err, resp)
+		return ClientSetStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// setStorageAccountHandleError handles the SetStorageAccount error response.
-func (client *Client) setStorageAccountHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Sign - The SIGN operation is applicable to asymmetric and symmetric keys stored in Azure Key Vault since this operation
 // uses the private portion of the key. This operation requires the keys/sign permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // keyVersion - The version of the key.
@@ -4574,7 +3650,7 @@ func (client *Client) Sign(ctx context.Context, vaultBaseURL string, keyName str
 		return ClientSignResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientSignResponse{}, client.signHandleError(resp)
+		return ClientSignResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.signHandleResponse(resp)
 }
@@ -4607,29 +3683,16 @@ func (client *Client) signCreateRequest(ctx context.Context, vaultBaseURL string
 func (client *Client) signHandleResponse(resp *http.Response) (ClientSignResponse, error) {
 	result := ClientSignResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
-		return ClientSignResponse{}, runtime.NewResponseError(err, resp)
+		return ClientSignResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// signHandleError handles the Sign error response.
-func (client *Client) signHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // UnwrapKey - The UNWRAP operation supports decryption of a symmetric key using the target key encryption key. This operation
 // is the reverse of the WRAP operation. The UNWRAP operation applies to asymmetric and
 // symmetric keys stored in Azure Key Vault since it uses the private portion of the key. This operation requires the keys/unwrapKey
 // permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // keyVersion - The version of the key.
@@ -4645,7 +3708,7 @@ func (client *Client) UnwrapKey(ctx context.Context, vaultBaseURL string, keyNam
 		return ClientUnwrapKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientUnwrapKeyResponse{}, client.unwrapKeyHandleError(resp)
+		return ClientUnwrapKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.unwrapKeyHandleResponse(resp)
 }
@@ -4678,28 +3741,15 @@ func (client *Client) unwrapKeyCreateRequest(ctx context.Context, vaultBaseURL s
 func (client *Client) unwrapKeyHandleResponse(resp *http.Response) (ClientUnwrapKeyResponse, error) {
 	result := ClientUnwrapKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
-		return ClientUnwrapKeyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientUnwrapKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// unwrapKeyHandleError handles the UnwrapKey error response.
-func (client *Client) unwrapKeyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // UpdateCertificate - The UpdateCertificate operation applies the specified update on the given certificate; the only elements
 // updated are the certificate's attributes. This operation requires the certificates/update
 // permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate in the given key vault.
 // certificateVersion - The version of the certificate.
@@ -4715,7 +3765,7 @@ func (client *Client) UpdateCertificate(ctx context.Context, vaultBaseURL string
 		return ClientUpdateCertificateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientUpdateCertificateResponse{}, client.updateCertificateHandleError(resp)
+		return ClientUpdateCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateCertificateHandleResponse(resp)
 }
@@ -4748,27 +3798,14 @@ func (client *Client) updateCertificateCreateRequest(ctx context.Context, vaultB
 func (client *Client) updateCertificateHandleResponse(resp *http.Response) (ClientUpdateCertificateResponse, error) {
 	result := ClientUpdateCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateBundle); err != nil {
-		return ClientUpdateCertificateResponse{}, runtime.NewResponseError(err, resp)
+		return ClientUpdateCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// updateCertificateHandleError handles the UpdateCertificate error response.
-func (client *Client) updateCertificateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateCertificateIssuer - The UpdateCertificateIssuer operation performs an update on the specified certificate issuer
 // entity. This operation requires the certificates/setissuers permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // issuerName - The name of the issuer.
 // parameter - Certificate issuer update parameter.
@@ -4784,7 +3821,7 @@ func (client *Client) UpdateCertificateIssuer(ctx context.Context, vaultBaseURL 
 		return ClientUpdateCertificateIssuerResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientUpdateCertificateIssuerResponse{}, client.updateCertificateIssuerHandleError(resp)
+		return ClientUpdateCertificateIssuerResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateCertificateIssuerHandleResponse(resp)
 }
@@ -4813,27 +3850,14 @@ func (client *Client) updateCertificateIssuerCreateRequest(ctx context.Context, 
 func (client *Client) updateCertificateIssuerHandleResponse(resp *http.Response) (ClientUpdateCertificateIssuerResponse, error) {
 	result := ClientUpdateCertificateIssuerResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IssuerBundle); err != nil {
-		return ClientUpdateCertificateIssuerResponse{}, runtime.NewResponseError(err, resp)
+		return ClientUpdateCertificateIssuerResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// updateCertificateIssuerHandleError handles the UpdateCertificateIssuer error response.
-func (client *Client) updateCertificateIssuerHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateCertificateOperation - Updates a certificate creation operation that is already in progress. This operation requires
 // the certificates/update permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate.
 // certificateOperation - The certificate operation response.
@@ -4849,7 +3873,7 @@ func (client *Client) UpdateCertificateOperation(ctx context.Context, vaultBaseU
 		return ClientUpdateCertificateOperationResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientUpdateCertificateOperationResponse{}, client.updateCertificateOperationHandleError(resp)
+		return ClientUpdateCertificateOperationResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateCertificateOperationHandleResponse(resp)
 }
@@ -4878,27 +3902,14 @@ func (client *Client) updateCertificateOperationCreateRequest(ctx context.Contex
 func (client *Client) updateCertificateOperationHandleResponse(resp *http.Response) (ClientUpdateCertificateOperationResponse, error) {
 	result := ClientUpdateCertificateOperationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificateOperation); err != nil {
-		return ClientUpdateCertificateOperationResponse{}, runtime.NewResponseError(err, resp)
+		return ClientUpdateCertificateOperationResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// updateCertificateOperationHandleError handles the UpdateCertificateOperation error response.
-func (client *Client) updateCertificateOperationHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateCertificatePolicy - Set specified members in the certificate policy. Leave others as null. This operation requires
 // the certificates/update permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // certificateName - The name of the certificate in the given vault.
 // certificatePolicy - The policy for the certificate.
@@ -4914,7 +3925,7 @@ func (client *Client) UpdateCertificatePolicy(ctx context.Context, vaultBaseURL 
 		return ClientUpdateCertificatePolicyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientUpdateCertificatePolicyResponse{}, client.updateCertificatePolicyHandleError(resp)
+		return ClientUpdateCertificatePolicyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateCertificatePolicyHandleResponse(resp)
 }
@@ -4943,27 +3954,14 @@ func (client *Client) updateCertificatePolicyCreateRequest(ctx context.Context, 
 func (client *Client) updateCertificatePolicyHandleResponse(resp *http.Response) (ClientUpdateCertificatePolicyResponse, error) {
 	result := ClientUpdateCertificatePolicyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CertificatePolicy); err != nil {
-		return ClientUpdateCertificatePolicyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientUpdateCertificatePolicyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// updateCertificatePolicyHandleError handles the UpdateCertificatePolicy error response.
-func (client *Client) updateCertificatePolicyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateKey - In order to perform this operation, the key must already exist in the Key Vault. Note: The cryptographic material
 // of a key itself cannot be changed. This operation requires the keys/update permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of key to update.
 // keyVersion - The version of the key to update.
@@ -4979,7 +3977,7 @@ func (client *Client) UpdateKey(ctx context.Context, vaultBaseURL string, keyNam
 		return ClientUpdateKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientUpdateKeyResponse{}, client.updateKeyHandleError(resp)
+		return ClientUpdateKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateKeyHandleResponse(resp)
 }
@@ -5012,27 +4010,14 @@ func (client *Client) updateKeyCreateRequest(ctx context.Context, vaultBaseURL s
 func (client *Client) updateKeyHandleResponse(resp *http.Response) (ClientUpdateKeyResponse, error) {
 	result := ClientUpdateKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyBundle); err != nil {
-		return ClientUpdateKeyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientUpdateKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// updateKeyHandleError handles the UpdateKey error response.
-func (client *Client) updateKeyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateSasDefinition - Updates the specified attributes associated with the given SAS definition. This operation requires
 // the storage/setsas permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // sasDefinitionName - The name of the SAS definition.
@@ -5048,7 +4033,7 @@ func (client *Client) UpdateSasDefinition(ctx context.Context, vaultBaseURL stri
 		return ClientUpdateSasDefinitionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientUpdateSasDefinitionResponse{}, client.updateSasDefinitionHandleError(resp)
+		return ClientUpdateSasDefinitionResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateSasDefinitionHandleResponse(resp)
 }
@@ -5081,28 +4066,15 @@ func (client *Client) updateSasDefinitionCreateRequest(ctx context.Context, vaul
 func (client *Client) updateSasDefinitionHandleResponse(resp *http.Response) (ClientUpdateSasDefinitionResponse, error) {
 	result := ClientUpdateSasDefinitionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SasDefinitionBundle); err != nil {
-		return ClientUpdateSasDefinitionResponse{}, runtime.NewResponseError(err, resp)
+		return ClientUpdateSasDefinitionResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// updateSasDefinitionHandleError handles the UpdateSasDefinition error response.
-func (client *Client) updateSasDefinitionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // UpdateSecret - The UPDATE operation changes specified attributes of an existing stored secret. Attributes that are not
 // specified in the request are left unchanged. The value of a secret itself cannot be changed.
 // This operation requires the secrets/set permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // secretName - The name of the secret.
 // secretVersion - The version of the secret.
@@ -5118,7 +4090,7 @@ func (client *Client) UpdateSecret(ctx context.Context, vaultBaseURL string, sec
 		return ClientUpdateSecretResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientUpdateSecretResponse{}, client.updateSecretHandleError(resp)
+		return ClientUpdateSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateSecretHandleResponse(resp)
 }
@@ -5151,27 +4123,14 @@ func (client *Client) updateSecretCreateRequest(ctx context.Context, vaultBaseUR
 func (client *Client) updateSecretHandleResponse(resp *http.Response) (ClientUpdateSecretResponse, error) {
 	result := ClientUpdateSecretResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecretBundle); err != nil {
-		return ClientUpdateSecretResponse{}, runtime.NewResponseError(err, resp)
+		return ClientUpdateSecretResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// updateSecretHandleError handles the UpdateSecret error response.
-func (client *Client) updateSecretHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateStorageAccount - Updates the specified attributes associated with the given storage account. This operation requires
 // the storage/set/update permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // storageAccountName - The name of the storage account.
 // parameters - The parameters to update a storage account.
@@ -5186,7 +4145,7 @@ func (client *Client) UpdateStorageAccount(ctx context.Context, vaultBaseURL str
 		return ClientUpdateStorageAccountResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientUpdateStorageAccountResponse{}, client.updateStorageAccountHandleError(resp)
+		return ClientUpdateStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateStorageAccountHandleResponse(resp)
 }
@@ -5215,22 +4174,9 @@ func (client *Client) updateStorageAccountCreateRequest(ctx context.Context, vau
 func (client *Client) updateStorageAccountHandleResponse(resp *http.Response) (ClientUpdateStorageAccountResponse, error) {
 	result := ClientUpdateStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageBundle); err != nil {
-		return ClientUpdateStorageAccountResponse{}, runtime.NewResponseError(err, resp)
+		return ClientUpdateStorageAccountResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// updateStorageAccountHandleError handles the UpdateStorageAccount error response.
-func (client *Client) updateStorageAccountHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // Verify - The VERIFY operation is applicable to symmetric keys stored in Azure Key Vault. VERIFY is not strictly necessary
@@ -5238,7 +4184,7 @@ func (client *Client) updateStorageAccountHandleError(resp *http.Response) error
 // performed using the public portion of the key but this operation is supported as a convenience for callers that only have
 // a key-reference and not the public portion of the key. This operation requires
 // the keys/verify permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // keyVersion - The version of the key.
@@ -5254,7 +4200,7 @@ func (client *Client) Verify(ctx context.Context, vaultBaseURL string, keyName s
 		return ClientVerifyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientVerifyResponse{}, client.verifyHandleError(resp)
+		return ClientVerifyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.verifyHandleResponse(resp)
 }
@@ -5287,22 +4233,9 @@ func (client *Client) verifyCreateRequest(ctx context.Context, vaultBaseURL stri
 func (client *Client) verifyHandleResponse(resp *http.Response) (ClientVerifyResponse, error) {
 	result := ClientVerifyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyVerifyResult); err != nil {
-		return ClientVerifyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientVerifyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// verifyHandleError handles the Verify error response.
-func (client *Client) verifyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // WrapKey - The WRAP operation supports encryption of a symmetric key using a key encryption key that has previously been
@@ -5311,7 +4244,7 @@ func (client *Client) verifyHandleError(resp *http.Response) error {
 // key. This operation is supported for asymmetric keys as a convenience for
 // callers that have a key-reference but do not have access to the public key material. This operation requires the keys/wrapKey
 // permission.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // keyName - The name of the key.
 // keyVersion - The version of the key.
@@ -5327,7 +4260,7 @@ func (client *Client) WrapKey(ctx context.Context, vaultBaseURL string, keyName 
 		return ClientWrapKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientWrapKeyResponse{}, client.wrapKeyHandleError(resp)
+		return ClientWrapKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.wrapKeyHandleResponse(resp)
 }
@@ -5360,20 +4293,7 @@ func (client *Client) wrapKeyCreateRequest(ctx context.Context, vaultBaseURL str
 func (client *Client) wrapKeyHandleResponse(resp *http.Response) (ClientWrapKeyResponse, error) {
 	result := ClientWrapKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.KeyOperationResult); err != nil {
-		return ClientWrapKeyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientWrapKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// wrapKeyHandleError handles the WrapKey error response.
-func (client *Client) wrapKeyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

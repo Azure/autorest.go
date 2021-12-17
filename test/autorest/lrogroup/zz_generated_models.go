@@ -14,17 +14,9 @@ import (
 	"reflect"
 )
 
-// Implements the error and azcore.HTTPResponse interfaces.
 type CloudError struct {
-	raw     string
 	Code    *int32  `json:"code,omitempty"`
 	Message *string `json:"message,omitempty"`
-}
-
-// Error implements the error interface for type CloudError.
-// The contents of the error text are not contractual and subject to change.
-func (e CloudError) Error() string {
-	return e.raw
 }
 
 // LRORetrysClientBeginDelete202Retry200Options contains the optional parameters for the LRORetrysClient.BeginDelete202Retry200

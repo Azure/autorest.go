@@ -10,8 +10,6 @@ package httpinfrastructuregroup
 
 import (
 	"context"
-	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -32,13 +30,13 @@ func NewHTTPFailureClient(options *azcore.ClientOptions) *HTTPFailureClient {
 		cp = *options
 	}
 	client := &HTTPFailureClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetEmptyError - Get empty error form server
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPFailureClientGetEmptyErrorOptions contains the optional parameters for the HTTPFailureClient.GetEmptyError
 // method.
 func (client *HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTTPFailureClientGetEmptyErrorOptions) (HTTPFailureClientGetEmptyErrorResponse, error) {
@@ -51,7 +49,7 @@ func (client *HTTPFailureClient) GetEmptyError(ctx context.Context, options *HTT
 		return HTTPFailureClientGetEmptyErrorResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPFailureClientGetEmptyErrorResponse{}, client.getEmptyErrorHandleError(resp)
+		return HTTPFailureClientGetEmptyErrorResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getEmptyErrorHandleResponse(resp)
 }
@@ -71,26 +69,13 @@ func (client *HTTPFailureClient) getEmptyErrorCreateRequest(ctx context.Context,
 func (client *HTTPFailureClient) getEmptyErrorHandleResponse(resp *http.Response) (HTTPFailureClientGetEmptyErrorResponse, error) {
 	result := HTTPFailureClientGetEmptyErrorResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return HTTPFailureClientGetEmptyErrorResponse{}, runtime.NewResponseError(err, resp)
+		return HTTPFailureClientGetEmptyErrorResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getEmptyErrorHandleError handles the GetEmptyError error response.
-func (client *HTTPFailureClient) getEmptyErrorHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetNoModelEmpty - Get empty response from server
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPFailureClientGetNoModelEmptyOptions contains the optional parameters for the HTTPFailureClient.GetNoModelEmpty
 // method.
 func (client *HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *HTTPFailureClientGetNoModelEmptyOptions) (HTTPFailureClientGetNoModelEmptyResponse, error) {
@@ -103,7 +88,7 @@ func (client *HTTPFailureClient) GetNoModelEmpty(ctx context.Context, options *H
 		return HTTPFailureClientGetNoModelEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPFailureClientGetNoModelEmptyResponse{}, client.getNoModelEmptyHandleError(resp)
+		return HTTPFailureClientGetNoModelEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getNoModelEmptyHandleResponse(resp)
 }
@@ -123,25 +108,13 @@ func (client *HTTPFailureClient) getNoModelEmptyCreateRequest(ctx context.Contex
 func (client *HTTPFailureClient) getNoModelEmptyHandleResponse(resp *http.Response) (HTTPFailureClientGetNoModelEmptyResponse, error) {
 	result := HTTPFailureClientGetNoModelEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return HTTPFailureClientGetNoModelEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return HTTPFailureClientGetNoModelEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getNoModelEmptyHandleError handles the GetNoModelEmpty error response.
-func (client *HTTPFailureClient) getNoModelEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // GetNoModelError - Get empty error form server
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPFailureClientGetNoModelErrorOptions contains the optional parameters for the HTTPFailureClient.GetNoModelError
 // method.
 func (client *HTTPFailureClient) GetNoModelError(ctx context.Context, options *HTTPFailureClientGetNoModelErrorOptions) (HTTPFailureClientGetNoModelErrorResponse, error) {
@@ -154,7 +127,7 @@ func (client *HTTPFailureClient) GetNoModelError(ctx context.Context, options *H
 		return HTTPFailureClientGetNoModelErrorResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPFailureClientGetNoModelErrorResponse{}, client.getNoModelErrorHandleError(resp)
+		return HTTPFailureClientGetNoModelErrorResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getNoModelErrorHandleResponse(resp)
 }
@@ -174,19 +147,7 @@ func (client *HTTPFailureClient) getNoModelErrorCreateRequest(ctx context.Contex
 func (client *HTTPFailureClient) getNoModelErrorHandleResponse(resp *http.Response) (HTTPFailureClientGetNoModelErrorResponse, error) {
 	result := HTTPFailureClientGetNoModelErrorResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return HTTPFailureClientGetNoModelErrorResponse{}, runtime.NewResponseError(err, resp)
+		return HTTPFailureClientGetNoModelErrorResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// getNoModelErrorHandleError handles the GetNoModelError error response.
-func (client *HTTPFailureClient) getNoModelErrorHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

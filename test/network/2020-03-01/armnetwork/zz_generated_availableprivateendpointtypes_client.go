@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewAvailablePrivateEndpointTypesClient(subscriptionID string, credential az
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &AvailablePrivateEndpointTypesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // List - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // location - The location of the domain name.
 // options - AvailablePrivateEndpointTypesClientListOptions contains the optional parameters for the AvailablePrivateEndpointTypesClient.List
 // method.
@@ -94,27 +93,14 @@ func (client *AvailablePrivateEndpointTypesClient) listCreateRequest(ctx context
 func (client *AvailablePrivateEndpointTypesClient) listHandleResponse(resp *http.Response) (AvailablePrivateEndpointTypesClientListResponse, error) {
 	result := AvailablePrivateEndpointTypesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailablePrivateEndpointTypesResult); err != nil {
-		return AvailablePrivateEndpointTypesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return AvailablePrivateEndpointTypesClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *AvailablePrivateEndpointTypesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByResourceGroup - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in
 // this region.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // location - The location of the domain name.
 // resourceGroupName - The name of the resource group.
 // options - AvailablePrivateEndpointTypesClientListByResourceGroupOptions contains the optional parameters for the AvailablePrivateEndpointTypesClient.ListByResourceGroup
@@ -161,20 +147,7 @@ func (client *AvailablePrivateEndpointTypesClient) listByResourceGroupCreateRequ
 func (client *AvailablePrivateEndpointTypesClient) listByResourceGroupHandleResponse(resp *http.Response) (AvailablePrivateEndpointTypesClientListByResourceGroupResponse, error) {
 	result := AvailablePrivateEndpointTypesClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailablePrivateEndpointTypesResult); err != nil {
-		return AvailablePrivateEndpointTypesClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return AvailablePrivateEndpointTypesClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *AvailablePrivateEndpointTypesClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

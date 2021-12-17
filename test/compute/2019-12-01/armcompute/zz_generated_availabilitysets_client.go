@@ -39,19 +39,19 @@ func NewAvailabilitySetsClient(subscriptionID string, credential azcore.TokenCre
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &AvailabilitySetsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // CreateOrUpdate - Create or update an availability set.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
 // parameters - Parameters supplied to the Create Availability Set operation.
@@ -67,7 +67,7 @@ func (client *AvailabilitySetsClient) CreateOrUpdate(ctx context.Context, resour
 		return AvailabilitySetsClientCreateOrUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AvailabilitySetsClientCreateOrUpdateResponse{}, client.createOrUpdateHandleError(resp)
+		return AvailabilitySetsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createOrUpdateHandleResponse(resp)
 }
@@ -102,25 +102,13 @@ func (client *AvailabilitySetsClient) createOrUpdateCreateRequest(ctx context.Co
 func (client *AvailabilitySetsClient) createOrUpdateHandleResponse(resp *http.Response) (AvailabilitySetsClientCreateOrUpdateResponse, error) {
 	result := AvailabilitySetsClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySet); err != nil {
-		return AvailabilitySetsClientCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
+		return AvailabilitySetsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *AvailabilitySetsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Delete - Delete an availability set.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
 // options - AvailabilitySetsClientDeleteOptions contains the optional parameters for the AvailabilitySetsClient.Delete method.
@@ -134,7 +122,7 @@ func (client *AvailabilitySetsClient) Delete(ctx context.Context, resourceGroupN
 		return AvailabilitySetsClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return AvailabilitySetsClientDeleteResponse{}, client.deleteHandleError(resp)
+		return AvailabilitySetsClientDeleteResponse{}, runtime.NewResponseError(resp)
 	}
 	return AvailabilitySetsClientDeleteResponse{RawResponse: resp}, nil
 }
@@ -164,20 +152,8 @@ func (client *AvailabilitySetsClient) deleteCreateRequest(ctx context.Context, r
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *AvailabilitySetsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get - Retrieves information about an availability set.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
 // options - AvailabilitySetsClientGetOptions contains the optional parameters for the AvailabilitySetsClient.Get method.
@@ -191,7 +167,7 @@ func (client *AvailabilitySetsClient) Get(ctx context.Context, resourceGroupName
 		return AvailabilitySetsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AvailabilitySetsClientGetResponse{}, client.getHandleError(resp)
+		return AvailabilitySetsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -226,25 +202,13 @@ func (client *AvailabilitySetsClient) getCreateRequest(ctx context.Context, reso
 func (client *AvailabilitySetsClient) getHandleResponse(resp *http.Response) (AvailabilitySetsClientGetResponse, error) {
 	result := AvailabilitySetsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySet); err != nil {
-		return AvailabilitySetsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return AvailabilitySetsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *AvailabilitySetsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // List - Lists all availability sets in a resource group.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - AvailabilitySetsClientListOptions contains the optional parameters for the AvailabilitySetsClient.List method.
 func (client *AvailabilitySetsClient) List(resourceGroupName string, options *AvailabilitySetsClientListOptions) *AvailabilitySetsClientListPager {
@@ -285,26 +249,14 @@ func (client *AvailabilitySetsClient) listCreateRequest(ctx context.Context, res
 func (client *AvailabilitySetsClient) listHandleResponse(resp *http.Response) (AvailabilitySetsClientListResponse, error) {
 	result := AvailabilitySetsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySetListResult); err != nil {
-		return AvailabilitySetsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return AvailabilitySetsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *AvailabilitySetsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // ListAvailableSizes - Lists all available virtual machine sizes that can be used to create a new virtual machine in an existing
 // availability set.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
 // options - AvailabilitySetsClientListAvailableSizesOptions contains the optional parameters for the AvailabilitySetsClient.ListAvailableSizes
@@ -319,7 +271,7 @@ func (client *AvailabilitySetsClient) ListAvailableSizes(ctx context.Context, re
 		return AvailabilitySetsClientListAvailableSizesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AvailabilitySetsClientListAvailableSizesResponse{}, client.listAvailableSizesHandleError(resp)
+		return AvailabilitySetsClientListAvailableSizesResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listAvailableSizesHandleResponse(resp)
 }
@@ -354,25 +306,13 @@ func (client *AvailabilitySetsClient) listAvailableSizesCreateRequest(ctx contex
 func (client *AvailabilitySetsClient) listAvailableSizesHandleResponse(resp *http.Response) (AvailabilitySetsClientListAvailableSizesResponse, error) {
 	result := AvailabilitySetsClientListAvailableSizesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineSizeListResult); err != nil {
-		return AvailabilitySetsClientListAvailableSizesResponse{}, runtime.NewResponseError(err, resp)
+		return AvailabilitySetsClientListAvailableSizesResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listAvailableSizesHandleError handles the ListAvailableSizes error response.
-func (client *AvailabilitySetsClient) listAvailableSizesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // ListBySubscription - Lists all availability sets in a subscription.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - AvailabilitySetsClientListBySubscriptionOptions contains the optional parameters for the AvailabilitySetsClient.ListBySubscription
 // method.
 func (client *AvailabilitySetsClient) ListBySubscription(options *AvailabilitySetsClientListBySubscriptionOptions) *AvailabilitySetsClientListBySubscriptionPager {
@@ -412,25 +352,13 @@ func (client *AvailabilitySetsClient) listBySubscriptionCreateRequest(ctx contex
 func (client *AvailabilitySetsClient) listBySubscriptionHandleResponse(resp *http.Response) (AvailabilitySetsClientListBySubscriptionResponse, error) {
 	result := AvailabilitySetsClientListBySubscriptionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySetListResult); err != nil {
-		return AvailabilitySetsClientListBySubscriptionResponse{}, runtime.NewResponseError(err, resp)
+		return AvailabilitySetsClientListBySubscriptionResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listBySubscriptionHandleError handles the ListBySubscription error response.
-func (client *AvailabilitySetsClient) listBySubscriptionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Update - Update an availability set.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
 // parameters - Parameters supplied to the Update Availability Set operation.
@@ -445,7 +373,7 @@ func (client *AvailabilitySetsClient) Update(ctx context.Context, resourceGroupN
 		return AvailabilitySetsClientUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AvailabilitySetsClientUpdateResponse{}, client.updateHandleError(resp)
+		return AvailabilitySetsClientUpdateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateHandleResponse(resp)
 }
@@ -480,19 +408,7 @@ func (client *AvailabilitySetsClient) updateCreateRequest(ctx context.Context, r
 func (client *AvailabilitySetsClient) updateHandleResponse(resp *http.Response) (AvailabilitySetsClientUpdateResponse, error) {
 	result := AvailabilitySetsClientUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySet); err != nil {
-		return AvailabilitySetsClientUpdateResponse{}, runtime.NewResponseError(err, resp)
+		return AvailabilitySetsClientUpdateResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// updateHandleError handles the Update error response.
-func (client *AvailabilitySetsClient) updateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

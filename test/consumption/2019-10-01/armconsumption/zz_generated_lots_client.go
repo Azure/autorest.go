@@ -10,7 +10,6 @@ package armconsumption
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -35,18 +34,18 @@ func NewLotsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &LotsClient{
-		host: string(cp.Host),
-		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+		host: string(cp.Endpoint),
+		pl:   armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // List - Lists the lots by billingAccountId and billingProfileId.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // scope - The scope associated with Lots operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
 // for Billing Profile scope, and
 // 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
@@ -82,20 +81,7 @@ func (client *LotsClient) listCreateRequest(ctx context.Context, scope string, o
 func (client *LotsClient) listHandleResponse(resp *http.Response) (LotsClientListResponse, error) {
 	result := LotsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Lots); err != nil {
-		return LotsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return LotsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *LotsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

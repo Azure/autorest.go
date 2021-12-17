@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewWebApplicationFirewallPoliciesClient(subscriptionID string, credential a
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &WebApplicationFirewallPoliciesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // CreateOrUpdate - Creates or update policy with specified rule set name within a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // policyName - The name of the policy.
 // parameters - Policy to be created.
@@ -68,7 +67,7 @@ func (client *WebApplicationFirewallPoliciesClient) CreateOrUpdate(ctx context.C
 		return WebApplicationFirewallPoliciesClientCreateOrUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return WebApplicationFirewallPoliciesClientCreateOrUpdateResponse{}, client.createOrUpdateHandleError(resp)
+		return WebApplicationFirewallPoliciesClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createOrUpdateHandleResponse(resp)
 }
@@ -103,26 +102,13 @@ func (client *WebApplicationFirewallPoliciesClient) createOrUpdateCreateRequest(
 func (client *WebApplicationFirewallPoliciesClient) createOrUpdateHandleResponse(resp *http.Response) (WebApplicationFirewallPoliciesClientCreateOrUpdateResponse, error) {
 	result := WebApplicationFirewallPoliciesClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.WebApplicationFirewallPolicy); err != nil {
-		return WebApplicationFirewallPoliciesClientCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
+		return WebApplicationFirewallPoliciesClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *WebApplicationFirewallPoliciesClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes Policy.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // policyName - The name of the policy.
 // options - WebApplicationFirewallPoliciesClientBeginDeleteOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.BeginDelete
@@ -135,7 +121,7 @@ func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Cont
 	result := WebApplicationFirewallPoliciesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("WebApplicationFirewallPoliciesClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("WebApplicationFirewallPoliciesClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return WebApplicationFirewallPoliciesClientDeletePollerResponse{}, err
 	}
@@ -146,7 +132,7 @@ func (client *WebApplicationFirewallPoliciesClient) BeginDelete(ctx context.Cont
 }
 
 // Delete - Deletes Policy.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *WebApplicationFirewallPoliciesClient) deleteOperation(ctx context.Context, resourceGroupName string, policyName string, options *WebApplicationFirewallPoliciesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, policyName, options)
 	if err != nil {
@@ -157,7 +143,7 @@ func (client *WebApplicationFirewallPoliciesClient) deleteOperation(ctx context.
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -188,21 +174,8 @@ func (client *WebApplicationFirewallPoliciesClient) deleteCreateRequest(ctx cont
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *WebApplicationFirewallPoliciesClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Retrieve protection policy with specified name within a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // policyName - The name of the policy.
 // options - WebApplicationFirewallPoliciesClientGetOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.Get
@@ -217,7 +190,7 @@ func (client *WebApplicationFirewallPoliciesClient) Get(ctx context.Context, res
 		return WebApplicationFirewallPoliciesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return WebApplicationFirewallPoliciesClientGetResponse{}, client.getHandleError(resp)
+		return WebApplicationFirewallPoliciesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -252,26 +225,13 @@ func (client *WebApplicationFirewallPoliciesClient) getCreateRequest(ctx context
 func (client *WebApplicationFirewallPoliciesClient) getHandleResponse(resp *http.Response) (WebApplicationFirewallPoliciesClientGetResponse, error) {
 	result := WebApplicationFirewallPoliciesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.WebApplicationFirewallPolicy); err != nil {
-		return WebApplicationFirewallPoliciesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return WebApplicationFirewallPoliciesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *WebApplicationFirewallPoliciesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Lists all of the protection policies within a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - WebApplicationFirewallPoliciesClientListOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.List
 // method.
@@ -313,26 +273,13 @@ func (client *WebApplicationFirewallPoliciesClient) listCreateRequest(ctx contex
 func (client *WebApplicationFirewallPoliciesClient) listHandleResponse(resp *http.Response) (WebApplicationFirewallPoliciesClientListResponse, error) {
 	result := WebApplicationFirewallPoliciesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.WebApplicationFirewallPolicyListResult); err != nil {
-		return WebApplicationFirewallPoliciesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return WebApplicationFirewallPoliciesClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *WebApplicationFirewallPoliciesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListAll - Gets all the WAF policies in a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - WebApplicationFirewallPoliciesClientListAllOptions contains the optional parameters for the WebApplicationFirewallPoliciesClient.ListAll
 // method.
 func (client *WebApplicationFirewallPoliciesClient) ListAll(options *WebApplicationFirewallPoliciesClientListAllOptions) *WebApplicationFirewallPoliciesClientListAllPager {
@@ -369,20 +316,7 @@ func (client *WebApplicationFirewallPoliciesClient) listAllCreateRequest(ctx con
 func (client *WebApplicationFirewallPoliciesClient) listAllHandleResponse(resp *http.Response) (WebApplicationFirewallPoliciesClientListAllResponse, error) {
 	result := WebApplicationFirewallPoliciesClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.WebApplicationFirewallPolicyListResult); err != nil {
-		return WebApplicationFirewallPoliciesClientListAllResponse{}, runtime.NewResponseError(err, resp)
+		return WebApplicationFirewallPoliciesClientListAllResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listAllHandleError handles the ListAll error response.
-func (client *WebApplicationFirewallPoliciesClient) listAllHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

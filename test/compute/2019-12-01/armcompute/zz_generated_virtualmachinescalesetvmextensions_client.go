@@ -11,7 +11,6 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewVirtualMachineScaleSetVMExtensionsClient(subscriptionID string, credenti
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VirtualMachineScaleSetVMExtensionsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - The operation to create or update the VMSS VM extension.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
 // instanceID - The instance ID of the virtual machine.
@@ -68,7 +67,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx 
 	result := VirtualMachineScaleSetVMExtensionsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMExtensionsClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMExtensionsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetVMExtensionsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -79,7 +78,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginCreateOrUpdate(ctx 
 }
 
 // CreateOrUpdate - The operation to create or update the VMSS VM extension.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineScaleSetVMExtensionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
 	if err != nil {
@@ -90,7 +89,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdate(ctx conte
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -129,21 +128,8 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdateCreateRequ
 	return req, runtime.MarshalAsJSON(req, extensionParameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *VirtualMachineScaleSetVMExtensionsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - The operation to delete the VMSS VM extension.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
 // instanceID - The instance ID of the virtual machine.
@@ -158,7 +144,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.
 	result := VirtualMachineScaleSetVMExtensionsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMExtensionsClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMExtensionsClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetVMExtensionsClientDeletePollerResponse{}, err
 	}
@@ -169,7 +155,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginDelete(ctx context.
 }
 
 // Delete - The operation to delete the VMSS VM extension.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualMachineScaleSetVMExtensionsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, options *VirtualMachineScaleSetVMExtensionsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, options)
 	if err != nil {
@@ -180,7 +166,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) deleteOperation(ctx cont
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -219,21 +205,8 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) deleteCreateRequest(ctx 
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *VirtualMachineScaleSetVMExtensionsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - The operation to get the VMSS VM extension.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
 // instanceID - The instance ID of the virtual machine.
@@ -250,7 +223,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) Get(ctx context.Context,
 		return VirtualMachineScaleSetVMExtensionsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineScaleSetVMExtensionsClientGetResponse{}, client.getHandleError(resp)
+		return VirtualMachineScaleSetVMExtensionsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -296,26 +269,13 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) getCreateRequest(ctx con
 func (client *VirtualMachineScaleSetVMExtensionsClient) getHandleResponse(resp *http.Response) (VirtualMachineScaleSetVMExtensionsClientGetResponse, error) {
 	result := VirtualMachineScaleSetVMExtensionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtension); err != nil {
-		return VirtualMachineScaleSetVMExtensionsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineScaleSetVMExtensionsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *VirtualMachineScaleSetVMExtensionsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - The operation to get all extensions of an instance in Virtual Machine Scaleset.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
 // instanceID - The instance ID of the virtual machine.
@@ -331,7 +291,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) List(ctx context.Context
 		return VirtualMachineScaleSetVMExtensionsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineScaleSetVMExtensionsClientListResponse{}, client.listHandleError(resp)
+		return VirtualMachineScaleSetVMExtensionsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -373,26 +333,13 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) listCreateRequest(ctx co
 func (client *VirtualMachineScaleSetVMExtensionsClient) listHandleResponse(resp *http.Response) (VirtualMachineScaleSetVMExtensionsClientListResponse, error) {
 	result := VirtualMachineScaleSetVMExtensionsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtensionsListResult); err != nil {
-		return VirtualMachineScaleSetVMExtensionsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineScaleSetVMExtensionsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *VirtualMachineScaleSetVMExtensionsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginUpdate - The operation to update the VMSS VM extension.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // vmScaleSetName - The name of the VM scale set.
 // instanceID - The instance ID of the virtual machine.
@@ -408,7 +355,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.
 	result := VirtualMachineScaleSetVMExtensionsClientUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMExtensionsClient.Update", "", resp, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPoller("VirtualMachineScaleSetVMExtensionsClient.Update", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineScaleSetVMExtensionsClientUpdatePollerResponse{}, err
 	}
@@ -419,7 +366,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) BeginUpdate(ctx context.
 }
 
 // Update - The operation to update the VMSS VM extension.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualMachineScaleSetVMExtensionsClient) update(ctx context.Context, resourceGroupName string, vmScaleSetName string, instanceID string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineScaleSetVMExtensionsClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, vmScaleSetName, instanceID, vmExtensionName, extensionParameters, options)
 	if err != nil {
@@ -430,7 +377,7 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) update(ctx context.Conte
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return nil, client.updateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -467,17 +414,4 @@ func (client *VirtualMachineScaleSetVMExtensionsClient) updateCreateRequest(ctx 
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, extensionParameters)
-}
-
-// updateHandleError handles the Update error response.
-func (client *VirtualMachineScaleSetVMExtensionsClient) updateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

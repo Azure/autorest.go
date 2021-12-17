@@ -10,7 +10,6 @@ package httpinfrastructuregroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewHTTPSuccessClient(options *azcore.ClientOptions) *HTTPSuccessClient {
 		cp = *options
 	}
 	client := &HTTPSuccessClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Delete200 - Delete simple boolean value true returns 200
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPSuccessClientDelete200Options contains the optional parameters for the HTTPSuccessClient.Delete200 method.
 func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuccessClientDelete200Options) (HTTPSuccessClientDelete200Response, error) {
 	req, err := client.delete200CreateRequest(ctx, options)
@@ -49,7 +48,7 @@ func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuc
 		return HTTPSuccessClientDelete200Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessClientDelete200Response{}, client.delete200HandleError(resp)
+		return HTTPSuccessClientDelete200Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPSuccessClientDelete200Response{RawResponse: resp}, nil
 }
@@ -65,21 +64,8 @@ func (client *HTTPSuccessClient) delete200CreateRequest(ctx context.Context, opt
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// delete200HandleError handles the Delete200 error response.
-func (client *HTTPSuccessClient) delete200HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Delete202 - Delete true Boolean value in request returns 202 (accepted)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPSuccessClientDelete202Options contains the optional parameters for the HTTPSuccessClient.Delete202 method.
 func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuccessClientDelete202Options) (HTTPSuccessClientDelete202Response, error) {
 	req, err := client.delete202CreateRequest(ctx, options)
@@ -91,7 +77,7 @@ func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuc
 		return HTTPSuccessClientDelete202Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return HTTPSuccessClientDelete202Response{}, client.delete202HandleError(resp)
+		return HTTPSuccessClientDelete202Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPSuccessClientDelete202Response{RawResponse: resp}, nil
 }
@@ -107,21 +93,8 @@ func (client *HTTPSuccessClient) delete202CreateRequest(ctx context.Context, opt
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// delete202HandleError handles the Delete202 error response.
-func (client *HTTPSuccessClient) delete202HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Delete204 - Delete true Boolean value in request returns 204 (no content)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPSuccessClientDelete204Options contains the optional parameters for the HTTPSuccessClient.Delete204 method.
 func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuccessClientDelete204Options) (HTTPSuccessClientDelete204Response, error) {
 	req, err := client.delete204CreateRequest(ctx, options)
@@ -133,7 +106,7 @@ func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuc
 		return HTTPSuccessClientDelete204Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return HTTPSuccessClientDelete204Response{}, client.delete204HandleError(resp)
+		return HTTPSuccessClientDelete204Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPSuccessClientDelete204Response{RawResponse: resp}, nil
 }
@@ -149,21 +122,8 @@ func (client *HTTPSuccessClient) delete204CreateRequest(ctx context.Context, opt
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// delete204HandleError handles the Delete204 error response.
-func (client *HTTPSuccessClient) delete204HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get200 - Get 200 success
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPSuccessClientGet200Options contains the optional parameters for the HTTPSuccessClient.Get200 method.
 func (client *HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSuccessClientGet200Options) (HTTPSuccessClientGet200Response, error) {
 	req, err := client.get200CreateRequest(ctx, options)
@@ -175,7 +135,7 @@ func (client *HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSucces
 		return HTTPSuccessClientGet200Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessClientGet200Response{}, client.get200HandleError(resp)
+		return HTTPSuccessClientGet200Response{}, runtime.NewResponseError(resp)
 	}
 	return client.get200HandleResponse(resp)
 }
@@ -195,26 +155,12 @@ func (client *HTTPSuccessClient) get200CreateRequest(ctx context.Context, option
 func (client *HTTPSuccessClient) get200HandleResponse(resp *http.Response) (HTTPSuccessClientGet200Response, error) {
 	result := HTTPSuccessClientGet200Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return HTTPSuccessClientGet200Response{}, runtime.NewResponseError(err, resp)
+		return HTTPSuccessClientGet200Response{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// get200HandleError handles the Get200 error response.
-func (client *HTTPSuccessClient) get200HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Head200 - Return 200 status code if successful
-// If the operation fails it returns the *Error error type.
 // options - HTTPSuccessClientHead200Options contains the optional parameters for the HTTPSuccessClient.Head200 method.
 func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessClientHead200Options) (HTTPSuccessClientHead200Response, error) {
 	req, err := client.head200CreateRequest(ctx, options)
@@ -244,7 +190,6 @@ func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, optio
 }
 
 // Head204 - Return 204 status code if successful
-// If the operation fails it returns the *Error error type.
 // options - HTTPSuccessClientHead204Options contains the optional parameters for the HTTPSuccessClient.Head204 method.
 func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessClientHead204Options) (HTTPSuccessClientHead204Response, error) {
 	req, err := client.head204CreateRequest(ctx, options)
@@ -274,7 +219,6 @@ func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, optio
 }
 
 // Head404 - Return 404 status code
-// If the operation fails it returns the *Error error type.
 // options - HTTPSuccessClientHead404Options contains the optional parameters for the HTTPSuccessClient.Head404 method.
 func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessClientHead404Options) (HTTPSuccessClientHead404Response, error) {
 	req, err := client.head404CreateRequest(ctx, options)
@@ -304,7 +248,7 @@ func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, optio
 }
 
 // Options200 - Options 200 success
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPSuccessClientOptions200Options contains the optional parameters for the HTTPSuccessClient.Options200 method.
 func (client *HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSuccessClientOptions200Options) (HTTPSuccessClientOptions200Response, error) {
 	req, err := client.options200CreateRequest(ctx, options)
@@ -316,7 +260,7 @@ func (client *HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSu
 		return HTTPSuccessClientOptions200Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessClientOptions200Response{}, client.options200HandleError(resp)
+		return HTTPSuccessClientOptions200Response{}, runtime.NewResponseError(resp)
 	}
 	return client.options200HandleResponse(resp)
 }
@@ -336,26 +280,13 @@ func (client *HTTPSuccessClient) options200CreateRequest(ctx context.Context, op
 func (client *HTTPSuccessClient) options200HandleResponse(resp *http.Response) (HTTPSuccessClientOptions200Response, error) {
 	result := HTTPSuccessClientOptions200Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return HTTPSuccessClientOptions200Response{}, runtime.NewResponseError(err, resp)
+		return HTTPSuccessClientOptions200Response{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// options200HandleError handles the Options200 error response.
-func (client *HTTPSuccessClient) options200HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Patch200 - Patch true Boolean value in request returning 200
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPSuccessClientPatch200Options contains the optional parameters for the HTTPSuccessClient.Patch200 method.
 func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSuccessClientPatch200Options) (HTTPSuccessClientPatch200Response, error) {
 	req, err := client.patch200CreateRequest(ctx, options)
@@ -367,7 +298,7 @@ func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSucc
 		return HTTPSuccessClientPatch200Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessClientPatch200Response{}, client.patch200HandleError(resp)
+		return HTTPSuccessClientPatch200Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPSuccessClientPatch200Response{RawResponse: resp}, nil
 }
@@ -383,21 +314,8 @@ func (client *HTTPSuccessClient) patch200CreateRequest(ctx context.Context, opti
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// patch200HandleError handles the Patch200 error response.
-func (client *HTTPSuccessClient) patch200HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Patch202 - Patch true Boolean value in request returns 202
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPSuccessClientPatch202Options contains the optional parameters for the HTTPSuccessClient.Patch202 method.
 func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSuccessClientPatch202Options) (HTTPSuccessClientPatch202Response, error) {
 	req, err := client.patch202CreateRequest(ctx, options)
@@ -409,7 +327,7 @@ func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSucc
 		return HTTPSuccessClientPatch202Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return HTTPSuccessClientPatch202Response{}, client.patch202HandleError(resp)
+		return HTTPSuccessClientPatch202Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPSuccessClientPatch202Response{RawResponse: resp}, nil
 }
@@ -425,21 +343,8 @@ func (client *HTTPSuccessClient) patch202CreateRequest(ctx context.Context, opti
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// patch202HandleError handles the Patch202 error response.
-func (client *HTTPSuccessClient) patch202HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Patch204 - Patch true Boolean value in request returns 204 (no content)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPSuccessClientPatch204Options contains the optional parameters for the HTTPSuccessClient.Patch204 method.
 func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSuccessClientPatch204Options) (HTTPSuccessClientPatch204Response, error) {
 	req, err := client.patch204CreateRequest(ctx, options)
@@ -451,7 +356,7 @@ func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSucc
 		return HTTPSuccessClientPatch204Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return HTTPSuccessClientPatch204Response{}, client.patch204HandleError(resp)
+		return HTTPSuccessClientPatch204Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPSuccessClientPatch204Response{RawResponse: resp}, nil
 }
@@ -467,21 +372,8 @@ func (client *HTTPSuccessClient) patch204CreateRequest(ctx context.Context, opti
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// patch204HandleError handles the Patch204 error response.
-func (client *HTTPSuccessClient) patch204HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Post200 - Post bollean value true in request that returns a 200
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPSuccessClientPost200Options contains the optional parameters for the HTTPSuccessClient.Post200 method.
 func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSuccessClientPost200Options) (HTTPSuccessClientPost200Response, error) {
 	req, err := client.post200CreateRequest(ctx, options)
@@ -493,7 +385,7 @@ func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSucce
 		return HTTPSuccessClientPost200Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessClientPost200Response{}, client.post200HandleError(resp)
+		return HTTPSuccessClientPost200Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPSuccessClientPost200Response{RawResponse: resp}, nil
 }
@@ -509,21 +401,8 @@ func (client *HTTPSuccessClient) post200CreateRequest(ctx context.Context, optio
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// post200HandleError handles the Post200 error response.
-func (client *HTTPSuccessClient) post200HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Post201 - Post true Boolean value in request returns 201 (Created)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPSuccessClientPost201Options contains the optional parameters for the HTTPSuccessClient.Post201 method.
 func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSuccessClientPost201Options) (HTTPSuccessClientPost201Response, error) {
 	req, err := client.post201CreateRequest(ctx, options)
@@ -535,7 +414,7 @@ func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSucce
 		return HTTPSuccessClientPost201Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return HTTPSuccessClientPost201Response{}, client.post201HandleError(resp)
+		return HTTPSuccessClientPost201Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPSuccessClientPost201Response{RawResponse: resp}, nil
 }
@@ -551,21 +430,8 @@ func (client *HTTPSuccessClient) post201CreateRequest(ctx context.Context, optio
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// post201HandleError handles the Post201 error response.
-func (client *HTTPSuccessClient) post201HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Post202 - Post true Boolean value in request returns 202 (Accepted)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPSuccessClientPost202Options contains the optional parameters for the HTTPSuccessClient.Post202 method.
 func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSuccessClientPost202Options) (HTTPSuccessClientPost202Response, error) {
 	req, err := client.post202CreateRequest(ctx, options)
@@ -577,7 +443,7 @@ func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSucce
 		return HTTPSuccessClientPost202Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return HTTPSuccessClientPost202Response{}, client.post202HandleError(resp)
+		return HTTPSuccessClientPost202Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPSuccessClientPost202Response{RawResponse: resp}, nil
 }
@@ -593,21 +459,8 @@ func (client *HTTPSuccessClient) post202CreateRequest(ctx context.Context, optio
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// post202HandleError handles the Post202 error response.
-func (client *HTTPSuccessClient) post202HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Post204 - Post true Boolean value in request returns 204 (no content)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPSuccessClientPost204Options contains the optional parameters for the HTTPSuccessClient.Post204 method.
 func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSuccessClientPost204Options) (HTTPSuccessClientPost204Response, error) {
 	req, err := client.post204CreateRequest(ctx, options)
@@ -619,7 +472,7 @@ func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSucce
 		return HTTPSuccessClientPost204Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return HTTPSuccessClientPost204Response{}, client.post204HandleError(resp)
+		return HTTPSuccessClientPost204Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPSuccessClientPost204Response{RawResponse: resp}, nil
 }
@@ -635,21 +488,8 @@ func (client *HTTPSuccessClient) post204CreateRequest(ctx context.Context, optio
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// post204HandleError handles the Post204 error response.
-func (client *HTTPSuccessClient) post204HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Put200 - Put boolean value true returning 200 success
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPSuccessClientPut200Options contains the optional parameters for the HTTPSuccessClient.Put200 method.
 func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSuccessClientPut200Options) (HTTPSuccessClientPut200Response, error) {
 	req, err := client.put200CreateRequest(ctx, options)
@@ -661,7 +501,7 @@ func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSucces
 		return HTTPSuccessClientPut200Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessClientPut200Response{}, client.put200HandleError(resp)
+		return HTTPSuccessClientPut200Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPSuccessClientPut200Response{RawResponse: resp}, nil
 }
@@ -677,21 +517,8 @@ func (client *HTTPSuccessClient) put200CreateRequest(ctx context.Context, option
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// put200HandleError handles the Put200 error response.
-func (client *HTTPSuccessClient) put200HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Put201 - Put true Boolean value in request returns 201
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPSuccessClientPut201Options contains the optional parameters for the HTTPSuccessClient.Put201 method.
 func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSuccessClientPut201Options) (HTTPSuccessClientPut201Response, error) {
 	req, err := client.put201CreateRequest(ctx, options)
@@ -703,7 +530,7 @@ func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSucces
 		return HTTPSuccessClientPut201Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return HTTPSuccessClientPut201Response{}, client.put201HandleError(resp)
+		return HTTPSuccessClientPut201Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPSuccessClientPut201Response{RawResponse: resp}, nil
 }
@@ -719,21 +546,8 @@ func (client *HTTPSuccessClient) put201CreateRequest(ctx context.Context, option
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// put201HandleError handles the Put201 error response.
-func (client *HTTPSuccessClient) put201HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Put202 - Put true Boolean value in request returns 202 (Accepted)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPSuccessClientPut202Options contains the optional parameters for the HTTPSuccessClient.Put202 method.
 func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSuccessClientPut202Options) (HTTPSuccessClientPut202Response, error) {
 	req, err := client.put202CreateRequest(ctx, options)
@@ -745,7 +559,7 @@ func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSucces
 		return HTTPSuccessClientPut202Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return HTTPSuccessClientPut202Response{}, client.put202HandleError(resp)
+		return HTTPSuccessClientPut202Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPSuccessClientPut202Response{RawResponse: resp}, nil
 }
@@ -761,21 +575,8 @@ func (client *HTTPSuccessClient) put202CreateRequest(ctx context.Context, option
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// put202HandleError handles the Put202 error response.
-func (client *HTTPSuccessClient) put202HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Put204 - Put true Boolean value in request returns 204 (no content)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPSuccessClientPut204Options contains the optional parameters for the HTTPSuccessClient.Put204 method.
 func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSuccessClientPut204Options) (HTTPSuccessClientPut204Response, error) {
 	req, err := client.put204CreateRequest(ctx, options)
@@ -787,7 +588,7 @@ func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSucces
 		return HTTPSuccessClientPut204Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return HTTPSuccessClientPut204Response{}, client.put204HandleError(resp)
+		return HTTPSuccessClientPut204Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPSuccessClientPut204Response{RawResponse: resp}, nil
 }
@@ -801,17 +602,4 @@ func (client *HTTPSuccessClient) put204CreateRequest(ctx context.Context, option
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, true)
-}
-
-// put204HandleError handles the Put204 error response.
-func (client *HTTPSuccessClient) put204HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewIPGroupsClient(subscriptionID string, credential azcore.TokenCredential,
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &IPGroupsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates an ipGroups in a specified resource group.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // ipGroupsName - The name of the ipGroups.
 // parameters - Parameters supplied to the create or update IpGroups operation.
@@ -66,7 +65,7 @@ func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 	result := IPGroupsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("IPGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("IPGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return IPGroupsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 }
 
 // CreateOrUpdate - Creates or updates an ipGroups in a specified resource group.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *IPGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, ipGroupsName, parameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *IPGroupsClient) createOrUpdate(ctx context.Context, resourceGroupN
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,21 +118,8 @@ func (client *IPGroupsClient) createOrUpdateCreateRequest(ctx context.Context, r
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *IPGroupsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified ipGroups.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // ipGroupsName - The name of the ipGroups.
 // options - IPGroupsClientBeginDeleteOptions contains the optional parameters for the IPGroupsClient.BeginDelete method.
@@ -145,7 +131,7 @@ func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName
 	result := IPGroupsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("IPGroupsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("IPGroupsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return IPGroupsClientDeletePollerResponse{}, err
 	}
@@ -156,7 +142,7 @@ func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName
 }
 
 // Delete - Deletes the specified ipGroups.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *IPGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, ipGroupsName, options)
 	if err != nil {
@@ -167,7 +153,7 @@ func (client *IPGroupsClient) deleteOperation(ctx context.Context, resourceGroup
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -198,21 +184,8 @@ func (client *IPGroupsClient) deleteCreateRequest(ctx context.Context, resourceG
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *IPGroupsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the specified ipGroups.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // ipGroupsName - The name of the ipGroups.
 // options - IPGroupsClientGetOptions contains the optional parameters for the IPGroupsClient.Get method.
@@ -226,7 +199,7 @@ func (client *IPGroupsClient) Get(ctx context.Context, resourceGroupName string,
 		return IPGroupsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IPGroupsClientGetResponse{}, client.getHandleError(resp)
+		return IPGroupsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -264,26 +237,13 @@ func (client *IPGroupsClient) getCreateRequest(ctx context.Context, resourceGrou
 func (client *IPGroupsClient) getHandleResponse(resp *http.Response) (IPGroupsClientGetResponse, error) {
 	result := IPGroupsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPGroup); err != nil {
-		return IPGroupsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return IPGroupsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *IPGroupsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all IpGroups in a subscription.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - IPGroupsClientListOptions contains the optional parameters for the IPGroupsClient.List method.
 func (client *IPGroupsClient) List(options *IPGroupsClientListOptions) *IPGroupsClientListPager {
 	return &IPGroupsClientListPager{
@@ -319,26 +279,13 @@ func (client *IPGroupsClient) listCreateRequest(ctx context.Context, options *IP
 func (client *IPGroupsClient) listHandleResponse(resp *http.Response) (IPGroupsClientListResponse, error) {
 	result := IPGroupsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPGroupListResult); err != nil {
-		return IPGroupsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return IPGroupsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *IPGroupsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByResourceGroup - Gets all IpGroups in a resource group.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - IPGroupsClientListByResourceGroupOptions contains the optional parameters for the IPGroupsClient.ListByResourceGroup
 // method.
@@ -380,26 +327,13 @@ func (client *IPGroupsClient) listByResourceGroupCreateRequest(ctx context.Conte
 func (client *IPGroupsClient) listByResourceGroupHandleResponse(resp *http.Response) (IPGroupsClientListByResourceGroupResponse, error) {
 	result := IPGroupsClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPGroupListResult); err != nil {
-		return IPGroupsClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return IPGroupsClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *IPGroupsClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateGroups - Updates tags of an IpGroups resource.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // ipGroupsName - The name of the ipGroups.
 // parameters - Parameters supplied to the update ipGroups operation.
@@ -414,7 +348,7 @@ func (client *IPGroupsClient) UpdateGroups(ctx context.Context, resourceGroupNam
 		return IPGroupsClientUpdateGroupsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IPGroupsClientUpdateGroupsResponse{}, client.updateGroupsHandleError(resp)
+		return IPGroupsClientUpdateGroupsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateGroupsHandleResponse(resp)
 }
@@ -449,20 +383,7 @@ func (client *IPGroupsClient) updateGroupsCreateRequest(ctx context.Context, res
 func (client *IPGroupsClient) updateGroupsHandleResponse(resp *http.Response) (IPGroupsClientUpdateGroupsResponse, error) {
 	result := IPGroupsClientUpdateGroupsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPGroup); err != nil {
-		return IPGroupsClientUpdateGroupsResponse{}, runtime.NewResponseError(err, resp)
+		return IPGroupsClientUpdateGroupsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// updateGroupsHandleError handles the UpdateGroups error response.
-func (client *IPGroupsClient) updateGroupsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(subscriptionID str
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VPNServerConfigurationsAssociatedWithVirtualWanClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginList - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name.
 // virtualWANName - The name of the VirtualWAN whose associated VpnServerConfigurations is needed.
 // options - VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions contains the optional parameters for the
@@ -65,7 +64,7 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(c
 	result := VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", "location", resp, client.pl, client.listHandleError)
+	pt, err := armruntime.NewPoller("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", "location", resp, client.pl)
 	if err != nil {
 		return VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse{}, err
 	}
@@ -76,7 +75,7 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(c
 }
 
 // List - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listOperation(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (*http.Response, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
@@ -87,7 +86,7 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listOperati
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.listHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -116,17 +115,4 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listCreateR
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// listHandleError handles the List error response.
-func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

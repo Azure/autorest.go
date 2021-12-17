@@ -10,7 +10,6 @@ package httpinfrastructuregroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewHTTPServerFailureClient(options *azcore.ClientOptions) *HTTPServerFailur
 		cp = *options
 	}
 	client := &HTTPServerFailureClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Delete505 - Return 505 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPServerFailureClientDelete505Options contains the optional parameters for the HTTPServerFailureClient.Delete505
 // method.
 func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *HTTPServerFailureClientDelete505Options) (HTTPServerFailureClientDelete505Response, error) {
@@ -50,7 +49,7 @@ func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *H
 		return HTTPServerFailureClientDelete505Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPServerFailureClientDelete505Response{}, client.delete505HandleError(resp)
+		return HTTPServerFailureClientDelete505Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPServerFailureClientDelete505Response{RawResponse: resp}, nil
 }
@@ -66,21 +65,8 @@ func (client *HTTPServerFailureClient) delete505CreateRequest(ctx context.Contex
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// delete505HandleError handles the Delete505 error response.
-func (client *HTTPServerFailureClient) delete505HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get501 - Return 501 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPServerFailureClientGet501Options contains the optional parameters for the HTTPServerFailureClient.Get501
 // method.
 func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTPServerFailureClientGet501Options) (HTTPServerFailureClientGet501Response, error) {
@@ -93,7 +79,7 @@ func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTP
 		return HTTPServerFailureClientGet501Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPServerFailureClientGet501Response{}, client.get501HandleError(resp)
+		return HTTPServerFailureClientGet501Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPServerFailureClientGet501Response{RawResponse: resp}, nil
 }
@@ -109,21 +95,7 @@ func (client *HTTPServerFailureClient) get501CreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// get501HandleError handles the Get501 error response.
-func (client *HTTPServerFailureClient) get501HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Head501 - Return 501 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
 // options - HTTPServerFailureClientHead501Options contains the optional parameters for the HTTPServerFailureClient.Head501
 // method.
 func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTTPServerFailureClientHead501Options) (HTTPServerFailureClientHead501Response, error) {
@@ -154,7 +126,7 @@ func (client *HTTPServerFailureClient) head501CreateRequest(ctx context.Context,
 }
 
 // Post505 - Return 505 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPServerFailureClientPost505Options contains the optional parameters for the HTTPServerFailureClient.Post505
 // method.
 func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTTPServerFailureClientPost505Options) (HTTPServerFailureClientPost505Response, error) {
@@ -167,7 +139,7 @@ func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTT
 		return HTTPServerFailureClientPost505Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPServerFailureClientPost505Response{}, client.post505HandleError(resp)
+		return HTTPServerFailureClientPost505Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPServerFailureClientPost505Response{RawResponse: resp}, nil
 }
@@ -181,17 +153,4 @@ func (client *HTTPServerFailureClient) post505CreateRequest(ctx context.Context,
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, true)
-}
-
-// post505HandleError handles the Post505 error response.
-func (client *HTTPServerFailureClient) post505HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

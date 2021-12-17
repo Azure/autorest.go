@@ -11,7 +11,6 @@ package azartifacts
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -36,7 +35,7 @@ func newBigDataPoolsClient(endpoint string, pl runtime.Pipeline) *bigDataPoolsCl
 }
 
 // Get - Get Big Data Pool
-// If the operation fails it returns the *ErrorContract error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // bigDataPoolName - The Big Data Pool name
 // options - bigDataPoolsClientGetOptions contains the optional parameters for the bigDataPoolsClient.Get method.
 func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *bigDataPoolsClientGetOptions) (bigDataPoolsClientGetResponse, error) {
@@ -49,7 +48,7 @@ func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName strin
 		return bigDataPoolsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return bigDataPoolsClientGetResponse{}, client.getHandleError(resp)
+		return bigDataPoolsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -76,26 +75,13 @@ func (client *bigDataPoolsClient) getCreateRequest(ctx context.Context, bigDataP
 func (client *bigDataPoolsClient) getHandleResponse(resp *http.Response) (bigDataPoolsClientGetResponse, error) {
 	result := bigDataPoolsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BigDataPoolResourceInfo); err != nil {
-		return bigDataPoolsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return bigDataPoolsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *bigDataPoolsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorContract{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - List Big Data Pools
-// If the operation fails it returns the *ErrorContract error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - bigDataPoolsClientListOptions contains the optional parameters for the bigDataPoolsClient.List method.
 func (client *bigDataPoolsClient) List(ctx context.Context, options *bigDataPoolsClientListOptions) (bigDataPoolsClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
@@ -107,7 +93,7 @@ func (client *bigDataPoolsClient) List(ctx context.Context, options *bigDataPool
 		return bigDataPoolsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return bigDataPoolsClientListResponse{}, client.listHandleError(resp)
+		return bigDataPoolsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -130,20 +116,7 @@ func (client *bigDataPoolsClient) listCreateRequest(ctx context.Context, options
 func (client *bigDataPoolsClient) listHandleResponse(resp *http.Response) (bigDataPoolsClientListResponse, error) {
 	result := bigDataPoolsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BigDataPoolResourceInfoListResult); err != nil {
-		return bigDataPoolsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return bigDataPoolsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *bigDataPoolsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorContract{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

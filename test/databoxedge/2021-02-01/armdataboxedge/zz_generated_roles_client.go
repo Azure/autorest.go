@@ -11,7 +11,6 @@ package armdataboxedge
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -39,19 +38,19 @@ func NewRolesClient(subscriptionID string, credential azcore.TokenCredential, op
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &RolesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Create or update a role.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The role name.
 // resourceGroupName - The resource group name.
@@ -66,7 +65,7 @@ func (client *RolesClient) BeginCreateOrUpdate(ctx context.Context, deviceName s
 	result := RolesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("RolesClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("RolesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return RolesClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *RolesClient) BeginCreateOrUpdate(ctx context.Context, deviceName s
 }
 
 // CreateOrUpdate - Create or update a role.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *RolesClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, role RoleClassification, options *RolesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, role, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *RolesClient) createOrUpdate(ctx context.Context, deviceName string
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -123,21 +122,8 @@ func (client *RolesClient) createOrUpdateCreateRequest(ctx context.Context, devi
 	return req, runtime.MarshalAsJSON(req, role)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *RolesClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the role on the device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The role name.
 // resourceGroupName - The resource group name.
@@ -150,7 +136,7 @@ func (client *RolesClient) BeginDelete(ctx context.Context, deviceName string, n
 	result := RolesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("RolesClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("RolesClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return RolesClientDeletePollerResponse{}, err
 	}
@@ -161,7 +147,7 @@ func (client *RolesClient) BeginDelete(ctx context.Context, deviceName string, n
 }
 
 // Delete - Deletes the role on the device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *RolesClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -172,7 +158,7 @@ func (client *RolesClient) deleteOperation(ctx context.Context, deviceName strin
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -207,21 +193,8 @@ func (client *RolesClient) deleteCreateRequest(ctx context.Context, deviceName s
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *RolesClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets a specific role by name.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The role name.
 // resourceGroupName - The resource group name.
@@ -236,7 +209,7 @@ func (client *RolesClient) Get(ctx context.Context, deviceName string, name stri
 		return RolesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RolesClientGetResponse{}, client.getHandleError(resp)
+		return RolesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -275,26 +248,13 @@ func (client *RolesClient) getCreateRequest(ctx context.Context, deviceName stri
 func (client *RolesClient) getHandleResponse(resp *http.Response) (RolesClientGetResponse, error) {
 	result := RolesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return RolesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return RolesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *RolesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByDataBoxEdgeDevice - Lists all the roles configured in a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - RolesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the RolesClient.ListByDataBoxEdgeDevice
@@ -341,20 +301,7 @@ func (client *RolesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Cont
 func (client *RolesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (RolesClientListByDataBoxEdgeDeviceResponse, error) {
 	result := RolesClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleList); err != nil {
-		return RolesClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
+		return RolesClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listByDataBoxEdgeDeviceHandleError handles the ListByDataBoxEdgeDevice error response.
-func (client *RolesClient) listByDataBoxEdgeDeviceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewVirtualRouterPeeringsClient(subscriptionID string, credential azcore.Tok
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VirtualRouterPeeringsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified Virtual Router Peering.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualRouterName - The name of the Virtual Router.
 // peeringName - The name of the Virtual Router Peering.
@@ -67,7 +66,7 @@ func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Conte
 	result := VirtualRouterPeeringsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualRouterPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("VirtualRouterPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VirtualRouterPeeringsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -78,7 +77,7 @@ func (client *VirtualRouterPeeringsClient) BeginCreateOrUpdate(ctx context.Conte
 }
 
 // CreateOrUpdate - Creates or updates the specified Virtual Router Peering.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualRouterPeeringsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, parameters VirtualRouterPeering, options *VirtualRouterPeeringsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualRouterName, peeringName, parameters, options)
 	if err != nil {
@@ -89,7 +88,7 @@ func (client *VirtualRouterPeeringsClient) createOrUpdate(ctx context.Context, r
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -124,21 +123,8 @@ func (client *VirtualRouterPeeringsClient) createOrUpdateCreateRequest(ctx conte
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *VirtualRouterPeeringsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified peering from a Virtual Router.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualRouterName - The name of the Virtual Router.
 // peeringName - The name of the peering.
@@ -152,7 +138,7 @@ func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, reso
 	result := VirtualRouterPeeringsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualRouterPeeringsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("VirtualRouterPeeringsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VirtualRouterPeeringsClientDeletePollerResponse{}, err
 	}
@@ -163,7 +149,7 @@ func (client *VirtualRouterPeeringsClient) BeginDelete(ctx context.Context, reso
 }
 
 // Delete - Deletes the specified peering from a Virtual Router.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualRouterPeeringsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualRouterName string, peeringName string, options *VirtualRouterPeeringsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualRouterName, peeringName, options)
 	if err != nil {
@@ -174,7 +160,7 @@ func (client *VirtualRouterPeeringsClient) deleteOperation(ctx context.Context, 
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -209,21 +195,8 @@ func (client *VirtualRouterPeeringsClient) deleteCreateRequest(ctx context.Conte
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *VirtualRouterPeeringsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the specified Virtual Router Peering.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualRouterName - The name of the Virtual Router.
 // peeringName - The name of the Virtual Router Peering.
@@ -239,7 +212,7 @@ func (client *VirtualRouterPeeringsClient) Get(ctx context.Context, resourceGrou
 		return VirtualRouterPeeringsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualRouterPeeringsClientGetResponse{}, client.getHandleError(resp)
+		return VirtualRouterPeeringsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -278,26 +251,13 @@ func (client *VirtualRouterPeeringsClient) getCreateRequest(ctx context.Context,
 func (client *VirtualRouterPeeringsClient) getHandleResponse(resp *http.Response) (VirtualRouterPeeringsClientGetResponse, error) {
 	result := VirtualRouterPeeringsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualRouterPeering); err != nil {
-		return VirtualRouterPeeringsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualRouterPeeringsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *VirtualRouterPeeringsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Lists all Virtual Router Peerings in a Virtual Router resource.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualRouterName - The name of the Virtual Router.
 // options - VirtualRouterPeeringsClientListOptions contains the optional parameters for the VirtualRouterPeeringsClient.List
@@ -344,20 +304,7 @@ func (client *VirtualRouterPeeringsClient) listCreateRequest(ctx context.Context
 func (client *VirtualRouterPeeringsClient) listHandleResponse(resp *http.Response) (VirtualRouterPeeringsClientListResponse, error) {
 	result := VirtualRouterPeeringsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualRouterPeeringListResult); err != nil {
-		return VirtualRouterPeeringsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualRouterPeeringsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *VirtualRouterPeeringsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

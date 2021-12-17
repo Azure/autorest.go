@@ -11,7 +11,6 @@ package urlgroup
 import (
 	"context"
 	"encoding/base64"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -35,13 +34,13 @@ func NewQueriesClient(options *azcore.ClientOptions) *QueriesClient {
 		cp = *options
 	}
 	client := &QueriesClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientArrayStringCSVEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringCSVEmpty
 // method.
 func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *QueriesClientArrayStringCSVEmptyOptions) (QueriesClientArrayStringCSVEmptyResponse, error) {
@@ -54,7 +53,7 @@ func (client *QueriesClient) ArrayStringCSVEmpty(ctx context.Context, options *Q
 		return QueriesClientArrayStringCSVEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringCSVEmptyResponse{}, client.arrayStringCSVEmptyHandleError(resp)
+		return QueriesClientArrayStringCSVEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientArrayStringCSVEmptyResponse{RawResponse: resp}, nil
 }
@@ -75,21 +74,8 @@ func (client *QueriesClient) arrayStringCSVEmptyCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// arrayStringCSVEmptyHandleError handles the ArrayStringCSVEmpty error response.
-func (client *QueriesClient) arrayStringCSVEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ArrayStringCSVNull - Get a null array of string using the csv-array format
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientArrayStringCSVNullOptions contains the optional parameters for the QueriesClient.ArrayStringCSVNull
 // method.
 func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *QueriesClientArrayStringCSVNullOptions) (QueriesClientArrayStringCSVNullResponse, error) {
@@ -102,7 +88,7 @@ func (client *QueriesClient) ArrayStringCSVNull(ctx context.Context, options *Qu
 		return QueriesClientArrayStringCSVNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringCSVNullResponse{}, client.arrayStringCSVNullHandleError(resp)
+		return QueriesClientArrayStringCSVNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientArrayStringCSVNullResponse{RawResponse: resp}, nil
 }
@@ -123,22 +109,9 @@ func (client *QueriesClient) arrayStringCSVNullCreateRequest(ctx context.Context
 	return req, nil
 }
 
-// arrayStringCSVNullHandleError handles the ArrayStringCSVNull error response.
-func (client *QueriesClient) arrayStringCSVNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array
 // format
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientArrayStringCSVValidOptions contains the optional parameters for the QueriesClient.ArrayStringCSVValid
 // method.
 func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *QueriesClientArrayStringCSVValidOptions) (QueriesClientArrayStringCSVValidResponse, error) {
@@ -151,7 +124,7 @@ func (client *QueriesClient) ArrayStringCSVValid(ctx context.Context, options *Q
 		return QueriesClientArrayStringCSVValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringCSVValidResponse{}, client.arrayStringCSVValidHandleError(resp)
+		return QueriesClientArrayStringCSVValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientArrayStringCSVValidResponse{RawResponse: resp}, nil
 }
@@ -172,22 +145,9 @@ func (client *QueriesClient) arrayStringCSVValidCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// arrayStringCSVValidHandleError handles the ArrayStringCSVValid error response.
-func (client *QueriesClient) arrayStringCSVValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ArrayStringNoCollectionFormatEmpty - Array query has no defined collection format, should default to csv. Pass in ['hello',
 // 'nihao', 'bonjour'] for the 'arrayQuery' parameter to the service
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientArrayStringNoCollectionFormatEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringNoCollectionFormatEmpty
 // method.
 func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Context, options *QueriesClientArrayStringNoCollectionFormatEmptyOptions) (QueriesClientArrayStringNoCollectionFormatEmptyResponse, error) {
@@ -200,7 +160,7 @@ func (client *QueriesClient) ArrayStringNoCollectionFormatEmpty(ctx context.Cont
 		return QueriesClientArrayStringNoCollectionFormatEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringNoCollectionFormatEmptyResponse{}, client.arrayStringNoCollectionFormatEmptyHandleError(resp)
+		return QueriesClientArrayStringNoCollectionFormatEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientArrayStringNoCollectionFormatEmptyResponse{RawResponse: resp}, nil
 }
@@ -221,22 +181,9 @@ func (client *QueriesClient) arrayStringNoCollectionFormatEmptyCreateRequest(ctx
 	return req, nil
 }
 
-// arrayStringNoCollectionFormatEmptyHandleError handles the ArrayStringNoCollectionFormatEmpty error response.
-func (client *QueriesClient) arrayStringNoCollectionFormatEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array
 // format
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientArrayStringPipesValidOptions contains the optional parameters for the QueriesClient.ArrayStringPipesValid
 // method.
 func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options *QueriesClientArrayStringPipesValidOptions) (QueriesClientArrayStringPipesValidResponse, error) {
@@ -249,7 +196,7 @@ func (client *QueriesClient) ArrayStringPipesValid(ctx context.Context, options 
 		return QueriesClientArrayStringPipesValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringPipesValidResponse{}, client.arrayStringPipesValidHandleError(resp)
+		return QueriesClientArrayStringPipesValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientArrayStringPipesValidResponse{RawResponse: resp}, nil
 }
@@ -270,22 +217,9 @@ func (client *QueriesClient) arrayStringPipesValidCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// arrayStringPipesValidHandleError handles the ArrayStringPipesValid error response.
-func (client *QueriesClient) arrayStringPipesValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array
 // format
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientArrayStringSsvValidOptions contains the optional parameters for the QueriesClient.ArrayStringSsvValid
 // method.
 func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *QueriesClientArrayStringSsvValidOptions) (QueriesClientArrayStringSsvValidResponse, error) {
@@ -298,7 +232,7 @@ func (client *QueriesClient) ArrayStringSsvValid(ctx context.Context, options *Q
 		return QueriesClientArrayStringSsvValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringSsvValidResponse{}, client.arrayStringSsvValidHandleError(resp)
+		return QueriesClientArrayStringSsvValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientArrayStringSsvValidResponse{RawResponse: resp}, nil
 }
@@ -319,22 +253,9 @@ func (client *QueriesClient) arrayStringSsvValidCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// arrayStringSsvValidHandleError handles the ArrayStringSsvValid error response.
-func (client *QueriesClient) arrayStringSsvValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array
 // format
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientArrayStringTsvValidOptions contains the optional parameters for the QueriesClient.ArrayStringTsvValid
 // method.
 func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *QueriesClientArrayStringTsvValidOptions) (QueriesClientArrayStringTsvValidResponse, error) {
@@ -347,7 +268,7 @@ func (client *QueriesClient) ArrayStringTsvValid(ctx context.Context, options *Q
 		return QueriesClientArrayStringTsvValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringTsvValidResponse{}, client.arrayStringTsvValidHandleError(resp)
+		return QueriesClientArrayStringTsvValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientArrayStringTsvValidResponse{RawResponse: resp}, nil
 }
@@ -368,21 +289,8 @@ func (client *QueriesClient) arrayStringTsvValidCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// arrayStringTsvValidHandleError handles the ArrayStringTsvValid error response.
-func (client *QueriesClient) arrayStringTsvValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ByteEmpty - Get '' as byte array
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientByteEmptyOptions contains the optional parameters for the QueriesClient.ByteEmpty method.
 func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesClientByteEmptyOptions) (QueriesClientByteEmptyResponse, error) {
 	req, err := client.byteEmptyCreateRequest(ctx, options)
@@ -394,7 +302,7 @@ func (client *QueriesClient) ByteEmpty(ctx context.Context, options *QueriesClie
 		return QueriesClientByteEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientByteEmptyResponse{}, client.byteEmptyHandleError(resp)
+		return QueriesClientByteEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientByteEmptyResponse{RawResponse: resp}, nil
 }
@@ -413,21 +321,8 @@ func (client *QueriesClient) byteEmptyCreateRequest(ctx context.Context, options
 	return req, nil
 }
 
-// byteEmptyHandleError handles the ByteEmpty error response.
-func (client *QueriesClient) byteEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientByteMultiByteOptions contains the optional parameters for the QueriesClient.ByteMultiByte method.
 func (client *QueriesClient) ByteMultiByte(ctx context.Context, options *QueriesClientByteMultiByteOptions) (QueriesClientByteMultiByteResponse, error) {
 	req, err := client.byteMultiByteCreateRequest(ctx, options)
@@ -439,7 +334,7 @@ func (client *QueriesClient) ByteMultiByte(ctx context.Context, options *Queries
 		return QueriesClientByteMultiByteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientByteMultiByteResponse{}, client.byteMultiByteHandleError(resp)
+		return QueriesClientByteMultiByteResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientByteMultiByteResponse{RawResponse: resp}, nil
 }
@@ -460,21 +355,8 @@ func (client *QueriesClient) byteMultiByteCreateRequest(ctx context.Context, opt
 	return req, nil
 }
 
-// byteMultiByteHandleError handles the ByteMultiByte error response.
-func (client *QueriesClient) byteMultiByteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ByteNull - Get null as byte array (no query parameters in uri)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientByteNullOptions contains the optional parameters for the QueriesClient.ByteNull method.
 func (client *QueriesClient) ByteNull(ctx context.Context, options *QueriesClientByteNullOptions) (QueriesClientByteNullResponse, error) {
 	req, err := client.byteNullCreateRequest(ctx, options)
@@ -486,7 +368,7 @@ func (client *QueriesClient) ByteNull(ctx context.Context, options *QueriesClien
 		return QueriesClientByteNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientByteNullResponse{}, client.byteNullHandleError(resp)
+		return QueriesClientByteNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientByteNullResponse{RawResponse: resp}, nil
 }
@@ -507,21 +389,8 @@ func (client *QueriesClient) byteNullCreateRequest(ctx context.Context, options 
 	return req, nil
 }
 
-// byteNullHandleError handles the ByteNull error response.
-func (client *QueriesClient) byteNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DateNull - Get null as date - this should result in no query parameters in uri
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientDateNullOptions contains the optional parameters for the QueriesClient.DateNull method.
 func (client *QueriesClient) DateNull(ctx context.Context, options *QueriesClientDateNullOptions) (QueriesClientDateNullResponse, error) {
 	req, err := client.dateNullCreateRequest(ctx, options)
@@ -533,7 +402,7 @@ func (client *QueriesClient) DateNull(ctx context.Context, options *QueriesClien
 		return QueriesClientDateNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientDateNullResponse{}, client.dateNullHandleError(resp)
+		return QueriesClientDateNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientDateNullResponse{RawResponse: resp}, nil
 }
@@ -554,21 +423,8 @@ func (client *QueriesClient) dateNullCreateRequest(ctx context.Context, options 
 	return req, nil
 }
 
-// dateNullHandleError handles the DateNull error response.
-func (client *QueriesClient) dateNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DateTimeNull - Get null as date-time, should result in no query parameters in uri
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientDateTimeNullOptions contains the optional parameters for the QueriesClient.DateTimeNull method.
 func (client *QueriesClient) DateTimeNull(ctx context.Context, options *QueriesClientDateTimeNullOptions) (QueriesClientDateTimeNullResponse, error) {
 	req, err := client.dateTimeNullCreateRequest(ctx, options)
@@ -580,7 +436,7 @@ func (client *QueriesClient) DateTimeNull(ctx context.Context, options *QueriesC
 		return QueriesClientDateTimeNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientDateTimeNullResponse{}, client.dateTimeNullHandleError(resp)
+		return QueriesClientDateTimeNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientDateTimeNullResponse{RawResponse: resp}, nil
 }
@@ -601,21 +457,8 @@ func (client *QueriesClient) dateTimeNullCreateRequest(ctx context.Context, opti
 	return req, nil
 }
 
-// dateTimeNullHandleError handles the DateTimeNull error response.
-func (client *QueriesClient) dateTimeNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientDateTimeValidOptions contains the optional parameters for the QueriesClient.DateTimeValid method.
 func (client *QueriesClient) DateTimeValid(ctx context.Context, options *QueriesClientDateTimeValidOptions) (QueriesClientDateTimeValidResponse, error) {
 	req, err := client.dateTimeValidCreateRequest(ctx, options)
@@ -627,7 +470,7 @@ func (client *QueriesClient) DateTimeValid(ctx context.Context, options *Queries
 		return QueriesClientDateTimeValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientDateTimeValidResponse{}, client.dateTimeValidHandleError(resp)
+		return QueriesClientDateTimeValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientDateTimeValidResponse{RawResponse: resp}, nil
 }
@@ -646,21 +489,8 @@ func (client *QueriesClient) dateTimeValidCreateRequest(ctx context.Context, opt
 	return req, nil
 }
 
-// dateTimeValidHandleError handles the DateTimeValid error response.
-func (client *QueriesClient) dateTimeValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DateValid - Get '2012-01-01' as date
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientDateValidOptions contains the optional parameters for the QueriesClient.DateValid method.
 func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesClientDateValidOptions) (QueriesClientDateValidResponse, error) {
 	req, err := client.dateValidCreateRequest(ctx, options)
@@ -672,7 +502,7 @@ func (client *QueriesClient) DateValid(ctx context.Context, options *QueriesClie
 		return QueriesClientDateValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientDateValidResponse{}, client.dateValidHandleError(resp)
+		return QueriesClientDateValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientDateValidResponse{RawResponse: resp}, nil
 }
@@ -691,21 +521,8 @@ func (client *QueriesClient) dateValidCreateRequest(ctx context.Context, options
 	return req, nil
 }
 
-// dateValidHandleError handles the DateValid error response.
-func (client *QueriesClient) dateValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DoubleDecimalNegative - Get '-9999999.999' numeric value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientDoubleDecimalNegativeOptions contains the optional parameters for the QueriesClient.DoubleDecimalNegative
 // method.
 func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options *QueriesClientDoubleDecimalNegativeOptions) (QueriesClientDoubleDecimalNegativeResponse, error) {
@@ -718,7 +535,7 @@ func (client *QueriesClient) DoubleDecimalNegative(ctx context.Context, options 
 		return QueriesClientDoubleDecimalNegativeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientDoubleDecimalNegativeResponse{}, client.doubleDecimalNegativeHandleError(resp)
+		return QueriesClientDoubleDecimalNegativeResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientDoubleDecimalNegativeResponse{RawResponse: resp}, nil
 }
@@ -737,21 +554,8 @@ func (client *QueriesClient) doubleDecimalNegativeCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// doubleDecimalNegativeHandleError handles the DoubleDecimalNegative error response.
-func (client *QueriesClient) doubleDecimalNegativeHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DoubleDecimalPositive - Get '9999999.999' numeric value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientDoubleDecimalPositiveOptions contains the optional parameters for the QueriesClient.DoubleDecimalPositive
 // method.
 func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options *QueriesClientDoubleDecimalPositiveOptions) (QueriesClientDoubleDecimalPositiveResponse, error) {
@@ -764,7 +568,7 @@ func (client *QueriesClient) DoubleDecimalPositive(ctx context.Context, options 
 		return QueriesClientDoubleDecimalPositiveResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientDoubleDecimalPositiveResponse{}, client.doubleDecimalPositiveHandleError(resp)
+		return QueriesClientDoubleDecimalPositiveResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientDoubleDecimalPositiveResponse{RawResponse: resp}, nil
 }
@@ -783,21 +587,8 @@ func (client *QueriesClient) doubleDecimalPositiveCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// doubleDecimalPositiveHandleError handles the DoubleDecimalPositive error response.
-func (client *QueriesClient) doubleDecimalPositiveHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DoubleNull - Get null numeric value (no query parameter)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientDoubleNullOptions contains the optional parameters for the QueriesClient.DoubleNull method.
 func (client *QueriesClient) DoubleNull(ctx context.Context, options *QueriesClientDoubleNullOptions) (QueriesClientDoubleNullResponse, error) {
 	req, err := client.doubleNullCreateRequest(ctx, options)
@@ -809,7 +600,7 @@ func (client *QueriesClient) DoubleNull(ctx context.Context, options *QueriesCli
 		return QueriesClientDoubleNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientDoubleNullResponse{}, client.doubleNullHandleError(resp)
+		return QueriesClientDoubleNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientDoubleNullResponse{RawResponse: resp}, nil
 }
@@ -830,21 +621,8 @@ func (client *QueriesClient) doubleNullCreateRequest(ctx context.Context, option
 	return req, nil
 }
 
-// doubleNullHandleError handles the DoubleNull error response.
-func (client *QueriesClient) doubleNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // EnumNull - Get null (no query parameter in url)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientEnumNullOptions contains the optional parameters for the QueriesClient.EnumNull method.
 func (client *QueriesClient) EnumNull(ctx context.Context, options *QueriesClientEnumNullOptions) (QueriesClientEnumNullResponse, error) {
 	req, err := client.enumNullCreateRequest(ctx, options)
@@ -856,7 +634,7 @@ func (client *QueriesClient) EnumNull(ctx context.Context, options *QueriesClien
 		return QueriesClientEnumNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientEnumNullResponse{}, client.enumNullHandleError(resp)
+		return QueriesClientEnumNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientEnumNullResponse{RawResponse: resp}, nil
 }
@@ -877,21 +655,8 @@ func (client *QueriesClient) enumNullCreateRequest(ctx context.Context, options 
 	return req, nil
 }
 
-// enumNullHandleError handles the EnumNull error response.
-func (client *QueriesClient) enumNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // EnumValid - Get using uri with query parameter 'green color'
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientEnumValidOptions contains the optional parameters for the QueriesClient.EnumValid method.
 func (client *QueriesClient) EnumValid(ctx context.Context, options *QueriesClientEnumValidOptions) (QueriesClientEnumValidResponse, error) {
 	req, err := client.enumValidCreateRequest(ctx, options)
@@ -903,7 +668,7 @@ func (client *QueriesClient) EnumValid(ctx context.Context, options *QueriesClie
 		return QueriesClientEnumValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientEnumValidResponse{}, client.enumValidHandleError(resp)
+		return QueriesClientEnumValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientEnumValidResponse{RawResponse: resp}, nil
 }
@@ -924,21 +689,8 @@ func (client *QueriesClient) enumValidCreateRequest(ctx context.Context, options
 	return req, nil
 }
 
-// enumValidHandleError handles the EnumValid error response.
-func (client *QueriesClient) enumValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // FloatNull - Get null numeric value (no query parameter)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientFloatNullOptions contains the optional parameters for the QueriesClient.FloatNull method.
 func (client *QueriesClient) FloatNull(ctx context.Context, options *QueriesClientFloatNullOptions) (QueriesClientFloatNullResponse, error) {
 	req, err := client.floatNullCreateRequest(ctx, options)
@@ -950,7 +702,7 @@ func (client *QueriesClient) FloatNull(ctx context.Context, options *QueriesClie
 		return QueriesClientFloatNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientFloatNullResponse{}, client.floatNullHandleError(resp)
+		return QueriesClientFloatNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientFloatNullResponse{RawResponse: resp}, nil
 }
@@ -971,21 +723,8 @@ func (client *QueriesClient) floatNullCreateRequest(ctx context.Context, options
 	return req, nil
 }
 
-// floatNullHandleError handles the FloatNull error response.
-func (client *QueriesClient) floatNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // FloatScientificNegative - Get '-1.034E-20' numeric value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientFloatScientificNegativeOptions contains the optional parameters for the QueriesClient.FloatScientificNegative
 // method.
 func (client *QueriesClient) FloatScientificNegative(ctx context.Context, options *QueriesClientFloatScientificNegativeOptions) (QueriesClientFloatScientificNegativeResponse, error) {
@@ -998,7 +737,7 @@ func (client *QueriesClient) FloatScientificNegative(ctx context.Context, option
 		return QueriesClientFloatScientificNegativeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientFloatScientificNegativeResponse{}, client.floatScientificNegativeHandleError(resp)
+		return QueriesClientFloatScientificNegativeResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientFloatScientificNegativeResponse{RawResponse: resp}, nil
 }
@@ -1017,21 +756,8 @@ func (client *QueriesClient) floatScientificNegativeCreateRequest(ctx context.Co
 	return req, nil
 }
 
-// floatScientificNegativeHandleError handles the FloatScientificNegative error response.
-func (client *QueriesClient) floatScientificNegativeHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // FloatScientificPositive - Get '1.034E+20' numeric value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientFloatScientificPositiveOptions contains the optional parameters for the QueriesClient.FloatScientificPositive
 // method.
 func (client *QueriesClient) FloatScientificPositive(ctx context.Context, options *QueriesClientFloatScientificPositiveOptions) (QueriesClientFloatScientificPositiveResponse, error) {
@@ -1044,7 +770,7 @@ func (client *QueriesClient) FloatScientificPositive(ctx context.Context, option
 		return QueriesClientFloatScientificPositiveResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientFloatScientificPositiveResponse{}, client.floatScientificPositiveHandleError(resp)
+		return QueriesClientFloatScientificPositiveResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientFloatScientificPositiveResponse{RawResponse: resp}, nil
 }
@@ -1063,21 +789,8 @@ func (client *QueriesClient) floatScientificPositiveCreateRequest(ctx context.Co
 	return req, nil
 }
 
-// floatScientificPositiveHandleError handles the FloatScientificPositive error response.
-func (client *QueriesClient) floatScientificPositiveHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBooleanFalse - Get false Boolean value on path
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientGetBooleanFalseOptions contains the optional parameters for the QueriesClient.GetBooleanFalse method.
 func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *QueriesClientGetBooleanFalseOptions) (QueriesClientGetBooleanFalseResponse, error) {
 	req, err := client.getBooleanFalseCreateRequest(ctx, options)
@@ -1089,7 +802,7 @@ func (client *QueriesClient) GetBooleanFalse(ctx context.Context, options *Queri
 		return QueriesClientGetBooleanFalseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetBooleanFalseResponse{}, client.getBooleanFalseHandleError(resp)
+		return QueriesClientGetBooleanFalseResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientGetBooleanFalseResponse{RawResponse: resp}, nil
 }
@@ -1108,21 +821,8 @@ func (client *QueriesClient) getBooleanFalseCreateRequest(ctx context.Context, o
 	return req, nil
 }
 
-// getBooleanFalseHandleError handles the GetBooleanFalse error response.
-func (client *QueriesClient) getBooleanFalseHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBooleanNull - Get null Boolean value on query (query string should be absent)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientGetBooleanNullOptions contains the optional parameters for the QueriesClient.GetBooleanNull method.
 func (client *QueriesClient) GetBooleanNull(ctx context.Context, options *QueriesClientGetBooleanNullOptions) (QueriesClientGetBooleanNullResponse, error) {
 	req, err := client.getBooleanNullCreateRequest(ctx, options)
@@ -1134,7 +834,7 @@ func (client *QueriesClient) GetBooleanNull(ctx context.Context, options *Querie
 		return QueriesClientGetBooleanNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetBooleanNullResponse{}, client.getBooleanNullHandleError(resp)
+		return QueriesClientGetBooleanNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientGetBooleanNullResponse{RawResponse: resp}, nil
 }
@@ -1155,21 +855,8 @@ func (client *QueriesClient) getBooleanNullCreateRequest(ctx context.Context, op
 	return req, nil
 }
 
-// getBooleanNullHandleError handles the GetBooleanNull error response.
-func (client *QueriesClient) getBooleanNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBooleanTrue - Get true Boolean value on path
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientGetBooleanTrueOptions contains the optional parameters for the QueriesClient.GetBooleanTrue method.
 func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *QueriesClientGetBooleanTrueOptions) (QueriesClientGetBooleanTrueResponse, error) {
 	req, err := client.getBooleanTrueCreateRequest(ctx, options)
@@ -1181,7 +868,7 @@ func (client *QueriesClient) GetBooleanTrue(ctx context.Context, options *Querie
 		return QueriesClientGetBooleanTrueResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetBooleanTrueResponse{}, client.getBooleanTrueHandleError(resp)
+		return QueriesClientGetBooleanTrueResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientGetBooleanTrueResponse{RawResponse: resp}, nil
 }
@@ -1200,21 +887,8 @@ func (client *QueriesClient) getBooleanTrueCreateRequest(ctx context.Context, op
 	return req, nil
 }
 
-// getBooleanTrueHandleError handles the GetBooleanTrue error response.
-func (client *QueriesClient) getBooleanTrueHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetIntNegativeOneMillion - Get '-1000000' integer value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientGetIntNegativeOneMillionOptions contains the optional parameters for the QueriesClient.GetIntNegativeOneMillion
 // method.
 func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, options *QueriesClientGetIntNegativeOneMillionOptions) (QueriesClientGetIntNegativeOneMillionResponse, error) {
@@ -1227,7 +901,7 @@ func (client *QueriesClient) GetIntNegativeOneMillion(ctx context.Context, optio
 		return QueriesClientGetIntNegativeOneMillionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetIntNegativeOneMillionResponse{}, client.getIntNegativeOneMillionHandleError(resp)
+		return QueriesClientGetIntNegativeOneMillionResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientGetIntNegativeOneMillionResponse{RawResponse: resp}, nil
 }
@@ -1246,21 +920,8 @@ func (client *QueriesClient) getIntNegativeOneMillionCreateRequest(ctx context.C
 	return req, nil
 }
 
-// getIntNegativeOneMillionHandleError handles the GetIntNegativeOneMillion error response.
-func (client *QueriesClient) getIntNegativeOneMillionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetIntNull - Get null integer value (no query parameter)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientGetIntNullOptions contains the optional parameters for the QueriesClient.GetIntNull method.
 func (client *QueriesClient) GetIntNull(ctx context.Context, options *QueriesClientGetIntNullOptions) (QueriesClientGetIntNullResponse, error) {
 	req, err := client.getIntNullCreateRequest(ctx, options)
@@ -1272,7 +933,7 @@ func (client *QueriesClient) GetIntNull(ctx context.Context, options *QueriesCli
 		return QueriesClientGetIntNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetIntNullResponse{}, client.getIntNullHandleError(resp)
+		return QueriesClientGetIntNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientGetIntNullResponse{RawResponse: resp}, nil
 }
@@ -1293,21 +954,8 @@ func (client *QueriesClient) getIntNullCreateRequest(ctx context.Context, option
 	return req, nil
 }
 
-// getIntNullHandleError handles the GetIntNull error response.
-func (client *QueriesClient) getIntNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetIntOneMillion - Get '1000000' integer value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientGetIntOneMillionOptions contains the optional parameters for the QueriesClient.GetIntOneMillion
 // method.
 func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *QueriesClientGetIntOneMillionOptions) (QueriesClientGetIntOneMillionResponse, error) {
@@ -1320,7 +968,7 @@ func (client *QueriesClient) GetIntOneMillion(ctx context.Context, options *Quer
 		return QueriesClientGetIntOneMillionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetIntOneMillionResponse{}, client.getIntOneMillionHandleError(resp)
+		return QueriesClientGetIntOneMillionResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientGetIntOneMillionResponse{RawResponse: resp}, nil
 }
@@ -1339,21 +987,8 @@ func (client *QueriesClient) getIntOneMillionCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// getIntOneMillionHandleError handles the GetIntOneMillion error response.
-func (client *QueriesClient) getIntOneMillionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetLongNull - Get 'null 64 bit integer value (no query param in uri)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientGetLongNullOptions contains the optional parameters for the QueriesClient.GetLongNull method.
 func (client *QueriesClient) GetLongNull(ctx context.Context, options *QueriesClientGetLongNullOptions) (QueriesClientGetLongNullResponse, error) {
 	req, err := client.getLongNullCreateRequest(ctx, options)
@@ -1365,7 +1000,7 @@ func (client *QueriesClient) GetLongNull(ctx context.Context, options *QueriesCl
 		return QueriesClientGetLongNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetLongNullResponse{}, client.getLongNullHandleError(resp)
+		return QueriesClientGetLongNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientGetLongNullResponse{RawResponse: resp}, nil
 }
@@ -1386,21 +1021,8 @@ func (client *QueriesClient) getLongNullCreateRequest(ctx context.Context, optio
 	return req, nil
 }
 
-// getLongNullHandleError handles the GetLongNull error response.
-func (client *QueriesClient) getLongNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientGetNegativeTenBillionOptions contains the optional parameters for the QueriesClient.GetNegativeTenBillion
 // method.
 func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options *QueriesClientGetNegativeTenBillionOptions) (QueriesClientGetNegativeTenBillionResponse, error) {
@@ -1413,7 +1035,7 @@ func (client *QueriesClient) GetNegativeTenBillion(ctx context.Context, options 
 		return QueriesClientGetNegativeTenBillionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetNegativeTenBillionResponse{}, client.getNegativeTenBillionHandleError(resp)
+		return QueriesClientGetNegativeTenBillionResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientGetNegativeTenBillionResponse{RawResponse: resp}, nil
 }
@@ -1432,21 +1054,8 @@ func (client *QueriesClient) getNegativeTenBillionCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// getNegativeTenBillionHandleError handles the GetNegativeTenBillion error response.
-func (client *QueriesClient) getNegativeTenBillionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetTenBillion - Get '10000000000' 64 bit integer value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientGetTenBillionOptions contains the optional parameters for the QueriesClient.GetTenBillion method.
 func (client *QueriesClient) GetTenBillion(ctx context.Context, options *QueriesClientGetTenBillionOptions) (QueriesClientGetTenBillionResponse, error) {
 	req, err := client.getTenBillionCreateRequest(ctx, options)
@@ -1458,7 +1067,7 @@ func (client *QueriesClient) GetTenBillion(ctx context.Context, options *Queries
 		return QueriesClientGetTenBillionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientGetTenBillionResponse{}, client.getTenBillionHandleError(resp)
+		return QueriesClientGetTenBillionResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientGetTenBillionResponse{RawResponse: resp}, nil
 }
@@ -1477,21 +1086,8 @@ func (client *QueriesClient) getTenBillionCreateRequest(ctx context.Context, opt
 	return req, nil
 }
 
-// getTenBillionHandleError handles the GetTenBillion error response.
-func (client *QueriesClient) getTenBillionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // StringEmpty - Get ''
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientStringEmptyOptions contains the optional parameters for the QueriesClient.StringEmpty method.
 func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesClientStringEmptyOptions) (QueriesClientStringEmptyResponse, error) {
 	req, err := client.stringEmptyCreateRequest(ctx, options)
@@ -1503,7 +1099,7 @@ func (client *QueriesClient) StringEmpty(ctx context.Context, options *QueriesCl
 		return QueriesClientStringEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientStringEmptyResponse{}, client.stringEmptyHandleError(resp)
+		return QueriesClientStringEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientStringEmptyResponse{RawResponse: resp}, nil
 }
@@ -1522,21 +1118,8 @@ func (client *QueriesClient) stringEmptyCreateRequest(ctx context.Context, optio
 	return req, nil
 }
 
-// stringEmptyHandleError handles the StringEmpty error response.
-func (client *QueriesClient) stringEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // StringNull - Get null (no query parameter in url)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientStringNullOptions contains the optional parameters for the QueriesClient.StringNull method.
 func (client *QueriesClient) StringNull(ctx context.Context, options *QueriesClientStringNullOptions) (QueriesClientStringNullResponse, error) {
 	req, err := client.stringNullCreateRequest(ctx, options)
@@ -1548,7 +1131,7 @@ func (client *QueriesClient) StringNull(ctx context.Context, options *QueriesCli
 		return QueriesClientStringNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientStringNullResponse{}, client.stringNullHandleError(resp)
+		return QueriesClientStringNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientStringNullResponse{RawResponse: resp}, nil
 }
@@ -1569,21 +1152,8 @@ func (client *QueriesClient) stringNullCreateRequest(ctx context.Context, option
 	return req, nil
 }
 
-// stringNullHandleError handles the StringNull error response.
-func (client *QueriesClient) stringNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientStringURLEncodedOptions contains the optional parameters for the QueriesClient.StringURLEncoded
 // method.
 func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *QueriesClientStringURLEncodedOptions) (QueriesClientStringURLEncodedResponse, error) {
@@ -1596,7 +1166,7 @@ func (client *QueriesClient) StringURLEncoded(ctx context.Context, options *Quer
 		return QueriesClientStringURLEncodedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientStringURLEncodedResponse{}, client.stringURLEncodedHandleError(resp)
+		return QueriesClientStringURLEncodedResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientStringURLEncodedResponse{RawResponse: resp}, nil
 }
@@ -1615,21 +1185,8 @@ func (client *QueriesClient) stringURLEncodedCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// stringURLEncodedHandleError handles the StringURLEncoded error response.
-func (client *QueriesClient) stringURLEncodedHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientStringUnicodeOptions contains the optional parameters for the QueriesClient.StringUnicode method.
 func (client *QueriesClient) StringUnicode(ctx context.Context, options *QueriesClientStringUnicodeOptions) (QueriesClientStringUnicodeResponse, error) {
 	req, err := client.stringUnicodeCreateRequest(ctx, options)
@@ -1641,7 +1198,7 @@ func (client *QueriesClient) StringUnicode(ctx context.Context, options *Queries
 		return QueriesClientStringUnicodeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientStringUnicodeResponse{}, client.stringUnicodeHandleError(resp)
+		return QueriesClientStringUnicodeResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientStringUnicodeResponse{RawResponse: resp}, nil
 }
@@ -1658,17 +1215,4 @@ func (client *QueriesClient) stringUnicodeCreateRequest(ctx context.Context, opt
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// stringUnicodeHandleError handles the StringUnicode error response.
-func (client *QueriesClient) stringUnicodeHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

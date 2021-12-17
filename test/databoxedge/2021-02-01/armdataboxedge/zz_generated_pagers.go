@@ -53,7 +53,7 @@ func (p *AddonsClientListByRolePager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByRoleHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByRoleHandleResponse(resp)
@@ -107,7 +107,7 @@ func (p *AlertsClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context)
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByDataBoxEdgeDeviceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
@@ -161,7 +161,7 @@ func (p *AvailableSKUsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -215,7 +215,7 @@ func (p *BandwidthSchedulesClientListByDataBoxEdgeDevicePager) NextPage(ctx cont
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByDataBoxEdgeDeviceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
@@ -269,7 +269,7 @@ func (p *ContainersClientListByStorageAccountPager) NextPage(ctx context.Context
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByStorageAccountHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByStorageAccountHandleResponse(resp)
@@ -323,7 +323,7 @@ func (p *DevicesClientListByResourceGroupPager) NextPage(ctx context.Context) bo
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -377,7 +377,7 @@ func (p *DevicesClientListBySubscriptionPager) NextPage(ctx context.Context) boo
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listBySubscriptionHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listBySubscriptionHandleResponse(resp)
@@ -431,7 +431,7 @@ func (p *MonitoringConfigClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -485,7 +485,7 @@ func (p *NodesClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context) 
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByDataBoxEdgeDeviceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
@@ -539,7 +539,7 @@ func (p *OperationsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -593,7 +593,7 @@ func (p *OrdersClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context)
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByDataBoxEdgeDeviceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
@@ -647,7 +647,7 @@ func (p *RolesClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context) 
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByDataBoxEdgeDeviceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
@@ -701,7 +701,7 @@ func (p *SharesClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context)
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByDataBoxEdgeDeviceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
@@ -755,7 +755,7 @@ func (p *StorageAccountCredentialsClientListByDataBoxEdgeDevicePager) NextPage(c
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByDataBoxEdgeDeviceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
@@ -809,7 +809,7 @@ func (p *StorageAccountsClientListByDataBoxEdgeDevicePager) NextPage(ctx context
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByDataBoxEdgeDeviceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
@@ -863,7 +863,7 @@ func (p *TriggersClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Contex
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByDataBoxEdgeDeviceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)
@@ -917,7 +917,7 @@ func (p *UsersClientListByDataBoxEdgeDevicePager) NextPage(ctx context.Context) 
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByDataBoxEdgeDeviceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByDataBoxEdgeDeviceHandleResponse(resp)

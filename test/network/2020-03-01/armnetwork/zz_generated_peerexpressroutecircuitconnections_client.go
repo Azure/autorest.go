@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewPeerExpressRouteCircuitConnectionsClient(subscriptionID string, credenti
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &PeerExpressRouteCircuitConnectionsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Gets the specified Peer Express Route Circuit Connection from the specified express route circuit.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // peeringName - The name of the peering.
@@ -69,7 +68,7 @@ func (client *PeerExpressRouteCircuitConnectionsClient) Get(ctx context.Context,
 		return PeerExpressRouteCircuitConnectionsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PeerExpressRouteCircuitConnectionsClientGetResponse{}, client.getHandleError(resp)
+		return PeerExpressRouteCircuitConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -112,26 +111,13 @@ func (client *PeerExpressRouteCircuitConnectionsClient) getCreateRequest(ctx con
 func (client *PeerExpressRouteCircuitConnectionsClient) getHandleResponse(resp *http.Response) (PeerExpressRouteCircuitConnectionsClientGetResponse, error) {
 	result := PeerExpressRouteCircuitConnectionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PeerExpressRouteCircuitConnection); err != nil {
-		return PeerExpressRouteCircuitConnectionsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return PeerExpressRouteCircuitConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *PeerExpressRouteCircuitConnectionsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all global reach peer connections associated with a private peering in an express route circuit.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the circuit.
 // peeringName - The name of the peering.
@@ -183,20 +169,7 @@ func (client *PeerExpressRouteCircuitConnectionsClient) listCreateRequest(ctx co
 func (client *PeerExpressRouteCircuitConnectionsClient) listHandleResponse(resp *http.Response) (PeerExpressRouteCircuitConnectionsClientListResponse, error) {
 	result := PeerExpressRouteCircuitConnectionsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PeerExpressRouteCircuitConnectionListResult); err != nil {
-		return PeerExpressRouteCircuitConnectionsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return PeerExpressRouteCircuitConnectionsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *PeerExpressRouteCircuitConnectionsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

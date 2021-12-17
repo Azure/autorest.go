@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewVirtualNetworksClient(subscriptionID string, credential azcore.TokenCred
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VirtualNetworksClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // CheckIPAddressAvailability - Checks whether a private IP address is available for use.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // ipAddress - The private IP address to be verified.
@@ -68,7 +67,7 @@ func (client *VirtualNetworksClient) CheckIPAddressAvailability(ctx context.Cont
 		return VirtualNetworksClientCheckIPAddressAvailabilityResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualNetworksClientCheckIPAddressAvailabilityResponse{}, client.checkIPAddressAvailabilityHandleError(resp)
+		return VirtualNetworksClientCheckIPAddressAvailabilityResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.checkIPAddressAvailabilityHandleResponse(resp)
 }
@@ -104,26 +103,13 @@ func (client *VirtualNetworksClient) checkIPAddressAvailabilityCreateRequest(ctx
 func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleResponse(resp *http.Response) (VirtualNetworksClientCheckIPAddressAvailabilityResponse, error) {
 	result := VirtualNetworksClientCheckIPAddressAvailabilityResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPAddressAvailabilityResult); err != nil {
-		return VirtualNetworksClientCheckIPAddressAvailabilityResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualNetworksClientCheckIPAddressAvailabilityResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// checkIPAddressAvailabilityHandleError handles the CheckIPAddressAvailability error response.
-func (client *VirtualNetworksClient) checkIPAddressAvailabilityHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginCreateOrUpdate - Creates or updates a virtual network in the specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // parameters - Parameters supplied to the create or update virtual network operation.
@@ -137,7 +123,7 @@ func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, re
 	result := VirtualNetworksClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualNetworksClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("VirtualNetworksClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VirtualNetworksClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -148,7 +134,7 @@ func (client *VirtualNetworksClient) BeginCreateOrUpdate(ctx context.Context, re
 }
 
 // CreateOrUpdate - Creates or updates a virtual network in the specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualNetworksClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, parameters VirtualNetwork, options *VirtualNetworksClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualNetworkName, parameters, options)
 	if err != nil {
@@ -159,7 +145,7 @@ func (client *VirtualNetworksClient) createOrUpdate(ctx context.Context, resourc
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -190,21 +176,8 @@ func (client *VirtualNetworksClient) createOrUpdateCreateRequest(ctx context.Con
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *VirtualNetworksClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified virtual network.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // options - VirtualNetworksClientBeginDeleteOptions contains the optional parameters for the VirtualNetworksClient.BeginDelete
@@ -217,7 +190,7 @@ func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGr
 	result := VirtualNetworksClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualNetworksClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("VirtualNetworksClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworksClientDeletePollerResponse{}, err
 	}
@@ -228,7 +201,7 @@ func (client *VirtualNetworksClient) BeginDelete(ctx context.Context, resourceGr
 }
 
 // Delete - Deletes the specified virtual network.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualNetworksClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualNetworkName string, options *VirtualNetworksClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualNetworkName, options)
 	if err != nil {
@@ -239,7 +212,7 @@ func (client *VirtualNetworksClient) deleteOperation(ctx context.Context, resour
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -270,21 +243,8 @@ func (client *VirtualNetworksClient) deleteCreateRequest(ctx context.Context, re
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *VirtualNetworksClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the specified virtual network by resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // options - VirtualNetworksClientGetOptions contains the optional parameters for the VirtualNetworksClient.Get method.
@@ -298,7 +258,7 @@ func (client *VirtualNetworksClient) Get(ctx context.Context, resourceGroupName 
 		return VirtualNetworksClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualNetworksClientGetResponse{}, client.getHandleError(resp)
+		return VirtualNetworksClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -336,26 +296,13 @@ func (client *VirtualNetworksClient) getCreateRequest(ctx context.Context, resou
 func (client *VirtualNetworksClient) getHandleResponse(resp *http.Response) (VirtualNetworksClientGetResponse, error) {
 	result := VirtualNetworksClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetwork); err != nil {
-		return VirtualNetworksClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualNetworksClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *VirtualNetworksClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all virtual networks in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - VirtualNetworksClientListOptions contains the optional parameters for the VirtualNetworksClient.List method.
 func (client *VirtualNetworksClient) List(resourceGroupName string, options *VirtualNetworksClientListOptions) *VirtualNetworksClientListPager {
@@ -396,26 +343,13 @@ func (client *VirtualNetworksClient) listCreateRequest(ctx context.Context, reso
 func (client *VirtualNetworksClient) listHandleResponse(resp *http.Response) (VirtualNetworksClientListResponse, error) {
 	result := VirtualNetworksClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkListResult); err != nil {
-		return VirtualNetworksClientListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualNetworksClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *VirtualNetworksClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListAll - Gets all virtual networks in a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - VirtualNetworksClientListAllOptions contains the optional parameters for the VirtualNetworksClient.ListAll method.
 func (client *VirtualNetworksClient) ListAll(options *VirtualNetworksClientListAllOptions) *VirtualNetworksClientListAllPager {
 	return &VirtualNetworksClientListAllPager{
@@ -451,26 +385,13 @@ func (client *VirtualNetworksClient) listAllCreateRequest(ctx context.Context, o
 func (client *VirtualNetworksClient) listAllHandleResponse(resp *http.Response) (VirtualNetworksClientListAllResponse, error) {
 	result := VirtualNetworksClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkListResult); err != nil {
-		return VirtualNetworksClientListAllResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualNetworksClientListAllResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listAllHandleError handles the ListAll error response.
-func (client *VirtualNetworksClient) listAllHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListUsage - Lists usage stats.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // options - VirtualNetworksClientListUsageOptions contains the optional parameters for the VirtualNetworksClient.ListUsage
@@ -517,26 +438,13 @@ func (client *VirtualNetworksClient) listUsageCreateRequest(ctx context.Context,
 func (client *VirtualNetworksClient) listUsageHandleResponse(resp *http.Response) (VirtualNetworksClientListUsageResponse, error) {
 	result := VirtualNetworksClientListUsageResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkListUsageResult); err != nil {
-		return VirtualNetworksClientListUsageResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualNetworksClientListUsageResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listUsageHandleError handles the ListUsage error response.
-func (client *VirtualNetworksClient) listUsageHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateTags - Updates a virtual network tags.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // parameters - Parameters supplied to update virtual network tags.
@@ -552,7 +460,7 @@ func (client *VirtualNetworksClient) UpdateTags(ctx context.Context, resourceGro
 		return VirtualNetworksClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualNetworksClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return VirtualNetworksClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -587,20 +495,7 @@ func (client *VirtualNetworksClient) updateTagsCreateRequest(ctx context.Context
 func (client *VirtualNetworksClient) updateTagsHandleResponse(resp *http.Response) (VirtualNetworksClientUpdateTagsResponse, error) {
 	result := VirtualNetworksClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetwork); err != nil {
-		return VirtualNetworksClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualNetworksClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *VirtualNetworksClient) updateTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

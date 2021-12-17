@@ -11,7 +11,6 @@ package armdataboxedge
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -39,19 +38,19 @@ func NewSharesClient(subscriptionID string, credential azcore.TokenCredential, o
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &SharesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates a new share or updates an existing share on the device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The share name.
 // resourceGroupName - The resource group name.
@@ -66,7 +65,7 @@ func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 	result := SharesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SharesClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("SharesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return SharesClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 }
 
 // CreateOrUpdate - Creates a new share or updates an existing share on the device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SharesClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, share, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *SharesClient) createOrUpdate(ctx context.Context, deviceName strin
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -123,21 +122,8 @@ func (client *SharesClient) createOrUpdateCreateRequest(ctx context.Context, dev
 	return req, runtime.MarshalAsJSON(req, share)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *SharesClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the share on the Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The share name.
 // resourceGroupName - The resource group name.
@@ -150,7 +136,7 @@ func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, 
 	result := SharesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SharesClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("SharesClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return SharesClientDeletePollerResponse{}, err
 	}
@@ -161,7 +147,7 @@ func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, 
 }
 
 // Delete - Deletes the share on the Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SharesClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -172,7 +158,7 @@ func (client *SharesClient) deleteOperation(ctx context.Context, deviceName stri
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -207,21 +193,8 @@ func (client *SharesClient) deleteCreateRequest(ctx context.Context, deviceName 
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *SharesClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets a share by name.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The share name.
 // resourceGroupName - The resource group name.
@@ -236,7 +209,7 @@ func (client *SharesClient) Get(ctx context.Context, deviceName string, name str
 		return SharesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SharesClientGetResponse{}, client.getHandleError(resp)
+		return SharesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -275,26 +248,13 @@ func (client *SharesClient) getCreateRequest(ctx context.Context, deviceName str
 func (client *SharesClient) getHandleResponse(resp *http.Response) (SharesClientGetResponse, error) {
 	result := SharesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Share); err != nil {
-		return SharesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return SharesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *SharesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByDataBoxEdgeDevice - Lists all the shares in a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - SharesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the SharesClient.ListByDataBoxEdgeDevice
@@ -341,26 +301,13 @@ func (client *SharesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Con
 func (client *SharesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (SharesClientListByDataBoxEdgeDeviceResponse, error) {
 	result := SharesClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ShareList); err != nil {
-		return SharesClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
+		return SharesClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listByDataBoxEdgeDeviceHandleError handles the ListByDataBoxEdgeDevice error response.
-func (client *SharesClient) listByDataBoxEdgeDeviceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginRefresh - Refreshes the share metadata with the data from the cloud.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The share name.
 // resourceGroupName - The resource group name.
@@ -373,7 +320,7 @@ func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string,
 	result := SharesClientRefreshPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SharesClient.Refresh", "", resp, client.pl, client.refreshHandleError)
+	pt, err := armruntime.NewPoller("SharesClient.Refresh", "", resp, client.pl)
 	if err != nil {
 		return SharesClientRefreshPollerResponse{}, err
 	}
@@ -384,7 +331,7 @@ func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string,
 }
 
 // Refresh - Refreshes the share metadata with the data from the cloud.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SharesClient) refresh(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginRefreshOptions) (*http.Response, error) {
 	req, err := client.refreshCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -395,7 +342,7 @@ func (client *SharesClient) refresh(ctx context.Context, deviceName string, name
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.refreshHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -428,17 +375,4 @@ func (client *SharesClient) refreshCreateRequest(ctx context.Context, deviceName
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// refreshHandleError handles the Refresh error response.
-func (client *SharesClient) refreshHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

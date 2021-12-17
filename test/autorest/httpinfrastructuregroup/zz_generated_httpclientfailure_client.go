@@ -10,7 +10,6 @@ package httpinfrastructuregroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewHTTPClientFailureClient(options *azcore.ClientOptions) *HTTPClientFailur
 		cp = *options
 	}
 	client := &HTTPClientFailureClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Delete400 - Return 400 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientDelete400Options contains the optional parameters for the HTTPClientFailureClient.Delete400
 // method.
 func (client *HTTPClientFailureClient) Delete400(ctx context.Context, options *HTTPClientFailureClientDelete400Options) (HTTPClientFailureClientDelete400Response, error) {
@@ -50,7 +49,7 @@ func (client *HTTPClientFailureClient) Delete400(ctx context.Context, options *H
 		return HTTPClientFailureClientDelete400Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientDelete400Response{}, client.delete400HandleError(resp)
+		return HTTPClientFailureClientDelete400Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientDelete400Response{RawResponse: resp}, nil
 }
@@ -66,21 +65,8 @@ func (client *HTTPClientFailureClient) delete400CreateRequest(ctx context.Contex
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// delete400HandleError handles the Delete400 error response.
-func (client *HTTPClientFailureClient) delete400HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Delete407 - Return 407 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientDelete407Options contains the optional parameters for the HTTPClientFailureClient.Delete407
 // method.
 func (client *HTTPClientFailureClient) Delete407(ctx context.Context, options *HTTPClientFailureClientDelete407Options) (HTTPClientFailureClientDelete407Response, error) {
@@ -93,7 +79,7 @@ func (client *HTTPClientFailureClient) Delete407(ctx context.Context, options *H
 		return HTTPClientFailureClientDelete407Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientDelete407Response{}, client.delete407HandleError(resp)
+		return HTTPClientFailureClientDelete407Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientDelete407Response{RawResponse: resp}, nil
 }
@@ -109,21 +95,8 @@ func (client *HTTPClientFailureClient) delete407CreateRequest(ctx context.Contex
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// delete407HandleError handles the Delete407 error response.
-func (client *HTTPClientFailureClient) delete407HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Delete417 - Return 417 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientDelete417Options contains the optional parameters for the HTTPClientFailureClient.Delete417
 // method.
 func (client *HTTPClientFailureClient) Delete417(ctx context.Context, options *HTTPClientFailureClientDelete417Options) (HTTPClientFailureClientDelete417Response, error) {
@@ -136,7 +109,7 @@ func (client *HTTPClientFailureClient) Delete417(ctx context.Context, options *H
 		return HTTPClientFailureClientDelete417Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientDelete417Response{}, client.delete417HandleError(resp)
+		return HTTPClientFailureClientDelete417Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientDelete417Response{RawResponse: resp}, nil
 }
@@ -152,21 +125,8 @@ func (client *HTTPClientFailureClient) delete417CreateRequest(ctx context.Contex
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// delete417HandleError handles the Delete417 error response.
-func (client *HTTPClientFailureClient) delete417HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get400 - Return 400 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientGet400Options contains the optional parameters for the HTTPClientFailureClient.Get400
 // method.
 func (client *HTTPClientFailureClient) Get400(ctx context.Context, options *HTTPClientFailureClientGet400Options) (HTTPClientFailureClientGet400Response, error) {
@@ -179,7 +139,7 @@ func (client *HTTPClientFailureClient) Get400(ctx context.Context, options *HTTP
 		return HTTPClientFailureClientGet400Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientGet400Response{}, client.get400HandleError(resp)
+		return HTTPClientFailureClientGet400Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientGet400Response{RawResponse: resp}, nil
 }
@@ -195,21 +155,8 @@ func (client *HTTPClientFailureClient) get400CreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// get400HandleError handles the Get400 error response.
-func (client *HTTPClientFailureClient) get400HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get402 - Return 402 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientGet402Options contains the optional parameters for the HTTPClientFailureClient.Get402
 // method.
 func (client *HTTPClientFailureClient) Get402(ctx context.Context, options *HTTPClientFailureClientGet402Options) (HTTPClientFailureClientGet402Response, error) {
@@ -222,7 +169,7 @@ func (client *HTTPClientFailureClient) Get402(ctx context.Context, options *HTTP
 		return HTTPClientFailureClientGet402Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientGet402Response{}, client.get402HandleError(resp)
+		return HTTPClientFailureClientGet402Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientGet402Response{RawResponse: resp}, nil
 }
@@ -238,21 +185,8 @@ func (client *HTTPClientFailureClient) get402CreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// get402HandleError handles the Get402 error response.
-func (client *HTTPClientFailureClient) get402HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get403 - Return 403 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientGet403Options contains the optional parameters for the HTTPClientFailureClient.Get403
 // method.
 func (client *HTTPClientFailureClient) Get403(ctx context.Context, options *HTTPClientFailureClientGet403Options) (HTTPClientFailureClientGet403Response, error) {
@@ -265,7 +199,7 @@ func (client *HTTPClientFailureClient) Get403(ctx context.Context, options *HTTP
 		return HTTPClientFailureClientGet403Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientGet403Response{}, client.get403HandleError(resp)
+		return HTTPClientFailureClientGet403Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientGet403Response{RawResponse: resp}, nil
 }
@@ -281,21 +215,8 @@ func (client *HTTPClientFailureClient) get403CreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// get403HandleError handles the Get403 error response.
-func (client *HTTPClientFailureClient) get403HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get411 - Return 411 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientGet411Options contains the optional parameters for the HTTPClientFailureClient.Get411
 // method.
 func (client *HTTPClientFailureClient) Get411(ctx context.Context, options *HTTPClientFailureClientGet411Options) (HTTPClientFailureClientGet411Response, error) {
@@ -308,7 +229,7 @@ func (client *HTTPClientFailureClient) Get411(ctx context.Context, options *HTTP
 		return HTTPClientFailureClientGet411Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientGet411Response{}, client.get411HandleError(resp)
+		return HTTPClientFailureClientGet411Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientGet411Response{RawResponse: resp}, nil
 }
@@ -324,21 +245,8 @@ func (client *HTTPClientFailureClient) get411CreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// get411HandleError handles the Get411 error response.
-func (client *HTTPClientFailureClient) get411HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get412 - Return 412 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientGet412Options contains the optional parameters for the HTTPClientFailureClient.Get412
 // method.
 func (client *HTTPClientFailureClient) Get412(ctx context.Context, options *HTTPClientFailureClientGet412Options) (HTTPClientFailureClientGet412Response, error) {
@@ -351,7 +259,7 @@ func (client *HTTPClientFailureClient) Get412(ctx context.Context, options *HTTP
 		return HTTPClientFailureClientGet412Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientGet412Response{}, client.get412HandleError(resp)
+		return HTTPClientFailureClientGet412Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientGet412Response{RawResponse: resp}, nil
 }
@@ -367,21 +275,8 @@ func (client *HTTPClientFailureClient) get412CreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// get412HandleError handles the Get412 error response.
-func (client *HTTPClientFailureClient) get412HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get416 - Return 416 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientGet416Options contains the optional parameters for the HTTPClientFailureClient.Get416
 // method.
 func (client *HTTPClientFailureClient) Get416(ctx context.Context, options *HTTPClientFailureClientGet416Options) (HTTPClientFailureClientGet416Response, error) {
@@ -394,7 +289,7 @@ func (client *HTTPClientFailureClient) Get416(ctx context.Context, options *HTTP
 		return HTTPClientFailureClientGet416Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientGet416Response{}, client.get416HandleError(resp)
+		return HTTPClientFailureClientGet416Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientGet416Response{RawResponse: resp}, nil
 }
@@ -410,21 +305,7 @@ func (client *HTTPClientFailureClient) get416CreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// get416HandleError handles the Get416 error response.
-func (client *HTTPClientFailureClient) get416HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Head400 - Return 400 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
 // options - HTTPClientFailureClientHead400Options contains the optional parameters for the HTTPClientFailureClient.Head400
 // method.
 func (client *HTTPClientFailureClient) Head400(ctx context.Context, options *HTTPClientFailureClientHead400Options) (HTTPClientFailureClientHead400Response, error) {
@@ -455,7 +336,6 @@ func (client *HTTPClientFailureClient) head400CreateRequest(ctx context.Context,
 }
 
 // Head401 - Return 401 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
 // options - HTTPClientFailureClientHead401Options contains the optional parameters for the HTTPClientFailureClient.Head401
 // method.
 func (client *HTTPClientFailureClient) Head401(ctx context.Context, options *HTTPClientFailureClientHead401Options) (HTTPClientFailureClientHead401Response, error) {
@@ -486,7 +366,6 @@ func (client *HTTPClientFailureClient) head401CreateRequest(ctx context.Context,
 }
 
 // Head410 - Return 410 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
 // options - HTTPClientFailureClientHead410Options contains the optional parameters for the HTTPClientFailureClient.Head410
 // method.
 func (client *HTTPClientFailureClient) Head410(ctx context.Context, options *HTTPClientFailureClientHead410Options) (HTTPClientFailureClientHead410Response, error) {
@@ -517,7 +396,6 @@ func (client *HTTPClientFailureClient) head410CreateRequest(ctx context.Context,
 }
 
 // Head429 - Return 429 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
 // options - HTTPClientFailureClientHead429Options contains the optional parameters for the HTTPClientFailureClient.Head429
 // method.
 func (client *HTTPClientFailureClient) Head429(ctx context.Context, options *HTTPClientFailureClientHead429Options) (HTTPClientFailureClientHead429Response, error) {
@@ -548,7 +426,7 @@ func (client *HTTPClientFailureClient) head429CreateRequest(ctx context.Context,
 }
 
 // Options400 - Return 400 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientOptions400Options contains the optional parameters for the HTTPClientFailureClient.Options400
 // method.
 func (client *HTTPClientFailureClient) Options400(ctx context.Context, options *HTTPClientFailureClientOptions400Options) (HTTPClientFailureClientOptions400Response, error) {
@@ -561,7 +439,7 @@ func (client *HTTPClientFailureClient) Options400(ctx context.Context, options *
 		return HTTPClientFailureClientOptions400Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientOptions400Response{}, client.options400HandleError(resp)
+		return HTTPClientFailureClientOptions400Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientOptions400Response{RawResponse: resp}, nil
 }
@@ -577,21 +455,8 @@ func (client *HTTPClientFailureClient) options400CreateRequest(ctx context.Conte
 	return req, nil
 }
 
-// options400HandleError handles the Options400 error response.
-func (client *HTTPClientFailureClient) options400HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Options403 - Return 403 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientOptions403Options contains the optional parameters for the HTTPClientFailureClient.Options403
 // method.
 func (client *HTTPClientFailureClient) Options403(ctx context.Context, options *HTTPClientFailureClientOptions403Options) (HTTPClientFailureClientOptions403Response, error) {
@@ -604,7 +469,7 @@ func (client *HTTPClientFailureClient) Options403(ctx context.Context, options *
 		return HTTPClientFailureClientOptions403Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientOptions403Response{}, client.options403HandleError(resp)
+		return HTTPClientFailureClientOptions403Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientOptions403Response{RawResponse: resp}, nil
 }
@@ -620,21 +485,8 @@ func (client *HTTPClientFailureClient) options403CreateRequest(ctx context.Conte
 	return req, nil
 }
 
-// options403HandleError handles the Options403 error response.
-func (client *HTTPClientFailureClient) options403HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Options412 - Return 412 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientOptions412Options contains the optional parameters for the HTTPClientFailureClient.Options412
 // method.
 func (client *HTTPClientFailureClient) Options412(ctx context.Context, options *HTTPClientFailureClientOptions412Options) (HTTPClientFailureClientOptions412Response, error) {
@@ -647,7 +499,7 @@ func (client *HTTPClientFailureClient) Options412(ctx context.Context, options *
 		return HTTPClientFailureClientOptions412Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientOptions412Response{}, client.options412HandleError(resp)
+		return HTTPClientFailureClientOptions412Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientOptions412Response{RawResponse: resp}, nil
 }
@@ -663,21 +515,8 @@ func (client *HTTPClientFailureClient) options412CreateRequest(ctx context.Conte
 	return req, nil
 }
 
-// options412HandleError handles the Options412 error response.
-func (client *HTTPClientFailureClient) options412HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Patch400 - Return 400 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientPatch400Options contains the optional parameters for the HTTPClientFailureClient.Patch400
 // method.
 func (client *HTTPClientFailureClient) Patch400(ctx context.Context, options *HTTPClientFailureClientPatch400Options) (HTTPClientFailureClientPatch400Response, error) {
@@ -690,7 +529,7 @@ func (client *HTTPClientFailureClient) Patch400(ctx context.Context, options *HT
 		return HTTPClientFailureClientPatch400Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPatch400Response{}, client.patch400HandleError(resp)
+		return HTTPClientFailureClientPatch400Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientPatch400Response{RawResponse: resp}, nil
 }
@@ -706,21 +545,8 @@ func (client *HTTPClientFailureClient) patch400CreateRequest(ctx context.Context
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// patch400HandleError handles the Patch400 error response.
-func (client *HTTPClientFailureClient) patch400HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Patch405 - Return 405 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientPatch405Options contains the optional parameters for the HTTPClientFailureClient.Patch405
 // method.
 func (client *HTTPClientFailureClient) Patch405(ctx context.Context, options *HTTPClientFailureClientPatch405Options) (HTTPClientFailureClientPatch405Response, error) {
@@ -733,7 +559,7 @@ func (client *HTTPClientFailureClient) Patch405(ctx context.Context, options *HT
 		return HTTPClientFailureClientPatch405Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPatch405Response{}, client.patch405HandleError(resp)
+		return HTTPClientFailureClientPatch405Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientPatch405Response{RawResponse: resp}, nil
 }
@@ -749,21 +575,8 @@ func (client *HTTPClientFailureClient) patch405CreateRequest(ctx context.Context
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// patch405HandleError handles the Patch405 error response.
-func (client *HTTPClientFailureClient) patch405HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Patch414 - Return 414 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientPatch414Options contains the optional parameters for the HTTPClientFailureClient.Patch414
 // method.
 func (client *HTTPClientFailureClient) Patch414(ctx context.Context, options *HTTPClientFailureClientPatch414Options) (HTTPClientFailureClientPatch414Response, error) {
@@ -776,7 +589,7 @@ func (client *HTTPClientFailureClient) Patch414(ctx context.Context, options *HT
 		return HTTPClientFailureClientPatch414Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPatch414Response{}, client.patch414HandleError(resp)
+		return HTTPClientFailureClientPatch414Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientPatch414Response{RawResponse: resp}, nil
 }
@@ -792,21 +605,8 @@ func (client *HTTPClientFailureClient) patch414CreateRequest(ctx context.Context
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// patch414HandleError handles the Patch414 error response.
-func (client *HTTPClientFailureClient) patch414HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Post400 - Return 400 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientPost400Options contains the optional parameters for the HTTPClientFailureClient.Post400
 // method.
 func (client *HTTPClientFailureClient) Post400(ctx context.Context, options *HTTPClientFailureClientPost400Options) (HTTPClientFailureClientPost400Response, error) {
@@ -819,7 +619,7 @@ func (client *HTTPClientFailureClient) Post400(ctx context.Context, options *HTT
 		return HTTPClientFailureClientPost400Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPost400Response{}, client.post400HandleError(resp)
+		return HTTPClientFailureClientPost400Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientPost400Response{RawResponse: resp}, nil
 }
@@ -835,21 +635,8 @@ func (client *HTTPClientFailureClient) post400CreateRequest(ctx context.Context,
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// post400HandleError handles the Post400 error response.
-func (client *HTTPClientFailureClient) post400HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Post406 - Return 406 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientPost406Options contains the optional parameters for the HTTPClientFailureClient.Post406
 // method.
 func (client *HTTPClientFailureClient) Post406(ctx context.Context, options *HTTPClientFailureClientPost406Options) (HTTPClientFailureClientPost406Response, error) {
@@ -862,7 +649,7 @@ func (client *HTTPClientFailureClient) Post406(ctx context.Context, options *HTT
 		return HTTPClientFailureClientPost406Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPost406Response{}, client.post406HandleError(resp)
+		return HTTPClientFailureClientPost406Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientPost406Response{RawResponse: resp}, nil
 }
@@ -878,21 +665,8 @@ func (client *HTTPClientFailureClient) post406CreateRequest(ctx context.Context,
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// post406HandleError handles the Post406 error response.
-func (client *HTTPClientFailureClient) post406HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Post415 - Return 415 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientPost415Options contains the optional parameters for the HTTPClientFailureClient.Post415
 // method.
 func (client *HTTPClientFailureClient) Post415(ctx context.Context, options *HTTPClientFailureClientPost415Options) (HTTPClientFailureClientPost415Response, error) {
@@ -905,7 +679,7 @@ func (client *HTTPClientFailureClient) Post415(ctx context.Context, options *HTT
 		return HTTPClientFailureClientPost415Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPost415Response{}, client.post415HandleError(resp)
+		return HTTPClientFailureClientPost415Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientPost415Response{RawResponse: resp}, nil
 }
@@ -921,21 +695,8 @@ func (client *HTTPClientFailureClient) post415CreateRequest(ctx context.Context,
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// post415HandleError handles the Post415 error response.
-func (client *HTTPClientFailureClient) post415HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Put400 - Return 400 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientPut400Options contains the optional parameters for the HTTPClientFailureClient.Put400
 // method.
 func (client *HTTPClientFailureClient) Put400(ctx context.Context, options *HTTPClientFailureClientPut400Options) (HTTPClientFailureClientPut400Response, error) {
@@ -948,7 +709,7 @@ func (client *HTTPClientFailureClient) Put400(ctx context.Context, options *HTTP
 		return HTTPClientFailureClientPut400Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPut400Response{}, client.put400HandleError(resp)
+		return HTTPClientFailureClientPut400Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientPut400Response{RawResponse: resp}, nil
 }
@@ -964,21 +725,8 @@ func (client *HTTPClientFailureClient) put400CreateRequest(ctx context.Context, 
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// put400HandleError handles the Put400 error response.
-func (client *HTTPClientFailureClient) put400HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Put404 - Return 404 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientPut404Options contains the optional parameters for the HTTPClientFailureClient.Put404
 // method.
 func (client *HTTPClientFailureClient) Put404(ctx context.Context, options *HTTPClientFailureClientPut404Options) (HTTPClientFailureClientPut404Response, error) {
@@ -991,7 +739,7 @@ func (client *HTTPClientFailureClient) Put404(ctx context.Context, options *HTTP
 		return HTTPClientFailureClientPut404Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPut404Response{}, client.put404HandleError(resp)
+		return HTTPClientFailureClientPut404Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientPut404Response{RawResponse: resp}, nil
 }
@@ -1007,21 +755,8 @@ func (client *HTTPClientFailureClient) put404CreateRequest(ctx context.Context, 
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// put404HandleError handles the Put404 error response.
-func (client *HTTPClientFailureClient) put404HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Put409 - Return 409 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientPut409Options contains the optional parameters for the HTTPClientFailureClient.Put409
 // method.
 func (client *HTTPClientFailureClient) Put409(ctx context.Context, options *HTTPClientFailureClientPut409Options) (HTTPClientFailureClientPut409Response, error) {
@@ -1034,7 +769,7 @@ func (client *HTTPClientFailureClient) Put409(ctx context.Context, options *HTTP
 		return HTTPClientFailureClientPut409Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPut409Response{}, client.put409HandleError(resp)
+		return HTTPClientFailureClientPut409Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientPut409Response{RawResponse: resp}, nil
 }
@@ -1050,21 +785,8 @@ func (client *HTTPClientFailureClient) put409CreateRequest(ctx context.Context, 
 	return req, runtime.MarshalAsJSON(req, true)
 }
 
-// put409HandleError handles the Put409 error response.
-func (client *HTTPClientFailureClient) put409HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Put413 - Return 413 status code - should be represented in the client as an error
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - HTTPClientFailureClientPut413Options contains the optional parameters for the HTTPClientFailureClient.Put413
 // method.
 func (client *HTTPClientFailureClient) Put413(ctx context.Context, options *HTTPClientFailureClientPut413Options) (HTTPClientFailureClientPut413Response, error) {
@@ -1077,7 +799,7 @@ func (client *HTTPClientFailureClient) Put413(ctx context.Context, options *HTTP
 		return HTTPClientFailureClientPut413Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureClientPut413Response{}, client.put413HandleError(resp)
+		return HTTPClientFailureClientPut413Response{}, runtime.NewResponseError(resp)
 	}
 	return HTTPClientFailureClientPut413Response{RawResponse: resp}, nil
 }
@@ -1091,17 +813,4 @@ func (client *HTTPClientFailureClient) put413CreateRequest(ctx context.Context, 
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, true)
-}
-
-// put413HandleError handles the Put413 error response.
-func (client *HTTPClientFailureClient) put413HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

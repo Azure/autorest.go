@@ -92,14 +92,11 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
 function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): StructDef[] {
   const structTypes = new Array<StructDef>();
   for (const obj of values(objects)) {
-    const structDef = generateStruct(imports, obj.language.go!, aggregateProperties(obj));
     if (obj.language.go!.errorType) {
-      // add Error() method
-      let text = `func (e ${obj.language.go!.name}) Error() string {\n`;
-      text += `\treturn e.raw\n`;
-      text += '}\n\n';
-      structDef.Methods.push({ name: 'Error', desc: `Error implements the error interface for type ${obj.language.go!.name}.\nThe contents of the error text are not contractual and subject to change.`, text: text });
+      // don't generate models for error types as we don't use them
+      continue;
     }
+    const structDef = generateStruct(imports, obj.language.go!, aggregateProperties(obj));
     if (obj.language.go!.marshallingFormat === 'xml') {
       // due to differences in XML marshallers/unmarshallers, we use different codegen than for JSON
       if (obj.language.go!.needsDateTimeMarshalling || obj.language.go!.xmlWrapperName || needsXMLArrayMarshalling(obj)) {
@@ -133,7 +130,7 @@ function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): Stru
     }
     if (needs.U) {
       structDef.HasJSONUnmarshaller = true;
-      generateJSONUnmarshaller(imports, obj, structDef);
+      generateJSONUnmarshaller(imports, structDef);
     }
     structTypes.push(structDef);
   }
@@ -271,10 +268,7 @@ function generateDiscriminatorMarkerMethod(obj: ObjectSchema, structDef: StructD
 }
 
 function generateJSONMarshaller(imports: ImportManager, obj: ObjectSchema, structDef: StructDef) {
-  if (obj.language.go!.errorType) {
-    // errors don't need custom marshallers
-    return;
-  } else if (!obj.discriminatorValue && (!structDef.Properties || structDef.Properties.length === 0)) {
+if (!obj.discriminatorValue && (!structDef.Properties || structDef.Properties.length === 0)) {
     // non-discriminated types without content don't need a custom marshaller.
     // there is a case in network where child is allOf base and child has no properties.
     return;
@@ -347,7 +341,7 @@ function generateJSONMarshallerBody(obj: ObjectSchema, structDef: StructDef, imp
   return marshaller;
 }
 
-function generateJSONUnmarshaller(imports: ImportManager, obj: ObjectSchema, structDef: StructDef) {
+function generateJSONUnmarshaller(imports: ImportManager, structDef: StructDef) {
   // there's a corner-case where a derived type might not add any new fields (Cookiecuttershark).
   // in this case skip adding the unmarshaller as it's not necessary and doesn't compile.
   if (!structDef.Properties || structDef.Properties.length === 0) {
@@ -361,9 +355,6 @@ function generateJSONUnmarshaller(imports: ImportManager, obj: ObjectSchema, str
   unmarshaller += '\tif err := json.Unmarshal(data, &rawMsg); err != nil {\n';
   unmarshaller += '\t\treturn err\n';
   unmarshaller += '\t}\n';
-  if (obj.language.go!.errorType) {
-    unmarshaller += `\t${receiver}.raw = string(data)\n`;
-  }
   unmarshaller += generateJSONUnmarshallerBody(structDef, imports);
   unmarshaller += '}\n\n';
   structDef.Methods.push({ name: 'UnmarshalJSON', desc: `UnmarshalJSON implements the json.Unmarshaller interface for type ${typeName}.`, text: unmarshaller });

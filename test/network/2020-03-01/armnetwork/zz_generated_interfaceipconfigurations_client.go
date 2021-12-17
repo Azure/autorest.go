@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewInterfaceIPConfigurationsClient(subscriptionID string, credential azcore
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &InterfaceIPConfigurationsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Gets the specified network interface ip configuration.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // ipConfigurationName - The name of the ip configuration name.
@@ -68,7 +67,7 @@ func (client *InterfaceIPConfigurationsClient) Get(ctx context.Context, resource
 		return InterfaceIPConfigurationsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return InterfaceIPConfigurationsClientGetResponse{}, client.getHandleError(resp)
+		return InterfaceIPConfigurationsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -107,26 +106,13 @@ func (client *InterfaceIPConfigurationsClient) getCreateRequest(ctx context.Cont
 func (client *InterfaceIPConfigurationsClient) getHandleResponse(resp *http.Response) (InterfaceIPConfigurationsClientGetResponse, error) {
 	result := InterfaceIPConfigurationsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceIPConfiguration); err != nil {
-		return InterfaceIPConfigurationsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return InterfaceIPConfigurationsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *InterfaceIPConfigurationsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Get all ip configurations in a network interface.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // options - InterfaceIPConfigurationsClientListOptions contains the optional parameters for the InterfaceIPConfigurationsClient.List
@@ -173,20 +159,7 @@ func (client *InterfaceIPConfigurationsClient) listCreateRequest(ctx context.Con
 func (client *InterfaceIPConfigurationsClient) listHandleResponse(resp *http.Response) (InterfaceIPConfigurationsClientListResponse, error) {
 	result := InterfaceIPConfigurationsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceIPConfigurationListResult); err != nil {
-		return InterfaceIPConfigurationsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return InterfaceIPConfigurationsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *InterfaceIPConfigurationsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

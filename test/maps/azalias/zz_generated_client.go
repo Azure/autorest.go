@@ -10,7 +10,6 @@ package azalias
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -57,7 +56,7 @@ func newClient(geography *Geography, apiVersion *string, pl runtime.Pipeline) *c
 // { "createdTimestamp": "2020-02-13T21:19:11.123Z", "aliasId": "a8a4b8bb-ecf4-fb27-a618-f41721552766", "creatorDataItemId":
 // "e89aebb9-70a3-8fe1-32bb-1fbd0c725f14", "lastUpdatedTimestamp":
 // "2020-02-13T21:19:22.123Z" }
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - clientCreateOptions contains the optional parameters for the client.Create method.
 func (client *client) Create(ctx context.Context, options *clientCreateOptions) (clientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, options)
@@ -69,7 +68,7 @@ func (client *client) Create(ctx context.Context, options *clientCreateOptions) 
 		return clientCreateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return clientCreateResponse{}, client.createHandleError(resp)
+		return clientCreateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
@@ -105,25 +104,13 @@ func (client *client) createHandleResponse(resp *http.Response) (clientCreateRes
 		result.AccessControlExposeHeaders = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AliasesCreateResponse); err != nil {
-		return clientCreateResponse{}, runtime.NewResponseError(err, resp)
+		return clientCreateResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// createHandleError handles the Create error response.
-func (client *client) createHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // GetScript - Retrieve the configuration script identified by configuration name.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - clientGetScriptOptions contains the optional parameters for the client.GetScript method.
 func (client *client) GetScript(ctx context.Context, options *clientGetScriptOptions) (clientGetScriptResponse, error) {
 	req, err := client.getScriptCreateRequest(ctx, options)
@@ -135,7 +122,7 @@ func (client *client) GetScript(ctx context.Context, options *clientGetScriptOpt
 		return clientGetScriptResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientGetScriptResponse{}, client.getScriptHandleError(resp)
+		return clientGetScriptResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getScriptHandleResponse(resp)
 }
@@ -156,23 +143,11 @@ func (client *client) getScriptHandleResponse(resp *http.Response) (clientGetScr
 	result := clientGetScriptResponse{RawResponse: resp}
 	body, err := runtime.Payload(resp)
 	if err != nil {
-		return clientGetScriptResponse{}, runtime.NewResponseError(err, resp)
+		return clientGetScriptResponse{}, runtime.NewResponseError(resp)
 	}
 	txt := string(body)
 	result.Value = &txt
 	return result, nil
-}
-
-// getScriptHandleError handles the GetScript error response.
-func (client *client) getScriptHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // List - Applies to: see pricing tiers [https://aka.ms/AzureMapsPricingTier].
@@ -193,7 +168,7 @@ func (client *client) getScriptHandleError(resp *http.Response) error {
 // "2020-02-13T21:19:22.123Z" }, { "createdTimestamp": "2020-02-18T19:53:33.123Z", "aliasId": "1856dbfc-7a66-ee5a-bf8d-51dbfe1906f6",
 // "creatorDataItemId": null, "lastUpdatedTimestamp":
 // "2020-02-18T19:53:33.123Z" } ] }
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - clientListOptions contains the optional parameters for the client.List method.
 func (client *client) List(options *clientListOptions) *clientListPager {
 	return &clientListPager{
@@ -232,19 +207,7 @@ func (client *client) listCreateRequest(ctx context.Context, options *clientList
 func (client *client) listHandleResponse(resp *http.Response) (clientListResponse, error) {
 	result := clientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListResponse); err != nil {
-		return clientListResponse{}, runtime.NewResponseError(err, resp)
+		return clientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *client) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

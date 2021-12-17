@@ -10,7 +10,6 @@ package dictionarygroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -32,13 +31,13 @@ func NewDictionaryClient(options *azcore.ClientOptions) *DictionaryClient {
 		cp = *options
 	}
 	client := &DictionaryClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetArrayEmpty - Get an empty dictionary {}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetArrayEmptyOptions contains the optional parameters for the DictionaryClient.GetArrayEmpty
 // method.
 func (client *DictionaryClient) GetArrayEmpty(ctx context.Context, options *DictionaryClientGetArrayEmptyOptions) (DictionaryClientGetArrayEmptyResponse, error) {
@@ -51,7 +50,7 @@ func (client *DictionaryClient) GetArrayEmpty(ctx context.Context, options *Dict
 		return DictionaryClientGetArrayEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetArrayEmptyResponse{}, client.getArrayEmptyHandleError(resp)
+		return DictionaryClientGetArrayEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getArrayEmptyHandleResponse(resp)
 }
@@ -71,26 +70,13 @@ func (client *DictionaryClient) getArrayEmptyCreateRequest(ctx context.Context, 
 func (client *DictionaryClient) getArrayEmptyHandleResponse(resp *http.Response) (DictionaryClientGetArrayEmptyResponse, error) {
 	result := DictionaryClientGetArrayEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetArrayEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetArrayEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getArrayEmptyHandleError handles the GetArrayEmpty error response.
-func (client *DictionaryClient) getArrayEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetArrayItemEmpty - Get an array of array of strings [{"0": ["1", "2", "3"], "1": [], "2": ["7", "8", "9"]}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetArrayItemEmptyOptions contains the optional parameters for the DictionaryClient.GetArrayItemEmpty
 // method.
 func (client *DictionaryClient) GetArrayItemEmpty(ctx context.Context, options *DictionaryClientGetArrayItemEmptyOptions) (DictionaryClientGetArrayItemEmptyResponse, error) {
@@ -103,7 +89,7 @@ func (client *DictionaryClient) GetArrayItemEmpty(ctx context.Context, options *
 		return DictionaryClientGetArrayItemEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetArrayItemEmptyResponse{}, client.getArrayItemEmptyHandleError(resp)
+		return DictionaryClientGetArrayItemEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getArrayItemEmptyHandleResponse(resp)
 }
@@ -123,26 +109,13 @@ func (client *DictionaryClient) getArrayItemEmptyCreateRequest(ctx context.Conte
 func (client *DictionaryClient) getArrayItemEmptyHandleResponse(resp *http.Response) (DictionaryClientGetArrayItemEmptyResponse, error) {
 	result := DictionaryClientGetArrayItemEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetArrayItemEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetArrayItemEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getArrayItemEmptyHandleError handles the GetArrayItemEmpty error response.
-func (client *DictionaryClient) getArrayItemEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetArrayItemNull - Get an dictionary of array of strings {"0": ["1", "2", "3"], "1": null, "2": ["7", "8", "9"]}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetArrayItemNullOptions contains the optional parameters for the DictionaryClient.GetArrayItemNull
 // method.
 func (client *DictionaryClient) GetArrayItemNull(ctx context.Context, options *DictionaryClientGetArrayItemNullOptions) (DictionaryClientGetArrayItemNullResponse, error) {
@@ -155,7 +128,7 @@ func (client *DictionaryClient) GetArrayItemNull(ctx context.Context, options *D
 		return DictionaryClientGetArrayItemNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetArrayItemNullResponse{}, client.getArrayItemNullHandleError(resp)
+		return DictionaryClientGetArrayItemNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getArrayItemNullHandleResponse(resp)
 }
@@ -175,26 +148,13 @@ func (client *DictionaryClient) getArrayItemNullCreateRequest(ctx context.Contex
 func (client *DictionaryClient) getArrayItemNullHandleResponse(resp *http.Response) (DictionaryClientGetArrayItemNullResponse, error) {
 	result := DictionaryClientGetArrayItemNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetArrayItemNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetArrayItemNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getArrayItemNullHandleError handles the GetArrayItemNull error response.
-func (client *DictionaryClient) getArrayItemNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetArrayNull - Get a null array
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetArrayNullOptions contains the optional parameters for the DictionaryClient.GetArrayNull method.
 func (client *DictionaryClient) GetArrayNull(ctx context.Context, options *DictionaryClientGetArrayNullOptions) (DictionaryClientGetArrayNullResponse, error) {
 	req, err := client.getArrayNullCreateRequest(ctx, options)
@@ -206,7 +166,7 @@ func (client *DictionaryClient) GetArrayNull(ctx context.Context, options *Dicti
 		return DictionaryClientGetArrayNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetArrayNullResponse{}, client.getArrayNullHandleError(resp)
+		return DictionaryClientGetArrayNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getArrayNullHandleResponse(resp)
 }
@@ -226,26 +186,13 @@ func (client *DictionaryClient) getArrayNullCreateRequest(ctx context.Context, o
 func (client *DictionaryClient) getArrayNullHandleResponse(resp *http.Response) (DictionaryClientGetArrayNullResponse, error) {
 	result := DictionaryClientGetArrayNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetArrayNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetArrayNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getArrayNullHandleError handles the GetArrayNull error response.
-func (client *DictionaryClient) getArrayNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetArrayValid - Get an array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetArrayValidOptions contains the optional parameters for the DictionaryClient.GetArrayValid
 // method.
 func (client *DictionaryClient) GetArrayValid(ctx context.Context, options *DictionaryClientGetArrayValidOptions) (DictionaryClientGetArrayValidResponse, error) {
@@ -258,7 +205,7 @@ func (client *DictionaryClient) GetArrayValid(ctx context.Context, options *Dict
 		return DictionaryClientGetArrayValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetArrayValidResponse{}, client.getArrayValidHandleError(resp)
+		return DictionaryClientGetArrayValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getArrayValidHandleResponse(resp)
 }
@@ -278,27 +225,14 @@ func (client *DictionaryClient) getArrayValidCreateRequest(ctx context.Context, 
 func (client *DictionaryClient) getArrayValidHandleResponse(resp *http.Response) (DictionaryClientGetArrayValidResponse, error) {
 	result := DictionaryClientGetArrayValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetArrayValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetArrayValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getArrayValidHandleError handles the GetArrayValid error response.
-func (client *DictionaryClient) getArrayValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBase64URL - Get base64url dictionary value {"0": "a string that gets encoded with base64url", "1": "test string", "2":
 // "Lorem ipsum"}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetBase64URLOptions contains the optional parameters for the DictionaryClient.GetBase64URL method.
 func (client *DictionaryClient) GetBase64URL(ctx context.Context, options *DictionaryClientGetBase64URLOptions) (DictionaryClientGetBase64URLResponse, error) {
 	req, err := client.getBase64URLCreateRequest(ctx, options)
@@ -310,7 +244,7 @@ func (client *DictionaryClient) GetBase64URL(ctx context.Context, options *Dicti
 		return DictionaryClientGetBase64URLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetBase64URLResponse{}, client.getBase64URLHandleError(resp)
+		return DictionaryClientGetBase64URLResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBase64URLHandleResponse(resp)
 }
@@ -330,26 +264,13 @@ func (client *DictionaryClient) getBase64URLCreateRequest(ctx context.Context, o
 func (client *DictionaryClient) getBase64URLHandleResponse(resp *http.Response) (DictionaryClientGetBase64URLResponse, error) {
 	result := DictionaryClientGetBase64URLResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetBase64URLResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetBase64URLResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getBase64URLHandleError handles the GetBase64URL error response.
-func (client *DictionaryClient) getBase64URLHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBooleanInvalidNull - Get boolean dictionary value {"0": true, "1": null, "2": false }
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetBooleanInvalidNullOptions contains the optional parameters for the DictionaryClient.GetBooleanInvalidNull
 // method.
 func (client *DictionaryClient) GetBooleanInvalidNull(ctx context.Context, options *DictionaryClientGetBooleanInvalidNullOptions) (DictionaryClientGetBooleanInvalidNullResponse, error) {
@@ -362,7 +283,7 @@ func (client *DictionaryClient) GetBooleanInvalidNull(ctx context.Context, optio
 		return DictionaryClientGetBooleanInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetBooleanInvalidNullResponse{}, client.getBooleanInvalidNullHandleError(resp)
+		return DictionaryClientGetBooleanInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBooleanInvalidNullHandleResponse(resp)
 }
@@ -382,26 +303,13 @@ func (client *DictionaryClient) getBooleanInvalidNullCreateRequest(ctx context.C
 func (client *DictionaryClient) getBooleanInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetBooleanInvalidNullResponse, error) {
 	result := DictionaryClientGetBooleanInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetBooleanInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetBooleanInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getBooleanInvalidNullHandleError handles the GetBooleanInvalidNull error response.
-func (client *DictionaryClient) getBooleanInvalidNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBooleanInvalidString - Get boolean dictionary value '{"0": true, "1": "boolean", "2": false}'
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetBooleanInvalidStringOptions contains the optional parameters for the DictionaryClient.GetBooleanInvalidString
 // method.
 func (client *DictionaryClient) GetBooleanInvalidString(ctx context.Context, options *DictionaryClientGetBooleanInvalidStringOptions) (DictionaryClientGetBooleanInvalidStringResponse, error) {
@@ -414,7 +322,7 @@ func (client *DictionaryClient) GetBooleanInvalidString(ctx context.Context, opt
 		return DictionaryClientGetBooleanInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetBooleanInvalidStringResponse{}, client.getBooleanInvalidStringHandleError(resp)
+		return DictionaryClientGetBooleanInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBooleanInvalidStringHandleResponse(resp)
 }
@@ -434,26 +342,13 @@ func (client *DictionaryClient) getBooleanInvalidStringCreateRequest(ctx context
 func (client *DictionaryClient) getBooleanInvalidStringHandleResponse(resp *http.Response) (DictionaryClientGetBooleanInvalidStringResponse, error) {
 	result := DictionaryClientGetBooleanInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetBooleanInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetBooleanInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getBooleanInvalidStringHandleError handles the GetBooleanInvalidString error response.
-func (client *DictionaryClient) getBooleanInvalidStringHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBooleanTfft - Get boolean dictionary value {"0": true, "1": false, "2": false, "3": true }
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetBooleanTfftOptions contains the optional parameters for the DictionaryClient.GetBooleanTfft
 // method.
 func (client *DictionaryClient) GetBooleanTfft(ctx context.Context, options *DictionaryClientGetBooleanTfftOptions) (DictionaryClientGetBooleanTfftResponse, error) {
@@ -466,7 +361,7 @@ func (client *DictionaryClient) GetBooleanTfft(ctx context.Context, options *Dic
 		return DictionaryClientGetBooleanTfftResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetBooleanTfftResponse{}, client.getBooleanTfftHandleError(resp)
+		return DictionaryClientGetBooleanTfftResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBooleanTfftHandleResponse(resp)
 }
@@ -486,26 +381,13 @@ func (client *DictionaryClient) getBooleanTfftCreateRequest(ctx context.Context,
 func (client *DictionaryClient) getBooleanTfftHandleResponse(resp *http.Response) (DictionaryClientGetBooleanTfftResponse, error) {
 	result := DictionaryClientGetBooleanTfftResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetBooleanTfftResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetBooleanTfftResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getBooleanTfftHandleError handles the GetBooleanTfft error response.
-func (client *DictionaryClient) getBooleanTfftHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetByteInvalidNull - Get byte dictionary value {"0": hex(FF FF FF FA), "1": null} with the first item base64 encoded
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetByteInvalidNullOptions contains the optional parameters for the DictionaryClient.GetByteInvalidNull
 // method.
 func (client *DictionaryClient) GetByteInvalidNull(ctx context.Context, options *DictionaryClientGetByteInvalidNullOptions) (DictionaryClientGetByteInvalidNullResponse, error) {
@@ -518,7 +400,7 @@ func (client *DictionaryClient) GetByteInvalidNull(ctx context.Context, options 
 		return DictionaryClientGetByteInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetByteInvalidNullResponse{}, client.getByteInvalidNullHandleError(resp)
+		return DictionaryClientGetByteInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getByteInvalidNullHandleResponse(resp)
 }
@@ -538,27 +420,14 @@ func (client *DictionaryClient) getByteInvalidNullCreateRequest(ctx context.Cont
 func (client *DictionaryClient) getByteInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetByteInvalidNullResponse, error) {
 	result := DictionaryClientGetByteInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetByteInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetByteInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getByteInvalidNullHandleError handles the GetByteInvalidNull error response.
-func (client *DictionaryClient) getByteInvalidNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetByteValid - Get byte dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each item
 // encoded in base64
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetByteValidOptions contains the optional parameters for the DictionaryClient.GetByteValid method.
 func (client *DictionaryClient) GetByteValid(ctx context.Context, options *DictionaryClientGetByteValidOptions) (DictionaryClientGetByteValidResponse, error) {
 	req, err := client.getByteValidCreateRequest(ctx, options)
@@ -570,7 +439,7 @@ func (client *DictionaryClient) GetByteValid(ctx context.Context, options *Dicti
 		return DictionaryClientGetByteValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetByteValidResponse{}, client.getByteValidHandleError(resp)
+		return DictionaryClientGetByteValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getByteValidHandleResponse(resp)
 }
@@ -590,26 +459,13 @@ func (client *DictionaryClient) getByteValidCreateRequest(ctx context.Context, o
 func (client *DictionaryClient) getByteValidHandleResponse(resp *http.Response) (DictionaryClientGetByteValidResponse, error) {
 	result := DictionaryClientGetByteValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetByteValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetByteValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getByteValidHandleError handles the GetByteValid error response.
-func (client *DictionaryClient) getByteValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetComplexEmpty - Get empty dictionary of complex type {}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetComplexEmptyOptions contains the optional parameters for the DictionaryClient.GetComplexEmpty
 // method.
 func (client *DictionaryClient) GetComplexEmpty(ctx context.Context, options *DictionaryClientGetComplexEmptyOptions) (DictionaryClientGetComplexEmptyResponse, error) {
@@ -622,7 +478,7 @@ func (client *DictionaryClient) GetComplexEmpty(ctx context.Context, options *Di
 		return DictionaryClientGetComplexEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetComplexEmptyResponse{}, client.getComplexEmptyHandleError(resp)
+		return DictionaryClientGetComplexEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getComplexEmptyHandleResponse(resp)
 }
@@ -642,27 +498,14 @@ func (client *DictionaryClient) getComplexEmptyCreateRequest(ctx context.Context
 func (client *DictionaryClient) getComplexEmptyHandleResponse(resp *http.Response) (DictionaryClientGetComplexEmptyResponse, error) {
 	result := DictionaryClientGetComplexEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetComplexEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetComplexEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getComplexEmptyHandleError handles the GetComplexEmpty error response.
-func (client *DictionaryClient) getComplexEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetComplexItemEmpty - Get dictionary of complex type with empty item {"0": {"integer": 1, "string": "2"}, "1:" {}, "2":
 // {"integer": 5, "string": "6"}}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetComplexItemEmptyOptions contains the optional parameters for the DictionaryClient.GetComplexItemEmpty
 // method.
 func (client *DictionaryClient) GetComplexItemEmpty(ctx context.Context, options *DictionaryClientGetComplexItemEmptyOptions) (DictionaryClientGetComplexItemEmptyResponse, error) {
@@ -675,7 +518,7 @@ func (client *DictionaryClient) GetComplexItemEmpty(ctx context.Context, options
 		return DictionaryClientGetComplexItemEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetComplexItemEmptyResponse{}, client.getComplexItemEmptyHandleError(resp)
+		return DictionaryClientGetComplexItemEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getComplexItemEmptyHandleResponse(resp)
 }
@@ -695,27 +538,14 @@ func (client *DictionaryClient) getComplexItemEmptyCreateRequest(ctx context.Con
 func (client *DictionaryClient) getComplexItemEmptyHandleResponse(resp *http.Response) (DictionaryClientGetComplexItemEmptyResponse, error) {
 	result := DictionaryClientGetComplexItemEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetComplexItemEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetComplexItemEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getComplexItemEmptyHandleError handles the GetComplexItemEmpty error response.
-func (client *DictionaryClient) getComplexItemEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetComplexItemNull - Get dictionary of complex type with null item {"0": {"integer": 1, "string": "2"}, "1": null, "2":
 // {"integer": 5, "string": "6"}}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetComplexItemNullOptions contains the optional parameters for the DictionaryClient.GetComplexItemNull
 // method.
 func (client *DictionaryClient) GetComplexItemNull(ctx context.Context, options *DictionaryClientGetComplexItemNullOptions) (DictionaryClientGetComplexItemNullResponse, error) {
@@ -728,7 +558,7 @@ func (client *DictionaryClient) GetComplexItemNull(ctx context.Context, options 
 		return DictionaryClientGetComplexItemNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetComplexItemNullResponse{}, client.getComplexItemNullHandleError(resp)
+		return DictionaryClientGetComplexItemNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getComplexItemNullHandleResponse(resp)
 }
@@ -748,26 +578,13 @@ func (client *DictionaryClient) getComplexItemNullCreateRequest(ctx context.Cont
 func (client *DictionaryClient) getComplexItemNullHandleResponse(resp *http.Response) (DictionaryClientGetComplexItemNullResponse, error) {
 	result := DictionaryClientGetComplexItemNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetComplexItemNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetComplexItemNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getComplexItemNullHandleError handles the GetComplexItemNull error response.
-func (client *DictionaryClient) getComplexItemNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetComplexNull - Get dictionary of complex type null value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetComplexNullOptions contains the optional parameters for the DictionaryClient.GetComplexNull
 // method.
 func (client *DictionaryClient) GetComplexNull(ctx context.Context, options *DictionaryClientGetComplexNullOptions) (DictionaryClientGetComplexNullResponse, error) {
@@ -780,7 +597,7 @@ func (client *DictionaryClient) GetComplexNull(ctx context.Context, options *Dic
 		return DictionaryClientGetComplexNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetComplexNullResponse{}, client.getComplexNullHandleError(resp)
+		return DictionaryClientGetComplexNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getComplexNullHandleResponse(resp)
 }
@@ -800,27 +617,14 @@ func (client *DictionaryClient) getComplexNullCreateRequest(ctx context.Context,
 func (client *DictionaryClient) getComplexNullHandleResponse(resp *http.Response) (DictionaryClientGetComplexNullResponse, error) {
 	result := DictionaryClientGetComplexNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetComplexNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetComplexNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getComplexNullHandleError handles the GetComplexNull error response.
-func (client *DictionaryClient) getComplexNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetComplexValid - Get dictionary of complex type with {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string":
 // "4"}, "2": {"integer": 5, "string": "6"}}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetComplexValidOptions contains the optional parameters for the DictionaryClient.GetComplexValid
 // method.
 func (client *DictionaryClient) GetComplexValid(ctx context.Context, options *DictionaryClientGetComplexValidOptions) (DictionaryClientGetComplexValidResponse, error) {
@@ -833,7 +637,7 @@ func (client *DictionaryClient) GetComplexValid(ctx context.Context, options *Di
 		return DictionaryClientGetComplexValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetComplexValidResponse{}, client.getComplexValidHandleError(resp)
+		return DictionaryClientGetComplexValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getComplexValidHandleResponse(resp)
 }
@@ -853,26 +657,13 @@ func (client *DictionaryClient) getComplexValidCreateRequest(ctx context.Context
 func (client *DictionaryClient) getComplexValidHandleResponse(resp *http.Response) (DictionaryClientGetComplexValidResponse, error) {
 	result := DictionaryClientGetComplexValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetComplexValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetComplexValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getComplexValidHandleError handles the GetComplexValid error response.
-func (client *DictionaryClient) getComplexValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDateInvalidChars - Get date dictionary value {"0": "2011-03-22", "1": "date"}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetDateInvalidCharsOptions contains the optional parameters for the DictionaryClient.GetDateInvalidChars
 // method.
 func (client *DictionaryClient) GetDateInvalidChars(ctx context.Context, options *DictionaryClientGetDateInvalidCharsOptions) (DictionaryClientGetDateInvalidCharsResponse, error) {
@@ -885,7 +676,7 @@ func (client *DictionaryClient) GetDateInvalidChars(ctx context.Context, options
 		return DictionaryClientGetDateInvalidCharsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetDateInvalidCharsResponse{}, client.getDateInvalidCharsHandleError(resp)
+		return DictionaryClientGetDateInvalidCharsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDateInvalidCharsHandleResponse(resp)
 }
@@ -906,7 +697,7 @@ func (client *DictionaryClient) getDateInvalidCharsHandleResponse(resp *http.Res
 	result := DictionaryClientGetDateInvalidCharsResponse{RawResponse: resp}
 	aux := map[string]*dateType{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryClientGetDateInvalidCharsResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDateInvalidCharsResponse{}, runtime.NewResponseError(resp)
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -916,21 +707,8 @@ func (client *DictionaryClient) getDateInvalidCharsHandleResponse(resp *http.Res
 	return result, nil
 }
 
-// getDateInvalidCharsHandleError handles the GetDateInvalidChars error response.
-func (client *DictionaryClient) getDateInvalidCharsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDateInvalidNull - Get date dictionary value {"0": "2012-01-01", "1": null, "2": "1776-07-04"}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetDateInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDateInvalidNull
 // method.
 func (client *DictionaryClient) GetDateInvalidNull(ctx context.Context, options *DictionaryClientGetDateInvalidNullOptions) (DictionaryClientGetDateInvalidNullResponse, error) {
@@ -943,7 +721,7 @@ func (client *DictionaryClient) GetDateInvalidNull(ctx context.Context, options 
 		return DictionaryClientGetDateInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetDateInvalidNullResponse{}, client.getDateInvalidNullHandleError(resp)
+		return DictionaryClientGetDateInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDateInvalidNullHandleResponse(resp)
 }
@@ -964,7 +742,7 @@ func (client *DictionaryClient) getDateInvalidNullHandleResponse(resp *http.Resp
 	result := DictionaryClientGetDateInvalidNullResponse{RawResponse: resp}
 	aux := map[string]*dateType{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryClientGetDateInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDateInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -974,21 +752,8 @@ func (client *DictionaryClient) getDateInvalidNullHandleResponse(resp *http.Resp
 	return result, nil
 }
 
-// getDateInvalidNullHandleError handles the GetDateInvalidNull error response.
-func (client *DictionaryClient) getDateInvalidNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDateTimeInvalidChars - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": "date-time"}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetDateTimeInvalidCharsOptions contains the optional parameters for the DictionaryClient.GetDateTimeInvalidChars
 // method.
 func (client *DictionaryClient) GetDateTimeInvalidChars(ctx context.Context, options *DictionaryClientGetDateTimeInvalidCharsOptions) (DictionaryClientGetDateTimeInvalidCharsResponse, error) {
@@ -1001,7 +766,7 @@ func (client *DictionaryClient) GetDateTimeInvalidChars(ctx context.Context, opt
 		return DictionaryClientGetDateTimeInvalidCharsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetDateTimeInvalidCharsResponse{}, client.getDateTimeInvalidCharsHandleError(resp)
+		return DictionaryClientGetDateTimeInvalidCharsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDateTimeInvalidCharsHandleResponse(resp)
 }
@@ -1022,7 +787,7 @@ func (client *DictionaryClient) getDateTimeInvalidCharsHandleResponse(resp *http
 	result := DictionaryClientGetDateTimeInvalidCharsResponse{RawResponse: resp}
 	aux := map[string]*timeRFC3339{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryClientGetDateTimeInvalidCharsResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDateTimeInvalidCharsResponse{}, runtime.NewResponseError(resp)
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -1032,21 +797,8 @@ func (client *DictionaryClient) getDateTimeInvalidCharsHandleResponse(resp *http
 	return result, nil
 }
 
-// getDateTimeInvalidCharsHandleError handles the GetDateTimeInvalidChars error response.
-func (client *DictionaryClient) getDateTimeInvalidCharsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDateTimeInvalidNull - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": null}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetDateTimeInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDateTimeInvalidNull
 // method.
 func (client *DictionaryClient) GetDateTimeInvalidNull(ctx context.Context, options *DictionaryClientGetDateTimeInvalidNullOptions) (DictionaryClientGetDateTimeInvalidNullResponse, error) {
@@ -1059,7 +811,7 @@ func (client *DictionaryClient) GetDateTimeInvalidNull(ctx context.Context, opti
 		return DictionaryClientGetDateTimeInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetDateTimeInvalidNullResponse{}, client.getDateTimeInvalidNullHandleError(resp)
+		return DictionaryClientGetDateTimeInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDateTimeInvalidNullHandleResponse(resp)
 }
@@ -1080,7 +832,7 @@ func (client *DictionaryClient) getDateTimeInvalidNullHandleResponse(resp *http.
 	result := DictionaryClientGetDateTimeInvalidNullResponse{RawResponse: resp}
 	aux := map[string]*timeRFC3339{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryClientGetDateTimeInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDateTimeInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -1090,22 +842,9 @@ func (client *DictionaryClient) getDateTimeInvalidNullHandleResponse(resp *http.
 	return result, nil
 }
 
-// getDateTimeInvalidNullHandleError handles the GetDateTimeInvalidNull error response.
-func (client *DictionaryClient) getDateTimeInvalidNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDateTimeRFC1123Valid - Get date-time-rfc1123 dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan
 // 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetDateTimeRFC1123ValidOptions contains the optional parameters for the DictionaryClient.GetDateTimeRFC1123Valid
 // method.
 func (client *DictionaryClient) GetDateTimeRFC1123Valid(ctx context.Context, options *DictionaryClientGetDateTimeRFC1123ValidOptions) (DictionaryClientGetDateTimeRFC1123ValidResponse, error) {
@@ -1118,7 +857,7 @@ func (client *DictionaryClient) GetDateTimeRFC1123Valid(ctx context.Context, opt
 		return DictionaryClientGetDateTimeRFC1123ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetDateTimeRFC1123ValidResponse{}, client.getDateTimeRFC1123ValidHandleError(resp)
+		return DictionaryClientGetDateTimeRFC1123ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDateTimeRFC1123ValidHandleResponse(resp)
 }
@@ -1139,7 +878,7 @@ func (client *DictionaryClient) getDateTimeRFC1123ValidHandleResponse(resp *http
 	result := DictionaryClientGetDateTimeRFC1123ValidResponse{RawResponse: resp}
 	aux := map[string]*timeRFC1123{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryClientGetDateTimeRFC1123ValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDateTimeRFC1123ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -1149,22 +888,9 @@ func (client *DictionaryClient) getDateTimeRFC1123ValidHandleResponse(resp *http
 	return result, nil
 }
 
-// getDateTimeRFC1123ValidHandleError handles the GetDateTimeRFC1123Valid error response.
-func (client *DictionaryClient) getDateTimeRFC1123ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDateTimeValid - Get date-time dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2":
 // "1492-10-12T10:15:01-08:00"}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetDateTimeValidOptions contains the optional parameters for the DictionaryClient.GetDateTimeValid
 // method.
 func (client *DictionaryClient) GetDateTimeValid(ctx context.Context, options *DictionaryClientGetDateTimeValidOptions) (DictionaryClientGetDateTimeValidResponse, error) {
@@ -1177,7 +903,7 @@ func (client *DictionaryClient) GetDateTimeValid(ctx context.Context, options *D
 		return DictionaryClientGetDateTimeValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetDateTimeValidResponse{}, client.getDateTimeValidHandleError(resp)
+		return DictionaryClientGetDateTimeValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDateTimeValidHandleResponse(resp)
 }
@@ -1198,7 +924,7 @@ func (client *DictionaryClient) getDateTimeValidHandleResponse(resp *http.Respon
 	result := DictionaryClientGetDateTimeValidResponse{RawResponse: resp}
 	aux := map[string]*timeRFC3339{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryClientGetDateTimeValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDateTimeValidResponse{}, runtime.NewResponseError(resp)
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -1208,21 +934,8 @@ func (client *DictionaryClient) getDateTimeValidHandleResponse(resp *http.Respon
 	return result, nil
 }
 
-// getDateTimeValidHandleError handles the GetDateTimeValid error response.
-func (client *DictionaryClient) getDateTimeValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDateValid - Get integer dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetDateValidOptions contains the optional parameters for the DictionaryClient.GetDateValid method.
 func (client *DictionaryClient) GetDateValid(ctx context.Context, options *DictionaryClientGetDateValidOptions) (DictionaryClientGetDateValidResponse, error) {
 	req, err := client.getDateValidCreateRequest(ctx, options)
@@ -1234,7 +947,7 @@ func (client *DictionaryClient) GetDateValid(ctx context.Context, options *Dicti
 		return DictionaryClientGetDateValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetDateValidResponse{}, client.getDateValidHandleError(resp)
+		return DictionaryClientGetDateValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDateValidHandleResponse(resp)
 }
@@ -1255,7 +968,7 @@ func (client *DictionaryClient) getDateValidHandleResponse(resp *http.Response) 
 	result := DictionaryClientGetDateValidResponse{RawResponse: resp}
 	aux := map[string]*dateType{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryClientGetDateValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDateValidResponse{}, runtime.NewResponseError(resp)
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -1265,21 +978,8 @@ func (client *DictionaryClient) getDateValidHandleResponse(resp *http.Response) 
 	return result, nil
 }
 
-// getDateValidHandleError handles the GetDateValid error response.
-func (client *DictionaryClient) getDateValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDictionaryEmpty - Get an dictionaries of dictionaries of type with value {}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetDictionaryEmptyOptions contains the optional parameters for the DictionaryClient.GetDictionaryEmpty
 // method.
 func (client *DictionaryClient) GetDictionaryEmpty(ctx context.Context, options *DictionaryClientGetDictionaryEmptyOptions) (DictionaryClientGetDictionaryEmptyResponse, error) {
@@ -1292,7 +992,7 @@ func (client *DictionaryClient) GetDictionaryEmpty(ctx context.Context, options 
 		return DictionaryClientGetDictionaryEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetDictionaryEmptyResponse{}, client.getDictionaryEmptyHandleError(resp)
+		return DictionaryClientGetDictionaryEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDictionaryEmptyHandleResponse(resp)
 }
@@ -1312,27 +1012,14 @@ func (client *DictionaryClient) getDictionaryEmptyCreateRequest(ctx context.Cont
 func (client *DictionaryClient) getDictionaryEmptyHandleResponse(resp *http.Response) (DictionaryClientGetDictionaryEmptyResponse, error) {
 	result := DictionaryClientGetDictionaryEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDictionaryEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDictionaryEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDictionaryEmptyHandleError handles the GetDictionaryEmpty error response.
-func (client *DictionaryClient) getDictionaryEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDictionaryItemEmpty - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
 // "1": {}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetDictionaryItemEmptyOptions contains the optional parameters for the DictionaryClient.GetDictionaryItemEmpty
 // method.
 func (client *DictionaryClient) GetDictionaryItemEmpty(ctx context.Context, options *DictionaryClientGetDictionaryItemEmptyOptions) (DictionaryClientGetDictionaryItemEmptyResponse, error) {
@@ -1345,7 +1032,7 @@ func (client *DictionaryClient) GetDictionaryItemEmpty(ctx context.Context, opti
 		return DictionaryClientGetDictionaryItemEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetDictionaryItemEmptyResponse{}, client.getDictionaryItemEmptyHandleError(resp)
+		return DictionaryClientGetDictionaryItemEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDictionaryItemEmptyHandleResponse(resp)
 }
@@ -1365,27 +1052,14 @@ func (client *DictionaryClient) getDictionaryItemEmptyCreateRequest(ctx context.
 func (client *DictionaryClient) getDictionaryItemEmptyHandleResponse(resp *http.Response) (DictionaryClientGetDictionaryItemEmptyResponse, error) {
 	result := DictionaryClientGetDictionaryItemEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDictionaryItemEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDictionaryItemEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDictionaryItemEmptyHandleError handles the GetDictionaryItemEmpty error response.
-func (client *DictionaryClient) getDictionaryItemEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDictionaryItemNull - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
 // "1": null, "2": {"7": "seven", "8": "eight", "9": "nine"}}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetDictionaryItemNullOptions contains the optional parameters for the DictionaryClient.GetDictionaryItemNull
 // method.
 func (client *DictionaryClient) GetDictionaryItemNull(ctx context.Context, options *DictionaryClientGetDictionaryItemNullOptions) (DictionaryClientGetDictionaryItemNullResponse, error) {
@@ -1398,7 +1072,7 @@ func (client *DictionaryClient) GetDictionaryItemNull(ctx context.Context, optio
 		return DictionaryClientGetDictionaryItemNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetDictionaryItemNullResponse{}, client.getDictionaryItemNullHandleError(resp)
+		return DictionaryClientGetDictionaryItemNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDictionaryItemNullHandleResponse(resp)
 }
@@ -1418,26 +1092,13 @@ func (client *DictionaryClient) getDictionaryItemNullCreateRequest(ctx context.C
 func (client *DictionaryClient) getDictionaryItemNullHandleResponse(resp *http.Response) (DictionaryClientGetDictionaryItemNullResponse, error) {
 	result := DictionaryClientGetDictionaryItemNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDictionaryItemNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDictionaryItemNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDictionaryItemNullHandleError handles the GetDictionaryItemNull error response.
-func (client *DictionaryClient) getDictionaryItemNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDictionaryNull - Get an dictionaries of dictionaries with value null
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetDictionaryNullOptions contains the optional parameters for the DictionaryClient.GetDictionaryNull
 // method.
 func (client *DictionaryClient) GetDictionaryNull(ctx context.Context, options *DictionaryClientGetDictionaryNullOptions) (DictionaryClientGetDictionaryNullResponse, error) {
@@ -1450,7 +1111,7 @@ func (client *DictionaryClient) GetDictionaryNull(ctx context.Context, options *
 		return DictionaryClientGetDictionaryNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetDictionaryNullResponse{}, client.getDictionaryNullHandleError(resp)
+		return DictionaryClientGetDictionaryNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDictionaryNullHandleResponse(resp)
 }
@@ -1470,27 +1131,14 @@ func (client *DictionaryClient) getDictionaryNullCreateRequest(ctx context.Conte
 func (client *DictionaryClient) getDictionaryNullHandleResponse(resp *http.Response) (DictionaryClientGetDictionaryNullResponse, error) {
 	result := DictionaryClientGetDictionaryNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDictionaryNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDictionaryNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDictionaryNullHandleError handles the GetDictionaryNull error response.
-func (client *DictionaryClient) getDictionaryNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
 // "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetDictionaryValidOptions contains the optional parameters for the DictionaryClient.GetDictionaryValid
 // method.
 func (client *DictionaryClient) GetDictionaryValid(ctx context.Context, options *DictionaryClientGetDictionaryValidOptions) (DictionaryClientGetDictionaryValidResponse, error) {
@@ -1503,7 +1151,7 @@ func (client *DictionaryClient) GetDictionaryValid(ctx context.Context, options 
 		return DictionaryClientGetDictionaryValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetDictionaryValidResponse{}, client.getDictionaryValidHandleError(resp)
+		return DictionaryClientGetDictionaryValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDictionaryValidHandleResponse(resp)
 }
@@ -1523,26 +1171,13 @@ func (client *DictionaryClient) getDictionaryValidCreateRequest(ctx context.Cont
 func (client *DictionaryClient) getDictionaryValidHandleResponse(resp *http.Response) (DictionaryClientGetDictionaryValidResponse, error) {
 	result := DictionaryClientGetDictionaryValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDictionaryValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDictionaryValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDictionaryValidHandleError handles the GetDictionaryValid error response.
-func (client *DictionaryClient) getDictionaryValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDoubleInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetDoubleInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDoubleInvalidNull
 // method.
 func (client *DictionaryClient) GetDoubleInvalidNull(ctx context.Context, options *DictionaryClientGetDoubleInvalidNullOptions) (DictionaryClientGetDoubleInvalidNullResponse, error) {
@@ -1555,7 +1190,7 @@ func (client *DictionaryClient) GetDoubleInvalidNull(ctx context.Context, option
 		return DictionaryClientGetDoubleInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetDoubleInvalidNullResponse{}, client.getDoubleInvalidNullHandleError(resp)
+		return DictionaryClientGetDoubleInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDoubleInvalidNullHandleResponse(resp)
 }
@@ -1575,26 +1210,13 @@ func (client *DictionaryClient) getDoubleInvalidNullCreateRequest(ctx context.Co
 func (client *DictionaryClient) getDoubleInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetDoubleInvalidNullResponse, error) {
 	result := DictionaryClientGetDoubleInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDoubleInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDoubleInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDoubleInvalidNullHandleError handles the GetDoubleInvalidNull error response.
-func (client *DictionaryClient) getDoubleInvalidNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDoubleInvalidString - Get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetDoubleInvalidStringOptions contains the optional parameters for the DictionaryClient.GetDoubleInvalidString
 // method.
 func (client *DictionaryClient) GetDoubleInvalidString(ctx context.Context, options *DictionaryClientGetDoubleInvalidStringOptions) (DictionaryClientGetDoubleInvalidStringResponse, error) {
@@ -1607,7 +1229,7 @@ func (client *DictionaryClient) GetDoubleInvalidString(ctx context.Context, opti
 		return DictionaryClientGetDoubleInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetDoubleInvalidStringResponse{}, client.getDoubleInvalidStringHandleError(resp)
+		return DictionaryClientGetDoubleInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDoubleInvalidStringHandleResponse(resp)
 }
@@ -1627,26 +1249,13 @@ func (client *DictionaryClient) getDoubleInvalidStringCreateRequest(ctx context.
 func (client *DictionaryClient) getDoubleInvalidStringHandleResponse(resp *http.Response) (DictionaryClientGetDoubleInvalidStringResponse, error) {
 	result := DictionaryClientGetDoubleInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDoubleInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDoubleInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDoubleInvalidStringHandleError handles the GetDoubleInvalidString error response.
-func (client *DictionaryClient) getDoubleInvalidStringHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDoubleValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetDoubleValidOptions contains the optional parameters for the DictionaryClient.GetDoubleValid
 // method.
 func (client *DictionaryClient) GetDoubleValid(ctx context.Context, options *DictionaryClientGetDoubleValidOptions) (DictionaryClientGetDoubleValidResponse, error) {
@@ -1659,7 +1268,7 @@ func (client *DictionaryClient) GetDoubleValid(ctx context.Context, options *Dic
 		return DictionaryClientGetDoubleValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetDoubleValidResponse{}, client.getDoubleValidHandleError(resp)
+		return DictionaryClientGetDoubleValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDoubleValidHandleResponse(resp)
 }
@@ -1679,26 +1288,13 @@ func (client *DictionaryClient) getDoubleValidCreateRequest(ctx context.Context,
 func (client *DictionaryClient) getDoubleValidHandleResponse(resp *http.Response) (DictionaryClientGetDoubleValidResponse, error) {
 	result := DictionaryClientGetDoubleValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDoubleValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDoubleValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDoubleValidHandleError handles the GetDoubleValid error response.
-func (client *DictionaryClient) getDoubleValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDurationValid - Get duration dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetDurationValidOptions contains the optional parameters for the DictionaryClient.GetDurationValid
 // method.
 func (client *DictionaryClient) GetDurationValid(ctx context.Context, options *DictionaryClientGetDurationValidOptions) (DictionaryClientGetDurationValidResponse, error) {
@@ -1711,7 +1307,7 @@ func (client *DictionaryClient) GetDurationValid(ctx context.Context, options *D
 		return DictionaryClientGetDurationValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetDurationValidResponse{}, client.getDurationValidHandleError(resp)
+		return DictionaryClientGetDurationValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDurationValidHandleResponse(resp)
 }
@@ -1731,26 +1327,13 @@ func (client *DictionaryClient) getDurationValidCreateRequest(ctx context.Contex
 func (client *DictionaryClient) getDurationValidHandleResponse(resp *http.Response) (DictionaryClientGetDurationValidResponse, error) {
 	result := DictionaryClientGetDurationValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDurationValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDurationValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDurationValidHandleError handles the GetDurationValid error response.
-func (client *DictionaryClient) getDurationValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetEmpty - Get empty dictionary value {}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetEmptyOptions contains the optional parameters for the DictionaryClient.GetEmpty method.
 func (client *DictionaryClient) GetEmpty(ctx context.Context, options *DictionaryClientGetEmptyOptions) (DictionaryClientGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
@@ -1762,7 +1345,7 @@ func (client *DictionaryClient) GetEmpty(ctx context.Context, options *Dictionar
 		return DictionaryClientGetEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetEmptyResponse{}, client.getEmptyHandleError(resp)
+		return DictionaryClientGetEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getEmptyHandleResponse(resp)
 }
@@ -1782,26 +1365,13 @@ func (client *DictionaryClient) getEmptyCreateRequest(ctx context.Context, optio
 func (client *DictionaryClient) getEmptyHandleResponse(resp *http.Response) (DictionaryClientGetEmptyResponse, error) {
 	result := DictionaryClientGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getEmptyHandleError handles the GetEmpty error response.
-func (client *DictionaryClient) getEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetEmptyStringKey - Get Dictionary with key as empty string
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetEmptyStringKeyOptions contains the optional parameters for the DictionaryClient.GetEmptyStringKey
 // method.
 func (client *DictionaryClient) GetEmptyStringKey(ctx context.Context, options *DictionaryClientGetEmptyStringKeyOptions) (DictionaryClientGetEmptyStringKeyResponse, error) {
@@ -1814,7 +1384,7 @@ func (client *DictionaryClient) GetEmptyStringKey(ctx context.Context, options *
 		return DictionaryClientGetEmptyStringKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetEmptyStringKeyResponse{}, client.getEmptyStringKeyHandleError(resp)
+		return DictionaryClientGetEmptyStringKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getEmptyStringKeyHandleResponse(resp)
 }
@@ -1834,26 +1404,13 @@ func (client *DictionaryClient) getEmptyStringKeyCreateRequest(ctx context.Conte
 func (client *DictionaryClient) getEmptyStringKeyHandleResponse(resp *http.Response) (DictionaryClientGetEmptyStringKeyResponse, error) {
 	result := DictionaryClientGetEmptyStringKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetEmptyStringKeyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetEmptyStringKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getEmptyStringKeyHandleError handles the GetEmptyStringKey error response.
-func (client *DictionaryClient) getEmptyStringKeyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetFloatInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetFloatInvalidNullOptions contains the optional parameters for the DictionaryClient.GetFloatInvalidNull
 // method.
 func (client *DictionaryClient) GetFloatInvalidNull(ctx context.Context, options *DictionaryClientGetFloatInvalidNullOptions) (DictionaryClientGetFloatInvalidNullResponse, error) {
@@ -1866,7 +1423,7 @@ func (client *DictionaryClient) GetFloatInvalidNull(ctx context.Context, options
 		return DictionaryClientGetFloatInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetFloatInvalidNullResponse{}, client.getFloatInvalidNullHandleError(resp)
+		return DictionaryClientGetFloatInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getFloatInvalidNullHandleResponse(resp)
 }
@@ -1886,26 +1443,13 @@ func (client *DictionaryClient) getFloatInvalidNullCreateRequest(ctx context.Con
 func (client *DictionaryClient) getFloatInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetFloatInvalidNullResponse, error) {
 	result := DictionaryClientGetFloatInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetFloatInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetFloatInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getFloatInvalidNullHandleError handles the GetFloatInvalidNull error response.
-func (client *DictionaryClient) getFloatInvalidNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetFloatInvalidString - Get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetFloatInvalidStringOptions contains the optional parameters for the DictionaryClient.GetFloatInvalidString
 // method.
 func (client *DictionaryClient) GetFloatInvalidString(ctx context.Context, options *DictionaryClientGetFloatInvalidStringOptions) (DictionaryClientGetFloatInvalidStringResponse, error) {
@@ -1918,7 +1462,7 @@ func (client *DictionaryClient) GetFloatInvalidString(ctx context.Context, optio
 		return DictionaryClientGetFloatInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetFloatInvalidStringResponse{}, client.getFloatInvalidStringHandleError(resp)
+		return DictionaryClientGetFloatInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getFloatInvalidStringHandleResponse(resp)
 }
@@ -1938,26 +1482,13 @@ func (client *DictionaryClient) getFloatInvalidStringCreateRequest(ctx context.C
 func (client *DictionaryClient) getFloatInvalidStringHandleResponse(resp *http.Response) (DictionaryClientGetFloatInvalidStringResponse, error) {
 	result := DictionaryClientGetFloatInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetFloatInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetFloatInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getFloatInvalidStringHandleError handles the GetFloatInvalidString error response.
-func (client *DictionaryClient) getFloatInvalidStringHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetFloatValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetFloatValidOptions contains the optional parameters for the DictionaryClient.GetFloatValid
 // method.
 func (client *DictionaryClient) GetFloatValid(ctx context.Context, options *DictionaryClientGetFloatValidOptions) (DictionaryClientGetFloatValidResponse, error) {
@@ -1970,7 +1501,7 @@ func (client *DictionaryClient) GetFloatValid(ctx context.Context, options *Dict
 		return DictionaryClientGetFloatValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetFloatValidResponse{}, client.getFloatValidHandleError(resp)
+		return DictionaryClientGetFloatValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getFloatValidHandleResponse(resp)
 }
@@ -1990,26 +1521,13 @@ func (client *DictionaryClient) getFloatValidCreateRequest(ctx context.Context, 
 func (client *DictionaryClient) getFloatValidHandleResponse(resp *http.Response) (DictionaryClientGetFloatValidResponse, error) {
 	result := DictionaryClientGetFloatValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetFloatValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetFloatValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getFloatValidHandleError handles the GetFloatValid error response.
-func (client *DictionaryClient) getFloatValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetIntInvalidNull - Get integer dictionary value {"0": 1, "1": null, "2": 0}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetIntInvalidNullOptions contains the optional parameters for the DictionaryClient.GetIntInvalidNull
 // method.
 func (client *DictionaryClient) GetIntInvalidNull(ctx context.Context, options *DictionaryClientGetIntInvalidNullOptions) (DictionaryClientGetIntInvalidNullResponse, error) {
@@ -2022,7 +1540,7 @@ func (client *DictionaryClient) GetIntInvalidNull(ctx context.Context, options *
 		return DictionaryClientGetIntInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetIntInvalidNullResponse{}, client.getIntInvalidNullHandleError(resp)
+		return DictionaryClientGetIntInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getIntInvalidNullHandleResponse(resp)
 }
@@ -2042,26 +1560,13 @@ func (client *DictionaryClient) getIntInvalidNullCreateRequest(ctx context.Conte
 func (client *DictionaryClient) getIntInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetIntInvalidNullResponse, error) {
 	result := DictionaryClientGetIntInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetIntInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetIntInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getIntInvalidNullHandleError handles the GetIntInvalidNull error response.
-func (client *DictionaryClient) getIntInvalidNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetIntInvalidString - Get integer dictionary value {"0": 1, "1": "integer", "2": 0}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetIntInvalidStringOptions contains the optional parameters for the DictionaryClient.GetIntInvalidString
 // method.
 func (client *DictionaryClient) GetIntInvalidString(ctx context.Context, options *DictionaryClientGetIntInvalidStringOptions) (DictionaryClientGetIntInvalidStringResponse, error) {
@@ -2074,7 +1579,7 @@ func (client *DictionaryClient) GetIntInvalidString(ctx context.Context, options
 		return DictionaryClientGetIntInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetIntInvalidStringResponse{}, client.getIntInvalidStringHandleError(resp)
+		return DictionaryClientGetIntInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getIntInvalidStringHandleResponse(resp)
 }
@@ -2094,26 +1599,13 @@ func (client *DictionaryClient) getIntInvalidStringCreateRequest(ctx context.Con
 func (client *DictionaryClient) getIntInvalidStringHandleResponse(resp *http.Response) (DictionaryClientGetIntInvalidStringResponse, error) {
 	result := DictionaryClientGetIntInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetIntInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetIntInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getIntInvalidStringHandleError handles the GetIntInvalidString error response.
-func (client *DictionaryClient) getIntInvalidStringHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetIntegerValid - Get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetIntegerValidOptions contains the optional parameters for the DictionaryClient.GetIntegerValid
 // method.
 func (client *DictionaryClient) GetIntegerValid(ctx context.Context, options *DictionaryClientGetIntegerValidOptions) (DictionaryClientGetIntegerValidResponse, error) {
@@ -2126,7 +1618,7 @@ func (client *DictionaryClient) GetIntegerValid(ctx context.Context, options *Di
 		return DictionaryClientGetIntegerValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetIntegerValidResponse{}, client.getIntegerValidHandleError(resp)
+		return DictionaryClientGetIntegerValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getIntegerValidHandleResponse(resp)
 }
@@ -2146,26 +1638,13 @@ func (client *DictionaryClient) getIntegerValidCreateRequest(ctx context.Context
 func (client *DictionaryClient) getIntegerValidHandleResponse(resp *http.Response) (DictionaryClientGetIntegerValidResponse, error) {
 	result := DictionaryClientGetIntegerValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetIntegerValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetIntegerValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getIntegerValidHandleError handles the GetIntegerValid error response.
-func (client *DictionaryClient) getIntegerValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetInvalid - Get invalid Dictionary value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetInvalidOptions contains the optional parameters for the DictionaryClient.GetInvalid method.
 func (client *DictionaryClient) GetInvalid(ctx context.Context, options *DictionaryClientGetInvalidOptions) (DictionaryClientGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
@@ -2177,7 +1656,7 @@ func (client *DictionaryClient) GetInvalid(ctx context.Context, options *Diction
 		return DictionaryClientGetInvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetInvalidResponse{}, client.getInvalidHandleError(resp)
+		return DictionaryClientGetInvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getInvalidHandleResponse(resp)
 }
@@ -2197,26 +1676,13 @@ func (client *DictionaryClient) getInvalidCreateRequest(ctx context.Context, opt
 func (client *DictionaryClient) getInvalidHandleResponse(resp *http.Response) (DictionaryClientGetInvalidResponse, error) {
 	result := DictionaryClientGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetInvalidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetInvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getInvalidHandleError handles the GetInvalid error response.
-func (client *DictionaryClient) getInvalidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetLongInvalidNull - Get long dictionary value {"0": 1, "1": null, "2": 0}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetLongInvalidNullOptions contains the optional parameters for the DictionaryClient.GetLongInvalidNull
 // method.
 func (client *DictionaryClient) GetLongInvalidNull(ctx context.Context, options *DictionaryClientGetLongInvalidNullOptions) (DictionaryClientGetLongInvalidNullResponse, error) {
@@ -2229,7 +1695,7 @@ func (client *DictionaryClient) GetLongInvalidNull(ctx context.Context, options 
 		return DictionaryClientGetLongInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetLongInvalidNullResponse{}, client.getLongInvalidNullHandleError(resp)
+		return DictionaryClientGetLongInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getLongInvalidNullHandleResponse(resp)
 }
@@ -2249,26 +1715,13 @@ func (client *DictionaryClient) getLongInvalidNullCreateRequest(ctx context.Cont
 func (client *DictionaryClient) getLongInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetLongInvalidNullResponse, error) {
 	result := DictionaryClientGetLongInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetLongInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetLongInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getLongInvalidNullHandleError handles the GetLongInvalidNull error response.
-func (client *DictionaryClient) getLongInvalidNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetLongInvalidString - Get long dictionary value {"0": 1, "1": "integer", "2": 0}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetLongInvalidStringOptions contains the optional parameters for the DictionaryClient.GetLongInvalidString
 // method.
 func (client *DictionaryClient) GetLongInvalidString(ctx context.Context, options *DictionaryClientGetLongInvalidStringOptions) (DictionaryClientGetLongInvalidStringResponse, error) {
@@ -2281,7 +1734,7 @@ func (client *DictionaryClient) GetLongInvalidString(ctx context.Context, option
 		return DictionaryClientGetLongInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetLongInvalidStringResponse{}, client.getLongInvalidStringHandleError(resp)
+		return DictionaryClientGetLongInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getLongInvalidStringHandleResponse(resp)
 }
@@ -2301,26 +1754,13 @@ func (client *DictionaryClient) getLongInvalidStringCreateRequest(ctx context.Co
 func (client *DictionaryClient) getLongInvalidStringHandleResponse(resp *http.Response) (DictionaryClientGetLongInvalidStringResponse, error) {
 	result := DictionaryClientGetLongInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetLongInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetLongInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getLongInvalidStringHandleError handles the GetLongInvalidString error response.
-func (client *DictionaryClient) getLongInvalidStringHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetLongValid - Get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetLongValidOptions contains the optional parameters for the DictionaryClient.GetLongValid method.
 func (client *DictionaryClient) GetLongValid(ctx context.Context, options *DictionaryClientGetLongValidOptions) (DictionaryClientGetLongValidResponse, error) {
 	req, err := client.getLongValidCreateRequest(ctx, options)
@@ -2332,7 +1772,7 @@ func (client *DictionaryClient) GetLongValid(ctx context.Context, options *Dicti
 		return DictionaryClientGetLongValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetLongValidResponse{}, client.getLongValidHandleError(resp)
+		return DictionaryClientGetLongValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getLongValidHandleResponse(resp)
 }
@@ -2352,26 +1792,13 @@ func (client *DictionaryClient) getLongValidCreateRequest(ctx context.Context, o
 func (client *DictionaryClient) getLongValidHandleResponse(resp *http.Response) (DictionaryClientGetLongValidResponse, error) {
 	result := DictionaryClientGetLongValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetLongValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetLongValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getLongValidHandleError handles the GetLongValid error response.
-func (client *DictionaryClient) getLongValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetNull - Get null dictionary value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetNullOptions contains the optional parameters for the DictionaryClient.GetNull method.
 func (client *DictionaryClient) GetNull(ctx context.Context, options *DictionaryClientGetNullOptions) (DictionaryClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
@@ -2383,7 +1810,7 @@ func (client *DictionaryClient) GetNull(ctx context.Context, options *Dictionary
 		return DictionaryClientGetNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetNullResponse{}, client.getNullHandleError(resp)
+		return DictionaryClientGetNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
@@ -2403,26 +1830,13 @@ func (client *DictionaryClient) getNullCreateRequest(ctx context.Context, option
 func (client *DictionaryClient) getNullHandleResponse(resp *http.Response) (DictionaryClientGetNullResponse, error) {
 	result := DictionaryClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getNullHandleError handles the GetNull error response.
-func (client *DictionaryClient) getNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetNullKey - Get Dictionary with null key
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetNullKeyOptions contains the optional parameters for the DictionaryClient.GetNullKey method.
 func (client *DictionaryClient) GetNullKey(ctx context.Context, options *DictionaryClientGetNullKeyOptions) (DictionaryClientGetNullKeyResponse, error) {
 	req, err := client.getNullKeyCreateRequest(ctx, options)
@@ -2434,7 +1848,7 @@ func (client *DictionaryClient) GetNullKey(ctx context.Context, options *Diction
 		return DictionaryClientGetNullKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetNullKeyResponse{}, client.getNullKeyHandleError(resp)
+		return DictionaryClientGetNullKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getNullKeyHandleResponse(resp)
 }
@@ -2454,26 +1868,13 @@ func (client *DictionaryClient) getNullKeyCreateRequest(ctx context.Context, opt
 func (client *DictionaryClient) getNullKeyHandleResponse(resp *http.Response) (DictionaryClientGetNullKeyResponse, error) {
 	result := DictionaryClientGetNullKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetNullKeyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetNullKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getNullKeyHandleError handles the GetNullKey error response.
-func (client *DictionaryClient) getNullKeyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetNullValue - Get Dictionary with null value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetNullValueOptions contains the optional parameters for the DictionaryClient.GetNullValue method.
 func (client *DictionaryClient) GetNullValue(ctx context.Context, options *DictionaryClientGetNullValueOptions) (DictionaryClientGetNullValueResponse, error) {
 	req, err := client.getNullValueCreateRequest(ctx, options)
@@ -2485,7 +1886,7 @@ func (client *DictionaryClient) GetNullValue(ctx context.Context, options *Dicti
 		return DictionaryClientGetNullValueResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetNullValueResponse{}, client.getNullValueHandleError(resp)
+		return DictionaryClientGetNullValueResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getNullValueHandleResponse(resp)
 }
@@ -2505,26 +1906,13 @@ func (client *DictionaryClient) getNullValueCreateRequest(ctx context.Context, o
 func (client *DictionaryClient) getNullValueHandleResponse(resp *http.Response) (DictionaryClientGetNullValueResponse, error) {
 	result := DictionaryClientGetNullValueResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetNullValueResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetNullValueResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getNullValueHandleError handles the GetNullValue error response.
-func (client *DictionaryClient) getNullValueHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetStringValid - Get string dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetStringValidOptions contains the optional parameters for the DictionaryClient.GetStringValid
 // method.
 func (client *DictionaryClient) GetStringValid(ctx context.Context, options *DictionaryClientGetStringValidOptions) (DictionaryClientGetStringValidResponse, error) {
@@ -2537,7 +1925,7 @@ func (client *DictionaryClient) GetStringValid(ctx context.Context, options *Dic
 		return DictionaryClientGetStringValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetStringValidResponse{}, client.getStringValidHandleError(resp)
+		return DictionaryClientGetStringValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getStringValidHandleResponse(resp)
 }
@@ -2557,26 +1945,13 @@ func (client *DictionaryClient) getStringValidCreateRequest(ctx context.Context,
 func (client *DictionaryClient) getStringValidHandleResponse(resp *http.Response) (DictionaryClientGetStringValidResponse, error) {
 	result := DictionaryClientGetStringValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetStringValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetStringValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getStringValidHandleError handles the GetStringValid error response.
-func (client *DictionaryClient) getStringValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetStringWithInvalid - Get string dictionary value {"0": "foo", "1": 123, "2": "foo2"}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetStringWithInvalidOptions contains the optional parameters for the DictionaryClient.GetStringWithInvalid
 // method.
 func (client *DictionaryClient) GetStringWithInvalid(ctx context.Context, options *DictionaryClientGetStringWithInvalidOptions) (DictionaryClientGetStringWithInvalidResponse, error) {
@@ -2589,7 +1964,7 @@ func (client *DictionaryClient) GetStringWithInvalid(ctx context.Context, option
 		return DictionaryClientGetStringWithInvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetStringWithInvalidResponse{}, client.getStringWithInvalidHandleError(resp)
+		return DictionaryClientGetStringWithInvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getStringWithInvalidHandleResponse(resp)
 }
@@ -2609,26 +1984,13 @@ func (client *DictionaryClient) getStringWithInvalidCreateRequest(ctx context.Co
 func (client *DictionaryClient) getStringWithInvalidHandleResponse(resp *http.Response) (DictionaryClientGetStringWithInvalidResponse, error) {
 	result := DictionaryClientGetStringWithInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetStringWithInvalidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetStringWithInvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getStringWithInvalidHandleError handles the GetStringWithInvalid error response.
-func (client *DictionaryClient) getStringWithInvalidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetStringWithNull - Get string dictionary value {"0": "foo", "1": null, "2": "foo2"}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientGetStringWithNullOptions contains the optional parameters for the DictionaryClient.GetStringWithNull
 // method.
 func (client *DictionaryClient) GetStringWithNull(ctx context.Context, options *DictionaryClientGetStringWithNullOptions) (DictionaryClientGetStringWithNullResponse, error) {
@@ -2641,7 +2003,7 @@ func (client *DictionaryClient) GetStringWithNull(ctx context.Context, options *
 		return DictionaryClientGetStringWithNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientGetStringWithNullResponse{}, client.getStringWithNullHandleError(resp)
+		return DictionaryClientGetStringWithNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getStringWithNullHandleResponse(resp)
 }
@@ -2661,26 +2023,13 @@ func (client *DictionaryClient) getStringWithNullCreateRequest(ctx context.Conte
 func (client *DictionaryClient) getStringWithNullHandleResponse(resp *http.Response) (DictionaryClientGetStringWithNullResponse, error) {
 	result := DictionaryClientGetStringWithNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetStringWithNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetStringWithNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getStringWithNullHandleError handles the GetStringWithNull error response.
-func (client *DictionaryClient) getStringWithNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutArrayValid - Put An array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientPutArrayValidOptions contains the optional parameters for the DictionaryClient.PutArrayValid
 // method.
 func (client *DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[string][]*string, options *DictionaryClientPutArrayValidOptions) (DictionaryClientPutArrayValidResponse, error) {
@@ -2693,7 +2042,7 @@ func (client *DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map
 		return DictionaryClientPutArrayValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientPutArrayValidResponse{}, client.putArrayValidHandleError(resp)
+		return DictionaryClientPutArrayValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return DictionaryClientPutArrayValidResponse{RawResponse: resp}, nil
 }
@@ -2709,21 +2058,8 @@ func (client *DictionaryClient) putArrayValidCreateRequest(ctx context.Context, 
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putArrayValidHandleError handles the PutArrayValid error response.
-func (client *DictionaryClient) putArrayValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutBooleanTfft - Set dictionary value empty {"0": true, "1": false, "2": false, "3": true }
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientPutBooleanTfftOptions contains the optional parameters for the DictionaryClient.PutBooleanTfft
 // method.
 func (client *DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map[string]*bool, options *DictionaryClientPutBooleanTfftOptions) (DictionaryClientPutBooleanTfftResponse, error) {
@@ -2736,7 +2072,7 @@ func (client *DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody ma
 		return DictionaryClientPutBooleanTfftResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientPutBooleanTfftResponse{}, client.putBooleanTfftHandleError(resp)
+		return DictionaryClientPutBooleanTfftResponse{}, runtime.NewResponseError(resp)
 	}
 	return DictionaryClientPutBooleanTfftResponse{RawResponse: resp}, nil
 }
@@ -2752,22 +2088,9 @@ func (client *DictionaryClient) putBooleanTfftCreateRequest(ctx context.Context,
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putBooleanTfftHandleError handles the PutBooleanTfft error response.
-func (client *DictionaryClient) putBooleanTfftHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutByteValid - Put the dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each elementencoded
 // in base 64
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientPutByteValidOptions contains the optional parameters for the DictionaryClient.PutByteValid method.
 func (client *DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[string][]byte, options *DictionaryClientPutByteValidOptions) (DictionaryClientPutByteValidResponse, error) {
 	req, err := client.putByteValidCreateRequest(ctx, arrayBody, options)
@@ -2779,7 +2102,7 @@ func (client *DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[
 		return DictionaryClientPutByteValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientPutByteValidResponse{}, client.putByteValidHandleError(resp)
+		return DictionaryClientPutByteValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return DictionaryClientPutByteValidResponse{RawResponse: resp}, nil
 }
@@ -2795,22 +2118,9 @@ func (client *DictionaryClient) putByteValidCreateRequest(ctx context.Context, a
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putByteValidHandleError handles the PutByteValid error response.
-func (client *DictionaryClient) putByteValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutComplexValid - Put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3,
 // "string": "4"}, "2": {"integer": 5, "string": "6"}}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientPutComplexValidOptions contains the optional parameters for the DictionaryClient.PutComplexValid
 // method.
 func (client *DictionaryClient) PutComplexValid(ctx context.Context, arrayBody map[string]*Widget, options *DictionaryClientPutComplexValidOptions) (DictionaryClientPutComplexValidResponse, error) {
@@ -2823,7 +2133,7 @@ func (client *DictionaryClient) PutComplexValid(ctx context.Context, arrayBody m
 		return DictionaryClientPutComplexValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientPutComplexValidResponse{}, client.putComplexValidHandleError(resp)
+		return DictionaryClientPutComplexValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return DictionaryClientPutComplexValidResponse{RawResponse: resp}, nil
 }
@@ -2839,22 +2149,9 @@ func (client *DictionaryClient) putComplexValidCreateRequest(ctx context.Context
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putComplexValidHandleError handles the PutComplexValid error response.
-func (client *DictionaryClient) putComplexValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutDateTimeRFC1123Valid - Set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35
 // GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientPutDateTimeRFC1123ValidOptions contains the optional parameters for the DictionaryClient.PutDateTimeRFC1123Valid
 // method.
 func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryClientPutDateTimeRFC1123ValidOptions) (DictionaryClientPutDateTimeRFC1123ValidResponse, error) {
@@ -2867,7 +2164,7 @@ func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arr
 		return DictionaryClientPutDateTimeRFC1123ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientPutDateTimeRFC1123ValidResponse{}, client.putDateTimeRFC1123ValidHandleError(resp)
+		return DictionaryClientPutDateTimeRFC1123ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return DictionaryClientPutDateTimeRFC1123ValidResponse{RawResponse: resp}, nil
 }
@@ -2887,21 +2184,8 @@ func (client *DictionaryClient) putDateTimeRFC1123ValidCreateRequest(ctx context
 	return req, runtime.MarshalAsJSON(req, aux)
 }
 
-// putDateTimeRFC1123ValidHandleError handles the PutDateTimeRFC1123Valid error response.
-func (client *DictionaryClient) putDateTimeRFC1123ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutDateTimeValid - Set dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientPutDateTimeValidOptions contains the optional parameters for the DictionaryClient.PutDateTimeValid
 // method.
 func (client *DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryClientPutDateTimeValidOptions) (DictionaryClientPutDateTimeValidResponse, error) {
@@ -2914,7 +2198,7 @@ func (client *DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody 
 		return DictionaryClientPutDateTimeValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientPutDateTimeValidResponse{}, client.putDateTimeValidHandleError(resp)
+		return DictionaryClientPutDateTimeValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return DictionaryClientPutDateTimeValidResponse{RawResponse: resp}, nil
 }
@@ -2934,21 +2218,8 @@ func (client *DictionaryClient) putDateTimeValidCreateRequest(ctx context.Contex
 	return req, runtime.MarshalAsJSON(req, aux)
 }
 
-// putDateTimeValidHandleError handles the PutDateTimeValid error response.
-func (client *DictionaryClient) putDateTimeValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutDateValid - Set dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientPutDateValidOptions contains the optional parameters for the DictionaryClient.PutDateValid method.
 func (client *DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryClientPutDateValidOptions) (DictionaryClientPutDateValidResponse, error) {
 	req, err := client.putDateValidCreateRequest(ctx, arrayBody, options)
@@ -2960,7 +2231,7 @@ func (client *DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[
 		return DictionaryClientPutDateValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientPutDateValidResponse{}, client.putDateValidHandleError(resp)
+		return DictionaryClientPutDateValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return DictionaryClientPutDateValidResponse{RawResponse: resp}, nil
 }
@@ -2980,22 +2251,9 @@ func (client *DictionaryClient) putDateValidCreateRequest(ctx context.Context, a
 	return req, runtime.MarshalAsJSON(req, aux)
 }
 
-// putDateValidHandleError handles the PutDateValid error response.
-func (client *DictionaryClient) putDateValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
 // "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientPutDictionaryValidOptions contains the optional parameters for the DictionaryClient.PutDictionaryValid
 // method.
 func (client *DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]map[string]*string, options *DictionaryClientPutDictionaryValidOptions) (DictionaryClientPutDictionaryValidResponse, error) {
@@ -3008,7 +2266,7 @@ func (client *DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBod
 		return DictionaryClientPutDictionaryValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientPutDictionaryValidResponse{}, client.putDictionaryValidHandleError(resp)
+		return DictionaryClientPutDictionaryValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return DictionaryClientPutDictionaryValidResponse{RawResponse: resp}, nil
 }
@@ -3024,21 +2282,8 @@ func (client *DictionaryClient) putDictionaryValidCreateRequest(ctx context.Cont
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putDictionaryValidHandleError handles the PutDictionaryValid error response.
-func (client *DictionaryClient) putDictionaryValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutDoubleValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientPutDoubleValidOptions contains the optional parameters for the DictionaryClient.PutDoubleValid
 // method.
 func (client *DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map[string]*float64, options *DictionaryClientPutDoubleValidOptions) (DictionaryClientPutDoubleValidResponse, error) {
@@ -3051,7 +2296,7 @@ func (client *DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody ma
 		return DictionaryClientPutDoubleValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientPutDoubleValidResponse{}, client.putDoubleValidHandleError(resp)
+		return DictionaryClientPutDoubleValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return DictionaryClientPutDoubleValidResponse{RawResponse: resp}, nil
 }
@@ -3067,21 +2312,8 @@ func (client *DictionaryClient) putDoubleValidCreateRequest(ctx context.Context,
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putDoubleValidHandleError handles the PutDoubleValid error response.
-func (client *DictionaryClient) putDoubleValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutDurationValid - Set dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientPutDurationValidOptions contains the optional parameters for the DictionaryClient.PutDurationValid
 // method.
 func (client *DictionaryClient) PutDurationValid(ctx context.Context, arrayBody map[string]*string, options *DictionaryClientPutDurationValidOptions) (DictionaryClientPutDurationValidResponse, error) {
@@ -3094,7 +2326,7 @@ func (client *DictionaryClient) PutDurationValid(ctx context.Context, arrayBody 
 		return DictionaryClientPutDurationValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientPutDurationValidResponse{}, client.putDurationValidHandleError(resp)
+		return DictionaryClientPutDurationValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return DictionaryClientPutDurationValidResponse{RawResponse: resp}, nil
 }
@@ -3110,21 +2342,8 @@ func (client *DictionaryClient) putDurationValidCreateRequest(ctx context.Contex
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putDurationValidHandleError handles the PutDurationValid error response.
-func (client *DictionaryClient) putDurationValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutEmpty - Set dictionary value empty {}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientPutEmptyOptions contains the optional parameters for the DictionaryClient.PutEmpty method.
 func (client *DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[string]*string, options *DictionaryClientPutEmptyOptions) (DictionaryClientPutEmptyResponse, error) {
 	req, err := client.putEmptyCreateRequest(ctx, arrayBody, options)
@@ -3136,7 +2355,7 @@ func (client *DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[stri
 		return DictionaryClientPutEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientPutEmptyResponse{}, client.putEmptyHandleError(resp)
+		return DictionaryClientPutEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return DictionaryClientPutEmptyResponse{RawResponse: resp}, nil
 }
@@ -3152,21 +2371,8 @@ func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, array
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putEmptyHandleError handles the PutEmpty error response.
-func (client *DictionaryClient) putEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutFloatValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientPutFloatValidOptions contains the optional parameters for the DictionaryClient.PutFloatValid
 // method.
 func (client *DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[string]*float32, options *DictionaryClientPutFloatValidOptions) (DictionaryClientPutFloatValidResponse, error) {
@@ -3179,7 +2385,7 @@ func (client *DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map
 		return DictionaryClientPutFloatValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientPutFloatValidResponse{}, client.putFloatValidHandleError(resp)
+		return DictionaryClientPutFloatValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return DictionaryClientPutFloatValidResponse{RawResponse: resp}, nil
 }
@@ -3195,21 +2401,8 @@ func (client *DictionaryClient) putFloatValidCreateRequest(ctx context.Context, 
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putFloatValidHandleError handles the PutFloatValid error response.
-func (client *DictionaryClient) putFloatValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutIntegerValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientPutIntegerValidOptions contains the optional parameters for the DictionaryClient.PutIntegerValid
 // method.
 func (client *DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody map[string]*int32, options *DictionaryClientPutIntegerValidOptions) (DictionaryClientPutIntegerValidResponse, error) {
@@ -3222,7 +2415,7 @@ func (client *DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody m
 		return DictionaryClientPutIntegerValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientPutIntegerValidResponse{}, client.putIntegerValidHandleError(resp)
+		return DictionaryClientPutIntegerValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return DictionaryClientPutIntegerValidResponse{RawResponse: resp}, nil
 }
@@ -3238,21 +2431,8 @@ func (client *DictionaryClient) putIntegerValidCreateRequest(ctx context.Context
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putIntegerValidHandleError handles the PutIntegerValid error response.
-func (client *DictionaryClient) putIntegerValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutLongValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientPutLongValidOptions contains the optional parameters for the DictionaryClient.PutLongValid method.
 func (client *DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[string]*int64, options *DictionaryClientPutLongValidOptions) (DictionaryClientPutLongValidResponse, error) {
 	req, err := client.putLongValidCreateRequest(ctx, arrayBody, options)
@@ -3264,7 +2444,7 @@ func (client *DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[
 		return DictionaryClientPutLongValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientPutLongValidResponse{}, client.putLongValidHandleError(resp)
+		return DictionaryClientPutLongValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return DictionaryClientPutLongValidResponse{RawResponse: resp}, nil
 }
@@ -3280,21 +2460,8 @@ func (client *DictionaryClient) putLongValidCreateRequest(ctx context.Context, a
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putLongValidHandleError handles the PutLongValid error response.
-func (client *DictionaryClient) putLongValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutStringValid - Set dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DictionaryClientPutStringValidOptions contains the optional parameters for the DictionaryClient.PutStringValid
 // method.
 func (client *DictionaryClient) PutStringValid(ctx context.Context, arrayBody map[string]*string, options *DictionaryClientPutStringValidOptions) (DictionaryClientPutStringValidResponse, error) {
@@ -3307,7 +2474,7 @@ func (client *DictionaryClient) PutStringValid(ctx context.Context, arrayBody ma
 		return DictionaryClientPutStringValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryClientPutStringValidResponse{}, client.putStringValidHandleError(resp)
+		return DictionaryClientPutStringValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return DictionaryClientPutStringValidResponse{RawResponse: resp}, nil
 }
@@ -3321,17 +2488,4 @@ func (client *DictionaryClient) putStringValidCreateRequest(ctx context.Context,
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, arrayBody)
-}
-
-// putStringValidHandleError handles the PutStringValid error response.
-func (client *DictionaryClient) putStringValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

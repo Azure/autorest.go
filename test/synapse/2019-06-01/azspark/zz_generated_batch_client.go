@@ -10,7 +10,6 @@ package azspark
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -46,7 +45,7 @@ func newBatchClient(endpoint string, livyAPIVersion *string, sparkPoolName strin
 }
 
 // CancelSparkBatchJob - Cancels a running spark batch job.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // batchID - Identifier for the batch job.
 // options - batchClientCancelSparkBatchJobOptions contains the optional parameters for the batchClient.CancelSparkBatchJob
 // method.
@@ -60,7 +59,7 @@ func (client *batchClient) CancelSparkBatchJob(ctx context.Context, batchID int3
 		return batchClientCancelSparkBatchJobResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return batchClientCancelSparkBatchJobResponse{}, client.cancelSparkBatchJobHandleError(resp)
+		return batchClientCancelSparkBatchJobResponse{}, runtime.NewResponseError(resp)
 	}
 	return batchClientCancelSparkBatchJobResponse{RawResponse: resp}, nil
 }
@@ -76,20 +75,8 @@ func (client *batchClient) cancelSparkBatchJobCreateRequest(ctx context.Context,
 	return req, nil
 }
 
-// cancelSparkBatchJobHandleError handles the CancelSparkBatchJob error response.
-func (client *batchClient) cancelSparkBatchJobHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // CreateSparkBatchJob - Create new spark batch job.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sparkBatchJobOptions - Livy compatible batch job request payload.
 // options - batchClientCreateSparkBatchJobOptions contains the optional parameters for the batchClient.CreateSparkBatchJob
 // method.
@@ -103,7 +90,7 @@ func (client *batchClient) CreateSparkBatchJob(ctx context.Context, sparkBatchJo
 		return batchClientCreateSparkBatchJobResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return batchClientCreateSparkBatchJobResponse{}, client.createSparkBatchJobHandleError(resp)
+		return batchClientCreateSparkBatchJobResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createSparkBatchJobHandleResponse(resp)
 }
@@ -128,25 +115,13 @@ func (client *batchClient) createSparkBatchJobCreateRequest(ctx context.Context,
 func (client *batchClient) createSparkBatchJobHandleResponse(resp *http.Response) (batchClientCreateSparkBatchJobResponse, error) {
 	result := batchClientCreateSparkBatchJobResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BatchJob); err != nil {
-		return batchClientCreateSparkBatchJobResponse{}, runtime.NewResponseError(err, resp)
+		return batchClientCreateSparkBatchJobResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// createSparkBatchJobHandleError handles the CreateSparkBatchJob error response.
-func (client *batchClient) createSparkBatchJobHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // GetSparkBatchJob - Gets a single spark batch job.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // batchID - Identifier for the batch job.
 // options - batchClientGetSparkBatchJobOptions contains the optional parameters for the batchClient.GetSparkBatchJob method.
 func (client *batchClient) GetSparkBatchJob(ctx context.Context, batchID int32, options *batchClientGetSparkBatchJobOptions) (batchClientGetSparkBatchJobResponse, error) {
@@ -159,7 +134,7 @@ func (client *batchClient) GetSparkBatchJob(ctx context.Context, batchID int32, 
 		return batchClientGetSparkBatchJobResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return batchClientGetSparkBatchJobResponse{}, client.getSparkBatchJobHandleError(resp)
+		return batchClientGetSparkBatchJobResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getSparkBatchJobHandleResponse(resp)
 }
@@ -185,25 +160,13 @@ func (client *batchClient) getSparkBatchJobCreateRequest(ctx context.Context, ba
 func (client *batchClient) getSparkBatchJobHandleResponse(resp *http.Response) (batchClientGetSparkBatchJobResponse, error) {
 	result := batchClientGetSparkBatchJobResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BatchJob); err != nil {
-		return batchClientGetSparkBatchJobResponse{}, runtime.NewResponseError(err, resp)
+		return batchClientGetSparkBatchJobResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getSparkBatchJobHandleError handles the GetSparkBatchJob error response.
-func (client *batchClient) getSparkBatchJobHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // GetSparkBatchJobs - List all spark batch jobs which are running under a particular spark pool.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - batchClientGetSparkBatchJobsOptions contains the optional parameters for the batchClient.GetSparkBatchJobs method.
 func (client *batchClient) GetSparkBatchJobs(ctx context.Context, options *batchClientGetSparkBatchJobsOptions) (batchClientGetSparkBatchJobsResponse, error) {
 	req, err := client.getSparkBatchJobsCreateRequest(ctx, options)
@@ -215,7 +178,7 @@ func (client *batchClient) GetSparkBatchJobs(ctx context.Context, options *batch
 		return batchClientGetSparkBatchJobsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return batchClientGetSparkBatchJobsResponse{}, client.getSparkBatchJobsHandleError(resp)
+		return batchClientGetSparkBatchJobsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getSparkBatchJobsHandleResponse(resp)
 }
@@ -246,19 +209,7 @@ func (client *batchClient) getSparkBatchJobsCreateRequest(ctx context.Context, o
 func (client *batchClient) getSparkBatchJobsHandleResponse(resp *http.Response) (batchClientGetSparkBatchJobsResponse, error) {
 	result := batchClientGetSparkBatchJobsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BatchJobCollection); err != nil {
-		return batchClientGetSparkBatchJobsResponse{}, runtime.NewResponseError(err, resp)
+		return batchClientGetSparkBatchJobsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// getSparkBatchJobsHandleError handles the GetSparkBatchJobs error response.
-func (client *batchClient) getSparkBatchJobsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

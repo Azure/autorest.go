@@ -11,7 +11,6 @@ package armdataboxedge
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -39,19 +38,19 @@ func NewMonitoringConfigClient(subscriptionID string, credential azcore.TokenCre
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &MonitoringConfigClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates a new metric configuration or updates an existing one for a role.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // roleName - The role name.
 // resourceGroupName - The resource group name.
@@ -66,7 +65,7 @@ func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, d
 	result := MonitoringConfigClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("MonitoringConfigClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("MonitoringConfigClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return MonitoringConfigClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, d
 }
 
 // CreateOrUpdate - Creates a new metric configuration or updates an existing one for a role.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *MonitoringConfigClient) createOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, roleName, resourceGroupName, monitoringMetricConfiguration, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *MonitoringConfigClient) createOrUpdate(ctx context.Context, device
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -123,21 +122,8 @@ func (client *MonitoringConfigClient) createOrUpdateCreateRequest(ctx context.Co
 	return req, runtime.MarshalAsJSON(req, monitoringMetricConfiguration)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *MonitoringConfigClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - deletes a new metric configuration for a role.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // roleName - The role name.
 // resourceGroupName - The resource group name.
@@ -151,7 +137,7 @@ func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceNam
 	result := MonitoringConfigClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("MonitoringConfigClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("MonitoringConfigClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return MonitoringConfigClientDeletePollerResponse{}, err
 	}
@@ -162,7 +148,7 @@ func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceNam
 }
 
 // Delete - deletes a new metric configuration for a role.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *MonitoringConfigClient) deleteOperation(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
 	if err != nil {
@@ -173,7 +159,7 @@ func (client *MonitoringConfigClient) deleteOperation(ctx context.Context, devic
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -208,21 +194,8 @@ func (client *MonitoringConfigClient) deleteCreateRequest(ctx context.Context, d
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *MonitoringConfigClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets a metric configuration of a role.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // roleName - The role name.
 // resourceGroupName - The resource group name.
@@ -237,7 +210,7 @@ func (client *MonitoringConfigClient) Get(ctx context.Context, deviceName string
 		return MonitoringConfigClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MonitoringConfigClientGetResponse{}, client.getHandleError(resp)
+		return MonitoringConfigClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -276,26 +249,13 @@ func (client *MonitoringConfigClient) getCreateRequest(ctx context.Context, devi
 func (client *MonitoringConfigClient) getHandleResponse(resp *http.Response) (MonitoringConfigClientGetResponse, error) {
 	result := MonitoringConfigClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MonitoringMetricConfiguration); err != nil {
-		return MonitoringConfigClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return MonitoringConfigClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *MonitoringConfigClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Lists metric configurations in a role.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // roleName - The role name.
 // resourceGroupName - The resource group name.
@@ -346,20 +306,7 @@ func (client *MonitoringConfigClient) listCreateRequest(ctx context.Context, dev
 func (client *MonitoringConfigClient) listHandleResponse(resp *http.Response) (MonitoringConfigClientListResponse, error) {
 	result := MonitoringConfigClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MonitoringMetricConfigurationList); err != nil {
-		return MonitoringConfigClientListResponse{}, runtime.NewResponseError(err, resp)
+		return MonitoringConfigClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *MonitoringConfigClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

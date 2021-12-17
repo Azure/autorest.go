@@ -10,7 +10,6 @@ package binarygroup
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -32,13 +31,13 @@ func NewUploadClient(options *azcore.ClientOptions) *UploadClient {
 		cp = *options
 	}
 	client := &UploadClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Binary - Uploading binary file
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // fileParam - Non-empty binary file
 // options - UploadClientBinaryOptions contains the optional parameters for the UploadClient.Binary method.
 func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientBinaryOptions) (UploadClientBinaryResponse, error) {
@@ -51,7 +50,7 @@ func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekClo
 		return UploadClientBinaryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return UploadClientBinaryResponse{}, client.binaryHandleError(resp)
+		return UploadClientBinaryResponse{}, runtime.NewResponseError(resp)
 	}
 	return UploadClientBinaryResponse{RawResponse: resp}, nil
 }
@@ -66,20 +65,8 @@ func (client *UploadClient) binaryCreateRequest(ctx context.Context, fileParam i
 	return req, req.SetBody(fileParam, "application/octet-stream")
 }
 
-// binaryHandleError handles the Binary error response.
-func (client *UploadClient) binaryHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // File - Uploading json file
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // fileParam - JSON file with payload { "more": "cowbell" }
 // options - UploadClientFileOptions contains the optional parameters for the UploadClient.File method.
 func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientFileOptions) (UploadClientFileResponse, error) {
@@ -92,7 +79,7 @@ func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekClose
 		return UploadClientFileResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return UploadClientFileResponse{}, client.fileHandleError(resp)
+		return UploadClientFileResponse{}, runtime.NewResponseError(resp)
 	}
 	return UploadClientFileResponse{RawResponse: resp}, nil
 }
@@ -105,16 +92,4 @@ func (client *UploadClient) fileCreateRequest(ctx context.Context, fileParam io.
 		return nil, err
 	}
 	return req, req.SetBody(fileParam, "application/json")
-}
-
-// fileHandleError handles the File error response.
-func (client *UploadClient) fileHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

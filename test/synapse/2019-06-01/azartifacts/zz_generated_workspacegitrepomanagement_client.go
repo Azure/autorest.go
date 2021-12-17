@@ -10,7 +10,6 @@ package azartifacts
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -33,7 +32,7 @@ func newWorkspaceGitRepoManagementClient(endpoint string, pl runtime.Pipeline) *
 }
 
 // GetGitHubAccessToken - Get the GitHub access token.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - workspaceGitRepoManagementClientGetGitHubAccessTokenOptions contains the optional parameters for the workspaceGitRepoManagementClient.GetGitHubAccessToken
 // method.
 func (client *workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context.Context, gitHubAccessTokenRequest GitHubAccessTokenRequest, options *workspaceGitRepoManagementClientGetGitHubAccessTokenOptions) (workspaceGitRepoManagementClientGetGitHubAccessTokenResponse, error) {
@@ -46,7 +45,7 @@ func (client *workspaceGitRepoManagementClient) GetGitHubAccessToken(ctx context
 		return workspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return workspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, client.getGitHubAccessTokenHandleError(resp)
+		return workspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getGitHubAccessTokenHandleResponse(resp)
 }
@@ -72,19 +71,7 @@ func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenCreateReques
 func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenHandleResponse(resp *http.Response) (workspaceGitRepoManagementClientGetGitHubAccessTokenResponse, error) {
 	result := workspaceGitRepoManagementClientGetGitHubAccessTokenResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GitHubAccessTokenResponse); err != nil {
-		return workspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, runtime.NewResponseError(err, resp)
+		return workspaceGitRepoManagementClientGetGitHubAccessTokenResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// getGitHubAccessTokenHandleError handles the GetGitHubAccessToken error response.
-func (client *workspaceGitRepoManagementClient) getGitHubAccessTokenHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

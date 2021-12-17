@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewDdosCustomPoliciesClient(subscriptionID string, credential azcore.TokenC
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &DdosCustomPoliciesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a DDoS custom policy.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // ddosCustomPolicyName - The name of the DDoS custom policy.
 // parameters - Parameters supplied to the create or update operation.
@@ -66,7 +65,7 @@ func (client *DdosCustomPoliciesClient) BeginCreateOrUpdate(ctx context.Context,
 	result := DdosCustomPoliciesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DdosCustomPoliciesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("DdosCustomPoliciesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return DdosCustomPoliciesClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *DdosCustomPoliciesClient) BeginCreateOrUpdate(ctx context.Context,
 }
 
 // CreateOrUpdate - Creates or updates a DDoS custom policy.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *DdosCustomPoliciesClient) createOrUpdate(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, parameters DdosCustomPolicy, options *DdosCustomPoliciesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, ddosCustomPolicyName, parameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *DdosCustomPoliciesClient) createOrUpdate(ctx context.Context, reso
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,21 +118,8 @@ func (client *DdosCustomPoliciesClient) createOrUpdateCreateRequest(ctx context.
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *DdosCustomPoliciesClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified DDoS custom policy.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // ddosCustomPolicyName - The name of the DDoS custom policy.
 // options - DdosCustomPoliciesClientBeginDeleteOptions contains the optional parameters for the DdosCustomPoliciesClient.BeginDelete
@@ -146,7 +132,7 @@ func (client *DdosCustomPoliciesClient) BeginDelete(ctx context.Context, resourc
 	result := DdosCustomPoliciesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DdosCustomPoliciesClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("DdosCustomPoliciesClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return DdosCustomPoliciesClientDeletePollerResponse{}, err
 	}
@@ -157,7 +143,7 @@ func (client *DdosCustomPoliciesClient) BeginDelete(ctx context.Context, resourc
 }
 
 // Delete - Deletes the specified DDoS custom policy.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *DdosCustomPoliciesClient) deleteOperation(ctx context.Context, resourceGroupName string, ddosCustomPolicyName string, options *DdosCustomPoliciesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, ddosCustomPolicyName, options)
 	if err != nil {
@@ -168,7 +154,7 @@ func (client *DdosCustomPoliciesClient) deleteOperation(ctx context.Context, res
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -199,21 +185,8 @@ func (client *DdosCustomPoliciesClient) deleteCreateRequest(ctx context.Context,
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *DdosCustomPoliciesClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets information about the specified DDoS custom policy.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // ddosCustomPolicyName - The name of the DDoS custom policy.
 // options - DdosCustomPoliciesClientGetOptions contains the optional parameters for the DdosCustomPoliciesClient.Get method.
@@ -227,7 +200,7 @@ func (client *DdosCustomPoliciesClient) Get(ctx context.Context, resourceGroupNa
 		return DdosCustomPoliciesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DdosCustomPoliciesClientGetResponse{}, client.getHandleError(resp)
+		return DdosCustomPoliciesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -262,26 +235,13 @@ func (client *DdosCustomPoliciesClient) getCreateRequest(ctx context.Context, re
 func (client *DdosCustomPoliciesClient) getHandleResponse(resp *http.Response) (DdosCustomPoliciesClientGetResponse, error) {
 	result := DdosCustomPoliciesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DdosCustomPolicy); err != nil {
-		return DdosCustomPoliciesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return DdosCustomPoliciesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *DdosCustomPoliciesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateTags - Update a DDoS custom policy tags.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // ddosCustomPolicyName - The name of the DDoS custom policy.
 // parameters - Parameters supplied to update DDoS custom policy resource tags.
@@ -297,7 +257,7 @@ func (client *DdosCustomPoliciesClient) UpdateTags(ctx context.Context, resource
 		return DdosCustomPoliciesClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DdosCustomPoliciesClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return DdosCustomPoliciesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -332,20 +292,7 @@ func (client *DdosCustomPoliciesClient) updateTagsCreateRequest(ctx context.Cont
 func (client *DdosCustomPoliciesClient) updateTagsHandleResponse(resp *http.Response) (DdosCustomPoliciesClientUpdateTagsResponse, error) {
 	result := DdosCustomPoliciesClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DdosCustomPolicy); err != nil {
-		return DdosCustomPoliciesClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return DdosCustomPoliciesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *DdosCustomPoliciesClient) updateTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

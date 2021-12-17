@@ -10,7 +10,6 @@ package arraygroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -32,13 +31,13 @@ func NewArrayClient(options *azcore.ClientOptions) *ArrayClient {
 		cp = *options
 	}
 	client := &ArrayClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetArrayEmpty - Get an empty array []
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetArrayEmptyOptions contains the optional parameters for the ArrayClient.GetArrayEmpty method.
 func (client *ArrayClient) GetArrayEmpty(ctx context.Context, options *ArrayClientGetArrayEmptyOptions) (ArrayClientGetArrayEmptyResponse, error) {
 	req, err := client.getArrayEmptyCreateRequest(ctx, options)
@@ -50,7 +49,7 @@ func (client *ArrayClient) GetArrayEmpty(ctx context.Context, options *ArrayClie
 		return ArrayClientGetArrayEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetArrayEmptyResponse{}, client.getArrayEmptyHandleError(resp)
+		return ArrayClientGetArrayEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getArrayEmptyHandleResponse(resp)
 }
@@ -70,26 +69,13 @@ func (client *ArrayClient) getArrayEmptyCreateRequest(ctx context.Context, optio
 func (client *ArrayClient) getArrayEmptyHandleResponse(resp *http.Response) (ArrayClientGetArrayEmptyResponse, error) {
 	result := ArrayClientGetArrayEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
-		return ArrayClientGetArrayEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetArrayEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getArrayEmptyHandleError handles the GetArrayEmpty error response.
-func (client *ArrayClient) getArrayEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetArrayItemEmpty - Get an array of array of strings [['1', '2', '3'], [], ['7', '8', '9']]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetArrayItemEmptyOptions contains the optional parameters for the ArrayClient.GetArrayItemEmpty method.
 func (client *ArrayClient) GetArrayItemEmpty(ctx context.Context, options *ArrayClientGetArrayItemEmptyOptions) (ArrayClientGetArrayItemEmptyResponse, error) {
 	req, err := client.getArrayItemEmptyCreateRequest(ctx, options)
@@ -101,7 +87,7 @@ func (client *ArrayClient) GetArrayItemEmpty(ctx context.Context, options *Array
 		return ArrayClientGetArrayItemEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetArrayItemEmptyResponse{}, client.getArrayItemEmptyHandleError(resp)
+		return ArrayClientGetArrayItemEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getArrayItemEmptyHandleResponse(resp)
 }
@@ -121,26 +107,13 @@ func (client *ArrayClient) getArrayItemEmptyCreateRequest(ctx context.Context, o
 func (client *ArrayClient) getArrayItemEmptyHandleResponse(resp *http.Response) (ArrayClientGetArrayItemEmptyResponse, error) {
 	result := ArrayClientGetArrayItemEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
-		return ArrayClientGetArrayItemEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetArrayItemEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getArrayItemEmptyHandleError handles the GetArrayItemEmpty error response.
-func (client *ArrayClient) getArrayItemEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetArrayItemNull - Get an array of array of strings [['1', '2', '3'], null, ['7', '8', '9']]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetArrayItemNullOptions contains the optional parameters for the ArrayClient.GetArrayItemNull method.
 func (client *ArrayClient) GetArrayItemNull(ctx context.Context, options *ArrayClientGetArrayItemNullOptions) (ArrayClientGetArrayItemNullResponse, error) {
 	req, err := client.getArrayItemNullCreateRequest(ctx, options)
@@ -152,7 +125,7 @@ func (client *ArrayClient) GetArrayItemNull(ctx context.Context, options *ArrayC
 		return ArrayClientGetArrayItemNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetArrayItemNullResponse{}, client.getArrayItemNullHandleError(resp)
+		return ArrayClientGetArrayItemNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getArrayItemNullHandleResponse(resp)
 }
@@ -172,26 +145,13 @@ func (client *ArrayClient) getArrayItemNullCreateRequest(ctx context.Context, op
 func (client *ArrayClient) getArrayItemNullHandleResponse(resp *http.Response) (ArrayClientGetArrayItemNullResponse, error) {
 	result := ArrayClientGetArrayItemNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
-		return ArrayClientGetArrayItemNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetArrayItemNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getArrayItemNullHandleError handles the GetArrayItemNull error response.
-func (client *ArrayClient) getArrayItemNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetArrayNull - Get a null array
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetArrayNullOptions contains the optional parameters for the ArrayClient.GetArrayNull method.
 func (client *ArrayClient) GetArrayNull(ctx context.Context, options *ArrayClientGetArrayNullOptions) (ArrayClientGetArrayNullResponse, error) {
 	req, err := client.getArrayNullCreateRequest(ctx, options)
@@ -203,7 +163,7 @@ func (client *ArrayClient) GetArrayNull(ctx context.Context, options *ArrayClien
 		return ArrayClientGetArrayNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetArrayNullResponse{}, client.getArrayNullHandleError(resp)
+		return ArrayClientGetArrayNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getArrayNullHandleResponse(resp)
 }
@@ -223,26 +183,13 @@ func (client *ArrayClient) getArrayNullCreateRequest(ctx context.Context, option
 func (client *ArrayClient) getArrayNullHandleResponse(resp *http.Response) (ArrayClientGetArrayNullResponse, error) {
 	result := ArrayClientGetArrayNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
-		return ArrayClientGetArrayNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetArrayNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getArrayNullHandleError handles the GetArrayNull error response.
-func (client *ArrayClient) getArrayNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetArrayValid - Get an array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetArrayValidOptions contains the optional parameters for the ArrayClient.GetArrayValid method.
 func (client *ArrayClient) GetArrayValid(ctx context.Context, options *ArrayClientGetArrayValidOptions) (ArrayClientGetArrayValidResponse, error) {
 	req, err := client.getArrayValidCreateRequest(ctx, options)
@@ -254,7 +201,7 @@ func (client *ArrayClient) GetArrayValid(ctx context.Context, options *ArrayClie
 		return ArrayClientGetArrayValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetArrayValidResponse{}, client.getArrayValidHandleError(resp)
+		return ArrayClientGetArrayValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getArrayValidHandleResponse(resp)
 }
@@ -274,27 +221,14 @@ func (client *ArrayClient) getArrayValidCreateRequest(ctx context.Context, optio
 func (client *ArrayClient) getArrayValidHandleResponse(resp *http.Response) (ArrayClientGetArrayValidResponse, error) {
 	result := ArrayClientGetArrayValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
-		return ArrayClientGetArrayValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetArrayValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getArrayValidHandleError handles the GetArrayValid error response.
-func (client *ArrayClient) getArrayValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items
 // base64url encoded
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetBase64URLOptions contains the optional parameters for the ArrayClient.GetBase64URL method.
 func (client *ArrayClient) GetBase64URL(ctx context.Context, options *ArrayClientGetBase64URLOptions) (ArrayClientGetBase64URLResponse, error) {
 	req, err := client.getBase64URLCreateRequest(ctx, options)
@@ -306,7 +240,7 @@ func (client *ArrayClient) GetBase64URL(ctx context.Context, options *ArrayClien
 		return ArrayClientGetBase64URLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetBase64URLResponse{}, client.getBase64URLHandleError(resp)
+		return ArrayClientGetBase64URLResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBase64URLHandleResponse(resp)
 }
@@ -326,26 +260,13 @@ func (client *ArrayClient) getBase64URLCreateRequest(ctx context.Context, option
 func (client *ArrayClient) getBase64URLHandleResponse(resp *http.Response) (ArrayClientGetBase64URLResponse, error) {
 	result := ArrayClientGetBase64URLResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ByteArrayArray); err != nil {
-		return ArrayClientGetBase64URLResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetBase64URLResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getBase64URLHandleError handles the GetBase64URL error response.
-func (client *ArrayClient) getBase64URLHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBooleanInvalidNull - Get boolean array value [true, null, false]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetBooleanInvalidNullOptions contains the optional parameters for the ArrayClient.GetBooleanInvalidNull
 // method.
 func (client *ArrayClient) GetBooleanInvalidNull(ctx context.Context, options *ArrayClientGetBooleanInvalidNullOptions) (ArrayClientGetBooleanInvalidNullResponse, error) {
@@ -358,7 +279,7 @@ func (client *ArrayClient) GetBooleanInvalidNull(ctx context.Context, options *A
 		return ArrayClientGetBooleanInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetBooleanInvalidNullResponse{}, client.getBooleanInvalidNullHandleError(resp)
+		return ArrayClientGetBooleanInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBooleanInvalidNullHandleResponse(resp)
 }
@@ -378,26 +299,13 @@ func (client *ArrayClient) getBooleanInvalidNullCreateRequest(ctx context.Contex
 func (client *ArrayClient) getBooleanInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetBooleanInvalidNullResponse, error) {
 	result := ArrayClientGetBooleanInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BoolArray); err != nil {
-		return ArrayClientGetBooleanInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetBooleanInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getBooleanInvalidNullHandleError handles the GetBooleanInvalidNull error response.
-func (client *ArrayClient) getBooleanInvalidNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBooleanInvalidString - Get boolean array value [true, 'boolean', false]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetBooleanInvalidStringOptions contains the optional parameters for the ArrayClient.GetBooleanInvalidString
 // method.
 func (client *ArrayClient) GetBooleanInvalidString(ctx context.Context, options *ArrayClientGetBooleanInvalidStringOptions) (ArrayClientGetBooleanInvalidStringResponse, error) {
@@ -410,7 +318,7 @@ func (client *ArrayClient) GetBooleanInvalidString(ctx context.Context, options 
 		return ArrayClientGetBooleanInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetBooleanInvalidStringResponse{}, client.getBooleanInvalidStringHandleError(resp)
+		return ArrayClientGetBooleanInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBooleanInvalidStringHandleResponse(resp)
 }
@@ -430,26 +338,13 @@ func (client *ArrayClient) getBooleanInvalidStringCreateRequest(ctx context.Cont
 func (client *ArrayClient) getBooleanInvalidStringHandleResponse(resp *http.Response) (ArrayClientGetBooleanInvalidStringResponse, error) {
 	result := ArrayClientGetBooleanInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BoolArray); err != nil {
-		return ArrayClientGetBooleanInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetBooleanInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getBooleanInvalidStringHandleError handles the GetBooleanInvalidString error response.
-func (client *ArrayClient) getBooleanInvalidStringHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBooleanTfft - Get boolean array value [true, false, false, true]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetBooleanTfftOptions contains the optional parameters for the ArrayClient.GetBooleanTfft method.
 func (client *ArrayClient) GetBooleanTfft(ctx context.Context, options *ArrayClientGetBooleanTfftOptions) (ArrayClientGetBooleanTfftResponse, error) {
 	req, err := client.getBooleanTfftCreateRequest(ctx, options)
@@ -461,7 +356,7 @@ func (client *ArrayClient) GetBooleanTfft(ctx context.Context, options *ArrayCli
 		return ArrayClientGetBooleanTfftResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetBooleanTfftResponse{}, client.getBooleanTfftHandleError(resp)
+		return ArrayClientGetBooleanTfftResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBooleanTfftHandleResponse(resp)
 }
@@ -481,26 +376,13 @@ func (client *ArrayClient) getBooleanTfftCreateRequest(ctx context.Context, opti
 func (client *ArrayClient) getBooleanTfftHandleResponse(resp *http.Response) (ArrayClientGetBooleanTfftResponse, error) {
 	result := ArrayClientGetBooleanTfftResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BoolArray); err != nil {
-		return ArrayClientGetBooleanTfftResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetBooleanTfftResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getBooleanTfftHandleError handles the GetBooleanTfft error response.
-func (client *ArrayClient) getBooleanTfftHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetByteInvalidNull - Get byte array value [hex(AB, AC, AD), null] with the first item base64 encoded
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetByteInvalidNullOptions contains the optional parameters for the ArrayClient.GetByteInvalidNull
 // method.
 func (client *ArrayClient) GetByteInvalidNull(ctx context.Context, options *ArrayClientGetByteInvalidNullOptions) (ArrayClientGetByteInvalidNullResponse, error) {
@@ -513,7 +395,7 @@ func (client *ArrayClient) GetByteInvalidNull(ctx context.Context, options *Arra
 		return ArrayClientGetByteInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetByteInvalidNullResponse{}, client.getByteInvalidNullHandleError(resp)
+		return ArrayClientGetByteInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getByteInvalidNullHandleResponse(resp)
 }
@@ -533,26 +415,13 @@ func (client *ArrayClient) getByteInvalidNullCreateRequest(ctx context.Context, 
 func (client *ArrayClient) getByteInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetByteInvalidNullResponse, error) {
 	result := ArrayClientGetByteInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ByteArrayArray); err != nil {
-		return ArrayClientGetByteInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetByteInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getByteInvalidNullHandleError handles the GetByteInvalidNull error response.
-func (client *ArrayClient) getByteInvalidNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetByteValid - Get byte array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each item encoded in base64
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetByteValidOptions contains the optional parameters for the ArrayClient.GetByteValid method.
 func (client *ArrayClient) GetByteValid(ctx context.Context, options *ArrayClientGetByteValidOptions) (ArrayClientGetByteValidResponse, error) {
 	req, err := client.getByteValidCreateRequest(ctx, options)
@@ -564,7 +433,7 @@ func (client *ArrayClient) GetByteValid(ctx context.Context, options *ArrayClien
 		return ArrayClientGetByteValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetByteValidResponse{}, client.getByteValidHandleError(resp)
+		return ArrayClientGetByteValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getByteValidHandleResponse(resp)
 }
@@ -584,26 +453,13 @@ func (client *ArrayClient) getByteValidCreateRequest(ctx context.Context, option
 func (client *ArrayClient) getByteValidHandleResponse(resp *http.Response) (ArrayClientGetByteValidResponse, error) {
 	result := ArrayClientGetByteValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ByteArrayArray); err != nil {
-		return ArrayClientGetByteValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetByteValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getByteValidHandleError handles the GetByteValid error response.
-func (client *ArrayClient) getByteValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetComplexEmpty - Get empty array of complex type []
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetComplexEmptyOptions contains the optional parameters for the ArrayClient.GetComplexEmpty method.
 func (client *ArrayClient) GetComplexEmpty(ctx context.Context, options *ArrayClientGetComplexEmptyOptions) (ArrayClientGetComplexEmptyResponse, error) {
 	req, err := client.getComplexEmptyCreateRequest(ctx, options)
@@ -615,7 +471,7 @@ func (client *ArrayClient) GetComplexEmpty(ctx context.Context, options *ArrayCl
 		return ArrayClientGetComplexEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetComplexEmptyResponse{}, client.getComplexEmptyHandleError(resp)
+		return ArrayClientGetComplexEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getComplexEmptyHandleResponse(resp)
 }
@@ -635,27 +491,14 @@ func (client *ArrayClient) getComplexEmptyCreateRequest(ctx context.Context, opt
 func (client *ArrayClient) getComplexEmptyHandleResponse(resp *http.Response) (ArrayClientGetComplexEmptyResponse, error) {
 	result := ArrayClientGetComplexEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
-		return ArrayClientGetComplexEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetComplexEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getComplexEmptyHandleError handles the GetComplexEmpty error response.
-func (client *ArrayClient) getComplexEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetComplexItemEmpty - Get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string':
 // '6'}]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetComplexItemEmptyOptions contains the optional parameters for the ArrayClient.GetComplexItemEmpty
 // method.
 func (client *ArrayClient) GetComplexItemEmpty(ctx context.Context, options *ArrayClientGetComplexItemEmptyOptions) (ArrayClientGetComplexItemEmptyResponse, error) {
@@ -668,7 +511,7 @@ func (client *ArrayClient) GetComplexItemEmpty(ctx context.Context, options *Arr
 		return ArrayClientGetComplexItemEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetComplexItemEmptyResponse{}, client.getComplexItemEmptyHandleError(resp)
+		return ArrayClientGetComplexItemEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getComplexItemEmptyHandleResponse(resp)
 }
@@ -688,27 +531,14 @@ func (client *ArrayClient) getComplexItemEmptyCreateRequest(ctx context.Context,
 func (client *ArrayClient) getComplexItemEmptyHandleResponse(resp *http.Response) (ArrayClientGetComplexItemEmptyResponse, error) {
 	result := ArrayClientGetComplexItemEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
-		return ArrayClientGetComplexItemEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetComplexItemEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getComplexItemEmptyHandleError handles the GetComplexItemEmpty error response.
-func (client *ArrayClient) getComplexItemEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string':
 // '6'}]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetComplexItemNullOptions contains the optional parameters for the ArrayClient.GetComplexItemNull
 // method.
 func (client *ArrayClient) GetComplexItemNull(ctx context.Context, options *ArrayClientGetComplexItemNullOptions) (ArrayClientGetComplexItemNullResponse, error) {
@@ -721,7 +551,7 @@ func (client *ArrayClient) GetComplexItemNull(ctx context.Context, options *Arra
 		return ArrayClientGetComplexItemNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetComplexItemNullResponse{}, client.getComplexItemNullHandleError(resp)
+		return ArrayClientGetComplexItemNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getComplexItemNullHandleResponse(resp)
 }
@@ -741,26 +571,13 @@ func (client *ArrayClient) getComplexItemNullCreateRequest(ctx context.Context, 
 func (client *ArrayClient) getComplexItemNullHandleResponse(resp *http.Response) (ArrayClientGetComplexItemNullResponse, error) {
 	result := ArrayClientGetComplexItemNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
-		return ArrayClientGetComplexItemNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetComplexItemNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getComplexItemNullHandleError handles the GetComplexItemNull error response.
-func (client *ArrayClient) getComplexItemNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetComplexNull - Get array of complex type null value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetComplexNullOptions contains the optional parameters for the ArrayClient.GetComplexNull method.
 func (client *ArrayClient) GetComplexNull(ctx context.Context, options *ArrayClientGetComplexNullOptions) (ArrayClientGetComplexNullResponse, error) {
 	req, err := client.getComplexNullCreateRequest(ctx, options)
@@ -772,7 +589,7 @@ func (client *ArrayClient) GetComplexNull(ctx context.Context, options *ArrayCli
 		return ArrayClientGetComplexNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetComplexNullResponse{}, client.getComplexNullHandleError(resp)
+		return ArrayClientGetComplexNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getComplexNullHandleResponse(resp)
 }
@@ -792,27 +609,14 @@ func (client *ArrayClient) getComplexNullCreateRequest(ctx context.Context, opti
 func (client *ArrayClient) getComplexNullHandleResponse(resp *http.Response) (ArrayClientGetComplexNullResponse, error) {
 	result := ArrayClientGetComplexNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
-		return ArrayClientGetComplexNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetComplexNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getComplexNullHandleError handles the GetComplexNull error response.
-func (client *ArrayClient) getComplexNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetComplexValid - Get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer':
 // 5, 'string': '6'}]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetComplexValidOptions contains the optional parameters for the ArrayClient.GetComplexValid method.
 func (client *ArrayClient) GetComplexValid(ctx context.Context, options *ArrayClientGetComplexValidOptions) (ArrayClientGetComplexValidResponse, error) {
 	req, err := client.getComplexValidCreateRequest(ctx, options)
@@ -824,7 +628,7 @@ func (client *ArrayClient) GetComplexValid(ctx context.Context, options *ArrayCl
 		return ArrayClientGetComplexValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetComplexValidResponse{}, client.getComplexValidHandleError(resp)
+		return ArrayClientGetComplexValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getComplexValidHandleResponse(resp)
 }
@@ -844,26 +648,13 @@ func (client *ArrayClient) getComplexValidCreateRequest(ctx context.Context, opt
 func (client *ArrayClient) getComplexValidHandleResponse(resp *http.Response) (ArrayClientGetComplexValidResponse, error) {
 	result := ArrayClientGetComplexValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
-		return ArrayClientGetComplexValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetComplexValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getComplexValidHandleError handles the GetComplexValid error response.
-func (client *ArrayClient) getComplexValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDateInvalidChars - Get date array value ['2011-03-22', 'date']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetDateInvalidCharsOptions contains the optional parameters for the ArrayClient.GetDateInvalidChars
 // method.
 func (client *ArrayClient) GetDateInvalidChars(ctx context.Context, options *ArrayClientGetDateInvalidCharsOptions) (ArrayClientGetDateInvalidCharsResponse, error) {
@@ -876,7 +667,7 @@ func (client *ArrayClient) GetDateInvalidChars(ctx context.Context, options *Arr
 		return ArrayClientGetDateInvalidCharsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDateInvalidCharsResponse{}, client.getDateInvalidCharsHandleError(resp)
+		return ArrayClientGetDateInvalidCharsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDateInvalidCharsHandleResponse(resp)
 }
@@ -897,7 +688,7 @@ func (client *ArrayClient) getDateInvalidCharsHandleResponse(resp *http.Response
 	result := ArrayClientGetDateInvalidCharsResponse{RawResponse: resp}
 	var aux []*dateType
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return ArrayClientGetDateInvalidCharsResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDateInvalidCharsResponse{}, runtime.NewResponseError(resp)
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
 	for i := 0; i < len(aux); i++ {
@@ -907,21 +698,8 @@ func (client *ArrayClient) getDateInvalidCharsHandleResponse(resp *http.Response
 	return result, nil
 }
 
-// getDateInvalidCharsHandleError handles the GetDateInvalidChars error response.
-func (client *ArrayClient) getDateInvalidCharsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDateInvalidNull - Get date array value ['2012-01-01', null, '1776-07-04']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetDateInvalidNullOptions contains the optional parameters for the ArrayClient.GetDateInvalidNull
 // method.
 func (client *ArrayClient) GetDateInvalidNull(ctx context.Context, options *ArrayClientGetDateInvalidNullOptions) (ArrayClientGetDateInvalidNullResponse, error) {
@@ -934,7 +712,7 @@ func (client *ArrayClient) GetDateInvalidNull(ctx context.Context, options *Arra
 		return ArrayClientGetDateInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDateInvalidNullResponse{}, client.getDateInvalidNullHandleError(resp)
+		return ArrayClientGetDateInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDateInvalidNullHandleResponse(resp)
 }
@@ -955,7 +733,7 @@ func (client *ArrayClient) getDateInvalidNullHandleResponse(resp *http.Response)
 	result := ArrayClientGetDateInvalidNullResponse{RawResponse: resp}
 	var aux []*dateType
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return ArrayClientGetDateInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDateInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
 	for i := 0; i < len(aux); i++ {
@@ -965,21 +743,8 @@ func (client *ArrayClient) getDateInvalidNullHandleResponse(resp *http.Response)
 	return result, nil
 }
 
-// getDateInvalidNullHandleError handles the GetDateInvalidNull error response.
-func (client *ArrayClient) getDateInvalidNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDateTimeInvalidChars - Get date array value ['2000-12-01t00:00:01z', 'date-time']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetDateTimeInvalidCharsOptions contains the optional parameters for the ArrayClient.GetDateTimeInvalidChars
 // method.
 func (client *ArrayClient) GetDateTimeInvalidChars(ctx context.Context, options *ArrayClientGetDateTimeInvalidCharsOptions) (ArrayClientGetDateTimeInvalidCharsResponse, error) {
@@ -992,7 +757,7 @@ func (client *ArrayClient) GetDateTimeInvalidChars(ctx context.Context, options 
 		return ArrayClientGetDateTimeInvalidCharsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDateTimeInvalidCharsResponse{}, client.getDateTimeInvalidCharsHandleError(resp)
+		return ArrayClientGetDateTimeInvalidCharsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDateTimeInvalidCharsHandleResponse(resp)
 }
@@ -1013,7 +778,7 @@ func (client *ArrayClient) getDateTimeInvalidCharsHandleResponse(resp *http.Resp
 	result := ArrayClientGetDateTimeInvalidCharsResponse{RawResponse: resp}
 	var aux []*timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return ArrayClientGetDateTimeInvalidCharsResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDateTimeInvalidCharsResponse{}, runtime.NewResponseError(resp)
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
 	for i := 0; i < len(aux); i++ {
@@ -1023,21 +788,8 @@ func (client *ArrayClient) getDateTimeInvalidCharsHandleResponse(resp *http.Resp
 	return result, nil
 }
 
-// getDateTimeInvalidCharsHandleError handles the GetDateTimeInvalidChars error response.
-func (client *ArrayClient) getDateTimeInvalidCharsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDateTimeInvalidNull - Get date array value ['2000-12-01t00:00:01z', null]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetDateTimeInvalidNullOptions contains the optional parameters for the ArrayClient.GetDateTimeInvalidNull
 // method.
 func (client *ArrayClient) GetDateTimeInvalidNull(ctx context.Context, options *ArrayClientGetDateTimeInvalidNullOptions) (ArrayClientGetDateTimeInvalidNullResponse, error) {
@@ -1050,7 +802,7 @@ func (client *ArrayClient) GetDateTimeInvalidNull(ctx context.Context, options *
 		return ArrayClientGetDateTimeInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDateTimeInvalidNullResponse{}, client.getDateTimeInvalidNullHandleError(resp)
+		return ArrayClientGetDateTimeInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDateTimeInvalidNullHandleResponse(resp)
 }
@@ -1071,7 +823,7 @@ func (client *ArrayClient) getDateTimeInvalidNullHandleResponse(resp *http.Respo
 	result := ArrayClientGetDateTimeInvalidNullResponse{RawResponse: resp}
 	var aux []*timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return ArrayClientGetDateTimeInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDateTimeInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
 	for i := 0; i < len(aux); i++ {
@@ -1081,22 +833,9 @@ func (client *ArrayClient) getDateTimeInvalidNullHandleResponse(resp *http.Respo
 	return result, nil
 }
 
-// getDateTimeInvalidNullHandleError handles the GetDateTimeInvalidNull error response.
-func (client *ArrayClient) getDateTimeInvalidNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDateTimeRFC1123Valid - Get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT',
 // 'Wed, 12 Oct 1492 10:15:01 GMT']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetDateTimeRFC1123ValidOptions contains the optional parameters for the ArrayClient.GetDateTimeRFC1123Valid
 // method.
 func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context, options *ArrayClientGetDateTimeRFC1123ValidOptions) (ArrayClientGetDateTimeRFC1123ValidResponse, error) {
@@ -1109,7 +848,7 @@ func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context, options 
 		return ArrayClientGetDateTimeRFC1123ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDateTimeRFC1123ValidResponse{}, client.getDateTimeRFC1123ValidHandleError(resp)
+		return ArrayClientGetDateTimeRFC1123ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDateTimeRFC1123ValidHandleResponse(resp)
 }
@@ -1130,7 +869,7 @@ func (client *ArrayClient) getDateTimeRFC1123ValidHandleResponse(resp *http.Resp
 	result := ArrayClientGetDateTimeRFC1123ValidResponse{RawResponse: resp}
 	var aux []*timeRFC1123
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return ArrayClientGetDateTimeRFC1123ValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDateTimeRFC1123ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
 	for i := 0; i < len(aux); i++ {
@@ -1140,21 +879,8 @@ func (client *ArrayClient) getDateTimeRFC1123ValidHandleResponse(resp *http.Resp
 	return result, nil
 }
 
-// getDateTimeRFC1123ValidHandleError handles the GetDateTimeRFC1123Valid error response.
-func (client *ArrayClient) getDateTimeRFC1123ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDateTimeValid - Get date-time array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetDateTimeValidOptions contains the optional parameters for the ArrayClient.GetDateTimeValid method.
 func (client *ArrayClient) GetDateTimeValid(ctx context.Context, options *ArrayClientGetDateTimeValidOptions) (ArrayClientGetDateTimeValidResponse, error) {
 	req, err := client.getDateTimeValidCreateRequest(ctx, options)
@@ -1166,7 +892,7 @@ func (client *ArrayClient) GetDateTimeValid(ctx context.Context, options *ArrayC
 		return ArrayClientGetDateTimeValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDateTimeValidResponse{}, client.getDateTimeValidHandleError(resp)
+		return ArrayClientGetDateTimeValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDateTimeValidHandleResponse(resp)
 }
@@ -1187,7 +913,7 @@ func (client *ArrayClient) getDateTimeValidHandleResponse(resp *http.Response) (
 	result := ArrayClientGetDateTimeValidResponse{RawResponse: resp}
 	var aux []*timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return ArrayClientGetDateTimeValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDateTimeValidResponse{}, runtime.NewResponseError(resp)
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
 	for i := 0; i < len(aux); i++ {
@@ -1197,21 +923,8 @@ func (client *ArrayClient) getDateTimeValidHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
-// getDateTimeValidHandleError handles the GetDateTimeValid error response.
-func (client *ArrayClient) getDateTimeValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDateValid - Get integer array value ['2000-12-01', '1980-01-02', '1492-10-12']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetDateValidOptions contains the optional parameters for the ArrayClient.GetDateValid method.
 func (client *ArrayClient) GetDateValid(ctx context.Context, options *ArrayClientGetDateValidOptions) (ArrayClientGetDateValidResponse, error) {
 	req, err := client.getDateValidCreateRequest(ctx, options)
@@ -1223,7 +936,7 @@ func (client *ArrayClient) GetDateValid(ctx context.Context, options *ArrayClien
 		return ArrayClientGetDateValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDateValidResponse{}, client.getDateValidHandleError(resp)
+		return ArrayClientGetDateValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDateValidHandleResponse(resp)
 }
@@ -1244,7 +957,7 @@ func (client *ArrayClient) getDateValidHandleResponse(resp *http.Response) (Arra
 	result := ArrayClientGetDateValidResponse{RawResponse: resp}
 	var aux []*dateType
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return ArrayClientGetDateValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDateValidResponse{}, runtime.NewResponseError(resp)
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
 	for i := 0; i < len(aux); i++ {
@@ -1254,21 +967,8 @@ func (client *ArrayClient) getDateValidHandleResponse(resp *http.Response) (Arra
 	return result, nil
 }
 
-// getDateValidHandleError handles the GetDateValid error response.
-func (client *ArrayClient) getDateValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDictionaryEmpty - Get an array of Dictionaries of type with value []
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetDictionaryEmptyOptions contains the optional parameters for the ArrayClient.GetDictionaryEmpty
 // method.
 func (client *ArrayClient) GetDictionaryEmpty(ctx context.Context, options *ArrayClientGetDictionaryEmptyOptions) (ArrayClientGetDictionaryEmptyResponse, error) {
@@ -1281,7 +981,7 @@ func (client *ArrayClient) GetDictionaryEmpty(ctx context.Context, options *Arra
 		return ArrayClientGetDictionaryEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDictionaryEmptyResponse{}, client.getDictionaryEmptyHandleError(resp)
+		return ArrayClientGetDictionaryEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDictionaryEmptyHandleResponse(resp)
 }
@@ -1301,27 +1001,14 @@ func (client *ArrayClient) getDictionaryEmptyCreateRequest(ctx context.Context, 
 func (client *ArrayClient) getDictionaryEmptyHandleResponse(resp *http.Response) (ArrayClientGetDictionaryEmptyResponse, error) {
 	result := ArrayClientGetDictionaryEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
-		return ArrayClientGetDictionaryEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDictionaryEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDictionaryEmptyHandleError handles the GetDictionaryEmpty error response.
-func (client *ArrayClient) getDictionaryEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDictionaryItemEmpty - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7':
 // 'seven', '8': 'eight', '9': 'nine'}]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetDictionaryItemEmptyOptions contains the optional parameters for the ArrayClient.GetDictionaryItemEmpty
 // method.
 func (client *ArrayClient) GetDictionaryItemEmpty(ctx context.Context, options *ArrayClientGetDictionaryItemEmptyOptions) (ArrayClientGetDictionaryItemEmptyResponse, error) {
@@ -1334,7 +1021,7 @@ func (client *ArrayClient) GetDictionaryItemEmpty(ctx context.Context, options *
 		return ArrayClientGetDictionaryItemEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDictionaryItemEmptyResponse{}, client.getDictionaryItemEmptyHandleError(resp)
+		return ArrayClientGetDictionaryItemEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDictionaryItemEmptyHandleResponse(resp)
 }
@@ -1354,27 +1041,14 @@ func (client *ArrayClient) getDictionaryItemEmptyCreateRequest(ctx context.Conte
 func (client *ArrayClient) getDictionaryItemEmptyHandleResponse(resp *http.Response) (ArrayClientGetDictionaryItemEmptyResponse, error) {
 	result := ArrayClientGetDictionaryItemEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
-		return ArrayClientGetDictionaryItemEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDictionaryItemEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDictionaryItemEmptyHandleError handles the GetDictionaryItemEmpty error response.
-func (client *ArrayClient) getDictionaryItemEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDictionaryItemNull - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, null,
 // {'7': 'seven', '8': 'eight', '9': 'nine'}]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetDictionaryItemNullOptions contains the optional parameters for the ArrayClient.GetDictionaryItemNull
 // method.
 func (client *ArrayClient) GetDictionaryItemNull(ctx context.Context, options *ArrayClientGetDictionaryItemNullOptions) (ArrayClientGetDictionaryItemNullResponse, error) {
@@ -1387,7 +1061,7 @@ func (client *ArrayClient) GetDictionaryItemNull(ctx context.Context, options *A
 		return ArrayClientGetDictionaryItemNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDictionaryItemNullResponse{}, client.getDictionaryItemNullHandleError(resp)
+		return ArrayClientGetDictionaryItemNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDictionaryItemNullHandleResponse(resp)
 }
@@ -1407,26 +1081,13 @@ func (client *ArrayClient) getDictionaryItemNullCreateRequest(ctx context.Contex
 func (client *ArrayClient) getDictionaryItemNullHandleResponse(resp *http.Response) (ArrayClientGetDictionaryItemNullResponse, error) {
 	result := ArrayClientGetDictionaryItemNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
-		return ArrayClientGetDictionaryItemNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDictionaryItemNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDictionaryItemNullHandleError handles the GetDictionaryItemNull error response.
-func (client *ArrayClient) getDictionaryItemNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDictionaryNull - Get an array of Dictionaries with value null
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetDictionaryNullOptions contains the optional parameters for the ArrayClient.GetDictionaryNull method.
 func (client *ArrayClient) GetDictionaryNull(ctx context.Context, options *ArrayClientGetDictionaryNullOptions) (ArrayClientGetDictionaryNullResponse, error) {
 	req, err := client.getDictionaryNullCreateRequest(ctx, options)
@@ -1438,7 +1099,7 @@ func (client *ArrayClient) GetDictionaryNull(ctx context.Context, options *Array
 		return ArrayClientGetDictionaryNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDictionaryNullResponse{}, client.getDictionaryNullHandleError(resp)
+		return ArrayClientGetDictionaryNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDictionaryNullHandleResponse(resp)
 }
@@ -1458,27 +1119,14 @@ func (client *ArrayClient) getDictionaryNullCreateRequest(ctx context.Context, o
 func (client *ArrayClient) getDictionaryNullHandleResponse(resp *http.Response) (ArrayClientGetDictionaryNullResponse, error) {
 	result := ArrayClientGetDictionaryNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
-		return ArrayClientGetDictionaryNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDictionaryNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDictionaryNullHandleError handles the GetDictionaryNull error response.
-func (client *ArrayClient) getDictionaryNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four',
 // '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetDictionaryValidOptions contains the optional parameters for the ArrayClient.GetDictionaryValid
 // method.
 func (client *ArrayClient) GetDictionaryValid(ctx context.Context, options *ArrayClientGetDictionaryValidOptions) (ArrayClientGetDictionaryValidResponse, error) {
@@ -1491,7 +1139,7 @@ func (client *ArrayClient) GetDictionaryValid(ctx context.Context, options *Arra
 		return ArrayClientGetDictionaryValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDictionaryValidResponse{}, client.getDictionaryValidHandleError(resp)
+		return ArrayClientGetDictionaryValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDictionaryValidHandleResponse(resp)
 }
@@ -1511,26 +1159,13 @@ func (client *ArrayClient) getDictionaryValidCreateRequest(ctx context.Context, 
 func (client *ArrayClient) getDictionaryValidHandleResponse(resp *http.Response) (ArrayClientGetDictionaryValidResponse, error) {
 	result := ArrayClientGetDictionaryValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
-		return ArrayClientGetDictionaryValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDictionaryValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDictionaryValidHandleError handles the GetDictionaryValid error response.
-func (client *ArrayClient) getDictionaryValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDoubleInvalidNull - Get float array value [0.0, null, -1.2e20]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetDoubleInvalidNullOptions contains the optional parameters for the ArrayClient.GetDoubleInvalidNull
 // method.
 func (client *ArrayClient) GetDoubleInvalidNull(ctx context.Context, options *ArrayClientGetDoubleInvalidNullOptions) (ArrayClientGetDoubleInvalidNullResponse, error) {
@@ -1543,7 +1178,7 @@ func (client *ArrayClient) GetDoubleInvalidNull(ctx context.Context, options *Ar
 		return ArrayClientGetDoubleInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDoubleInvalidNullResponse{}, client.getDoubleInvalidNullHandleError(resp)
+		return ArrayClientGetDoubleInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDoubleInvalidNullHandleResponse(resp)
 }
@@ -1563,26 +1198,13 @@ func (client *ArrayClient) getDoubleInvalidNullCreateRequest(ctx context.Context
 func (client *ArrayClient) getDoubleInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetDoubleInvalidNullResponse, error) {
 	result := ArrayClientGetDoubleInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float64Array); err != nil {
-		return ArrayClientGetDoubleInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDoubleInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDoubleInvalidNullHandleError handles the GetDoubleInvalidNull error response.
-func (client *ArrayClient) getDoubleInvalidNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDoubleInvalidString - Get boolean array value [1.0, 'number', 0.0]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetDoubleInvalidStringOptions contains the optional parameters for the ArrayClient.GetDoubleInvalidString
 // method.
 func (client *ArrayClient) GetDoubleInvalidString(ctx context.Context, options *ArrayClientGetDoubleInvalidStringOptions) (ArrayClientGetDoubleInvalidStringResponse, error) {
@@ -1595,7 +1217,7 @@ func (client *ArrayClient) GetDoubleInvalidString(ctx context.Context, options *
 		return ArrayClientGetDoubleInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDoubleInvalidStringResponse{}, client.getDoubleInvalidStringHandleError(resp)
+		return ArrayClientGetDoubleInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDoubleInvalidStringHandleResponse(resp)
 }
@@ -1615,26 +1237,13 @@ func (client *ArrayClient) getDoubleInvalidStringCreateRequest(ctx context.Conte
 func (client *ArrayClient) getDoubleInvalidStringHandleResponse(resp *http.Response) (ArrayClientGetDoubleInvalidStringResponse, error) {
 	result := ArrayClientGetDoubleInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float64Array); err != nil {
-		return ArrayClientGetDoubleInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDoubleInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDoubleInvalidStringHandleError handles the GetDoubleInvalidString error response.
-func (client *ArrayClient) getDoubleInvalidStringHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDoubleValid - Get float array value [0, -0.01, 1.2e20]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetDoubleValidOptions contains the optional parameters for the ArrayClient.GetDoubleValid method.
 func (client *ArrayClient) GetDoubleValid(ctx context.Context, options *ArrayClientGetDoubleValidOptions) (ArrayClientGetDoubleValidResponse, error) {
 	req, err := client.getDoubleValidCreateRequest(ctx, options)
@@ -1646,7 +1255,7 @@ func (client *ArrayClient) GetDoubleValid(ctx context.Context, options *ArrayCli
 		return ArrayClientGetDoubleValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDoubleValidResponse{}, client.getDoubleValidHandleError(resp)
+		return ArrayClientGetDoubleValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDoubleValidHandleResponse(resp)
 }
@@ -1666,26 +1275,13 @@ func (client *ArrayClient) getDoubleValidCreateRequest(ctx context.Context, opti
 func (client *ArrayClient) getDoubleValidHandleResponse(resp *http.Response) (ArrayClientGetDoubleValidResponse, error) {
 	result := ArrayClientGetDoubleValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float64Array); err != nil {
-		return ArrayClientGetDoubleValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDoubleValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDoubleValidHandleError handles the GetDoubleValid error response.
-func (client *ArrayClient) getDoubleValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDurationValid - Get duration array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetDurationValidOptions contains the optional parameters for the ArrayClient.GetDurationValid method.
 func (client *ArrayClient) GetDurationValid(ctx context.Context, options *ArrayClientGetDurationValidOptions) (ArrayClientGetDurationValidResponse, error) {
 	req, err := client.getDurationValidCreateRequest(ctx, options)
@@ -1697,7 +1293,7 @@ func (client *ArrayClient) GetDurationValid(ctx context.Context, options *ArrayC
 		return ArrayClientGetDurationValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetDurationValidResponse{}, client.getDurationValidHandleError(resp)
+		return ArrayClientGetDurationValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDurationValidHandleResponse(resp)
 }
@@ -1717,26 +1313,13 @@ func (client *ArrayClient) getDurationValidCreateRequest(ctx context.Context, op
 func (client *ArrayClient) getDurationValidHandleResponse(resp *http.Response) (ArrayClientGetDurationValidResponse, error) {
 	result := ArrayClientGetDurationValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return ArrayClientGetDurationValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDurationValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getDurationValidHandleError handles the GetDurationValid error response.
-func (client *ArrayClient) getDurationValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetEmpty - Get empty array value []
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetEmptyOptions contains the optional parameters for the ArrayClient.GetEmpty method.
 func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayClientGetEmptyOptions) (ArrayClientGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
@@ -1748,7 +1331,7 @@ func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayClientGet
 		return ArrayClientGetEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetEmptyResponse{}, client.getEmptyHandleError(resp)
+		return ArrayClientGetEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getEmptyHandleResponse(resp)
 }
@@ -1768,26 +1351,13 @@ func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, options *A
 func (client *ArrayClient) getEmptyHandleResponse(resp *http.Response) (ArrayClientGetEmptyResponse, error) {
 	result := ArrayClientGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
-		return ArrayClientGetEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getEmptyHandleError handles the GetEmpty error response.
-func (client *ArrayClient) getEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetEnumValid - Get enum array value ['foo1', 'foo2', 'foo3']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetEnumValidOptions contains the optional parameters for the ArrayClient.GetEnumValid method.
 func (client *ArrayClient) GetEnumValid(ctx context.Context, options *ArrayClientGetEnumValidOptions) (ArrayClientGetEnumValidResponse, error) {
 	req, err := client.getEnumValidCreateRequest(ctx, options)
@@ -1799,7 +1369,7 @@ func (client *ArrayClient) GetEnumValid(ctx context.Context, options *ArrayClien
 		return ArrayClientGetEnumValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetEnumValidResponse{}, client.getEnumValidHandleError(resp)
+		return ArrayClientGetEnumValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getEnumValidHandleResponse(resp)
 }
@@ -1819,26 +1389,13 @@ func (client *ArrayClient) getEnumValidCreateRequest(ctx context.Context, option
 func (client *ArrayClient) getEnumValidHandleResponse(resp *http.Response) (ArrayClientGetEnumValidResponse, error) {
 	result := ArrayClientGetEnumValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FooEnumArray); err != nil {
-		return ArrayClientGetEnumValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetEnumValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getEnumValidHandleError handles the GetEnumValid error response.
-func (client *ArrayClient) getEnumValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetFloatInvalidNull - Get float array value [0.0, null, -1.2e20]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetFloatInvalidNullOptions contains the optional parameters for the ArrayClient.GetFloatInvalidNull
 // method.
 func (client *ArrayClient) GetFloatInvalidNull(ctx context.Context, options *ArrayClientGetFloatInvalidNullOptions) (ArrayClientGetFloatInvalidNullResponse, error) {
@@ -1851,7 +1408,7 @@ func (client *ArrayClient) GetFloatInvalidNull(ctx context.Context, options *Arr
 		return ArrayClientGetFloatInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetFloatInvalidNullResponse{}, client.getFloatInvalidNullHandleError(resp)
+		return ArrayClientGetFloatInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getFloatInvalidNullHandleResponse(resp)
 }
@@ -1871,26 +1428,13 @@ func (client *ArrayClient) getFloatInvalidNullCreateRequest(ctx context.Context,
 func (client *ArrayClient) getFloatInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetFloatInvalidNullResponse, error) {
 	result := ArrayClientGetFloatInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float32Array); err != nil {
-		return ArrayClientGetFloatInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetFloatInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getFloatInvalidNullHandleError handles the GetFloatInvalidNull error response.
-func (client *ArrayClient) getFloatInvalidNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetFloatInvalidString - Get boolean array value [1.0, 'number', 0.0]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetFloatInvalidStringOptions contains the optional parameters for the ArrayClient.GetFloatInvalidString
 // method.
 func (client *ArrayClient) GetFloatInvalidString(ctx context.Context, options *ArrayClientGetFloatInvalidStringOptions) (ArrayClientGetFloatInvalidStringResponse, error) {
@@ -1903,7 +1447,7 @@ func (client *ArrayClient) GetFloatInvalidString(ctx context.Context, options *A
 		return ArrayClientGetFloatInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetFloatInvalidStringResponse{}, client.getFloatInvalidStringHandleError(resp)
+		return ArrayClientGetFloatInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getFloatInvalidStringHandleResponse(resp)
 }
@@ -1923,26 +1467,13 @@ func (client *ArrayClient) getFloatInvalidStringCreateRequest(ctx context.Contex
 func (client *ArrayClient) getFloatInvalidStringHandleResponse(resp *http.Response) (ArrayClientGetFloatInvalidStringResponse, error) {
 	result := ArrayClientGetFloatInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float32Array); err != nil {
-		return ArrayClientGetFloatInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetFloatInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getFloatInvalidStringHandleError handles the GetFloatInvalidString error response.
-func (client *ArrayClient) getFloatInvalidStringHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetFloatValid - Get float array value [0, -0.01, 1.2e20]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetFloatValidOptions contains the optional parameters for the ArrayClient.GetFloatValid method.
 func (client *ArrayClient) GetFloatValid(ctx context.Context, options *ArrayClientGetFloatValidOptions) (ArrayClientGetFloatValidResponse, error) {
 	req, err := client.getFloatValidCreateRequest(ctx, options)
@@ -1954,7 +1485,7 @@ func (client *ArrayClient) GetFloatValid(ctx context.Context, options *ArrayClie
 		return ArrayClientGetFloatValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetFloatValidResponse{}, client.getFloatValidHandleError(resp)
+		return ArrayClientGetFloatValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getFloatValidHandleResponse(resp)
 }
@@ -1974,26 +1505,13 @@ func (client *ArrayClient) getFloatValidCreateRequest(ctx context.Context, optio
 func (client *ArrayClient) getFloatValidHandleResponse(resp *http.Response) (ArrayClientGetFloatValidResponse, error) {
 	result := ArrayClientGetFloatValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float32Array); err != nil {
-		return ArrayClientGetFloatValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetFloatValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getFloatValidHandleError handles the GetFloatValid error response.
-func (client *ArrayClient) getFloatValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetIntInvalidNull - Get integer array value [1, null, 0]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetIntInvalidNullOptions contains the optional parameters for the ArrayClient.GetIntInvalidNull method.
 func (client *ArrayClient) GetIntInvalidNull(ctx context.Context, options *ArrayClientGetIntInvalidNullOptions) (ArrayClientGetIntInvalidNullResponse, error) {
 	req, err := client.getIntInvalidNullCreateRequest(ctx, options)
@@ -2005,7 +1523,7 @@ func (client *ArrayClient) GetIntInvalidNull(ctx context.Context, options *Array
 		return ArrayClientGetIntInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetIntInvalidNullResponse{}, client.getIntInvalidNullHandleError(resp)
+		return ArrayClientGetIntInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getIntInvalidNullHandleResponse(resp)
 }
@@ -2025,26 +1543,13 @@ func (client *ArrayClient) getIntInvalidNullCreateRequest(ctx context.Context, o
 func (client *ArrayClient) getIntInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetIntInvalidNullResponse, error) {
 	result := ArrayClientGetIntInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
-		return ArrayClientGetIntInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetIntInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getIntInvalidNullHandleError handles the GetIntInvalidNull error response.
-func (client *ArrayClient) getIntInvalidNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetIntInvalidString - Get integer array value [1, 'integer', 0]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetIntInvalidStringOptions contains the optional parameters for the ArrayClient.GetIntInvalidString
 // method.
 func (client *ArrayClient) GetIntInvalidString(ctx context.Context, options *ArrayClientGetIntInvalidStringOptions) (ArrayClientGetIntInvalidStringResponse, error) {
@@ -2057,7 +1562,7 @@ func (client *ArrayClient) GetIntInvalidString(ctx context.Context, options *Arr
 		return ArrayClientGetIntInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetIntInvalidStringResponse{}, client.getIntInvalidStringHandleError(resp)
+		return ArrayClientGetIntInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getIntInvalidStringHandleResponse(resp)
 }
@@ -2077,26 +1582,13 @@ func (client *ArrayClient) getIntInvalidStringCreateRequest(ctx context.Context,
 func (client *ArrayClient) getIntInvalidStringHandleResponse(resp *http.Response) (ArrayClientGetIntInvalidStringResponse, error) {
 	result := ArrayClientGetIntInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
-		return ArrayClientGetIntInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetIntInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getIntInvalidStringHandleError handles the GetIntInvalidString error response.
-func (client *ArrayClient) getIntInvalidStringHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetIntegerValid - Get integer array value [1, -1, 3, 300]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetIntegerValidOptions contains the optional parameters for the ArrayClient.GetIntegerValid method.
 func (client *ArrayClient) GetIntegerValid(ctx context.Context, options *ArrayClientGetIntegerValidOptions) (ArrayClientGetIntegerValidResponse, error) {
 	req, err := client.getIntegerValidCreateRequest(ctx, options)
@@ -2108,7 +1600,7 @@ func (client *ArrayClient) GetIntegerValid(ctx context.Context, options *ArrayCl
 		return ArrayClientGetIntegerValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetIntegerValidResponse{}, client.getIntegerValidHandleError(resp)
+		return ArrayClientGetIntegerValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getIntegerValidHandleResponse(resp)
 }
@@ -2128,26 +1620,13 @@ func (client *ArrayClient) getIntegerValidCreateRequest(ctx context.Context, opt
 func (client *ArrayClient) getIntegerValidHandleResponse(resp *http.Response) (ArrayClientGetIntegerValidResponse, error) {
 	result := ArrayClientGetIntegerValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
-		return ArrayClientGetIntegerValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetIntegerValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getIntegerValidHandleError handles the GetIntegerValid error response.
-func (client *ArrayClient) getIntegerValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetInvalid - Get invalid array [1, 2, 3
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetInvalidOptions contains the optional parameters for the ArrayClient.GetInvalid method.
 func (client *ArrayClient) GetInvalid(ctx context.Context, options *ArrayClientGetInvalidOptions) (ArrayClientGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
@@ -2159,7 +1638,7 @@ func (client *ArrayClient) GetInvalid(ctx context.Context, options *ArrayClientG
 		return ArrayClientGetInvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetInvalidResponse{}, client.getInvalidHandleError(resp)
+		return ArrayClientGetInvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getInvalidHandleResponse(resp)
 }
@@ -2179,26 +1658,13 @@ func (client *ArrayClient) getInvalidCreateRequest(ctx context.Context, options 
 func (client *ArrayClient) getInvalidHandleResponse(resp *http.Response) (ArrayClientGetInvalidResponse, error) {
 	result := ArrayClientGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
-		return ArrayClientGetInvalidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetInvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getInvalidHandleError handles the GetInvalid error response.
-func (client *ArrayClient) getInvalidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetLongInvalidNull - Get long array value [1, null, 0]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetLongInvalidNullOptions contains the optional parameters for the ArrayClient.GetLongInvalidNull
 // method.
 func (client *ArrayClient) GetLongInvalidNull(ctx context.Context, options *ArrayClientGetLongInvalidNullOptions) (ArrayClientGetLongInvalidNullResponse, error) {
@@ -2211,7 +1677,7 @@ func (client *ArrayClient) GetLongInvalidNull(ctx context.Context, options *Arra
 		return ArrayClientGetLongInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetLongInvalidNullResponse{}, client.getLongInvalidNullHandleError(resp)
+		return ArrayClientGetLongInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getLongInvalidNullHandleResponse(resp)
 }
@@ -2231,26 +1697,13 @@ func (client *ArrayClient) getLongInvalidNullCreateRequest(ctx context.Context, 
 func (client *ArrayClient) getLongInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetLongInvalidNullResponse, error) {
 	result := ArrayClientGetLongInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int64Array); err != nil {
-		return ArrayClientGetLongInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetLongInvalidNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getLongInvalidNullHandleError handles the GetLongInvalidNull error response.
-func (client *ArrayClient) getLongInvalidNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetLongInvalidString - Get long array value [1, 'integer', 0]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetLongInvalidStringOptions contains the optional parameters for the ArrayClient.GetLongInvalidString
 // method.
 func (client *ArrayClient) GetLongInvalidString(ctx context.Context, options *ArrayClientGetLongInvalidStringOptions) (ArrayClientGetLongInvalidStringResponse, error) {
@@ -2263,7 +1716,7 @@ func (client *ArrayClient) GetLongInvalidString(ctx context.Context, options *Ar
 		return ArrayClientGetLongInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetLongInvalidStringResponse{}, client.getLongInvalidStringHandleError(resp)
+		return ArrayClientGetLongInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getLongInvalidStringHandleResponse(resp)
 }
@@ -2283,26 +1736,13 @@ func (client *ArrayClient) getLongInvalidStringCreateRequest(ctx context.Context
 func (client *ArrayClient) getLongInvalidStringHandleResponse(resp *http.Response) (ArrayClientGetLongInvalidStringResponse, error) {
 	result := ArrayClientGetLongInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int64Array); err != nil {
-		return ArrayClientGetLongInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetLongInvalidStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getLongInvalidStringHandleError handles the GetLongInvalidString error response.
-func (client *ArrayClient) getLongInvalidStringHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetLongValid - Get integer array value [1, -1, 3, 300]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetLongValidOptions contains the optional parameters for the ArrayClient.GetLongValid method.
 func (client *ArrayClient) GetLongValid(ctx context.Context, options *ArrayClientGetLongValidOptions) (ArrayClientGetLongValidResponse, error) {
 	req, err := client.getLongValidCreateRequest(ctx, options)
@@ -2314,7 +1754,7 @@ func (client *ArrayClient) GetLongValid(ctx context.Context, options *ArrayClien
 		return ArrayClientGetLongValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetLongValidResponse{}, client.getLongValidHandleError(resp)
+		return ArrayClientGetLongValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getLongValidHandleResponse(resp)
 }
@@ -2334,26 +1774,13 @@ func (client *ArrayClient) getLongValidCreateRequest(ctx context.Context, option
 func (client *ArrayClient) getLongValidHandleResponse(resp *http.Response) (ArrayClientGetLongValidResponse, error) {
 	result := ArrayClientGetLongValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int64Array); err != nil {
-		return ArrayClientGetLongValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetLongValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getLongValidHandleError handles the GetLongValid error response.
-func (client *ArrayClient) getLongValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetNull - Get null array value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetNullOptions contains the optional parameters for the ArrayClient.GetNull method.
 func (client *ArrayClient) GetNull(ctx context.Context, options *ArrayClientGetNullOptions) (ArrayClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
@@ -2365,7 +1792,7 @@ func (client *ArrayClient) GetNull(ctx context.Context, options *ArrayClientGetN
 		return ArrayClientGetNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetNullResponse{}, client.getNullHandleError(resp)
+		return ArrayClientGetNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
@@ -2385,26 +1812,13 @@ func (client *ArrayClient) getNullCreateRequest(ctx context.Context, options *Ar
 func (client *ArrayClient) getNullHandleResponse(resp *http.Response) (ArrayClientGetNullResponse, error) {
 	result := ArrayClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
-		return ArrayClientGetNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getNullHandleError handles the GetNull error response.
-func (client *ArrayClient) getNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetStringEnumValid - Get enum array value ['foo1', 'foo2', 'foo3']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetStringEnumValidOptions contains the optional parameters for the ArrayClient.GetStringEnumValid
 // method.
 func (client *ArrayClient) GetStringEnumValid(ctx context.Context, options *ArrayClientGetStringEnumValidOptions) (ArrayClientGetStringEnumValidResponse, error) {
@@ -2417,7 +1831,7 @@ func (client *ArrayClient) GetStringEnumValid(ctx context.Context, options *Arra
 		return ArrayClientGetStringEnumValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetStringEnumValidResponse{}, client.getStringEnumValidHandleError(resp)
+		return ArrayClientGetStringEnumValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getStringEnumValidHandleResponse(resp)
 }
@@ -2437,26 +1851,13 @@ func (client *ArrayClient) getStringEnumValidCreateRequest(ctx context.Context, 
 func (client *ArrayClient) getStringEnumValidHandleResponse(resp *http.Response) (ArrayClientGetStringEnumValidResponse, error) {
 	result := ArrayClientGetStringEnumValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Enum0Array); err != nil {
-		return ArrayClientGetStringEnumValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetStringEnumValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getStringEnumValidHandleError handles the GetStringEnumValid error response.
-func (client *ArrayClient) getStringEnumValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetStringValid - Get string array value ['foo1', 'foo2', 'foo3']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetStringValidOptions contains the optional parameters for the ArrayClient.GetStringValid method.
 func (client *ArrayClient) GetStringValid(ctx context.Context, options *ArrayClientGetStringValidOptions) (ArrayClientGetStringValidResponse, error) {
 	req, err := client.getStringValidCreateRequest(ctx, options)
@@ -2468,7 +1869,7 @@ func (client *ArrayClient) GetStringValid(ctx context.Context, options *ArrayCli
 		return ArrayClientGetStringValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetStringValidResponse{}, client.getStringValidHandleError(resp)
+		return ArrayClientGetStringValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getStringValidHandleResponse(resp)
 }
@@ -2488,26 +1889,13 @@ func (client *ArrayClient) getStringValidCreateRequest(ctx context.Context, opti
 func (client *ArrayClient) getStringValidHandleResponse(resp *http.Response) (ArrayClientGetStringValidResponse, error) {
 	result := ArrayClientGetStringValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return ArrayClientGetStringValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetStringValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getStringValidHandleError handles the GetStringValid error response.
-func (client *ArrayClient) getStringValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetStringWithInvalid - Get string array value ['foo', 123, 'foo2']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetStringWithInvalidOptions contains the optional parameters for the ArrayClient.GetStringWithInvalid
 // method.
 func (client *ArrayClient) GetStringWithInvalid(ctx context.Context, options *ArrayClientGetStringWithInvalidOptions) (ArrayClientGetStringWithInvalidResponse, error) {
@@ -2520,7 +1908,7 @@ func (client *ArrayClient) GetStringWithInvalid(ctx context.Context, options *Ar
 		return ArrayClientGetStringWithInvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetStringWithInvalidResponse{}, client.getStringWithInvalidHandleError(resp)
+		return ArrayClientGetStringWithInvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getStringWithInvalidHandleResponse(resp)
 }
@@ -2540,26 +1928,13 @@ func (client *ArrayClient) getStringWithInvalidCreateRequest(ctx context.Context
 func (client *ArrayClient) getStringWithInvalidHandleResponse(resp *http.Response) (ArrayClientGetStringWithInvalidResponse, error) {
 	result := ArrayClientGetStringWithInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return ArrayClientGetStringWithInvalidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetStringWithInvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getStringWithInvalidHandleError handles the GetStringWithInvalid error response.
-func (client *ArrayClient) getStringWithInvalidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetStringWithNull - Get string array value ['foo', null, 'foo2']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetStringWithNullOptions contains the optional parameters for the ArrayClient.GetStringWithNull method.
 func (client *ArrayClient) GetStringWithNull(ctx context.Context, options *ArrayClientGetStringWithNullOptions) (ArrayClientGetStringWithNullResponse, error) {
 	req, err := client.getStringWithNullCreateRequest(ctx, options)
@@ -2571,7 +1946,7 @@ func (client *ArrayClient) GetStringWithNull(ctx context.Context, options *Array
 		return ArrayClientGetStringWithNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetStringWithNullResponse{}, client.getStringWithNullHandleError(resp)
+		return ArrayClientGetStringWithNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getStringWithNullHandleResponse(resp)
 }
@@ -2591,26 +1966,13 @@ func (client *ArrayClient) getStringWithNullCreateRequest(ctx context.Context, o
 func (client *ArrayClient) getStringWithNullHandleResponse(resp *http.Response) (ArrayClientGetStringWithNullResponse, error) {
 	result := ArrayClientGetStringWithNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return ArrayClientGetStringWithNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetStringWithNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getStringWithNullHandleError handles the GetStringWithNull error response.
-func (client *ArrayClient) getStringWithNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetUUIDInvalidChars - Get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'foo']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetUUIDInvalidCharsOptions contains the optional parameters for the ArrayClient.GetUUIDInvalidChars
 // method.
 func (client *ArrayClient) GetUUIDInvalidChars(ctx context.Context, options *ArrayClientGetUUIDInvalidCharsOptions) (ArrayClientGetUUIDInvalidCharsResponse, error) {
@@ -2623,7 +1985,7 @@ func (client *ArrayClient) GetUUIDInvalidChars(ctx context.Context, options *Arr
 		return ArrayClientGetUUIDInvalidCharsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetUUIDInvalidCharsResponse{}, client.getUUIDInvalidCharsHandleError(resp)
+		return ArrayClientGetUUIDInvalidCharsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getUUIDInvalidCharsHandleResponse(resp)
 }
@@ -2643,26 +2005,13 @@ func (client *ArrayClient) getUUIDInvalidCharsCreateRequest(ctx context.Context,
 func (client *ArrayClient) getUUIDInvalidCharsHandleResponse(resp *http.Response) (ArrayClientGetUUIDInvalidCharsResponse, error) {
 	result := ArrayClientGetUUIDInvalidCharsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return ArrayClientGetUUIDInvalidCharsResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetUUIDInvalidCharsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getUUIDInvalidCharsHandleError handles the GetUUIDInvalidChars error response.
-func (client *ArrayClient) getUUIDInvalidCharsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetUUIDValid - Get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientGetUUIDValidOptions contains the optional parameters for the ArrayClient.GetUUIDValid method.
 func (client *ArrayClient) GetUUIDValid(ctx context.Context, options *ArrayClientGetUUIDValidOptions) (ArrayClientGetUUIDValidResponse, error) {
 	req, err := client.getUUIDValidCreateRequest(ctx, options)
@@ -2674,7 +2023,7 @@ func (client *ArrayClient) GetUUIDValid(ctx context.Context, options *ArrayClien
 		return ArrayClientGetUUIDValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientGetUUIDValidResponse{}, client.getUUIDValidHandleError(resp)
+		return ArrayClientGetUUIDValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getUUIDValidHandleResponse(resp)
 }
@@ -2694,26 +2043,13 @@ func (client *ArrayClient) getUUIDValidCreateRequest(ctx context.Context, option
 func (client *ArrayClient) getUUIDValidHandleResponse(resp *http.Response) (ArrayClientGetUUIDValidResponse, error) {
 	result := ArrayClientGetUUIDValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return ArrayClientGetUUIDValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetUUIDValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getUUIDValidHandleError handles the GetUUIDValid error response.
-func (client *ArrayClient) getUUIDValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutArrayValid - Put An array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutArrayValidOptions contains the optional parameters for the ArrayClient.PutArrayValid method.
 func (client *ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]*string, options *ArrayClientPutArrayValidOptions) (ArrayClientPutArrayValidResponse, error) {
 	req, err := client.putArrayValidCreateRequest(ctx, arrayBody, options)
@@ -2725,7 +2061,7 @@ func (client *ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]*str
 		return ArrayClientPutArrayValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutArrayValidResponse{}, client.putArrayValidHandleError(resp)
+		return ArrayClientPutArrayValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutArrayValidResponse{RawResponse: resp}, nil
 }
@@ -2741,21 +2077,8 @@ func (client *ArrayClient) putArrayValidCreateRequest(ctx context.Context, array
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putArrayValidHandleError handles the PutArrayValid error response.
-func (client *ArrayClient) putArrayValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutBooleanTfft - Set array value empty [true, false, false, true]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutBooleanTfftOptions contains the optional parameters for the ArrayClient.PutBooleanTfft method.
 func (client *ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []*bool, options *ArrayClientPutBooleanTfftOptions) (ArrayClientPutBooleanTfftResponse, error) {
 	req, err := client.putBooleanTfftCreateRequest(ctx, arrayBody, options)
@@ -2767,7 +2090,7 @@ func (client *ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []*bool
 		return ArrayClientPutBooleanTfftResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutBooleanTfftResponse{}, client.putBooleanTfftHandleError(resp)
+		return ArrayClientPutBooleanTfftResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutBooleanTfftResponse{RawResponse: resp}, nil
 }
@@ -2783,22 +2106,9 @@ func (client *ArrayClient) putBooleanTfftCreateRequest(ctx context.Context, arra
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putBooleanTfftHandleError handles the PutBooleanTfft error response.
-func (client *ArrayClient) putBooleanTfftHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base
 // 64
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutByteValidOptions contains the optional parameters for the ArrayClient.PutByteValid method.
 func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte, options *ArrayClientPutByteValidOptions) (ArrayClientPutByteValidResponse, error) {
 	req, err := client.putByteValidCreateRequest(ctx, arrayBody, options)
@@ -2810,7 +2120,7 @@ func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte,
 		return ArrayClientPutByteValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutByteValidResponse{}, client.putByteValidHandleError(resp)
+		return ArrayClientPutByteValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutByteValidResponse{RawResponse: resp}, nil
 }
@@ -2826,22 +2136,9 @@ func (client *ArrayClient) putByteValidCreateRequest(ctx context.Context, arrayB
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putByteValidHandleError handles the PutByteValid error response.
-func (client *ArrayClient) putByteValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'},
 // {'integer': 5, 'string': '6'}]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutComplexValidOptions contains the optional parameters for the ArrayClient.PutComplexValid method.
 func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []*Product, options *ArrayClientPutComplexValidOptions) (ArrayClientPutComplexValidResponse, error) {
 	req, err := client.putComplexValidCreateRequest(ctx, arrayBody, options)
@@ -2853,7 +2150,7 @@ func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []*Pro
 		return ArrayClientPutComplexValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutComplexValidResponse{}, client.putComplexValidHandleError(resp)
+		return ArrayClientPutComplexValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutComplexValidResponse{RawResponse: resp}, nil
 }
@@ -2869,22 +2166,9 @@ func (client *ArrayClient) putComplexValidCreateRequest(ctx context.Context, arr
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putComplexValidHandleError handles the PutComplexValid error response.
-func (client *ArrayClient) putComplexValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutDateTimeRFC1123Valid - Set array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct
 // 1492 10:15:01 GMT']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutDateTimeRFC1123ValidOptions contains the optional parameters for the ArrayClient.PutDateTimeRFC1123Valid
 // method.
 func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateTimeRFC1123ValidOptions) (ArrayClientPutDateTimeRFC1123ValidResponse, error) {
@@ -2897,7 +2181,7 @@ func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBod
 		return ArrayClientPutDateTimeRFC1123ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutDateTimeRFC1123ValidResponse{}, client.putDateTimeRFC1123ValidHandleError(resp)
+		return ArrayClientPutDateTimeRFC1123ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutDateTimeRFC1123ValidResponse{RawResponse: resp}, nil
 }
@@ -2917,21 +2201,8 @@ func (client *ArrayClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Cont
 	return req, runtime.MarshalAsJSON(req, aux)
 }
 
-// putDateTimeRFC1123ValidHandleError handles the PutDateTimeRFC1123Valid error response.
-func (client *ArrayClient) putDateTimeRFC1123ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutDateTimeValid - Set array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutDateTimeValidOptions contains the optional parameters for the ArrayClient.PutDateTimeValid method.
 func (client *ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateTimeValidOptions) (ArrayClientPutDateTimeValidResponse, error) {
 	req, err := client.putDateTimeValidCreateRequest(ctx, arrayBody, options)
@@ -2943,7 +2214,7 @@ func (client *ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []*ti
 		return ArrayClientPutDateTimeValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutDateTimeValidResponse{}, client.putDateTimeValidHandleError(resp)
+		return ArrayClientPutDateTimeValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutDateTimeValidResponse{RawResponse: resp}, nil
 }
@@ -2959,21 +2230,8 @@ func (client *ArrayClient) putDateTimeValidCreateRequest(ctx context.Context, ar
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putDateTimeValidHandleError handles the PutDateTimeValid error response.
-func (client *ArrayClient) putDateTimeValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutDateValid - Set array value ['2000-12-01', '1980-01-02', '1492-10-12']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutDateValidOptions contains the optional parameters for the ArrayClient.PutDateValid method.
 func (client *ArrayClient) PutDateValid(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateValidOptions) (ArrayClientPutDateValidResponse, error) {
 	req, err := client.putDateValidCreateRequest(ctx, arrayBody, options)
@@ -2985,7 +2243,7 @@ func (client *ArrayClient) PutDateValid(ctx context.Context, arrayBody []*time.T
 		return ArrayClientPutDateValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutDateValidResponse{}, client.putDateValidHandleError(resp)
+		return ArrayClientPutDateValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutDateValidResponse{RawResponse: resp}, nil
 }
@@ -3005,22 +2263,9 @@ func (client *ArrayClient) putDateValidCreateRequest(ctx context.Context, arrayB
 	return req, runtime.MarshalAsJSON(req, aux)
 }
 
-// putDateValidHandleError handles the PutDateValid error response.
-func (client *ArrayClient) putDateValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four',
 // '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutDictionaryValidOptions contains the optional parameters for the ArrayClient.PutDictionaryValid
 // method.
 func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []map[string]*string, options *ArrayClientPutDictionaryValidOptions) (ArrayClientPutDictionaryValidResponse, error) {
@@ -3033,7 +2278,7 @@ func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []m
 		return ArrayClientPutDictionaryValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutDictionaryValidResponse{}, client.putDictionaryValidHandleError(resp)
+		return ArrayClientPutDictionaryValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutDictionaryValidResponse{RawResponse: resp}, nil
 }
@@ -3049,21 +2294,8 @@ func (client *ArrayClient) putDictionaryValidCreateRequest(ctx context.Context, 
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putDictionaryValidHandleError handles the PutDictionaryValid error response.
-func (client *ArrayClient) putDictionaryValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutDoubleValid - Set array value [0, -0.01, 1.2e20]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutDoubleValidOptions contains the optional parameters for the ArrayClient.PutDoubleValid method.
 func (client *ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []*float64, options *ArrayClientPutDoubleValidOptions) (ArrayClientPutDoubleValidResponse, error) {
 	req, err := client.putDoubleValidCreateRequest(ctx, arrayBody, options)
@@ -3075,7 +2307,7 @@ func (client *ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []*floa
 		return ArrayClientPutDoubleValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutDoubleValidResponse{}, client.putDoubleValidHandleError(resp)
+		return ArrayClientPutDoubleValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutDoubleValidResponse{RawResponse: resp}, nil
 }
@@ -3091,21 +2323,8 @@ func (client *ArrayClient) putDoubleValidCreateRequest(ctx context.Context, arra
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putDoubleValidHandleError handles the PutDoubleValid error response.
-func (client *ArrayClient) putDoubleValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutDurationValid - Set array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutDurationValidOptions contains the optional parameters for the ArrayClient.PutDurationValid method.
 func (client *ArrayClient) PutDurationValid(ctx context.Context, arrayBody []*string, options *ArrayClientPutDurationValidOptions) (ArrayClientPutDurationValidResponse, error) {
 	req, err := client.putDurationValidCreateRequest(ctx, arrayBody, options)
@@ -3117,7 +2336,7 @@ func (client *ArrayClient) PutDurationValid(ctx context.Context, arrayBody []*st
 		return ArrayClientPutDurationValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutDurationValidResponse{}, client.putDurationValidHandleError(resp)
+		return ArrayClientPutDurationValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutDurationValidResponse{RawResponse: resp}, nil
 }
@@ -3133,21 +2352,8 @@ func (client *ArrayClient) putDurationValidCreateRequest(ctx context.Context, ar
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putDurationValidHandleError handles the PutDurationValid error response.
-func (client *ArrayClient) putDurationValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutEmpty - Set array value empty []
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutEmptyOptions contains the optional parameters for the ArrayClient.PutEmpty method.
 func (client *ArrayClient) PutEmpty(ctx context.Context, arrayBody []*string, options *ArrayClientPutEmptyOptions) (ArrayClientPutEmptyResponse, error) {
 	req, err := client.putEmptyCreateRequest(ctx, arrayBody, options)
@@ -3159,7 +2365,7 @@ func (client *ArrayClient) PutEmpty(ctx context.Context, arrayBody []*string, op
 		return ArrayClientPutEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutEmptyResponse{}, client.putEmptyHandleError(resp)
+		return ArrayClientPutEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutEmptyResponse{RawResponse: resp}, nil
 }
@@ -3175,21 +2381,8 @@ func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, arrayBody 
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putEmptyHandleError handles the PutEmpty error response.
-func (client *ArrayClient) putEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutEnumValid - Set array value ['foo1', 'foo2', 'foo3']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutEnumValidOptions contains the optional parameters for the ArrayClient.PutEnumValid method.
 func (client *ArrayClient) PutEnumValid(ctx context.Context, arrayBody []*FooEnum, options *ArrayClientPutEnumValidOptions) (ArrayClientPutEnumValidResponse, error) {
 	req, err := client.putEnumValidCreateRequest(ctx, arrayBody, options)
@@ -3201,7 +2394,7 @@ func (client *ArrayClient) PutEnumValid(ctx context.Context, arrayBody []*FooEnu
 		return ArrayClientPutEnumValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutEnumValidResponse{}, client.putEnumValidHandleError(resp)
+		return ArrayClientPutEnumValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutEnumValidResponse{RawResponse: resp}, nil
 }
@@ -3217,21 +2410,8 @@ func (client *ArrayClient) putEnumValidCreateRequest(ctx context.Context, arrayB
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putEnumValidHandleError handles the PutEnumValid error response.
-func (client *ArrayClient) putEnumValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutFloatValid - Set array value [0, -0.01, 1.2e20]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutFloatValidOptions contains the optional parameters for the ArrayClient.PutFloatValid method.
 func (client *ArrayClient) PutFloatValid(ctx context.Context, arrayBody []*float32, options *ArrayClientPutFloatValidOptions) (ArrayClientPutFloatValidResponse, error) {
 	req, err := client.putFloatValidCreateRequest(ctx, arrayBody, options)
@@ -3243,7 +2423,7 @@ func (client *ArrayClient) PutFloatValid(ctx context.Context, arrayBody []*float
 		return ArrayClientPutFloatValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutFloatValidResponse{}, client.putFloatValidHandleError(resp)
+		return ArrayClientPutFloatValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutFloatValidResponse{RawResponse: resp}, nil
 }
@@ -3259,21 +2439,8 @@ func (client *ArrayClient) putFloatValidCreateRequest(ctx context.Context, array
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putFloatValidHandleError handles the PutFloatValid error response.
-func (client *ArrayClient) putFloatValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutIntegerValid - Set array value empty [1, -1, 3, 300]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutIntegerValidOptions contains the optional parameters for the ArrayClient.PutIntegerValid method.
 func (client *ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []*int32, options *ArrayClientPutIntegerValidOptions) (ArrayClientPutIntegerValidResponse, error) {
 	req, err := client.putIntegerValidCreateRequest(ctx, arrayBody, options)
@@ -3285,7 +2452,7 @@ func (client *ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []*int
 		return ArrayClientPutIntegerValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutIntegerValidResponse{}, client.putIntegerValidHandleError(resp)
+		return ArrayClientPutIntegerValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutIntegerValidResponse{RawResponse: resp}, nil
 }
@@ -3301,21 +2468,8 @@ func (client *ArrayClient) putIntegerValidCreateRequest(ctx context.Context, arr
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putIntegerValidHandleError handles the PutIntegerValid error response.
-func (client *ArrayClient) putIntegerValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutLongValid - Set array value empty [1, -1, 3, 300]
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutLongValidOptions contains the optional parameters for the ArrayClient.PutLongValid method.
 func (client *ArrayClient) PutLongValid(ctx context.Context, arrayBody []*int64, options *ArrayClientPutLongValidOptions) (ArrayClientPutLongValidResponse, error) {
 	req, err := client.putLongValidCreateRequest(ctx, arrayBody, options)
@@ -3327,7 +2481,7 @@ func (client *ArrayClient) PutLongValid(ctx context.Context, arrayBody []*int64,
 		return ArrayClientPutLongValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutLongValidResponse{}, client.putLongValidHandleError(resp)
+		return ArrayClientPutLongValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutLongValidResponse{RawResponse: resp}, nil
 }
@@ -3343,21 +2497,8 @@ func (client *ArrayClient) putLongValidCreateRequest(ctx context.Context, arrayB
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putLongValidHandleError handles the PutLongValid error response.
-func (client *ArrayClient) putLongValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutStringEnumValid - Set array value ['foo1', 'foo2', 'foo3']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutStringEnumValidOptions contains the optional parameters for the ArrayClient.PutStringEnumValid
 // method.
 func (client *ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []*Enum1, options *ArrayClientPutStringEnumValidOptions) (ArrayClientPutStringEnumValidResponse, error) {
@@ -3370,7 +2511,7 @@ func (client *ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []*
 		return ArrayClientPutStringEnumValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutStringEnumValidResponse{}, client.putStringEnumValidHandleError(resp)
+		return ArrayClientPutStringEnumValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutStringEnumValidResponse{RawResponse: resp}, nil
 }
@@ -3386,21 +2527,8 @@ func (client *ArrayClient) putStringEnumValidCreateRequest(ctx context.Context, 
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putStringEnumValidHandleError handles the PutStringEnumValid error response.
-func (client *ArrayClient) putStringEnumValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutStringValid - Set array value ['foo1', 'foo2', 'foo3']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutStringValidOptions contains the optional parameters for the ArrayClient.PutStringValid method.
 func (client *ArrayClient) PutStringValid(ctx context.Context, arrayBody []*string, options *ArrayClientPutStringValidOptions) (ArrayClientPutStringValidResponse, error) {
 	req, err := client.putStringValidCreateRequest(ctx, arrayBody, options)
@@ -3412,7 +2540,7 @@ func (client *ArrayClient) PutStringValid(ctx context.Context, arrayBody []*stri
 		return ArrayClientPutStringValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutStringValidResponse{}, client.putStringValidHandleError(resp)
+		return ArrayClientPutStringValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutStringValidResponse{RawResponse: resp}, nil
 }
@@ -3428,21 +2556,8 @@ func (client *ArrayClient) putStringValidCreateRequest(ctx context.Context, arra
 	return req, runtime.MarshalAsJSON(req, arrayBody)
 }
 
-// putStringValidHandleError handles the PutStringValid error response.
-func (client *ArrayClient) putStringValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutUUIDValid - Set array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ArrayClientPutUUIDValidOptions contains the optional parameters for the ArrayClient.PutUUIDValid method.
 func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []*string, options *ArrayClientPutUUIDValidOptions) (ArrayClientPutUUIDValidResponse, error) {
 	req, err := client.putUUIDValidCreateRequest(ctx, arrayBody, options)
@@ -3454,7 +2569,7 @@ func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []*string
 		return ArrayClientPutUUIDValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayClientPutUUIDValidResponse{}, client.putUUIDValidHandleError(resp)
+		return ArrayClientPutUUIDValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ArrayClientPutUUIDValidResponse{RawResponse: resp}, nil
 }
@@ -3468,17 +2583,4 @@ func (client *ArrayClient) putUUIDValidCreateRequest(ctx context.Context, arrayB
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, arrayBody)
-}
-
-// putUUIDValidHandleError handles the PutUUIDValid error response.
-func (client *ArrayClient) putUUIDValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

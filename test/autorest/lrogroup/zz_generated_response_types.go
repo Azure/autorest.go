@@ -38,7 +38,7 @@ func (l LRORetrysClientDelete202Retry200PollerResponse) PollUntilDone(ctx contex
 
 // Resume rehydrates a LRORetrysClientDelete202Retry200PollerResponse from the provided client and resume token.
 func (l *LRORetrysClientDelete202Retry200PollerResponse) Resume(ctx context.Context, client *LRORetrysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.Delete202Retry200", token, client.pl, client.delete202Retry200HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.Delete202Retry200", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -84,7 +84,7 @@ func (l LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse) PollUnti
 // Resume rehydrates a LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse from the provided client and resume
 // token.
 func (l *LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse) Resume(ctx context.Context, client *LRORetrysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.DeleteAsyncRelativeRetrySucceeded", token, client.pl, client.deleteAsyncRelativeRetrySucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.DeleteAsyncRelativeRetrySucceeded", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -130,7 +130,7 @@ func (l LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse) 
 // Resume rehydrates a LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse from the provided client and
 // resume token.
 func (l *LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse) Resume(ctx context.Context, client *LRORetrysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.DeleteProvisioning202Accepted200Succeeded", token, client.pl, client.deleteProvisioning202Accepted200SucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.DeleteProvisioning202Accepted200Succeeded", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -181,7 +181,7 @@ func (l LRORetrysClientPost202Retry200PollerResponse) PollUntilDone(ctx context.
 
 // Resume rehydrates a LRORetrysClientPost202Retry200PollerResponse from the provided client and resume token.
 func (l *LRORetrysClientPost202Retry200PollerResponse) Resume(ctx context.Context, client *LRORetrysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.Post202Retry200", token, client.pl, client.post202Retry200HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.Post202Retry200", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -226,7 +226,7 @@ func (l LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse) PollUntilD
 
 // Resume rehydrates a LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse from the provided client and resume token.
 func (l *LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse) Resume(ctx context.Context, client *LRORetrysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.PostAsyncRelativeRetrySucceeded", token, client.pl, client.postAsyncRelativeRetrySucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.PostAsyncRelativeRetrySucceeded", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -271,7 +271,7 @@ func (l LRORetrysClientPut201CreatingSucceeded200PollerResponse) PollUntilDone(c
 
 // Resume rehydrates a LRORetrysClientPut201CreatingSucceeded200PollerResponse from the provided client and resume token.
 func (l *LRORetrysClientPut201CreatingSucceeded200PollerResponse) Resume(ctx context.Context, client *LRORetrysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.Put201CreatingSucceeded200", token, client.pl, client.put201CreatingSucceeded200HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.Put201CreatingSucceeded200", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -322,7 +322,7 @@ func (l LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse) PollUntilDo
 
 // Resume rehydrates a LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse from the provided client and resume token.
 func (l *LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse) Resume(ctx context.Context, client *LRORetrysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.PutAsyncRelativeRetrySucceeded", token, client.pl, client.putAsyncRelativeRetrySucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LRORetrysClient.PutAsyncRelativeRetrySucceeded", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -373,7 +373,7 @@ func (l LROSADsClientDelete202NonRetry400PollerResponse) PollUntilDone(ctx conte
 
 // Resume rehydrates a LROSADsClientDelete202NonRetry400PollerResponse from the provided client and resume token.
 func (l *LROSADsClientDelete202NonRetry400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Delete202NonRetry400", token, client.pl, client.delete202NonRetry400HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Delete202NonRetry400", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -418,7 +418,7 @@ func (l LROSADsClientDelete202RetryInvalidHeaderPollerResponse) PollUntilDone(ct
 
 // Resume rehydrates a LROSADsClientDelete202RetryInvalidHeaderPollerResponse from the provided client and resume token.
 func (l *LROSADsClientDelete202RetryInvalidHeaderPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Delete202RetryInvalidHeader", token, client.pl, client.delete202RetryInvalidHeaderHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Delete202RetryInvalidHeader", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -463,7 +463,7 @@ func (l LROSADsClientDelete204SucceededPollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a LROSADsClientDelete204SucceededPollerResponse from the provided client and resume token.
 func (l *LROSADsClientDelete204SucceededPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Delete204Succeeded", token, client.pl, client.delete204SucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Delete204Succeeded", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -508,7 +508,7 @@ func (l LROSADsClientDeleteAsyncRelativeRetry400PollerResponse) PollUntilDone(ct
 
 // Resume rehydrates a LROSADsClientDeleteAsyncRelativeRetry400PollerResponse from the provided client and resume token.
 func (l *LROSADsClientDeleteAsyncRelativeRetry400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetry400", token, client.pl, client.deleteAsyncRelativeRetry400HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetry400", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -554,7 +554,7 @@ func (l LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderPollerResponse) PollUn
 // Resume rehydrates a LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderPollerResponse from the provided client and resume
 // token.
 func (l *LROSADsClientDeleteAsyncRelativeRetryInvalidHeaderPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetryInvalidHeader", token, client.pl, client.deleteAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetryInvalidHeader", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -600,7 +600,7 @@ func (l LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse) P
 // Resume rehydrates a LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse from the provided client and
 // resume token.
 func (l *LROSADsClientDeleteAsyncRelativeRetryInvalidJSONPollingPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetryInvalidJSONPolling", token, client.pl, client.deleteAsyncRelativeRetryInvalidJSONPollingHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetryInvalidJSONPolling", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -645,7 +645,7 @@ func (l LROSADsClientDeleteAsyncRelativeRetryNoStatusPollerResponse) PollUntilDo
 
 // Resume rehydrates a LROSADsClientDeleteAsyncRelativeRetryNoStatusPollerResponse from the provided client and resume token.
 func (l *LROSADsClientDeleteAsyncRelativeRetryNoStatusPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetryNoStatus", token, client.pl, client.deleteAsyncRelativeRetryNoStatusHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.DeleteAsyncRelativeRetryNoStatus", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -690,7 +690,7 @@ func (l LROSADsClientDeleteNonRetry400PollerResponse) PollUntilDone(ctx context.
 
 // Resume rehydrates a LROSADsClientDeleteNonRetry400PollerResponse from the provided client and resume token.
 func (l *LROSADsClientDeleteNonRetry400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.DeleteNonRetry400", token, client.pl, client.deleteNonRetry400HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.DeleteNonRetry400", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -735,7 +735,7 @@ func (l LROSADsClientPost202NoLocationPollerResponse) PollUntilDone(ctx context.
 
 // Resume rehydrates a LROSADsClientPost202NoLocationPollerResponse from the provided client and resume token.
 func (l *LROSADsClientPost202NoLocationPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Post202NoLocation", token, client.pl, client.post202NoLocationHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Post202NoLocation", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -780,7 +780,7 @@ func (l LROSADsClientPost202NonRetry400PollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a LROSADsClientPost202NonRetry400PollerResponse from the provided client and resume token.
 func (l *LROSADsClientPost202NonRetry400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Post202NonRetry400", token, client.pl, client.post202NonRetry400HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Post202NonRetry400", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -825,7 +825,7 @@ func (l LROSADsClientPost202RetryInvalidHeaderPollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a LROSADsClientPost202RetryInvalidHeaderPollerResponse from the provided client and resume token.
 func (l *LROSADsClientPost202RetryInvalidHeaderPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Post202RetryInvalidHeader", token, client.pl, client.post202RetryInvalidHeaderHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Post202RetryInvalidHeader", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -870,7 +870,7 @@ func (l LROSADsClientPostAsyncRelativeRetry400PollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a LROSADsClientPostAsyncRelativeRetry400PollerResponse from the provided client and resume token.
 func (l *LROSADsClientPostAsyncRelativeRetry400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetry400", token, client.pl, client.postAsyncRelativeRetry400HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetry400", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -916,7 +916,7 @@ func (l LROSADsClientPostAsyncRelativeRetryInvalidHeaderPollerResponse) PollUnti
 // Resume rehydrates a LROSADsClientPostAsyncRelativeRetryInvalidHeaderPollerResponse from the provided client and resume
 // token.
 func (l *LROSADsClientPostAsyncRelativeRetryInvalidHeaderPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetryInvalidHeader", token, client.pl, client.postAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetryInvalidHeader", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -962,7 +962,7 @@ func (l LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingPollerResponse) Pol
 // Resume rehydrates a LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingPollerResponse from the provided client and resume
 // token.
 func (l *LROSADsClientPostAsyncRelativeRetryInvalidJSONPollingPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetryInvalidJSONPolling", token, client.pl, client.postAsyncRelativeRetryInvalidJSONPollingHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetryInvalidJSONPolling", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1007,7 +1007,7 @@ func (l LROSADsClientPostAsyncRelativeRetryNoPayloadPollerResponse) PollUntilDon
 
 // Resume rehydrates a LROSADsClientPostAsyncRelativeRetryNoPayloadPollerResponse from the provided client and resume token.
 func (l *LROSADsClientPostAsyncRelativeRetryNoPayloadPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetryNoPayload", token, client.pl, client.postAsyncRelativeRetryNoPayloadHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PostAsyncRelativeRetryNoPayload", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1052,7 +1052,7 @@ func (l LROSADsClientPostNonRetry400PollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a LROSADsClientPostNonRetry400PollerResponse from the provided client and resume token.
 func (l *LROSADsClientPostNonRetry400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PostNonRetry400", token, client.pl, client.postNonRetry400HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PostNonRetry400", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1097,7 +1097,7 @@ func (l LROSADsClientPut200InvalidJSONPollerResponse) PollUntilDone(ctx context.
 
 // Resume rehydrates a LROSADsClientPut200InvalidJSONPollerResponse from the provided client and resume token.
 func (l *LROSADsClientPut200InvalidJSONPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Put200InvalidJSON", token, client.pl, client.put200InvalidJSONHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.Put200InvalidJSON", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1148,7 +1148,7 @@ func (l LROSADsClientPutAsyncRelativeRetry400PollerResponse) PollUntilDone(ctx c
 
 // Resume rehydrates a LROSADsClientPutAsyncRelativeRetry400PollerResponse from the provided client and resume token.
 func (l *LROSADsClientPutAsyncRelativeRetry400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetry400", token, client.pl, client.putAsyncRelativeRetry400HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetry400", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1199,7 +1199,7 @@ func (l LROSADsClientPutAsyncRelativeRetryInvalidHeaderPollerResponse) PollUntil
 
 // Resume rehydrates a LROSADsClientPutAsyncRelativeRetryInvalidHeaderPollerResponse from the provided client and resume token.
 func (l *LROSADsClientPutAsyncRelativeRetryInvalidHeaderPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryInvalidHeader", token, client.pl, client.putAsyncRelativeRetryInvalidHeaderHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryInvalidHeader", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1251,7 +1251,7 @@ func (l LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPollerResponse) Poll
 // Resume rehydrates a LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPollerResponse from the provided client and resume
 // token.
 func (l *LROSADsClientPutAsyncRelativeRetryInvalidJSONPollingPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling", token, client.pl, client.putAsyncRelativeRetryInvalidJSONPollingHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryInvalidJSONPolling", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1303,7 +1303,7 @@ func (l LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPollerResponse) PollUnt
 // Resume rehydrates a LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPollerResponse from the provided client and resume
 // token.
 func (l *LROSADsClientPutAsyncRelativeRetryNoStatusPayloadPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryNoStatusPayload", token, client.pl, client.putAsyncRelativeRetryNoStatusPayloadHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryNoStatusPayload", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1354,7 +1354,7 @@ func (l LROSADsClientPutAsyncRelativeRetryNoStatusPollerResponse) PollUntilDone(
 
 // Resume rehydrates a LROSADsClientPutAsyncRelativeRetryNoStatusPollerResponse from the provided client and resume token.
 func (l *LROSADsClientPutAsyncRelativeRetryNoStatusPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryNoStatus", token, client.pl, client.putAsyncRelativeRetryNoStatusHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutAsyncRelativeRetryNoStatus", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1406,7 +1406,7 @@ func (l LROSADsClientPutError201NoProvisioningStatePayloadPollerResponse) PollUn
 // Resume rehydrates a LROSADsClientPutError201NoProvisioningStatePayloadPollerResponse from the provided client and resume
 // token.
 func (l *LROSADsClientPutError201NoProvisioningStatePayloadPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutError201NoProvisioningStatePayload", token, client.pl, client.putError201NoProvisioningStatePayloadHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutError201NoProvisioningStatePayload", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1458,7 +1458,7 @@ func (l LROSADsClientPutNonRetry201Creating400InvalidJSONPollerResponse) PollUnt
 // Resume rehydrates a LROSADsClientPutNonRetry201Creating400InvalidJSONPollerResponse from the provided client and resume
 // token.
 func (l *LROSADsClientPutNonRetry201Creating400InvalidJSONPollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutNonRetry201Creating400InvalidJSON", token, client.pl, client.putNonRetry201Creating400InvalidJSONHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutNonRetry201Creating400InvalidJSON", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1509,7 +1509,7 @@ func (l LROSADsClientPutNonRetry201Creating400PollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a LROSADsClientPutNonRetry201Creating400PollerResponse from the provided client and resume token.
 func (l *LROSADsClientPutNonRetry201Creating400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutNonRetry201Creating400", token, client.pl, client.putNonRetry201Creating400HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutNonRetry201Creating400", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1560,7 +1560,7 @@ func (l LROSADsClientPutNonRetry400PollerResponse) PollUntilDone(ctx context.Con
 
 // Resume rehydrates a LROSADsClientPutNonRetry400PollerResponse from the provided client and resume token.
 func (l *LROSADsClientPutNonRetry400PollerResponse) Resume(ctx context.Context, client *LROSADsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutNonRetry400", token, client.pl, client.putNonRetry400HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROSADsClient.PutNonRetry400", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1611,7 +1611,7 @@ func (l LROsClientDelete202NoRetry204PollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a LROsClientDelete202NoRetry204PollerResponse from the provided client and resume token.
 func (l *LROsClientDelete202NoRetry204PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Delete202NoRetry204", token, client.pl, client.delete202NoRetry204HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Delete202NoRetry204", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1662,7 +1662,7 @@ func (l LROsClientDelete202Retry200PollerResponse) PollUntilDone(ctx context.Con
 
 // Resume rehydrates a LROsClientDelete202Retry200PollerResponse from the provided client and resume token.
 func (l *LROsClientDelete202Retry200PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Delete202Retry200", token, client.pl, client.delete202Retry200HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Delete202Retry200", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1713,7 +1713,7 @@ func (l LROsClientDelete204SucceededPollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a LROsClientDelete204SucceededPollerResponse from the provided client and resume token.
 func (l *LROsClientDelete204SucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Delete204Succeeded", token, client.pl, client.delete204SucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Delete204Succeeded", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1758,7 +1758,7 @@ func (l LROsClientDeleteAsyncNoHeaderInRetryPollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a LROsClientDeleteAsyncNoHeaderInRetryPollerResponse from the provided client and resume token.
 func (l *LROsClientDeleteAsyncNoHeaderInRetryPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteAsyncNoHeaderInRetry", token, client.pl, client.deleteAsyncNoHeaderInRetryHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteAsyncNoHeaderInRetry", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1803,7 +1803,7 @@ func (l LROsClientDeleteAsyncNoRetrySucceededPollerResponse) PollUntilDone(ctx c
 
 // Resume rehydrates a LROsClientDeleteAsyncNoRetrySucceededPollerResponse from the provided client and resume token.
 func (l *LROsClientDeleteAsyncNoRetrySucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteAsyncNoRetrySucceeded", token, client.pl, client.deleteAsyncNoRetrySucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteAsyncNoRetrySucceeded", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1848,7 +1848,7 @@ func (l LROsClientDeleteAsyncRetryFailedPollerResponse) PollUntilDone(ctx contex
 
 // Resume rehydrates a LROsClientDeleteAsyncRetryFailedPollerResponse from the provided client and resume token.
 func (l *LROsClientDeleteAsyncRetryFailedPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteAsyncRetryFailed", token, client.pl, client.deleteAsyncRetryFailedHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteAsyncRetryFailed", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1893,7 +1893,7 @@ func (l LROsClientDeleteAsyncRetrySucceededPollerResponse) PollUntilDone(ctx con
 
 // Resume rehydrates a LROsClientDeleteAsyncRetrySucceededPollerResponse from the provided client and resume token.
 func (l *LROsClientDeleteAsyncRetrySucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteAsyncRetrySucceeded", token, client.pl, client.deleteAsyncRetrySucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteAsyncRetrySucceeded", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1938,7 +1938,7 @@ func (l LROsClientDeleteAsyncRetrycanceledPollerResponse) PollUntilDone(ctx cont
 
 // Resume rehydrates a LROsClientDeleteAsyncRetrycanceledPollerResponse from the provided client and resume token.
 func (l *LROsClientDeleteAsyncRetrycanceledPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteAsyncRetrycanceled", token, client.pl, client.deleteAsyncRetrycanceledHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteAsyncRetrycanceled", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1983,7 +1983,7 @@ func (l LROsClientDeleteNoHeaderInRetryPollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a LROsClientDeleteNoHeaderInRetryPollerResponse from the provided client and resume token.
 func (l *LROsClientDeleteNoHeaderInRetryPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteNoHeaderInRetry", token, client.pl, client.deleteNoHeaderInRetryHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteNoHeaderInRetry", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2029,7 +2029,7 @@ func (l LROsClientDeleteProvisioning202Accepted200SucceededPollerResponse) PollU
 // Resume rehydrates a LROsClientDeleteProvisioning202Accepted200SucceededPollerResponse from the provided client and resume
 // token.
 func (l *LROsClientDeleteProvisioning202Accepted200SucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteProvisioning202Accepted200Succeeded", token, client.pl, client.deleteProvisioning202Accepted200SucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteProvisioning202Accepted200Succeeded", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2081,7 +2081,7 @@ func (l LROsClientDeleteProvisioning202DeletingFailed200PollerResponse) PollUnti
 // Resume rehydrates a LROsClientDeleteProvisioning202DeletingFailed200PollerResponse from the provided client and resume
 // token.
 func (l *LROsClientDeleteProvisioning202DeletingFailed200PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteProvisioning202DeletingFailed200", token, client.pl, client.deleteProvisioning202DeletingFailed200HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteProvisioning202DeletingFailed200", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2133,7 +2133,7 @@ func (l LROsClientDeleteProvisioning202Deletingcanceled200PollerResponse) PollUn
 // Resume rehydrates a LROsClientDeleteProvisioning202Deletingcanceled200PollerResponse from the provided client and resume
 // token.
 func (l *LROsClientDeleteProvisioning202Deletingcanceled200PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteProvisioning202Deletingcanceled200", token, client.pl, client.deleteProvisioning202Deletingcanceled200HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.DeleteProvisioning202Deletingcanceled200", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2184,7 +2184,7 @@ func (l LROsClientPatch200SucceededIgnoreHeadersPollerResponse) PollUntilDone(ct
 
 // Resume rehydrates a LROsClientPatch200SucceededIgnoreHeadersPollerResponse from the provided client and resume token.
 func (l *LROsClientPatch200SucceededIgnoreHeadersPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Patch200SucceededIgnoreHeaders", token, client.pl, client.patch200SucceededIgnoreHeadersHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Patch200SucceededIgnoreHeaders", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2235,7 +2235,7 @@ func (l LROsClientPost200WithPayloadPollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a LROsClientPost200WithPayloadPollerResponse from the provided client and resume token.
 func (l *LROsClientPost200WithPayloadPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Post200WithPayload", token, client.pl, client.post200WithPayloadHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Post200WithPayload", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2286,7 +2286,7 @@ func (l LROsClientPost202ListPollerResponse) PollUntilDone(ctx context.Context, 
 
 // Resume rehydrates a LROsClientPost202ListPollerResponse from the provided client and resume token.
 func (l *LROsClientPost202ListPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Post202List", token, client.pl, client.post202ListHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Post202List", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2338,7 +2338,7 @@ func (l LROsClientPost202NoRetry204PollerResponse) PollUntilDone(ctx context.Con
 
 // Resume rehydrates a LROsClientPost202NoRetry204PollerResponse from the provided client and resume token.
 func (l *LROsClientPost202NoRetry204PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Post202NoRetry204", token, client.pl, client.post202NoRetry204HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Post202NoRetry204", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2389,7 +2389,7 @@ func (l LROsClientPost202Retry200PollerResponse) PollUntilDone(ctx context.Conte
 
 // Resume rehydrates a LROsClientPost202Retry200PollerResponse from the provided client and resume token.
 func (l *LROsClientPost202Retry200PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Post202Retry200", token, client.pl, client.post202Retry200HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Post202Retry200", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2434,7 +2434,7 @@ func (l LROsClientPostAsyncNoRetrySucceededPollerResponse) PollUntilDone(ctx con
 
 // Resume rehydrates a LROsClientPostAsyncNoRetrySucceededPollerResponse from the provided client and resume token.
 func (l *LROsClientPostAsyncNoRetrySucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostAsyncNoRetrySucceeded", token, client.pl, client.postAsyncNoRetrySucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostAsyncNoRetrySucceeded", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2485,7 +2485,7 @@ func (l LROsClientPostAsyncRetryFailedPollerResponse) PollUntilDone(ctx context.
 
 // Resume rehydrates a LROsClientPostAsyncRetryFailedPollerResponse from the provided client and resume token.
 func (l *LROsClientPostAsyncRetryFailedPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostAsyncRetryFailed", token, client.pl, client.postAsyncRetryFailedHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostAsyncRetryFailed", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2530,7 +2530,7 @@ func (l LROsClientPostAsyncRetrySucceededPollerResponse) PollUntilDone(ctx conte
 
 // Resume rehydrates a LROsClientPostAsyncRetrySucceededPollerResponse from the provided client and resume token.
 func (l *LROsClientPostAsyncRetrySucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostAsyncRetrySucceeded", token, client.pl, client.postAsyncRetrySucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostAsyncRetrySucceeded", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2581,7 +2581,7 @@ func (l LROsClientPostAsyncRetrycanceledPollerResponse) PollUntilDone(ctx contex
 
 // Resume rehydrates a LROsClientPostAsyncRetrycanceledPollerResponse from the provided client and resume token.
 func (l *LROsClientPostAsyncRetrycanceledPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostAsyncRetrycanceled", token, client.pl, client.postAsyncRetrycanceledHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostAsyncRetrycanceled", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2627,7 +2627,7 @@ func (l LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse) Pol
 // Resume rehydrates a LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse from the provided client and resume
 // token.
 func (l *LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostDoubleHeadersFinalAzureHeaderGetDefault", token, client.pl, client.postDoubleHeadersFinalAzureHeaderGetDefaultHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostDoubleHeadersFinalAzureHeaderGetDefault", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2678,7 +2678,7 @@ func (l LROsClientPostDoubleHeadersFinalAzureHeaderGetPollerResponse) PollUntilD
 
 // Resume rehydrates a LROsClientPostDoubleHeadersFinalAzureHeaderGetPollerResponse from the provided client and resume token.
 func (l *LROsClientPostDoubleHeadersFinalAzureHeaderGetPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostDoubleHeadersFinalAzureHeaderGet", token, client.pl, client.postDoubleHeadersFinalAzureHeaderGetHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostDoubleHeadersFinalAzureHeaderGet", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2729,7 +2729,7 @@ func (l LROsClientPostDoubleHeadersFinalLocationGetPollerResponse) PollUntilDone
 
 // Resume rehydrates a LROsClientPostDoubleHeadersFinalLocationGetPollerResponse from the provided client and resume token.
 func (l *LROsClientPostDoubleHeadersFinalLocationGetPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostDoubleHeadersFinalLocationGet", token, client.pl, client.postDoubleHeadersFinalLocationGetHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PostDoubleHeadersFinalLocationGet", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2780,7 +2780,7 @@ func (l LROsClientPut200Acceptedcanceled200PollerResponse) PollUntilDone(ctx con
 
 // Resume rehydrates a LROsClientPut200Acceptedcanceled200PollerResponse from the provided client and resume token.
 func (l *LROsClientPut200Acceptedcanceled200PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put200Acceptedcanceled200", token, client.pl, client.put200Acceptedcanceled200HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put200Acceptedcanceled200", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2831,7 +2831,7 @@ func (l LROsClientPut200SucceededNoStatePollerResponse) PollUntilDone(ctx contex
 
 // Resume rehydrates a LROsClientPut200SucceededNoStatePollerResponse from the provided client and resume token.
 func (l *LROsClientPut200SucceededNoStatePollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put200SucceededNoState", token, client.pl, client.put200SucceededNoStateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put200SucceededNoState", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2882,7 +2882,7 @@ func (l LROsClientPut200SucceededPollerResponse) PollUntilDone(ctx context.Conte
 
 // Resume rehydrates a LROsClientPut200SucceededPollerResponse from the provided client and resume token.
 func (l *LROsClientPut200SucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put200Succeeded", token, client.pl, client.put200SucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put200Succeeded", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2933,7 +2933,7 @@ func (l LROsClientPut200UpdatingSucceeded204PollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a LROsClientPut200UpdatingSucceeded204PollerResponse from the provided client and resume token.
 func (l *LROsClientPut200UpdatingSucceeded204PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put200UpdatingSucceeded204", token, client.pl, client.put200UpdatingSucceeded204HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put200UpdatingSucceeded204", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2984,7 +2984,7 @@ func (l LROsClientPut201CreatingFailed200PollerResponse) PollUntilDone(ctx conte
 
 // Resume rehydrates a LROsClientPut201CreatingFailed200PollerResponse from the provided client and resume token.
 func (l *LROsClientPut201CreatingFailed200PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put201CreatingFailed200", token, client.pl, client.put201CreatingFailed200HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put201CreatingFailed200", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3035,7 +3035,7 @@ func (l LROsClientPut201CreatingSucceeded200PollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a LROsClientPut201CreatingSucceeded200PollerResponse from the provided client and resume token.
 func (l *LROsClientPut201CreatingSucceeded200PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put201CreatingSucceeded200", token, client.pl, client.put201CreatingSucceeded200HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put201CreatingSucceeded200", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3086,7 +3086,7 @@ func (l LROsClientPut201SucceededPollerResponse) PollUntilDone(ctx context.Conte
 
 // Resume rehydrates a LROsClientPut201SucceededPollerResponse from the provided client and resume token.
 func (l *LROsClientPut201SucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put201Succeeded", token, client.pl, client.put201SucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put201Succeeded", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3137,7 +3137,7 @@ func (l LROsClientPut202Retry200PollerResponse) PollUntilDone(ctx context.Contex
 
 // Resume rehydrates a LROsClientPut202Retry200PollerResponse from the provided client and resume token.
 func (l *LROsClientPut202Retry200PollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put202Retry200", token, client.pl, client.put202Retry200HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.Put202Retry200", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3188,7 +3188,7 @@ func (l LROsClientPutAsyncNoHeaderInRetryPollerResponse) PollUntilDone(ctx conte
 
 // Resume rehydrates a LROsClientPutAsyncNoHeaderInRetryPollerResponse from the provided client and resume token.
 func (l *LROsClientPutAsyncNoHeaderInRetryPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncNoHeaderInRetry", token, client.pl, client.putAsyncNoHeaderInRetryHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncNoHeaderInRetry", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3239,7 +3239,7 @@ func (l LROsClientPutAsyncNoRetrySucceededPollerResponse) PollUntilDone(ctx cont
 
 // Resume rehydrates a LROsClientPutAsyncNoRetrySucceededPollerResponse from the provided client and resume token.
 func (l *LROsClientPutAsyncNoRetrySucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncNoRetrySucceeded", token, client.pl, client.putAsyncNoRetrySucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncNoRetrySucceeded", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3290,7 +3290,7 @@ func (l LROsClientPutAsyncNoRetrycanceledPollerResponse) PollUntilDone(ctx conte
 
 // Resume rehydrates a LROsClientPutAsyncNoRetrycanceledPollerResponse from the provided client and resume token.
 func (l *LROsClientPutAsyncNoRetrycanceledPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncNoRetrycanceled", token, client.pl, client.putAsyncNoRetrycanceledHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncNoRetrycanceled", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3341,7 +3341,7 @@ func (l LROsClientPutAsyncNonResourcePollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a LROsClientPutAsyncNonResourcePollerResponse from the provided client and resume token.
 func (l *LROsClientPutAsyncNonResourcePollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncNonResource", token, client.pl, client.putAsyncNonResourceHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncNonResource", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3392,7 +3392,7 @@ func (l LROsClientPutAsyncRetryFailedPollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a LROsClientPutAsyncRetryFailedPollerResponse from the provided client and resume token.
 func (l *LROsClientPutAsyncRetryFailedPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncRetryFailed", token, client.pl, client.putAsyncRetryFailedHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncRetryFailed", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3443,7 +3443,7 @@ func (l LROsClientPutAsyncRetrySucceededPollerResponse) PollUntilDone(ctx contex
 
 // Resume rehydrates a LROsClientPutAsyncRetrySucceededPollerResponse from the provided client and resume token.
 func (l *LROsClientPutAsyncRetrySucceededPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncRetrySucceeded", token, client.pl, client.putAsyncRetrySucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncRetrySucceeded", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3494,7 +3494,7 @@ func (l LROsClientPutAsyncSubResourcePollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a LROsClientPutAsyncSubResourcePollerResponse from the provided client and resume token.
 func (l *LROsClientPutAsyncSubResourcePollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncSubResource", token, client.pl, client.putAsyncSubResourceHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutAsyncSubResource", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3545,7 +3545,7 @@ func (l LROsClientPutNoHeaderInRetryPollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a LROsClientPutNoHeaderInRetryPollerResponse from the provided client and resume token.
 func (l *LROsClientPutNoHeaderInRetryPollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutNoHeaderInRetry", token, client.pl, client.putNoHeaderInRetryHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutNoHeaderInRetry", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3596,7 +3596,7 @@ func (l LROsClientPutNonResourcePollerResponse) PollUntilDone(ctx context.Contex
 
 // Resume rehydrates a LROsClientPutNonResourcePollerResponse from the provided client and resume token.
 func (l *LROsClientPutNonResourcePollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutNonResource", token, client.pl, client.putNonResourceHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutNonResource", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3647,7 +3647,7 @@ func (l LROsClientPutSubResourcePollerResponse) PollUntilDone(ctx context.Contex
 
 // Resume rehydrates a LROsClientPutSubResourcePollerResponse from the provided client and resume token.
 func (l *LROsClientPutSubResourcePollerResponse) Resume(ctx context.Context, client *LROsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutSubResource", token, client.pl, client.putSubResourceHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsClient.PutSubResource", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3698,7 +3698,7 @@ func (l LROsCustomHeaderClientPost202Retry200PollerResponse) PollUntilDone(ctx c
 
 // Resume rehydrates a LROsCustomHeaderClientPost202Retry200PollerResponse from the provided client and resume token.
 func (l *LROsCustomHeaderClientPost202Retry200PollerResponse) Resume(ctx context.Context, client *LROsCustomHeaderClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsCustomHeaderClient.Post202Retry200", token, client.pl, client.post202Retry200HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsCustomHeaderClient.Post202Retry200", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3743,7 +3743,7 @@ func (l LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse) PollUntilDo
 
 // Resume rehydrates a LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse from the provided client and resume token.
 func (l *LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse) Resume(ctx context.Context, client *LROsCustomHeaderClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsCustomHeaderClient.PostAsyncRetrySucceeded", token, client.pl, client.postAsyncRetrySucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsCustomHeaderClient.PostAsyncRetrySucceeded", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3789,7 +3789,7 @@ func (l LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse) PollUnti
 // Resume rehydrates a LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse from the provided client and resume
 // token.
 func (l *LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse) Resume(ctx context.Context, client *LROsCustomHeaderClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsCustomHeaderClient.Put201CreatingSucceeded200", token, client.pl, client.put201CreatingSucceeded200HandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsCustomHeaderClient.Put201CreatingSucceeded200", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3840,7 +3840,7 @@ func (l LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse) PollUntilDon
 
 // Resume rehydrates a LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse from the provided client and resume token.
 func (l *LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse) Resume(ctx context.Context, client *LROsCustomHeaderClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LROsCustomHeaderClient.PutAsyncRetrySucceeded", token, client.pl, client.putAsyncRetrySucceededHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LROsCustomHeaderClient.PutAsyncRetrySucceeded", token, client.pl)
 	if err != nil {
 		return err
 	}

@@ -11,7 +11,6 @@ package armdataboxedge
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -39,19 +38,19 @@ func NewOrdersClient(subscriptionID string, credential azcore.TokenCredential, o
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &OrdersClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates an order.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The order details of a device.
 // resourceGroupName - The resource group name.
 // order - The order to be created or updated.
@@ -65,7 +64,7 @@ func (client *OrdersClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 	result := OrdersClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("OrdersClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("OrdersClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return OrdersClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -76,7 +75,7 @@ func (client *OrdersClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 }
 
 // CreateOrUpdate - Creates or updates an order.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *OrdersClient) createOrUpdate(ctx context.Context, deviceName string, resourceGroupName string, order Order, options *OrdersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, resourceGroupName, order, options)
 	if err != nil {
@@ -87,7 +86,7 @@ func (client *OrdersClient) createOrUpdate(ctx context.Context, deviceName strin
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -118,21 +117,8 @@ func (client *OrdersClient) createOrUpdateCreateRequest(ctx context.Context, dev
 	return req, runtime.MarshalAsJSON(req, order)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *OrdersClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the order related to the device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - OrdersClientBeginDeleteOptions contains the optional parameters for the OrdersClient.BeginDelete method.
@@ -144,7 +130,7 @@ func (client *OrdersClient) BeginDelete(ctx context.Context, deviceName string, 
 	result := OrdersClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("OrdersClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("OrdersClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return OrdersClientDeletePollerResponse{}, err
 	}
@@ -155,7 +141,7 @@ func (client *OrdersClient) BeginDelete(ctx context.Context, deviceName string, 
 }
 
 // Delete - Deletes the order related to the device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *OrdersClient) deleteOperation(ctx context.Context, deviceName string, resourceGroupName string, options *OrdersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -166,7 +152,7 @@ func (client *OrdersClient) deleteOperation(ctx context.Context, deviceName stri
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -197,21 +183,8 @@ func (client *OrdersClient) deleteCreateRequest(ctx context.Context, deviceName 
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *OrdersClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets a specific order by name.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - OrdersClientGetOptions contains the optional parameters for the OrdersClient.Get method.
@@ -225,7 +198,7 @@ func (client *OrdersClient) Get(ctx context.Context, deviceName string, resource
 		return OrdersClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return OrdersClientGetResponse{}, client.getHandleError(resp)
+		return OrdersClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -260,26 +233,13 @@ func (client *OrdersClient) getCreateRequest(ctx context.Context, deviceName str
 func (client *OrdersClient) getHandleResponse(resp *http.Response) (OrdersClientGetResponse, error) {
 	result := OrdersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Order); err != nil {
-		return OrdersClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return OrdersClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *OrdersClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByDataBoxEdgeDevice - Lists all the orders related to a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - OrdersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the OrdersClient.ListByDataBoxEdgeDevice
@@ -326,26 +286,13 @@ func (client *OrdersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Con
 func (client *OrdersClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (OrdersClientListByDataBoxEdgeDeviceResponse, error) {
 	result := OrdersClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.OrderList); err != nil {
-		return OrdersClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
+		return OrdersClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listByDataBoxEdgeDeviceHandleError handles the ListByDataBoxEdgeDevice error response.
-func (client *OrdersClient) listByDataBoxEdgeDeviceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListDCAccessCode - Gets the DCAccess Code
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name
 // resourceGroupName - The resource group name.
 // options - OrdersClientListDCAccessCodeOptions contains the optional parameters for the OrdersClient.ListDCAccessCode method.
@@ -359,7 +306,7 @@ func (client *OrdersClient) ListDCAccessCode(ctx context.Context, deviceName str
 		return OrdersClientListDCAccessCodeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return OrdersClientListDCAccessCodeResponse{}, client.listDCAccessCodeHandleError(resp)
+		return OrdersClientListDCAccessCodeResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listDCAccessCodeHandleResponse(resp)
 }
@@ -394,20 +341,7 @@ func (client *OrdersClient) listDCAccessCodeCreateRequest(ctx context.Context, d
 func (client *OrdersClient) listDCAccessCodeHandleResponse(resp *http.Response) (OrdersClientListDCAccessCodeResponse, error) {
 	result := OrdersClientListDCAccessCodeResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DCAccessCode); err != nil {
-		return OrdersClientListDCAccessCodeResponse{}, runtime.NewResponseError(err, resp)
+		return OrdersClientListDCAccessCodeResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listDCAccessCodeHandleError handles the ListDCAccessCode error response.
-func (client *OrdersClient) listDCAccessCodeHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

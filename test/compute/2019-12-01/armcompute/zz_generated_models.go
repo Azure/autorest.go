@@ -325,17 +325,9 @@ type BootDiagnosticsInstanceView struct {
 }
 
 // CloudError - An error response from the Compute service.
-// Implements the error and azcore.HTTPResponse interfaces.
 type CloudError struct {
-	raw string
 	// Api error.
-	InnerError *APIError `json:"error,omitempty"`
-}
-
-// Error implements the error interface for type CloudError.
-// The contents of the error text are not contractual and subject to change.
-func (e CloudError) Error() string {
-	return e.raw
+	Error *APIError `json:"error,omitempty"`
 }
 
 // ContainerService - Container service.

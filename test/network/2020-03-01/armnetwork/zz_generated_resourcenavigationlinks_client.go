@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewResourceNavigationLinksClient(subscriptionID string, credential azcore.T
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ResourceNavigationLinksClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // List - Gets a list of resource navigation links for a subnet.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // subnetName - The name of the subnet.
@@ -68,7 +67,7 @@ func (client *ResourceNavigationLinksClient) List(ctx context.Context, resourceG
 		return ResourceNavigationLinksClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ResourceNavigationLinksClientListResponse{}, client.listHandleError(resp)
+		return ResourceNavigationLinksClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -107,20 +106,7 @@ func (client *ResourceNavigationLinksClient) listCreateRequest(ctx context.Conte
 func (client *ResourceNavigationLinksClient) listHandleResponse(resp *http.Response) (ResourceNavigationLinksClientListResponse, error) {
 	result := ResourceNavigationLinksClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ResourceNavigationLinksListResult); err != nil {
-		return ResourceNavigationLinksClientListResponse{}, runtime.NewResponseError(err, resp)
+		return ResourceNavigationLinksClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *ResourceNavigationLinksClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

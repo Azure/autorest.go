@@ -11,7 +11,6 @@ package azartifacts
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -36,7 +35,7 @@ func newLinkedServiceClient(endpoint string, pl runtime.Pipeline) *linkedService
 }
 
 // BeginCreateOrUpdateLinkedService - Creates or updates a linked service.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // linkedServiceName - The linked service name.
 // linkedService - Linked service resource definition.
 // options - linkedServiceClientBeginCreateOrUpdateLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginCreateOrUpdateLinkedService
@@ -49,7 +48,7 @@ func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.
 	result := linkedServiceClientCreateOrUpdateLinkedServicePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("linkedServiceClient.CreateOrUpdateLinkedService", resp, client.pl, client.createOrUpdateLinkedServiceHandleError)
+	pt, err := runtime.NewPoller("linkedServiceClient.CreateOrUpdateLinkedService", resp, client.pl)
 	if err != nil {
 		return linkedServiceClientCreateOrUpdateLinkedServicePollerResponse{}, err
 	}
@@ -60,7 +59,7 @@ func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.
 }
 
 // CreateOrUpdateLinkedService - Creates or updates a linked service.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *linkedServiceClient) createOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *linkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateLinkedServiceCreateRequest(ctx, linkedServiceName, linkedService, options)
 	if err != nil {
@@ -71,7 +70,7 @@ func (client *linkedServiceClient) createOrUpdateLinkedService(ctx context.Conte
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateLinkedServiceHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -97,21 +96,8 @@ func (client *linkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx 
 	return req, runtime.MarshalAsJSON(req, linkedService)
 }
 
-// createOrUpdateLinkedServiceHandleError handles the CreateOrUpdateLinkedService error response.
-func (client *linkedServiceClient) createOrUpdateLinkedServiceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDeleteLinkedService - Deletes a linked service.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // linkedServiceName - The linked service name.
 // options - linkedServiceClientBeginDeleteLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginDeleteLinkedService
 // method.
@@ -123,7 +109,7 @@ func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context,
 	result := linkedServiceClientDeleteLinkedServicePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("linkedServiceClient.DeleteLinkedService", resp, client.pl, client.deleteLinkedServiceHandleError)
+	pt, err := runtime.NewPoller("linkedServiceClient.DeleteLinkedService", resp, client.pl)
 	if err != nil {
 		return linkedServiceClientDeleteLinkedServicePollerResponse{}, err
 	}
@@ -134,7 +120,7 @@ func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context,
 }
 
 // DeleteLinkedService - Deletes a linked service.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *linkedServiceClient) deleteLinkedService(ctx context.Context, linkedServiceName string, options *linkedServiceClientBeginDeleteLinkedServiceOptions) (*http.Response, error) {
 	req, err := client.deleteLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
@@ -145,7 +131,7 @@ func (client *linkedServiceClient) deleteLinkedService(ctx context.Context, link
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteLinkedServiceHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -168,21 +154,8 @@ func (client *linkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.
 	return req, nil
 }
 
-// deleteLinkedServiceHandleError handles the DeleteLinkedService error response.
-func (client *linkedServiceClient) deleteLinkedServiceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetLinkedService - Gets a linked service.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // linkedServiceName - The linked service name.
 // options - linkedServiceClientGetLinkedServiceOptions contains the optional parameters for the linkedServiceClient.GetLinkedService
 // method.
@@ -196,7 +169,7 @@ func (client *linkedServiceClient) GetLinkedService(ctx context.Context, linkedS
 		return linkedServiceClientGetLinkedServiceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
-		return linkedServiceClientGetLinkedServiceResponse{}, client.getLinkedServiceHandleError(resp)
+		return linkedServiceClientGetLinkedServiceResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getLinkedServiceHandleResponse(resp)
 }
@@ -226,26 +199,13 @@ func (client *linkedServiceClient) getLinkedServiceCreateRequest(ctx context.Con
 func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *http.Response) (linkedServiceClientGetLinkedServiceResponse, error) {
 	result := linkedServiceClientGetLinkedServiceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LinkedServiceResource); err != nil {
-		return linkedServiceClientGetLinkedServiceResponse{}, runtime.NewResponseError(err, resp)
+		return linkedServiceClientGetLinkedServiceResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getLinkedServiceHandleError handles the GetLinkedService error response.
-func (client *linkedServiceClient) getLinkedServiceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetLinkedServicesByWorkspace - Lists linked services.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - linkedServiceClientGetLinkedServicesByWorkspaceOptions contains the optional parameters for the linkedServiceClient.GetLinkedServicesByWorkspace
 // method.
 func (client *linkedServiceClient) GetLinkedServicesByWorkspace(options *linkedServiceClientGetLinkedServicesByWorkspaceOptions) *linkedServiceClientGetLinkedServicesByWorkspacePager {
@@ -278,26 +238,13 @@ func (client *linkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx
 func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(resp *http.Response) (linkedServiceClientGetLinkedServicesByWorkspaceResponse, error) {
 	result := linkedServiceClientGetLinkedServicesByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LinkedServiceListResponse); err != nil {
-		return linkedServiceClientGetLinkedServicesByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
+		return linkedServiceClientGetLinkedServicesByWorkspaceResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getLinkedServicesByWorkspaceHandleError handles the GetLinkedServicesByWorkspace error response.
-func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginRenameLinkedService - Renames a linked service.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // linkedServiceName - The linked service name.
 // request - proposed new name.
 // options - linkedServiceClientBeginRenameLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginRenameLinkedService
@@ -310,7 +257,7 @@ func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context,
 	result := linkedServiceClientRenameLinkedServicePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("linkedServiceClient.RenameLinkedService", resp, client.pl, client.renameLinkedServiceHandleError)
+	pt, err := runtime.NewPoller("linkedServiceClient.RenameLinkedService", resp, client.pl)
 	if err != nil {
 		return linkedServiceClientRenameLinkedServicePollerResponse{}, err
 	}
@@ -321,7 +268,7 @@ func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context,
 }
 
 // RenameLinkedService - Renames a linked service.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *linkedServiceClient) renameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *linkedServiceClientBeginRenameLinkedServiceOptions) (*http.Response, error) {
 	req, err := client.renameLinkedServiceCreateRequest(ctx, linkedServiceName, request, options)
 	if err != nil {
@@ -332,7 +279,7 @@ func (client *linkedServiceClient) renameLinkedService(ctx context.Context, link
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.renameLinkedServiceHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -353,17 +300,4 @@ func (client *linkedServiceClient) renameLinkedServiceCreateRequest(ctx context.
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, request)
-}
-
-// renameLinkedServiceHandleError handles the RenameLinkedService error response.
-func (client *linkedServiceClient) renameLinkedServiceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

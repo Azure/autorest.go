@@ -12,7 +12,6 @@ import { aggregateParameters, hasAdditionalProperties } from '../common/helpers'
 
 const requestMethodSuffix = 'CreateRequest';
 const responseMethodSuffix = 'HandleResponse';
-const errorMethodSuffix = 'HandleError';
 
 // contains extended naming information for operations
 export interface OperationNaming extends Language {
@@ -23,21 +22,18 @@ interface protocolNaming {
   internalMethod: string;
   requestMethod: string;
   responseMethod: string;
-  errorMethod: string;
 }
 
 export class protocolMethods implements protocolNaming {
   readonly internalMethod: string;
   readonly requestMethod: string;
   readonly responseMethod: string;
-  readonly errorMethod: string;
 
   constructor(name: string) {
     // uncapitalizing runs the risk of reserved name collision, e.g. Import -> import
     this.internalMethod = getEscapedReservedName(uncapitalize(name), 'Operation');
     this.requestMethod = ensureNameCase(`${name}${requestMethodSuffix}`, true);
     this.responseMethod = ensureNameCase(`${name}${responseMethodSuffix}`, true);
-    this.errorMethod = ensureNameCase(`${name}${errorMethodSuffix}`, true);
   }
 }
 

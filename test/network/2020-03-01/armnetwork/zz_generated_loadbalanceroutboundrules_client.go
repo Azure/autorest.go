@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewLoadBalancerOutboundRulesClient(subscriptionID string, credential azcore
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &LoadBalancerOutboundRulesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Gets the specified load balancer outbound rule.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // outboundRuleName - The name of the outbound rule.
@@ -68,7 +67,7 @@ func (client *LoadBalancerOutboundRulesClient) Get(ctx context.Context, resource
 		return LoadBalancerOutboundRulesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LoadBalancerOutboundRulesClientGetResponse{}, client.getHandleError(resp)
+		return LoadBalancerOutboundRulesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -107,26 +106,13 @@ func (client *LoadBalancerOutboundRulesClient) getCreateRequest(ctx context.Cont
 func (client *LoadBalancerOutboundRulesClient) getHandleResponse(resp *http.Response) (LoadBalancerOutboundRulesClientGetResponse, error) {
 	result := LoadBalancerOutboundRulesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.OutboundRule); err != nil {
-		return LoadBalancerOutboundRulesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return LoadBalancerOutboundRulesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *LoadBalancerOutboundRulesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all the outbound rules in a load balancer.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // options - LoadBalancerOutboundRulesClientListOptions contains the optional parameters for the LoadBalancerOutboundRulesClient.List
@@ -173,20 +159,7 @@ func (client *LoadBalancerOutboundRulesClient) listCreateRequest(ctx context.Con
 func (client *LoadBalancerOutboundRulesClient) listHandleResponse(resp *http.Response) (LoadBalancerOutboundRulesClientListResponse, error) {
 	result := LoadBalancerOutboundRulesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancerOutboundRuleListResult); err != nil {
-		return LoadBalancerOutboundRulesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return LoadBalancerOutboundRulesClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *LoadBalancerOutboundRulesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

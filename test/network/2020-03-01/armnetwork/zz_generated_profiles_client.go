@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewProfilesClient(subscriptionID string, credential azcore.TokenCredential,
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ProfilesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // CreateOrUpdate - Creates or updates a network profile.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkProfileName - The name of the network profile.
 // parameters - Parameters supplied to the create or update network profile operation.
@@ -67,7 +66,7 @@ func (client *ProfilesClient) CreateOrUpdate(ctx context.Context, resourceGroupN
 		return ProfilesClientCreateOrUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return ProfilesClientCreateOrUpdateResponse{}, client.createOrUpdateHandleError(resp)
+		return ProfilesClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createOrUpdateHandleResponse(resp)
 }
@@ -102,26 +101,13 @@ func (client *ProfilesClient) createOrUpdateCreateRequest(ctx context.Context, r
 func (client *ProfilesClient) createOrUpdateHandleResponse(resp *http.Response) (ProfilesClientCreateOrUpdateResponse, error) {
 	result := ProfilesClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Profile); err != nil {
-		return ProfilesClientCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
+		return ProfilesClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *ProfilesClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified network profile.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkProfileName - The name of the NetworkProfile.
 // options - ProfilesClientBeginDeleteOptions contains the optional parameters for the ProfilesClient.BeginDelete method.
@@ -133,7 +119,7 @@ func (client *ProfilesClient) BeginDelete(ctx context.Context, resourceGroupName
 	result := ProfilesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ProfilesClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("ProfilesClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return ProfilesClientDeletePollerResponse{}, err
 	}
@@ -144,7 +130,7 @@ func (client *ProfilesClient) BeginDelete(ctx context.Context, resourceGroupName
 }
 
 // Delete - Deletes the specified network profile.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ProfilesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
@@ -155,7 +141,7 @@ func (client *ProfilesClient) deleteOperation(ctx context.Context, resourceGroup
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -186,21 +172,8 @@ func (client *ProfilesClient) deleteCreateRequest(ctx context.Context, resourceG
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *ProfilesClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the specified network profile in a specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkProfileName - The name of the public IP prefix.
 // options - ProfilesClientGetOptions contains the optional parameters for the ProfilesClient.Get method.
@@ -214,7 +187,7 @@ func (client *ProfilesClient) Get(ctx context.Context, resourceGroupName string,
 		return ProfilesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ProfilesClientGetResponse{}, client.getHandleError(resp)
+		return ProfilesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -252,26 +225,13 @@ func (client *ProfilesClient) getCreateRequest(ctx context.Context, resourceGrou
 func (client *ProfilesClient) getHandleResponse(resp *http.Response) (ProfilesClientGetResponse, error) {
 	result := ProfilesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Profile); err != nil {
-		return ProfilesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return ProfilesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *ProfilesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all network profiles in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - ProfilesClientListOptions contains the optional parameters for the ProfilesClient.List method.
 func (client *ProfilesClient) List(resourceGroupName string, options *ProfilesClientListOptions) *ProfilesClientListPager {
@@ -312,26 +272,13 @@ func (client *ProfilesClient) listCreateRequest(ctx context.Context, resourceGro
 func (client *ProfilesClient) listHandleResponse(resp *http.Response) (ProfilesClientListResponse, error) {
 	result := ProfilesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProfileListResult); err != nil {
-		return ProfilesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return ProfilesClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *ProfilesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListAll - Gets all the network profiles in a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ProfilesClientListAllOptions contains the optional parameters for the ProfilesClient.ListAll method.
 func (client *ProfilesClient) ListAll(options *ProfilesClientListAllOptions) *ProfilesClientListAllPager {
 	return &ProfilesClientListAllPager{
@@ -367,26 +314,13 @@ func (client *ProfilesClient) listAllCreateRequest(ctx context.Context, options 
 func (client *ProfilesClient) listAllHandleResponse(resp *http.Response) (ProfilesClientListAllResponse, error) {
 	result := ProfilesClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProfileListResult); err != nil {
-		return ProfilesClientListAllResponse{}, runtime.NewResponseError(err, resp)
+		return ProfilesClientListAllResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listAllHandleError handles the ListAll error response.
-func (client *ProfilesClient) listAllHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateTags - Updates network profile tags.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkProfileName - The name of the network profile.
 // parameters - Parameters supplied to update network profile tags.
@@ -401,7 +335,7 @@ func (client *ProfilesClient) UpdateTags(ctx context.Context, resourceGroupName 
 		return ProfilesClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ProfilesClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return ProfilesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -436,20 +370,7 @@ func (client *ProfilesClient) updateTagsCreateRequest(ctx context.Context, resou
 func (client *ProfilesClient) updateTagsHandleResponse(resp *http.Response) (ProfilesClientUpdateTagsResponse, error) {
 	result := ProfilesClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Profile); err != nil {
-		return ProfilesClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return ProfilesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *ProfilesClient) updateTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

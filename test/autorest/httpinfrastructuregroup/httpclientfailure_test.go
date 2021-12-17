@@ -7,10 +7,17 @@ import (
 	"context"
 	"reflect"
 	"testing"
+	"time"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 )
 
 func newHTTPClientFailureClient() *HTTPClientFailureClient {
-	return NewHTTPClientFailureClient(nil)
+	return NewHTTPClientFailureClient(&policy.ClientOptions{
+		Retry: policy.RetryOptions{
+			MaxRetryDelay: 2 * time.Second,
+		},
+	})
 }
 
 func TestHTTPClientFailureDelete400(t *testing.T) {

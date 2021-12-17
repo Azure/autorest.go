@@ -230,7 +230,7 @@ func (l ClientFullBackupPollerResponse) PollUntilDone(ctx context.Context, freq 
 
 // Resume rehydrates a ClientFullBackupPollerResponse from the provided client and resume token.
 func (l *ClientFullBackupPollerResponse) Resume(ctx context.Context, client *Client, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("Client.FullBackup", token, client.pl, client.fullBackupHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("Client.FullBackup", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -293,7 +293,7 @@ func (l ClientFullRestoreOperationPollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a ClientFullRestoreOperationPollerResponse from the provided client and resume token.
 func (l *ClientFullRestoreOperationPollerResponse) Resume(ctx context.Context, client *Client, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("Client.FullRestoreOperation", token, client.pl, client.fullRestoreOperationHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("Client.FullRestoreOperation", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -872,7 +872,7 @@ func (l ClientSelectiveKeyRestoreOperationPollerResponse) PollUntilDone(ctx cont
 
 // Resume rehydrates a ClientSelectiveKeyRestoreOperationPollerResponse from the provided client and resume token.
 func (l *ClientSelectiveKeyRestoreOperationPollerResponse) Resume(ctx context.Context, client *Client, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("Client.SelectiveKeyRestoreOperation", token, client.pl, client.selectiveKeyRestoreOperationHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("Client.SelectiveKeyRestoreOperation", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1139,7 +1139,7 @@ func (l HSMSecurityDomainClientDownloadPollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a HSMSecurityDomainClientDownloadPollerResponse from the provided client and resume token.
 func (l *HSMSecurityDomainClientDownloadPollerResponse) Resume(ctx context.Context, client *HSMSecurityDomainClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("HSMSecurityDomainClient.Download", token, client.pl, client.downloadHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("HSMSecurityDomainClient.Download", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1214,7 +1214,7 @@ func (l HSMSecurityDomainClientUploadPollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a HSMSecurityDomainClientUploadPollerResponse from the provided client and resume token.
 func (l *HSMSecurityDomainClientUploadPollerResponse) Resume(ctx context.Context, client *HSMSecurityDomainClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("HSMSecurityDomainClient.Upload", token, client.pl, client.uploadHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("HSMSecurityDomainClient.Upload", token, client.pl)
 	if err != nil {
 		return err
 	}

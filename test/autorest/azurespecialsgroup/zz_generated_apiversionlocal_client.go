@@ -10,7 +10,6 @@ package azurespecialsgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewAPIVersionLocalClient(options *azcore.ClientOptions) *APIVersionLocalCli
 		cp = *options
 	}
 	client := &APIVersionLocalClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetMethodLocalNull - Get method with api-version modeled in the method. pass in api-version = null to succeed
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - APIVersionLocalClientGetMethodLocalNullOptions contains the optional parameters for the APIVersionLocalClient.GetMethodLocalNull
 // method.
 func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, options *APIVersionLocalClientGetMethodLocalNullOptions) (APIVersionLocalClientGetMethodLocalNullResponse, error) {
@@ -50,7 +49,7 @@ func (client *APIVersionLocalClient) GetMethodLocalNull(ctx context.Context, opt
 		return APIVersionLocalClientGetMethodLocalNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return APIVersionLocalClientGetMethodLocalNullResponse{}, client.getMethodLocalNullHandleError(resp)
+		return APIVersionLocalClientGetMethodLocalNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return APIVersionLocalClientGetMethodLocalNullResponse{RawResponse: resp}, nil
 }
@@ -71,21 +70,8 @@ func (client *APIVersionLocalClient) getMethodLocalNullCreateRequest(ctx context
 	return req, nil
 }
 
-// getMethodLocalNullHandleError handles the GetMethodLocalNull error response.
-func (client *APIVersionLocalClient) getMethodLocalNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetMethodLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - APIVersionLocalClientGetMethodLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetMethodLocalValid
 // method.
 func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, options *APIVersionLocalClientGetMethodLocalValidOptions) (APIVersionLocalClientGetMethodLocalValidResponse, error) {
@@ -98,7 +84,7 @@ func (client *APIVersionLocalClient) GetMethodLocalValid(ctx context.Context, op
 		return APIVersionLocalClientGetMethodLocalValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return APIVersionLocalClientGetMethodLocalValidResponse{}, client.getMethodLocalValidHandleError(resp)
+		return APIVersionLocalClientGetMethodLocalValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return APIVersionLocalClientGetMethodLocalValidResponse{RawResponse: resp}, nil
 }
@@ -117,21 +103,8 @@ func (client *APIVersionLocalClient) getMethodLocalValidCreateRequest(ctx contex
 	return req, nil
 }
 
-// getMethodLocalValidHandleError handles the GetMethodLocalValid error response.
-func (client *APIVersionLocalClient) getMethodLocalValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetPathLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - APIVersionLocalClientGetPathLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetPathLocalValid
 // method.
 func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, options *APIVersionLocalClientGetPathLocalValidOptions) (APIVersionLocalClientGetPathLocalValidResponse, error) {
@@ -144,7 +117,7 @@ func (client *APIVersionLocalClient) GetPathLocalValid(ctx context.Context, opti
 		return APIVersionLocalClientGetPathLocalValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return APIVersionLocalClientGetPathLocalValidResponse{}, client.getPathLocalValidHandleError(resp)
+		return APIVersionLocalClientGetPathLocalValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return APIVersionLocalClientGetPathLocalValidResponse{RawResponse: resp}, nil
 }
@@ -163,21 +136,8 @@ func (client *APIVersionLocalClient) getPathLocalValidCreateRequest(ctx context.
 	return req, nil
 }
 
-// getPathLocalValidHandleError handles the GetPathLocalValid error response.
-func (client *APIVersionLocalClient) getPathLocalValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetSwaggerLocalValid - Get method with api-version modeled in the method. pass in api-version = '2.0' to succeed
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - APIVersionLocalClientGetSwaggerLocalValidOptions contains the optional parameters for the APIVersionLocalClient.GetSwaggerLocalValid
 // method.
 func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, options *APIVersionLocalClientGetSwaggerLocalValidOptions) (APIVersionLocalClientGetSwaggerLocalValidResponse, error) {
@@ -190,7 +150,7 @@ func (client *APIVersionLocalClient) GetSwaggerLocalValid(ctx context.Context, o
 		return APIVersionLocalClientGetSwaggerLocalValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return APIVersionLocalClientGetSwaggerLocalValidResponse{}, client.getSwaggerLocalValidHandleError(resp)
+		return APIVersionLocalClientGetSwaggerLocalValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return APIVersionLocalClientGetSwaggerLocalValidResponse{RawResponse: resp}, nil
 }
@@ -207,17 +167,4 @@ func (client *APIVersionLocalClient) getSwaggerLocalValidCreateRequest(ctx conte
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// getSwaggerLocalValidHandleError handles the GetSwaggerLocalValid error response.
-func (client *APIVersionLocalClient) getSwaggerLocalValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

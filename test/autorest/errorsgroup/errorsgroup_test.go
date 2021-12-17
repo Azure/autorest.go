@@ -14,7 +14,6 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
-	"github.com/google/go-cmp/cmp/cmpopts"
 )
 
 func newPetClient() *PetClient {
@@ -39,17 +38,25 @@ func TestDoSomethingSuccess(t *testing.T) {
 func TestDoSomethingError1(t *testing.T) {
 	client := newPetClient()
 	result, err := client.DoSomething(context.Background(), "jump", nil)
-	var sadErr *PetSadError
-	if !errors.As(err, &sadErr) {
-		t.Fatalf("expected PetSadError: %v", err)
+	var respErr *azcore.ResponseError
+	if !errors.As(err, &respErr) {
+		t.Fatalf("expected azcore.ResponseError: %v", err)
 	}
-	if r := cmp.Diff(sadErr, &PetSadError{
-		ActionResponse: to.StringPtr("grrrr"),
-		ErrorMessage:   to.StringPtr("casper aint happy"),
-		ErrorType:      to.StringPtr("PetSadError"),
-		Reason:         to.StringPtr("need more treats"),
-	}, cmpopts.IgnoreUnexported(PetSadError{})); r != "" {
-		t.Fatal(r)
+	const want = `POST http://localhost:3000/errorStatusCodes/Pets/doSomething/jump
+--------------------------------------------------------------------------------
+RESPONSE 500: 500 Internal Server Error
+ERROR CODE UNAVAILABLE
+--------------------------------------------------------------------------------
+{
+  "actionResponse": "grrrr",
+  "errorType": "PetSadError",
+  "errorMessage": "casper aint happy",
+  "reason": "need more treats"
+}
+--------------------------------------------------------------------------------
+`
+	if got := respErr.Error(); got != want {
+		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
@@ -59,18 +66,26 @@ func TestDoSomethingError1(t *testing.T) {
 func TestDoSomethingError2(t *testing.T) {
 	client := newPetClient()
 	result, err := client.DoSomething(context.Background(), "fetch", nil)
-	var hungrErr *PetHungryOrThirstyError
-	if !errors.As(err, &hungrErr) {
-		t.Fatal("expected PetHungryOrThirstyError")
+	var respErr *azcore.ResponseError
+	if !errors.As(err, &respErr) {
+		t.Fatalf("expected azcore.ResponseError: %v", err)
 	}
-	if r := cmp.Diff(hungrErr, &PetHungryOrThirstyError{
-		ActionResponse:  to.StringPtr("howl"),
-		ErrorMessage:    to.StringPtr("scooby is low"),
-		ErrorType:       to.StringPtr("PetHungryOrThirstyError"),
-		Reason:          to.StringPtr("need more everything"),
-		HungryOrThirsty: to.StringPtr("hungry and thirsty"),
-	}, cmpopts.IgnoreUnexported(PetHungryOrThirstyError{})); r != "" {
-		t.Fatal(r)
+	const want = `POST http://localhost:3000/errorStatusCodes/Pets/doSomething/fetch
+--------------------------------------------------------------------------------
+RESPONSE 404: 404 Not Found
+ERROR CODE UNAVAILABLE
+--------------------------------------------------------------------------------
+{
+  "actionResponse": "howl",
+  "errorType": "PetHungryOrThirstyError",
+  "errorMessage": "scooby is low",
+  "reason": "need more everything",
+  "hungryOrThirsty": "hungry and thirsty"
+}
+--------------------------------------------------------------------------------
+`
+	if got := respErr.Error(); got != want {
+		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
@@ -80,12 +95,23 @@ func TestDoSomethingError2(t *testing.T) {
 func TestDoSomethingError3(t *testing.T) {
 	client := newPetClient()
 	result, err := client.DoSomething(context.Background(), "unknown", nil)
-	var actErr *PetActionError
-	if !errors.As(err, &actErr) {
-		t.Fatal("expected PetActionError")
+	var respErr *azcore.ResponseError
+	if !errors.As(err, &respErr) {
+		t.Fatalf("expected azcore.ResponseError: %v", err)
 	}
-	if r := cmp.Diff(actErr, &PetActionError{}, cmpopts.IgnoreUnexported(PetActionError{})); r != "" {
-		t.Fatal(r)
+	const want = `POST http://localhost:3000/errorStatusCodes/Pets/doSomething/unknown
+--------------------------------------------------------------------------------
+RESPONSE 400: 400 Bad Request
+ERROR CODE UNAVAILABLE
+--------------------------------------------------------------------------------
+{
+  "message": "Action cannot be performed unknown",
+  "status": 400
+}
+--------------------------------------------------------------------------------
+`
+	if got := respErr.Error(); got != want {
+		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
@@ -121,17 +147,25 @@ func TestGetPetByIDSuccess2(t *testing.T) {
 func TestGetPetByIDError1(t *testing.T) {
 	client := newPetClient()
 	result, err := client.GetPetByID(context.Background(), "coyoteUgly", nil)
-	var anfe *AnimalNotFound
-	if !errors.As(err, &anfe) {
-		t.Fatal("expected AnimalNotFoundError")
+	var respErr *azcore.ResponseError
+	if !errors.As(err, &respErr) {
+		t.Fatalf("expected azcore.ResponseError: %v", err)
 	}
-	if r := cmp.Diff(anfe, &AnimalNotFound{
-		SomeBaseProp: to.StringPtr("problem finding animal"),
-		Reason:       to.StringPtr("the type of animal requested is not available"),
-		WhatNotFound: to.StringPtr("AnimalNotFound"),
-		Name:         to.StringPtr("coyote"),
-	}, cmpopts.IgnoreUnexported(AnimalNotFound{})); r != "" {
-		t.Fatal(r)
+	const want = `GET http://localhost:3000/errorStatusCodes/Pets/coyoteUgly/GetPet
+--------------------------------------------------------------------------------
+RESPONSE 404: 404 Not Found
+ERROR CODE UNAVAILABLE
+--------------------------------------------------------------------------------
+{
+  "someBaseProp": "problem finding animal",
+  "reason": "the type of animal requested is not available",
+  "name": "coyote",
+  "whatNotFound": "AnimalNotFound"
+}
+--------------------------------------------------------------------------------
+`
+	if got := respErr.Error(); got != want {
+		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
@@ -141,17 +175,25 @@ func TestGetPetByIDError1(t *testing.T) {
 func TestGetPetByIDError2(t *testing.T) {
 	client := newPetClient()
 	result, err := client.GetPetByID(context.Background(), "weirdAlYankovic", nil)
-	var lnfe *LinkNotFound
-	if !errors.As(err, &lnfe) {
-		t.Fatal("expected LinkNotFoundError")
+	var respErr *azcore.ResponseError
+	if !errors.As(err, &respErr) {
+		t.Fatalf("expected azcore.ResponseError: %v", err)
 	}
-	if r := cmp.Diff(lnfe, &LinkNotFound{
-		SomeBaseProp:   to.StringPtr("problem finding pet"),
-		Reason:         to.StringPtr("link to pet not found"),
-		WhatNotFound:   to.StringPtr("InvalidResourceLink"),
-		WhatSubAddress: to.StringPtr("pet/yourpet was not found"),
-	}, cmpopts.IgnoreUnexported(LinkNotFound{})); r != "" {
-		t.Fatal(r)
+	const want = `GET http://localhost:3000/errorStatusCodes/Pets/weirdAlYankovic/GetPet
+--------------------------------------------------------------------------------
+RESPONSE 404: 404 Not Found
+ERROR CODE UNAVAILABLE
+--------------------------------------------------------------------------------
+{
+  "someBaseProp": "problem finding pet",
+  "reason": "link to pet not found",
+  "whatSubAddress": "pet/yourpet was not found",
+  "whatNotFound": "InvalidResourceLink"
+}
+--------------------------------------------------------------------------------
+`
+	if got := respErr.Error(); got != want {
+		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
@@ -164,9 +206,20 @@ func TestGetPetByIDError3(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	const expected = "ringo is missing"
-	if e := err.Error(); e != expected {
-		t.Fatalf("expected %s, got %s", expected, e)
+	var respErr *azcore.ResponseError
+	if !errors.As(err, &respErr) {
+		t.Fatalf("expected azcore.ResponseError: %v", err)
+	}
+	const want = `GET http://localhost:3000/errorStatusCodes/Pets/ringo/GetPet
+--------------------------------------------------------------------------------
+RESPONSE 400: 400 Bad Request
+ERROR CODE UNAVAILABLE
+--------------------------------------------------------------------------------
+"ringo is missing"
+--------------------------------------------------------------------------------
+`
+	if got := respErr.Error(); got != want {
+		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
@@ -179,9 +232,20 @@ func TestGetPetByIDError4(t *testing.T) {
 	if err == nil {
 		t.Fatal("unexpected nil error")
 	}
-	expected := "123"
-	if e := err.Error(); e != expected {
-		t.Fatalf("expected %s, got %s", expected, e)
+	var respErr *azcore.ResponseError
+	if !errors.As(err, &respErr) {
+		t.Fatalf("expected azcore.ResponseError: %v", err)
+	}
+	const want = `GET http://localhost:3000/errorStatusCodes/Pets/alien123/GetPet
+--------------------------------------------------------------------------------
+RESPONSE 501: 501 Not Implemented
+ERROR CODE UNAVAILABLE
+--------------------------------------------------------------------------------
+123
+--------------------------------------------------------------------------------
+`
+	if got := respErr.Error(); got != want {
+		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
@@ -192,8 +256,20 @@ func TestGetPetByIDError5(t *testing.T) {
 	client := newPetClient()
 	result, err := client.GetPetByID(context.Background(), "unknown", nil)
 	// default generic error (no schema)
-	if r := cmp.Diff(err.Error(), "That's all folks!!"); r != "" {
-		t.Fatal(r)
+	var respErr *azcore.ResponseError
+	if !errors.As(err, &respErr) {
+		t.Fatalf("expected azcore.ResponseError: %v", err)
+	}
+	const want = `GET http://localhost:3000/errorStatusCodes/Pets/unknown/GetPet
+--------------------------------------------------------------------------------
+RESPONSE 402: 402 Payment Required
+ERROR CODE UNAVAILABLE
+--------------------------------------------------------------------------------
+That's all folks!!
+--------------------------------------------------------------------------------
+`
+	if got := respErr.Error(); got != want {
+		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")

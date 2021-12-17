@@ -99,7 +99,7 @@ func (l PagingClientGetMultiplePagesLROPollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a PagingClientGetMultiplePagesLROPollerResponse from the provided client and resume token.
 func (l *PagingClientGetMultiplePagesLROPollerResponse) Resume(ctx context.Context, client *PagingClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PagingClient.GetMultiplePagesLRO", token, client.pl, client.getMultiplePagesLROHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PagingClient.GetMultiplePagesLRO", token, client.pl)
 	if err != nil {
 		return err
 	}

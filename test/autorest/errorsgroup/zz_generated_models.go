@@ -18,20 +18,12 @@ type Animal struct {
 	AniType *string `json:"aniType,omitempty"`
 }
 
-// Implements the error and azcore.HTTPResponse interfaces.
 type AnimalNotFound struct {
-	raw string
 	// REQUIRED
 	WhatNotFound *string `json:"whatNotFound,omitempty"`
 	Name         *string `json:"name,omitempty"`
 	Reason       *string `json:"reason,omitempty"`
 	SomeBaseProp *string `json:"someBaseProp,omitempty"`
-}
-
-// Error implements the error interface for type AnimalNotFound.
-// The contents of the error text are not contractual and subject to change.
-func (e AnimalNotFound) Error() string {
-	return e.raw
 }
 
 // GetNotFoundErrorBase implements the NotFoundErrorBaseClassification interface for type AnimalNotFound.
@@ -43,13 +35,22 @@ func (a *AnimalNotFound) GetNotFoundErrorBase() *NotFoundErrorBase {
 	}
 }
 
+// MarshalJSON implements the json.Marshaller interface for type AnimalNotFound.
+func (a AnimalNotFound) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "name", a.Name)
+	populate(objectMap, "reason", a.Reason)
+	populate(objectMap, "someBaseProp", a.SomeBaseProp)
+	objectMap["whatNotFound"] = "AnimalNotFound"
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type AnimalNotFound.
 func (a *AnimalNotFound) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	a.raw = string(data)
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -77,20 +78,12 @@ type BaseError struct {
 	SomeBaseProp *string `json:"someBaseProp,omitempty"`
 }
 
-// Implements the error and azcore.HTTPResponse interfaces.
 type LinkNotFound struct {
-	raw string
 	// REQUIRED
 	WhatNotFound   *string `json:"whatNotFound,omitempty"`
 	Reason         *string `json:"reason,omitempty"`
 	SomeBaseProp   *string `json:"someBaseProp,omitempty"`
 	WhatSubAddress *string `json:"whatSubAddress,omitempty"`
-}
-
-// Error implements the error interface for type LinkNotFound.
-// The contents of the error text are not contractual and subject to change.
-func (e LinkNotFound) Error() string {
-	return e.raw
 }
 
 // GetNotFoundErrorBase implements the NotFoundErrorBaseClassification interface for type LinkNotFound.
@@ -102,13 +95,22 @@ func (l *LinkNotFound) GetNotFoundErrorBase() *NotFoundErrorBase {
 	}
 }
 
+// MarshalJSON implements the json.Marshaller interface for type LinkNotFound.
+func (l LinkNotFound) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "reason", l.Reason)
+	populate(objectMap, "someBaseProp", l.SomeBaseProp)
+	objectMap["whatNotFound"] = "InvalidResourceLink"
+	populate(objectMap, "whatSubAddress", l.WhatSubAddress)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type LinkNotFound.
 func (l *LinkNotFound) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	l.raw = string(data)
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -137,24 +139,15 @@ func (l *LinkNotFound) UnmarshalJSON(data []byte) error {
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *AnimalNotFound, *LinkNotFound, *NotFoundErrorBase
 type NotFoundErrorBaseClassification interface {
-	error
 	// GetNotFoundErrorBase returns the NotFoundErrorBase content of the underlying type.
 	GetNotFoundErrorBase() *NotFoundErrorBase
 }
 
-// Implements the error and azcore.HTTPResponse interfaces.
 type NotFoundErrorBase struct {
-	raw string
 	// REQUIRED
 	WhatNotFound *string `json:"whatNotFound,omitempty"`
 	Reason       *string `json:"reason,omitempty"`
 	SomeBaseProp *string `json:"someBaseProp,omitempty"`
-}
-
-// Error implements the error interface for type NotFoundErrorBase.
-// The contents of the error text are not contractual and subject to change.
-func (e NotFoundErrorBase) Error() string {
-	return e.raw
 }
 
 // GetNotFoundErrorBase implements the NotFoundErrorBaseClassification interface for type NotFoundErrorBase.
@@ -177,14 +170,11 @@ type PetAction struct {
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *PetActionError, *PetHungryOrThirstyError, *PetSadError
 type PetActionErrorClassification interface {
-	error
 	// GetPetActionError returns the PetActionError content of the underlying type.
 	GetPetActionError() *PetActionError
 }
 
-// Implements the error and azcore.HTTPResponse interfaces.
 type PetActionError struct {
-	raw string
 	// REQUIRED
 	ErrorType *string `json:"errorType,omitempty"`
 
@@ -193,12 +183,6 @@ type PetActionError struct {
 
 	// the error message
 	ErrorMessage *string `json:"errorMessage,omitempty"`
-}
-
-// Error implements the error interface for type PetActionError.
-// The contents of the error text are not contractual and subject to change.
-func (e PetActionError) Error() string {
-	return e.raw
 }
 
 // GetPetActionError implements the PetActionErrorClassification interface for type PetActionError.
@@ -221,9 +205,7 @@ type PetClientHasModelsParamOptions struct {
 	Models *string
 }
 
-// Implements the error and azcore.HTTPResponse interfaces.
 type PetHungryOrThirstyError struct {
-	raw string
 	// REQUIRED
 	ErrorType *string `json:"errorType,omitempty"`
 
@@ -238,12 +220,6 @@ type PetHungryOrThirstyError struct {
 
 	// why is the pet sad
 	Reason *string `json:"reason,omitempty"`
-}
-
-// Error implements the error interface for type PetHungryOrThirstyError.
-// The contents of the error text are not contractual and subject to change.
-func (e PetHungryOrThirstyError) Error() string {
-	return e.raw
 }
 
 // GetPetActionError implements the PetActionErrorClassification interface for type PetHungryOrThirstyError.
@@ -265,13 +241,23 @@ func (p *PetHungryOrThirstyError) GetPetSadError() *PetSadError {
 	}
 }
 
+// MarshalJSON implements the json.Marshaller interface for type PetHungryOrThirstyError.
+func (p PetHungryOrThirstyError) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "actionResponse", p.ActionResponse)
+	populate(objectMap, "errorMessage", p.ErrorMessage)
+	objectMap["errorType"] = "PetHungryOrThirstyError"
+	populate(objectMap, "hungryOrThirsty", p.HungryOrThirsty)
+	populate(objectMap, "reason", p.Reason)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type PetHungryOrThirstyError.
 func (p *PetHungryOrThirstyError) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	p.raw = string(data)
 	for key, val := range rawMsg {
 		var err error
 		switch key {
@@ -308,9 +294,7 @@ type PetSadErrorClassification interface {
 	GetPetSadError() *PetSadError
 }
 
-// Implements the error and azcore.HTTPResponse interfaces.
 type PetSadError struct {
-	raw string
 	// REQUIRED
 	ErrorType *string `json:"errorType,omitempty"`
 
@@ -322,12 +306,6 @@ type PetSadError struct {
 
 	// why is the pet sad
 	Reason *string `json:"reason,omitempty"`
-}
-
-// Error implements the error interface for type PetSadError.
-// The contents of the error text are not contractual and subject to change.
-func (e PetSadError) Error() string {
-	return e.raw
 }
 
 // GetPetActionError implements the PetActionErrorClassification interface for type PetSadError.
@@ -342,13 +320,22 @@ func (p *PetSadError) GetPetActionError() *PetActionError {
 // GetPetSadError implements the PetSadErrorClassification interface for type PetSadError.
 func (p *PetSadError) GetPetSadError() *PetSadError { return p }
 
+// MarshalJSON implements the json.Marshaller interface for type PetSadError.
+func (p PetSadError) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "actionResponse", p.ActionResponse)
+	populate(objectMap, "errorMessage", p.ErrorMessage)
+	objectMap["errorType"] = "PetSadError"
+	populate(objectMap, "reason", p.Reason)
+	return json.Marshal(objectMap)
+}
+
 // UnmarshalJSON implements the json.Unmarshaller interface for type PetSadError.
 func (p *PetSadError) UnmarshalJSON(data []byte) error {
 	var rawMsg map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawMsg); err != nil {
 		return err
 	}
-	p.raw = string(data)
 	for key, val := range rawMsg {
 		var err error
 		switch key {

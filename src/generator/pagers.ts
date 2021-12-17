@@ -83,7 +83,7 @@ export async function generatePagers(session: Session<CodeModel>): Promise<strin
       statusCodes = formatStatusCodes(getStatusCodes(pager.op));
     }
     text += `\tif !runtime.HasStatusCode(resp, ${statusCodes}) {\n`;
-    text += `\t\tp.err = p.client.${pager.op.language.go!.protocolNaming.errorMethod}(resp)\n\t\treturn false\n\t}\n`;
+    text += `\t\tp.err = runtime.NewResponseError(resp)\n\t\treturn false\n\t}\n`;
     text += `\tresult, err := p.client.${pager.op.language.go!.protocolNaming.responseMethod}(resp)\n`;
     text += '\tif err != nil {\n\t\tp.err = err\n\t\treturn false\n\t}\n';
     text += '\tp.current = result\n\treturn true\n';

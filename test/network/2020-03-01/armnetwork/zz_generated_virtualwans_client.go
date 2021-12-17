@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewVirtualWansClient(subscriptionID string, credential azcore.TokenCredenti
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VirtualWansClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates a VirtualWAN resource if it doesn't exist else updates the existing VirtualWAN.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VirtualWan.
 // virtualWANName - The name of the VirtualWAN being created or updated.
 // wanParameters - Parameters supplied to create or update VirtualWAN.
@@ -66,7 +65,7 @@ func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resour
 	result := VirtualWansClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualWansClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("VirtualWansClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VirtualWansClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resour
 }
 
 // CreateOrUpdate - Creates a VirtualWAN resource if it doesn't exist else updates the existing VirtualWAN.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualWansClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualWANName, wanParameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *VirtualWansClient) createOrUpdate(ctx context.Context, resourceGro
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,21 +118,8 @@ func (client *VirtualWansClient) createOrUpdateCreateRequest(ctx context.Context
 	return req, runtime.MarshalAsJSON(req, wanParameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *VirtualWansClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes a VirtualWAN.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VirtualWan.
 // virtualWANName - The name of the VirtualWAN being deleted.
 // options - VirtualWansClientBeginDeleteOptions contains the optional parameters for the VirtualWansClient.BeginDelete method.
@@ -145,7 +131,7 @@ func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupN
 	result := VirtualWansClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualWansClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("VirtualWansClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VirtualWansClientDeletePollerResponse{}, err
 	}
@@ -156,7 +142,7 @@ func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupN
 }
 
 // Delete - Deletes a VirtualWAN.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualWansClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
@@ -167,7 +153,7 @@ func (client *VirtualWansClient) deleteOperation(ctx context.Context, resourceGr
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -198,21 +184,8 @@ func (client *VirtualWansClient) deleteCreateRequest(ctx context.Context, resour
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *VirtualWansClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Retrieves the details of a VirtualWAN.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VirtualWan.
 // virtualWANName - The name of the VirtualWAN being retrieved.
 // options - VirtualWansClientGetOptions contains the optional parameters for the VirtualWansClient.Get method.
@@ -226,7 +199,7 @@ func (client *VirtualWansClient) Get(ctx context.Context, resourceGroupName stri
 		return VirtualWansClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualWansClientGetResponse{}, client.getHandleError(resp)
+		return VirtualWansClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -261,26 +234,13 @@ func (client *VirtualWansClient) getCreateRequest(ctx context.Context, resourceG
 func (client *VirtualWansClient) getHandleResponse(resp *http.Response) (VirtualWansClientGetResponse, error) {
 	result := VirtualWansClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualWAN); err != nil {
-		return VirtualWansClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualWansClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *VirtualWansClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Lists all the VirtualWANs in a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - VirtualWansClientListOptions contains the optional parameters for the VirtualWansClient.List method.
 func (client *VirtualWansClient) List(options *VirtualWansClientListOptions) *VirtualWansClientListPager {
 	return &VirtualWansClientListPager{
@@ -316,26 +276,13 @@ func (client *VirtualWansClient) listCreateRequest(ctx context.Context, options 
 func (client *VirtualWansClient) listHandleResponse(resp *http.Response) (VirtualWansClientListResponse, error) {
 	result := VirtualWansClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVirtualWANsResult); err != nil {
-		return VirtualWansClientListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualWansClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *VirtualWansClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByResourceGroup - Lists all the VirtualWANs in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VirtualWan.
 // options - VirtualWansClientListByResourceGroupOptions contains the optional parameters for the VirtualWansClient.ListByResourceGroup
 // method.
@@ -377,26 +324,13 @@ func (client *VirtualWansClient) listByResourceGroupCreateRequest(ctx context.Co
 func (client *VirtualWansClient) listByResourceGroupHandleResponse(resp *http.Response) (VirtualWansClientListByResourceGroupResponse, error) {
 	result := VirtualWansClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVirtualWANsResult); err != nil {
-		return VirtualWansClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualWansClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *VirtualWansClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateTags - Updates a VirtualWAN tags.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VirtualWan.
 // virtualWANName - The name of the VirtualWAN being updated.
 // wanParameters - Parameters supplied to Update VirtualWAN tags.
@@ -411,7 +345,7 @@ func (client *VirtualWansClient) UpdateTags(ctx context.Context, resourceGroupNa
 		return VirtualWansClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualWansClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return VirtualWansClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -446,20 +380,7 @@ func (client *VirtualWansClient) updateTagsCreateRequest(ctx context.Context, re
 func (client *VirtualWansClient) updateTagsHandleResponse(resp *http.Response) (VirtualWansClientUpdateTagsResponse, error) {
 	result := VirtualWansClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualWAN); err != nil {
-		return VirtualWansClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualWansClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *VirtualWansClient) updateTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

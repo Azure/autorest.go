@@ -10,7 +10,6 @@ package objectgroup
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewObjectTypeClient(options *azcore.ClientOptions) *ObjectTypeClient {
 		cp = *options
 	}
 	client := &ObjectTypeClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Basic get that returns an object. Returns object { 'message': 'An object was successfully returned' }
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ObjectTypeClientGetOptions contains the optional parameters for the ObjectTypeClient.Get method.
 func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClientGetOptions) (ObjectTypeClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
@@ -49,7 +48,7 @@ func (client *ObjectTypeClient) Get(ctx context.Context, options *ObjectTypeClie
 		return ObjectTypeClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ObjectTypeClientGetResponse{}, client.getHandleError(resp)
+		return ObjectTypeClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -69,25 +68,13 @@ func (client *ObjectTypeClient) getCreateRequest(ctx context.Context, options *O
 func (client *ObjectTypeClient) getHandleResponse(resp *http.Response) (ObjectTypeClientGetResponse, error) {
 	result := ObjectTypeClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Object); err != nil {
-		return ObjectTypeClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return ObjectTypeClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *ObjectTypeClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Put - Basic put that puts an object. Pass in {'foo': 'bar'} to get a 200 and anything else to get an object error.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // putObject - Pass in {'foo': 'bar'} for a 200, anything else for an object error
 // options - ObjectTypeClientPutOptions contains the optional parameters for the ObjectTypeClient.Put method.
 func (client *ObjectTypeClient) Put(ctx context.Context, putObject map[string]interface{}, options *ObjectTypeClientPutOptions) (ObjectTypeClientPutResponse, error) {
@@ -100,7 +87,7 @@ func (client *ObjectTypeClient) Put(ctx context.Context, putObject map[string]in
 		return ObjectTypeClientPutResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ObjectTypeClientPutResponse{}, client.putHandleError(resp)
+		return ObjectTypeClientPutResponse{}, runtime.NewResponseError(resp)
 	}
 	return ObjectTypeClientPutResponse{RawResponse: resp}, nil
 }
@@ -114,16 +101,4 @@ func (client *ObjectTypeClient) putCreateRequest(ctx context.Context, putObject 
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, putObject)
-}
-
-// putHandleError handles the Put error response.
-func (client *ObjectTypeClient) putHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

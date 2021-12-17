@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewVirtualRoutersClient(subscriptionID string, credential azcore.TokenCrede
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VirtualRoutersClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified Virtual Router.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualRouterName - The name of the Virtual Router.
 // parameters - Parameters supplied to the create or update Virtual Router.
@@ -66,7 +65,7 @@ func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, res
 	result := VirtualRoutersClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualRoutersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("VirtualRoutersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VirtualRoutersClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, res
 }
 
 // CreateOrUpdate - Creates or updates the specified Virtual Router.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualRoutersClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualRouterName, parameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *VirtualRoutersClient) createOrUpdate(ctx context.Context, resource
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,21 +118,8 @@ func (client *VirtualRoutersClient) createOrUpdateCreateRequest(ctx context.Cont
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *VirtualRoutersClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified Virtual Router.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualRouterName - The name of the Virtual Router.
 // options - VirtualRoutersClientBeginDeleteOptions contains the optional parameters for the VirtualRoutersClient.BeginDelete
@@ -146,7 +132,7 @@ func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGro
 	result := VirtualRoutersClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualRoutersClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("VirtualRoutersClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VirtualRoutersClientDeletePollerResponse{}, err
 	}
@@ -157,7 +143,7 @@ func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGro
 }
 
 // Delete - Deletes the specified Virtual Router.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualRoutersClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualRouterName, options)
 	if err != nil {
@@ -168,7 +154,7 @@ func (client *VirtualRoutersClient) deleteOperation(ctx context.Context, resourc
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -199,21 +185,8 @@ func (client *VirtualRoutersClient) deleteCreateRequest(ctx context.Context, res
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *VirtualRoutersClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the specified Virtual Router.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualRouterName - The name of the Virtual Router.
 // options - VirtualRoutersClientGetOptions contains the optional parameters for the VirtualRoutersClient.Get method.
@@ -227,7 +200,7 @@ func (client *VirtualRoutersClient) Get(ctx context.Context, resourceGroupName s
 		return VirtualRoutersClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualRoutersClientGetResponse{}, client.getHandleError(resp)
+		return VirtualRoutersClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -265,26 +238,13 @@ func (client *VirtualRoutersClient) getCreateRequest(ctx context.Context, resour
 func (client *VirtualRoutersClient) getHandleResponse(resp *http.Response) (VirtualRoutersClientGetResponse, error) {
 	result := VirtualRoutersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualRouter); err != nil {
-		return VirtualRoutersClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualRoutersClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *VirtualRoutersClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all the Virtual Routers in a subscription.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - VirtualRoutersClientListOptions contains the optional parameters for the VirtualRoutersClient.List method.
 func (client *VirtualRoutersClient) List(options *VirtualRoutersClientListOptions) *VirtualRoutersClientListPager {
 	return &VirtualRoutersClientListPager{
@@ -320,26 +280,13 @@ func (client *VirtualRoutersClient) listCreateRequest(ctx context.Context, optio
 func (client *VirtualRoutersClient) listHandleResponse(resp *http.Response) (VirtualRoutersClientListResponse, error) {
 	result := VirtualRoutersClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualRouterListResult); err != nil {
-		return VirtualRoutersClientListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualRoutersClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *VirtualRoutersClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByResourceGroup - Lists all Virtual Routers in a resource group.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - VirtualRoutersClientListByResourceGroupOptions contains the optional parameters for the VirtualRoutersClient.ListByResourceGroup
 // method.
@@ -381,20 +328,7 @@ func (client *VirtualRoutersClient) listByResourceGroupCreateRequest(ctx context
 func (client *VirtualRoutersClient) listByResourceGroupHandleResponse(resp *http.Response) (VirtualRoutersClientListByResourceGroupResponse, error) {
 	result := VirtualRoutersClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualRouterListResult); err != nil {
-		return VirtualRoutersClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualRoutersClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *VirtualRoutersClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

@@ -11,7 +11,6 @@ package armconsumption
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -37,12 +36,12 @@ func NewBudgetsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &BudgetsClient{
-		host: string(cp.Host),
-		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+		host: string(cp.Endpoint),
+		pl:   armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
@@ -50,7 +49,7 @@ func NewBudgetsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 // CreateOrUpdate - The operation to create or update a budget. You can optionally provide an eTag if desired as a form of
 // concurrency control. To obtain the latest eTag for a given budget, perform a get operation prior
 // to your put operation.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 // scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
 // resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope,
@@ -73,7 +72,7 @@ func (client *BudgetsClient) CreateOrUpdate(ctx context.Context, scope string, b
 		return BudgetsClientCreateOrUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return BudgetsClientCreateOrUpdateResponse{}, client.createOrUpdateHandleError(resp)
+		return BudgetsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createOrUpdateHandleResponse(resp)
 }
@@ -101,26 +100,13 @@ func (client *BudgetsClient) createOrUpdateCreateRequest(ctx context.Context, sc
 func (client *BudgetsClient) createOrUpdateHandleResponse(resp *http.Response) (BudgetsClientCreateOrUpdateResponse, error) {
 	result := BudgetsClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Budget); err != nil {
-		return BudgetsClientCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
+		return BudgetsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *BudgetsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Delete - The operation to delete a budget.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 // scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
 // resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope,
@@ -142,7 +128,7 @@ func (client *BudgetsClient) Delete(ctx context.Context, scope string, budgetNam
 		return BudgetsClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BudgetsClientDeleteResponse{}, client.deleteHandleError(resp)
+		return BudgetsClientDeleteResponse{}, runtime.NewResponseError(resp)
 	}
 	return BudgetsClientDeleteResponse{RawResponse: resp}, nil
 }
@@ -166,21 +152,8 @@ func (client *BudgetsClient) deleteCreateRequest(ctx context.Context, scope stri
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *BudgetsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the budget for the scope by budget name.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 // scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
 // resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope,
@@ -202,7 +175,7 @@ func (client *BudgetsClient) Get(ctx context.Context, scope string, budgetName s
 		return BudgetsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BudgetsClientGetResponse{}, client.getHandleError(resp)
+		return BudgetsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -230,26 +203,13 @@ func (client *BudgetsClient) getCreateRequest(ctx context.Context, scope string,
 func (client *BudgetsClient) getHandleResponse(resp *http.Response) (BudgetsClientGetResponse, error) {
 	result := BudgetsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Budget); err != nil {
-		return BudgetsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return BudgetsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *BudgetsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Lists all budgets for the defined scope.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // scope - The scope associated with budget operations. This includes '/subscriptions/{subscriptionId}/' for subscription
 // scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
 // resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope,
@@ -291,20 +251,7 @@ func (client *BudgetsClient) listCreateRequest(ctx context.Context, scope string
 func (client *BudgetsClient) listHandleResponse(resp *http.Response) (BudgetsClientListResponse, error) {
 	result := BudgetsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BudgetsListResult); err != nil {
-		return BudgetsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return BudgetsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *BudgetsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

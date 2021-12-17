@@ -10,7 +10,6 @@ package nonstringenumgroup
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewFloatClient(options *azcore.ClientOptions) *FloatClient {
 		cp = *options
 	}
 	client := &FloatClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Get a float enum
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - FloatClientGetOptions contains the optional parameters for the FloatClient.Get method.
 func (client *FloatClient) Get(ctx context.Context, options *FloatClientGetOptions) (FloatClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
@@ -49,7 +48,7 @@ func (client *FloatClient) Get(ctx context.Context, options *FloatClientGetOptio
 		return FloatClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FloatClientGetResponse{}, client.getHandleError(resp)
+		return FloatClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -69,25 +68,13 @@ func (client *FloatClient) getCreateRequest(ctx context.Context, options *FloatC
 func (client *FloatClient) getHandleResponse(resp *http.Response) (FloatClientGetResponse, error) {
 	result := FloatClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return FloatClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return FloatClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *FloatClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Put - Put a float enum
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - FloatClientPutOptions contains the optional parameters for the FloatClient.Put method.
 func (client *FloatClient) Put(ctx context.Context, options *FloatClientPutOptions) (FloatClientPutResponse, error) {
 	req, err := client.putCreateRequest(ctx, options)
@@ -99,7 +86,7 @@ func (client *FloatClient) Put(ctx context.Context, options *FloatClientPutOptio
 		return FloatClientPutResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FloatClientPutResponse{}, client.putHandleError(resp)
+		return FloatClientPutResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.putHandleResponse(resp)
 }
@@ -122,19 +109,7 @@ func (client *FloatClient) putCreateRequest(ctx context.Context, options *FloatC
 func (client *FloatClient) putHandleResponse(resp *http.Response) (FloatClientPutResponse, error) {
 	result := FloatClientPutResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return FloatClientPutResponse{}, runtime.NewResponseError(err, resp)
+		return FloatClientPutResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// putHandleError handles the Put error response.
-func (client *FloatClient) putHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

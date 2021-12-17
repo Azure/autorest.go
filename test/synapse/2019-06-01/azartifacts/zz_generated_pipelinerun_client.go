@@ -11,7 +11,6 @@ package azartifacts
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -37,7 +36,7 @@ func newPipelineRunClient(endpoint string, pl runtime.Pipeline) *pipelineRunClie
 }
 
 // CancelPipelineRun - Cancel a pipeline run by its run ID.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // runID - The pipeline run identifier.
 // options - pipelineRunClientCancelPipelineRunOptions contains the optional parameters for the pipelineRunClient.CancelPipelineRun
 // method.
@@ -51,7 +50,7 @@ func (client *pipelineRunClient) CancelPipelineRun(ctx context.Context, runID st
 		return pipelineRunClientCancelPipelineRunResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return pipelineRunClientCancelPipelineRunResponse{}, client.cancelPipelineRunHandleError(resp)
+		return pipelineRunClientCancelPipelineRunResponse{}, runtime.NewResponseError(resp)
 	}
 	return pipelineRunClientCancelPipelineRunResponse{RawResponse: resp}, nil
 }
@@ -77,21 +76,8 @@ func (client *pipelineRunClient) cancelPipelineRunCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// cancelPipelineRunHandleError handles the CancelPipelineRun error response.
-func (client *pipelineRunClient) cancelPipelineRunHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetPipelineRun - Get a pipeline run by its run ID.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // runID - The pipeline run identifier.
 // options - pipelineRunClientGetPipelineRunOptions contains the optional parameters for the pipelineRunClient.GetPipelineRun
 // method.
@@ -105,7 +91,7 @@ func (client *pipelineRunClient) GetPipelineRun(ctx context.Context, runID strin
 		return pipelineRunClientGetPipelineRunResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return pipelineRunClientGetPipelineRunResponse{}, client.getPipelineRunHandleError(resp)
+		return pipelineRunClientGetPipelineRunResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getPipelineRunHandleResponse(resp)
 }
@@ -132,26 +118,13 @@ func (client *pipelineRunClient) getPipelineRunCreateRequest(ctx context.Context
 func (client *pipelineRunClient) getPipelineRunHandleResponse(resp *http.Response) (pipelineRunClientGetPipelineRunResponse, error) {
 	result := pipelineRunClientGetPipelineRunResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineRun); err != nil {
-		return pipelineRunClientGetPipelineRunResponse{}, runtime.NewResponseError(err, resp)
+		return pipelineRunClientGetPipelineRunResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getPipelineRunHandleError handles the GetPipelineRun error response.
-func (client *pipelineRunClient) getPipelineRunHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // QueryActivityRuns - Query activity runs based on input filter conditions.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // pipelineName - The pipeline name.
 // runID - The pipeline run identifier.
 // filterParameters - Parameters to filter the activity runs.
@@ -167,7 +140,7 @@ func (client *pipelineRunClient) QueryActivityRuns(ctx context.Context, pipeline
 		return pipelineRunClientQueryActivityRunsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return pipelineRunClientQueryActivityRunsResponse{}, client.queryActivityRunsHandleError(resp)
+		return pipelineRunClientQueryActivityRunsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.queryActivityRunsHandleResponse(resp)
 }
@@ -198,26 +171,13 @@ func (client *pipelineRunClient) queryActivityRunsCreateRequest(ctx context.Cont
 func (client *pipelineRunClient) queryActivityRunsHandleResponse(resp *http.Response) (pipelineRunClientQueryActivityRunsResponse, error) {
 	result := pipelineRunClientQueryActivityRunsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ActivityRunsQueryResponse); err != nil {
-		return pipelineRunClientQueryActivityRunsResponse{}, runtime.NewResponseError(err, resp)
+		return pipelineRunClientQueryActivityRunsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// queryActivityRunsHandleError handles the QueryActivityRuns error response.
-func (client *pipelineRunClient) queryActivityRunsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // QueryPipelineRunsByWorkspace - Query pipeline runs in the workspace based on input filter conditions.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // filterParameters - Parameters to filter the pipeline run.
 // options - pipelineRunClientQueryPipelineRunsByWorkspaceOptions contains the optional parameters for the pipelineRunClient.QueryPipelineRunsByWorkspace
 // method.
@@ -231,7 +191,7 @@ func (client *pipelineRunClient) QueryPipelineRunsByWorkspace(ctx context.Contex
 		return pipelineRunClientQueryPipelineRunsByWorkspaceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return pipelineRunClientQueryPipelineRunsByWorkspaceResponse{}, client.queryPipelineRunsByWorkspaceHandleError(resp)
+		return pipelineRunClientQueryPipelineRunsByWorkspaceResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.queryPipelineRunsByWorkspaceHandleResponse(resp)
 }
@@ -254,20 +214,7 @@ func (client *pipelineRunClient) queryPipelineRunsByWorkspaceCreateRequest(ctx c
 func (client *pipelineRunClient) queryPipelineRunsByWorkspaceHandleResponse(resp *http.Response) (pipelineRunClientQueryPipelineRunsByWorkspaceResponse, error) {
 	result := pipelineRunClientQueryPipelineRunsByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineRunsQueryResponse); err != nil {
-		return pipelineRunClientQueryPipelineRunsByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
+		return pipelineRunClientQueryPipelineRunsByWorkspaceResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// queryPipelineRunsByWorkspaceHandleError handles the QueryPipelineRunsByWorkspace error response.
-func (client *pipelineRunClient) queryPipelineRunsByWorkspaceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

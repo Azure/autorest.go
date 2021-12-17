@@ -10,7 +10,6 @@ package azurespecialsgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewAPIVersionDefaultClient(options *azcore.ClientOptions) *APIVersionDefaul
 		cp = *options
 	}
 	client := &APIVersionDefaultClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetMethodGlobalNotProvidedValid - GET method with api-version modeled in global settings.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - APIVersionDefaultClientGetMethodGlobalNotProvidedValidOptions contains the optional parameters for the APIVersionDefaultClient.GetMethodGlobalNotProvidedValid
 // method.
 func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValid(ctx context.Context, options *APIVersionDefaultClientGetMethodGlobalNotProvidedValidOptions) (APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse, error) {
@@ -50,7 +49,7 @@ func (client *APIVersionDefaultClient) GetMethodGlobalNotProvidedValid(ctx conte
 		return APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse{}, client.getMethodGlobalNotProvidedValidHandleError(resp)
+		return APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse{RawResponse: resp}, nil
 }
@@ -69,21 +68,8 @@ func (client *APIVersionDefaultClient) getMethodGlobalNotProvidedValidCreateRequ
 	return req, nil
 }
 
-// getMethodGlobalNotProvidedValidHandleError handles the GetMethodGlobalNotProvidedValid error response.
-func (client *APIVersionDefaultClient) getMethodGlobalNotProvidedValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetMethodGlobalValid - GET method with api-version modeled in global settings.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - APIVersionDefaultClientGetMethodGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetMethodGlobalValid
 // method.
 func (client *APIVersionDefaultClient) GetMethodGlobalValid(ctx context.Context, options *APIVersionDefaultClientGetMethodGlobalValidOptions) (APIVersionDefaultClientGetMethodGlobalValidResponse, error) {
@@ -96,7 +82,7 @@ func (client *APIVersionDefaultClient) GetMethodGlobalValid(ctx context.Context,
 		return APIVersionDefaultClientGetMethodGlobalValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return APIVersionDefaultClientGetMethodGlobalValidResponse{}, client.getMethodGlobalValidHandleError(resp)
+		return APIVersionDefaultClientGetMethodGlobalValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return APIVersionDefaultClientGetMethodGlobalValidResponse{RawResponse: resp}, nil
 }
@@ -115,21 +101,8 @@ func (client *APIVersionDefaultClient) getMethodGlobalValidCreateRequest(ctx con
 	return req, nil
 }
 
-// getMethodGlobalValidHandleError handles the GetMethodGlobalValid error response.
-func (client *APIVersionDefaultClient) getMethodGlobalValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetPathGlobalValid - GET method with api-version modeled in global settings.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - APIVersionDefaultClientGetPathGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetPathGlobalValid
 // method.
 func (client *APIVersionDefaultClient) GetPathGlobalValid(ctx context.Context, options *APIVersionDefaultClientGetPathGlobalValidOptions) (APIVersionDefaultClientGetPathGlobalValidResponse, error) {
@@ -142,7 +115,7 @@ func (client *APIVersionDefaultClient) GetPathGlobalValid(ctx context.Context, o
 		return APIVersionDefaultClientGetPathGlobalValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return APIVersionDefaultClientGetPathGlobalValidResponse{}, client.getPathGlobalValidHandleError(resp)
+		return APIVersionDefaultClientGetPathGlobalValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return APIVersionDefaultClientGetPathGlobalValidResponse{RawResponse: resp}, nil
 }
@@ -161,21 +134,8 @@ func (client *APIVersionDefaultClient) getPathGlobalValidCreateRequest(ctx conte
 	return req, nil
 }
 
-// getPathGlobalValidHandleError handles the GetPathGlobalValid error response.
-func (client *APIVersionDefaultClient) getPathGlobalValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetSwaggerGlobalValid - GET method with api-version modeled in global settings.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - APIVersionDefaultClientGetSwaggerGlobalValidOptions contains the optional parameters for the APIVersionDefaultClient.GetSwaggerGlobalValid
 // method.
 func (client *APIVersionDefaultClient) GetSwaggerGlobalValid(ctx context.Context, options *APIVersionDefaultClientGetSwaggerGlobalValidOptions) (APIVersionDefaultClientGetSwaggerGlobalValidResponse, error) {
@@ -188,7 +148,7 @@ func (client *APIVersionDefaultClient) GetSwaggerGlobalValid(ctx context.Context
 		return APIVersionDefaultClientGetSwaggerGlobalValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return APIVersionDefaultClientGetSwaggerGlobalValidResponse{}, client.getSwaggerGlobalValidHandleError(resp)
+		return APIVersionDefaultClientGetSwaggerGlobalValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return APIVersionDefaultClientGetSwaggerGlobalValidResponse{RawResponse: resp}, nil
 }
@@ -205,17 +165,4 @@ func (client *APIVersionDefaultClient) getSwaggerGlobalValidCreateRequest(ctx co
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// getSwaggerGlobalValidHandleError handles the GetSwaggerGlobalValid error response.
-func (client *APIVersionDefaultClient) getSwaggerGlobalValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

@@ -10,7 +10,6 @@ package mediatypesgroup
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -34,13 +33,13 @@ func NewMediaTypesClient(options *azcore.ClientOptions) *MediaTypesClient {
 		cp = *options
 	}
 	client := &MediaTypesClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // AnalyzeBody - Analyze body, that could be different media types.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // contentType - Upload file type
 // options - MediaTypesClientAnalyzeBodyOptions contains the optional parameters for the MediaTypesClient.AnalyzeBody method.
 func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType ContentType, options *MediaTypesClientAnalyzeBodyOptions) (MediaTypesClientAnalyzeBodyResponse, error) {
@@ -53,7 +52,7 @@ func (client *MediaTypesClient) AnalyzeBody(ctx context.Context, contentType Con
 		return MediaTypesClientAnalyzeBodyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MediaTypesClientAnalyzeBodyResponse{}, client.analyzeBodyHandleError(resp)
+		return MediaTypesClientAnalyzeBodyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.analyzeBodyHandleResponse(resp)
 }
@@ -77,26 +76,14 @@ func (client *MediaTypesClient) analyzeBodyCreateRequest(ctx context.Context, co
 func (client *MediaTypesClient) analyzeBodyHandleResponse(resp *http.Response) (MediaTypesClientAnalyzeBodyResponse, error) {
 	result := MediaTypesClientAnalyzeBodyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return MediaTypesClientAnalyzeBodyResponse{}, runtime.NewResponseError(err, resp)
+		return MediaTypesClientAnalyzeBodyResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// analyzeBodyHandleError handles the AnalyzeBody error response.
-func (client *MediaTypesClient) analyzeBodyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // AnalyzeBodyNoAcceptHeader - Analyze body, that could be different media types. Adds to AnalyzeBody by not having an accept
 // type.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // contentType - Upload file type
 // options - MediaTypesClientAnalyzeBodyNoAcceptHeaderOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeader
 // method.
@@ -110,7 +97,7 @@ func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeader(ctx context.Context, c
 		return MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse{}, client.analyzeBodyNoAcceptHeaderHandleError(resp)
+		return MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse{}, runtime.NewResponseError(resp)
 	}
 	return MediaTypesClientAnalyzeBodyNoAcceptHeaderResponse{RawResponse: resp}, nil
 }
@@ -129,21 +116,9 @@ func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderCreateRequest(ctx conte
 	return req, nil
 }
 
-// analyzeBodyNoAcceptHeaderHandleError handles the AnalyzeBodyNoAcceptHeader error response.
-func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // AnalyzeBodyNoAcceptHeaderWithJSON - Analyze body, that could be different media types. Adds to AnalyzeBody by not having
 // an accept type.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyNoAcceptHeaderWithJSON
 // method.
 func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeaderWithJSON(ctx context.Context, options *MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONOptions) (MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse, error) {
@@ -156,7 +131,7 @@ func (client *MediaTypesClient) AnalyzeBodyNoAcceptHeaderWithJSON(ctx context.Co
 		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse{}, client.analyzeBodyNoAcceptHeaderWithJSONHandleError(resp)
+		return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse{}, runtime.NewResponseError(resp)
 	}
 	return MediaTypesClientAnalyzeBodyNoAcceptHeaderWithJSONResponse{RawResponse: resp}, nil
 }
@@ -174,20 +149,8 @@ func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithJSONCreateRequest(c
 	return req, nil
 }
 
-// analyzeBodyNoAcceptHeaderWithJSONHandleError handles the AnalyzeBodyNoAcceptHeaderWithJSON error response.
-func (client *MediaTypesClient) analyzeBodyNoAcceptHeaderWithJSONHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // AnalyzeBodyWithJSON - Analyze body, that could be different media types.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MediaTypesClientAnalyzeBodyWithJSONOptions contains the optional parameters for the MediaTypesClient.AnalyzeBodyWithJSON
 // method.
 func (client *MediaTypesClient) AnalyzeBodyWithJSON(ctx context.Context, options *MediaTypesClientAnalyzeBodyWithJSONOptions) (MediaTypesClientAnalyzeBodyWithJSONResponse, error) {
@@ -200,7 +163,7 @@ func (client *MediaTypesClient) AnalyzeBodyWithJSON(ctx context.Context, options
 		return MediaTypesClientAnalyzeBodyWithJSONResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MediaTypesClientAnalyzeBodyWithJSONResponse{}, client.analyzeBodyWithJSONHandleError(resp)
+		return MediaTypesClientAnalyzeBodyWithJSONResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.analyzeBodyWithJSONHandleResponse(resp)
 }
@@ -223,27 +186,15 @@ func (client *MediaTypesClient) analyzeBodyWithJSONCreateRequest(ctx context.Con
 func (client *MediaTypesClient) analyzeBodyWithJSONHandleResponse(resp *http.Response) (MediaTypesClientAnalyzeBodyWithJSONResponse, error) {
 	result := MediaTypesClientAnalyzeBodyWithJSONResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return MediaTypesClientAnalyzeBodyWithJSONResponse{}, runtime.NewResponseError(err, resp)
+		return MediaTypesClientAnalyzeBodyWithJSONResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// analyzeBodyWithJSONHandleError handles the AnalyzeBodyWithJSON error response.
-func (client *MediaTypesClient) analyzeBodyWithJSONHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // BinaryBodyWithThreeContentTypes - Binary body with three content types. Pass in string 'hello, world' with content type
 // 'text/plain', {'hello': world'} with content type 'application/json' and a byte string for
 // 'application/octet-stream'.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // contentType - Upload file type
 // message - The payload body.
 // options - MediaTypesClientBinaryBodyWithThreeContentTypesOptions contains the optional parameters for the MediaTypesClient.BinaryBodyWithThreeContentTypes
@@ -258,7 +209,7 @@ func (client *MediaTypesClient) BinaryBodyWithThreeContentTypes(ctx context.Cont
 		return MediaTypesClientBinaryBodyWithThreeContentTypesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MediaTypesClientBinaryBodyWithThreeContentTypesResponse{}, client.binaryBodyWithThreeContentTypesHandleError(resp)
+		return MediaTypesClientBinaryBodyWithThreeContentTypesResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.binaryBodyWithThreeContentTypesHandleResponse(resp)
 }
@@ -280,29 +231,17 @@ func (client *MediaTypesClient) binaryBodyWithThreeContentTypesHandleResponse(re
 	result := MediaTypesClientBinaryBodyWithThreeContentTypesResponse{RawResponse: resp}
 	body, err := runtime.Payload(resp)
 	if err != nil {
-		return MediaTypesClientBinaryBodyWithThreeContentTypesResponse{}, runtime.NewResponseError(err, resp)
+		return MediaTypesClientBinaryBodyWithThreeContentTypesResponse{}, runtime.NewResponseError(resp)
 	}
 	txt := string(body)
 	result.Value = &txt
 	return result, nil
 }
 
-// binaryBodyWithThreeContentTypesHandleError handles the BinaryBodyWithThreeContentTypes error response.
-func (client *MediaTypesClient) binaryBodyWithThreeContentTypesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BinaryBodyWithThreeContentTypesWithText - Binary body with three content types. Pass in string 'hello, world' with content
 // type 'text/plain', {'hello': world'} with content type 'application/json' and a byte string for
 // 'application/octet-stream'.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // message - The payload body.
 // options - MediaTypesClientBinaryBodyWithThreeContentTypesWithTextOptions contains the optional parameters for the MediaTypesClient.BinaryBodyWithThreeContentTypesWithText
 // method.
@@ -316,7 +255,7 @@ func (client *MediaTypesClient) BinaryBodyWithThreeContentTypesWithText(ctx cont
 		return MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse{}, client.binaryBodyWithThreeContentTypesWithTextHandleError(resp)
+		return MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.binaryBodyWithThreeContentTypesWithTextHandleResponse(resp)
 }
@@ -338,28 +277,16 @@ func (client *MediaTypesClient) binaryBodyWithThreeContentTypesWithTextHandleRes
 	result := MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse{RawResponse: resp}
 	body, err := runtime.Payload(resp)
 	if err != nil {
-		return MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse{}, runtime.NewResponseError(err, resp)
+		return MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse{}, runtime.NewResponseError(resp)
 	}
 	txt := string(body)
 	result.Value = &txt
 	return result, nil
 }
 
-// binaryBodyWithThreeContentTypesWithTextHandleError handles the BinaryBodyWithThreeContentTypesWithText error response.
-func (client *MediaTypesClient) binaryBodyWithThreeContentTypesWithTextHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BinaryBodyWithTwoContentTypes - Binary body with two content types. Pass in of {'hello': 'world'} for the application/json
 // content type, and a byte stream of 'hello, world!' for application/octet-stream.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // contentType - Upload file type
 // message - The payload body.
 // options - MediaTypesClientBinaryBodyWithTwoContentTypesOptions contains the optional parameters for the MediaTypesClient.BinaryBodyWithTwoContentTypes
@@ -374,7 +301,7 @@ func (client *MediaTypesClient) BinaryBodyWithTwoContentTypes(ctx context.Contex
 		return MediaTypesClientBinaryBodyWithTwoContentTypesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MediaTypesClientBinaryBodyWithTwoContentTypesResponse{}, client.binaryBodyWithTwoContentTypesHandleError(resp)
+		return MediaTypesClientBinaryBodyWithTwoContentTypesResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.binaryBodyWithTwoContentTypesHandleResponse(resp)
 }
@@ -396,27 +323,15 @@ func (client *MediaTypesClient) binaryBodyWithTwoContentTypesHandleResponse(resp
 	result := MediaTypesClientBinaryBodyWithTwoContentTypesResponse{RawResponse: resp}
 	body, err := runtime.Payload(resp)
 	if err != nil {
-		return MediaTypesClientBinaryBodyWithTwoContentTypesResponse{}, runtime.NewResponseError(err, resp)
+		return MediaTypesClientBinaryBodyWithTwoContentTypesResponse{}, runtime.NewResponseError(resp)
 	}
 	txt := string(body)
 	result.Value = &txt
 	return result, nil
 }
 
-// binaryBodyWithTwoContentTypesHandleError handles the BinaryBodyWithTwoContentTypes error response.
-func (client *MediaTypesClient) binaryBodyWithTwoContentTypesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // ContentTypeWithEncoding - Pass in contentType 'text/plain; charset=UTF-8' to pass test. Value for input does not matter
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MediaTypesClientContentTypeWithEncodingOptions contains the optional parameters for the MediaTypesClient.ContentTypeWithEncoding
 // method.
 func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, options *MediaTypesClientContentTypeWithEncodingOptions) (MediaTypesClientContentTypeWithEncodingResponse, error) {
@@ -429,7 +344,7 @@ func (client *MediaTypesClient) ContentTypeWithEncoding(ctx context.Context, opt
 		return MediaTypesClientContentTypeWithEncodingResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MediaTypesClientContentTypeWithEncodingResponse{}, client.contentTypeWithEncodingHandleError(resp)
+		return MediaTypesClientContentTypeWithEncodingResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.contentTypeWithEncodingHandleResponse(resp)
 }
@@ -453,25 +368,13 @@ func (client *MediaTypesClient) contentTypeWithEncodingCreateRequest(ctx context
 func (client *MediaTypesClient) contentTypeWithEncodingHandleResponse(resp *http.Response) (MediaTypesClientContentTypeWithEncodingResponse, error) {
 	result := MediaTypesClientContentTypeWithEncodingResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return MediaTypesClientContentTypeWithEncodingResponse{}, runtime.NewResponseError(err, resp)
+		return MediaTypesClientContentTypeWithEncodingResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// contentTypeWithEncodingHandleError handles the ContentTypeWithEncoding error response.
-func (client *MediaTypesClient) contentTypeWithEncodingHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // PutTextAndJSONBodyWithJSON - Body that's either text/plain or application/json
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // message - The payload body.
 // options - MediaTypesClientPutTextAndJSONBodyWithJSONOptions contains the optional parameters for the MediaTypesClient.PutTextAndJSONBodyWithJSON
 // method.
@@ -485,7 +388,7 @@ func (client *MediaTypesClient) PutTextAndJSONBodyWithJSON(ctx context.Context, 
 		return MediaTypesClientPutTextAndJSONBodyWithJSONResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MediaTypesClientPutTextAndJSONBodyWithJSONResponse{}, client.putTextAndJSONBodyWithJSONHandleError(resp)
+		return MediaTypesClientPutTextAndJSONBodyWithJSONResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.putTextAndJSONBodyWithJSONHandleResponse(resp)
 }
@@ -506,27 +409,15 @@ func (client *MediaTypesClient) putTextAndJSONBodyWithJSONHandleResponse(resp *h
 	result := MediaTypesClientPutTextAndJSONBodyWithJSONResponse{RawResponse: resp}
 	body, err := runtime.Payload(resp)
 	if err != nil {
-		return MediaTypesClientPutTextAndJSONBodyWithJSONResponse{}, runtime.NewResponseError(err, resp)
+		return MediaTypesClientPutTextAndJSONBodyWithJSONResponse{}, runtime.NewResponseError(resp)
 	}
 	txt := string(body)
 	result.Value = &txt
 	return result, nil
 }
 
-// putTextAndJSONBodyWithJSONHandleError handles the PutTextAndJSONBodyWithJSON error response.
-func (client *MediaTypesClient) putTextAndJSONBodyWithJSONHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // PutTextAndJSONBodyWithText - Body that's either text/plain or application/json
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // message - The payload body.
 // options - MediaTypesClientPutTextAndJSONBodyWithTextOptions contains the optional parameters for the MediaTypesClient.PutTextAndJSONBodyWithText
 // method.
@@ -540,7 +431,7 @@ func (client *MediaTypesClient) PutTextAndJSONBodyWithText(ctx context.Context, 
 		return MediaTypesClientPutTextAndJSONBodyWithTextResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MediaTypesClientPutTextAndJSONBodyWithTextResponse{}, client.putTextAndJSONBodyWithTextHandleError(resp)
+		return MediaTypesClientPutTextAndJSONBodyWithTextResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.putTextAndJSONBodyWithTextHandleResponse(resp)
 }
@@ -562,21 +453,9 @@ func (client *MediaTypesClient) putTextAndJSONBodyWithTextHandleResponse(resp *h
 	result := MediaTypesClientPutTextAndJSONBodyWithTextResponse{RawResponse: resp}
 	body, err := runtime.Payload(resp)
 	if err != nil {
-		return MediaTypesClientPutTextAndJSONBodyWithTextResponse{}, runtime.NewResponseError(err, resp)
+		return MediaTypesClientPutTextAndJSONBodyWithTextResponse{}, runtime.NewResponseError(resp)
 	}
 	txt := string(body)
 	result.Value = &txt
 	return result, nil
-}
-
-// putTextAndJSONBodyWithTextHandleError handles the PutTextAndJSONBodyWithText error response.
-func (client *MediaTypesClient) putTextAndJSONBodyWithTextHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

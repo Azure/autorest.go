@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewSecurityGroupsClient(subscriptionID string, credential azcore.TokenCrede
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &SecurityGroupsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a network security group in the specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
 // parameters - Parameters supplied to the create or update network security group operation.
@@ -66,7 +65,7 @@ func (client *SecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, res
 	result := SecurityGroupsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SecurityGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("SecurityGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return SecurityGroupsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *SecurityGroupsClient) BeginCreateOrUpdate(ctx context.Context, res
 }
 
 // CreateOrUpdate - Creates or updates a network security group in the specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SecurityGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, parameters SecurityGroup, options *SecurityGroupsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, parameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *SecurityGroupsClient) createOrUpdate(ctx context.Context, resource
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,21 +118,8 @@ func (client *SecurityGroupsClient) createOrUpdateCreateRequest(ctx context.Cont
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *SecurityGroupsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified network security group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
 // options - SecurityGroupsClientBeginDeleteOptions contains the optional parameters for the SecurityGroupsClient.BeginDelete
@@ -146,7 +132,7 @@ func (client *SecurityGroupsClient) BeginDelete(ctx context.Context, resourceGro
 	result := SecurityGroupsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SecurityGroupsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("SecurityGroupsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return SecurityGroupsClientDeletePollerResponse{}, err
 	}
@@ -157,7 +143,7 @@ func (client *SecurityGroupsClient) BeginDelete(ctx context.Context, resourceGro
 }
 
 // Delete - Deletes the specified network security group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SecurityGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *SecurityGroupsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, options)
 	if err != nil {
@@ -168,7 +154,7 @@ func (client *SecurityGroupsClient) deleteOperation(ctx context.Context, resourc
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -199,21 +185,8 @@ func (client *SecurityGroupsClient) deleteCreateRequest(ctx context.Context, res
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *SecurityGroupsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the specified network security group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
 // options - SecurityGroupsClientGetOptions contains the optional parameters for the SecurityGroupsClient.Get method.
@@ -227,7 +200,7 @@ func (client *SecurityGroupsClient) Get(ctx context.Context, resourceGroupName s
 		return SecurityGroupsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SecurityGroupsClientGetResponse{}, client.getHandleError(resp)
+		return SecurityGroupsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -265,26 +238,13 @@ func (client *SecurityGroupsClient) getCreateRequest(ctx context.Context, resour
 func (client *SecurityGroupsClient) getHandleResponse(resp *http.Response) (SecurityGroupsClientGetResponse, error) {
 	result := SecurityGroupsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityGroup); err != nil {
-		return SecurityGroupsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return SecurityGroupsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *SecurityGroupsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all network security groups in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - SecurityGroupsClientListOptions contains the optional parameters for the SecurityGroupsClient.List method.
 func (client *SecurityGroupsClient) List(resourceGroupName string, options *SecurityGroupsClientListOptions) *SecurityGroupsClientListPager {
@@ -325,26 +285,13 @@ func (client *SecurityGroupsClient) listCreateRequest(ctx context.Context, resou
 func (client *SecurityGroupsClient) listHandleResponse(resp *http.Response) (SecurityGroupsClientListResponse, error) {
 	result := SecurityGroupsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityGroupListResult); err != nil {
-		return SecurityGroupsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return SecurityGroupsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *SecurityGroupsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListAll - Gets all network security groups in a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - SecurityGroupsClientListAllOptions contains the optional parameters for the SecurityGroupsClient.ListAll method.
 func (client *SecurityGroupsClient) ListAll(options *SecurityGroupsClientListAllOptions) *SecurityGroupsClientListAllPager {
 	return &SecurityGroupsClientListAllPager{
@@ -380,26 +327,13 @@ func (client *SecurityGroupsClient) listAllCreateRequest(ctx context.Context, op
 func (client *SecurityGroupsClient) listAllHandleResponse(resp *http.Response) (SecurityGroupsClientListAllResponse, error) {
 	result := SecurityGroupsClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityGroupListResult); err != nil {
-		return SecurityGroupsClientListAllResponse{}, runtime.NewResponseError(err, resp)
+		return SecurityGroupsClientListAllResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listAllHandleError handles the ListAll error response.
-func (client *SecurityGroupsClient) listAllHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateTags - Updates a network security group tags.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
 // parameters - Parameters supplied to update network security group tags.
@@ -415,7 +349,7 @@ func (client *SecurityGroupsClient) UpdateTags(ctx context.Context, resourceGrou
 		return SecurityGroupsClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SecurityGroupsClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return SecurityGroupsClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -450,20 +384,7 @@ func (client *SecurityGroupsClient) updateTagsCreateRequest(ctx context.Context,
 func (client *SecurityGroupsClient) updateTagsHandleResponse(resp *http.Response) (SecurityGroupsClientUpdateTagsResponse, error) {
 	result := SecurityGroupsClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityGroup); err != nil {
-		return SecurityGroupsClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return SecurityGroupsClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *SecurityGroupsClient) updateTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

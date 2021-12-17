@@ -117,7 +117,7 @@ func (l ContainerServicesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx c
 
 // Resume rehydrates a ContainerServicesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *ContainerServicesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ContainerServicesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ContainerServicesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ContainerServicesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -169,7 +169,7 @@ func (l ContainerServicesClientDeletePollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a ContainerServicesClientDeletePollerResponse from the provided client and resume token.
 func (l *ContainerServicesClientDeletePollerResponse) Resume(ctx context.Context, client *ContainerServicesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ContainerServicesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ContainerServicesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -317,7 +317,7 @@ func (l DedicatedHostsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx cont
 
 // Resume rehydrates a DedicatedHostsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *DedicatedHostsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *DedicatedHostsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("DedicatedHostsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("DedicatedHostsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -369,7 +369,7 @@ func (l DedicatedHostsClientDeletePollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a DedicatedHostsClientDeletePollerResponse from the provided client and resume token.
 func (l *DedicatedHostsClientDeletePollerResponse) Resume(ctx context.Context, client *DedicatedHostsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("DedicatedHostsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("DedicatedHostsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -439,7 +439,7 @@ func (l DedicatedHostsClientUpdatePollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a DedicatedHostsClientUpdatePollerResponse from the provided client and resume token.
 func (l *DedicatedHostsClientUpdatePollerResponse) Resume(ctx context.Context, client *DedicatedHostsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("DedicatedHostsClient.Update", token, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("DedicatedHostsClient.Update", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -491,7 +491,7 @@ func (l DiskEncryptionSetsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a DiskEncryptionSetsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *DiskEncryptionSetsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *DiskEncryptionSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("DiskEncryptionSetsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("DiskEncryptionSetsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -543,7 +543,7 @@ func (l DiskEncryptionSetsClientDeletePollerResponse) PollUntilDone(ctx context.
 
 // Resume rehydrates a DiskEncryptionSetsClientDeletePollerResponse from the provided client and resume token.
 func (l *DiskEncryptionSetsClientDeletePollerResponse) Resume(ctx context.Context, client *DiskEncryptionSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("DiskEncryptionSetsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("DiskEncryptionSetsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -625,7 +625,7 @@ func (l DiskEncryptionSetsClientUpdatePollerResponse) PollUntilDone(ctx context.
 
 // Resume rehydrates a DiskEncryptionSetsClientUpdatePollerResponse from the provided client and resume token.
 func (l *DiskEncryptionSetsClientUpdatePollerResponse) Resume(ctx context.Context, client *DiskEncryptionSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("DiskEncryptionSetsClient.Update", token, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("DiskEncryptionSetsClient.Update", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -677,7 +677,7 @@ func (l DisksClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Conte
 
 // Resume rehydrates a DisksClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *DisksClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *DisksClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("DisksClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("DisksClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -729,7 +729,7 @@ func (l DisksClientDeletePollerResponse) PollUntilDone(ctx context.Context, freq
 
 // Resume rehydrates a DisksClientDeletePollerResponse from the provided client and resume token.
 func (l *DisksClientDeletePollerResponse) Resume(ctx context.Context, client *DisksClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("DisksClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("DisksClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -787,7 +787,7 @@ func (l DisksClientGrantAccessPollerResponse) PollUntilDone(ctx context.Context,
 
 // Resume rehydrates a DisksClientGrantAccessPollerResponse from the provided client and resume token.
 func (l *DisksClientGrantAccessPollerResponse) Resume(ctx context.Context, client *DisksClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("DisksClient.GrantAccess", token, client.pl, client.grantAccessHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("DisksClient.GrantAccess", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -863,7 +863,7 @@ func (l DisksClientRevokeAccessPollerResponse) PollUntilDone(ctx context.Context
 
 // Resume rehydrates a DisksClientRevokeAccessPollerResponse from the provided client and resume token.
 func (l *DisksClientRevokeAccessPollerResponse) Resume(ctx context.Context, client *DisksClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("DisksClient.RevokeAccess", token, client.pl, client.revokeAccessHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("DisksClient.RevokeAccess", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -909,7 +909,7 @@ func (l DisksClientUpdatePollerResponse) PollUntilDone(ctx context.Context, freq
 
 // Resume rehydrates a DisksClientUpdatePollerResponse from the provided client and resume token.
 func (l *DisksClientUpdatePollerResponse) Resume(ctx context.Context, client *DisksClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("DisksClient.Update", token, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("DisksClient.Update", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -961,7 +961,7 @@ func (l GalleriesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a GalleriesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *GalleriesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *GalleriesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("GalleriesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("GalleriesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1013,7 +1013,7 @@ func (l GalleriesClientDeletePollerResponse) PollUntilDone(ctx context.Context, 
 
 // Resume rehydrates a GalleriesClientDeletePollerResponse from the provided client and resume token.
 func (l *GalleriesClientDeletePollerResponse) Resume(ctx context.Context, client *GalleriesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("GalleriesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("GalleriesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1095,7 +1095,7 @@ func (l GalleriesClientUpdatePollerResponse) PollUntilDone(ctx context.Context, 
 
 // Resume rehydrates a GalleriesClientUpdatePollerResponse from the provided client and resume token.
 func (l *GalleriesClientUpdatePollerResponse) Resume(ctx context.Context, client *GalleriesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("GalleriesClient.Update", token, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("GalleriesClient.Update", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1147,7 +1147,7 @@ func (l GalleryApplicationVersionsClientCreateOrUpdatePollerResponse) PollUntilD
 
 // Resume rehydrates a GalleryApplicationVersionsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *GalleryApplicationVersionsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *GalleryApplicationVersionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("GalleryApplicationVersionsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("GalleryApplicationVersionsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1199,7 +1199,7 @@ func (l GalleryApplicationVersionsClientDeletePollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a GalleryApplicationVersionsClientDeletePollerResponse from the provided client and resume token.
 func (l *GalleryApplicationVersionsClientDeletePollerResponse) Resume(ctx context.Context, client *GalleryApplicationVersionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("GalleryApplicationVersionsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("GalleryApplicationVersionsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1269,7 +1269,7 @@ func (l GalleryApplicationVersionsClientUpdatePollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a GalleryApplicationVersionsClientUpdatePollerResponse from the provided client and resume token.
 func (l *GalleryApplicationVersionsClientUpdatePollerResponse) Resume(ctx context.Context, client *GalleryApplicationVersionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("GalleryApplicationVersionsClient.Update", token, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("GalleryApplicationVersionsClient.Update", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1321,7 +1321,7 @@ func (l GalleryApplicationsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx
 
 // Resume rehydrates a GalleryApplicationsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *GalleryApplicationsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *GalleryApplicationsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("GalleryApplicationsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("GalleryApplicationsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1373,7 +1373,7 @@ func (l GalleryApplicationsClientDeletePollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a GalleryApplicationsClientDeletePollerResponse from the provided client and resume token.
 func (l *GalleryApplicationsClientDeletePollerResponse) Resume(ctx context.Context, client *GalleryApplicationsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("GalleryApplicationsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("GalleryApplicationsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1443,7 +1443,7 @@ func (l GalleryApplicationsClientUpdatePollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a GalleryApplicationsClientUpdatePollerResponse from the provided client and resume token.
 func (l *GalleryApplicationsClientUpdatePollerResponse) Resume(ctx context.Context, client *GalleryApplicationsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("GalleryApplicationsClient.Update", token, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("GalleryApplicationsClient.Update", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1495,7 +1495,7 @@ func (l GalleryImageVersionsClientCreateOrUpdatePollerResponse) PollUntilDone(ct
 
 // Resume rehydrates a GalleryImageVersionsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *GalleryImageVersionsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *GalleryImageVersionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("GalleryImageVersionsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("GalleryImageVersionsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1547,7 +1547,7 @@ func (l GalleryImageVersionsClientDeletePollerResponse) PollUntilDone(ctx contex
 
 // Resume rehydrates a GalleryImageVersionsClientDeletePollerResponse from the provided client and resume token.
 func (l *GalleryImageVersionsClientDeletePollerResponse) Resume(ctx context.Context, client *GalleryImageVersionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("GalleryImageVersionsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("GalleryImageVersionsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1617,7 +1617,7 @@ func (l GalleryImageVersionsClientUpdatePollerResponse) PollUntilDone(ctx contex
 
 // Resume rehydrates a GalleryImageVersionsClientUpdatePollerResponse from the provided client and resume token.
 func (l *GalleryImageVersionsClientUpdatePollerResponse) Resume(ctx context.Context, client *GalleryImageVersionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("GalleryImageVersionsClient.Update", token, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("GalleryImageVersionsClient.Update", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1669,7 +1669,7 @@ func (l GalleryImagesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx conte
 
 // Resume rehydrates a GalleryImagesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *GalleryImagesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *GalleryImagesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("GalleryImagesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("GalleryImagesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1721,7 +1721,7 @@ func (l GalleryImagesClientDeletePollerResponse) PollUntilDone(ctx context.Conte
 
 // Resume rehydrates a GalleryImagesClientDeletePollerResponse from the provided client and resume token.
 func (l *GalleryImagesClientDeletePollerResponse) Resume(ctx context.Context, client *GalleryImagesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("GalleryImagesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("GalleryImagesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1791,7 +1791,7 @@ func (l GalleryImagesClientUpdatePollerResponse) PollUntilDone(ctx context.Conte
 
 // Resume rehydrates a GalleryImagesClientUpdatePollerResponse from the provided client and resume token.
 func (l *GalleryImagesClientUpdatePollerResponse) Resume(ctx context.Context, client *GalleryImagesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("GalleryImagesClient.Update", token, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("GalleryImagesClient.Update", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1843,7 +1843,7 @@ func (l ImagesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a ImagesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *ImagesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ImagesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ImagesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ImagesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1895,7 +1895,7 @@ func (l ImagesClientDeletePollerResponse) PollUntilDone(ctx context.Context, fre
 
 // Resume rehydrates a ImagesClientDeletePollerResponse from the provided client and resume token.
 func (l *ImagesClientDeletePollerResponse) Resume(ctx context.Context, client *ImagesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ImagesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ImagesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1977,7 +1977,7 @@ func (l ImagesClientUpdatePollerResponse) PollUntilDone(ctx context.Context, fre
 
 // Resume rehydrates a ImagesClientUpdatePollerResponse from the provided client and resume token.
 func (l *ImagesClientUpdatePollerResponse) Resume(ctx context.Context, client *ImagesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ImagesClient.Update", token, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ImagesClient.Update", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2029,7 +2029,7 @@ func (l LogAnalyticsClientExportRequestRateByIntervalPollerResponse) PollUntilDo
 
 // Resume rehydrates a LogAnalyticsClientExportRequestRateByIntervalPollerResponse from the provided client and resume token.
 func (l *LogAnalyticsClientExportRequestRateByIntervalPollerResponse) Resume(ctx context.Context, client *LogAnalyticsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LogAnalyticsClient.ExportRequestRateByInterval", token, client.pl, client.exportRequestRateByIntervalHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LogAnalyticsClient.ExportRequestRateByInterval", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2081,7 +2081,7 @@ func (l LogAnalyticsClientExportThrottledRequestsPollerResponse) PollUntilDone(c
 
 // Resume rehydrates a LogAnalyticsClientExportThrottledRequestsPollerResponse from the provided client and resume token.
 func (l *LogAnalyticsClientExportThrottledRequestsPollerResponse) Resume(ctx context.Context, client *LogAnalyticsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LogAnalyticsClient.ExportThrottledRequests", token, client.pl, client.exportThrottledRequestsHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LogAnalyticsClient.ExportThrottledRequests", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2301,7 +2301,7 @@ func (l SnapshotsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a SnapshotsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *SnapshotsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *SnapshotsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("SnapshotsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("SnapshotsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2353,7 +2353,7 @@ func (l SnapshotsClientDeletePollerResponse) PollUntilDone(ctx context.Context, 
 
 // Resume rehydrates a SnapshotsClientDeletePollerResponse from the provided client and resume token.
 func (l *SnapshotsClientDeletePollerResponse) Resume(ctx context.Context, client *SnapshotsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("SnapshotsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("SnapshotsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2411,7 +2411,7 @@ func (l SnapshotsClientGrantAccessPollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a SnapshotsClientGrantAccessPollerResponse from the provided client and resume token.
 func (l *SnapshotsClientGrantAccessPollerResponse) Resume(ctx context.Context, client *SnapshotsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("SnapshotsClient.GrantAccess", token, client.pl, client.grantAccessHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("SnapshotsClient.GrantAccess", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2487,7 +2487,7 @@ func (l SnapshotsClientRevokeAccessPollerResponse) PollUntilDone(ctx context.Con
 
 // Resume rehydrates a SnapshotsClientRevokeAccessPollerResponse from the provided client and resume token.
 func (l *SnapshotsClientRevokeAccessPollerResponse) Resume(ctx context.Context, client *SnapshotsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("SnapshotsClient.RevokeAccess", token, client.pl, client.revokeAccessHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("SnapshotsClient.RevokeAccess", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2533,7 +2533,7 @@ func (l SnapshotsClientUpdatePollerResponse) PollUntilDone(ctx context.Context, 
 
 // Resume rehydrates a SnapshotsClientUpdatePollerResponse from the provided client and resume token.
 func (l *SnapshotsClientUpdatePollerResponse) Resume(ctx context.Context, client *SnapshotsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("SnapshotsClient.Update", token, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("SnapshotsClient.Update", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2635,7 +2635,7 @@ func (l VirtualMachineExtensionsClientCreateOrUpdatePollerResponse) PollUntilDon
 
 // Resume rehydrates a VirtualMachineExtensionsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualMachineExtensionsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineExtensionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineExtensionsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineExtensionsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2687,7 +2687,7 @@ func (l VirtualMachineExtensionsClientDeletePollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a VirtualMachineExtensionsClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualMachineExtensionsClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualMachineExtensionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineExtensionsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineExtensionsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2757,7 +2757,7 @@ func (l VirtualMachineExtensionsClientUpdatePollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a VirtualMachineExtensionsClientUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualMachineExtensionsClientUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineExtensionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineExtensionsClient.Update", token, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineExtensionsClient.Update", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2898,7 +2898,7 @@ func (l VirtualMachineScaleSetExtensionsClientCreateOrUpdatePollerResponse) Poll
 // Resume rehydrates a VirtualMachineScaleSetExtensionsClientCreateOrUpdatePollerResponse from the provided client and resume
 // token.
 func (l *VirtualMachineScaleSetExtensionsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetExtensionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetExtensionsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetExtensionsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2950,7 +2950,7 @@ func (l VirtualMachineScaleSetExtensionsClientDeletePollerResponse) PollUntilDon
 
 // Resume rehydrates a VirtualMachineScaleSetExtensionsClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetExtensionsClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetExtensionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetExtensionsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetExtensionsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3020,7 +3020,7 @@ func (l VirtualMachineScaleSetExtensionsClientUpdatePollerResponse) PollUntilDon
 
 // Resume rehydrates a VirtualMachineScaleSetExtensionsClientUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetExtensionsClientUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetExtensionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetExtensionsClient.Update", token, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetExtensionsClient.Update", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3073,7 +3073,7 @@ func (l VirtualMachineScaleSetRollingUpgradesClientCancelPollerResponse) PollUnt
 // Resume rehydrates a VirtualMachineScaleSetRollingUpgradesClientCancelPollerResponse from the provided client and resume
 // token.
 func (l *VirtualMachineScaleSetRollingUpgradesClientCancelPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetRollingUpgradesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetRollingUpgradesClient.Cancel", token, client.pl, client.cancelHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetRollingUpgradesClient.Cancel", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3132,7 +3132,7 @@ func (l VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradePollerRe
 // Resume rehydrates a VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradePollerResponse from the provided client
 // and resume token.
 func (l *VirtualMachineScaleSetRollingUpgradesClientStartExtensionUpgradePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetRollingUpgradesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetRollingUpgradesClient.StartExtensionUpgrade", token, client.pl, client.startExtensionUpgradeHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetRollingUpgradesClient.StartExtensionUpgrade", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3179,7 +3179,7 @@ func (l VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradePollerResponse)
 // Resume rehydrates a VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradePollerResponse from the provided client and
 // resume token.
 func (l *VirtualMachineScaleSetRollingUpgradesClientStartOSUpgradePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetRollingUpgradesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetRollingUpgradesClient.StartOSUpgrade", token, client.pl, client.startOSUpgradeHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetRollingUpgradesClient.StartOSUpgrade", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3226,7 +3226,7 @@ func (l VirtualMachineScaleSetVMExtensionsClientCreateOrUpdatePollerResponse) Po
 // Resume rehydrates a VirtualMachineScaleSetVMExtensionsClientCreateOrUpdatePollerResponse from the provided client and resume
 // token.
 func (l *VirtualMachineScaleSetVMExtensionsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMExtensionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMExtensionsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMExtensionsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3278,7 +3278,7 @@ func (l VirtualMachineScaleSetVMExtensionsClientDeletePollerResponse) PollUntilD
 
 // Resume rehydrates a VirtualMachineScaleSetVMExtensionsClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetVMExtensionsClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMExtensionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMExtensionsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMExtensionsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3348,7 +3348,7 @@ func (l VirtualMachineScaleSetVMExtensionsClientUpdatePollerResponse) PollUntilD
 
 // Resume rehydrates a VirtualMachineScaleSetVMExtensionsClientUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetVMExtensionsClientUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMExtensionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMExtensionsClient.Update", token, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMExtensionsClient.Update", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3400,7 +3400,7 @@ func (l VirtualMachineScaleSetVMsClientDeallocatePollerResponse) PollUntilDone(c
 
 // Resume rehydrates a VirtualMachineScaleSetVMsClientDeallocatePollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetVMsClientDeallocatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Deallocate", token, client.pl, client.deallocateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Deallocate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3446,7 +3446,7 @@ func (l VirtualMachineScaleSetVMsClientDeletePollerResponse) PollUntilDone(ctx c
 
 // Resume rehydrates a VirtualMachineScaleSetVMsClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetVMsClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3529,7 +3529,7 @@ func (l VirtualMachineScaleSetVMsClientPerformMaintenancePollerResponse) PollUnt
 // Resume rehydrates a VirtualMachineScaleSetVMsClientPerformMaintenancePollerResponse from the provided client and resume
 // token.
 func (l *VirtualMachineScaleSetVMsClientPerformMaintenancePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.PerformMaintenance", token, client.pl, client.performMaintenanceHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.PerformMaintenance", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3575,7 +3575,7 @@ func (l VirtualMachineScaleSetVMsClientPowerOffPollerResponse) PollUntilDone(ctx
 
 // Resume rehydrates a VirtualMachineScaleSetVMsClientPowerOffPollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetVMsClientPowerOffPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.PowerOff", token, client.pl, client.powerOffHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.PowerOff", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3621,7 +3621,7 @@ func (l VirtualMachineScaleSetVMsClientRedeployPollerResponse) PollUntilDone(ctx
 
 // Resume rehydrates a VirtualMachineScaleSetVMsClientRedeployPollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetVMsClientRedeployPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Redeploy", token, client.pl, client.redeployHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Redeploy", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3667,7 +3667,7 @@ func (l VirtualMachineScaleSetVMsClientReimageAllPollerResponse) PollUntilDone(c
 
 // Resume rehydrates a VirtualMachineScaleSetVMsClientReimageAllPollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetVMsClientReimageAllPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.ReimageAll", token, client.pl, client.reimageAllHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.ReimageAll", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3713,7 +3713,7 @@ func (l VirtualMachineScaleSetVMsClientReimagePollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a VirtualMachineScaleSetVMsClientReimagePollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetVMsClientReimagePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Reimage", token, client.pl, client.reimageHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Reimage", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3759,7 +3759,7 @@ func (l VirtualMachineScaleSetVMsClientRestartPollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a VirtualMachineScaleSetVMsClientRestartPollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetVMsClientRestartPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Restart", token, client.pl, client.restartHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Restart", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3805,7 +3805,7 @@ func (l VirtualMachineScaleSetVMsClientRunCommandPollerResponse) PollUntilDone(c
 
 // Resume rehydrates a VirtualMachineScaleSetVMsClientRunCommandPollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetVMsClientRunCommandPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.RunCommand", token, client.pl, client.runCommandHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.RunCommand", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3863,7 +3863,7 @@ func (l VirtualMachineScaleSetVMsClientStartPollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a VirtualMachineScaleSetVMsClientStartPollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetVMsClientStartPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Start", token, client.pl, client.startHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Start", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3909,7 +3909,7 @@ func (l VirtualMachineScaleSetVMsClientUpdatePollerResponse) PollUntilDone(ctx c
 
 // Resume rehydrates a VirtualMachineScaleSetVMsClientUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetVMsClientUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetVMsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Update", token, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetVMsClient.Update", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3967,7 +3967,7 @@ func (l VirtualMachineScaleSetsClientCreateOrUpdatePollerResponse) PollUntilDone
 
 // Resume rehydrates a VirtualMachineScaleSetsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4019,7 +4019,7 @@ func (l VirtualMachineScaleSetsClientDeallocatePollerResponse) PollUntilDone(ctx
 
 // Resume rehydrates a VirtualMachineScaleSetsClientDeallocatePollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetsClientDeallocatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.Deallocate", token, client.pl, client.deallocateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.Deallocate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4065,7 +4065,7 @@ func (l VirtualMachineScaleSetsClientDeleteInstancesPollerResponse) PollUntilDon
 
 // Resume rehydrates a VirtualMachineScaleSetsClientDeleteInstancesPollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetsClientDeleteInstancesPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.DeleteInstances", token, client.pl, client.deleteInstancesHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.DeleteInstances", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4111,7 +4111,7 @@ func (l VirtualMachineScaleSetsClientDeletePollerResponse) PollUntilDone(ctx con
 
 // Resume rehydrates a VirtualMachineScaleSetsClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetsClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4242,7 +4242,7 @@ func (l VirtualMachineScaleSetsClientPerformMaintenancePollerResponse) PollUntil
 
 // Resume rehydrates a VirtualMachineScaleSetsClientPerformMaintenancePollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetsClientPerformMaintenancePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.PerformMaintenance", token, client.pl, client.performMaintenanceHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.PerformMaintenance", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4288,7 +4288,7 @@ func (l VirtualMachineScaleSetsClientPowerOffPollerResponse) PollUntilDone(ctx c
 
 // Resume rehydrates a VirtualMachineScaleSetsClientPowerOffPollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetsClientPowerOffPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.PowerOff", token, client.pl, client.powerOffHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.PowerOff", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4334,7 +4334,7 @@ func (l VirtualMachineScaleSetsClientRedeployPollerResponse) PollUntilDone(ctx c
 
 // Resume rehydrates a VirtualMachineScaleSetsClientRedeployPollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetsClientRedeployPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.Redeploy", token, client.pl, client.redeployHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.Redeploy", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4380,7 +4380,7 @@ func (l VirtualMachineScaleSetsClientReimageAllPollerResponse) PollUntilDone(ctx
 
 // Resume rehydrates a VirtualMachineScaleSetsClientReimageAllPollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetsClientReimageAllPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.ReimageAll", token, client.pl, client.reimageAllHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.ReimageAll", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4426,7 +4426,7 @@ func (l VirtualMachineScaleSetsClientReimagePollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a VirtualMachineScaleSetsClientReimagePollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetsClientReimagePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.Reimage", token, client.pl, client.reimageHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.Reimage", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4472,7 +4472,7 @@ func (l VirtualMachineScaleSetsClientRestartPollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a VirtualMachineScaleSetsClientRestartPollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetsClientRestartPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.Restart", token, client.pl, client.restartHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.Restart", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4519,7 +4519,7 @@ func (l VirtualMachineScaleSetsClientSetOrchestrationServiceStatePollerResponse)
 // Resume rehydrates a VirtualMachineScaleSetsClientSetOrchestrationServiceStatePollerResponse from the provided client and
 // resume token.
 func (l *VirtualMachineScaleSetsClientSetOrchestrationServiceStatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.SetOrchestrationServiceState", token, client.pl, client.setOrchestrationServiceStateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.SetOrchestrationServiceState", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4565,7 +4565,7 @@ func (l VirtualMachineScaleSetsClientStartPollerResponse) PollUntilDone(ctx cont
 
 // Resume rehydrates a VirtualMachineScaleSetsClientStartPollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetsClientStartPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.Start", token, client.pl, client.startHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.Start", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4611,7 +4611,7 @@ func (l VirtualMachineScaleSetsClientUpdateInstancesPollerResponse) PollUntilDon
 
 // Resume rehydrates a VirtualMachineScaleSetsClientUpdateInstancesPollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetsClientUpdateInstancesPollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.UpdateInstances", token, client.pl, client.updateInstancesHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.UpdateInstances", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4657,7 +4657,7 @@ func (l VirtualMachineScaleSetsClientUpdatePollerResponse) PollUntilDone(ctx con
 
 // Resume rehydrates a VirtualMachineScaleSetsClientUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualMachineScaleSetsClientUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachineScaleSetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.Update", token, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachineScaleSetsClient.Update", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4721,7 +4721,7 @@ func (l VirtualMachinesClientCapturePollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a VirtualMachinesClientCapturePollerResponse from the provided client and resume token.
 func (l *VirtualMachinesClientCapturePollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Capture", token, client.pl, client.captureHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Capture", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4773,7 +4773,7 @@ func (l VirtualMachinesClientConvertToManagedDisksPollerResponse) PollUntilDone(
 
 // Resume rehydrates a VirtualMachinesClientConvertToManagedDisksPollerResponse from the provided client and resume token.
 func (l *VirtualMachinesClientConvertToManagedDisksPollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.ConvertToManagedDisks", token, client.pl, client.convertToManagedDisksHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.ConvertToManagedDisks", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4819,7 +4819,7 @@ func (l VirtualMachinesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx con
 
 // Resume rehydrates a VirtualMachinesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualMachinesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4871,7 +4871,7 @@ func (l VirtualMachinesClientDeallocatePollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a VirtualMachinesClientDeallocatePollerResponse from the provided client and resume token.
 func (l *VirtualMachinesClientDeallocatePollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Deallocate", token, client.pl, client.deallocateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Deallocate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4917,7 +4917,7 @@ func (l VirtualMachinesClientDeletePollerResponse) PollUntilDone(ctx context.Con
 
 // Resume rehydrates a VirtualMachinesClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualMachinesClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5041,7 +5041,7 @@ func (l VirtualMachinesClientPerformMaintenancePollerResponse) PollUntilDone(ctx
 
 // Resume rehydrates a VirtualMachinesClientPerformMaintenancePollerResponse from the provided client and resume token.
 func (l *VirtualMachinesClientPerformMaintenancePollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.PerformMaintenance", token, client.pl, client.performMaintenanceHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.PerformMaintenance", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5087,7 +5087,7 @@ func (l VirtualMachinesClientPowerOffPollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a VirtualMachinesClientPowerOffPollerResponse from the provided client and resume token.
 func (l *VirtualMachinesClientPowerOffPollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.PowerOff", token, client.pl, client.powerOffHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.PowerOff", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5133,7 +5133,7 @@ func (l VirtualMachinesClientReapplyPollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a VirtualMachinesClientReapplyPollerResponse from the provided client and resume token.
 func (l *VirtualMachinesClientReapplyPollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Reapply", token, client.pl, client.reapplyHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Reapply", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5179,7 +5179,7 @@ func (l VirtualMachinesClientRedeployPollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a VirtualMachinesClientRedeployPollerResponse from the provided client and resume token.
 func (l *VirtualMachinesClientRedeployPollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Redeploy", token, client.pl, client.redeployHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Redeploy", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5225,7 +5225,7 @@ func (l VirtualMachinesClientReimagePollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a VirtualMachinesClientReimagePollerResponse from the provided client and resume token.
 func (l *VirtualMachinesClientReimagePollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Reimage", token, client.pl, client.reimageHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Reimage", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5271,7 +5271,7 @@ func (l VirtualMachinesClientRestartPollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a VirtualMachinesClientRestartPollerResponse from the provided client and resume token.
 func (l *VirtualMachinesClientRestartPollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Restart", token, client.pl, client.restartHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Restart", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5317,7 +5317,7 @@ func (l VirtualMachinesClientRunCommandPollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a VirtualMachinesClientRunCommandPollerResponse from the provided client and resume token.
 func (l *VirtualMachinesClientRunCommandPollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.RunCommand", token, client.pl, client.runCommandHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.RunCommand", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5375,7 +5375,7 @@ func (l VirtualMachinesClientStartPollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a VirtualMachinesClientStartPollerResponse from the provided client and resume token.
 func (l *VirtualMachinesClientStartPollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Start", token, client.pl, client.startHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Start", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5421,7 +5421,7 @@ func (l VirtualMachinesClientUpdatePollerResponse) PollUntilDone(ctx context.Con
 
 // Resume rehydrates a VirtualMachinesClientUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualMachinesClientUpdatePollerResponse) Resume(ctx context.Context, client *VirtualMachinesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Update", token, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualMachinesClient.Update", token, client.pl)
 	if err != nil {
 		return err
 	}

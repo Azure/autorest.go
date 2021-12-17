@@ -10,7 +10,6 @@ package nonstringenumgroup
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewIntClient(options *azcore.ClientOptions) *IntClient {
 		cp = *options
 	}
 	client := &IntClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Get an int enum
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - IntClientGetOptions contains the optional parameters for the IntClient.Get method.
 func (client *IntClient) Get(ctx context.Context, options *IntClientGetOptions) (IntClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
@@ -49,7 +48,7 @@ func (client *IntClient) Get(ctx context.Context, options *IntClientGetOptions) 
 		return IntClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetResponse{}, client.getHandleError(resp)
+		return IntClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -69,25 +68,13 @@ func (client *IntClient) getCreateRequest(ctx context.Context, options *IntClien
 func (client *IntClient) getHandleResponse(resp *http.Response) (IntClientGetResponse, error) {
 	result := IntClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return IntClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *IntClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Put - Put an int enum
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - IntClientPutOptions contains the optional parameters for the IntClient.Put method.
 func (client *IntClient) Put(ctx context.Context, options *IntClientPutOptions) (IntClientPutResponse, error) {
 	req, err := client.putCreateRequest(ctx, options)
@@ -99,7 +86,7 @@ func (client *IntClient) Put(ctx context.Context, options *IntClientPutOptions) 
 		return IntClientPutResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientPutResponse{}, client.putHandleError(resp)
+		return IntClientPutResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.putHandleResponse(resp)
 }
@@ -122,19 +109,7 @@ func (client *IntClient) putCreateRequest(ctx context.Context, options *IntClien
 func (client *IntClient) putHandleResponse(resp *http.Response) (IntClientPutResponse, error) {
 	result := IntClientPutResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntClientPutResponse{}, runtime.NewResponseError(err, resp)
+		return IntClientPutResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// putHandleError handles the Put error response.
-func (client *IntClient) putHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

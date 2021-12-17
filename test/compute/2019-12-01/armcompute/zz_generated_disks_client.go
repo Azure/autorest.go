@@ -39,19 +39,19 @@ func NewDisksClient(subscriptionID string, credential azcore.TokenCredential, op
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &DisksClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a disk.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // diskName - The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported
 // characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80
@@ -67,7 +67,7 @@ func (client *DisksClient) BeginCreateOrUpdate(ctx context.Context, resourceGrou
 	result := DisksClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DisksClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("DisksClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return DisksClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -78,7 +78,7 @@ func (client *DisksClient) BeginCreateOrUpdate(ctx context.Context, resourceGrou
 }
 
 // CreateOrUpdate - Creates or updates a disk.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *DisksClient) createOrUpdate(ctx context.Context, resourceGroupName string, diskName string, disk Disk, options *DisksClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, diskName, disk, options)
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *DisksClient) createOrUpdate(ctx context.Context, resourceGroupName
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -120,20 +120,8 @@ func (client *DisksClient) createOrUpdateCreateRequest(ctx context.Context, reso
 	return req, runtime.MarshalAsJSON(req, disk)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *DisksClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BeginDelete - Deletes a disk.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // diskName - The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported
 // characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80
@@ -147,7 +135,7 @@ func (client *DisksClient) BeginDelete(ctx context.Context, resourceGroupName st
 	result := DisksClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DisksClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("DisksClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return DisksClientDeletePollerResponse{}, err
 	}
@@ -158,7 +146,7 @@ func (client *DisksClient) BeginDelete(ctx context.Context, resourceGroupName st
 }
 
 // Delete - Deletes a disk.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *DisksClient) deleteOperation(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, diskName, options)
 	if err != nil {
@@ -169,7 +157,7 @@ func (client *DisksClient) deleteOperation(ctx context.Context, resourceGroupNam
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -199,20 +187,8 @@ func (client *DisksClient) deleteCreateRequest(ctx context.Context, resourceGrou
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *DisksClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get - Gets information about a disk.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // diskName - The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported
 // characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80
@@ -228,7 +204,7 @@ func (client *DisksClient) Get(ctx context.Context, resourceGroupName string, di
 		return DisksClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DisksClientGetResponse{}, client.getHandleError(resp)
+		return DisksClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -263,25 +239,13 @@ func (client *DisksClient) getCreateRequest(ctx context.Context, resourceGroupNa
 func (client *DisksClient) getHandleResponse(resp *http.Response) (DisksClientGetResponse, error) {
 	result := DisksClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Disk); err != nil {
-		return DisksClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return DisksClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *DisksClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BeginGrantAccess - Grants access to a disk.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // diskName - The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported
 // characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80
@@ -296,7 +260,7 @@ func (client *DisksClient) BeginGrantAccess(ctx context.Context, resourceGroupNa
 	result := DisksClientGrantAccessPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DisksClient.GrantAccess", "location", resp, client.pl, client.grantAccessHandleError)
+	pt, err := armruntime.NewPoller("DisksClient.GrantAccess", "location", resp, client.pl)
 	if err != nil {
 		return DisksClientGrantAccessPollerResponse{}, err
 	}
@@ -307,7 +271,7 @@ func (client *DisksClient) BeginGrantAccess(ctx context.Context, resourceGroupNa
 }
 
 // GrantAccess - Grants access to a disk.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *DisksClient) grantAccess(ctx context.Context, resourceGroupName string, diskName string, grantAccessData GrantAccessData, options *DisksClientBeginGrantAccessOptions) (*http.Response, error) {
 	req, err := client.grantAccessCreateRequest(ctx, resourceGroupName, diskName, grantAccessData, options)
 	if err != nil {
@@ -318,7 +282,7 @@ func (client *DisksClient) grantAccess(ctx context.Context, resourceGroupName st
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.grantAccessHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -349,20 +313,8 @@ func (client *DisksClient) grantAccessCreateRequest(ctx context.Context, resourc
 	return req, runtime.MarshalAsJSON(req, grantAccessData)
 }
 
-// grantAccessHandleError handles the GrantAccess error response.
-func (client *DisksClient) grantAccessHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // List - Lists all the disks under a subscription.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DisksClientListOptions contains the optional parameters for the DisksClient.List method.
 func (client *DisksClient) List(options *DisksClientListOptions) *DisksClientListPager {
 	return &DisksClientListPager{
@@ -398,25 +350,13 @@ func (client *DisksClient) listCreateRequest(ctx context.Context, options *Disks
 func (client *DisksClient) listHandleResponse(resp *http.Response) (DisksClientListResponse, error) {
 	result := DisksClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DiskList); err != nil {
-		return DisksClientListResponse{}, runtime.NewResponseError(err, resp)
+		return DisksClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *DisksClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // ListByResourceGroup - Lists all the disks under a resource group.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - DisksClientListByResourceGroupOptions contains the optional parameters for the DisksClient.ListByResourceGroup
 // method.
@@ -458,25 +398,13 @@ func (client *DisksClient) listByResourceGroupCreateRequest(ctx context.Context,
 func (client *DisksClient) listByResourceGroupHandleResponse(resp *http.Response) (DisksClientListByResourceGroupResponse, error) {
 	result := DisksClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DiskList); err != nil {
-		return DisksClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return DisksClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *DisksClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BeginRevokeAccess - Revokes access to a disk.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // diskName - The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported
 // characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80
@@ -490,7 +418,7 @@ func (client *DisksClient) BeginRevokeAccess(ctx context.Context, resourceGroupN
 	result := DisksClientRevokeAccessPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DisksClient.RevokeAccess", "location", resp, client.pl, client.revokeAccessHandleError)
+	pt, err := armruntime.NewPoller("DisksClient.RevokeAccess", "location", resp, client.pl)
 	if err != nil {
 		return DisksClientRevokeAccessPollerResponse{}, err
 	}
@@ -501,7 +429,7 @@ func (client *DisksClient) BeginRevokeAccess(ctx context.Context, resourceGroupN
 }
 
 // RevokeAccess - Revokes access to a disk.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *DisksClient) revokeAccess(ctx context.Context, resourceGroupName string, diskName string, options *DisksClientBeginRevokeAccessOptions) (*http.Response, error) {
 	req, err := client.revokeAccessCreateRequest(ctx, resourceGroupName, diskName, options)
 	if err != nil {
@@ -512,7 +440,7 @@ func (client *DisksClient) revokeAccess(ctx context.Context, resourceGroupName s
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.revokeAccessHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -542,20 +470,8 @@ func (client *DisksClient) revokeAccessCreateRequest(ctx context.Context, resour
 	return req, nil
 }
 
-// revokeAccessHandleError handles the RevokeAccess error response.
-func (client *DisksClient) revokeAccessHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BeginUpdate - Updates (patches) a disk.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // diskName - The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported
 // characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80
@@ -570,7 +486,7 @@ func (client *DisksClient) BeginUpdate(ctx context.Context, resourceGroupName st
 	result := DisksClientUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DisksClient.Update", "", resp, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPoller("DisksClient.Update", "", resp, client.pl)
 	if err != nil {
 		return DisksClientUpdatePollerResponse{}, err
 	}
@@ -581,7 +497,7 @@ func (client *DisksClient) BeginUpdate(ctx context.Context, resourceGroupName st
 }
 
 // Update - Updates (patches) a disk.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *DisksClient) update(ctx context.Context, resourceGroupName string, diskName string, disk DiskUpdate, options *DisksClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, diskName, disk, options)
 	if err != nil {
@@ -592,7 +508,7 @@ func (client *DisksClient) update(ctx context.Context, resourceGroupName string,
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.updateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -621,16 +537,4 @@ func (client *DisksClient) updateCreateRequest(ctx context.Context, resourceGrou
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, disk)
-}
-
-// updateHandleError handles the Update error response.
-func (client *DisksClient) updateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

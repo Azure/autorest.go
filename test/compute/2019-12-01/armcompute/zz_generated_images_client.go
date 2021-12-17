@@ -39,19 +39,19 @@ func NewImagesClient(subscriptionID string, credential azcore.TokenCredential, o
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ImagesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Create or update an image.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // imageName - The name of the image.
 // parameters - Parameters supplied to the Create Image operation.
@@ -65,7 +65,7 @@ func (client *ImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGro
 	result := ImagesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ImagesClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("ImagesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return ImagesClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -76,7 +76,7 @@ func (client *ImagesClient) BeginCreateOrUpdate(ctx context.Context, resourceGro
 }
 
 // CreateOrUpdate - Create or update an image.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ImagesClient) createOrUpdate(ctx context.Context, resourceGroupName string, imageName string, parameters Image, options *ImagesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, imageName, parameters, options)
 	if err != nil {
@@ -87,7 +87,7 @@ func (client *ImagesClient) createOrUpdate(ctx context.Context, resourceGroupNam
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -118,20 +118,8 @@ func (client *ImagesClient) createOrUpdateCreateRequest(ctx context.Context, res
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *ImagesClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BeginDelete - Deletes an Image.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // imageName - The name of the image.
 // options - ImagesClientBeginDeleteOptions contains the optional parameters for the ImagesClient.BeginDelete method.
@@ -143,7 +131,7 @@ func (client *ImagesClient) BeginDelete(ctx context.Context, resourceGroupName s
 	result := ImagesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ImagesClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("ImagesClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return ImagesClientDeletePollerResponse{}, err
 	}
@@ -154,7 +142,7 @@ func (client *ImagesClient) BeginDelete(ctx context.Context, resourceGroupName s
 }
 
 // Delete - Deletes an Image.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ImagesClient) deleteOperation(ctx context.Context, resourceGroupName string, imageName string, options *ImagesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, imageName, options)
 	if err != nil {
@@ -165,7 +153,7 @@ func (client *ImagesClient) deleteOperation(ctx context.Context, resourceGroupNa
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -195,20 +183,8 @@ func (client *ImagesClient) deleteCreateRequest(ctx context.Context, resourceGro
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *ImagesClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get - Gets an image.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // imageName - The name of the image.
 // options - ImagesClientGetOptions contains the optional parameters for the ImagesClient.Get method.
@@ -222,7 +198,7 @@ func (client *ImagesClient) Get(ctx context.Context, resourceGroupName string, i
 		return ImagesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImagesClientGetResponse{}, client.getHandleError(resp)
+		return ImagesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -260,26 +236,14 @@ func (client *ImagesClient) getCreateRequest(ctx context.Context, resourceGroupN
 func (client *ImagesClient) getHandleResponse(resp *http.Response) (ImagesClientGetResponse, error) {
 	result := ImagesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Image); err != nil {
-		return ImagesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return ImagesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *ImagesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // List - Gets the list of Images in the subscription. Use nextLink property in the response to get the next page of Images.
 // Do this till nextLink is null to fetch all the Images.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ImagesClientListOptions contains the optional parameters for the ImagesClient.List method.
 func (client *ImagesClient) List(options *ImagesClientListOptions) *ImagesClientListPager {
 	return &ImagesClientListPager{
@@ -315,25 +279,13 @@ func (client *ImagesClient) listCreateRequest(ctx context.Context, options *Imag
 func (client *ImagesClient) listHandleResponse(resp *http.Response) (ImagesClientListResponse, error) {
 	result := ImagesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ImageListResult); err != nil {
-		return ImagesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return ImagesClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *ImagesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // ListByResourceGroup - Gets the list of images under a resource group.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - ImagesClientListByResourceGroupOptions contains the optional parameters for the ImagesClient.ListByResourceGroup
 // method.
@@ -375,25 +327,13 @@ func (client *ImagesClient) listByResourceGroupCreateRequest(ctx context.Context
 func (client *ImagesClient) listByResourceGroupHandleResponse(resp *http.Response) (ImagesClientListByResourceGroupResponse, error) {
 	result := ImagesClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ImageListResult); err != nil {
-		return ImagesClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return ImagesClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *ImagesClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BeginUpdate - Update an image.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // imageName - The name of the image.
 // parameters - Parameters supplied to the Update Image operation.
@@ -406,7 +346,7 @@ func (client *ImagesClient) BeginUpdate(ctx context.Context, resourceGroupName s
 	result := ImagesClientUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ImagesClient.Update", "", resp, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPoller("ImagesClient.Update", "", resp, client.pl)
 	if err != nil {
 		return ImagesClientUpdatePollerResponse{}, err
 	}
@@ -417,7 +357,7 @@ func (client *ImagesClient) BeginUpdate(ctx context.Context, resourceGroupName s
 }
 
 // Update - Update an image.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ImagesClient) update(ctx context.Context, resourceGroupName string, imageName string, parameters ImageUpdate, options *ImagesClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, imageName, parameters, options)
 	if err != nil {
@@ -428,7 +368,7 @@ func (client *ImagesClient) update(ctx context.Context, resourceGroupName string
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.updateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -457,16 +397,4 @@ func (client *ImagesClient) updateCreateRequest(ctx context.Context, resourceGro
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, parameters)
-}
-
-// updateHandleError handles the Update error response.
-func (client *ImagesClient) updateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

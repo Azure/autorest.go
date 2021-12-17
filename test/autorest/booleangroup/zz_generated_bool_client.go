@@ -10,7 +10,6 @@ package booleangroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewBoolClient(options *azcore.ClientOptions) *BoolClient {
 		cp = *options
 	}
 	client := &BoolClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetFalse - Get false Boolean value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - BoolClientGetFalseOptions contains the optional parameters for the BoolClient.GetFalse method.
 func (client *BoolClient) GetFalse(ctx context.Context, options *BoolClientGetFalseOptions) (BoolClientGetFalseResponse, error) {
 	req, err := client.getFalseCreateRequest(ctx, options)
@@ -49,7 +48,7 @@ func (client *BoolClient) GetFalse(ctx context.Context, options *BoolClientGetFa
 		return BoolClientGetFalseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BoolClientGetFalseResponse{}, client.getFalseHandleError(resp)
+		return BoolClientGetFalseResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getFalseHandleResponse(resp)
 }
@@ -69,26 +68,13 @@ func (client *BoolClient) getFalseCreateRequest(ctx context.Context, options *Bo
 func (client *BoolClient) getFalseHandleResponse(resp *http.Response) (BoolClientGetFalseResponse, error) {
 	result := BoolClientGetFalseResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return BoolClientGetFalseResponse{}, runtime.NewResponseError(err, resp)
+		return BoolClientGetFalseResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getFalseHandleError handles the GetFalse error response.
-func (client *BoolClient) getFalseHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetInvalid - Get invalid Boolean value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - BoolClientGetInvalidOptions contains the optional parameters for the BoolClient.GetInvalid method.
 func (client *BoolClient) GetInvalid(ctx context.Context, options *BoolClientGetInvalidOptions) (BoolClientGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
@@ -100,7 +86,7 @@ func (client *BoolClient) GetInvalid(ctx context.Context, options *BoolClientGet
 		return BoolClientGetInvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BoolClientGetInvalidResponse{}, client.getInvalidHandleError(resp)
+		return BoolClientGetInvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getInvalidHandleResponse(resp)
 }
@@ -120,26 +106,13 @@ func (client *BoolClient) getInvalidCreateRequest(ctx context.Context, options *
 func (client *BoolClient) getInvalidHandleResponse(resp *http.Response) (BoolClientGetInvalidResponse, error) {
 	result := BoolClientGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return BoolClientGetInvalidResponse{}, runtime.NewResponseError(err, resp)
+		return BoolClientGetInvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getInvalidHandleError handles the GetInvalid error response.
-func (client *BoolClient) getInvalidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetNull - Get null Boolean value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - BoolClientGetNullOptions contains the optional parameters for the BoolClient.GetNull method.
 func (client *BoolClient) GetNull(ctx context.Context, options *BoolClientGetNullOptions) (BoolClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
@@ -151,7 +124,7 @@ func (client *BoolClient) GetNull(ctx context.Context, options *BoolClientGetNul
 		return BoolClientGetNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BoolClientGetNullResponse{}, client.getNullHandleError(resp)
+		return BoolClientGetNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
@@ -171,26 +144,13 @@ func (client *BoolClient) getNullCreateRequest(ctx context.Context, options *Boo
 func (client *BoolClient) getNullHandleResponse(resp *http.Response) (BoolClientGetNullResponse, error) {
 	result := BoolClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return BoolClientGetNullResponse{}, runtime.NewResponseError(err, resp)
+		return BoolClientGetNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getNullHandleError handles the GetNull error response.
-func (client *BoolClient) getNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetTrue - Get true Boolean value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - BoolClientGetTrueOptions contains the optional parameters for the BoolClient.GetTrue method.
 func (client *BoolClient) GetTrue(ctx context.Context, options *BoolClientGetTrueOptions) (BoolClientGetTrueResponse, error) {
 	req, err := client.getTrueCreateRequest(ctx, options)
@@ -202,7 +162,7 @@ func (client *BoolClient) GetTrue(ctx context.Context, options *BoolClientGetTru
 		return BoolClientGetTrueResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BoolClientGetTrueResponse{}, client.getTrueHandleError(resp)
+		return BoolClientGetTrueResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getTrueHandleResponse(resp)
 }
@@ -222,26 +182,13 @@ func (client *BoolClient) getTrueCreateRequest(ctx context.Context, options *Boo
 func (client *BoolClient) getTrueHandleResponse(resp *http.Response) (BoolClientGetTrueResponse, error) {
 	result := BoolClientGetTrueResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return BoolClientGetTrueResponse{}, runtime.NewResponseError(err, resp)
+		return BoolClientGetTrueResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getTrueHandleError handles the GetTrue error response.
-func (client *BoolClient) getTrueHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutFalse - Set Boolean value false
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - BoolClientPutFalseOptions contains the optional parameters for the BoolClient.PutFalse method.
 func (client *BoolClient) PutFalse(ctx context.Context, options *BoolClientPutFalseOptions) (BoolClientPutFalseResponse, error) {
 	req, err := client.putFalseCreateRequest(ctx, options)
@@ -253,7 +200,7 @@ func (client *BoolClient) PutFalse(ctx context.Context, options *BoolClientPutFa
 		return BoolClientPutFalseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BoolClientPutFalseResponse{}, client.putFalseHandleError(resp)
+		return BoolClientPutFalseResponse{}, runtime.NewResponseError(resp)
 	}
 	return BoolClientPutFalseResponse{RawResponse: resp}, nil
 }
@@ -269,21 +216,8 @@ func (client *BoolClient) putFalseCreateRequest(ctx context.Context, options *Bo
 	return req, runtime.MarshalAsJSON(req, false)
 }
 
-// putFalseHandleError handles the PutFalse error response.
-func (client *BoolClient) putFalseHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutTrue - Set Boolean value true
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - BoolClientPutTrueOptions contains the optional parameters for the BoolClient.PutTrue method.
 func (client *BoolClient) PutTrue(ctx context.Context, options *BoolClientPutTrueOptions) (BoolClientPutTrueResponse, error) {
 	req, err := client.putTrueCreateRequest(ctx, options)
@@ -295,7 +229,7 @@ func (client *BoolClient) PutTrue(ctx context.Context, options *BoolClientPutTru
 		return BoolClientPutTrueResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BoolClientPutTrueResponse{}, client.putTrueHandleError(resp)
+		return BoolClientPutTrueResponse{}, runtime.NewResponseError(resp)
 	}
 	return BoolClientPutTrueResponse{RawResponse: resp}, nil
 }
@@ -309,17 +243,4 @@ func (client *BoolClient) putTrueCreateRequest(ctx context.Context, options *Boo
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, true)
-}
-
-// putTrueHandleError handles the PutTrue error response.
-func (client *BoolClient) putTrueHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

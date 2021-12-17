@@ -3281,17 +3281,9 @@ type CheckPrivateLinkServiceVisibilityRequest struct {
 }
 
 // CloudError - An error response from the service.
-// Implements the error and azcore.HTTPResponse interfaces.
 type CloudError struct {
-	raw string
 	// Cloud error body.
-	InnerError *CloudErrorBody `json:"error,omitempty"`
-}
-
-// Error implements the error interface for type CloudError.
-// The contents of the error text are not contractual and subject to change.
-func (e CloudError) Error() string {
-	return e.raw
+	Error *CloudErrorBody `json:"error,omitempty"`
 }
 
 // CloudErrorBody - An error response from the service.
@@ -4731,9 +4723,7 @@ func (e EndpointServicesListResult) MarshalJSON() ([]byte, error) {
 }
 
 // Error - Common error representation.
-// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
-	raw string
 	// Error code.
 	Code *string `json:"code,omitempty"`
 
@@ -4750,10 +4740,15 @@ type Error struct {
 	Target *string `json:"target,omitempty"`
 }
 
-// Error implements the error interface for type Error.
-// The contents of the error text are not contractual and subject to change.
-func (e Error) Error() string {
-	return e.raw
+// MarshalJSON implements the json.Marshaller interface for type Error.
+func (e Error) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "code", e.Code)
+	populate(objectMap, "details", e.Details)
+	populate(objectMap, "innerError", e.InnerError)
+	populate(objectMap, "message", e.Message)
+	populate(objectMap, "target", e.Target)
+	return json.Marshal(objectMap)
 }
 
 // ErrorDetails - Common error details representation.
@@ -4769,17 +4764,9 @@ type ErrorDetails struct {
 }
 
 // ErrorResponse - The error object.
-// Implements the error and azcore.HTTPResponse interfaces.
 type ErrorResponse struct {
-	raw string
 	// The error details object.
-	InnerError *ErrorDetails `json:"error,omitempty"`
-}
-
-// Error implements the error interface for type ErrorResponse.
-// The contents of the error text are not contractual and subject to change.
-func (e ErrorResponse) Error() string {
-	return e.raw
+	Error *ErrorDetails `json:"error,omitempty"`
 }
 
 // EvaluatedNetworkSecurityGroup - Results of network security group evaluation.

@@ -10,7 +10,6 @@ package azurereportgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewAutoRestReportServiceForAzureClient(options *azcore.ClientOptions) *Auto
 		cp = *options
 	}
 	client := &AutoRestReportServiceForAzureClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetReport - Get test coverage report
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - AutoRestReportServiceForAzureClientGetReportOptions contains the optional parameters for the AutoRestReportServiceForAzureClient.GetReport
 // method.
 func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureClientGetReportOptions) (AutoRestReportServiceForAzureClientGetReportResponse, error) {
@@ -50,7 +49,7 @@ func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context
 		return AutoRestReportServiceForAzureClientGetReportResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AutoRestReportServiceForAzureClientGetReportResponse{}, client.getReportHandleError(resp)
+		return AutoRestReportServiceForAzureClientGetReportResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getReportHandleResponse(resp)
 }
@@ -75,20 +74,7 @@ func (client *AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx co
 func (client *AutoRestReportServiceForAzureClient) getReportHandleResponse(resp *http.Response) (AutoRestReportServiceForAzureClientGetReportResponse, error) {
 	result := AutoRestReportServiceForAzureClientGetReportResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return AutoRestReportServiceForAzureClientGetReportResponse{}, runtime.NewResponseError(err, resp)
+		return AutoRestReportServiceForAzureClientGetReportResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// getReportHandleError handles the GetReport error response.
-func (client *AutoRestReportServiceForAzureClient) getReportHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

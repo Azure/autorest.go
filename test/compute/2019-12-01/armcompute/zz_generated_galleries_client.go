@@ -11,7 +11,6 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewGalleriesClient(subscriptionID string, credential azcore.TokenCredential
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &GalleriesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Create or update a Shared Image Gallery.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods
 // allowed in the middle. The maximum length is 80 characters.
@@ -67,7 +66,7 @@ func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resource
 	result := GalleriesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("GalleriesClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("GalleriesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return GalleriesClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -78,7 +77,7 @@ func (client *GalleriesClient) BeginCreateOrUpdate(ctx context.Context, resource
 }
 
 // CreateOrUpdate - Create or update a Shared Image Gallery.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *GalleriesClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, gallery Gallery, options *GalleriesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, gallery, options)
 	if err != nil {
@@ -89,7 +88,7 @@ func (client *GalleriesClient) createOrUpdate(ctx context.Context, resourceGroup
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -120,21 +119,8 @@ func (client *GalleriesClient) createOrUpdateCreateRequest(ctx context.Context, 
 	return req, runtime.MarshalAsJSON(req, gallery)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *GalleriesClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Delete a Shared Image Gallery.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery to be deleted.
 // options - GalleriesClientBeginDeleteOptions contains the optional parameters for the GalleriesClient.BeginDelete method.
@@ -146,7 +132,7 @@ func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupNam
 	result := GalleriesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("GalleriesClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("GalleriesClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return GalleriesClientDeletePollerResponse{}, err
 	}
@@ -157,7 +143,7 @@ func (client *GalleriesClient) BeginDelete(ctx context.Context, resourceGroupNam
 }
 
 // Delete - Delete a Shared Image Gallery.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *GalleriesClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, options *GalleriesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, galleryName, options)
 	if err != nil {
@@ -168,7 +154,7 @@ func (client *GalleriesClient) deleteOperation(ctx context.Context, resourceGrou
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -199,21 +185,8 @@ func (client *GalleriesClient) deleteCreateRequest(ctx context.Context, resource
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *GalleriesClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Retrieves information about a Shared Image Gallery.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery.
 // options - GalleriesClientGetOptions contains the optional parameters for the GalleriesClient.Get method.
@@ -227,7 +200,7 @@ func (client *GalleriesClient) Get(ctx context.Context, resourceGroupName string
 		return GalleriesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return GalleriesClientGetResponse{}, client.getHandleError(resp)
+		return GalleriesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -262,26 +235,13 @@ func (client *GalleriesClient) getCreateRequest(ctx context.Context, resourceGro
 func (client *GalleriesClient) getHandleResponse(resp *http.Response) (GalleriesClientGetResponse, error) {
 	result := GalleriesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Gallery); err != nil {
-		return GalleriesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return GalleriesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *GalleriesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - List galleries under a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - GalleriesClientListOptions contains the optional parameters for the GalleriesClient.List method.
 func (client *GalleriesClient) List(options *GalleriesClientListOptions) *GalleriesClientListPager {
 	return &GalleriesClientListPager{
@@ -317,26 +277,13 @@ func (client *GalleriesClient) listCreateRequest(ctx context.Context, options *G
 func (client *GalleriesClient) listHandleResponse(resp *http.Response) (GalleriesClientListResponse, error) {
 	result := GalleriesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GalleryList); err != nil {
-		return GalleriesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return GalleriesClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *GalleriesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByResourceGroup - List galleries under a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - GalleriesClientListByResourceGroupOptions contains the optional parameters for the GalleriesClient.ListByResourceGroup
 // method.
@@ -378,26 +325,13 @@ func (client *GalleriesClient) listByResourceGroupCreateRequest(ctx context.Cont
 func (client *GalleriesClient) listByResourceGroupHandleResponse(resp *http.Response) (GalleriesClientListByResourceGroupResponse, error) {
 	result := GalleriesClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GalleryList); err != nil {
-		return GalleriesClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return GalleriesClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *GalleriesClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginUpdate - Update a Shared Image Gallery.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods
 // allowed in the middle. The maximum length is 80 characters.
@@ -411,7 +345,7 @@ func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupNam
 	result := GalleriesClientUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("GalleriesClient.Update", "", resp, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPoller("GalleriesClient.Update", "", resp, client.pl)
 	if err != nil {
 		return GalleriesClientUpdatePollerResponse{}, err
 	}
@@ -422,7 +356,7 @@ func (client *GalleriesClient) BeginUpdate(ctx context.Context, resourceGroupNam
 }
 
 // Update - Update a Shared Image Gallery.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *GalleriesClient) update(ctx context.Context, resourceGroupName string, galleryName string, gallery GalleryUpdate, options *GalleriesClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, galleryName, gallery, options)
 	if err != nil {
@@ -433,7 +367,7 @@ func (client *GalleriesClient) update(ctx context.Context, resourceGroupName str
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return nil, client.updateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -462,17 +396,4 @@ func (client *GalleriesClient) updateCreateRequest(ctx context.Context, resource
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, gallery)
-}
-
-// updateHandleError handles the Update error response.
-func (client *GalleriesClient) updateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

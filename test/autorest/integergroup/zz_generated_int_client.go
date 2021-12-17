@@ -10,7 +10,6 @@ package integergroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -32,13 +31,13 @@ func NewIntClient(options *azcore.ClientOptions) *IntClient {
 		cp = *options
 	}
 	client := &IntClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetInvalid - Get invalid Int value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - IntClientGetInvalidOptions contains the optional parameters for the IntClient.GetInvalid method.
 func (client *IntClient) GetInvalid(ctx context.Context, options *IntClientGetInvalidOptions) (IntClientGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
@@ -50,7 +49,7 @@ func (client *IntClient) GetInvalid(ctx context.Context, options *IntClientGetIn
 		return IntClientGetInvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetInvalidResponse{}, client.getInvalidHandleError(resp)
+		return IntClientGetInvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getInvalidHandleResponse(resp)
 }
@@ -70,26 +69,13 @@ func (client *IntClient) getInvalidCreateRequest(ctx context.Context, options *I
 func (client *IntClient) getInvalidHandleResponse(resp *http.Response) (IntClientGetInvalidResponse, error) {
 	result := IntClientGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntClientGetInvalidResponse{}, runtime.NewResponseError(err, resp)
+		return IntClientGetInvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getInvalidHandleError handles the GetInvalid error response.
-func (client *IntClient) getInvalidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetInvalidUnixTime - Get invalid Unix time value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - IntClientGetInvalidUnixTimeOptions contains the optional parameters for the IntClient.GetInvalidUnixTime method.
 func (client *IntClient) GetInvalidUnixTime(ctx context.Context, options *IntClientGetInvalidUnixTimeOptions) (IntClientGetInvalidUnixTimeResponse, error) {
 	req, err := client.getInvalidUnixTimeCreateRequest(ctx, options)
@@ -101,7 +87,7 @@ func (client *IntClient) GetInvalidUnixTime(ctx context.Context, options *IntCli
 		return IntClientGetInvalidUnixTimeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetInvalidUnixTimeResponse{}, client.getInvalidUnixTimeHandleError(resp)
+		return IntClientGetInvalidUnixTimeResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getInvalidUnixTimeHandleResponse(resp)
 }
@@ -122,27 +108,14 @@ func (client *IntClient) getInvalidUnixTimeHandleResponse(resp *http.Response) (
 	result := IntClientGetInvalidUnixTimeResponse{RawResponse: resp}
 	var aux *timeUnix
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return IntClientGetInvalidUnixTimeResponse{}, runtime.NewResponseError(err, resp)
+		return IntClientGetInvalidUnixTimeResponse{}, runtime.NewResponseError(resp)
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil
 }
 
-// getInvalidUnixTimeHandleError handles the GetInvalidUnixTime error response.
-func (client *IntClient) getInvalidUnixTimeHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetNull - Get null Int value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - IntClientGetNullOptions contains the optional parameters for the IntClient.GetNull method.
 func (client *IntClient) GetNull(ctx context.Context, options *IntClientGetNullOptions) (IntClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
@@ -154,7 +127,7 @@ func (client *IntClient) GetNull(ctx context.Context, options *IntClientGetNullO
 		return IntClientGetNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetNullResponse{}, client.getNullHandleError(resp)
+		return IntClientGetNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
@@ -174,26 +147,13 @@ func (client *IntClient) getNullCreateRequest(ctx context.Context, options *IntC
 func (client *IntClient) getNullHandleResponse(resp *http.Response) (IntClientGetNullResponse, error) {
 	result := IntClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntClientGetNullResponse{}, runtime.NewResponseError(err, resp)
+		return IntClientGetNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getNullHandleError handles the GetNull error response.
-func (client *IntClient) getNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetNullUnixTime - Get null Unix time value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - IntClientGetNullUnixTimeOptions contains the optional parameters for the IntClient.GetNullUnixTime method.
 func (client *IntClient) GetNullUnixTime(ctx context.Context, options *IntClientGetNullUnixTimeOptions) (IntClientGetNullUnixTimeResponse, error) {
 	req, err := client.getNullUnixTimeCreateRequest(ctx, options)
@@ -205,7 +165,7 @@ func (client *IntClient) GetNullUnixTime(ctx context.Context, options *IntClient
 		return IntClientGetNullUnixTimeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetNullUnixTimeResponse{}, client.getNullUnixTimeHandleError(resp)
+		return IntClientGetNullUnixTimeResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getNullUnixTimeHandleResponse(resp)
 }
@@ -226,27 +186,14 @@ func (client *IntClient) getNullUnixTimeHandleResponse(resp *http.Response) (Int
 	result := IntClientGetNullUnixTimeResponse{RawResponse: resp}
 	var aux *timeUnix
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return IntClientGetNullUnixTimeResponse{}, runtime.NewResponseError(err, resp)
+		return IntClientGetNullUnixTimeResponse{}, runtime.NewResponseError(resp)
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil
 }
 
-// getNullUnixTimeHandleError handles the GetNullUnixTime error response.
-func (client *IntClient) getNullUnixTimeHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetOverflowInt32 - Get overflow Int32 value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - IntClientGetOverflowInt32Options contains the optional parameters for the IntClient.GetOverflowInt32 method.
 func (client *IntClient) GetOverflowInt32(ctx context.Context, options *IntClientGetOverflowInt32Options) (IntClientGetOverflowInt32Response, error) {
 	req, err := client.getOverflowInt32CreateRequest(ctx, options)
@@ -258,7 +205,7 @@ func (client *IntClient) GetOverflowInt32(ctx context.Context, options *IntClien
 		return IntClientGetOverflowInt32Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetOverflowInt32Response{}, client.getOverflowInt32HandleError(resp)
+		return IntClientGetOverflowInt32Response{}, runtime.NewResponseError(resp)
 	}
 	return client.getOverflowInt32HandleResponse(resp)
 }
@@ -278,26 +225,13 @@ func (client *IntClient) getOverflowInt32CreateRequest(ctx context.Context, opti
 func (client *IntClient) getOverflowInt32HandleResponse(resp *http.Response) (IntClientGetOverflowInt32Response, error) {
 	result := IntClientGetOverflowInt32Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntClientGetOverflowInt32Response{}, runtime.NewResponseError(err, resp)
+		return IntClientGetOverflowInt32Response{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getOverflowInt32HandleError handles the GetOverflowInt32 error response.
-func (client *IntClient) getOverflowInt32HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetOverflowInt64 - Get overflow Int64 value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - IntClientGetOverflowInt64Options contains the optional parameters for the IntClient.GetOverflowInt64 method.
 func (client *IntClient) GetOverflowInt64(ctx context.Context, options *IntClientGetOverflowInt64Options) (IntClientGetOverflowInt64Response, error) {
 	req, err := client.getOverflowInt64CreateRequest(ctx, options)
@@ -309,7 +243,7 @@ func (client *IntClient) GetOverflowInt64(ctx context.Context, options *IntClien
 		return IntClientGetOverflowInt64Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetOverflowInt64Response{}, client.getOverflowInt64HandleError(resp)
+		return IntClientGetOverflowInt64Response{}, runtime.NewResponseError(resp)
 	}
 	return client.getOverflowInt64HandleResponse(resp)
 }
@@ -329,26 +263,13 @@ func (client *IntClient) getOverflowInt64CreateRequest(ctx context.Context, opti
 func (client *IntClient) getOverflowInt64HandleResponse(resp *http.Response) (IntClientGetOverflowInt64Response, error) {
 	result := IntClientGetOverflowInt64Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntClientGetOverflowInt64Response{}, runtime.NewResponseError(err, resp)
+		return IntClientGetOverflowInt64Response{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getOverflowInt64HandleError handles the GetOverflowInt64 error response.
-func (client *IntClient) getOverflowInt64HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetUnderflowInt32 - Get underflow Int32 value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - IntClientGetUnderflowInt32Options contains the optional parameters for the IntClient.GetUnderflowInt32 method.
 func (client *IntClient) GetUnderflowInt32(ctx context.Context, options *IntClientGetUnderflowInt32Options) (IntClientGetUnderflowInt32Response, error) {
 	req, err := client.getUnderflowInt32CreateRequest(ctx, options)
@@ -360,7 +281,7 @@ func (client *IntClient) GetUnderflowInt32(ctx context.Context, options *IntClie
 		return IntClientGetUnderflowInt32Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetUnderflowInt32Response{}, client.getUnderflowInt32HandleError(resp)
+		return IntClientGetUnderflowInt32Response{}, runtime.NewResponseError(resp)
 	}
 	return client.getUnderflowInt32HandleResponse(resp)
 }
@@ -380,26 +301,13 @@ func (client *IntClient) getUnderflowInt32CreateRequest(ctx context.Context, opt
 func (client *IntClient) getUnderflowInt32HandleResponse(resp *http.Response) (IntClientGetUnderflowInt32Response, error) {
 	result := IntClientGetUnderflowInt32Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntClientGetUnderflowInt32Response{}, runtime.NewResponseError(err, resp)
+		return IntClientGetUnderflowInt32Response{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getUnderflowInt32HandleError handles the GetUnderflowInt32 error response.
-func (client *IntClient) getUnderflowInt32HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetUnderflowInt64 - Get underflow Int64 value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - IntClientGetUnderflowInt64Options contains the optional parameters for the IntClient.GetUnderflowInt64 method.
 func (client *IntClient) GetUnderflowInt64(ctx context.Context, options *IntClientGetUnderflowInt64Options) (IntClientGetUnderflowInt64Response, error) {
 	req, err := client.getUnderflowInt64CreateRequest(ctx, options)
@@ -411,7 +319,7 @@ func (client *IntClient) GetUnderflowInt64(ctx context.Context, options *IntClie
 		return IntClientGetUnderflowInt64Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetUnderflowInt64Response{}, client.getUnderflowInt64HandleError(resp)
+		return IntClientGetUnderflowInt64Response{}, runtime.NewResponseError(resp)
 	}
 	return client.getUnderflowInt64HandleResponse(resp)
 }
@@ -431,26 +339,13 @@ func (client *IntClient) getUnderflowInt64CreateRequest(ctx context.Context, opt
 func (client *IntClient) getUnderflowInt64HandleResponse(resp *http.Response) (IntClientGetUnderflowInt64Response, error) {
 	result := IntClientGetUnderflowInt64Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntClientGetUnderflowInt64Response{}, runtime.NewResponseError(err, resp)
+		return IntClientGetUnderflowInt64Response{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getUnderflowInt64HandleError handles the GetUnderflowInt64 error response.
-func (client *IntClient) getUnderflowInt64HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetUnixTime - Get datetime encoded as Unix time value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - IntClientGetUnixTimeOptions contains the optional parameters for the IntClient.GetUnixTime method.
 func (client *IntClient) GetUnixTime(ctx context.Context, options *IntClientGetUnixTimeOptions) (IntClientGetUnixTimeResponse, error) {
 	req, err := client.getUnixTimeCreateRequest(ctx, options)
@@ -462,7 +357,7 @@ func (client *IntClient) GetUnixTime(ctx context.Context, options *IntClientGetU
 		return IntClientGetUnixTimeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientGetUnixTimeResponse{}, client.getUnixTimeHandleError(resp)
+		return IntClientGetUnixTimeResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getUnixTimeHandleResponse(resp)
 }
@@ -483,27 +378,14 @@ func (client *IntClient) getUnixTimeHandleResponse(resp *http.Response) (IntClie
 	result := IntClientGetUnixTimeResponse{RawResponse: resp}
 	var aux *timeUnix
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return IntClientGetUnixTimeResponse{}, runtime.NewResponseError(err, resp)
+		return IntClientGetUnixTimeResponse{}, runtime.NewResponseError(resp)
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil
 }
 
-// getUnixTimeHandleError handles the GetUnixTime error response.
-func (client *IntClient) getUnixTimeHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutMax32 - Put max int32 value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // intBody - int body
 // options - IntClientPutMax32Options contains the optional parameters for the IntClient.PutMax32 method.
 func (client *IntClient) PutMax32(ctx context.Context, intBody int32, options *IntClientPutMax32Options) (IntClientPutMax32Response, error) {
@@ -516,7 +398,7 @@ func (client *IntClient) PutMax32(ctx context.Context, intBody int32, options *I
 		return IntClientPutMax32Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientPutMax32Response{}, client.putMax32HandleError(resp)
+		return IntClientPutMax32Response{}, runtime.NewResponseError(resp)
 	}
 	return IntClientPutMax32Response{RawResponse: resp}, nil
 }
@@ -532,21 +414,8 @@ func (client *IntClient) putMax32CreateRequest(ctx context.Context, intBody int3
 	return req, runtime.MarshalAsJSON(req, intBody)
 }
 
-// putMax32HandleError handles the PutMax32 error response.
-func (client *IntClient) putMax32HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutMax64 - Put max int64 value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // intBody - int body
 // options - IntClientPutMax64Options contains the optional parameters for the IntClient.PutMax64 method.
 func (client *IntClient) PutMax64(ctx context.Context, intBody int64, options *IntClientPutMax64Options) (IntClientPutMax64Response, error) {
@@ -559,7 +428,7 @@ func (client *IntClient) PutMax64(ctx context.Context, intBody int64, options *I
 		return IntClientPutMax64Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientPutMax64Response{}, client.putMax64HandleError(resp)
+		return IntClientPutMax64Response{}, runtime.NewResponseError(resp)
 	}
 	return IntClientPutMax64Response{RawResponse: resp}, nil
 }
@@ -575,21 +444,8 @@ func (client *IntClient) putMax64CreateRequest(ctx context.Context, intBody int6
 	return req, runtime.MarshalAsJSON(req, intBody)
 }
 
-// putMax64HandleError handles the PutMax64 error response.
-func (client *IntClient) putMax64HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutMin32 - Put min int32 value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // intBody - int body
 // options - IntClientPutMin32Options contains the optional parameters for the IntClient.PutMin32 method.
 func (client *IntClient) PutMin32(ctx context.Context, intBody int32, options *IntClientPutMin32Options) (IntClientPutMin32Response, error) {
@@ -602,7 +458,7 @@ func (client *IntClient) PutMin32(ctx context.Context, intBody int32, options *I
 		return IntClientPutMin32Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientPutMin32Response{}, client.putMin32HandleError(resp)
+		return IntClientPutMin32Response{}, runtime.NewResponseError(resp)
 	}
 	return IntClientPutMin32Response{RawResponse: resp}, nil
 }
@@ -618,21 +474,8 @@ func (client *IntClient) putMin32CreateRequest(ctx context.Context, intBody int3
 	return req, runtime.MarshalAsJSON(req, intBody)
 }
 
-// putMin32HandleError handles the PutMin32 error response.
-func (client *IntClient) putMin32HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutMin64 - Put min int64 value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // intBody - int body
 // options - IntClientPutMin64Options contains the optional parameters for the IntClient.PutMin64 method.
 func (client *IntClient) PutMin64(ctx context.Context, intBody int64, options *IntClientPutMin64Options) (IntClientPutMin64Response, error) {
@@ -645,7 +488,7 @@ func (client *IntClient) PutMin64(ctx context.Context, intBody int64, options *I
 		return IntClientPutMin64Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientPutMin64Response{}, client.putMin64HandleError(resp)
+		return IntClientPutMin64Response{}, runtime.NewResponseError(resp)
 	}
 	return IntClientPutMin64Response{RawResponse: resp}, nil
 }
@@ -661,21 +504,8 @@ func (client *IntClient) putMin64CreateRequest(ctx context.Context, intBody int6
 	return req, runtime.MarshalAsJSON(req, intBody)
 }
 
-// putMin64HandleError handles the PutMin64 error response.
-func (client *IntClient) putMin64HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutUnixTimeDate - Put datetime encoded as Unix time
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // intBody - int body
 // options - IntClientPutUnixTimeDateOptions contains the optional parameters for the IntClient.PutUnixTimeDate method.
 func (client *IntClient) PutUnixTimeDate(ctx context.Context, intBody time.Time, options *IntClientPutUnixTimeDateOptions) (IntClientPutUnixTimeDateResponse, error) {
@@ -688,7 +518,7 @@ func (client *IntClient) PutUnixTimeDate(ctx context.Context, intBody time.Time,
 		return IntClientPutUnixTimeDateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntClientPutUnixTimeDateResponse{}, client.putUnixTimeDateHandleError(resp)
+		return IntClientPutUnixTimeDateResponse{}, runtime.NewResponseError(resp)
 	}
 	return IntClientPutUnixTimeDateResponse{RawResponse: resp}, nil
 }
@@ -703,17 +533,4 @@ func (client *IntClient) putUnixTimeDateCreateRequest(ctx context.Context, intBo
 	req.Raw().Header.Set("Accept", "application/json")
 	aux := timeUnix(intBody)
 	return req, runtime.MarshalAsJSON(req, aux)
-}
-
-// putUnixTimeDateHandleError handles the PutUnixTimeDate error response.
-func (client *IntClient) putUnixTimeDateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

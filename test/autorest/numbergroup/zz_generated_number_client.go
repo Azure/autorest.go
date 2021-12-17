@@ -10,7 +10,6 @@ package numbergroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewNumberClient(options *azcore.ClientOptions) *NumberClient {
 		cp = *options
 	}
 	client := &NumberClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetBigDecimal - Get big decimal value 2.5976931e+101
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientGetBigDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimal method.
 func (client *NumberClient) GetBigDecimal(ctx context.Context, options *NumberClientGetBigDecimalOptions) (NumberClientGetBigDecimalResponse, error) {
 	req, err := client.getBigDecimalCreateRequest(ctx, options)
@@ -49,7 +48,7 @@ func (client *NumberClient) GetBigDecimal(ctx context.Context, options *NumberCl
 		return NumberClientGetBigDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientGetBigDecimalResponse{}, client.getBigDecimalHandleError(resp)
+		return NumberClientGetBigDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBigDecimalHandleResponse(resp)
 }
@@ -69,26 +68,13 @@ func (client *NumberClient) getBigDecimalCreateRequest(ctx context.Context, opti
 func (client *NumberClient) getBigDecimalHandleResponse(resp *http.Response) (NumberClientGetBigDecimalResponse, error) {
 	result := NumberClientGetBigDecimalResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberClientGetBigDecimalResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetBigDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getBigDecimalHandleError handles the GetBigDecimal error response.
-func (client *NumberClient) getBigDecimalHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBigDecimalNegativeDecimal - Get big decimal value -99999999.99
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientGetBigDecimalNegativeDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimalNegativeDecimal
 // method.
 func (client *NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context, options *NumberClientGetBigDecimalNegativeDecimalOptions) (NumberClientGetBigDecimalNegativeDecimalResponse, error) {
@@ -101,7 +87,7 @@ func (client *NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context, op
 		return NumberClientGetBigDecimalNegativeDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientGetBigDecimalNegativeDecimalResponse{}, client.getBigDecimalNegativeDecimalHandleError(resp)
+		return NumberClientGetBigDecimalNegativeDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBigDecimalNegativeDecimalHandleResponse(resp)
 }
@@ -121,26 +107,13 @@ func (client *NumberClient) getBigDecimalNegativeDecimalCreateRequest(ctx contex
 func (client *NumberClient) getBigDecimalNegativeDecimalHandleResponse(resp *http.Response) (NumberClientGetBigDecimalNegativeDecimalResponse, error) {
 	result := NumberClientGetBigDecimalNegativeDecimalResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberClientGetBigDecimalNegativeDecimalResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetBigDecimalNegativeDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getBigDecimalNegativeDecimalHandleError handles the GetBigDecimalNegativeDecimal error response.
-func (client *NumberClient) getBigDecimalNegativeDecimalHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBigDecimalPositiveDecimal - Get big decimal value 99999999.99
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientGetBigDecimalPositiveDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimalPositiveDecimal
 // method.
 func (client *NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context, options *NumberClientGetBigDecimalPositiveDecimalOptions) (NumberClientGetBigDecimalPositiveDecimalResponse, error) {
@@ -153,7 +126,7 @@ func (client *NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context, op
 		return NumberClientGetBigDecimalPositiveDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientGetBigDecimalPositiveDecimalResponse{}, client.getBigDecimalPositiveDecimalHandleError(resp)
+		return NumberClientGetBigDecimalPositiveDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBigDecimalPositiveDecimalHandleResponse(resp)
 }
@@ -173,26 +146,13 @@ func (client *NumberClient) getBigDecimalPositiveDecimalCreateRequest(ctx contex
 func (client *NumberClient) getBigDecimalPositiveDecimalHandleResponse(resp *http.Response) (NumberClientGetBigDecimalPositiveDecimalResponse, error) {
 	result := NumberClientGetBigDecimalPositiveDecimalResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberClientGetBigDecimalPositiveDecimalResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetBigDecimalPositiveDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getBigDecimalPositiveDecimalHandleError handles the GetBigDecimalPositiveDecimal error response.
-func (client *NumberClient) getBigDecimalPositiveDecimalHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBigDouble - Get big double value 2.5976931e+101
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientGetBigDoubleOptions contains the optional parameters for the NumberClient.GetBigDouble method.
 func (client *NumberClient) GetBigDouble(ctx context.Context, options *NumberClientGetBigDoubleOptions) (NumberClientGetBigDoubleResponse, error) {
 	req, err := client.getBigDoubleCreateRequest(ctx, options)
@@ -204,7 +164,7 @@ func (client *NumberClient) GetBigDouble(ctx context.Context, options *NumberCli
 		return NumberClientGetBigDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientGetBigDoubleResponse{}, client.getBigDoubleHandleError(resp)
+		return NumberClientGetBigDoubleResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBigDoubleHandleResponse(resp)
 }
@@ -224,26 +184,13 @@ func (client *NumberClient) getBigDoubleCreateRequest(ctx context.Context, optio
 func (client *NumberClient) getBigDoubleHandleResponse(resp *http.Response) (NumberClientGetBigDoubleResponse, error) {
 	result := NumberClientGetBigDoubleResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberClientGetBigDoubleResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetBigDoubleResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getBigDoubleHandleError handles the GetBigDouble error response.
-func (client *NumberClient) getBigDoubleHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBigDoubleNegativeDecimal - Get big double value -99999999.99
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientGetBigDoubleNegativeDecimalOptions contains the optional parameters for the NumberClient.GetBigDoubleNegativeDecimal
 // method.
 func (client *NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context, options *NumberClientGetBigDoubleNegativeDecimalOptions) (NumberClientGetBigDoubleNegativeDecimalResponse, error) {
@@ -256,7 +203,7 @@ func (client *NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context, opt
 		return NumberClientGetBigDoubleNegativeDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientGetBigDoubleNegativeDecimalResponse{}, client.getBigDoubleNegativeDecimalHandleError(resp)
+		return NumberClientGetBigDoubleNegativeDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBigDoubleNegativeDecimalHandleResponse(resp)
 }
@@ -276,26 +223,13 @@ func (client *NumberClient) getBigDoubleNegativeDecimalCreateRequest(ctx context
 func (client *NumberClient) getBigDoubleNegativeDecimalHandleResponse(resp *http.Response) (NumberClientGetBigDoubleNegativeDecimalResponse, error) {
 	result := NumberClientGetBigDoubleNegativeDecimalResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberClientGetBigDoubleNegativeDecimalResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetBigDoubleNegativeDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getBigDoubleNegativeDecimalHandleError handles the GetBigDoubleNegativeDecimal error response.
-func (client *NumberClient) getBigDoubleNegativeDecimalHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBigDoublePositiveDecimal - Get big double value 99999999.99
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientGetBigDoublePositiveDecimalOptions contains the optional parameters for the NumberClient.GetBigDoublePositiveDecimal
 // method.
 func (client *NumberClient) GetBigDoublePositiveDecimal(ctx context.Context, options *NumberClientGetBigDoublePositiveDecimalOptions) (NumberClientGetBigDoublePositiveDecimalResponse, error) {
@@ -308,7 +242,7 @@ func (client *NumberClient) GetBigDoublePositiveDecimal(ctx context.Context, opt
 		return NumberClientGetBigDoublePositiveDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientGetBigDoublePositiveDecimalResponse{}, client.getBigDoublePositiveDecimalHandleError(resp)
+		return NumberClientGetBigDoublePositiveDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBigDoublePositiveDecimalHandleResponse(resp)
 }
@@ -328,26 +262,13 @@ func (client *NumberClient) getBigDoublePositiveDecimalCreateRequest(ctx context
 func (client *NumberClient) getBigDoublePositiveDecimalHandleResponse(resp *http.Response) (NumberClientGetBigDoublePositiveDecimalResponse, error) {
 	result := NumberClientGetBigDoublePositiveDecimalResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberClientGetBigDoublePositiveDecimalResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetBigDoublePositiveDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getBigDoublePositiveDecimalHandleError handles the GetBigDoublePositiveDecimal error response.
-func (client *NumberClient) getBigDoublePositiveDecimalHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBigFloat - Get big float value 3.402823e+20
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientGetBigFloatOptions contains the optional parameters for the NumberClient.GetBigFloat method.
 func (client *NumberClient) GetBigFloat(ctx context.Context, options *NumberClientGetBigFloatOptions) (NumberClientGetBigFloatResponse, error) {
 	req, err := client.getBigFloatCreateRequest(ctx, options)
@@ -359,7 +280,7 @@ func (client *NumberClient) GetBigFloat(ctx context.Context, options *NumberClie
 		return NumberClientGetBigFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientGetBigFloatResponse{}, client.getBigFloatHandleError(resp)
+		return NumberClientGetBigFloatResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBigFloatHandleResponse(resp)
 }
@@ -379,26 +300,13 @@ func (client *NumberClient) getBigFloatCreateRequest(ctx context.Context, option
 func (client *NumberClient) getBigFloatHandleResponse(resp *http.Response) (NumberClientGetBigFloatResponse, error) {
 	result := NumberClientGetBigFloatResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberClientGetBigFloatResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetBigFloatResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getBigFloatHandleError handles the GetBigFloat error response.
-func (client *NumberClient) getBigFloatHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetInvalidDecimal - Get invalid decimal Number value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientGetInvalidDecimalOptions contains the optional parameters for the NumberClient.GetInvalidDecimal
 // method.
 func (client *NumberClient) GetInvalidDecimal(ctx context.Context, options *NumberClientGetInvalidDecimalOptions) (NumberClientGetInvalidDecimalResponse, error) {
@@ -411,7 +319,7 @@ func (client *NumberClient) GetInvalidDecimal(ctx context.Context, options *Numb
 		return NumberClientGetInvalidDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientGetInvalidDecimalResponse{}, client.getInvalidDecimalHandleError(resp)
+		return NumberClientGetInvalidDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getInvalidDecimalHandleResponse(resp)
 }
@@ -431,26 +339,13 @@ func (client *NumberClient) getInvalidDecimalCreateRequest(ctx context.Context, 
 func (client *NumberClient) getInvalidDecimalHandleResponse(resp *http.Response) (NumberClientGetInvalidDecimalResponse, error) {
 	result := NumberClientGetInvalidDecimalResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberClientGetInvalidDecimalResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetInvalidDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getInvalidDecimalHandleError handles the GetInvalidDecimal error response.
-func (client *NumberClient) getInvalidDecimalHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetInvalidDouble - Get invalid double Number value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientGetInvalidDoubleOptions contains the optional parameters for the NumberClient.GetInvalidDouble method.
 func (client *NumberClient) GetInvalidDouble(ctx context.Context, options *NumberClientGetInvalidDoubleOptions) (NumberClientGetInvalidDoubleResponse, error) {
 	req, err := client.getInvalidDoubleCreateRequest(ctx, options)
@@ -462,7 +357,7 @@ func (client *NumberClient) GetInvalidDouble(ctx context.Context, options *Numbe
 		return NumberClientGetInvalidDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientGetInvalidDoubleResponse{}, client.getInvalidDoubleHandleError(resp)
+		return NumberClientGetInvalidDoubleResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getInvalidDoubleHandleResponse(resp)
 }
@@ -482,26 +377,13 @@ func (client *NumberClient) getInvalidDoubleCreateRequest(ctx context.Context, o
 func (client *NumberClient) getInvalidDoubleHandleResponse(resp *http.Response) (NumberClientGetInvalidDoubleResponse, error) {
 	result := NumberClientGetInvalidDoubleResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberClientGetInvalidDoubleResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetInvalidDoubleResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getInvalidDoubleHandleError handles the GetInvalidDouble error response.
-func (client *NumberClient) getInvalidDoubleHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetInvalidFloat - Get invalid float Number value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientGetInvalidFloatOptions contains the optional parameters for the NumberClient.GetInvalidFloat method.
 func (client *NumberClient) GetInvalidFloat(ctx context.Context, options *NumberClientGetInvalidFloatOptions) (NumberClientGetInvalidFloatResponse, error) {
 	req, err := client.getInvalidFloatCreateRequest(ctx, options)
@@ -513,7 +395,7 @@ func (client *NumberClient) GetInvalidFloat(ctx context.Context, options *Number
 		return NumberClientGetInvalidFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientGetInvalidFloatResponse{}, client.getInvalidFloatHandleError(resp)
+		return NumberClientGetInvalidFloatResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getInvalidFloatHandleResponse(resp)
 }
@@ -533,26 +415,13 @@ func (client *NumberClient) getInvalidFloatCreateRequest(ctx context.Context, op
 func (client *NumberClient) getInvalidFloatHandleResponse(resp *http.Response) (NumberClientGetInvalidFloatResponse, error) {
 	result := NumberClientGetInvalidFloatResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberClientGetInvalidFloatResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetInvalidFloatResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getInvalidFloatHandleError handles the GetInvalidFloat error response.
-func (client *NumberClient) getInvalidFloatHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetNull - Get null Number value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientGetNullOptions contains the optional parameters for the NumberClient.GetNull method.
 func (client *NumberClient) GetNull(ctx context.Context, options *NumberClientGetNullOptions) (NumberClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
@@ -564,7 +433,7 @@ func (client *NumberClient) GetNull(ctx context.Context, options *NumberClientGe
 		return NumberClientGetNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientGetNullResponse{}, client.getNullHandleError(resp)
+		return NumberClientGetNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
@@ -584,26 +453,13 @@ func (client *NumberClient) getNullCreateRequest(ctx context.Context, options *N
 func (client *NumberClient) getNullHandleResponse(resp *http.Response) (NumberClientGetNullResponse, error) {
 	result := NumberClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberClientGetNullResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getNullHandleError handles the GetNull error response.
-func (client *NumberClient) getNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetSmallDecimal - Get small decimal value 2.5976931e-101
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientGetSmallDecimalOptions contains the optional parameters for the NumberClient.GetSmallDecimal method.
 func (client *NumberClient) GetSmallDecimal(ctx context.Context, options *NumberClientGetSmallDecimalOptions) (NumberClientGetSmallDecimalResponse, error) {
 	req, err := client.getSmallDecimalCreateRequest(ctx, options)
@@ -615,7 +471,7 @@ func (client *NumberClient) GetSmallDecimal(ctx context.Context, options *Number
 		return NumberClientGetSmallDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientGetSmallDecimalResponse{}, client.getSmallDecimalHandleError(resp)
+		return NumberClientGetSmallDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getSmallDecimalHandleResponse(resp)
 }
@@ -635,26 +491,13 @@ func (client *NumberClient) getSmallDecimalCreateRequest(ctx context.Context, op
 func (client *NumberClient) getSmallDecimalHandleResponse(resp *http.Response) (NumberClientGetSmallDecimalResponse, error) {
 	result := NumberClientGetSmallDecimalResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberClientGetSmallDecimalResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetSmallDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getSmallDecimalHandleError handles the GetSmallDecimal error response.
-func (client *NumberClient) getSmallDecimalHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetSmallDouble - Get big double value 2.5976931e-101
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientGetSmallDoubleOptions contains the optional parameters for the NumberClient.GetSmallDouble method.
 func (client *NumberClient) GetSmallDouble(ctx context.Context, options *NumberClientGetSmallDoubleOptions) (NumberClientGetSmallDoubleResponse, error) {
 	req, err := client.getSmallDoubleCreateRequest(ctx, options)
@@ -666,7 +509,7 @@ func (client *NumberClient) GetSmallDouble(ctx context.Context, options *NumberC
 		return NumberClientGetSmallDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientGetSmallDoubleResponse{}, client.getSmallDoubleHandleError(resp)
+		return NumberClientGetSmallDoubleResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getSmallDoubleHandleResponse(resp)
 }
@@ -686,26 +529,13 @@ func (client *NumberClient) getSmallDoubleCreateRequest(ctx context.Context, opt
 func (client *NumberClient) getSmallDoubleHandleResponse(resp *http.Response) (NumberClientGetSmallDoubleResponse, error) {
 	result := NumberClientGetSmallDoubleResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberClientGetSmallDoubleResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetSmallDoubleResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getSmallDoubleHandleError handles the GetSmallDouble error response.
-func (client *NumberClient) getSmallDoubleHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetSmallFloat - Get big double value 3.402823e-20
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientGetSmallFloatOptions contains the optional parameters for the NumberClient.GetSmallFloat method.
 func (client *NumberClient) GetSmallFloat(ctx context.Context, options *NumberClientGetSmallFloatOptions) (NumberClientGetSmallFloatResponse, error) {
 	req, err := client.getSmallFloatCreateRequest(ctx, options)
@@ -717,7 +547,7 @@ func (client *NumberClient) GetSmallFloat(ctx context.Context, options *NumberCl
 		return NumberClientGetSmallFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientGetSmallFloatResponse{}, client.getSmallFloatHandleError(resp)
+		return NumberClientGetSmallFloatResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getSmallFloatHandleResponse(resp)
 }
@@ -737,26 +567,13 @@ func (client *NumberClient) getSmallFloatCreateRequest(ctx context.Context, opti
 func (client *NumberClient) getSmallFloatHandleResponse(resp *http.Response) (NumberClientGetSmallFloatResponse, error) {
 	result := NumberClientGetSmallFloatResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberClientGetSmallFloatResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetSmallFloatResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getSmallFloatHandleError handles the GetSmallFloat error response.
-func (client *NumberClient) getSmallFloatHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutBigDecimal - Put big decimal value 2.5976931e+101
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // numberBody - number body
 // options - NumberClientPutBigDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimal method.
 func (client *NumberClient) PutBigDecimal(ctx context.Context, numberBody float64, options *NumberClientPutBigDecimalOptions) (NumberClientPutBigDecimalResponse, error) {
@@ -769,7 +586,7 @@ func (client *NumberClient) PutBigDecimal(ctx context.Context, numberBody float6
 		return NumberClientPutBigDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientPutBigDecimalResponse{}, client.putBigDecimalHandleError(resp)
+		return NumberClientPutBigDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return NumberClientPutBigDecimalResponse{RawResponse: resp}, nil
 }
@@ -785,21 +602,8 @@ func (client *NumberClient) putBigDecimalCreateRequest(ctx context.Context, numb
 	return req, runtime.MarshalAsJSON(req, numberBody)
 }
 
-// putBigDecimalHandleError handles the PutBigDecimal error response.
-func (client *NumberClient) putBigDecimalHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutBigDecimalNegativeDecimal - Put big decimal value -99999999.99
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientPutBigDecimalNegativeDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimalNegativeDecimal
 // method.
 func (client *NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context, options *NumberClientPutBigDecimalNegativeDecimalOptions) (NumberClientPutBigDecimalNegativeDecimalResponse, error) {
@@ -812,7 +616,7 @@ func (client *NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context, op
 		return NumberClientPutBigDecimalNegativeDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientPutBigDecimalNegativeDecimalResponse{}, client.putBigDecimalNegativeDecimalHandleError(resp)
+		return NumberClientPutBigDecimalNegativeDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return NumberClientPutBigDecimalNegativeDecimalResponse{RawResponse: resp}, nil
 }
@@ -828,21 +632,8 @@ func (client *NumberClient) putBigDecimalNegativeDecimalCreateRequest(ctx contex
 	return req, runtime.MarshalAsJSON(req, -99999999.99)
 }
 
-// putBigDecimalNegativeDecimalHandleError handles the PutBigDecimalNegativeDecimal error response.
-func (client *NumberClient) putBigDecimalNegativeDecimalHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutBigDecimalPositiveDecimal - Put big decimal value 99999999.99
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientPutBigDecimalPositiveDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimalPositiveDecimal
 // method.
 func (client *NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context, options *NumberClientPutBigDecimalPositiveDecimalOptions) (NumberClientPutBigDecimalPositiveDecimalResponse, error) {
@@ -855,7 +646,7 @@ func (client *NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context, op
 		return NumberClientPutBigDecimalPositiveDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientPutBigDecimalPositiveDecimalResponse{}, client.putBigDecimalPositiveDecimalHandleError(resp)
+		return NumberClientPutBigDecimalPositiveDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return NumberClientPutBigDecimalPositiveDecimalResponse{RawResponse: resp}, nil
 }
@@ -871,21 +662,8 @@ func (client *NumberClient) putBigDecimalPositiveDecimalCreateRequest(ctx contex
 	return req, runtime.MarshalAsJSON(req, 99999999.99)
 }
 
-// putBigDecimalPositiveDecimalHandleError handles the PutBigDecimalPositiveDecimal error response.
-func (client *NumberClient) putBigDecimalPositiveDecimalHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutBigDouble - Put big double value 2.5976931e+101
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // numberBody - number body
 // options - NumberClientPutBigDoubleOptions contains the optional parameters for the NumberClient.PutBigDouble method.
 func (client *NumberClient) PutBigDouble(ctx context.Context, numberBody float64, options *NumberClientPutBigDoubleOptions) (NumberClientPutBigDoubleResponse, error) {
@@ -898,7 +676,7 @@ func (client *NumberClient) PutBigDouble(ctx context.Context, numberBody float64
 		return NumberClientPutBigDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientPutBigDoubleResponse{}, client.putBigDoubleHandleError(resp)
+		return NumberClientPutBigDoubleResponse{}, runtime.NewResponseError(resp)
 	}
 	return NumberClientPutBigDoubleResponse{RawResponse: resp}, nil
 }
@@ -914,21 +692,8 @@ func (client *NumberClient) putBigDoubleCreateRequest(ctx context.Context, numbe
 	return req, runtime.MarshalAsJSON(req, numberBody)
 }
 
-// putBigDoubleHandleError handles the PutBigDouble error response.
-func (client *NumberClient) putBigDoubleHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutBigDoubleNegativeDecimal - Put big double value -99999999.99
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientPutBigDoubleNegativeDecimalOptions contains the optional parameters for the NumberClient.PutBigDoubleNegativeDecimal
 // method.
 func (client *NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context, options *NumberClientPutBigDoubleNegativeDecimalOptions) (NumberClientPutBigDoubleNegativeDecimalResponse, error) {
@@ -941,7 +706,7 @@ func (client *NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context, opt
 		return NumberClientPutBigDoubleNegativeDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientPutBigDoubleNegativeDecimalResponse{}, client.putBigDoubleNegativeDecimalHandleError(resp)
+		return NumberClientPutBigDoubleNegativeDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return NumberClientPutBigDoubleNegativeDecimalResponse{RawResponse: resp}, nil
 }
@@ -957,21 +722,8 @@ func (client *NumberClient) putBigDoubleNegativeDecimalCreateRequest(ctx context
 	return req, runtime.MarshalAsJSON(req, -99999999.99)
 }
 
-// putBigDoubleNegativeDecimalHandleError handles the PutBigDoubleNegativeDecimal error response.
-func (client *NumberClient) putBigDoubleNegativeDecimalHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutBigDoublePositiveDecimal - Put big double value 99999999.99
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - NumberClientPutBigDoublePositiveDecimalOptions contains the optional parameters for the NumberClient.PutBigDoublePositiveDecimal
 // method.
 func (client *NumberClient) PutBigDoublePositiveDecimal(ctx context.Context, options *NumberClientPutBigDoublePositiveDecimalOptions) (NumberClientPutBigDoublePositiveDecimalResponse, error) {
@@ -984,7 +736,7 @@ func (client *NumberClient) PutBigDoublePositiveDecimal(ctx context.Context, opt
 		return NumberClientPutBigDoublePositiveDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientPutBigDoublePositiveDecimalResponse{}, client.putBigDoublePositiveDecimalHandleError(resp)
+		return NumberClientPutBigDoublePositiveDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return NumberClientPutBigDoublePositiveDecimalResponse{RawResponse: resp}, nil
 }
@@ -1000,21 +752,8 @@ func (client *NumberClient) putBigDoublePositiveDecimalCreateRequest(ctx context
 	return req, runtime.MarshalAsJSON(req, 99999999.99)
 }
 
-// putBigDoublePositiveDecimalHandleError handles the PutBigDoublePositiveDecimal error response.
-func (client *NumberClient) putBigDoublePositiveDecimalHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutBigFloat - Put big float value 3.402823e+20
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // numberBody - number body
 // options - NumberClientPutBigFloatOptions contains the optional parameters for the NumberClient.PutBigFloat method.
 func (client *NumberClient) PutBigFloat(ctx context.Context, numberBody float32, options *NumberClientPutBigFloatOptions) (NumberClientPutBigFloatResponse, error) {
@@ -1027,7 +766,7 @@ func (client *NumberClient) PutBigFloat(ctx context.Context, numberBody float32,
 		return NumberClientPutBigFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientPutBigFloatResponse{}, client.putBigFloatHandleError(resp)
+		return NumberClientPutBigFloatResponse{}, runtime.NewResponseError(resp)
 	}
 	return NumberClientPutBigFloatResponse{RawResponse: resp}, nil
 }
@@ -1043,21 +782,8 @@ func (client *NumberClient) putBigFloatCreateRequest(ctx context.Context, number
 	return req, runtime.MarshalAsJSON(req, numberBody)
 }
 
-// putBigFloatHandleError handles the PutBigFloat error response.
-func (client *NumberClient) putBigFloatHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutSmallDecimal - Put small decimal value 2.5976931e-101
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // numberBody - number body
 // options - NumberClientPutSmallDecimalOptions contains the optional parameters for the NumberClient.PutSmallDecimal method.
 func (client *NumberClient) PutSmallDecimal(ctx context.Context, numberBody float64, options *NumberClientPutSmallDecimalOptions) (NumberClientPutSmallDecimalResponse, error) {
@@ -1070,7 +796,7 @@ func (client *NumberClient) PutSmallDecimal(ctx context.Context, numberBody floa
 		return NumberClientPutSmallDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientPutSmallDecimalResponse{}, client.putSmallDecimalHandleError(resp)
+		return NumberClientPutSmallDecimalResponse{}, runtime.NewResponseError(resp)
 	}
 	return NumberClientPutSmallDecimalResponse{RawResponse: resp}, nil
 }
@@ -1086,21 +812,8 @@ func (client *NumberClient) putSmallDecimalCreateRequest(ctx context.Context, nu
 	return req, runtime.MarshalAsJSON(req, numberBody)
 }
 
-// putSmallDecimalHandleError handles the PutSmallDecimal error response.
-func (client *NumberClient) putSmallDecimalHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutSmallDouble - Put small double value 2.5976931e-101
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // numberBody - number body
 // options - NumberClientPutSmallDoubleOptions contains the optional parameters for the NumberClient.PutSmallDouble method.
 func (client *NumberClient) PutSmallDouble(ctx context.Context, numberBody float64, options *NumberClientPutSmallDoubleOptions) (NumberClientPutSmallDoubleResponse, error) {
@@ -1113,7 +826,7 @@ func (client *NumberClient) PutSmallDouble(ctx context.Context, numberBody float
 		return NumberClientPutSmallDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientPutSmallDoubleResponse{}, client.putSmallDoubleHandleError(resp)
+		return NumberClientPutSmallDoubleResponse{}, runtime.NewResponseError(resp)
 	}
 	return NumberClientPutSmallDoubleResponse{RawResponse: resp}, nil
 }
@@ -1129,21 +842,8 @@ func (client *NumberClient) putSmallDoubleCreateRequest(ctx context.Context, num
 	return req, runtime.MarshalAsJSON(req, numberBody)
 }
 
-// putSmallDoubleHandleError handles the PutSmallDouble error response.
-func (client *NumberClient) putSmallDoubleHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutSmallFloat - Put small float value 3.402823e-20
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // numberBody - number body
 // options - NumberClientPutSmallFloatOptions contains the optional parameters for the NumberClient.PutSmallFloat method.
 func (client *NumberClient) PutSmallFloat(ctx context.Context, numberBody float32, options *NumberClientPutSmallFloatOptions) (NumberClientPutSmallFloatResponse, error) {
@@ -1156,7 +856,7 @@ func (client *NumberClient) PutSmallFloat(ctx context.Context, numberBody float3
 		return NumberClientPutSmallFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberClientPutSmallFloatResponse{}, client.putSmallFloatHandleError(resp)
+		return NumberClientPutSmallFloatResponse{}, runtime.NewResponseError(resp)
 	}
 	return NumberClientPutSmallFloatResponse{RawResponse: resp}, nil
 }
@@ -1170,17 +870,4 @@ func (client *NumberClient) putSmallFloatCreateRequest(ctx context.Context, numb
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, numberBody)
-}
-
-// putSmallFloatHandleError handles the PutSmallFloat error response.
-func (client *NumberClient) putSmallFloatHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

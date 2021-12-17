@@ -10,7 +10,6 @@ package azartifacts
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -33,7 +32,7 @@ func newWorkspaceClient(endpoint string, pl runtime.Pipeline) *workspaceClient {
 }
 
 // Get - Get Workspace
-// If the operation fails it returns the *ErrorContract error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - workspaceClientGetOptions contains the optional parameters for the workspaceClient.Get method.
 func (client *workspaceClient) Get(ctx context.Context, options *workspaceClientGetOptions) (workspaceClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
@@ -45,7 +44,7 @@ func (client *workspaceClient) Get(ctx context.Context, options *workspaceClient
 		return workspaceClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return workspaceClientGetResponse{}, client.getHandleError(resp)
+		return workspaceClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -68,20 +67,7 @@ func (client *workspaceClient) getCreateRequest(ctx context.Context, options *wo
 func (client *workspaceClient) getHandleResponse(resp *http.Response) (workspaceClientGetResponse, error) {
 	result := workspaceClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Workspace); err != nil {
-		return workspaceClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return workspaceClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// getHandleError handles the Get error response.
-func (client *workspaceClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorContract{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

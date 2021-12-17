@@ -11,7 +11,6 @@ package armconsumption
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -37,18 +36,18 @@ func NewReservationsSummariesClient(credential azcore.TokenCredential, options *
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ReservationsSummariesClient{
-		host: string(cp.Host),
-		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+		host: string(cp.Endpoint),
+		pl:   armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // List - Lists the reservations summaries for the defined scope daily or monthly grain.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // scope - The scope associated with reservations summaries operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
 // for BillingAccount scope (legacy), and
 // '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile
@@ -103,26 +102,13 @@ func (client *ReservationsSummariesClient) listCreateRequest(ctx context.Context
 func (client *ReservationsSummariesClient) listHandleResponse(resp *http.Response) (ReservationsSummariesClientListResponse, error) {
 	result := ReservationsSummariesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationSummariesListResult); err != nil {
-		return ReservationsSummariesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationsSummariesClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *ReservationsSummariesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByReservationOrder - Lists the reservations summaries for daily or monthly grain.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // reservationOrderID - Order Id of the reservation
 // grain - Can be daily or monthly
 // options - ReservationsSummariesClientListByReservationOrderOptions contains the optional parameters for the ReservationsSummariesClient.ListByReservationOrder
@@ -165,26 +151,13 @@ func (client *ReservationsSummariesClient) listByReservationOrderCreateRequest(c
 func (client *ReservationsSummariesClient) listByReservationOrderHandleResponse(resp *http.Response) (ReservationsSummariesClientListByReservationOrderResponse, error) {
 	result := ReservationsSummariesClientListByReservationOrderResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationSummariesListResult); err != nil {
-		return ReservationsSummariesClientListByReservationOrderResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationsSummariesClientListByReservationOrderResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listByReservationOrderHandleError handles the ListByReservationOrder error response.
-func (client *ReservationsSummariesClient) listByReservationOrderHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByReservationOrderAndReservation - Lists the reservations summaries for daily or monthly grain.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // reservationOrderID - Order Id of the reservation
 // reservationID - Id of the reservation
 // grain - Can be daily or monthly
@@ -232,20 +205,7 @@ func (client *ReservationsSummariesClient) listByReservationOrderAndReservationC
 func (client *ReservationsSummariesClient) listByReservationOrderAndReservationHandleResponse(resp *http.Response) (ReservationsSummariesClientListByReservationOrderAndReservationResponse, error) {
 	result := ReservationsSummariesClientListByReservationOrderAndReservationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationSummariesListResult); err != nil {
-		return ReservationsSummariesClientListByReservationOrderAndReservationResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationsSummariesClientListByReservationOrderAndReservationResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listByReservationOrderAndReservationHandleError handles the ListByReservationOrderAndReservation error response.
-func (client *ReservationsSummariesClient) listByReservationOrderAndReservationHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

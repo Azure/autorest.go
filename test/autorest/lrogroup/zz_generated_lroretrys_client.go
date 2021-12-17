@@ -10,7 +10,6 @@ package lrogroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
@@ -32,14 +31,14 @@ func NewLRORetrysClient(options *azcore.ClientOptions) *LRORetrysClient {
 		cp = *options
 	}
 	client := &LRORetrysClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginDelete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return
 // this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - LRORetrysClientBeginDelete202Retry200Options contains the optional parameters for the LRORetrysClient.BeginDelete202Retry200
 // method.
 func (client *LRORetrysClient) BeginDelete202Retry200(ctx context.Context, options *LRORetrysClientBeginDelete202Retry200Options) (LRORetrysClientDelete202Retry200PollerResponse, error) {
@@ -50,7 +49,7 @@ func (client *LRORetrysClient) BeginDelete202Retry200(ctx context.Context, optio
 	result := LRORetrysClientDelete202Retry200PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LRORetrysClient.Delete202Retry200", "", resp, client.pl, client.delete202Retry200HandleError)
+	pt, err := armruntime.NewPoller("LRORetrysClient.Delete202Retry200", "", resp, client.pl)
 	if err != nil {
 		return LRORetrysClientDelete202Retry200PollerResponse{}, err
 	}
@@ -62,7 +61,7 @@ func (client *LRORetrysClient) BeginDelete202Retry200(ctx context.Context, optio
 
 // Delete202Retry200 - Long running delete request, service returns a 500, then a 202 to the initial request. Polls return
 // this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *LRORetrysClient) delete202Retry200(ctx context.Context, options *LRORetrysClientBeginDelete202Retry200Options) (*http.Response, error) {
 	req, err := client.delete202Retry200CreateRequest(ctx, options)
 	if err != nil {
@@ -73,7 +72,7 @@ func (client *LRORetrysClient) delete202Retry200(ctx context.Context, options *L
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return nil, client.delete202Retry200HandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -89,22 +88,9 @@ func (client *LRORetrysClient) delete202Retry200CreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// delete202Retry200HandleError handles the Delete202Retry200 error response.
-func (client *LRORetrysClient) delete202Retry200HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDeleteAsyncRelativeRetrySucceeded - Long running delete request, service returns a 500, then a 202 to the initial
 // request. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - LRORetrysClientBeginDeleteAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginDeleteAsyncRelativeRetrySucceeded
 // method.
 func (client *LRORetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginDeleteAsyncRelativeRetrySucceededOptions) (LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse, error) {
@@ -115,7 +101,7 @@ func (client *LRORetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx contex
 	result := LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LRORetrysClient.DeleteAsyncRelativeRetrySucceeded", "", resp, client.pl, client.deleteAsyncRelativeRetrySucceededHandleError)
+	pt, err := armruntime.NewPoller("LRORetrysClient.DeleteAsyncRelativeRetrySucceeded", "", resp, client.pl)
 	if err != nil {
 		return LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
@@ -127,7 +113,7 @@ func (client *LRORetrysClient) BeginDeleteAsyncRelativeRetrySucceeded(ctx contex
 
 // DeleteAsyncRelativeRetrySucceeded - Long running delete request, service returns a 500, then a 202 to the initial request.
 // Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginDeleteAsyncRelativeRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.deleteAsyncRelativeRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -138,7 +124,7 @@ func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceeded(ctx context.Con
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return nil, client.deleteAsyncRelativeRetrySucceededHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -154,24 +140,11 @@ func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceededCreateRequest(ct
 	return req, nil
 }
 
-// deleteAsyncRelativeRetrySucceededHandleError handles the DeleteAsyncRelativeRetrySucceeded error response.
-func (client *LRORetrysClient) deleteAsyncRelativeRetrySucceededHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDeleteProvisioning202Accepted200Succeeded - Long running delete request, service returns a 500, then a 202 to the
 // initial request, with an entity that contains ProvisioningState=’Accepted’. Polls return this value until the last poll
 // returns a
 // ‘200’ with ProvisioningState=’Succeeded’
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - LRORetrysClientBeginDeleteProvisioning202Accepted200SucceededOptions contains the optional parameters for the
 // LRORetrysClient.BeginDeleteProvisioning202Accepted200Succeeded method.
 func (client *LRORetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LRORetrysClientBeginDeleteProvisioning202Accepted200SucceededOptions) (LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse, error) {
@@ -182,7 +155,7 @@ func (client *LRORetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ct
 	result := LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LRORetrysClient.DeleteProvisioning202Accepted200Succeeded", "", resp, client.pl, client.deleteProvisioning202Accepted200SucceededHandleError)
+	pt, err := armruntime.NewPoller("LRORetrysClient.DeleteProvisioning202Accepted200Succeeded", "", resp, client.pl)
 	if err != nil {
 		return LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse{}, err
 	}
@@ -196,7 +169,7 @@ func (client *LRORetrysClient) BeginDeleteProvisioning202Accepted200Succeeded(ct
 // request, with an entity that contains ProvisioningState=’Accepted’. Polls return this value until the last poll returns
 // a
 // ‘200’ with ProvisioningState=’Succeeded’
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *LRORetrysClient) deleteProvisioning202Accepted200Succeeded(ctx context.Context, options *LRORetrysClientBeginDeleteProvisioning202Accepted200SucceededOptions) (*http.Response, error) {
 	req, err := client.deleteProvisioning202Accepted200SucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -207,7 +180,7 @@ func (client *LRORetrysClient) deleteProvisioning202Accepted200Succeeded(ctx con
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.deleteProvisioning202Accepted200SucceededHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -223,22 +196,9 @@ func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededCreateRe
 	return req, nil
 }
 
-// deleteProvisioning202Accepted200SucceededHandleError handles the DeleteProvisioning202Accepted200Succeeded error response.
-func (client *LRORetrysClient) deleteProvisioning202Accepted200SucceededHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginPost202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location'
 // and 'Retry-After' headers, Polls return a 200 with a response body after success
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - LRORetrysClientBeginPost202Retry200Options contains the optional parameters for the LRORetrysClient.BeginPost202Retry200
 // method.
 func (client *LRORetrysClient) BeginPost202Retry200(ctx context.Context, options *LRORetrysClientBeginPost202Retry200Options) (LRORetrysClientPost202Retry200PollerResponse, error) {
@@ -249,7 +209,7 @@ func (client *LRORetrysClient) BeginPost202Retry200(ctx context.Context, options
 	result := LRORetrysClientPost202Retry200PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LRORetrysClient.Post202Retry200", "", resp, client.pl, client.post202Retry200HandleError)
+	pt, err := armruntime.NewPoller("LRORetrysClient.Post202Retry200", "", resp, client.pl)
 	if err != nil {
 		return LRORetrysClientPost202Retry200PollerResponse{}, err
 	}
@@ -261,7 +221,7 @@ func (client *LRORetrysClient) BeginPost202Retry200(ctx context.Context, options
 
 // Post202Retry200 - Long running post request, service returns a 500, then a 202 to the initial request, with 'Location'
 // and 'Retry-After' headers, Polls return a 200 with a response body after success
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *LRORetrysClient) post202Retry200(ctx context.Context, options *LRORetrysClientBeginPost202Retry200Options) (*http.Response, error) {
 	req, err := client.post202Retry200CreateRequest(ctx, options)
 	if err != nil {
@@ -272,7 +232,7 @@ func (client *LRORetrysClient) post202Retry200(ctx context.Context, options *LRO
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return nil, client.post202Retry200HandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -291,23 +251,10 @@ func (client *LRORetrysClient) post202Retry200CreateRequest(ctx context.Context,
 	return req, nil
 }
 
-// post202Retry200HandleError handles the Post202Retry200 error response.
-func (client *LRORetrysClient) post202Retry200HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginPostAsyncRelativeRetrySucceeded - Long running post request, service returns a 500, then a 202 to the initial request,
 // with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - LRORetrysClientBeginPostAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginPostAsyncRelativeRetrySucceeded
 // method.
 func (client *LRORetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginPostAsyncRelativeRetrySucceededOptions) (LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse, error) {
@@ -318,7 +265,7 @@ func (client *LRORetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.
 	result := LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LRORetrysClient.PostAsyncRelativeRetrySucceeded", "", resp, client.pl, client.postAsyncRelativeRetrySucceededHandleError)
+	pt, err := armruntime.NewPoller("LRORetrysClient.PostAsyncRelativeRetrySucceeded", "", resp, client.pl)
 	if err != nil {
 		return LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
@@ -331,7 +278,7 @@ func (client *LRORetrysClient) BeginPostAsyncRelativeRetrySucceeded(ctx context.
 // PostAsyncRelativeRetrySucceeded - Long running post request, service returns a 500, then a 202 to the initial request,
 // with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *LRORetrysClient) postAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginPostAsyncRelativeRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.postAsyncRelativeRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -342,7 +289,7 @@ func (client *LRORetrysClient) postAsyncRelativeRetrySucceeded(ctx context.Conte
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return nil, client.postAsyncRelativeRetrySucceededHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -361,23 +308,10 @@ func (client *LRORetrysClient) postAsyncRelativeRetrySucceededCreateRequest(ctx 
 	return req, nil
 }
 
-// postAsyncRelativeRetrySucceededHandleError handles the PostAsyncRelativeRetrySucceeded error response.
-func (client *LRORetrysClient) postAsyncRelativeRetrySucceededHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginPut201CreatingSucceeded200 - Long running put request, service returns a 500, then a 201 to the initial request, with
 // an entity that contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a
 // ‘200’ with ProvisioningState=’Succeeded’
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - LRORetrysClientBeginPut201CreatingSucceeded200Options contains the optional parameters for the LRORetrysClient.BeginPut201CreatingSucceeded200
 // method.
 func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LRORetrysClientBeginPut201CreatingSucceeded200Options) (LRORetrysClientPut201CreatingSucceeded200PollerResponse, error) {
@@ -388,7 +322,7 @@ func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Conte
 	result := LRORetrysClientPut201CreatingSucceeded200PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LRORetrysClient.Put201CreatingSucceeded200", "", resp, client.pl, client.put201CreatingSucceeded200HandleError)
+	pt, err := armruntime.NewPoller("LRORetrysClient.Put201CreatingSucceeded200", "", resp, client.pl)
 	if err != nil {
 		return LRORetrysClientPut201CreatingSucceeded200PollerResponse{}, err
 	}
@@ -401,7 +335,7 @@ func (client *LRORetrysClient) BeginPut201CreatingSucceeded200(ctx context.Conte
 // Put201CreatingSucceeded200 - Long running put request, service returns a 500, then a 201 to the initial request, with an
 // entity that contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a
 // ‘200’ with ProvisioningState=’Succeeded’
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *LRORetrysClient) put201CreatingSucceeded200(ctx context.Context, options *LRORetrysClientBeginPut201CreatingSucceeded200Options) (*http.Response, error) {
 	req, err := client.put201CreatingSucceeded200CreateRequest(ctx, options)
 	if err != nil {
@@ -412,7 +346,7 @@ func (client *LRORetrysClient) put201CreatingSucceeded200(ctx context.Context, o
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.put201CreatingSucceeded200HandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -431,23 +365,10 @@ func (client *LRORetrysClient) put201CreatingSucceeded200CreateRequest(ctx conte
 	return req, nil
 }
 
-// put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
-func (client *LRORetrysClient) put201CreatingSucceeded200HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginPutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request,
 // with an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions contains the optional parameters for the LRORetrysClient.BeginPutAsyncRelativeRetrySucceeded
 // method.
 func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions) (LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse, error) {
@@ -458,7 +379,7 @@ func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.C
 	result := LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LRORetrysClient.PutAsyncRelativeRetrySucceeded", "", resp, client.pl, client.putAsyncRelativeRetrySucceededHandleError)
+	pt, err := armruntime.NewPoller("LRORetrysClient.PutAsyncRelativeRetrySucceeded", "", resp, client.pl)
 	if err != nil {
 		return LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse{}, err
 	}
@@ -471,7 +392,7 @@ func (client *LRORetrysClient) BeginPutAsyncRelativeRetrySucceeded(ctx context.C
 // PutAsyncRelativeRetrySucceeded - Long running put request, service returns a 500, then a 200 to the initial request, with
 // an entity that contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation
 // header for operation status
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *LRORetrysClient) putAsyncRelativeRetrySucceeded(ctx context.Context, options *LRORetrysClientBeginPutAsyncRelativeRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.putAsyncRelativeRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -482,7 +403,7 @@ func (client *LRORetrysClient) putAsyncRelativeRetrySucceeded(ctx context.Contex
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return nil, client.putAsyncRelativeRetrySucceededHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -499,17 +420,4 @@ func (client *LRORetrysClient) putAsyncRelativeRetrySucceededCreateRequest(ctx c
 		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
-}
-
-// putAsyncRelativeRetrySucceededHandleError handles the PutAsyncRelativeRetrySucceeded error response.
-func (client *LRORetrysClient) putAsyncRelativeRetrySucceededHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

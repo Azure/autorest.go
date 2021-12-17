@@ -12,7 +12,6 @@ import (
 	"context"
 	"encoding/base64"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -36,13 +35,13 @@ func NewPathsClient(options *azcore.ClientOptions) *PathsClient {
 		cp = *options
 	}
 	client := &PathsClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // ArrayCSVInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // arrayPath - an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 // options - PathsClientArrayCSVInPathOptions contains the optional parameters for the PathsClient.ArrayCSVInPath method.
 func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []string, options *PathsClientArrayCSVInPathOptions) (PathsClientArrayCSVInPathResponse, error) {
@@ -55,7 +54,7 @@ func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []strin
 		return PathsClientArrayCSVInPathResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientArrayCSVInPathResponse{}, client.arrayCSVInPathHandleError(resp)
+		return PathsClientArrayCSVInPathResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientArrayCSVInPathResponse{RawResponse: resp}, nil
 }
@@ -72,21 +71,8 @@ func (client *PathsClient) arrayCSVInPathCreateRequest(ctx context.Context, arra
 	return req, nil
 }
 
-// arrayCSVInPathHandleError handles the ArrayCSVInPath error response.
-func (client *PathsClient) arrayCSVInPathHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Base64URL - Get 'lorem' encoded value as 'bG9yZW0' (base64url)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // base64URLPath - base64url encoded value
 // options - PathsClientBase64URLOptions contains the optional parameters for the PathsClient.Base64URL method.
 func (client *PathsClient) Base64URL(ctx context.Context, base64URLPath []byte, options *PathsClientBase64URLOptions) (PathsClientBase64URLResponse, error) {
@@ -99,7 +85,7 @@ func (client *PathsClient) Base64URL(ctx context.Context, base64URLPath []byte, 
 		return PathsClientBase64URLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientBase64URLResponse{}, client.base64URLHandleError(resp)
+		return PathsClientBase64URLResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientBase64URLResponse{RawResponse: resp}, nil
 }
@@ -116,21 +102,8 @@ func (client *PathsClient) base64URLCreateRequest(ctx context.Context, base64URL
 	return req, nil
 }
 
-// base64URLHandleError handles the Base64URL error response.
-func (client *PathsClient) base64URLHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ByteEmpty - Get '' as byte array
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientByteEmptyOptions contains the optional parameters for the PathsClient.ByteEmpty method.
 func (client *PathsClient) ByteEmpty(ctx context.Context, options *PathsClientByteEmptyOptions) (PathsClientByteEmptyResponse, error) {
 	req, err := client.byteEmptyCreateRequest(ctx, options)
@@ -142,7 +115,7 @@ func (client *PathsClient) ByteEmpty(ctx context.Context, options *PathsClientBy
 		return PathsClientByteEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientByteEmptyResponse{}, client.byteEmptyHandleError(resp)
+		return PathsClientByteEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientByteEmptyResponse{RawResponse: resp}, nil
 }
@@ -159,21 +132,8 @@ func (client *PathsClient) byteEmptyCreateRequest(ctx context.Context, options *
 	return req, nil
 }
 
-// byteEmptyHandleError handles the ByteEmpty error response.
-func (client *PathsClient) byteEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // bytePath - '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 // options - PathsClientByteMultiByteOptions contains the optional parameters for the PathsClient.ByteMultiByte method.
 func (client *PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte, options *PathsClientByteMultiByteOptions) (PathsClientByteMultiByteResponse, error) {
@@ -186,7 +146,7 @@ func (client *PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte, o
 		return PathsClientByteMultiByteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientByteMultiByteResponse{}, client.byteMultiByteHandleError(resp)
+		return PathsClientByteMultiByteResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientByteMultiByteResponse{RawResponse: resp}, nil
 }
@@ -203,21 +163,8 @@ func (client *PathsClient) byteMultiByteCreateRequest(ctx context.Context, byteP
 	return req, nil
 }
 
-// byteMultiByteHandleError handles the ByteMultiByte error response.
-func (client *PathsClient) byteMultiByteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ByteNull - Get null as byte array (should throw)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // bytePath - null as byte array (should throw)
 // options - PathsClientByteNullOptions contains the optional parameters for the PathsClient.ByteNull method.
 func (client *PathsClient) ByteNull(ctx context.Context, bytePath []byte, options *PathsClientByteNullOptions) (PathsClientByteNullResponse, error) {
@@ -230,7 +177,7 @@ func (client *PathsClient) ByteNull(ctx context.Context, bytePath []byte, option
 		return PathsClientByteNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
-		return PathsClientByteNullResponse{}, client.byteNullHandleError(resp)
+		return PathsClientByteNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientByteNullResponse{RawResponse: resp}, nil
 }
@@ -247,21 +194,8 @@ func (client *PathsClient) byteNullCreateRequest(ctx context.Context, bytePath [
 	return req, nil
 }
 
-// byteNullHandleError handles the ByteNull error response.
-func (client *PathsClient) byteNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DateNull - Get null as date - this should throw or be unusable on the client side, depending on date representation
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // datePath - null as date (should throw)
 // options - PathsClientDateNullOptions contains the optional parameters for the PathsClient.DateNull method.
 func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time, options *PathsClientDateNullOptions) (PathsClientDateNullResponse, error) {
@@ -274,7 +208,7 @@ func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time, opt
 		return PathsClientDateNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
-		return PathsClientDateNullResponse{}, client.dateNullHandleError(resp)
+		return PathsClientDateNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientDateNullResponse{RawResponse: resp}, nil
 }
@@ -291,21 +225,8 @@ func (client *PathsClient) dateNullCreateRequest(ctx context.Context, datePath t
 	return req, nil
 }
 
-// dateNullHandleError handles the DateNull error response.
-func (client *PathsClient) dateNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DateTimeNull - Get null as date-time, should be disallowed or throw depending on representation of date-time
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // dateTimePath - null as date-time
 // options - PathsClientDateTimeNullOptions contains the optional parameters for the PathsClient.DateTimeNull method.
 func (client *PathsClient) DateTimeNull(ctx context.Context, dateTimePath time.Time, options *PathsClientDateTimeNullOptions) (PathsClientDateTimeNullResponse, error) {
@@ -318,7 +239,7 @@ func (client *PathsClient) DateTimeNull(ctx context.Context, dateTimePath time.T
 		return PathsClientDateTimeNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
-		return PathsClientDateTimeNullResponse{}, client.dateTimeNullHandleError(resp)
+		return PathsClientDateTimeNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientDateTimeNullResponse{RawResponse: resp}, nil
 }
@@ -335,21 +256,8 @@ func (client *PathsClient) dateTimeNullCreateRequest(ctx context.Context, dateTi
 	return req, nil
 }
 
-// dateTimeNullHandleError handles the DateTimeNull error response.
-func (client *PathsClient) dateTimeNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientDateTimeValidOptions contains the optional parameters for the PathsClient.DateTimeValid method.
 func (client *PathsClient) DateTimeValid(ctx context.Context, options *PathsClientDateTimeValidOptions) (PathsClientDateTimeValidResponse, error) {
 	req, err := client.dateTimeValidCreateRequest(ctx, options)
@@ -361,7 +269,7 @@ func (client *PathsClient) DateTimeValid(ctx context.Context, options *PathsClie
 		return PathsClientDateTimeValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientDateTimeValidResponse{}, client.dateTimeValidHandleError(resp)
+		return PathsClientDateTimeValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientDateTimeValidResponse{RawResponse: resp}, nil
 }
@@ -378,21 +286,8 @@ func (client *PathsClient) dateTimeValidCreateRequest(ctx context.Context, optio
 	return req, nil
 }
 
-// dateTimeValidHandleError handles the DateTimeValid error response.
-func (client *PathsClient) dateTimeValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DateValid - Get '2012-01-01' as date
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientDateValidOptions contains the optional parameters for the PathsClient.DateValid method.
 func (client *PathsClient) DateValid(ctx context.Context, options *PathsClientDateValidOptions) (PathsClientDateValidResponse, error) {
 	req, err := client.dateValidCreateRequest(ctx, options)
@@ -404,7 +299,7 @@ func (client *PathsClient) DateValid(ctx context.Context, options *PathsClientDa
 		return PathsClientDateValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientDateValidResponse{}, client.dateValidHandleError(resp)
+		return PathsClientDateValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientDateValidResponse{RawResponse: resp}, nil
 }
@@ -421,21 +316,8 @@ func (client *PathsClient) dateValidCreateRequest(ctx context.Context, options *
 	return req, nil
 }
 
-// dateValidHandleError handles the DateValid error response.
-func (client *PathsClient) dateValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DoubleDecimalNegative - Get '-9999999.999' numeric value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientDoubleDecimalNegativeOptions contains the optional parameters for the PathsClient.DoubleDecimalNegative
 // method.
 func (client *PathsClient) DoubleDecimalNegative(ctx context.Context, options *PathsClientDoubleDecimalNegativeOptions) (PathsClientDoubleDecimalNegativeResponse, error) {
@@ -448,7 +330,7 @@ func (client *PathsClient) DoubleDecimalNegative(ctx context.Context, options *P
 		return PathsClientDoubleDecimalNegativeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientDoubleDecimalNegativeResponse{}, client.doubleDecimalNegativeHandleError(resp)
+		return PathsClientDoubleDecimalNegativeResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientDoubleDecimalNegativeResponse{RawResponse: resp}, nil
 }
@@ -465,21 +347,8 @@ func (client *PathsClient) doubleDecimalNegativeCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// doubleDecimalNegativeHandleError handles the DoubleDecimalNegative error response.
-func (client *PathsClient) doubleDecimalNegativeHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DoubleDecimalPositive - Get '9999999.999' numeric value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientDoubleDecimalPositiveOptions contains the optional parameters for the PathsClient.DoubleDecimalPositive
 // method.
 func (client *PathsClient) DoubleDecimalPositive(ctx context.Context, options *PathsClientDoubleDecimalPositiveOptions) (PathsClientDoubleDecimalPositiveResponse, error) {
@@ -492,7 +361,7 @@ func (client *PathsClient) DoubleDecimalPositive(ctx context.Context, options *P
 		return PathsClientDoubleDecimalPositiveResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientDoubleDecimalPositiveResponse{}, client.doubleDecimalPositiveHandleError(resp)
+		return PathsClientDoubleDecimalPositiveResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientDoubleDecimalPositiveResponse{RawResponse: resp}, nil
 }
@@ -509,21 +378,8 @@ func (client *PathsClient) doubleDecimalPositiveCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// doubleDecimalPositiveHandleError handles the DoubleDecimalPositive error response.
-func (client *PathsClient) doubleDecimalPositiveHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // EnumNull - Get null (should throw on the client before the request is sent on wire)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // enumPath - send null should throw
 // options - PathsClientEnumNullOptions contains the optional parameters for the PathsClient.EnumNull method.
 func (client *PathsClient) EnumNull(ctx context.Context, enumPath URIColor, options *PathsClientEnumNullOptions) (PathsClientEnumNullResponse, error) {
@@ -536,7 +392,7 @@ func (client *PathsClient) EnumNull(ctx context.Context, enumPath URIColor, opti
 		return PathsClientEnumNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
-		return PathsClientEnumNullResponse{}, client.enumNullHandleError(resp)
+		return PathsClientEnumNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientEnumNullResponse{RawResponse: resp}, nil
 }
@@ -556,21 +412,8 @@ func (client *PathsClient) enumNullCreateRequest(ctx context.Context, enumPath U
 	return req, nil
 }
 
-// enumNullHandleError handles the EnumNull error response.
-func (client *PathsClient) enumNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // EnumValid - Get using uri with 'green color' in path parameter
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // enumPath - send the value green
 // options - PathsClientEnumValidOptions contains the optional parameters for the PathsClient.EnumValid method.
 func (client *PathsClient) EnumValid(ctx context.Context, enumPath URIColor, options *PathsClientEnumValidOptions) (PathsClientEnumValidResponse, error) {
@@ -583,7 +426,7 @@ func (client *PathsClient) EnumValid(ctx context.Context, enumPath URIColor, opt
 		return PathsClientEnumValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientEnumValidResponse{}, client.enumValidHandleError(resp)
+		return PathsClientEnumValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientEnumValidResponse{RawResponse: resp}, nil
 }
@@ -603,21 +446,8 @@ func (client *PathsClient) enumValidCreateRequest(ctx context.Context, enumPath 
 	return req, nil
 }
 
-// enumValidHandleError handles the EnumValid error response.
-func (client *PathsClient) enumValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // FloatScientificNegative - Get '-1.034E-20' numeric value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientFloatScientificNegativeOptions contains the optional parameters for the PathsClient.FloatScientificNegative
 // method.
 func (client *PathsClient) FloatScientificNegative(ctx context.Context, options *PathsClientFloatScientificNegativeOptions) (PathsClientFloatScientificNegativeResponse, error) {
@@ -630,7 +460,7 @@ func (client *PathsClient) FloatScientificNegative(ctx context.Context, options 
 		return PathsClientFloatScientificNegativeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientFloatScientificNegativeResponse{}, client.floatScientificNegativeHandleError(resp)
+		return PathsClientFloatScientificNegativeResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientFloatScientificNegativeResponse{RawResponse: resp}, nil
 }
@@ -647,21 +477,8 @@ func (client *PathsClient) floatScientificNegativeCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// floatScientificNegativeHandleError handles the FloatScientificNegative error response.
-func (client *PathsClient) floatScientificNegativeHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // FloatScientificPositive - Get '1.034E+20' numeric value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientFloatScientificPositiveOptions contains the optional parameters for the PathsClient.FloatScientificPositive
 // method.
 func (client *PathsClient) FloatScientificPositive(ctx context.Context, options *PathsClientFloatScientificPositiveOptions) (PathsClientFloatScientificPositiveResponse, error) {
@@ -674,7 +491,7 @@ func (client *PathsClient) FloatScientificPositive(ctx context.Context, options 
 		return PathsClientFloatScientificPositiveResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientFloatScientificPositiveResponse{}, client.floatScientificPositiveHandleError(resp)
+		return PathsClientFloatScientificPositiveResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientFloatScientificPositiveResponse{RawResponse: resp}, nil
 }
@@ -691,21 +508,8 @@ func (client *PathsClient) floatScientificPositiveCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// floatScientificPositiveHandleError handles the FloatScientificPositive error response.
-func (client *PathsClient) floatScientificPositiveHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBooleanFalse - Get false Boolean value on path
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientGetBooleanFalseOptions contains the optional parameters for the PathsClient.GetBooleanFalse method.
 func (client *PathsClient) GetBooleanFalse(ctx context.Context, options *PathsClientGetBooleanFalseOptions) (PathsClientGetBooleanFalseResponse, error) {
 	req, err := client.getBooleanFalseCreateRequest(ctx, options)
@@ -717,7 +521,7 @@ func (client *PathsClient) GetBooleanFalse(ctx context.Context, options *PathsCl
 		return PathsClientGetBooleanFalseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientGetBooleanFalseResponse{}, client.getBooleanFalseHandleError(resp)
+		return PathsClientGetBooleanFalseResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientGetBooleanFalseResponse{RawResponse: resp}, nil
 }
@@ -734,21 +538,8 @@ func (client *PathsClient) getBooleanFalseCreateRequest(ctx context.Context, opt
 	return req, nil
 }
 
-// getBooleanFalseHandleError handles the GetBooleanFalse error response.
-func (client *PathsClient) getBooleanFalseHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBooleanTrue - Get true Boolean value on path
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientGetBooleanTrueOptions contains the optional parameters for the PathsClient.GetBooleanTrue method.
 func (client *PathsClient) GetBooleanTrue(ctx context.Context, options *PathsClientGetBooleanTrueOptions) (PathsClientGetBooleanTrueResponse, error) {
 	req, err := client.getBooleanTrueCreateRequest(ctx, options)
@@ -760,7 +551,7 @@ func (client *PathsClient) GetBooleanTrue(ctx context.Context, options *PathsCli
 		return PathsClientGetBooleanTrueResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientGetBooleanTrueResponse{}, client.getBooleanTrueHandleError(resp)
+		return PathsClientGetBooleanTrueResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientGetBooleanTrueResponse{RawResponse: resp}, nil
 }
@@ -777,21 +568,8 @@ func (client *PathsClient) getBooleanTrueCreateRequest(ctx context.Context, opti
 	return req, nil
 }
 
-// getBooleanTrueHandleError handles the GetBooleanTrue error response.
-func (client *PathsClient) getBooleanTrueHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetIntNegativeOneMillion - Get '-1000000' integer value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientGetIntNegativeOneMillionOptions contains the optional parameters for the PathsClient.GetIntNegativeOneMillion
 // method.
 func (client *PathsClient) GetIntNegativeOneMillion(ctx context.Context, options *PathsClientGetIntNegativeOneMillionOptions) (PathsClientGetIntNegativeOneMillionResponse, error) {
@@ -804,7 +582,7 @@ func (client *PathsClient) GetIntNegativeOneMillion(ctx context.Context, options
 		return PathsClientGetIntNegativeOneMillionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientGetIntNegativeOneMillionResponse{}, client.getIntNegativeOneMillionHandleError(resp)
+		return PathsClientGetIntNegativeOneMillionResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientGetIntNegativeOneMillionResponse{RawResponse: resp}, nil
 }
@@ -821,21 +599,8 @@ func (client *PathsClient) getIntNegativeOneMillionCreateRequest(ctx context.Con
 	return req, nil
 }
 
-// getIntNegativeOneMillionHandleError handles the GetIntNegativeOneMillion error response.
-func (client *PathsClient) getIntNegativeOneMillionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetIntOneMillion - Get '1000000' integer value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientGetIntOneMillionOptions contains the optional parameters for the PathsClient.GetIntOneMillion method.
 func (client *PathsClient) GetIntOneMillion(ctx context.Context, options *PathsClientGetIntOneMillionOptions) (PathsClientGetIntOneMillionResponse, error) {
 	req, err := client.getIntOneMillionCreateRequest(ctx, options)
@@ -847,7 +612,7 @@ func (client *PathsClient) GetIntOneMillion(ctx context.Context, options *PathsC
 		return PathsClientGetIntOneMillionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientGetIntOneMillionResponse{}, client.getIntOneMillionHandleError(resp)
+		return PathsClientGetIntOneMillionResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientGetIntOneMillionResponse{RawResponse: resp}, nil
 }
@@ -864,21 +629,8 @@ func (client *PathsClient) getIntOneMillionCreateRequest(ctx context.Context, op
 	return req, nil
 }
 
-// getIntOneMillionHandleError handles the GetIntOneMillion error response.
-func (client *PathsClient) getIntOneMillionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientGetNegativeTenBillionOptions contains the optional parameters for the PathsClient.GetNegativeTenBillion
 // method.
 func (client *PathsClient) GetNegativeTenBillion(ctx context.Context, options *PathsClientGetNegativeTenBillionOptions) (PathsClientGetNegativeTenBillionResponse, error) {
@@ -891,7 +643,7 @@ func (client *PathsClient) GetNegativeTenBillion(ctx context.Context, options *P
 		return PathsClientGetNegativeTenBillionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientGetNegativeTenBillionResponse{}, client.getNegativeTenBillionHandleError(resp)
+		return PathsClientGetNegativeTenBillionResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientGetNegativeTenBillionResponse{RawResponse: resp}, nil
 }
@@ -908,21 +660,8 @@ func (client *PathsClient) getNegativeTenBillionCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// getNegativeTenBillionHandleError handles the GetNegativeTenBillion error response.
-func (client *PathsClient) getNegativeTenBillionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetTenBillion - Get '10000000000' 64 bit integer value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientGetTenBillionOptions contains the optional parameters for the PathsClient.GetTenBillion method.
 func (client *PathsClient) GetTenBillion(ctx context.Context, options *PathsClientGetTenBillionOptions) (PathsClientGetTenBillionResponse, error) {
 	req, err := client.getTenBillionCreateRequest(ctx, options)
@@ -934,7 +673,7 @@ func (client *PathsClient) GetTenBillion(ctx context.Context, options *PathsClie
 		return PathsClientGetTenBillionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientGetTenBillionResponse{}, client.getTenBillionHandleError(resp)
+		return PathsClientGetTenBillionResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientGetTenBillionResponse{RawResponse: resp}, nil
 }
@@ -951,21 +690,8 @@ func (client *PathsClient) getTenBillionCreateRequest(ctx context.Context, optio
 	return req, nil
 }
 
-// getTenBillionHandleError handles the GetTenBillion error response.
-func (client *PathsClient) getTenBillionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // StringEmpty - Get ''
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientStringEmptyOptions contains the optional parameters for the PathsClient.StringEmpty method.
 func (client *PathsClient) StringEmpty(ctx context.Context, options *PathsClientStringEmptyOptions) (PathsClientStringEmptyResponse, error) {
 	req, err := client.stringEmptyCreateRequest(ctx, options)
@@ -977,7 +703,7 @@ func (client *PathsClient) StringEmpty(ctx context.Context, options *PathsClient
 		return PathsClientStringEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientStringEmptyResponse{}, client.stringEmptyHandleError(resp)
+		return PathsClientStringEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientStringEmptyResponse{RawResponse: resp}, nil
 }
@@ -994,21 +720,8 @@ func (client *PathsClient) stringEmptyCreateRequest(ctx context.Context, options
 	return req, nil
 }
 
-// stringEmptyHandleError handles the StringEmpty error response.
-func (client *PathsClient) stringEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // StringNull - Get null (should throw)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // stringPath - null string value
 // options - PathsClientStringNullOptions contains the optional parameters for the PathsClient.StringNull method.
 func (client *PathsClient) StringNull(ctx context.Context, stringPath string, options *PathsClientStringNullOptions) (PathsClientStringNullResponse, error) {
@@ -1021,7 +734,7 @@ func (client *PathsClient) StringNull(ctx context.Context, stringPath string, op
 		return PathsClientStringNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
-		return PathsClientStringNullResponse{}, client.stringNullHandleError(resp)
+		return PathsClientStringNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientStringNullResponse{RawResponse: resp}, nil
 }
@@ -1041,21 +754,8 @@ func (client *PathsClient) stringNullCreateRequest(ctx context.Context, stringPa
 	return req, nil
 }
 
-// stringNullHandleError handles the StringNull error response.
-func (client *PathsClient) stringNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientStringURLEncodedOptions contains the optional parameters for the PathsClient.StringURLEncoded method.
 func (client *PathsClient) StringURLEncoded(ctx context.Context, options *PathsClientStringURLEncodedOptions) (PathsClientStringURLEncodedResponse, error) {
 	req, err := client.stringURLEncodedCreateRequest(ctx, options)
@@ -1067,7 +767,7 @@ func (client *PathsClient) StringURLEncoded(ctx context.Context, options *PathsC
 		return PathsClientStringURLEncodedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientStringURLEncodedResponse{}, client.stringURLEncodedHandleError(resp)
+		return PathsClientStringURLEncodedResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientStringURLEncodedResponse{RawResponse: resp}, nil
 }
@@ -1084,21 +784,8 @@ func (client *PathsClient) stringURLEncodedCreateRequest(ctx context.Context, op
 	return req, nil
 }
 
-// stringURLEncodedHandleError handles the StringURLEncoded error response.
-func (client *PathsClient) stringURLEncodedHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // StringURLNonEncoded - https://tools.ietf.org/html/rfc3986#appendix-A 'path' accept any 'pchar' not encoded
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientStringURLNonEncodedOptions contains the optional parameters for the PathsClient.StringURLNonEncoded
 // method.
 func (client *PathsClient) StringURLNonEncoded(ctx context.Context, options *PathsClientStringURLNonEncodedOptions) (PathsClientStringURLNonEncodedResponse, error) {
@@ -1111,7 +798,7 @@ func (client *PathsClient) StringURLNonEncoded(ctx context.Context, options *Pat
 		return PathsClientStringURLNonEncodedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientStringURLNonEncodedResponse{}, client.stringURLNonEncodedHandleError(resp)
+		return PathsClientStringURLNonEncodedResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientStringURLNonEncodedResponse{RawResponse: resp}, nil
 }
@@ -1128,21 +815,8 @@ func (client *PathsClient) stringURLNonEncodedCreateRequest(ctx context.Context,
 	return req, nil
 }
 
-// stringURLNonEncodedHandleError handles the StringURLNonEncoded error response.
-func (client *PathsClient) stringURLNonEncodedHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PathsClientStringUnicodeOptions contains the optional parameters for the PathsClient.StringUnicode method.
 func (client *PathsClient) StringUnicode(ctx context.Context, options *PathsClientStringUnicodeOptions) (PathsClientStringUnicodeResponse, error) {
 	req, err := client.stringUnicodeCreateRequest(ctx, options)
@@ -1154,7 +828,7 @@ func (client *PathsClient) StringUnicode(ctx context.Context, options *PathsClie
 		return PathsClientStringUnicodeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientStringUnicodeResponse{}, client.stringUnicodeHandleError(resp)
+		return PathsClientStringUnicodeResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientStringUnicodeResponse{RawResponse: resp}, nil
 }
@@ -1171,21 +845,8 @@ func (client *PathsClient) stringUnicodeCreateRequest(ctx context.Context, optio
 	return req, nil
 }
 
-// stringUnicodeHandleError handles the StringUnicode error response.
-func (client *PathsClient) stringUnicodeHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UnixTimeURL - Get the date 2016-04-13 encoded value as '1460505600' (Unix time)
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // unixTimeURLPath - Unix time encoded value
 // options - PathsClientUnixTimeURLOptions contains the optional parameters for the PathsClient.UnixTimeURL method.
 func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath time.Time, options *PathsClientUnixTimeURLOptions) (PathsClientUnixTimeURLResponse, error) {
@@ -1198,7 +859,7 @@ func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath time
 		return PathsClientUnixTimeURLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientUnixTimeURLResponse{}, client.unixTimeURLHandleError(resp)
+		return PathsClientUnixTimeURLResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientUnixTimeURLResponse{RawResponse: resp}, nil
 }
@@ -1213,17 +874,4 @@ func (client *PathsClient) unixTimeURLCreateRequest(ctx context.Context, unixTim
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// unixTimeURLHandleError handles the UnixTimeURL error response.
-func (client *PathsClient) unixTimeURLHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

@@ -11,7 +11,6 @@ package paramgroupinggroup
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -35,13 +34,13 @@ func NewParameterGroupingClient(options *azcore.ClientOptions) *ParameterGroupin
 		cp = *options
 	}
 	client := &ParameterGroupingClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // PostMultiParamGroups - Post parameters from multiple different parameter groups
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // FirstParameterGroup - FirstParameterGroup contains a group of parameters for the ParameterGroupingClient.PostMultiParamGroups
 // method.
 // ParameterGroupingClientPostMultiParamGroupsSecondParamGroup - ParameterGroupingClientPostMultiParamGroupsSecondParamGroup
@@ -56,7 +55,7 @@ func (client *ParameterGroupingClient) PostMultiParamGroups(ctx context.Context,
 		return ParameterGroupingClientPostMultiParamGroupsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ParameterGroupingClientPostMultiParamGroupsResponse{}, client.postMultiParamGroupsHandleError(resp)
+		return ParameterGroupingClientPostMultiParamGroupsResponse{}, runtime.NewResponseError(resp)
 	}
 	return ParameterGroupingClientPostMultiParamGroupsResponse{RawResponse: resp}, nil
 }
@@ -86,21 +85,8 @@ func (client *ParameterGroupingClient) postMultiParamGroupsCreateRequest(ctx con
 	return req, nil
 }
 
-// postMultiParamGroupsHandleError handles the PostMultiParamGroups error response.
-func (client *ParameterGroupingClient) postMultiParamGroupsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PostOptional - Post a bunch of optional parameters grouped
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ParameterGroupingClientPostOptionalParameters contains a group of parameters for the ParameterGroupingClient.PostOptional
 // method.
 func (client *ParameterGroupingClient) PostOptional(ctx context.Context, options *ParameterGroupingClientPostOptionalParameters) (ParameterGroupingClientPostOptionalResponse, error) {
@@ -113,7 +99,7 @@ func (client *ParameterGroupingClient) PostOptional(ctx context.Context, options
 		return ParameterGroupingClientPostOptionalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ParameterGroupingClientPostOptionalResponse{}, client.postOptionalHandleError(resp)
+		return ParameterGroupingClientPostOptionalResponse{}, runtime.NewResponseError(resp)
 	}
 	return ParameterGroupingClientPostOptionalResponse{RawResponse: resp}, nil
 }
@@ -137,21 +123,8 @@ func (client *ParameterGroupingClient) postOptionalCreateRequest(ctx context.Con
 	return req, nil
 }
 
-// postOptionalHandleError handles the PostOptional error response.
-func (client *ParameterGroupingClient) postOptionalHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PostRequired - Post a bunch of required parameters grouped
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // ParameterGroupingClientPostRequiredParameters - ParameterGroupingClientPostRequiredParameters contains a group of parameters
 // for the ParameterGroupingClient.PostRequired method.
 func (client *ParameterGroupingClient) PostRequired(ctx context.Context, parameterGroupingClientPostRequiredParameters ParameterGroupingClientPostRequiredParameters) (ParameterGroupingClientPostRequiredResponse, error) {
@@ -164,7 +137,7 @@ func (client *ParameterGroupingClient) PostRequired(ctx context.Context, paramet
 		return ParameterGroupingClientPostRequiredResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ParameterGroupingClientPostRequiredResponse{}, client.postRequiredHandleError(resp)
+		return ParameterGroupingClientPostRequiredResponse{}, runtime.NewResponseError(resp)
 	}
 	return ParameterGroupingClientPostRequiredResponse{RawResponse: resp}, nil
 }
@@ -192,21 +165,8 @@ func (client *ParameterGroupingClient) postRequiredCreateRequest(ctx context.Con
 	return req, runtime.MarshalAsJSON(req, parameterGroupingClientPostRequiredParameters.Body)
 }
 
-// postRequiredHandleError handles the PostRequired error response.
-func (client *ParameterGroupingClient) postRequiredHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PostReservedWords - Post a grouped parameters with reserved words
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ParameterGroupingClientPostReservedWordsParameters contains a group of parameters for the ParameterGroupingClient.PostReservedWords
 // method.
 func (client *ParameterGroupingClient) PostReservedWords(ctx context.Context, options *ParameterGroupingClientPostReservedWordsParameters) (ParameterGroupingClientPostReservedWordsResponse, error) {
@@ -219,7 +179,7 @@ func (client *ParameterGroupingClient) PostReservedWords(ctx context.Context, op
 		return ParameterGroupingClientPostReservedWordsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ParameterGroupingClientPostReservedWordsResponse{}, client.postReservedWordsHandleError(resp)
+		return ParameterGroupingClientPostReservedWordsResponse{}, runtime.NewResponseError(resp)
 	}
 	return ParameterGroupingClientPostReservedWordsResponse{RawResponse: resp}, nil
 }
@@ -243,21 +203,8 @@ func (client *ParameterGroupingClient) postReservedWordsCreateRequest(ctx contex
 	return req, nil
 }
 
-// postReservedWordsHandleError handles the PostReservedWords error response.
-func (client *ParameterGroupingClient) postReservedWordsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PostSharedParameterGroupObject - Post parameters with a shared parameter group object
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - FirstParameterGroup contains a group of parameters for the ParameterGroupingClient.PostMultiParamGroups method.
 func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx context.Context, options *FirstParameterGroup) (ParameterGroupingClientPostSharedParameterGroupObjectResponse, error) {
 	req, err := client.postSharedParameterGroupObjectCreateRequest(ctx, options)
@@ -269,7 +216,7 @@ func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx contex
 		return ParameterGroupingClientPostSharedParameterGroupObjectResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ParameterGroupingClientPostSharedParameterGroupObjectResponse{}, client.postSharedParameterGroupObjectHandleError(resp)
+		return ParameterGroupingClientPostSharedParameterGroupObjectResponse{}, runtime.NewResponseError(resp)
 	}
 	return ParameterGroupingClientPostSharedParameterGroupObjectResponse{RawResponse: resp}, nil
 }
@@ -291,17 +238,4 @@ func (client *ParameterGroupingClient) postSharedParameterGroupObjectCreateReque
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// postSharedParameterGroupObjectHandleError handles the PostSharedParameterGroupObject error response.
-func (client *ParameterGroupingClient) postSharedParameterGroupObjectHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

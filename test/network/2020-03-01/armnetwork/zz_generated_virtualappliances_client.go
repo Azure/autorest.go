@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewVirtualAppliancesClient(subscriptionID string, credential azcore.TokenCr
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VirtualAppliancesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified Network Virtual Appliance.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkVirtualApplianceName - The name of Network Virtual Appliance.
 // parameters - Parameters supplied to the create or update Network Virtual Appliance.
@@ -66,7 +65,7 @@ func (client *VirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, 
 	result := VirtualAppliancesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualAppliancesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("VirtualAppliancesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VirtualAppliancesClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *VirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, 
 }
 
 // CreateOrUpdate - Creates or updates the specified Network Virtual Appliance.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualAppliancesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters VirtualAppliance, options *VirtualAppliancesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *VirtualAppliancesClient) createOrUpdate(ctx context.Context, resou
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,21 +118,8 @@ func (client *VirtualAppliancesClient) createOrUpdateCreateRequest(ctx context.C
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *VirtualAppliancesClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified Network Virtual Appliance.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkVirtualApplianceName - The name of Network Virtual Appliance.
 // options - VirtualAppliancesClientBeginDeleteOptions contains the optional parameters for the VirtualAppliancesClient.BeginDelete
@@ -146,7 +132,7 @@ func (client *VirtualAppliancesClient) BeginDelete(ctx context.Context, resource
 	result := VirtualAppliancesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualAppliancesClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("VirtualAppliancesClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VirtualAppliancesClientDeletePollerResponse{}, err
 	}
@@ -157,7 +143,7 @@ func (client *VirtualAppliancesClient) BeginDelete(ctx context.Context, resource
 }
 
 // Delete - Deletes the specified Network Virtual Appliance.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualAppliancesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, options)
 	if err != nil {
@@ -168,7 +154,7 @@ func (client *VirtualAppliancesClient) deleteOperation(ctx context.Context, reso
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -199,21 +185,8 @@ func (client *VirtualAppliancesClient) deleteCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *VirtualAppliancesClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the specified Network Virtual Appliance.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkVirtualApplianceName - The name of Network Virtual Appliance.
 // options - VirtualAppliancesClientGetOptions contains the optional parameters for the VirtualAppliancesClient.Get method.
@@ -227,7 +200,7 @@ func (client *VirtualAppliancesClient) Get(ctx context.Context, resourceGroupNam
 		return VirtualAppliancesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualAppliancesClientGetResponse{}, client.getHandleError(resp)
+		return VirtualAppliancesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -265,26 +238,13 @@ func (client *VirtualAppliancesClient) getCreateRequest(ctx context.Context, res
 func (client *VirtualAppliancesClient) getHandleResponse(resp *http.Response) (VirtualAppliancesClientGetResponse, error) {
 	result := VirtualAppliancesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualAppliance); err != nil {
-		return VirtualAppliancesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualAppliancesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *VirtualAppliancesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all Network Virtual Appliances in a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - VirtualAppliancesClientListOptions contains the optional parameters for the VirtualAppliancesClient.List method.
 func (client *VirtualAppliancesClient) List(options *VirtualAppliancesClientListOptions) *VirtualAppliancesClientListPager {
 	return &VirtualAppliancesClientListPager{
@@ -320,26 +280,13 @@ func (client *VirtualAppliancesClient) listCreateRequest(ctx context.Context, op
 func (client *VirtualAppliancesClient) listHandleResponse(resp *http.Response) (VirtualAppliancesClientListResponse, error) {
 	result := VirtualAppliancesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualApplianceListResult); err != nil {
-		return VirtualAppliancesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualAppliancesClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *VirtualAppliancesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByResourceGroup - Lists all Network Virtual Appliances in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - VirtualAppliancesClientListByResourceGroupOptions contains the optional parameters for the VirtualAppliancesClient.ListByResourceGroup
 // method.
@@ -381,26 +328,13 @@ func (client *VirtualAppliancesClient) listByResourceGroupCreateRequest(ctx cont
 func (client *VirtualAppliancesClient) listByResourceGroupHandleResponse(resp *http.Response) (VirtualAppliancesClientListByResourceGroupResponse, error) {
 	result := VirtualAppliancesClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualApplianceListResult); err != nil {
-		return VirtualAppliancesClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualAppliancesClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *VirtualAppliancesClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateTags - Updates a Network Virtual Appliance.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of Network Virtual Appliance.
 // networkVirtualApplianceName - The name of Network Virtual Appliance being updated.
 // parameters - Parameters supplied to Update Network Virtual Appliance Tags.
@@ -416,7 +350,7 @@ func (client *VirtualAppliancesClient) UpdateTags(ctx context.Context, resourceG
 		return VirtualAppliancesClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualAppliancesClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return VirtualAppliancesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -451,20 +385,7 @@ func (client *VirtualAppliancesClient) updateTagsCreateRequest(ctx context.Conte
 func (client *VirtualAppliancesClient) updateTagsHandleResponse(resp *http.Response) (VirtualAppliancesClientUpdateTagsResponse, error) {
 	result := VirtualAppliancesClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualAppliance); err != nil {
-		return VirtualAppliancesClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualAppliancesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *VirtualAppliancesClient) updateTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

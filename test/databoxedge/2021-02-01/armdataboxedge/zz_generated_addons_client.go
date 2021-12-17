@@ -11,7 +11,6 @@ package armdataboxedge
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -39,19 +38,19 @@ func NewAddonsClient(subscriptionID string, credential azcore.TokenCredential, o
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &AddonsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Create or update a addon.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // roleName - The role name.
 // addonName - The addon name.
@@ -67,7 +66,7 @@ func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 	result := AddonsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("AddonsClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("AddonsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return AddonsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -78,7 +77,7 @@ func (client *AddonsClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 }
 
 // CreateOrUpdate - Create or update a addon.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *AddonsClient) createOrUpdate(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, addon AddonClassification, options *AddonsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, roleName, addonName, resourceGroupName, addon, options)
 	if err != nil {
@@ -89,7 +88,7 @@ func (client *AddonsClient) createOrUpdate(ctx context.Context, deviceName strin
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -128,21 +127,8 @@ func (client *AddonsClient) createOrUpdateCreateRequest(ctx context.Context, dev
 	return req, runtime.MarshalAsJSON(req, addon)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *AddonsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the addon on the device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // roleName - The role name.
 // addonName - The addon name.
@@ -156,7 +142,7 @@ func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, 
 	result := AddonsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("AddonsClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("AddonsClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return AddonsClientDeletePollerResponse{}, err
 	}
@@ -167,7 +153,7 @@ func (client *AddonsClient) BeginDelete(ctx context.Context, deviceName string, 
 }
 
 // Delete - Deletes the addon on the device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *AddonsClient) deleteOperation(ctx context.Context, deviceName string, roleName string, addonName string, resourceGroupName string, options *AddonsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, roleName, addonName, resourceGroupName, options)
 	if err != nil {
@@ -178,7 +164,7 @@ func (client *AddonsClient) deleteOperation(ctx context.Context, deviceName stri
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -217,21 +203,8 @@ func (client *AddonsClient) deleteCreateRequest(ctx context.Context, deviceName 
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *AddonsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets a specific addon by name.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // roleName - The role name.
 // addonName - The addon name.
@@ -247,7 +220,7 @@ func (client *AddonsClient) Get(ctx context.Context, deviceName string, roleName
 		return AddonsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AddonsClientGetResponse{}, client.getHandleError(resp)
+		return AddonsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -290,26 +263,13 @@ func (client *AddonsClient) getCreateRequest(ctx context.Context, deviceName str
 func (client *AddonsClient) getHandleResponse(resp *http.Response) (AddonsClientGetResponse, error) {
 	result := AddonsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return AddonsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return AddonsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *AddonsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByRole - Lists all the addons configured in the role.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // roleName - The role name.
 // resourceGroupName - The resource group name.
@@ -360,20 +320,7 @@ func (client *AddonsClient) listByRoleCreateRequest(ctx context.Context, deviceN
 func (client *AddonsClient) listByRoleHandleResponse(resp *http.Response) (AddonsClientListByRoleResponse, error) {
 	result := AddonsClientListByRoleResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AddonList); err != nil {
-		return AddonsClientListByRoleResponse{}, runtime.NewResponseError(err, resp)
+		return AddonsClientListByRoleResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listByRoleHandleError handles the ListByRole error response.
-func (client *AddonsClient) listByRoleHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

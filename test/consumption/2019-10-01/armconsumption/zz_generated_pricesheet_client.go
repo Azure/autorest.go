@@ -11,7 +11,6 @@ package armconsumption
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,20 +39,20 @@ func NewPriceSheetClient(subscriptionID string, credential azcore.TokenCredentia
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &PriceSheetClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Gets the price sheet for a scope by subscriptionId. Price sheet is available via this API only for May 1, 2014 or
 // later.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PriceSheetClientGetOptions contains the optional parameters for the PriceSheetClient.Get method.
 func (client *PriceSheetClient) Get(ctx context.Context, options *PriceSheetClientGetOptions) (PriceSheetClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
@@ -65,7 +64,7 @@ func (client *PriceSheetClient) Get(ctx context.Context, options *PriceSheetClie
 		return PriceSheetClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PriceSheetClientGetResponse{}, client.getHandleError(resp)
+		return PriceSheetClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -101,27 +100,14 @@ func (client *PriceSheetClient) getCreateRequest(ctx context.Context, options *P
 func (client *PriceSheetClient) getHandleResponse(resp *http.Response) (PriceSheetClientGetResponse, error) {
 	result := PriceSheetClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PriceSheetResult); err != nil {
-		return PriceSheetClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return PriceSheetClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *PriceSheetClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetByBillingPeriod - Get the price sheet for a scope by subscriptionId and billing period. Price sheet is available via
 // this API only for May 1, 2014 or later.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // billingPeriodName - Billing Period Name.
 // options - PriceSheetClientGetByBillingPeriodOptions contains the optional parameters for the PriceSheetClient.GetByBillingPeriod
 // method.
@@ -135,7 +121,7 @@ func (client *PriceSheetClient) GetByBillingPeriod(ctx context.Context, billingP
 		return PriceSheetClientGetByBillingPeriodResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PriceSheetClientGetByBillingPeriodResponse{}, client.getByBillingPeriodHandleError(resp)
+		return PriceSheetClientGetByBillingPeriodResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getByBillingPeriodHandleResponse(resp)
 }
@@ -175,20 +161,7 @@ func (client *PriceSheetClient) getByBillingPeriodCreateRequest(ctx context.Cont
 func (client *PriceSheetClient) getByBillingPeriodHandleResponse(resp *http.Response) (PriceSheetClientGetByBillingPeriodResponse, error) {
 	result := PriceSheetClientGetByBillingPeriodResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PriceSheetResult); err != nil {
-		return PriceSheetClientGetByBillingPeriodResponse{}, runtime.NewResponseError(err, resp)
+		return PriceSheetClientGetByBillingPeriodResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// getByBillingPeriodHandleError handles the GetByBillingPeriod error response.
-func (client *PriceSheetClient) getByBillingPeriodHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

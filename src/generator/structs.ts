@@ -50,9 +50,6 @@ export class StructDef {
     if (hasDescription(this.Language)) {
       text += `${comment(this.Language.description, '// ', undefined, commentLength)}\n`;
     }
-    if (this.Language.errorType) {
-      text += '// Implements the error and azcore.HTTPResponse interfaces.\n';
-    }
     text += `type ${this.Language.name} struct {\n`;
     // any composed types go first
     for (const comp of values(this.ComposedOf)) {
@@ -63,9 +60,6 @@ export class StructDef {
     if (this.Properties === undefined && this.Parameters?.length === 0) {
       // this is an optional params placeholder struct
       text += '\t// placeholder for future optional parameters\n';
-    }
-    if (this.Language.errorType) {
-      text += '\traw string\n';
     }
     // group fields by required/optional/read-only in that order
     this.Properties?.sort((lhs: Property, rhs: Property): number => {

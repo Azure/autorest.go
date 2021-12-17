@@ -10,7 +10,6 @@ package aztables
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -41,7 +40,7 @@ func NewServiceClient(endpoint string, version Enum0, pl runtime.Pipeline) *Serv
 
 // GetProperties - Gets the properties of an account's Table service, including properties for Analytics and CORS (Cross-Origin
 // Resource Sharing) rules.
-// If the operation fails it returns the *ServiceError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // restype - Required query string to set the service properties.
 // comp - Required query string to set the service properties.
 // options - ServiceClientGetPropertiesOptions contains the optional parameters for the ServiceClient.GetProperties method.
@@ -55,7 +54,7 @@ func (client *ServiceClient) GetProperties(ctx context.Context, restype Enum5, c
 		return ServiceClientGetPropertiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ServiceClientGetPropertiesResponse{}, client.getPropertiesHandleError(resp)
+		return ServiceClientGetPropertiesResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getPropertiesHandleResponse(resp)
 }
@@ -94,27 +93,14 @@ func (client *ServiceClient) getPropertiesHandleResponse(resp *http.Response) (S
 		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ServiceProperties); err != nil {
-		return ServiceClientGetPropertiesResponse{}, runtime.NewResponseError(err, resp)
+		return ServiceClientGetPropertiesResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getPropertiesHandleError handles the GetProperties error response.
-func (client *ServiceClient) getPropertiesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ServiceError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetStatistics - Retrieves statistics related to replication for the Table service. It is only available on the secondary
 // location endpoint when read-access geo-redundant replication is enabled for the account.
-// If the operation fails it returns the *ServiceError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // restype - Required query string to get service stats.
 // comp - Required query string to get service stats.
 // options - ServiceClientGetStatisticsOptions contains the optional parameters for the ServiceClient.GetStatistics method.
@@ -128,7 +114,7 @@ func (client *ServiceClient) GetStatistics(ctx context.Context, restype Enum5, c
 		return ServiceClientGetStatisticsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ServiceClientGetStatisticsResponse{}, client.getStatisticsHandleError(resp)
+		return ServiceClientGetStatisticsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getStatisticsHandleResponse(resp)
 }
@@ -174,27 +160,14 @@ func (client *ServiceClient) getStatisticsHandleResponse(resp *http.Response) (S
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ServiceStats); err != nil {
-		return ServiceClientGetStatisticsResponse{}, runtime.NewResponseError(err, resp)
+		return ServiceClientGetStatisticsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getStatisticsHandleError handles the GetStatistics error response.
-func (client *ServiceClient) getStatisticsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ServiceError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetProperties - Sets properties for an account's Table service endpoint, including properties for Analytics and CORS (Cross-Origin
 // Resource Sharing) rules.
-// If the operation fails it returns the *ServiceError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // restype - Required query string to set the service properties.
 // comp - Required query string to set the service properties.
 // tableServiceProperties - The Table Service properties.
@@ -209,7 +182,7 @@ func (client *ServiceClient) SetProperties(ctx context.Context, restype Enum5, c
 		return ServiceClientSetPropertiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return ServiceClientSetPropertiesResponse{}, client.setPropertiesHandleError(resp)
+		return ServiceClientSetPropertiesResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setPropertiesHandleResponse(resp)
 }
@@ -248,17 +221,4 @@ func (client *ServiceClient) setPropertiesHandleResponse(resp *http.Response) (S
 		result.Version = &val
 	}
 	return result, nil
-}
-
-// setPropertiesHandleError handles the SetProperties error response.
-func (client *ServiceClient) setPropertiesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ServiceError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

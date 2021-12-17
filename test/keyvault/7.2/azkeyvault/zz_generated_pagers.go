@@ -53,7 +53,7 @@ func (p *ClientGetCertificateIssuersPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getCertificateIssuersHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getCertificateIssuersHandleResponse(resp)
@@ -107,7 +107,7 @@ func (p *ClientGetCertificateVersionsPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getCertificateVersionsHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getCertificateVersionsHandleResponse(resp)
@@ -161,7 +161,7 @@ func (p *ClientGetCertificatesPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getCertificatesHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getCertificatesHandleResponse(resp)
@@ -215,7 +215,7 @@ func (p *ClientGetDeletedCertificatesPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getDeletedCertificatesHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getDeletedCertificatesHandleResponse(resp)
@@ -269,7 +269,7 @@ func (p *ClientGetDeletedKeysPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getDeletedKeysHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getDeletedKeysHandleResponse(resp)
@@ -323,7 +323,7 @@ func (p *ClientGetDeletedSasDefinitionsPager) NextPage(ctx context.Context) bool
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getDeletedSasDefinitionsHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getDeletedSasDefinitionsHandleResponse(resp)
@@ -377,7 +377,7 @@ func (p *ClientGetDeletedSecretsPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getDeletedSecretsHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getDeletedSecretsHandleResponse(resp)
@@ -431,7 +431,7 @@ func (p *ClientGetDeletedStorageAccountsPager) NextPage(ctx context.Context) boo
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getDeletedStorageAccountsHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getDeletedStorageAccountsHandleResponse(resp)
@@ -485,7 +485,7 @@ func (p *ClientGetKeyVersionsPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getKeyVersionsHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getKeyVersionsHandleResponse(resp)
@@ -539,7 +539,7 @@ func (p *ClientGetKeysPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getKeysHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getKeysHandleResponse(resp)
@@ -593,7 +593,7 @@ func (p *ClientGetSasDefinitionsPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getSasDefinitionsHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getSasDefinitionsHandleResponse(resp)
@@ -647,7 +647,7 @@ func (p *ClientGetSecretVersionsPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getSecretVersionsHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getSecretVersionsHandleResponse(resp)
@@ -701,7 +701,7 @@ func (p *ClientGetSecretsPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getSecretsHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getSecretsHandleResponse(resp)
@@ -755,7 +755,7 @@ func (p *ClientGetStorageAccountsPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getStorageAccountsHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getStorageAccountsHandleResponse(resp)
@@ -809,7 +809,7 @@ func (p *RoleAssignmentsClientListForScopePager) NextPage(ctx context.Context) b
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listForScopeHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listForScopeHandleResponse(resp)
@@ -863,7 +863,7 @@ func (p *RoleDefinitionsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)

@@ -11,7 +11,6 @@ package armdataboxedge
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -39,19 +38,19 @@ func NewSupportPackagesClient(subscriptionID string, credential azcore.TokenCred
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &SupportPackagesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginTriggerSupportPackage - Triggers support package on the device
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // triggerSupportPackageRequest - The trigger support package request object
@@ -65,7 +64,7 @@ func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Cont
 	result := SupportPackagesClientTriggerSupportPackagePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SupportPackagesClient.TriggerSupportPackage", "", resp, client.pl, client.triggerSupportPackageHandleError)
+	pt, err := armruntime.NewPoller("SupportPackagesClient.TriggerSupportPackage", "", resp, client.pl)
 	if err != nil {
 		return SupportPackagesClientTriggerSupportPackagePollerResponse{}, err
 	}
@@ -76,7 +75,7 @@ func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Cont
 }
 
 // TriggerSupportPackage - Triggers support package on the device
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SupportPackagesClient) triggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (*http.Response, error) {
 	req, err := client.triggerSupportPackageCreateRequest(ctx, deviceName, resourceGroupName, triggerSupportPackageRequest, options)
 	if err != nil {
@@ -87,7 +86,7 @@ func (client *SupportPackagesClient) triggerSupportPackage(ctx context.Context, 
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.triggerSupportPackageHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -116,17 +115,4 @@ func (client *SupportPackagesClient) triggerSupportPackageCreateRequest(ctx cont
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, triggerSupportPackageRequest)
-}
-
-// triggerSupportPackageHandleError handles the TriggerSupportPackage error response.
-func (client *SupportPackagesClient) triggerSupportPackageHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

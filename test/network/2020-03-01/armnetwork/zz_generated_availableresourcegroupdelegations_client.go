@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewAvailableResourceGroupDelegationsClient(subscriptionID string, credentia
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &AvailableResourceGroupDelegationsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // List - Gets all of the available subnet delegations for this resource group in this region.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // location - The location of the domain name.
 // resourceGroupName - The name of the resource group.
 // options - AvailableResourceGroupDelegationsClientListOptions contains the optional parameters for the AvailableResourceGroupDelegationsClient.List
@@ -99,20 +98,7 @@ func (client *AvailableResourceGroupDelegationsClient) listCreateRequest(ctx con
 func (client *AvailableResourceGroupDelegationsClient) listHandleResponse(resp *http.Response) (AvailableResourceGroupDelegationsClientListResponse, error) {
 	result := AvailableResourceGroupDelegationsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailableDelegationsResult); err != nil {
-		return AvailableResourceGroupDelegationsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return AvailableResourceGroupDelegationsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *AvailableResourceGroupDelegationsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

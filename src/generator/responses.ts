@@ -141,14 +141,13 @@ function generateResumeForResponse(structDef: StructDef, isARM: boolean, imports
   const pollerInfo = <PollerInfo>structDef.Language.pollerInfo;
   const clientName = pollerInfo.op.language.go!.clientName;
   const apiMethod = pollerInfo.op.language.go!.name;
-  const errorMethod = pollerInfo.op.language.go!.protocolNaming.errorMethod;
   let resume = `func (l *${structDef.Language.name}) Resume(ctx context.Context, client *${clientName}, token string) error {\n`;
   if (isARM) {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime', 'armruntime');
-    resume += `\tpt, err := armruntime.NewPollerFromResumeToken("${clientName}.${apiMethod}", token, client.pl, client.${errorMethod})\n`;
+    resume += `\tpt, err := armruntime.NewPollerFromResumeToken("${clientName}.${apiMethod}", token, client.pl)\n`;
   } else {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-    resume += `\tpt, err := runtime.NewPollerFromResumeToken("${clientName}.${apiMethod}",token, client.pl, client.${errorMethod})\n`;
+    resume += `\tpt, err := runtime.NewPollerFromResumeToken("${clientName}.${apiMethod}",token, client.pl)\n`;
   }
   resume += '\tif err != nil {\n';
   resume += `\t\treturn err\n`;

@@ -39,20 +39,20 @@ func NewUsageClient(subscriptionID string, credential azcore.TokenCredential, op
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &UsageClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // List - Gets, for the specified location, the current compute resource usage information as well as the limits for compute
 // resources under the subscription.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // location - The location for which resource usage is queried.
 // options - UsageClientListOptions contains the optional parameters for the UsageClient.List method.
 func (client *UsageClient) List(location string, options *UsageClientListOptions) *UsageClientListPager {
@@ -93,19 +93,7 @@ func (client *UsageClient) listCreateRequest(ctx context.Context, location strin
 func (client *UsageClient) listHandleResponse(resp *http.Response) (UsageClientListResponse, error) {
 	result := UsageClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListUsagesResult); err != nil {
-		return UsageClientListResponse{}, runtime.NewResponseError(err, resp)
+		return UsageClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *UsageClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

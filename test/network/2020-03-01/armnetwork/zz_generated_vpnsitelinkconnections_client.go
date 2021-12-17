@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewVPNSiteLinkConnectionsClient(subscriptionID string, credential azcore.To
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VPNSiteLinkConnectionsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Retrieves the details of a vpn site link connection.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // connectionName - The name of the vpn connection.
@@ -69,7 +68,7 @@ func (client *VPNSiteLinkConnectionsClient) Get(ctx context.Context, resourceGro
 		return VPNSiteLinkConnectionsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VPNSiteLinkConnectionsClientGetResponse{}, client.getHandleError(resp)
+		return VPNSiteLinkConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -112,20 +111,7 @@ func (client *VPNSiteLinkConnectionsClient) getCreateRequest(ctx context.Context
 func (client *VPNSiteLinkConnectionsClient) getHandleResponse(resp *http.Response) (VPNSiteLinkConnectionsClientGetResponse, error) {
 	result := VPNSiteLinkConnectionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNSiteLinkConnection); err != nil {
-		return VPNSiteLinkConnectionsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return VPNSiteLinkConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// getHandleError handles the Get error response.
-func (client *VPNSiteLinkConnectionsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

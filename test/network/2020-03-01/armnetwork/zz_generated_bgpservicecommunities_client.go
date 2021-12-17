@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewBgpServiceCommunitiesClient(subscriptionID string, credential azcore.Tok
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &BgpServiceCommunitiesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // List - Gets all the available bgp service communities.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - BgpServiceCommunitiesClientListOptions contains the optional parameters for the BgpServiceCommunitiesClient.List
 // method.
 func (client *BgpServiceCommunitiesClient) List(options *BgpServiceCommunitiesClientListOptions) *BgpServiceCommunitiesClientListPager {
@@ -89,20 +88,7 @@ func (client *BgpServiceCommunitiesClient) listCreateRequest(ctx context.Context
 func (client *BgpServiceCommunitiesClient) listHandleResponse(resp *http.Response) (BgpServiceCommunitiesClientListResponse, error) {
 	result := BgpServiceCommunitiesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BgpServiceCommunityListResult); err != nil {
-		return BgpServiceCommunitiesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return BgpServiceCommunitiesClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *BgpServiceCommunitiesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

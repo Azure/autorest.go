@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewAzureFirewallFqdnTagsClient(subscriptionID string, credential azcore.Tok
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &AzureFirewallFqdnTagsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // ListAll - Gets all the Azure Firewall FQDN Tags in a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - AzureFirewallFqdnTagsClientListAllOptions contains the optional parameters for the AzureFirewallFqdnTagsClient.ListAll
 // method.
 func (client *AzureFirewallFqdnTagsClient) ListAll(options *AzureFirewallFqdnTagsClientListAllOptions) *AzureFirewallFqdnTagsClientListAllPager {
@@ -89,20 +88,7 @@ func (client *AzureFirewallFqdnTagsClient) listAllCreateRequest(ctx context.Cont
 func (client *AzureFirewallFqdnTagsClient) listAllHandleResponse(resp *http.Response) (AzureFirewallFqdnTagsClientListAllResponse, error) {
 	result := AzureFirewallFqdnTagsClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureFirewallFqdnTagListResult); err != nil {
-		return AzureFirewallFqdnTagsClientListAllResponse{}, runtime.NewResponseError(err, resp)
+		return AzureFirewallFqdnTagsClientListAllResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listAllHandleError handles the ListAll error response.
-func (client *AzureFirewallFqdnTagsClient) listAllHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

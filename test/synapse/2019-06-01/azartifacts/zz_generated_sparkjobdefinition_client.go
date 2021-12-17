@@ -11,7 +11,6 @@ package azartifacts
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -36,7 +35,7 @@ func newSparkJobDefinitionClient(endpoint string, pl runtime.Pipeline) *sparkJob
 }
 
 // BeginCreateOrUpdateSparkJobDefinition - Creates or updates a Spark Job Definition.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sparkJobDefinitionName - The spark job definition name.
 // sparkJobDefinition - Spark Job Definition resource definition.
 // options - sparkJobDefinitionClientBeginCreateOrUpdateSparkJobDefinitionOptions contains the optional parameters for the
@@ -49,7 +48,7 @@ func (client *sparkJobDefinitionClient) BeginCreateOrUpdateSparkJobDefinition(ct
 	result := sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition", resp, client.pl, client.createOrUpdateSparkJobDefinitionHandleError)
+	pt, err := runtime.NewPoller("sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition", resp, client.pl)
 	if err != nil {
 		return sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPollerResponse{}, err
 	}
@@ -60,7 +59,7 @@ func (client *sparkJobDefinitionClient) BeginCreateOrUpdateSparkJobDefinition(ct
 }
 
 // CreateOrUpdateSparkJobDefinition - Creates or updates a Spark Job Definition.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, sparkJobDefinition SparkJobDefinitionResource, options *sparkJobDefinitionClientBeginCreateOrUpdateSparkJobDefinitionOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, sparkJobDefinition, options)
 	if err != nil {
@@ -71,7 +70,7 @@ func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinition(ctx con
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateSparkJobDefinitionHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -97,21 +96,8 @@ func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinitionCreateRe
 	return req, runtime.MarshalAsJSON(req, sparkJobDefinition)
 }
 
-// createOrUpdateSparkJobDefinitionHandleError handles the CreateOrUpdateSparkJobDefinition error response.
-func (client *sparkJobDefinitionClient) createOrUpdateSparkJobDefinitionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDebugSparkJobDefinition - Debug the spark job definition.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sparkJobDefinitionAzureResource - Spark Job Definition resource definition.
 // options - sparkJobDefinitionClientBeginDebugSparkJobDefinitionOptions contains the optional parameters for the sparkJobDefinitionClient.BeginDebugSparkJobDefinition
 // method.
@@ -123,7 +109,7 @@ func (client *sparkJobDefinitionClient) BeginDebugSparkJobDefinition(ctx context
 	result := sparkJobDefinitionClientDebugSparkJobDefinitionPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("sparkJobDefinitionClient.DebugSparkJobDefinition", resp, client.pl, client.debugSparkJobDefinitionHandleError)
+	pt, err := runtime.NewPoller("sparkJobDefinitionClient.DebugSparkJobDefinition", resp, client.pl)
 	if err != nil {
 		return sparkJobDefinitionClientDebugSparkJobDefinitionPollerResponse{}, err
 	}
@@ -134,7 +120,7 @@ func (client *sparkJobDefinitionClient) BeginDebugSparkJobDefinition(ctx context
 }
 
 // DebugSparkJobDefinition - Debug the spark job definition.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *sparkJobDefinitionClient) debugSparkJobDefinition(ctx context.Context, sparkJobDefinitionAzureResource SparkJobDefinitionResource, options *sparkJobDefinitionClientBeginDebugSparkJobDefinitionOptions) (*http.Response, error) {
 	req, err := client.debugSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionAzureResource, options)
 	if err != nil {
@@ -145,7 +131,7 @@ func (client *sparkJobDefinitionClient) debugSparkJobDefinition(ctx context.Cont
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.debugSparkJobDefinitionHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -164,21 +150,8 @@ func (client *sparkJobDefinitionClient) debugSparkJobDefinitionCreateRequest(ctx
 	return req, runtime.MarshalAsJSON(req, sparkJobDefinitionAzureResource)
 }
 
-// debugSparkJobDefinitionHandleError handles the DebugSparkJobDefinition error response.
-func (client *sparkJobDefinitionClient) debugSparkJobDefinitionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDeleteSparkJobDefinition - Deletes a Spark Job Definition.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sparkJobDefinitionName - The spark job definition name.
 // options - sparkJobDefinitionClientBeginDeleteSparkJobDefinitionOptions contains the optional parameters for the sparkJobDefinitionClient.BeginDeleteSparkJobDefinition
 // method.
@@ -190,7 +163,7 @@ func (client *sparkJobDefinitionClient) BeginDeleteSparkJobDefinition(ctx contex
 	result := sparkJobDefinitionClientDeleteSparkJobDefinitionPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("sparkJobDefinitionClient.DeleteSparkJobDefinition", resp, client.pl, client.deleteSparkJobDefinitionHandleError)
+	pt, err := runtime.NewPoller("sparkJobDefinitionClient.DeleteSparkJobDefinition", resp, client.pl)
 	if err != nil {
 		return sparkJobDefinitionClientDeleteSparkJobDefinitionPollerResponse{}, err
 	}
@@ -201,7 +174,7 @@ func (client *sparkJobDefinitionClient) BeginDeleteSparkJobDefinition(ctx contex
 }
 
 // DeleteSparkJobDefinition - Deletes a Spark Job Definition.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *sparkJobDefinitionClient) deleteSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *sparkJobDefinitionClientBeginDeleteSparkJobDefinitionOptions) (*http.Response, error) {
 	req, err := client.deleteSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, options)
 	if err != nil {
@@ -212,7 +185,7 @@ func (client *sparkJobDefinitionClient) deleteSparkJobDefinition(ctx context.Con
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteSparkJobDefinitionHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -235,21 +208,8 @@ func (client *sparkJobDefinitionClient) deleteSparkJobDefinitionCreateRequest(ct
 	return req, nil
 }
 
-// deleteSparkJobDefinitionHandleError handles the DeleteSparkJobDefinition error response.
-func (client *sparkJobDefinitionClient) deleteSparkJobDefinitionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginExecuteSparkJobDefinition - Executes the spark job definition.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sparkJobDefinitionName - The spark job definition name.
 // options - sparkJobDefinitionClientBeginExecuteSparkJobDefinitionOptions contains the optional parameters for the sparkJobDefinitionClient.BeginExecuteSparkJobDefinition
 // method.
@@ -261,7 +221,7 @@ func (client *sparkJobDefinitionClient) BeginExecuteSparkJobDefinition(ctx conte
 	result := sparkJobDefinitionClientExecuteSparkJobDefinitionPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("sparkJobDefinitionClient.ExecuteSparkJobDefinition", resp, client.pl, client.executeSparkJobDefinitionHandleError)
+	pt, err := runtime.NewPoller("sparkJobDefinitionClient.ExecuteSparkJobDefinition", resp, client.pl)
 	if err != nil {
 		return sparkJobDefinitionClientExecuteSparkJobDefinitionPollerResponse{}, err
 	}
@@ -272,7 +232,7 @@ func (client *sparkJobDefinitionClient) BeginExecuteSparkJobDefinition(ctx conte
 }
 
 // ExecuteSparkJobDefinition - Executes the spark job definition.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *sparkJobDefinitionClient) executeSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, options *sparkJobDefinitionClientBeginExecuteSparkJobDefinitionOptions) (*http.Response, error) {
 	req, err := client.executeSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, options)
 	if err != nil {
@@ -283,7 +243,7 @@ func (client *sparkJobDefinitionClient) executeSparkJobDefinition(ctx context.Co
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.executeSparkJobDefinitionHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -306,21 +266,8 @@ func (client *sparkJobDefinitionClient) executeSparkJobDefinitionCreateRequest(c
 	return req, nil
 }
 
-// executeSparkJobDefinitionHandleError handles the ExecuteSparkJobDefinition error response.
-func (client *sparkJobDefinitionClient) executeSparkJobDefinitionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetSparkJobDefinition - Gets a Spark Job Definition.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sparkJobDefinitionName - The spark job definition name.
 // options - sparkJobDefinitionClientGetSparkJobDefinitionOptions contains the optional parameters for the sparkJobDefinitionClient.GetSparkJobDefinition
 // method.
@@ -334,7 +281,7 @@ func (client *sparkJobDefinitionClient) GetSparkJobDefinition(ctx context.Contex
 		return sparkJobDefinitionClientGetSparkJobDefinitionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
-		return sparkJobDefinitionClientGetSparkJobDefinitionResponse{}, client.getSparkJobDefinitionHandleError(resp)
+		return sparkJobDefinitionClientGetSparkJobDefinitionResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getSparkJobDefinitionHandleResponse(resp)
 }
@@ -364,26 +311,13 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionCreateRequest(ctx c
 func (client *sparkJobDefinitionClient) getSparkJobDefinitionHandleResponse(resp *http.Response) (sparkJobDefinitionClientGetSparkJobDefinitionResponse, error) {
 	result := sparkJobDefinitionClientGetSparkJobDefinitionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SparkJobDefinitionResource); err != nil {
-		return sparkJobDefinitionClientGetSparkJobDefinitionResponse{}, runtime.NewResponseError(err, resp)
+		return sparkJobDefinitionClientGetSparkJobDefinitionResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getSparkJobDefinitionHandleError handles the GetSparkJobDefinition error response.
-func (client *sparkJobDefinitionClient) getSparkJobDefinitionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetSparkJobDefinitionsByWorkspace - Lists spark job definitions.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions contains the optional parameters for the sparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace
 // method.
 func (client *sparkJobDefinitionClient) GetSparkJobDefinitionsByWorkspace(options *sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceOptions) *sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspacePager {
@@ -416,26 +350,13 @@ func (client *sparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceCreateR
 func (client *sparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceHandleResponse(resp *http.Response) (sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse, error) {
 	result := sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SparkJobDefinitionsListResponse); err != nil {
-		return sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
+		return sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getSparkJobDefinitionsByWorkspaceHandleError handles the GetSparkJobDefinitionsByWorkspace error response.
-func (client *sparkJobDefinitionClient) getSparkJobDefinitionsByWorkspaceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginRenameSparkJobDefinition - Renames a sparkJobDefinition.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sparkJobDefinitionName - The spark job definition name.
 // request - proposed new name.
 // options - sparkJobDefinitionClientBeginRenameSparkJobDefinitionOptions contains the optional parameters for the sparkJobDefinitionClient.BeginRenameSparkJobDefinition
@@ -448,7 +369,7 @@ func (client *sparkJobDefinitionClient) BeginRenameSparkJobDefinition(ctx contex
 	result := sparkJobDefinitionClientRenameSparkJobDefinitionPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("sparkJobDefinitionClient.RenameSparkJobDefinition", resp, client.pl, client.renameSparkJobDefinitionHandleError)
+	pt, err := runtime.NewPoller("sparkJobDefinitionClient.RenameSparkJobDefinition", resp, client.pl)
 	if err != nil {
 		return sparkJobDefinitionClientRenameSparkJobDefinitionPollerResponse{}, err
 	}
@@ -459,7 +380,7 @@ func (client *sparkJobDefinitionClient) BeginRenameSparkJobDefinition(ctx contex
 }
 
 // RenameSparkJobDefinition - Renames a sparkJobDefinition.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *sparkJobDefinitionClient) renameSparkJobDefinition(ctx context.Context, sparkJobDefinitionName string, request ArtifactRenameRequest, options *sparkJobDefinitionClientBeginRenameSparkJobDefinitionOptions) (*http.Response, error) {
 	req, err := client.renameSparkJobDefinitionCreateRequest(ctx, sparkJobDefinitionName, request, options)
 	if err != nil {
@@ -470,7 +391,7 @@ func (client *sparkJobDefinitionClient) renameSparkJobDefinition(ctx context.Con
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.renameSparkJobDefinitionHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -491,17 +412,4 @@ func (client *sparkJobDefinitionClient) renameSparkJobDefinitionCreateRequest(ct
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, request)
-}
-
-// renameSparkJobDefinitionHandleError handles the RenameSparkJobDefinition error response.
-func (client *sparkJobDefinitionClient) renameSparkJobDefinitionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

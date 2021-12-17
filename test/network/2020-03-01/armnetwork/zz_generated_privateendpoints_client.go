@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewPrivateEndpointsClient(subscriptionID string, credential azcore.TokenCre
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &PrivateEndpointsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates an private endpoint in the specified resource group.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // privateEndpointName - The name of the private endpoint.
 // parameters - Parameters supplied to the create or update private endpoint operation.
@@ -66,7 +65,7 @@ func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, r
 	result := PrivateEndpointsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("PrivateEndpointsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("PrivateEndpointsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return PrivateEndpointsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, r
 }
 
 // CreateOrUpdate - Creates or updates an private endpoint in the specified resource group.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *PrivateEndpointsClient) createOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, privateEndpointName, parameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *PrivateEndpointsClient) createOrUpdate(ctx context.Context, resour
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,21 +118,8 @@ func (client *PrivateEndpointsClient) createOrUpdateCreateRequest(ctx context.Co
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *PrivateEndpointsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified private endpoint.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // privateEndpointName - The name of the private endpoint.
 // options - PrivateEndpointsClientBeginDeleteOptions contains the optional parameters for the PrivateEndpointsClient.BeginDelete
@@ -146,7 +132,7 @@ func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceG
 	result := PrivateEndpointsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("PrivateEndpointsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("PrivateEndpointsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return PrivateEndpointsClientDeletePollerResponse{}, err
 	}
@@ -157,7 +143,7 @@ func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceG
 }
 
 // Delete - Deletes the specified private endpoint.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *PrivateEndpointsClient) deleteOperation(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
@@ -168,7 +154,7 @@ func (client *PrivateEndpointsClient) deleteOperation(ctx context.Context, resou
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -199,21 +185,8 @@ func (client *PrivateEndpointsClient) deleteCreateRequest(ctx context.Context, r
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *PrivateEndpointsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the specified private endpoint by resource group.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // privateEndpointName - The name of the private endpoint.
 // options - PrivateEndpointsClientGetOptions contains the optional parameters for the PrivateEndpointsClient.Get method.
@@ -227,7 +200,7 @@ func (client *PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName
 		return PrivateEndpointsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrivateEndpointsClientGetResponse{}, client.getHandleError(resp)
+		return PrivateEndpointsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -265,26 +238,13 @@ func (client *PrivateEndpointsClient) getCreateRequest(ctx context.Context, reso
 func (client *PrivateEndpointsClient) getHandleResponse(resp *http.Response) (PrivateEndpointsClientGetResponse, error) {
 	result := PrivateEndpointsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateEndpoint); err != nil {
-		return PrivateEndpointsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return PrivateEndpointsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *PrivateEndpointsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all private endpoints in a resource group.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - PrivateEndpointsClientListOptions contains the optional parameters for the PrivateEndpointsClient.List method.
 func (client *PrivateEndpointsClient) List(resourceGroupName string, options *PrivateEndpointsClientListOptions) *PrivateEndpointsClientListPager {
@@ -325,26 +285,13 @@ func (client *PrivateEndpointsClient) listCreateRequest(ctx context.Context, res
 func (client *PrivateEndpointsClient) listHandleResponse(resp *http.Response) (PrivateEndpointsClientListResponse, error) {
 	result := PrivateEndpointsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateEndpointListResult); err != nil {
-		return PrivateEndpointsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return PrivateEndpointsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *PrivateEndpointsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListBySubscription - Gets all private endpoints in a subscription.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PrivateEndpointsClientListBySubscriptionOptions contains the optional parameters for the PrivateEndpointsClient.ListBySubscription
 // method.
 func (client *PrivateEndpointsClient) ListBySubscription(options *PrivateEndpointsClientListBySubscriptionOptions) *PrivateEndpointsClientListBySubscriptionPager {
@@ -381,20 +328,7 @@ func (client *PrivateEndpointsClient) listBySubscriptionCreateRequest(ctx contex
 func (client *PrivateEndpointsClient) listBySubscriptionHandleResponse(resp *http.Response) (PrivateEndpointsClientListBySubscriptionResponse, error) {
 	result := PrivateEndpointsClientListBySubscriptionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateEndpointListResult); err != nil {
-		return PrivateEndpointsClientListBySubscriptionResponse{}, runtime.NewResponseError(err, resp)
+		return PrivateEndpointsClientListBySubscriptionResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listBySubscriptionHandleError handles the ListBySubscription error response.
-func (client *PrivateEndpointsClient) listBySubscriptionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

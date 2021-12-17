@@ -39,20 +39,20 @@ func NewContainerServicesClient(subscriptionID string, credential azcore.TokenCr
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ContainerServicesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters,
 // and agents.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // containerServiceName - The name of the container service in the specified subscription and resource group.
 // parameters - Parameters supplied to the Create or Update a Container Service operation.
@@ -66,7 +66,7 @@ func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, 
 	result := ContainerServicesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ContainerServicesClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("ContainerServicesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return ContainerServicesClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -78,7 +78,7 @@ func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, 
 
 // CreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters, and
 // agents.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ContainerServicesClient) createOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, containerServiceName, parameters, options)
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *ContainerServicesClient) createOrUpdate(ctx context.Context, resou
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -120,23 +120,11 @@ func (client *ContainerServicesClient) createOrUpdateCreateRequest(ctx context.C
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *ContainerServicesClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BeginDelete - Deletes the specified container service in the specified subscription and resource group. The operation does
 // not delete other resources created as part of creating a container service, including
 // storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the
 // same resource group and can be deleted individually.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // containerServiceName - The name of the container service in the specified subscription and resource group.
 // options - ContainerServicesClientBeginDeleteOptions contains the optional parameters for the ContainerServicesClient.BeginDelete
@@ -149,7 +137,7 @@ func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resource
 	result := ContainerServicesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ContainerServicesClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("ContainerServicesClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return ContainerServicesClientDeletePollerResponse{}, err
 	}
@@ -163,7 +151,7 @@ func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resource
 // delete other resources created as part of creating a container service, including
 // storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the
 // same resource group and can be deleted individually.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ContainerServicesClient) deleteOperation(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
@@ -174,7 +162,7 @@ func (client *ContainerServicesClient) deleteOperation(ctx context.Context, reso
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -204,22 +192,10 @@ func (client *ContainerServicesClient) deleteCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *ContainerServicesClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get - Gets the properties of the specified container service in the specified subscription and resource group. The operation
 // returns the properties including state, orchestrator, number of masters and
 // agents, and FQDNs of masters and agents.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // containerServiceName - The name of the container service in the specified subscription and resource group.
 // options - ContainerServicesClientGetOptions contains the optional parameters for the ContainerServicesClient.Get method.
@@ -233,7 +209,7 @@ func (client *ContainerServicesClient) Get(ctx context.Context, resourceGroupNam
 		return ContainerServicesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ContainerServicesClientGetResponse{}, client.getHandleError(resp)
+		return ContainerServicesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -268,27 +244,15 @@ func (client *ContainerServicesClient) getCreateRequest(ctx context.Context, res
 func (client *ContainerServicesClient) getHandleResponse(resp *http.Response) (ContainerServicesClientGetResponse, error) {
 	result := ContainerServicesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ContainerService); err != nil {
-		return ContainerServicesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return ContainerServicesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// getHandleError handles the Get error response.
-func (client *ContainerServicesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // List - Gets a list of container services in the specified subscription. The operation returns properties of each container
 // service including state, orchestrator, number of masters and agents, and FQDNs of
 // masters and agents.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ContainerServicesClientListOptions contains the optional parameters for the ContainerServicesClient.List method.
 func (client *ContainerServicesClient) List(options *ContainerServicesClientListOptions) *ContainerServicesClientListPager {
 	return &ContainerServicesClientListPager{
@@ -324,27 +288,15 @@ func (client *ContainerServicesClient) listCreateRequest(ctx context.Context, op
 func (client *ContainerServicesClient) listHandleResponse(resp *http.Response) (ContainerServicesClientListResponse, error) {
 	result := ContainerServicesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ContainerServiceListResult); err != nil {
-		return ContainerServicesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return ContainerServicesClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *ContainerServicesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
 // ListByResourceGroup - Gets a list of container services in the specified subscription and resource group. The operation
 // returns properties of each container service including state, orchestrator, number of masters and
 // agents, and FQDNs of masters and agents.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - ContainerServicesClientListByResourceGroupOptions contains the optional parameters for the ContainerServicesClient.ListByResourceGroup
 // method.
@@ -386,19 +338,7 @@ func (client *ContainerServicesClient) listByResourceGroupCreateRequest(ctx cont
 func (client *ContainerServicesClient) listByResourceGroupHandleResponse(resp *http.Response) (ContainerServicesClientListByResourceGroupResponse, error) {
 	result := ContainerServicesClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ContainerServiceListResult); err != nil {
-		return ContainerServicesClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return ContainerServicesClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *ContainerServicesClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

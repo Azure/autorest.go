@@ -8,17 +8,9 @@
 
 package httpinfrastructuregroup
 
-// Implements the error and azcore.HTTPResponse interfaces.
 type B struct {
-	raw            string
 	StatusCode     *string `json:"statusCode,omitempty"`
 	TextStatusCode *string `json:"textStatusCode,omitempty"`
-}
-
-// Error implements the error interface for type B.
-// The contents of the error text are not contractual and subject to change.
-func (e B) Error() string {
-	return e.raw
 }
 
 type C struct {
@@ -29,17 +21,9 @@ type D struct {
 	HTTPStatusCode *string `json:"httpStatusCode,omitempty"`
 }
 
-// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
-	raw     string
 	Message *string `json:"message,omitempty"`
 	Status  *int32  `json:"status,omitempty"`
-}
-
-// Error implements the error interface for type Error.
-// The contents of the error text are not contractual and subject to change.
-func (e Error) Error() string {
-	return e.raw
 }
 
 // HTTPClientFailureClientDelete400Options contains the optional parameters for the HTTPClientFailureClient.Delete400 method.
@@ -631,14 +615,6 @@ type MultipleResponsesClientGetDefaultNone400NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Implements the error and azcore.HTTPResponse interfaces.
 type MyException struct {
-	raw        string
 	StatusCode *string `json:"statusCode,omitempty"`
-}
-
-// Error implements the error interface for type MyException.
-// The contents of the error text are not contractual and subject to change.
-func (e MyException) Error() string {
-	return e.raw
 }

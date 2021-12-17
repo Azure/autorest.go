@@ -10,7 +10,6 @@ package azurespecialsgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewHeaderClient(options *azcore.ClientOptions) *HeaderClient {
 		cp = *options
 	}
 	client := &HeaderClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // CustomNamedRequestID - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // fooClientRequestID - The fooRequestId
 // options - HeaderClientCustomNamedRequestIDOptions contains the optional parameters for the HeaderClient.CustomNamedRequestID
 // method.
@@ -51,7 +50,7 @@ func (client *HeaderClient) CustomNamedRequestID(ctx context.Context, fooClientR
 		return HeaderClientCustomNamedRequestIDResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HeaderClientCustomNamedRequestIDResponse{}, client.customNamedRequestIDHandleError(resp)
+		return HeaderClientCustomNamedRequestIDResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.customNamedRequestIDHandleResponse(resp)
 }
@@ -77,21 +76,7 @@ func (client *HeaderClient) customNamedRequestIDHandleResponse(resp *http.Respon
 	return result, nil
 }
 
-// customNamedRequestIDHandleError handles the CustomNamedRequestID error response.
-func (client *HeaderClient) customNamedRequestIDHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // CustomNamedRequestIDHead - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request
-// If the operation fails it returns the *Error error type.
 // fooClientRequestID - The fooRequestId
 // options - HeaderClientCustomNamedRequestIDHeadOptions contains the optional parameters for the HeaderClient.CustomNamedRequestIDHead
 // method.
@@ -133,7 +118,7 @@ func (client *HeaderClient) customNamedRequestIDHeadHandleResponse(resp *http.Re
 
 // CustomNamedRequestIDParamGrouping - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of
 // the request, via a parameter group
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // HeaderClientCustomNamedRequestIDParamGroupingParameters - HeaderClientCustomNamedRequestIDParamGroupingParameters contains
 // a group of parameters for the HeaderClient.CustomNamedRequestIDParamGrouping method.
 func (client *HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Context, headerClientCustomNamedRequestIDParamGroupingParameters HeaderClientCustomNamedRequestIDParamGroupingParameters) (HeaderClientCustomNamedRequestIDParamGroupingResponse, error) {
@@ -146,7 +131,7 @@ func (client *HeaderClient) CustomNamedRequestIDParamGrouping(ctx context.Contex
 		return HeaderClientCustomNamedRequestIDParamGroupingResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HeaderClientCustomNamedRequestIDParamGroupingResponse{}, client.customNamedRequestIDParamGroupingHandleError(resp)
+		return HeaderClientCustomNamedRequestIDParamGroupingResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.customNamedRequestIDParamGroupingHandleResponse(resp)
 }
@@ -170,17 +155,4 @@ func (client *HeaderClient) customNamedRequestIDParamGroupingHandleResponse(resp
 		result.FooRequestID = &val
 	}
 	return result, nil
-}
-
-// customNamedRequestIDParamGroupingHandleError handles the CustomNamedRequestIDParamGrouping error response.
-func (client *HeaderClient) customNamedRequestIDParamGroupingHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

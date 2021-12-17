@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewRouteTablesClient(subscriptionID string, credential azcore.TokenCredenti
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &RouteTablesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Create or updates a route table in a specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
 // parameters - Parameters supplied to the create or update route table operation.
@@ -66,7 +65,7 @@ func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resour
 	result := RouteTablesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("RouteTablesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("RouteTablesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return RouteTablesClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *RouteTablesClient) BeginCreateOrUpdate(ctx context.Context, resour
 }
 
 // CreateOrUpdate - Create or updates a route table in a specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *RouteTablesClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, parameters RouteTable, options *RouteTablesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, routeTableName, parameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *RouteTablesClient) createOrUpdate(ctx context.Context, resourceGro
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,21 +118,8 @@ func (client *RouteTablesClient) createOrUpdateCreateRequest(ctx context.Context
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *RouteTablesClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified route table.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
 // options - RouteTablesClientBeginDeleteOptions contains the optional parameters for the RouteTablesClient.BeginDelete method.
@@ -145,7 +131,7 @@ func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupN
 	result := RouteTablesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("RouteTablesClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("RouteTablesClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return RouteTablesClientDeletePollerResponse{}, err
 	}
@@ -156,7 +142,7 @@ func (client *RouteTablesClient) BeginDelete(ctx context.Context, resourceGroupN
 }
 
 // Delete - Deletes the specified route table.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *RouteTablesClient) deleteOperation(ctx context.Context, resourceGroupName string, routeTableName string, options *RouteTablesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, routeTableName, options)
 	if err != nil {
@@ -167,7 +153,7 @@ func (client *RouteTablesClient) deleteOperation(ctx context.Context, resourceGr
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -198,21 +184,8 @@ func (client *RouteTablesClient) deleteCreateRequest(ctx context.Context, resour
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *RouteTablesClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the specified route table.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
 // options - RouteTablesClientGetOptions contains the optional parameters for the RouteTablesClient.Get method.
@@ -226,7 +199,7 @@ func (client *RouteTablesClient) Get(ctx context.Context, resourceGroupName stri
 		return RouteTablesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RouteTablesClientGetResponse{}, client.getHandleError(resp)
+		return RouteTablesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -264,26 +237,13 @@ func (client *RouteTablesClient) getCreateRequest(ctx context.Context, resourceG
 func (client *RouteTablesClient) getHandleResponse(resp *http.Response) (RouteTablesClientGetResponse, error) {
 	result := RouteTablesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteTable); err != nil {
-		return RouteTablesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return RouteTablesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *RouteTablesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all route tables in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - RouteTablesClientListOptions contains the optional parameters for the RouteTablesClient.List method.
 func (client *RouteTablesClient) List(resourceGroupName string, options *RouteTablesClientListOptions) *RouteTablesClientListPager {
@@ -324,26 +284,13 @@ func (client *RouteTablesClient) listCreateRequest(ctx context.Context, resource
 func (client *RouteTablesClient) listHandleResponse(resp *http.Response) (RouteTablesClientListResponse, error) {
 	result := RouteTablesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteTableListResult); err != nil {
-		return RouteTablesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return RouteTablesClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *RouteTablesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListAll - Gets all route tables in a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - RouteTablesClientListAllOptions contains the optional parameters for the RouteTablesClient.ListAll method.
 func (client *RouteTablesClient) ListAll(options *RouteTablesClientListAllOptions) *RouteTablesClientListAllPager {
 	return &RouteTablesClientListAllPager{
@@ -379,26 +326,13 @@ func (client *RouteTablesClient) listAllCreateRequest(ctx context.Context, optio
 func (client *RouteTablesClient) listAllHandleResponse(resp *http.Response) (RouteTablesClientListAllResponse, error) {
 	result := RouteTablesClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteTableListResult); err != nil {
-		return RouteTablesClientListAllResponse{}, runtime.NewResponseError(err, resp)
+		return RouteTablesClientListAllResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listAllHandleError handles the ListAll error response.
-func (client *RouteTablesClient) listAllHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateTags - Updates a route table tags.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
 // parameters - Parameters supplied to update route table tags.
@@ -413,7 +347,7 @@ func (client *RouteTablesClient) UpdateTags(ctx context.Context, resourceGroupNa
 		return RouteTablesClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RouteTablesClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return RouteTablesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -448,20 +382,7 @@ func (client *RouteTablesClient) updateTagsCreateRequest(ctx context.Context, re
 func (client *RouteTablesClient) updateTagsHandleResponse(resp *http.Response) (RouteTablesClientUpdateTagsResponse, error) {
 	result := RouteTablesClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteTable); err != nil {
-		return RouteTablesClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return RouteTablesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *RouteTablesClient) updateTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

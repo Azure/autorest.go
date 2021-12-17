@@ -10,7 +10,6 @@ package azurespecialsgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -32,13 +31,13 @@ func NewODataClient(options *azcore.ClientOptions) *ODataClient {
 		cp = *options
 	}
 	client := &ODataClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ODataClientGetWithFilterOptions contains the optional parameters for the ODataClient.GetWithFilter method.
 func (client *ODataClient) GetWithFilter(ctx context.Context, options *ODataClientGetWithFilterOptions) (ODataClientGetWithFilterResponse, error) {
 	req, err := client.getWithFilterCreateRequest(ctx, options)
@@ -50,7 +49,7 @@ func (client *ODataClient) GetWithFilter(ctx context.Context, options *ODataClie
 		return ODataClientGetWithFilterResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ODataClientGetWithFilterResponse{}, client.getWithFilterHandleError(resp)
+		return ODataClientGetWithFilterResponse{}, runtime.NewResponseError(resp)
 	}
 	return ODataClientGetWithFilterResponse{RawResponse: resp}, nil
 }
@@ -75,17 +74,4 @@ func (client *ODataClient) getWithFilterCreateRequest(ctx context.Context, optio
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// getWithFilterHandleError handles the GetWithFilter error response.
-func (client *ODataClient) getWithFilterHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

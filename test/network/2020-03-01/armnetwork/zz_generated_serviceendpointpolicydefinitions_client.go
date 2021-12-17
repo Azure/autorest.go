@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewServiceEndpointPolicyDefinitionsClient(subscriptionID string, credential
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ServiceEndpointPolicyDefinitionsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a service endpoint policy definition in the specified service endpoint policy.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // serviceEndpointPolicyName - The name of the service endpoint policy.
 // serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition name.
@@ -67,7 +66,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx co
 	result := ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ServiceEndpointPolicyDefinitionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("ServiceEndpointPolicyDefinitionsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -78,7 +77,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) BeginCreateOrUpdate(ctx co
 }
 
 // CreateOrUpdate - Creates or updates a service endpoint policy definition in the specified service endpoint policy.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, serviceEndpointPolicyDefinitions ServiceEndpointPolicyDefinition, options *ServiceEndpointPolicyDefinitionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, serviceEndpointPolicyDefinitions, options)
 	if err != nil {
@@ -89,7 +88,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdate(ctx context
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -124,21 +123,8 @@ func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdateCreateReques
 	return req, runtime.MarshalAsJSON(req, serviceEndpointPolicyDefinitions)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *ServiceEndpointPolicyDefinitionsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified ServiceEndpoint policy definitions.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // serviceEndpointPolicyName - The name of the Service Endpoint Policy.
 // serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition.
@@ -152,7 +138,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Co
 	result := ServiceEndpointPolicyDefinitionsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ServiceEndpointPolicyDefinitionsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("ServiceEndpointPolicyDefinitionsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return ServiceEndpointPolicyDefinitionsClientDeletePollerResponse{}, err
 	}
@@ -163,7 +149,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) BeginDelete(ctx context.Co
 }
 
 // Delete - Deletes the specified ServiceEndpoint policy definitions.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ServiceEndpointPolicyDefinitionsClient) deleteOperation(ctx context.Context, resourceGroupName string, serviceEndpointPolicyName string, serviceEndpointPolicyDefinitionName string, options *ServiceEndpointPolicyDefinitionsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, options)
 	if err != nil {
@@ -174,7 +160,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) deleteOperation(ctx contex
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -209,21 +195,8 @@ func (client *ServiceEndpointPolicyDefinitionsClient) deleteCreateRequest(ctx co
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *ServiceEndpointPolicyDefinitionsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Get the specified service endpoint policy definitions from service endpoint policy.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // serviceEndpointPolicyName - The name of the service endpoint policy name.
 // serviceEndpointPolicyDefinitionName - The name of the service endpoint policy definition name.
@@ -239,7 +212,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) Get(ctx context.Context, r
 		return ServiceEndpointPolicyDefinitionsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ServiceEndpointPolicyDefinitionsClientGetResponse{}, client.getHandleError(resp)
+		return ServiceEndpointPolicyDefinitionsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -278,26 +251,13 @@ func (client *ServiceEndpointPolicyDefinitionsClient) getCreateRequest(ctx conte
 func (client *ServiceEndpointPolicyDefinitionsClient) getHandleResponse(resp *http.Response) (ServiceEndpointPolicyDefinitionsClientGetResponse, error) {
 	result := ServiceEndpointPolicyDefinitionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ServiceEndpointPolicyDefinition); err != nil {
-		return ServiceEndpointPolicyDefinitionsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return ServiceEndpointPolicyDefinitionsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *ServiceEndpointPolicyDefinitionsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByResourceGroup - Gets all service endpoint policy definitions in a service end point policy.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // serviceEndpointPolicyName - The name of the service endpoint policy name.
 // options - ServiceEndpointPolicyDefinitionsClientListByResourceGroupOptions contains the optional parameters for the ServiceEndpointPolicyDefinitionsClient.ListByResourceGroup
@@ -344,20 +304,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) listByResourceGroupCreateR
 func (client *ServiceEndpointPolicyDefinitionsClient) listByResourceGroupHandleResponse(resp *http.Response) (ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse, error) {
 	result := ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ServiceEndpointPolicyDefinitionListResult); err != nil {
-		return ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *ServiceEndpointPolicyDefinitionsClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

@@ -586,17 +586,9 @@ type ErrorDetails struct {
 //
 // * 503 ServiceUnavailable - Service is temporarily unavailable. Retry after waiting for the time specified in the "Retry-After"
 // header.
-// Implements the error and azcore.HTTPResponse interfaces.
 type ErrorResponse struct {
-	raw string
 	// The details of the error.
-	InnerError *ErrorDetails `json:"error,omitempty"`
-}
-
-// Error implements the error interface for type ErrorResponse.
-// The contents of the error text are not contractual and subject to change.
-func (e ErrorResponse) Error() string {
-	return e.raw
+	Error *ErrorDetails `json:"error,omitempty"`
 }
 
 // EventProperties - The event properties.
@@ -927,17 +919,9 @@ type HighCasedErrorDetails struct {
 //
 // * 503 ServiceUnavailable - Service is temporarily unavailable. Retry after waiting for the time specified in the "Retry-After"
 // header.
-// Implements the error and azcore.HTTPResponse interfaces.
 type HighCasedErrorResponse struct {
-	raw string
 	// The details of the error.
-	InnerError *HighCasedErrorDetails `json:"error,omitempty"`
-}
-
-// Error implements the error interface for type HighCasedErrorResponse.
-// The contents of the error text are not contractual and subject to change.
-func (e HighCasedErrorResponse) Error() string {
-	return e.raw
+	Error *HighCasedErrorDetails `json:"error,omitempty"`
 }
 
 // LegacyChargeSummary - Legacy charge summary.

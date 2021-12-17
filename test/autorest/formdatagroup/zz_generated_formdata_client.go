@@ -10,7 +10,6 @@ package formdatagroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -32,13 +31,13 @@ func NewFormdataClient(options *azcore.ClientOptions) *FormdataClient {
 		cp = *options
 	}
 	client := &FormdataClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // UploadFile - Upload file
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // fileContent - File to upload.
 // fileName - File name to upload. Name has to be spelled exactly as written here.
 // options - FormdataClientUploadFileOptions contains the optional parameters for the FormdataClient.UploadFile method.
@@ -52,7 +51,7 @@ func (client *FormdataClient) UploadFile(ctx context.Context, fileContent io.Rea
 		return FormdataClientUploadFileResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FormdataClientUploadFileResponse{}, client.uploadFileHandleError(resp)
+		return FormdataClientUploadFileResponse{}, runtime.NewResponseError(resp)
 	}
 	return FormdataClientUploadFileResponse{RawResponse: resp}, nil
 }
@@ -64,7 +63,7 @@ func (client *FormdataClient) uploadFileCreateRequest(ctx context.Context, fileC
 	if err != nil {
 		return nil, err
 	}
-	req.SkipBodyDownload()
+	runtime.SkipBodyDownload(req)
 	req.Raw().Header.Set("Accept", "application/octet-stream, application/json")
 	if err := runtime.SetMultipartFormData(req, map[string]interface{}{
 		"fileContent": fileContent,
@@ -75,21 +74,8 @@ func (client *FormdataClient) uploadFileCreateRequest(ctx context.Context, fileC
 	return req, nil
 }
 
-// uploadFileHandleError handles the UploadFile error response.
-func (client *FormdataClient) uploadFileHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UploadFileViaBody - Upload file
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // fileContent - File to upload.
 // options - FormdataClientUploadFileViaBodyOptions contains the optional parameters for the FormdataClient.UploadFileViaBody
 // method.
@@ -103,7 +89,7 @@ func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent
 		return FormdataClientUploadFileViaBodyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FormdataClientUploadFileViaBodyResponse{}, client.uploadFileViaBodyHandleError(resp)
+		return FormdataClientUploadFileViaBodyResponse{}, runtime.NewResponseError(resp)
 	}
 	return FormdataClientUploadFileViaBodyResponse{RawResponse: resp}, nil
 }
@@ -115,26 +101,13 @@ func (client *FormdataClient) uploadFileViaBodyCreateRequest(ctx context.Context
 	if err != nil {
 		return nil, err
 	}
-	req.SkipBodyDownload()
+	runtime.SkipBodyDownload(req)
 	req.Raw().Header.Set("Accept", "application/octet-stream, application/json")
 	return req, req.SetBody(fileContent, "application/octet-stream")
 }
 
-// uploadFileViaBodyHandleError handles the UploadFileViaBody error response.
-func (client *FormdataClient) uploadFileViaBodyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UploadFiles - Upload multiple files
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // fileContent - Files to upload.
 // options - FormdataClientUploadFilesOptions contains the optional parameters for the FormdataClient.UploadFiles method.
 func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []io.ReadSeekCloser, options *FormdataClientUploadFilesOptions) (FormdataClientUploadFilesResponse, error) {
@@ -147,7 +120,7 @@ func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []io.
 		return FormdataClientUploadFilesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FormdataClientUploadFilesResponse{}, client.uploadFilesHandleError(resp)
+		return FormdataClientUploadFilesResponse{}, runtime.NewResponseError(resp)
 	}
 	return FormdataClientUploadFilesResponse{RawResponse: resp}, nil
 }
@@ -159,7 +132,7 @@ func (client *FormdataClient) uploadFilesCreateRequest(ctx context.Context, file
 	if err != nil {
 		return nil, err
 	}
-	req.SkipBodyDownload()
+	runtime.SkipBodyDownload(req)
 	req.Raw().Header.Set("Accept", "application/octet-stream, application/json")
 	if err := runtime.SetMultipartFormData(req, map[string]interface{}{
 		"fileContent": fileContent,
@@ -167,17 +140,4 @@ func (client *FormdataClient) uploadFilesCreateRequest(ctx context.Context, file
 		return nil, err
 	}
 	return req, nil
-}
-
-// uploadFilesHandleError handles the UploadFiles error response.
-func (client *FormdataClient) uploadFilesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

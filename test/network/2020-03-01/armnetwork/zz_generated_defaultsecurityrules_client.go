@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewDefaultSecurityRulesClient(subscriptionID string, credential azcore.Toke
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &DefaultSecurityRulesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Get the specified default network security rule.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
 // defaultSecurityRuleName - The name of the default security rule.
@@ -68,7 +67,7 @@ func (client *DefaultSecurityRulesClient) Get(ctx context.Context, resourceGroup
 		return DefaultSecurityRulesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DefaultSecurityRulesClientGetResponse{}, client.getHandleError(resp)
+		return DefaultSecurityRulesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -107,26 +106,13 @@ func (client *DefaultSecurityRulesClient) getCreateRequest(ctx context.Context, 
 func (client *DefaultSecurityRulesClient) getHandleResponse(resp *http.Response) (DefaultSecurityRulesClientGetResponse, error) {
 	result := DefaultSecurityRulesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityRule); err != nil {
-		return DefaultSecurityRulesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return DefaultSecurityRulesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *DefaultSecurityRulesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all default security rules in a network security group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
 // options - DefaultSecurityRulesClientListOptions contains the optional parameters for the DefaultSecurityRulesClient.List
@@ -173,20 +159,7 @@ func (client *DefaultSecurityRulesClient) listCreateRequest(ctx context.Context,
 func (client *DefaultSecurityRulesClient) listHandleResponse(resp *http.Response) (DefaultSecurityRulesClientListResponse, error) {
 	result := DefaultSecurityRulesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityRuleListResult); err != nil {
-		return DefaultSecurityRulesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return DefaultSecurityRulesClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *DefaultSecurityRulesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewPublicIPPrefixesClient(subscriptionID string, credential azcore.TokenCre
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &PublicIPPrefixesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a static or dynamic public IP prefix.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // publicIPPrefixName - The name of the public IP prefix.
 // parameters - Parameters supplied to the create or update public IP prefix operation.
@@ -66,7 +65,7 @@ func (client *PublicIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, r
 	result := PublicIPPrefixesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("PublicIPPrefixesClient.CreateOrUpdate", "location", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("PublicIPPrefixesClient.CreateOrUpdate", "location", resp, client.pl)
 	if err != nil {
 		return PublicIPPrefixesClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *PublicIPPrefixesClient) BeginCreateOrUpdate(ctx context.Context, r
 }
 
 // CreateOrUpdate - Creates or updates a static or dynamic public IP prefix.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *PublicIPPrefixesClient) createOrUpdate(ctx context.Context, resourceGroupName string, publicIPPrefixName string, parameters PublicIPPrefix, options *PublicIPPrefixesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, publicIPPrefixName, parameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *PublicIPPrefixesClient) createOrUpdate(ctx context.Context, resour
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,21 +118,8 @@ func (client *PublicIPPrefixesClient) createOrUpdateCreateRequest(ctx context.Co
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *PublicIPPrefixesClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified public IP prefix.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // publicIPPrefixName - The name of the PublicIpPrefix.
 // options - PublicIPPrefixesClientBeginDeleteOptions contains the optional parameters for the PublicIPPrefixesClient.BeginDelete
@@ -146,7 +132,7 @@ func (client *PublicIPPrefixesClient) BeginDelete(ctx context.Context, resourceG
 	result := PublicIPPrefixesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("PublicIPPrefixesClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("PublicIPPrefixesClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return PublicIPPrefixesClientDeletePollerResponse{}, err
 	}
@@ -157,7 +143,7 @@ func (client *PublicIPPrefixesClient) BeginDelete(ctx context.Context, resourceG
 }
 
 // Delete - Deletes the specified public IP prefix.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *PublicIPPrefixesClient) deleteOperation(ctx context.Context, resourceGroupName string, publicIPPrefixName string, options *PublicIPPrefixesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, publicIPPrefixName, options)
 	if err != nil {
@@ -168,7 +154,7 @@ func (client *PublicIPPrefixesClient) deleteOperation(ctx context.Context, resou
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -199,21 +185,8 @@ func (client *PublicIPPrefixesClient) deleteCreateRequest(ctx context.Context, r
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *PublicIPPrefixesClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the specified public IP prefix in a specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // publicIPPrefixName - The name of the public IP prefix.
 // options - PublicIPPrefixesClientGetOptions contains the optional parameters for the PublicIPPrefixesClient.Get method.
@@ -227,7 +200,7 @@ func (client *PublicIPPrefixesClient) Get(ctx context.Context, resourceGroupName
 		return PublicIPPrefixesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PublicIPPrefixesClientGetResponse{}, client.getHandleError(resp)
+		return PublicIPPrefixesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -265,26 +238,13 @@ func (client *PublicIPPrefixesClient) getCreateRequest(ctx context.Context, reso
 func (client *PublicIPPrefixesClient) getHandleResponse(resp *http.Response) (PublicIPPrefixesClientGetResponse, error) {
 	result := PublicIPPrefixesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPPrefix); err != nil {
-		return PublicIPPrefixesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return PublicIPPrefixesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *PublicIPPrefixesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all public IP prefixes in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - PublicIPPrefixesClientListOptions contains the optional parameters for the PublicIPPrefixesClient.List method.
 func (client *PublicIPPrefixesClient) List(resourceGroupName string, options *PublicIPPrefixesClientListOptions) *PublicIPPrefixesClientListPager {
@@ -325,26 +285,13 @@ func (client *PublicIPPrefixesClient) listCreateRequest(ctx context.Context, res
 func (client *PublicIPPrefixesClient) listHandleResponse(resp *http.Response) (PublicIPPrefixesClientListResponse, error) {
 	result := PublicIPPrefixesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPPrefixListResult); err != nil {
-		return PublicIPPrefixesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return PublicIPPrefixesClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *PublicIPPrefixesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListAll - Gets all the public IP prefixes in a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PublicIPPrefixesClientListAllOptions contains the optional parameters for the PublicIPPrefixesClient.ListAll
 // method.
 func (client *PublicIPPrefixesClient) ListAll(options *PublicIPPrefixesClientListAllOptions) *PublicIPPrefixesClientListAllPager {
@@ -381,26 +328,13 @@ func (client *PublicIPPrefixesClient) listAllCreateRequest(ctx context.Context, 
 func (client *PublicIPPrefixesClient) listAllHandleResponse(resp *http.Response) (PublicIPPrefixesClientListAllResponse, error) {
 	result := PublicIPPrefixesClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPPrefixListResult); err != nil {
-		return PublicIPPrefixesClientListAllResponse{}, runtime.NewResponseError(err, resp)
+		return PublicIPPrefixesClientListAllResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
 }
 
-// listAllHandleError handles the ListAll error response.
-func (client *PublicIPPrefixesClient) listAllHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateTags - Updates public IP prefix tags.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // publicIPPrefixName - The name of the public IP prefix.
 // parameters - Parameters supplied to update public IP prefix tags.
@@ -416,7 +350,7 @@ func (client *PublicIPPrefixesClient) UpdateTags(ctx context.Context, resourceGr
 		return PublicIPPrefixesClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PublicIPPrefixesClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return PublicIPPrefixesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -451,20 +385,7 @@ func (client *PublicIPPrefixesClient) updateTagsCreateRequest(ctx context.Contex
 func (client *PublicIPPrefixesClient) updateTagsHandleResponse(resp *http.Response) (PublicIPPrefixesClientUpdateTagsResponse, error) {
 	result := PublicIPPrefixesClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPPrefix); err != nil {
-		return PublicIPPrefixesClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return PublicIPPrefixesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return result, nil
-}
-
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *PublicIPPrefixesClient) updateTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

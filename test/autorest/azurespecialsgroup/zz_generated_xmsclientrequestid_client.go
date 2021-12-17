@@ -10,8 +10,6 @@ package azurespecialsgroup
 
 import (
 	"context"
-	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -32,13 +30,13 @@ func NewXMSClientRequestIDClient(options *azcore.ClientOptions) *XMSClientReques
 		cp = *options
 	}
 	client := &XMSClientRequestIDClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - XMSClientRequestIDClientGetOptions contains the optional parameters for the XMSClientRequestIDClient.Get method.
 func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSClientRequestIDClientGetOptions) (XMSClientRequestIDClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
@@ -50,7 +48,7 @@ func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSCli
 		return XMSClientRequestIDClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMSClientRequestIDClientGetResponse{}, client.getHandleError(resp)
+		return XMSClientRequestIDClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return XMSClientRequestIDClientGetResponse{RawResponse: resp}, nil
 }
@@ -65,20 +63,8 @@ func (client *XMSClientRequestIDClient) getCreateRequest(ctx context.Context, op
 	return req, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *XMSClientRequestIDClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // ParamGet - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // xmsClientRequestID - This should appear as a method parameter, use value '9C4D50EE-2D56-4CD3-8152-34347DC9F2B0'
 // options - XMSClientRequestIDClientParamGetOptions contains the optional parameters for the XMSClientRequestIDClient.ParamGet
 // method.
@@ -92,7 +78,7 @@ func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientR
 		return XMSClientRequestIDClientParamGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMSClientRequestIDClientParamGetResponse{}, client.paramGetHandleError(resp)
+		return XMSClientRequestIDClientParamGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return XMSClientRequestIDClientParamGetResponse{RawResponse: resp}, nil
 }
@@ -107,17 +93,4 @@ func (client *XMSClientRequestIDClient) paramGetCreateRequest(ctx context.Contex
 	req.Raw().Header.Set("x-ms-client-request-id", xmsClientRequestID)
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// paramGetHandleError handles the ParamGet error response.
-func (client *XMSClientRequestIDClient) paramGetHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
