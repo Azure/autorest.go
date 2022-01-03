@@ -979,6 +979,16 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
     unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaFormat(response.schema, mediaType, `resp, &${unmarshalTarget}`)}; err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, runtime.NewResponseError(err, resp)\n`;
     unmarshallerText += '\t}\n';
+  } else if (mediaType === 'text') {
+    unmarshallerText += `\tbody, err := runtime.Payload(resp)\n`;
+    unmarshallerText += '\tif err != nil {\n';
+    unmarshallerText += `\t\treturn ${zeroValue}, runtime.NewResponseError(err, resp)\n`;
+    unmarshallerText += '\t}\n';
+    unmarshallerText += '\ttxt := string(body)\n';
+    unmarshallerText += `\t${unmarshalTarget} = &txt\n`;
+  } else {
+    // the remaining media types are handled elsewhere
+    throw new Error(`unhandled media type ${mediaType} for operation ${op.language.go!.clientName}.${op.language.go!.name}`);
   }
   return unmarshallerText;
 }

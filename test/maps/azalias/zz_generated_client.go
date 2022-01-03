@@ -122,6 +122,59 @@ func (client *client) createHandleError(resp *http.Response) error {
 	return runtime.NewResponseError(errors.New(string(body)), resp)
 }
 
+// GetScript - Retrieve the configuration script identified by configuration name.
+// If the operation fails it returns a generic error.
+// options - AliasGetScriptOptions contains the optional parameters for the client.GetScript method.
+func (client *client) GetScript(ctx context.Context, options *AliasGetScriptOptions) (AliasGetScriptResponse, error) {
+	req, err := client.getScriptCreateRequest(ctx, options)
+	if err != nil {
+		return AliasGetScriptResponse{}, err
+	}
+	resp, err := client.pl.Do(req)
+	if err != nil {
+		return AliasGetScriptResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return AliasGetScriptResponse{}, client.getScriptHandleError(resp)
+	}
+	return client.getScriptHandleResponse(resp)
+}
+
+// getScriptCreateRequest creates the GetScript request.
+func (client *client) getScriptCreateRequest(ctx context.Context, options *AliasGetScriptOptions) (*policy.Request, error) {
+	urlPath := "/scripts"
+	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header.Set("Accept", "text/powershell")
+	return req, nil
+}
+
+// getScriptHandleResponse handles the GetScript response.
+func (client *client) getScriptHandleResponse(resp *http.Response) (AliasGetScriptResponse, error) {
+	result := AliasGetScriptResponse{RawResponse: resp}
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return AliasGetScriptResponse{}, runtime.NewResponseError(err, resp)
+	}
+	txt := string(body)
+	result.Value = &txt
+	return result, nil
+}
+
+// getScriptHandleError handles the GetScript error response.
+func (client *client) getScriptHandleError(resp *http.Response) error {
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return runtime.NewResponseError(err, resp)
+	}
+	if len(body) == 0 {
+		return runtime.NewResponseError(errors.New(resp.Status), resp)
+	}
+	return runtime.NewResponseError(errors.New(string(body)), resp)
+}
+
 // List - Applies to: see pricing tiers [https://aka.ms/AzureMapsPricingTier].
 // Creator makes it possible to develop applications based on your private indoor map data using Azure Maps API and SDK. This
 // [https://docs.microsoft.com/azure/azure-maps/creator-indoor-maps] article

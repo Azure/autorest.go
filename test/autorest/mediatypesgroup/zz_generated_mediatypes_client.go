@@ -278,6 +278,12 @@ func (client *MediaTypesClient) binaryBodyWithThreeContentTypesCreateRequest(ctx
 // binaryBodyWithThreeContentTypesHandleResponse handles the BinaryBodyWithThreeContentTypes response.
 func (client *MediaTypesClient) binaryBodyWithThreeContentTypesHandleResponse(resp *http.Response) (MediaTypesClientBinaryBodyWithThreeContentTypesResponse, error) {
 	result := MediaTypesClientBinaryBodyWithThreeContentTypesResponse{RawResponse: resp}
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return MediaTypesClientBinaryBodyWithThreeContentTypesResponse{}, runtime.NewResponseError(err, resp)
+	}
+	txt := string(body)
+	result.Value = &txt
 	return result, nil
 }
 
@@ -330,6 +336,12 @@ func (client *MediaTypesClient) binaryBodyWithThreeContentTypesWithTextCreateReq
 // binaryBodyWithThreeContentTypesWithTextHandleResponse handles the BinaryBodyWithThreeContentTypesWithText response.
 func (client *MediaTypesClient) binaryBodyWithThreeContentTypesWithTextHandleResponse(resp *http.Response) (MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse, error) {
 	result := MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse{RawResponse: resp}
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return MediaTypesClientBinaryBodyWithThreeContentTypesWithTextResponse{}, runtime.NewResponseError(err, resp)
+	}
+	txt := string(body)
+	result.Value = &txt
 	return result, nil
 }
 
@@ -382,6 +394,12 @@ func (client *MediaTypesClient) binaryBodyWithTwoContentTypesCreateRequest(ctx c
 // binaryBodyWithTwoContentTypesHandleResponse handles the BinaryBodyWithTwoContentTypes response.
 func (client *MediaTypesClient) binaryBodyWithTwoContentTypesHandleResponse(resp *http.Response) (MediaTypesClientBinaryBodyWithTwoContentTypesResponse, error) {
 	result := MediaTypesClientBinaryBodyWithTwoContentTypesResponse{RawResponse: resp}
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return MediaTypesClientBinaryBodyWithTwoContentTypesResponse{}, runtime.NewResponseError(err, resp)
+	}
+	txt := string(body)
+	result.Value = &txt
 	return result, nil
 }
 
@@ -486,6 +504,12 @@ func (client *MediaTypesClient) putTextAndJSONBodyWithJSONCreateRequest(ctx cont
 // putTextAndJSONBodyWithJSONHandleResponse handles the PutTextAndJSONBodyWithJSON response.
 func (client *MediaTypesClient) putTextAndJSONBodyWithJSONHandleResponse(resp *http.Response) (MediaTypesClientPutTextAndJSONBodyWithJSONResponse, error) {
 	result := MediaTypesClientPutTextAndJSONBodyWithJSONResponse{RawResponse: resp}
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return MediaTypesClientPutTextAndJSONBodyWithJSONResponse{}, runtime.NewResponseError(err, resp)
+	}
+	txt := string(body)
+	result.Value = &txt
 	return result, nil
 }
 
@@ -536,6 +560,12 @@ func (client *MediaTypesClient) putTextAndJSONBodyWithTextCreateRequest(ctx cont
 // putTextAndJSONBodyWithTextHandleResponse handles the PutTextAndJSONBodyWithText response.
 func (client *MediaTypesClient) putTextAndJSONBodyWithTextHandleResponse(resp *http.Response) (MediaTypesClientPutTextAndJSONBodyWithTextResponse, error) {
 	result := MediaTypesClientPutTextAndJSONBodyWithTextResponse{RawResponse: resp}
+	body, err := runtime.Payload(resp)
+	if err != nil {
+		return MediaTypesClientPutTextAndJSONBodyWithTextResponse{}, runtime.NewResponseError(err, resp)
+	}
+	txt := string(body)
+	result.Value = &txt
 	return result, nil
 }
 

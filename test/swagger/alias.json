@@ -213,6 +213,24 @@
           }
         }
       }
+    },
+    "/scripts": {
+      "get": {
+        "operationId": "Alias_GetScript",
+        "description": "Retrieve the configuration script identified by configuration name.",
+        "produces": [
+          "text/powershell"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
