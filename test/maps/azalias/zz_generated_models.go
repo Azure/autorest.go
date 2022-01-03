@@ -22,6 +22,11 @@ type AliasCreateOptions struct {
 	GroupBy           []SomethingCount
 }
 
+// AliasGetScriptOptions contains the optional parameters for the client.GetScript method.
+type AliasGetScriptOptions struct {
+	// placeholder for future optional parameters
+}
+
 // AliasListOptions contains the optional parameters for the client.List method.
 type AliasListOptions struct {
 	GroupBy []LogMetricsGroupBy

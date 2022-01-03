@@ -24,6 +24,18 @@ type AliasCreateResult struct {
 	AccessControlExposeHeaders *string
 }
 
+// AliasGetScriptResponse contains the response from method Alias.GetScript.
+type AliasGetScriptResponse struct {
+	AliasGetScriptResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// AliasGetScriptResult contains the result from method Alias.GetScript.
+type AliasGetScriptResult struct {
+	Value *string
+}
+
 // AliasListResponse contains the response from method Alias.List.
 type AliasListResponse struct {
 	AliasListResult
