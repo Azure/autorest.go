@@ -99,7 +99,7 @@ export async function namer(session: Session<CodeModel>) {
     structNames.add(obj.language.go!.name);
   }
 
-  // fix stuttering type names, object fields, and other bits
+  // fix stuttering type names
   for (const obj of values(model.schemas.objects)) {
     const details = <Language>obj.language.go;
     const originalName = details.name;
@@ -108,6 +108,11 @@ export async function namer(session: Session<CodeModel>) {
     if (details.name !== originalName && structNames.has(details.name)) {
       throw new Error(`type ${originalName} was renamed to ${details.name} which collides with an existing type name`);
     }
+  }
+
+  // fix property names and other bits
+  for (const obj of values(model.schemas.objects)) {
+    const details = <Language>obj.language.go;
     if (obj.discriminator) {
       // if this is a discriminator add the interface name
       details.discriminatorInterface = createPolymorphicInterfaceName(details.name);

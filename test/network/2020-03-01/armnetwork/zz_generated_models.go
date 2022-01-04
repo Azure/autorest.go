@@ -6627,7 +6627,7 @@ func (f *FirewallPolicyRule) GetFirewallPolicyRule() *FirewallPolicyRule { retur
 // FirewallPolicyRuleConditionClassification provides polymorphic access to related types.
 // Call the interface's GetFirewallPolicyRuleCondition() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
-// - *ApplicationRuleCondition, *FirewallPolicyRuleCondition, *NatRuleCondition, *NetworkRuleCondition
+// - *ApplicationRuleCondition, *FirewallPolicyRuleCondition, *NatRuleCondition, *RuleCondition
 type FirewallPolicyRuleConditionClassification interface {
 	// GetFirewallPolicyRuleCondition returns the FirewallPolicyRuleCondition content of the underlying type.
 	GetFirewallPolicyRuleCondition() *FirewallPolicyRuleCondition
