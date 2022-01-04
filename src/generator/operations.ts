@@ -511,7 +511,8 @@ function generateOperation(op: Operation, imports: ImportManager): string {
     text += `\t\tadvancer: func(ctx context.Context, resp ${getResponseEnvelopeName(op)}) (*policy.Request, error) {\n`;
     const nextLink = op.language.go!.paging.nextLinkName;
     const response = getResultFieldName(op);
-    if (op.language.go!.paging.member) {
+    // nextLinkOperation might be absent in some cases, see https://github.com/Azure/autorest/issues/4393
+    if (op.language.go!.paging.nextLinkOperation) {
       const nextOpParams = getCreateRequestParametersSig(op.language.go!.paging.nextLinkOperation).split(',');
       // keep the parameter names from the name/type tuples and find nextLink param
       for (let i = 0; i < nextOpParams.length; ++i) {

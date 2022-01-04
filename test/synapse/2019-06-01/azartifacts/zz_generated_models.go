@@ -23,7 +23,7 @@ import (
 // - *DatabricksNotebookActivity, *DatabricksSparkJarActivity, *DatabricksSparkPythonActivity, *DeleteActivity, *ExecuteDataFlowActivity,
 // - *ExecutePipelineActivity, *ExecuteSSISPackageActivity, *ExecutionActivity, *FilterActivity, *ForEachActivity, *GetMetadataActivity,
 // - *HDInsightHiveActivity, *HDInsightMapReduceActivity, *HDInsightPigActivity, *HDInsightSparkActivity, *HDInsightStreamingActivity,
-// - *IfConditionActivity, *LookupActivity, *SetVariableActivity, *SqlPoolStoredProcedureActivity, *SqlServerStoredProcedureActivity,
+// - *IfConditionActivity, *LookupActivity, *SQLPoolStoredProcedureActivity, *SQLServerStoredProcedureActivity, *SetVariableActivity,
 // - *SwitchActivity, *SynapseNotebookActivity, *SynapseSparkJobDefinitionActivity, *UntilActivity, *ValidationActivity, *WaitActivity,
 // - *WebActivity, *WebHookActivity
 type ActivityClassification interface {
@@ -13449,11 +13449,11 @@ func (c *CopyActivityTypeProperties) UnmarshalJSON(data []byte) error {
 // CopySinkClassification provides polymorphic access to related types.
 // Call the interface's GetCopySink() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
-// - *AvroSink, *AzureBlobFSSink, *AzureDataExplorerSink, *AzureDataLakeStoreSink, *AzureMySqlSink, *AzurePostgreSqlSink,
-// - *AzureQueueSink, *AzureSearchIndexSink, *AzureSqlSink, *AzureTableSink, *BinarySink, *BlobSink, *CommonDataServiceForAppsSink,
-// - *CopySink, *CosmosDbMongoDbApiSink, *CosmosDbSqlApiSink, *DelimitedTextSink, *DocumentDbCollectionSink, *DynamicsCrmSink,
-// - *DynamicsSink, *FileSystemSink, *InformixSink, *JsonSink, *MicrosoftAccessSink, *OdbcSink, *OracleSink, *OrcSink, *ParquetSink,
-// - *SalesforceServiceCloudSink, *SalesforceSink, *SapCloudForCustomerSink, *SqlDWSink, *SqlMISink, *SqlServerSink, *SqlSink
+// - *AvroSink, *AzureBlobFSSink, *AzureDataExplorerSink, *AzureDataLakeStoreSink, *AzureMySQLSink, *AzurePostgreSQLSink,
+// - *AzureQueueSink, *AzureSQLSink, *AzureSearchIndexSink, *AzureTableSink, *BinarySink, *BlobSink, *CommonDataServiceForAppsSink,
+// - *CopySink, *CosmosDbMongoDbAPISink, *CosmosDbSQLAPISink, *DelimitedTextSink, *DocumentDbCollectionSink, *DynamicsCrmSink,
+// - *DynamicsSink, *FileSystemSink, *InformixSink, *JSONSink, *MicrosoftAccessSink, *OdbcSink, *OracleSink, *OrcSink, *ParquetSink,
+// - *SQLDWSink, *SQLMISink, *SQLServerSink, *SQLSink, *SalesforceServiceCloudSink, *SalesforceSink, *SapCloudForCustomerSink
 type CopySinkClassification interface {
 	// GetCopySink returns the CopySink content of the underlying type.
 	GetCopySink() *CopySink
@@ -13552,17 +13552,17 @@ func (c *CopySink) UnmarshalJSON(data []byte) error {
 // Call the interface's GetCopySource() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *AmazonMWSSource, *AmazonRedshiftSource, *AvroSource, *AzureBlobFSSource, *AzureDataExplorerSource, *AzureDataLakeStoreSource,
-// - *AzureMariaDBSource, *AzureMySqlSource, *AzurePostgreSqlSource, *AzureSqlSource, *AzureTableSource, *BinarySource, *BlobSource,
-// - *CassandraSource, *CommonDataServiceForAppsSource, *ConcurSource, *CopySource, *CosmosDbMongoDbApiSource, *CosmosDbSqlApiSource,
+// - *AzureMariaDBSource, *AzureMySQLSource, *AzurePostgreSQLSource, *AzureSQLSource, *AzureTableSource, *BinarySource, *BlobSource,
+// - *CassandraSource, *CommonDataServiceForAppsSource, *ConcurSource, *CopySource, *CosmosDbMongoDbAPISource, *CosmosDbSQLAPISource,
 // - *CouchbaseSource, *Db2Source, *DelimitedTextSource, *DocumentDbCollectionSource, *DrillSource, *DynamicsAXSource, *DynamicsCrmSource,
 // - *DynamicsSource, *EloquaSource, *FileSystemSource, *GoogleAdWordsSource, *GoogleBigQuerySource, *GreenplumSource, *HBaseSource,
-// - *HdfsSource, *HiveSource, *HttpSource, *HubspotSource, *ImpalaSource, *InformixSource, *JiraSource, *JsonSource, *MagentoSource,
-// - *MariaDBSource, *MarketoSource, *MicrosoftAccessSource, *MongoDbSource, *MongoDbV2Source, *MySqlSource, *NetezzaSource,
+// - *HTTPSource, *HdfsSource, *HiveSource, *HubspotSource, *ImpalaSource, *InformixSource, *JSONSource, *JiraSource, *MagentoSource,
+// - *MariaDBSource, *MarketoSource, *MicrosoftAccessSource, *MongoDbSource, *MongoDbV2Source, *MySQLSource, *NetezzaSource,
 // - *ODataSource, *OdbcSource, *Office365Source, *OracleServiceCloudSource, *OracleSource, *OrcSource, *ParquetSource, *PaypalSource,
-// - *PhoenixSource, *PostgreSqlSource, *PrestoSource, *QuickBooksSource, *RelationalSource, *ResponsysSource, *RestSource,
-// - *SalesforceMarketingCloudSource, *SalesforceServiceCloudSource, *SalesforceSource, *SapBwSource, *SapCloudForCustomerSource,
-// - *SapEccSource, *SapHanaSource, *SapOpenHubSource, *SapTableSource, *ServiceNowSource, *ShopifySource, *SparkSource, *SqlDWSource,
-// - *SqlMISource, *SqlServerSource, *SqlSource, *SquareSource, *SybaseSource, *TabularSource, *TeradataSource, *VerticaSource,
+// - *PhoenixSource, *PostgreSQLSource, *PrestoSource, *QuickBooksSource, *RelationalSource, *ResponsysSource, *RestSource,
+// - *SQLDWSource, *SQLMISource, *SQLServerSource, *SQLSource, *SalesforceMarketingCloudSource, *SalesforceServiceCloudSource,
+// - *SalesforceSource, *SapBwSource, *SapCloudForCustomerSource, *SapEccSource, *SapHanaSource, *SapOpenHubSource, *SapTableSource,
+// - *ServiceNowSource, *ShopifySource, *SparkSource, *SquareSource, *SybaseSource, *TabularSource, *TeradataSource, *VerticaSource,
 // - *WebSource, *XeroSource, *ZohoSource
 type CopySourceClassification interface {
 	// GetCopySource returns the CopySource content of the underlying type.
@@ -16794,21 +16794,21 @@ func (d DatabricksSparkPythonActivityTypeProperties) MarshalJSON() ([]byte, erro
 // Call the interface's GetDataset() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *AmazonMWSObjectDataset, *AmazonRedshiftTableDataset, *AvroDataset, *AzureDataExplorerTableDataset, *AzureMariaDBTableDataset,
-// - *AzureMySqlTableDataset, *AzurePostgreSqlTableDataset, *AzureSearchIndexDataset, *AzureSqlDWTableDataset, *AzureSqlMITableDataset,
-// - *AzureSqlTableDataset, *AzureTableDataset, *BinaryDataset, *CassandraTableDataset, *CommonDataServiceForAppsEntityDataset,
-// - *ConcurObjectDataset, *CosmosDbMongoDbApiCollectionDataset, *CosmosDbSqlApiCollectionDataset, *CouchbaseTableDataset,
+// - *AzureMySQLTableDataset, *AzurePostgreSQLTableDataset, *AzureSQLDWTableDataset, *AzureSQLMITableDataset, *AzureSQLTableDataset,
+// - *AzureSearchIndexDataset, *AzureTableDataset, *BinaryDataset, *CassandraTableDataset, *CommonDataServiceForAppsEntityDataset,
+// - *ConcurObjectDataset, *CosmosDbMongoDbAPICollectionDataset, *CosmosDbSQLAPICollectionDataset, *CouchbaseTableDataset,
 // - *CustomDataset, *Dataset, *Db2TableDataset, *DelimitedTextDataset, *DocumentDbCollectionDataset, *DrillTableDataset,
 // - *DynamicsAXResourceDataset, *DynamicsCrmEntityDataset, *DynamicsEntityDataset, *EloquaObjectDataset, *GoogleAdWordsObjectDataset,
 // - *GoogleBigQueryObjectDataset, *GreenplumTableDataset, *HBaseObjectDataset, *HiveObjectDataset, *HubspotObjectDataset,
-// - *ImpalaObjectDataset, *InformixTableDataset, *JiraObjectDataset, *JsonDataset, *MagentoObjectDataset, *MariaDBTableDataset,
-// - *MarketoObjectDataset, *MicrosoftAccessTableDataset, *MongoDbCollectionDataset, *MongoDbV2CollectionDataset, *MySqlTableDataset,
+// - *ImpalaObjectDataset, *InformixTableDataset, *JSONDataset, *JiraObjectDataset, *MagentoObjectDataset, *MariaDBTableDataset,
+// - *MarketoObjectDataset, *MicrosoftAccessTableDataset, *MongoDbCollectionDataset, *MongoDbV2CollectionDataset, *MySQLTableDataset,
 // - *NetezzaTableDataset, *ODataResourceDataset, *OdbcTableDataset, *Office365Dataset, *OracleServiceCloudObjectDataset,
-// - *OracleTableDataset, *OrcDataset, *ParquetDataset, *PaypalObjectDataset, *PhoenixObjectDataset, *PostgreSqlTableDataset,
+// - *OracleTableDataset, *OrcDataset, *ParquetDataset, *PaypalObjectDataset, *PhoenixObjectDataset, *PostgreSQLTableDataset,
 // - *PrestoObjectDataset, *QuickBooksObjectDataset, *RelationalTableDataset, *ResponsysObjectDataset, *RestResourceDataset,
-// - *SalesforceMarketingCloudObjectDataset, *SalesforceObjectDataset, *SalesforceServiceCloudObjectDataset, *SapBwCubeDataset,
-// - *SapCloudForCustomerResourceDataset, *SapEccResourceDataset, *SapHanaTableDataset, *SapOpenHubTableDataset, *SapTableResourceDataset,
-// - *ServiceNowObjectDataset, *ShopifyObjectDataset, *SparkObjectDataset, *SqlServerTableDataset, *SquareObjectDataset, *SybaseTableDataset,
-// - *TeradataTableDataset, *VerticaTableDataset, *WebTableDataset, *XeroObjectDataset, *ZohoObjectDataset
+// - *SQLServerTableDataset, *SalesforceMarketingCloudObjectDataset, *SalesforceObjectDataset, *SalesforceServiceCloudObjectDataset,
+// - *SapBwCubeDataset, *SapCloudForCustomerResourceDataset, *SapEccResourceDataset, *SapHanaTableDataset, *SapOpenHubTableDataset,
+// - *SapTableResourceDataset, *ServiceNowObjectDataset, *ShopifyObjectDataset, *SparkObjectDataset, *SquareObjectDataset,
+// - *SybaseTableDataset, *TeradataTableDataset, *VerticaTableDataset, *WebTableDataset, *XeroObjectDataset, *ZohoObjectDataset
 type DatasetClassification interface {
 	// GetDataset returns the Dataset content of the underlying type.
 	GetDataset() *Dataset
@@ -17279,7 +17279,7 @@ func (d DatasetListResponse) MarshalJSON() ([]byte, error) {
 // Call the interface's GetDatasetLocation() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *AmazonS3Location, *AzureBlobFSLocation, *AzureBlobStorageLocation, *AzureDataLakeStoreLocation, *AzureFileStorageLocation,
-// - *DatasetLocation, *FileServerLocation, *FtpServerLocation, *GoogleCloudStorageLocation, *HdfsLocation, *HttpServerLocation,
+// - *DatasetLocation, *FileServerLocation, *FtpServerLocation, *GoogleCloudStorageLocation, *HTTPServerLocation, *HdfsLocation,
 // - *SftpLocation
 type DatasetLocationClassification interface {
 	// GetDatasetLocation returns the DatasetLocation content of the underlying type.
@@ -17497,7 +17497,7 @@ func (d *DatasetSchemaDataElement) UnmarshalJSON(data []byte) error {
 // DatasetStorageFormatClassification provides polymorphic access to related types.
 // Call the interface's GetDatasetStorageFormat() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
-// - *AvroFormat, *DatasetStorageFormat, *JsonFormat, *OrcFormat, *ParquetFormat, *TextFormat
+// - *AvroFormat, *DatasetStorageFormat, *JSONFormat, *OrcFormat, *ParquetFormat, *TextFormat
 type DatasetStorageFormatClassification interface {
 	// GetDatasetStorageFormat returns the DatasetStorageFormat content of the underlying type.
 	GetDatasetStorageFormat() *DatasetStorageFormat
@@ -22036,7 +22036,7 @@ func (e ExecuteSSISPackageActivityTypeProperties) MarshalJSON() ([]byte, error) 
 // - *AzureMLUpdateResourceActivity, *CopyActivity, *CustomActivity, *DataLakeAnalyticsUSQLActivity, *DatabricksNotebookActivity,
 // - *DatabricksSparkJarActivity, *DatabricksSparkPythonActivity, *DeleteActivity, *ExecuteDataFlowActivity, *ExecuteSSISPackageActivity,
 // - *ExecutionActivity, *GetMetadataActivity, *HDInsightHiveActivity, *HDInsightMapReduceActivity, *HDInsightPigActivity,
-// - *HDInsightSparkActivity, *HDInsightStreamingActivity, *LookupActivity, *SqlServerStoredProcedureActivity, *SynapseNotebookActivity,
+// - *HDInsightSparkActivity, *HDInsightStreamingActivity, *LookupActivity, *SQLServerStoredProcedureActivity, *SynapseNotebookActivity,
 // - *SynapseSparkJobDefinitionActivity, *WebActivity
 type ExecutionActivityClassification interface {
 	ActivityClassification
@@ -23138,7 +23138,7 @@ func (f *FormatReadSettings) UnmarshalJSON(data []byte) error {
 // FormatWriteSettingsClassification provides polymorphic access to related types.
 // Call the interface's GetFormatWriteSettings() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
-// - *AvroWriteSettings, *DelimitedTextWriteSettings, *FormatWriteSettings, *JsonWriteSettings
+// - *AvroWriteSettings, *DelimitedTextWriteSettings, *FormatWriteSettings, *JSONWriteSettings
 type FormatWriteSettingsClassification interface {
 	// GetFormatWriteSettings returns the FormatWriteSettings content of the underlying type.
 	GetFormatWriteSettings() *FormatWriteSettings
@@ -32027,21 +32027,21 @@ func (l *LinkedIntegrationRuntimeType) GetLinkedIntegrationRuntimeType() *Linked
 // - *AmazonMWSLinkedService, *AmazonRedshiftLinkedService, *AmazonS3LinkedService, *AzureBatchLinkedService, *AzureBlobFSLinkedService,
 // - *AzureBlobStorageLinkedService, *AzureDataExplorerLinkedService, *AzureDataLakeAnalyticsLinkedService, *AzureDataLakeStoreLinkedService,
 // - *AzureDatabricksLinkedService, *AzureFileStorageLinkedService, *AzureFunctionLinkedService, *AzureKeyVaultLinkedService,
-// - *AzureMLLinkedService, *AzureMLServiceLinkedService, *AzureMariaDBLinkedService, *AzureMySqlLinkedService, *AzurePostgreSqlLinkedService,
-// - *AzureSearchLinkedService, *AzureSqlDWLinkedService, *AzureSqlDatabaseLinkedService, *AzureSqlMILinkedService, *AzureStorageLinkedService,
+// - *AzureMLLinkedService, *AzureMLServiceLinkedService, *AzureMariaDBLinkedService, *AzureMySQLLinkedService, *AzurePostgreSQLLinkedService,
+// - *AzureSQLDWLinkedService, *AzureSQLDatabaseLinkedService, *AzureSQLMILinkedService, *AzureSearchLinkedService, *AzureStorageLinkedService,
 // - *AzureTableStorageLinkedService, *CassandraLinkedService, *CommonDataServiceForAppsLinkedService, *ConcurLinkedService,
-// - *CosmosDbLinkedService, *CosmosDbMongoDbApiLinkedService, *CouchbaseLinkedService, *CustomDataSourceLinkedService, *Db2LinkedService,
+// - *CosmosDbLinkedService, *CosmosDbMongoDbAPILinkedService, *CouchbaseLinkedService, *CustomDataSourceLinkedService, *Db2LinkedService,
 // - *DrillLinkedService, *DynamicsAXLinkedService, *DynamicsCrmLinkedService, *DynamicsLinkedService, *EloquaLinkedService,
 // - *FileServerLinkedService, *FtpServerLinkedService, *GoogleAdWordsLinkedService, *GoogleBigQueryLinkedService, *GoogleCloudStorageLinkedService,
-// - *GreenplumLinkedService, *HBaseLinkedService, *HDInsightLinkedService, *HDInsightOnDemandLinkedService, *HdfsLinkedService,
-// - *HiveLinkedService, *HttpLinkedService, *HubspotLinkedService, *ImpalaLinkedService, *InformixLinkedService, *JiraLinkedService,
+// - *GreenplumLinkedService, *HBaseLinkedService, *HDInsightLinkedService, *HDInsightOnDemandLinkedService, *HTTPLinkedService,
+// - *HdfsLinkedService, *HiveLinkedService, *HubspotLinkedService, *ImpalaLinkedService, *InformixLinkedService, *JiraLinkedService,
 // - *LinkedService, *MagentoLinkedService, *MariaDBLinkedService, *MarketoLinkedService, *MicrosoftAccessLinkedService, *MongoDbLinkedService,
-// - *MongoDbV2LinkedService, *MySqlLinkedService, *NetezzaLinkedService, *ODataLinkedService, *OdbcLinkedService, *Office365LinkedService,
-// - *OracleLinkedService, *OracleServiceCloudLinkedService, *PaypalLinkedService, *PhoenixLinkedService, *PostgreSqlLinkedService,
-// - *PrestoLinkedService, *QuickBooksLinkedService, *ResponsysLinkedService, *RestServiceLinkedService, *SalesforceLinkedService,
-// - *SalesforceMarketingCloudLinkedService, *SalesforceServiceCloudLinkedService, *SapBWLinkedService, *SapCloudForCustomerLinkedService,
-// - *SapEccLinkedService, *SapHanaLinkedService, *SapOpenHubLinkedService, *SapTableLinkedService, *ServiceNowLinkedService,
-// - *SftpServerLinkedService, *ShopifyLinkedService, *SparkLinkedService, *SqlServerLinkedService, *SquareLinkedService,
+// - *MongoDbV2LinkedService, *MySQLLinkedService, *NetezzaLinkedService, *ODataLinkedService, *OdbcLinkedService, *Office365LinkedService,
+// - *OracleLinkedService, *OracleServiceCloudLinkedService, *PaypalLinkedService, *PhoenixLinkedService, *PostgreSQLLinkedService,
+// - *PrestoLinkedService, *QuickBooksLinkedService, *ResponsysLinkedService, *RestServiceLinkedService, *SQLServerLinkedService,
+// - *SalesforceLinkedService, *SalesforceMarketingCloudLinkedService, *SalesforceServiceCloudLinkedService, *SapBWLinkedService,
+// - *SapCloudForCustomerLinkedService, *SapEccLinkedService, *SapHanaLinkedService, *SapOpenHubLinkedService, *SapTableLinkedService,
+// - *ServiceNowLinkedService, *SftpServerLinkedService, *ShopifyLinkedService, *SparkLinkedService, *SquareLinkedService,
 // - *SybaseLinkedService, *TeradataLinkedService, *VerticaLinkedService, *WebLinkedService, *XeroLinkedService, *ZohoLinkedService
 type LinkedServiceClassification interface {
 	// GetLinkedService returns the LinkedService content of the underlying type.
@@ -53968,7 +53968,7 @@ type StartDataFlowDebugSessionResponse struct {
 // Call the interface's GetStoreReadSettings() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
 // - *AmazonS3ReadSettings, *AzureBlobFSReadSettings, *AzureBlobStorageReadSettings, *AzureDataLakeStoreReadSettings, *AzureFileStorageReadSettings,
-// - *FileServerReadSettings, *FtpReadSettings, *GoogleCloudStorageReadSettings, *HdfsReadSettings, *HttpReadSettings, *SftpReadSettings,
+// - *FileServerReadSettings, *FtpReadSettings, *GoogleCloudStorageReadSettings, *HTTPReadSettings, *HdfsReadSettings, *SftpReadSettings,
 // - *StoreReadSettings
 type StoreReadSettingsClassification interface {
 	// GetStoreReadSettings returns the StoreReadSettings content of the underlying type.
@@ -55053,14 +55053,14 @@ type SynapseSparkJobReference struct {
 // TabularSourceClassification provides polymorphic access to related types.
 // Call the interface's GetTabularSource() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
-// - *AmazonMWSSource, *AmazonRedshiftSource, *AzureMariaDBSource, *AzureMySqlSource, *AzurePostgreSqlSource, *AzureSqlSource,
+// - *AmazonMWSSource, *AmazonRedshiftSource, *AzureMariaDBSource, *AzureMySQLSource, *AzurePostgreSQLSource, *AzureSQLSource,
 // - *AzureTableSource, *CassandraSource, *ConcurSource, *CouchbaseSource, *Db2Source, *DrillSource, *DynamicsAXSource, *EloquaSource,
 // - *GoogleAdWordsSource, *GoogleBigQuerySource, *GreenplumSource, *HBaseSource, *HiveSource, *HubspotSource, *ImpalaSource,
-// - *InformixSource, *JiraSource, *MagentoSource, *MariaDBSource, *MarketoSource, *MySqlSource, *NetezzaSource, *OdbcSource,
-// - *OracleServiceCloudSource, *PaypalSource, *PhoenixSource, *PostgreSqlSource, *PrestoSource, *QuickBooksSource, *ResponsysSource,
-// - *SalesforceMarketingCloudSource, *SalesforceSource, *SapBwSource, *SapCloudForCustomerSource, *SapEccSource, *SapHanaSource,
-// - *SapOpenHubSource, *SapTableSource, *ServiceNowSource, *ShopifySource, *SparkSource, *SqlDWSource, *SqlMISource, *SqlServerSource,
-// - *SqlSource, *SquareSource, *SybaseSource, *TabularSource, *TeradataSource, *VerticaSource, *XeroSource, *ZohoSource
+// - *InformixSource, *JiraSource, *MagentoSource, *MariaDBSource, *MarketoSource, *MySQLSource, *NetezzaSource, *OdbcSource,
+// - *OracleServiceCloudSource, *PaypalSource, *PhoenixSource, *PostgreSQLSource, *PrestoSource, *QuickBooksSource, *ResponsysSource,
+// - *SQLDWSource, *SQLMISource, *SQLServerSource, *SQLSource, *SalesforceMarketingCloudSource, *SalesforceSource, *SapBwSource,
+// - *SapCloudForCustomerSource, *SapEccSource, *SapHanaSource, *SapOpenHubSource, *SapTableSource, *ServiceNowSource, *ShopifySource,
+// - *SparkSource, *SquareSource, *SybaseSource, *TabularSource, *TeradataSource, *VerticaSource, *XeroSource, *ZohoSource
 type TabularSourceClassification interface {
 	CopySourceClassification
 	// GetTabularSource returns the TabularSource content of the underlying type.

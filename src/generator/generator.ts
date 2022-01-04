@@ -30,7 +30,7 @@ async function getModuleVersion(session: Session<CodeModel>): Promise<string> {
 
 // The generator emits Go source code files to disk.
 export async function protocolGen(host: AutorestExtensionHost) {
-  const debug = await host.GetValue('debug') || false;
+  const debug = await host.getValue('debug') || false;
 
   try {
     // get the code model from the core
@@ -58,7 +58,7 @@ export async function protocolGen(host: AutorestExtensionHost) {
       // insert a _ before Client, i.e. Foo_Client
       // if the name isn't simply Client.
       if (fileName !== 'client') {
-        fileName = fileName.substr(0, fileName.length-6) + '_client';
+        fileName = fileName.substring(0, fileName.length-6) + '_client';
       }
       host.writeFile({
         filename: `${filePrefix}${fileName}.go`,
