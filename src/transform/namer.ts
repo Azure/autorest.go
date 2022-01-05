@@ -45,7 +45,7 @@ export class protocolMethods implements protocolNaming {
 function packageNameFromOutputFolder(folder: string): string {
   for (let i = folder.length - 1; i > -1; --i) {
     if (folder[i] === '/' || folder[i] === '\\') {
-      return folder.substr(i + 1);
+      return folder.substring(i + 1);
     }
   }
   // no path separator
@@ -73,9 +73,9 @@ export async function namer(session: Session<CodeModel>) {
   let stutteringPrefix = <string>model.language.go!.packageName;
   // if there's a well-known prefix, remove it
   if (stutteringPrefix.startsWith('arm')) {
-    stutteringPrefix = stutteringPrefix.substr(3);
+    stutteringPrefix = stutteringPrefix.substring(3);
   } else if (stutteringPrefix.startsWith('az')) {
-    stutteringPrefix = stutteringPrefix.substr(2);
+    stutteringPrefix = stutteringPrefix.substring(2);
   }
   // use the user-specified value if available
   stutteringPrefix = await session.getValue<string>('stutter', stutteringPrefix);
@@ -92,10 +92,27 @@ export async function namer(session: Session<CodeModel>) {
   const groupParameters = await session.getValue('group-parameters', true);
   model.language.go!.groupParameters = groupParameters;
 
-  // pascal-case and capitzalize acronym names of objects and their fields
+  // fix up type names
+  const structNames = new Set<string>();
+  for (const obj of values(model.schemas.objects)) {
+    obj.language.go!.name = ensureNameCase(obj.language.go!.name);
+    structNames.add(obj.language.go!.name);
+  }
+
+  // fix stuttering type names
   for (const obj of values(model.schemas.objects)) {
     const details = <Language>obj.language.go;
-    details.name = trimPackagePrefix(stutteringPrefix, ensureNameCase(details.name));
+    const originalName = details.name;
+    details.name = trimPackagePrefix(stutteringPrefix, originalName);
+    // if the type was renamed to remove stuttering, check if it collides with an existing type name
+    if (details.name !== originalName && structNames.has(details.name)) {
+      throw new Error(`type ${originalName} was renamed to ${details.name} which collides with an existing type name`);
+    }
+  }
+
+  // fix property names and other bits
+  for (const obj of values(model.schemas.objects)) {
+    const details = <Language>obj.language.go;
     if (obj.discriminator) {
       // if this is a discriminator add the interface name
       details.discriminatorInterface = createPolymorphicInterfaceName(details.name);
@@ -117,15 +134,27 @@ export async function namer(session: Session<CodeModel>) {
     }
   }
 
+  // fix up operation group names
+  const groupNames = new Set<string>();
+  for (const group of values(model.operationGroups)) {
+    if (group.language.go!.name.length > 0) {
+      group.language.go!.name = ensureNameCase(group.language.go!.name);
+      groupNames.add(group.language.go!.name);
+    }
+  }
+
+  const fallbackGroupName = ensureNameCase(session.model.info.title);
   const exportClient = session.model.language.go!.openApiType === 'arm' || exportClients;
-  // pascal-case and capitzalize acronym operation groups and their operations
+  // fix up empty operation group names and operations
   for (const group of values(model.operationGroups)) {
     const groupDetails = <Language>group.language.go;
     // use the swagger title as the default name for operation groups that don't specify a group name
     if (groupDetails.name.length === 0) {
-      groupDetails.name = session.model.info.title;
+      if (groupNames.has(fallbackGroupName)) {
+        throw new Error(`the fallback operation group name ${fallbackGroupName} collides with an existing group name`);
+      }
+      groupDetails.name = fallbackGroupName;
     }
-    groupDetails.name = ensureNameCase(groupDetails.name);
     groupDetails.clientName = groupDetails.name;
     // don't generate a name like FooClientClient
     if (!groupDetails.clientName.endsWith('Client')) {
@@ -297,7 +326,7 @@ function trimPackagePrefix(pkg: string, val: string): string {
   }
 
   // pkg is already upper-case
-  if (pkg !== val.substr(0, pkg.length).toUpperCase()) {
+  if (pkg !== val.substring(0, pkg.length).toUpperCase()) {
     return val;
   }
 
@@ -308,5 +337,5 @@ function trimPackagePrefix(pkg: string, val: string): string {
   if (val.charAt(pkg.length) !== val.charAt(pkg.length).toUpperCase()) {
     return val;
   }
-  return val.substr(pkg.length);
+  return val.substring(pkg.length);
 }

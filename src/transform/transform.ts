@@ -14,7 +14,7 @@ import { Converter } from 'showdown';
 
 // The transformer adds Go-specific information to the code model.
 export async function transform(host: AutorestExtensionHost) {
-  const debug = await host.GetValue('debug') || false;
+  const debug = await host.getValue('debug') || false;
 
   try {
     const session = await startSession<CodeModel>(host, codeModelSchema);

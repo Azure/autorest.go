@@ -249,14 +249,14 @@ export function formatParamValue(param: Parameter, imports: ImportManager): stri
     case SchemaType.Date:
       if (param.required !== true && paramName[0] === '*') {
         // remove the dereference
-        paramName = paramName.substr(1);
+        paramName = paramName.substring(1);
       }
       return `${paramName}.Format("${dateFormat}")`;
     case SchemaType.DateTime:
       imports.add('time');
       if (param.required !== true && paramName[0] === '*') {
         // remove the dereference
-        paramName = paramName.substr(1);
+        paramName = paramName.substring(1);
       }
       let format = datetimeRFC3339Format;
       const dateTime = <DateTimeSchema>param.schema;

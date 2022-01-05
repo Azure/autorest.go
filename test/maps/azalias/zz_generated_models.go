@@ -137,7 +137,7 @@ type GeoJSONFeatureData struct {
 // GeoJSONObjectClassification provides polymorphic access to related types.
 // Call the interface's GetGeoJSONObject() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
-// - *GeoJSONObject, *GeoJsonFeature
+// - *GeoJSONFeature, *GeoJSONObject
 type GeoJSONObjectClassification interface {
 	// GetGeoJSONObject returns the GeoJSONObject content of the underlying type.
 	GetGeoJSONObject() *GeoJSONObject
