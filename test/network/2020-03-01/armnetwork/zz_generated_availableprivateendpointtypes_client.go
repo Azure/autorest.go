@@ -54,22 +54,22 @@ func NewAvailablePrivateEndpointTypesClient(subscriptionID string, credential az
 // List - Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
 // If the operation fails it returns the *CloudError error type.
 // location - The location of the domain name.
-// options - AvailablePrivateEndpointTypesListOptions contains the optional parameters for the AvailablePrivateEndpointTypesClient.List
+// options - AvailablePrivateEndpointTypesClientListOptions contains the optional parameters for the AvailablePrivateEndpointTypesClient.List
 // method.
-func (client *AvailablePrivateEndpointTypesClient) List(location string, options *AvailablePrivateEndpointTypesListOptions) *AvailablePrivateEndpointTypesListPager {
-	return &AvailablePrivateEndpointTypesListPager{
+func (client *AvailablePrivateEndpointTypesClient) List(location string, options *AvailablePrivateEndpointTypesClientListOptions) *AvailablePrivateEndpointTypesClientListPager {
+	return &AvailablePrivateEndpointTypesClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, location, options)
 		},
-		advancer: func(ctx context.Context, resp AvailablePrivateEndpointTypesListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp AvailablePrivateEndpointTypesClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.AvailablePrivateEndpointTypesResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *AvailablePrivateEndpointTypesClient) listCreateRequest(ctx context.Context, location string, options *AvailablePrivateEndpointTypesListOptions) (*policy.Request, error) {
+func (client *AvailablePrivateEndpointTypesClient) listCreateRequest(ctx context.Context, location string, options *AvailablePrivateEndpointTypesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -91,10 +91,10 @@ func (client *AvailablePrivateEndpointTypesClient) listCreateRequest(ctx context
 }
 
 // listHandleResponse handles the List response.
-func (client *AvailablePrivateEndpointTypesClient) listHandleResponse(resp *http.Response) (AvailablePrivateEndpointTypesListResponse, error) {
-	result := AvailablePrivateEndpointTypesListResponse{RawResponse: resp}
+func (client *AvailablePrivateEndpointTypesClient) listHandleResponse(resp *http.Response) (AvailablePrivateEndpointTypesClientListResponse, error) {
+	result := AvailablePrivateEndpointTypesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailablePrivateEndpointTypesResult); err != nil {
-		return AvailablePrivateEndpointTypesListResponse{}, runtime.NewResponseError(err, resp)
+		return AvailablePrivateEndpointTypesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -117,22 +117,22 @@ func (client *AvailablePrivateEndpointTypesClient) listHandleError(resp *http.Re
 // If the operation fails it returns the *CloudError error type.
 // location - The location of the domain name.
 // resourceGroupName - The name of the resource group.
-// options - AvailablePrivateEndpointTypesListByResourceGroupOptions contains the optional parameters for the AvailablePrivateEndpointTypesClient.ListByResourceGroup
+// options - AvailablePrivateEndpointTypesClientListByResourceGroupOptions contains the optional parameters for the AvailablePrivateEndpointTypesClient.ListByResourceGroup
 // method.
-func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroup(location string, resourceGroupName string, options *AvailablePrivateEndpointTypesListByResourceGroupOptions) *AvailablePrivateEndpointTypesListByResourceGroupPager {
-	return &AvailablePrivateEndpointTypesListByResourceGroupPager{
+func (client *AvailablePrivateEndpointTypesClient) ListByResourceGroup(location string, resourceGroupName string, options *AvailablePrivateEndpointTypesClientListByResourceGroupOptions) *AvailablePrivateEndpointTypesClientListByResourceGroupPager {
+	return &AvailablePrivateEndpointTypesClientListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, location, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp AvailablePrivateEndpointTypesListByResourceGroupResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp AvailablePrivateEndpointTypesClientListByResourceGroupResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.AvailablePrivateEndpointTypesResult.NextLink)
 		},
 	}
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *AvailablePrivateEndpointTypesClient) listByResourceGroupCreateRequest(ctx context.Context, location string, resourceGroupName string, options *AvailablePrivateEndpointTypesListByResourceGroupOptions) (*policy.Request, error) {
+func (client *AvailablePrivateEndpointTypesClient) listByResourceGroupCreateRequest(ctx context.Context, location string, resourceGroupName string, options *AvailablePrivateEndpointTypesClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -158,10 +158,10 @@ func (client *AvailablePrivateEndpointTypesClient) listByResourceGroupCreateRequ
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *AvailablePrivateEndpointTypesClient) listByResourceGroupHandleResponse(resp *http.Response) (AvailablePrivateEndpointTypesListByResourceGroupResponse, error) {
-	result := AvailablePrivateEndpointTypesListByResourceGroupResponse{RawResponse: resp}
+func (client *AvailablePrivateEndpointTypesClient) listByResourceGroupHandleResponse(resp *http.Response) (AvailablePrivateEndpointTypesClientListByResourceGroupResponse, error) {
+	result := AvailablePrivateEndpointTypesClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailablePrivateEndpointTypesResult); err != nil {
-		return AvailablePrivateEndpointTypesListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return AvailablePrivateEndpointTypesClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

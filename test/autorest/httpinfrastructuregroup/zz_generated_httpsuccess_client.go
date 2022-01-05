@@ -38,24 +38,24 @@ func NewHTTPSuccessClient(options *azcore.ClientOptions) *HTTPSuccessClient {
 
 // Delete200 - Delete simple boolean value true returns 200
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessDelete200Options contains the optional parameters for the HTTPSuccessClient.Delete200 method.
-func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuccessDelete200Options) (HTTPSuccessDelete200Response, error) {
+// options - HTTPSuccessClientDelete200Options contains the optional parameters for the HTTPSuccessClient.Delete200 method.
+func (client *HTTPSuccessClient) Delete200(ctx context.Context, options *HTTPSuccessClientDelete200Options) (HTTPSuccessClientDelete200Response, error) {
 	req, err := client.delete200CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessDelete200Response{}, err
+		return HTTPSuccessClientDelete200Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessDelete200Response{}, err
+		return HTTPSuccessClientDelete200Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessDelete200Response{}, client.delete200HandleError(resp)
+		return HTTPSuccessClientDelete200Response{}, client.delete200HandleError(resp)
 	}
-	return HTTPSuccessDelete200Response{RawResponse: resp}, nil
+	return HTTPSuccessClientDelete200Response{RawResponse: resp}, nil
 }
 
 // delete200CreateRequest creates the Delete200 request.
-func (client *HTTPSuccessClient) delete200CreateRequest(ctx context.Context, options *HTTPSuccessDelete200Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) delete200CreateRequest(ctx context.Context, options *HTTPSuccessClientDelete200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -80,24 +80,24 @@ func (client *HTTPSuccessClient) delete200HandleError(resp *http.Response) error
 
 // Delete202 - Delete true Boolean value in request returns 202 (accepted)
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessDelete202Options contains the optional parameters for the HTTPSuccessClient.Delete202 method.
-func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuccessDelete202Options) (HTTPSuccessDelete202Response, error) {
+// options - HTTPSuccessClientDelete202Options contains the optional parameters for the HTTPSuccessClient.Delete202 method.
+func (client *HTTPSuccessClient) Delete202(ctx context.Context, options *HTTPSuccessClientDelete202Options) (HTTPSuccessClientDelete202Response, error) {
 	req, err := client.delete202CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessDelete202Response{}, err
+		return HTTPSuccessClientDelete202Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessDelete202Response{}, err
+		return HTTPSuccessClientDelete202Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return HTTPSuccessDelete202Response{}, client.delete202HandleError(resp)
+		return HTTPSuccessClientDelete202Response{}, client.delete202HandleError(resp)
 	}
-	return HTTPSuccessDelete202Response{RawResponse: resp}, nil
+	return HTTPSuccessClientDelete202Response{RawResponse: resp}, nil
 }
 
 // delete202CreateRequest creates the Delete202 request.
-func (client *HTTPSuccessClient) delete202CreateRequest(ctx context.Context, options *HTTPSuccessDelete202Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) delete202CreateRequest(ctx context.Context, options *HTTPSuccessClientDelete202Options) (*policy.Request, error) {
 	urlPath := "/http/success/202"
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -122,24 +122,24 @@ func (client *HTTPSuccessClient) delete202HandleError(resp *http.Response) error
 
 // Delete204 - Delete true Boolean value in request returns 204 (no content)
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessDelete204Options contains the optional parameters for the HTTPSuccessClient.Delete204 method.
-func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuccessDelete204Options) (HTTPSuccessDelete204Response, error) {
+// options - HTTPSuccessClientDelete204Options contains the optional parameters for the HTTPSuccessClient.Delete204 method.
+func (client *HTTPSuccessClient) Delete204(ctx context.Context, options *HTTPSuccessClientDelete204Options) (HTTPSuccessClientDelete204Response, error) {
 	req, err := client.delete204CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessDelete204Response{}, err
+		return HTTPSuccessClientDelete204Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessDelete204Response{}, err
+		return HTTPSuccessClientDelete204Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return HTTPSuccessDelete204Response{}, client.delete204HandleError(resp)
+		return HTTPSuccessClientDelete204Response{}, client.delete204HandleError(resp)
 	}
-	return HTTPSuccessDelete204Response{RawResponse: resp}, nil
+	return HTTPSuccessClientDelete204Response{RawResponse: resp}, nil
 }
 
 // delete204CreateRequest creates the Delete204 request.
-func (client *HTTPSuccessClient) delete204CreateRequest(ctx context.Context, options *HTTPSuccessDelete204Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) delete204CreateRequest(ctx context.Context, options *HTTPSuccessClientDelete204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -164,24 +164,24 @@ func (client *HTTPSuccessClient) delete204HandleError(resp *http.Response) error
 
 // Get200 - Get 200 success
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessGet200Options contains the optional parameters for the HTTPSuccessClient.Get200 method.
-func (client *HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSuccessGet200Options) (HTTPSuccessGet200Response, error) {
+// options - HTTPSuccessClientGet200Options contains the optional parameters for the HTTPSuccessClient.Get200 method.
+func (client *HTTPSuccessClient) Get200(ctx context.Context, options *HTTPSuccessClientGet200Options) (HTTPSuccessClientGet200Response, error) {
 	req, err := client.get200CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessGet200Response{}, err
+		return HTTPSuccessClientGet200Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessGet200Response{}, err
+		return HTTPSuccessClientGet200Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessGet200Response{}, client.get200HandleError(resp)
+		return HTTPSuccessClientGet200Response{}, client.get200HandleError(resp)
 	}
 	return client.get200HandleResponse(resp)
 }
 
 // get200CreateRequest creates the Get200 request.
-func (client *HTTPSuccessClient) get200CreateRequest(ctx context.Context, options *HTTPSuccessGet200Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) get200CreateRequest(ctx context.Context, options *HTTPSuccessClientGet200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -192,10 +192,10 @@ func (client *HTTPSuccessClient) get200CreateRequest(ctx context.Context, option
 }
 
 // get200HandleResponse handles the Get200 response.
-func (client *HTTPSuccessClient) get200HandleResponse(resp *http.Response) (HTTPSuccessGet200Response, error) {
-	result := HTTPSuccessGet200Response{RawResponse: resp}
+func (client *HTTPSuccessClient) get200HandleResponse(resp *http.Response) (HTTPSuccessClientGet200Response, error) {
+	result := HTTPSuccessClientGet200Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return HTTPSuccessGet200Response{}, runtime.NewResponseError(err, resp)
+		return HTTPSuccessClientGet200Response{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -215,17 +215,17 @@ func (client *HTTPSuccessClient) get200HandleError(resp *http.Response) error {
 
 // Head200 - Return 200 status code if successful
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessHead200Options contains the optional parameters for the HTTPSuccessClient.Head200 method.
-func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessHead200Options) (HTTPSuccessHead200Response, error) {
+// options - HTTPSuccessClientHead200Options contains the optional parameters for the HTTPSuccessClient.Head200 method.
+func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSuccessClientHead200Options) (HTTPSuccessClientHead200Response, error) {
 	req, err := client.head200CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessHead200Response{}, err
+		return HTTPSuccessClientHead200Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessHead200Response{}, err
+		return HTTPSuccessClientHead200Response{}, err
 	}
-	result := HTTPSuccessHead200Response{RawResponse: resp}
+	result := HTTPSuccessClientHead200Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -233,7 +233,7 @@ func (client *HTTPSuccessClient) Head200(ctx context.Context, options *HTTPSucce
 }
 
 // head200CreateRequest creates the Head200 request.
-func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, options *HTTPSuccessHead200Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, options *HTTPSuccessClientHead200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -245,17 +245,17 @@ func (client *HTTPSuccessClient) head200CreateRequest(ctx context.Context, optio
 
 // Head204 - Return 204 status code if successful
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessHead204Options contains the optional parameters for the HTTPSuccessClient.Head204 method.
-func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessHead204Options) (HTTPSuccessHead204Response, error) {
+// options - HTTPSuccessClientHead204Options contains the optional parameters for the HTTPSuccessClient.Head204 method.
+func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSuccessClientHead204Options) (HTTPSuccessClientHead204Response, error) {
 	req, err := client.head204CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessHead204Response{}, err
+		return HTTPSuccessClientHead204Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessHead204Response{}, err
+		return HTTPSuccessClientHead204Response{}, err
 	}
-	result := HTTPSuccessHead204Response{RawResponse: resp}
+	result := HTTPSuccessClientHead204Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -263,7 +263,7 @@ func (client *HTTPSuccessClient) Head204(ctx context.Context, options *HTTPSucce
 }
 
 // head204CreateRequest creates the Head204 request.
-func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, options *HTTPSuccessHead204Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, options *HTTPSuccessClientHead204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -275,17 +275,17 @@ func (client *HTTPSuccessClient) head204CreateRequest(ctx context.Context, optio
 
 // Head404 - Return 404 status code
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessHead404Options contains the optional parameters for the HTTPSuccessClient.Head404 method.
-func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessHead404Options) (HTTPSuccessHead404Response, error) {
+// options - HTTPSuccessClientHead404Options contains the optional parameters for the HTTPSuccessClient.Head404 method.
+func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSuccessClientHead404Options) (HTTPSuccessClientHead404Response, error) {
 	req, err := client.head404CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessHead404Response{}, err
+		return HTTPSuccessClientHead404Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessHead404Response{}, err
+		return HTTPSuccessClientHead404Response{}, err
 	}
-	result := HTTPSuccessHead404Response{RawResponse: resp}
+	result := HTTPSuccessClientHead404Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -293,7 +293,7 @@ func (client *HTTPSuccessClient) Head404(ctx context.Context, options *HTTPSucce
 }
 
 // head404CreateRequest creates the Head404 request.
-func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, options *HTTPSuccessHead404Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, options *HTTPSuccessClientHead404Options) (*policy.Request, error) {
 	urlPath := "/http/success/404"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -305,24 +305,24 @@ func (client *HTTPSuccessClient) head404CreateRequest(ctx context.Context, optio
 
 // Options200 - Options 200 success
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessOptions200Options contains the optional parameters for the HTTPSuccessClient.Options200 method.
-func (client *HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSuccessOptions200Options) (HTTPSuccessOptions200Response, error) {
+// options - HTTPSuccessClientOptions200Options contains the optional parameters for the HTTPSuccessClient.Options200 method.
+func (client *HTTPSuccessClient) Options200(ctx context.Context, options *HTTPSuccessClientOptions200Options) (HTTPSuccessClientOptions200Response, error) {
 	req, err := client.options200CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessOptions200Response{}, err
+		return HTTPSuccessClientOptions200Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessOptions200Response{}, err
+		return HTTPSuccessClientOptions200Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessOptions200Response{}, client.options200HandleError(resp)
+		return HTTPSuccessClientOptions200Response{}, client.options200HandleError(resp)
 	}
 	return client.options200HandleResponse(resp)
 }
 
 // options200CreateRequest creates the Options200 request.
-func (client *HTTPSuccessClient) options200CreateRequest(ctx context.Context, options *HTTPSuccessOptions200Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) options200CreateRequest(ctx context.Context, options *HTTPSuccessClientOptions200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
 	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -333,10 +333,10 @@ func (client *HTTPSuccessClient) options200CreateRequest(ctx context.Context, op
 }
 
 // options200HandleResponse handles the Options200 response.
-func (client *HTTPSuccessClient) options200HandleResponse(resp *http.Response) (HTTPSuccessOptions200Response, error) {
-	result := HTTPSuccessOptions200Response{RawResponse: resp}
+func (client *HTTPSuccessClient) options200HandleResponse(resp *http.Response) (HTTPSuccessClientOptions200Response, error) {
+	result := HTTPSuccessClientOptions200Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return HTTPSuccessOptions200Response{}, runtime.NewResponseError(err, resp)
+		return HTTPSuccessClientOptions200Response{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -356,24 +356,24 @@ func (client *HTTPSuccessClient) options200HandleError(resp *http.Response) erro
 
 // Patch200 - Patch true Boolean value in request returning 200
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPatch200Options contains the optional parameters for the HTTPSuccessClient.Patch200 method.
-func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSuccessPatch200Options) (HTTPSuccessPatch200Response, error) {
+// options - HTTPSuccessClientPatch200Options contains the optional parameters for the HTTPSuccessClient.Patch200 method.
+func (client *HTTPSuccessClient) Patch200(ctx context.Context, options *HTTPSuccessClientPatch200Options) (HTTPSuccessClientPatch200Response, error) {
 	req, err := client.patch200CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessPatch200Response{}, err
+		return HTTPSuccessClientPatch200Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessPatch200Response{}, err
+		return HTTPSuccessClientPatch200Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessPatch200Response{}, client.patch200HandleError(resp)
+		return HTTPSuccessClientPatch200Response{}, client.patch200HandleError(resp)
 	}
-	return HTTPSuccessPatch200Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPatch200Response{RawResponse: resp}, nil
 }
 
 // patch200CreateRequest creates the Patch200 request.
-func (client *HTTPSuccessClient) patch200CreateRequest(ctx context.Context, options *HTTPSuccessPatch200Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) patch200CreateRequest(ctx context.Context, options *HTTPSuccessClientPatch200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -398,24 +398,24 @@ func (client *HTTPSuccessClient) patch200HandleError(resp *http.Response) error 
 
 // Patch202 - Patch true Boolean value in request returns 202
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPatch202Options contains the optional parameters for the HTTPSuccessClient.Patch202 method.
-func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSuccessPatch202Options) (HTTPSuccessPatch202Response, error) {
+// options - HTTPSuccessClientPatch202Options contains the optional parameters for the HTTPSuccessClient.Patch202 method.
+func (client *HTTPSuccessClient) Patch202(ctx context.Context, options *HTTPSuccessClientPatch202Options) (HTTPSuccessClientPatch202Response, error) {
 	req, err := client.patch202CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessPatch202Response{}, err
+		return HTTPSuccessClientPatch202Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessPatch202Response{}, err
+		return HTTPSuccessClientPatch202Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return HTTPSuccessPatch202Response{}, client.patch202HandleError(resp)
+		return HTTPSuccessClientPatch202Response{}, client.patch202HandleError(resp)
 	}
-	return HTTPSuccessPatch202Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPatch202Response{RawResponse: resp}, nil
 }
 
 // patch202CreateRequest creates the Patch202 request.
-func (client *HTTPSuccessClient) patch202CreateRequest(ctx context.Context, options *HTTPSuccessPatch202Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) patch202CreateRequest(ctx context.Context, options *HTTPSuccessClientPatch202Options) (*policy.Request, error) {
 	urlPath := "/http/success/202"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -440,24 +440,24 @@ func (client *HTTPSuccessClient) patch202HandleError(resp *http.Response) error 
 
 // Patch204 - Patch true Boolean value in request returns 204 (no content)
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPatch204Options contains the optional parameters for the HTTPSuccessClient.Patch204 method.
-func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSuccessPatch204Options) (HTTPSuccessPatch204Response, error) {
+// options - HTTPSuccessClientPatch204Options contains the optional parameters for the HTTPSuccessClient.Patch204 method.
+func (client *HTTPSuccessClient) Patch204(ctx context.Context, options *HTTPSuccessClientPatch204Options) (HTTPSuccessClientPatch204Response, error) {
 	req, err := client.patch204CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessPatch204Response{}, err
+		return HTTPSuccessClientPatch204Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessPatch204Response{}, err
+		return HTTPSuccessClientPatch204Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return HTTPSuccessPatch204Response{}, client.patch204HandleError(resp)
+		return HTTPSuccessClientPatch204Response{}, client.patch204HandleError(resp)
 	}
-	return HTTPSuccessPatch204Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPatch204Response{RawResponse: resp}, nil
 }
 
 // patch204CreateRequest creates the Patch204 request.
-func (client *HTTPSuccessClient) patch204CreateRequest(ctx context.Context, options *HTTPSuccessPatch204Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) patch204CreateRequest(ctx context.Context, options *HTTPSuccessClientPatch204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -482,24 +482,24 @@ func (client *HTTPSuccessClient) patch204HandleError(resp *http.Response) error 
 
 // Post200 - Post bollean value true in request that returns a 200
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPost200Options contains the optional parameters for the HTTPSuccessClient.Post200 method.
-func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSuccessPost200Options) (HTTPSuccessPost200Response, error) {
+// options - HTTPSuccessClientPost200Options contains the optional parameters for the HTTPSuccessClient.Post200 method.
+func (client *HTTPSuccessClient) Post200(ctx context.Context, options *HTTPSuccessClientPost200Options) (HTTPSuccessClientPost200Response, error) {
 	req, err := client.post200CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessPost200Response{}, err
+		return HTTPSuccessClientPost200Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessPost200Response{}, err
+		return HTTPSuccessClientPost200Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessPost200Response{}, client.post200HandleError(resp)
+		return HTTPSuccessClientPost200Response{}, client.post200HandleError(resp)
 	}
-	return HTTPSuccessPost200Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPost200Response{RawResponse: resp}, nil
 }
 
 // post200CreateRequest creates the Post200 request.
-func (client *HTTPSuccessClient) post200CreateRequest(ctx context.Context, options *HTTPSuccessPost200Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) post200CreateRequest(ctx context.Context, options *HTTPSuccessClientPost200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -524,24 +524,24 @@ func (client *HTTPSuccessClient) post200HandleError(resp *http.Response) error {
 
 // Post201 - Post true Boolean value in request returns 201 (Created)
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPost201Options contains the optional parameters for the HTTPSuccessClient.Post201 method.
-func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSuccessPost201Options) (HTTPSuccessPost201Response, error) {
+// options - HTTPSuccessClientPost201Options contains the optional parameters for the HTTPSuccessClient.Post201 method.
+func (client *HTTPSuccessClient) Post201(ctx context.Context, options *HTTPSuccessClientPost201Options) (HTTPSuccessClientPost201Response, error) {
 	req, err := client.post201CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessPost201Response{}, err
+		return HTTPSuccessClientPost201Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessPost201Response{}, err
+		return HTTPSuccessClientPost201Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return HTTPSuccessPost201Response{}, client.post201HandleError(resp)
+		return HTTPSuccessClientPost201Response{}, client.post201HandleError(resp)
 	}
-	return HTTPSuccessPost201Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPost201Response{RawResponse: resp}, nil
 }
 
 // post201CreateRequest creates the Post201 request.
-func (client *HTTPSuccessClient) post201CreateRequest(ctx context.Context, options *HTTPSuccessPost201Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) post201CreateRequest(ctx context.Context, options *HTTPSuccessClientPost201Options) (*policy.Request, error) {
 	urlPath := "/http/success/201"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -566,24 +566,24 @@ func (client *HTTPSuccessClient) post201HandleError(resp *http.Response) error {
 
 // Post202 - Post true Boolean value in request returns 202 (Accepted)
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPost202Options contains the optional parameters for the HTTPSuccessClient.Post202 method.
-func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSuccessPost202Options) (HTTPSuccessPost202Response, error) {
+// options - HTTPSuccessClientPost202Options contains the optional parameters for the HTTPSuccessClient.Post202 method.
+func (client *HTTPSuccessClient) Post202(ctx context.Context, options *HTTPSuccessClientPost202Options) (HTTPSuccessClientPost202Response, error) {
 	req, err := client.post202CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessPost202Response{}, err
+		return HTTPSuccessClientPost202Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessPost202Response{}, err
+		return HTTPSuccessClientPost202Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return HTTPSuccessPost202Response{}, client.post202HandleError(resp)
+		return HTTPSuccessClientPost202Response{}, client.post202HandleError(resp)
 	}
-	return HTTPSuccessPost202Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPost202Response{RawResponse: resp}, nil
 }
 
 // post202CreateRequest creates the Post202 request.
-func (client *HTTPSuccessClient) post202CreateRequest(ctx context.Context, options *HTTPSuccessPost202Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) post202CreateRequest(ctx context.Context, options *HTTPSuccessClientPost202Options) (*policy.Request, error) {
 	urlPath := "/http/success/202"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -608,24 +608,24 @@ func (client *HTTPSuccessClient) post202HandleError(resp *http.Response) error {
 
 // Post204 - Post true Boolean value in request returns 204 (no content)
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPost204Options contains the optional parameters for the HTTPSuccessClient.Post204 method.
-func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSuccessPost204Options) (HTTPSuccessPost204Response, error) {
+// options - HTTPSuccessClientPost204Options contains the optional parameters for the HTTPSuccessClient.Post204 method.
+func (client *HTTPSuccessClient) Post204(ctx context.Context, options *HTTPSuccessClientPost204Options) (HTTPSuccessClientPost204Response, error) {
 	req, err := client.post204CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessPost204Response{}, err
+		return HTTPSuccessClientPost204Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessPost204Response{}, err
+		return HTTPSuccessClientPost204Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return HTTPSuccessPost204Response{}, client.post204HandleError(resp)
+		return HTTPSuccessClientPost204Response{}, client.post204HandleError(resp)
 	}
-	return HTTPSuccessPost204Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPost204Response{RawResponse: resp}, nil
 }
 
 // post204CreateRequest creates the Post204 request.
-func (client *HTTPSuccessClient) post204CreateRequest(ctx context.Context, options *HTTPSuccessPost204Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) post204CreateRequest(ctx context.Context, options *HTTPSuccessClientPost204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -650,24 +650,24 @@ func (client *HTTPSuccessClient) post204HandleError(resp *http.Response) error {
 
 // Put200 - Put boolean value true returning 200 success
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPut200Options contains the optional parameters for the HTTPSuccessClient.Put200 method.
-func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSuccessPut200Options) (HTTPSuccessPut200Response, error) {
+// options - HTTPSuccessClientPut200Options contains the optional parameters for the HTTPSuccessClient.Put200 method.
+func (client *HTTPSuccessClient) Put200(ctx context.Context, options *HTTPSuccessClientPut200Options) (HTTPSuccessClientPut200Response, error) {
 	req, err := client.put200CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessPut200Response{}, err
+		return HTTPSuccessClientPut200Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessPut200Response{}, err
+		return HTTPSuccessClientPut200Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPSuccessPut200Response{}, client.put200HandleError(resp)
+		return HTTPSuccessClientPut200Response{}, client.put200HandleError(resp)
 	}
-	return HTTPSuccessPut200Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPut200Response{RawResponse: resp}, nil
 }
 
 // put200CreateRequest creates the Put200 request.
-func (client *HTTPSuccessClient) put200CreateRequest(ctx context.Context, options *HTTPSuccessPut200Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) put200CreateRequest(ctx context.Context, options *HTTPSuccessClientPut200Options) (*policy.Request, error) {
 	urlPath := "/http/success/200"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -692,24 +692,24 @@ func (client *HTTPSuccessClient) put200HandleError(resp *http.Response) error {
 
 // Put201 - Put true Boolean value in request returns 201
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPut201Options contains the optional parameters for the HTTPSuccessClient.Put201 method.
-func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSuccessPut201Options) (HTTPSuccessPut201Response, error) {
+// options - HTTPSuccessClientPut201Options contains the optional parameters for the HTTPSuccessClient.Put201 method.
+func (client *HTTPSuccessClient) Put201(ctx context.Context, options *HTTPSuccessClientPut201Options) (HTTPSuccessClientPut201Response, error) {
 	req, err := client.put201CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessPut201Response{}, err
+		return HTTPSuccessClientPut201Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessPut201Response{}, err
+		return HTTPSuccessClientPut201Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return HTTPSuccessPut201Response{}, client.put201HandleError(resp)
+		return HTTPSuccessClientPut201Response{}, client.put201HandleError(resp)
 	}
-	return HTTPSuccessPut201Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPut201Response{RawResponse: resp}, nil
 }
 
 // put201CreateRequest creates the Put201 request.
-func (client *HTTPSuccessClient) put201CreateRequest(ctx context.Context, options *HTTPSuccessPut201Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) put201CreateRequest(ctx context.Context, options *HTTPSuccessClientPut201Options) (*policy.Request, error) {
 	urlPath := "/http/success/201"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -734,24 +734,24 @@ func (client *HTTPSuccessClient) put201HandleError(resp *http.Response) error {
 
 // Put202 - Put true Boolean value in request returns 202 (Accepted)
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPut202Options contains the optional parameters for the HTTPSuccessClient.Put202 method.
-func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSuccessPut202Options) (HTTPSuccessPut202Response, error) {
+// options - HTTPSuccessClientPut202Options contains the optional parameters for the HTTPSuccessClient.Put202 method.
+func (client *HTTPSuccessClient) Put202(ctx context.Context, options *HTTPSuccessClientPut202Options) (HTTPSuccessClientPut202Response, error) {
 	req, err := client.put202CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessPut202Response{}, err
+		return HTTPSuccessClientPut202Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessPut202Response{}, err
+		return HTTPSuccessClientPut202Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return HTTPSuccessPut202Response{}, client.put202HandleError(resp)
+		return HTTPSuccessClientPut202Response{}, client.put202HandleError(resp)
 	}
-	return HTTPSuccessPut202Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPut202Response{RawResponse: resp}, nil
 }
 
 // put202CreateRequest creates the Put202 request.
-func (client *HTTPSuccessClient) put202CreateRequest(ctx context.Context, options *HTTPSuccessPut202Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) put202CreateRequest(ctx context.Context, options *HTTPSuccessClientPut202Options) (*policy.Request, error) {
 	urlPath := "/http/success/202"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -776,24 +776,24 @@ func (client *HTTPSuccessClient) put202HandleError(resp *http.Response) error {
 
 // Put204 - Put true Boolean value in request returns 204 (no content)
 // If the operation fails it returns the *Error error type.
-// options - HTTPSuccessPut204Options contains the optional parameters for the HTTPSuccessClient.Put204 method.
-func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSuccessPut204Options) (HTTPSuccessPut204Response, error) {
+// options - HTTPSuccessClientPut204Options contains the optional parameters for the HTTPSuccessClient.Put204 method.
+func (client *HTTPSuccessClient) Put204(ctx context.Context, options *HTTPSuccessClientPut204Options) (HTTPSuccessClientPut204Response, error) {
 	req, err := client.put204CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPSuccessPut204Response{}, err
+		return HTTPSuccessClientPut204Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPSuccessPut204Response{}, err
+		return HTTPSuccessClientPut204Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return HTTPSuccessPut204Response{}, client.put204HandleError(resp)
+		return HTTPSuccessClientPut204Response{}, client.put204HandleError(resp)
 	}
-	return HTTPSuccessPut204Response{RawResponse: resp}, nil
+	return HTTPSuccessClientPut204Response{RawResponse: resp}, nil
 }
 
 // put204CreateRequest creates the Put204 request.
-func (client *HTTPSuccessClient) put204CreateRequest(ctx context.Context, options *HTTPSuccessPut204Options) (*policy.Request, error) {
+func (client *HTTPSuccessClient) put204CreateRequest(ctx context.Context, options *HTTPSuccessClientPut204Options) (*policy.Request, error) {
 	urlPath := "/http/success/204"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

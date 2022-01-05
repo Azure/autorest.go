@@ -38,25 +38,25 @@ func NewQueriesClient(options *azcore.ClientOptions) *QueriesClient {
 
 // ArrayStringMultiEmpty - Get an empty array [] of string using the multi-array format
 // If the operation fails it returns the *Error error type.
-// options - QueriesArrayStringMultiEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringMultiEmpty
+// options - QueriesClientArrayStringMultiEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringMultiEmpty
 // method.
-func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options *QueriesArrayStringMultiEmptyOptions) (QueriesArrayStringMultiEmptyResponse, error) {
+func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options *QueriesClientArrayStringMultiEmptyOptions) (QueriesClientArrayStringMultiEmptyResponse, error) {
 	req, err := client.arrayStringMultiEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesArrayStringMultiEmptyResponse{}, err
+		return QueriesClientArrayStringMultiEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return QueriesArrayStringMultiEmptyResponse{}, err
+		return QueriesClientArrayStringMultiEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesArrayStringMultiEmptyResponse{}, client.arrayStringMultiEmptyHandleError(resp)
+		return QueriesClientArrayStringMultiEmptyResponse{}, client.arrayStringMultiEmptyHandleError(resp)
 	}
-	return QueriesArrayStringMultiEmptyResponse{RawResponse: resp}, nil
+	return QueriesClientArrayStringMultiEmptyResponse{RawResponse: resp}, nil
 }
 
 // arrayStringMultiEmptyCreateRequest creates the ArrayStringMultiEmpty request.
-func (client *QueriesClient) arrayStringMultiEmptyCreateRequest(ctx context.Context, options *QueriesArrayStringMultiEmptyOptions) (*policy.Request, error) {
+func (client *QueriesClient) arrayStringMultiEmptyCreateRequest(ctx context.Context, options *QueriesClientArrayStringMultiEmptyOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/multi/string/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -88,25 +88,25 @@ func (client *QueriesClient) arrayStringMultiEmptyHandleError(resp *http.Respons
 
 // ArrayStringMultiNull - Get a null array of string using the multi-array format
 // If the operation fails it returns the *Error error type.
-// options - QueriesArrayStringMultiNullOptions contains the optional parameters for the QueriesClient.ArrayStringMultiNull
+// options - QueriesClientArrayStringMultiNullOptions contains the optional parameters for the QueriesClient.ArrayStringMultiNull
 // method.
-func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, options *QueriesArrayStringMultiNullOptions) (QueriesArrayStringMultiNullResponse, error) {
+func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, options *QueriesClientArrayStringMultiNullOptions) (QueriesClientArrayStringMultiNullResponse, error) {
 	req, err := client.arrayStringMultiNullCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesArrayStringMultiNullResponse{}, err
+		return QueriesClientArrayStringMultiNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return QueriesArrayStringMultiNullResponse{}, err
+		return QueriesClientArrayStringMultiNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesArrayStringMultiNullResponse{}, client.arrayStringMultiNullHandleError(resp)
+		return QueriesClientArrayStringMultiNullResponse{}, client.arrayStringMultiNullHandleError(resp)
 	}
-	return QueriesArrayStringMultiNullResponse{RawResponse: resp}, nil
+	return QueriesClientArrayStringMultiNullResponse{RawResponse: resp}, nil
 }
 
 // arrayStringMultiNullCreateRequest creates the ArrayStringMultiNull request.
-func (client *QueriesClient) arrayStringMultiNullCreateRequest(ctx context.Context, options *QueriesArrayStringMultiNullOptions) (*policy.Request, error) {
+func (client *QueriesClient) arrayStringMultiNullCreateRequest(ctx context.Context, options *QueriesClientArrayStringMultiNullOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/multi/string/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -139,25 +139,25 @@ func (client *QueriesClient) arrayStringMultiNullHandleError(resp *http.Response
 // ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array
 // format
 // If the operation fails it returns the *Error error type.
-// options - QueriesArrayStringMultiValidOptions contains the optional parameters for the QueriesClient.ArrayStringMultiValid
+// options - QueriesClientArrayStringMultiValidOptions contains the optional parameters for the QueriesClient.ArrayStringMultiValid
 // method.
-func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options *QueriesArrayStringMultiValidOptions) (QueriesArrayStringMultiValidResponse, error) {
+func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options *QueriesClientArrayStringMultiValidOptions) (QueriesClientArrayStringMultiValidResponse, error) {
 	req, err := client.arrayStringMultiValidCreateRequest(ctx, options)
 	if err != nil {
-		return QueriesArrayStringMultiValidResponse{}, err
+		return QueriesClientArrayStringMultiValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return QueriesArrayStringMultiValidResponse{}, err
+		return QueriesClientArrayStringMultiValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesArrayStringMultiValidResponse{}, client.arrayStringMultiValidHandleError(resp)
+		return QueriesClientArrayStringMultiValidResponse{}, client.arrayStringMultiValidHandleError(resp)
 	}
-	return QueriesArrayStringMultiValidResponse{RawResponse: resp}, nil
+	return QueriesClientArrayStringMultiValidResponse{RawResponse: resp}, nil
 }
 
 // arrayStringMultiValidCreateRequest creates the ArrayStringMultiValid request.
-func (client *QueriesClient) arrayStringMultiValidCreateRequest(ctx context.Context, options *QueriesArrayStringMultiValidOptions) (*policy.Request, error) {
+func (client *QueriesClient) arrayStringMultiValidCreateRequest(ctx context.Context, options *QueriesClientArrayStringMultiValidOptions) (*policy.Request, error) {
 	urlPath := "/queries/array/multi/string/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

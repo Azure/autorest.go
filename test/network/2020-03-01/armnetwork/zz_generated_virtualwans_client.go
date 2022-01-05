@@ -56,21 +56,21 @@ func NewVirtualWansClient(subscriptionID string, credential azcore.TokenCredenti
 // resourceGroupName - The resource group name of the VirtualWan.
 // virtualWANName - The name of the VirtualWAN being created or updated.
 // wanParameters - Parameters supplied to create or update VirtualWAN.
-// options - VirtualWansBeginCreateOrUpdateOptions contains the optional parameters for the VirtualWansClient.BeginCreateOrUpdate
+// options - VirtualWansClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualWansClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansBeginCreateOrUpdateOptions) (VirtualWansCreateOrUpdatePollerResponse, error) {
+func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansClientBeginCreateOrUpdateOptions) (VirtualWansClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualWANName, wanParameters, options)
 	if err != nil {
-		return VirtualWansCreateOrUpdatePollerResponse{}, err
+		return VirtualWansClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualWansCreateOrUpdatePollerResponse{
+	result := VirtualWansClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualWansClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return VirtualWansCreateOrUpdatePollerResponse{}, err
+		return VirtualWansClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &VirtualWansCreateOrUpdatePoller{
+	result.Poller = &VirtualWansClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *VirtualWansClient) BeginCreateOrUpdate(ctx context.Context, resour
 
 // CreateOrUpdate - Creates a VirtualWAN resource if it doesn't exist else updates the existing VirtualWAN.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualWansClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VirtualWansClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualWANName, wanParameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *VirtualWansClient) createOrUpdate(ctx context.Context, resourceGro
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualWansClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *VirtualWansClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters VirtualWAN, options *VirtualWansClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -136,20 +136,20 @@ func (client *VirtualWansClient) createOrUpdateHandleError(resp *http.Response) 
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VirtualWan.
 // virtualWANName - The name of the VirtualWAN being deleted.
-// options - VirtualWansBeginDeleteOptions contains the optional parameters for the VirtualWansClient.BeginDelete method.
-func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansBeginDeleteOptions) (VirtualWansDeletePollerResponse, error) {
+// options - VirtualWansClientBeginDeleteOptions contains the optional parameters for the VirtualWansClient.BeginDelete method.
+func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansClientBeginDeleteOptions) (VirtualWansClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
-		return VirtualWansDeletePollerResponse{}, err
+		return VirtualWansClientDeletePollerResponse{}, err
 	}
-	result := VirtualWansDeletePollerResponse{
+	result := VirtualWansClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualWansClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return VirtualWansDeletePollerResponse{}, err
+		return VirtualWansClientDeletePollerResponse{}, err
 	}
-	result.Poller = &VirtualWansDeletePoller{
+	result.Poller = &VirtualWansClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -157,7 +157,7 @@ func (client *VirtualWansClient) BeginDelete(ctx context.Context, resourceGroupN
 
 // Delete - Deletes a VirtualWAN.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualWansClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansBeginDeleteOptions) (*http.Response, error) {
+func (client *VirtualWansClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
 		return nil, err
@@ -173,7 +173,7 @@ func (client *VirtualWansClient) deleteOperation(ctx context.Context, resourceGr
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *VirtualWansClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansBeginDeleteOptions) (*policy.Request, error) {
+func (client *VirtualWansClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -215,24 +215,24 @@ func (client *VirtualWansClient) deleteHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VirtualWan.
 // virtualWANName - The name of the VirtualWAN being retrieved.
-// options - VirtualWansGetOptions contains the optional parameters for the VirtualWansClient.Get method.
-func (client *VirtualWansClient) Get(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansGetOptions) (VirtualWansGetResponse, error) {
+// options - VirtualWansClientGetOptions contains the optional parameters for the VirtualWansClient.Get method.
+func (client *VirtualWansClient) Get(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansClientGetOptions) (VirtualWansClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
-		return VirtualWansGetResponse{}, err
+		return VirtualWansClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualWansGetResponse{}, err
+		return VirtualWansClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualWansGetResponse{}, client.getHandleError(resp)
+		return VirtualWansClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualWansClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansGetOptions) (*policy.Request, error) {
+func (client *VirtualWansClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, options *VirtualWansClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -258,10 +258,10 @@ func (client *VirtualWansClient) getCreateRequest(ctx context.Context, resourceG
 }
 
 // getHandleResponse handles the Get response.
-func (client *VirtualWansClient) getHandleResponse(resp *http.Response) (VirtualWansGetResponse, error) {
-	result := VirtualWansGetResponse{RawResponse: resp}
+func (client *VirtualWansClient) getHandleResponse(resp *http.Response) (VirtualWansClientGetResponse, error) {
+	result := VirtualWansClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualWAN); err != nil {
-		return VirtualWansGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualWansClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -281,21 +281,21 @@ func (client *VirtualWansClient) getHandleError(resp *http.Response) error {
 
 // List - Lists all the VirtualWANs in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - VirtualWansListOptions contains the optional parameters for the VirtualWansClient.List method.
-func (client *VirtualWansClient) List(options *VirtualWansListOptions) *VirtualWansListPager {
-	return &VirtualWansListPager{
+// options - VirtualWansClientListOptions contains the optional parameters for the VirtualWansClient.List method.
+func (client *VirtualWansClient) List(options *VirtualWansClientListOptions) *VirtualWansClientListPager {
+	return &VirtualWansClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp VirtualWansListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualWansClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListVirtualWANsResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualWansClient) listCreateRequest(ctx context.Context, options *VirtualWansListOptions) (*policy.Request, error) {
+func (client *VirtualWansClient) listCreateRequest(ctx context.Context, options *VirtualWansClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -313,10 +313,10 @@ func (client *VirtualWansClient) listCreateRequest(ctx context.Context, options 
 }
 
 // listHandleResponse handles the List response.
-func (client *VirtualWansClient) listHandleResponse(resp *http.Response) (VirtualWansListResponse, error) {
-	result := VirtualWansListResponse{RawResponse: resp}
+func (client *VirtualWansClient) listHandleResponse(resp *http.Response) (VirtualWansClientListResponse, error) {
+	result := VirtualWansClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVirtualWANsResult); err != nil {
-		return VirtualWansListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualWansClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -337,22 +337,22 @@ func (client *VirtualWansClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Lists all the VirtualWANs in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VirtualWan.
-// options - VirtualWansListByResourceGroupOptions contains the optional parameters for the VirtualWansClient.ListByResourceGroup
+// options - VirtualWansClientListByResourceGroupOptions contains the optional parameters for the VirtualWansClient.ListByResourceGroup
 // method.
-func (client *VirtualWansClient) ListByResourceGroup(resourceGroupName string, options *VirtualWansListByResourceGroupOptions) *VirtualWansListByResourceGroupPager {
-	return &VirtualWansListByResourceGroupPager{
+func (client *VirtualWansClient) ListByResourceGroup(resourceGroupName string, options *VirtualWansClientListByResourceGroupOptions) *VirtualWansClientListByResourceGroupPager {
+	return &VirtualWansClientListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp VirtualWansListByResourceGroupResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualWansClientListByResourceGroupResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListVirtualWANsResult.NextLink)
 		},
 	}
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *VirtualWansClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualWansListByResourceGroupOptions) (*policy.Request, error) {
+func (client *VirtualWansClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualWansClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -374,10 +374,10 @@ func (client *VirtualWansClient) listByResourceGroupCreateRequest(ctx context.Co
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *VirtualWansClient) listByResourceGroupHandleResponse(resp *http.Response) (VirtualWansListByResourceGroupResponse, error) {
-	result := VirtualWansListByResourceGroupResponse{RawResponse: resp}
+func (client *VirtualWansClient) listByResourceGroupHandleResponse(resp *http.Response) (VirtualWansClientListByResourceGroupResponse, error) {
+	result := VirtualWansClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVirtualWANsResult); err != nil {
-		return VirtualWansListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualWansClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -400,24 +400,24 @@ func (client *VirtualWansClient) listByResourceGroupHandleError(resp *http.Respo
 // resourceGroupName - The resource group name of the VirtualWan.
 // virtualWANName - The name of the VirtualWAN being updated.
 // wanParameters - Parameters supplied to Update VirtualWAN tags.
-// options - VirtualWansUpdateTagsOptions contains the optional parameters for the VirtualWansClient.UpdateTags method.
-func (client *VirtualWansClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters TagsObject, options *VirtualWansUpdateTagsOptions) (VirtualWansUpdateTagsResponse, error) {
+// options - VirtualWansClientUpdateTagsOptions contains the optional parameters for the VirtualWansClient.UpdateTags method.
+func (client *VirtualWansClient) UpdateTags(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters TagsObject, options *VirtualWansClientUpdateTagsOptions) (VirtualWansClientUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, virtualWANName, wanParameters, options)
 	if err != nil {
-		return VirtualWansUpdateTagsResponse{}, err
+		return VirtualWansClientUpdateTagsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualWansUpdateTagsResponse{}, err
+		return VirtualWansClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualWansUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return VirtualWansClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *VirtualWansClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters TagsObject, options *VirtualWansUpdateTagsOptions) (*policy.Request, error) {
+func (client *VirtualWansClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, wanParameters TagsObject, options *VirtualWansClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -443,10 +443,10 @@ func (client *VirtualWansClient) updateTagsCreateRequest(ctx context.Context, re
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *VirtualWansClient) updateTagsHandleResponse(resp *http.Response) (VirtualWansUpdateTagsResponse, error) {
-	result := VirtualWansUpdateTagsResponse{RawResponse: resp}
+func (client *VirtualWansClient) updateTagsHandleResponse(resp *http.Response) (VirtualWansClientUpdateTagsResponse, error) {
+	result := VirtualWansClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualWAN); err != nil {
-		return VirtualWansUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualWansClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

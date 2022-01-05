@@ -56,21 +56,21 @@ func NewSecurityPartnerProvidersClient(subscriptionID string, credential azcore.
 // resourceGroupName - The name of the resource group.
 // securityPartnerProviderName - The name of the Security Partner Provider.
 // parameters - Parameters supplied to the create or update Security Partner Provider operation.
-// options - SecurityPartnerProvidersBeginCreateOrUpdateOptions contains the optional parameters for the SecurityPartnerProvidersClient.BeginCreateOrUpdate
+// options - SecurityPartnerProvidersClientBeginCreateOrUpdateOptions contains the optional parameters for the SecurityPartnerProvidersClient.BeginCreateOrUpdate
 // method.
-func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersBeginCreateOrUpdateOptions) (SecurityPartnerProvidersCreateOrUpdatePollerResponse, error) {
+func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersClientBeginCreateOrUpdateOptions) (SecurityPartnerProvidersClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
 	if err != nil {
-		return SecurityPartnerProvidersCreateOrUpdatePollerResponse{}, err
+		return SecurityPartnerProvidersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := SecurityPartnerProvidersCreateOrUpdatePollerResponse{
+	result := SecurityPartnerProvidersClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("SecurityPartnerProvidersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return SecurityPartnerProvidersCreateOrUpdatePollerResponse{}, err
+		return SecurityPartnerProvidersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &SecurityPartnerProvidersCreateOrUpdatePoller{
+	result.Poller = &SecurityPartnerProvidersClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Co
 
 // CreateOrUpdate - Creates or updates the specified Security Partner Provider.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityPartnerProvidersClient) createOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *SecurityPartnerProvidersClient) createOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *SecurityPartnerProvidersClient) createOrUpdate(ctx context.Context
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *SecurityPartnerProvidersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *SecurityPartnerProvidersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -136,21 +136,21 @@ func (client *SecurityPartnerProvidersClient) createOrUpdateHandleError(resp *ht
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // securityPartnerProviderName - The name of the Security Partner Provider.
-// options - SecurityPartnerProvidersBeginDeleteOptions contains the optional parameters for the SecurityPartnerProvidersClient.BeginDelete
+// options - SecurityPartnerProvidersClientBeginDeleteOptions contains the optional parameters for the SecurityPartnerProvidersClient.BeginDelete
 // method.
-func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersBeginDeleteOptions) (SecurityPartnerProvidersDeletePollerResponse, error) {
+func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersClientBeginDeleteOptions) (SecurityPartnerProvidersClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, securityPartnerProviderName, options)
 	if err != nil {
-		return SecurityPartnerProvidersDeletePollerResponse{}, err
+		return SecurityPartnerProvidersClientDeletePollerResponse{}, err
 	}
-	result := SecurityPartnerProvidersDeletePollerResponse{
+	result := SecurityPartnerProvidersClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("SecurityPartnerProvidersClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return SecurityPartnerProvidersDeletePollerResponse{}, err
+		return SecurityPartnerProvidersClientDeletePollerResponse{}, err
 	}
-	result.Poller = &SecurityPartnerProvidersDeletePoller{
+	result.Poller = &SecurityPartnerProvidersClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -158,7 +158,7 @@ func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, r
 
 // Delete - Deletes the specified Security Partner Provider.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityPartnerProvidersClient) deleteOperation(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersBeginDeleteOptions) (*http.Response, error) {
+func (client *SecurityPartnerProvidersClient) deleteOperation(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, options)
 	if err != nil {
 		return nil, err
@@ -174,7 +174,7 @@ func (client *SecurityPartnerProvidersClient) deleteOperation(ctx context.Contex
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *SecurityPartnerProvidersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersBeginDeleteOptions) (*policy.Request, error) {
+func (client *SecurityPartnerProvidersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -216,25 +216,25 @@ func (client *SecurityPartnerProvidersClient) deleteHandleError(resp *http.Respo
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // securityPartnerProviderName - The name of the Security Partner Provider.
-// options - SecurityPartnerProvidersGetOptions contains the optional parameters for the SecurityPartnerProvidersClient.Get
+// options - SecurityPartnerProvidersClientGetOptions contains the optional parameters for the SecurityPartnerProvidersClient.Get
 // method.
-func (client *SecurityPartnerProvidersClient) Get(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersGetOptions) (SecurityPartnerProvidersGetResponse, error) {
+func (client *SecurityPartnerProvidersClient) Get(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersClientGetOptions) (SecurityPartnerProvidersClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, options)
 	if err != nil {
-		return SecurityPartnerProvidersGetResponse{}, err
+		return SecurityPartnerProvidersClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SecurityPartnerProvidersGetResponse{}, err
+		return SecurityPartnerProvidersClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SecurityPartnerProvidersGetResponse{}, client.getHandleError(resp)
+		return SecurityPartnerProvidersClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *SecurityPartnerProvidersClient) getCreateRequest(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersGetOptions) (*policy.Request, error) {
+func (client *SecurityPartnerProvidersClient) getCreateRequest(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -260,10 +260,10 @@ func (client *SecurityPartnerProvidersClient) getCreateRequest(ctx context.Conte
 }
 
 // getHandleResponse handles the Get response.
-func (client *SecurityPartnerProvidersClient) getHandleResponse(resp *http.Response) (SecurityPartnerProvidersGetResponse, error) {
-	result := SecurityPartnerProvidersGetResponse{RawResponse: resp}
+func (client *SecurityPartnerProvidersClient) getHandleResponse(resp *http.Response) (SecurityPartnerProvidersClientGetResponse, error) {
+	result := SecurityPartnerProvidersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityPartnerProvider); err != nil {
-		return SecurityPartnerProvidersGetResponse{}, runtime.NewResponseError(err, resp)
+		return SecurityPartnerProvidersClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -283,22 +283,22 @@ func (client *SecurityPartnerProvidersClient) getHandleError(resp *http.Response
 
 // List - Gets all the Security Partner Providers in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - SecurityPartnerProvidersListOptions contains the optional parameters for the SecurityPartnerProvidersClient.List
+// options - SecurityPartnerProvidersClientListOptions contains the optional parameters for the SecurityPartnerProvidersClient.List
 // method.
-func (client *SecurityPartnerProvidersClient) List(options *SecurityPartnerProvidersListOptions) *SecurityPartnerProvidersListPager {
-	return &SecurityPartnerProvidersListPager{
+func (client *SecurityPartnerProvidersClient) List(options *SecurityPartnerProvidersClientListOptions) *SecurityPartnerProvidersClientListPager {
+	return &SecurityPartnerProvidersClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp SecurityPartnerProvidersListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp SecurityPartnerProvidersClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.SecurityPartnerProviderListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *SecurityPartnerProvidersClient) listCreateRequest(ctx context.Context, options *SecurityPartnerProvidersListOptions) (*policy.Request, error) {
+func (client *SecurityPartnerProvidersClient) listCreateRequest(ctx context.Context, options *SecurityPartnerProvidersClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -316,10 +316,10 @@ func (client *SecurityPartnerProvidersClient) listCreateRequest(ctx context.Cont
 }
 
 // listHandleResponse handles the List response.
-func (client *SecurityPartnerProvidersClient) listHandleResponse(resp *http.Response) (SecurityPartnerProvidersListResponse, error) {
-	result := SecurityPartnerProvidersListResponse{RawResponse: resp}
+func (client *SecurityPartnerProvidersClient) listHandleResponse(resp *http.Response) (SecurityPartnerProvidersClientListResponse, error) {
+	result := SecurityPartnerProvidersClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityPartnerProviderListResult); err != nil {
-		return SecurityPartnerProvidersListResponse{}, runtime.NewResponseError(err, resp)
+		return SecurityPartnerProvidersClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -340,22 +340,22 @@ func (client *SecurityPartnerProvidersClient) listHandleError(resp *http.Respons
 // ListByResourceGroup - Lists all Security Partner Providers in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - SecurityPartnerProvidersListByResourceGroupOptions contains the optional parameters for the SecurityPartnerProvidersClient.ListByResourceGroup
+// options - SecurityPartnerProvidersClientListByResourceGroupOptions contains the optional parameters for the SecurityPartnerProvidersClient.ListByResourceGroup
 // method.
-func (client *SecurityPartnerProvidersClient) ListByResourceGroup(resourceGroupName string, options *SecurityPartnerProvidersListByResourceGroupOptions) *SecurityPartnerProvidersListByResourceGroupPager {
-	return &SecurityPartnerProvidersListByResourceGroupPager{
+func (client *SecurityPartnerProvidersClient) ListByResourceGroup(resourceGroupName string, options *SecurityPartnerProvidersClientListByResourceGroupOptions) *SecurityPartnerProvidersClientListByResourceGroupPager {
+	return &SecurityPartnerProvidersClientListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp SecurityPartnerProvidersListByResourceGroupResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp SecurityPartnerProvidersClientListByResourceGroupResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.SecurityPartnerProviderListResult.NextLink)
 		},
 	}
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *SecurityPartnerProvidersClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *SecurityPartnerProvidersListByResourceGroupOptions) (*policy.Request, error) {
+func (client *SecurityPartnerProvidersClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *SecurityPartnerProvidersClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -377,10 +377,10 @@ func (client *SecurityPartnerProvidersClient) listByResourceGroupCreateRequest(c
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *SecurityPartnerProvidersClient) listByResourceGroupHandleResponse(resp *http.Response) (SecurityPartnerProvidersListByResourceGroupResponse, error) {
-	result := SecurityPartnerProvidersListByResourceGroupResponse{RawResponse: resp}
+func (client *SecurityPartnerProvidersClient) listByResourceGroupHandleResponse(resp *http.Response) (SecurityPartnerProvidersClientListByResourceGroupResponse, error) {
+	result := SecurityPartnerProvidersClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityPartnerProviderListResult); err != nil {
-		return SecurityPartnerProvidersListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return SecurityPartnerProvidersClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -403,25 +403,25 @@ func (client *SecurityPartnerProvidersClient) listByResourceGroupHandleError(res
 // resourceGroupName - The name of the resource group.
 // securityPartnerProviderName - The name of the Security Partner Provider.
 // parameters - Parameters supplied to update Security Partner Provider tags.
-// options - SecurityPartnerProvidersUpdateTagsOptions contains the optional parameters for the SecurityPartnerProvidersClient.UpdateTags
+// options - SecurityPartnerProvidersClientUpdateTagsOptions contains the optional parameters for the SecurityPartnerProvidersClient.UpdateTags
 // method.
-func (client *SecurityPartnerProvidersClient) UpdateTags(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters TagsObject, options *SecurityPartnerProvidersUpdateTagsOptions) (SecurityPartnerProvidersUpdateTagsResponse, error) {
+func (client *SecurityPartnerProvidersClient) UpdateTags(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters TagsObject, options *SecurityPartnerProvidersClientUpdateTagsOptions) (SecurityPartnerProvidersClientUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
 	if err != nil {
-		return SecurityPartnerProvidersUpdateTagsResponse{}, err
+		return SecurityPartnerProvidersClientUpdateTagsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SecurityPartnerProvidersUpdateTagsResponse{}, err
+		return SecurityPartnerProvidersClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SecurityPartnerProvidersUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return SecurityPartnerProvidersClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *SecurityPartnerProvidersClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters TagsObject, options *SecurityPartnerProvidersUpdateTagsOptions) (*policy.Request, error) {
+func (client *SecurityPartnerProvidersClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters TagsObject, options *SecurityPartnerProvidersClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -447,10 +447,10 @@ func (client *SecurityPartnerProvidersClient) updateTagsCreateRequest(ctx contex
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *SecurityPartnerProvidersClient) updateTagsHandleResponse(resp *http.Response) (SecurityPartnerProvidersUpdateTagsResponse, error) {
-	result := SecurityPartnerProvidersUpdateTagsResponse{RawResponse: resp}
+func (client *SecurityPartnerProvidersClient) updateTagsHandleResponse(resp *http.Response) (SecurityPartnerProvidersClientUpdateTagsResponse, error) {
+	result := SecurityPartnerProvidersClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityPartnerProvider); err != nil {
-		return SecurityPartnerProvidersUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return SecurityPartnerProvidersClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

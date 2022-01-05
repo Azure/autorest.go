@@ -58,24 +58,24 @@ func NewPathsClient(subscriptionID string, options *PathsClientOptions) *PathsCl
 // vault - The vault name, e.g. https://myvault
 // secret - Secret value.
 // keyName - The key name with value 'key1'.
-// options - PathsGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
-func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (PathsGetEmptyResponse, error) {
+// options - PathsClientGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
+func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret string, keyName string, options *PathsClientGetEmptyOptions) (PathsClientGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, vault, secret, keyName, options)
 	if err != nil {
-		return PathsGetEmptyResponse{}, err
+		return PathsClientGetEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsGetEmptyResponse{}, err
+		return PathsClientGetEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsGetEmptyResponse{}, client.getEmptyHandleError(resp)
+		return PathsClientGetEmptyResponse{}, client.getEmptyHandleError(resp)
 	}
-	return PathsGetEmptyResponse{RawResponse: resp}, nil
+	return PathsClientGetEmptyResponse{RawResponse: resp}, nil
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, vault string, secret string, keyName string, options *PathsGetEmptyOptions) (*policy.Request, error) {
+func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, vault string, secret string, keyName string, options *PathsClientGetEmptyOptions) (*policy.Request, error) {
 	host := "{vault}{secret}{dnsSuffix}"
 	host = strings.ReplaceAll(host, "{dnsSuffix}", client.dnsSuffix)
 	host = strings.ReplaceAll(host, "{vault}", vault)

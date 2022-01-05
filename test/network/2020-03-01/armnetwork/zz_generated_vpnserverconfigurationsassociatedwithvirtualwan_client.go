@@ -55,21 +55,21 @@ func NewVPNServerConfigurationsAssociatedWithVirtualWanClient(subscriptionID str
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name.
 // virtualWANName - The name of the VirtualWAN whose associated VpnServerConfigurations is needed.
-// options - VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions contains the optional parameters for the VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList
-// method.
-func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse, error) {
+// options - VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions contains the optional parameters for the
+// VPNServerConfigurationsAssociatedWithVirtualWanClient.BeginList method.
+func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse, error) {
 	resp, err := client.listOperation(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
-		return VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse{}, err
+		return VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse{}, err
 	}
-	result := VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse{
+	result := VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", "location", resp, client.pl, client.listHandleError)
 	if err != nil {
-		return VPNServerConfigurationsAssociatedWithVirtualWanListPollerResponse{}, err
+		return VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse{}, err
 	}
-	result.Poller = &VPNServerConfigurationsAssociatedWithVirtualWanListPoller{
+	result.Poller = &VPNServerConfigurationsAssociatedWithVirtualWanClientListPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -77,7 +77,7 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) BeginList(c
 
 // List - Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listOperation(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (*http.Response, error) {
+func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listOperation(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (*http.Response, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualWANName, options)
 	if err != nil {
 		return nil, err
@@ -93,7 +93,7 @@ func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listOperati
 }
 
 // listCreateRequest creates the List request.
-func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanBeginListOptions) (*policy.Request, error) {
+func (client *VPNServerConfigurationsAssociatedWithVirtualWanClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, options *VPNServerConfigurationsAssociatedWithVirtualWanClientBeginListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnServerConfigurations"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

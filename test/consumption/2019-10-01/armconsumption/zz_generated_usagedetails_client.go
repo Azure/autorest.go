@@ -65,21 +65,21 @@ func NewUsageDetailsClient(credential azcore.TokenCredential, options *arm.Clien
 // billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/invoiceSections/{invoiceSectionId}'
 // for invoiceSection scope, and
 // 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
-// options - UsageDetailsListOptions contains the optional parameters for the UsageDetailsClient.List method.
-func (client *UsageDetailsClient) List(scope string, options *UsageDetailsListOptions) *UsageDetailsListPager {
-	return &UsageDetailsListPager{
+// options - UsageDetailsClientListOptions contains the optional parameters for the UsageDetailsClient.List method.
+func (client *UsageDetailsClient) List(scope string, options *UsageDetailsClientListOptions) *UsageDetailsClientListPager {
+	return &UsageDetailsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, scope, options)
 		},
-		advancer: func(ctx context.Context, resp UsageDetailsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp UsageDetailsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.UsageDetailsListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *UsageDetailsClient) listCreateRequest(ctx context.Context, scope string, options *UsageDetailsListOptions) (*policy.Request, error) {
+func (client *UsageDetailsClient) listCreateRequest(ctx context.Context, scope string, options *UsageDetailsClientListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/usageDetails"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
@@ -109,10 +109,10 @@ func (client *UsageDetailsClient) listCreateRequest(ctx context.Context, scope s
 }
 
 // listHandleResponse handles the List response.
-func (client *UsageDetailsClient) listHandleResponse(resp *http.Response) (UsageDetailsListResponse, error) {
-	result := UsageDetailsListResponse{RawResponse: resp}
+func (client *UsageDetailsClient) listHandleResponse(resp *http.Response) (UsageDetailsClientListResponse, error) {
+	result := UsageDetailsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.UsageDetailsListResult); err != nil {
-		return UsageDetailsListResponse{}, runtime.NewResponseError(err, resp)
+		return UsageDetailsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

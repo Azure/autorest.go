@@ -32,7 +32,7 @@ func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LRORetrysDelete202Retry200PollerResponse{}
+	resp = LRORetrysClientDelete202Retry200PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -56,7 +56,7 @@ func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LRORetrysDeleteAsyncRelativeRetrySucceededPollerResponse{}
+	resp = LRORetrysClientDeleteAsyncRelativeRetrySucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -80,7 +80,7 @@ func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LRORetrysDeleteProvisioning202Accepted200SucceededPollerResponse{}
+	resp = LRORetrysClientDeleteProvisioning202Accepted200SucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -113,7 +113,7 @@ func TestLRORetrysBeginPost202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LRORetrysPost202Retry200PollerResponse{}
+	resp = LRORetrysClientPost202Retry200PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -137,7 +137,7 @@ func TestLRORetrysBeginPostAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LRORetrysPostAsyncRelativeRetrySucceededPollerResponse{}
+	resp = LRORetrysClientPostAsyncRelativeRetrySucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -161,7 +161,7 @@ func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LRORetrysPut201CreatingSucceeded200PollerResponse{}
+	resp = LRORetrysClientPut201CreatingSucceeded200PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -194,7 +194,7 @@ func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LRORetrysPutAsyncRelativeRetrySucceededPollerResponse{}
+	resp = LRORetrysClientPutAsyncRelativeRetrySucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}

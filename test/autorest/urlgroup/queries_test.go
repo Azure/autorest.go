@@ -16,7 +16,7 @@ func newQueriesClient() *QueriesClient {
 // ArrayStringCSVEmpty - Get an empty array [] of string using the csv-array format
 func TestArrayStringCSVEmpty(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.ArrayStringCSVEmpty(context.Background(), &QueriesArrayStringCSVEmptyOptions{
+	result, err := client.ArrayStringCSVEmpty(context.Background(), &QueriesClientArrayStringCSVEmptyOptions{
 		ArrayQuery: []string{},
 	})
 	if err != nil {
@@ -42,7 +42,7 @@ func TestArrayStringCSVNull(t *testing.T) {
 // ArrayStringCSVValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 func TestArrayStringCsvValid(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.ArrayStringCSVValid(context.Background(), &QueriesArrayStringCSVValidOptions{
+	result, err := client.ArrayStringCSVValid(context.Background(), &QueriesClientArrayStringCSVValidOptions{
 		ArrayQuery: []string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
 	if err != nil {
@@ -56,7 +56,7 @@ func TestArrayStringCsvValid(t *testing.T) {
 // ArrayStringPipesValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
 func TestArrayStringPipesValid(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.ArrayStringPipesValid(context.Background(), &QueriesArrayStringPipesValidOptions{
+	result, err := client.ArrayStringPipesValid(context.Background(), &QueriesClientArrayStringPipesValidOptions{
 		ArrayQuery: []string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
 	if err != nil {
@@ -70,7 +70,7 @@ func TestArrayStringPipesValid(t *testing.T) {
 // ArrayStringSsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
 func TestArrayStringSsvValid(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.ArrayStringSsvValid(context.Background(), &QueriesArrayStringSsvValidOptions{
+	result, err := client.ArrayStringSsvValid(context.Background(), &QueriesClientArrayStringSsvValidOptions{
 		ArrayQuery: []string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
 	if err != nil {
@@ -84,7 +84,7 @@ func TestArrayStringSsvValid(t *testing.T) {
 // ArrayStringTsvValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
 func TestArrayStringTsvValid(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.ArrayStringTsvValid(context.Background(), &QueriesArrayStringTsvValidOptions{
+	result, err := client.ArrayStringTsvValid(context.Background(), &QueriesClientArrayStringTsvValidOptions{
 		ArrayQuery: []string{"ArrayQuery1", "begin!*'();:@ &=+$,/?#[]end", "", ""},
 	})
 	if err != nil {
@@ -110,7 +110,7 @@ func TestByteEmpty(t *testing.T) {
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 func TestByteMultiByte(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.ByteMultiByte(context.Background(), &QueriesByteMultiByteOptions{
+	result, err := client.ByteMultiByte(context.Background(), &QueriesClientByteMultiByteOptions{
 		ByteQuery: []byte("啊齄丂狛狜隣郎隣兀﨩"),
 	})
 	if err != nil {
@@ -232,7 +232,7 @@ func TestEnumNull(t *testing.T) {
 // EnumValid - Get using uri with query parameter 'green color'
 func TestEnumValid(t *testing.T) {
 	client := newQueriesClient()
-	result, err := client.EnumValid(context.Background(), &QueriesEnumValidOptions{
+	result, err := client.EnumValid(context.Background(), &QueriesClientEnumValidOptions{
 		EnumQuery: URIColorGreenColor.ToPtr(),
 	})
 	if err != nil {

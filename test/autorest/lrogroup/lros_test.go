@@ -45,7 +45,7 @@ func TestLROResumeWrongPoller(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp2 := LROsDelete202Retry200PollerResponse{}
+	resp2 := LROsClientDelete202Retry200PollerResponse{}
 	if err = resp2.Resume(context.Background(), op, rt); err == nil {
 		t.Fatal("expected an error but did not find receive one")
 	}
@@ -62,7 +62,7 @@ func TestLROBeginDelete202NoRetry204(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsDelete202NoRetry204PollerResponse{}
+	resp = LROsClientDelete202NoRetry204PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -86,7 +86,7 @@ func TestLROBeginDelete202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsDelete202Retry200PollerResponse{}
+	resp = LROsClientDelete202Retry200PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -130,7 +130,7 @@ func TestLROBeginDeleteAsyncNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsDeleteAsyncNoHeaderInRetryPollerResponse{}
+	resp = LROsClientDeleteAsyncNoHeaderInRetryPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -154,7 +154,7 @@ func TestLROBeginDeleteAsyncNoRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsDeleteAsyncNoRetrySucceededPollerResponse{}
+	resp = LROsClientDeleteAsyncNoRetrySucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -178,7 +178,7 @@ func TestLROBeginDeleteAsyncRetryFailed(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsDeleteAsyncRetryFailedPollerResponse{}
+	resp = LROsClientDeleteAsyncRetryFailedPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -212,7 +212,7 @@ func TestLROBeginDeleteAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsDeleteAsyncRetrySucceededPollerResponse{}
+	resp = LROsClientDeleteAsyncRetrySucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -236,7 +236,7 @@ func TestLROBeginDeleteAsyncRetrycanceled(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsDeleteAsyncRetrycanceledPollerResponse{}
+	resp = LROsClientDeleteAsyncRetrycanceledPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -270,7 +270,7 @@ func TestLROBeginDeleteNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsDeleteNoHeaderInRetryPollerResponse{}
+	resp = LROsClientDeleteNoHeaderInRetryPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -294,7 +294,7 @@ func TestLROBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsDeleteProvisioning202Accepted200SucceededPollerResponse{}
+	resp = LROsClientDeleteProvisioning202Accepted200SucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -350,7 +350,7 @@ func TestLROBeginPost200WithPayload(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPost200WithPayloadPollerResponse{}
+	resp = LROsClientPost200WithPayloadPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -380,7 +380,7 @@ func TestLROBeginPost202List(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPost202ListPollerResponse{}
+	resp = LROsClientPost202ListPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -412,7 +412,7 @@ func TestLROBeginPost202NoRetry204(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPost202NoRetry204PollerResponse{}
+	resp = LROsClientPost202NoRetry204PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -436,7 +436,7 @@ func TestLROBeginPost202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPost202Retry200PollerResponse{}
+	resp = LROsClientPost202Retry200PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -460,7 +460,7 @@ func TestLROBeginPostAsyncNoRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPostAsyncNoRetrySucceededPollerResponse{}
+	resp = LROsClientPostAsyncNoRetrySucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -493,7 +493,7 @@ func TestLROBeginPostAsyncRetryFailed(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPostAsyncRetryFailedPollerResponse{}
+	resp = LROsClientPostAsyncRetryFailedPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -527,7 +527,7 @@ func TestLROBeginPostAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPostAsyncRetrySucceededPollerResponse{}
+	resp = LROsClientPostAsyncRetrySucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -560,7 +560,7 @@ func TestLROBeginPostAsyncRetrycanceled(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPostAsyncRetrycanceledPollerResponse{}
+	resp = LROsClientPostAsyncRetrycanceledPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -594,7 +594,7 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGet(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPostDoubleHeadersFinalAzureHeaderGetPollerResponse{}
+	resp = LROsClientPostDoubleHeadersFinalAzureHeaderGetPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -623,7 +623,7 @@ func TestLROBeginPostDoubleHeadersFinalAzureHeaderGetDefault(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse{}
+	resp = LROsClientPostDoubleHeadersFinalAzureHeaderGetDefaultPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -653,7 +653,7 @@ func TestLROBeginPostDoubleHeadersFinalLocationGet(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPostDoubleHeadersFinalLocationGetPollerResponse{}
+	resp = LROsClientPostDoubleHeadersFinalLocationGetPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -765,7 +765,7 @@ func TestLROBeginPut200UpdatingSucceeded204(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPut200UpdatingSucceeded204PollerResponse{}
+	resp = LROsClientPut200UpdatingSucceeded204PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -815,7 +815,7 @@ func TestLROBeginPut201CreatingFailed200(t *testing.T) {
 
 func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPut201CreatingSucceeded200(context.Background(), &LROsBeginPut201CreatingSucceeded200Options{Product: &Product{}})
+	resp, err := op.BeginPut201CreatingSucceeded200(context.Background(), &LROsClientBeginPut201CreatingSucceeded200Options{Product: &Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -824,7 +824,7 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPut201CreatingSucceeded200PollerResponse{}
+	resp = LROsClientPut201CreatingSucceeded200PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -848,7 +848,7 @@ func TestLROBeginPut201CreatingSucceeded200(t *testing.T) {
 
 func TestLROBeginPut202Retry200(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPut202Retry200(context.Background(), &LROsBeginPut202Retry200Options{Product: &Product{}})
+	resp, err := op.BeginPut202Retry200(context.Background(), &LROsClientBeginPut202Retry200Options{Product: &Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -857,7 +857,7 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPut202Retry200PollerResponse{}
+	resp = LROsClientPut202Retry200PollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -878,7 +878,7 @@ func TestLROBeginPut202Retry200(t *testing.T) {
 
 func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPutAsyncNoHeaderInRetry(context.Background(), &LROsBeginPutAsyncNoHeaderInRetryOptions{Product: &Product{}})
+	resp, err := op.BeginPutAsyncNoHeaderInRetry(context.Background(), &LROsClientBeginPutAsyncNoHeaderInRetryOptions{Product: &Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -887,7 +887,7 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPutAsyncNoHeaderInRetryPollerResponse{}
+	resp = LROsClientPutAsyncNoHeaderInRetryPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -911,7 +911,7 @@ func TestLROBeginPutAsyncNoHeaderInRetry(t *testing.T) {
 
 func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 	op := newLROSClient()
-	resp, err := op.BeginPutAsyncNoRetrySucceeded(context.Background(), &LROsBeginPutAsyncNoRetrySucceededOptions{Product: &Product{}})
+	resp, err := op.BeginPutAsyncNoRetrySucceeded(context.Background(), &LROsClientBeginPutAsyncNoRetrySucceededOptions{Product: &Product{}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -920,7 +920,7 @@ func TestLROBeginPutAsyncNoRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPutAsyncNoRetrySucceededPollerResponse{}
+	resp = LROsClientPutAsyncNoRetrySucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -953,7 +953,7 @@ func TestLROBeginPutAsyncNoRetrycanceled(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPutAsyncNoRetrycanceledPollerResponse{}
+	resp = LROsClientPutAsyncNoRetrycanceledPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -987,7 +987,7 @@ func TestLROBeginPutAsyncNonResource(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPutAsyncNonResourcePollerResponse{}
+	resp = LROsClientPutAsyncNonResourcePollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -1017,7 +1017,7 @@ func TestLROBeginPutAsyncRetryFailed(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPutAsyncRetryFailedPollerResponse{}
+	resp = LROsClientPutAsyncRetryFailedPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -1051,7 +1051,7 @@ func TestLROBeginPutAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPutAsyncRetrySucceededPollerResponse{}
+	resp = LROsClientPutAsyncRetrySucceededPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -1084,7 +1084,7 @@ func TestLROBeginPutAsyncSubResource(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPutAsyncSubResourcePollerResponse{}
+	resp = LROsClientPutAsyncSubResourcePollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -1117,7 +1117,7 @@ func TestLROBeginPutNoHeaderInRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPutNoHeaderInRetryPollerResponse{}
+	resp = LROsClientPutNoHeaderInRetryPollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -1150,7 +1150,7 @@ func TestLROBeginPutNonResource(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPutNonResourcePollerResponse{}
+	resp = LROsClientPutNonResourcePollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -1181,7 +1181,7 @@ func TestLROBeginPutSubResource(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = LROsPutSubResourcePollerResponse{}
+	resp = LROsClientPutSubResourcePollerResponse{}
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}

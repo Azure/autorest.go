@@ -21,130 +21,130 @@ func (e Error) Error() string {
 	return e.raw
 }
 
-// NumberGetBigDecimalNegativeDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimalNegativeDecimal
+// NumberClientGetBigDecimalNegativeDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimalNegativeDecimal
 // method.
-type NumberGetBigDecimalNegativeDecimalOptions struct {
+type NumberClientGetBigDecimalNegativeDecimalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberGetBigDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimal method.
-type NumberGetBigDecimalOptions struct {
+// NumberClientGetBigDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimal method.
+type NumberClientGetBigDecimalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberGetBigDecimalPositiveDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimalPositiveDecimal
+// NumberClientGetBigDecimalPositiveDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimalPositiveDecimal
 // method.
-type NumberGetBigDecimalPositiveDecimalOptions struct {
+type NumberClientGetBigDecimalPositiveDecimalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberGetBigDoubleNegativeDecimalOptions contains the optional parameters for the NumberClient.GetBigDoubleNegativeDecimal
+// NumberClientGetBigDoubleNegativeDecimalOptions contains the optional parameters for the NumberClient.GetBigDoubleNegativeDecimal
 // method.
-type NumberGetBigDoubleNegativeDecimalOptions struct {
+type NumberClientGetBigDoubleNegativeDecimalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberGetBigDoubleOptions contains the optional parameters for the NumberClient.GetBigDouble method.
-type NumberGetBigDoubleOptions struct {
+// NumberClientGetBigDoubleOptions contains the optional parameters for the NumberClient.GetBigDouble method.
+type NumberClientGetBigDoubleOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberGetBigDoublePositiveDecimalOptions contains the optional parameters for the NumberClient.GetBigDoublePositiveDecimal
+// NumberClientGetBigDoublePositiveDecimalOptions contains the optional parameters for the NumberClient.GetBigDoublePositiveDecimal
 // method.
-type NumberGetBigDoublePositiveDecimalOptions struct {
+type NumberClientGetBigDoublePositiveDecimalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberGetBigFloatOptions contains the optional parameters for the NumberClient.GetBigFloat method.
-type NumberGetBigFloatOptions struct {
+// NumberClientGetBigFloatOptions contains the optional parameters for the NumberClient.GetBigFloat method.
+type NumberClientGetBigFloatOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberGetInvalidDecimalOptions contains the optional parameters for the NumberClient.GetInvalidDecimal method.
-type NumberGetInvalidDecimalOptions struct {
+// NumberClientGetInvalidDecimalOptions contains the optional parameters for the NumberClient.GetInvalidDecimal method.
+type NumberClientGetInvalidDecimalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberGetInvalidDoubleOptions contains the optional parameters for the NumberClient.GetInvalidDouble method.
-type NumberGetInvalidDoubleOptions struct {
+// NumberClientGetInvalidDoubleOptions contains the optional parameters for the NumberClient.GetInvalidDouble method.
+type NumberClientGetInvalidDoubleOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberGetInvalidFloatOptions contains the optional parameters for the NumberClient.GetInvalidFloat method.
-type NumberGetInvalidFloatOptions struct {
+// NumberClientGetInvalidFloatOptions contains the optional parameters for the NumberClient.GetInvalidFloat method.
+type NumberClientGetInvalidFloatOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberGetNullOptions contains the optional parameters for the NumberClient.GetNull method.
-type NumberGetNullOptions struct {
+// NumberClientGetNullOptions contains the optional parameters for the NumberClient.GetNull method.
+type NumberClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberGetSmallDecimalOptions contains the optional parameters for the NumberClient.GetSmallDecimal method.
-type NumberGetSmallDecimalOptions struct {
+// NumberClientGetSmallDecimalOptions contains the optional parameters for the NumberClient.GetSmallDecimal method.
+type NumberClientGetSmallDecimalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberGetSmallDoubleOptions contains the optional parameters for the NumberClient.GetSmallDouble method.
-type NumberGetSmallDoubleOptions struct {
+// NumberClientGetSmallDoubleOptions contains the optional parameters for the NumberClient.GetSmallDouble method.
+type NumberClientGetSmallDoubleOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberGetSmallFloatOptions contains the optional parameters for the NumberClient.GetSmallFloat method.
-type NumberGetSmallFloatOptions struct {
+// NumberClientGetSmallFloatOptions contains the optional parameters for the NumberClient.GetSmallFloat method.
+type NumberClientGetSmallFloatOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberPutBigDecimalNegativeDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimalNegativeDecimal
+// NumberClientPutBigDecimalNegativeDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimalNegativeDecimal
 // method.
-type NumberPutBigDecimalNegativeDecimalOptions struct {
+type NumberClientPutBigDecimalNegativeDecimalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberPutBigDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimal method.
-type NumberPutBigDecimalOptions struct {
+// NumberClientPutBigDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimal method.
+type NumberClientPutBigDecimalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberPutBigDecimalPositiveDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimalPositiveDecimal
+// NumberClientPutBigDecimalPositiveDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimalPositiveDecimal
 // method.
-type NumberPutBigDecimalPositiveDecimalOptions struct {
+type NumberClientPutBigDecimalPositiveDecimalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberPutBigDoubleNegativeDecimalOptions contains the optional parameters for the NumberClient.PutBigDoubleNegativeDecimal
+// NumberClientPutBigDoubleNegativeDecimalOptions contains the optional parameters for the NumberClient.PutBigDoubleNegativeDecimal
 // method.
-type NumberPutBigDoubleNegativeDecimalOptions struct {
+type NumberClientPutBigDoubleNegativeDecimalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberPutBigDoubleOptions contains the optional parameters for the NumberClient.PutBigDouble method.
-type NumberPutBigDoubleOptions struct {
+// NumberClientPutBigDoubleOptions contains the optional parameters for the NumberClient.PutBigDouble method.
+type NumberClientPutBigDoubleOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberPutBigDoublePositiveDecimalOptions contains the optional parameters for the NumberClient.PutBigDoublePositiveDecimal
+// NumberClientPutBigDoublePositiveDecimalOptions contains the optional parameters for the NumberClient.PutBigDoublePositiveDecimal
 // method.
-type NumberPutBigDoublePositiveDecimalOptions struct {
+type NumberClientPutBigDoublePositiveDecimalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberPutBigFloatOptions contains the optional parameters for the NumberClient.PutBigFloat method.
-type NumberPutBigFloatOptions struct {
+// NumberClientPutBigFloatOptions contains the optional parameters for the NumberClient.PutBigFloat method.
+type NumberClientPutBigFloatOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberPutSmallDecimalOptions contains the optional parameters for the NumberClient.PutSmallDecimal method.
-type NumberPutSmallDecimalOptions struct {
+// NumberClientPutSmallDecimalOptions contains the optional parameters for the NumberClient.PutSmallDecimal method.
+type NumberClientPutSmallDecimalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberPutSmallDoubleOptions contains the optional parameters for the NumberClient.PutSmallDouble method.
-type NumberPutSmallDoubleOptions struct {
+// NumberClientPutSmallDoubleOptions contains the optional parameters for the NumberClient.PutSmallDouble method.
+type NumberClientPutSmallDoubleOptions struct {
 	// placeholder for future optional parameters
 }
 
-// NumberPutSmallFloatOptions contains the optional parameters for the NumberClient.PutSmallFloat method.
-type NumberPutSmallFloatOptions struct {
+// NumberClientPutSmallFloatOptions contains the optional parameters for the NumberClient.PutSmallFloat method.
+type NumberClientPutSmallFloatOptions struct {
 	// placeholder for future optional parameters
 }

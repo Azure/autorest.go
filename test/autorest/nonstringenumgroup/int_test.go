@@ -30,7 +30,7 @@ func TestIntGet(t *testing.T) {
 // Put - Put an int enum
 func TestIntPut(t *testing.T) {
 	client := newIntClient()
-	result, err := client.Put(context.Background(), &IntPutOptions{
+	result, err := client.Put(context.Background(), &IntClientPutOptions{
 		Input: IntEnumTwoHundred.ToPtr(),
 	})
 	if err != nil {

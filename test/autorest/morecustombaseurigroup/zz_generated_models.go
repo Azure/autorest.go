@@ -21,8 +21,8 @@ func (e Error) Error() string {
 	return e.raw
 }
 
-// PathsGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
-type PathsGetEmptyOptions struct {
+// PathsClientGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
+type PathsClientGetEmptyOptions struct {
 	// The key version. Default value 'v1'.
 	KeyVersion *string
 }

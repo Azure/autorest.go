@@ -56,21 +56,21 @@ func NewVirtualAppliancesClient(subscriptionID string, credential azcore.TokenCr
 // resourceGroupName - The name of the resource group.
 // networkVirtualApplianceName - The name of Network Virtual Appliance.
 // parameters - Parameters supplied to the create or update Network Virtual Appliance.
-// options - NetworkVirtualAppliancesBeginCreateOrUpdateOptions contains the optional parameters for the VirtualAppliancesClient.BeginCreateOrUpdate
+// options - VirtualAppliancesClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualAppliancesClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters VirtualAppliance, options *NetworkVirtualAppliancesBeginCreateOrUpdateOptions) (NetworkVirtualAppliancesCreateOrUpdatePollerResponse, error) {
+func (client *VirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters VirtualAppliance, options *VirtualAppliancesClientBeginCreateOrUpdateOptions) (VirtualAppliancesClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
 	if err != nil {
-		return NetworkVirtualAppliancesCreateOrUpdatePollerResponse{}, err
+		return VirtualAppliancesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := NetworkVirtualAppliancesCreateOrUpdatePollerResponse{
+	result := VirtualAppliancesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualAppliancesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return NetworkVirtualAppliancesCreateOrUpdatePollerResponse{}, err
+		return VirtualAppliancesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &NetworkVirtualAppliancesCreateOrUpdatePoller{
+	result.Poller = &VirtualAppliancesClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *VirtualAppliancesClient) BeginCreateOrUpdate(ctx context.Context, 
 
 // CreateOrUpdate - Creates or updates the specified Network Virtual Appliance.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualAppliancesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters VirtualAppliance, options *NetworkVirtualAppliancesBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VirtualAppliancesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters VirtualAppliance, options *VirtualAppliancesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *VirtualAppliancesClient) createOrUpdate(ctx context.Context, resou
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualAppliancesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters VirtualAppliance, options *NetworkVirtualAppliancesBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *VirtualAppliancesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters VirtualAppliance, options *VirtualAppliancesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -136,21 +136,21 @@ func (client *VirtualAppliancesClient) createOrUpdateHandleError(resp *http.Resp
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkVirtualApplianceName - The name of Network Virtual Appliance.
-// options - NetworkVirtualAppliancesBeginDeleteOptions contains the optional parameters for the VirtualAppliancesClient.BeginDelete
+// options - VirtualAppliancesClientBeginDeleteOptions contains the optional parameters for the VirtualAppliancesClient.BeginDelete
 // method.
-func (client *VirtualAppliancesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *NetworkVirtualAppliancesBeginDeleteOptions) (NetworkVirtualAppliancesDeletePollerResponse, error) {
+func (client *VirtualAppliancesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientBeginDeleteOptions) (VirtualAppliancesClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkVirtualApplianceName, options)
 	if err != nil {
-		return NetworkVirtualAppliancesDeletePollerResponse{}, err
+		return VirtualAppliancesClientDeletePollerResponse{}, err
 	}
-	result := NetworkVirtualAppliancesDeletePollerResponse{
+	result := VirtualAppliancesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualAppliancesClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return NetworkVirtualAppliancesDeletePollerResponse{}, err
+		return VirtualAppliancesClientDeletePollerResponse{}, err
 	}
-	result.Poller = &NetworkVirtualAppliancesDeletePoller{
+	result.Poller = &VirtualAppliancesClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -158,7 +158,7 @@ func (client *VirtualAppliancesClient) BeginDelete(ctx context.Context, resource
 
 // Delete - Deletes the specified Network Virtual Appliance.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualAppliancesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *NetworkVirtualAppliancesBeginDeleteOptions) (*http.Response, error) {
+func (client *VirtualAppliancesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, options)
 	if err != nil {
 		return nil, err
@@ -174,7 +174,7 @@ func (client *VirtualAppliancesClient) deleteOperation(ctx context.Context, reso
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *VirtualAppliancesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *NetworkVirtualAppliancesBeginDeleteOptions) (*policy.Request, error) {
+func (client *VirtualAppliancesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -216,24 +216,24 @@ func (client *VirtualAppliancesClient) deleteHandleError(resp *http.Response) er
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkVirtualApplianceName - The name of Network Virtual Appliance.
-// options - NetworkVirtualAppliancesGetOptions contains the optional parameters for the VirtualAppliancesClient.Get method.
-func (client *VirtualAppliancesClient) Get(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *NetworkVirtualAppliancesGetOptions) (NetworkVirtualAppliancesGetResponse, error) {
+// options - VirtualAppliancesClientGetOptions contains the optional parameters for the VirtualAppliancesClient.Get method.
+func (client *VirtualAppliancesClient) Get(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientGetOptions) (VirtualAppliancesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, options)
 	if err != nil {
-		return NetworkVirtualAppliancesGetResponse{}, err
+		return VirtualAppliancesClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NetworkVirtualAppliancesGetResponse{}, err
+		return VirtualAppliancesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NetworkVirtualAppliancesGetResponse{}, client.getHandleError(resp)
+		return VirtualAppliancesClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualAppliancesClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *NetworkVirtualAppliancesGetOptions) (*policy.Request, error) {
+func (client *VirtualAppliancesClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, options *VirtualAppliancesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -262,10 +262,10 @@ func (client *VirtualAppliancesClient) getCreateRequest(ctx context.Context, res
 }
 
 // getHandleResponse handles the Get response.
-func (client *VirtualAppliancesClient) getHandleResponse(resp *http.Response) (NetworkVirtualAppliancesGetResponse, error) {
-	result := NetworkVirtualAppliancesGetResponse{RawResponse: resp}
+func (client *VirtualAppliancesClient) getHandleResponse(resp *http.Response) (VirtualAppliancesClientGetResponse, error) {
+	result := VirtualAppliancesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualAppliance); err != nil {
-		return NetworkVirtualAppliancesGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualAppliancesClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -285,21 +285,21 @@ func (client *VirtualAppliancesClient) getHandleError(resp *http.Response) error
 
 // List - Gets all Network Virtual Appliances in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - NetworkVirtualAppliancesListOptions contains the optional parameters for the VirtualAppliancesClient.List method.
-func (client *VirtualAppliancesClient) List(options *NetworkVirtualAppliancesListOptions) *NetworkVirtualAppliancesListPager {
-	return &NetworkVirtualAppliancesListPager{
+// options - VirtualAppliancesClientListOptions contains the optional parameters for the VirtualAppliancesClient.List method.
+func (client *VirtualAppliancesClient) List(options *VirtualAppliancesClientListOptions) *VirtualAppliancesClientListPager {
+	return &VirtualAppliancesClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp NetworkVirtualAppliancesListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualAppliancesClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualApplianceListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualAppliancesClient) listCreateRequest(ctx context.Context, options *NetworkVirtualAppliancesListOptions) (*policy.Request, error) {
+func (client *VirtualAppliancesClient) listCreateRequest(ctx context.Context, options *VirtualAppliancesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -317,10 +317,10 @@ func (client *VirtualAppliancesClient) listCreateRequest(ctx context.Context, op
 }
 
 // listHandleResponse handles the List response.
-func (client *VirtualAppliancesClient) listHandleResponse(resp *http.Response) (NetworkVirtualAppliancesListResponse, error) {
-	result := NetworkVirtualAppliancesListResponse{RawResponse: resp}
+func (client *VirtualAppliancesClient) listHandleResponse(resp *http.Response) (VirtualAppliancesClientListResponse, error) {
+	result := VirtualAppliancesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualApplianceListResult); err != nil {
-		return NetworkVirtualAppliancesListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualAppliancesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -341,22 +341,22 @@ func (client *VirtualAppliancesClient) listHandleError(resp *http.Response) erro
 // ListByResourceGroup - Lists all Network Virtual Appliances in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - NetworkVirtualAppliancesListByResourceGroupOptions contains the optional parameters for the VirtualAppliancesClient.ListByResourceGroup
+// options - VirtualAppliancesClientListByResourceGroupOptions contains the optional parameters for the VirtualAppliancesClient.ListByResourceGroup
 // method.
-func (client *VirtualAppliancesClient) ListByResourceGroup(resourceGroupName string, options *NetworkVirtualAppliancesListByResourceGroupOptions) *NetworkVirtualAppliancesListByResourceGroupPager {
-	return &NetworkVirtualAppliancesListByResourceGroupPager{
+func (client *VirtualAppliancesClient) ListByResourceGroup(resourceGroupName string, options *VirtualAppliancesClientListByResourceGroupOptions) *VirtualAppliancesClientListByResourceGroupPager {
+	return &VirtualAppliancesClientListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp NetworkVirtualAppliancesListByResourceGroupResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualAppliancesClientListByResourceGroupResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualApplianceListResult.NextLink)
 		},
 	}
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *VirtualAppliancesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *NetworkVirtualAppliancesListByResourceGroupOptions) (*policy.Request, error) {
+func (client *VirtualAppliancesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualAppliancesClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -378,10 +378,10 @@ func (client *VirtualAppliancesClient) listByResourceGroupCreateRequest(ctx cont
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *VirtualAppliancesClient) listByResourceGroupHandleResponse(resp *http.Response) (NetworkVirtualAppliancesListByResourceGroupResponse, error) {
-	result := NetworkVirtualAppliancesListByResourceGroupResponse{RawResponse: resp}
+func (client *VirtualAppliancesClient) listByResourceGroupHandleResponse(resp *http.Response) (VirtualAppliancesClientListByResourceGroupResponse, error) {
+	result := VirtualAppliancesClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualApplianceListResult); err != nil {
-		return NetworkVirtualAppliancesListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualAppliancesClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -404,25 +404,25 @@ func (client *VirtualAppliancesClient) listByResourceGroupHandleError(resp *http
 // resourceGroupName - The resource group name of Network Virtual Appliance.
 // networkVirtualApplianceName - The name of Network Virtual Appliance being updated.
 // parameters - Parameters supplied to Update Network Virtual Appliance Tags.
-// options - NetworkVirtualAppliancesUpdateTagsOptions contains the optional parameters for the VirtualAppliancesClient.UpdateTags
+// options - VirtualAppliancesClientUpdateTagsOptions contains the optional parameters for the VirtualAppliancesClient.UpdateTags
 // method.
-func (client *VirtualAppliancesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters TagsObject, options *NetworkVirtualAppliancesUpdateTagsOptions) (NetworkVirtualAppliancesUpdateTagsResponse, error) {
+func (client *VirtualAppliancesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters TagsObject, options *VirtualAppliancesClientUpdateTagsOptions) (VirtualAppliancesClientUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkVirtualApplianceName, parameters, options)
 	if err != nil {
-		return NetworkVirtualAppliancesUpdateTagsResponse{}, err
+		return VirtualAppliancesClientUpdateTagsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NetworkVirtualAppliancesUpdateTagsResponse{}, err
+		return VirtualAppliancesClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NetworkVirtualAppliancesUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return VirtualAppliancesClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *VirtualAppliancesClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters TagsObject, options *NetworkVirtualAppliancesUpdateTagsOptions) (*policy.Request, error) {
+func (client *VirtualAppliancesClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkVirtualApplianceName string, parameters TagsObject, options *VirtualAppliancesClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -448,10 +448,10 @@ func (client *VirtualAppliancesClient) updateTagsCreateRequest(ctx context.Conte
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *VirtualAppliancesClient) updateTagsHandleResponse(resp *http.Response) (NetworkVirtualAppliancesUpdateTagsResponse, error) {
-	result := NetworkVirtualAppliancesUpdateTagsResponse{RawResponse: resp}
+func (client *VirtualAppliancesClient) updateTagsHandleResponse(resp *http.Response) (VirtualAppliancesClientUpdateTagsResponse, error) {
+	result := VirtualAppliancesClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualAppliance); err != nil {
-		return NetworkVirtualAppliancesUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualAppliancesClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

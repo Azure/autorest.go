@@ -38,24 +38,24 @@ func NewStringClient(options *azcore.ClientOptions) *StringClient {
 
 // GetBase64Encoded - Get value that is base64 encoded
 // If the operation fails it returns the *Error error type.
-// options - StringGetBase64EncodedOptions contains the optional parameters for the StringClient.GetBase64Encoded method.
-func (client *StringClient) GetBase64Encoded(ctx context.Context, options *StringGetBase64EncodedOptions) (StringGetBase64EncodedResponse, error) {
+// options - StringClientGetBase64EncodedOptions contains the optional parameters for the StringClient.GetBase64Encoded method.
+func (client *StringClient) GetBase64Encoded(ctx context.Context, options *StringClientGetBase64EncodedOptions) (StringClientGetBase64EncodedResponse, error) {
 	req, err := client.getBase64EncodedCreateRequest(ctx, options)
 	if err != nil {
-		return StringGetBase64EncodedResponse{}, err
+		return StringClientGetBase64EncodedResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return StringGetBase64EncodedResponse{}, err
+		return StringClientGetBase64EncodedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringGetBase64EncodedResponse{}, client.getBase64EncodedHandleError(resp)
+		return StringClientGetBase64EncodedResponse{}, client.getBase64EncodedHandleError(resp)
 	}
 	return client.getBase64EncodedHandleResponse(resp)
 }
 
 // getBase64EncodedCreateRequest creates the GetBase64Encoded request.
-func (client *StringClient) getBase64EncodedCreateRequest(ctx context.Context, options *StringGetBase64EncodedOptions) (*policy.Request, error) {
+func (client *StringClient) getBase64EncodedCreateRequest(ctx context.Context, options *StringClientGetBase64EncodedOptions) (*policy.Request, error) {
 	urlPath := "/string/base64Encoding"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -66,10 +66,10 @@ func (client *StringClient) getBase64EncodedCreateRequest(ctx context.Context, o
 }
 
 // getBase64EncodedHandleResponse handles the GetBase64Encoded response.
-func (client *StringClient) getBase64EncodedHandleResponse(resp *http.Response) (StringGetBase64EncodedResponse, error) {
-	result := StringGetBase64EncodedResponse{RawResponse: resp}
+func (client *StringClient) getBase64EncodedHandleResponse(resp *http.Response) (StringClientGetBase64EncodedResponse, error) {
+	result := StringClientGetBase64EncodedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return StringGetBase64EncodedResponse{}, runtime.NewResponseError(err, resp)
+		return StringClientGetBase64EncodedResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -89,24 +89,25 @@ func (client *StringClient) getBase64EncodedHandleError(resp *http.Response) err
 
 // GetBase64URLEncoded - Get value that is base64url encoded
 // If the operation fails it returns the *Error error type.
-// options - StringGetBase64URLEncodedOptions contains the optional parameters for the StringClient.GetBase64URLEncoded method.
-func (client *StringClient) GetBase64URLEncoded(ctx context.Context, options *StringGetBase64URLEncodedOptions) (StringGetBase64URLEncodedResponse, error) {
+// options - StringClientGetBase64URLEncodedOptions contains the optional parameters for the StringClient.GetBase64URLEncoded
+// method.
+func (client *StringClient) GetBase64URLEncoded(ctx context.Context, options *StringClientGetBase64URLEncodedOptions) (StringClientGetBase64URLEncodedResponse, error) {
 	req, err := client.getBase64URLEncodedCreateRequest(ctx, options)
 	if err != nil {
-		return StringGetBase64URLEncodedResponse{}, err
+		return StringClientGetBase64URLEncodedResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return StringGetBase64URLEncodedResponse{}, err
+		return StringClientGetBase64URLEncodedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringGetBase64URLEncodedResponse{}, client.getBase64URLEncodedHandleError(resp)
+		return StringClientGetBase64URLEncodedResponse{}, client.getBase64URLEncodedHandleError(resp)
 	}
 	return client.getBase64URLEncodedHandleResponse(resp)
 }
 
 // getBase64URLEncodedCreateRequest creates the GetBase64URLEncoded request.
-func (client *StringClient) getBase64URLEncodedCreateRequest(ctx context.Context, options *StringGetBase64URLEncodedOptions) (*policy.Request, error) {
+func (client *StringClient) getBase64URLEncodedCreateRequest(ctx context.Context, options *StringClientGetBase64URLEncodedOptions) (*policy.Request, error) {
 	urlPath := "/string/base64UrlEncoding"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -117,10 +118,10 @@ func (client *StringClient) getBase64URLEncodedCreateRequest(ctx context.Context
 }
 
 // getBase64URLEncodedHandleResponse handles the GetBase64URLEncoded response.
-func (client *StringClient) getBase64URLEncodedHandleResponse(resp *http.Response) (StringGetBase64URLEncodedResponse, error) {
-	result := StringGetBase64URLEncodedResponse{RawResponse: resp}
+func (client *StringClient) getBase64URLEncodedHandleResponse(resp *http.Response) (StringClientGetBase64URLEncodedResponse, error) {
+	result := StringClientGetBase64URLEncodedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64URLFormat); err != nil {
-		return StringGetBase64URLEncodedResponse{}, runtime.NewResponseError(err, resp)
+		return StringClientGetBase64URLEncodedResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -140,24 +141,24 @@ func (client *StringClient) getBase64URLEncodedHandleError(resp *http.Response) 
 
 // GetEmpty - Get empty string value value ''
 // If the operation fails it returns the *Error error type.
-// options - StringGetEmptyOptions contains the optional parameters for the StringClient.GetEmpty method.
-func (client *StringClient) GetEmpty(ctx context.Context, options *StringGetEmptyOptions) (StringGetEmptyResponse, error) {
+// options - StringClientGetEmptyOptions contains the optional parameters for the StringClient.GetEmpty method.
+func (client *StringClient) GetEmpty(ctx context.Context, options *StringClientGetEmptyOptions) (StringClientGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return StringGetEmptyResponse{}, err
+		return StringClientGetEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return StringGetEmptyResponse{}, err
+		return StringClientGetEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringGetEmptyResponse{}, client.getEmptyHandleError(resp)
+		return StringClientGetEmptyResponse{}, client.getEmptyHandleError(resp)
 	}
 	return client.getEmptyHandleResponse(resp)
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *StringClient) getEmptyCreateRequest(ctx context.Context, options *StringGetEmptyOptions) (*policy.Request, error) {
+func (client *StringClient) getEmptyCreateRequest(ctx context.Context, options *StringClientGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/string/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -168,10 +169,10 @@ func (client *StringClient) getEmptyCreateRequest(ctx context.Context, options *
 }
 
 // getEmptyHandleResponse handles the GetEmpty response.
-func (client *StringClient) getEmptyHandleResponse(resp *http.Response) (StringGetEmptyResponse, error) {
-	result := StringGetEmptyResponse{RawResponse: resp}
+func (client *StringClient) getEmptyHandleResponse(resp *http.Response) (StringClientGetEmptyResponse, error) {
+	result := StringClientGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringGetEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return StringClientGetEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -191,24 +192,24 @@ func (client *StringClient) getEmptyHandleError(resp *http.Response) error {
 
 // GetMBCS - Get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 // If the operation fails it returns the *Error error type.
-// options - StringGetMBCSOptions contains the optional parameters for the StringClient.GetMBCS method.
-func (client *StringClient) GetMBCS(ctx context.Context, options *StringGetMBCSOptions) (StringGetMBCSResponse, error) {
+// options - StringClientGetMBCSOptions contains the optional parameters for the StringClient.GetMBCS method.
+func (client *StringClient) GetMBCS(ctx context.Context, options *StringClientGetMBCSOptions) (StringClientGetMBCSResponse, error) {
 	req, err := client.getMBCSCreateRequest(ctx, options)
 	if err != nil {
-		return StringGetMBCSResponse{}, err
+		return StringClientGetMBCSResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return StringGetMBCSResponse{}, err
+		return StringClientGetMBCSResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringGetMBCSResponse{}, client.getMBCSHandleError(resp)
+		return StringClientGetMBCSResponse{}, client.getMBCSHandleError(resp)
 	}
 	return client.getMBCSHandleResponse(resp)
 }
 
 // getMBCSCreateRequest creates the GetMBCS request.
-func (client *StringClient) getMBCSCreateRequest(ctx context.Context, options *StringGetMBCSOptions) (*policy.Request, error) {
+func (client *StringClient) getMBCSCreateRequest(ctx context.Context, options *StringClientGetMBCSOptions) (*policy.Request, error) {
 	urlPath := "/string/mbcs"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -219,10 +220,10 @@ func (client *StringClient) getMBCSCreateRequest(ctx context.Context, options *S
 }
 
 // getMBCSHandleResponse handles the GetMBCS response.
-func (client *StringClient) getMBCSHandleResponse(resp *http.Response) (StringGetMBCSResponse, error) {
-	result := StringGetMBCSResponse{RawResponse: resp}
+func (client *StringClient) getMBCSHandleResponse(resp *http.Response) (StringClientGetMBCSResponse, error) {
+	result := StringClientGetMBCSResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringGetMBCSResponse{}, runtime.NewResponseError(err, resp)
+		return StringClientGetMBCSResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -242,24 +243,24 @@ func (client *StringClient) getMBCSHandleError(resp *http.Response) error {
 
 // GetNotProvided - Get String value when no string value is sent in response payload
 // If the operation fails it returns the *Error error type.
-// options - StringGetNotProvidedOptions contains the optional parameters for the StringClient.GetNotProvided method.
-func (client *StringClient) GetNotProvided(ctx context.Context, options *StringGetNotProvidedOptions) (StringGetNotProvidedResponse, error) {
+// options - StringClientGetNotProvidedOptions contains the optional parameters for the StringClient.GetNotProvided method.
+func (client *StringClient) GetNotProvided(ctx context.Context, options *StringClientGetNotProvidedOptions) (StringClientGetNotProvidedResponse, error) {
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
-		return StringGetNotProvidedResponse{}, err
+		return StringClientGetNotProvidedResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return StringGetNotProvidedResponse{}, err
+		return StringClientGetNotProvidedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringGetNotProvidedResponse{}, client.getNotProvidedHandleError(resp)
+		return StringClientGetNotProvidedResponse{}, client.getNotProvidedHandleError(resp)
 	}
 	return client.getNotProvidedHandleResponse(resp)
 }
 
 // getNotProvidedCreateRequest creates the GetNotProvided request.
-func (client *StringClient) getNotProvidedCreateRequest(ctx context.Context, options *StringGetNotProvidedOptions) (*policy.Request, error) {
+func (client *StringClient) getNotProvidedCreateRequest(ctx context.Context, options *StringClientGetNotProvidedOptions) (*policy.Request, error) {
 	urlPath := "/string/notProvided"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -270,10 +271,10 @@ func (client *StringClient) getNotProvidedCreateRequest(ctx context.Context, opt
 }
 
 // getNotProvidedHandleResponse handles the GetNotProvided response.
-func (client *StringClient) getNotProvidedHandleResponse(resp *http.Response) (StringGetNotProvidedResponse, error) {
-	result := StringGetNotProvidedResponse{RawResponse: resp}
+func (client *StringClient) getNotProvidedHandleResponse(resp *http.Response) (StringClientGetNotProvidedResponse, error) {
+	result := StringClientGetNotProvidedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringGetNotProvidedResponse{}, runtime.NewResponseError(err, resp)
+		return StringClientGetNotProvidedResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -293,24 +294,24 @@ func (client *StringClient) getNotProvidedHandleError(resp *http.Response) error
 
 // GetNull - Get null string value value
 // If the operation fails it returns the *Error error type.
-// options - StringGetNullOptions contains the optional parameters for the StringClient.GetNull method.
-func (client *StringClient) GetNull(ctx context.Context, options *StringGetNullOptions) (StringGetNullResponse, error) {
+// options - StringClientGetNullOptions contains the optional parameters for the StringClient.GetNull method.
+func (client *StringClient) GetNull(ctx context.Context, options *StringClientGetNullOptions) (StringClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
-		return StringGetNullResponse{}, err
+		return StringClientGetNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return StringGetNullResponse{}, err
+		return StringClientGetNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringGetNullResponse{}, client.getNullHandleError(resp)
+		return StringClientGetNullResponse{}, client.getNullHandleError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *StringClient) getNullCreateRequest(ctx context.Context, options *StringGetNullOptions) (*policy.Request, error) {
+func (client *StringClient) getNullCreateRequest(ctx context.Context, options *StringClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/string/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -321,10 +322,10 @@ func (client *StringClient) getNullCreateRequest(ctx context.Context, options *S
 }
 
 // getNullHandleResponse handles the GetNull response.
-func (client *StringClient) getNullHandleResponse(resp *http.Response) (StringGetNullResponse, error) {
-	result := StringGetNullResponse{RawResponse: resp}
+func (client *StringClient) getNullHandleResponse(resp *http.Response) (StringClientGetNullResponse, error) {
+	result := StringClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringGetNullResponse{}, runtime.NewResponseError(err, resp)
+		return StringClientGetNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -344,25 +345,25 @@ func (client *StringClient) getNullHandleError(resp *http.Response) error {
 
 // GetNullBase64URLEncoded - Get null value that is expected to be base64url encoded
 // If the operation fails it returns the *Error error type.
-// options - StringGetNullBase64URLEncodedOptions contains the optional parameters for the StringClient.GetNullBase64URLEncoded
+// options - StringClientGetNullBase64URLEncodedOptions contains the optional parameters for the StringClient.GetNullBase64URLEncoded
 // method.
-func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context, options *StringGetNullBase64URLEncodedOptions) (StringGetNullBase64URLEncodedResponse, error) {
+func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context, options *StringClientGetNullBase64URLEncodedOptions) (StringClientGetNullBase64URLEncodedResponse, error) {
 	req, err := client.getNullBase64URLEncodedCreateRequest(ctx, options)
 	if err != nil {
-		return StringGetNullBase64URLEncodedResponse{}, err
+		return StringClientGetNullBase64URLEncodedResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return StringGetNullBase64URLEncodedResponse{}, err
+		return StringClientGetNullBase64URLEncodedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringGetNullBase64URLEncodedResponse{}, client.getNullBase64URLEncodedHandleError(resp)
+		return StringClientGetNullBase64URLEncodedResponse{}, client.getNullBase64URLEncodedHandleError(resp)
 	}
 	return client.getNullBase64URLEncodedHandleResponse(resp)
 }
 
 // getNullBase64URLEncodedCreateRequest creates the GetNullBase64URLEncoded request.
-func (client *StringClient) getNullBase64URLEncodedCreateRequest(ctx context.Context, options *StringGetNullBase64URLEncodedOptions) (*policy.Request, error) {
+func (client *StringClient) getNullBase64URLEncodedCreateRequest(ctx context.Context, options *StringClientGetNullBase64URLEncodedOptions) (*policy.Request, error) {
 	urlPath := "/string/nullBase64UrlEncoding"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -373,10 +374,10 @@ func (client *StringClient) getNullBase64URLEncodedCreateRequest(ctx context.Con
 }
 
 // getNullBase64URLEncodedHandleResponse handles the GetNullBase64URLEncoded response.
-func (client *StringClient) getNullBase64URLEncodedHandleResponse(resp *http.Response) (StringGetNullBase64URLEncodedResponse, error) {
-	result := StringGetNullBase64URLEncodedResponse{RawResponse: resp}
+func (client *StringClient) getNullBase64URLEncodedHandleResponse(resp *http.Response) (StringClientGetNullBase64URLEncodedResponse, error) {
+	result := StringClientGetNullBase64URLEncodedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64URLFormat); err != nil {
-		return StringGetNullBase64URLEncodedResponse{}, runtime.NewResponseError(err, resp)
+		return StringClientGetNullBase64URLEncodedResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -397,24 +398,24 @@ func (client *StringClient) getNullBase64URLEncodedHandleError(resp *http.Respon
 // GetWhitespace - Get string value with leading and trailing whitespace 'Now is the time for all good men to come to the
 // aid of their country'
 // If the operation fails it returns the *Error error type.
-// options - StringGetWhitespaceOptions contains the optional parameters for the StringClient.GetWhitespace method.
-func (client *StringClient) GetWhitespace(ctx context.Context, options *StringGetWhitespaceOptions) (StringGetWhitespaceResponse, error) {
+// options - StringClientGetWhitespaceOptions contains the optional parameters for the StringClient.GetWhitespace method.
+func (client *StringClient) GetWhitespace(ctx context.Context, options *StringClientGetWhitespaceOptions) (StringClientGetWhitespaceResponse, error) {
 	req, err := client.getWhitespaceCreateRequest(ctx, options)
 	if err != nil {
-		return StringGetWhitespaceResponse{}, err
+		return StringClientGetWhitespaceResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return StringGetWhitespaceResponse{}, err
+		return StringClientGetWhitespaceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringGetWhitespaceResponse{}, client.getWhitespaceHandleError(resp)
+		return StringClientGetWhitespaceResponse{}, client.getWhitespaceHandleError(resp)
 	}
 	return client.getWhitespaceHandleResponse(resp)
 }
 
 // getWhitespaceCreateRequest creates the GetWhitespace request.
-func (client *StringClient) getWhitespaceCreateRequest(ctx context.Context, options *StringGetWhitespaceOptions) (*policy.Request, error) {
+func (client *StringClient) getWhitespaceCreateRequest(ctx context.Context, options *StringClientGetWhitespaceOptions) (*policy.Request, error) {
 	urlPath := "/string/whitespace"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -425,10 +426,10 @@ func (client *StringClient) getWhitespaceCreateRequest(ctx context.Context, opti
 }
 
 // getWhitespaceHandleResponse handles the GetWhitespace response.
-func (client *StringClient) getWhitespaceHandleResponse(resp *http.Response) (StringGetWhitespaceResponse, error) {
-	result := StringGetWhitespaceResponse{RawResponse: resp}
+func (client *StringClient) getWhitespaceHandleResponse(resp *http.Response) (StringClientGetWhitespaceResponse, error) {
+	result := StringClientGetWhitespaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringGetWhitespaceResponse{}, runtime.NewResponseError(err, resp)
+		return StringClientGetWhitespaceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -449,24 +450,25 @@ func (client *StringClient) getWhitespaceHandleError(resp *http.Response) error 
 // PutBase64URLEncoded - Put value that is base64url encoded
 // If the operation fails it returns the *Error error type.
 // stringBody - string body
-// options - StringPutBase64URLEncodedOptions contains the optional parameters for the StringClient.PutBase64URLEncoded method.
-func (client *StringClient) PutBase64URLEncoded(ctx context.Context, stringBody []byte, options *StringPutBase64URLEncodedOptions) (StringPutBase64URLEncodedResponse, error) {
+// options - StringClientPutBase64URLEncodedOptions contains the optional parameters for the StringClient.PutBase64URLEncoded
+// method.
+func (client *StringClient) PutBase64URLEncoded(ctx context.Context, stringBody []byte, options *StringClientPutBase64URLEncodedOptions) (StringClientPutBase64URLEncodedResponse, error) {
 	req, err := client.putBase64URLEncodedCreateRequest(ctx, stringBody, options)
 	if err != nil {
-		return StringPutBase64URLEncodedResponse{}, err
+		return StringClientPutBase64URLEncodedResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return StringPutBase64URLEncodedResponse{}, err
+		return StringClientPutBase64URLEncodedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringPutBase64URLEncodedResponse{}, client.putBase64URLEncodedHandleError(resp)
+		return StringClientPutBase64URLEncodedResponse{}, client.putBase64URLEncodedHandleError(resp)
 	}
-	return StringPutBase64URLEncodedResponse{RawResponse: resp}, nil
+	return StringClientPutBase64URLEncodedResponse{RawResponse: resp}, nil
 }
 
 // putBase64URLEncodedCreateRequest creates the PutBase64URLEncoded request.
-func (client *StringClient) putBase64URLEncodedCreateRequest(ctx context.Context, stringBody []byte, options *StringPutBase64URLEncodedOptions) (*policy.Request, error) {
+func (client *StringClient) putBase64URLEncodedCreateRequest(ctx context.Context, stringBody []byte, options *StringClientPutBase64URLEncodedOptions) (*policy.Request, error) {
 	urlPath := "/string/base64UrlEncoding"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -491,24 +493,24 @@ func (client *StringClient) putBase64URLEncodedHandleError(resp *http.Response) 
 
 // PutEmpty - Set string value empty ''
 // If the operation fails it returns the *Error error type.
-// options - StringPutEmptyOptions contains the optional parameters for the StringClient.PutEmpty method.
-func (client *StringClient) PutEmpty(ctx context.Context, options *StringPutEmptyOptions) (StringPutEmptyResponse, error) {
+// options - StringClientPutEmptyOptions contains the optional parameters for the StringClient.PutEmpty method.
+func (client *StringClient) PutEmpty(ctx context.Context, options *StringClientPutEmptyOptions) (StringClientPutEmptyResponse, error) {
 	req, err := client.putEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return StringPutEmptyResponse{}, err
+		return StringClientPutEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return StringPutEmptyResponse{}, err
+		return StringClientPutEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringPutEmptyResponse{}, client.putEmptyHandleError(resp)
+		return StringClientPutEmptyResponse{}, client.putEmptyHandleError(resp)
 	}
-	return StringPutEmptyResponse{RawResponse: resp}, nil
+	return StringClientPutEmptyResponse{RawResponse: resp}, nil
 }
 
 // putEmptyCreateRequest creates the PutEmpty request.
-func (client *StringClient) putEmptyCreateRequest(ctx context.Context, options *StringPutEmptyOptions) (*policy.Request, error) {
+func (client *StringClient) putEmptyCreateRequest(ctx context.Context, options *StringClientPutEmptyOptions) (*policy.Request, error) {
 	urlPath := "/string/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -533,24 +535,24 @@ func (client *StringClient) putEmptyHandleError(resp *http.Response) error {
 
 // PutMBCS - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
 // If the operation fails it returns the *Error error type.
-// options - StringPutMBCSOptions contains the optional parameters for the StringClient.PutMBCS method.
-func (client *StringClient) PutMBCS(ctx context.Context, options *StringPutMBCSOptions) (StringPutMBCSResponse, error) {
+// options - StringClientPutMBCSOptions contains the optional parameters for the StringClient.PutMBCS method.
+func (client *StringClient) PutMBCS(ctx context.Context, options *StringClientPutMBCSOptions) (StringClientPutMBCSResponse, error) {
 	req, err := client.putMBCSCreateRequest(ctx, options)
 	if err != nil {
-		return StringPutMBCSResponse{}, err
+		return StringClientPutMBCSResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return StringPutMBCSResponse{}, err
+		return StringClientPutMBCSResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringPutMBCSResponse{}, client.putMBCSHandleError(resp)
+		return StringClientPutMBCSResponse{}, client.putMBCSHandleError(resp)
 	}
-	return StringPutMBCSResponse{RawResponse: resp}, nil
+	return StringClientPutMBCSResponse{RawResponse: resp}, nil
 }
 
 // putMBCSCreateRequest creates the PutMBCS request.
-func (client *StringClient) putMBCSCreateRequest(ctx context.Context, options *StringPutMBCSOptions) (*policy.Request, error) {
+func (client *StringClient) putMBCSCreateRequest(ctx context.Context, options *StringClientPutMBCSOptions) (*policy.Request, error) {
 	urlPath := "/string/mbcs"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -575,24 +577,24 @@ func (client *StringClient) putMBCSHandleError(resp *http.Response) error {
 
 // PutNull - Set string value null
 // If the operation fails it returns the *Error error type.
-// options - StringPutNullOptions contains the optional parameters for the StringClient.PutNull method.
-func (client *StringClient) PutNull(ctx context.Context, options *StringPutNullOptions) (StringPutNullResponse, error) {
+// options - StringClientPutNullOptions contains the optional parameters for the StringClient.PutNull method.
+func (client *StringClient) PutNull(ctx context.Context, options *StringClientPutNullOptions) (StringClientPutNullResponse, error) {
 	req, err := client.putNullCreateRequest(ctx, options)
 	if err != nil {
-		return StringPutNullResponse{}, err
+		return StringClientPutNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return StringPutNullResponse{}, err
+		return StringClientPutNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringPutNullResponse{}, client.putNullHandleError(resp)
+		return StringClientPutNullResponse{}, client.putNullHandleError(resp)
 	}
-	return StringPutNullResponse{RawResponse: resp}, nil
+	return StringClientPutNullResponse{RawResponse: resp}, nil
 }
 
 // putNullCreateRequest creates the PutNull request.
-func (client *StringClient) putNullCreateRequest(ctx context.Context, options *StringPutNullOptions) (*policy.Request, error) {
+func (client *StringClient) putNullCreateRequest(ctx context.Context, options *StringClientPutNullOptions) (*policy.Request, error) {
 	urlPath := "/string/null"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -621,24 +623,24 @@ func (client *StringClient) putNullHandleError(resp *http.Response) error {
 // PutWhitespace - Set String value with leading and trailing whitespace 'Now is the time for all good men to come to the
 // aid of their country'
 // If the operation fails it returns the *Error error type.
-// options - StringPutWhitespaceOptions contains the optional parameters for the StringClient.PutWhitespace method.
-func (client *StringClient) PutWhitespace(ctx context.Context, options *StringPutWhitespaceOptions) (StringPutWhitespaceResponse, error) {
+// options - StringClientPutWhitespaceOptions contains the optional parameters for the StringClient.PutWhitespace method.
+func (client *StringClient) PutWhitespace(ctx context.Context, options *StringClientPutWhitespaceOptions) (StringClientPutWhitespaceResponse, error) {
 	req, err := client.putWhitespaceCreateRequest(ctx, options)
 	if err != nil {
-		return StringPutWhitespaceResponse{}, err
+		return StringClientPutWhitespaceResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return StringPutWhitespaceResponse{}, err
+		return StringClientPutWhitespaceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringPutWhitespaceResponse{}, client.putWhitespaceHandleError(resp)
+		return StringClientPutWhitespaceResponse{}, client.putWhitespaceHandleError(resp)
 	}
-	return StringPutWhitespaceResponse{RawResponse: resp}, nil
+	return StringClientPutWhitespaceResponse{RawResponse: resp}, nil
 }
 
 // putWhitespaceCreateRequest creates the PutWhitespace request.
-func (client *StringClient) putWhitespaceCreateRequest(ctx context.Context, options *StringPutWhitespaceOptions) (*policy.Request, error) {
+func (client *StringClient) putWhitespaceCreateRequest(ctx context.Context, options *StringClientPutWhitespaceOptions) (*policy.Request, error) {
 	urlPath := "/string/whitespace"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

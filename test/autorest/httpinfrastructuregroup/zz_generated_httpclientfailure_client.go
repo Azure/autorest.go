@@ -38,25 +38,25 @@ func NewHTTPClientFailureClient(options *azcore.ClientOptions) *HTTPClientFailur
 
 // Delete400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureDelete400Options contains the optional parameters for the HTTPClientFailureClient.Delete400
+// options - HTTPClientFailureClientDelete400Options contains the optional parameters for the HTTPClientFailureClient.Delete400
 // method.
-func (client *HTTPClientFailureClient) Delete400(ctx context.Context, options *HTTPClientFailureDelete400Options) (HTTPClientFailureDelete400Response, error) {
+func (client *HTTPClientFailureClient) Delete400(ctx context.Context, options *HTTPClientFailureClientDelete400Options) (HTTPClientFailureClientDelete400Response, error) {
 	req, err := client.delete400CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailureDelete400Response{}, err
+		return HTTPClientFailureClientDelete400Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailureDelete400Response{}, err
+		return HTTPClientFailureClientDelete400Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureDelete400Response{}, client.delete400HandleError(resp)
+		return HTTPClientFailureClientDelete400Response{}, client.delete400HandleError(resp)
 	}
-	return HTTPClientFailureDelete400Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientDelete400Response{RawResponse: resp}, nil
 }
 
 // delete400CreateRequest creates the Delete400 request.
-func (client *HTTPClientFailureClient) delete400CreateRequest(ctx context.Context, options *HTTPClientFailureDelete400Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) delete400CreateRequest(ctx context.Context, options *HTTPClientFailureClientDelete400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -81,25 +81,25 @@ func (client *HTTPClientFailureClient) delete400HandleError(resp *http.Response)
 
 // Delete407 - Return 407 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureDelete407Options contains the optional parameters for the HTTPClientFailureClient.Delete407
+// options - HTTPClientFailureClientDelete407Options contains the optional parameters for the HTTPClientFailureClient.Delete407
 // method.
-func (client *HTTPClientFailureClient) Delete407(ctx context.Context, options *HTTPClientFailureDelete407Options) (HTTPClientFailureDelete407Response, error) {
+func (client *HTTPClientFailureClient) Delete407(ctx context.Context, options *HTTPClientFailureClientDelete407Options) (HTTPClientFailureClientDelete407Response, error) {
 	req, err := client.delete407CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailureDelete407Response{}, err
+		return HTTPClientFailureClientDelete407Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailureDelete407Response{}, err
+		return HTTPClientFailureClientDelete407Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureDelete407Response{}, client.delete407HandleError(resp)
+		return HTTPClientFailureClientDelete407Response{}, client.delete407HandleError(resp)
 	}
-	return HTTPClientFailureDelete407Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientDelete407Response{RawResponse: resp}, nil
 }
 
 // delete407CreateRequest creates the Delete407 request.
-func (client *HTTPClientFailureClient) delete407CreateRequest(ctx context.Context, options *HTTPClientFailureDelete407Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) delete407CreateRequest(ctx context.Context, options *HTTPClientFailureClientDelete407Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/407"
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -124,25 +124,25 @@ func (client *HTTPClientFailureClient) delete407HandleError(resp *http.Response)
 
 // Delete417 - Return 417 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureDelete417Options contains the optional parameters for the HTTPClientFailureClient.Delete417
+// options - HTTPClientFailureClientDelete417Options contains the optional parameters for the HTTPClientFailureClient.Delete417
 // method.
-func (client *HTTPClientFailureClient) Delete417(ctx context.Context, options *HTTPClientFailureDelete417Options) (HTTPClientFailureDelete417Response, error) {
+func (client *HTTPClientFailureClient) Delete417(ctx context.Context, options *HTTPClientFailureClientDelete417Options) (HTTPClientFailureClientDelete417Response, error) {
 	req, err := client.delete417CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailureDelete417Response{}, err
+		return HTTPClientFailureClientDelete417Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailureDelete417Response{}, err
+		return HTTPClientFailureClientDelete417Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureDelete417Response{}, client.delete417HandleError(resp)
+		return HTTPClientFailureClientDelete417Response{}, client.delete417HandleError(resp)
 	}
-	return HTTPClientFailureDelete417Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientDelete417Response{RawResponse: resp}, nil
 }
 
 // delete417CreateRequest creates the Delete417 request.
-func (client *HTTPClientFailureClient) delete417CreateRequest(ctx context.Context, options *HTTPClientFailureDelete417Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) delete417CreateRequest(ctx context.Context, options *HTTPClientFailureClientDelete417Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/417"
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -167,24 +167,25 @@ func (client *HTTPClientFailureClient) delete417HandleError(resp *http.Response)
 
 // Get400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureGet400Options contains the optional parameters for the HTTPClientFailureClient.Get400 method.
-func (client *HTTPClientFailureClient) Get400(ctx context.Context, options *HTTPClientFailureGet400Options) (HTTPClientFailureGet400Response, error) {
+// options - HTTPClientFailureClientGet400Options contains the optional parameters for the HTTPClientFailureClient.Get400
+// method.
+func (client *HTTPClientFailureClient) Get400(ctx context.Context, options *HTTPClientFailureClientGet400Options) (HTTPClientFailureClientGet400Response, error) {
 	req, err := client.get400CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailureGet400Response{}, err
+		return HTTPClientFailureClientGet400Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailureGet400Response{}, err
+		return HTTPClientFailureClientGet400Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureGet400Response{}, client.get400HandleError(resp)
+		return HTTPClientFailureClientGet400Response{}, client.get400HandleError(resp)
 	}
-	return HTTPClientFailureGet400Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientGet400Response{RawResponse: resp}, nil
 }
 
 // get400CreateRequest creates the Get400 request.
-func (client *HTTPClientFailureClient) get400CreateRequest(ctx context.Context, options *HTTPClientFailureGet400Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) get400CreateRequest(ctx context.Context, options *HTTPClientFailureClientGet400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -209,24 +210,25 @@ func (client *HTTPClientFailureClient) get400HandleError(resp *http.Response) er
 
 // Get402 - Return 402 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureGet402Options contains the optional parameters for the HTTPClientFailureClient.Get402 method.
-func (client *HTTPClientFailureClient) Get402(ctx context.Context, options *HTTPClientFailureGet402Options) (HTTPClientFailureGet402Response, error) {
+// options - HTTPClientFailureClientGet402Options contains the optional parameters for the HTTPClientFailureClient.Get402
+// method.
+func (client *HTTPClientFailureClient) Get402(ctx context.Context, options *HTTPClientFailureClientGet402Options) (HTTPClientFailureClientGet402Response, error) {
 	req, err := client.get402CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailureGet402Response{}, err
+		return HTTPClientFailureClientGet402Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailureGet402Response{}, err
+		return HTTPClientFailureClientGet402Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureGet402Response{}, client.get402HandleError(resp)
+		return HTTPClientFailureClientGet402Response{}, client.get402HandleError(resp)
 	}
-	return HTTPClientFailureGet402Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientGet402Response{RawResponse: resp}, nil
 }
 
 // get402CreateRequest creates the Get402 request.
-func (client *HTTPClientFailureClient) get402CreateRequest(ctx context.Context, options *HTTPClientFailureGet402Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) get402CreateRequest(ctx context.Context, options *HTTPClientFailureClientGet402Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/402"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -251,24 +253,25 @@ func (client *HTTPClientFailureClient) get402HandleError(resp *http.Response) er
 
 // Get403 - Return 403 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureGet403Options contains the optional parameters for the HTTPClientFailureClient.Get403 method.
-func (client *HTTPClientFailureClient) Get403(ctx context.Context, options *HTTPClientFailureGet403Options) (HTTPClientFailureGet403Response, error) {
+// options - HTTPClientFailureClientGet403Options contains the optional parameters for the HTTPClientFailureClient.Get403
+// method.
+func (client *HTTPClientFailureClient) Get403(ctx context.Context, options *HTTPClientFailureClientGet403Options) (HTTPClientFailureClientGet403Response, error) {
 	req, err := client.get403CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailureGet403Response{}, err
+		return HTTPClientFailureClientGet403Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailureGet403Response{}, err
+		return HTTPClientFailureClientGet403Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureGet403Response{}, client.get403HandleError(resp)
+		return HTTPClientFailureClientGet403Response{}, client.get403HandleError(resp)
 	}
-	return HTTPClientFailureGet403Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientGet403Response{RawResponse: resp}, nil
 }
 
 // get403CreateRequest creates the Get403 request.
-func (client *HTTPClientFailureClient) get403CreateRequest(ctx context.Context, options *HTTPClientFailureGet403Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) get403CreateRequest(ctx context.Context, options *HTTPClientFailureClientGet403Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/403"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -293,24 +296,25 @@ func (client *HTTPClientFailureClient) get403HandleError(resp *http.Response) er
 
 // Get411 - Return 411 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureGet411Options contains the optional parameters for the HTTPClientFailureClient.Get411 method.
-func (client *HTTPClientFailureClient) Get411(ctx context.Context, options *HTTPClientFailureGet411Options) (HTTPClientFailureGet411Response, error) {
+// options - HTTPClientFailureClientGet411Options contains the optional parameters for the HTTPClientFailureClient.Get411
+// method.
+func (client *HTTPClientFailureClient) Get411(ctx context.Context, options *HTTPClientFailureClientGet411Options) (HTTPClientFailureClientGet411Response, error) {
 	req, err := client.get411CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailureGet411Response{}, err
+		return HTTPClientFailureClientGet411Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailureGet411Response{}, err
+		return HTTPClientFailureClientGet411Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureGet411Response{}, client.get411HandleError(resp)
+		return HTTPClientFailureClientGet411Response{}, client.get411HandleError(resp)
 	}
-	return HTTPClientFailureGet411Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientGet411Response{RawResponse: resp}, nil
 }
 
 // get411CreateRequest creates the Get411 request.
-func (client *HTTPClientFailureClient) get411CreateRequest(ctx context.Context, options *HTTPClientFailureGet411Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) get411CreateRequest(ctx context.Context, options *HTTPClientFailureClientGet411Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/411"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -335,24 +339,25 @@ func (client *HTTPClientFailureClient) get411HandleError(resp *http.Response) er
 
 // Get412 - Return 412 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureGet412Options contains the optional parameters for the HTTPClientFailureClient.Get412 method.
-func (client *HTTPClientFailureClient) Get412(ctx context.Context, options *HTTPClientFailureGet412Options) (HTTPClientFailureGet412Response, error) {
+// options - HTTPClientFailureClientGet412Options contains the optional parameters for the HTTPClientFailureClient.Get412
+// method.
+func (client *HTTPClientFailureClient) Get412(ctx context.Context, options *HTTPClientFailureClientGet412Options) (HTTPClientFailureClientGet412Response, error) {
 	req, err := client.get412CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailureGet412Response{}, err
+		return HTTPClientFailureClientGet412Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailureGet412Response{}, err
+		return HTTPClientFailureClientGet412Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureGet412Response{}, client.get412HandleError(resp)
+		return HTTPClientFailureClientGet412Response{}, client.get412HandleError(resp)
 	}
-	return HTTPClientFailureGet412Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientGet412Response{RawResponse: resp}, nil
 }
 
 // get412CreateRequest creates the Get412 request.
-func (client *HTTPClientFailureClient) get412CreateRequest(ctx context.Context, options *HTTPClientFailureGet412Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) get412CreateRequest(ctx context.Context, options *HTTPClientFailureClientGet412Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/412"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -377,24 +382,25 @@ func (client *HTTPClientFailureClient) get412HandleError(resp *http.Response) er
 
 // Get416 - Return 416 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureGet416Options contains the optional parameters for the HTTPClientFailureClient.Get416 method.
-func (client *HTTPClientFailureClient) Get416(ctx context.Context, options *HTTPClientFailureGet416Options) (HTTPClientFailureGet416Response, error) {
+// options - HTTPClientFailureClientGet416Options contains the optional parameters for the HTTPClientFailureClient.Get416
+// method.
+func (client *HTTPClientFailureClient) Get416(ctx context.Context, options *HTTPClientFailureClientGet416Options) (HTTPClientFailureClientGet416Response, error) {
 	req, err := client.get416CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailureGet416Response{}, err
+		return HTTPClientFailureClientGet416Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailureGet416Response{}, err
+		return HTTPClientFailureClientGet416Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureGet416Response{}, client.get416HandleError(resp)
+		return HTTPClientFailureClientGet416Response{}, client.get416HandleError(resp)
 	}
-	return HTTPClientFailureGet416Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientGet416Response{RawResponse: resp}, nil
 }
 
 // get416CreateRequest creates the Get416 request.
-func (client *HTTPClientFailureClient) get416CreateRequest(ctx context.Context, options *HTTPClientFailureGet416Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) get416CreateRequest(ctx context.Context, options *HTTPClientFailureClientGet416Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/416"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -419,17 +425,18 @@ func (client *HTTPClientFailureClient) get416HandleError(resp *http.Response) er
 
 // Head400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureHead400Options contains the optional parameters for the HTTPClientFailureClient.Head400 method.
-func (client *HTTPClientFailureClient) Head400(ctx context.Context, options *HTTPClientFailureHead400Options) (HTTPClientFailureHead400Response, error) {
+// options - HTTPClientFailureClientHead400Options contains the optional parameters for the HTTPClientFailureClient.Head400
+// method.
+func (client *HTTPClientFailureClient) Head400(ctx context.Context, options *HTTPClientFailureClientHead400Options) (HTTPClientFailureClientHead400Response, error) {
 	req, err := client.head400CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailureHead400Response{}, err
+		return HTTPClientFailureClientHead400Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailureHead400Response{}, err
+		return HTTPClientFailureClientHead400Response{}, err
 	}
-	result := HTTPClientFailureHead400Response{RawResponse: resp}
+	result := HTTPClientFailureClientHead400Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -437,7 +444,7 @@ func (client *HTTPClientFailureClient) Head400(ctx context.Context, options *HTT
 }
 
 // head400CreateRequest creates the Head400 request.
-func (client *HTTPClientFailureClient) head400CreateRequest(ctx context.Context, options *HTTPClientFailureHead400Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) head400CreateRequest(ctx context.Context, options *HTTPClientFailureClientHead400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -449,17 +456,18 @@ func (client *HTTPClientFailureClient) head400CreateRequest(ctx context.Context,
 
 // Head401 - Return 401 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureHead401Options contains the optional parameters for the HTTPClientFailureClient.Head401 method.
-func (client *HTTPClientFailureClient) Head401(ctx context.Context, options *HTTPClientFailureHead401Options) (HTTPClientFailureHead401Response, error) {
+// options - HTTPClientFailureClientHead401Options contains the optional parameters for the HTTPClientFailureClient.Head401
+// method.
+func (client *HTTPClientFailureClient) Head401(ctx context.Context, options *HTTPClientFailureClientHead401Options) (HTTPClientFailureClientHead401Response, error) {
 	req, err := client.head401CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailureHead401Response{}, err
+		return HTTPClientFailureClientHead401Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailureHead401Response{}, err
+		return HTTPClientFailureClientHead401Response{}, err
 	}
-	result := HTTPClientFailureHead401Response{RawResponse: resp}
+	result := HTTPClientFailureClientHead401Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -467,7 +475,7 @@ func (client *HTTPClientFailureClient) Head401(ctx context.Context, options *HTT
 }
 
 // head401CreateRequest creates the Head401 request.
-func (client *HTTPClientFailureClient) head401CreateRequest(ctx context.Context, options *HTTPClientFailureHead401Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) head401CreateRequest(ctx context.Context, options *HTTPClientFailureClientHead401Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/401"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -479,17 +487,18 @@ func (client *HTTPClientFailureClient) head401CreateRequest(ctx context.Context,
 
 // Head410 - Return 410 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureHead410Options contains the optional parameters for the HTTPClientFailureClient.Head410 method.
-func (client *HTTPClientFailureClient) Head410(ctx context.Context, options *HTTPClientFailureHead410Options) (HTTPClientFailureHead410Response, error) {
+// options - HTTPClientFailureClientHead410Options contains the optional parameters for the HTTPClientFailureClient.Head410
+// method.
+func (client *HTTPClientFailureClient) Head410(ctx context.Context, options *HTTPClientFailureClientHead410Options) (HTTPClientFailureClientHead410Response, error) {
 	req, err := client.head410CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailureHead410Response{}, err
+		return HTTPClientFailureClientHead410Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailureHead410Response{}, err
+		return HTTPClientFailureClientHead410Response{}, err
 	}
-	result := HTTPClientFailureHead410Response{RawResponse: resp}
+	result := HTTPClientFailureClientHead410Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -497,7 +506,7 @@ func (client *HTTPClientFailureClient) Head410(ctx context.Context, options *HTT
 }
 
 // head410CreateRequest creates the Head410 request.
-func (client *HTTPClientFailureClient) head410CreateRequest(ctx context.Context, options *HTTPClientFailureHead410Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) head410CreateRequest(ctx context.Context, options *HTTPClientFailureClientHead410Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/410"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -509,17 +518,18 @@ func (client *HTTPClientFailureClient) head410CreateRequest(ctx context.Context,
 
 // Head429 - Return 429 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureHead429Options contains the optional parameters for the HTTPClientFailureClient.Head429 method.
-func (client *HTTPClientFailureClient) Head429(ctx context.Context, options *HTTPClientFailureHead429Options) (HTTPClientFailureHead429Response, error) {
+// options - HTTPClientFailureClientHead429Options contains the optional parameters for the HTTPClientFailureClient.Head429
+// method.
+func (client *HTTPClientFailureClient) Head429(ctx context.Context, options *HTTPClientFailureClientHead429Options) (HTTPClientFailureClientHead429Response, error) {
 	req, err := client.head429CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailureHead429Response{}, err
+		return HTTPClientFailureClientHead429Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailureHead429Response{}, err
+		return HTTPClientFailureClientHead429Response{}, err
 	}
-	result := HTTPClientFailureHead429Response{RawResponse: resp}
+	result := HTTPClientFailureClientHead429Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -527,7 +537,7 @@ func (client *HTTPClientFailureClient) Head429(ctx context.Context, options *HTT
 }
 
 // head429CreateRequest creates the Head429 request.
-func (client *HTTPClientFailureClient) head429CreateRequest(ctx context.Context, options *HTTPClientFailureHead429Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) head429CreateRequest(ctx context.Context, options *HTTPClientFailureClientHead429Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/429"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -539,25 +549,25 @@ func (client *HTTPClientFailureClient) head429CreateRequest(ctx context.Context,
 
 // Options400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureOptions400Options contains the optional parameters for the HTTPClientFailureClient.Options400
+// options - HTTPClientFailureClientOptions400Options contains the optional parameters for the HTTPClientFailureClient.Options400
 // method.
-func (client *HTTPClientFailureClient) Options400(ctx context.Context, options *HTTPClientFailureOptions400Options) (HTTPClientFailureOptions400Response, error) {
+func (client *HTTPClientFailureClient) Options400(ctx context.Context, options *HTTPClientFailureClientOptions400Options) (HTTPClientFailureClientOptions400Response, error) {
 	req, err := client.options400CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailureOptions400Response{}, err
+		return HTTPClientFailureClientOptions400Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailureOptions400Response{}, err
+		return HTTPClientFailureClientOptions400Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureOptions400Response{}, client.options400HandleError(resp)
+		return HTTPClientFailureClientOptions400Response{}, client.options400HandleError(resp)
 	}
-	return HTTPClientFailureOptions400Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientOptions400Response{RawResponse: resp}, nil
 }
 
 // options400CreateRequest creates the Options400 request.
-func (client *HTTPClientFailureClient) options400CreateRequest(ctx context.Context, options *HTTPClientFailureOptions400Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) options400CreateRequest(ctx context.Context, options *HTTPClientFailureClientOptions400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
 	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -582,25 +592,25 @@ func (client *HTTPClientFailureClient) options400HandleError(resp *http.Response
 
 // Options403 - Return 403 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureOptions403Options contains the optional parameters for the HTTPClientFailureClient.Options403
+// options - HTTPClientFailureClientOptions403Options contains the optional parameters for the HTTPClientFailureClient.Options403
 // method.
-func (client *HTTPClientFailureClient) Options403(ctx context.Context, options *HTTPClientFailureOptions403Options) (HTTPClientFailureOptions403Response, error) {
+func (client *HTTPClientFailureClient) Options403(ctx context.Context, options *HTTPClientFailureClientOptions403Options) (HTTPClientFailureClientOptions403Response, error) {
 	req, err := client.options403CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailureOptions403Response{}, err
+		return HTTPClientFailureClientOptions403Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailureOptions403Response{}, err
+		return HTTPClientFailureClientOptions403Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureOptions403Response{}, client.options403HandleError(resp)
+		return HTTPClientFailureClientOptions403Response{}, client.options403HandleError(resp)
 	}
-	return HTTPClientFailureOptions403Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientOptions403Response{RawResponse: resp}, nil
 }
 
 // options403CreateRequest creates the Options403 request.
-func (client *HTTPClientFailureClient) options403CreateRequest(ctx context.Context, options *HTTPClientFailureOptions403Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) options403CreateRequest(ctx context.Context, options *HTTPClientFailureClientOptions403Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/403"
 	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -625,25 +635,25 @@ func (client *HTTPClientFailureClient) options403HandleError(resp *http.Response
 
 // Options412 - Return 412 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailureOptions412Options contains the optional parameters for the HTTPClientFailureClient.Options412
+// options - HTTPClientFailureClientOptions412Options contains the optional parameters for the HTTPClientFailureClient.Options412
 // method.
-func (client *HTTPClientFailureClient) Options412(ctx context.Context, options *HTTPClientFailureOptions412Options) (HTTPClientFailureOptions412Response, error) {
+func (client *HTTPClientFailureClient) Options412(ctx context.Context, options *HTTPClientFailureClientOptions412Options) (HTTPClientFailureClientOptions412Response, error) {
 	req, err := client.options412CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailureOptions412Response{}, err
+		return HTTPClientFailureClientOptions412Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailureOptions412Response{}, err
+		return HTTPClientFailureClientOptions412Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailureOptions412Response{}, client.options412HandleError(resp)
+		return HTTPClientFailureClientOptions412Response{}, client.options412HandleError(resp)
 	}
-	return HTTPClientFailureOptions412Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientOptions412Response{RawResponse: resp}, nil
 }
 
 // options412CreateRequest creates the Options412 request.
-func (client *HTTPClientFailureClient) options412CreateRequest(ctx context.Context, options *HTTPClientFailureOptions412Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) options412CreateRequest(ctx context.Context, options *HTTPClientFailureClientOptions412Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/412"
 	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -668,24 +678,25 @@ func (client *HTTPClientFailureClient) options412HandleError(resp *http.Response
 
 // Patch400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePatch400Options contains the optional parameters for the HTTPClientFailureClient.Patch400 method.
-func (client *HTTPClientFailureClient) Patch400(ctx context.Context, options *HTTPClientFailurePatch400Options) (HTTPClientFailurePatch400Response, error) {
+// options - HTTPClientFailureClientPatch400Options contains the optional parameters for the HTTPClientFailureClient.Patch400
+// method.
+func (client *HTTPClientFailureClient) Patch400(ctx context.Context, options *HTTPClientFailureClientPatch400Options) (HTTPClientFailureClientPatch400Response, error) {
 	req, err := client.patch400CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailurePatch400Response{}, err
+		return HTTPClientFailureClientPatch400Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailurePatch400Response{}, err
+		return HTTPClientFailureClientPatch400Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailurePatch400Response{}, client.patch400HandleError(resp)
+		return HTTPClientFailureClientPatch400Response{}, client.patch400HandleError(resp)
 	}
-	return HTTPClientFailurePatch400Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPatch400Response{RawResponse: resp}, nil
 }
 
 // patch400CreateRequest creates the Patch400 request.
-func (client *HTTPClientFailureClient) patch400CreateRequest(ctx context.Context, options *HTTPClientFailurePatch400Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) patch400CreateRequest(ctx context.Context, options *HTTPClientFailureClientPatch400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -710,24 +721,25 @@ func (client *HTTPClientFailureClient) patch400HandleError(resp *http.Response) 
 
 // Patch405 - Return 405 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePatch405Options contains the optional parameters for the HTTPClientFailureClient.Patch405 method.
-func (client *HTTPClientFailureClient) Patch405(ctx context.Context, options *HTTPClientFailurePatch405Options) (HTTPClientFailurePatch405Response, error) {
+// options - HTTPClientFailureClientPatch405Options contains the optional parameters for the HTTPClientFailureClient.Patch405
+// method.
+func (client *HTTPClientFailureClient) Patch405(ctx context.Context, options *HTTPClientFailureClientPatch405Options) (HTTPClientFailureClientPatch405Response, error) {
 	req, err := client.patch405CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailurePatch405Response{}, err
+		return HTTPClientFailureClientPatch405Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailurePatch405Response{}, err
+		return HTTPClientFailureClientPatch405Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailurePatch405Response{}, client.patch405HandleError(resp)
+		return HTTPClientFailureClientPatch405Response{}, client.patch405HandleError(resp)
 	}
-	return HTTPClientFailurePatch405Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPatch405Response{RawResponse: resp}, nil
 }
 
 // patch405CreateRequest creates the Patch405 request.
-func (client *HTTPClientFailureClient) patch405CreateRequest(ctx context.Context, options *HTTPClientFailurePatch405Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) patch405CreateRequest(ctx context.Context, options *HTTPClientFailureClientPatch405Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/405"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -752,24 +764,25 @@ func (client *HTTPClientFailureClient) patch405HandleError(resp *http.Response) 
 
 // Patch414 - Return 414 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePatch414Options contains the optional parameters for the HTTPClientFailureClient.Patch414 method.
-func (client *HTTPClientFailureClient) Patch414(ctx context.Context, options *HTTPClientFailurePatch414Options) (HTTPClientFailurePatch414Response, error) {
+// options - HTTPClientFailureClientPatch414Options contains the optional parameters for the HTTPClientFailureClient.Patch414
+// method.
+func (client *HTTPClientFailureClient) Patch414(ctx context.Context, options *HTTPClientFailureClientPatch414Options) (HTTPClientFailureClientPatch414Response, error) {
 	req, err := client.patch414CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailurePatch414Response{}, err
+		return HTTPClientFailureClientPatch414Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailurePatch414Response{}, err
+		return HTTPClientFailureClientPatch414Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailurePatch414Response{}, client.patch414HandleError(resp)
+		return HTTPClientFailureClientPatch414Response{}, client.patch414HandleError(resp)
 	}
-	return HTTPClientFailurePatch414Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPatch414Response{RawResponse: resp}, nil
 }
 
 // patch414CreateRequest creates the Patch414 request.
-func (client *HTTPClientFailureClient) patch414CreateRequest(ctx context.Context, options *HTTPClientFailurePatch414Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) patch414CreateRequest(ctx context.Context, options *HTTPClientFailureClientPatch414Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/414"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -794,24 +807,25 @@ func (client *HTTPClientFailureClient) patch414HandleError(resp *http.Response) 
 
 // Post400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePost400Options contains the optional parameters for the HTTPClientFailureClient.Post400 method.
-func (client *HTTPClientFailureClient) Post400(ctx context.Context, options *HTTPClientFailurePost400Options) (HTTPClientFailurePost400Response, error) {
+// options - HTTPClientFailureClientPost400Options contains the optional parameters for the HTTPClientFailureClient.Post400
+// method.
+func (client *HTTPClientFailureClient) Post400(ctx context.Context, options *HTTPClientFailureClientPost400Options) (HTTPClientFailureClientPost400Response, error) {
 	req, err := client.post400CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailurePost400Response{}, err
+		return HTTPClientFailureClientPost400Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailurePost400Response{}, err
+		return HTTPClientFailureClientPost400Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailurePost400Response{}, client.post400HandleError(resp)
+		return HTTPClientFailureClientPost400Response{}, client.post400HandleError(resp)
 	}
-	return HTTPClientFailurePost400Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPost400Response{RawResponse: resp}, nil
 }
 
 // post400CreateRequest creates the Post400 request.
-func (client *HTTPClientFailureClient) post400CreateRequest(ctx context.Context, options *HTTPClientFailurePost400Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) post400CreateRequest(ctx context.Context, options *HTTPClientFailureClientPost400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -836,24 +850,25 @@ func (client *HTTPClientFailureClient) post400HandleError(resp *http.Response) e
 
 // Post406 - Return 406 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePost406Options contains the optional parameters for the HTTPClientFailureClient.Post406 method.
-func (client *HTTPClientFailureClient) Post406(ctx context.Context, options *HTTPClientFailurePost406Options) (HTTPClientFailurePost406Response, error) {
+// options - HTTPClientFailureClientPost406Options contains the optional parameters for the HTTPClientFailureClient.Post406
+// method.
+func (client *HTTPClientFailureClient) Post406(ctx context.Context, options *HTTPClientFailureClientPost406Options) (HTTPClientFailureClientPost406Response, error) {
 	req, err := client.post406CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailurePost406Response{}, err
+		return HTTPClientFailureClientPost406Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailurePost406Response{}, err
+		return HTTPClientFailureClientPost406Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailurePost406Response{}, client.post406HandleError(resp)
+		return HTTPClientFailureClientPost406Response{}, client.post406HandleError(resp)
 	}
-	return HTTPClientFailurePost406Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPost406Response{RawResponse: resp}, nil
 }
 
 // post406CreateRequest creates the Post406 request.
-func (client *HTTPClientFailureClient) post406CreateRequest(ctx context.Context, options *HTTPClientFailurePost406Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) post406CreateRequest(ctx context.Context, options *HTTPClientFailureClientPost406Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/406"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -878,24 +893,25 @@ func (client *HTTPClientFailureClient) post406HandleError(resp *http.Response) e
 
 // Post415 - Return 415 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePost415Options contains the optional parameters for the HTTPClientFailureClient.Post415 method.
-func (client *HTTPClientFailureClient) Post415(ctx context.Context, options *HTTPClientFailurePost415Options) (HTTPClientFailurePost415Response, error) {
+// options - HTTPClientFailureClientPost415Options contains the optional parameters for the HTTPClientFailureClient.Post415
+// method.
+func (client *HTTPClientFailureClient) Post415(ctx context.Context, options *HTTPClientFailureClientPost415Options) (HTTPClientFailureClientPost415Response, error) {
 	req, err := client.post415CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailurePost415Response{}, err
+		return HTTPClientFailureClientPost415Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailurePost415Response{}, err
+		return HTTPClientFailureClientPost415Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailurePost415Response{}, client.post415HandleError(resp)
+		return HTTPClientFailureClientPost415Response{}, client.post415HandleError(resp)
 	}
-	return HTTPClientFailurePost415Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPost415Response{RawResponse: resp}, nil
 }
 
 // post415CreateRequest creates the Post415 request.
-func (client *HTTPClientFailureClient) post415CreateRequest(ctx context.Context, options *HTTPClientFailurePost415Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) post415CreateRequest(ctx context.Context, options *HTTPClientFailureClientPost415Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/415"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -920,24 +936,25 @@ func (client *HTTPClientFailureClient) post415HandleError(resp *http.Response) e
 
 // Put400 - Return 400 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePut400Options contains the optional parameters for the HTTPClientFailureClient.Put400 method.
-func (client *HTTPClientFailureClient) Put400(ctx context.Context, options *HTTPClientFailurePut400Options) (HTTPClientFailurePut400Response, error) {
+// options - HTTPClientFailureClientPut400Options contains the optional parameters for the HTTPClientFailureClient.Put400
+// method.
+func (client *HTTPClientFailureClient) Put400(ctx context.Context, options *HTTPClientFailureClientPut400Options) (HTTPClientFailureClientPut400Response, error) {
 	req, err := client.put400CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailurePut400Response{}, err
+		return HTTPClientFailureClientPut400Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailurePut400Response{}, err
+		return HTTPClientFailureClientPut400Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailurePut400Response{}, client.put400HandleError(resp)
+		return HTTPClientFailureClientPut400Response{}, client.put400HandleError(resp)
 	}
-	return HTTPClientFailurePut400Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPut400Response{RawResponse: resp}, nil
 }
 
 // put400CreateRequest creates the Put400 request.
-func (client *HTTPClientFailureClient) put400CreateRequest(ctx context.Context, options *HTTPClientFailurePut400Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) put400CreateRequest(ctx context.Context, options *HTTPClientFailureClientPut400Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/400"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -962,24 +979,25 @@ func (client *HTTPClientFailureClient) put400HandleError(resp *http.Response) er
 
 // Put404 - Return 404 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePut404Options contains the optional parameters for the HTTPClientFailureClient.Put404 method.
-func (client *HTTPClientFailureClient) Put404(ctx context.Context, options *HTTPClientFailurePut404Options) (HTTPClientFailurePut404Response, error) {
+// options - HTTPClientFailureClientPut404Options contains the optional parameters for the HTTPClientFailureClient.Put404
+// method.
+func (client *HTTPClientFailureClient) Put404(ctx context.Context, options *HTTPClientFailureClientPut404Options) (HTTPClientFailureClientPut404Response, error) {
 	req, err := client.put404CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailurePut404Response{}, err
+		return HTTPClientFailureClientPut404Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailurePut404Response{}, err
+		return HTTPClientFailureClientPut404Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailurePut404Response{}, client.put404HandleError(resp)
+		return HTTPClientFailureClientPut404Response{}, client.put404HandleError(resp)
 	}
-	return HTTPClientFailurePut404Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPut404Response{RawResponse: resp}, nil
 }
 
 // put404CreateRequest creates the Put404 request.
-func (client *HTTPClientFailureClient) put404CreateRequest(ctx context.Context, options *HTTPClientFailurePut404Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) put404CreateRequest(ctx context.Context, options *HTTPClientFailureClientPut404Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/404"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1004,24 +1022,25 @@ func (client *HTTPClientFailureClient) put404HandleError(resp *http.Response) er
 
 // Put409 - Return 409 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePut409Options contains the optional parameters for the HTTPClientFailureClient.Put409 method.
-func (client *HTTPClientFailureClient) Put409(ctx context.Context, options *HTTPClientFailurePut409Options) (HTTPClientFailurePut409Response, error) {
+// options - HTTPClientFailureClientPut409Options contains the optional parameters for the HTTPClientFailureClient.Put409
+// method.
+func (client *HTTPClientFailureClient) Put409(ctx context.Context, options *HTTPClientFailureClientPut409Options) (HTTPClientFailureClientPut409Response, error) {
 	req, err := client.put409CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailurePut409Response{}, err
+		return HTTPClientFailureClientPut409Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailurePut409Response{}, err
+		return HTTPClientFailureClientPut409Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailurePut409Response{}, client.put409HandleError(resp)
+		return HTTPClientFailureClientPut409Response{}, client.put409HandleError(resp)
 	}
-	return HTTPClientFailurePut409Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPut409Response{RawResponse: resp}, nil
 }
 
 // put409CreateRequest creates the Put409 request.
-func (client *HTTPClientFailureClient) put409CreateRequest(ctx context.Context, options *HTTPClientFailurePut409Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) put409CreateRequest(ctx context.Context, options *HTTPClientFailureClientPut409Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/409"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1046,24 +1065,25 @@ func (client *HTTPClientFailureClient) put409HandleError(resp *http.Response) er
 
 // Put413 - Return 413 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPClientFailurePut413Options contains the optional parameters for the HTTPClientFailureClient.Put413 method.
-func (client *HTTPClientFailureClient) Put413(ctx context.Context, options *HTTPClientFailurePut413Options) (HTTPClientFailurePut413Response, error) {
+// options - HTTPClientFailureClientPut413Options contains the optional parameters for the HTTPClientFailureClient.Put413
+// method.
+func (client *HTTPClientFailureClient) Put413(ctx context.Context, options *HTTPClientFailureClientPut413Options) (HTTPClientFailureClientPut413Response, error) {
 	req, err := client.put413CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPClientFailurePut413Response{}, err
+		return HTTPClientFailureClientPut413Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPClientFailurePut413Response{}, err
+		return HTTPClientFailureClientPut413Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPClientFailurePut413Response{}, client.put413HandleError(resp)
+		return HTTPClientFailureClientPut413Response{}, client.put413HandleError(resp)
 	}
-	return HTTPClientFailurePut413Response{RawResponse: resp}, nil
+	return HTTPClientFailureClientPut413Response{RawResponse: resp}, nil
 }
 
 // put413CreateRequest creates the Put413 request.
-func (client *HTTPClientFailureClient) put413CreateRequest(ctx context.Context, options *HTTPClientFailurePut413Options) (*policy.Request, error) {
+func (client *HTTPClientFailureClient) put413CreateRequest(ctx context.Context, options *HTTPClientFailureClientPut413Options) (*policy.Request, error) {
 	urlPath := "/http/failure/client/413"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

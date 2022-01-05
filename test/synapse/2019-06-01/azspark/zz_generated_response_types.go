@@ -10,140 +10,140 @@ package azspark
 
 import "net/http"
 
-// SparkBatchCancelSparkBatchJobResponse contains the response from method SparkBatch.CancelSparkBatchJob.
-type SparkBatchCancelSparkBatchJobResponse struct {
+// batchClientCancelSparkBatchJobResponse contains the response from method batchClient.CancelSparkBatchJob.
+type batchClientCancelSparkBatchJobResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SparkBatchCreateSparkBatchJobResponse contains the response from method SparkBatch.CreateSparkBatchJob.
-type SparkBatchCreateSparkBatchJobResponse struct {
-	SparkBatchCreateSparkBatchJobResult
+// batchClientCreateSparkBatchJobResponse contains the response from method batchClient.CreateSparkBatchJob.
+type batchClientCreateSparkBatchJobResponse struct {
+	batchClientCreateSparkBatchJobResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SparkBatchCreateSparkBatchJobResult contains the result from method SparkBatch.CreateSparkBatchJob.
-type SparkBatchCreateSparkBatchJobResult struct {
+// batchClientCreateSparkBatchJobResult contains the result from method batchClient.CreateSparkBatchJob.
+type batchClientCreateSparkBatchJobResult struct {
 	BatchJob
 }
 
-// SparkBatchGetSparkBatchJobResponse contains the response from method SparkBatch.GetSparkBatchJob.
-type SparkBatchGetSparkBatchJobResponse struct {
-	SparkBatchGetSparkBatchJobResult
+// batchClientGetSparkBatchJobResponse contains the response from method batchClient.GetSparkBatchJob.
+type batchClientGetSparkBatchJobResponse struct {
+	batchClientGetSparkBatchJobResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SparkBatchGetSparkBatchJobResult contains the result from method SparkBatch.GetSparkBatchJob.
-type SparkBatchGetSparkBatchJobResult struct {
+// batchClientGetSparkBatchJobResult contains the result from method batchClient.GetSparkBatchJob.
+type batchClientGetSparkBatchJobResult struct {
 	BatchJob
 }
 
-// SparkBatchGetSparkBatchJobsResponse contains the response from method SparkBatch.GetSparkBatchJobs.
-type SparkBatchGetSparkBatchJobsResponse struct {
-	SparkBatchGetSparkBatchJobsResult
+// batchClientGetSparkBatchJobsResponse contains the response from method batchClient.GetSparkBatchJobs.
+type batchClientGetSparkBatchJobsResponse struct {
+	batchClientGetSparkBatchJobsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SparkBatchGetSparkBatchJobsResult contains the result from method SparkBatch.GetSparkBatchJobs.
-type SparkBatchGetSparkBatchJobsResult struct {
+// batchClientGetSparkBatchJobsResult contains the result from method batchClient.GetSparkBatchJobs.
+type batchClientGetSparkBatchJobsResult struct {
 	BatchJobCollection
 }
 
-// SparkSessionCancelSparkSessionResponse contains the response from method SparkSession.CancelSparkSession.
-type SparkSessionCancelSparkSessionResponse struct {
+// sessionClientCancelSparkSessionResponse contains the response from method sessionClient.CancelSparkSession.
+type sessionClientCancelSparkSessionResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SparkSessionCancelSparkStatementResponse contains the response from method SparkSession.CancelSparkStatement.
-type SparkSessionCancelSparkStatementResponse struct {
-	SparkSessionCancelSparkStatementResult
+// sessionClientCancelSparkStatementResponse contains the response from method sessionClient.CancelSparkStatement.
+type sessionClientCancelSparkStatementResponse struct {
+	sessionClientCancelSparkStatementResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SparkSessionCancelSparkStatementResult contains the result from method SparkSession.CancelSparkStatement.
-type SparkSessionCancelSparkStatementResult struct {
+// sessionClientCancelSparkStatementResult contains the result from method sessionClient.CancelSparkStatement.
+type sessionClientCancelSparkStatementResult struct {
 	StatementCancellationResult
 }
 
-// SparkSessionCreateSparkSessionResponse contains the response from method SparkSession.CreateSparkSession.
-type SparkSessionCreateSparkSessionResponse struct {
-	SparkSessionCreateSparkSessionResult
+// sessionClientCreateSparkSessionResponse contains the response from method sessionClient.CreateSparkSession.
+type sessionClientCreateSparkSessionResponse struct {
+	sessionClientCreateSparkSessionResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SparkSessionCreateSparkSessionResult contains the result from method SparkSession.CreateSparkSession.
-type SparkSessionCreateSparkSessionResult struct {
+// sessionClientCreateSparkSessionResult contains the result from method sessionClient.CreateSparkSession.
+type sessionClientCreateSparkSessionResult struct {
 	Session
 }
 
-// SparkSessionCreateSparkStatementResponse contains the response from method SparkSession.CreateSparkStatement.
-type SparkSessionCreateSparkStatementResponse struct {
-	SparkSessionCreateSparkStatementResult
+// sessionClientCreateSparkStatementResponse contains the response from method sessionClient.CreateSparkStatement.
+type sessionClientCreateSparkStatementResponse struct {
+	sessionClientCreateSparkStatementResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SparkSessionCreateSparkStatementResult contains the result from method SparkSession.CreateSparkStatement.
-type SparkSessionCreateSparkStatementResult struct {
+// sessionClientCreateSparkStatementResult contains the result from method sessionClient.CreateSparkStatement.
+type sessionClientCreateSparkStatementResult struct {
 	Statement
 }
 
-// SparkSessionGetSparkSessionResponse contains the response from method SparkSession.GetSparkSession.
-type SparkSessionGetSparkSessionResponse struct {
-	SparkSessionGetSparkSessionResult
+// sessionClientGetSparkSessionResponse contains the response from method sessionClient.GetSparkSession.
+type sessionClientGetSparkSessionResponse struct {
+	sessionClientGetSparkSessionResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SparkSessionGetSparkSessionResult contains the result from method SparkSession.GetSparkSession.
-type SparkSessionGetSparkSessionResult struct {
+// sessionClientGetSparkSessionResult contains the result from method sessionClient.GetSparkSession.
+type sessionClientGetSparkSessionResult struct {
 	Session
 }
 
-// SparkSessionGetSparkSessionsResponse contains the response from method SparkSession.GetSparkSessions.
-type SparkSessionGetSparkSessionsResponse struct {
-	SparkSessionGetSparkSessionsResult
+// sessionClientGetSparkSessionsResponse contains the response from method sessionClient.GetSparkSessions.
+type sessionClientGetSparkSessionsResponse struct {
+	sessionClientGetSparkSessionsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SparkSessionGetSparkSessionsResult contains the result from method SparkSession.GetSparkSessions.
-type SparkSessionGetSparkSessionsResult struct {
+// sessionClientGetSparkSessionsResult contains the result from method sessionClient.GetSparkSessions.
+type sessionClientGetSparkSessionsResult struct {
 	SessionCollection
 }
 
-// SparkSessionGetSparkStatementResponse contains the response from method SparkSession.GetSparkStatement.
-type SparkSessionGetSparkStatementResponse struct {
-	SparkSessionGetSparkStatementResult
+// sessionClientGetSparkStatementResponse contains the response from method sessionClient.GetSparkStatement.
+type sessionClientGetSparkStatementResponse struct {
+	sessionClientGetSparkStatementResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SparkSessionGetSparkStatementResult contains the result from method SparkSession.GetSparkStatement.
-type SparkSessionGetSparkStatementResult struct {
+// sessionClientGetSparkStatementResult contains the result from method sessionClient.GetSparkStatement.
+type sessionClientGetSparkStatementResult struct {
 	Statement
 }
 
-// SparkSessionGetSparkStatementsResponse contains the response from method SparkSession.GetSparkStatements.
-type SparkSessionGetSparkStatementsResponse struct {
-	SparkSessionGetSparkStatementsResult
+// sessionClientGetSparkStatementsResponse contains the response from method sessionClient.GetSparkStatements.
+type sessionClientGetSparkStatementsResponse struct {
+	sessionClientGetSparkStatementsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SparkSessionGetSparkStatementsResult contains the result from method SparkSession.GetSparkStatements.
-type SparkSessionGetSparkStatementsResult struct {
+// sessionClientGetSparkStatementsResult contains the result from method sessionClient.GetSparkStatements.
+type sessionClientGetSparkStatementsResult struct {
 	StatementCollection
 }
 
-// SparkSessionResetSparkSessionTimeoutResponse contains the response from method SparkSession.ResetSparkSessionTimeout.
-type SparkSessionResetSparkSessionTimeoutResponse struct {
+// sessionClientResetSparkSessionTimeoutResponse contains the response from method sessionClient.ResetSparkSessionTimeout.
+type sessionClientResetSparkSessionTimeoutResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

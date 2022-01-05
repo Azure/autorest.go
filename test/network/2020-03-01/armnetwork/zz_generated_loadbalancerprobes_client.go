@@ -56,24 +56,24 @@ func NewLoadBalancerProbesClient(subscriptionID string, credential azcore.TokenC
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // probeName - The name of the probe.
-// options - LoadBalancerProbesGetOptions contains the optional parameters for the LoadBalancerProbesClient.Get method.
-func (client *LoadBalancerProbesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string, options *LoadBalancerProbesGetOptions) (LoadBalancerProbesGetResponse, error) {
+// options - LoadBalancerProbesClientGetOptions contains the optional parameters for the LoadBalancerProbesClient.Get method.
+func (client *LoadBalancerProbesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string, options *LoadBalancerProbesClientGetOptions) (LoadBalancerProbesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, probeName, options)
 	if err != nil {
-		return LoadBalancerProbesGetResponse{}, err
+		return LoadBalancerProbesClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return LoadBalancerProbesGetResponse{}, err
+		return LoadBalancerProbesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LoadBalancerProbesGetResponse{}, client.getHandleError(resp)
+		return LoadBalancerProbesClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *LoadBalancerProbesClient) getCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string, options *LoadBalancerProbesGetOptions) (*policy.Request, error) {
+func (client *LoadBalancerProbesClient) getCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, probeName string, options *LoadBalancerProbesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -103,10 +103,10 @@ func (client *LoadBalancerProbesClient) getCreateRequest(ctx context.Context, re
 }
 
 // getHandleResponse handles the Get response.
-func (client *LoadBalancerProbesClient) getHandleResponse(resp *http.Response) (LoadBalancerProbesGetResponse, error) {
-	result := LoadBalancerProbesGetResponse{RawResponse: resp}
+func (client *LoadBalancerProbesClient) getHandleResponse(resp *http.Response) (LoadBalancerProbesClientGetResponse, error) {
+	result := LoadBalancerProbesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Probe); err != nil {
-		return LoadBalancerProbesGetResponse{}, runtime.NewResponseError(err, resp)
+		return LoadBalancerProbesClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -128,21 +128,21 @@ func (client *LoadBalancerProbesClient) getHandleError(resp *http.Response) erro
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
-// options - LoadBalancerProbesListOptions contains the optional parameters for the LoadBalancerProbesClient.List method.
-func (client *LoadBalancerProbesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerProbesListOptions) *LoadBalancerProbesListPager {
-	return &LoadBalancerProbesListPager{
+// options - LoadBalancerProbesClientListOptions contains the optional parameters for the LoadBalancerProbesClient.List method.
+func (client *LoadBalancerProbesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerProbesClientListOptions) *LoadBalancerProbesClientListPager {
+	return &LoadBalancerProbesClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
 		},
-		advancer: func(ctx context.Context, resp LoadBalancerProbesListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp LoadBalancerProbesClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.LoadBalancerProbeListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *LoadBalancerProbesClient) listCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancerProbesListOptions) (*policy.Request, error) {
+func (client *LoadBalancerProbesClient) listCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancerProbesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -168,10 +168,10 @@ func (client *LoadBalancerProbesClient) listCreateRequest(ctx context.Context, r
 }
 
 // listHandleResponse handles the List response.
-func (client *LoadBalancerProbesClient) listHandleResponse(resp *http.Response) (LoadBalancerProbesListResponse, error) {
-	result := LoadBalancerProbesListResponse{RawResponse: resp}
+func (client *LoadBalancerProbesClient) listHandleResponse(resp *http.Response) (LoadBalancerProbesClientListResponse, error) {
+	result := LoadBalancerProbesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancerProbeListResult); err != nil {
-		return LoadBalancerProbesListResponse{}, runtime.NewResponseError(err, resp)
+		return LoadBalancerProbesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

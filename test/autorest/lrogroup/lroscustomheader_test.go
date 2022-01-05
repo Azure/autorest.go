@@ -39,7 +39,7 @@ func TestBeginPost202Retry200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	env = LROsCustomHeaderPost202Retry200PollerResponse{}
+	env = LROsCustomHeaderClientPost202Retry200PollerResponse{}
 	if err = env.Resume(ctxWithHTTPHeader(), op, tk); err != nil {
 		t.Fatal(err)
 	}
@@ -72,7 +72,7 @@ func TestBeginPostAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	env = LROsCustomHeaderPostAsyncRetrySucceededPollerResponse{}
+	env = LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse{}
 	if err = env.Resume(ctxWithHTTPHeader(), op, tk); err != nil {
 		t.Fatal(err)
 	}
@@ -105,7 +105,7 @@ func TestBeginPut201CreatingSucceeded200(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	env = LROsCustomHeaderPut201CreatingSucceeded200PollerResponse{}
+	env = LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse{}
 	if err = env.Resume(ctxWithHTTPHeader(), op, tk); err != nil {
 		t.Fatal(err)
 	}
@@ -147,7 +147,7 @@ func TestBeginPutAsyncRetrySucceeded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	env = LROsCustomHeaderPutAsyncRetrySucceededPollerResponse{}
+	env = LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse{}
 	if err = env.Resume(ctxWithHTTPHeader(), op, tk); err != nil {
 		t.Fatal(err)
 	}

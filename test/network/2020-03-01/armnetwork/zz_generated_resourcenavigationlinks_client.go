@@ -56,25 +56,25 @@ func NewResourceNavigationLinksClient(subscriptionID string, credential azcore.T
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // subnetName - The name of the subnet.
-// options - ResourceNavigationLinksListOptions contains the optional parameters for the ResourceNavigationLinksClient.List
+// options - ResourceNavigationLinksClientListOptions contains the optional parameters for the ResourceNavigationLinksClient.List
 // method.
-func (client *ResourceNavigationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (ResourceNavigationLinksListResponse, error) {
+func (client *ResourceNavigationLinksClient) List(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksClientListOptions) (ResourceNavigationLinksClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {
-		return ResourceNavigationLinksListResponse{}, err
+		return ResourceNavigationLinksClientListResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ResourceNavigationLinksListResponse{}, err
+		return ResourceNavigationLinksClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ResourceNavigationLinksListResponse{}, client.listHandleError(resp)
+		return ResourceNavigationLinksClientListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
-func (client *ResourceNavigationLinksClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksListOptions) (*policy.Request, error) {
+func (client *ResourceNavigationLinksClient) listCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *ResourceNavigationLinksClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/ResourceNavigationLinks"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -104,10 +104,10 @@ func (client *ResourceNavigationLinksClient) listCreateRequest(ctx context.Conte
 }
 
 // listHandleResponse handles the List response.
-func (client *ResourceNavigationLinksClient) listHandleResponse(resp *http.Response) (ResourceNavigationLinksListResponse, error) {
-	result := ResourceNavigationLinksListResponse{RawResponse: resp}
+func (client *ResourceNavigationLinksClient) listHandleResponse(resp *http.Response) (ResourceNavigationLinksClientListResponse, error) {
+	result := ResourceNavigationLinksClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ResourceNavigationLinksListResult); err != nil {
-		return ResourceNavigationLinksListResponse{}, runtime.NewResponseError(err, resp)
+		return ResourceNavigationLinksClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

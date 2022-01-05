@@ -14,27 +14,27 @@ import (
 	"reflect"
 )
 
-// AutoRestValidationTestGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTestClient.GetWithConstantInPath
+// AutoRestValidationTestClientGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTestClient.GetWithConstantInPath
 // method.
-type AutoRestValidationTestGetWithConstantInPathOptions struct {
+type AutoRestValidationTestClientGetWithConstantInPathOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AutoRestValidationTestPostWithConstantInBodyOptions contains the optional parameters for the AutoRestValidationTestClient.PostWithConstantInBody
+// AutoRestValidationTestClientPostWithConstantInBodyOptions contains the optional parameters for the AutoRestValidationTestClient.PostWithConstantInBody
 // method.
-type AutoRestValidationTestPostWithConstantInBodyOptions struct {
+type AutoRestValidationTestClientPostWithConstantInBodyOptions struct {
 	Body *Product
 }
 
-// AutoRestValidationTestValidationOfBodyOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfBody
+// AutoRestValidationTestClientValidationOfBodyOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfBody
 // method.
-type AutoRestValidationTestValidationOfBodyOptions struct {
+type AutoRestValidationTestClientValidationOfBodyOptions struct {
 	Body *Product
 }
 
-// AutoRestValidationTestValidationOfMethodParametersOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfMethodParameters
+// AutoRestValidationTestClientValidationOfMethodParametersOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfMethodParameters
 // method.
-type AutoRestValidationTestValidationOfMethodParametersOptions struct {
+type AutoRestValidationTestClientValidationOfMethodParametersOptions struct {
 	// placeholder for future optional parameters
 }
 

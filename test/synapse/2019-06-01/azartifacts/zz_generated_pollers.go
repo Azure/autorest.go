@@ -14,13 +14,13 @@ import (
 	"net/http"
 )
 
-// DataFlowCreateOrUpdateDataFlowPoller provides polling facilities until the operation reaches a terminal state.
-type DataFlowCreateOrUpdateDataFlowPoller struct {
+// dataFlowClientCreateOrUpdateDataFlowPoller provides polling facilities until the operation reaches a terminal state.
+type dataFlowClientCreateOrUpdateDataFlowPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *DataFlowCreateOrUpdateDataFlowPoller) Done() bool {
+func (p *dataFlowClientCreateOrUpdateDataFlowPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -34,18 +34,18 @@ func (p *DataFlowCreateOrUpdateDataFlowPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *DataFlowCreateOrUpdateDataFlowPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *dataFlowClientCreateOrUpdateDataFlowPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final DataFlowCreateOrUpdateDataFlowResponse will be returned.
-func (p *DataFlowCreateOrUpdateDataFlowPoller) FinalResponse(ctx context.Context) (DataFlowCreateOrUpdateDataFlowResponse, error) {
-	respType := DataFlowCreateOrUpdateDataFlowResponse{}
+// If the final GET succeeded then the final dataFlowClientCreateOrUpdateDataFlowResponse will be returned.
+func (p *dataFlowClientCreateOrUpdateDataFlowPoller) FinalResponse(ctx context.Context) (dataFlowClientCreateOrUpdateDataFlowResponse, error) {
+	respType := dataFlowClientCreateOrUpdateDataFlowResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.DataFlowResource)
 	if err != nil {
-		return DataFlowCreateOrUpdateDataFlowResponse{}, err
+		return dataFlowClientCreateOrUpdateDataFlowResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -53,17 +53,17 @@ func (p *DataFlowCreateOrUpdateDataFlowPoller) FinalResponse(ctx context.Context
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *DataFlowCreateOrUpdateDataFlowPoller) ResumeToken() (string, error) {
+func (p *dataFlowClientCreateOrUpdateDataFlowPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// DataFlowDebugSessionCreateDataFlowDebugSessionPoller provides polling facilities until the operation reaches a terminal state.
-type DataFlowDebugSessionCreateDataFlowDebugSessionPoller struct {
+// dataFlowClientDeleteDataFlowPoller provides polling facilities until the operation reaches a terminal state.
+type dataFlowClientDeleteDataFlowPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *DataFlowDebugSessionCreateDataFlowDebugSessionPoller) Done() bool {
+func (p *dataFlowClientDeleteDataFlowPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -77,18 +77,104 @@ func (p *DataFlowDebugSessionCreateDataFlowDebugSessionPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *DataFlowDebugSessionCreateDataFlowDebugSessionPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *dataFlowClientDeleteDataFlowPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final DataFlowDebugSessionCreateDataFlowDebugSessionResponse will be returned.
-func (p *DataFlowDebugSessionCreateDataFlowDebugSessionPoller) FinalResponse(ctx context.Context) (DataFlowDebugSessionCreateDataFlowDebugSessionResponse, error) {
-	respType := DataFlowDebugSessionCreateDataFlowDebugSessionResponse{}
+// If the final GET succeeded then the final dataFlowClientDeleteDataFlowResponse will be returned.
+func (p *dataFlowClientDeleteDataFlowPoller) FinalResponse(ctx context.Context) (dataFlowClientDeleteDataFlowResponse, error) {
+	respType := dataFlowClientDeleteDataFlowResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return dataFlowClientDeleteDataFlowResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// ResumeToken returns a value representing the poller that can be used to resume
+// the LRO at a later time. ResumeTokens are unique per service operation.
+func (p *dataFlowClientDeleteDataFlowPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+// dataFlowClientRenameDataFlowPoller provides polling facilities until the operation reaches a terminal state.
+type dataFlowClientRenameDataFlowPoller struct {
+	pt *azcore.Poller
+}
+
+// Done returns true if the LRO has reached a terminal state.
+func (p *dataFlowClientRenameDataFlowPoller) Done() bool {
+	return p.pt.Done()
+}
+
+// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
+// response is returned.
+// If the LRO has completed with failure or was cancelled, the poller's state is
+// updated and the error is returned.
+// If the LRO has not reached a terminal state, the poller's state is updated and
+// the latest HTTP response is returned.
+// If Poll fails, the poller's state is unmodified and the error is returned.
+// Calling Poll on an LRO that has reached a terminal state will return the final
+// HTTP response or error.
+func (p *dataFlowClientRenameDataFlowPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+// FinalResponse performs a final GET to the service and returns the final response
+// for the polling operation. If there is an error performing the final GET then an error is returned.
+// If the final GET succeeded then the final dataFlowClientRenameDataFlowResponse will be returned.
+func (p *dataFlowClientRenameDataFlowPoller) FinalResponse(ctx context.Context) (dataFlowClientRenameDataFlowResponse, error) {
+	respType := dataFlowClientRenameDataFlowResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return dataFlowClientRenameDataFlowResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// ResumeToken returns a value representing the poller that can be used to resume
+// the LRO at a later time. ResumeTokens are unique per service operation.
+func (p *dataFlowClientRenameDataFlowPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+// dataFlowDebugSessionClientCreateDataFlowDebugSessionPoller provides polling facilities until the operation reaches a terminal state.
+type dataFlowDebugSessionClientCreateDataFlowDebugSessionPoller struct {
+	pt *azcore.Poller
+}
+
+// Done returns true if the LRO has reached a terminal state.
+func (p *dataFlowDebugSessionClientCreateDataFlowDebugSessionPoller) Done() bool {
+	return p.pt.Done()
+}
+
+// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
+// response is returned.
+// If the LRO has completed with failure or was cancelled, the poller's state is
+// updated and the error is returned.
+// If the LRO has not reached a terminal state, the poller's state is updated and
+// the latest HTTP response is returned.
+// If Poll fails, the poller's state is unmodified and the error is returned.
+// Calling Poll on an LRO that has reached a terminal state will return the final
+// HTTP response or error.
+func (p *dataFlowDebugSessionClientCreateDataFlowDebugSessionPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+// FinalResponse performs a final GET to the service and returns the final response
+// for the polling operation. If there is an error performing the final GET then an error is returned.
+// If the final GET succeeded then the final dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse will be returned.
+func (p *dataFlowDebugSessionClientCreateDataFlowDebugSessionPoller) FinalResponse(ctx context.Context) (dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse, error) {
+	respType := dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.CreateDataFlowDebugSessionResponse)
 	if err != nil {
-		return DataFlowDebugSessionCreateDataFlowDebugSessionResponse{}, err
+		return dataFlowDebugSessionClientCreateDataFlowDebugSessionResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -96,17 +182,17 @@ func (p *DataFlowDebugSessionCreateDataFlowDebugSessionPoller) FinalResponse(ctx
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *DataFlowDebugSessionCreateDataFlowDebugSessionPoller) ResumeToken() (string, error) {
+func (p *dataFlowDebugSessionClientCreateDataFlowDebugSessionPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// DataFlowDebugSessionExecuteCommandPoller provides polling facilities until the operation reaches a terminal state.
-type DataFlowDebugSessionExecuteCommandPoller struct {
+// dataFlowDebugSessionClientExecuteCommandPoller provides polling facilities until the operation reaches a terminal state.
+type dataFlowDebugSessionClientExecuteCommandPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *DataFlowDebugSessionExecuteCommandPoller) Done() bool {
+func (p *dataFlowDebugSessionClientExecuteCommandPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -120,18 +206,18 @@ func (p *DataFlowDebugSessionExecuteCommandPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *DataFlowDebugSessionExecuteCommandPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *dataFlowDebugSessionClientExecuteCommandPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final DataFlowDebugSessionExecuteCommandResponse will be returned.
-func (p *DataFlowDebugSessionExecuteCommandPoller) FinalResponse(ctx context.Context) (DataFlowDebugSessionExecuteCommandResponse, error) {
-	respType := DataFlowDebugSessionExecuteCommandResponse{}
+// If the final GET succeeded then the final dataFlowDebugSessionClientExecuteCommandResponse will be returned.
+func (p *dataFlowDebugSessionClientExecuteCommandPoller) FinalResponse(ctx context.Context) (dataFlowDebugSessionClientExecuteCommandResponse, error) {
+	respType := dataFlowDebugSessionClientExecuteCommandResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.DataFlowDebugCommandResponse)
 	if err != nil {
-		return DataFlowDebugSessionExecuteCommandResponse{}, err
+		return dataFlowDebugSessionClientExecuteCommandResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -139,17 +225,17 @@ func (p *DataFlowDebugSessionExecuteCommandPoller) FinalResponse(ctx context.Con
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *DataFlowDebugSessionExecuteCommandPoller) ResumeToken() (string, error) {
+func (p *dataFlowDebugSessionClientExecuteCommandPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// DataFlowDeleteDataFlowPoller provides polling facilities until the operation reaches a terminal state.
-type DataFlowDeleteDataFlowPoller struct {
+// datasetClientCreateOrUpdateDatasetPoller provides polling facilities until the operation reaches a terminal state.
+type datasetClientCreateOrUpdateDatasetPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *DataFlowDeleteDataFlowPoller) Done() bool {
+func (p *datasetClientCreateOrUpdateDatasetPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -163,104 +249,18 @@ func (p *DataFlowDeleteDataFlowPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *DataFlowDeleteDataFlowPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *datasetClientCreateOrUpdateDatasetPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final DataFlowDeleteDataFlowResponse will be returned.
-func (p *DataFlowDeleteDataFlowPoller) FinalResponse(ctx context.Context) (DataFlowDeleteDataFlowResponse, error) {
-	respType := DataFlowDeleteDataFlowResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
-	if err != nil {
-		return DataFlowDeleteDataFlowResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// ResumeToken returns a value representing the poller that can be used to resume
-// the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *DataFlowDeleteDataFlowPoller) ResumeToken() (string, error) {
-	return p.pt.ResumeToken()
-}
-
-// DataFlowRenameDataFlowPoller provides polling facilities until the operation reaches a terminal state.
-type DataFlowRenameDataFlowPoller struct {
-	pt *azcore.Poller
-}
-
-// Done returns true if the LRO has reached a terminal state.
-func (p *DataFlowRenameDataFlowPoller) Done() bool {
-	return p.pt.Done()
-}
-
-// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is updated and the HTTP
-// response is returned.
-// If the LRO has completed with failure or was cancelled, the poller's state is
-// updated and the error is returned.
-// If the LRO has not reached a terminal state, the poller's state is updated and
-// the latest HTTP response is returned.
-// If Poll fails, the poller's state is unmodified and the error is returned.
-// Calling Poll on an LRO that has reached a terminal state will return the final
-// HTTP response or error.
-func (p *DataFlowRenameDataFlowPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx)
-}
-
-// FinalResponse performs a final GET to the service and returns the final response
-// for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final DataFlowRenameDataFlowResponse will be returned.
-func (p *DataFlowRenameDataFlowPoller) FinalResponse(ctx context.Context) (DataFlowRenameDataFlowResponse, error) {
-	respType := DataFlowRenameDataFlowResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
-	if err != nil {
-		return DataFlowRenameDataFlowResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// ResumeToken returns a value representing the poller that can be used to resume
-// the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *DataFlowRenameDataFlowPoller) ResumeToken() (string, error) {
-	return p.pt.ResumeToken()
-}
-
-// DatasetCreateOrUpdateDatasetPoller provides polling facilities until the operation reaches a terminal state.
-type DatasetCreateOrUpdateDatasetPoller struct {
-	pt *azcore.Poller
-}
-
-// Done returns true if the LRO has reached a terminal state.
-func (p *DatasetCreateOrUpdateDatasetPoller) Done() bool {
-	return p.pt.Done()
-}
-
-// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is updated and the HTTP
-// response is returned.
-// If the LRO has completed with failure or was cancelled, the poller's state is
-// updated and the error is returned.
-// If the LRO has not reached a terminal state, the poller's state is updated and
-// the latest HTTP response is returned.
-// If Poll fails, the poller's state is unmodified and the error is returned.
-// Calling Poll on an LRO that has reached a terminal state will return the final
-// HTTP response or error.
-func (p *DatasetCreateOrUpdateDatasetPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx)
-}
-
-// FinalResponse performs a final GET to the service and returns the final response
-// for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final DatasetCreateOrUpdateDatasetResponse will be returned.
-func (p *DatasetCreateOrUpdateDatasetPoller) FinalResponse(ctx context.Context) (DatasetCreateOrUpdateDatasetResponse, error) {
-	respType := DatasetCreateOrUpdateDatasetResponse{}
+// If the final GET succeeded then the final datasetClientCreateOrUpdateDatasetResponse will be returned.
+func (p *datasetClientCreateOrUpdateDatasetPoller) FinalResponse(ctx context.Context) (datasetClientCreateOrUpdateDatasetResponse, error) {
+	respType := datasetClientCreateOrUpdateDatasetResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.DatasetResource)
 	if err != nil {
-		return DatasetCreateOrUpdateDatasetResponse{}, err
+		return datasetClientCreateOrUpdateDatasetResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -268,17 +268,17 @@ func (p *DatasetCreateOrUpdateDatasetPoller) FinalResponse(ctx context.Context) 
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *DatasetCreateOrUpdateDatasetPoller) ResumeToken() (string, error) {
+func (p *datasetClientCreateOrUpdateDatasetPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// DatasetDeleteDatasetPoller provides polling facilities until the operation reaches a terminal state.
-type DatasetDeleteDatasetPoller struct {
+// datasetClientDeleteDatasetPoller provides polling facilities until the operation reaches a terminal state.
+type datasetClientDeleteDatasetPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *DatasetDeleteDatasetPoller) Done() bool {
+func (p *datasetClientDeleteDatasetPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -292,18 +292,18 @@ func (p *DatasetDeleteDatasetPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *DatasetDeleteDatasetPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *datasetClientDeleteDatasetPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final DatasetDeleteDatasetResponse will be returned.
-func (p *DatasetDeleteDatasetPoller) FinalResponse(ctx context.Context) (DatasetDeleteDatasetResponse, error) {
-	respType := DatasetDeleteDatasetResponse{}
+// If the final GET succeeded then the final datasetClientDeleteDatasetResponse will be returned.
+func (p *datasetClientDeleteDatasetPoller) FinalResponse(ctx context.Context) (datasetClientDeleteDatasetResponse, error) {
+	respType := datasetClientDeleteDatasetResponse{}
 	resp, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
-		return DatasetDeleteDatasetResponse{}, err
+		return datasetClientDeleteDatasetResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -311,17 +311,17 @@ func (p *DatasetDeleteDatasetPoller) FinalResponse(ctx context.Context) (Dataset
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *DatasetDeleteDatasetPoller) ResumeToken() (string, error) {
+func (p *datasetClientDeleteDatasetPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// DatasetRenameDatasetPoller provides polling facilities until the operation reaches a terminal state.
-type DatasetRenameDatasetPoller struct {
+// datasetClientRenameDatasetPoller provides polling facilities until the operation reaches a terminal state.
+type datasetClientRenameDatasetPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *DatasetRenameDatasetPoller) Done() bool {
+func (p *datasetClientRenameDatasetPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -335,18 +335,18 @@ func (p *DatasetRenameDatasetPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *DatasetRenameDatasetPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *datasetClientRenameDatasetPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final DatasetRenameDatasetResponse will be returned.
-func (p *DatasetRenameDatasetPoller) FinalResponse(ctx context.Context) (DatasetRenameDatasetResponse, error) {
-	respType := DatasetRenameDatasetResponse{}
+// If the final GET succeeded then the final datasetClientRenameDatasetResponse will be returned.
+func (p *datasetClientRenameDatasetPoller) FinalResponse(ctx context.Context) (datasetClientRenameDatasetResponse, error) {
+	respType := datasetClientRenameDatasetResponse{}
 	resp, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
-		return DatasetRenameDatasetResponse{}, err
+		return datasetClientRenameDatasetResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -354,17 +354,17 @@ func (p *DatasetRenameDatasetPoller) FinalResponse(ctx context.Context) (Dataset
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *DatasetRenameDatasetPoller) ResumeToken() (string, error) {
+func (p *datasetClientRenameDatasetPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// LibraryCreatePoller provides polling facilities until the operation reaches a terminal state.
-type LibraryCreatePoller struct {
+// libraryClientCreatePoller provides polling facilities until the operation reaches a terminal state.
+type libraryClientCreatePoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *LibraryCreatePoller) Done() bool {
+func (p *libraryClientCreatePoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -378,18 +378,18 @@ func (p *LibraryCreatePoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *LibraryCreatePoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *libraryClientCreatePoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final LibraryCreateResponse will be returned.
-func (p *LibraryCreatePoller) FinalResponse(ctx context.Context) (LibraryCreateResponse, error) {
-	respType := LibraryCreateResponse{}
+// If the final GET succeeded then the final libraryClientCreateResponse will be returned.
+func (p *libraryClientCreatePoller) FinalResponse(ctx context.Context) (libraryClientCreateResponse, error) {
+	respType := libraryClientCreateResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.LibraryResourceInfo)
 	if err != nil {
-		return LibraryCreateResponse{}, err
+		return libraryClientCreateResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -397,17 +397,17 @@ func (p *LibraryCreatePoller) FinalResponse(ctx context.Context) (LibraryCreateR
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *LibraryCreatePoller) ResumeToken() (string, error) {
+func (p *libraryClientCreatePoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// LibraryDeletePoller provides polling facilities until the operation reaches a terminal state.
-type LibraryDeletePoller struct {
+// libraryClientDeletePoller provides polling facilities until the operation reaches a terminal state.
+type libraryClientDeletePoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *LibraryDeletePoller) Done() bool {
+func (p *libraryClientDeletePoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -421,18 +421,18 @@ func (p *LibraryDeletePoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *LibraryDeletePoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *libraryClientDeletePoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final LibraryDeleteResponse will be returned.
-func (p *LibraryDeletePoller) FinalResponse(ctx context.Context) (LibraryDeleteResponse, error) {
-	respType := LibraryDeleteResponse{}
+// If the final GET succeeded then the final libraryClientDeleteResponse will be returned.
+func (p *libraryClientDeletePoller) FinalResponse(ctx context.Context) (libraryClientDeleteResponse, error) {
+	respType := libraryClientDeleteResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.LibraryResourceInfo)
 	if err != nil {
-		return LibraryDeleteResponse{}, err
+		return libraryClientDeleteResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -440,17 +440,17 @@ func (p *LibraryDeletePoller) FinalResponse(ctx context.Context) (LibraryDeleteR
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *LibraryDeletePoller) ResumeToken() (string, error) {
+func (p *libraryClientDeletePoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// LibraryFlushPoller provides polling facilities until the operation reaches a terminal state.
-type LibraryFlushPoller struct {
+// libraryClientFlushPoller provides polling facilities until the operation reaches a terminal state.
+type libraryClientFlushPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *LibraryFlushPoller) Done() bool {
+func (p *libraryClientFlushPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -464,18 +464,18 @@ func (p *LibraryFlushPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *LibraryFlushPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *libraryClientFlushPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final LibraryFlushResponse will be returned.
-func (p *LibraryFlushPoller) FinalResponse(ctx context.Context) (LibraryFlushResponse, error) {
-	respType := LibraryFlushResponse{}
+// If the final GET succeeded then the final libraryClientFlushResponse will be returned.
+func (p *libraryClientFlushPoller) FinalResponse(ctx context.Context) (libraryClientFlushResponse, error) {
+	respType := libraryClientFlushResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.LibraryResourceInfo)
 	if err != nil {
-		return LibraryFlushResponse{}, err
+		return libraryClientFlushResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -483,17 +483,17 @@ func (p *LibraryFlushPoller) FinalResponse(ctx context.Context) (LibraryFlushRes
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *LibraryFlushPoller) ResumeToken() (string, error) {
+func (p *libraryClientFlushPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// LinkedServiceCreateOrUpdateLinkedServicePoller provides polling facilities until the operation reaches a terminal state.
-type LinkedServiceCreateOrUpdateLinkedServicePoller struct {
+// linkedServiceClientCreateOrUpdateLinkedServicePoller provides polling facilities until the operation reaches a terminal state.
+type linkedServiceClientCreateOrUpdateLinkedServicePoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *LinkedServiceCreateOrUpdateLinkedServicePoller) Done() bool {
+func (p *linkedServiceClientCreateOrUpdateLinkedServicePoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -507,18 +507,18 @@ func (p *LinkedServiceCreateOrUpdateLinkedServicePoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *LinkedServiceCreateOrUpdateLinkedServicePoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *linkedServiceClientCreateOrUpdateLinkedServicePoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final LinkedServiceCreateOrUpdateLinkedServiceResponse will be returned.
-func (p *LinkedServiceCreateOrUpdateLinkedServicePoller) FinalResponse(ctx context.Context) (LinkedServiceCreateOrUpdateLinkedServiceResponse, error) {
-	respType := LinkedServiceCreateOrUpdateLinkedServiceResponse{}
+// If the final GET succeeded then the final linkedServiceClientCreateOrUpdateLinkedServiceResponse will be returned.
+func (p *linkedServiceClientCreateOrUpdateLinkedServicePoller) FinalResponse(ctx context.Context) (linkedServiceClientCreateOrUpdateLinkedServiceResponse, error) {
+	respType := linkedServiceClientCreateOrUpdateLinkedServiceResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.LinkedServiceResource)
 	if err != nil {
-		return LinkedServiceCreateOrUpdateLinkedServiceResponse{}, err
+		return linkedServiceClientCreateOrUpdateLinkedServiceResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -526,17 +526,17 @@ func (p *LinkedServiceCreateOrUpdateLinkedServicePoller) FinalResponse(ctx conte
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *LinkedServiceCreateOrUpdateLinkedServicePoller) ResumeToken() (string, error) {
+func (p *linkedServiceClientCreateOrUpdateLinkedServicePoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// LinkedServiceDeleteLinkedServicePoller provides polling facilities until the operation reaches a terminal state.
-type LinkedServiceDeleteLinkedServicePoller struct {
+// linkedServiceClientDeleteLinkedServicePoller provides polling facilities until the operation reaches a terminal state.
+type linkedServiceClientDeleteLinkedServicePoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *LinkedServiceDeleteLinkedServicePoller) Done() bool {
+func (p *linkedServiceClientDeleteLinkedServicePoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -550,18 +550,18 @@ func (p *LinkedServiceDeleteLinkedServicePoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *LinkedServiceDeleteLinkedServicePoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *linkedServiceClientDeleteLinkedServicePoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final LinkedServiceDeleteLinkedServiceResponse will be returned.
-func (p *LinkedServiceDeleteLinkedServicePoller) FinalResponse(ctx context.Context) (LinkedServiceDeleteLinkedServiceResponse, error) {
-	respType := LinkedServiceDeleteLinkedServiceResponse{}
+// If the final GET succeeded then the final linkedServiceClientDeleteLinkedServiceResponse will be returned.
+func (p *linkedServiceClientDeleteLinkedServicePoller) FinalResponse(ctx context.Context) (linkedServiceClientDeleteLinkedServiceResponse, error) {
+	respType := linkedServiceClientDeleteLinkedServiceResponse{}
 	resp, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
-		return LinkedServiceDeleteLinkedServiceResponse{}, err
+		return linkedServiceClientDeleteLinkedServiceResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -569,17 +569,17 @@ func (p *LinkedServiceDeleteLinkedServicePoller) FinalResponse(ctx context.Conte
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *LinkedServiceDeleteLinkedServicePoller) ResumeToken() (string, error) {
+func (p *linkedServiceClientDeleteLinkedServicePoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// LinkedServiceRenameLinkedServicePoller provides polling facilities until the operation reaches a terminal state.
-type LinkedServiceRenameLinkedServicePoller struct {
+// linkedServiceClientRenameLinkedServicePoller provides polling facilities until the operation reaches a terminal state.
+type linkedServiceClientRenameLinkedServicePoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *LinkedServiceRenameLinkedServicePoller) Done() bool {
+func (p *linkedServiceClientRenameLinkedServicePoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -593,18 +593,18 @@ func (p *LinkedServiceRenameLinkedServicePoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *LinkedServiceRenameLinkedServicePoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *linkedServiceClientRenameLinkedServicePoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final LinkedServiceRenameLinkedServiceResponse will be returned.
-func (p *LinkedServiceRenameLinkedServicePoller) FinalResponse(ctx context.Context) (LinkedServiceRenameLinkedServiceResponse, error) {
-	respType := LinkedServiceRenameLinkedServiceResponse{}
+// If the final GET succeeded then the final linkedServiceClientRenameLinkedServiceResponse will be returned.
+func (p *linkedServiceClientRenameLinkedServicePoller) FinalResponse(ctx context.Context) (linkedServiceClientRenameLinkedServiceResponse, error) {
+	respType := linkedServiceClientRenameLinkedServiceResponse{}
 	resp, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
-		return LinkedServiceRenameLinkedServiceResponse{}, err
+		return linkedServiceClientRenameLinkedServiceResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -612,17 +612,17 @@ func (p *LinkedServiceRenameLinkedServicePoller) FinalResponse(ctx context.Conte
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *LinkedServiceRenameLinkedServicePoller) ResumeToken() (string, error) {
+func (p *linkedServiceClientRenameLinkedServicePoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// NotebookCreateOrUpdateNotebookPoller provides polling facilities until the operation reaches a terminal state.
-type NotebookCreateOrUpdateNotebookPoller struct {
+// notebookClientCreateOrUpdateNotebookPoller provides polling facilities until the operation reaches a terminal state.
+type notebookClientCreateOrUpdateNotebookPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *NotebookCreateOrUpdateNotebookPoller) Done() bool {
+func (p *notebookClientCreateOrUpdateNotebookPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -636,18 +636,18 @@ func (p *NotebookCreateOrUpdateNotebookPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *NotebookCreateOrUpdateNotebookPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *notebookClientCreateOrUpdateNotebookPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final NotebookCreateOrUpdateNotebookResponse will be returned.
-func (p *NotebookCreateOrUpdateNotebookPoller) FinalResponse(ctx context.Context) (NotebookCreateOrUpdateNotebookResponse, error) {
-	respType := NotebookCreateOrUpdateNotebookResponse{}
+// If the final GET succeeded then the final notebookClientCreateOrUpdateNotebookResponse will be returned.
+func (p *notebookClientCreateOrUpdateNotebookPoller) FinalResponse(ctx context.Context) (notebookClientCreateOrUpdateNotebookResponse, error) {
+	respType := notebookClientCreateOrUpdateNotebookResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.NotebookResource)
 	if err != nil {
-		return NotebookCreateOrUpdateNotebookResponse{}, err
+		return notebookClientCreateOrUpdateNotebookResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -655,17 +655,17 @@ func (p *NotebookCreateOrUpdateNotebookPoller) FinalResponse(ctx context.Context
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *NotebookCreateOrUpdateNotebookPoller) ResumeToken() (string, error) {
+func (p *notebookClientCreateOrUpdateNotebookPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// NotebookDeleteNotebookPoller provides polling facilities until the operation reaches a terminal state.
-type NotebookDeleteNotebookPoller struct {
+// notebookClientDeleteNotebookPoller provides polling facilities until the operation reaches a terminal state.
+type notebookClientDeleteNotebookPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *NotebookDeleteNotebookPoller) Done() bool {
+func (p *notebookClientDeleteNotebookPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -679,18 +679,18 @@ func (p *NotebookDeleteNotebookPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *NotebookDeleteNotebookPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *notebookClientDeleteNotebookPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final NotebookDeleteNotebookResponse will be returned.
-func (p *NotebookDeleteNotebookPoller) FinalResponse(ctx context.Context) (NotebookDeleteNotebookResponse, error) {
-	respType := NotebookDeleteNotebookResponse{}
+// If the final GET succeeded then the final notebookClientDeleteNotebookResponse will be returned.
+func (p *notebookClientDeleteNotebookPoller) FinalResponse(ctx context.Context) (notebookClientDeleteNotebookResponse, error) {
+	respType := notebookClientDeleteNotebookResponse{}
 	resp, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
-		return NotebookDeleteNotebookResponse{}, err
+		return notebookClientDeleteNotebookResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -698,17 +698,17 @@ func (p *NotebookDeleteNotebookPoller) FinalResponse(ctx context.Context) (Noteb
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *NotebookDeleteNotebookPoller) ResumeToken() (string, error) {
+func (p *notebookClientDeleteNotebookPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// NotebookRenameNotebookPoller provides polling facilities until the operation reaches a terminal state.
-type NotebookRenameNotebookPoller struct {
+// notebookClientRenameNotebookPoller provides polling facilities until the operation reaches a terminal state.
+type notebookClientRenameNotebookPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *NotebookRenameNotebookPoller) Done() bool {
+func (p *notebookClientRenameNotebookPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -722,18 +722,18 @@ func (p *NotebookRenameNotebookPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *NotebookRenameNotebookPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *notebookClientRenameNotebookPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final NotebookRenameNotebookResponse will be returned.
-func (p *NotebookRenameNotebookPoller) FinalResponse(ctx context.Context) (NotebookRenameNotebookResponse, error) {
-	respType := NotebookRenameNotebookResponse{}
+// If the final GET succeeded then the final notebookClientRenameNotebookResponse will be returned.
+func (p *notebookClientRenameNotebookPoller) FinalResponse(ctx context.Context) (notebookClientRenameNotebookResponse, error) {
+	respType := notebookClientRenameNotebookResponse{}
 	resp, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
-		return NotebookRenameNotebookResponse{}, err
+		return notebookClientRenameNotebookResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -741,17 +741,17 @@ func (p *NotebookRenameNotebookPoller) FinalResponse(ctx context.Context) (Noteb
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *NotebookRenameNotebookPoller) ResumeToken() (string, error) {
+func (p *notebookClientRenameNotebookPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// PipelineCreateOrUpdatePipelinePoller provides polling facilities until the operation reaches a terminal state.
-type PipelineCreateOrUpdatePipelinePoller struct {
+// pipelineClientCreateOrUpdatePipelinePoller provides polling facilities until the operation reaches a terminal state.
+type pipelineClientCreateOrUpdatePipelinePoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *PipelineCreateOrUpdatePipelinePoller) Done() bool {
+func (p *pipelineClientCreateOrUpdatePipelinePoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -765,18 +765,18 @@ func (p *PipelineCreateOrUpdatePipelinePoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *PipelineCreateOrUpdatePipelinePoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *pipelineClientCreateOrUpdatePipelinePoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final PipelineCreateOrUpdatePipelineResponse will be returned.
-func (p *PipelineCreateOrUpdatePipelinePoller) FinalResponse(ctx context.Context) (PipelineCreateOrUpdatePipelineResponse, error) {
-	respType := PipelineCreateOrUpdatePipelineResponse{}
+// If the final GET succeeded then the final pipelineClientCreateOrUpdatePipelineResponse will be returned.
+func (p *pipelineClientCreateOrUpdatePipelinePoller) FinalResponse(ctx context.Context) (pipelineClientCreateOrUpdatePipelineResponse, error) {
+	respType := pipelineClientCreateOrUpdatePipelineResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.PipelineResource)
 	if err != nil {
-		return PipelineCreateOrUpdatePipelineResponse{}, err
+		return pipelineClientCreateOrUpdatePipelineResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -784,17 +784,17 @@ func (p *PipelineCreateOrUpdatePipelinePoller) FinalResponse(ctx context.Context
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *PipelineCreateOrUpdatePipelinePoller) ResumeToken() (string, error) {
+func (p *pipelineClientCreateOrUpdatePipelinePoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// PipelineDeletePipelinePoller provides polling facilities until the operation reaches a terminal state.
-type PipelineDeletePipelinePoller struct {
+// pipelineClientDeletePipelinePoller provides polling facilities until the operation reaches a terminal state.
+type pipelineClientDeletePipelinePoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *PipelineDeletePipelinePoller) Done() bool {
+func (p *pipelineClientDeletePipelinePoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -808,18 +808,18 @@ func (p *PipelineDeletePipelinePoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *PipelineDeletePipelinePoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *pipelineClientDeletePipelinePoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final PipelineDeletePipelineResponse will be returned.
-func (p *PipelineDeletePipelinePoller) FinalResponse(ctx context.Context) (PipelineDeletePipelineResponse, error) {
-	respType := PipelineDeletePipelineResponse{}
+// If the final GET succeeded then the final pipelineClientDeletePipelineResponse will be returned.
+func (p *pipelineClientDeletePipelinePoller) FinalResponse(ctx context.Context) (pipelineClientDeletePipelineResponse, error) {
+	respType := pipelineClientDeletePipelineResponse{}
 	resp, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
-		return PipelineDeletePipelineResponse{}, err
+		return pipelineClientDeletePipelineResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -827,17 +827,17 @@ func (p *PipelineDeletePipelinePoller) FinalResponse(ctx context.Context) (Pipel
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *PipelineDeletePipelinePoller) ResumeToken() (string, error) {
+func (p *pipelineClientDeletePipelinePoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// PipelineRenamePipelinePoller provides polling facilities until the operation reaches a terminal state.
-type PipelineRenamePipelinePoller struct {
+// pipelineClientRenamePipelinePoller provides polling facilities until the operation reaches a terminal state.
+type pipelineClientRenamePipelinePoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *PipelineRenamePipelinePoller) Done() bool {
+func (p *pipelineClientRenamePipelinePoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -851,18 +851,18 @@ func (p *PipelineRenamePipelinePoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *PipelineRenamePipelinePoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *pipelineClientRenamePipelinePoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final PipelineRenamePipelineResponse will be returned.
-func (p *PipelineRenamePipelinePoller) FinalResponse(ctx context.Context) (PipelineRenamePipelineResponse, error) {
-	respType := PipelineRenamePipelineResponse{}
+// If the final GET succeeded then the final pipelineClientRenamePipelineResponse will be returned.
+func (p *pipelineClientRenamePipelinePoller) FinalResponse(ctx context.Context) (pipelineClientRenamePipelineResponse, error) {
+	respType := pipelineClientRenamePipelineResponse{}
 	resp, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
-		return PipelineRenamePipelineResponse{}, err
+		return pipelineClientRenamePipelineResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -870,17 +870,17 @@ func (p *PipelineRenamePipelinePoller) FinalResponse(ctx context.Context) (Pipel
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *PipelineRenamePipelinePoller) ResumeToken() (string, error) {
+func (p *pipelineClientRenamePipelinePoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// SQLScriptCreateOrUpdateSQLScriptPoller provides polling facilities until the operation reaches a terminal state.
-type SQLScriptCreateOrUpdateSQLScriptPoller struct {
+// sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPoller provides polling facilities until the operation reaches a terminal state.
+type sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *SQLScriptCreateOrUpdateSQLScriptPoller) Done() bool {
+func (p *sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -894,147 +894,18 @@ func (p *SQLScriptCreateOrUpdateSQLScriptPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *SQLScriptCreateOrUpdateSQLScriptPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final SQLScriptCreateOrUpdateSQLScriptResponse will be returned.
-func (p *SQLScriptCreateOrUpdateSQLScriptPoller) FinalResponse(ctx context.Context) (SQLScriptCreateOrUpdateSQLScriptResponse, error) {
-	respType := SQLScriptCreateOrUpdateSQLScriptResponse{}
-	resp, err := p.pt.FinalResponse(ctx, &respType.SQLScriptResource)
-	if err != nil {
-		return SQLScriptCreateOrUpdateSQLScriptResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// ResumeToken returns a value representing the poller that can be used to resume
-// the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *SQLScriptCreateOrUpdateSQLScriptPoller) ResumeToken() (string, error) {
-	return p.pt.ResumeToken()
-}
-
-// SQLScriptDeleteSQLScriptPoller provides polling facilities until the operation reaches a terminal state.
-type SQLScriptDeleteSQLScriptPoller struct {
-	pt *azcore.Poller
-}
-
-// Done returns true if the LRO has reached a terminal state.
-func (p *SQLScriptDeleteSQLScriptPoller) Done() bool {
-	return p.pt.Done()
-}
-
-// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is updated and the HTTP
-// response is returned.
-// If the LRO has completed with failure or was cancelled, the poller's state is
-// updated and the error is returned.
-// If the LRO has not reached a terminal state, the poller's state is updated and
-// the latest HTTP response is returned.
-// If Poll fails, the poller's state is unmodified and the error is returned.
-// Calling Poll on an LRO that has reached a terminal state will return the final
-// HTTP response or error.
-func (p *SQLScriptDeleteSQLScriptPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx)
-}
-
-// FinalResponse performs a final GET to the service and returns the final response
-// for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final SQLScriptDeleteSQLScriptResponse will be returned.
-func (p *SQLScriptDeleteSQLScriptPoller) FinalResponse(ctx context.Context) (SQLScriptDeleteSQLScriptResponse, error) {
-	respType := SQLScriptDeleteSQLScriptResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
-	if err != nil {
-		return SQLScriptDeleteSQLScriptResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// ResumeToken returns a value representing the poller that can be used to resume
-// the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *SQLScriptDeleteSQLScriptPoller) ResumeToken() (string, error) {
-	return p.pt.ResumeToken()
-}
-
-// SQLScriptRenameSQLScriptPoller provides polling facilities until the operation reaches a terminal state.
-type SQLScriptRenameSQLScriptPoller struct {
-	pt *azcore.Poller
-}
-
-// Done returns true if the LRO has reached a terminal state.
-func (p *SQLScriptRenameSQLScriptPoller) Done() bool {
-	return p.pt.Done()
-}
-
-// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is updated and the HTTP
-// response is returned.
-// If the LRO has completed with failure or was cancelled, the poller's state is
-// updated and the error is returned.
-// If the LRO has not reached a terminal state, the poller's state is updated and
-// the latest HTTP response is returned.
-// If Poll fails, the poller's state is unmodified and the error is returned.
-// Calling Poll on an LRO that has reached a terminal state will return the final
-// HTTP response or error.
-func (p *SQLScriptRenameSQLScriptPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx)
-}
-
-// FinalResponse performs a final GET to the service and returns the final response
-// for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final SQLScriptRenameSQLScriptResponse will be returned.
-func (p *SQLScriptRenameSQLScriptPoller) FinalResponse(ctx context.Context) (SQLScriptRenameSQLScriptResponse, error) {
-	respType := SQLScriptRenameSQLScriptResponse{}
-	resp, err := p.pt.FinalResponse(ctx, nil)
-	if err != nil {
-		return SQLScriptRenameSQLScriptResponse{}, err
-	}
-	respType.RawResponse = resp
-	return respType, nil
-}
-
-// ResumeToken returns a value representing the poller that can be used to resume
-// the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *SQLScriptRenameSQLScriptPoller) ResumeToken() (string, error) {
-	return p.pt.ResumeToken()
-}
-
-// SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPoller provides polling facilities until the operation reaches a terminal state.
-type SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPoller struct {
-	pt *azcore.Poller
-}
-
-// Done returns true if the LRO has reached a terminal state.
-func (p *SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPoller) Done() bool {
-	return p.pt.Done()
-}
-
-// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
-// If the LRO has completed successfully, the poller's state is updated and the HTTP
-// response is returned.
-// If the LRO has completed with failure or was cancelled, the poller's state is
-// updated and the error is returned.
-// If the LRO has not reached a terminal state, the poller's state is updated and
-// the latest HTTP response is returned.
-// If Poll fails, the poller's state is unmodified and the error is returned.
-// Calling Poll on an LRO that has reached a terminal state will return the final
-// HTTP response or error.
-func (p *SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPoller) Poll(ctx context.Context) (*http.Response, error) {
-	return p.pt.Poll(ctx)
-}
-
-// FinalResponse performs a final GET to the service and returns the final response
-// for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final SparkJobDefinitionCreateOrUpdateSparkJobDefinitionResponse will be returned.
-func (p *SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPoller) FinalResponse(ctx context.Context) (SparkJobDefinitionCreateOrUpdateSparkJobDefinitionResponse, error) {
-	respType := SparkJobDefinitionCreateOrUpdateSparkJobDefinitionResponse{}
+// If the final GET succeeded then the final sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse will be returned.
+func (p *sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPoller) FinalResponse(ctx context.Context) (sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse, error) {
+	respType := sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.SparkJobDefinitionResource)
 	if err != nil {
-		return SparkJobDefinitionCreateOrUpdateSparkJobDefinitionResponse{}, err
+		return sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -1042,17 +913,17 @@ func (p *SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPoller) FinalResponse
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *SparkJobDefinitionCreateOrUpdateSparkJobDefinitionPoller) ResumeToken() (string, error) {
+func (p *sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// SparkJobDefinitionDebugSparkJobDefinitionPoller provides polling facilities until the operation reaches a terminal state.
-type SparkJobDefinitionDebugSparkJobDefinitionPoller struct {
+// sparkJobDefinitionClientDebugSparkJobDefinitionPoller provides polling facilities until the operation reaches a terminal state.
+type sparkJobDefinitionClientDebugSparkJobDefinitionPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *SparkJobDefinitionDebugSparkJobDefinitionPoller) Done() bool {
+func (p *sparkJobDefinitionClientDebugSparkJobDefinitionPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -1066,18 +937,18 @@ func (p *SparkJobDefinitionDebugSparkJobDefinitionPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *SparkJobDefinitionDebugSparkJobDefinitionPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *sparkJobDefinitionClientDebugSparkJobDefinitionPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final SparkJobDefinitionDebugSparkJobDefinitionResponse will be returned.
-func (p *SparkJobDefinitionDebugSparkJobDefinitionPoller) FinalResponse(ctx context.Context) (SparkJobDefinitionDebugSparkJobDefinitionResponse, error) {
-	respType := SparkJobDefinitionDebugSparkJobDefinitionResponse{}
+// If the final GET succeeded then the final sparkJobDefinitionClientDebugSparkJobDefinitionResponse will be returned.
+func (p *sparkJobDefinitionClientDebugSparkJobDefinitionPoller) FinalResponse(ctx context.Context) (sparkJobDefinitionClientDebugSparkJobDefinitionResponse, error) {
+	respType := sparkJobDefinitionClientDebugSparkJobDefinitionResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.SparkBatchJob)
 	if err != nil {
-		return SparkJobDefinitionDebugSparkJobDefinitionResponse{}, err
+		return sparkJobDefinitionClientDebugSparkJobDefinitionResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -1085,17 +956,17 @@ func (p *SparkJobDefinitionDebugSparkJobDefinitionPoller) FinalResponse(ctx cont
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *SparkJobDefinitionDebugSparkJobDefinitionPoller) ResumeToken() (string, error) {
+func (p *sparkJobDefinitionClientDebugSparkJobDefinitionPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// SparkJobDefinitionDeleteSparkJobDefinitionPoller provides polling facilities until the operation reaches a terminal state.
-type SparkJobDefinitionDeleteSparkJobDefinitionPoller struct {
+// sparkJobDefinitionClientDeleteSparkJobDefinitionPoller provides polling facilities until the operation reaches a terminal state.
+type sparkJobDefinitionClientDeleteSparkJobDefinitionPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *SparkJobDefinitionDeleteSparkJobDefinitionPoller) Done() bool {
+func (p *sparkJobDefinitionClientDeleteSparkJobDefinitionPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -1109,18 +980,18 @@ func (p *SparkJobDefinitionDeleteSparkJobDefinitionPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *SparkJobDefinitionDeleteSparkJobDefinitionPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *sparkJobDefinitionClientDeleteSparkJobDefinitionPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final SparkJobDefinitionDeleteSparkJobDefinitionResponse will be returned.
-func (p *SparkJobDefinitionDeleteSparkJobDefinitionPoller) FinalResponse(ctx context.Context) (SparkJobDefinitionDeleteSparkJobDefinitionResponse, error) {
-	respType := SparkJobDefinitionDeleteSparkJobDefinitionResponse{}
+// If the final GET succeeded then the final sparkJobDefinitionClientDeleteSparkJobDefinitionResponse will be returned.
+func (p *sparkJobDefinitionClientDeleteSparkJobDefinitionPoller) FinalResponse(ctx context.Context) (sparkJobDefinitionClientDeleteSparkJobDefinitionResponse, error) {
+	respType := sparkJobDefinitionClientDeleteSparkJobDefinitionResponse{}
 	resp, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
-		return SparkJobDefinitionDeleteSparkJobDefinitionResponse{}, err
+		return sparkJobDefinitionClientDeleteSparkJobDefinitionResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -1128,17 +999,17 @@ func (p *SparkJobDefinitionDeleteSparkJobDefinitionPoller) FinalResponse(ctx con
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *SparkJobDefinitionDeleteSparkJobDefinitionPoller) ResumeToken() (string, error) {
+func (p *sparkJobDefinitionClientDeleteSparkJobDefinitionPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// SparkJobDefinitionExecuteSparkJobDefinitionPoller provides polling facilities until the operation reaches a terminal state.
-type SparkJobDefinitionExecuteSparkJobDefinitionPoller struct {
+// sparkJobDefinitionClientExecuteSparkJobDefinitionPoller provides polling facilities until the operation reaches a terminal state.
+type sparkJobDefinitionClientExecuteSparkJobDefinitionPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *SparkJobDefinitionExecuteSparkJobDefinitionPoller) Done() bool {
+func (p *sparkJobDefinitionClientExecuteSparkJobDefinitionPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -1152,18 +1023,18 @@ func (p *SparkJobDefinitionExecuteSparkJobDefinitionPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *SparkJobDefinitionExecuteSparkJobDefinitionPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *sparkJobDefinitionClientExecuteSparkJobDefinitionPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final SparkJobDefinitionExecuteSparkJobDefinitionResponse will be returned.
-func (p *SparkJobDefinitionExecuteSparkJobDefinitionPoller) FinalResponse(ctx context.Context) (SparkJobDefinitionExecuteSparkJobDefinitionResponse, error) {
-	respType := SparkJobDefinitionExecuteSparkJobDefinitionResponse{}
+// If the final GET succeeded then the final sparkJobDefinitionClientExecuteSparkJobDefinitionResponse will be returned.
+func (p *sparkJobDefinitionClientExecuteSparkJobDefinitionPoller) FinalResponse(ctx context.Context) (sparkJobDefinitionClientExecuteSparkJobDefinitionResponse, error) {
+	respType := sparkJobDefinitionClientExecuteSparkJobDefinitionResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.SparkBatchJob)
 	if err != nil {
-		return SparkJobDefinitionExecuteSparkJobDefinitionResponse{}, err
+		return sparkJobDefinitionClientExecuteSparkJobDefinitionResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -1171,17 +1042,17 @@ func (p *SparkJobDefinitionExecuteSparkJobDefinitionPoller) FinalResponse(ctx co
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *SparkJobDefinitionExecuteSparkJobDefinitionPoller) ResumeToken() (string, error) {
+func (p *sparkJobDefinitionClientExecuteSparkJobDefinitionPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// SparkJobDefinitionRenameSparkJobDefinitionPoller provides polling facilities until the operation reaches a terminal state.
-type SparkJobDefinitionRenameSparkJobDefinitionPoller struct {
+// sparkJobDefinitionClientRenameSparkJobDefinitionPoller provides polling facilities until the operation reaches a terminal state.
+type sparkJobDefinitionClientRenameSparkJobDefinitionPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *SparkJobDefinitionRenameSparkJobDefinitionPoller) Done() bool {
+func (p *sparkJobDefinitionClientRenameSparkJobDefinitionPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -1195,18 +1066,18 @@ func (p *SparkJobDefinitionRenameSparkJobDefinitionPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *SparkJobDefinitionRenameSparkJobDefinitionPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *sparkJobDefinitionClientRenameSparkJobDefinitionPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final SparkJobDefinitionRenameSparkJobDefinitionResponse will be returned.
-func (p *SparkJobDefinitionRenameSparkJobDefinitionPoller) FinalResponse(ctx context.Context) (SparkJobDefinitionRenameSparkJobDefinitionResponse, error) {
-	respType := SparkJobDefinitionRenameSparkJobDefinitionResponse{}
+// If the final GET succeeded then the final sparkJobDefinitionClientRenameSparkJobDefinitionResponse will be returned.
+func (p *sparkJobDefinitionClientRenameSparkJobDefinitionPoller) FinalResponse(ctx context.Context) (sparkJobDefinitionClientRenameSparkJobDefinitionResponse, error) {
+	respType := sparkJobDefinitionClientRenameSparkJobDefinitionResponse{}
 	resp, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
-		return SparkJobDefinitionRenameSparkJobDefinitionResponse{}, err
+		return sparkJobDefinitionClientRenameSparkJobDefinitionResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -1214,17 +1085,17 @@ func (p *SparkJobDefinitionRenameSparkJobDefinitionPoller) FinalResponse(ctx con
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *SparkJobDefinitionRenameSparkJobDefinitionPoller) ResumeToken() (string, error) {
+func (p *sparkJobDefinitionClientRenameSparkJobDefinitionPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// TriggerCreateOrUpdateTriggerPoller provides polling facilities until the operation reaches a terminal state.
-type TriggerCreateOrUpdateTriggerPoller struct {
+// sqlScriptClientCreateOrUpdateSQLScriptPoller provides polling facilities until the operation reaches a terminal state.
+type sqlScriptClientCreateOrUpdateSQLScriptPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *TriggerCreateOrUpdateTriggerPoller) Done() bool {
+func (p *sqlScriptClientCreateOrUpdateSQLScriptPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -1238,18 +1109,147 @@ func (p *TriggerCreateOrUpdateTriggerPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *TriggerCreateOrUpdateTriggerPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *sqlScriptClientCreateOrUpdateSQLScriptPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final TriggerCreateOrUpdateTriggerResponse will be returned.
-func (p *TriggerCreateOrUpdateTriggerPoller) FinalResponse(ctx context.Context) (TriggerCreateOrUpdateTriggerResponse, error) {
-	respType := TriggerCreateOrUpdateTriggerResponse{}
+// If the final GET succeeded then the final sqlScriptClientCreateOrUpdateSQLScriptResponse will be returned.
+func (p *sqlScriptClientCreateOrUpdateSQLScriptPoller) FinalResponse(ctx context.Context) (sqlScriptClientCreateOrUpdateSQLScriptResponse, error) {
+	respType := sqlScriptClientCreateOrUpdateSQLScriptResponse{}
+	resp, err := p.pt.FinalResponse(ctx, &respType.SQLScriptResource)
+	if err != nil {
+		return sqlScriptClientCreateOrUpdateSQLScriptResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// ResumeToken returns a value representing the poller that can be used to resume
+// the LRO at a later time. ResumeTokens are unique per service operation.
+func (p *sqlScriptClientCreateOrUpdateSQLScriptPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+// sqlScriptClientDeleteSQLScriptPoller provides polling facilities until the operation reaches a terminal state.
+type sqlScriptClientDeleteSQLScriptPoller struct {
+	pt *azcore.Poller
+}
+
+// Done returns true if the LRO has reached a terminal state.
+func (p *sqlScriptClientDeleteSQLScriptPoller) Done() bool {
+	return p.pt.Done()
+}
+
+// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
+// response is returned.
+// If the LRO has completed with failure or was cancelled, the poller's state is
+// updated and the error is returned.
+// If the LRO has not reached a terminal state, the poller's state is updated and
+// the latest HTTP response is returned.
+// If Poll fails, the poller's state is unmodified and the error is returned.
+// Calling Poll on an LRO that has reached a terminal state will return the final
+// HTTP response or error.
+func (p *sqlScriptClientDeleteSQLScriptPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+// FinalResponse performs a final GET to the service and returns the final response
+// for the polling operation. If there is an error performing the final GET then an error is returned.
+// If the final GET succeeded then the final sqlScriptClientDeleteSQLScriptResponse will be returned.
+func (p *sqlScriptClientDeleteSQLScriptPoller) FinalResponse(ctx context.Context) (sqlScriptClientDeleteSQLScriptResponse, error) {
+	respType := sqlScriptClientDeleteSQLScriptResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return sqlScriptClientDeleteSQLScriptResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// ResumeToken returns a value representing the poller that can be used to resume
+// the LRO at a later time. ResumeTokens are unique per service operation.
+func (p *sqlScriptClientDeleteSQLScriptPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+// sqlScriptClientRenameSQLScriptPoller provides polling facilities until the operation reaches a terminal state.
+type sqlScriptClientRenameSQLScriptPoller struct {
+	pt *azcore.Poller
+}
+
+// Done returns true if the LRO has reached a terminal state.
+func (p *sqlScriptClientRenameSQLScriptPoller) Done() bool {
+	return p.pt.Done()
+}
+
+// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
+// response is returned.
+// If the LRO has completed with failure or was cancelled, the poller's state is
+// updated and the error is returned.
+// If the LRO has not reached a terminal state, the poller's state is updated and
+// the latest HTTP response is returned.
+// If Poll fails, the poller's state is unmodified and the error is returned.
+// Calling Poll on an LRO that has reached a terminal state will return the final
+// HTTP response or error.
+func (p *sqlScriptClientRenameSQLScriptPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+// FinalResponse performs a final GET to the service and returns the final response
+// for the polling operation. If there is an error performing the final GET then an error is returned.
+// If the final GET succeeded then the final sqlScriptClientRenameSQLScriptResponse will be returned.
+func (p *sqlScriptClientRenameSQLScriptPoller) FinalResponse(ctx context.Context) (sqlScriptClientRenameSQLScriptResponse, error) {
+	respType := sqlScriptClientRenameSQLScriptResponse{}
+	resp, err := p.pt.FinalResponse(ctx, nil)
+	if err != nil {
+		return sqlScriptClientRenameSQLScriptResponse{}, err
+	}
+	respType.RawResponse = resp
+	return respType, nil
+}
+
+// ResumeToken returns a value representing the poller that can be used to resume
+// the LRO at a later time. ResumeTokens are unique per service operation.
+func (p *sqlScriptClientRenameSQLScriptPoller) ResumeToken() (string, error) {
+	return p.pt.ResumeToken()
+}
+
+// triggerClientCreateOrUpdateTriggerPoller provides polling facilities until the operation reaches a terminal state.
+type triggerClientCreateOrUpdateTriggerPoller struct {
+	pt *azcore.Poller
+}
+
+// Done returns true if the LRO has reached a terminal state.
+func (p *triggerClientCreateOrUpdateTriggerPoller) Done() bool {
+	return p.pt.Done()
+}
+
+// Poll fetches the latest state of the LRO.  It returns an HTTP response or error.
+// If the LRO has completed successfully, the poller's state is updated and the HTTP
+// response is returned.
+// If the LRO has completed with failure or was cancelled, the poller's state is
+// updated and the error is returned.
+// If the LRO has not reached a terminal state, the poller's state is updated and
+// the latest HTTP response is returned.
+// If Poll fails, the poller's state is unmodified and the error is returned.
+// Calling Poll on an LRO that has reached a terminal state will return the final
+// HTTP response or error.
+func (p *triggerClientCreateOrUpdateTriggerPoller) Poll(ctx context.Context) (*http.Response, error) {
+	return p.pt.Poll(ctx)
+}
+
+// FinalResponse performs a final GET to the service and returns the final response
+// for the polling operation. If there is an error performing the final GET then an error is returned.
+// If the final GET succeeded then the final triggerClientCreateOrUpdateTriggerResponse will be returned.
+func (p *triggerClientCreateOrUpdateTriggerPoller) FinalResponse(ctx context.Context) (triggerClientCreateOrUpdateTriggerResponse, error) {
+	respType := triggerClientCreateOrUpdateTriggerResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.TriggerResource)
 	if err != nil {
-		return TriggerCreateOrUpdateTriggerResponse{}, err
+		return triggerClientCreateOrUpdateTriggerResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -1257,17 +1257,17 @@ func (p *TriggerCreateOrUpdateTriggerPoller) FinalResponse(ctx context.Context) 
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *TriggerCreateOrUpdateTriggerPoller) ResumeToken() (string, error) {
+func (p *triggerClientCreateOrUpdateTriggerPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// TriggerDeleteTriggerPoller provides polling facilities until the operation reaches a terminal state.
-type TriggerDeleteTriggerPoller struct {
+// triggerClientDeleteTriggerPoller provides polling facilities until the operation reaches a terminal state.
+type triggerClientDeleteTriggerPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *TriggerDeleteTriggerPoller) Done() bool {
+func (p *triggerClientDeleteTriggerPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -1281,18 +1281,18 @@ func (p *TriggerDeleteTriggerPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *TriggerDeleteTriggerPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *triggerClientDeleteTriggerPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final TriggerDeleteTriggerResponse will be returned.
-func (p *TriggerDeleteTriggerPoller) FinalResponse(ctx context.Context) (TriggerDeleteTriggerResponse, error) {
-	respType := TriggerDeleteTriggerResponse{}
+// If the final GET succeeded then the final triggerClientDeleteTriggerResponse will be returned.
+func (p *triggerClientDeleteTriggerPoller) FinalResponse(ctx context.Context) (triggerClientDeleteTriggerResponse, error) {
+	respType := triggerClientDeleteTriggerResponse{}
 	resp, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
-		return TriggerDeleteTriggerResponse{}, err
+		return triggerClientDeleteTriggerResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -1300,17 +1300,17 @@ func (p *TriggerDeleteTriggerPoller) FinalResponse(ctx context.Context) (Trigger
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *TriggerDeleteTriggerPoller) ResumeToken() (string, error) {
+func (p *triggerClientDeleteTriggerPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// TriggerStartTriggerPoller provides polling facilities until the operation reaches a terminal state.
-type TriggerStartTriggerPoller struct {
+// triggerClientStartTriggerPoller provides polling facilities until the operation reaches a terminal state.
+type triggerClientStartTriggerPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *TriggerStartTriggerPoller) Done() bool {
+func (p *triggerClientStartTriggerPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -1324,18 +1324,18 @@ func (p *TriggerStartTriggerPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *TriggerStartTriggerPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *triggerClientStartTriggerPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final TriggerStartTriggerResponse will be returned.
-func (p *TriggerStartTriggerPoller) FinalResponse(ctx context.Context) (TriggerStartTriggerResponse, error) {
-	respType := TriggerStartTriggerResponse{}
+// If the final GET succeeded then the final triggerClientStartTriggerResponse will be returned.
+func (p *triggerClientStartTriggerPoller) FinalResponse(ctx context.Context) (triggerClientStartTriggerResponse, error) {
+	respType := triggerClientStartTriggerResponse{}
 	resp, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
-		return TriggerStartTriggerResponse{}, err
+		return triggerClientStartTriggerResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -1343,17 +1343,17 @@ func (p *TriggerStartTriggerPoller) FinalResponse(ctx context.Context) (TriggerS
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *TriggerStartTriggerPoller) ResumeToken() (string, error) {
+func (p *triggerClientStartTriggerPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// TriggerStopTriggerPoller provides polling facilities until the operation reaches a terminal state.
-type TriggerStopTriggerPoller struct {
+// triggerClientStopTriggerPoller provides polling facilities until the operation reaches a terminal state.
+type triggerClientStopTriggerPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *TriggerStopTriggerPoller) Done() bool {
+func (p *triggerClientStopTriggerPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -1367,18 +1367,18 @@ func (p *TriggerStopTriggerPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *TriggerStopTriggerPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *triggerClientStopTriggerPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final TriggerStopTriggerResponse will be returned.
-func (p *TriggerStopTriggerPoller) FinalResponse(ctx context.Context) (TriggerStopTriggerResponse, error) {
-	respType := TriggerStopTriggerResponse{}
+// If the final GET succeeded then the final triggerClientStopTriggerResponse will be returned.
+func (p *triggerClientStopTriggerPoller) FinalResponse(ctx context.Context) (triggerClientStopTriggerResponse, error) {
+	respType := triggerClientStopTriggerResponse{}
 	resp, err := p.pt.FinalResponse(ctx, nil)
 	if err != nil {
-		return TriggerStopTriggerResponse{}, err
+		return triggerClientStopTriggerResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -1386,17 +1386,17 @@ func (p *TriggerStopTriggerPoller) FinalResponse(ctx context.Context) (TriggerSt
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *TriggerStopTriggerPoller) ResumeToken() (string, error) {
+func (p *triggerClientStopTriggerPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// TriggerSubscribeTriggerToEventsPoller provides polling facilities until the operation reaches a terminal state.
-type TriggerSubscribeTriggerToEventsPoller struct {
+// triggerClientSubscribeTriggerToEventsPoller provides polling facilities until the operation reaches a terminal state.
+type triggerClientSubscribeTriggerToEventsPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *TriggerSubscribeTriggerToEventsPoller) Done() bool {
+func (p *triggerClientSubscribeTriggerToEventsPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -1410,18 +1410,18 @@ func (p *TriggerSubscribeTriggerToEventsPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *TriggerSubscribeTriggerToEventsPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *triggerClientSubscribeTriggerToEventsPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final TriggerSubscribeTriggerToEventsResponse will be returned.
-func (p *TriggerSubscribeTriggerToEventsPoller) FinalResponse(ctx context.Context) (TriggerSubscribeTriggerToEventsResponse, error) {
-	respType := TriggerSubscribeTriggerToEventsResponse{}
+// If the final GET succeeded then the final triggerClientSubscribeTriggerToEventsResponse will be returned.
+func (p *triggerClientSubscribeTriggerToEventsPoller) FinalResponse(ctx context.Context) (triggerClientSubscribeTriggerToEventsResponse, error) {
+	respType := triggerClientSubscribeTriggerToEventsResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.TriggerSubscriptionOperationStatus)
 	if err != nil {
-		return TriggerSubscribeTriggerToEventsResponse{}, err
+		return triggerClientSubscribeTriggerToEventsResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -1429,17 +1429,17 @@ func (p *TriggerSubscribeTriggerToEventsPoller) FinalResponse(ctx context.Contex
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *TriggerSubscribeTriggerToEventsPoller) ResumeToken() (string, error) {
+func (p *triggerClientSubscribeTriggerToEventsPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }
 
-// TriggerUnsubscribeTriggerFromEventsPoller provides polling facilities until the operation reaches a terminal state.
-type TriggerUnsubscribeTriggerFromEventsPoller struct {
+// triggerClientUnsubscribeTriggerFromEventsPoller provides polling facilities until the operation reaches a terminal state.
+type triggerClientUnsubscribeTriggerFromEventsPoller struct {
 	pt *azcore.Poller
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *TriggerUnsubscribeTriggerFromEventsPoller) Done() bool {
+func (p *triggerClientUnsubscribeTriggerFromEventsPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -1453,18 +1453,18 @@ func (p *TriggerUnsubscribeTriggerFromEventsPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *TriggerUnsubscribeTriggerFromEventsPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *triggerClientUnsubscribeTriggerFromEventsPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final TriggerUnsubscribeTriggerFromEventsResponse will be returned.
-func (p *TriggerUnsubscribeTriggerFromEventsPoller) FinalResponse(ctx context.Context) (TriggerUnsubscribeTriggerFromEventsResponse, error) {
-	respType := TriggerUnsubscribeTriggerFromEventsResponse{}
+// If the final GET succeeded then the final triggerClientUnsubscribeTriggerFromEventsResponse will be returned.
+func (p *triggerClientUnsubscribeTriggerFromEventsPoller) FinalResponse(ctx context.Context) (triggerClientUnsubscribeTriggerFromEventsResponse, error) {
+	respType := triggerClientUnsubscribeTriggerFromEventsResponse{}
 	resp, err := p.pt.FinalResponse(ctx, &respType.TriggerSubscriptionOperationStatus)
 	if err != nil {
-		return TriggerUnsubscribeTriggerFromEventsResponse{}, err
+		return triggerClientUnsubscribeTriggerFromEventsResponse{}, err
 	}
 	respType.RawResponse = resp
 	return respType, nil
@@ -1472,6 +1472,6 @@ func (p *TriggerUnsubscribeTriggerFromEventsPoller) FinalResponse(ctx context.Co
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *TriggerUnsubscribeTriggerFromEventsPoller) ResumeToken() (string, error) {
+func (p *triggerClientUnsubscribeTriggerFromEventsPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }

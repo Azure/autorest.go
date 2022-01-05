@@ -53,22 +53,22 @@ func NewAzureFirewallFqdnTagsClient(subscriptionID string, credential azcore.Tok
 
 // ListAll - Gets all the Azure Firewall FQDN Tags in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - AzureFirewallFqdnTagsListAllOptions contains the optional parameters for the AzureFirewallFqdnTagsClient.ListAll
+// options - AzureFirewallFqdnTagsClientListAllOptions contains the optional parameters for the AzureFirewallFqdnTagsClient.ListAll
 // method.
-func (client *AzureFirewallFqdnTagsClient) ListAll(options *AzureFirewallFqdnTagsListAllOptions) *AzureFirewallFqdnTagsListAllPager {
-	return &AzureFirewallFqdnTagsListAllPager{
+func (client *AzureFirewallFqdnTagsClient) ListAll(options *AzureFirewallFqdnTagsClientListAllOptions) *AzureFirewallFqdnTagsClientListAllPager {
+	return &AzureFirewallFqdnTagsClientListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp AzureFirewallFqdnTagsListAllResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp AzureFirewallFqdnTagsClientListAllResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.AzureFirewallFqdnTagListResult.NextLink)
 		},
 	}
 }
 
 // listAllCreateRequest creates the ListAll request.
-func (client *AzureFirewallFqdnTagsClient) listAllCreateRequest(ctx context.Context, options *AzureFirewallFqdnTagsListAllOptions) (*policy.Request, error) {
+func (client *AzureFirewallFqdnTagsClient) listAllCreateRequest(ctx context.Context, options *AzureFirewallFqdnTagsClientListAllOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -86,10 +86,10 @@ func (client *AzureFirewallFqdnTagsClient) listAllCreateRequest(ctx context.Cont
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client *AzureFirewallFqdnTagsClient) listAllHandleResponse(resp *http.Response) (AzureFirewallFqdnTagsListAllResponse, error) {
-	result := AzureFirewallFqdnTagsListAllResponse{RawResponse: resp}
+func (client *AzureFirewallFqdnTagsClient) listAllHandleResponse(resp *http.Response) (AzureFirewallFqdnTagsClientListAllResponse, error) {
+	result := AzureFirewallFqdnTagsClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureFirewallFqdnTagListResult); err != nil {
-		return AzureFirewallFqdnTagsListAllResponse{}, runtime.NewResponseError(err, resp)
+		return AzureFirewallFqdnTagsClientListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

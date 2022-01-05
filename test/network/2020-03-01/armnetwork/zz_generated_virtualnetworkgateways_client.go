@@ -56,21 +56,21 @@ func NewVirtualNetworkGatewaysClient(subscriptionID string, credential azcore.To
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
 // parameters - Parameters supplied to create or update virtual network gateway operation.
-// options - VirtualNetworkGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginCreateOrUpdate
+// options - VirtualNetworkGatewaysClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VirtualNetworkGateway, options *VirtualNetworkGatewaysBeginCreateOrUpdateOptions) (VirtualNetworkGatewaysCreateOrUpdatePollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VirtualNetworkGateway, options *VirtualNetworkGatewaysClientBeginCreateOrUpdateOptions) (VirtualNetworkGatewaysClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
-		return VirtualNetworkGatewaysCreateOrUpdatePollerResponse{}, err
+		return VirtualNetworkGatewaysClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysCreateOrUpdatePollerResponse{
+	result := VirtualNetworkGatewaysClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysCreateOrUpdatePollerResponse{}, err
+		return VirtualNetworkGatewaysClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysCreateOrUpdatePoller{
+	result.Poller = &VirtualNetworkGatewaysClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *VirtualNetworkGatewaysClient) BeginCreateOrUpdate(ctx context.Cont
 
 // CreateOrUpdate - Creates or updates a virtual network gateway in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VirtualNetworkGateway, options *VirtualNetworkGatewaysBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VirtualNetworkGateway, options *VirtualNetworkGatewaysClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *VirtualNetworkGatewaysClient) createOrUpdate(ctx context.Context, 
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualNetworkGatewaysClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VirtualNetworkGateway, options *VirtualNetworkGatewaysBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VirtualNetworkGateway, options *VirtualNetworkGatewaysClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -136,21 +136,21 @@ func (client *VirtualNetworkGatewaysClient) createOrUpdateHandleError(resp *http
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
-// options - VirtualNetworkGatewaysBeginDeleteOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginDelete
+// options - VirtualNetworkGatewaysClientBeginDeleteOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginDelete
 // method.
-func (client *VirtualNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginDeleteOptions) (VirtualNetworkGatewaysDeletePollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginDeleteOptions) (VirtualNetworkGatewaysClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
-		return VirtualNetworkGatewaysDeletePollerResponse{}, err
+		return VirtualNetworkGatewaysClientDeletePollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysDeletePollerResponse{
+	result := VirtualNetworkGatewaysClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysDeletePollerResponse{}, err
+		return VirtualNetworkGatewaysClientDeletePollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysDeletePoller{
+	result.Poller = &VirtualNetworkGatewaysClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -158,7 +158,7 @@ func (client *VirtualNetworkGatewaysClient) BeginDelete(ctx context.Context, res
 
 // Delete - Deletes the specified virtual network gateway.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginDeleteOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -174,7 +174,7 @@ func (client *VirtualNetworkGatewaysClient) deleteOperation(ctx context.Context,
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *VirtualNetworkGatewaysClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginDeleteOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -218,21 +218,21 @@ func (client *VirtualNetworkGatewaysClient) deleteHandleError(resp *http.Respons
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
 // request - The parameters are supplied to disconnect vpn connections.
-// options - VirtualNetworkGatewaysBeginDisconnectVirtualNetworkGatewayVPNConnectionsOptions contains the optional parameters
+// options - VirtualNetworkGatewaysClientBeginDisconnectVirtualNetworkGatewayVPNConnectionsOptions contains the optional parameters
 // for the VirtualNetworkGatewaysClient.BeginDisconnectVirtualNetworkGatewayVPNConnections method.
-func (client *VirtualNetworkGatewaysClient) BeginDisconnectVirtualNetworkGatewayVPNConnections(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVPNConnectionRequest, options *VirtualNetworkGatewaysBeginDisconnectVirtualNetworkGatewayVPNConnectionsOptions) (VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) BeginDisconnectVirtualNetworkGatewayVPNConnections(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVPNConnectionRequest, options *VirtualNetworkGatewaysClientBeginDisconnectVirtualNetworkGatewayVPNConnectionsOptions) (VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse, error) {
 	resp, err := client.disconnectVirtualNetworkGatewayVPNConnections(ctx, resourceGroupName, virtualNetworkGatewayName, request, options)
 	if err != nil {
-		return VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse{}, err
+		return VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse{
+	result := VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.DisconnectVirtualNetworkGatewayVPNConnections", "location", resp, client.pl, client.disconnectVirtualNetworkGatewayVPNConnectionsHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse{}, err
+		return VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysDisconnectVirtualNetworkGatewayVPNConnectionsPoller{
+	result.Poller = &VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -241,7 +241,7 @@ func (client *VirtualNetworkGatewaysClient) BeginDisconnectVirtualNetworkGateway
 // DisconnectVirtualNetworkGatewayVPNConnections - Disconnect vpn connections of virtual network gateway in the specified
 // resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) disconnectVirtualNetworkGatewayVPNConnections(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVPNConnectionRequest, options *VirtualNetworkGatewaysBeginDisconnectVirtualNetworkGatewayVPNConnectionsOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) disconnectVirtualNetworkGatewayVPNConnections(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVPNConnectionRequest, options *VirtualNetworkGatewaysClientBeginDisconnectVirtualNetworkGatewayVPNConnectionsOptions) (*http.Response, error) {
 	req, err := client.disconnectVirtualNetworkGatewayVPNConnectionsCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, request, options)
 	if err != nil {
 		return nil, err
@@ -257,7 +257,7 @@ func (client *VirtualNetworkGatewaysClient) disconnectVirtualNetworkGatewayVPNCo
 }
 
 // disconnectVirtualNetworkGatewayVPNConnectionsCreateRequest creates the DisconnectVirtualNetworkGatewayVPNConnections request.
-func (client *VirtualNetworkGatewaysClient) disconnectVirtualNetworkGatewayVPNConnectionsCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVPNConnectionRequest, options *VirtualNetworkGatewaysBeginDisconnectVirtualNetworkGatewayVPNConnectionsOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) disconnectVirtualNetworkGatewayVPNConnectionsCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, request P2SVPNConnectionRequest, options *VirtualNetworkGatewaysClientBeginDisconnectVirtualNetworkGatewayVPNConnectionsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/disconnectVirtualNetworkGatewayVpnConnections"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -301,21 +301,21 @@ func (client *VirtualNetworkGatewaysClient) disconnectVirtualNetworkGatewayVPNCo
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
 // parameters - Parameters supplied to the generate virtual network gateway VPN client package operation.
-// options - VirtualNetworkGatewaysBeginGenerateVPNProfileOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginGenerateVPNProfile
+// options - VirtualNetworkGatewaysClientBeginGenerateVPNProfileOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginGenerateVPNProfile
 // method.
-func (client *VirtualNetworkGatewaysClient) BeginGenerateVPNProfile(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysBeginGenerateVPNProfileOptions) (VirtualNetworkGatewaysGenerateVPNProfilePollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) BeginGenerateVPNProfile(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysClientBeginGenerateVPNProfileOptions) (VirtualNetworkGatewaysClientGenerateVPNProfilePollerResponse, error) {
 	resp, err := client.generateVPNProfile(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
-		return VirtualNetworkGatewaysGenerateVPNProfilePollerResponse{}, err
+		return VirtualNetworkGatewaysClientGenerateVPNProfilePollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysGenerateVPNProfilePollerResponse{
+	result := VirtualNetworkGatewaysClientGenerateVPNProfilePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.GenerateVPNProfile", "location", resp, client.pl, client.generateVPNProfileHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysGenerateVPNProfilePollerResponse{}, err
+		return VirtualNetworkGatewaysClientGenerateVPNProfilePollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysGenerateVPNProfilePoller{
+	result.Poller = &VirtualNetworkGatewaysClientGenerateVPNProfilePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -324,7 +324,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGenerateVPNProfile(ctx context.
 // GenerateVPNProfile - Generates VPN profile for P2S client of the virtual network gateway in the specified resource group.
 // Used for IKEV2 and radius based authentication.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) generateVPNProfile(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysBeginGenerateVPNProfileOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) generateVPNProfile(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysClientBeginGenerateVPNProfileOptions) (*http.Response, error) {
 	req, err := client.generateVPNProfileCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -340,7 +340,7 @@ func (client *VirtualNetworkGatewaysClient) generateVPNProfile(ctx context.Conte
 }
 
 // generateVPNProfileCreateRequest creates the GenerateVPNProfile request.
-func (client *VirtualNetworkGatewaysClient) generateVPNProfileCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysBeginGenerateVPNProfileOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) generateVPNProfileCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysClientBeginGenerateVPNProfileOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/generatevpnprofile"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -384,21 +384,21 @@ func (client *VirtualNetworkGatewaysClient) generateVPNProfileHandleError(resp *
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
 // parameters - Parameters supplied to the generate virtual network gateway VPN client package operation.
-// options - VirtualNetworkGatewaysBeginGeneratevpnclientpackageOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginGeneratevpnclientpackage
+// options - VirtualNetworkGatewaysClientBeginGeneratevpnclientpackageOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginGeneratevpnclientpackage
 // method.
-func (client *VirtualNetworkGatewaysClient) BeginGeneratevpnclientpackage(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysBeginGeneratevpnclientpackageOptions) (VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) BeginGeneratevpnclientpackage(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysClientBeginGeneratevpnclientpackageOptions) (VirtualNetworkGatewaysClientGeneratevpnclientpackagePollerResponse, error) {
 	resp, err := client.generatevpnclientpackage(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
-		return VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse{}, err
+		return VirtualNetworkGatewaysClientGeneratevpnclientpackagePollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse{
+	result := VirtualNetworkGatewaysClientGeneratevpnclientpackagePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.Generatevpnclientpackage", "location", resp, client.pl, client.generatevpnclientpackageHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysGeneratevpnclientpackagePollerResponse{}, err
+		return VirtualNetworkGatewaysClientGeneratevpnclientpackagePollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysGeneratevpnclientpackagePoller{
+	result.Poller = &VirtualNetworkGatewaysClientGeneratevpnclientpackagePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -407,7 +407,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGeneratevpnclientpackage(ctx co
 // Generatevpnclientpackage - Generates VPN client package for P2S client of the virtual network gateway in the specified
 // resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) generatevpnclientpackage(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysBeginGeneratevpnclientpackageOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) generatevpnclientpackage(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysClientBeginGeneratevpnclientpackageOptions) (*http.Response, error) {
 	req, err := client.generatevpnclientpackageCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -423,7 +423,7 @@ func (client *VirtualNetworkGatewaysClient) generatevpnclientpackage(ctx context
 }
 
 // generatevpnclientpackageCreateRequest creates the Generatevpnclientpackage request.
-func (client *VirtualNetworkGatewaysClient) generatevpnclientpackageCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysBeginGeneratevpnclientpackageOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) generatevpnclientpackageCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNClientParameters, options *VirtualNetworkGatewaysClientBeginGeneratevpnclientpackageOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/generatevpnclientpackage"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -465,24 +465,25 @@ func (client *VirtualNetworkGatewaysClient) generatevpnclientpackageHandleError(
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
-// options - VirtualNetworkGatewaysGetOptions contains the optional parameters for the VirtualNetworkGatewaysClient.Get method.
-func (client *VirtualNetworkGatewaysClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetOptions) (VirtualNetworkGatewaysGetResponse, error) {
+// options - VirtualNetworkGatewaysClientGetOptions contains the optional parameters for the VirtualNetworkGatewaysClient.Get
+// method.
+func (client *VirtualNetworkGatewaysClient) Get(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientGetOptions) (VirtualNetworkGatewaysClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
-		return VirtualNetworkGatewaysGetResponse{}, err
+		return VirtualNetworkGatewaysClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualNetworkGatewaysGetResponse{}, err
+		return VirtualNetworkGatewaysClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualNetworkGatewaysGetResponse{}, client.getHandleError(resp)
+		return VirtualNetworkGatewaysClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualNetworkGatewaysClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysGetOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -508,10 +509,10 @@ func (client *VirtualNetworkGatewaysClient) getCreateRequest(ctx context.Context
 }
 
 // getHandleResponse handles the Get response.
-func (client *VirtualNetworkGatewaysClient) getHandleResponse(resp *http.Response) (VirtualNetworkGatewaysGetResponse, error) {
-	result := VirtualNetworkGatewaysGetResponse{RawResponse: resp}
+func (client *VirtualNetworkGatewaysClient) getHandleResponse(resp *http.Response) (VirtualNetworkGatewaysClientGetResponse, error) {
+	result := VirtualNetworkGatewaysClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkGateway); err != nil {
-		return VirtualNetworkGatewaysGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualNetworkGatewaysClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -535,21 +536,21 @@ func (client *VirtualNetworkGatewaysClient) getHandleError(resp *http.Response) 
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
 // peer - The IP address of the peer.
-// options - VirtualNetworkGatewaysBeginGetAdvertisedRoutesOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginGetAdvertisedRoutes
+// options - VirtualNetworkGatewaysClientBeginGetAdvertisedRoutesOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginGetAdvertisedRoutes
 // method.
-func (client *VirtualNetworkGatewaysClient) BeginGetAdvertisedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string, options *VirtualNetworkGatewaysBeginGetAdvertisedRoutesOptions) (VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) BeginGetAdvertisedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string, options *VirtualNetworkGatewaysClientBeginGetAdvertisedRoutesOptions) (VirtualNetworkGatewaysClientGetAdvertisedRoutesPollerResponse, error) {
 	resp, err := client.getAdvertisedRoutes(ctx, resourceGroupName, virtualNetworkGatewayName, peer, options)
 	if err != nil {
-		return VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse{}, err
+		return VirtualNetworkGatewaysClientGetAdvertisedRoutesPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse{
+	result := VirtualNetworkGatewaysClientGetAdvertisedRoutesPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.GetAdvertisedRoutes", "location", resp, client.pl, client.getAdvertisedRoutesHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysGetAdvertisedRoutesPollerResponse{}, err
+		return VirtualNetworkGatewaysClientGetAdvertisedRoutesPollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysGetAdvertisedRoutesPoller{
+	result.Poller = &VirtualNetworkGatewaysClientGetAdvertisedRoutesPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -558,7 +559,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetAdvertisedRoutes(ctx context
 // GetAdvertisedRoutes - This operation retrieves a list of routes the virtual network gateway is advertising to the specified
 // peer.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) getAdvertisedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string, options *VirtualNetworkGatewaysBeginGetAdvertisedRoutesOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) getAdvertisedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string, options *VirtualNetworkGatewaysClientBeginGetAdvertisedRoutesOptions) (*http.Response, error) {
 	req, err := client.getAdvertisedRoutesCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, peer, options)
 	if err != nil {
 		return nil, err
@@ -574,7 +575,7 @@ func (client *VirtualNetworkGatewaysClient) getAdvertisedRoutes(ctx context.Cont
 }
 
 // getAdvertisedRoutesCreateRequest creates the GetAdvertisedRoutes request.
-func (client *VirtualNetworkGatewaysClient) getAdvertisedRoutesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string, options *VirtualNetworkGatewaysBeginGetAdvertisedRoutesOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) getAdvertisedRoutesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, peer string, options *VirtualNetworkGatewaysClientBeginGetAdvertisedRoutesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getAdvertisedRoutes"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -617,21 +618,21 @@ func (client *VirtualNetworkGatewaysClient) getAdvertisedRoutesHandleError(resp 
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
-// options - VirtualNetworkGatewaysBeginGetBgpPeerStatusOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginGetBgpPeerStatus
+// options - VirtualNetworkGatewaysClientBeginGetBgpPeerStatusOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginGetBgpPeerStatus
 // method.
-func (client *VirtualNetworkGatewaysClient) BeginGetBgpPeerStatus(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetBgpPeerStatusOptions) (VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) BeginGetBgpPeerStatus(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetBgpPeerStatusOptions) (VirtualNetworkGatewaysClientGetBgpPeerStatusPollerResponse, error) {
 	resp, err := client.getBgpPeerStatus(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
-		return VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse{}, err
+		return VirtualNetworkGatewaysClientGetBgpPeerStatusPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse{
+	result := VirtualNetworkGatewaysClientGetBgpPeerStatusPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.GetBgpPeerStatus", "location", resp, client.pl, client.getBgpPeerStatusHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysGetBgpPeerStatusPollerResponse{}, err
+		return VirtualNetworkGatewaysClientGetBgpPeerStatusPollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysGetBgpPeerStatusPoller{
+	result.Poller = &VirtualNetworkGatewaysClientGetBgpPeerStatusPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -639,7 +640,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetBgpPeerStatus(ctx context.Co
 
 // GetBgpPeerStatus - The GetBgpPeerStatus operation retrieves the status of all BGP peers.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) getBgpPeerStatus(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetBgpPeerStatusOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) getBgpPeerStatus(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetBgpPeerStatusOptions) (*http.Response, error) {
 	req, err := client.getBgpPeerStatusCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -655,7 +656,7 @@ func (client *VirtualNetworkGatewaysClient) getBgpPeerStatus(ctx context.Context
 }
 
 // getBgpPeerStatusCreateRequest creates the GetBgpPeerStatus request.
-func (client *VirtualNetworkGatewaysClient) getBgpPeerStatusCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetBgpPeerStatusOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) getBgpPeerStatusCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetBgpPeerStatusOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getBgpPeerStatus"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -701,21 +702,21 @@ func (client *VirtualNetworkGatewaysClient) getBgpPeerStatusHandleError(resp *ht
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
-// options - VirtualNetworkGatewaysBeginGetLearnedRoutesOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginGetLearnedRoutes
+// options - VirtualNetworkGatewaysClientBeginGetLearnedRoutesOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginGetLearnedRoutes
 // method.
-func (client *VirtualNetworkGatewaysClient) BeginGetLearnedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetLearnedRoutesOptions) (VirtualNetworkGatewaysGetLearnedRoutesPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) BeginGetLearnedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetLearnedRoutesOptions) (VirtualNetworkGatewaysClientGetLearnedRoutesPollerResponse, error) {
 	resp, err := client.getLearnedRoutes(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
-		return VirtualNetworkGatewaysGetLearnedRoutesPollerResponse{}, err
+		return VirtualNetworkGatewaysClientGetLearnedRoutesPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysGetLearnedRoutesPollerResponse{
+	result := VirtualNetworkGatewaysClientGetLearnedRoutesPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.GetLearnedRoutes", "location", resp, client.pl, client.getLearnedRoutesHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysGetLearnedRoutesPollerResponse{}, err
+		return VirtualNetworkGatewaysClientGetLearnedRoutesPollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysGetLearnedRoutesPoller{
+	result.Poller = &VirtualNetworkGatewaysClientGetLearnedRoutesPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -724,7 +725,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetLearnedRoutes(ctx context.Co
 // GetLearnedRoutes - This operation retrieves a list of routes the virtual network gateway has learned, including routes
 // learned from BGP peers.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) getLearnedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetLearnedRoutesOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) getLearnedRoutes(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetLearnedRoutesOptions) (*http.Response, error) {
 	req, err := client.getLearnedRoutesCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -740,7 +741,7 @@ func (client *VirtualNetworkGatewaysClient) getLearnedRoutes(ctx context.Context
 }
 
 // getLearnedRoutesCreateRequest creates the GetLearnedRoutes request.
-func (client *VirtualNetworkGatewaysClient) getLearnedRoutesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetLearnedRoutesOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) getLearnedRoutesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetLearnedRoutesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getLearnedRoutes"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -783,21 +784,21 @@ func (client *VirtualNetworkGatewaysClient) getLearnedRoutesHandleError(resp *ht
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
-// options - VirtualNetworkGatewaysBeginGetVPNProfilePackageURLOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginGetVPNProfilePackageURL
+// options - VirtualNetworkGatewaysClientBeginGetVPNProfilePackageURLOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginGetVPNProfilePackageURL
 // method.
-func (client *VirtualNetworkGatewaysClient) BeginGetVPNProfilePackageURL(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVPNProfilePackageURLOptions) (VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) BeginGetVPNProfilePackageURL(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVPNProfilePackageURLOptions) (VirtualNetworkGatewaysClientGetVPNProfilePackageURLPollerResponse, error) {
 	resp, err := client.getVPNProfilePackageURL(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
-		return VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse{}, err
+		return VirtualNetworkGatewaysClientGetVPNProfilePackageURLPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse{
+	result := VirtualNetworkGatewaysClientGetVPNProfilePackageURLPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.GetVPNProfilePackageURL", "location", resp, client.pl, client.getVPNProfilePackageURLHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysGetVPNProfilePackageURLPollerResponse{}, err
+		return VirtualNetworkGatewaysClientGetVPNProfilePackageURLPollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysGetVPNProfilePackageURLPoller{
+	result.Poller = &VirtualNetworkGatewaysClientGetVPNProfilePackageURLPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -806,7 +807,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVPNProfilePackageURL(ctx con
 // GetVPNProfilePackageURL - Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified
 // resource group. The profile needs to be generated first using generateVpnProfile.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) getVPNProfilePackageURL(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVPNProfilePackageURLOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) getVPNProfilePackageURL(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVPNProfilePackageURLOptions) (*http.Response, error) {
 	req, err := client.getVPNProfilePackageURLCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -822,7 +823,7 @@ func (client *VirtualNetworkGatewaysClient) getVPNProfilePackageURL(ctx context.
 }
 
 // getVPNProfilePackageURLCreateRequest creates the GetVPNProfilePackageURL request.
-func (client *VirtualNetworkGatewaysClient) getVPNProfilePackageURLCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVPNProfilePackageURLOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) getVPNProfilePackageURLCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVPNProfilePackageURLOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnprofilepackageurl"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -865,21 +866,21 @@ func (client *VirtualNetworkGatewaysClient) getVPNProfilePackageURLHandleError(r
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
-// options - VirtualNetworkGatewaysBeginGetVpnclientConnectionHealthOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginGetVpnclientConnectionHealth
-// method.
-func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientConnectionHealth(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVpnclientConnectionHealthOptions) (VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse, error) {
+// options - VirtualNetworkGatewaysClientBeginGetVpnclientConnectionHealthOptions contains the optional parameters for the
+// VirtualNetworkGatewaysClient.BeginGetVpnclientConnectionHealth method.
+func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientConnectionHealth(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVpnclientConnectionHealthOptions) (VirtualNetworkGatewaysClientGetVpnclientConnectionHealthPollerResponse, error) {
 	resp, err := client.getVpnclientConnectionHealth(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
-		return VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse{}, err
+		return VirtualNetworkGatewaysClientGetVpnclientConnectionHealthPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse{
+	result := VirtualNetworkGatewaysClientGetVpnclientConnectionHealthPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.GetVpnclientConnectionHealth", "location", resp, client.pl, client.getVpnclientConnectionHealthHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysGetVpnclientConnectionHealthPollerResponse{}, err
+		return VirtualNetworkGatewaysClientGetVpnclientConnectionHealthPollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysGetVpnclientConnectionHealthPoller{
+	result.Poller = &VirtualNetworkGatewaysClientGetVpnclientConnectionHealthPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -888,7 +889,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientConnectionHealth(ct
 // GetVpnclientConnectionHealth - Get VPN client connection health detail per P2S client connection of the virtual network
 // gateway in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) getVpnclientConnectionHealth(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVpnclientConnectionHealthOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) getVpnclientConnectionHealth(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVpnclientConnectionHealthOptions) (*http.Response, error) {
 	req, err := client.getVpnclientConnectionHealthCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -904,7 +905,7 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientConnectionHealth(ctx con
 }
 
 // getVpnclientConnectionHealthCreateRequest creates the GetVpnclientConnectionHealth request.
-func (client *VirtualNetworkGatewaysClient) getVpnclientConnectionHealthCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVpnclientConnectionHealthOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) getVpnclientConnectionHealthCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVpnclientConnectionHealthOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getVpnClientConnectionHealth"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -948,21 +949,21 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientConnectionHealthHandleEr
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The virtual network gateway name.
-// options - VirtualNetworkGatewaysBeginGetVpnclientIPSecParametersOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginGetVpnclientIPSecParameters
-// method.
-func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientIPSecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVpnclientIPSecParametersOptions) (VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse, error) {
+// options - VirtualNetworkGatewaysClientBeginGetVpnclientIPSecParametersOptions contains the optional parameters for the
+// VirtualNetworkGatewaysClient.BeginGetVpnclientIPSecParameters method.
+func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientIPSecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVpnclientIPSecParametersOptions) (VirtualNetworkGatewaysClientGetVpnclientIPSecParametersPollerResponse, error) {
 	resp, err := client.getVpnclientIPSecParameters(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
-		return VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse{}, err
+		return VirtualNetworkGatewaysClientGetVpnclientIPSecParametersPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse{
+	result := VirtualNetworkGatewaysClientGetVpnclientIPSecParametersPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.GetVpnclientIPSecParameters", "location", resp, client.pl, client.getVpnclientIPSecParametersHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysGetVpnclientIPSecParametersPollerResponse{}, err
+		return VirtualNetworkGatewaysClientGetVpnclientIPSecParametersPollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysGetVpnclientIPSecParametersPoller{
+	result.Poller = &VirtualNetworkGatewaysClientGetVpnclientIPSecParametersPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -972,7 +973,7 @@ func (client *VirtualNetworkGatewaysClient) BeginGetVpnclientIPSecParameters(ctx
 // policy for P2S client of virtual network gateway in the specified resource group through Network resource
 // provider.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVpnclientIPSecParametersOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVpnclientIPSecParametersOptions) (*http.Response, error) {
 	req, err := client.getVpnclientIPSecParametersCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -988,7 +989,7 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParameters(ctx cont
 }
 
 // getVpnclientIPSecParametersCreateRequest creates the GetVpnclientIPSecParameters request.
-func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParametersCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginGetVpnclientIPSecParametersOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParametersCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginGetVpnclientIPSecParametersOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnclientipsecparameters"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1029,22 +1030,22 @@ func (client *VirtualNetworkGatewaysClient) getVpnclientIPSecParametersHandleErr
 // List - Gets all virtual network gateways by resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - VirtualNetworkGatewaysListOptions contains the optional parameters for the VirtualNetworkGatewaysClient.List
+// options - VirtualNetworkGatewaysClientListOptions contains the optional parameters for the VirtualNetworkGatewaysClient.List
 // method.
-func (client *VirtualNetworkGatewaysClient) List(resourceGroupName string, options *VirtualNetworkGatewaysListOptions) *VirtualNetworkGatewaysListPager {
-	return &VirtualNetworkGatewaysListPager{
+func (client *VirtualNetworkGatewaysClient) List(resourceGroupName string, options *VirtualNetworkGatewaysClientListOptions) *VirtualNetworkGatewaysClientListPager {
+	return &VirtualNetworkGatewaysClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp VirtualNetworkGatewaysListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualNetworkGatewaysClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkGatewayListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualNetworkGatewaysClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualNetworkGatewaysListOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualNetworkGatewaysClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1066,10 +1067,10 @@ func (client *VirtualNetworkGatewaysClient) listCreateRequest(ctx context.Contex
 }
 
 // listHandleResponse handles the List response.
-func (client *VirtualNetworkGatewaysClient) listHandleResponse(resp *http.Response) (VirtualNetworkGatewaysListResponse, error) {
-	result := VirtualNetworkGatewaysListResponse{RawResponse: resp}
+func (client *VirtualNetworkGatewaysClient) listHandleResponse(resp *http.Response) (VirtualNetworkGatewaysClientListResponse, error) {
+	result := VirtualNetworkGatewaysClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkGatewayListResult); err != nil {
-		return VirtualNetworkGatewaysListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualNetworkGatewaysClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1091,22 +1092,22 @@ func (client *VirtualNetworkGatewaysClient) listHandleError(resp *http.Response)
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
-// options - VirtualNetworkGatewaysListConnectionsOptions contains the optional parameters for the VirtualNetworkGatewaysClient.ListConnections
+// options - VirtualNetworkGatewaysClientListConnectionsOptions contains the optional parameters for the VirtualNetworkGatewaysClient.ListConnections
 // method.
-func (client *VirtualNetworkGatewaysClient) ListConnections(resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysListConnectionsOptions) *VirtualNetworkGatewaysListConnectionsPager {
-	return &VirtualNetworkGatewaysListConnectionsPager{
+func (client *VirtualNetworkGatewaysClient) ListConnections(resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientListConnectionsOptions) *VirtualNetworkGatewaysClientListConnectionsPager {
+	return &VirtualNetworkGatewaysClientListConnectionsPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listConnectionsCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 		},
-		advancer: func(ctx context.Context, resp VirtualNetworkGatewaysListConnectionsResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualNetworkGatewaysClientListConnectionsResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualNetworkGatewayListConnectionsResult.NextLink)
 		},
 	}
 }
 
 // listConnectionsCreateRequest creates the ListConnections request.
-func (client *VirtualNetworkGatewaysClient) listConnectionsCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysListConnectionsOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) listConnectionsCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientListConnectionsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/connections"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1132,10 +1133,10 @@ func (client *VirtualNetworkGatewaysClient) listConnectionsCreateRequest(ctx con
 }
 
 // listConnectionsHandleResponse handles the ListConnections response.
-func (client *VirtualNetworkGatewaysClient) listConnectionsHandleResponse(resp *http.Response) (VirtualNetworkGatewaysListConnectionsResponse, error) {
-	result := VirtualNetworkGatewaysListConnectionsResponse{RawResponse: resp}
+func (client *VirtualNetworkGatewaysClient) listConnectionsHandleResponse(resp *http.Response) (VirtualNetworkGatewaysClientListConnectionsResponse, error) {
+	result := VirtualNetworkGatewaysClientListConnectionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkGatewayListConnectionsResult); err != nil {
-		return VirtualNetworkGatewaysListConnectionsResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualNetworkGatewaysClientListConnectionsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1157,21 +1158,21 @@ func (client *VirtualNetworkGatewaysClient) listConnectionsHandleError(resp *htt
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
-// options - VirtualNetworkGatewaysBeginResetOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginReset
+// options - VirtualNetworkGatewaysClientBeginResetOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginReset
 // method.
-func (client *VirtualNetworkGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginResetOptions) (VirtualNetworkGatewaysResetPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginResetOptions) (VirtualNetworkGatewaysClientResetPollerResponse, error) {
 	resp, err := client.reset(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
-		return VirtualNetworkGatewaysResetPollerResponse{}, err
+		return VirtualNetworkGatewaysClientResetPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysResetPollerResponse{
+	result := VirtualNetworkGatewaysClientResetPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.Reset", "location", resp, client.pl, client.resetHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysResetPollerResponse{}, err
+		return VirtualNetworkGatewaysClientResetPollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysResetPoller{
+	result.Poller = &VirtualNetworkGatewaysClientResetPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -1179,7 +1180,7 @@ func (client *VirtualNetworkGatewaysClient) BeginReset(ctx context.Context, reso
 
 // Reset - Resets the primary of the virtual network gateway in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) reset(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginResetOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) reset(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginResetOptions) (*http.Response, error) {
 	req, err := client.resetCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -1195,7 +1196,7 @@ func (client *VirtualNetworkGatewaysClient) reset(ctx context.Context, resourceG
 }
 
 // resetCreateRequest creates the Reset request.
-func (client *VirtualNetworkGatewaysClient) resetCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginResetOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) resetCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginResetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/reset"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1241,21 +1242,21 @@ func (client *VirtualNetworkGatewaysClient) resetHandleError(resp *http.Response
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
-// options - VirtualNetworkGatewaysBeginResetVPNClientSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginResetVPNClientSharedKey
+// options - VirtualNetworkGatewaysClientBeginResetVPNClientSharedKeyOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginResetVPNClientSharedKey
 // method.
-func (client *VirtualNetworkGatewaysClient) BeginResetVPNClientSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginResetVPNClientSharedKeyOptions) (VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) BeginResetVPNClientSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginResetVPNClientSharedKeyOptions) (VirtualNetworkGatewaysClientResetVPNClientSharedKeyPollerResponse, error) {
 	resp, err := client.resetVPNClientSharedKey(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
-		return VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse{}, err
+		return VirtualNetworkGatewaysClientResetVPNClientSharedKeyPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse{
+	result := VirtualNetworkGatewaysClientResetVPNClientSharedKeyPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.ResetVPNClientSharedKey", "location", resp, client.pl, client.resetVPNClientSharedKeyHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysResetVPNClientSharedKeyPollerResponse{}, err
+		return VirtualNetworkGatewaysClientResetVPNClientSharedKeyPollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysResetVPNClientSharedKeyPoller{
+	result.Poller = &VirtualNetworkGatewaysClientResetVPNClientSharedKeyPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -1263,7 +1264,7 @@ func (client *VirtualNetworkGatewaysClient) BeginResetVPNClientSharedKey(ctx con
 
 // ResetVPNClientSharedKey - Resets the VPN client shared key of the virtual network gateway in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) resetVPNClientSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginResetVPNClientSharedKeyOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) resetVPNClientSharedKey(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginResetVPNClientSharedKeyOptions) (*http.Response, error) {
 	req, err := client.resetVPNClientSharedKeyCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -1279,7 +1280,7 @@ func (client *VirtualNetworkGatewaysClient) resetVPNClientSharedKey(ctx context.
 }
 
 // resetVPNClientSharedKeyCreateRequest creates the ResetVPNClientSharedKey request.
-func (client *VirtualNetworkGatewaysClient) resetVPNClientSharedKeyCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginResetVPNClientSharedKeyOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) resetVPNClientSharedKeyCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginResetVPNClientSharedKeyOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/resetvpnclientsharedkey"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1324,21 +1325,21 @@ func (client *VirtualNetworkGatewaysClient) resetVPNClientSharedKeyHandleError(r
 // virtualNetworkGatewayName - The name of the virtual network gateway.
 // vpnclientIPSecParams - Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client
 // operation through Network resource provider.
-// options - VirtualNetworkGatewaysBeginSetVpnclientIPSecParametersOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginSetVpnclientIPSecParameters
-// method.
-func (client *VirtualNetworkGatewaysClient) BeginSetVpnclientIPSecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIPSecParams VPNClientIPsecParameters, options *VirtualNetworkGatewaysBeginSetVpnclientIPSecParametersOptions) (VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse, error) {
+// options - VirtualNetworkGatewaysClientBeginSetVpnclientIPSecParametersOptions contains the optional parameters for the
+// VirtualNetworkGatewaysClient.BeginSetVpnclientIPSecParameters method.
+func (client *VirtualNetworkGatewaysClient) BeginSetVpnclientIPSecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIPSecParams VPNClientIPsecParameters, options *VirtualNetworkGatewaysClientBeginSetVpnclientIPSecParametersOptions) (VirtualNetworkGatewaysClientSetVpnclientIPSecParametersPollerResponse, error) {
 	resp, err := client.setVpnclientIPSecParameters(ctx, resourceGroupName, virtualNetworkGatewayName, vpnclientIPSecParams, options)
 	if err != nil {
-		return VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse{}, err
+		return VirtualNetworkGatewaysClientSetVpnclientIPSecParametersPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse{
+	result := VirtualNetworkGatewaysClientSetVpnclientIPSecParametersPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.SetVpnclientIPSecParameters", "location", resp, client.pl, client.setVpnclientIPSecParametersHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysSetVpnclientIPSecParametersPollerResponse{}, err
+		return VirtualNetworkGatewaysClientSetVpnclientIPSecParametersPollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysSetVpnclientIPSecParametersPoller{
+	result.Poller = &VirtualNetworkGatewaysClientSetVpnclientIPSecParametersPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -1347,7 +1348,7 @@ func (client *VirtualNetworkGatewaysClient) BeginSetVpnclientIPSecParameters(ctx
 // SetVpnclientIPSecParameters - The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client
 // of virtual network gateway in the specified resource group through Network resource provider.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIPSecParams VPNClientIPsecParameters, options *VirtualNetworkGatewaysBeginSetVpnclientIPSecParametersOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParameters(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIPSecParams VPNClientIPsecParameters, options *VirtualNetworkGatewaysClientBeginSetVpnclientIPSecParametersOptions) (*http.Response, error) {
 	req, err := client.setVpnclientIPSecParametersCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, vpnclientIPSecParams, options)
 	if err != nil {
 		return nil, err
@@ -1363,7 +1364,7 @@ func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParameters(ctx cont
 }
 
 // setVpnclientIPSecParametersCreateRequest creates the SetVpnclientIPSecParameters request.
-func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParametersCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIPSecParams VPNClientIPsecParameters, options *VirtualNetworkGatewaysBeginSetVpnclientIPSecParametersOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParametersCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, vpnclientIPSecParams VPNClientIPsecParameters, options *VirtualNetworkGatewaysClientBeginSetVpnclientIPSecParametersOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/setvpnclientipsecparameters"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1405,21 +1406,21 @@ func (client *VirtualNetworkGatewaysClient) setVpnclientIPSecParametersHandleErr
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
-// options - VirtualNetworkGatewaysBeginStartPacketCaptureOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginStartPacketCapture
+// options - VirtualNetworkGatewaysClientBeginStartPacketCaptureOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginStartPacketCapture
 // method.
-func (client *VirtualNetworkGatewaysClient) BeginStartPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginStartPacketCaptureOptions) (VirtualNetworkGatewaysStartPacketCapturePollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) BeginStartPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginStartPacketCaptureOptions) (VirtualNetworkGatewaysClientStartPacketCapturePollerResponse, error) {
 	resp, err := client.startPacketCapture(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
-		return VirtualNetworkGatewaysStartPacketCapturePollerResponse{}, err
+		return VirtualNetworkGatewaysClientStartPacketCapturePollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysStartPacketCapturePollerResponse{
+	result := VirtualNetworkGatewaysClientStartPacketCapturePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.StartPacketCapture", "location", resp, client.pl, client.startPacketCaptureHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysStartPacketCapturePollerResponse{}, err
+		return VirtualNetworkGatewaysClientStartPacketCapturePollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysStartPacketCapturePoller{
+	result.Poller = &VirtualNetworkGatewaysClientStartPacketCapturePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -1427,7 +1428,7 @@ func (client *VirtualNetworkGatewaysClient) BeginStartPacketCapture(ctx context.
 
 // StartPacketCapture - Starts packet capture on virtual network gateway in the specified resource group.
 // If the operation fails it returns the *Error error type.
-func (client *VirtualNetworkGatewaysClient) startPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginStartPacketCaptureOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) startPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginStartPacketCaptureOptions) (*http.Response, error) {
 	req, err := client.startPacketCaptureCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
 		return nil, err
@@ -1443,7 +1444,7 @@ func (client *VirtualNetworkGatewaysClient) startPacketCapture(ctx context.Conte
 }
 
 // startPacketCaptureCreateRequest creates the StartPacketCapture request.
-func (client *VirtualNetworkGatewaysClient) startPacketCaptureCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysBeginStartPacketCaptureOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) startPacketCaptureCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientBeginStartPacketCaptureOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/startPacketCapture"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1489,21 +1490,21 @@ func (client *VirtualNetworkGatewaysClient) startPacketCaptureHandleError(resp *
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
 // parameters - Virtual network gateway packet capture parameters supplied to stop packet capture on gateway.
-// options - VirtualNetworkGatewaysBeginStopPacketCaptureOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginStopPacketCapture
+// options - VirtualNetworkGatewaysClientBeginStopPacketCaptureOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginStopPacketCapture
 // method.
-func (client *VirtualNetworkGatewaysClient) BeginStopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewaysBeginStopPacketCaptureOptions) (VirtualNetworkGatewaysStopPacketCapturePollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) BeginStopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewaysClientBeginStopPacketCaptureOptions) (VirtualNetworkGatewaysClientStopPacketCapturePollerResponse, error) {
 	resp, err := client.stopPacketCapture(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
-		return VirtualNetworkGatewaysStopPacketCapturePollerResponse{}, err
+		return VirtualNetworkGatewaysClientStopPacketCapturePollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysStopPacketCapturePollerResponse{
+	result := VirtualNetworkGatewaysClientStopPacketCapturePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.StopPacketCapture", "location", resp, client.pl, client.stopPacketCaptureHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysStopPacketCapturePollerResponse{}, err
+		return VirtualNetworkGatewaysClientStopPacketCapturePollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysStopPacketCapturePoller{
+	result.Poller = &VirtualNetworkGatewaysClientStopPacketCapturePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -1511,7 +1512,7 @@ func (client *VirtualNetworkGatewaysClient) BeginStopPacketCapture(ctx context.C
 
 // StopPacketCapture - Stops packet capture on virtual network gateway in the specified resource group.
 // If the operation fails it returns the *Error error type.
-func (client *VirtualNetworkGatewaysClient) stopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewaysBeginStopPacketCaptureOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) stopPacketCapture(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewaysClientBeginStopPacketCaptureOptions) (*http.Response, error) {
 	req, err := client.stopPacketCaptureCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -1527,7 +1528,7 @@ func (client *VirtualNetworkGatewaysClient) stopPacketCapture(ctx context.Contex
 }
 
 // stopPacketCaptureCreateRequest creates the StopPacketCapture request.
-func (client *VirtualNetworkGatewaysClient) stopPacketCaptureCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewaysBeginStopPacketCaptureOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) stopPacketCaptureCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters VPNPacketCaptureStopParameters, options *VirtualNetworkGatewaysClientBeginStopPacketCaptureOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/stopPacketCapture"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1569,25 +1570,25 @@ func (client *VirtualNetworkGatewaysClient) stopPacketCaptureHandleError(resp *h
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
-// options - VirtualNetworkGatewaysSupportedVPNDevicesOptions contains the optional parameters for the VirtualNetworkGatewaysClient.SupportedVPNDevices
+// options - VirtualNetworkGatewaysClientSupportedVPNDevicesOptions contains the optional parameters for the VirtualNetworkGatewaysClient.SupportedVPNDevices
 // method.
-func (client *VirtualNetworkGatewaysClient) SupportedVPNDevices(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysSupportedVPNDevicesOptions) (VirtualNetworkGatewaysSupportedVPNDevicesResponse, error) {
+func (client *VirtualNetworkGatewaysClient) SupportedVPNDevices(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientSupportedVPNDevicesOptions) (VirtualNetworkGatewaysClientSupportedVPNDevicesResponse, error) {
 	req, err := client.supportedVPNDevicesCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, options)
 	if err != nil {
-		return VirtualNetworkGatewaysSupportedVPNDevicesResponse{}, err
+		return VirtualNetworkGatewaysClientSupportedVPNDevicesResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualNetworkGatewaysSupportedVPNDevicesResponse{}, err
+		return VirtualNetworkGatewaysClientSupportedVPNDevicesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualNetworkGatewaysSupportedVPNDevicesResponse{}, client.supportedVPNDevicesHandleError(resp)
+		return VirtualNetworkGatewaysClientSupportedVPNDevicesResponse{}, client.supportedVPNDevicesHandleError(resp)
 	}
 	return client.supportedVPNDevicesHandleResponse(resp)
 }
 
 // supportedVPNDevicesCreateRequest creates the SupportedVPNDevices request.
-func (client *VirtualNetworkGatewaysClient) supportedVPNDevicesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysSupportedVPNDevicesOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) supportedVPNDevicesCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, options *VirtualNetworkGatewaysClientSupportedVPNDevicesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/supportedvpndevices"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1613,10 +1614,10 @@ func (client *VirtualNetworkGatewaysClient) supportedVPNDevicesCreateRequest(ctx
 }
 
 // supportedVPNDevicesHandleResponse handles the SupportedVPNDevices response.
-func (client *VirtualNetworkGatewaysClient) supportedVPNDevicesHandleResponse(resp *http.Response) (VirtualNetworkGatewaysSupportedVPNDevicesResponse, error) {
-	result := VirtualNetworkGatewaysSupportedVPNDevicesResponse{RawResponse: resp}
+func (client *VirtualNetworkGatewaysClient) supportedVPNDevicesHandleResponse(resp *http.Response) (VirtualNetworkGatewaysClientSupportedVPNDevicesResponse, error) {
+	result := VirtualNetworkGatewaysClientSupportedVPNDevicesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return VirtualNetworkGatewaysSupportedVPNDevicesResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualNetworkGatewaysClientSupportedVPNDevicesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1639,21 +1640,21 @@ func (client *VirtualNetworkGatewaysClient) supportedVPNDevicesHandleError(resp 
 // resourceGroupName - The name of the resource group.
 // virtualNetworkGatewayName - The name of the virtual network gateway.
 // parameters - Parameters supplied to update virtual network gateway tags.
-// options - VirtualNetworkGatewaysBeginUpdateTagsOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginUpdateTags
+// options - VirtualNetworkGatewaysClientBeginUpdateTagsOptions contains the optional parameters for the VirtualNetworkGatewaysClient.BeginUpdateTags
 // method.
-func (client *VirtualNetworkGatewaysClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters TagsObject, options *VirtualNetworkGatewaysBeginUpdateTagsOptions) (VirtualNetworkGatewaysUpdateTagsPollerResponse, error) {
+func (client *VirtualNetworkGatewaysClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters TagsObject, options *VirtualNetworkGatewaysClientBeginUpdateTagsOptions) (VirtualNetworkGatewaysClientUpdateTagsPollerResponse, error) {
 	resp, err := client.updateTags(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
-		return VirtualNetworkGatewaysUpdateTagsPollerResponse{}, err
+		return VirtualNetworkGatewaysClientUpdateTagsPollerResponse{}, err
 	}
-	result := VirtualNetworkGatewaysUpdateTagsPollerResponse{
+	result := VirtualNetworkGatewaysClientUpdateTagsPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualNetworkGatewaysClient.UpdateTags", "azure-async-operation", resp, client.pl, client.updateTagsHandleError)
 	if err != nil {
-		return VirtualNetworkGatewaysUpdateTagsPollerResponse{}, err
+		return VirtualNetworkGatewaysClientUpdateTagsPollerResponse{}, err
 	}
-	result.Poller = &VirtualNetworkGatewaysUpdateTagsPoller{
+	result.Poller = &VirtualNetworkGatewaysClientUpdateTagsPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -1661,7 +1662,7 @@ func (client *VirtualNetworkGatewaysClient) BeginUpdateTags(ctx context.Context,
 
 // UpdateTags - Updates a virtual network gateway tags.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualNetworkGatewaysClient) updateTags(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters TagsObject, options *VirtualNetworkGatewaysBeginUpdateTagsOptions) (*http.Response, error) {
+func (client *VirtualNetworkGatewaysClient) updateTags(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters TagsObject, options *VirtualNetworkGatewaysClientBeginUpdateTagsOptions) (*http.Response, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -1677,7 +1678,7 @@ func (client *VirtualNetworkGatewaysClient) updateTags(ctx context.Context, reso
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *VirtualNetworkGatewaysClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters TagsObject, options *VirtualNetworkGatewaysBeginUpdateTagsOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayName string, parameters TagsObject, options *VirtualNetworkGatewaysClientBeginUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1721,25 +1722,25 @@ func (client *VirtualNetworkGatewaysClient) updateTagsHandleError(resp *http.Res
 // virtualNetworkGatewayConnectionName - The name of the virtual network gateway connection for which the configuration script
 // is generated.
 // parameters - Parameters supplied to the generate vpn device script operation.
-// options - VirtualNetworkGatewaysVPNDeviceConfigurationScriptOptions contains the optional parameters for the VirtualNetworkGatewaysClient.VPNDeviceConfigurationScript
+// options - VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptOptions contains the optional parameters for the VirtualNetworkGatewaysClient.VPNDeviceConfigurationScript
 // method.
-func (client *VirtualNetworkGatewaysClient) VPNDeviceConfigurationScript(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VPNDeviceScriptParameters, options *VirtualNetworkGatewaysVPNDeviceConfigurationScriptOptions) (VirtualNetworkGatewaysVPNDeviceConfigurationScriptResponse, error) {
+func (client *VirtualNetworkGatewaysClient) VPNDeviceConfigurationScript(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VPNDeviceScriptParameters, options *VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptOptions) (VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResponse, error) {
 	req, err := client.vpnDeviceConfigurationScriptCreateRequest(ctx, resourceGroupName, virtualNetworkGatewayConnectionName, parameters, options)
 	if err != nil {
-		return VirtualNetworkGatewaysVPNDeviceConfigurationScriptResponse{}, err
+		return VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualNetworkGatewaysVPNDeviceConfigurationScriptResponse{}, err
+		return VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualNetworkGatewaysVPNDeviceConfigurationScriptResponse{}, client.vpnDeviceConfigurationScriptHandleError(resp)
+		return VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResponse{}, client.vpnDeviceConfigurationScriptHandleError(resp)
 	}
 	return client.vpnDeviceConfigurationScriptHandleResponse(resp)
 }
 
 // vpnDeviceConfigurationScriptCreateRequest creates the VPNDeviceConfigurationScript request.
-func (client *VirtualNetworkGatewaysClient) vpnDeviceConfigurationScriptCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VPNDeviceScriptParameters, options *VirtualNetworkGatewaysVPNDeviceConfigurationScriptOptions) (*policy.Request, error) {
+func (client *VirtualNetworkGatewaysClient) vpnDeviceConfigurationScriptCreateRequest(ctx context.Context, resourceGroupName string, virtualNetworkGatewayConnectionName string, parameters VPNDeviceScriptParameters, options *VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/vpndeviceconfigurationscript"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1765,10 +1766,10 @@ func (client *VirtualNetworkGatewaysClient) vpnDeviceConfigurationScriptCreateRe
 }
 
 // vpnDeviceConfigurationScriptHandleResponse handles the VPNDeviceConfigurationScript response.
-func (client *VirtualNetworkGatewaysClient) vpnDeviceConfigurationScriptHandleResponse(resp *http.Response) (VirtualNetworkGatewaysVPNDeviceConfigurationScriptResponse, error) {
-	result := VirtualNetworkGatewaysVPNDeviceConfigurationScriptResponse{RawResponse: resp}
+func (client *VirtualNetworkGatewaysClient) vpnDeviceConfigurationScriptHandleResponse(resp *http.Response) (VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResponse, error) {
+	result := VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return VirtualNetworkGatewaysVPNDeviceConfigurationScriptResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualNetworkGatewaysClientVPNDeviceConfigurationScriptResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

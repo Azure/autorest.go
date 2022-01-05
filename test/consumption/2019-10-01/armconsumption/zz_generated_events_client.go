@@ -52,21 +52,21 @@ func NewEventsClient(credential azcore.TokenCredential, options *arm.ClientOptio
 // scope - The scope associated with events operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
 // for Billing Profile scope, and
 // 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
-// options - EventsListOptions contains the optional parameters for the EventsClient.List method.
-func (client *EventsClient) List(startDate string, endDate string, scope string, options *EventsListOptions) *EventsListPager {
-	return &EventsListPager{
+// options - EventsClientListOptions contains the optional parameters for the EventsClient.List method.
+func (client *EventsClient) List(startDate string, endDate string, scope string, options *EventsClientListOptions) *EventsClientListPager {
+	return &EventsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, startDate, endDate, scope, options)
 		},
-		advancer: func(ctx context.Context, resp EventsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp EventsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.Events.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *EventsClient) listCreateRequest(ctx context.Context, startDate string, endDate string, scope string, options *EventsListOptions) (*policy.Request, error) {
+func (client *EventsClient) listCreateRequest(ctx context.Context, startDate string, endDate string, scope string, options *EventsClientListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/events"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
@@ -83,10 +83,10 @@ func (client *EventsClient) listCreateRequest(ctx context.Context, startDate str
 }
 
 // listHandleResponse handles the List response.
-func (client *EventsClient) listHandleResponse(resp *http.Response) (EventsListResponse, error) {
-	result := EventsListResponse{RawResponse: resp}
+func (client *EventsClient) listHandleResponse(resp *http.Response) (EventsClientListResponse, error) {
+	result := EventsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Events); err != nil {
-		return EventsListResponse{}, runtime.NewResponseError(err, resp)
+		return EventsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

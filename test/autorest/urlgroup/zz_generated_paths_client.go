@@ -44,24 +44,24 @@ func NewPathsClient(options *azcore.ClientOptions) *PathsClient {
 // ArrayCSVInPath - Get an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 // If the operation fails it returns the *Error error type.
 // arrayPath - an array of string ['ArrayPath1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
-// options - PathsArrayCSVInPathOptions contains the optional parameters for the PathsClient.ArrayCSVInPath method.
-func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []string, options *PathsArrayCSVInPathOptions) (PathsArrayCSVInPathResponse, error) {
+// options - PathsClientArrayCSVInPathOptions contains the optional parameters for the PathsClient.ArrayCSVInPath method.
+func (client *PathsClient) ArrayCSVInPath(ctx context.Context, arrayPath []string, options *PathsClientArrayCSVInPathOptions) (PathsClientArrayCSVInPathResponse, error) {
 	req, err := client.arrayCSVInPathCreateRequest(ctx, arrayPath, options)
 	if err != nil {
-		return PathsArrayCSVInPathResponse{}, err
+		return PathsClientArrayCSVInPathResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsArrayCSVInPathResponse{}, err
+		return PathsClientArrayCSVInPathResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsArrayCSVInPathResponse{}, client.arrayCSVInPathHandleError(resp)
+		return PathsClientArrayCSVInPathResponse{}, client.arrayCSVInPathHandleError(resp)
 	}
-	return PathsArrayCSVInPathResponse{RawResponse: resp}, nil
+	return PathsClientArrayCSVInPathResponse{RawResponse: resp}, nil
 }
 
 // arrayCSVInPathCreateRequest creates the ArrayCSVInPath request.
-func (client *PathsClient) arrayCSVInPathCreateRequest(ctx context.Context, arrayPath []string, options *PathsArrayCSVInPathOptions) (*policy.Request, error) {
+func (client *PathsClient) arrayCSVInPathCreateRequest(ctx context.Context, arrayPath []string, options *PathsClientArrayCSVInPathOptions) (*policy.Request, error) {
 	urlPath := "/paths/array/ArrayPath1%2cbegin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend%2c%2c/{arrayPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{arrayPath}", url.PathEscape(strings.Join(arrayPath, ",")))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -88,24 +88,24 @@ func (client *PathsClient) arrayCSVInPathHandleError(resp *http.Response) error 
 // Base64URL - Get 'lorem' encoded value as 'bG9yZW0' (base64url)
 // If the operation fails it returns the *Error error type.
 // base64URLPath - base64url encoded value
-// options - PathsBase64URLOptions contains the optional parameters for the PathsClient.Base64URL method.
-func (client *PathsClient) Base64URL(ctx context.Context, base64URLPath []byte, options *PathsBase64URLOptions) (PathsBase64URLResponse, error) {
+// options - PathsClientBase64URLOptions contains the optional parameters for the PathsClient.Base64URL method.
+func (client *PathsClient) Base64URL(ctx context.Context, base64URLPath []byte, options *PathsClientBase64URLOptions) (PathsClientBase64URLResponse, error) {
 	req, err := client.base64URLCreateRequest(ctx, base64URLPath, options)
 	if err != nil {
-		return PathsBase64URLResponse{}, err
+		return PathsClientBase64URLResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsBase64URLResponse{}, err
+		return PathsClientBase64URLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsBase64URLResponse{}, client.base64URLHandleError(resp)
+		return PathsClientBase64URLResponse{}, client.base64URLHandleError(resp)
 	}
-	return PathsBase64URLResponse{RawResponse: resp}, nil
+	return PathsClientBase64URLResponse{RawResponse: resp}, nil
 }
 
 // base64URLCreateRequest creates the Base64URL request.
-func (client *PathsClient) base64URLCreateRequest(ctx context.Context, base64URLPath []byte, options *PathsBase64URLOptions) (*policy.Request, error) {
+func (client *PathsClient) base64URLCreateRequest(ctx context.Context, base64URLPath []byte, options *PathsClientBase64URLOptions) (*policy.Request, error) {
 	urlPath := "/paths/string/bG9yZW0/{base64UrlPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{base64UrlPath}", url.PathEscape(base64.RawURLEncoding.EncodeToString(base64URLPath)))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -131,24 +131,24 @@ func (client *PathsClient) base64URLHandleError(resp *http.Response) error {
 
 // ByteEmpty - Get '' as byte array
 // If the operation fails it returns the *Error error type.
-// options - PathsByteEmptyOptions contains the optional parameters for the PathsClient.ByteEmpty method.
-func (client *PathsClient) ByteEmpty(ctx context.Context, options *PathsByteEmptyOptions) (PathsByteEmptyResponse, error) {
+// options - PathsClientByteEmptyOptions contains the optional parameters for the PathsClient.ByteEmpty method.
+func (client *PathsClient) ByteEmpty(ctx context.Context, options *PathsClientByteEmptyOptions) (PathsClientByteEmptyResponse, error) {
 	req, err := client.byteEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return PathsByteEmptyResponse{}, err
+		return PathsClientByteEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsByteEmptyResponse{}, err
+		return PathsClientByteEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsByteEmptyResponse{}, client.byteEmptyHandleError(resp)
+		return PathsClientByteEmptyResponse{}, client.byteEmptyHandleError(resp)
 	}
-	return PathsByteEmptyResponse{RawResponse: resp}, nil
+	return PathsClientByteEmptyResponse{RawResponse: resp}, nil
 }
 
 // byteEmptyCreateRequest creates the ByteEmpty request.
-func (client *PathsClient) byteEmptyCreateRequest(ctx context.Context, options *PathsByteEmptyOptions) (*policy.Request, error) {
+func (client *PathsClient) byteEmptyCreateRequest(ctx context.Context, options *PathsClientByteEmptyOptions) (*policy.Request, error) {
 	urlPath := "/paths/byte/empty/{bytePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{bytePath}", url.PathEscape(""))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -175,24 +175,24 @@ func (client *PathsClient) byteEmptyHandleError(resp *http.Response) error {
 // ByteMultiByte - Get '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 // If the operation fails it returns the *Error error type.
 // bytePath - '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
-// options - PathsByteMultiByteOptions contains the optional parameters for the PathsClient.ByteMultiByte method.
-func (client *PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte, options *PathsByteMultiByteOptions) (PathsByteMultiByteResponse, error) {
+// options - PathsClientByteMultiByteOptions contains the optional parameters for the PathsClient.ByteMultiByte method.
+func (client *PathsClient) ByteMultiByte(ctx context.Context, bytePath []byte, options *PathsClientByteMultiByteOptions) (PathsClientByteMultiByteResponse, error) {
 	req, err := client.byteMultiByteCreateRequest(ctx, bytePath, options)
 	if err != nil {
-		return PathsByteMultiByteResponse{}, err
+		return PathsClientByteMultiByteResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsByteMultiByteResponse{}, err
+		return PathsClientByteMultiByteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsByteMultiByteResponse{}, client.byteMultiByteHandleError(resp)
+		return PathsClientByteMultiByteResponse{}, client.byteMultiByteHandleError(resp)
 	}
-	return PathsByteMultiByteResponse{RawResponse: resp}, nil
+	return PathsClientByteMultiByteResponse{RawResponse: resp}, nil
 }
 
 // byteMultiByteCreateRequest creates the ByteMultiByte request.
-func (client *PathsClient) byteMultiByteCreateRequest(ctx context.Context, bytePath []byte, options *PathsByteMultiByteOptions) (*policy.Request, error) {
+func (client *PathsClient) byteMultiByteCreateRequest(ctx context.Context, bytePath []byte, options *PathsClientByteMultiByteOptions) (*policy.Request, error) {
 	urlPath := "/paths/byte/multibyte/{bytePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{bytePath}", url.PathEscape(base64.StdEncoding.EncodeToString(bytePath)))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -219,24 +219,24 @@ func (client *PathsClient) byteMultiByteHandleError(resp *http.Response) error {
 // ByteNull - Get null as byte array (should throw)
 // If the operation fails it returns the *Error error type.
 // bytePath - null as byte array (should throw)
-// options - PathsByteNullOptions contains the optional parameters for the PathsClient.ByteNull method.
-func (client *PathsClient) ByteNull(ctx context.Context, bytePath []byte, options *PathsByteNullOptions) (PathsByteNullResponse, error) {
+// options - PathsClientByteNullOptions contains the optional parameters for the PathsClient.ByteNull method.
+func (client *PathsClient) ByteNull(ctx context.Context, bytePath []byte, options *PathsClientByteNullOptions) (PathsClientByteNullResponse, error) {
 	req, err := client.byteNullCreateRequest(ctx, bytePath, options)
 	if err != nil {
-		return PathsByteNullResponse{}, err
+		return PathsClientByteNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsByteNullResponse{}, err
+		return PathsClientByteNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
-		return PathsByteNullResponse{}, client.byteNullHandleError(resp)
+		return PathsClientByteNullResponse{}, client.byteNullHandleError(resp)
 	}
-	return PathsByteNullResponse{RawResponse: resp}, nil
+	return PathsClientByteNullResponse{RawResponse: resp}, nil
 }
 
 // byteNullCreateRequest creates the ByteNull request.
-func (client *PathsClient) byteNullCreateRequest(ctx context.Context, bytePath []byte, options *PathsByteNullOptions) (*policy.Request, error) {
+func (client *PathsClient) byteNullCreateRequest(ctx context.Context, bytePath []byte, options *PathsClientByteNullOptions) (*policy.Request, error) {
 	urlPath := "/paths/byte/null/{bytePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{bytePath}", url.PathEscape(base64.StdEncoding.EncodeToString(bytePath)))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -263,24 +263,24 @@ func (client *PathsClient) byteNullHandleError(resp *http.Response) error {
 // DateNull - Get null as date - this should throw or be unusable on the client side, depending on date representation
 // If the operation fails it returns the *Error error type.
 // datePath - null as date (should throw)
-// options - PathsDateNullOptions contains the optional parameters for the PathsClient.DateNull method.
-func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time, options *PathsDateNullOptions) (PathsDateNullResponse, error) {
+// options - PathsClientDateNullOptions contains the optional parameters for the PathsClient.DateNull method.
+func (client *PathsClient) DateNull(ctx context.Context, datePath time.Time, options *PathsClientDateNullOptions) (PathsClientDateNullResponse, error) {
 	req, err := client.dateNullCreateRequest(ctx, datePath, options)
 	if err != nil {
-		return PathsDateNullResponse{}, err
+		return PathsClientDateNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsDateNullResponse{}, err
+		return PathsClientDateNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
-		return PathsDateNullResponse{}, client.dateNullHandleError(resp)
+		return PathsClientDateNullResponse{}, client.dateNullHandleError(resp)
 	}
-	return PathsDateNullResponse{RawResponse: resp}, nil
+	return PathsClientDateNullResponse{RawResponse: resp}, nil
 }
 
 // dateNullCreateRequest creates the DateNull request.
-func (client *PathsClient) dateNullCreateRequest(ctx context.Context, datePath time.Time, options *PathsDateNullOptions) (*policy.Request, error) {
+func (client *PathsClient) dateNullCreateRequest(ctx context.Context, datePath time.Time, options *PathsClientDateNullOptions) (*policy.Request, error) {
 	urlPath := "/paths/date/null/{datePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{datePath}", url.PathEscape(datePath.Format("2006-01-02")))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -307,24 +307,24 @@ func (client *PathsClient) dateNullHandleError(resp *http.Response) error {
 // DateTimeNull - Get null as date-time, should be disallowed or throw depending on representation of date-time
 // If the operation fails it returns the *Error error type.
 // dateTimePath - null as date-time
-// options - PathsDateTimeNullOptions contains the optional parameters for the PathsClient.DateTimeNull method.
-func (client *PathsClient) DateTimeNull(ctx context.Context, dateTimePath time.Time, options *PathsDateTimeNullOptions) (PathsDateTimeNullResponse, error) {
+// options - PathsClientDateTimeNullOptions contains the optional parameters for the PathsClient.DateTimeNull method.
+func (client *PathsClient) DateTimeNull(ctx context.Context, dateTimePath time.Time, options *PathsClientDateTimeNullOptions) (PathsClientDateTimeNullResponse, error) {
 	req, err := client.dateTimeNullCreateRequest(ctx, dateTimePath, options)
 	if err != nil {
-		return PathsDateTimeNullResponse{}, err
+		return PathsClientDateTimeNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsDateTimeNullResponse{}, err
+		return PathsClientDateTimeNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
-		return PathsDateTimeNullResponse{}, client.dateTimeNullHandleError(resp)
+		return PathsClientDateTimeNullResponse{}, client.dateTimeNullHandleError(resp)
 	}
-	return PathsDateTimeNullResponse{RawResponse: resp}, nil
+	return PathsClientDateTimeNullResponse{RawResponse: resp}, nil
 }
 
 // dateTimeNullCreateRequest creates the DateTimeNull request.
-func (client *PathsClient) dateTimeNullCreateRequest(ctx context.Context, dateTimePath time.Time, options *PathsDateTimeNullOptions) (*policy.Request, error) {
+func (client *PathsClient) dateTimeNullCreateRequest(ctx context.Context, dateTimePath time.Time, options *PathsClientDateTimeNullOptions) (*policy.Request, error) {
 	urlPath := "/paths/datetime/null/{dateTimePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{dateTimePath}", url.PathEscape(dateTimePath.Format(time.RFC3339Nano)))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -350,24 +350,24 @@ func (client *PathsClient) dateTimeNullHandleError(resp *http.Response) error {
 
 // DateTimeValid - Get '2012-01-01T01:01:01Z' as date-time
 // If the operation fails it returns the *Error error type.
-// options - PathsDateTimeValidOptions contains the optional parameters for the PathsClient.DateTimeValid method.
-func (client *PathsClient) DateTimeValid(ctx context.Context, options *PathsDateTimeValidOptions) (PathsDateTimeValidResponse, error) {
+// options - PathsClientDateTimeValidOptions contains the optional parameters for the PathsClient.DateTimeValid method.
+func (client *PathsClient) DateTimeValid(ctx context.Context, options *PathsClientDateTimeValidOptions) (PathsClientDateTimeValidResponse, error) {
 	req, err := client.dateTimeValidCreateRequest(ctx, options)
 	if err != nil {
-		return PathsDateTimeValidResponse{}, err
+		return PathsClientDateTimeValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsDateTimeValidResponse{}, err
+		return PathsClientDateTimeValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsDateTimeValidResponse{}, client.dateTimeValidHandleError(resp)
+		return PathsClientDateTimeValidResponse{}, client.dateTimeValidHandleError(resp)
 	}
-	return PathsDateTimeValidResponse{RawResponse: resp}, nil
+	return PathsClientDateTimeValidResponse{RawResponse: resp}, nil
 }
 
 // dateTimeValidCreateRequest creates the DateTimeValid request.
-func (client *PathsClient) dateTimeValidCreateRequest(ctx context.Context, options *PathsDateTimeValidOptions) (*policy.Request, error) {
+func (client *PathsClient) dateTimeValidCreateRequest(ctx context.Context, options *PathsClientDateTimeValidOptions) (*policy.Request, error) {
 	urlPath := "/paths/datetime/2012-01-01T01%3A01%3A01Z/{dateTimePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{dateTimePath}", url.PathEscape("2012-01-01T01:01:01Z"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -393,24 +393,24 @@ func (client *PathsClient) dateTimeValidHandleError(resp *http.Response) error {
 
 // DateValid - Get '2012-01-01' as date
 // If the operation fails it returns the *Error error type.
-// options - PathsDateValidOptions contains the optional parameters for the PathsClient.DateValid method.
-func (client *PathsClient) DateValid(ctx context.Context, options *PathsDateValidOptions) (PathsDateValidResponse, error) {
+// options - PathsClientDateValidOptions contains the optional parameters for the PathsClient.DateValid method.
+func (client *PathsClient) DateValid(ctx context.Context, options *PathsClientDateValidOptions) (PathsClientDateValidResponse, error) {
 	req, err := client.dateValidCreateRequest(ctx, options)
 	if err != nil {
-		return PathsDateValidResponse{}, err
+		return PathsClientDateValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsDateValidResponse{}, err
+		return PathsClientDateValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsDateValidResponse{}, client.dateValidHandleError(resp)
+		return PathsClientDateValidResponse{}, client.dateValidHandleError(resp)
 	}
-	return PathsDateValidResponse{RawResponse: resp}, nil
+	return PathsClientDateValidResponse{RawResponse: resp}, nil
 }
 
 // dateValidCreateRequest creates the DateValid request.
-func (client *PathsClient) dateValidCreateRequest(ctx context.Context, options *PathsDateValidOptions) (*policy.Request, error) {
+func (client *PathsClient) dateValidCreateRequest(ctx context.Context, options *PathsClientDateValidOptions) (*policy.Request, error) {
 	urlPath := "/paths/date/2012-01-01/{datePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{datePath}", url.PathEscape("2012-01-01"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -436,25 +436,25 @@ func (client *PathsClient) dateValidHandleError(resp *http.Response) error {
 
 // DoubleDecimalNegative - Get '-9999999.999' numeric value
 // If the operation fails it returns the *Error error type.
-// options - PathsDoubleDecimalNegativeOptions contains the optional parameters for the PathsClient.DoubleDecimalNegative
+// options - PathsClientDoubleDecimalNegativeOptions contains the optional parameters for the PathsClient.DoubleDecimalNegative
 // method.
-func (client *PathsClient) DoubleDecimalNegative(ctx context.Context, options *PathsDoubleDecimalNegativeOptions) (PathsDoubleDecimalNegativeResponse, error) {
+func (client *PathsClient) DoubleDecimalNegative(ctx context.Context, options *PathsClientDoubleDecimalNegativeOptions) (PathsClientDoubleDecimalNegativeResponse, error) {
 	req, err := client.doubleDecimalNegativeCreateRequest(ctx, options)
 	if err != nil {
-		return PathsDoubleDecimalNegativeResponse{}, err
+		return PathsClientDoubleDecimalNegativeResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsDoubleDecimalNegativeResponse{}, err
+		return PathsClientDoubleDecimalNegativeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsDoubleDecimalNegativeResponse{}, client.doubleDecimalNegativeHandleError(resp)
+		return PathsClientDoubleDecimalNegativeResponse{}, client.doubleDecimalNegativeHandleError(resp)
 	}
-	return PathsDoubleDecimalNegativeResponse{RawResponse: resp}, nil
+	return PathsClientDoubleDecimalNegativeResponse{RawResponse: resp}, nil
 }
 
 // doubleDecimalNegativeCreateRequest creates the DoubleDecimalNegative request.
-func (client *PathsClient) doubleDecimalNegativeCreateRequest(ctx context.Context, options *PathsDoubleDecimalNegativeOptions) (*policy.Request, error) {
+func (client *PathsClient) doubleDecimalNegativeCreateRequest(ctx context.Context, options *PathsClientDoubleDecimalNegativeOptions) (*policy.Request, error) {
 	urlPath := "/paths/double/-9999999.999/{doublePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{doublePath}", url.PathEscape("-9999999.999"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -480,25 +480,25 @@ func (client *PathsClient) doubleDecimalNegativeHandleError(resp *http.Response)
 
 // DoubleDecimalPositive - Get '9999999.999' numeric value
 // If the operation fails it returns the *Error error type.
-// options - PathsDoubleDecimalPositiveOptions contains the optional parameters for the PathsClient.DoubleDecimalPositive
+// options - PathsClientDoubleDecimalPositiveOptions contains the optional parameters for the PathsClient.DoubleDecimalPositive
 // method.
-func (client *PathsClient) DoubleDecimalPositive(ctx context.Context, options *PathsDoubleDecimalPositiveOptions) (PathsDoubleDecimalPositiveResponse, error) {
+func (client *PathsClient) DoubleDecimalPositive(ctx context.Context, options *PathsClientDoubleDecimalPositiveOptions) (PathsClientDoubleDecimalPositiveResponse, error) {
 	req, err := client.doubleDecimalPositiveCreateRequest(ctx, options)
 	if err != nil {
-		return PathsDoubleDecimalPositiveResponse{}, err
+		return PathsClientDoubleDecimalPositiveResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsDoubleDecimalPositiveResponse{}, err
+		return PathsClientDoubleDecimalPositiveResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsDoubleDecimalPositiveResponse{}, client.doubleDecimalPositiveHandleError(resp)
+		return PathsClientDoubleDecimalPositiveResponse{}, client.doubleDecimalPositiveHandleError(resp)
 	}
-	return PathsDoubleDecimalPositiveResponse{RawResponse: resp}, nil
+	return PathsClientDoubleDecimalPositiveResponse{RawResponse: resp}, nil
 }
 
 // doubleDecimalPositiveCreateRequest creates the DoubleDecimalPositive request.
-func (client *PathsClient) doubleDecimalPositiveCreateRequest(ctx context.Context, options *PathsDoubleDecimalPositiveOptions) (*policy.Request, error) {
+func (client *PathsClient) doubleDecimalPositiveCreateRequest(ctx context.Context, options *PathsClientDoubleDecimalPositiveOptions) (*policy.Request, error) {
 	urlPath := "/paths/double/9999999.999/{doublePath}"
 	urlPath = strings.ReplaceAll(urlPath, "{doublePath}", url.PathEscape("9999999.999"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -525,24 +525,24 @@ func (client *PathsClient) doubleDecimalPositiveHandleError(resp *http.Response)
 // EnumNull - Get null (should throw on the client before the request is sent on wire)
 // If the operation fails it returns the *Error error type.
 // enumPath - send null should throw
-// options - PathsEnumNullOptions contains the optional parameters for the PathsClient.EnumNull method.
-func (client *PathsClient) EnumNull(ctx context.Context, enumPath URIColor, options *PathsEnumNullOptions) (PathsEnumNullResponse, error) {
+// options - PathsClientEnumNullOptions contains the optional parameters for the PathsClient.EnumNull method.
+func (client *PathsClient) EnumNull(ctx context.Context, enumPath URIColor, options *PathsClientEnumNullOptions) (PathsClientEnumNullResponse, error) {
 	req, err := client.enumNullCreateRequest(ctx, enumPath, options)
 	if err != nil {
-		return PathsEnumNullResponse{}, err
+		return PathsClientEnumNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsEnumNullResponse{}, err
+		return PathsClientEnumNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
-		return PathsEnumNullResponse{}, client.enumNullHandleError(resp)
+		return PathsClientEnumNullResponse{}, client.enumNullHandleError(resp)
 	}
-	return PathsEnumNullResponse{RawResponse: resp}, nil
+	return PathsClientEnumNullResponse{RawResponse: resp}, nil
 }
 
 // enumNullCreateRequest creates the EnumNull request.
-func (client *PathsClient) enumNullCreateRequest(ctx context.Context, enumPath URIColor, options *PathsEnumNullOptions) (*policy.Request, error) {
+func (client *PathsClient) enumNullCreateRequest(ctx context.Context, enumPath URIColor, options *PathsClientEnumNullOptions) (*policy.Request, error) {
 	urlPath := "/paths/string/null/{enumPath}"
 	if enumPath == "" {
 		return nil, errors.New("parameter enumPath cannot be empty")
@@ -572,24 +572,24 @@ func (client *PathsClient) enumNullHandleError(resp *http.Response) error {
 // EnumValid - Get using uri with 'green color' in path parameter
 // If the operation fails it returns the *Error error type.
 // enumPath - send the value green
-// options - PathsEnumValidOptions contains the optional parameters for the PathsClient.EnumValid method.
-func (client *PathsClient) EnumValid(ctx context.Context, enumPath URIColor, options *PathsEnumValidOptions) (PathsEnumValidResponse, error) {
+// options - PathsClientEnumValidOptions contains the optional parameters for the PathsClient.EnumValid method.
+func (client *PathsClient) EnumValid(ctx context.Context, enumPath URIColor, options *PathsClientEnumValidOptions) (PathsClientEnumValidResponse, error) {
 	req, err := client.enumValidCreateRequest(ctx, enumPath, options)
 	if err != nil {
-		return PathsEnumValidResponse{}, err
+		return PathsClientEnumValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsEnumValidResponse{}, err
+		return PathsClientEnumValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsEnumValidResponse{}, client.enumValidHandleError(resp)
+		return PathsClientEnumValidResponse{}, client.enumValidHandleError(resp)
 	}
-	return PathsEnumValidResponse{RawResponse: resp}, nil
+	return PathsClientEnumValidResponse{RawResponse: resp}, nil
 }
 
 // enumValidCreateRequest creates the EnumValid request.
-func (client *PathsClient) enumValidCreateRequest(ctx context.Context, enumPath URIColor, options *PathsEnumValidOptions) (*policy.Request, error) {
+func (client *PathsClient) enumValidCreateRequest(ctx context.Context, enumPath URIColor, options *PathsClientEnumValidOptions) (*policy.Request, error) {
 	urlPath := "/paths/enum/green%20color/{enumPath}"
 	if enumPath == "" {
 		return nil, errors.New("parameter enumPath cannot be empty")
@@ -618,25 +618,25 @@ func (client *PathsClient) enumValidHandleError(resp *http.Response) error {
 
 // FloatScientificNegative - Get '-1.034E-20' numeric value
 // If the operation fails it returns the *Error error type.
-// options - PathsFloatScientificNegativeOptions contains the optional parameters for the PathsClient.FloatScientificNegative
+// options - PathsClientFloatScientificNegativeOptions contains the optional parameters for the PathsClient.FloatScientificNegative
 // method.
-func (client *PathsClient) FloatScientificNegative(ctx context.Context, options *PathsFloatScientificNegativeOptions) (PathsFloatScientificNegativeResponse, error) {
+func (client *PathsClient) FloatScientificNegative(ctx context.Context, options *PathsClientFloatScientificNegativeOptions) (PathsClientFloatScientificNegativeResponse, error) {
 	req, err := client.floatScientificNegativeCreateRequest(ctx, options)
 	if err != nil {
-		return PathsFloatScientificNegativeResponse{}, err
+		return PathsClientFloatScientificNegativeResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsFloatScientificNegativeResponse{}, err
+		return PathsClientFloatScientificNegativeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsFloatScientificNegativeResponse{}, client.floatScientificNegativeHandleError(resp)
+		return PathsClientFloatScientificNegativeResponse{}, client.floatScientificNegativeHandleError(resp)
 	}
-	return PathsFloatScientificNegativeResponse{RawResponse: resp}, nil
+	return PathsClientFloatScientificNegativeResponse{RawResponse: resp}, nil
 }
 
 // floatScientificNegativeCreateRequest creates the FloatScientificNegative request.
-func (client *PathsClient) floatScientificNegativeCreateRequest(ctx context.Context, options *PathsFloatScientificNegativeOptions) (*policy.Request, error) {
+func (client *PathsClient) floatScientificNegativeCreateRequest(ctx context.Context, options *PathsClientFloatScientificNegativeOptions) (*policy.Request, error) {
 	urlPath := "/paths/float/-1.034E-20/{floatPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{floatPath}", url.PathEscape("-1.034e-20"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -662,25 +662,25 @@ func (client *PathsClient) floatScientificNegativeHandleError(resp *http.Respons
 
 // FloatScientificPositive - Get '1.034E+20' numeric value
 // If the operation fails it returns the *Error error type.
-// options - PathsFloatScientificPositiveOptions contains the optional parameters for the PathsClient.FloatScientificPositive
+// options - PathsClientFloatScientificPositiveOptions contains the optional parameters for the PathsClient.FloatScientificPositive
 // method.
-func (client *PathsClient) FloatScientificPositive(ctx context.Context, options *PathsFloatScientificPositiveOptions) (PathsFloatScientificPositiveResponse, error) {
+func (client *PathsClient) FloatScientificPositive(ctx context.Context, options *PathsClientFloatScientificPositiveOptions) (PathsClientFloatScientificPositiveResponse, error) {
 	req, err := client.floatScientificPositiveCreateRequest(ctx, options)
 	if err != nil {
-		return PathsFloatScientificPositiveResponse{}, err
+		return PathsClientFloatScientificPositiveResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsFloatScientificPositiveResponse{}, err
+		return PathsClientFloatScientificPositiveResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsFloatScientificPositiveResponse{}, client.floatScientificPositiveHandleError(resp)
+		return PathsClientFloatScientificPositiveResponse{}, client.floatScientificPositiveHandleError(resp)
 	}
-	return PathsFloatScientificPositiveResponse{RawResponse: resp}, nil
+	return PathsClientFloatScientificPositiveResponse{RawResponse: resp}, nil
 }
 
 // floatScientificPositiveCreateRequest creates the FloatScientificPositive request.
-func (client *PathsClient) floatScientificPositiveCreateRequest(ctx context.Context, options *PathsFloatScientificPositiveOptions) (*policy.Request, error) {
+func (client *PathsClient) floatScientificPositiveCreateRequest(ctx context.Context, options *PathsClientFloatScientificPositiveOptions) (*policy.Request, error) {
 	urlPath := "/paths/float/1.034E+20/{floatPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{floatPath}", url.PathEscape("103400000000000000000"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -706,24 +706,24 @@ func (client *PathsClient) floatScientificPositiveHandleError(resp *http.Respons
 
 // GetBooleanFalse - Get false Boolean value on path
 // If the operation fails it returns the *Error error type.
-// options - PathsGetBooleanFalseOptions contains the optional parameters for the PathsClient.GetBooleanFalse method.
-func (client *PathsClient) GetBooleanFalse(ctx context.Context, options *PathsGetBooleanFalseOptions) (PathsGetBooleanFalseResponse, error) {
+// options - PathsClientGetBooleanFalseOptions contains the optional parameters for the PathsClient.GetBooleanFalse method.
+func (client *PathsClient) GetBooleanFalse(ctx context.Context, options *PathsClientGetBooleanFalseOptions) (PathsClientGetBooleanFalseResponse, error) {
 	req, err := client.getBooleanFalseCreateRequest(ctx, options)
 	if err != nil {
-		return PathsGetBooleanFalseResponse{}, err
+		return PathsClientGetBooleanFalseResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsGetBooleanFalseResponse{}, err
+		return PathsClientGetBooleanFalseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsGetBooleanFalseResponse{}, client.getBooleanFalseHandleError(resp)
+		return PathsClientGetBooleanFalseResponse{}, client.getBooleanFalseHandleError(resp)
 	}
-	return PathsGetBooleanFalseResponse{RawResponse: resp}, nil
+	return PathsClientGetBooleanFalseResponse{RawResponse: resp}, nil
 }
 
 // getBooleanFalseCreateRequest creates the GetBooleanFalse request.
-func (client *PathsClient) getBooleanFalseCreateRequest(ctx context.Context, options *PathsGetBooleanFalseOptions) (*policy.Request, error) {
+func (client *PathsClient) getBooleanFalseCreateRequest(ctx context.Context, options *PathsClientGetBooleanFalseOptions) (*policy.Request, error) {
 	urlPath := "/paths/bool/false/{boolPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{boolPath}", url.PathEscape("false"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -749,24 +749,24 @@ func (client *PathsClient) getBooleanFalseHandleError(resp *http.Response) error
 
 // GetBooleanTrue - Get true Boolean value on path
 // If the operation fails it returns the *Error error type.
-// options - PathsGetBooleanTrueOptions contains the optional parameters for the PathsClient.GetBooleanTrue method.
-func (client *PathsClient) GetBooleanTrue(ctx context.Context, options *PathsGetBooleanTrueOptions) (PathsGetBooleanTrueResponse, error) {
+// options - PathsClientGetBooleanTrueOptions contains the optional parameters for the PathsClient.GetBooleanTrue method.
+func (client *PathsClient) GetBooleanTrue(ctx context.Context, options *PathsClientGetBooleanTrueOptions) (PathsClientGetBooleanTrueResponse, error) {
 	req, err := client.getBooleanTrueCreateRequest(ctx, options)
 	if err != nil {
-		return PathsGetBooleanTrueResponse{}, err
+		return PathsClientGetBooleanTrueResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsGetBooleanTrueResponse{}, err
+		return PathsClientGetBooleanTrueResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsGetBooleanTrueResponse{}, client.getBooleanTrueHandleError(resp)
+		return PathsClientGetBooleanTrueResponse{}, client.getBooleanTrueHandleError(resp)
 	}
-	return PathsGetBooleanTrueResponse{RawResponse: resp}, nil
+	return PathsClientGetBooleanTrueResponse{RawResponse: resp}, nil
 }
 
 // getBooleanTrueCreateRequest creates the GetBooleanTrue request.
-func (client *PathsClient) getBooleanTrueCreateRequest(ctx context.Context, options *PathsGetBooleanTrueOptions) (*policy.Request, error) {
+func (client *PathsClient) getBooleanTrueCreateRequest(ctx context.Context, options *PathsClientGetBooleanTrueOptions) (*policy.Request, error) {
 	urlPath := "/paths/bool/true/{boolPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{boolPath}", url.PathEscape("true"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -792,25 +792,25 @@ func (client *PathsClient) getBooleanTrueHandleError(resp *http.Response) error 
 
 // GetIntNegativeOneMillion - Get '-1000000' integer value
 // If the operation fails it returns the *Error error type.
-// options - PathsGetIntNegativeOneMillionOptions contains the optional parameters for the PathsClient.GetIntNegativeOneMillion
+// options - PathsClientGetIntNegativeOneMillionOptions contains the optional parameters for the PathsClient.GetIntNegativeOneMillion
 // method.
-func (client *PathsClient) GetIntNegativeOneMillion(ctx context.Context, options *PathsGetIntNegativeOneMillionOptions) (PathsGetIntNegativeOneMillionResponse, error) {
+func (client *PathsClient) GetIntNegativeOneMillion(ctx context.Context, options *PathsClientGetIntNegativeOneMillionOptions) (PathsClientGetIntNegativeOneMillionResponse, error) {
 	req, err := client.getIntNegativeOneMillionCreateRequest(ctx, options)
 	if err != nil {
-		return PathsGetIntNegativeOneMillionResponse{}, err
+		return PathsClientGetIntNegativeOneMillionResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsGetIntNegativeOneMillionResponse{}, err
+		return PathsClientGetIntNegativeOneMillionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsGetIntNegativeOneMillionResponse{}, client.getIntNegativeOneMillionHandleError(resp)
+		return PathsClientGetIntNegativeOneMillionResponse{}, client.getIntNegativeOneMillionHandleError(resp)
 	}
-	return PathsGetIntNegativeOneMillionResponse{RawResponse: resp}, nil
+	return PathsClientGetIntNegativeOneMillionResponse{RawResponse: resp}, nil
 }
 
 // getIntNegativeOneMillionCreateRequest creates the GetIntNegativeOneMillion request.
-func (client *PathsClient) getIntNegativeOneMillionCreateRequest(ctx context.Context, options *PathsGetIntNegativeOneMillionOptions) (*policy.Request, error) {
+func (client *PathsClient) getIntNegativeOneMillionCreateRequest(ctx context.Context, options *PathsClientGetIntNegativeOneMillionOptions) (*policy.Request, error) {
 	urlPath := "/paths/int/-1000000/{intPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{intPath}", url.PathEscape("-1000000"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -836,24 +836,24 @@ func (client *PathsClient) getIntNegativeOneMillionHandleError(resp *http.Respon
 
 // GetIntOneMillion - Get '1000000' integer value
 // If the operation fails it returns the *Error error type.
-// options - PathsGetIntOneMillionOptions contains the optional parameters for the PathsClient.GetIntOneMillion method.
-func (client *PathsClient) GetIntOneMillion(ctx context.Context, options *PathsGetIntOneMillionOptions) (PathsGetIntOneMillionResponse, error) {
+// options - PathsClientGetIntOneMillionOptions contains the optional parameters for the PathsClient.GetIntOneMillion method.
+func (client *PathsClient) GetIntOneMillion(ctx context.Context, options *PathsClientGetIntOneMillionOptions) (PathsClientGetIntOneMillionResponse, error) {
 	req, err := client.getIntOneMillionCreateRequest(ctx, options)
 	if err != nil {
-		return PathsGetIntOneMillionResponse{}, err
+		return PathsClientGetIntOneMillionResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsGetIntOneMillionResponse{}, err
+		return PathsClientGetIntOneMillionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsGetIntOneMillionResponse{}, client.getIntOneMillionHandleError(resp)
+		return PathsClientGetIntOneMillionResponse{}, client.getIntOneMillionHandleError(resp)
 	}
-	return PathsGetIntOneMillionResponse{RawResponse: resp}, nil
+	return PathsClientGetIntOneMillionResponse{RawResponse: resp}, nil
 }
 
 // getIntOneMillionCreateRequest creates the GetIntOneMillion request.
-func (client *PathsClient) getIntOneMillionCreateRequest(ctx context.Context, options *PathsGetIntOneMillionOptions) (*policy.Request, error) {
+func (client *PathsClient) getIntOneMillionCreateRequest(ctx context.Context, options *PathsClientGetIntOneMillionOptions) (*policy.Request, error) {
 	urlPath := "/paths/int/1000000/{intPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{intPath}", url.PathEscape("1000000"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -879,25 +879,25 @@ func (client *PathsClient) getIntOneMillionHandleError(resp *http.Response) erro
 
 // GetNegativeTenBillion - Get '-10000000000' 64 bit integer value
 // If the operation fails it returns the *Error error type.
-// options - PathsGetNegativeTenBillionOptions contains the optional parameters for the PathsClient.GetNegativeTenBillion
+// options - PathsClientGetNegativeTenBillionOptions contains the optional parameters for the PathsClient.GetNegativeTenBillion
 // method.
-func (client *PathsClient) GetNegativeTenBillion(ctx context.Context, options *PathsGetNegativeTenBillionOptions) (PathsGetNegativeTenBillionResponse, error) {
+func (client *PathsClient) GetNegativeTenBillion(ctx context.Context, options *PathsClientGetNegativeTenBillionOptions) (PathsClientGetNegativeTenBillionResponse, error) {
 	req, err := client.getNegativeTenBillionCreateRequest(ctx, options)
 	if err != nil {
-		return PathsGetNegativeTenBillionResponse{}, err
+		return PathsClientGetNegativeTenBillionResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsGetNegativeTenBillionResponse{}, err
+		return PathsClientGetNegativeTenBillionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsGetNegativeTenBillionResponse{}, client.getNegativeTenBillionHandleError(resp)
+		return PathsClientGetNegativeTenBillionResponse{}, client.getNegativeTenBillionHandleError(resp)
 	}
-	return PathsGetNegativeTenBillionResponse{RawResponse: resp}, nil
+	return PathsClientGetNegativeTenBillionResponse{RawResponse: resp}, nil
 }
 
 // getNegativeTenBillionCreateRequest creates the GetNegativeTenBillion request.
-func (client *PathsClient) getNegativeTenBillionCreateRequest(ctx context.Context, options *PathsGetNegativeTenBillionOptions) (*policy.Request, error) {
+func (client *PathsClient) getNegativeTenBillionCreateRequest(ctx context.Context, options *PathsClientGetNegativeTenBillionOptions) (*policy.Request, error) {
 	urlPath := "/paths/long/-10000000000/{longPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{longPath}", url.PathEscape("-10000000000"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -923,24 +923,24 @@ func (client *PathsClient) getNegativeTenBillionHandleError(resp *http.Response)
 
 // GetTenBillion - Get '10000000000' 64 bit integer value
 // If the operation fails it returns the *Error error type.
-// options - PathsGetTenBillionOptions contains the optional parameters for the PathsClient.GetTenBillion method.
-func (client *PathsClient) GetTenBillion(ctx context.Context, options *PathsGetTenBillionOptions) (PathsGetTenBillionResponse, error) {
+// options - PathsClientGetTenBillionOptions contains the optional parameters for the PathsClient.GetTenBillion method.
+func (client *PathsClient) GetTenBillion(ctx context.Context, options *PathsClientGetTenBillionOptions) (PathsClientGetTenBillionResponse, error) {
 	req, err := client.getTenBillionCreateRequest(ctx, options)
 	if err != nil {
-		return PathsGetTenBillionResponse{}, err
+		return PathsClientGetTenBillionResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsGetTenBillionResponse{}, err
+		return PathsClientGetTenBillionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsGetTenBillionResponse{}, client.getTenBillionHandleError(resp)
+		return PathsClientGetTenBillionResponse{}, client.getTenBillionHandleError(resp)
 	}
-	return PathsGetTenBillionResponse{RawResponse: resp}, nil
+	return PathsClientGetTenBillionResponse{RawResponse: resp}, nil
 }
 
 // getTenBillionCreateRequest creates the GetTenBillion request.
-func (client *PathsClient) getTenBillionCreateRequest(ctx context.Context, options *PathsGetTenBillionOptions) (*policy.Request, error) {
+func (client *PathsClient) getTenBillionCreateRequest(ctx context.Context, options *PathsClientGetTenBillionOptions) (*policy.Request, error) {
 	urlPath := "/paths/long/10000000000/{longPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{longPath}", url.PathEscape("10000000000"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -966,24 +966,24 @@ func (client *PathsClient) getTenBillionHandleError(resp *http.Response) error {
 
 // StringEmpty - Get ''
 // If the operation fails it returns the *Error error type.
-// options - PathsStringEmptyOptions contains the optional parameters for the PathsClient.StringEmpty method.
-func (client *PathsClient) StringEmpty(ctx context.Context, options *PathsStringEmptyOptions) (PathsStringEmptyResponse, error) {
+// options - PathsClientStringEmptyOptions contains the optional parameters for the PathsClient.StringEmpty method.
+func (client *PathsClient) StringEmpty(ctx context.Context, options *PathsClientStringEmptyOptions) (PathsClientStringEmptyResponse, error) {
 	req, err := client.stringEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return PathsStringEmptyResponse{}, err
+		return PathsClientStringEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsStringEmptyResponse{}, err
+		return PathsClientStringEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsStringEmptyResponse{}, client.stringEmptyHandleError(resp)
+		return PathsClientStringEmptyResponse{}, client.stringEmptyHandleError(resp)
 	}
-	return PathsStringEmptyResponse{RawResponse: resp}, nil
+	return PathsClientStringEmptyResponse{RawResponse: resp}, nil
 }
 
 // stringEmptyCreateRequest creates the StringEmpty request.
-func (client *PathsClient) stringEmptyCreateRequest(ctx context.Context, options *PathsStringEmptyOptions) (*policy.Request, error) {
+func (client *PathsClient) stringEmptyCreateRequest(ctx context.Context, options *PathsClientStringEmptyOptions) (*policy.Request, error) {
 	urlPath := "/paths/string/empty/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape(""))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -1010,24 +1010,24 @@ func (client *PathsClient) stringEmptyHandleError(resp *http.Response) error {
 // StringNull - Get null (should throw)
 // If the operation fails it returns the *Error error type.
 // stringPath - null string value
-// options - PathsStringNullOptions contains the optional parameters for the PathsClient.StringNull method.
-func (client *PathsClient) StringNull(ctx context.Context, stringPath string, options *PathsStringNullOptions) (PathsStringNullResponse, error) {
+// options - PathsClientStringNullOptions contains the optional parameters for the PathsClient.StringNull method.
+func (client *PathsClient) StringNull(ctx context.Context, stringPath string, options *PathsClientStringNullOptions) (PathsClientStringNullResponse, error) {
 	req, err := client.stringNullCreateRequest(ctx, stringPath, options)
 	if err != nil {
-		return PathsStringNullResponse{}, err
+		return PathsClientStringNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsStringNullResponse{}, err
+		return PathsClientStringNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusBadRequest) {
-		return PathsStringNullResponse{}, client.stringNullHandleError(resp)
+		return PathsClientStringNullResponse{}, client.stringNullHandleError(resp)
 	}
-	return PathsStringNullResponse{RawResponse: resp}, nil
+	return PathsClientStringNullResponse{RawResponse: resp}, nil
 }
 
 // stringNullCreateRequest creates the StringNull request.
-func (client *PathsClient) stringNullCreateRequest(ctx context.Context, stringPath string, options *PathsStringNullOptions) (*policy.Request, error) {
+func (client *PathsClient) stringNullCreateRequest(ctx context.Context, stringPath string, options *PathsClientStringNullOptions) (*policy.Request, error) {
 	urlPath := "/paths/string/null/{stringPath}"
 	if stringPath == "" {
 		return nil, errors.New("parameter stringPath cannot be empty")
@@ -1056,24 +1056,24 @@ func (client *PathsClient) stringNullHandleError(resp *http.Response) error {
 
 // StringURLEncoded - Get 'begin!*'();:@ &=+$,/?#[]end
 // If the operation fails it returns the *Error error type.
-// options - PathsStringURLEncodedOptions contains the optional parameters for the PathsClient.StringURLEncoded method.
-func (client *PathsClient) StringURLEncoded(ctx context.Context, options *PathsStringURLEncodedOptions) (PathsStringURLEncodedResponse, error) {
+// options - PathsClientStringURLEncodedOptions contains the optional parameters for the PathsClient.StringURLEncoded method.
+func (client *PathsClient) StringURLEncoded(ctx context.Context, options *PathsClientStringURLEncodedOptions) (PathsClientStringURLEncodedResponse, error) {
 	req, err := client.stringURLEncodedCreateRequest(ctx, options)
 	if err != nil {
-		return PathsStringURLEncodedResponse{}, err
+		return PathsClientStringURLEncodedResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsStringURLEncodedResponse{}, err
+		return PathsClientStringURLEncodedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsStringURLEncodedResponse{}, client.stringURLEncodedHandleError(resp)
+		return PathsClientStringURLEncodedResponse{}, client.stringURLEncodedHandleError(resp)
 	}
-	return PathsStringURLEncodedResponse{RawResponse: resp}, nil
+	return PathsClientStringURLEncodedResponse{RawResponse: resp}, nil
 }
 
 // stringURLEncodedCreateRequest creates the StringURLEncoded request.
-func (client *PathsClient) stringURLEncodedCreateRequest(ctx context.Context, options *PathsStringURLEncodedOptions) (*policy.Request, error) {
+func (client *PathsClient) stringURLEncodedCreateRequest(ctx context.Context, options *PathsClientStringURLEncodedOptions) (*policy.Request, error) {
 	urlPath := "/paths/string/begin%21%2A%27%28%29%3B%3A%40%20%26%3D%2B%24%2C%2F%3F%23%5B%5Dend/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape("begin!*'();:@ &=+$,/?#[]end"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -1099,24 +1099,25 @@ func (client *PathsClient) stringURLEncodedHandleError(resp *http.Response) erro
 
 // StringURLNonEncoded - https://tools.ietf.org/html/rfc3986#appendix-A 'path' accept any 'pchar' not encoded
 // If the operation fails it returns the *Error error type.
-// options - PathsStringURLNonEncodedOptions contains the optional parameters for the PathsClient.StringURLNonEncoded method.
-func (client *PathsClient) StringURLNonEncoded(ctx context.Context, options *PathsStringURLNonEncodedOptions) (PathsStringURLNonEncodedResponse, error) {
+// options - PathsClientStringURLNonEncodedOptions contains the optional parameters for the PathsClient.StringURLNonEncoded
+// method.
+func (client *PathsClient) StringURLNonEncoded(ctx context.Context, options *PathsClientStringURLNonEncodedOptions) (PathsClientStringURLNonEncodedResponse, error) {
 	req, err := client.stringURLNonEncodedCreateRequest(ctx, options)
 	if err != nil {
-		return PathsStringURLNonEncodedResponse{}, err
+		return PathsClientStringURLNonEncodedResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsStringURLNonEncodedResponse{}, err
+		return PathsClientStringURLNonEncodedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsStringURLNonEncodedResponse{}, client.stringURLNonEncodedHandleError(resp)
+		return PathsClientStringURLNonEncodedResponse{}, client.stringURLNonEncodedHandleError(resp)
 	}
-	return PathsStringURLNonEncodedResponse{RawResponse: resp}, nil
+	return PathsClientStringURLNonEncodedResponse{RawResponse: resp}, nil
 }
 
 // stringURLNonEncodedCreateRequest creates the StringURLNonEncoded request.
-func (client *PathsClient) stringURLNonEncodedCreateRequest(ctx context.Context, options *PathsStringURLNonEncodedOptions) (*policy.Request, error) {
+func (client *PathsClient) stringURLNonEncodedCreateRequest(ctx context.Context, options *PathsClientStringURLNonEncodedOptions) (*policy.Request, error) {
 	urlPath := "/paths/string/begin!*'();:@&=+$,end/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", "begin!*'();:@&=+$,end")
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -1142,24 +1143,24 @@ func (client *PathsClient) stringURLNonEncodedHandleError(resp *http.Response) e
 
 // StringUnicode - Get '啊齄丂狛狜隣郎隣兀﨩' multi-byte string value
 // If the operation fails it returns the *Error error type.
-// options - PathsStringUnicodeOptions contains the optional parameters for the PathsClient.StringUnicode method.
-func (client *PathsClient) StringUnicode(ctx context.Context, options *PathsStringUnicodeOptions) (PathsStringUnicodeResponse, error) {
+// options - PathsClientStringUnicodeOptions contains the optional parameters for the PathsClient.StringUnicode method.
+func (client *PathsClient) StringUnicode(ctx context.Context, options *PathsClientStringUnicodeOptions) (PathsClientStringUnicodeResponse, error) {
 	req, err := client.stringUnicodeCreateRequest(ctx, options)
 	if err != nil {
-		return PathsStringUnicodeResponse{}, err
+		return PathsClientStringUnicodeResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsStringUnicodeResponse{}, err
+		return PathsClientStringUnicodeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsStringUnicodeResponse{}, client.stringUnicodeHandleError(resp)
+		return PathsClientStringUnicodeResponse{}, client.stringUnicodeHandleError(resp)
 	}
-	return PathsStringUnicodeResponse{RawResponse: resp}, nil
+	return PathsClientStringUnicodeResponse{RawResponse: resp}, nil
 }
 
 // stringUnicodeCreateRequest creates the StringUnicode request.
-func (client *PathsClient) stringUnicodeCreateRequest(ctx context.Context, options *PathsStringUnicodeOptions) (*policy.Request, error) {
+func (client *PathsClient) stringUnicodeCreateRequest(ctx context.Context, options *PathsClientStringUnicodeOptions) (*policy.Request, error) {
 	urlPath := "/paths/string/unicode/{stringPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{stringPath}", url.PathEscape("啊齄丂狛狜隣郎隣兀﨩"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -1186,24 +1187,24 @@ func (client *PathsClient) stringUnicodeHandleError(resp *http.Response) error {
 // UnixTimeURL - Get the date 2016-04-13 encoded value as '1460505600' (Unix time)
 // If the operation fails it returns the *Error error type.
 // unixTimeURLPath - Unix time encoded value
-// options - PathsUnixTimeURLOptions contains the optional parameters for the PathsClient.UnixTimeURL method.
-func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath time.Time, options *PathsUnixTimeURLOptions) (PathsUnixTimeURLResponse, error) {
+// options - PathsClientUnixTimeURLOptions contains the optional parameters for the PathsClient.UnixTimeURL method.
+func (client *PathsClient) UnixTimeURL(ctx context.Context, unixTimeURLPath time.Time, options *PathsClientUnixTimeURLOptions) (PathsClientUnixTimeURLResponse, error) {
 	req, err := client.unixTimeURLCreateRequest(ctx, unixTimeURLPath, options)
 	if err != nil {
-		return PathsUnixTimeURLResponse{}, err
+		return PathsClientUnixTimeURLResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsUnixTimeURLResponse{}, err
+		return PathsClientUnixTimeURLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsUnixTimeURLResponse{}, client.unixTimeURLHandleError(resp)
+		return PathsClientUnixTimeURLResponse{}, client.unixTimeURLHandleError(resp)
 	}
-	return PathsUnixTimeURLResponse{RawResponse: resp}, nil
+	return PathsClientUnixTimeURLResponse{RawResponse: resp}, nil
 }
 
 // unixTimeURLCreateRequest creates the UnixTimeURL request.
-func (client *PathsClient) unixTimeURLCreateRequest(ctx context.Context, unixTimeURLPath time.Time, options *PathsUnixTimeURLOptions) (*policy.Request, error) {
+func (client *PathsClient) unixTimeURLCreateRequest(ctx context.Context, unixTimeURLPath time.Time, options *PathsClientUnixTimeURLOptions) (*policy.Request, error) {
 	urlPath := "/paths/int/1460505600/{unixTimeUrlPath}"
 	urlPath = strings.ReplaceAll(urlPath, "{unixTimeUrlPath}", url.PathEscape(timeUnix(unixTimeURLPath).String()))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))

@@ -54,25 +54,25 @@ func NewVirtualMachineExtensionImagesClient(subscriptionID string, credential az
 // Get - Gets a virtual machine extension image.
 // If the operation fails it returns a generic error.
 // location - The name of a supported Azure region.
-// options - VirtualMachineExtensionImagesGetOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.Get
+// options - VirtualMachineExtensionImagesClientGetOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.Get
 // method.
-func (client *VirtualMachineExtensionImagesClient) Get(ctx context.Context, location string, publisherName string, typeParam string, version string, options *VirtualMachineExtensionImagesGetOptions) (VirtualMachineExtensionImagesGetResponse, error) {
+func (client *VirtualMachineExtensionImagesClient) Get(ctx context.Context, location string, publisherName string, typeParam string, version string, options *VirtualMachineExtensionImagesClientGetOptions) (VirtualMachineExtensionImagesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, publisherName, typeParam, version, options)
 	if err != nil {
-		return VirtualMachineExtensionImagesGetResponse{}, err
+		return VirtualMachineExtensionImagesClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachineExtensionImagesGetResponse{}, err
+		return VirtualMachineExtensionImagesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineExtensionImagesGetResponse{}, client.getHandleError(resp)
+		return VirtualMachineExtensionImagesClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualMachineExtensionImagesClient) getCreateRequest(ctx context.Context, location string, publisherName string, typeParam string, version string, options *VirtualMachineExtensionImagesGetOptions) (*policy.Request, error) {
+func (client *VirtualMachineExtensionImagesClient) getCreateRequest(ctx context.Context, location string, publisherName string, typeParam string, version string, options *VirtualMachineExtensionImagesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -106,10 +106,10 @@ func (client *VirtualMachineExtensionImagesClient) getCreateRequest(ctx context.
 }
 
 // getHandleResponse handles the Get response.
-func (client *VirtualMachineExtensionImagesClient) getHandleResponse(resp *http.Response) (VirtualMachineExtensionImagesGetResponse, error) {
-	result := VirtualMachineExtensionImagesGetResponse{RawResponse: resp}
+func (client *VirtualMachineExtensionImagesClient) getHandleResponse(resp *http.Response) (VirtualMachineExtensionImagesClientGetResponse, error) {
+	result := VirtualMachineExtensionImagesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtensionImage); err != nil {
-		return VirtualMachineExtensionImagesGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineExtensionImagesClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -129,25 +129,25 @@ func (client *VirtualMachineExtensionImagesClient) getHandleError(resp *http.Res
 // ListTypes - Gets a list of virtual machine extension image types.
 // If the operation fails it returns a generic error.
 // location - The name of a supported Azure region.
-// options - VirtualMachineExtensionImagesListTypesOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.ListTypes
+// options - VirtualMachineExtensionImagesClientListTypesOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.ListTypes
 // method.
-func (client *VirtualMachineExtensionImagesClient) ListTypes(ctx context.Context, location string, publisherName string, options *VirtualMachineExtensionImagesListTypesOptions) (VirtualMachineExtensionImagesListTypesResponse, error) {
+func (client *VirtualMachineExtensionImagesClient) ListTypes(ctx context.Context, location string, publisherName string, options *VirtualMachineExtensionImagesClientListTypesOptions) (VirtualMachineExtensionImagesClientListTypesResponse, error) {
 	req, err := client.listTypesCreateRequest(ctx, location, publisherName, options)
 	if err != nil {
-		return VirtualMachineExtensionImagesListTypesResponse{}, err
+		return VirtualMachineExtensionImagesClientListTypesResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachineExtensionImagesListTypesResponse{}, err
+		return VirtualMachineExtensionImagesClientListTypesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineExtensionImagesListTypesResponse{}, client.listTypesHandleError(resp)
+		return VirtualMachineExtensionImagesClientListTypesResponse{}, client.listTypesHandleError(resp)
 	}
 	return client.listTypesHandleResponse(resp)
 }
 
 // listTypesCreateRequest creates the ListTypes request.
-func (client *VirtualMachineExtensionImagesClient) listTypesCreateRequest(ctx context.Context, location string, publisherName string, options *VirtualMachineExtensionImagesListTypesOptions) (*policy.Request, error) {
+func (client *VirtualMachineExtensionImagesClient) listTypesCreateRequest(ctx context.Context, location string, publisherName string, options *VirtualMachineExtensionImagesClientListTypesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -173,10 +173,10 @@ func (client *VirtualMachineExtensionImagesClient) listTypesCreateRequest(ctx co
 }
 
 // listTypesHandleResponse handles the ListTypes response.
-func (client *VirtualMachineExtensionImagesClient) listTypesHandleResponse(resp *http.Response) (VirtualMachineExtensionImagesListTypesResponse, error) {
-	result := VirtualMachineExtensionImagesListTypesResponse{RawResponse: resp}
+func (client *VirtualMachineExtensionImagesClient) listTypesHandleResponse(resp *http.Response) (VirtualMachineExtensionImagesClientListTypesResponse, error) {
+	result := VirtualMachineExtensionImagesClientListTypesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtensionImageArray); err != nil {
-		return VirtualMachineExtensionImagesListTypesResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineExtensionImagesClientListTypesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -196,25 +196,25 @@ func (client *VirtualMachineExtensionImagesClient) listTypesHandleError(resp *ht
 // ListVersions - Gets a list of virtual machine extension image versions.
 // If the operation fails it returns a generic error.
 // location - The name of a supported Azure region.
-// options - VirtualMachineExtensionImagesListVersionsOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.ListVersions
+// options - VirtualMachineExtensionImagesClientListVersionsOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.ListVersions
 // method.
-func (client *VirtualMachineExtensionImagesClient) ListVersions(ctx context.Context, location string, publisherName string, typeParam string, options *VirtualMachineExtensionImagesListVersionsOptions) (VirtualMachineExtensionImagesListVersionsResponse, error) {
+func (client *VirtualMachineExtensionImagesClient) ListVersions(ctx context.Context, location string, publisherName string, typeParam string, options *VirtualMachineExtensionImagesClientListVersionsOptions) (VirtualMachineExtensionImagesClientListVersionsResponse, error) {
 	req, err := client.listVersionsCreateRequest(ctx, location, publisherName, typeParam, options)
 	if err != nil {
-		return VirtualMachineExtensionImagesListVersionsResponse{}, err
+		return VirtualMachineExtensionImagesClientListVersionsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachineExtensionImagesListVersionsResponse{}, err
+		return VirtualMachineExtensionImagesClientListVersionsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineExtensionImagesListVersionsResponse{}, client.listVersionsHandleError(resp)
+		return VirtualMachineExtensionImagesClientListVersionsResponse{}, client.listVersionsHandleError(resp)
 	}
 	return client.listVersionsHandleResponse(resp)
 }
 
 // listVersionsCreateRequest creates the ListVersions request.
-func (client *VirtualMachineExtensionImagesClient) listVersionsCreateRequest(ctx context.Context, location string, publisherName string, typeParam string, options *VirtualMachineExtensionImagesListVersionsOptions) (*policy.Request, error) {
+func (client *VirtualMachineExtensionImagesClient) listVersionsCreateRequest(ctx context.Context, location string, publisherName string, typeParam string, options *VirtualMachineExtensionImagesClientListVersionsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -253,10 +253,10 @@ func (client *VirtualMachineExtensionImagesClient) listVersionsCreateRequest(ctx
 }
 
 // listVersionsHandleResponse handles the ListVersions response.
-func (client *VirtualMachineExtensionImagesClient) listVersionsHandleResponse(resp *http.Response) (VirtualMachineExtensionImagesListVersionsResponse, error) {
-	result := VirtualMachineExtensionImagesListVersionsResponse{RawResponse: resp}
+func (client *VirtualMachineExtensionImagesClient) listVersionsHandleResponse(resp *http.Response) (VirtualMachineExtensionImagesClientListVersionsResponse, error) {
+	result := VirtualMachineExtensionImagesClientListVersionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtensionImageArray); err != nil {
-		return VirtualMachineExtensionImagesListVersionsResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineExtensionImagesClientListVersionsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

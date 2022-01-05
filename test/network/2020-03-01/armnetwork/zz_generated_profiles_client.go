@@ -56,24 +56,24 @@ func NewProfilesClient(subscriptionID string, credential azcore.TokenCredential,
 // resourceGroupName - The name of the resource group.
 // networkProfileName - The name of the network profile.
 // parameters - Parameters supplied to the create or update network profile operation.
-// options - NetworkProfilesCreateOrUpdateOptions contains the optional parameters for the ProfilesClient.CreateOrUpdate method.
-func (client *ProfilesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkProfileName string, parameters Profile, options *NetworkProfilesCreateOrUpdateOptions) (NetworkProfilesCreateOrUpdateResponse, error) {
+// options - ProfilesClientCreateOrUpdateOptions contains the optional parameters for the ProfilesClient.CreateOrUpdate method.
+func (client *ProfilesClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, networkProfileName string, parameters Profile, options *ProfilesClientCreateOrUpdateOptions) (ProfilesClientCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkProfileName, parameters, options)
 	if err != nil {
-		return NetworkProfilesCreateOrUpdateResponse{}, err
+		return ProfilesClientCreateOrUpdateResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NetworkProfilesCreateOrUpdateResponse{}, err
+		return ProfilesClientCreateOrUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return NetworkProfilesCreateOrUpdateResponse{}, client.createOrUpdateHandleError(resp)
+		return ProfilesClientCreateOrUpdateResponse{}, client.createOrUpdateHandleError(resp)
 	}
 	return client.createOrUpdateHandleResponse(resp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ProfilesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, parameters Profile, options *NetworkProfilesCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *ProfilesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, parameters Profile, options *ProfilesClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -99,10 +99,10 @@ func (client *ProfilesClient) createOrUpdateCreateRequest(ctx context.Context, r
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *ProfilesClient) createOrUpdateHandleResponse(resp *http.Response) (NetworkProfilesCreateOrUpdateResponse, error) {
-	result := NetworkProfilesCreateOrUpdateResponse{RawResponse: resp}
+func (client *ProfilesClient) createOrUpdateHandleResponse(resp *http.Response) (ProfilesClientCreateOrUpdateResponse, error) {
+	result := ProfilesClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Profile); err != nil {
-		return NetworkProfilesCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
+		return ProfilesClientCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -124,20 +124,20 @@ func (client *ProfilesClient) createOrUpdateHandleError(resp *http.Response) err
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkProfileName - The name of the NetworkProfile.
-// options - NetworkProfilesBeginDeleteOptions contains the optional parameters for the ProfilesClient.BeginDelete method.
-func (client *ProfilesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesBeginDeleteOptions) (NetworkProfilesDeletePollerResponse, error) {
+// options - ProfilesClientBeginDeleteOptions contains the optional parameters for the ProfilesClient.BeginDelete method.
+func (client *ProfilesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientBeginDeleteOptions) (ProfilesClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
-		return NetworkProfilesDeletePollerResponse{}, err
+		return ProfilesClientDeletePollerResponse{}, err
 	}
-	result := NetworkProfilesDeletePollerResponse{
+	result := ProfilesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("ProfilesClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return NetworkProfilesDeletePollerResponse{}, err
+		return ProfilesClientDeletePollerResponse{}, err
 	}
-	result.Poller = &NetworkProfilesDeletePoller{
+	result.Poller = &ProfilesClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -145,7 +145,7 @@ func (client *ProfilesClient) BeginDelete(ctx context.Context, resourceGroupName
 
 // Delete - Deletes the specified network profile.
 // If the operation fails it returns the *CloudError error type.
-func (client *ProfilesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesBeginDeleteOptions) (*http.Response, error) {
+func (client *ProfilesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
 		return nil, err
@@ -161,7 +161,7 @@ func (client *ProfilesClient) deleteOperation(ctx context.Context, resourceGroup
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *ProfilesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesBeginDeleteOptions) (*policy.Request, error) {
+func (client *ProfilesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -203,24 +203,24 @@ func (client *ProfilesClient) deleteHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkProfileName - The name of the public IP prefix.
-// options - NetworkProfilesGetOptions contains the optional parameters for the ProfilesClient.Get method.
-func (client *ProfilesClient) Get(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesGetOptions) (NetworkProfilesGetResponse, error) {
+// options - ProfilesClientGetOptions contains the optional parameters for the ProfilesClient.Get method.
+func (client *ProfilesClient) Get(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientGetOptions) (ProfilesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkProfileName, options)
 	if err != nil {
-		return NetworkProfilesGetResponse{}, err
+		return ProfilesClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NetworkProfilesGetResponse{}, err
+		return ProfilesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NetworkProfilesGetResponse{}, client.getHandleError(resp)
+		return ProfilesClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *ProfilesClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, options *NetworkProfilesGetOptions) (*policy.Request, error) {
+func (client *ProfilesClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, options *ProfilesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -249,10 +249,10 @@ func (client *ProfilesClient) getCreateRequest(ctx context.Context, resourceGrou
 }
 
 // getHandleResponse handles the Get response.
-func (client *ProfilesClient) getHandleResponse(resp *http.Response) (NetworkProfilesGetResponse, error) {
-	result := NetworkProfilesGetResponse{RawResponse: resp}
+func (client *ProfilesClient) getHandleResponse(resp *http.Response) (ProfilesClientGetResponse, error) {
+	result := ProfilesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Profile); err != nil {
-		return NetworkProfilesGetResponse{}, runtime.NewResponseError(err, resp)
+		return ProfilesClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -273,21 +273,21 @@ func (client *ProfilesClient) getHandleError(resp *http.Response) error {
 // List - Gets all network profiles in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - NetworkProfilesListOptions contains the optional parameters for the ProfilesClient.List method.
-func (client *ProfilesClient) List(resourceGroupName string, options *NetworkProfilesListOptions) *NetworkProfilesListPager {
-	return &NetworkProfilesListPager{
+// options - ProfilesClientListOptions contains the optional parameters for the ProfilesClient.List method.
+func (client *ProfilesClient) List(resourceGroupName string, options *ProfilesClientListOptions) *ProfilesClientListPager {
+	return &ProfilesClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp NetworkProfilesListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp ProfilesClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ProfileListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *ProfilesClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *NetworkProfilesListOptions) (*policy.Request, error) {
+func (client *ProfilesClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *ProfilesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -309,10 +309,10 @@ func (client *ProfilesClient) listCreateRequest(ctx context.Context, resourceGro
 }
 
 // listHandleResponse handles the List response.
-func (client *ProfilesClient) listHandleResponse(resp *http.Response) (NetworkProfilesListResponse, error) {
-	result := NetworkProfilesListResponse{RawResponse: resp}
+func (client *ProfilesClient) listHandleResponse(resp *http.Response) (ProfilesClientListResponse, error) {
+	result := ProfilesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProfileListResult); err != nil {
-		return NetworkProfilesListResponse{}, runtime.NewResponseError(err, resp)
+		return ProfilesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -332,21 +332,21 @@ func (client *ProfilesClient) listHandleError(resp *http.Response) error {
 
 // ListAll - Gets all the network profiles in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - NetworkProfilesListAllOptions contains the optional parameters for the ProfilesClient.ListAll method.
-func (client *ProfilesClient) ListAll(options *NetworkProfilesListAllOptions) *NetworkProfilesListAllPager {
-	return &NetworkProfilesListAllPager{
+// options - ProfilesClientListAllOptions contains the optional parameters for the ProfilesClient.ListAll method.
+func (client *ProfilesClient) ListAll(options *ProfilesClientListAllOptions) *ProfilesClientListAllPager {
+	return &ProfilesClientListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp NetworkProfilesListAllResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp ProfilesClientListAllResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ProfileListResult.NextLink)
 		},
 	}
 }
 
 // listAllCreateRequest creates the ListAll request.
-func (client *ProfilesClient) listAllCreateRequest(ctx context.Context, options *NetworkProfilesListAllOptions) (*policy.Request, error) {
+func (client *ProfilesClient) listAllCreateRequest(ctx context.Context, options *ProfilesClientListAllOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -364,10 +364,10 @@ func (client *ProfilesClient) listAllCreateRequest(ctx context.Context, options 
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client *ProfilesClient) listAllHandleResponse(resp *http.Response) (NetworkProfilesListAllResponse, error) {
-	result := NetworkProfilesListAllResponse{RawResponse: resp}
+func (client *ProfilesClient) listAllHandleResponse(resp *http.Response) (ProfilesClientListAllResponse, error) {
+	result := ProfilesClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProfileListResult); err != nil {
-		return NetworkProfilesListAllResponse{}, runtime.NewResponseError(err, resp)
+		return ProfilesClientListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -390,24 +390,24 @@ func (client *ProfilesClient) listAllHandleError(resp *http.Response) error {
 // resourceGroupName - The name of the resource group.
 // networkProfileName - The name of the network profile.
 // parameters - Parameters supplied to update network profile tags.
-// options - NetworkProfilesUpdateTagsOptions contains the optional parameters for the ProfilesClient.UpdateTags method.
-func (client *ProfilesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject, options *NetworkProfilesUpdateTagsOptions) (NetworkProfilesUpdateTagsResponse, error) {
+// options - ProfilesClientUpdateTagsOptions contains the optional parameters for the ProfilesClient.UpdateTags method.
+func (client *ProfilesClient) UpdateTags(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject, options *ProfilesClientUpdateTagsOptions) (ProfilesClientUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkProfileName, parameters, options)
 	if err != nil {
-		return NetworkProfilesUpdateTagsResponse{}, err
+		return ProfilesClientUpdateTagsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NetworkProfilesUpdateTagsResponse{}, err
+		return ProfilesClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NetworkProfilesUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return ProfilesClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *ProfilesClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject, options *NetworkProfilesUpdateTagsOptions) (*policy.Request, error) {
+func (client *ProfilesClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkProfileName string, parameters TagsObject, options *ProfilesClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -433,10 +433,10 @@ func (client *ProfilesClient) updateTagsCreateRequest(ctx context.Context, resou
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *ProfilesClient) updateTagsHandleResponse(resp *http.Response) (NetworkProfilesUpdateTagsResponse, error) {
-	result := NetworkProfilesUpdateTagsResponse{RawResponse: resp}
+func (client *ProfilesClient) updateTagsHandleResponse(resp *http.Response) (ProfilesClientUpdateTagsResponse, error) {
+	result := ProfilesClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Profile); err != nil {
-		return NetworkProfilesUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return ProfilesClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

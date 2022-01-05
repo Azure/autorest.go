@@ -54,24 +54,24 @@ func NewTagsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 // '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount
 // scope and
 // '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope..
-// options - TagsGetOptions contains the optional parameters for the TagsClient.Get method.
-func (client *TagsClient) Get(ctx context.Context, scope string, options *TagsGetOptions) (TagsGetResponse, error) {
+// options - TagsClientGetOptions contains the optional parameters for the TagsClient.Get method.
+func (client *TagsClient) Get(ctx context.Context, scope string, options *TagsClientGetOptions) (TagsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, scope, options)
 	if err != nil {
-		return TagsGetResponse{}, err
+		return TagsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return TagsGetResponse{}, err
+		return TagsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return TagsGetResponse{}, client.getHandleError(resp)
+		return TagsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *TagsClient) getCreateRequest(ctx context.Context, scope string, options *TagsGetOptions) (*policy.Request, error) {
+func (client *TagsClient) getCreateRequest(ctx context.Context, scope string, options *TagsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/tags"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
@@ -86,10 +86,10 @@ func (client *TagsClient) getCreateRequest(ctx context.Context, scope string, op
 }
 
 // getHandleResponse handles the Get response.
-func (client *TagsClient) getHandleResponse(resp *http.Response) (TagsGetResponse, error) {
-	result := TagsGetResponse{RawResponse: resp}
+func (client *TagsClient) getHandleResponse(resp *http.Response) (TagsClientGetResponse, error) {
+	result := TagsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TagsResult); err != nil {
-		return TagsGetResponse{}, runtime.NewResponseError(err, resp)
+		return TagsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

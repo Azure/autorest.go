@@ -57,21 +57,21 @@ func NewContainersClient(subscriptionID string, credential azcore.TokenCredentia
 // containerName - The container name.
 // resourceGroupName - The resource group name.
 // containerParam - The container properties.
-// options - ContainersBeginCreateOrUpdateOptions contains the optional parameters for the ContainersClient.BeginCreateOrUpdate
+// options - ContainersClientBeginCreateOrUpdateOptions contains the optional parameters for the ContainersClient.BeginCreateOrUpdate
 // method.
-func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersBeginCreateOrUpdateOptions) (ContainersCreateOrUpdatePollerResponse, error) {
+func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (ContainersClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, storageAccountName, containerName, resourceGroupName, containerParam, options)
 	if err != nil {
-		return ContainersCreateOrUpdatePollerResponse{}, err
+		return ContainersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := ContainersCreateOrUpdatePollerResponse{
+	result := ContainersClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("ContainersClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return ContainersCreateOrUpdatePollerResponse{}, err
+		return ContainersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &ContainersCreateOrUpdatePoller{
+	result.Poller = &ContainersClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -79,7 +79,7 @@ func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceN
 
 // CreateOrUpdate - Creates a new container or updates an existing container on the device.
 // If the operation fails it returns the *CloudError error type.
-func (client *ContainersClient) createOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *ContainersClient) createOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, containerParam, options)
 	if err != nil {
 		return nil, err
@@ -95,7 +95,7 @@ func (client *ContainersClient) createOrUpdate(ctx context.Context, deviceName s
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ContainersClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *ContainersClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -147,20 +147,20 @@ func (client *ContainersClient) createOrUpdateHandleError(resp *http.Response) e
 // storageAccountName - The Storage Account Name
 // containerName - The container name.
 // resourceGroupName - The resource group name.
-// options - ContainersBeginDeleteOptions contains the optional parameters for the ContainersClient.BeginDelete method.
-func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersBeginDeleteOptions) (ContainersDeletePollerResponse, error) {
+// options - ContainersClientBeginDeleteOptions contains the optional parameters for the ContainersClient.BeginDelete method.
+func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (ContainersClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
-		return ContainersDeletePollerResponse{}, err
+		return ContainersClientDeletePollerResponse{}, err
 	}
-	result := ContainersDeletePollerResponse{
+	result := ContainersClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("ContainersClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return ContainersDeletePollerResponse{}, err
+		return ContainersClientDeletePollerResponse{}, err
 	}
-	result.Poller = &ContainersDeletePoller{
+	result.Poller = &ContainersClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -168,7 +168,7 @@ func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName stri
 
 // Delete - Deletes the container on the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
-func (client *ContainersClient) deleteOperation(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersBeginDeleteOptions) (*http.Response, error) {
+func (client *ContainersClient) deleteOperation(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -184,7 +184,7 @@ func (client *ContainersClient) deleteOperation(ctx context.Context, deviceName 
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *ContainersClient) deleteCreateRequest(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersBeginDeleteOptions) (*policy.Request, error) {
+func (client *ContainersClient) deleteCreateRequest(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -236,24 +236,24 @@ func (client *ContainersClient) deleteHandleError(resp *http.Response) error {
 // storageAccountName - The Storage Account Name
 // containerName - The container Name
 // resourceGroupName - The resource group name.
-// options - ContainersGetOptions contains the optional parameters for the ContainersClient.Get method.
-func (client *ContainersClient) Get(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersGetOptions) (ContainersGetResponse, error) {
+// options - ContainersClientGetOptions contains the optional parameters for the ContainersClient.Get method.
+func (client *ContainersClient) Get(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientGetOptions) (ContainersClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
-		return ContainersGetResponse{}, err
+		return ContainersClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ContainersGetResponse{}, err
+		return ContainersClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ContainersGetResponse{}, client.getHandleError(resp)
+		return ContainersClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *ContainersClient) getCreateRequest(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersGetOptions) (*policy.Request, error) {
+func (client *ContainersClient) getCreateRequest(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -287,10 +287,10 @@ func (client *ContainersClient) getCreateRequest(ctx context.Context, deviceName
 }
 
 // getHandleResponse handles the Get response.
-func (client *ContainersClient) getHandleResponse(resp *http.Response) (ContainersGetResponse, error) {
-	result := ContainersGetResponse{RawResponse: resp}
+func (client *ContainersClient) getHandleResponse(resp *http.Response) (ContainersClientGetResponse, error) {
+	result := ContainersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Container); err != nil {
-		return ContainersGetResponse{}, runtime.NewResponseError(err, resp)
+		return ContainersClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -313,22 +313,22 @@ func (client *ContainersClient) getHandleError(resp *http.Response) error {
 // deviceName - The device name.
 // storageAccountName - The storage Account name.
 // resourceGroupName - The resource group name.
-// options - ContainersListByStorageAccountOptions contains the optional parameters for the ContainersClient.ListByStorageAccount
+// options - ContainersClientListByStorageAccountOptions contains the optional parameters for the ContainersClient.ListByStorageAccount
 // method.
-func (client *ContainersClient) ListByStorageAccount(deviceName string, storageAccountName string, resourceGroupName string, options *ContainersListByStorageAccountOptions) *ContainersListByStorageAccountPager {
-	return &ContainersListByStorageAccountPager{
+func (client *ContainersClient) ListByStorageAccount(deviceName string, storageAccountName string, resourceGroupName string, options *ContainersClientListByStorageAccountOptions) *ContainersClientListByStorageAccountPager {
+	return &ContainersClientListByStorageAccountPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByStorageAccountCreateRequest(ctx, deviceName, storageAccountName, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp ContainersListByStorageAccountResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp ContainersClientListByStorageAccountResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ContainerList.NextLink)
 		},
 	}
 }
 
 // listByStorageAccountCreateRequest creates the ListByStorageAccount request.
-func (client *ContainersClient) listByStorageAccountCreateRequest(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *ContainersListByStorageAccountOptions) (*policy.Request, error) {
+func (client *ContainersClient) listByStorageAccountCreateRequest(ctx context.Context, deviceName string, storageAccountName string, resourceGroupName string, options *ContainersClientListByStorageAccountOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -358,10 +358,10 @@ func (client *ContainersClient) listByStorageAccountCreateRequest(ctx context.Co
 }
 
 // listByStorageAccountHandleResponse handles the ListByStorageAccount response.
-func (client *ContainersClient) listByStorageAccountHandleResponse(resp *http.Response) (ContainersListByStorageAccountResponse, error) {
-	result := ContainersListByStorageAccountResponse{RawResponse: resp}
+func (client *ContainersClient) listByStorageAccountHandleResponse(resp *http.Response) (ContainersClientListByStorageAccountResponse, error) {
+	result := ContainersClientListByStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ContainerList); err != nil {
-		return ContainersListByStorageAccountResponse{}, runtime.NewResponseError(err, resp)
+		return ContainersClientListByStorageAccountResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -385,20 +385,20 @@ func (client *ContainersClient) listByStorageAccountHandleError(resp *http.Respo
 // storageAccountName - The Storage Account Name
 // containerName - The container name.
 // resourceGroupName - The resource group name.
-// options - ContainersBeginRefreshOptions contains the optional parameters for the ContainersClient.BeginRefresh method.
-func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersBeginRefreshOptions) (ContainersRefreshPollerResponse, error) {
+// options - ContainersClientBeginRefreshOptions contains the optional parameters for the ContainersClient.BeginRefresh method.
+func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (ContainersClientRefreshPollerResponse, error) {
 	resp, err := client.refresh(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
-		return ContainersRefreshPollerResponse{}, err
+		return ContainersClientRefreshPollerResponse{}, err
 	}
-	result := ContainersRefreshPollerResponse{
+	result := ContainersClientRefreshPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("ContainersClient.Refresh", "", resp, client.pl, client.refreshHandleError)
 	if err != nil {
-		return ContainersRefreshPollerResponse{}, err
+		return ContainersClientRefreshPollerResponse{}, err
 	}
-	result.Poller = &ContainersRefreshPoller{
+	result.Poller = &ContainersClientRefreshPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -406,7 +406,7 @@ func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName str
 
 // Refresh - Refreshes the container metadata with the data from the cloud.
 // If the operation fails it returns the *CloudError error type.
-func (client *ContainersClient) refresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersBeginRefreshOptions) (*http.Response, error) {
+func (client *ContainersClient) refresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (*http.Response, error) {
 	req, err := client.refreshCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -422,7 +422,7 @@ func (client *ContainersClient) refresh(ctx context.Context, deviceName string, 
 }
 
 // refreshCreateRequest creates the Refresh request.
-func (client *ContainersClient) refreshCreateRequest(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersBeginRefreshOptions) (*policy.Request, error) {
+func (client *ContainersClient) refreshCreateRequest(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}/refresh"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")

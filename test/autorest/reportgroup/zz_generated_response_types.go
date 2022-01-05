@@ -10,28 +10,28 @@ package reportgroup
 
 import "net/http"
 
-// AutoRestReportServiceGetOptionalReportResponse contains the response from method AutoRestReportService.GetOptionalReport.
-type AutoRestReportServiceGetOptionalReportResponse struct {
-	AutoRestReportServiceGetOptionalReportResult
+// AutoRestReportServiceClientGetOptionalReportResponse contains the response from method AutoRestReportServiceClient.GetOptionalReport.
+type AutoRestReportServiceClientGetOptionalReportResponse struct {
+	AutoRestReportServiceClientGetOptionalReportResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// AutoRestReportServiceGetOptionalReportResult contains the result from method AutoRestReportService.GetOptionalReport.
-type AutoRestReportServiceGetOptionalReportResult struct {
+// AutoRestReportServiceClientGetOptionalReportResult contains the result from method AutoRestReportServiceClient.GetOptionalReport.
+type AutoRestReportServiceClientGetOptionalReportResult struct {
 	// Dictionary of <integer>
 	Value map[string]*int32
 }
 
-// AutoRestReportServiceGetReportResponse contains the response from method AutoRestReportService.GetReport.
-type AutoRestReportServiceGetReportResponse struct {
-	AutoRestReportServiceGetReportResult
+// AutoRestReportServiceClientGetReportResponse contains the response from method AutoRestReportServiceClient.GetReport.
+type AutoRestReportServiceClientGetReportResponse struct {
+	AutoRestReportServiceClientGetReportResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// AutoRestReportServiceGetReportResult contains the result from method AutoRestReportService.GetReport.
-type AutoRestReportServiceGetReportResult struct {
+// AutoRestReportServiceClientGetReportResult contains the result from method AutoRestReportServiceClient.GetReport.
+type AutoRestReportServiceClientGetReportResult struct {
 	// Dictionary of <integer>
 	Value map[string]*int32
 }

@@ -97,23 +97,23 @@ func (a *AddonList) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// AddonsBeginCreateOrUpdateOptions contains the optional parameters for the AddonsClient.BeginCreateOrUpdate method.
-type AddonsBeginCreateOrUpdateOptions struct {
+// AddonsClientBeginCreateOrUpdateOptions contains the optional parameters for the AddonsClient.BeginCreateOrUpdate method.
+type AddonsClientBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AddonsBeginDeleteOptions contains the optional parameters for the AddonsClient.BeginDelete method.
-type AddonsBeginDeleteOptions struct {
+// AddonsClientBeginDeleteOptions contains the optional parameters for the AddonsClient.BeginDelete method.
+type AddonsClientBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AddonsGetOptions contains the optional parameters for the AddonsClient.Get method.
-type AddonsGetOptions struct {
+// AddonsClientGetOptions contains the optional parameters for the AddonsClient.Get method.
+type AddonsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AddonsListByRoleOptions contains the optional parameters for the AddonsClient.ListByRole method.
-type AddonsListByRoleOptions struct {
+// AddonsClientListByRoleOptions contains the optional parameters for the AddonsClient.ListByRole method.
+type AddonsClientListByRoleOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -263,13 +263,14 @@ func (a *AlertProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// AlertsGetOptions contains the optional parameters for the AlertsClient.Get method.
-type AlertsGetOptions struct {
+// AlertsClientGetOptions contains the optional parameters for the AlertsClient.Get method.
+type AlertsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// AlertsListByDataBoxEdgeDeviceOptions contains the optional parameters for the AlertsClient.ListByDataBoxEdgeDevice method.
-type AlertsListByDataBoxEdgeDeviceOptions struct {
+// AlertsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the AlertsClient.ListByDataBoxEdgeDevice
+// method.
+type AlertsClientListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -397,8 +398,8 @@ type Authentication struct {
 	SymmetricKey *SymmetricKey `json:"symmetricKey,omitempty"`
 }
 
-// AvailableSKUsListOptions contains the optional parameters for the AvailableSKUsClient.List method.
-type AvailableSKUsListOptions struct {
+// AvailableSKUsClientListOptions contains the optional parameters for the AvailableSKUsClient.List method.
+type AvailableSKUsClientListOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -457,19 +458,26 @@ func (b BandwidthScheduleProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// BandwidthSchedulesBeginCreateOrUpdateOptions contains the optional parameters for the BandwidthSchedulesClient.BeginCreateOrUpdate
+// BandwidthSchedulesClientBeginCreateOrUpdateOptions contains the optional parameters for the BandwidthSchedulesClient.BeginCreateOrUpdate
 // method.
-type BandwidthSchedulesBeginCreateOrUpdateOptions struct {
+type BandwidthSchedulesClientBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BandwidthSchedulesBeginDeleteOptions contains the optional parameters for the BandwidthSchedulesClient.BeginDelete method.
-type BandwidthSchedulesBeginDeleteOptions struct {
+// BandwidthSchedulesClientBeginDeleteOptions contains the optional parameters for the BandwidthSchedulesClient.BeginDelete
+// method.
+type BandwidthSchedulesClientBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BandwidthSchedulesGetOptions contains the optional parameters for the BandwidthSchedulesClient.Get method.
-type BandwidthSchedulesGetOptions struct {
+// BandwidthSchedulesClientGetOptions contains the optional parameters for the BandwidthSchedulesClient.Get method.
+type BandwidthSchedulesClientGetOptions struct {
+	// placeholder for future optional parameters
+}
+
+// BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the BandwidthSchedulesClient.ListByDataBoxEdgeDevice
+// method.
+type BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -488,12 +496,6 @@ func (b BandwidthSchedulesList) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", b.NextLink)
 	populate(objectMap, "value", b.Value)
 	return json.Marshal(objectMap)
-}
-
-// BandwidthSchedulesListByDataBoxEdgeDeviceOptions contains the optional parameters for the BandwidthSchedulesClient.ListByDataBoxEdgeDevice
-// method.
-type BandwidthSchedulesListByDataBoxEdgeDeviceOptions struct {
-	// placeholder for future optional parameters
 }
 
 // ClientAccessRight - The mapping between a particular client IP and the type of access client has on the NFS share.
@@ -773,28 +775,30 @@ func (c *ContainerProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ContainersBeginCreateOrUpdateOptions contains the optional parameters for the ContainersClient.BeginCreateOrUpdate method.
-type ContainersBeginCreateOrUpdateOptions struct {
+// ContainersClientBeginCreateOrUpdateOptions contains the optional parameters for the ContainersClient.BeginCreateOrUpdate
+// method.
+type ContainersClientBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainersBeginDeleteOptions contains the optional parameters for the ContainersClient.BeginDelete method.
-type ContainersBeginDeleteOptions struct {
+// ContainersClientBeginDeleteOptions contains the optional parameters for the ContainersClient.BeginDelete method.
+type ContainersClientBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainersBeginRefreshOptions contains the optional parameters for the ContainersClient.BeginRefresh method.
-type ContainersBeginRefreshOptions struct {
+// ContainersClientBeginRefreshOptions contains the optional parameters for the ContainersClient.BeginRefresh method.
+type ContainersClientBeginRefreshOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainersGetOptions contains the optional parameters for the ContainersClient.Get method.
-type ContainersGetOptions struct {
+// ContainersClientGetOptions contains the optional parameters for the ContainersClient.Get method.
+type ContainersClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ContainersListByStorageAccountOptions contains the optional parameters for the ContainersClient.ListByStorageAccount method.
-type ContainersListByStorageAccountOptions struct {
+// ContainersClientListByStorageAccountOptions contains the optional parameters for the ContainersClient.ListByStorageAccount
+// method.
+type ContainersClientListByStorageAccountOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -1075,89 +1079,90 @@ type DevicePropertiesPatch struct {
 	EdgeProfile *EdgeProfilePatch `json:"edgeProfile,omitempty"`
 }
 
-// DevicesBeginCreateOrUpdateSecuritySettingsOptions contains the optional parameters for the DevicesClient.BeginCreateOrUpdateSecuritySettings
+// DevicesClientBeginCreateOrUpdateSecuritySettingsOptions contains the optional parameters for the DevicesClient.BeginCreateOrUpdateSecuritySettings
 // method.
-type DevicesBeginCreateOrUpdateSecuritySettingsOptions struct {
+type DevicesClientBeginCreateOrUpdateSecuritySettingsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DevicesBeginDeleteOptions contains the optional parameters for the DevicesClient.BeginDelete method.
-type DevicesBeginDeleteOptions struct {
+// DevicesClientBeginDeleteOptions contains the optional parameters for the DevicesClient.BeginDelete method.
+type DevicesClientBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DevicesBeginDownloadUpdatesOptions contains the optional parameters for the DevicesClient.BeginDownloadUpdates method.
-type DevicesBeginDownloadUpdatesOptions struct {
+// DevicesClientBeginDownloadUpdatesOptions contains the optional parameters for the DevicesClient.BeginDownloadUpdates method.
+type DevicesClientBeginDownloadUpdatesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DevicesBeginInstallUpdatesOptions contains the optional parameters for the DevicesClient.BeginInstallUpdates method.
-type DevicesBeginInstallUpdatesOptions struct {
+// DevicesClientBeginInstallUpdatesOptions contains the optional parameters for the DevicesClient.BeginInstallUpdates method.
+type DevicesClientBeginInstallUpdatesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DevicesBeginScanForUpdatesOptions contains the optional parameters for the DevicesClient.BeginScanForUpdates method.
-type DevicesBeginScanForUpdatesOptions struct {
+// DevicesClientBeginScanForUpdatesOptions contains the optional parameters for the DevicesClient.BeginScanForUpdates method.
+type DevicesClientBeginScanForUpdatesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DevicesCreateOrUpdateOptions contains the optional parameters for the DevicesClient.CreateOrUpdate method.
-type DevicesCreateOrUpdateOptions struct {
+// DevicesClientCreateOrUpdateOptions contains the optional parameters for the DevicesClient.CreateOrUpdate method.
+type DevicesClientCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DevicesGenerateCertificateOptions contains the optional parameters for the DevicesClient.GenerateCertificate method.
-type DevicesGenerateCertificateOptions struct {
+// DevicesClientGenerateCertificateOptions contains the optional parameters for the DevicesClient.GenerateCertificate method.
+type DevicesClientGenerateCertificateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DevicesGetExtendedInformationOptions contains the optional parameters for the DevicesClient.GetExtendedInformation method.
-type DevicesGetExtendedInformationOptions struct {
+// DevicesClientGetExtendedInformationOptions contains the optional parameters for the DevicesClient.GetExtendedInformation
+// method.
+type DevicesClientGetExtendedInformationOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DevicesGetNetworkSettingsOptions contains the optional parameters for the DevicesClient.GetNetworkSettings method.
-type DevicesGetNetworkSettingsOptions struct {
+// DevicesClientGetNetworkSettingsOptions contains the optional parameters for the DevicesClient.GetNetworkSettings method.
+type DevicesClientGetNetworkSettingsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DevicesGetOptions contains the optional parameters for the DevicesClient.Get method.
-type DevicesGetOptions struct {
+// DevicesClientGetOptions contains the optional parameters for the DevicesClient.Get method.
+type DevicesClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DevicesGetUpdateSummaryOptions contains the optional parameters for the DevicesClient.GetUpdateSummary method.
-type DevicesGetUpdateSummaryOptions struct {
+// DevicesClientGetUpdateSummaryOptions contains the optional parameters for the DevicesClient.GetUpdateSummary method.
+type DevicesClientGetUpdateSummaryOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DevicesListByResourceGroupOptions contains the optional parameters for the DevicesClient.ListByResourceGroup method.
-type DevicesListByResourceGroupOptions struct {
+// DevicesClientListByResourceGroupOptions contains the optional parameters for the DevicesClient.ListByResourceGroup method.
+type DevicesClientListByResourceGroupOptions struct {
 	// Specify $expand=details to populate additional fields related to the resource or Specify $skipToken= to populate the next
 	// page in the list.
 	Expand *string
 }
 
-// DevicesListBySubscriptionOptions contains the optional parameters for the DevicesClient.ListBySubscription method.
-type DevicesListBySubscriptionOptions struct {
+// DevicesClientListBySubscriptionOptions contains the optional parameters for the DevicesClient.ListBySubscription method.
+type DevicesClientListBySubscriptionOptions struct {
 	// Specify $expand=details to populate additional fields related to the resource or Specify $skipToken= to populate the next
 	// page in the list.
 	Expand *string
 }
 
-// DevicesUpdateExtendedInformationOptions contains the optional parameters for the DevicesClient.UpdateExtendedInformation
+// DevicesClientUpdateExtendedInformationOptions contains the optional parameters for the DevicesClient.UpdateExtendedInformation
 // method.
-type DevicesUpdateExtendedInformationOptions struct {
+type DevicesClientUpdateExtendedInformationOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DevicesUpdateOptions contains the optional parameters for the DevicesClient.Update method.
-type DevicesUpdateOptions struct {
+// DevicesClientUpdateOptions contains the optional parameters for the DevicesClient.Update method.
+type DevicesClientUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DevicesUploadCertificateOptions contains the optional parameters for the DevicesClient.UploadCertificate method.
-type DevicesUploadCertificateOptions struct {
+// DevicesClientUploadCertificateOptions contains the optional parameters for the DevicesClient.UploadCertificate method.
+type DevicesClientUploadCertificateOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -1210,27 +1215,27 @@ func (d DiagnosticRemoteSupportSettingsProperties) MarshalJSON() ([]byte, error)
 	return json.Marshal(objectMap)
 }
 
-// DiagnosticSettingsBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters for the DiagnosticSettingsClient.BeginUpdateDiagnosticProactiveLogCollectionSettings
-// method.
-type DiagnosticSettingsBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions struct {
+// DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters for
+// the DiagnosticSettingsClient.BeginUpdateDiagnosticProactiveLogCollectionSettings method.
+type DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DiagnosticSettingsBeginUpdateDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings
+// DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings
 // method.
-type DiagnosticSettingsBeginUpdateDiagnosticRemoteSupportSettingsOptions struct {
+type DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters for the DiagnosticSettingsClient.GetDiagnosticProactiveLogCollectionSettings
+// DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters for the DiagnosticSettingsClient.GetDiagnosticProactiveLogCollectionSettings
 // method.
-type DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsOptions struct {
+type DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DiagnosticSettingsGetDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the DiagnosticSettingsClient.GetDiagnosticRemoteSupportSettings
+// DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the DiagnosticSettingsClient.GetDiagnosticRemoteSupportSettings
 // method.
-type DiagnosticSettingsGetDiagnosticRemoteSupportSettingsOptions struct {
+type DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -1828,8 +1833,8 @@ type JobProperties struct {
 	TotalRefreshErrors *int32 `json:"totalRefreshErrors,omitempty" azure:"ro"`
 }
 
-// JobsGetOptions contains the optional parameters for the JobsClient.Get method.
-type JobsGetOptions struct {
+// JobsClientGetOptions contains the optional parameters for the JobsClient.Get method.
+type JobsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -2276,24 +2281,24 @@ func (m MetricSpecificationV1) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// MonitoringConfigBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfigClient.BeginCreateOrUpdate
+// MonitoringConfigClientBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfigClient.BeginCreateOrUpdate
 // method.
-type MonitoringConfigBeginCreateOrUpdateOptions struct {
+type MonitoringConfigClientBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MonitoringConfigBeginDeleteOptions contains the optional parameters for the MonitoringConfigClient.BeginDelete method.
-type MonitoringConfigBeginDeleteOptions struct {
+// MonitoringConfigClientBeginDeleteOptions contains the optional parameters for the MonitoringConfigClient.BeginDelete method.
+type MonitoringConfigClientBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MonitoringConfigGetOptions contains the optional parameters for the MonitoringConfigClient.Get method.
-type MonitoringConfigGetOptions struct {
+// MonitoringConfigClientGetOptions contains the optional parameters for the MonitoringConfigClient.Get method.
+type MonitoringConfigClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MonitoringConfigListOptions contains the optional parameters for the MonitoringConfigClient.List method.
-type MonitoringConfigListOptions struct {
+// MonitoringConfigClientListOptions contains the optional parameters for the MonitoringConfigClient.List method.
+type MonitoringConfigClientListOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -2568,8 +2573,9 @@ type NodeProperties struct {
 	NodeStatus *NodeStatus `json:"nodeStatus,omitempty" azure:"ro"`
 }
 
-// NodesListByDataBoxEdgeDeviceOptions contains the optional parameters for the NodesClient.ListByDataBoxEdgeDevice method.
-type NodesListByDataBoxEdgeDeviceOptions struct {
+// NodesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the NodesClient.ListByDataBoxEdgeDevice
+// method.
+type NodesClientListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -2612,6 +2618,11 @@ type OperationProperties struct {
 	ServiceSpecification *ServiceSpecification `json:"serviceSpecification,omitempty"`
 }
 
+// OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
+type OperationsClientListOptions struct {
+	// placeholder for future optional parameters
+}
+
 // OperationsList - The list of operations used for the discovery of available provider operations.
 type OperationsList struct {
 	// REQUIRED; The value.
@@ -2629,13 +2640,8 @@ func (o OperationsList) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// OperationsListOptions contains the optional parameters for the OperationsClient.List method.
-type OperationsListOptions struct {
-	// placeholder for future optional parameters
-}
-
-// OperationsStatusGetOptions contains the optional parameters for the OperationsStatusClient.Get method.
-type OperationsStatusGetOptions struct {
+// OperationsStatusClientGetOptions contains the optional parameters for the OperationsStatusClient.Get method.
+type OperationsStatusClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -2777,28 +2783,29 @@ func (o *OrderStatus) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// OrdersBeginCreateOrUpdateOptions contains the optional parameters for the OrdersClient.BeginCreateOrUpdate method.
-type OrdersBeginCreateOrUpdateOptions struct {
+// OrdersClientBeginCreateOrUpdateOptions contains the optional parameters for the OrdersClient.BeginCreateOrUpdate method.
+type OrdersClientBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// OrdersBeginDeleteOptions contains the optional parameters for the OrdersClient.BeginDelete method.
-type OrdersBeginDeleteOptions struct {
+// OrdersClientBeginDeleteOptions contains the optional parameters for the OrdersClient.BeginDelete method.
+type OrdersClientBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// OrdersGetOptions contains the optional parameters for the OrdersClient.Get method.
-type OrdersGetOptions struct {
+// OrdersClientGetOptions contains the optional parameters for the OrdersClient.Get method.
+type OrdersClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// OrdersListByDataBoxEdgeDeviceOptions contains the optional parameters for the OrdersClient.ListByDataBoxEdgeDevice method.
-type OrdersListByDataBoxEdgeDeviceOptions struct {
+// OrdersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the OrdersClient.ListByDataBoxEdgeDevice
+// method.
+type OrdersClientListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
 }
 
-// OrdersListDCAccessCodeOptions contains the optional parameters for the OrdersClient.ListDCAccessCode method.
-type OrdersListDCAccessCodeOptions struct {
+// OrdersClientListDCAccessCodeOptions contains the optional parameters for the OrdersClient.ListDCAccessCode method.
+type OrdersClientListDCAccessCodeOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -3209,23 +3216,24 @@ type RoleSinkInfo struct {
 	RoleID *string `json:"roleId,omitempty"`
 }
 
-// RolesBeginCreateOrUpdateOptions contains the optional parameters for the RolesClient.BeginCreateOrUpdate method.
-type RolesBeginCreateOrUpdateOptions struct {
+// RolesClientBeginCreateOrUpdateOptions contains the optional parameters for the RolesClient.BeginCreateOrUpdate method.
+type RolesClientBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RolesBeginDeleteOptions contains the optional parameters for the RolesClient.BeginDelete method.
-type RolesBeginDeleteOptions struct {
+// RolesClientBeginDeleteOptions contains the optional parameters for the RolesClient.BeginDelete method.
+type RolesClientBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RolesGetOptions contains the optional parameters for the RolesClient.Get method.
-type RolesGetOptions struct {
+// RolesClientGetOptions contains the optional parameters for the RolesClient.Get method.
+type RolesClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RolesListByDataBoxEdgeDeviceOptions contains the optional parameters for the RolesClient.ListByDataBoxEdgeDevice method.
-type RolesListByDataBoxEdgeDeviceOptions struct {
+// RolesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the RolesClient.ListByDataBoxEdgeDevice
+// method.
+type RolesClientListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -3566,28 +3574,29 @@ func (s ShareProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// SharesBeginCreateOrUpdateOptions contains the optional parameters for the SharesClient.BeginCreateOrUpdate method.
-type SharesBeginCreateOrUpdateOptions struct {
+// SharesClientBeginCreateOrUpdateOptions contains the optional parameters for the SharesClient.BeginCreateOrUpdate method.
+type SharesClientBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SharesBeginDeleteOptions contains the optional parameters for the SharesClient.BeginDelete method.
-type SharesBeginDeleteOptions struct {
+// SharesClientBeginDeleteOptions contains the optional parameters for the SharesClient.BeginDelete method.
+type SharesClientBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SharesBeginRefreshOptions contains the optional parameters for the SharesClient.BeginRefresh method.
-type SharesBeginRefreshOptions struct {
+// SharesClientBeginRefreshOptions contains the optional parameters for the SharesClient.BeginRefresh method.
+type SharesClientBeginRefreshOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SharesGetOptions contains the optional parameters for the SharesClient.Get method.
-type SharesGetOptions struct {
+// SharesClientGetOptions contains the optional parameters for the SharesClient.Get method.
+type SharesClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// SharesListByDataBoxEdgeDeviceOptions contains the optional parameters for the SharesClient.ListByDataBoxEdgeDevice method.
-type SharesListByDataBoxEdgeDeviceOptions struct {
+// SharesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the SharesClient.ListByDataBoxEdgeDevice
+// method.
+type SharesClientListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -3671,26 +3680,27 @@ type StorageAccountCredentialProperties struct {
 	UserName *string `json:"userName,omitempty"`
 }
 
-// StorageAccountCredentialsBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginCreateOrUpdate
+// StorageAccountCredentialsClientBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginCreateOrUpdate
 // method.
-type StorageAccountCredentialsBeginCreateOrUpdateOptions struct {
+type StorageAccountCredentialsClientBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StorageAccountCredentialsBeginDeleteOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginDelete
+// StorageAccountCredentialsClientBeginDeleteOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginDelete
 // method.
-type StorageAccountCredentialsBeginDeleteOptions struct {
+type StorageAccountCredentialsClientBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StorageAccountCredentialsGetOptions contains the optional parameters for the StorageAccountCredentialsClient.Get method.
-type StorageAccountCredentialsGetOptions struct {
+// StorageAccountCredentialsClientGetOptions contains the optional parameters for the StorageAccountCredentialsClient.Get
+// method.
+type StorageAccountCredentialsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StorageAccountCredentialsListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountCredentialsClient.ListByDataBoxEdgeDevice
+// StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountCredentialsClient.ListByDataBoxEdgeDevice
 // method.
-type StorageAccountCredentialsListByDataBoxEdgeDeviceOptions struct {
+type StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -3732,25 +3742,25 @@ type StorageAccountProperties struct {
 	ContainerCount *int32 `json:"containerCount,omitempty" azure:"ro"`
 }
 
-// StorageAccountsBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountsClient.BeginCreateOrUpdate
+// StorageAccountsClientBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountsClient.BeginCreateOrUpdate
 // method.
-type StorageAccountsBeginCreateOrUpdateOptions struct {
+type StorageAccountsClientBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StorageAccountsBeginDeleteOptions contains the optional parameters for the StorageAccountsClient.BeginDelete method.
-type StorageAccountsBeginDeleteOptions struct {
+// StorageAccountsClientBeginDeleteOptions contains the optional parameters for the StorageAccountsClient.BeginDelete method.
+type StorageAccountsClientBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StorageAccountsGetOptions contains the optional parameters for the StorageAccountsClient.Get method.
-type StorageAccountsGetOptions struct {
+// StorageAccountsClientGetOptions contains the optional parameters for the StorageAccountsClient.Get method.
+type StorageAccountsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// StorageAccountsListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountsClient.ListByDataBoxEdgeDevice
+// StorageAccountsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountsClient.ListByDataBoxEdgeDevice
 // method.
-type StorageAccountsListByDataBoxEdgeDeviceOptions struct {
+type StorageAccountsClientListByDataBoxEdgeDeviceOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -3826,9 +3836,9 @@ func (s *SupportPackageRequestProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// SupportPackagesBeginTriggerSupportPackageOptions contains the optional parameters for the SupportPackagesClient.BeginTriggerSupportPackage
+// SupportPackagesClientBeginTriggerSupportPackageOptions contains the optional parameters for the SupportPackagesClient.BeginTriggerSupportPackage
 // method.
-type SupportPackagesBeginTriggerSupportPackageOptions struct {
+type SupportPackagesClientBeginTriggerSupportPackageOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -4006,24 +4016,24 @@ type TriggerSupportPackageRequest struct {
 	Type *string `json:"type,omitempty" azure:"ro"`
 }
 
-// TriggersBeginCreateOrUpdateOptions contains the optional parameters for the TriggersClient.BeginCreateOrUpdate method.
-type TriggersBeginCreateOrUpdateOptions struct {
+// TriggersClientBeginCreateOrUpdateOptions contains the optional parameters for the TriggersClient.BeginCreateOrUpdate method.
+type TriggersClientBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// TriggersBeginDeleteOptions contains the optional parameters for the TriggersClient.BeginDelete method.
-type TriggersBeginDeleteOptions struct {
+// TriggersClientBeginDeleteOptions contains the optional parameters for the TriggersClient.BeginDelete method.
+type TriggersClientBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// TriggersGetOptions contains the optional parameters for the TriggersClient.Get method.
-type TriggersGetOptions struct {
+// TriggersClientGetOptions contains the optional parameters for the TriggersClient.Get method.
+type TriggersClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// TriggersListByDataBoxEdgeDeviceOptions contains the optional parameters for the TriggersClient.ListByDataBoxEdgeDevice
+// TriggersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the TriggersClient.ListByDataBoxEdgeDevice
 // method.
-type TriggersListByDataBoxEdgeDeviceOptions struct {
+type TriggersClientListByDataBoxEdgeDeviceOptions struct {
 	// Specify $filter='CustomContextTag eq ' to filter on custom context tag property
 	Filter *string
 }
@@ -4408,23 +4418,24 @@ func (u UserProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UsersBeginCreateOrUpdateOptions contains the optional parameters for the UsersClient.BeginCreateOrUpdate method.
-type UsersBeginCreateOrUpdateOptions struct {
+// UsersClientBeginCreateOrUpdateOptions contains the optional parameters for the UsersClient.BeginCreateOrUpdate method.
+type UsersClientBeginCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// UsersBeginDeleteOptions contains the optional parameters for the UsersClient.BeginDelete method.
-type UsersBeginDeleteOptions struct {
+// UsersClientBeginDeleteOptions contains the optional parameters for the UsersClient.BeginDelete method.
+type UsersClientBeginDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// UsersGetOptions contains the optional parameters for the UsersClient.Get method.
-type UsersGetOptions struct {
+// UsersClientGetOptions contains the optional parameters for the UsersClient.Get method.
+type UsersClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// UsersListByDataBoxEdgeDeviceOptions contains the optional parameters for the UsersClient.ListByDataBoxEdgeDevice method.
-type UsersListByDataBoxEdgeDeviceOptions struct {
+// UsersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the UsersClient.ListByDataBoxEdgeDevice
+// method.
+type UsersClientListByDataBoxEdgeDeviceOptions struct {
 	// Specify $filter='Type eq ' to filter on user type property
 	Filter *string
 }

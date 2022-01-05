@@ -48,7 +48,7 @@ func TestBasicGetInvalid(t *testing.T) {
 	if err == nil {
 		t.Fatal("GetInvalid expected an error")
 	}
-	if r := cmp.Diff(result, BasicGetInvalidResponse{}); r != "" {
+	if r := cmp.Diff(result, BasicClientGetInvalidResponse{}); r != "" {
 		t.Fatal(r)
 	}
 }

@@ -58,21 +58,21 @@ func NewVirtualMachinesClient(subscriptionID string, credential azcore.TokenCred
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // parameters - Parameters supplied to the Capture Virtual Machine operation.
-// options - VirtualMachinesBeginCaptureOptions contains the optional parameters for the VirtualMachinesClient.BeginCapture
+// options - VirtualMachinesClientBeginCaptureOptions contains the optional parameters for the VirtualMachinesClient.BeginCapture
 // method.
-func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesBeginCaptureOptions) (VirtualMachinesCapturePollerResponse, error) {
+func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesClientBeginCaptureOptions) (VirtualMachinesClientCapturePollerResponse, error) {
 	resp, err := client.capture(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
-		return VirtualMachinesCapturePollerResponse{}, err
+		return VirtualMachinesClientCapturePollerResponse{}, err
 	}
-	result := VirtualMachinesCapturePollerResponse{
+	result := VirtualMachinesClientCapturePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Capture", "location", resp, client.pl, client.captureHandleError)
 	if err != nil {
-		return VirtualMachinesCapturePollerResponse{}, err
+		return VirtualMachinesClientCapturePollerResponse{}, err
 	}
-	result.Poller = &VirtualMachinesCapturePoller{
+	result.Poller = &VirtualMachinesClientCapturePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -81,7 +81,7 @@ func (client *VirtualMachinesClient) BeginCapture(ctx context.Context, resourceG
 // Capture - Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar
 // VMs.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachinesClient) capture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesBeginCaptureOptions) (*http.Response, error) {
+func (client *VirtualMachinesClient) capture(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesClientBeginCaptureOptions) (*http.Response, error) {
 	req, err := client.captureCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -97,7 +97,7 @@ func (client *VirtualMachinesClient) capture(ctx context.Context, resourceGroupN
 }
 
 // captureCreateRequest creates the Capture request.
-func (client *VirtualMachinesClient) captureCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesBeginCaptureOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) captureCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineCaptureParameters, options *VirtualMachinesClientBeginCaptureOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/capture"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -142,21 +142,21 @@ func (client *VirtualMachinesClient) captureHandleError(resp *http.Response) err
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
-// options - VirtualMachinesBeginConvertToManagedDisksOptions contains the optional parameters for the VirtualMachinesClient.BeginConvertToManagedDisks
+// options - VirtualMachinesClientBeginConvertToManagedDisksOptions contains the optional parameters for the VirtualMachinesClient.BeginConvertToManagedDisks
 // method.
-func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginConvertToManagedDisksOptions) (VirtualMachinesConvertToManagedDisksPollerResponse, error) {
+func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginConvertToManagedDisksOptions) (VirtualMachinesClientConvertToManagedDisksPollerResponse, error) {
 	resp, err := client.convertToManagedDisks(ctx, resourceGroupName, vmName, options)
 	if err != nil {
-		return VirtualMachinesConvertToManagedDisksPollerResponse{}, err
+		return VirtualMachinesClientConvertToManagedDisksPollerResponse{}, err
 	}
-	result := VirtualMachinesConvertToManagedDisksPollerResponse{
+	result := VirtualMachinesClientConvertToManagedDisksPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.ConvertToManagedDisks", "", resp, client.pl, client.convertToManagedDisksHandleError)
 	if err != nil {
-		return VirtualMachinesConvertToManagedDisksPollerResponse{}, err
+		return VirtualMachinesClientConvertToManagedDisksPollerResponse{}, err
 	}
-	result.Poller = &VirtualMachinesConvertToManagedDisksPoller{
+	result.Poller = &VirtualMachinesClientConvertToManagedDisksPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -168,7 +168,7 @@ func (client *VirtualMachinesClient) BeginConvertToManagedDisks(ctx context.Cont
 // For Linux, please refer to Convert a virtual machine from
 // unmanaged disks to managed disks. [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/convert-unmanaged-to-managed-disks].
 // If the operation fails it returns a generic error.
-func (client *VirtualMachinesClient) convertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginConvertToManagedDisksOptions) (*http.Response, error) {
+func (client *VirtualMachinesClient) convertToManagedDisks(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginConvertToManagedDisksOptions) (*http.Response, error) {
 	req, err := client.convertToManagedDisksCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -184,7 +184,7 @@ func (client *VirtualMachinesClient) convertToManagedDisks(ctx context.Context, 
 }
 
 // convertToManagedDisksCreateRequest creates the ConvertToManagedDisks request.
-func (client *VirtualMachinesClient) convertToManagedDisksCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginConvertToManagedDisksOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) convertToManagedDisksCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginConvertToManagedDisksOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/convertToManagedDisks"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -226,21 +226,21 @@ func (client *VirtualMachinesClient) convertToManagedDisksHandleError(resp *http
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // parameters - Parameters supplied to the Create Virtual Machine operation.
-// options - VirtualMachinesBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachinesClient.BeginCreateOrUpdate
+// options - VirtualMachinesClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachinesClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesBeginCreateOrUpdateOptions) (VirtualMachinesCreateOrUpdatePollerResponse, error) {
+func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesClientBeginCreateOrUpdateOptions) (VirtualMachinesClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
-		return VirtualMachinesCreateOrUpdatePollerResponse{}, err
+		return VirtualMachinesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualMachinesCreateOrUpdatePollerResponse{
+	result := VirtualMachinesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return VirtualMachinesCreateOrUpdatePollerResponse{}, err
+		return VirtualMachinesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &VirtualMachinesCreateOrUpdatePoller{
+	result.Poller = &VirtualMachinesClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -249,7 +249,7 @@ func (client *VirtualMachinesClient) BeginCreateOrUpdate(ctx context.Context, re
 // CreateOrUpdate - The operation to create or update a virtual machine. Please note some properties can be set only during
 // virtual machine creation.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachinesClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VirtualMachinesClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -265,7 +265,7 @@ func (client *VirtualMachinesClient) createOrUpdate(ctx context.Context, resourc
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualMachinesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachine, options *VirtualMachinesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -307,21 +307,21 @@ func (client *VirtualMachinesClient) createOrUpdateHandleError(resp *http.Respon
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
-// options - VirtualMachinesBeginDeallocateOptions contains the optional parameters for the VirtualMachinesClient.BeginDeallocate
+// options - VirtualMachinesClientBeginDeallocateOptions contains the optional parameters for the VirtualMachinesClient.BeginDeallocate
 // method.
-func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginDeallocateOptions) (VirtualMachinesDeallocatePollerResponse, error) {
+func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginDeallocateOptions) (VirtualMachinesClientDeallocatePollerResponse, error) {
 	resp, err := client.deallocate(ctx, resourceGroupName, vmName, options)
 	if err != nil {
-		return VirtualMachinesDeallocatePollerResponse{}, err
+		return VirtualMachinesClientDeallocatePollerResponse{}, err
 	}
-	result := VirtualMachinesDeallocatePollerResponse{
+	result := VirtualMachinesClientDeallocatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Deallocate", "", resp, client.pl, client.deallocateHandleError)
 	if err != nil {
-		return VirtualMachinesDeallocatePollerResponse{}, err
+		return VirtualMachinesClientDeallocatePollerResponse{}, err
 	}
-	result.Poller = &VirtualMachinesDeallocatePoller{
+	result.Poller = &VirtualMachinesClientDeallocatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -330,7 +330,7 @@ func (client *VirtualMachinesClient) BeginDeallocate(ctx context.Context, resour
 // Deallocate - Shuts down the virtual machine and releases the compute resources. You are not billed for the compute resources
 // that this virtual machine uses.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachinesClient) deallocate(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginDeallocateOptions) (*http.Response, error) {
+func (client *VirtualMachinesClient) deallocate(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginDeallocateOptions) (*http.Response, error) {
 	req, err := client.deallocateCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -346,7 +346,7 @@ func (client *VirtualMachinesClient) deallocate(ctx context.Context, resourceGro
 }
 
 // deallocateCreateRequest creates the Deallocate request.
-func (client *VirtualMachinesClient) deallocateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginDeallocateOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) deallocateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginDeallocateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/deallocate"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -386,21 +386,21 @@ func (client *VirtualMachinesClient) deallocateHandleError(resp *http.Response) 
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
-// options - VirtualMachinesBeginDeleteOptions contains the optional parameters for the VirtualMachinesClient.BeginDelete
+// options - VirtualMachinesClientBeginDeleteOptions contains the optional parameters for the VirtualMachinesClient.BeginDelete
 // method.
-func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginDeleteOptions) (VirtualMachinesDeletePollerResponse, error) {
+func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginDeleteOptions) (VirtualMachinesClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vmName, options)
 	if err != nil {
-		return VirtualMachinesDeletePollerResponse{}, err
+		return VirtualMachinesClientDeletePollerResponse{}, err
 	}
-	result := VirtualMachinesDeletePollerResponse{
+	result := VirtualMachinesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return VirtualMachinesDeletePollerResponse{}, err
+		return VirtualMachinesClientDeletePollerResponse{}, err
 	}
-	result.Poller = &VirtualMachinesDeletePoller{
+	result.Poller = &VirtualMachinesClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -408,7 +408,7 @@ func (client *VirtualMachinesClient) BeginDelete(ctx context.Context, resourceGr
 
 // Delete - The operation to delete a virtual machine.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachinesClient) deleteOperation(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginDeleteOptions) (*http.Response, error) {
+func (client *VirtualMachinesClient) deleteOperation(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -424,7 +424,7 @@ func (client *VirtualMachinesClient) deleteOperation(ctx context.Context, resour
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *VirtualMachinesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginDeleteOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -468,24 +468,25 @@ func (client *VirtualMachinesClient) deleteHandleError(resp *http.Response) erro
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
-// options - VirtualMachinesGeneralizeOptions contains the optional parameters for the VirtualMachinesClient.Generalize method.
-func (client *VirtualMachinesClient) Generalize(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGeneralizeOptions) (VirtualMachinesGeneralizeResponse, error) {
+// options - VirtualMachinesClientGeneralizeOptions contains the optional parameters for the VirtualMachinesClient.Generalize
+// method.
+func (client *VirtualMachinesClient) Generalize(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientGeneralizeOptions) (VirtualMachinesClientGeneralizeResponse, error) {
 	req, err := client.generalizeCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
-		return VirtualMachinesGeneralizeResponse{}, err
+		return VirtualMachinesClientGeneralizeResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachinesGeneralizeResponse{}, err
+		return VirtualMachinesClientGeneralizeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachinesGeneralizeResponse{}, client.generalizeHandleError(resp)
+		return VirtualMachinesClientGeneralizeResponse{}, client.generalizeHandleError(resp)
 	}
-	return VirtualMachinesGeneralizeResponse{RawResponse: resp}, nil
+	return VirtualMachinesClientGeneralizeResponse{RawResponse: resp}, nil
 }
 
 // generalizeCreateRequest creates the Generalize request.
-func (client *VirtualMachinesClient) generalizeCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGeneralizeOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) generalizeCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientGeneralizeOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/generalize"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -525,24 +526,24 @@ func (client *VirtualMachinesClient) generalizeHandleError(resp *http.Response) 
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
-// options - VirtualMachinesGetOptions contains the optional parameters for the VirtualMachinesClient.Get method.
-func (client *VirtualMachinesClient) Get(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGetOptions) (VirtualMachinesGetResponse, error) {
+// options - VirtualMachinesClientGetOptions contains the optional parameters for the VirtualMachinesClient.Get method.
+func (client *VirtualMachinesClient) Get(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientGetOptions) (VirtualMachinesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
-		return VirtualMachinesGetResponse{}, err
+		return VirtualMachinesClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachinesGetResponse{}, err
+		return VirtualMachinesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachinesGetResponse{}, client.getHandleError(resp)
+		return VirtualMachinesClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualMachinesClient) getCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesGetOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) getCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -571,10 +572,10 @@ func (client *VirtualMachinesClient) getCreateRequest(ctx context.Context, resou
 }
 
 // getHandleResponse handles the Get response.
-func (client *VirtualMachinesClient) getHandleResponse(resp *http.Response) (VirtualMachinesGetResponse, error) {
-	result := VirtualMachinesGetResponse{RawResponse: resp}
+func (client *VirtualMachinesClient) getHandleResponse(resp *http.Response) (VirtualMachinesClientGetResponse, error) {
+	result := VirtualMachinesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachine); err != nil {
-		return VirtualMachinesGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachinesClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -595,25 +596,25 @@ func (client *VirtualMachinesClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
-// options - VirtualMachinesInstanceViewOptions contains the optional parameters for the VirtualMachinesClient.InstanceView
+// options - VirtualMachinesClientInstanceViewOptions contains the optional parameters for the VirtualMachinesClient.InstanceView
 // method.
-func (client *VirtualMachinesClient) InstanceView(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesInstanceViewOptions) (VirtualMachinesInstanceViewResponse, error) {
+func (client *VirtualMachinesClient) InstanceView(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientInstanceViewOptions) (VirtualMachinesClientInstanceViewResponse, error) {
 	req, err := client.instanceViewCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
-		return VirtualMachinesInstanceViewResponse{}, err
+		return VirtualMachinesClientInstanceViewResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachinesInstanceViewResponse{}, err
+		return VirtualMachinesClientInstanceViewResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachinesInstanceViewResponse{}, client.instanceViewHandleError(resp)
+		return VirtualMachinesClientInstanceViewResponse{}, client.instanceViewHandleError(resp)
 	}
 	return client.instanceViewHandleResponse(resp)
 }
 
 // instanceViewCreateRequest creates the InstanceView request.
-func (client *VirtualMachinesClient) instanceViewCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesInstanceViewOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) instanceViewCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientInstanceViewOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/instanceView"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -639,10 +640,10 @@ func (client *VirtualMachinesClient) instanceViewCreateRequest(ctx context.Conte
 }
 
 // instanceViewHandleResponse handles the InstanceView response.
-func (client *VirtualMachinesClient) instanceViewHandleResponse(resp *http.Response) (VirtualMachinesInstanceViewResponse, error) {
-	result := VirtualMachinesInstanceViewResponse{RawResponse: resp}
+func (client *VirtualMachinesClient) instanceViewHandleResponse(resp *http.Response) (VirtualMachinesClientInstanceViewResponse, error) {
+	result := VirtualMachinesClientInstanceViewResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineInstanceView); err != nil {
-		return VirtualMachinesInstanceViewResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachinesClientInstanceViewResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -663,21 +664,21 @@ func (client *VirtualMachinesClient) instanceViewHandleError(resp *http.Response
 // get the next page of virtual machines.
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
-// options - VirtualMachinesListOptions contains the optional parameters for the VirtualMachinesClient.List method.
-func (client *VirtualMachinesClient) List(resourceGroupName string, options *VirtualMachinesListOptions) *VirtualMachinesListPager {
-	return &VirtualMachinesListPager{
+// options - VirtualMachinesClientListOptions contains the optional parameters for the VirtualMachinesClient.List method.
+func (client *VirtualMachinesClient) List(resourceGroupName string, options *VirtualMachinesClientListOptions) *VirtualMachinesClientListPager {
+	return &VirtualMachinesClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp VirtualMachinesListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualMachinesClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualMachinesClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualMachinesListOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualMachinesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -699,10 +700,10 @@ func (client *VirtualMachinesClient) listCreateRequest(ctx context.Context, reso
 }
 
 // listHandleResponse handles the List response.
-func (client *VirtualMachinesClient) listHandleResponse(resp *http.Response) (VirtualMachinesListResponse, error) {
-	result := VirtualMachinesListResponse{RawResponse: resp}
+func (client *VirtualMachinesClient) listHandleResponse(resp *http.Response) (VirtualMachinesClientListResponse, error) {
+	result := VirtualMachinesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineListResult); err != nil {
-		return VirtualMachinesListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachinesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -722,21 +723,21 @@ func (client *VirtualMachinesClient) listHandleError(resp *http.Response) error 
 // ListAll - Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to
 // get the next page of virtual machines.
 // If the operation fails it returns a generic error.
-// options - VirtualMachinesListAllOptions contains the optional parameters for the VirtualMachinesClient.ListAll method.
-func (client *VirtualMachinesClient) ListAll(options *VirtualMachinesListAllOptions) *VirtualMachinesListAllPager {
-	return &VirtualMachinesListAllPager{
+// options - VirtualMachinesClientListAllOptions contains the optional parameters for the VirtualMachinesClient.ListAll method.
+func (client *VirtualMachinesClient) ListAll(options *VirtualMachinesClientListAllOptions) *VirtualMachinesClientListAllPager {
+	return &VirtualMachinesClientListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp VirtualMachinesListAllResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualMachinesClientListAllResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineListResult.NextLink)
 		},
 	}
 }
 
 // listAllCreateRequest creates the ListAll request.
-func (client *VirtualMachinesClient) listAllCreateRequest(ctx context.Context, options *VirtualMachinesListAllOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) listAllCreateRequest(ctx context.Context, options *VirtualMachinesClientListAllOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -757,10 +758,10 @@ func (client *VirtualMachinesClient) listAllCreateRequest(ctx context.Context, o
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client *VirtualMachinesClient) listAllHandleResponse(resp *http.Response) (VirtualMachinesListAllResponse, error) {
-	result := VirtualMachinesListAllResponse{RawResponse: resp}
+func (client *VirtualMachinesClient) listAllHandleResponse(resp *http.Response) (VirtualMachinesClientListAllResponse, error) {
+	result := VirtualMachinesClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineListResult); err != nil {
-		return VirtualMachinesListAllResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachinesClientListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -781,25 +782,25 @@ func (client *VirtualMachinesClient) listAllHandleError(resp *http.Response) err
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
-// options - VirtualMachinesListAvailableSizesOptions contains the optional parameters for the VirtualMachinesClient.ListAvailableSizes
+// options - VirtualMachinesClientListAvailableSizesOptions contains the optional parameters for the VirtualMachinesClient.ListAvailableSizes
 // method.
-func (client *VirtualMachinesClient) ListAvailableSizes(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesListAvailableSizesOptions) (VirtualMachinesListAvailableSizesResponse, error) {
+func (client *VirtualMachinesClient) ListAvailableSizes(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientListAvailableSizesOptions) (VirtualMachinesClientListAvailableSizesResponse, error) {
 	req, err := client.listAvailableSizesCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
-		return VirtualMachinesListAvailableSizesResponse{}, err
+		return VirtualMachinesClientListAvailableSizesResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachinesListAvailableSizesResponse{}, err
+		return VirtualMachinesClientListAvailableSizesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachinesListAvailableSizesResponse{}, client.listAvailableSizesHandleError(resp)
+		return VirtualMachinesClientListAvailableSizesResponse{}, client.listAvailableSizesHandleError(resp)
 	}
 	return client.listAvailableSizesHandleResponse(resp)
 }
 
 // listAvailableSizesCreateRequest creates the ListAvailableSizes request.
-func (client *VirtualMachinesClient) listAvailableSizesCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesListAvailableSizesOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) listAvailableSizesCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientListAvailableSizesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/vmSizes"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -825,10 +826,10 @@ func (client *VirtualMachinesClient) listAvailableSizesCreateRequest(ctx context
 }
 
 // listAvailableSizesHandleResponse handles the ListAvailableSizes response.
-func (client *VirtualMachinesClient) listAvailableSizesHandleResponse(resp *http.Response) (VirtualMachinesListAvailableSizesResponse, error) {
-	result := VirtualMachinesListAvailableSizesResponse{RawResponse: resp}
+func (client *VirtualMachinesClient) listAvailableSizesHandleResponse(resp *http.Response) (VirtualMachinesClientListAvailableSizesResponse, error) {
+	result := VirtualMachinesClientListAvailableSizesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineSizeListResult); err != nil {
-		return VirtualMachinesListAvailableSizesResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachinesClientListAvailableSizesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -848,22 +849,22 @@ func (client *VirtualMachinesClient) listAvailableSizesHandleError(resp *http.Re
 // ListByLocation - Gets all the virtual machines under the specified subscription for the specified location.
 // If the operation fails it returns a generic error.
 // location - The location for which virtual machines under the subscription are queried.
-// options - VirtualMachinesListByLocationOptions contains the optional parameters for the VirtualMachinesClient.ListByLocation
+// options - VirtualMachinesClientListByLocationOptions contains the optional parameters for the VirtualMachinesClient.ListByLocation
 // method.
-func (client *VirtualMachinesClient) ListByLocation(location string, options *VirtualMachinesListByLocationOptions) *VirtualMachinesListByLocationPager {
-	return &VirtualMachinesListByLocationPager{
+func (client *VirtualMachinesClient) ListByLocation(location string, options *VirtualMachinesClientListByLocationOptions) *VirtualMachinesClientListByLocationPager {
+	return &VirtualMachinesClientListByLocationPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByLocationCreateRequest(ctx, location, options)
 		},
-		advancer: func(ctx context.Context, resp VirtualMachinesListByLocationResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualMachinesClientListByLocationResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualMachineListResult.NextLink)
 		},
 	}
 }
 
 // listByLocationCreateRequest creates the ListByLocation request.
-func (client *VirtualMachinesClient) listByLocationCreateRequest(ctx context.Context, location string, options *VirtualMachinesListByLocationOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) listByLocationCreateRequest(ctx context.Context, location string, options *VirtualMachinesClientListByLocationOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachines"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -885,10 +886,10 @@ func (client *VirtualMachinesClient) listByLocationCreateRequest(ctx context.Con
 }
 
 // listByLocationHandleResponse handles the ListByLocation response.
-func (client *VirtualMachinesClient) listByLocationHandleResponse(resp *http.Response) (VirtualMachinesListByLocationResponse, error) {
-	result := VirtualMachinesListByLocationResponse{RawResponse: resp}
+func (client *VirtualMachinesClient) listByLocationHandleResponse(resp *http.Response) (VirtualMachinesClientListByLocationResponse, error) {
+	result := VirtualMachinesClientListByLocationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineListResult); err != nil {
-		return VirtualMachinesListByLocationResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachinesClientListByLocationResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -910,21 +911,21 @@ func (client *VirtualMachinesClient) listByLocationHandleError(resp *http.Respon
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
-// options - VirtualMachinesBeginPerformMaintenanceOptions contains the optional parameters for the VirtualMachinesClient.BeginPerformMaintenance
+// options - VirtualMachinesClientBeginPerformMaintenanceOptions contains the optional parameters for the VirtualMachinesClient.BeginPerformMaintenance
 // method.
-func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginPerformMaintenanceOptions) (VirtualMachinesPerformMaintenancePollerResponse, error) {
+func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginPerformMaintenanceOptions) (VirtualMachinesClientPerformMaintenancePollerResponse, error) {
 	resp, err := client.performMaintenance(ctx, resourceGroupName, vmName, options)
 	if err != nil {
-		return VirtualMachinesPerformMaintenancePollerResponse{}, err
+		return VirtualMachinesClientPerformMaintenancePollerResponse{}, err
 	}
-	result := VirtualMachinesPerformMaintenancePollerResponse{
+	result := VirtualMachinesClientPerformMaintenancePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.PerformMaintenance", "", resp, client.pl, client.performMaintenanceHandleError)
 	if err != nil {
-		return VirtualMachinesPerformMaintenancePollerResponse{}, err
+		return VirtualMachinesClientPerformMaintenancePollerResponse{}, err
 	}
-	result.Poller = &VirtualMachinesPerformMaintenancePoller{
+	result.Poller = &VirtualMachinesClientPerformMaintenancePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -933,7 +934,7 @@ func (client *VirtualMachinesClient) BeginPerformMaintenance(ctx context.Context
 // PerformMaintenance - Shuts down the virtual machine, moves it to an already updated node, and powers it back on during
 // the self-service phase of planned maintenance.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachinesClient) performMaintenance(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginPerformMaintenanceOptions) (*http.Response, error) {
+func (client *VirtualMachinesClient) performMaintenance(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginPerformMaintenanceOptions) (*http.Response, error) {
 	req, err := client.performMaintenanceCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -949,7 +950,7 @@ func (client *VirtualMachinesClient) performMaintenance(ctx context.Context, res
 }
 
 // performMaintenanceCreateRequest creates the PerformMaintenance request.
-func (client *VirtualMachinesClient) performMaintenanceCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginPerformMaintenanceOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) performMaintenanceCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginPerformMaintenanceOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/performMaintenance"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -990,21 +991,21 @@ func (client *VirtualMachinesClient) performMaintenanceHandleError(resp *http.Re
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
-// options - VirtualMachinesBeginPowerOffOptions contains the optional parameters for the VirtualMachinesClient.BeginPowerOff
+// options - VirtualMachinesClientBeginPowerOffOptions contains the optional parameters for the VirtualMachinesClient.BeginPowerOff
 // method.
-func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginPowerOffOptions) (VirtualMachinesPowerOffPollerResponse, error) {
+func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginPowerOffOptions) (VirtualMachinesClientPowerOffPollerResponse, error) {
 	resp, err := client.powerOff(ctx, resourceGroupName, vmName, options)
 	if err != nil {
-		return VirtualMachinesPowerOffPollerResponse{}, err
+		return VirtualMachinesClientPowerOffPollerResponse{}, err
 	}
-	result := VirtualMachinesPowerOffPollerResponse{
+	result := VirtualMachinesClientPowerOffPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.PowerOff", "", resp, client.pl, client.powerOffHandleError)
 	if err != nil {
-		return VirtualMachinesPowerOffPollerResponse{}, err
+		return VirtualMachinesClientPowerOffPollerResponse{}, err
 	}
-	result.Poller = &VirtualMachinesPowerOffPoller{
+	result.Poller = &VirtualMachinesClientPowerOffPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -1013,7 +1014,7 @@ func (client *VirtualMachinesClient) BeginPowerOff(ctx context.Context, resource
 // PowerOff - The operation to power off (stop) a virtual machine. The virtual machine can be restarted with the same provisioned
 // resources. You are still charged for this virtual machine.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachinesClient) powerOff(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginPowerOffOptions) (*http.Response, error) {
+func (client *VirtualMachinesClient) powerOff(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginPowerOffOptions) (*http.Response, error) {
 	req, err := client.powerOffCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1029,7 +1030,7 @@ func (client *VirtualMachinesClient) powerOff(ctx context.Context, resourceGroup
 }
 
 // powerOffCreateRequest creates the PowerOff request.
-func (client *VirtualMachinesClient) powerOffCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginPowerOffOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) powerOffCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginPowerOffOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/powerOff"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1072,21 +1073,21 @@ func (client *VirtualMachinesClient) powerOffHandleError(resp *http.Response) er
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
-// options - VirtualMachinesBeginReapplyOptions contains the optional parameters for the VirtualMachinesClient.BeginReapply
+// options - VirtualMachinesClientBeginReapplyOptions contains the optional parameters for the VirtualMachinesClient.BeginReapply
 // method.
-func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginReapplyOptions) (VirtualMachinesReapplyPollerResponse, error) {
+func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginReapplyOptions) (VirtualMachinesClientReapplyPollerResponse, error) {
 	resp, err := client.reapply(ctx, resourceGroupName, vmName, options)
 	if err != nil {
-		return VirtualMachinesReapplyPollerResponse{}, err
+		return VirtualMachinesClientReapplyPollerResponse{}, err
 	}
-	result := VirtualMachinesReapplyPollerResponse{
+	result := VirtualMachinesClientReapplyPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Reapply", "", resp, client.pl, client.reapplyHandleError)
 	if err != nil {
-		return VirtualMachinesReapplyPollerResponse{}, err
+		return VirtualMachinesClientReapplyPollerResponse{}, err
 	}
-	result.Poller = &VirtualMachinesReapplyPoller{
+	result.Poller = &VirtualMachinesClientReapplyPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -1094,7 +1095,7 @@ func (client *VirtualMachinesClient) BeginReapply(ctx context.Context, resourceG
 
 // Reapply - The operation to reapply a virtual machine's state.
 // If the operation fails it returns the *CloudError error type.
-func (client *VirtualMachinesClient) reapply(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginReapplyOptions) (*http.Response, error) {
+func (client *VirtualMachinesClient) reapply(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginReapplyOptions) (*http.Response, error) {
 	req, err := client.reapplyCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1110,7 +1111,7 @@ func (client *VirtualMachinesClient) reapply(ctx context.Context, resourceGroupN
 }
 
 // reapplyCreateRequest creates the Reapply request.
-func (client *VirtualMachinesClient) reapplyCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginReapplyOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) reapplyCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginReapplyOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reapply"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1152,21 +1153,21 @@ func (client *VirtualMachinesClient) reapplyHandleError(resp *http.Response) err
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
-// options - VirtualMachinesBeginRedeployOptions contains the optional parameters for the VirtualMachinesClient.BeginRedeploy
+// options - VirtualMachinesClientBeginRedeployOptions contains the optional parameters for the VirtualMachinesClient.BeginRedeploy
 // method.
-func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginRedeployOptions) (VirtualMachinesRedeployPollerResponse, error) {
+func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginRedeployOptions) (VirtualMachinesClientRedeployPollerResponse, error) {
 	resp, err := client.redeploy(ctx, resourceGroupName, vmName, options)
 	if err != nil {
-		return VirtualMachinesRedeployPollerResponse{}, err
+		return VirtualMachinesClientRedeployPollerResponse{}, err
 	}
-	result := VirtualMachinesRedeployPollerResponse{
+	result := VirtualMachinesClientRedeployPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Redeploy", "", resp, client.pl, client.redeployHandleError)
 	if err != nil {
-		return VirtualMachinesRedeployPollerResponse{}, err
+		return VirtualMachinesClientRedeployPollerResponse{}, err
 	}
-	result.Poller = &VirtualMachinesRedeployPoller{
+	result.Poller = &VirtualMachinesClientRedeployPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -1174,7 +1175,7 @@ func (client *VirtualMachinesClient) BeginRedeploy(ctx context.Context, resource
 
 // Redeploy - Shuts down the virtual machine, moves it to a new node, and powers it back on.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachinesClient) redeploy(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginRedeployOptions) (*http.Response, error) {
+func (client *VirtualMachinesClient) redeploy(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginRedeployOptions) (*http.Response, error) {
 	req, err := client.redeployCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1190,7 +1191,7 @@ func (client *VirtualMachinesClient) redeploy(ctx context.Context, resourceGroup
 }
 
 // redeployCreateRequest creates the Redeploy request.
-func (client *VirtualMachinesClient) redeployCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginRedeployOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) redeployCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginRedeployOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/redeploy"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1230,21 +1231,21 @@ func (client *VirtualMachinesClient) redeployHandleError(resp *http.Response) er
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
-// options - VirtualMachinesBeginReimageOptions contains the optional parameters for the VirtualMachinesClient.BeginReimage
+// options - VirtualMachinesClientBeginReimageOptions contains the optional parameters for the VirtualMachinesClient.BeginReimage
 // method.
-func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginReimageOptions) (VirtualMachinesReimagePollerResponse, error) {
+func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginReimageOptions) (VirtualMachinesClientReimagePollerResponse, error) {
 	resp, err := client.reimage(ctx, resourceGroupName, vmName, options)
 	if err != nil {
-		return VirtualMachinesReimagePollerResponse{}, err
+		return VirtualMachinesClientReimagePollerResponse{}, err
 	}
-	result := VirtualMachinesReimagePollerResponse{
+	result := VirtualMachinesClientReimagePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Reimage", "", resp, client.pl, client.reimageHandleError)
 	if err != nil {
-		return VirtualMachinesReimagePollerResponse{}, err
+		return VirtualMachinesClientReimagePollerResponse{}, err
 	}
-	result.Poller = &VirtualMachinesReimagePoller{
+	result.Poller = &VirtualMachinesClientReimagePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -1252,7 +1253,7 @@ func (client *VirtualMachinesClient) BeginReimage(ctx context.Context, resourceG
 
 // Reimage - Reimages the virtual machine which has an ephemeral OS disk back to its initial state.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachinesClient) reimage(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginReimageOptions) (*http.Response, error) {
+func (client *VirtualMachinesClient) reimage(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginReimageOptions) (*http.Response, error) {
 	req, err := client.reimageCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1268,7 +1269,7 @@ func (client *VirtualMachinesClient) reimage(ctx context.Context, resourceGroupN
 }
 
 // reimageCreateRequest creates the Reimage request.
-func (client *VirtualMachinesClient) reimageCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginReimageOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) reimageCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginReimageOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/reimage"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1311,21 +1312,21 @@ func (client *VirtualMachinesClient) reimageHandleError(resp *http.Response) err
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
-// options - VirtualMachinesBeginRestartOptions contains the optional parameters for the VirtualMachinesClient.BeginRestart
+// options - VirtualMachinesClientBeginRestartOptions contains the optional parameters for the VirtualMachinesClient.BeginRestart
 // method.
-func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginRestartOptions) (VirtualMachinesRestartPollerResponse, error) {
+func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginRestartOptions) (VirtualMachinesClientRestartPollerResponse, error) {
 	resp, err := client.restart(ctx, resourceGroupName, vmName, options)
 	if err != nil {
-		return VirtualMachinesRestartPollerResponse{}, err
+		return VirtualMachinesClientRestartPollerResponse{}, err
 	}
-	result := VirtualMachinesRestartPollerResponse{
+	result := VirtualMachinesClientRestartPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Restart", "", resp, client.pl, client.restartHandleError)
 	if err != nil {
-		return VirtualMachinesRestartPollerResponse{}, err
+		return VirtualMachinesClientRestartPollerResponse{}, err
 	}
-	result.Poller = &VirtualMachinesRestartPoller{
+	result.Poller = &VirtualMachinesClientRestartPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -1333,7 +1334,7 @@ func (client *VirtualMachinesClient) BeginRestart(ctx context.Context, resourceG
 
 // Restart - The operation to restart a virtual machine.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachinesClient) restart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginRestartOptions) (*http.Response, error) {
+func (client *VirtualMachinesClient) restart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginRestartOptions) (*http.Response, error) {
 	req, err := client.restartCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1349,7 +1350,7 @@ func (client *VirtualMachinesClient) restart(ctx context.Context, resourceGroupN
 }
 
 // restartCreateRequest creates the Restart request.
-func (client *VirtualMachinesClient) restartCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginRestartOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) restartCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginRestartOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/restart"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1390,21 +1391,21 @@ func (client *VirtualMachinesClient) restartHandleError(resp *http.Response) err
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // parameters - Parameters supplied to the Run command operation.
-// options - VirtualMachinesBeginRunCommandOptions contains the optional parameters for the VirtualMachinesClient.BeginRunCommand
+// options - VirtualMachinesClientBeginRunCommandOptions contains the optional parameters for the VirtualMachinesClient.BeginRunCommand
 // method.
-func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesBeginRunCommandOptions) (VirtualMachinesRunCommandPollerResponse, error) {
+func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesClientBeginRunCommandOptions) (VirtualMachinesClientRunCommandPollerResponse, error) {
 	resp, err := client.runCommand(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
-		return VirtualMachinesRunCommandPollerResponse{}, err
+		return VirtualMachinesClientRunCommandPollerResponse{}, err
 	}
-	result := VirtualMachinesRunCommandPollerResponse{
+	result := VirtualMachinesClientRunCommandPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.RunCommand", "location", resp, client.pl, client.runCommandHandleError)
 	if err != nil {
-		return VirtualMachinesRunCommandPollerResponse{}, err
+		return VirtualMachinesClientRunCommandPollerResponse{}, err
 	}
-	result.Poller = &VirtualMachinesRunCommandPoller{
+	result.Poller = &VirtualMachinesClientRunCommandPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -1412,7 +1413,7 @@ func (client *VirtualMachinesClient) BeginRunCommand(ctx context.Context, resour
 
 // RunCommand - Run command on the VM.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachinesClient) runCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesBeginRunCommandOptions) (*http.Response, error) {
+func (client *VirtualMachinesClient) runCommand(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesClientBeginRunCommandOptions) (*http.Response, error) {
 	req, err := client.runCommandCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -1428,7 +1429,7 @@ func (client *VirtualMachinesClient) runCommand(ctx context.Context, resourceGro
 }
 
 // runCommandCreateRequest creates the RunCommand request.
-func (client *VirtualMachinesClient) runCommandCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesBeginRunCommandOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) runCommandCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters RunCommandInput, options *VirtualMachinesClientBeginRunCommandOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommand"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1470,25 +1471,25 @@ func (client *VirtualMachinesClient) runCommandHandleError(resp *http.Response) 
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
-// options - VirtualMachinesSimulateEvictionOptions contains the optional parameters for the VirtualMachinesClient.SimulateEviction
+// options - VirtualMachinesClientSimulateEvictionOptions contains the optional parameters for the VirtualMachinesClient.SimulateEviction
 // method.
-func (client *VirtualMachinesClient) SimulateEviction(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesSimulateEvictionOptions) (VirtualMachinesSimulateEvictionResponse, error) {
+func (client *VirtualMachinesClient) SimulateEviction(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientSimulateEvictionOptions) (VirtualMachinesClientSimulateEvictionResponse, error) {
 	req, err := client.simulateEvictionCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
-		return VirtualMachinesSimulateEvictionResponse{}, err
+		return VirtualMachinesClientSimulateEvictionResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachinesSimulateEvictionResponse{}, err
+		return VirtualMachinesClientSimulateEvictionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return VirtualMachinesSimulateEvictionResponse{}, client.simulateEvictionHandleError(resp)
+		return VirtualMachinesClientSimulateEvictionResponse{}, client.simulateEvictionHandleError(resp)
 	}
-	return VirtualMachinesSimulateEvictionResponse{RawResponse: resp}, nil
+	return VirtualMachinesClientSimulateEvictionResponse{RawResponse: resp}, nil
 }
 
 // simulateEvictionCreateRequest creates the SimulateEviction request.
-func (client *VirtualMachinesClient) simulateEvictionCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesSimulateEvictionOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) simulateEvictionCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientSimulateEvictionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/simulateEviction"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1528,20 +1529,21 @@ func (client *VirtualMachinesClient) simulateEvictionHandleError(resp *http.Resp
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
-// options - VirtualMachinesBeginStartOptions contains the optional parameters for the VirtualMachinesClient.BeginStart method.
-func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginStartOptions) (VirtualMachinesStartPollerResponse, error) {
+// options - VirtualMachinesClientBeginStartOptions contains the optional parameters for the VirtualMachinesClient.BeginStart
+// method.
+func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginStartOptions) (VirtualMachinesClientStartPollerResponse, error) {
 	resp, err := client.start(ctx, resourceGroupName, vmName, options)
 	if err != nil {
-		return VirtualMachinesStartPollerResponse{}, err
+		return VirtualMachinesClientStartPollerResponse{}, err
 	}
-	result := VirtualMachinesStartPollerResponse{
+	result := VirtualMachinesClientStartPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Start", "", resp, client.pl, client.startHandleError)
 	if err != nil {
-		return VirtualMachinesStartPollerResponse{}, err
+		return VirtualMachinesClientStartPollerResponse{}, err
 	}
-	result.Poller = &VirtualMachinesStartPoller{
+	result.Poller = &VirtualMachinesClientStartPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -1549,7 +1551,7 @@ func (client *VirtualMachinesClient) BeginStart(ctx context.Context, resourceGro
 
 // Start - The operation to start a virtual machine.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachinesClient) start(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginStartOptions) (*http.Response, error) {
+func (client *VirtualMachinesClient) start(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginStartOptions) (*http.Response, error) {
 	req, err := client.startCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
 		return nil, err
@@ -1565,7 +1567,7 @@ func (client *VirtualMachinesClient) start(ctx context.Context, resourceGroupNam
 }
 
 // startCreateRequest creates the Start request.
-func (client *VirtualMachinesClient) startCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesBeginStartOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) startCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachinesClientBeginStartOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/start"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -1606,21 +1608,21 @@ func (client *VirtualMachinesClient) startHandleError(resp *http.Response) error
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine.
 // parameters - Parameters supplied to the Update Virtual Machine operation.
-// options - VirtualMachinesBeginUpdateOptions contains the optional parameters for the VirtualMachinesClient.BeginUpdate
+// options - VirtualMachinesClientBeginUpdateOptions contains the optional parameters for the VirtualMachinesClient.BeginUpdate
 // method.
-func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesBeginUpdateOptions) (VirtualMachinesUpdatePollerResponse, error) {
+func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesClientBeginUpdateOptions) (VirtualMachinesClientUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
-		return VirtualMachinesUpdatePollerResponse{}, err
+		return VirtualMachinesClientUpdatePollerResponse{}, err
 	}
-	result := VirtualMachinesUpdatePollerResponse{
+	result := VirtualMachinesClientUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachinesClient.Update", "", resp, client.pl, client.updateHandleError)
 	if err != nil {
-		return VirtualMachinesUpdatePollerResponse{}, err
+		return VirtualMachinesClientUpdatePollerResponse{}, err
 	}
-	result.Poller = &VirtualMachinesUpdatePoller{
+	result.Poller = &VirtualMachinesClientUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -1628,7 +1630,7 @@ func (client *VirtualMachinesClient) BeginUpdate(ctx context.Context, resourceGr
 
 // Update - The operation to update a virtual machine.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachinesClient) update(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesBeginUpdateOptions) (*http.Response, error) {
+func (client *VirtualMachinesClient) update(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, vmName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -1644,7 +1646,7 @@ func (client *VirtualMachinesClient) update(ctx context.Context, resourceGroupNa
 }
 
 // updateCreateRequest creates the Update request.
-func (client *VirtualMachinesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesBeginUpdateOptions) (*policy.Request, error) {
+func (client *VirtualMachinesClient) updateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, parameters VirtualMachineUpdate, options *VirtualMachinesClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

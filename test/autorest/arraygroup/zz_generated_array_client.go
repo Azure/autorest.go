@@ -39,24 +39,24 @@ func NewArrayClient(options *azcore.ClientOptions) *ArrayClient {
 
 // GetArrayEmpty - Get an empty array []
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetArrayEmptyOptions contains the optional parameters for the ArrayClient.GetArrayEmpty method.
-func (client *ArrayClient) GetArrayEmpty(ctx context.Context, options *ArrayGetArrayEmptyOptions) (ArrayGetArrayEmptyResponse, error) {
+// options - ArrayClientGetArrayEmptyOptions contains the optional parameters for the ArrayClient.GetArrayEmpty method.
+func (client *ArrayClient) GetArrayEmpty(ctx context.Context, options *ArrayClientGetArrayEmptyOptions) (ArrayClientGetArrayEmptyResponse, error) {
 	req, err := client.getArrayEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetArrayEmptyResponse{}, err
+		return ArrayClientGetArrayEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetArrayEmptyResponse{}, err
+		return ArrayClientGetArrayEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetArrayEmptyResponse{}, client.getArrayEmptyHandleError(resp)
+		return ArrayClientGetArrayEmptyResponse{}, client.getArrayEmptyHandleError(resp)
 	}
 	return client.getArrayEmptyHandleResponse(resp)
 }
 
 // getArrayEmptyCreateRequest creates the GetArrayEmpty request.
-func (client *ArrayClient) getArrayEmptyCreateRequest(ctx context.Context, options *ArrayGetArrayEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) getArrayEmptyCreateRequest(ctx context.Context, options *ArrayClientGetArrayEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/array/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -67,10 +67,10 @@ func (client *ArrayClient) getArrayEmptyCreateRequest(ctx context.Context, optio
 }
 
 // getArrayEmptyHandleResponse handles the GetArrayEmpty response.
-func (client *ArrayClient) getArrayEmptyHandleResponse(resp *http.Response) (ArrayGetArrayEmptyResponse, error) {
-	result := ArrayGetArrayEmptyResponse{RawResponse: resp}
+func (client *ArrayClient) getArrayEmptyHandleResponse(resp *http.Response) (ArrayClientGetArrayEmptyResponse, error) {
+	result := ArrayClientGetArrayEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
-		return ArrayGetArrayEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetArrayEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -90,24 +90,24 @@ func (client *ArrayClient) getArrayEmptyHandleError(resp *http.Response) error {
 
 // GetArrayItemEmpty - Get an array of array of strings [['1', '2', '3'], [], ['7', '8', '9']]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetArrayItemEmptyOptions contains the optional parameters for the ArrayClient.GetArrayItemEmpty method.
-func (client *ArrayClient) GetArrayItemEmpty(ctx context.Context, options *ArrayGetArrayItemEmptyOptions) (ArrayGetArrayItemEmptyResponse, error) {
+// options - ArrayClientGetArrayItemEmptyOptions contains the optional parameters for the ArrayClient.GetArrayItemEmpty method.
+func (client *ArrayClient) GetArrayItemEmpty(ctx context.Context, options *ArrayClientGetArrayItemEmptyOptions) (ArrayClientGetArrayItemEmptyResponse, error) {
 	req, err := client.getArrayItemEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetArrayItemEmptyResponse{}, err
+		return ArrayClientGetArrayItemEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetArrayItemEmptyResponse{}, err
+		return ArrayClientGetArrayItemEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetArrayItemEmptyResponse{}, client.getArrayItemEmptyHandleError(resp)
+		return ArrayClientGetArrayItemEmptyResponse{}, client.getArrayItemEmptyHandleError(resp)
 	}
 	return client.getArrayItemEmptyHandleResponse(resp)
 }
 
 // getArrayItemEmptyCreateRequest creates the GetArrayItemEmpty request.
-func (client *ArrayClient) getArrayItemEmptyCreateRequest(ctx context.Context, options *ArrayGetArrayItemEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) getArrayItemEmptyCreateRequest(ctx context.Context, options *ArrayClientGetArrayItemEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/array/itemempty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -118,10 +118,10 @@ func (client *ArrayClient) getArrayItemEmptyCreateRequest(ctx context.Context, o
 }
 
 // getArrayItemEmptyHandleResponse handles the GetArrayItemEmpty response.
-func (client *ArrayClient) getArrayItemEmptyHandleResponse(resp *http.Response) (ArrayGetArrayItemEmptyResponse, error) {
-	result := ArrayGetArrayItemEmptyResponse{RawResponse: resp}
+func (client *ArrayClient) getArrayItemEmptyHandleResponse(resp *http.Response) (ArrayClientGetArrayItemEmptyResponse, error) {
+	result := ArrayClientGetArrayItemEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
-		return ArrayGetArrayItemEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetArrayItemEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -141,24 +141,24 @@ func (client *ArrayClient) getArrayItemEmptyHandleError(resp *http.Response) err
 
 // GetArrayItemNull - Get an array of array of strings [['1', '2', '3'], null, ['7', '8', '9']]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetArrayItemNullOptions contains the optional parameters for the ArrayClient.GetArrayItemNull method.
-func (client *ArrayClient) GetArrayItemNull(ctx context.Context, options *ArrayGetArrayItemNullOptions) (ArrayGetArrayItemNullResponse, error) {
+// options - ArrayClientGetArrayItemNullOptions contains the optional parameters for the ArrayClient.GetArrayItemNull method.
+func (client *ArrayClient) GetArrayItemNull(ctx context.Context, options *ArrayClientGetArrayItemNullOptions) (ArrayClientGetArrayItemNullResponse, error) {
 	req, err := client.getArrayItemNullCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetArrayItemNullResponse{}, err
+		return ArrayClientGetArrayItemNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetArrayItemNullResponse{}, err
+		return ArrayClientGetArrayItemNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetArrayItemNullResponse{}, client.getArrayItemNullHandleError(resp)
+		return ArrayClientGetArrayItemNullResponse{}, client.getArrayItemNullHandleError(resp)
 	}
 	return client.getArrayItemNullHandleResponse(resp)
 }
 
 // getArrayItemNullCreateRequest creates the GetArrayItemNull request.
-func (client *ArrayClient) getArrayItemNullCreateRequest(ctx context.Context, options *ArrayGetArrayItemNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getArrayItemNullCreateRequest(ctx context.Context, options *ArrayClientGetArrayItemNullOptions) (*policy.Request, error) {
 	urlPath := "/array/array/itemnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -169,10 +169,10 @@ func (client *ArrayClient) getArrayItemNullCreateRequest(ctx context.Context, op
 }
 
 // getArrayItemNullHandleResponse handles the GetArrayItemNull response.
-func (client *ArrayClient) getArrayItemNullHandleResponse(resp *http.Response) (ArrayGetArrayItemNullResponse, error) {
-	result := ArrayGetArrayItemNullResponse{RawResponse: resp}
+func (client *ArrayClient) getArrayItemNullHandleResponse(resp *http.Response) (ArrayClientGetArrayItemNullResponse, error) {
+	result := ArrayClientGetArrayItemNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
-		return ArrayGetArrayItemNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetArrayItemNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -192,24 +192,24 @@ func (client *ArrayClient) getArrayItemNullHandleError(resp *http.Response) erro
 
 // GetArrayNull - Get a null array
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetArrayNullOptions contains the optional parameters for the ArrayClient.GetArrayNull method.
-func (client *ArrayClient) GetArrayNull(ctx context.Context, options *ArrayGetArrayNullOptions) (ArrayGetArrayNullResponse, error) {
+// options - ArrayClientGetArrayNullOptions contains the optional parameters for the ArrayClient.GetArrayNull method.
+func (client *ArrayClient) GetArrayNull(ctx context.Context, options *ArrayClientGetArrayNullOptions) (ArrayClientGetArrayNullResponse, error) {
 	req, err := client.getArrayNullCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetArrayNullResponse{}, err
+		return ArrayClientGetArrayNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetArrayNullResponse{}, err
+		return ArrayClientGetArrayNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetArrayNullResponse{}, client.getArrayNullHandleError(resp)
+		return ArrayClientGetArrayNullResponse{}, client.getArrayNullHandleError(resp)
 	}
 	return client.getArrayNullHandleResponse(resp)
 }
 
 // getArrayNullCreateRequest creates the GetArrayNull request.
-func (client *ArrayClient) getArrayNullCreateRequest(ctx context.Context, options *ArrayGetArrayNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getArrayNullCreateRequest(ctx context.Context, options *ArrayClientGetArrayNullOptions) (*policy.Request, error) {
 	urlPath := "/array/array/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -220,10 +220,10 @@ func (client *ArrayClient) getArrayNullCreateRequest(ctx context.Context, option
 }
 
 // getArrayNullHandleResponse handles the GetArrayNull response.
-func (client *ArrayClient) getArrayNullHandleResponse(resp *http.Response) (ArrayGetArrayNullResponse, error) {
-	result := ArrayGetArrayNullResponse{RawResponse: resp}
+func (client *ArrayClient) getArrayNullHandleResponse(resp *http.Response) (ArrayClientGetArrayNullResponse, error) {
+	result := ArrayClientGetArrayNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
-		return ArrayGetArrayNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetArrayNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -243,24 +243,24 @@ func (client *ArrayClient) getArrayNullHandleError(resp *http.Response) error {
 
 // GetArrayValid - Get an array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetArrayValidOptions contains the optional parameters for the ArrayClient.GetArrayValid method.
-func (client *ArrayClient) GetArrayValid(ctx context.Context, options *ArrayGetArrayValidOptions) (ArrayGetArrayValidResponse, error) {
+// options - ArrayClientGetArrayValidOptions contains the optional parameters for the ArrayClient.GetArrayValid method.
+func (client *ArrayClient) GetArrayValid(ctx context.Context, options *ArrayClientGetArrayValidOptions) (ArrayClientGetArrayValidResponse, error) {
 	req, err := client.getArrayValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetArrayValidResponse{}, err
+		return ArrayClientGetArrayValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetArrayValidResponse{}, err
+		return ArrayClientGetArrayValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetArrayValidResponse{}, client.getArrayValidHandleError(resp)
+		return ArrayClientGetArrayValidResponse{}, client.getArrayValidHandleError(resp)
 	}
 	return client.getArrayValidHandleResponse(resp)
 }
 
 // getArrayValidCreateRequest creates the GetArrayValid request.
-func (client *ArrayClient) getArrayValidCreateRequest(ctx context.Context, options *ArrayGetArrayValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getArrayValidCreateRequest(ctx context.Context, options *ArrayClientGetArrayValidOptions) (*policy.Request, error) {
 	urlPath := "/array/array/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -271,10 +271,10 @@ func (client *ArrayClient) getArrayValidCreateRequest(ctx context.Context, optio
 }
 
 // getArrayValidHandleResponse handles the GetArrayValid response.
-func (client *ArrayClient) getArrayValidHandleResponse(resp *http.Response) (ArrayGetArrayValidResponse, error) {
-	result := ArrayGetArrayValidResponse{RawResponse: resp}
+func (client *ArrayClient) getArrayValidHandleResponse(resp *http.Response) (ArrayClientGetArrayValidResponse, error) {
+	result := ArrayClientGetArrayValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArrayArray); err != nil {
-		return ArrayGetArrayValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetArrayValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -295,24 +295,24 @@ func (client *ArrayClient) getArrayValidHandleError(resp *http.Response) error {
 // GetBase64URL - Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items
 // base64url encoded
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetBase64URLOptions contains the optional parameters for the ArrayClient.GetBase64URL method.
-func (client *ArrayClient) GetBase64URL(ctx context.Context, options *ArrayGetBase64URLOptions) (ArrayGetBase64URLResponse, error) {
+// options - ArrayClientGetBase64URLOptions contains the optional parameters for the ArrayClient.GetBase64URL method.
+func (client *ArrayClient) GetBase64URL(ctx context.Context, options *ArrayClientGetBase64URLOptions) (ArrayClientGetBase64URLResponse, error) {
 	req, err := client.getBase64URLCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetBase64URLResponse{}, err
+		return ArrayClientGetBase64URLResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetBase64URLResponse{}, err
+		return ArrayClientGetBase64URLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetBase64URLResponse{}, client.getBase64URLHandleError(resp)
+		return ArrayClientGetBase64URLResponse{}, client.getBase64URLHandleError(resp)
 	}
 	return client.getBase64URLHandleResponse(resp)
 }
 
 // getBase64URLCreateRequest creates the GetBase64URL request.
-func (client *ArrayClient) getBase64URLCreateRequest(ctx context.Context, options *ArrayGetBase64URLOptions) (*policy.Request, error) {
+func (client *ArrayClient) getBase64URLCreateRequest(ctx context.Context, options *ArrayClientGetBase64URLOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/base64url/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -323,10 +323,10 @@ func (client *ArrayClient) getBase64URLCreateRequest(ctx context.Context, option
 }
 
 // getBase64URLHandleResponse handles the GetBase64URL response.
-func (client *ArrayClient) getBase64URLHandleResponse(resp *http.Response) (ArrayGetBase64URLResponse, error) {
-	result := ArrayGetBase64URLResponse{RawResponse: resp}
+func (client *ArrayClient) getBase64URLHandleResponse(resp *http.Response) (ArrayClientGetBase64URLResponse, error) {
+	result := ArrayClientGetBase64URLResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ByteArrayArray); err != nil {
-		return ArrayGetBase64URLResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetBase64URLResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -346,25 +346,25 @@ func (client *ArrayClient) getBase64URLHandleError(resp *http.Response) error {
 
 // GetBooleanInvalidNull - Get boolean array value [true, null, false]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetBooleanInvalidNullOptions contains the optional parameters for the ArrayClient.GetBooleanInvalidNull
+// options - ArrayClientGetBooleanInvalidNullOptions contains the optional parameters for the ArrayClient.GetBooleanInvalidNull
 // method.
-func (client *ArrayClient) GetBooleanInvalidNull(ctx context.Context, options *ArrayGetBooleanInvalidNullOptions) (ArrayGetBooleanInvalidNullResponse, error) {
+func (client *ArrayClient) GetBooleanInvalidNull(ctx context.Context, options *ArrayClientGetBooleanInvalidNullOptions) (ArrayClientGetBooleanInvalidNullResponse, error) {
 	req, err := client.getBooleanInvalidNullCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetBooleanInvalidNullResponse{}, err
+		return ArrayClientGetBooleanInvalidNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetBooleanInvalidNullResponse{}, err
+		return ArrayClientGetBooleanInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetBooleanInvalidNullResponse{}, client.getBooleanInvalidNullHandleError(resp)
+		return ArrayClientGetBooleanInvalidNullResponse{}, client.getBooleanInvalidNullHandleError(resp)
 	}
 	return client.getBooleanInvalidNullHandleResponse(resp)
 }
 
 // getBooleanInvalidNullCreateRequest creates the GetBooleanInvalidNull request.
-func (client *ArrayClient) getBooleanInvalidNullCreateRequest(ctx context.Context, options *ArrayGetBooleanInvalidNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getBooleanInvalidNullCreateRequest(ctx context.Context, options *ArrayClientGetBooleanInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/boolean/true.null.false"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -375,10 +375,10 @@ func (client *ArrayClient) getBooleanInvalidNullCreateRequest(ctx context.Contex
 }
 
 // getBooleanInvalidNullHandleResponse handles the GetBooleanInvalidNull response.
-func (client *ArrayClient) getBooleanInvalidNullHandleResponse(resp *http.Response) (ArrayGetBooleanInvalidNullResponse, error) {
-	result := ArrayGetBooleanInvalidNullResponse{RawResponse: resp}
+func (client *ArrayClient) getBooleanInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetBooleanInvalidNullResponse, error) {
+	result := ArrayClientGetBooleanInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BoolArray); err != nil {
-		return ArrayGetBooleanInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetBooleanInvalidNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -398,25 +398,25 @@ func (client *ArrayClient) getBooleanInvalidNullHandleError(resp *http.Response)
 
 // GetBooleanInvalidString - Get boolean array value [true, 'boolean', false]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetBooleanInvalidStringOptions contains the optional parameters for the ArrayClient.GetBooleanInvalidString
+// options - ArrayClientGetBooleanInvalidStringOptions contains the optional parameters for the ArrayClient.GetBooleanInvalidString
 // method.
-func (client *ArrayClient) GetBooleanInvalidString(ctx context.Context, options *ArrayGetBooleanInvalidStringOptions) (ArrayGetBooleanInvalidStringResponse, error) {
+func (client *ArrayClient) GetBooleanInvalidString(ctx context.Context, options *ArrayClientGetBooleanInvalidStringOptions) (ArrayClientGetBooleanInvalidStringResponse, error) {
 	req, err := client.getBooleanInvalidStringCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetBooleanInvalidStringResponse{}, err
+		return ArrayClientGetBooleanInvalidStringResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetBooleanInvalidStringResponse{}, err
+		return ArrayClientGetBooleanInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetBooleanInvalidStringResponse{}, client.getBooleanInvalidStringHandleError(resp)
+		return ArrayClientGetBooleanInvalidStringResponse{}, client.getBooleanInvalidStringHandleError(resp)
 	}
 	return client.getBooleanInvalidStringHandleResponse(resp)
 }
 
 // getBooleanInvalidStringCreateRequest creates the GetBooleanInvalidString request.
-func (client *ArrayClient) getBooleanInvalidStringCreateRequest(ctx context.Context, options *ArrayGetBooleanInvalidStringOptions) (*policy.Request, error) {
+func (client *ArrayClient) getBooleanInvalidStringCreateRequest(ctx context.Context, options *ArrayClientGetBooleanInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/boolean/true.boolean.false"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -427,10 +427,10 @@ func (client *ArrayClient) getBooleanInvalidStringCreateRequest(ctx context.Cont
 }
 
 // getBooleanInvalidStringHandleResponse handles the GetBooleanInvalidString response.
-func (client *ArrayClient) getBooleanInvalidStringHandleResponse(resp *http.Response) (ArrayGetBooleanInvalidStringResponse, error) {
-	result := ArrayGetBooleanInvalidStringResponse{RawResponse: resp}
+func (client *ArrayClient) getBooleanInvalidStringHandleResponse(resp *http.Response) (ArrayClientGetBooleanInvalidStringResponse, error) {
+	result := ArrayClientGetBooleanInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BoolArray); err != nil {
-		return ArrayGetBooleanInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetBooleanInvalidStringResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -450,24 +450,24 @@ func (client *ArrayClient) getBooleanInvalidStringHandleError(resp *http.Respons
 
 // GetBooleanTfft - Get boolean array value [true, false, false, true]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetBooleanTfftOptions contains the optional parameters for the ArrayClient.GetBooleanTfft method.
-func (client *ArrayClient) GetBooleanTfft(ctx context.Context, options *ArrayGetBooleanTfftOptions) (ArrayGetBooleanTfftResponse, error) {
+// options - ArrayClientGetBooleanTfftOptions contains the optional parameters for the ArrayClient.GetBooleanTfft method.
+func (client *ArrayClient) GetBooleanTfft(ctx context.Context, options *ArrayClientGetBooleanTfftOptions) (ArrayClientGetBooleanTfftResponse, error) {
 	req, err := client.getBooleanTfftCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetBooleanTfftResponse{}, err
+		return ArrayClientGetBooleanTfftResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetBooleanTfftResponse{}, err
+		return ArrayClientGetBooleanTfftResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetBooleanTfftResponse{}, client.getBooleanTfftHandleError(resp)
+		return ArrayClientGetBooleanTfftResponse{}, client.getBooleanTfftHandleError(resp)
 	}
 	return client.getBooleanTfftHandleResponse(resp)
 }
 
 // getBooleanTfftCreateRequest creates the GetBooleanTfft request.
-func (client *ArrayClient) getBooleanTfftCreateRequest(ctx context.Context, options *ArrayGetBooleanTfftOptions) (*policy.Request, error) {
+func (client *ArrayClient) getBooleanTfftCreateRequest(ctx context.Context, options *ArrayClientGetBooleanTfftOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/boolean/tfft"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -478,10 +478,10 @@ func (client *ArrayClient) getBooleanTfftCreateRequest(ctx context.Context, opti
 }
 
 // getBooleanTfftHandleResponse handles the GetBooleanTfft response.
-func (client *ArrayClient) getBooleanTfftHandleResponse(resp *http.Response) (ArrayGetBooleanTfftResponse, error) {
-	result := ArrayGetBooleanTfftResponse{RawResponse: resp}
+func (client *ArrayClient) getBooleanTfftHandleResponse(resp *http.Response) (ArrayClientGetBooleanTfftResponse, error) {
+	result := ArrayClientGetBooleanTfftResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BoolArray); err != nil {
-		return ArrayGetBooleanTfftResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetBooleanTfftResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -501,24 +501,25 @@ func (client *ArrayClient) getBooleanTfftHandleError(resp *http.Response) error 
 
 // GetByteInvalidNull - Get byte array value [hex(AB, AC, AD), null] with the first item base64 encoded
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetByteInvalidNullOptions contains the optional parameters for the ArrayClient.GetByteInvalidNull method.
-func (client *ArrayClient) GetByteInvalidNull(ctx context.Context, options *ArrayGetByteInvalidNullOptions) (ArrayGetByteInvalidNullResponse, error) {
+// options - ArrayClientGetByteInvalidNullOptions contains the optional parameters for the ArrayClient.GetByteInvalidNull
+// method.
+func (client *ArrayClient) GetByteInvalidNull(ctx context.Context, options *ArrayClientGetByteInvalidNullOptions) (ArrayClientGetByteInvalidNullResponse, error) {
 	req, err := client.getByteInvalidNullCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetByteInvalidNullResponse{}, err
+		return ArrayClientGetByteInvalidNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetByteInvalidNullResponse{}, err
+		return ArrayClientGetByteInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetByteInvalidNullResponse{}, client.getByteInvalidNullHandleError(resp)
+		return ArrayClientGetByteInvalidNullResponse{}, client.getByteInvalidNullHandleError(resp)
 	}
 	return client.getByteInvalidNullHandleResponse(resp)
 }
 
 // getByteInvalidNullCreateRequest creates the GetByteInvalidNull request.
-func (client *ArrayClient) getByteInvalidNullCreateRequest(ctx context.Context, options *ArrayGetByteInvalidNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getByteInvalidNullCreateRequest(ctx context.Context, options *ArrayClientGetByteInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/byte/invalidnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -529,10 +530,10 @@ func (client *ArrayClient) getByteInvalidNullCreateRequest(ctx context.Context, 
 }
 
 // getByteInvalidNullHandleResponse handles the GetByteInvalidNull response.
-func (client *ArrayClient) getByteInvalidNullHandleResponse(resp *http.Response) (ArrayGetByteInvalidNullResponse, error) {
-	result := ArrayGetByteInvalidNullResponse{RawResponse: resp}
+func (client *ArrayClient) getByteInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetByteInvalidNullResponse, error) {
+	result := ArrayClientGetByteInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ByteArrayArray); err != nil {
-		return ArrayGetByteInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetByteInvalidNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -552,24 +553,24 @@ func (client *ArrayClient) getByteInvalidNullHandleError(resp *http.Response) er
 
 // GetByteValid - Get byte array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each item encoded in base64
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetByteValidOptions contains the optional parameters for the ArrayClient.GetByteValid method.
-func (client *ArrayClient) GetByteValid(ctx context.Context, options *ArrayGetByteValidOptions) (ArrayGetByteValidResponse, error) {
+// options - ArrayClientGetByteValidOptions contains the optional parameters for the ArrayClient.GetByteValid method.
+func (client *ArrayClient) GetByteValid(ctx context.Context, options *ArrayClientGetByteValidOptions) (ArrayClientGetByteValidResponse, error) {
 	req, err := client.getByteValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetByteValidResponse{}, err
+		return ArrayClientGetByteValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetByteValidResponse{}, err
+		return ArrayClientGetByteValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetByteValidResponse{}, client.getByteValidHandleError(resp)
+		return ArrayClientGetByteValidResponse{}, client.getByteValidHandleError(resp)
 	}
 	return client.getByteValidHandleResponse(resp)
 }
 
 // getByteValidCreateRequest creates the GetByteValid request.
-func (client *ArrayClient) getByteValidCreateRequest(ctx context.Context, options *ArrayGetByteValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getByteValidCreateRequest(ctx context.Context, options *ArrayClientGetByteValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/byte/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -580,10 +581,10 @@ func (client *ArrayClient) getByteValidCreateRequest(ctx context.Context, option
 }
 
 // getByteValidHandleResponse handles the GetByteValid response.
-func (client *ArrayClient) getByteValidHandleResponse(resp *http.Response) (ArrayGetByteValidResponse, error) {
-	result := ArrayGetByteValidResponse{RawResponse: resp}
+func (client *ArrayClient) getByteValidHandleResponse(resp *http.Response) (ArrayClientGetByteValidResponse, error) {
+	result := ArrayClientGetByteValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ByteArrayArray); err != nil {
-		return ArrayGetByteValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetByteValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -603,24 +604,24 @@ func (client *ArrayClient) getByteValidHandleError(resp *http.Response) error {
 
 // GetComplexEmpty - Get empty array of complex type []
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetComplexEmptyOptions contains the optional parameters for the ArrayClient.GetComplexEmpty method.
-func (client *ArrayClient) GetComplexEmpty(ctx context.Context, options *ArrayGetComplexEmptyOptions) (ArrayGetComplexEmptyResponse, error) {
+// options - ArrayClientGetComplexEmptyOptions contains the optional parameters for the ArrayClient.GetComplexEmpty method.
+func (client *ArrayClient) GetComplexEmpty(ctx context.Context, options *ArrayClientGetComplexEmptyOptions) (ArrayClientGetComplexEmptyResponse, error) {
 	req, err := client.getComplexEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetComplexEmptyResponse{}, err
+		return ArrayClientGetComplexEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetComplexEmptyResponse{}, err
+		return ArrayClientGetComplexEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetComplexEmptyResponse{}, client.getComplexEmptyHandleError(resp)
+		return ArrayClientGetComplexEmptyResponse{}, client.getComplexEmptyHandleError(resp)
 	}
 	return client.getComplexEmptyHandleResponse(resp)
 }
 
 // getComplexEmptyCreateRequest creates the GetComplexEmpty request.
-func (client *ArrayClient) getComplexEmptyCreateRequest(ctx context.Context, options *ArrayGetComplexEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) getComplexEmptyCreateRequest(ctx context.Context, options *ArrayClientGetComplexEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -631,10 +632,10 @@ func (client *ArrayClient) getComplexEmptyCreateRequest(ctx context.Context, opt
 }
 
 // getComplexEmptyHandleResponse handles the GetComplexEmpty response.
-func (client *ArrayClient) getComplexEmptyHandleResponse(resp *http.Response) (ArrayGetComplexEmptyResponse, error) {
-	result := ArrayGetComplexEmptyResponse{RawResponse: resp}
+func (client *ArrayClient) getComplexEmptyHandleResponse(resp *http.Response) (ArrayClientGetComplexEmptyResponse, error) {
+	result := ArrayClientGetComplexEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
-		return ArrayGetComplexEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetComplexEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -655,24 +656,25 @@ func (client *ArrayClient) getComplexEmptyHandleError(resp *http.Response) error
 // GetComplexItemEmpty - Get array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string':
 // '6'}]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetComplexItemEmptyOptions contains the optional parameters for the ArrayClient.GetComplexItemEmpty method.
-func (client *ArrayClient) GetComplexItemEmpty(ctx context.Context, options *ArrayGetComplexItemEmptyOptions) (ArrayGetComplexItemEmptyResponse, error) {
+// options - ArrayClientGetComplexItemEmptyOptions contains the optional parameters for the ArrayClient.GetComplexItemEmpty
+// method.
+func (client *ArrayClient) GetComplexItemEmpty(ctx context.Context, options *ArrayClientGetComplexItemEmptyOptions) (ArrayClientGetComplexItemEmptyResponse, error) {
 	req, err := client.getComplexItemEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetComplexItemEmptyResponse{}, err
+		return ArrayClientGetComplexItemEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetComplexItemEmptyResponse{}, err
+		return ArrayClientGetComplexItemEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetComplexItemEmptyResponse{}, client.getComplexItemEmptyHandleError(resp)
+		return ArrayClientGetComplexItemEmptyResponse{}, client.getComplexItemEmptyHandleError(resp)
 	}
 	return client.getComplexItemEmptyHandleResponse(resp)
 }
 
 // getComplexItemEmptyCreateRequest creates the GetComplexItemEmpty request.
-func (client *ArrayClient) getComplexItemEmptyCreateRequest(ctx context.Context, options *ArrayGetComplexItemEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) getComplexItemEmptyCreateRequest(ctx context.Context, options *ArrayClientGetComplexItemEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/itemempty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -683,10 +685,10 @@ func (client *ArrayClient) getComplexItemEmptyCreateRequest(ctx context.Context,
 }
 
 // getComplexItemEmptyHandleResponse handles the GetComplexItemEmpty response.
-func (client *ArrayClient) getComplexItemEmptyHandleResponse(resp *http.Response) (ArrayGetComplexItemEmptyResponse, error) {
-	result := ArrayGetComplexItemEmptyResponse{RawResponse: resp}
+func (client *ArrayClient) getComplexItemEmptyHandleResponse(resp *http.Response) (ArrayClientGetComplexItemEmptyResponse, error) {
+	result := ArrayClientGetComplexItemEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
-		return ArrayGetComplexItemEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetComplexItemEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -707,24 +709,25 @@ func (client *ArrayClient) getComplexItemEmptyHandleError(resp *http.Response) e
 // GetComplexItemNull - Get array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string':
 // '6'}]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetComplexItemNullOptions contains the optional parameters for the ArrayClient.GetComplexItemNull method.
-func (client *ArrayClient) GetComplexItemNull(ctx context.Context, options *ArrayGetComplexItemNullOptions) (ArrayGetComplexItemNullResponse, error) {
+// options - ArrayClientGetComplexItemNullOptions contains the optional parameters for the ArrayClient.GetComplexItemNull
+// method.
+func (client *ArrayClient) GetComplexItemNull(ctx context.Context, options *ArrayClientGetComplexItemNullOptions) (ArrayClientGetComplexItemNullResponse, error) {
 	req, err := client.getComplexItemNullCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetComplexItemNullResponse{}, err
+		return ArrayClientGetComplexItemNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetComplexItemNullResponse{}, err
+		return ArrayClientGetComplexItemNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetComplexItemNullResponse{}, client.getComplexItemNullHandleError(resp)
+		return ArrayClientGetComplexItemNullResponse{}, client.getComplexItemNullHandleError(resp)
 	}
 	return client.getComplexItemNullHandleResponse(resp)
 }
 
 // getComplexItemNullCreateRequest creates the GetComplexItemNull request.
-func (client *ArrayClient) getComplexItemNullCreateRequest(ctx context.Context, options *ArrayGetComplexItemNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getComplexItemNullCreateRequest(ctx context.Context, options *ArrayClientGetComplexItemNullOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/itemnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -735,10 +738,10 @@ func (client *ArrayClient) getComplexItemNullCreateRequest(ctx context.Context, 
 }
 
 // getComplexItemNullHandleResponse handles the GetComplexItemNull response.
-func (client *ArrayClient) getComplexItemNullHandleResponse(resp *http.Response) (ArrayGetComplexItemNullResponse, error) {
-	result := ArrayGetComplexItemNullResponse{RawResponse: resp}
+func (client *ArrayClient) getComplexItemNullHandleResponse(resp *http.Response) (ArrayClientGetComplexItemNullResponse, error) {
+	result := ArrayClientGetComplexItemNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
-		return ArrayGetComplexItemNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetComplexItemNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -758,24 +761,24 @@ func (client *ArrayClient) getComplexItemNullHandleError(resp *http.Response) er
 
 // GetComplexNull - Get array of complex type null value
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetComplexNullOptions contains the optional parameters for the ArrayClient.GetComplexNull method.
-func (client *ArrayClient) GetComplexNull(ctx context.Context, options *ArrayGetComplexNullOptions) (ArrayGetComplexNullResponse, error) {
+// options - ArrayClientGetComplexNullOptions contains the optional parameters for the ArrayClient.GetComplexNull method.
+func (client *ArrayClient) GetComplexNull(ctx context.Context, options *ArrayClientGetComplexNullOptions) (ArrayClientGetComplexNullResponse, error) {
 	req, err := client.getComplexNullCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetComplexNullResponse{}, err
+		return ArrayClientGetComplexNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetComplexNullResponse{}, err
+		return ArrayClientGetComplexNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetComplexNullResponse{}, client.getComplexNullHandleError(resp)
+		return ArrayClientGetComplexNullResponse{}, client.getComplexNullHandleError(resp)
 	}
 	return client.getComplexNullHandleResponse(resp)
 }
 
 // getComplexNullCreateRequest creates the GetComplexNull request.
-func (client *ArrayClient) getComplexNullCreateRequest(ctx context.Context, options *ArrayGetComplexNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getComplexNullCreateRequest(ctx context.Context, options *ArrayClientGetComplexNullOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -786,10 +789,10 @@ func (client *ArrayClient) getComplexNullCreateRequest(ctx context.Context, opti
 }
 
 // getComplexNullHandleResponse handles the GetComplexNull response.
-func (client *ArrayClient) getComplexNullHandleResponse(resp *http.Response) (ArrayGetComplexNullResponse, error) {
-	result := ArrayGetComplexNullResponse{RawResponse: resp}
+func (client *ArrayClient) getComplexNullHandleResponse(resp *http.Response) (ArrayClientGetComplexNullResponse, error) {
+	result := ArrayClientGetComplexNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
-		return ArrayGetComplexNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetComplexNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -810,24 +813,24 @@ func (client *ArrayClient) getComplexNullHandleError(resp *http.Response) error 
 // GetComplexValid - Get array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer':
 // 5, 'string': '6'}]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetComplexValidOptions contains the optional parameters for the ArrayClient.GetComplexValid method.
-func (client *ArrayClient) GetComplexValid(ctx context.Context, options *ArrayGetComplexValidOptions) (ArrayGetComplexValidResponse, error) {
+// options - ArrayClientGetComplexValidOptions contains the optional parameters for the ArrayClient.GetComplexValid method.
+func (client *ArrayClient) GetComplexValid(ctx context.Context, options *ArrayClientGetComplexValidOptions) (ArrayClientGetComplexValidResponse, error) {
 	req, err := client.getComplexValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetComplexValidResponse{}, err
+		return ArrayClientGetComplexValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetComplexValidResponse{}, err
+		return ArrayClientGetComplexValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetComplexValidResponse{}, client.getComplexValidHandleError(resp)
+		return ArrayClientGetComplexValidResponse{}, client.getComplexValidHandleError(resp)
 	}
 	return client.getComplexValidHandleResponse(resp)
 }
 
 // getComplexValidCreateRequest creates the GetComplexValid request.
-func (client *ArrayClient) getComplexValidCreateRequest(ctx context.Context, options *ArrayGetComplexValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getComplexValidCreateRequest(ctx context.Context, options *ArrayClientGetComplexValidOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -838,10 +841,10 @@ func (client *ArrayClient) getComplexValidCreateRequest(ctx context.Context, opt
 }
 
 // getComplexValidHandleResponse handles the GetComplexValid response.
-func (client *ArrayClient) getComplexValidHandleResponse(resp *http.Response) (ArrayGetComplexValidResponse, error) {
-	result := ArrayGetComplexValidResponse{RawResponse: resp}
+func (client *ArrayClient) getComplexValidHandleResponse(resp *http.Response) (ArrayClientGetComplexValidResponse, error) {
+	result := ArrayClientGetComplexValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductArray); err != nil {
-		return ArrayGetComplexValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetComplexValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -861,24 +864,25 @@ func (client *ArrayClient) getComplexValidHandleError(resp *http.Response) error
 
 // GetDateInvalidChars - Get date array value ['2011-03-22', 'date']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDateInvalidCharsOptions contains the optional parameters for the ArrayClient.GetDateInvalidChars method.
-func (client *ArrayClient) GetDateInvalidChars(ctx context.Context, options *ArrayGetDateInvalidCharsOptions) (ArrayGetDateInvalidCharsResponse, error) {
+// options - ArrayClientGetDateInvalidCharsOptions contains the optional parameters for the ArrayClient.GetDateInvalidChars
+// method.
+func (client *ArrayClient) GetDateInvalidChars(ctx context.Context, options *ArrayClientGetDateInvalidCharsOptions) (ArrayClientGetDateInvalidCharsResponse, error) {
 	req, err := client.getDateInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetDateInvalidCharsResponse{}, err
+		return ArrayClientGetDateInvalidCharsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetDateInvalidCharsResponse{}, err
+		return ArrayClientGetDateInvalidCharsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetDateInvalidCharsResponse{}, client.getDateInvalidCharsHandleError(resp)
+		return ArrayClientGetDateInvalidCharsResponse{}, client.getDateInvalidCharsHandleError(resp)
 	}
 	return client.getDateInvalidCharsHandleResponse(resp)
 }
 
 // getDateInvalidCharsCreateRequest creates the GetDateInvalidChars request.
-func (client *ArrayClient) getDateInvalidCharsCreateRequest(ctx context.Context, options *ArrayGetDateInvalidCharsOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDateInvalidCharsCreateRequest(ctx context.Context, options *ArrayClientGetDateInvalidCharsOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date/invalidchars"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -889,11 +893,11 @@ func (client *ArrayClient) getDateInvalidCharsCreateRequest(ctx context.Context,
 }
 
 // getDateInvalidCharsHandleResponse handles the GetDateInvalidChars response.
-func (client *ArrayClient) getDateInvalidCharsHandleResponse(resp *http.Response) (ArrayGetDateInvalidCharsResponse, error) {
-	result := ArrayGetDateInvalidCharsResponse{RawResponse: resp}
+func (client *ArrayClient) getDateInvalidCharsHandleResponse(resp *http.Response) (ArrayClientGetDateInvalidCharsResponse, error) {
+	result := ArrayClientGetDateInvalidCharsResponse{RawResponse: resp}
 	var aux []*dateType
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return ArrayGetDateInvalidCharsResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDateInvalidCharsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
 	for i := 0; i < len(aux); i++ {
@@ -918,24 +922,25 @@ func (client *ArrayClient) getDateInvalidCharsHandleError(resp *http.Response) e
 
 // GetDateInvalidNull - Get date array value ['2012-01-01', null, '1776-07-04']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDateInvalidNullOptions contains the optional parameters for the ArrayClient.GetDateInvalidNull method.
-func (client *ArrayClient) GetDateInvalidNull(ctx context.Context, options *ArrayGetDateInvalidNullOptions) (ArrayGetDateInvalidNullResponse, error) {
+// options - ArrayClientGetDateInvalidNullOptions contains the optional parameters for the ArrayClient.GetDateInvalidNull
+// method.
+func (client *ArrayClient) GetDateInvalidNull(ctx context.Context, options *ArrayClientGetDateInvalidNullOptions) (ArrayClientGetDateInvalidNullResponse, error) {
 	req, err := client.getDateInvalidNullCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetDateInvalidNullResponse{}, err
+		return ArrayClientGetDateInvalidNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetDateInvalidNullResponse{}, err
+		return ArrayClientGetDateInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetDateInvalidNullResponse{}, client.getDateInvalidNullHandleError(resp)
+		return ArrayClientGetDateInvalidNullResponse{}, client.getDateInvalidNullHandleError(resp)
 	}
 	return client.getDateInvalidNullHandleResponse(resp)
 }
 
 // getDateInvalidNullCreateRequest creates the GetDateInvalidNull request.
-func (client *ArrayClient) getDateInvalidNullCreateRequest(ctx context.Context, options *ArrayGetDateInvalidNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDateInvalidNullCreateRequest(ctx context.Context, options *ArrayClientGetDateInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date/invalidnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -946,11 +951,11 @@ func (client *ArrayClient) getDateInvalidNullCreateRequest(ctx context.Context, 
 }
 
 // getDateInvalidNullHandleResponse handles the GetDateInvalidNull response.
-func (client *ArrayClient) getDateInvalidNullHandleResponse(resp *http.Response) (ArrayGetDateInvalidNullResponse, error) {
-	result := ArrayGetDateInvalidNullResponse{RawResponse: resp}
+func (client *ArrayClient) getDateInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetDateInvalidNullResponse, error) {
+	result := ArrayClientGetDateInvalidNullResponse{RawResponse: resp}
 	var aux []*dateType
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return ArrayGetDateInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDateInvalidNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
 	for i := 0; i < len(aux); i++ {
@@ -975,25 +980,25 @@ func (client *ArrayClient) getDateInvalidNullHandleError(resp *http.Response) er
 
 // GetDateTimeInvalidChars - Get date array value ['2000-12-01t00:00:01z', 'date-time']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDateTimeInvalidCharsOptions contains the optional parameters for the ArrayClient.GetDateTimeInvalidChars
+// options - ArrayClientGetDateTimeInvalidCharsOptions contains the optional parameters for the ArrayClient.GetDateTimeInvalidChars
 // method.
-func (client *ArrayClient) GetDateTimeInvalidChars(ctx context.Context, options *ArrayGetDateTimeInvalidCharsOptions) (ArrayGetDateTimeInvalidCharsResponse, error) {
+func (client *ArrayClient) GetDateTimeInvalidChars(ctx context.Context, options *ArrayClientGetDateTimeInvalidCharsOptions) (ArrayClientGetDateTimeInvalidCharsResponse, error) {
 	req, err := client.getDateTimeInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetDateTimeInvalidCharsResponse{}, err
+		return ArrayClientGetDateTimeInvalidCharsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetDateTimeInvalidCharsResponse{}, err
+		return ArrayClientGetDateTimeInvalidCharsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetDateTimeInvalidCharsResponse{}, client.getDateTimeInvalidCharsHandleError(resp)
+		return ArrayClientGetDateTimeInvalidCharsResponse{}, client.getDateTimeInvalidCharsHandleError(resp)
 	}
 	return client.getDateTimeInvalidCharsHandleResponse(resp)
 }
 
 // getDateTimeInvalidCharsCreateRequest creates the GetDateTimeInvalidChars request.
-func (client *ArrayClient) getDateTimeInvalidCharsCreateRequest(ctx context.Context, options *ArrayGetDateTimeInvalidCharsOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDateTimeInvalidCharsCreateRequest(ctx context.Context, options *ArrayClientGetDateTimeInvalidCharsOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time/invalidchars"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1004,11 +1009,11 @@ func (client *ArrayClient) getDateTimeInvalidCharsCreateRequest(ctx context.Cont
 }
 
 // getDateTimeInvalidCharsHandleResponse handles the GetDateTimeInvalidChars response.
-func (client *ArrayClient) getDateTimeInvalidCharsHandleResponse(resp *http.Response) (ArrayGetDateTimeInvalidCharsResponse, error) {
-	result := ArrayGetDateTimeInvalidCharsResponse{RawResponse: resp}
+func (client *ArrayClient) getDateTimeInvalidCharsHandleResponse(resp *http.Response) (ArrayClientGetDateTimeInvalidCharsResponse, error) {
+	result := ArrayClientGetDateTimeInvalidCharsResponse{RawResponse: resp}
 	var aux []*timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return ArrayGetDateTimeInvalidCharsResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDateTimeInvalidCharsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
 	for i := 0; i < len(aux); i++ {
@@ -1033,25 +1038,25 @@ func (client *ArrayClient) getDateTimeInvalidCharsHandleError(resp *http.Respons
 
 // GetDateTimeInvalidNull - Get date array value ['2000-12-01t00:00:01z', null]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDateTimeInvalidNullOptions contains the optional parameters for the ArrayClient.GetDateTimeInvalidNull
+// options - ArrayClientGetDateTimeInvalidNullOptions contains the optional parameters for the ArrayClient.GetDateTimeInvalidNull
 // method.
-func (client *ArrayClient) GetDateTimeInvalidNull(ctx context.Context, options *ArrayGetDateTimeInvalidNullOptions) (ArrayGetDateTimeInvalidNullResponse, error) {
+func (client *ArrayClient) GetDateTimeInvalidNull(ctx context.Context, options *ArrayClientGetDateTimeInvalidNullOptions) (ArrayClientGetDateTimeInvalidNullResponse, error) {
 	req, err := client.getDateTimeInvalidNullCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetDateTimeInvalidNullResponse{}, err
+		return ArrayClientGetDateTimeInvalidNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetDateTimeInvalidNullResponse{}, err
+		return ArrayClientGetDateTimeInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetDateTimeInvalidNullResponse{}, client.getDateTimeInvalidNullHandleError(resp)
+		return ArrayClientGetDateTimeInvalidNullResponse{}, client.getDateTimeInvalidNullHandleError(resp)
 	}
 	return client.getDateTimeInvalidNullHandleResponse(resp)
 }
 
 // getDateTimeInvalidNullCreateRequest creates the GetDateTimeInvalidNull request.
-func (client *ArrayClient) getDateTimeInvalidNullCreateRequest(ctx context.Context, options *ArrayGetDateTimeInvalidNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDateTimeInvalidNullCreateRequest(ctx context.Context, options *ArrayClientGetDateTimeInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time/invalidnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1062,11 +1067,11 @@ func (client *ArrayClient) getDateTimeInvalidNullCreateRequest(ctx context.Conte
 }
 
 // getDateTimeInvalidNullHandleResponse handles the GetDateTimeInvalidNull response.
-func (client *ArrayClient) getDateTimeInvalidNullHandleResponse(resp *http.Response) (ArrayGetDateTimeInvalidNullResponse, error) {
-	result := ArrayGetDateTimeInvalidNullResponse{RawResponse: resp}
+func (client *ArrayClient) getDateTimeInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetDateTimeInvalidNullResponse, error) {
+	result := ArrayClientGetDateTimeInvalidNullResponse{RawResponse: resp}
 	var aux []*timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return ArrayGetDateTimeInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDateTimeInvalidNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
 	for i := 0; i < len(aux); i++ {
@@ -1092,25 +1097,25 @@ func (client *ArrayClient) getDateTimeInvalidNullHandleError(resp *http.Response
 // GetDateTimeRFC1123Valid - Get date-time array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT',
 // 'Wed, 12 Oct 1492 10:15:01 GMT']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDateTimeRFC1123ValidOptions contains the optional parameters for the ArrayClient.GetDateTimeRFC1123Valid
+// options - ArrayClientGetDateTimeRFC1123ValidOptions contains the optional parameters for the ArrayClient.GetDateTimeRFC1123Valid
 // method.
-func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context, options *ArrayGetDateTimeRFC1123ValidOptions) (ArrayGetDateTimeRFC1123ValidResponse, error) {
+func (client *ArrayClient) GetDateTimeRFC1123Valid(ctx context.Context, options *ArrayClientGetDateTimeRFC1123ValidOptions) (ArrayClientGetDateTimeRFC1123ValidResponse, error) {
 	req, err := client.getDateTimeRFC1123ValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetDateTimeRFC1123ValidResponse{}, err
+		return ArrayClientGetDateTimeRFC1123ValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetDateTimeRFC1123ValidResponse{}, err
+		return ArrayClientGetDateTimeRFC1123ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetDateTimeRFC1123ValidResponse{}, client.getDateTimeRFC1123ValidHandleError(resp)
+		return ArrayClientGetDateTimeRFC1123ValidResponse{}, client.getDateTimeRFC1123ValidHandleError(resp)
 	}
 	return client.getDateTimeRFC1123ValidHandleResponse(resp)
 }
 
 // getDateTimeRFC1123ValidCreateRequest creates the GetDateTimeRFC1123Valid request.
-func (client *ArrayClient) getDateTimeRFC1123ValidCreateRequest(ctx context.Context, options *ArrayGetDateTimeRFC1123ValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDateTimeRFC1123ValidCreateRequest(ctx context.Context, options *ArrayClientGetDateTimeRFC1123ValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time-rfc1123/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1121,11 +1126,11 @@ func (client *ArrayClient) getDateTimeRFC1123ValidCreateRequest(ctx context.Cont
 }
 
 // getDateTimeRFC1123ValidHandleResponse handles the GetDateTimeRFC1123Valid response.
-func (client *ArrayClient) getDateTimeRFC1123ValidHandleResponse(resp *http.Response) (ArrayGetDateTimeRFC1123ValidResponse, error) {
-	result := ArrayGetDateTimeRFC1123ValidResponse{RawResponse: resp}
+func (client *ArrayClient) getDateTimeRFC1123ValidHandleResponse(resp *http.Response) (ArrayClientGetDateTimeRFC1123ValidResponse, error) {
+	result := ArrayClientGetDateTimeRFC1123ValidResponse{RawResponse: resp}
 	var aux []*timeRFC1123
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return ArrayGetDateTimeRFC1123ValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDateTimeRFC1123ValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
 	for i := 0; i < len(aux); i++ {
@@ -1150,24 +1155,24 @@ func (client *ArrayClient) getDateTimeRFC1123ValidHandleError(resp *http.Respons
 
 // GetDateTimeValid - Get date-time array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDateTimeValidOptions contains the optional parameters for the ArrayClient.GetDateTimeValid method.
-func (client *ArrayClient) GetDateTimeValid(ctx context.Context, options *ArrayGetDateTimeValidOptions) (ArrayGetDateTimeValidResponse, error) {
+// options - ArrayClientGetDateTimeValidOptions contains the optional parameters for the ArrayClient.GetDateTimeValid method.
+func (client *ArrayClient) GetDateTimeValid(ctx context.Context, options *ArrayClientGetDateTimeValidOptions) (ArrayClientGetDateTimeValidResponse, error) {
 	req, err := client.getDateTimeValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetDateTimeValidResponse{}, err
+		return ArrayClientGetDateTimeValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetDateTimeValidResponse{}, err
+		return ArrayClientGetDateTimeValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetDateTimeValidResponse{}, client.getDateTimeValidHandleError(resp)
+		return ArrayClientGetDateTimeValidResponse{}, client.getDateTimeValidHandleError(resp)
 	}
 	return client.getDateTimeValidHandleResponse(resp)
 }
 
 // getDateTimeValidCreateRequest creates the GetDateTimeValid request.
-func (client *ArrayClient) getDateTimeValidCreateRequest(ctx context.Context, options *ArrayGetDateTimeValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDateTimeValidCreateRequest(ctx context.Context, options *ArrayClientGetDateTimeValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1178,11 +1183,11 @@ func (client *ArrayClient) getDateTimeValidCreateRequest(ctx context.Context, op
 }
 
 // getDateTimeValidHandleResponse handles the GetDateTimeValid response.
-func (client *ArrayClient) getDateTimeValidHandleResponse(resp *http.Response) (ArrayGetDateTimeValidResponse, error) {
-	result := ArrayGetDateTimeValidResponse{RawResponse: resp}
+func (client *ArrayClient) getDateTimeValidHandleResponse(resp *http.Response) (ArrayClientGetDateTimeValidResponse, error) {
+	result := ArrayClientGetDateTimeValidResponse{RawResponse: resp}
 	var aux []*timeRFC3339
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return ArrayGetDateTimeValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDateTimeValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
 	for i := 0; i < len(aux); i++ {
@@ -1207,24 +1212,24 @@ func (client *ArrayClient) getDateTimeValidHandleError(resp *http.Response) erro
 
 // GetDateValid - Get integer array value ['2000-12-01', '1980-01-02', '1492-10-12']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDateValidOptions contains the optional parameters for the ArrayClient.GetDateValid method.
-func (client *ArrayClient) GetDateValid(ctx context.Context, options *ArrayGetDateValidOptions) (ArrayGetDateValidResponse, error) {
+// options - ArrayClientGetDateValidOptions contains the optional parameters for the ArrayClient.GetDateValid method.
+func (client *ArrayClient) GetDateValid(ctx context.Context, options *ArrayClientGetDateValidOptions) (ArrayClientGetDateValidResponse, error) {
 	req, err := client.getDateValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetDateValidResponse{}, err
+		return ArrayClientGetDateValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetDateValidResponse{}, err
+		return ArrayClientGetDateValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetDateValidResponse{}, client.getDateValidHandleError(resp)
+		return ArrayClientGetDateValidResponse{}, client.getDateValidHandleError(resp)
 	}
 	return client.getDateValidHandleResponse(resp)
 }
 
 // getDateValidCreateRequest creates the GetDateValid request.
-func (client *ArrayClient) getDateValidCreateRequest(ctx context.Context, options *ArrayGetDateValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDateValidCreateRequest(ctx context.Context, options *ArrayClientGetDateValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1235,11 +1240,11 @@ func (client *ArrayClient) getDateValidCreateRequest(ctx context.Context, option
 }
 
 // getDateValidHandleResponse handles the GetDateValid response.
-func (client *ArrayClient) getDateValidHandleResponse(resp *http.Response) (ArrayGetDateValidResponse, error) {
-	result := ArrayGetDateValidResponse{RawResponse: resp}
+func (client *ArrayClient) getDateValidHandleResponse(resp *http.Response) (ArrayClientGetDateValidResponse, error) {
+	result := ArrayClientGetDateValidResponse{RawResponse: resp}
 	var aux []*dateType
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return ArrayGetDateValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDateValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	cp := make([]*time.Time, len(aux), len(aux))
 	for i := 0; i < len(aux); i++ {
@@ -1264,24 +1269,25 @@ func (client *ArrayClient) getDateValidHandleError(resp *http.Response) error {
 
 // GetDictionaryEmpty - Get an array of Dictionaries of type with value []
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDictionaryEmptyOptions contains the optional parameters for the ArrayClient.GetDictionaryEmpty method.
-func (client *ArrayClient) GetDictionaryEmpty(ctx context.Context, options *ArrayGetDictionaryEmptyOptions) (ArrayGetDictionaryEmptyResponse, error) {
+// options - ArrayClientGetDictionaryEmptyOptions contains the optional parameters for the ArrayClient.GetDictionaryEmpty
+// method.
+func (client *ArrayClient) GetDictionaryEmpty(ctx context.Context, options *ArrayClientGetDictionaryEmptyOptions) (ArrayClientGetDictionaryEmptyResponse, error) {
 	req, err := client.getDictionaryEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetDictionaryEmptyResponse{}, err
+		return ArrayClientGetDictionaryEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetDictionaryEmptyResponse{}, err
+		return ArrayClientGetDictionaryEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetDictionaryEmptyResponse{}, client.getDictionaryEmptyHandleError(resp)
+		return ArrayClientGetDictionaryEmptyResponse{}, client.getDictionaryEmptyHandleError(resp)
 	}
 	return client.getDictionaryEmptyHandleResponse(resp)
 }
 
 // getDictionaryEmptyCreateRequest creates the GetDictionaryEmpty request.
-func (client *ArrayClient) getDictionaryEmptyCreateRequest(ctx context.Context, options *ArrayGetDictionaryEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDictionaryEmptyCreateRequest(ctx context.Context, options *ArrayClientGetDictionaryEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1292,10 +1298,10 @@ func (client *ArrayClient) getDictionaryEmptyCreateRequest(ctx context.Context, 
 }
 
 // getDictionaryEmptyHandleResponse handles the GetDictionaryEmpty response.
-func (client *ArrayClient) getDictionaryEmptyHandleResponse(resp *http.Response) (ArrayGetDictionaryEmptyResponse, error) {
-	result := ArrayGetDictionaryEmptyResponse{RawResponse: resp}
+func (client *ArrayClient) getDictionaryEmptyHandleResponse(resp *http.Response) (ArrayClientGetDictionaryEmptyResponse, error) {
+	result := ArrayClientGetDictionaryEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
-		return ArrayGetDictionaryEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDictionaryEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1316,25 +1322,25 @@ func (client *ArrayClient) getDictionaryEmptyHandleError(resp *http.Response) er
 // GetDictionaryItemEmpty - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7':
 // 'seven', '8': 'eight', '9': 'nine'}]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDictionaryItemEmptyOptions contains the optional parameters for the ArrayClient.GetDictionaryItemEmpty
+// options - ArrayClientGetDictionaryItemEmptyOptions contains the optional parameters for the ArrayClient.GetDictionaryItemEmpty
 // method.
-func (client *ArrayClient) GetDictionaryItemEmpty(ctx context.Context, options *ArrayGetDictionaryItemEmptyOptions) (ArrayGetDictionaryItemEmptyResponse, error) {
+func (client *ArrayClient) GetDictionaryItemEmpty(ctx context.Context, options *ArrayClientGetDictionaryItemEmptyOptions) (ArrayClientGetDictionaryItemEmptyResponse, error) {
 	req, err := client.getDictionaryItemEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetDictionaryItemEmptyResponse{}, err
+		return ArrayClientGetDictionaryItemEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetDictionaryItemEmptyResponse{}, err
+		return ArrayClientGetDictionaryItemEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetDictionaryItemEmptyResponse{}, client.getDictionaryItemEmptyHandleError(resp)
+		return ArrayClientGetDictionaryItemEmptyResponse{}, client.getDictionaryItemEmptyHandleError(resp)
 	}
 	return client.getDictionaryItemEmptyHandleResponse(resp)
 }
 
 // getDictionaryItemEmptyCreateRequest creates the GetDictionaryItemEmpty request.
-func (client *ArrayClient) getDictionaryItemEmptyCreateRequest(ctx context.Context, options *ArrayGetDictionaryItemEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDictionaryItemEmptyCreateRequest(ctx context.Context, options *ArrayClientGetDictionaryItemEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/itemempty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1345,10 +1351,10 @@ func (client *ArrayClient) getDictionaryItemEmptyCreateRequest(ctx context.Conte
 }
 
 // getDictionaryItemEmptyHandleResponse handles the GetDictionaryItemEmpty response.
-func (client *ArrayClient) getDictionaryItemEmptyHandleResponse(resp *http.Response) (ArrayGetDictionaryItemEmptyResponse, error) {
-	result := ArrayGetDictionaryItemEmptyResponse{RawResponse: resp}
+func (client *ArrayClient) getDictionaryItemEmptyHandleResponse(resp *http.Response) (ArrayClientGetDictionaryItemEmptyResponse, error) {
+	result := ArrayClientGetDictionaryItemEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
-		return ArrayGetDictionaryItemEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDictionaryItemEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1369,25 +1375,25 @@ func (client *ArrayClient) getDictionaryItemEmptyHandleError(resp *http.Response
 // GetDictionaryItemNull - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, null,
 // {'7': 'seven', '8': 'eight', '9': 'nine'}]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDictionaryItemNullOptions contains the optional parameters for the ArrayClient.GetDictionaryItemNull
+// options - ArrayClientGetDictionaryItemNullOptions contains the optional parameters for the ArrayClient.GetDictionaryItemNull
 // method.
-func (client *ArrayClient) GetDictionaryItemNull(ctx context.Context, options *ArrayGetDictionaryItemNullOptions) (ArrayGetDictionaryItemNullResponse, error) {
+func (client *ArrayClient) GetDictionaryItemNull(ctx context.Context, options *ArrayClientGetDictionaryItemNullOptions) (ArrayClientGetDictionaryItemNullResponse, error) {
 	req, err := client.getDictionaryItemNullCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetDictionaryItemNullResponse{}, err
+		return ArrayClientGetDictionaryItemNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetDictionaryItemNullResponse{}, err
+		return ArrayClientGetDictionaryItemNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetDictionaryItemNullResponse{}, client.getDictionaryItemNullHandleError(resp)
+		return ArrayClientGetDictionaryItemNullResponse{}, client.getDictionaryItemNullHandleError(resp)
 	}
 	return client.getDictionaryItemNullHandleResponse(resp)
 }
 
 // getDictionaryItemNullCreateRequest creates the GetDictionaryItemNull request.
-func (client *ArrayClient) getDictionaryItemNullCreateRequest(ctx context.Context, options *ArrayGetDictionaryItemNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDictionaryItemNullCreateRequest(ctx context.Context, options *ArrayClientGetDictionaryItemNullOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/itemnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1398,10 +1404,10 @@ func (client *ArrayClient) getDictionaryItemNullCreateRequest(ctx context.Contex
 }
 
 // getDictionaryItemNullHandleResponse handles the GetDictionaryItemNull response.
-func (client *ArrayClient) getDictionaryItemNullHandleResponse(resp *http.Response) (ArrayGetDictionaryItemNullResponse, error) {
-	result := ArrayGetDictionaryItemNullResponse{RawResponse: resp}
+func (client *ArrayClient) getDictionaryItemNullHandleResponse(resp *http.Response) (ArrayClientGetDictionaryItemNullResponse, error) {
+	result := ArrayClientGetDictionaryItemNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
-		return ArrayGetDictionaryItemNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDictionaryItemNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1421,24 +1427,24 @@ func (client *ArrayClient) getDictionaryItemNullHandleError(resp *http.Response)
 
 // GetDictionaryNull - Get an array of Dictionaries with value null
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDictionaryNullOptions contains the optional parameters for the ArrayClient.GetDictionaryNull method.
-func (client *ArrayClient) GetDictionaryNull(ctx context.Context, options *ArrayGetDictionaryNullOptions) (ArrayGetDictionaryNullResponse, error) {
+// options - ArrayClientGetDictionaryNullOptions contains the optional parameters for the ArrayClient.GetDictionaryNull method.
+func (client *ArrayClient) GetDictionaryNull(ctx context.Context, options *ArrayClientGetDictionaryNullOptions) (ArrayClientGetDictionaryNullResponse, error) {
 	req, err := client.getDictionaryNullCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetDictionaryNullResponse{}, err
+		return ArrayClientGetDictionaryNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetDictionaryNullResponse{}, err
+		return ArrayClientGetDictionaryNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetDictionaryNullResponse{}, client.getDictionaryNullHandleError(resp)
+		return ArrayClientGetDictionaryNullResponse{}, client.getDictionaryNullHandleError(resp)
 	}
 	return client.getDictionaryNullHandleResponse(resp)
 }
 
 // getDictionaryNullCreateRequest creates the GetDictionaryNull request.
-func (client *ArrayClient) getDictionaryNullCreateRequest(ctx context.Context, options *ArrayGetDictionaryNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDictionaryNullCreateRequest(ctx context.Context, options *ArrayClientGetDictionaryNullOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1449,10 +1455,10 @@ func (client *ArrayClient) getDictionaryNullCreateRequest(ctx context.Context, o
 }
 
 // getDictionaryNullHandleResponse handles the GetDictionaryNull response.
-func (client *ArrayClient) getDictionaryNullHandleResponse(resp *http.Response) (ArrayGetDictionaryNullResponse, error) {
-	result := ArrayGetDictionaryNullResponse{RawResponse: resp}
+func (client *ArrayClient) getDictionaryNullHandleResponse(resp *http.Response) (ArrayClientGetDictionaryNullResponse, error) {
+	result := ArrayClientGetDictionaryNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
-		return ArrayGetDictionaryNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDictionaryNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1473,24 +1479,25 @@ func (client *ArrayClient) getDictionaryNullHandleError(resp *http.Response) err
 // GetDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four',
 // '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDictionaryValidOptions contains the optional parameters for the ArrayClient.GetDictionaryValid method.
-func (client *ArrayClient) GetDictionaryValid(ctx context.Context, options *ArrayGetDictionaryValidOptions) (ArrayGetDictionaryValidResponse, error) {
+// options - ArrayClientGetDictionaryValidOptions contains the optional parameters for the ArrayClient.GetDictionaryValid
+// method.
+func (client *ArrayClient) GetDictionaryValid(ctx context.Context, options *ArrayClientGetDictionaryValidOptions) (ArrayClientGetDictionaryValidResponse, error) {
 	req, err := client.getDictionaryValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetDictionaryValidResponse{}, err
+		return ArrayClientGetDictionaryValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetDictionaryValidResponse{}, err
+		return ArrayClientGetDictionaryValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetDictionaryValidResponse{}, client.getDictionaryValidHandleError(resp)
+		return ArrayClientGetDictionaryValidResponse{}, client.getDictionaryValidHandleError(resp)
 	}
 	return client.getDictionaryValidHandleResponse(resp)
 }
 
 // getDictionaryValidCreateRequest creates the GetDictionaryValid request.
-func (client *ArrayClient) getDictionaryValidCreateRequest(ctx context.Context, options *ArrayGetDictionaryValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDictionaryValidCreateRequest(ctx context.Context, options *ArrayClientGetDictionaryValidOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1501,10 +1508,10 @@ func (client *ArrayClient) getDictionaryValidCreateRequest(ctx context.Context, 
 }
 
 // getDictionaryValidHandleResponse handles the GetDictionaryValid response.
-func (client *ArrayClient) getDictionaryValidHandleResponse(resp *http.Response) (ArrayGetDictionaryValidResponse, error) {
-	result := ArrayGetDictionaryValidResponse{RawResponse: resp}
+func (client *ArrayClient) getDictionaryValidHandleResponse(resp *http.Response) (ArrayClientGetDictionaryValidResponse, error) {
+	result := ArrayClientGetDictionaryValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MapOfStringArray); err != nil {
-		return ArrayGetDictionaryValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDictionaryValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1524,24 +1531,25 @@ func (client *ArrayClient) getDictionaryValidHandleError(resp *http.Response) er
 
 // GetDoubleInvalidNull - Get float array value [0.0, null, -1.2e20]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDoubleInvalidNullOptions contains the optional parameters for the ArrayClient.GetDoubleInvalidNull method.
-func (client *ArrayClient) GetDoubleInvalidNull(ctx context.Context, options *ArrayGetDoubleInvalidNullOptions) (ArrayGetDoubleInvalidNullResponse, error) {
+// options - ArrayClientGetDoubleInvalidNullOptions contains the optional parameters for the ArrayClient.GetDoubleInvalidNull
+// method.
+func (client *ArrayClient) GetDoubleInvalidNull(ctx context.Context, options *ArrayClientGetDoubleInvalidNullOptions) (ArrayClientGetDoubleInvalidNullResponse, error) {
 	req, err := client.getDoubleInvalidNullCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetDoubleInvalidNullResponse{}, err
+		return ArrayClientGetDoubleInvalidNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetDoubleInvalidNullResponse{}, err
+		return ArrayClientGetDoubleInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetDoubleInvalidNullResponse{}, client.getDoubleInvalidNullHandleError(resp)
+		return ArrayClientGetDoubleInvalidNullResponse{}, client.getDoubleInvalidNullHandleError(resp)
 	}
 	return client.getDoubleInvalidNullHandleResponse(resp)
 }
 
 // getDoubleInvalidNullCreateRequest creates the GetDoubleInvalidNull request.
-func (client *ArrayClient) getDoubleInvalidNullCreateRequest(ctx context.Context, options *ArrayGetDoubleInvalidNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDoubleInvalidNullCreateRequest(ctx context.Context, options *ArrayClientGetDoubleInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/double/0.0-null-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1552,10 +1560,10 @@ func (client *ArrayClient) getDoubleInvalidNullCreateRequest(ctx context.Context
 }
 
 // getDoubleInvalidNullHandleResponse handles the GetDoubleInvalidNull response.
-func (client *ArrayClient) getDoubleInvalidNullHandleResponse(resp *http.Response) (ArrayGetDoubleInvalidNullResponse, error) {
-	result := ArrayGetDoubleInvalidNullResponse{RawResponse: resp}
+func (client *ArrayClient) getDoubleInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetDoubleInvalidNullResponse, error) {
+	result := ArrayClientGetDoubleInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float64Array); err != nil {
-		return ArrayGetDoubleInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDoubleInvalidNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1575,25 +1583,25 @@ func (client *ArrayClient) getDoubleInvalidNullHandleError(resp *http.Response) 
 
 // GetDoubleInvalidString - Get boolean array value [1.0, 'number', 0.0]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDoubleInvalidStringOptions contains the optional parameters for the ArrayClient.GetDoubleInvalidString
+// options - ArrayClientGetDoubleInvalidStringOptions contains the optional parameters for the ArrayClient.GetDoubleInvalidString
 // method.
-func (client *ArrayClient) GetDoubleInvalidString(ctx context.Context, options *ArrayGetDoubleInvalidStringOptions) (ArrayGetDoubleInvalidStringResponse, error) {
+func (client *ArrayClient) GetDoubleInvalidString(ctx context.Context, options *ArrayClientGetDoubleInvalidStringOptions) (ArrayClientGetDoubleInvalidStringResponse, error) {
 	req, err := client.getDoubleInvalidStringCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetDoubleInvalidStringResponse{}, err
+		return ArrayClientGetDoubleInvalidStringResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetDoubleInvalidStringResponse{}, err
+		return ArrayClientGetDoubleInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetDoubleInvalidStringResponse{}, client.getDoubleInvalidStringHandleError(resp)
+		return ArrayClientGetDoubleInvalidStringResponse{}, client.getDoubleInvalidStringHandleError(resp)
 	}
 	return client.getDoubleInvalidStringHandleResponse(resp)
 }
 
 // getDoubleInvalidStringCreateRequest creates the GetDoubleInvalidString request.
-func (client *ArrayClient) getDoubleInvalidStringCreateRequest(ctx context.Context, options *ArrayGetDoubleInvalidStringOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDoubleInvalidStringCreateRequest(ctx context.Context, options *ArrayClientGetDoubleInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/double/1.number.0"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1604,10 +1612,10 @@ func (client *ArrayClient) getDoubleInvalidStringCreateRequest(ctx context.Conte
 }
 
 // getDoubleInvalidStringHandleResponse handles the GetDoubleInvalidString response.
-func (client *ArrayClient) getDoubleInvalidStringHandleResponse(resp *http.Response) (ArrayGetDoubleInvalidStringResponse, error) {
-	result := ArrayGetDoubleInvalidStringResponse{RawResponse: resp}
+func (client *ArrayClient) getDoubleInvalidStringHandleResponse(resp *http.Response) (ArrayClientGetDoubleInvalidStringResponse, error) {
+	result := ArrayClientGetDoubleInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float64Array); err != nil {
-		return ArrayGetDoubleInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDoubleInvalidStringResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1627,24 +1635,24 @@ func (client *ArrayClient) getDoubleInvalidStringHandleError(resp *http.Response
 
 // GetDoubleValid - Get float array value [0, -0.01, 1.2e20]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDoubleValidOptions contains the optional parameters for the ArrayClient.GetDoubleValid method.
-func (client *ArrayClient) GetDoubleValid(ctx context.Context, options *ArrayGetDoubleValidOptions) (ArrayGetDoubleValidResponse, error) {
+// options - ArrayClientGetDoubleValidOptions contains the optional parameters for the ArrayClient.GetDoubleValid method.
+func (client *ArrayClient) GetDoubleValid(ctx context.Context, options *ArrayClientGetDoubleValidOptions) (ArrayClientGetDoubleValidResponse, error) {
 	req, err := client.getDoubleValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetDoubleValidResponse{}, err
+		return ArrayClientGetDoubleValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetDoubleValidResponse{}, err
+		return ArrayClientGetDoubleValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetDoubleValidResponse{}, client.getDoubleValidHandleError(resp)
+		return ArrayClientGetDoubleValidResponse{}, client.getDoubleValidHandleError(resp)
 	}
 	return client.getDoubleValidHandleResponse(resp)
 }
 
 // getDoubleValidCreateRequest creates the GetDoubleValid request.
-func (client *ArrayClient) getDoubleValidCreateRequest(ctx context.Context, options *ArrayGetDoubleValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDoubleValidCreateRequest(ctx context.Context, options *ArrayClientGetDoubleValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/double/0--0.01-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1655,10 +1663,10 @@ func (client *ArrayClient) getDoubleValidCreateRequest(ctx context.Context, opti
 }
 
 // getDoubleValidHandleResponse handles the GetDoubleValid response.
-func (client *ArrayClient) getDoubleValidHandleResponse(resp *http.Response) (ArrayGetDoubleValidResponse, error) {
-	result := ArrayGetDoubleValidResponse{RawResponse: resp}
+func (client *ArrayClient) getDoubleValidHandleResponse(resp *http.Response) (ArrayClientGetDoubleValidResponse, error) {
+	result := ArrayClientGetDoubleValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float64Array); err != nil {
-		return ArrayGetDoubleValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDoubleValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1678,24 +1686,24 @@ func (client *ArrayClient) getDoubleValidHandleError(resp *http.Response) error 
 
 // GetDurationValid - Get duration array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetDurationValidOptions contains the optional parameters for the ArrayClient.GetDurationValid method.
-func (client *ArrayClient) GetDurationValid(ctx context.Context, options *ArrayGetDurationValidOptions) (ArrayGetDurationValidResponse, error) {
+// options - ArrayClientGetDurationValidOptions contains the optional parameters for the ArrayClient.GetDurationValid method.
+func (client *ArrayClient) GetDurationValid(ctx context.Context, options *ArrayClientGetDurationValidOptions) (ArrayClientGetDurationValidResponse, error) {
 	req, err := client.getDurationValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetDurationValidResponse{}, err
+		return ArrayClientGetDurationValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetDurationValidResponse{}, err
+		return ArrayClientGetDurationValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetDurationValidResponse{}, client.getDurationValidHandleError(resp)
+		return ArrayClientGetDurationValidResponse{}, client.getDurationValidHandleError(resp)
 	}
 	return client.getDurationValidHandleResponse(resp)
 }
 
 // getDurationValidCreateRequest creates the GetDurationValid request.
-func (client *ArrayClient) getDurationValidCreateRequest(ctx context.Context, options *ArrayGetDurationValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getDurationValidCreateRequest(ctx context.Context, options *ArrayClientGetDurationValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/duration/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1706,10 +1714,10 @@ func (client *ArrayClient) getDurationValidCreateRequest(ctx context.Context, op
 }
 
 // getDurationValidHandleResponse handles the GetDurationValid response.
-func (client *ArrayClient) getDurationValidHandleResponse(resp *http.Response) (ArrayGetDurationValidResponse, error) {
-	result := ArrayGetDurationValidResponse{RawResponse: resp}
+func (client *ArrayClient) getDurationValidHandleResponse(resp *http.Response) (ArrayClientGetDurationValidResponse, error) {
+	result := ArrayClientGetDurationValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return ArrayGetDurationValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetDurationValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1729,24 +1737,24 @@ func (client *ArrayClient) getDurationValidHandleError(resp *http.Response) erro
 
 // GetEmpty - Get empty array value []
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetEmptyOptions contains the optional parameters for the ArrayClient.GetEmpty method.
-func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayGetEmptyOptions) (ArrayGetEmptyResponse, error) {
+// options - ArrayClientGetEmptyOptions contains the optional parameters for the ArrayClient.GetEmpty method.
+func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayClientGetEmptyOptions) (ArrayClientGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetEmptyResponse{}, err
+		return ArrayClientGetEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetEmptyResponse{}, err
+		return ArrayClientGetEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetEmptyResponse{}, client.getEmptyHandleError(resp)
+		return ArrayClientGetEmptyResponse{}, client.getEmptyHandleError(resp)
 	}
 	return client.getEmptyHandleResponse(resp)
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, options *ArrayGetEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, options *ArrayClientGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1757,10 +1765,10 @@ func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, options *A
 }
 
 // getEmptyHandleResponse handles the GetEmpty response.
-func (client *ArrayClient) getEmptyHandleResponse(resp *http.Response) (ArrayGetEmptyResponse, error) {
-	result := ArrayGetEmptyResponse{RawResponse: resp}
+func (client *ArrayClient) getEmptyHandleResponse(resp *http.Response) (ArrayClientGetEmptyResponse, error) {
+	result := ArrayClientGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
-		return ArrayGetEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1780,24 +1788,24 @@ func (client *ArrayClient) getEmptyHandleError(resp *http.Response) error {
 
 // GetEnumValid - Get enum array value ['foo1', 'foo2', 'foo3']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetEnumValidOptions contains the optional parameters for the ArrayClient.GetEnumValid method.
-func (client *ArrayClient) GetEnumValid(ctx context.Context, options *ArrayGetEnumValidOptions) (ArrayGetEnumValidResponse, error) {
+// options - ArrayClientGetEnumValidOptions contains the optional parameters for the ArrayClient.GetEnumValid method.
+func (client *ArrayClient) GetEnumValid(ctx context.Context, options *ArrayClientGetEnumValidOptions) (ArrayClientGetEnumValidResponse, error) {
 	req, err := client.getEnumValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetEnumValidResponse{}, err
+		return ArrayClientGetEnumValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetEnumValidResponse{}, err
+		return ArrayClientGetEnumValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetEnumValidResponse{}, client.getEnumValidHandleError(resp)
+		return ArrayClientGetEnumValidResponse{}, client.getEnumValidHandleError(resp)
 	}
 	return client.getEnumValidHandleResponse(resp)
 }
 
 // getEnumValidCreateRequest creates the GetEnumValid request.
-func (client *ArrayClient) getEnumValidCreateRequest(ctx context.Context, options *ArrayGetEnumValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getEnumValidCreateRequest(ctx context.Context, options *ArrayClientGetEnumValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/enum/foo1.foo2.foo3"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1808,10 +1816,10 @@ func (client *ArrayClient) getEnumValidCreateRequest(ctx context.Context, option
 }
 
 // getEnumValidHandleResponse handles the GetEnumValid response.
-func (client *ArrayClient) getEnumValidHandleResponse(resp *http.Response) (ArrayGetEnumValidResponse, error) {
-	result := ArrayGetEnumValidResponse{RawResponse: resp}
+func (client *ArrayClient) getEnumValidHandleResponse(resp *http.Response) (ArrayClientGetEnumValidResponse, error) {
+	result := ArrayClientGetEnumValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FooEnumArray); err != nil {
-		return ArrayGetEnumValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetEnumValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1831,24 +1839,25 @@ func (client *ArrayClient) getEnumValidHandleError(resp *http.Response) error {
 
 // GetFloatInvalidNull - Get float array value [0.0, null, -1.2e20]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetFloatInvalidNullOptions contains the optional parameters for the ArrayClient.GetFloatInvalidNull method.
-func (client *ArrayClient) GetFloatInvalidNull(ctx context.Context, options *ArrayGetFloatInvalidNullOptions) (ArrayGetFloatInvalidNullResponse, error) {
+// options - ArrayClientGetFloatInvalidNullOptions contains the optional parameters for the ArrayClient.GetFloatInvalidNull
+// method.
+func (client *ArrayClient) GetFloatInvalidNull(ctx context.Context, options *ArrayClientGetFloatInvalidNullOptions) (ArrayClientGetFloatInvalidNullResponse, error) {
 	req, err := client.getFloatInvalidNullCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetFloatInvalidNullResponse{}, err
+		return ArrayClientGetFloatInvalidNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetFloatInvalidNullResponse{}, err
+		return ArrayClientGetFloatInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetFloatInvalidNullResponse{}, client.getFloatInvalidNullHandleError(resp)
+		return ArrayClientGetFloatInvalidNullResponse{}, client.getFloatInvalidNullHandleError(resp)
 	}
 	return client.getFloatInvalidNullHandleResponse(resp)
 }
 
 // getFloatInvalidNullCreateRequest creates the GetFloatInvalidNull request.
-func (client *ArrayClient) getFloatInvalidNullCreateRequest(ctx context.Context, options *ArrayGetFloatInvalidNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getFloatInvalidNullCreateRequest(ctx context.Context, options *ArrayClientGetFloatInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/float/0.0-null-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1859,10 +1868,10 @@ func (client *ArrayClient) getFloatInvalidNullCreateRequest(ctx context.Context,
 }
 
 // getFloatInvalidNullHandleResponse handles the GetFloatInvalidNull response.
-func (client *ArrayClient) getFloatInvalidNullHandleResponse(resp *http.Response) (ArrayGetFloatInvalidNullResponse, error) {
-	result := ArrayGetFloatInvalidNullResponse{RawResponse: resp}
+func (client *ArrayClient) getFloatInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetFloatInvalidNullResponse, error) {
+	result := ArrayClientGetFloatInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float32Array); err != nil {
-		return ArrayGetFloatInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetFloatInvalidNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1882,25 +1891,25 @@ func (client *ArrayClient) getFloatInvalidNullHandleError(resp *http.Response) e
 
 // GetFloatInvalidString - Get boolean array value [1.0, 'number', 0.0]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetFloatInvalidStringOptions contains the optional parameters for the ArrayClient.GetFloatInvalidString
+// options - ArrayClientGetFloatInvalidStringOptions contains the optional parameters for the ArrayClient.GetFloatInvalidString
 // method.
-func (client *ArrayClient) GetFloatInvalidString(ctx context.Context, options *ArrayGetFloatInvalidStringOptions) (ArrayGetFloatInvalidStringResponse, error) {
+func (client *ArrayClient) GetFloatInvalidString(ctx context.Context, options *ArrayClientGetFloatInvalidStringOptions) (ArrayClientGetFloatInvalidStringResponse, error) {
 	req, err := client.getFloatInvalidStringCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetFloatInvalidStringResponse{}, err
+		return ArrayClientGetFloatInvalidStringResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetFloatInvalidStringResponse{}, err
+		return ArrayClientGetFloatInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetFloatInvalidStringResponse{}, client.getFloatInvalidStringHandleError(resp)
+		return ArrayClientGetFloatInvalidStringResponse{}, client.getFloatInvalidStringHandleError(resp)
 	}
 	return client.getFloatInvalidStringHandleResponse(resp)
 }
 
 // getFloatInvalidStringCreateRequest creates the GetFloatInvalidString request.
-func (client *ArrayClient) getFloatInvalidStringCreateRequest(ctx context.Context, options *ArrayGetFloatInvalidStringOptions) (*policy.Request, error) {
+func (client *ArrayClient) getFloatInvalidStringCreateRequest(ctx context.Context, options *ArrayClientGetFloatInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/float/1.number.0"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1911,10 +1920,10 @@ func (client *ArrayClient) getFloatInvalidStringCreateRequest(ctx context.Contex
 }
 
 // getFloatInvalidStringHandleResponse handles the GetFloatInvalidString response.
-func (client *ArrayClient) getFloatInvalidStringHandleResponse(resp *http.Response) (ArrayGetFloatInvalidStringResponse, error) {
-	result := ArrayGetFloatInvalidStringResponse{RawResponse: resp}
+func (client *ArrayClient) getFloatInvalidStringHandleResponse(resp *http.Response) (ArrayClientGetFloatInvalidStringResponse, error) {
+	result := ArrayClientGetFloatInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float32Array); err != nil {
-		return ArrayGetFloatInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetFloatInvalidStringResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1934,24 +1943,24 @@ func (client *ArrayClient) getFloatInvalidStringHandleError(resp *http.Response)
 
 // GetFloatValid - Get float array value [0, -0.01, 1.2e20]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetFloatValidOptions contains the optional parameters for the ArrayClient.GetFloatValid method.
-func (client *ArrayClient) GetFloatValid(ctx context.Context, options *ArrayGetFloatValidOptions) (ArrayGetFloatValidResponse, error) {
+// options - ArrayClientGetFloatValidOptions contains the optional parameters for the ArrayClient.GetFloatValid method.
+func (client *ArrayClient) GetFloatValid(ctx context.Context, options *ArrayClientGetFloatValidOptions) (ArrayClientGetFloatValidResponse, error) {
 	req, err := client.getFloatValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetFloatValidResponse{}, err
+		return ArrayClientGetFloatValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetFloatValidResponse{}, err
+		return ArrayClientGetFloatValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetFloatValidResponse{}, client.getFloatValidHandleError(resp)
+		return ArrayClientGetFloatValidResponse{}, client.getFloatValidHandleError(resp)
 	}
 	return client.getFloatValidHandleResponse(resp)
 }
 
 // getFloatValidCreateRequest creates the GetFloatValid request.
-func (client *ArrayClient) getFloatValidCreateRequest(ctx context.Context, options *ArrayGetFloatValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getFloatValidCreateRequest(ctx context.Context, options *ArrayClientGetFloatValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/float/0--0.01-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1962,10 +1971,10 @@ func (client *ArrayClient) getFloatValidCreateRequest(ctx context.Context, optio
 }
 
 // getFloatValidHandleResponse handles the GetFloatValid response.
-func (client *ArrayClient) getFloatValidHandleResponse(resp *http.Response) (ArrayGetFloatValidResponse, error) {
-	result := ArrayGetFloatValidResponse{RawResponse: resp}
+func (client *ArrayClient) getFloatValidHandleResponse(resp *http.Response) (ArrayClientGetFloatValidResponse, error) {
+	result := ArrayClientGetFloatValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Float32Array); err != nil {
-		return ArrayGetFloatValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetFloatValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1985,24 +1994,24 @@ func (client *ArrayClient) getFloatValidHandleError(resp *http.Response) error {
 
 // GetIntInvalidNull - Get integer array value [1, null, 0]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetIntInvalidNullOptions contains the optional parameters for the ArrayClient.GetIntInvalidNull method.
-func (client *ArrayClient) GetIntInvalidNull(ctx context.Context, options *ArrayGetIntInvalidNullOptions) (ArrayGetIntInvalidNullResponse, error) {
+// options - ArrayClientGetIntInvalidNullOptions contains the optional parameters for the ArrayClient.GetIntInvalidNull method.
+func (client *ArrayClient) GetIntInvalidNull(ctx context.Context, options *ArrayClientGetIntInvalidNullOptions) (ArrayClientGetIntInvalidNullResponse, error) {
 	req, err := client.getIntInvalidNullCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetIntInvalidNullResponse{}, err
+		return ArrayClientGetIntInvalidNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetIntInvalidNullResponse{}, err
+		return ArrayClientGetIntInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetIntInvalidNullResponse{}, client.getIntInvalidNullHandleError(resp)
+		return ArrayClientGetIntInvalidNullResponse{}, client.getIntInvalidNullHandleError(resp)
 	}
 	return client.getIntInvalidNullHandleResponse(resp)
 }
 
 // getIntInvalidNullCreateRequest creates the GetIntInvalidNull request.
-func (client *ArrayClient) getIntInvalidNullCreateRequest(ctx context.Context, options *ArrayGetIntInvalidNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getIntInvalidNullCreateRequest(ctx context.Context, options *ArrayClientGetIntInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/integer/1.null.zero"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2013,10 +2022,10 @@ func (client *ArrayClient) getIntInvalidNullCreateRequest(ctx context.Context, o
 }
 
 // getIntInvalidNullHandleResponse handles the GetIntInvalidNull response.
-func (client *ArrayClient) getIntInvalidNullHandleResponse(resp *http.Response) (ArrayGetIntInvalidNullResponse, error) {
-	result := ArrayGetIntInvalidNullResponse{RawResponse: resp}
+func (client *ArrayClient) getIntInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetIntInvalidNullResponse, error) {
+	result := ArrayClientGetIntInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
-		return ArrayGetIntInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetIntInvalidNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2036,24 +2045,25 @@ func (client *ArrayClient) getIntInvalidNullHandleError(resp *http.Response) err
 
 // GetIntInvalidString - Get integer array value [1, 'integer', 0]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetIntInvalidStringOptions contains the optional parameters for the ArrayClient.GetIntInvalidString method.
-func (client *ArrayClient) GetIntInvalidString(ctx context.Context, options *ArrayGetIntInvalidStringOptions) (ArrayGetIntInvalidStringResponse, error) {
+// options - ArrayClientGetIntInvalidStringOptions contains the optional parameters for the ArrayClient.GetIntInvalidString
+// method.
+func (client *ArrayClient) GetIntInvalidString(ctx context.Context, options *ArrayClientGetIntInvalidStringOptions) (ArrayClientGetIntInvalidStringResponse, error) {
 	req, err := client.getIntInvalidStringCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetIntInvalidStringResponse{}, err
+		return ArrayClientGetIntInvalidStringResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetIntInvalidStringResponse{}, err
+		return ArrayClientGetIntInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetIntInvalidStringResponse{}, client.getIntInvalidStringHandleError(resp)
+		return ArrayClientGetIntInvalidStringResponse{}, client.getIntInvalidStringHandleError(resp)
 	}
 	return client.getIntInvalidStringHandleResponse(resp)
 }
 
 // getIntInvalidStringCreateRequest creates the GetIntInvalidString request.
-func (client *ArrayClient) getIntInvalidStringCreateRequest(ctx context.Context, options *ArrayGetIntInvalidStringOptions) (*policy.Request, error) {
+func (client *ArrayClient) getIntInvalidStringCreateRequest(ctx context.Context, options *ArrayClientGetIntInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/integer/1.integer.0"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2064,10 +2074,10 @@ func (client *ArrayClient) getIntInvalidStringCreateRequest(ctx context.Context,
 }
 
 // getIntInvalidStringHandleResponse handles the GetIntInvalidString response.
-func (client *ArrayClient) getIntInvalidStringHandleResponse(resp *http.Response) (ArrayGetIntInvalidStringResponse, error) {
-	result := ArrayGetIntInvalidStringResponse{RawResponse: resp}
+func (client *ArrayClient) getIntInvalidStringHandleResponse(resp *http.Response) (ArrayClientGetIntInvalidStringResponse, error) {
+	result := ArrayClientGetIntInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
-		return ArrayGetIntInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetIntInvalidStringResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2087,24 +2097,24 @@ func (client *ArrayClient) getIntInvalidStringHandleError(resp *http.Response) e
 
 // GetIntegerValid - Get integer array value [1, -1, 3, 300]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetIntegerValidOptions contains the optional parameters for the ArrayClient.GetIntegerValid method.
-func (client *ArrayClient) GetIntegerValid(ctx context.Context, options *ArrayGetIntegerValidOptions) (ArrayGetIntegerValidResponse, error) {
+// options - ArrayClientGetIntegerValidOptions contains the optional parameters for the ArrayClient.GetIntegerValid method.
+func (client *ArrayClient) GetIntegerValid(ctx context.Context, options *ArrayClientGetIntegerValidOptions) (ArrayClientGetIntegerValidResponse, error) {
 	req, err := client.getIntegerValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetIntegerValidResponse{}, err
+		return ArrayClientGetIntegerValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetIntegerValidResponse{}, err
+		return ArrayClientGetIntegerValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetIntegerValidResponse{}, client.getIntegerValidHandleError(resp)
+		return ArrayClientGetIntegerValidResponse{}, client.getIntegerValidHandleError(resp)
 	}
 	return client.getIntegerValidHandleResponse(resp)
 }
 
 // getIntegerValidCreateRequest creates the GetIntegerValid request.
-func (client *ArrayClient) getIntegerValidCreateRequest(ctx context.Context, options *ArrayGetIntegerValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getIntegerValidCreateRequest(ctx context.Context, options *ArrayClientGetIntegerValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/integer/1.-1.3.300"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2115,10 +2125,10 @@ func (client *ArrayClient) getIntegerValidCreateRequest(ctx context.Context, opt
 }
 
 // getIntegerValidHandleResponse handles the GetIntegerValid response.
-func (client *ArrayClient) getIntegerValidHandleResponse(resp *http.Response) (ArrayGetIntegerValidResponse, error) {
-	result := ArrayGetIntegerValidResponse{RawResponse: resp}
+func (client *ArrayClient) getIntegerValidHandleResponse(resp *http.Response) (ArrayClientGetIntegerValidResponse, error) {
+	result := ArrayClientGetIntegerValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
-		return ArrayGetIntegerValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetIntegerValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2138,24 +2148,24 @@ func (client *ArrayClient) getIntegerValidHandleError(resp *http.Response) error
 
 // GetInvalid - Get invalid array [1, 2, 3
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetInvalidOptions contains the optional parameters for the ArrayClient.GetInvalid method.
-func (client *ArrayClient) GetInvalid(ctx context.Context, options *ArrayGetInvalidOptions) (ArrayGetInvalidResponse, error) {
+// options - ArrayClientGetInvalidOptions contains the optional parameters for the ArrayClient.GetInvalid method.
+func (client *ArrayClient) GetInvalid(ctx context.Context, options *ArrayClientGetInvalidOptions) (ArrayClientGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetInvalidResponse{}, err
+		return ArrayClientGetInvalidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetInvalidResponse{}, err
+		return ArrayClientGetInvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetInvalidResponse{}, client.getInvalidHandleError(resp)
+		return ArrayClientGetInvalidResponse{}, client.getInvalidHandleError(resp)
 	}
 	return client.getInvalidHandleResponse(resp)
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
-func (client *ArrayClient) getInvalidCreateRequest(ctx context.Context, options *ArrayGetInvalidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getInvalidCreateRequest(ctx context.Context, options *ArrayClientGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/array/invalid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2166,10 +2176,10 @@ func (client *ArrayClient) getInvalidCreateRequest(ctx context.Context, options 
 }
 
 // getInvalidHandleResponse handles the GetInvalid response.
-func (client *ArrayClient) getInvalidHandleResponse(resp *http.Response) (ArrayGetInvalidResponse, error) {
-	result := ArrayGetInvalidResponse{RawResponse: resp}
+func (client *ArrayClient) getInvalidHandleResponse(resp *http.Response) (ArrayClientGetInvalidResponse, error) {
+	result := ArrayClientGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
-		return ArrayGetInvalidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetInvalidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2189,24 +2199,25 @@ func (client *ArrayClient) getInvalidHandleError(resp *http.Response) error {
 
 // GetLongInvalidNull - Get long array value [1, null, 0]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetLongInvalidNullOptions contains the optional parameters for the ArrayClient.GetLongInvalidNull method.
-func (client *ArrayClient) GetLongInvalidNull(ctx context.Context, options *ArrayGetLongInvalidNullOptions) (ArrayGetLongInvalidNullResponse, error) {
+// options - ArrayClientGetLongInvalidNullOptions contains the optional parameters for the ArrayClient.GetLongInvalidNull
+// method.
+func (client *ArrayClient) GetLongInvalidNull(ctx context.Context, options *ArrayClientGetLongInvalidNullOptions) (ArrayClientGetLongInvalidNullResponse, error) {
 	req, err := client.getLongInvalidNullCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetLongInvalidNullResponse{}, err
+		return ArrayClientGetLongInvalidNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetLongInvalidNullResponse{}, err
+		return ArrayClientGetLongInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetLongInvalidNullResponse{}, client.getLongInvalidNullHandleError(resp)
+		return ArrayClientGetLongInvalidNullResponse{}, client.getLongInvalidNullHandleError(resp)
 	}
 	return client.getLongInvalidNullHandleResponse(resp)
 }
 
 // getLongInvalidNullCreateRequest creates the GetLongInvalidNull request.
-func (client *ArrayClient) getLongInvalidNullCreateRequest(ctx context.Context, options *ArrayGetLongInvalidNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getLongInvalidNullCreateRequest(ctx context.Context, options *ArrayClientGetLongInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/long/1.null.zero"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2217,10 +2228,10 @@ func (client *ArrayClient) getLongInvalidNullCreateRequest(ctx context.Context, 
 }
 
 // getLongInvalidNullHandleResponse handles the GetLongInvalidNull response.
-func (client *ArrayClient) getLongInvalidNullHandleResponse(resp *http.Response) (ArrayGetLongInvalidNullResponse, error) {
-	result := ArrayGetLongInvalidNullResponse{RawResponse: resp}
+func (client *ArrayClient) getLongInvalidNullHandleResponse(resp *http.Response) (ArrayClientGetLongInvalidNullResponse, error) {
+	result := ArrayClientGetLongInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int64Array); err != nil {
-		return ArrayGetLongInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetLongInvalidNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2240,24 +2251,25 @@ func (client *ArrayClient) getLongInvalidNullHandleError(resp *http.Response) er
 
 // GetLongInvalidString - Get long array value [1, 'integer', 0]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetLongInvalidStringOptions contains the optional parameters for the ArrayClient.GetLongInvalidString method.
-func (client *ArrayClient) GetLongInvalidString(ctx context.Context, options *ArrayGetLongInvalidStringOptions) (ArrayGetLongInvalidStringResponse, error) {
+// options - ArrayClientGetLongInvalidStringOptions contains the optional parameters for the ArrayClient.GetLongInvalidString
+// method.
+func (client *ArrayClient) GetLongInvalidString(ctx context.Context, options *ArrayClientGetLongInvalidStringOptions) (ArrayClientGetLongInvalidStringResponse, error) {
 	req, err := client.getLongInvalidStringCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetLongInvalidStringResponse{}, err
+		return ArrayClientGetLongInvalidStringResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetLongInvalidStringResponse{}, err
+		return ArrayClientGetLongInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetLongInvalidStringResponse{}, client.getLongInvalidStringHandleError(resp)
+		return ArrayClientGetLongInvalidStringResponse{}, client.getLongInvalidStringHandleError(resp)
 	}
 	return client.getLongInvalidStringHandleResponse(resp)
 }
 
 // getLongInvalidStringCreateRequest creates the GetLongInvalidString request.
-func (client *ArrayClient) getLongInvalidStringCreateRequest(ctx context.Context, options *ArrayGetLongInvalidStringOptions) (*policy.Request, error) {
+func (client *ArrayClient) getLongInvalidStringCreateRequest(ctx context.Context, options *ArrayClientGetLongInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/long/1.integer.0"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2268,10 +2280,10 @@ func (client *ArrayClient) getLongInvalidStringCreateRequest(ctx context.Context
 }
 
 // getLongInvalidStringHandleResponse handles the GetLongInvalidString response.
-func (client *ArrayClient) getLongInvalidStringHandleResponse(resp *http.Response) (ArrayGetLongInvalidStringResponse, error) {
-	result := ArrayGetLongInvalidStringResponse{RawResponse: resp}
+func (client *ArrayClient) getLongInvalidStringHandleResponse(resp *http.Response) (ArrayClientGetLongInvalidStringResponse, error) {
+	result := ArrayClientGetLongInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int64Array); err != nil {
-		return ArrayGetLongInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetLongInvalidStringResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2291,24 +2303,24 @@ func (client *ArrayClient) getLongInvalidStringHandleError(resp *http.Response) 
 
 // GetLongValid - Get integer array value [1, -1, 3, 300]
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetLongValidOptions contains the optional parameters for the ArrayClient.GetLongValid method.
-func (client *ArrayClient) GetLongValid(ctx context.Context, options *ArrayGetLongValidOptions) (ArrayGetLongValidResponse, error) {
+// options - ArrayClientGetLongValidOptions contains the optional parameters for the ArrayClient.GetLongValid method.
+func (client *ArrayClient) GetLongValid(ctx context.Context, options *ArrayClientGetLongValidOptions) (ArrayClientGetLongValidResponse, error) {
 	req, err := client.getLongValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetLongValidResponse{}, err
+		return ArrayClientGetLongValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetLongValidResponse{}, err
+		return ArrayClientGetLongValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetLongValidResponse{}, client.getLongValidHandleError(resp)
+		return ArrayClientGetLongValidResponse{}, client.getLongValidHandleError(resp)
 	}
 	return client.getLongValidHandleResponse(resp)
 }
 
 // getLongValidCreateRequest creates the GetLongValid request.
-func (client *ArrayClient) getLongValidCreateRequest(ctx context.Context, options *ArrayGetLongValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getLongValidCreateRequest(ctx context.Context, options *ArrayClientGetLongValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/long/1.-1.3.300"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2319,10 +2331,10 @@ func (client *ArrayClient) getLongValidCreateRequest(ctx context.Context, option
 }
 
 // getLongValidHandleResponse handles the GetLongValid response.
-func (client *ArrayClient) getLongValidHandleResponse(resp *http.Response) (ArrayGetLongValidResponse, error) {
-	result := ArrayGetLongValidResponse{RawResponse: resp}
+func (client *ArrayClient) getLongValidHandleResponse(resp *http.Response) (ArrayClientGetLongValidResponse, error) {
+	result := ArrayClientGetLongValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int64Array); err != nil {
-		return ArrayGetLongValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetLongValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2342,24 +2354,24 @@ func (client *ArrayClient) getLongValidHandleError(resp *http.Response) error {
 
 // GetNull - Get null array value
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetNullOptions contains the optional parameters for the ArrayClient.GetNull method.
-func (client *ArrayClient) GetNull(ctx context.Context, options *ArrayGetNullOptions) (ArrayGetNullResponse, error) {
+// options - ArrayClientGetNullOptions contains the optional parameters for the ArrayClient.GetNull method.
+func (client *ArrayClient) GetNull(ctx context.Context, options *ArrayClientGetNullOptions) (ArrayClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetNullResponse{}, err
+		return ArrayClientGetNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetNullResponse{}, err
+		return ArrayClientGetNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetNullResponse{}, client.getNullHandleError(resp)
+		return ArrayClientGetNullResponse{}, client.getNullHandleError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *ArrayClient) getNullCreateRequest(ctx context.Context, options *ArrayGetNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getNullCreateRequest(ctx context.Context, options *ArrayClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/array/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2370,10 +2382,10 @@ func (client *ArrayClient) getNullCreateRequest(ctx context.Context, options *Ar
 }
 
 // getNullHandleResponse handles the GetNull response.
-func (client *ArrayClient) getNullHandleResponse(resp *http.Response) (ArrayGetNullResponse, error) {
-	result := ArrayGetNullResponse{RawResponse: resp}
+func (client *ArrayClient) getNullHandleResponse(resp *http.Response) (ArrayClientGetNullResponse, error) {
+	result := ArrayClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Int32Array); err != nil {
-		return ArrayGetNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2393,24 +2405,25 @@ func (client *ArrayClient) getNullHandleError(resp *http.Response) error {
 
 // GetStringEnumValid - Get enum array value ['foo1', 'foo2', 'foo3']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetStringEnumValidOptions contains the optional parameters for the ArrayClient.GetStringEnumValid method.
-func (client *ArrayClient) GetStringEnumValid(ctx context.Context, options *ArrayGetStringEnumValidOptions) (ArrayGetStringEnumValidResponse, error) {
+// options - ArrayClientGetStringEnumValidOptions contains the optional parameters for the ArrayClient.GetStringEnumValid
+// method.
+func (client *ArrayClient) GetStringEnumValid(ctx context.Context, options *ArrayClientGetStringEnumValidOptions) (ArrayClientGetStringEnumValidResponse, error) {
 	req, err := client.getStringEnumValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetStringEnumValidResponse{}, err
+		return ArrayClientGetStringEnumValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetStringEnumValidResponse{}, err
+		return ArrayClientGetStringEnumValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetStringEnumValidResponse{}, client.getStringEnumValidHandleError(resp)
+		return ArrayClientGetStringEnumValidResponse{}, client.getStringEnumValidHandleError(resp)
 	}
 	return client.getStringEnumValidHandleResponse(resp)
 }
 
 // getStringEnumValidCreateRequest creates the GetStringEnumValid request.
-func (client *ArrayClient) getStringEnumValidCreateRequest(ctx context.Context, options *ArrayGetStringEnumValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getStringEnumValidCreateRequest(ctx context.Context, options *ArrayClientGetStringEnumValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string-enum/foo1.foo2.foo3"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2421,10 +2434,10 @@ func (client *ArrayClient) getStringEnumValidCreateRequest(ctx context.Context, 
 }
 
 // getStringEnumValidHandleResponse handles the GetStringEnumValid response.
-func (client *ArrayClient) getStringEnumValidHandleResponse(resp *http.Response) (ArrayGetStringEnumValidResponse, error) {
-	result := ArrayGetStringEnumValidResponse{RawResponse: resp}
+func (client *ArrayClient) getStringEnumValidHandleResponse(resp *http.Response) (ArrayClientGetStringEnumValidResponse, error) {
+	result := ArrayClientGetStringEnumValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Enum0Array); err != nil {
-		return ArrayGetStringEnumValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetStringEnumValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2444,24 +2457,24 @@ func (client *ArrayClient) getStringEnumValidHandleError(resp *http.Response) er
 
 // GetStringValid - Get string array value ['foo1', 'foo2', 'foo3']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetStringValidOptions contains the optional parameters for the ArrayClient.GetStringValid method.
-func (client *ArrayClient) GetStringValid(ctx context.Context, options *ArrayGetStringValidOptions) (ArrayGetStringValidResponse, error) {
+// options - ArrayClientGetStringValidOptions contains the optional parameters for the ArrayClient.GetStringValid method.
+func (client *ArrayClient) GetStringValid(ctx context.Context, options *ArrayClientGetStringValidOptions) (ArrayClientGetStringValidResponse, error) {
 	req, err := client.getStringValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetStringValidResponse{}, err
+		return ArrayClientGetStringValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetStringValidResponse{}, err
+		return ArrayClientGetStringValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetStringValidResponse{}, client.getStringValidHandleError(resp)
+		return ArrayClientGetStringValidResponse{}, client.getStringValidHandleError(resp)
 	}
 	return client.getStringValidHandleResponse(resp)
 }
 
 // getStringValidCreateRequest creates the GetStringValid request.
-func (client *ArrayClient) getStringValidCreateRequest(ctx context.Context, options *ArrayGetStringValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getStringValidCreateRequest(ctx context.Context, options *ArrayClientGetStringValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string/foo1.foo2.foo3"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2472,10 +2485,10 @@ func (client *ArrayClient) getStringValidCreateRequest(ctx context.Context, opti
 }
 
 // getStringValidHandleResponse handles the GetStringValid response.
-func (client *ArrayClient) getStringValidHandleResponse(resp *http.Response) (ArrayGetStringValidResponse, error) {
-	result := ArrayGetStringValidResponse{RawResponse: resp}
+func (client *ArrayClient) getStringValidHandleResponse(resp *http.Response) (ArrayClientGetStringValidResponse, error) {
+	result := ArrayClientGetStringValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return ArrayGetStringValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetStringValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2495,24 +2508,25 @@ func (client *ArrayClient) getStringValidHandleError(resp *http.Response) error 
 
 // GetStringWithInvalid - Get string array value ['foo', 123, 'foo2']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetStringWithInvalidOptions contains the optional parameters for the ArrayClient.GetStringWithInvalid method.
-func (client *ArrayClient) GetStringWithInvalid(ctx context.Context, options *ArrayGetStringWithInvalidOptions) (ArrayGetStringWithInvalidResponse, error) {
+// options - ArrayClientGetStringWithInvalidOptions contains the optional parameters for the ArrayClient.GetStringWithInvalid
+// method.
+func (client *ArrayClient) GetStringWithInvalid(ctx context.Context, options *ArrayClientGetStringWithInvalidOptions) (ArrayClientGetStringWithInvalidResponse, error) {
 	req, err := client.getStringWithInvalidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetStringWithInvalidResponse{}, err
+		return ArrayClientGetStringWithInvalidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetStringWithInvalidResponse{}, err
+		return ArrayClientGetStringWithInvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetStringWithInvalidResponse{}, client.getStringWithInvalidHandleError(resp)
+		return ArrayClientGetStringWithInvalidResponse{}, client.getStringWithInvalidHandleError(resp)
 	}
 	return client.getStringWithInvalidHandleResponse(resp)
 }
 
 // getStringWithInvalidCreateRequest creates the GetStringWithInvalid request.
-func (client *ArrayClient) getStringWithInvalidCreateRequest(ctx context.Context, options *ArrayGetStringWithInvalidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getStringWithInvalidCreateRequest(ctx context.Context, options *ArrayClientGetStringWithInvalidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string/foo.123.foo2"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2523,10 +2537,10 @@ func (client *ArrayClient) getStringWithInvalidCreateRequest(ctx context.Context
 }
 
 // getStringWithInvalidHandleResponse handles the GetStringWithInvalid response.
-func (client *ArrayClient) getStringWithInvalidHandleResponse(resp *http.Response) (ArrayGetStringWithInvalidResponse, error) {
-	result := ArrayGetStringWithInvalidResponse{RawResponse: resp}
+func (client *ArrayClient) getStringWithInvalidHandleResponse(resp *http.Response) (ArrayClientGetStringWithInvalidResponse, error) {
+	result := ArrayClientGetStringWithInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return ArrayGetStringWithInvalidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetStringWithInvalidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2546,24 +2560,24 @@ func (client *ArrayClient) getStringWithInvalidHandleError(resp *http.Response) 
 
 // GetStringWithNull - Get string array value ['foo', null, 'foo2']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetStringWithNullOptions contains the optional parameters for the ArrayClient.GetStringWithNull method.
-func (client *ArrayClient) GetStringWithNull(ctx context.Context, options *ArrayGetStringWithNullOptions) (ArrayGetStringWithNullResponse, error) {
+// options - ArrayClientGetStringWithNullOptions contains the optional parameters for the ArrayClient.GetStringWithNull method.
+func (client *ArrayClient) GetStringWithNull(ctx context.Context, options *ArrayClientGetStringWithNullOptions) (ArrayClientGetStringWithNullResponse, error) {
 	req, err := client.getStringWithNullCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetStringWithNullResponse{}, err
+		return ArrayClientGetStringWithNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetStringWithNullResponse{}, err
+		return ArrayClientGetStringWithNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetStringWithNullResponse{}, client.getStringWithNullHandleError(resp)
+		return ArrayClientGetStringWithNullResponse{}, client.getStringWithNullHandleError(resp)
 	}
 	return client.getStringWithNullHandleResponse(resp)
 }
 
 // getStringWithNullCreateRequest creates the GetStringWithNull request.
-func (client *ArrayClient) getStringWithNullCreateRequest(ctx context.Context, options *ArrayGetStringWithNullOptions) (*policy.Request, error) {
+func (client *ArrayClient) getStringWithNullCreateRequest(ctx context.Context, options *ArrayClientGetStringWithNullOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string/foo.null.foo2"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2574,10 +2588,10 @@ func (client *ArrayClient) getStringWithNullCreateRequest(ctx context.Context, o
 }
 
 // getStringWithNullHandleResponse handles the GetStringWithNull response.
-func (client *ArrayClient) getStringWithNullHandleResponse(resp *http.Response) (ArrayGetStringWithNullResponse, error) {
-	result := ArrayGetStringWithNullResponse{RawResponse: resp}
+func (client *ArrayClient) getStringWithNullHandleResponse(resp *http.Response) (ArrayClientGetStringWithNullResponse, error) {
+	result := ArrayClientGetStringWithNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return ArrayGetStringWithNullResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetStringWithNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2597,24 +2611,25 @@ func (client *ArrayClient) getStringWithNullHandleError(resp *http.Response) err
 
 // GetUUIDInvalidChars - Get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'foo']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetUUIDInvalidCharsOptions contains the optional parameters for the ArrayClient.GetUUIDInvalidChars method.
-func (client *ArrayClient) GetUUIDInvalidChars(ctx context.Context, options *ArrayGetUUIDInvalidCharsOptions) (ArrayGetUUIDInvalidCharsResponse, error) {
+// options - ArrayClientGetUUIDInvalidCharsOptions contains the optional parameters for the ArrayClient.GetUUIDInvalidChars
+// method.
+func (client *ArrayClient) GetUUIDInvalidChars(ctx context.Context, options *ArrayClientGetUUIDInvalidCharsOptions) (ArrayClientGetUUIDInvalidCharsResponse, error) {
 	req, err := client.getUUIDInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetUUIDInvalidCharsResponse{}, err
+		return ArrayClientGetUUIDInvalidCharsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetUUIDInvalidCharsResponse{}, err
+		return ArrayClientGetUUIDInvalidCharsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetUUIDInvalidCharsResponse{}, client.getUUIDInvalidCharsHandleError(resp)
+		return ArrayClientGetUUIDInvalidCharsResponse{}, client.getUUIDInvalidCharsHandleError(resp)
 	}
 	return client.getUUIDInvalidCharsHandleResponse(resp)
 }
 
 // getUUIDInvalidCharsCreateRequest creates the GetUUIDInvalidChars request.
-func (client *ArrayClient) getUUIDInvalidCharsCreateRequest(ctx context.Context, options *ArrayGetUUIDInvalidCharsOptions) (*policy.Request, error) {
+func (client *ArrayClient) getUUIDInvalidCharsCreateRequest(ctx context.Context, options *ArrayClientGetUUIDInvalidCharsOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/uuid/invalidchars"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2625,10 +2640,10 @@ func (client *ArrayClient) getUUIDInvalidCharsCreateRequest(ctx context.Context,
 }
 
 // getUUIDInvalidCharsHandleResponse handles the GetUUIDInvalidChars response.
-func (client *ArrayClient) getUUIDInvalidCharsHandleResponse(resp *http.Response) (ArrayGetUUIDInvalidCharsResponse, error) {
-	result := ArrayGetUUIDInvalidCharsResponse{RawResponse: resp}
+func (client *ArrayClient) getUUIDInvalidCharsHandleResponse(resp *http.Response) (ArrayClientGetUUIDInvalidCharsResponse, error) {
+	result := ArrayClientGetUUIDInvalidCharsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return ArrayGetUUIDInvalidCharsResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetUUIDInvalidCharsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2648,24 +2663,24 @@ func (client *ArrayClient) getUUIDInvalidCharsHandleError(resp *http.Response) e
 
 // GetUUIDValid - Get uuid array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetUUIDValidOptions contains the optional parameters for the ArrayClient.GetUUIDValid method.
-func (client *ArrayClient) GetUUIDValid(ctx context.Context, options *ArrayGetUUIDValidOptions) (ArrayGetUUIDValidResponse, error) {
+// options - ArrayClientGetUUIDValidOptions contains the optional parameters for the ArrayClient.GetUUIDValid method.
+func (client *ArrayClient) GetUUIDValid(ctx context.Context, options *ArrayClientGetUUIDValidOptions) (ArrayClientGetUUIDValidResponse, error) {
 	req, err := client.getUUIDValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetUUIDValidResponse{}, err
+		return ArrayClientGetUUIDValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetUUIDValidResponse{}, err
+		return ArrayClientGetUUIDValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetUUIDValidResponse{}, client.getUUIDValidHandleError(resp)
+		return ArrayClientGetUUIDValidResponse{}, client.getUUIDValidHandleError(resp)
 	}
 	return client.getUUIDValidHandleResponse(resp)
 }
 
 // getUUIDValidCreateRequest creates the GetUUIDValid request.
-func (client *ArrayClient) getUUIDValidCreateRequest(ctx context.Context, options *ArrayGetUUIDValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getUUIDValidCreateRequest(ctx context.Context, options *ArrayClientGetUUIDValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/uuid/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2676,10 +2691,10 @@ func (client *ArrayClient) getUUIDValidCreateRequest(ctx context.Context, option
 }
 
 // getUUIDValidHandleResponse handles the GetUUIDValid response.
-func (client *ArrayClient) getUUIDValidHandleResponse(resp *http.Response) (ArrayGetUUIDValidResponse, error) {
-	result := ArrayGetUUIDValidResponse{RawResponse: resp}
+func (client *ArrayClient) getUUIDValidHandleResponse(resp *http.Response) (ArrayClientGetUUIDValidResponse, error) {
+	result := ArrayClientGetUUIDValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return ArrayGetUUIDValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetUUIDValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2699,24 +2714,24 @@ func (client *ArrayClient) getUUIDValidHandleError(resp *http.Response) error {
 
 // PutArrayValid - Put An array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutArrayValidOptions contains the optional parameters for the ArrayClient.PutArrayValid method.
-func (client *ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]*string, options *ArrayPutArrayValidOptions) (ArrayPutArrayValidResponse, error) {
+// options - ArrayClientPutArrayValidOptions contains the optional parameters for the ArrayClient.PutArrayValid method.
+func (client *ArrayClient) PutArrayValid(ctx context.Context, arrayBody [][]*string, options *ArrayClientPutArrayValidOptions) (ArrayClientPutArrayValidResponse, error) {
 	req, err := client.putArrayValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutArrayValidResponse{}, err
+		return ArrayClientPutArrayValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutArrayValidResponse{}, err
+		return ArrayClientPutArrayValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutArrayValidResponse{}, client.putArrayValidHandleError(resp)
+		return ArrayClientPutArrayValidResponse{}, client.putArrayValidHandleError(resp)
 	}
-	return ArrayPutArrayValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutArrayValidResponse{RawResponse: resp}, nil
 }
 
 // putArrayValidCreateRequest creates the PutArrayValid request.
-func (client *ArrayClient) putArrayValidCreateRequest(ctx context.Context, arrayBody [][]*string, options *ArrayPutArrayValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putArrayValidCreateRequest(ctx context.Context, arrayBody [][]*string, options *ArrayClientPutArrayValidOptions) (*policy.Request, error) {
 	urlPath := "/array/array/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2741,24 +2756,24 @@ func (client *ArrayClient) putArrayValidHandleError(resp *http.Response) error {
 
 // PutBooleanTfft - Set array value empty [true, false, false, true]
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutBooleanTfftOptions contains the optional parameters for the ArrayClient.PutBooleanTfft method.
-func (client *ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []*bool, options *ArrayPutBooleanTfftOptions) (ArrayPutBooleanTfftResponse, error) {
+// options - ArrayClientPutBooleanTfftOptions contains the optional parameters for the ArrayClient.PutBooleanTfft method.
+func (client *ArrayClient) PutBooleanTfft(ctx context.Context, arrayBody []*bool, options *ArrayClientPutBooleanTfftOptions) (ArrayClientPutBooleanTfftResponse, error) {
 	req, err := client.putBooleanTfftCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutBooleanTfftResponse{}, err
+		return ArrayClientPutBooleanTfftResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutBooleanTfftResponse{}, err
+		return ArrayClientPutBooleanTfftResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutBooleanTfftResponse{}, client.putBooleanTfftHandleError(resp)
+		return ArrayClientPutBooleanTfftResponse{}, client.putBooleanTfftHandleError(resp)
 	}
-	return ArrayPutBooleanTfftResponse{RawResponse: resp}, nil
+	return ArrayClientPutBooleanTfftResponse{RawResponse: resp}, nil
 }
 
 // putBooleanTfftCreateRequest creates the PutBooleanTfft request.
-func (client *ArrayClient) putBooleanTfftCreateRequest(ctx context.Context, arrayBody []*bool, options *ArrayPutBooleanTfftOptions) (*policy.Request, error) {
+func (client *ArrayClient) putBooleanTfftCreateRequest(ctx context.Context, arrayBody []*bool, options *ArrayClientPutBooleanTfftOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/boolean/tfft"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2784,24 +2799,24 @@ func (client *ArrayClient) putBooleanTfftHandleError(resp *http.Response) error 
 // PutByteValid - Put the array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base
 // 64
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutByteValidOptions contains the optional parameters for the ArrayClient.PutByteValid method.
-func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte, options *ArrayPutByteValidOptions) (ArrayPutByteValidResponse, error) {
+// options - ArrayClientPutByteValidOptions contains the optional parameters for the ArrayClient.PutByteValid method.
+func (client *ArrayClient) PutByteValid(ctx context.Context, arrayBody [][]byte, options *ArrayClientPutByteValidOptions) (ArrayClientPutByteValidResponse, error) {
 	req, err := client.putByteValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutByteValidResponse{}, err
+		return ArrayClientPutByteValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutByteValidResponse{}, err
+		return ArrayClientPutByteValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutByteValidResponse{}, client.putByteValidHandleError(resp)
+		return ArrayClientPutByteValidResponse{}, client.putByteValidHandleError(resp)
 	}
-	return ArrayPutByteValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutByteValidResponse{RawResponse: resp}, nil
 }
 
 // putByteValidCreateRequest creates the PutByteValid request.
-func (client *ArrayClient) putByteValidCreateRequest(ctx context.Context, arrayBody [][]byte, options *ArrayPutByteValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putByteValidCreateRequest(ctx context.Context, arrayBody [][]byte, options *ArrayClientPutByteValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/byte/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2827,24 +2842,24 @@ func (client *ArrayClient) putByteValidHandleError(resp *http.Response) error {
 // PutComplexValid - Put an array of complex type with values [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'},
 // {'integer': 5, 'string': '6'}]
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutComplexValidOptions contains the optional parameters for the ArrayClient.PutComplexValid method.
-func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []*Product, options *ArrayPutComplexValidOptions) (ArrayPutComplexValidResponse, error) {
+// options - ArrayClientPutComplexValidOptions contains the optional parameters for the ArrayClient.PutComplexValid method.
+func (client *ArrayClient) PutComplexValid(ctx context.Context, arrayBody []*Product, options *ArrayClientPutComplexValidOptions) (ArrayClientPutComplexValidResponse, error) {
 	req, err := client.putComplexValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutComplexValidResponse{}, err
+		return ArrayClientPutComplexValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutComplexValidResponse{}, err
+		return ArrayClientPutComplexValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutComplexValidResponse{}, client.putComplexValidHandleError(resp)
+		return ArrayClientPutComplexValidResponse{}, client.putComplexValidHandleError(resp)
 	}
-	return ArrayPutComplexValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutComplexValidResponse{RawResponse: resp}, nil
 }
 
 // putComplexValidCreateRequest creates the PutComplexValid request.
-func (client *ArrayClient) putComplexValidCreateRequest(ctx context.Context, arrayBody []*Product, options *ArrayPutComplexValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putComplexValidCreateRequest(ctx context.Context, arrayBody []*Product, options *ArrayClientPutComplexValidOptions) (*policy.Request, error) {
 	urlPath := "/array/complex/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2870,25 +2885,25 @@ func (client *ArrayClient) putComplexValidHandleError(resp *http.Response) error
 // PutDateTimeRFC1123Valid - Set array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct
 // 1492 10:15:01 GMT']
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutDateTimeRFC1123ValidOptions contains the optional parameters for the ArrayClient.PutDateTimeRFC1123Valid
+// options - ArrayClientPutDateTimeRFC1123ValidOptions contains the optional parameters for the ArrayClient.PutDateTimeRFC1123Valid
 // method.
-func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateTimeRFC1123ValidOptions) (ArrayPutDateTimeRFC1123ValidResponse, error) {
+func (client *ArrayClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateTimeRFC1123ValidOptions) (ArrayClientPutDateTimeRFC1123ValidResponse, error) {
 	req, err := client.putDateTimeRFC1123ValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutDateTimeRFC1123ValidResponse{}, err
+		return ArrayClientPutDateTimeRFC1123ValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutDateTimeRFC1123ValidResponse{}, err
+		return ArrayClientPutDateTimeRFC1123ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutDateTimeRFC1123ValidResponse{}, client.putDateTimeRFC1123ValidHandleError(resp)
+		return ArrayClientPutDateTimeRFC1123ValidResponse{}, client.putDateTimeRFC1123ValidHandleError(resp)
 	}
-	return ArrayPutDateTimeRFC1123ValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutDateTimeRFC1123ValidResponse{RawResponse: resp}, nil
 }
 
 // putDateTimeRFC1123ValidCreateRequest creates the PutDateTimeRFC1123Valid request.
-func (client *ArrayClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateTimeRFC1123ValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateTimeRFC1123ValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time-rfc1123/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2917,24 +2932,24 @@ func (client *ArrayClient) putDateTimeRFC1123ValidHandleError(resp *http.Respons
 
 // PutDateTimeValid - Set array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutDateTimeValidOptions contains the optional parameters for the ArrayClient.PutDateTimeValid method.
-func (client *ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateTimeValidOptions) (ArrayPutDateTimeValidResponse, error) {
+// options - ArrayClientPutDateTimeValidOptions contains the optional parameters for the ArrayClient.PutDateTimeValid method.
+func (client *ArrayClient) PutDateTimeValid(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateTimeValidOptions) (ArrayClientPutDateTimeValidResponse, error) {
 	req, err := client.putDateTimeValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutDateTimeValidResponse{}, err
+		return ArrayClientPutDateTimeValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutDateTimeValidResponse{}, err
+		return ArrayClientPutDateTimeValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutDateTimeValidResponse{}, client.putDateTimeValidHandleError(resp)
+		return ArrayClientPutDateTimeValidResponse{}, client.putDateTimeValidHandleError(resp)
 	}
-	return ArrayPutDateTimeValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutDateTimeValidResponse{RawResponse: resp}, nil
 }
 
 // putDateTimeValidCreateRequest creates the PutDateTimeValid request.
-func (client *ArrayClient) putDateTimeValidCreateRequest(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateTimeValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putDateTimeValidCreateRequest(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateTimeValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date-time/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2959,24 +2974,24 @@ func (client *ArrayClient) putDateTimeValidHandleError(resp *http.Response) erro
 
 // PutDateValid - Set array value ['2000-12-01', '1980-01-02', '1492-10-12']
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutDateValidOptions contains the optional parameters for the ArrayClient.PutDateValid method.
-func (client *ArrayClient) PutDateValid(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateValidOptions) (ArrayPutDateValidResponse, error) {
+// options - ArrayClientPutDateValidOptions contains the optional parameters for the ArrayClient.PutDateValid method.
+func (client *ArrayClient) PutDateValid(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateValidOptions) (ArrayClientPutDateValidResponse, error) {
 	req, err := client.putDateValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutDateValidResponse{}, err
+		return ArrayClientPutDateValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutDateValidResponse{}, err
+		return ArrayClientPutDateValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutDateValidResponse{}, client.putDateValidHandleError(resp)
+		return ArrayClientPutDateValidResponse{}, client.putDateValidHandleError(resp)
 	}
-	return ArrayPutDateValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutDateValidResponse{RawResponse: resp}, nil
 }
 
 // putDateValidCreateRequest creates the PutDateValid request.
-func (client *ArrayClient) putDateValidCreateRequest(ctx context.Context, arrayBody []*time.Time, options *ArrayPutDateValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putDateValidCreateRequest(ctx context.Context, arrayBody []*time.Time, options *ArrayClientPutDateValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/date/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3006,24 +3021,25 @@ func (client *ArrayClient) putDateValidHandleError(resp *http.Response) error {
 // PutDictionaryValid - Get an array of Dictionaries of type with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four',
 // '5': 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutDictionaryValidOptions contains the optional parameters for the ArrayClient.PutDictionaryValid method.
-func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []map[string]*string, options *ArrayPutDictionaryValidOptions) (ArrayPutDictionaryValidResponse, error) {
+// options - ArrayClientPutDictionaryValidOptions contains the optional parameters for the ArrayClient.PutDictionaryValid
+// method.
+func (client *ArrayClient) PutDictionaryValid(ctx context.Context, arrayBody []map[string]*string, options *ArrayClientPutDictionaryValidOptions) (ArrayClientPutDictionaryValidResponse, error) {
 	req, err := client.putDictionaryValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutDictionaryValidResponse{}, err
+		return ArrayClientPutDictionaryValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutDictionaryValidResponse{}, err
+		return ArrayClientPutDictionaryValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutDictionaryValidResponse{}, client.putDictionaryValidHandleError(resp)
+		return ArrayClientPutDictionaryValidResponse{}, client.putDictionaryValidHandleError(resp)
 	}
-	return ArrayPutDictionaryValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutDictionaryValidResponse{RawResponse: resp}, nil
 }
 
 // putDictionaryValidCreateRequest creates the PutDictionaryValid request.
-func (client *ArrayClient) putDictionaryValidCreateRequest(ctx context.Context, arrayBody []map[string]*string, options *ArrayPutDictionaryValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putDictionaryValidCreateRequest(ctx context.Context, arrayBody []map[string]*string, options *ArrayClientPutDictionaryValidOptions) (*policy.Request, error) {
 	urlPath := "/array/dictionary/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3048,24 +3064,24 @@ func (client *ArrayClient) putDictionaryValidHandleError(resp *http.Response) er
 
 // PutDoubleValid - Set array value [0, -0.01, 1.2e20]
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutDoubleValidOptions contains the optional parameters for the ArrayClient.PutDoubleValid method.
-func (client *ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []*float64, options *ArrayPutDoubleValidOptions) (ArrayPutDoubleValidResponse, error) {
+// options - ArrayClientPutDoubleValidOptions contains the optional parameters for the ArrayClient.PutDoubleValid method.
+func (client *ArrayClient) PutDoubleValid(ctx context.Context, arrayBody []*float64, options *ArrayClientPutDoubleValidOptions) (ArrayClientPutDoubleValidResponse, error) {
 	req, err := client.putDoubleValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutDoubleValidResponse{}, err
+		return ArrayClientPutDoubleValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutDoubleValidResponse{}, err
+		return ArrayClientPutDoubleValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutDoubleValidResponse{}, client.putDoubleValidHandleError(resp)
+		return ArrayClientPutDoubleValidResponse{}, client.putDoubleValidHandleError(resp)
 	}
-	return ArrayPutDoubleValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutDoubleValidResponse{RawResponse: resp}, nil
 }
 
 // putDoubleValidCreateRequest creates the PutDoubleValid request.
-func (client *ArrayClient) putDoubleValidCreateRequest(ctx context.Context, arrayBody []*float64, options *ArrayPutDoubleValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putDoubleValidCreateRequest(ctx context.Context, arrayBody []*float64, options *ArrayClientPutDoubleValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/double/0--0.01-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3090,24 +3106,24 @@ func (client *ArrayClient) putDoubleValidHandleError(resp *http.Response) error 
 
 // PutDurationValid - Set array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutDurationValidOptions contains the optional parameters for the ArrayClient.PutDurationValid method.
-func (client *ArrayClient) PutDurationValid(ctx context.Context, arrayBody []*string, options *ArrayPutDurationValidOptions) (ArrayPutDurationValidResponse, error) {
+// options - ArrayClientPutDurationValidOptions contains the optional parameters for the ArrayClient.PutDurationValid method.
+func (client *ArrayClient) PutDurationValid(ctx context.Context, arrayBody []*string, options *ArrayClientPutDurationValidOptions) (ArrayClientPutDurationValidResponse, error) {
 	req, err := client.putDurationValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutDurationValidResponse{}, err
+		return ArrayClientPutDurationValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutDurationValidResponse{}, err
+		return ArrayClientPutDurationValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutDurationValidResponse{}, client.putDurationValidHandleError(resp)
+		return ArrayClientPutDurationValidResponse{}, client.putDurationValidHandleError(resp)
 	}
-	return ArrayPutDurationValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutDurationValidResponse{RawResponse: resp}, nil
 }
 
 // putDurationValidCreateRequest creates the PutDurationValid request.
-func (client *ArrayClient) putDurationValidCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayPutDurationValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putDurationValidCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayClientPutDurationValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/duration/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3132,24 +3148,24 @@ func (client *ArrayClient) putDurationValidHandleError(resp *http.Response) erro
 
 // PutEmpty - Set array value empty []
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutEmptyOptions contains the optional parameters for the ArrayClient.PutEmpty method.
-func (client *ArrayClient) PutEmpty(ctx context.Context, arrayBody []*string, options *ArrayPutEmptyOptions) (ArrayPutEmptyResponse, error) {
+// options - ArrayClientPutEmptyOptions contains the optional parameters for the ArrayClient.PutEmpty method.
+func (client *ArrayClient) PutEmpty(ctx context.Context, arrayBody []*string, options *ArrayClientPutEmptyOptions) (ArrayClientPutEmptyResponse, error) {
 	req, err := client.putEmptyCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutEmptyResponse{}, err
+		return ArrayClientPutEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutEmptyResponse{}, err
+		return ArrayClientPutEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutEmptyResponse{}, client.putEmptyHandleError(resp)
+		return ArrayClientPutEmptyResponse{}, client.putEmptyHandleError(resp)
 	}
-	return ArrayPutEmptyResponse{RawResponse: resp}, nil
+	return ArrayClientPutEmptyResponse{RawResponse: resp}, nil
 }
 
 // putEmptyCreateRequest creates the PutEmpty request.
-func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayPutEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayClientPutEmptyOptions) (*policy.Request, error) {
 	urlPath := "/array/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3174,24 +3190,24 @@ func (client *ArrayClient) putEmptyHandleError(resp *http.Response) error {
 
 // PutEnumValid - Set array value ['foo1', 'foo2', 'foo3']
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutEnumValidOptions contains the optional parameters for the ArrayClient.PutEnumValid method.
-func (client *ArrayClient) PutEnumValid(ctx context.Context, arrayBody []*FooEnum, options *ArrayPutEnumValidOptions) (ArrayPutEnumValidResponse, error) {
+// options - ArrayClientPutEnumValidOptions contains the optional parameters for the ArrayClient.PutEnumValid method.
+func (client *ArrayClient) PutEnumValid(ctx context.Context, arrayBody []*FooEnum, options *ArrayClientPutEnumValidOptions) (ArrayClientPutEnumValidResponse, error) {
 	req, err := client.putEnumValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutEnumValidResponse{}, err
+		return ArrayClientPutEnumValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutEnumValidResponse{}, err
+		return ArrayClientPutEnumValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutEnumValidResponse{}, client.putEnumValidHandleError(resp)
+		return ArrayClientPutEnumValidResponse{}, client.putEnumValidHandleError(resp)
 	}
-	return ArrayPutEnumValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutEnumValidResponse{RawResponse: resp}, nil
 }
 
 // putEnumValidCreateRequest creates the PutEnumValid request.
-func (client *ArrayClient) putEnumValidCreateRequest(ctx context.Context, arrayBody []*FooEnum, options *ArrayPutEnumValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putEnumValidCreateRequest(ctx context.Context, arrayBody []*FooEnum, options *ArrayClientPutEnumValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/enum/foo1.foo2.foo3"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3216,24 +3232,24 @@ func (client *ArrayClient) putEnumValidHandleError(resp *http.Response) error {
 
 // PutFloatValid - Set array value [0, -0.01, 1.2e20]
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutFloatValidOptions contains the optional parameters for the ArrayClient.PutFloatValid method.
-func (client *ArrayClient) PutFloatValid(ctx context.Context, arrayBody []*float32, options *ArrayPutFloatValidOptions) (ArrayPutFloatValidResponse, error) {
+// options - ArrayClientPutFloatValidOptions contains the optional parameters for the ArrayClient.PutFloatValid method.
+func (client *ArrayClient) PutFloatValid(ctx context.Context, arrayBody []*float32, options *ArrayClientPutFloatValidOptions) (ArrayClientPutFloatValidResponse, error) {
 	req, err := client.putFloatValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutFloatValidResponse{}, err
+		return ArrayClientPutFloatValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutFloatValidResponse{}, err
+		return ArrayClientPutFloatValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutFloatValidResponse{}, client.putFloatValidHandleError(resp)
+		return ArrayClientPutFloatValidResponse{}, client.putFloatValidHandleError(resp)
 	}
-	return ArrayPutFloatValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutFloatValidResponse{RawResponse: resp}, nil
 }
 
 // putFloatValidCreateRequest creates the PutFloatValid request.
-func (client *ArrayClient) putFloatValidCreateRequest(ctx context.Context, arrayBody []*float32, options *ArrayPutFloatValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putFloatValidCreateRequest(ctx context.Context, arrayBody []*float32, options *ArrayClientPutFloatValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/float/0--0.01-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3258,24 +3274,24 @@ func (client *ArrayClient) putFloatValidHandleError(resp *http.Response) error {
 
 // PutIntegerValid - Set array value empty [1, -1, 3, 300]
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutIntegerValidOptions contains the optional parameters for the ArrayClient.PutIntegerValid method.
-func (client *ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []*int32, options *ArrayPutIntegerValidOptions) (ArrayPutIntegerValidResponse, error) {
+// options - ArrayClientPutIntegerValidOptions contains the optional parameters for the ArrayClient.PutIntegerValid method.
+func (client *ArrayClient) PutIntegerValid(ctx context.Context, arrayBody []*int32, options *ArrayClientPutIntegerValidOptions) (ArrayClientPutIntegerValidResponse, error) {
 	req, err := client.putIntegerValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutIntegerValidResponse{}, err
+		return ArrayClientPutIntegerValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutIntegerValidResponse{}, err
+		return ArrayClientPutIntegerValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutIntegerValidResponse{}, client.putIntegerValidHandleError(resp)
+		return ArrayClientPutIntegerValidResponse{}, client.putIntegerValidHandleError(resp)
 	}
-	return ArrayPutIntegerValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutIntegerValidResponse{RawResponse: resp}, nil
 }
 
 // putIntegerValidCreateRequest creates the PutIntegerValid request.
-func (client *ArrayClient) putIntegerValidCreateRequest(ctx context.Context, arrayBody []*int32, options *ArrayPutIntegerValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putIntegerValidCreateRequest(ctx context.Context, arrayBody []*int32, options *ArrayClientPutIntegerValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/integer/1.-1.3.300"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3300,24 +3316,24 @@ func (client *ArrayClient) putIntegerValidHandleError(resp *http.Response) error
 
 // PutLongValid - Set array value empty [1, -1, 3, 300]
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutLongValidOptions contains the optional parameters for the ArrayClient.PutLongValid method.
-func (client *ArrayClient) PutLongValid(ctx context.Context, arrayBody []*int64, options *ArrayPutLongValidOptions) (ArrayPutLongValidResponse, error) {
+// options - ArrayClientPutLongValidOptions contains the optional parameters for the ArrayClient.PutLongValid method.
+func (client *ArrayClient) PutLongValid(ctx context.Context, arrayBody []*int64, options *ArrayClientPutLongValidOptions) (ArrayClientPutLongValidResponse, error) {
 	req, err := client.putLongValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutLongValidResponse{}, err
+		return ArrayClientPutLongValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutLongValidResponse{}, err
+		return ArrayClientPutLongValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutLongValidResponse{}, client.putLongValidHandleError(resp)
+		return ArrayClientPutLongValidResponse{}, client.putLongValidHandleError(resp)
 	}
-	return ArrayPutLongValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutLongValidResponse{RawResponse: resp}, nil
 }
 
 // putLongValidCreateRequest creates the PutLongValid request.
-func (client *ArrayClient) putLongValidCreateRequest(ctx context.Context, arrayBody []*int64, options *ArrayPutLongValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putLongValidCreateRequest(ctx context.Context, arrayBody []*int64, options *ArrayClientPutLongValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/long/1.-1.3.300"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3342,24 +3358,25 @@ func (client *ArrayClient) putLongValidHandleError(resp *http.Response) error {
 
 // PutStringEnumValid - Set array value ['foo1', 'foo2', 'foo3']
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutStringEnumValidOptions contains the optional parameters for the ArrayClient.PutStringEnumValid method.
-func (client *ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []*Enum1, options *ArrayPutStringEnumValidOptions) (ArrayPutStringEnumValidResponse, error) {
+// options - ArrayClientPutStringEnumValidOptions contains the optional parameters for the ArrayClient.PutStringEnumValid
+// method.
+func (client *ArrayClient) PutStringEnumValid(ctx context.Context, arrayBody []*Enum1, options *ArrayClientPutStringEnumValidOptions) (ArrayClientPutStringEnumValidResponse, error) {
 	req, err := client.putStringEnumValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutStringEnumValidResponse{}, err
+		return ArrayClientPutStringEnumValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutStringEnumValidResponse{}, err
+		return ArrayClientPutStringEnumValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutStringEnumValidResponse{}, client.putStringEnumValidHandleError(resp)
+		return ArrayClientPutStringEnumValidResponse{}, client.putStringEnumValidHandleError(resp)
 	}
-	return ArrayPutStringEnumValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutStringEnumValidResponse{RawResponse: resp}, nil
 }
 
 // putStringEnumValidCreateRequest creates the PutStringEnumValid request.
-func (client *ArrayClient) putStringEnumValidCreateRequest(ctx context.Context, arrayBody []*Enum1, options *ArrayPutStringEnumValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putStringEnumValidCreateRequest(ctx context.Context, arrayBody []*Enum1, options *ArrayClientPutStringEnumValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string-enum/foo1.foo2.foo3"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3384,24 +3401,24 @@ func (client *ArrayClient) putStringEnumValidHandleError(resp *http.Response) er
 
 // PutStringValid - Set array value ['foo1', 'foo2', 'foo3']
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutStringValidOptions contains the optional parameters for the ArrayClient.PutStringValid method.
-func (client *ArrayClient) PutStringValid(ctx context.Context, arrayBody []*string, options *ArrayPutStringValidOptions) (ArrayPutStringValidResponse, error) {
+// options - ArrayClientPutStringValidOptions contains the optional parameters for the ArrayClient.PutStringValid method.
+func (client *ArrayClient) PutStringValid(ctx context.Context, arrayBody []*string, options *ArrayClientPutStringValidOptions) (ArrayClientPutStringValidResponse, error) {
 	req, err := client.putStringValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutStringValidResponse{}, err
+		return ArrayClientPutStringValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutStringValidResponse{}, err
+		return ArrayClientPutStringValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutStringValidResponse{}, client.putStringValidHandleError(resp)
+		return ArrayClientPutStringValidResponse{}, client.putStringValidHandleError(resp)
 	}
-	return ArrayPutStringValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutStringValidResponse{RawResponse: resp}, nil
 }
 
 // putStringValidCreateRequest creates the PutStringValid request.
-func (client *ArrayClient) putStringValidCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayPutStringValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putStringValidCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayClientPutStringValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/string/foo1.foo2.foo3"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3426,24 +3443,24 @@ func (client *ArrayClient) putStringValidHandleError(resp *http.Response) error 
 
 // PutUUIDValid - Set array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 // If the operation fails it returns the *Error error type.
-// options - ArrayPutUUIDValidOptions contains the optional parameters for the ArrayClient.PutUUIDValid method.
-func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []*string, options *ArrayPutUUIDValidOptions) (ArrayPutUUIDValidResponse, error) {
+// options - ArrayClientPutUUIDValidOptions contains the optional parameters for the ArrayClient.PutUUIDValid method.
+func (client *ArrayClient) PutUUIDValid(ctx context.Context, arrayBody []*string, options *ArrayClientPutUUIDValidOptions) (ArrayClientPutUUIDValidResponse, error) {
 	req, err := client.putUUIDValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return ArrayPutUUIDValidResponse{}, err
+		return ArrayClientPutUUIDValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutUUIDValidResponse{}, err
+		return ArrayClientPutUUIDValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutUUIDValidResponse{}, client.putUUIDValidHandleError(resp)
+		return ArrayClientPutUUIDValidResponse{}, client.putUUIDValidHandleError(resp)
 	}
-	return ArrayPutUUIDValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutUUIDValidResponse{RawResponse: resp}, nil
 }
 
 // putUUIDValidCreateRequest creates the PutUUIDValid request.
-func (client *ArrayClient) putUUIDValidCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayPutUUIDValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putUUIDValidCreateRequest(ctx context.Context, arrayBody []*string, options *ArrayClientPutUUIDValidOptions) (*policy.Request, error) {
 	urlPath := "/array/prim/uuid/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

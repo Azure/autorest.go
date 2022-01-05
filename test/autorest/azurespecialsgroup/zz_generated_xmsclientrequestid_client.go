@@ -39,24 +39,24 @@ func NewXMSClientRequestIDClient(options *azcore.ClientOptions) *XMSClientReques
 
 // Get - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
 // If the operation fails it returns a generic error.
-// options - XMSClientRequestIDGetOptions contains the optional parameters for the XMSClientRequestIDClient.Get method.
-func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSClientRequestIDGetOptions) (XMSClientRequestIDGetResponse, error) {
+// options - XMSClientRequestIDClientGetOptions contains the optional parameters for the XMSClientRequestIDClient.Get method.
+func (client *XMSClientRequestIDClient) Get(ctx context.Context, options *XMSClientRequestIDClientGetOptions) (XMSClientRequestIDClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return XMSClientRequestIDGetResponse{}, err
+		return XMSClientRequestIDClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return XMSClientRequestIDGetResponse{}, err
+		return XMSClientRequestIDClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMSClientRequestIDGetResponse{}, client.getHandleError(resp)
+		return XMSClientRequestIDClientGetResponse{}, client.getHandleError(resp)
 	}
-	return XMSClientRequestIDGetResponse{RawResponse: resp}, nil
+	return XMSClientRequestIDClientGetResponse{RawResponse: resp}, nil
 }
 
 // getCreateRequest creates the Get request.
-func (client *XMSClientRequestIDClient) getCreateRequest(ctx context.Context, options *XMSClientRequestIDGetOptions) (*policy.Request, error) {
+func (client *XMSClientRequestIDClient) getCreateRequest(ctx context.Context, options *XMSClientRequestIDClientGetOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/method/"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -80,25 +80,25 @@ func (client *XMSClientRequestIDClient) getHandleError(resp *http.Response) erro
 // ParamGet - Get method that overwrites x-ms-client-request header with value 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
 // If the operation fails it returns the *Error error type.
 // xmsClientRequestID - This should appear as a method parameter, use value '9C4D50EE-2D56-4CD3-8152-34347DC9F2B0'
-// options - XMSClientRequestIDParamGetOptions contains the optional parameters for the XMSClientRequestIDClient.ParamGet
+// options - XMSClientRequestIDClientParamGetOptions contains the optional parameters for the XMSClientRequestIDClient.ParamGet
 // method.
-func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientRequestID string, options *XMSClientRequestIDParamGetOptions) (XMSClientRequestIDParamGetResponse, error) {
+func (client *XMSClientRequestIDClient) ParamGet(ctx context.Context, xmsClientRequestID string, options *XMSClientRequestIDClientParamGetOptions) (XMSClientRequestIDClientParamGetResponse, error) {
 	req, err := client.paramGetCreateRequest(ctx, xmsClientRequestID, options)
 	if err != nil {
-		return XMSClientRequestIDParamGetResponse{}, err
+		return XMSClientRequestIDClientParamGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return XMSClientRequestIDParamGetResponse{}, err
+		return XMSClientRequestIDClientParamGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return XMSClientRequestIDParamGetResponse{}, client.paramGetHandleError(resp)
+		return XMSClientRequestIDClientParamGetResponse{}, client.paramGetHandleError(resp)
 	}
-	return XMSClientRequestIDParamGetResponse{RawResponse: resp}, nil
+	return XMSClientRequestIDClientParamGetResponse{RawResponse: resp}, nil
 }
 
 // paramGetCreateRequest creates the ParamGet request.
-func (client *XMSClientRequestIDClient) paramGetCreateRequest(ctx context.Context, xmsClientRequestID string, options *XMSClientRequestIDParamGetOptions) (*policy.Request, error) {
+func (client *XMSClientRequestIDClient) paramGetCreateRequest(ctx context.Context, xmsClientRequestID string, options *XMSClientRequestIDClientParamGetOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/overwrite/x-ms-client-request-id/via-param/method/"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -56,21 +56,21 @@ func NewVirtualMachineExtensionsClient(subscriptionID string, credential azcore.
 // vmName - The name of the virtual machine where the extension should be created or updated.
 // vmExtensionName - The name of the virtual machine extension.
 // extensionParameters - Parameters supplied to the Create Virtual Machine Extension operation.
-// options - VirtualMachineExtensionsBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineExtensionsClient.BeginCreateOrUpdate
+// options - VirtualMachineExtensionsClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualMachineExtensionsClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualMachineExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineExtensionsBeginCreateOrUpdateOptions) (VirtualMachineExtensionsCreateOrUpdatePollerResponse, error) {
+func (client *VirtualMachineExtensionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineExtensionsClientBeginCreateOrUpdateOptions) (VirtualMachineExtensionsClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)
 	if err != nil {
-		return VirtualMachineExtensionsCreateOrUpdatePollerResponse{}, err
+		return VirtualMachineExtensionsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualMachineExtensionsCreateOrUpdatePollerResponse{
+	result := VirtualMachineExtensionsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachineExtensionsClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return VirtualMachineExtensionsCreateOrUpdatePollerResponse{}, err
+		return VirtualMachineExtensionsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &VirtualMachineExtensionsCreateOrUpdatePoller{
+	result.Poller = &VirtualMachineExtensionsClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *VirtualMachineExtensionsClient) BeginCreateOrUpdate(ctx context.Co
 
 // CreateOrUpdate - The operation to create or update the extension.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineExtensionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineExtensionsBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VirtualMachineExtensionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineExtensionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *VirtualMachineExtensionsClient) createOrUpdate(ctx context.Context
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualMachineExtensionsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineExtensionsBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *VirtualMachineExtensionsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineExtensionsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -140,21 +140,21 @@ func (client *VirtualMachineExtensionsClient) createOrUpdateHandleError(resp *ht
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine where the extension should be deleted.
 // vmExtensionName - The name of the virtual machine extension.
-// options - VirtualMachineExtensionsBeginDeleteOptions contains the optional parameters for the VirtualMachineExtensionsClient.BeginDelete
+// options - VirtualMachineExtensionsClientBeginDeleteOptions contains the optional parameters for the VirtualMachineExtensionsClient.BeginDelete
 // method.
-func (client *VirtualMachineExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsBeginDeleteOptions) (VirtualMachineExtensionsDeletePollerResponse, error) {
+func (client *VirtualMachineExtensionsClient) BeginDelete(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsClientBeginDeleteOptions) (VirtualMachineExtensionsClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, vmName, vmExtensionName, options)
 	if err != nil {
-		return VirtualMachineExtensionsDeletePollerResponse{}, err
+		return VirtualMachineExtensionsClientDeletePollerResponse{}, err
 	}
-	result := VirtualMachineExtensionsDeletePollerResponse{
+	result := VirtualMachineExtensionsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachineExtensionsClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return VirtualMachineExtensionsDeletePollerResponse{}, err
+		return VirtualMachineExtensionsClientDeletePollerResponse{}, err
 	}
-	result.Poller = &VirtualMachineExtensionsDeletePoller{
+	result.Poller = &VirtualMachineExtensionsClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -162,7 +162,7 @@ func (client *VirtualMachineExtensionsClient) BeginDelete(ctx context.Context, r
 
 // Delete - The operation to delete the extension.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineExtensionsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsBeginDeleteOptions) (*http.Response, error) {
+func (client *VirtualMachineExtensionsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName, options)
 	if err != nil {
 		return nil, err
@@ -178,7 +178,7 @@ func (client *VirtualMachineExtensionsClient) deleteOperation(ctx context.Contex
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *VirtualMachineExtensionsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsBeginDeleteOptions) (*policy.Request, error) {
+func (client *VirtualMachineExtensionsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -223,25 +223,25 @@ func (client *VirtualMachineExtensionsClient) deleteHandleError(resp *http.Respo
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine containing the extension.
 // vmExtensionName - The name of the virtual machine extension.
-// options - VirtualMachineExtensionsGetOptions contains the optional parameters for the VirtualMachineExtensionsClient.Get
+// options - VirtualMachineExtensionsClientGetOptions contains the optional parameters for the VirtualMachineExtensionsClient.Get
 // method.
-func (client *VirtualMachineExtensionsClient) Get(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsGetOptions) (VirtualMachineExtensionsGetResponse, error) {
+func (client *VirtualMachineExtensionsClient) Get(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsClientGetOptions) (VirtualMachineExtensionsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName, options)
 	if err != nil {
-		return VirtualMachineExtensionsGetResponse{}, err
+		return VirtualMachineExtensionsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachineExtensionsGetResponse{}, err
+		return VirtualMachineExtensionsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineExtensionsGetResponse{}, client.getHandleError(resp)
+		return VirtualMachineExtensionsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualMachineExtensionsClient) getCreateRequest(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsGetOptions) (*policy.Request, error) {
+func (client *VirtualMachineExtensionsClient) getCreateRequest(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -274,10 +274,10 @@ func (client *VirtualMachineExtensionsClient) getCreateRequest(ctx context.Conte
 }
 
 // getHandleResponse handles the Get response.
-func (client *VirtualMachineExtensionsClient) getHandleResponse(resp *http.Response) (VirtualMachineExtensionsGetResponse, error) {
-	result := VirtualMachineExtensionsGetResponse{RawResponse: resp}
+func (client *VirtualMachineExtensionsClient) getHandleResponse(resp *http.Response) (VirtualMachineExtensionsClientGetResponse, error) {
+	result := VirtualMachineExtensionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtension); err != nil {
-		return VirtualMachineExtensionsGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineExtensionsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -298,25 +298,25 @@ func (client *VirtualMachineExtensionsClient) getHandleError(resp *http.Response
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine containing the extension.
-// options - VirtualMachineExtensionsListOptions contains the optional parameters for the VirtualMachineExtensionsClient.List
+// options - VirtualMachineExtensionsClientListOptions contains the optional parameters for the VirtualMachineExtensionsClient.List
 // method.
-func (client *VirtualMachineExtensionsClient) List(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachineExtensionsListOptions) (VirtualMachineExtensionsListResponse, error) {
+func (client *VirtualMachineExtensionsClient) List(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachineExtensionsClientListOptions) (VirtualMachineExtensionsClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, vmName, options)
 	if err != nil {
-		return VirtualMachineExtensionsListResponse{}, err
+		return VirtualMachineExtensionsClientListResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachineExtensionsListResponse{}, err
+		return VirtualMachineExtensionsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineExtensionsListResponse{}, client.listHandleError(resp)
+		return VirtualMachineExtensionsClientListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualMachineExtensionsClient) listCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachineExtensionsListOptions) (*policy.Request, error) {
+func (client *VirtualMachineExtensionsClient) listCreateRequest(ctx context.Context, resourceGroupName string, vmName string, options *VirtualMachineExtensionsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -345,10 +345,10 @@ func (client *VirtualMachineExtensionsClient) listCreateRequest(ctx context.Cont
 }
 
 // listHandleResponse handles the List response.
-func (client *VirtualMachineExtensionsClient) listHandleResponse(resp *http.Response) (VirtualMachineExtensionsListResponse, error) {
-	result := VirtualMachineExtensionsListResponse{RawResponse: resp}
+func (client *VirtualMachineExtensionsClient) listHandleResponse(resp *http.Response) (VirtualMachineExtensionsClientListResponse, error) {
+	result := VirtualMachineExtensionsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtensionsListResult); err != nil {
-		return VirtualMachineExtensionsListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineExtensionsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -371,21 +371,21 @@ func (client *VirtualMachineExtensionsClient) listHandleError(resp *http.Respons
 // vmName - The name of the virtual machine where the extension should be updated.
 // vmExtensionName - The name of the virtual machine extension.
 // extensionParameters - Parameters supplied to the Update Virtual Machine Extension operation.
-// options - VirtualMachineExtensionsBeginUpdateOptions contains the optional parameters for the VirtualMachineExtensionsClient.BeginUpdate
+// options - VirtualMachineExtensionsClientBeginUpdateOptions contains the optional parameters for the VirtualMachineExtensionsClient.BeginUpdate
 // method.
-func (client *VirtualMachineExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineExtensionsBeginUpdateOptions) (VirtualMachineExtensionsUpdatePollerResponse, error) {
+func (client *VirtualMachineExtensionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineExtensionsClientBeginUpdateOptions) (VirtualMachineExtensionsClientUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)
 	if err != nil {
-		return VirtualMachineExtensionsUpdatePollerResponse{}, err
+		return VirtualMachineExtensionsClientUpdatePollerResponse{}, err
 	}
-	result := VirtualMachineExtensionsUpdatePollerResponse{
+	result := VirtualMachineExtensionsClientUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualMachineExtensionsClient.Update", "", resp, client.pl, client.updateHandleError)
 	if err != nil {
-		return VirtualMachineExtensionsUpdatePollerResponse{}, err
+		return VirtualMachineExtensionsClientUpdatePollerResponse{}, err
 	}
-	result.Poller = &VirtualMachineExtensionsUpdatePoller{
+	result.Poller = &VirtualMachineExtensionsClientUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -393,7 +393,7 @@ func (client *VirtualMachineExtensionsClient) BeginUpdate(ctx context.Context, r
 
 // Update - The operation to update the extension.
 // If the operation fails it returns a generic error.
-func (client *VirtualMachineExtensionsClient) update(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineExtensionsBeginUpdateOptions) (*http.Response, error) {
+func (client *VirtualMachineExtensionsClient) update(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineExtensionsClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)
 	if err != nil {
 		return nil, err
@@ -409,7 +409,7 @@ func (client *VirtualMachineExtensionsClient) update(ctx context.Context, resour
 }
 
 // updateCreateRequest creates the Update request.
-func (client *VirtualMachineExtensionsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineExtensionsBeginUpdateOptions) (*policy.Request, error) {
+func (client *VirtualMachineExtensionsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineExtensionsClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

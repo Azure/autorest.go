@@ -10,63 +10,63 @@ package azurespecialsgroup
 
 import "net/http"
 
-// APIVersionDefaultGetMethodGlobalNotProvidedValidResponse contains the response from method APIVersionDefault.GetMethodGlobalNotProvidedValid.
-type APIVersionDefaultGetMethodGlobalNotProvidedValidResponse struct {
+// APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse contains the response from method APIVersionDefaultClient.GetMethodGlobalNotProvidedValid.
+type APIVersionDefaultClientGetMethodGlobalNotProvidedValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// APIVersionDefaultGetMethodGlobalValidResponse contains the response from method APIVersionDefault.GetMethodGlobalValid.
-type APIVersionDefaultGetMethodGlobalValidResponse struct {
+// APIVersionDefaultClientGetMethodGlobalValidResponse contains the response from method APIVersionDefaultClient.GetMethodGlobalValid.
+type APIVersionDefaultClientGetMethodGlobalValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// APIVersionDefaultGetPathGlobalValidResponse contains the response from method APIVersionDefault.GetPathGlobalValid.
-type APIVersionDefaultGetPathGlobalValidResponse struct {
+// APIVersionDefaultClientGetPathGlobalValidResponse contains the response from method APIVersionDefaultClient.GetPathGlobalValid.
+type APIVersionDefaultClientGetPathGlobalValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// APIVersionDefaultGetSwaggerGlobalValidResponse contains the response from method APIVersionDefault.GetSwaggerGlobalValid.
-type APIVersionDefaultGetSwaggerGlobalValidResponse struct {
+// APIVersionDefaultClientGetSwaggerGlobalValidResponse contains the response from method APIVersionDefaultClient.GetSwaggerGlobalValid.
+type APIVersionDefaultClientGetSwaggerGlobalValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// APIVersionLocalGetMethodLocalNullResponse contains the response from method APIVersionLocal.GetMethodLocalNull.
-type APIVersionLocalGetMethodLocalNullResponse struct {
+// APIVersionLocalClientGetMethodLocalNullResponse contains the response from method APIVersionLocalClient.GetMethodLocalNull.
+type APIVersionLocalClientGetMethodLocalNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// APIVersionLocalGetMethodLocalValidResponse contains the response from method APIVersionLocal.GetMethodLocalValid.
-type APIVersionLocalGetMethodLocalValidResponse struct {
+// APIVersionLocalClientGetMethodLocalValidResponse contains the response from method APIVersionLocalClient.GetMethodLocalValid.
+type APIVersionLocalClientGetMethodLocalValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// APIVersionLocalGetPathLocalValidResponse contains the response from method APIVersionLocal.GetPathLocalValid.
-type APIVersionLocalGetPathLocalValidResponse struct {
+// APIVersionLocalClientGetPathLocalValidResponse contains the response from method APIVersionLocalClient.GetPathLocalValid.
+type APIVersionLocalClientGetPathLocalValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// APIVersionLocalGetSwaggerLocalValidResponse contains the response from method APIVersionLocal.GetSwaggerLocalValid.
-type APIVersionLocalGetSwaggerLocalValidResponse struct {
+// APIVersionLocalClientGetSwaggerLocalValidResponse contains the response from method APIVersionLocalClient.GetSwaggerLocalValid.
+type APIVersionLocalClientGetSwaggerLocalValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// HeaderCustomNamedRequestIDHeadResponse contains the response from method Header.CustomNamedRequestIDHead.
-type HeaderCustomNamedRequestIDHeadResponse struct {
-	HeaderCustomNamedRequestIDHeadResult
+// HeaderClientCustomNamedRequestIDHeadResponse contains the response from method HeaderClient.CustomNamedRequestIDHead.
+type HeaderClientCustomNamedRequestIDHeadResponse struct {
+	HeaderClientCustomNamedRequestIDHeadResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// HeaderCustomNamedRequestIDHeadResult contains the result from method Header.CustomNamedRequestIDHead.
-type HeaderCustomNamedRequestIDHeadResult struct {
+// HeaderClientCustomNamedRequestIDHeadResult contains the result from method HeaderClient.CustomNamedRequestIDHead.
+type HeaderClientCustomNamedRequestIDHeadResult struct {
 	// FooRequestID contains the information returned from the foo-request-id header response.
 	FooRequestID *string
 
@@ -74,142 +74,142 @@ type HeaderCustomNamedRequestIDHeadResult struct {
 	Success bool
 }
 
-// HeaderCustomNamedRequestIDParamGroupingResponse contains the response from method Header.CustomNamedRequestIDParamGrouping.
-type HeaderCustomNamedRequestIDParamGroupingResponse struct {
-	HeaderCustomNamedRequestIDParamGroupingResult
+// HeaderClientCustomNamedRequestIDParamGroupingResponse contains the response from method HeaderClient.CustomNamedRequestIDParamGrouping.
+type HeaderClientCustomNamedRequestIDParamGroupingResponse struct {
+	HeaderClientCustomNamedRequestIDParamGroupingResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// HeaderCustomNamedRequestIDParamGroupingResult contains the result from method Header.CustomNamedRequestIDParamGrouping.
-type HeaderCustomNamedRequestIDParamGroupingResult struct {
+// HeaderClientCustomNamedRequestIDParamGroupingResult contains the result from method HeaderClient.CustomNamedRequestIDParamGrouping.
+type HeaderClientCustomNamedRequestIDParamGroupingResult struct {
 	// FooRequestID contains the information returned from the foo-request-id header response.
 	FooRequestID *string
 }
 
-// HeaderCustomNamedRequestIDResponse contains the response from method Header.CustomNamedRequestID.
-type HeaderCustomNamedRequestIDResponse struct {
-	HeaderCustomNamedRequestIDResult
+// HeaderClientCustomNamedRequestIDResponse contains the response from method HeaderClient.CustomNamedRequestID.
+type HeaderClientCustomNamedRequestIDResponse struct {
+	HeaderClientCustomNamedRequestIDResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// HeaderCustomNamedRequestIDResult contains the result from method Header.CustomNamedRequestID.
-type HeaderCustomNamedRequestIDResult struct {
+// HeaderClientCustomNamedRequestIDResult contains the result from method HeaderClient.CustomNamedRequestID.
+type HeaderClientCustomNamedRequestIDResult struct {
 	// FooRequestID contains the information returned from the foo-request-id header response.
 	FooRequestID *string
 }
 
-// ODataGetWithFilterResponse contains the response from method OData.GetWithFilter.
-type ODataGetWithFilterResponse struct {
+// ODataClientGetWithFilterResponse contains the response from method ODataClient.GetWithFilter.
+type ODataClientGetWithFilterResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SkipURLEncodingGetMethodPathValidResponse contains the response from method SkipURLEncoding.GetMethodPathValid.
-type SkipURLEncodingGetMethodPathValidResponse struct {
+// SkipURLEncodingClientGetMethodPathValidResponse contains the response from method SkipURLEncodingClient.GetMethodPathValid.
+type SkipURLEncodingClientGetMethodPathValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SkipURLEncodingGetMethodQueryNullResponse contains the response from method SkipURLEncoding.GetMethodQueryNull.
-type SkipURLEncodingGetMethodQueryNullResponse struct {
+// SkipURLEncodingClientGetMethodQueryNullResponse contains the response from method SkipURLEncodingClient.GetMethodQueryNull.
+type SkipURLEncodingClientGetMethodQueryNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SkipURLEncodingGetMethodQueryValidResponse contains the response from method SkipURLEncoding.GetMethodQueryValid.
-type SkipURLEncodingGetMethodQueryValidResponse struct {
+// SkipURLEncodingClientGetMethodQueryValidResponse contains the response from method SkipURLEncodingClient.GetMethodQueryValid.
+type SkipURLEncodingClientGetMethodQueryValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SkipURLEncodingGetPathQueryValidResponse contains the response from method SkipURLEncoding.GetPathQueryValid.
-type SkipURLEncodingGetPathQueryValidResponse struct {
+// SkipURLEncodingClientGetPathQueryValidResponse contains the response from method SkipURLEncodingClient.GetPathQueryValid.
+type SkipURLEncodingClientGetPathQueryValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SkipURLEncodingGetPathValidResponse contains the response from method SkipURLEncoding.GetPathValid.
-type SkipURLEncodingGetPathValidResponse struct {
+// SkipURLEncodingClientGetPathValidResponse contains the response from method SkipURLEncodingClient.GetPathValid.
+type SkipURLEncodingClientGetPathValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SkipURLEncodingGetSwaggerPathValidResponse contains the response from method SkipURLEncoding.GetSwaggerPathValid.
-type SkipURLEncodingGetSwaggerPathValidResponse struct {
+// SkipURLEncodingClientGetSwaggerPathValidResponse contains the response from method SkipURLEncodingClient.GetSwaggerPathValid.
+type SkipURLEncodingClientGetSwaggerPathValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SkipURLEncodingGetSwaggerQueryValidResponse contains the response from method SkipURLEncoding.GetSwaggerQueryValid.
-type SkipURLEncodingGetSwaggerQueryValidResponse struct {
+// SkipURLEncodingClientGetSwaggerQueryValidResponse contains the response from method SkipURLEncodingClient.GetSwaggerQueryValid.
+type SkipURLEncodingClientGetSwaggerQueryValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SubscriptionInCredentialsPostMethodGlobalNotProvidedValidResponse contains the response from method SubscriptionInCredentials.PostMethodGlobalNotProvidedValid.
-type SubscriptionInCredentialsPostMethodGlobalNotProvidedValidResponse struct {
+// SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidResponse contains the response from method SubscriptionInCredentialsClient.PostMethodGlobalNotProvidedValid.
+type SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SubscriptionInCredentialsPostMethodGlobalNullResponse contains the response from method SubscriptionInCredentials.PostMethodGlobalNull.
-type SubscriptionInCredentialsPostMethodGlobalNullResponse struct {
+// SubscriptionInCredentialsClientPostMethodGlobalNullResponse contains the response from method SubscriptionInCredentialsClient.PostMethodGlobalNull.
+type SubscriptionInCredentialsClientPostMethodGlobalNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SubscriptionInCredentialsPostMethodGlobalValidResponse contains the response from method SubscriptionInCredentials.PostMethodGlobalValid.
-type SubscriptionInCredentialsPostMethodGlobalValidResponse struct {
+// SubscriptionInCredentialsClientPostMethodGlobalValidResponse contains the response from method SubscriptionInCredentialsClient.PostMethodGlobalValid.
+type SubscriptionInCredentialsClientPostMethodGlobalValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SubscriptionInCredentialsPostPathGlobalValidResponse contains the response from method SubscriptionInCredentials.PostPathGlobalValid.
-type SubscriptionInCredentialsPostPathGlobalValidResponse struct {
+// SubscriptionInCredentialsClientPostPathGlobalValidResponse contains the response from method SubscriptionInCredentialsClient.PostPathGlobalValid.
+type SubscriptionInCredentialsClientPostPathGlobalValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SubscriptionInCredentialsPostSwaggerGlobalValidResponse contains the response from method SubscriptionInCredentials.PostSwaggerGlobalValid.
-type SubscriptionInCredentialsPostSwaggerGlobalValidResponse struct {
+// SubscriptionInCredentialsClientPostSwaggerGlobalValidResponse contains the response from method SubscriptionInCredentialsClient.PostSwaggerGlobalValid.
+type SubscriptionInCredentialsClientPostSwaggerGlobalValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SubscriptionInMethodPostMethodLocalNullResponse contains the response from method SubscriptionInMethod.PostMethodLocalNull.
-type SubscriptionInMethodPostMethodLocalNullResponse struct {
+// SubscriptionInMethodClientPostMethodLocalNullResponse contains the response from method SubscriptionInMethodClient.PostMethodLocalNull.
+type SubscriptionInMethodClientPostMethodLocalNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SubscriptionInMethodPostMethodLocalValidResponse contains the response from method SubscriptionInMethod.PostMethodLocalValid.
-type SubscriptionInMethodPostMethodLocalValidResponse struct {
+// SubscriptionInMethodClientPostMethodLocalValidResponse contains the response from method SubscriptionInMethodClient.PostMethodLocalValid.
+type SubscriptionInMethodClientPostMethodLocalValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SubscriptionInMethodPostPathLocalValidResponse contains the response from method SubscriptionInMethod.PostPathLocalValid.
-type SubscriptionInMethodPostPathLocalValidResponse struct {
+// SubscriptionInMethodClientPostPathLocalValidResponse contains the response from method SubscriptionInMethodClient.PostPathLocalValid.
+type SubscriptionInMethodClientPostPathLocalValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// SubscriptionInMethodPostSwaggerLocalValidResponse contains the response from method SubscriptionInMethod.PostSwaggerLocalValid.
-type SubscriptionInMethodPostSwaggerLocalValidResponse struct {
+// SubscriptionInMethodClientPostSwaggerLocalValidResponse contains the response from method SubscriptionInMethodClient.PostSwaggerLocalValid.
+type SubscriptionInMethodClientPostSwaggerLocalValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// XMSClientRequestIDGetResponse contains the response from method XMSClientRequestID.Get.
-type XMSClientRequestIDGetResponse struct {
+// XMSClientRequestIDClientGetResponse contains the response from method XMSClientRequestIDClient.Get.
+type XMSClientRequestIDClientGetResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// XMSClientRequestIDParamGetResponse contains the response from method XMSClientRequestID.ParamGet.
-type XMSClientRequestIDParamGetResponse struct {
+// XMSClientRequestIDClientParamGetResponse contains the response from method XMSClientRequestIDClient.ParamGet.
+type XMSClientRequestIDClientParamGetResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

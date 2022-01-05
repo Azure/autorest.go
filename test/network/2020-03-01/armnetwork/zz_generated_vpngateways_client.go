@@ -56,21 +56,21 @@ func NewVPNGatewaysClient(subscriptionID string, credential azcore.TokenCredenti
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // vpnGatewayParameters - Parameters supplied to create or Update a virtual wan vpn gateway.
-// options - VPNGatewaysBeginCreateOrUpdateOptions contains the optional parameters for the VPNGatewaysClient.BeginCreateOrUpdate
+// options - VPNGatewaysClientBeginCreateOrUpdateOptions contains the optional parameters for the VPNGatewaysClient.BeginCreateOrUpdate
 // method.
-func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VPNGateway, options *VPNGatewaysBeginCreateOrUpdateOptions) (VPNGatewaysCreateOrUpdatePollerResponse, error) {
+func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VPNGateway, options *VPNGatewaysClientBeginCreateOrUpdateOptions) (VPNGatewaysClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, gatewayName, vpnGatewayParameters, options)
 	if err != nil {
-		return VPNGatewaysCreateOrUpdatePollerResponse{}, err
+		return VPNGatewaysClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VPNGatewaysCreateOrUpdatePollerResponse{
+	result := VPNGatewaysClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VPNGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return VPNGatewaysCreateOrUpdatePollerResponse{}, err
+		return VPNGatewaysClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &VPNGatewaysCreateOrUpdatePoller{
+	result.Poller = &VPNGatewaysClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 
 // CreateOrUpdate - Creates a virtual wan vpn gateway if it doesn't exist else updates the existing gateway.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VPNGateway, options *VPNGatewaysBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VPNGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VPNGateway, options *VPNGatewaysClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, gatewayName, vpnGatewayParameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *VPNGatewaysClient) createOrUpdate(ctx context.Context, resourceGro
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VPNGatewaysClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VPNGateway, options *VPNGatewaysBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *VPNGatewaysClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VPNGateway, options *VPNGatewaysClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -136,20 +136,20 @@ func (client *VPNGatewaysClient) createOrUpdateHandleError(resp *http.Response) 
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
-// options - VPNGatewaysBeginDeleteOptions contains the optional parameters for the VPNGatewaysClient.BeginDelete method.
-func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysBeginDeleteOptions) (VPNGatewaysDeletePollerResponse, error) {
+// options - VPNGatewaysClientBeginDeleteOptions contains the optional parameters for the VPNGatewaysClient.BeginDelete method.
+func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginDeleteOptions) (VPNGatewaysClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
-		return VPNGatewaysDeletePollerResponse{}, err
+		return VPNGatewaysClientDeletePollerResponse{}, err
 	}
-	result := VPNGatewaysDeletePollerResponse{
+	result := VPNGatewaysClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VPNGatewaysClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return VPNGatewaysDeletePollerResponse{}, err
+		return VPNGatewaysClientDeletePollerResponse{}, err
 	}
-	result.Poller = &VPNGatewaysDeletePoller{
+	result.Poller = &VPNGatewaysClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -157,7 +157,7 @@ func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 
 // Delete - Deletes a virtual wan vpn gateway.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysBeginDeleteOptions) (*http.Response, error) {
+func (client *VPNGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
 		return nil, err
@@ -173,7 +173,7 @@ func (client *VPNGatewaysClient) deleteOperation(ctx context.Context, resourceGr
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *VPNGatewaysClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysBeginDeleteOptions) (*policy.Request, error) {
+func (client *VPNGatewaysClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -215,24 +215,24 @@ func (client *VPNGatewaysClient) deleteHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
-// options - VPNGatewaysGetOptions contains the optional parameters for the VPNGatewaysClient.Get method.
-func (client *VPNGatewaysClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysGetOptions) (VPNGatewaysGetResponse, error) {
+// options - VPNGatewaysClientGetOptions contains the optional parameters for the VPNGatewaysClient.Get method.
+func (client *VPNGatewaysClient) Get(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientGetOptions) (VPNGatewaysClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
-		return VPNGatewaysGetResponse{}, err
+		return VPNGatewaysClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VPNGatewaysGetResponse{}, err
+		return VPNGatewaysClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VPNGatewaysGetResponse{}, client.getHandleError(resp)
+		return VPNGatewaysClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *VPNGatewaysClient) getCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysGetOptions) (*policy.Request, error) {
+func (client *VPNGatewaysClient) getCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -258,10 +258,10 @@ func (client *VPNGatewaysClient) getCreateRequest(ctx context.Context, resourceG
 }
 
 // getHandleResponse handles the Get response.
-func (client *VPNGatewaysClient) getHandleResponse(resp *http.Response) (VPNGatewaysGetResponse, error) {
-	result := VPNGatewaysGetResponse{RawResponse: resp}
+func (client *VPNGatewaysClient) getHandleResponse(resp *http.Response) (VPNGatewaysClientGetResponse, error) {
+	result := VPNGatewaysClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNGateway); err != nil {
-		return VPNGatewaysGetResponse{}, runtime.NewResponseError(err, resp)
+		return VPNGatewaysClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -281,21 +281,21 @@ func (client *VPNGatewaysClient) getHandleError(resp *http.Response) error {
 
 // List - Lists all the VpnGateways in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - VPNGatewaysListOptions contains the optional parameters for the VPNGatewaysClient.List method.
-func (client *VPNGatewaysClient) List(options *VPNGatewaysListOptions) *VPNGatewaysListPager {
-	return &VPNGatewaysListPager{
+// options - VPNGatewaysClientListOptions contains the optional parameters for the VPNGatewaysClient.List method.
+func (client *VPNGatewaysClient) List(options *VPNGatewaysClientListOptions) *VPNGatewaysClientListPager {
+	return &VPNGatewaysClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp VPNGatewaysListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp VPNGatewaysClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListVPNGatewaysResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *VPNGatewaysClient) listCreateRequest(ctx context.Context, options *VPNGatewaysListOptions) (*policy.Request, error) {
+func (client *VPNGatewaysClient) listCreateRequest(ctx context.Context, options *VPNGatewaysClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -313,10 +313,10 @@ func (client *VPNGatewaysClient) listCreateRequest(ctx context.Context, options 
 }
 
 // listHandleResponse handles the List response.
-func (client *VPNGatewaysClient) listHandleResponse(resp *http.Response) (VPNGatewaysListResponse, error) {
-	result := VPNGatewaysListResponse{RawResponse: resp}
+func (client *VPNGatewaysClient) listHandleResponse(resp *http.Response) (VPNGatewaysClientListResponse, error) {
+	result := VPNGatewaysClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNGatewaysResult); err != nil {
-		return VPNGatewaysListResponse{}, runtime.NewResponseError(err, resp)
+		return VPNGatewaysClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -337,22 +337,22 @@ func (client *VPNGatewaysClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Lists all the VpnGateways in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnGateway.
-// options - VPNGatewaysListByResourceGroupOptions contains the optional parameters for the VPNGatewaysClient.ListByResourceGroup
+// options - VPNGatewaysClientListByResourceGroupOptions contains the optional parameters for the VPNGatewaysClient.ListByResourceGroup
 // method.
-func (client *VPNGatewaysClient) ListByResourceGroup(resourceGroupName string, options *VPNGatewaysListByResourceGroupOptions) *VPNGatewaysListByResourceGroupPager {
-	return &VPNGatewaysListByResourceGroupPager{
+func (client *VPNGatewaysClient) ListByResourceGroup(resourceGroupName string, options *VPNGatewaysClientListByResourceGroupOptions) *VPNGatewaysClientListByResourceGroupPager {
+	return &VPNGatewaysClientListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp VPNGatewaysListByResourceGroupResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp VPNGatewaysClientListByResourceGroupResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListVPNGatewaysResult.NextLink)
 		},
 	}
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *VPNGatewaysClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *VPNGatewaysListByResourceGroupOptions) (*policy.Request, error) {
+func (client *VPNGatewaysClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *VPNGatewaysClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -374,10 +374,10 @@ func (client *VPNGatewaysClient) listByResourceGroupCreateRequest(ctx context.Co
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *VPNGatewaysClient) listByResourceGroupHandleResponse(resp *http.Response) (VPNGatewaysListByResourceGroupResponse, error) {
-	result := VPNGatewaysListByResourceGroupResponse{RawResponse: resp}
+func (client *VPNGatewaysClient) listByResourceGroupHandleResponse(resp *http.Response) (VPNGatewaysClientListByResourceGroupResponse, error) {
+	result := VPNGatewaysClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNGatewaysResult); err != nil {
-		return VPNGatewaysListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return VPNGatewaysClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -399,20 +399,20 @@ func (client *VPNGatewaysClient) listByResourceGroupHandleError(resp *http.Respo
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
-// options - VPNGatewaysBeginResetOptions contains the optional parameters for the VPNGatewaysClient.BeginReset method.
-func (client *VPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysBeginResetOptions) (VPNGatewaysResetPollerResponse, error) {
+// options - VPNGatewaysClientBeginResetOptions contains the optional parameters for the VPNGatewaysClient.BeginReset method.
+func (client *VPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginResetOptions) (VPNGatewaysClientResetPollerResponse, error) {
 	resp, err := client.reset(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
-		return VPNGatewaysResetPollerResponse{}, err
+		return VPNGatewaysClientResetPollerResponse{}, err
 	}
-	result := VPNGatewaysResetPollerResponse{
+	result := VPNGatewaysClientResetPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VPNGatewaysClient.Reset", "location", resp, client.pl, client.resetHandleError)
 	if err != nil {
-		return VPNGatewaysResetPollerResponse{}, err
+		return VPNGatewaysClientResetPollerResponse{}, err
 	}
-	result.Poller = &VPNGatewaysResetPoller{
+	result.Poller = &VPNGatewaysClientResetPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -420,7 +420,7 @@ func (client *VPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupNa
 
 // Reset - Resets the primary of the vpn gateway in the specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNGatewaysClient) reset(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysBeginResetOptions) (*http.Response, error) {
+func (client *VPNGatewaysClient) reset(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginResetOptions) (*http.Response, error) {
 	req, err := client.resetCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
 		return nil, err
@@ -436,7 +436,7 @@ func (client *VPNGatewaysClient) reset(ctx context.Context, resourceGroupName st
 }
 
 // resetCreateRequest creates the Reset request.
-func (client *VPNGatewaysClient) resetCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysBeginResetOptions) (*policy.Request, error) {
+func (client *VPNGatewaysClient) resetCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginResetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/reset"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -479,24 +479,24 @@ func (client *VPNGatewaysClient) resetHandleError(resp *http.Response) error {
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // vpnGatewayParameters - Parameters supplied to update a virtual wan vpn gateway tags.
-// options - VPNGatewaysUpdateTagsOptions contains the optional parameters for the VPNGatewaysClient.UpdateTags method.
-func (client *VPNGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters TagsObject, options *VPNGatewaysUpdateTagsOptions) (VPNGatewaysUpdateTagsResponse, error) {
+// options - VPNGatewaysClientUpdateTagsOptions contains the optional parameters for the VPNGatewaysClient.UpdateTags method.
+func (client *VPNGatewaysClient) UpdateTags(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters TagsObject, options *VPNGatewaysClientUpdateTagsOptions) (VPNGatewaysClientUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, gatewayName, vpnGatewayParameters, options)
 	if err != nil {
-		return VPNGatewaysUpdateTagsResponse{}, err
+		return VPNGatewaysClientUpdateTagsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VPNGatewaysUpdateTagsResponse{}, err
+		return VPNGatewaysClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VPNGatewaysUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return VPNGatewaysClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *VPNGatewaysClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters TagsObject, options *VPNGatewaysUpdateTagsOptions) (*policy.Request, error) {
+func (client *VPNGatewaysClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters TagsObject, options *VPNGatewaysClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -522,10 +522,10 @@ func (client *VPNGatewaysClient) updateTagsCreateRequest(ctx context.Context, re
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *VPNGatewaysClient) updateTagsHandleResponse(resp *http.Response) (VPNGatewaysUpdateTagsResponse, error) {
-	result := VPNGatewaysUpdateTagsResponse{RawResponse: resp}
+func (client *VPNGatewaysClient) updateTagsHandleResponse(resp *http.Response) (VPNGatewaysClientUpdateTagsResponse, error) {
+	result := VPNGatewaysClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNGateway); err != nil {
-		return VPNGatewaysUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return VPNGatewaysClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

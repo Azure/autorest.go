@@ -40,24 +40,24 @@ func NewPetClient(options *azcore.ClientOptions) *PetClient {
 
 // AddPet - add pet
 // If the operation fails it returns a generic error.
-// options - PetAddPetOptions contains the optional parameters for the PetClient.AddPet method.
-func (client *PetClient) AddPet(ctx context.Context, options *PetAddPetOptions) (PetAddPetResponse, error) {
+// options - PetClientAddPetOptions contains the optional parameters for the PetClient.AddPet method.
+func (client *PetClient) AddPet(ctx context.Context, options *PetClientAddPetOptions) (PetClientAddPetResponse, error) {
 	req, err := client.addPetCreateRequest(ctx, options)
 	if err != nil {
-		return PetAddPetResponse{}, err
+		return PetClientAddPetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PetAddPetResponse{}, err
+		return PetClientAddPetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetAddPetResponse{}, client.addPetHandleError(resp)
+		return PetClientAddPetResponse{}, client.addPetHandleError(resp)
 	}
 	return client.addPetHandleResponse(resp)
 }
 
 // addPetCreateRequest creates the AddPet request.
-func (client *PetClient) addPetCreateRequest(ctx context.Context, options *PetAddPetOptions) (*policy.Request, error) {
+func (client *PetClient) addPetCreateRequest(ctx context.Context, options *PetClientAddPetOptions) (*policy.Request, error) {
 	urlPath := "/extensibleenums/pet/addPet"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -71,10 +71,10 @@ func (client *PetClient) addPetCreateRequest(ctx context.Context, options *PetAd
 }
 
 // addPetHandleResponse handles the AddPet response.
-func (client *PetClient) addPetHandleResponse(resp *http.Response) (PetAddPetResponse, error) {
-	result := PetAddPetResponse{RawResponse: resp}
+func (client *PetClient) addPetHandleResponse(resp *http.Response) (PetClientAddPetResponse, error) {
+	result := PetClientAddPetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Pet); err != nil {
-		return PetAddPetResponse{}, runtime.NewResponseError(err, resp)
+		return PetClientAddPetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -94,24 +94,24 @@ func (client *PetClient) addPetHandleError(resp *http.Response) error {
 // GetByPetID - get pet by id
 // If the operation fails it returns a generic error.
 // petID - Pet id
-// options - PetGetByPetIDOptions contains the optional parameters for the PetClient.GetByPetID method.
-func (client *PetClient) GetByPetID(ctx context.Context, petID string, options *PetGetByPetIDOptions) (PetGetByPetIDResponse, error) {
+// options - PetClientGetByPetIDOptions contains the optional parameters for the PetClient.GetByPetID method.
+func (client *PetClient) GetByPetID(ctx context.Context, petID string, options *PetClientGetByPetIDOptions) (PetClientGetByPetIDResponse, error) {
 	req, err := client.getByPetIDCreateRequest(ctx, petID, options)
 	if err != nil {
-		return PetGetByPetIDResponse{}, err
+		return PetClientGetByPetIDResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PetGetByPetIDResponse{}, err
+		return PetClientGetByPetIDResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetGetByPetIDResponse{}, client.getByPetIDHandleError(resp)
+		return PetClientGetByPetIDResponse{}, client.getByPetIDHandleError(resp)
 	}
 	return client.getByPetIDHandleResponse(resp)
 }
 
 // getByPetIDCreateRequest creates the GetByPetID request.
-func (client *PetClient) getByPetIDCreateRequest(ctx context.Context, petID string, options *PetGetByPetIDOptions) (*policy.Request, error) {
+func (client *PetClient) getByPetIDCreateRequest(ctx context.Context, petID string, options *PetClientGetByPetIDOptions) (*policy.Request, error) {
 	urlPath := "/extensibleenums/pet/{petId}"
 	if petID == "" {
 		return nil, errors.New("parameter petID cannot be empty")
@@ -126,10 +126,10 @@ func (client *PetClient) getByPetIDCreateRequest(ctx context.Context, petID stri
 }
 
 // getByPetIDHandleResponse handles the GetByPetID response.
-func (client *PetClient) getByPetIDHandleResponse(resp *http.Response) (PetGetByPetIDResponse, error) {
-	result := PetGetByPetIDResponse{RawResponse: resp}
+func (client *PetClient) getByPetIDHandleResponse(resp *http.Response) (PetClientGetByPetIDResponse, error) {
+	result := PetClientGetByPetIDResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Pet); err != nil {
-		return PetGetByPetIDResponse{}, runtime.NewResponseError(err, resp)
+		return PetClientGetByPetIDResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

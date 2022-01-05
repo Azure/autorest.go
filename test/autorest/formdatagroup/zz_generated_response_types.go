@@ -10,20 +10,20 @@ package formdatagroup
 
 import "net/http"
 
-// FormdataUploadFileResponse contains the response from method Formdata.UploadFile.
-type FormdataUploadFileResponse struct {
+// FormdataClientUploadFileResponse contains the response from method FormdataClient.UploadFile.
+type FormdataClientUploadFileResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// FormdataUploadFileViaBodyResponse contains the response from method Formdata.UploadFileViaBody.
-type FormdataUploadFileViaBodyResponse struct {
+// FormdataClientUploadFileViaBodyResponse contains the response from method FormdataClient.UploadFileViaBody.
+type FormdataClientUploadFileViaBodyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// FormdataUploadFilesResponse contains the response from method Formdata.UploadFiles.
-type FormdataUploadFilesResponse struct {
+// FormdataClientUploadFilesResponse contains the response from method FormdataClient.UploadFiles.
+type FormdataClientUploadFilesResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

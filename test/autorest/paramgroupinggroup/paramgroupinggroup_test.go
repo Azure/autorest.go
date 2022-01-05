@@ -40,7 +40,7 @@ func TestPostOptional(t *testing.T) {
 // PostRequired - Post a bunch of required parameters grouped
 func TestPostRequired(t *testing.T) {
 	client := newParameterGroupingClient()
-	result, err := client.PostRequired(context.Background(), ParameterGroupingPostRequiredParameters{
+	result, err := client.PostRequired(context.Background(), ParameterGroupingClientPostRequiredParameters{
 		Body: 1234,
 		Path: "path",
 	})

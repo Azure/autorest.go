@@ -10,64 +10,64 @@ package booleangroup
 
 import "net/http"
 
-// BoolGetFalseResponse contains the response from method Bool.GetFalse.
-type BoolGetFalseResponse struct {
-	BoolGetFalseResult
+// BoolClientGetFalseResponse contains the response from method BoolClient.GetFalse.
+type BoolClientGetFalseResponse struct {
+	BoolClientGetFalseResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// BoolGetFalseResult contains the result from method Bool.GetFalse.
-type BoolGetFalseResult struct {
+// BoolClientGetFalseResult contains the result from method BoolClient.GetFalse.
+type BoolClientGetFalseResult struct {
 	// simple boolean
 	Value *bool
 }
 
-// BoolGetInvalidResponse contains the response from method Bool.GetInvalid.
-type BoolGetInvalidResponse struct {
-	BoolGetInvalidResult
+// BoolClientGetInvalidResponse contains the response from method BoolClient.GetInvalid.
+type BoolClientGetInvalidResponse struct {
+	BoolClientGetInvalidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// BoolGetInvalidResult contains the result from method Bool.GetInvalid.
-type BoolGetInvalidResult struct {
+// BoolClientGetInvalidResult contains the result from method BoolClient.GetInvalid.
+type BoolClientGetInvalidResult struct {
 	Value *bool
 }
 
-// BoolGetNullResponse contains the response from method Bool.GetNull.
-type BoolGetNullResponse struct {
-	BoolGetNullResult
+// BoolClientGetNullResponse contains the response from method BoolClient.GetNull.
+type BoolClientGetNullResponse struct {
+	BoolClientGetNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// BoolGetNullResult contains the result from method Bool.GetNull.
-type BoolGetNullResult struct {
+// BoolClientGetNullResult contains the result from method BoolClient.GetNull.
+type BoolClientGetNullResult struct {
 	Value *bool
 }
 
-// BoolGetTrueResponse contains the response from method Bool.GetTrue.
-type BoolGetTrueResponse struct {
-	BoolGetTrueResult
+// BoolClientGetTrueResponse contains the response from method BoolClient.GetTrue.
+type BoolClientGetTrueResponse struct {
+	BoolClientGetTrueResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// BoolGetTrueResult contains the result from method Bool.GetTrue.
-type BoolGetTrueResult struct {
+// BoolClientGetTrueResult contains the result from method BoolClient.GetTrue.
+type BoolClientGetTrueResult struct {
 	// simple boolean
 	Value *bool
 }
 
-// BoolPutFalseResponse contains the response from method Bool.PutFalse.
-type BoolPutFalseResponse struct {
+// BoolClientPutFalseResponse contains the response from method BoolClient.PutFalse.
+type BoolClientPutFalseResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// BoolPutTrueResponse contains the response from method Bool.PutTrue.
-type BoolPutTrueResponse struct {
+// BoolClientPutTrueResponse contains the response from method BoolClient.PutTrue.
+type BoolClientPutTrueResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

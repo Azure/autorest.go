@@ -14,14 +14,14 @@ import (
 	"net/http"
 )
 
-// PagingGetMultiplePagesLROPoller provides polling facilities until the operation reaches a terminal state.
-type PagingGetMultiplePagesLROPoller struct {
+// PagingClientGetMultiplePagesLROPoller provides polling facilities until the operation reaches a terminal state.
+type PagingClientGetMultiplePagesLROPoller struct {
 	pt     *azcore.Poller
 	client *PagingClient
 }
 
 // Done returns true if the LRO has reached a terminal state.
-func (p *PagingGetMultiplePagesLROPoller) Done() bool {
+func (p *PagingClientGetMultiplePagesLROPoller) Done() bool {
 	return p.pt.Done()
 }
 
@@ -35,15 +35,15 @@ func (p *PagingGetMultiplePagesLROPoller) Done() bool {
 // If Poll fails, the poller's state is unmodified and the error is returned.
 // Calling Poll on an LRO that has reached a terminal state will return the final
 // HTTP response or error.
-func (p *PagingGetMultiplePagesLROPoller) Poll(ctx context.Context) (*http.Response, error) {
+func (p *PagingClientGetMultiplePagesLROPoller) Poll(ctx context.Context) (*http.Response, error) {
 	return p.pt.Poll(ctx)
 }
 
 // FinalResponse performs a final GET to the service and returns the final response
 // for the polling operation. If there is an error performing the final GET then an error is returned.
-// If the final GET succeeded then the final *PagingGetMultiplePagesLROPager will be returned.
-func (p *PagingGetMultiplePagesLROPoller) FinalResponse(ctx context.Context) (*PagingGetMultiplePagesLROPager, error) {
-	respType := &PagingGetMultiplePagesLROPager{client: p.client}
+// If the final GET succeeded then the final *PagingClientGetMultiplePagesLROPager will be returned.
+func (p *PagingClientGetMultiplePagesLROPoller) FinalResponse(ctx context.Context) (*PagingClientGetMultiplePagesLROPager, error) {
+	respType := &PagingClientGetMultiplePagesLROPager{client: p.client}
 	if _, err := p.pt.FinalResponse(ctx, &respType.current.ProductResult); err != nil {
 		return nil, err
 	}
@@ -52,6 +52,6 @@ func (p *PagingGetMultiplePagesLROPoller) FinalResponse(ctx context.Context) (*P
 
 // ResumeToken returns a value representing the poller that can be used to resume
 // the LRO at a later time. ResumeTokens are unique per service operation.
-func (p *PagingGetMultiplePagesLROPoller) ResumeToken() (string, error) {
+func (p *PagingClientGetMultiplePagesLROPoller) ResumeToken() (string, error) {
 	return p.pt.ResumeToken()
 }

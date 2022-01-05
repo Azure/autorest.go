@@ -10,20 +10,20 @@ package urlmultigroup
 
 import "net/http"
 
-// QueriesArrayStringMultiEmptyResponse contains the response from method Queries.ArrayStringMultiEmpty.
-type QueriesArrayStringMultiEmptyResponse struct {
+// QueriesClientArrayStringMultiEmptyResponse contains the response from method QueriesClient.ArrayStringMultiEmpty.
+type QueriesClientArrayStringMultiEmptyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesArrayStringMultiNullResponse contains the response from method Queries.ArrayStringMultiNull.
-type QueriesArrayStringMultiNullResponse struct {
+// QueriesClientArrayStringMultiNullResponse contains the response from method QueriesClient.ArrayStringMultiNull.
+type QueriesClientArrayStringMultiNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesArrayStringMultiValidResponse contains the response from method Queries.ArrayStringMultiValid.
-type QueriesArrayStringMultiValidResponse struct {
+// QueriesClientArrayStringMultiValidResponse contains the response from method QueriesClient.ArrayStringMultiValid.
+type QueriesClientArrayStringMultiValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

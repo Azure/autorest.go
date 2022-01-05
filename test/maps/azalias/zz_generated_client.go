@@ -58,24 +58,24 @@ func newClient(geography *Geography, apiVersion *string, pl runtime.Pipeline) *c
 // "e89aebb9-70a3-8fe1-32bb-1fbd0c725f14", "lastUpdatedTimestamp":
 // "2020-02-13T21:19:22.123Z" }
 // If the operation fails it returns a generic error.
-// options - AliasCreateOptions contains the optional parameters for the client.Create method.
-func (client *client) Create(ctx context.Context, options *AliasCreateOptions) (AliasCreateResponse, error) {
+// options - clientCreateOptions contains the optional parameters for the client.Create method.
+func (client *client) Create(ctx context.Context, options *clientCreateOptions) (clientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, options)
 	if err != nil {
-		return AliasCreateResponse{}, err
+		return clientCreateResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return AliasCreateResponse{}, err
+		return clientCreateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return AliasCreateResponse{}, client.createHandleError(resp)
+		return clientCreateResponse{}, client.createHandleError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
 
 // createCreateRequest creates the Create request.
-func (client *client) createCreateRequest(ctx context.Context, options *AliasCreateOptions) (*policy.Request, error) {
+func (client *client) createCreateRequest(ctx context.Context, options *clientCreateOptions) (*policy.Request, error) {
 	urlPath := "/aliases"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -99,13 +99,13 @@ func (client *client) createCreateRequest(ctx context.Context, options *AliasCre
 }
 
 // createHandleResponse handles the Create response.
-func (client *client) createHandleResponse(resp *http.Response) (AliasCreateResponse, error) {
-	result := AliasCreateResponse{RawResponse: resp}
+func (client *client) createHandleResponse(resp *http.Response) (clientCreateResponse, error) {
+	result := clientCreateResponse{RawResponse: resp}
 	if val := resp.Header.Get("Access-Control-Expose-Headers"); val != "" {
 		result.AccessControlExposeHeaders = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AliasesCreateResponse); err != nil {
-		return AliasCreateResponse{}, runtime.NewResponseError(err, resp)
+		return clientCreateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -124,24 +124,24 @@ func (client *client) createHandleError(resp *http.Response) error {
 
 // GetScript - Retrieve the configuration script identified by configuration name.
 // If the operation fails it returns a generic error.
-// options - AliasGetScriptOptions contains the optional parameters for the client.GetScript method.
-func (client *client) GetScript(ctx context.Context, options *AliasGetScriptOptions) (AliasGetScriptResponse, error) {
+// options - clientGetScriptOptions contains the optional parameters for the client.GetScript method.
+func (client *client) GetScript(ctx context.Context, options *clientGetScriptOptions) (clientGetScriptResponse, error) {
 	req, err := client.getScriptCreateRequest(ctx, options)
 	if err != nil {
-		return AliasGetScriptResponse{}, err
+		return clientGetScriptResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return AliasGetScriptResponse{}, err
+		return clientGetScriptResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AliasGetScriptResponse{}, client.getScriptHandleError(resp)
+		return clientGetScriptResponse{}, client.getScriptHandleError(resp)
 	}
 	return client.getScriptHandleResponse(resp)
 }
 
 // getScriptCreateRequest creates the GetScript request.
-func (client *client) getScriptCreateRequest(ctx context.Context, options *AliasGetScriptOptions) (*policy.Request, error) {
+func (client *client) getScriptCreateRequest(ctx context.Context, options *clientGetScriptOptions) (*policy.Request, error) {
 	urlPath := "/scripts"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -152,11 +152,11 @@ func (client *client) getScriptCreateRequest(ctx context.Context, options *Alias
 }
 
 // getScriptHandleResponse handles the GetScript response.
-func (client *client) getScriptHandleResponse(resp *http.Response) (AliasGetScriptResponse, error) {
-	result := AliasGetScriptResponse{RawResponse: resp}
+func (client *client) getScriptHandleResponse(resp *http.Response) (clientGetScriptResponse, error) {
+	result := clientGetScriptResponse{RawResponse: resp}
 	body, err := runtime.Payload(resp)
 	if err != nil {
-		return AliasGetScriptResponse{}, runtime.NewResponseError(err, resp)
+		return clientGetScriptResponse{}, runtime.NewResponseError(err, resp)
 	}
 	txt := string(body)
 	result.Value = &txt
@@ -194,21 +194,21 @@ func (client *client) getScriptHandleError(resp *http.Response) error {
 // "creatorDataItemId": null, "lastUpdatedTimestamp":
 // "2020-02-18T19:53:33.123Z" } ] }
 // If the operation fails it returns a generic error.
-// options - AliasListOptions contains the optional parameters for the client.List method.
-func (client *client) List(options *AliasListOptions) *AliasListPager {
-	return &AliasListPager{
+// options - clientListOptions contains the optional parameters for the client.List method.
+func (client *client) List(options *clientListOptions) *clientListPager {
+	return &clientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp AliasListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp clientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListResponse.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *client) listCreateRequest(ctx context.Context, options *AliasListOptions) (*policy.Request, error) {
+func (client *client) listCreateRequest(ctx context.Context, options *clientListOptions) (*policy.Request, error) {
 	urlPath := "/aliases"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -229,10 +229,10 @@ func (client *client) listCreateRequest(ctx context.Context, options *AliasListO
 }
 
 // listHandleResponse handles the List response.
-func (client *client) listHandleResponse(resp *http.Response) (AliasListResponse, error) {
-	result := AliasListResponse{RawResponse: resp}
+func (client *client) listHandleResponse(resp *http.Response) (clientListResponse, error) {
+	result := clientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListResponse); err != nil {
-		return AliasListResponse{}, runtime.NewResponseError(err, resp)
+		return clientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

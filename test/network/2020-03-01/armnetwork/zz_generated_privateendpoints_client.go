@@ -56,21 +56,21 @@ func NewPrivateEndpointsClient(subscriptionID string, credential azcore.TokenCre
 // resourceGroupName - The name of the resource group.
 // privateEndpointName - The name of the private endpoint.
 // parameters - Parameters supplied to the create or update private endpoint operation.
-// options - PrivateEndpointsBeginCreateOrUpdateOptions contains the optional parameters for the PrivateEndpointsClient.BeginCreateOrUpdate
+// options - PrivateEndpointsClientBeginCreateOrUpdateOptions contains the optional parameters for the PrivateEndpointsClient.BeginCreateOrUpdate
 // method.
-func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsBeginCreateOrUpdateOptions) (PrivateEndpointsCreateOrUpdatePollerResponse, error) {
+func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsClientBeginCreateOrUpdateOptions) (PrivateEndpointsClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, privateEndpointName, parameters, options)
 	if err != nil {
-		return PrivateEndpointsCreateOrUpdatePollerResponse{}, err
+		return PrivateEndpointsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := PrivateEndpointsCreateOrUpdatePollerResponse{
+	result := PrivateEndpointsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("PrivateEndpointsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return PrivateEndpointsCreateOrUpdatePollerResponse{}, err
+		return PrivateEndpointsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &PrivateEndpointsCreateOrUpdatePoller{
+	result.Poller = &PrivateEndpointsClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *PrivateEndpointsClient) BeginCreateOrUpdate(ctx context.Context, r
 
 // CreateOrUpdate - Creates or updates an private endpoint in the specified resource group.
 // If the operation fails it returns the *Error error type.
-func (client *PrivateEndpointsClient) createOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *PrivateEndpointsClient) createOrUpdate(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, privateEndpointName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *PrivateEndpointsClient) createOrUpdate(ctx context.Context, resour
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *PrivateEndpointsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *PrivateEndpointsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, parameters PrivateEndpoint, options *PrivateEndpointsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -136,21 +136,21 @@ func (client *PrivateEndpointsClient) createOrUpdateHandleError(resp *http.Respo
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
 // privateEndpointName - The name of the private endpoint.
-// options - PrivateEndpointsBeginDeleteOptions contains the optional parameters for the PrivateEndpointsClient.BeginDelete
+// options - PrivateEndpointsClientBeginDeleteOptions contains the optional parameters for the PrivateEndpointsClient.BeginDelete
 // method.
-func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsBeginDeleteOptions) (PrivateEndpointsDeletePollerResponse, error) {
+func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientBeginDeleteOptions) (PrivateEndpointsClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
-		return PrivateEndpointsDeletePollerResponse{}, err
+		return PrivateEndpointsClientDeletePollerResponse{}, err
 	}
-	result := PrivateEndpointsDeletePollerResponse{
+	result := PrivateEndpointsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("PrivateEndpointsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return PrivateEndpointsDeletePollerResponse{}, err
+		return PrivateEndpointsClientDeletePollerResponse{}, err
 	}
-	result.Poller = &PrivateEndpointsDeletePoller{
+	result.Poller = &PrivateEndpointsClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -158,7 +158,7 @@ func (client *PrivateEndpointsClient) BeginDelete(ctx context.Context, resourceG
 
 // Delete - Deletes the specified private endpoint.
 // If the operation fails it returns the *Error error type.
-func (client *PrivateEndpointsClient) deleteOperation(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsBeginDeleteOptions) (*http.Response, error) {
+func (client *PrivateEndpointsClient) deleteOperation(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
 		return nil, err
@@ -174,7 +174,7 @@ func (client *PrivateEndpointsClient) deleteOperation(ctx context.Context, resou
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *PrivateEndpointsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsBeginDeleteOptions) (*policy.Request, error) {
+func (client *PrivateEndpointsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -216,24 +216,24 @@ func (client *PrivateEndpointsClient) deleteHandleError(resp *http.Response) err
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
 // privateEndpointName - The name of the private endpoint.
-// options - PrivateEndpointsGetOptions contains the optional parameters for the PrivateEndpointsClient.Get method.
-func (client *PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsGetOptions) (PrivateEndpointsGetResponse, error) {
+// options - PrivateEndpointsClientGetOptions contains the optional parameters for the PrivateEndpointsClient.Get method.
+func (client *PrivateEndpointsClient) Get(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientGetOptions) (PrivateEndpointsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, privateEndpointName, options)
 	if err != nil {
-		return PrivateEndpointsGetResponse{}, err
+		return PrivateEndpointsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrivateEndpointsGetResponse{}, err
+		return PrivateEndpointsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrivateEndpointsGetResponse{}, client.getHandleError(resp)
+		return PrivateEndpointsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *PrivateEndpointsClient) getCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsGetOptions) (*policy.Request, error) {
+func (client *PrivateEndpointsClient) getCreateRequest(ctx context.Context, resourceGroupName string, privateEndpointName string, options *PrivateEndpointsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -262,10 +262,10 @@ func (client *PrivateEndpointsClient) getCreateRequest(ctx context.Context, reso
 }
 
 // getHandleResponse handles the Get response.
-func (client *PrivateEndpointsClient) getHandleResponse(resp *http.Response) (PrivateEndpointsGetResponse, error) {
-	result := PrivateEndpointsGetResponse{RawResponse: resp}
+func (client *PrivateEndpointsClient) getHandleResponse(resp *http.Response) (PrivateEndpointsClientGetResponse, error) {
+	result := PrivateEndpointsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateEndpoint); err != nil {
-		return PrivateEndpointsGetResponse{}, runtime.NewResponseError(err, resp)
+		return PrivateEndpointsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -286,21 +286,21 @@ func (client *PrivateEndpointsClient) getHandleError(resp *http.Response) error 
 // List - Gets all private endpoints in a resource group.
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
-// options - PrivateEndpointsListOptions contains the optional parameters for the PrivateEndpointsClient.List method.
-func (client *PrivateEndpointsClient) List(resourceGroupName string, options *PrivateEndpointsListOptions) *PrivateEndpointsListPager {
-	return &PrivateEndpointsListPager{
+// options - PrivateEndpointsClientListOptions contains the optional parameters for the PrivateEndpointsClient.List method.
+func (client *PrivateEndpointsClient) List(resourceGroupName string, options *PrivateEndpointsClientListOptions) *PrivateEndpointsClientListPager {
+	return &PrivateEndpointsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp PrivateEndpointsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PrivateEndpointsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.PrivateEndpointListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *PrivateEndpointsClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *PrivateEndpointsListOptions) (*policy.Request, error) {
+func (client *PrivateEndpointsClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *PrivateEndpointsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -322,10 +322,10 @@ func (client *PrivateEndpointsClient) listCreateRequest(ctx context.Context, res
 }
 
 // listHandleResponse handles the List response.
-func (client *PrivateEndpointsClient) listHandleResponse(resp *http.Response) (PrivateEndpointsListResponse, error) {
-	result := PrivateEndpointsListResponse{RawResponse: resp}
+func (client *PrivateEndpointsClient) listHandleResponse(resp *http.Response) (PrivateEndpointsClientListResponse, error) {
+	result := PrivateEndpointsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateEndpointListResult); err != nil {
-		return PrivateEndpointsListResponse{}, runtime.NewResponseError(err, resp)
+		return PrivateEndpointsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -345,22 +345,22 @@ func (client *PrivateEndpointsClient) listHandleError(resp *http.Response) error
 
 // ListBySubscription - Gets all private endpoints in a subscription.
 // If the operation fails it returns the *Error error type.
-// options - PrivateEndpointsListBySubscriptionOptions contains the optional parameters for the PrivateEndpointsClient.ListBySubscription
+// options - PrivateEndpointsClientListBySubscriptionOptions contains the optional parameters for the PrivateEndpointsClient.ListBySubscription
 // method.
-func (client *PrivateEndpointsClient) ListBySubscription(options *PrivateEndpointsListBySubscriptionOptions) *PrivateEndpointsListBySubscriptionPager {
-	return &PrivateEndpointsListBySubscriptionPager{
+func (client *PrivateEndpointsClient) ListBySubscription(options *PrivateEndpointsClientListBySubscriptionOptions) *PrivateEndpointsClientListBySubscriptionPager {
+	return &PrivateEndpointsClientListBySubscriptionPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listBySubscriptionCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp PrivateEndpointsListBySubscriptionResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PrivateEndpointsClientListBySubscriptionResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.PrivateEndpointListResult.NextLink)
 		},
 	}
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *PrivateEndpointsClient) listBySubscriptionCreateRequest(ctx context.Context, options *PrivateEndpointsListBySubscriptionOptions) (*policy.Request, error) {
+func (client *PrivateEndpointsClient) listBySubscriptionCreateRequest(ctx context.Context, options *PrivateEndpointsClientListBySubscriptionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -378,10 +378,10 @@ func (client *PrivateEndpointsClient) listBySubscriptionCreateRequest(ctx contex
 }
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
-func (client *PrivateEndpointsClient) listBySubscriptionHandleResponse(resp *http.Response) (PrivateEndpointsListBySubscriptionResponse, error) {
-	result := PrivateEndpointsListBySubscriptionResponse{RawResponse: resp}
+func (client *PrivateEndpointsClient) listBySubscriptionHandleResponse(resp *http.Response) (PrivateEndpointsClientListBySubscriptionResponse, error) {
+	result := PrivateEndpointsClientListBySubscriptionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateEndpointListResult); err != nil {
-		return PrivateEndpointsListBySubscriptionResponse{}, runtime.NewResponseError(err, resp)
+		return PrivateEndpointsClientListBySubscriptionResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -52,21 +52,21 @@ func NewResourceSKUsClient(subscriptionID string, credential azcore.TokenCredent
 
 // List - Gets the list of Microsoft.Compute SKUs available for your Subscription.
 // If the operation fails it returns a generic error.
-// options - ResourceSKUsListOptions contains the optional parameters for the ResourceSKUsClient.List method.
-func (client *ResourceSKUsClient) List(options *ResourceSKUsListOptions) *ResourceSKUsListPager {
-	return &ResourceSKUsListPager{
+// options - ResourceSKUsClientListOptions contains the optional parameters for the ResourceSKUsClient.List method.
+func (client *ResourceSKUsClient) List(options *ResourceSKUsClientListOptions) *ResourceSKUsClientListPager {
+	return &ResourceSKUsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp ResourceSKUsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp ResourceSKUsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ResourceSKUsResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *ResourceSKUsClient) listCreateRequest(ctx context.Context, options *ResourceSKUsListOptions) (*policy.Request, error) {
+func (client *ResourceSKUsClient) listCreateRequest(ctx context.Context, options *ResourceSKUsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/skus"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -87,10 +87,10 @@ func (client *ResourceSKUsClient) listCreateRequest(ctx context.Context, options
 }
 
 // listHandleResponse handles the List response.
-func (client *ResourceSKUsClient) listHandleResponse(resp *http.Response) (ResourceSKUsListResponse, error) {
-	result := ResourceSKUsListResponse{RawResponse: resp}
+func (client *ResourceSKUsClient) listHandleResponse(resp *http.Response) (ResourceSKUsClientListResponse, error) {
+	result := ResourceSKUsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ResourceSKUsResult); err != nil {
-		return ResourceSKUsListResponse{}, runtime.NewResponseError(err, resp)
+		return ResourceSKUsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

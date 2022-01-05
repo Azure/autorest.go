@@ -44,24 +44,24 @@ func NewServiceClient(endpoint string, version Enum0, pl runtime.Pipeline) *Serv
 // If the operation fails it returns the *ServiceError error type.
 // restype - Required query string to set the service properties.
 // comp - Required query string to set the service properties.
-// options - ServiceGetPropertiesOptions contains the optional parameters for the ServiceClient.GetProperties method.
-func (client *ServiceClient) GetProperties(ctx context.Context, restype Enum5, comp Enum6, options *ServiceGetPropertiesOptions) (ServiceGetPropertiesResponse, error) {
+// options - ServiceClientGetPropertiesOptions contains the optional parameters for the ServiceClient.GetProperties method.
+func (client *ServiceClient) GetProperties(ctx context.Context, restype Enum5, comp Enum6, options *ServiceClientGetPropertiesOptions) (ServiceClientGetPropertiesResponse, error) {
 	req, err := client.getPropertiesCreateRequest(ctx, restype, comp, options)
 	if err != nil {
-		return ServiceGetPropertiesResponse{}, err
+		return ServiceClientGetPropertiesResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ServiceGetPropertiesResponse{}, err
+		return ServiceClientGetPropertiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ServiceGetPropertiesResponse{}, client.getPropertiesHandleError(resp)
+		return ServiceClientGetPropertiesResponse{}, client.getPropertiesHandleError(resp)
 	}
 	return client.getPropertiesHandleResponse(resp)
 }
 
 // getPropertiesCreateRequest creates the GetProperties request.
-func (client *ServiceClient) getPropertiesCreateRequest(ctx context.Context, restype Enum5, comp Enum6, options *ServiceGetPropertiesOptions) (*policy.Request, error) {
+func (client *ServiceClient) getPropertiesCreateRequest(ctx context.Context, restype Enum5, comp Enum6, options *ServiceClientGetPropertiesOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -82,8 +82,8 @@ func (client *ServiceClient) getPropertiesCreateRequest(ctx context.Context, res
 }
 
 // getPropertiesHandleResponse handles the GetProperties response.
-func (client *ServiceClient) getPropertiesHandleResponse(resp *http.Response) (ServiceGetPropertiesResponse, error) {
-	result := ServiceGetPropertiesResponse{RawResponse: resp}
+func (client *ServiceClient) getPropertiesHandleResponse(resp *http.Response) (ServiceClientGetPropertiesResponse, error) {
+	result := ServiceClientGetPropertiesResponse{RawResponse: resp}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -94,7 +94,7 @@ func (client *ServiceClient) getPropertiesHandleResponse(resp *http.Response) (S
 		result.Version = &val
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ServiceProperties); err != nil {
-		return ServiceGetPropertiesResponse{}, runtime.NewResponseError(err, resp)
+		return ServiceClientGetPropertiesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -117,24 +117,24 @@ func (client *ServiceClient) getPropertiesHandleError(resp *http.Response) error
 // If the operation fails it returns the *ServiceError error type.
 // restype - Required query string to get service stats.
 // comp - Required query string to get service stats.
-// options - ServiceGetStatisticsOptions contains the optional parameters for the ServiceClient.GetStatistics method.
-func (client *ServiceClient) GetStatistics(ctx context.Context, restype Enum5, comp Enum7, options *ServiceGetStatisticsOptions) (ServiceGetStatisticsResponse, error) {
+// options - ServiceClientGetStatisticsOptions contains the optional parameters for the ServiceClient.GetStatistics method.
+func (client *ServiceClient) GetStatistics(ctx context.Context, restype Enum5, comp Enum7, options *ServiceClientGetStatisticsOptions) (ServiceClientGetStatisticsResponse, error) {
 	req, err := client.getStatisticsCreateRequest(ctx, restype, comp, options)
 	if err != nil {
-		return ServiceGetStatisticsResponse{}, err
+		return ServiceClientGetStatisticsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ServiceGetStatisticsResponse{}, err
+		return ServiceClientGetStatisticsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ServiceGetStatisticsResponse{}, client.getStatisticsHandleError(resp)
+		return ServiceClientGetStatisticsResponse{}, client.getStatisticsHandleError(resp)
 	}
 	return client.getStatisticsHandleResponse(resp)
 }
 
 // getStatisticsCreateRequest creates the GetStatistics request.
-func (client *ServiceClient) getStatisticsCreateRequest(ctx context.Context, restype Enum5, comp Enum7, options *ServiceGetStatisticsOptions) (*policy.Request, error) {
+func (client *ServiceClient) getStatisticsCreateRequest(ctx context.Context, restype Enum5, comp Enum7, options *ServiceClientGetStatisticsOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -155,8 +155,8 @@ func (client *ServiceClient) getStatisticsCreateRequest(ctx context.Context, res
 }
 
 // getStatisticsHandleResponse handles the GetStatistics response.
-func (client *ServiceClient) getStatisticsHandleResponse(resp *http.Response) (ServiceGetStatisticsResponse, error) {
-	result := ServiceGetStatisticsResponse{RawResponse: resp}
+func (client *ServiceClient) getStatisticsHandleResponse(resp *http.Response) (ServiceClientGetStatisticsResponse, error) {
+	result := ServiceClientGetStatisticsResponse{RawResponse: resp}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}
@@ -169,12 +169,12 @@ func (client *ServiceClient) getStatisticsHandleResponse(resp *http.Response) (S
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return ServiceGetStatisticsResponse{}, err
+			return ServiceClientGetStatisticsResponse{}, err
 		}
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ServiceStats); err != nil {
-		return ServiceGetStatisticsResponse{}, runtime.NewResponseError(err, resp)
+		return ServiceClientGetStatisticsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -198,24 +198,24 @@ func (client *ServiceClient) getStatisticsHandleError(resp *http.Response) error
 // restype - Required query string to set the service properties.
 // comp - Required query string to set the service properties.
 // tableServiceProperties - The Table Service properties.
-// options - ServiceSetPropertiesOptions contains the optional parameters for the ServiceClient.SetProperties method.
-func (client *ServiceClient) SetProperties(ctx context.Context, restype Enum5, comp Enum6, tableServiceProperties ServiceProperties, options *ServiceSetPropertiesOptions) (ServiceSetPropertiesResponse, error) {
+// options - ServiceClientSetPropertiesOptions contains the optional parameters for the ServiceClient.SetProperties method.
+func (client *ServiceClient) SetProperties(ctx context.Context, restype Enum5, comp Enum6, tableServiceProperties ServiceProperties, options *ServiceClientSetPropertiesOptions) (ServiceClientSetPropertiesResponse, error) {
 	req, err := client.setPropertiesCreateRequest(ctx, restype, comp, tableServiceProperties, options)
 	if err != nil {
-		return ServiceSetPropertiesResponse{}, err
+		return ServiceClientSetPropertiesResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ServiceSetPropertiesResponse{}, err
+		return ServiceClientSetPropertiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return ServiceSetPropertiesResponse{}, client.setPropertiesHandleError(resp)
+		return ServiceClientSetPropertiesResponse{}, client.setPropertiesHandleError(resp)
 	}
 	return client.setPropertiesHandleResponse(resp)
 }
 
 // setPropertiesCreateRequest creates the SetProperties request.
-func (client *ServiceClient) setPropertiesCreateRequest(ctx context.Context, restype Enum5, comp Enum6, tableServiceProperties ServiceProperties, options *ServiceSetPropertiesOptions) (*policy.Request, error) {
+func (client *ServiceClient) setPropertiesCreateRequest(ctx context.Context, restype Enum5, comp Enum6, tableServiceProperties ServiceProperties, options *ServiceClientSetPropertiesOptions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -236,8 +236,8 @@ func (client *ServiceClient) setPropertiesCreateRequest(ctx context.Context, res
 }
 
 // setPropertiesHandleResponse handles the SetProperties response.
-func (client *ServiceClient) setPropertiesHandleResponse(resp *http.Response) (ServiceSetPropertiesResponse, error) {
-	result := ServiceSetPropertiesResponse{RawResponse: resp}
+func (client *ServiceClient) setPropertiesHandleResponse(resp *http.Response) (ServiceClientSetPropertiesResponse, error) {
+	result := ServiceClientSetPropertiesResponse{RawResponse: resp}
 	if val := resp.Header.Get("x-ms-client-request-id"); val != "" {
 		result.ClientRequestID = &val
 	}

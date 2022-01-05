@@ -16,28 +16,28 @@ import (
 	"time"
 )
 
-// ArrayGetEmptyOptions contains the optional parameters for the ArrayClient.GetEmpty method.
-type ArrayGetEmptyOptions struct {
+// ArrayClientGetEmptyOptions contains the optional parameters for the ArrayClient.GetEmpty method.
+type ArrayClientGetEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetNotProvidedOptions contains the optional parameters for the ArrayClient.GetNotProvided method.
-type ArrayGetNotProvidedOptions struct {
+// ArrayClientGetNotProvidedOptions contains the optional parameters for the ArrayClient.GetNotProvided method.
+type ArrayClientGetNotProvidedOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetValidOptions contains the optional parameters for the ArrayClient.GetValid method.
-type ArrayGetValidOptions struct {
+// ArrayClientGetValidOptions contains the optional parameters for the ArrayClient.GetValid method.
+type ArrayClientGetValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutEmptyOptions contains the optional parameters for the ArrayClient.PutEmpty method.
-type ArrayPutEmptyOptions struct {
+// ArrayClientPutEmptyOptions contains the optional parameters for the ArrayClient.PutEmpty method.
+type ArrayClientPutEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutValidOptions contains the optional parameters for the ArrayClient.PutValid method.
-type ArrayPutValidOptions struct {
+// ArrayClientPutValidOptions contains the optional parameters for the ArrayClient.PutValid method.
+type ArrayClientPutValidOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -62,33 +62,33 @@ type Basic struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// BasicGetEmptyOptions contains the optional parameters for the BasicClient.GetEmpty method.
-type BasicGetEmptyOptions struct {
+// BasicClientGetEmptyOptions contains the optional parameters for the BasicClient.GetEmpty method.
+type BasicClientGetEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BasicGetInvalidOptions contains the optional parameters for the BasicClient.GetInvalid method.
-type BasicGetInvalidOptions struct {
+// BasicClientGetInvalidOptions contains the optional parameters for the BasicClient.GetInvalid method.
+type BasicClientGetInvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BasicGetNotProvidedOptions contains the optional parameters for the BasicClient.GetNotProvided method.
-type BasicGetNotProvidedOptions struct {
+// BasicClientGetNotProvidedOptions contains the optional parameters for the BasicClient.GetNotProvided method.
+type BasicClientGetNotProvidedOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BasicGetNullOptions contains the optional parameters for the BasicClient.GetNull method.
-type BasicGetNullOptions struct {
+// BasicClientGetNullOptions contains the optional parameters for the BasicClient.GetNull method.
+type BasicClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BasicGetValidOptions contains the optional parameters for the BasicClient.GetValid method.
-type BasicGetValidOptions struct {
+// BasicClientGetValidOptions contains the optional parameters for the BasicClient.GetValid method.
+type BasicClientGetValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BasicPutValidOptions contains the optional parameters for the BasicClient.PutValid method.
-type BasicPutValidOptions struct {
+// BasicClientPutValidOptions contains the optional parameters for the BasicClient.PutValid method.
+type BasicClientPutValidOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -336,33 +336,33 @@ func (d *Datetimerfc1123Wrapper) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// DictionaryGetEmptyOptions contains the optional parameters for the DictionaryClient.GetEmpty method.
-type DictionaryGetEmptyOptions struct {
+// DictionaryClientGetEmptyOptions contains the optional parameters for the DictionaryClient.GetEmpty method.
+type DictionaryClientGetEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetNotProvidedOptions contains the optional parameters for the DictionaryClient.GetNotProvided method.
-type DictionaryGetNotProvidedOptions struct {
+// DictionaryClientGetNotProvidedOptions contains the optional parameters for the DictionaryClient.GetNotProvided method.
+type DictionaryClientGetNotProvidedOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetNullOptions contains the optional parameters for the DictionaryClient.GetNull method.
-type DictionaryGetNullOptions struct {
+// DictionaryClientGetNullOptions contains the optional parameters for the DictionaryClient.GetNull method.
+type DictionaryClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetValidOptions contains the optional parameters for the DictionaryClient.GetValid method.
-type DictionaryGetValidOptions struct {
+// DictionaryClientGetValidOptions contains the optional parameters for the DictionaryClient.GetValid method.
+type DictionaryClientGetValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryPutEmptyOptions contains the optional parameters for the DictionaryClient.PutEmpty method.
-type DictionaryPutEmptyOptions struct {
+// DictionaryClientPutEmptyOptions contains the optional parameters for the DictionaryClient.PutEmpty method.
+type DictionaryClientPutEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryPutValidOptions contains the optional parameters for the DictionaryClient.PutValid method.
-type DictionaryPutValidOptions struct {
+// DictionaryClientPutValidOptions contains the optional parameters for the DictionaryClient.PutValid method.
+type DictionaryClientPutValidOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -586,8 +586,8 @@ func (f *Fish) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// FlattencomplexGetValidOptions contains the optional parameters for the FlattencomplexClient.GetValid method.
-type FlattencomplexGetValidOptions struct {
+// FlattencomplexClientGetValidOptions contains the optional parameters for the FlattencomplexClient.GetValid method.
+type FlattencomplexClientGetValidOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -691,13 +691,13 @@ func (g *Goblinshark) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// InheritanceGetValidOptions contains the optional parameters for the InheritanceClient.GetValid method.
-type InheritanceGetValidOptions struct {
+// InheritanceClientGetValidOptions contains the optional parameters for the InheritanceClient.GetValid method.
+type InheritanceClientGetValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// InheritancePutValidOptions contains the optional parameters for the InheritanceClient.PutValid method.
-type InheritancePutValidOptions struct {
+// InheritanceClientPutValidOptions contains the optional parameters for the InheritanceClient.PutValid method.
+type InheritanceClientPutValidOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -795,172 +795,174 @@ type Pet struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// PolymorphicrecursiveGetValidOptions contains the optional parameters for the PolymorphicrecursiveClient.GetValid method.
-type PolymorphicrecursiveGetValidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// PolymorphicrecursivePutValidOptions contains the optional parameters for the PolymorphicrecursiveClient.PutValid method.
-type PolymorphicrecursivePutValidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// PolymorphismGetComplicatedOptions contains the optional parameters for the PolymorphismClient.GetComplicated method.
-type PolymorphismGetComplicatedOptions struct {
-	// placeholder for future optional parameters
-}
-
-// PolymorphismGetComposedWithDiscriminatorOptions contains the optional parameters for the PolymorphismClient.GetComposedWithDiscriminator
+// PolymorphicrecursiveClientGetValidOptions contains the optional parameters for the PolymorphicrecursiveClient.GetValid
 // method.
-type PolymorphismGetComposedWithDiscriminatorOptions struct {
+type PolymorphicrecursiveClientGetValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PolymorphismGetComposedWithoutDiscriminatorOptions contains the optional parameters for the PolymorphismClient.GetComposedWithoutDiscriminator
+// PolymorphicrecursiveClientPutValidOptions contains the optional parameters for the PolymorphicrecursiveClient.PutValid
 // method.
-type PolymorphismGetComposedWithoutDiscriminatorOptions struct {
+type PolymorphicrecursiveClientPutValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PolymorphismGetDotSyntaxOptions contains the optional parameters for the PolymorphismClient.GetDotSyntax method.
-type PolymorphismGetDotSyntaxOptions struct {
+// PolymorphismClientGetComplicatedOptions contains the optional parameters for the PolymorphismClient.GetComplicated method.
+type PolymorphismClientGetComplicatedOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PolymorphismGetValidOptions contains the optional parameters for the PolymorphismClient.GetValid method.
-type PolymorphismGetValidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// PolymorphismPutComplicatedOptions contains the optional parameters for the PolymorphismClient.PutComplicated method.
-type PolymorphismPutComplicatedOptions struct {
-	// placeholder for future optional parameters
-}
-
-// PolymorphismPutMissingDiscriminatorOptions contains the optional parameters for the PolymorphismClient.PutMissingDiscriminator
+// PolymorphismClientGetComposedWithDiscriminatorOptions contains the optional parameters for the PolymorphismClient.GetComposedWithDiscriminator
 // method.
-type PolymorphismPutMissingDiscriminatorOptions struct {
+type PolymorphismClientGetComposedWithDiscriminatorOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PolymorphismPutValidMissingRequiredOptions contains the optional parameters for the PolymorphismClient.PutValidMissingRequired
+// PolymorphismClientGetComposedWithoutDiscriminatorOptions contains the optional parameters for the PolymorphismClient.GetComposedWithoutDiscriminator
 // method.
-type PolymorphismPutValidMissingRequiredOptions struct {
+type PolymorphismClientGetComposedWithoutDiscriminatorOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PolymorphismPutValidOptions contains the optional parameters for the PolymorphismClient.PutValid method.
-type PolymorphismPutValidOptions struct {
+// PolymorphismClientGetDotSyntaxOptions contains the optional parameters for the PolymorphismClient.GetDotSyntax method.
+type PolymorphismClientGetDotSyntaxOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitiveGetBoolOptions contains the optional parameters for the PrimitiveClient.GetBool method.
-type PrimitiveGetBoolOptions struct {
+// PolymorphismClientGetValidOptions contains the optional parameters for the PolymorphismClient.GetValid method.
+type PolymorphismClientGetValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitiveGetByteOptions contains the optional parameters for the PrimitiveClient.GetByte method.
-type PrimitiveGetByteOptions struct {
+// PolymorphismClientPutComplicatedOptions contains the optional parameters for the PolymorphismClient.PutComplicated method.
+type PolymorphismClientPutComplicatedOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitiveGetDateOptions contains the optional parameters for the PrimitiveClient.GetDate method.
-type PrimitiveGetDateOptions struct {
+// PolymorphismClientPutMissingDiscriminatorOptions contains the optional parameters for the PolymorphismClient.PutMissingDiscriminator
+// method.
+type PolymorphismClientPutMissingDiscriminatorOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitiveGetDateTimeOptions contains the optional parameters for the PrimitiveClient.GetDateTime method.
-type PrimitiveGetDateTimeOptions struct {
+// PolymorphismClientPutValidMissingRequiredOptions contains the optional parameters for the PolymorphismClient.PutValidMissingRequired
+// method.
+type PolymorphismClientPutValidMissingRequiredOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitiveGetDateTimeRFC1123Options contains the optional parameters for the PrimitiveClient.GetDateTimeRFC1123 method.
-type PrimitiveGetDateTimeRFC1123Options struct {
+// PolymorphismClientPutValidOptions contains the optional parameters for the PolymorphismClient.PutValid method.
+type PolymorphismClientPutValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitiveGetDoubleOptions contains the optional parameters for the PrimitiveClient.GetDouble method.
-type PrimitiveGetDoubleOptions struct {
+// PrimitiveClientGetBoolOptions contains the optional parameters for the PrimitiveClient.GetBool method.
+type PrimitiveClientGetBoolOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitiveGetDurationOptions contains the optional parameters for the PrimitiveClient.GetDuration method.
-type PrimitiveGetDurationOptions struct {
+// PrimitiveClientGetByteOptions contains the optional parameters for the PrimitiveClient.GetByte method.
+type PrimitiveClientGetByteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitiveGetFloatOptions contains the optional parameters for the PrimitiveClient.GetFloat method.
-type PrimitiveGetFloatOptions struct {
+// PrimitiveClientGetDateOptions contains the optional parameters for the PrimitiveClient.GetDate method.
+type PrimitiveClientGetDateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitiveGetIntOptions contains the optional parameters for the PrimitiveClient.GetInt method.
-type PrimitiveGetIntOptions struct {
+// PrimitiveClientGetDateTimeOptions contains the optional parameters for the PrimitiveClient.GetDateTime method.
+type PrimitiveClientGetDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitiveGetLongOptions contains the optional parameters for the PrimitiveClient.GetLong method.
-type PrimitiveGetLongOptions struct {
+// PrimitiveClientGetDateTimeRFC1123Options contains the optional parameters for the PrimitiveClient.GetDateTimeRFC1123 method.
+type PrimitiveClientGetDateTimeRFC1123Options struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitiveGetStringOptions contains the optional parameters for the PrimitiveClient.GetString method.
-type PrimitiveGetStringOptions struct {
+// PrimitiveClientGetDoubleOptions contains the optional parameters for the PrimitiveClient.GetDouble method.
+type PrimitiveClientGetDoubleOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitivePutBoolOptions contains the optional parameters for the PrimitiveClient.PutBool method.
-type PrimitivePutBoolOptions struct {
+// PrimitiveClientGetDurationOptions contains the optional parameters for the PrimitiveClient.GetDuration method.
+type PrimitiveClientGetDurationOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitivePutByteOptions contains the optional parameters for the PrimitiveClient.PutByte method.
-type PrimitivePutByteOptions struct {
+// PrimitiveClientGetFloatOptions contains the optional parameters for the PrimitiveClient.GetFloat method.
+type PrimitiveClientGetFloatOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitivePutDateOptions contains the optional parameters for the PrimitiveClient.PutDate method.
-type PrimitivePutDateOptions struct {
+// PrimitiveClientGetIntOptions contains the optional parameters for the PrimitiveClient.GetInt method.
+type PrimitiveClientGetIntOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitivePutDateTimeOptions contains the optional parameters for the PrimitiveClient.PutDateTime method.
-type PrimitivePutDateTimeOptions struct {
+// PrimitiveClientGetLongOptions contains the optional parameters for the PrimitiveClient.GetLong method.
+type PrimitiveClientGetLongOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitivePutDateTimeRFC1123Options contains the optional parameters for the PrimitiveClient.PutDateTimeRFC1123 method.
-type PrimitivePutDateTimeRFC1123Options struct {
+// PrimitiveClientGetStringOptions contains the optional parameters for the PrimitiveClient.GetString method.
+type PrimitiveClientGetStringOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitivePutDoubleOptions contains the optional parameters for the PrimitiveClient.PutDouble method.
-type PrimitivePutDoubleOptions struct {
+// PrimitiveClientPutBoolOptions contains the optional parameters for the PrimitiveClient.PutBool method.
+type PrimitiveClientPutBoolOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitivePutDurationOptions contains the optional parameters for the PrimitiveClient.PutDuration method.
-type PrimitivePutDurationOptions struct {
+// PrimitiveClientPutByteOptions contains the optional parameters for the PrimitiveClient.PutByte method.
+type PrimitiveClientPutByteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitivePutFloatOptions contains the optional parameters for the PrimitiveClient.PutFloat method.
-type PrimitivePutFloatOptions struct {
+// PrimitiveClientPutDateOptions contains the optional parameters for the PrimitiveClient.PutDate method.
+type PrimitiveClientPutDateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitivePutIntOptions contains the optional parameters for the PrimitiveClient.PutInt method.
-type PrimitivePutIntOptions struct {
+// PrimitiveClientPutDateTimeOptions contains the optional parameters for the PrimitiveClient.PutDateTime method.
+type PrimitiveClientPutDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitivePutLongOptions contains the optional parameters for the PrimitiveClient.PutLong method.
-type PrimitivePutLongOptions struct {
+// PrimitiveClientPutDateTimeRFC1123Options contains the optional parameters for the PrimitiveClient.PutDateTimeRFC1123 method.
+type PrimitiveClientPutDateTimeRFC1123Options struct {
 	// placeholder for future optional parameters
 }
 
-// PrimitivePutStringOptions contains the optional parameters for the PrimitiveClient.PutString method.
-type PrimitivePutStringOptions struct {
+// PrimitiveClientPutDoubleOptions contains the optional parameters for the PrimitiveClient.PutDouble method.
+type PrimitiveClientPutDoubleOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitiveClientPutDurationOptions contains the optional parameters for the PrimitiveClient.PutDuration method.
+type PrimitiveClientPutDurationOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitiveClientPutFloatOptions contains the optional parameters for the PrimitiveClient.PutFloat method.
+type PrimitiveClientPutFloatOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitiveClientPutIntOptions contains the optional parameters for the PrimitiveClient.PutInt method.
+type PrimitiveClientPutIntOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitiveClientPutLongOptions contains the optional parameters for the PrimitiveClient.PutLong method.
+type PrimitiveClientPutLongOptions struct {
+	// placeholder for future optional parameters
+}
+
+// PrimitiveClientPutStringOptions contains the optional parameters for the PrimitiveClient.PutString method.
+type PrimitiveClientPutStringOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -971,13 +973,13 @@ type ReadonlyObj struct {
 	ID *string `json:"id,omitempty" azure:"ro"`
 }
 
-// ReadonlypropertyGetValidOptions contains the optional parameters for the ReadonlypropertyClient.GetValid method.
-type ReadonlypropertyGetValidOptions struct {
+// ReadonlypropertyClientGetValidOptions contains the optional parameters for the ReadonlypropertyClient.GetValid method.
+type ReadonlypropertyClientGetValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ReadonlypropertyPutValidOptions contains the optional parameters for the ReadonlypropertyClient.PutValid method.
-type ReadonlypropertyPutValidOptions struct {
+// ReadonlypropertyClientPutValidOptions contains the optional parameters for the ReadonlypropertyClient.PutValid method.
+type ReadonlypropertyClientPutValidOptions struct {
 	// placeholder for future optional parameters
 }
 

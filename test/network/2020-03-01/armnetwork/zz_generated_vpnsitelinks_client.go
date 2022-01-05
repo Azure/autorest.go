@@ -56,24 +56,24 @@ func NewVPNSiteLinksClient(subscriptionID string, credential azcore.TokenCredent
 // resourceGroupName - The resource group name of the VpnSite.
 // vpnSiteName - The name of the VpnSite.
 // vpnSiteLinkName - The name of the VpnSiteLink being retrieved.
-// options - VPNSiteLinksGetOptions contains the optional parameters for the VPNSiteLinksClient.Get method.
-func (client *VPNSiteLinksClient) Get(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string, options *VPNSiteLinksGetOptions) (VPNSiteLinksGetResponse, error) {
+// options - VPNSiteLinksClientGetOptions contains the optional parameters for the VPNSiteLinksClient.Get method.
+func (client *VPNSiteLinksClient) Get(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string, options *VPNSiteLinksClientGetOptions) (VPNSiteLinksClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, vpnSiteName, vpnSiteLinkName, options)
 	if err != nil {
-		return VPNSiteLinksGetResponse{}, err
+		return VPNSiteLinksClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VPNSiteLinksGetResponse{}, err
+		return VPNSiteLinksClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VPNSiteLinksGetResponse{}, client.getHandleError(resp)
+		return VPNSiteLinksClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *VPNSiteLinksClient) getCreateRequest(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string, options *VPNSiteLinksGetOptions) (*policy.Request, error) {
+func (client *VPNSiteLinksClient) getCreateRequest(ctx context.Context, resourceGroupName string, vpnSiteName string, vpnSiteLinkName string, options *VPNSiteLinksClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}/vpnSiteLinks/{vpnSiteLinkName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -103,10 +103,10 @@ func (client *VPNSiteLinksClient) getCreateRequest(ctx context.Context, resource
 }
 
 // getHandleResponse handles the Get response.
-func (client *VPNSiteLinksClient) getHandleResponse(resp *http.Response) (VPNSiteLinksGetResponse, error) {
-	result := VPNSiteLinksGetResponse{RawResponse: resp}
+func (client *VPNSiteLinksClient) getHandleResponse(resp *http.Response) (VPNSiteLinksClientGetResponse, error) {
+	result := VPNSiteLinksClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNSiteLink); err != nil {
-		return VPNSiteLinksGetResponse{}, runtime.NewResponseError(err, resp)
+		return VPNSiteLinksClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -128,21 +128,22 @@ func (client *VPNSiteLinksClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The resource group name of the VpnSite.
 // vpnSiteName - The name of the VpnSite.
-// options - VPNSiteLinksListByVPNSiteOptions contains the optional parameters for the VPNSiteLinksClient.ListByVPNSite method.
-func (client *VPNSiteLinksClient) ListByVPNSite(resourceGroupName string, vpnSiteName string, options *VPNSiteLinksListByVPNSiteOptions) *VPNSiteLinksListByVPNSitePager {
-	return &VPNSiteLinksListByVPNSitePager{
+// options - VPNSiteLinksClientListByVPNSiteOptions contains the optional parameters for the VPNSiteLinksClient.ListByVPNSite
+// method.
+func (client *VPNSiteLinksClient) ListByVPNSite(resourceGroupName string, vpnSiteName string, options *VPNSiteLinksClientListByVPNSiteOptions) *VPNSiteLinksClientListByVPNSitePager {
+	return &VPNSiteLinksClientListByVPNSitePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByVPNSiteCreateRequest(ctx, resourceGroupName, vpnSiteName, options)
 		},
-		advancer: func(ctx context.Context, resp VPNSiteLinksListByVPNSiteResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp VPNSiteLinksClientListByVPNSiteResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListVPNSiteLinksResult.NextLink)
 		},
 	}
 }
 
 // listByVPNSiteCreateRequest creates the ListByVPNSite request.
-func (client *VPNSiteLinksClient) listByVPNSiteCreateRequest(ctx context.Context, resourceGroupName string, vpnSiteName string, options *VPNSiteLinksListByVPNSiteOptions) (*policy.Request, error) {
+func (client *VPNSiteLinksClient) listByVPNSiteCreateRequest(ctx context.Context, resourceGroupName string, vpnSiteName string, options *VPNSiteLinksClientListByVPNSiteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}/vpnSiteLinks"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -168,10 +169,10 @@ func (client *VPNSiteLinksClient) listByVPNSiteCreateRequest(ctx context.Context
 }
 
 // listByVPNSiteHandleResponse handles the ListByVPNSite response.
-func (client *VPNSiteLinksClient) listByVPNSiteHandleResponse(resp *http.Response) (VPNSiteLinksListByVPNSiteResponse, error) {
-	result := VPNSiteLinksListByVPNSiteResponse{RawResponse: resp}
+func (client *VPNSiteLinksClient) listByVPNSiteHandleResponse(resp *http.Response) (VPNSiteLinksClientListByVPNSiteResponse, error) {
+	result := VPNSiteLinksClientListByVPNSiteResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNSiteLinksResult); err != nil {
-		return VPNSiteLinksListByVPNSiteResponse{}, runtime.NewResponseError(err, resp)
+		return VPNSiteLinksClientListByVPNSiteResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

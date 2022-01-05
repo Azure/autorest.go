@@ -46,21 +46,21 @@ func NewOperationsClient(credential azcore.TokenCredential, options *arm.ClientO
 
 // List - Lists all of the available Network Rest API operations.
 // If the operation fails it returns the *CloudError error type.
-// options - OperationsListOptions contains the optional parameters for the OperationsClient.List method.
-func (client *OperationsClient) List(options *OperationsListOptions) *OperationsListPager {
-	return &OperationsListPager{
+// options - OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
+func (client *OperationsClient) List(options *OperationsClientListOptions) *OperationsClientListPager {
+	return &OperationsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp OperationsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp OperationsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.OperationListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *OperationsClient) listCreateRequest(ctx context.Context, options *OperationsListOptions) (*policy.Request, error) {
+func (client *OperationsClient) listCreateRequest(ctx context.Context, options *OperationsClientListOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Network/operations"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
 	if err != nil {
@@ -74,10 +74,10 @@ func (client *OperationsClient) listCreateRequest(ctx context.Context, options *
 }
 
 // listHandleResponse handles the List response.
-func (client *OperationsClient) listHandleResponse(resp *http.Response) (OperationsListResponse, error) {
-	result := OperationsListResponse{RawResponse: resp}
+func (client *OperationsClient) listHandleResponse(resp *http.Response) (OperationsClientListResponse, error) {
+	result := OperationsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.OperationListResult); err != nil {
-		return OperationsListResponse{}, runtime.NewResponseError(err, resp)
+		return OperationsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

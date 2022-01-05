@@ -51,25 +51,25 @@ func NewImplicitClient(requiredGlobalPath string, requiredGlobalQuery string, op
 
 // GetOptionalGlobalQuery - Test implicitly optional query parameter
 // If the operation fails it returns the *Error error type.
-// options - ImplicitGetOptionalGlobalQueryOptions contains the optional parameters for the ImplicitClient.GetOptionalGlobalQuery
+// options - ImplicitClientGetOptionalGlobalQueryOptions contains the optional parameters for the ImplicitClient.GetOptionalGlobalQuery
 // method.
-func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context, options *ImplicitGetOptionalGlobalQueryOptions) (ImplicitGetOptionalGlobalQueryResponse, error) {
+func (client *ImplicitClient) GetOptionalGlobalQuery(ctx context.Context, options *ImplicitClientGetOptionalGlobalQueryOptions) (ImplicitClientGetOptionalGlobalQueryResponse, error) {
 	req, err := client.getOptionalGlobalQueryCreateRequest(ctx, options)
 	if err != nil {
-		return ImplicitGetOptionalGlobalQueryResponse{}, err
+		return ImplicitClientGetOptionalGlobalQueryResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ImplicitGetOptionalGlobalQueryResponse{}, err
+		return ImplicitClientGetOptionalGlobalQueryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitGetOptionalGlobalQueryResponse{}, client.getOptionalGlobalQueryHandleError(resp)
+		return ImplicitClientGetOptionalGlobalQueryResponse{}, client.getOptionalGlobalQueryHandleError(resp)
 	}
-	return ImplicitGetOptionalGlobalQueryResponse{RawResponse: resp}, nil
+	return ImplicitClientGetOptionalGlobalQueryResponse{RawResponse: resp}, nil
 }
 
 // getOptionalGlobalQueryCreateRequest creates the GetOptionalGlobalQuery request.
-func (client *ImplicitClient) getOptionalGlobalQueryCreateRequest(ctx context.Context, options *ImplicitGetOptionalGlobalQueryOptions) (*policy.Request, error) {
+func (client *ImplicitClient) getOptionalGlobalQueryCreateRequest(ctx context.Context, options *ImplicitClientGetOptionalGlobalQueryOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/global/optional/query"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -99,25 +99,25 @@ func (client *ImplicitClient) getOptionalGlobalQueryHandleError(resp *http.Respo
 
 // GetRequiredGlobalPath - Test implicitly required path parameter
 // If the operation fails it returns the *Error error type.
-// options - ImplicitGetRequiredGlobalPathOptions contains the optional parameters for the ImplicitClient.GetRequiredGlobalPath
+// options - ImplicitClientGetRequiredGlobalPathOptions contains the optional parameters for the ImplicitClient.GetRequiredGlobalPath
 // method.
-func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context, options *ImplicitGetRequiredGlobalPathOptions) (ImplicitGetRequiredGlobalPathResponse, error) {
+func (client *ImplicitClient) GetRequiredGlobalPath(ctx context.Context, options *ImplicitClientGetRequiredGlobalPathOptions) (ImplicitClientGetRequiredGlobalPathResponse, error) {
 	req, err := client.getRequiredGlobalPathCreateRequest(ctx, options)
 	if err != nil {
-		return ImplicitGetRequiredGlobalPathResponse{}, err
+		return ImplicitClientGetRequiredGlobalPathResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ImplicitGetRequiredGlobalPathResponse{}, err
+		return ImplicitClientGetRequiredGlobalPathResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitGetRequiredGlobalPathResponse{}, client.getRequiredGlobalPathHandleError(resp)
+		return ImplicitClientGetRequiredGlobalPathResponse{}, client.getRequiredGlobalPathHandleError(resp)
 	}
-	return ImplicitGetRequiredGlobalPathResponse{RawResponse: resp}, nil
+	return ImplicitClientGetRequiredGlobalPathResponse{RawResponse: resp}, nil
 }
 
 // getRequiredGlobalPathCreateRequest creates the GetRequiredGlobalPath request.
-func (client *ImplicitClient) getRequiredGlobalPathCreateRequest(ctx context.Context, options *ImplicitGetRequiredGlobalPathOptions) (*policy.Request, error) {
+func (client *ImplicitClient) getRequiredGlobalPathCreateRequest(ctx context.Context, options *ImplicitClientGetRequiredGlobalPathOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/global/required/path/{required-global-path}"
 	if client.requiredGlobalPath == "" {
 		return nil, errors.New("parameter client.requiredGlobalPath cannot be empty")
@@ -146,25 +146,25 @@ func (client *ImplicitClient) getRequiredGlobalPathHandleError(resp *http.Respon
 
 // GetRequiredGlobalQuery - Test implicitly required query parameter
 // If the operation fails it returns the *Error error type.
-// options - ImplicitGetRequiredGlobalQueryOptions contains the optional parameters for the ImplicitClient.GetRequiredGlobalQuery
+// options - ImplicitClientGetRequiredGlobalQueryOptions contains the optional parameters for the ImplicitClient.GetRequiredGlobalQuery
 // method.
-func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context, options *ImplicitGetRequiredGlobalQueryOptions) (ImplicitGetRequiredGlobalQueryResponse, error) {
+func (client *ImplicitClient) GetRequiredGlobalQuery(ctx context.Context, options *ImplicitClientGetRequiredGlobalQueryOptions) (ImplicitClientGetRequiredGlobalQueryResponse, error) {
 	req, err := client.getRequiredGlobalQueryCreateRequest(ctx, options)
 	if err != nil {
-		return ImplicitGetRequiredGlobalQueryResponse{}, err
+		return ImplicitClientGetRequiredGlobalQueryResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ImplicitGetRequiredGlobalQueryResponse{}, err
+		return ImplicitClientGetRequiredGlobalQueryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitGetRequiredGlobalQueryResponse{}, client.getRequiredGlobalQueryHandleError(resp)
+		return ImplicitClientGetRequiredGlobalQueryResponse{}, client.getRequiredGlobalQueryHandleError(resp)
 	}
-	return ImplicitGetRequiredGlobalQueryResponse{RawResponse: resp}, nil
+	return ImplicitClientGetRequiredGlobalQueryResponse{RawResponse: resp}, nil
 }
 
 // getRequiredGlobalQueryCreateRequest creates the GetRequiredGlobalQuery request.
-func (client *ImplicitClient) getRequiredGlobalQueryCreateRequest(ctx context.Context, options *ImplicitGetRequiredGlobalQueryOptions) (*policy.Request, error) {
+func (client *ImplicitClient) getRequiredGlobalQueryCreateRequest(ctx context.Context, options *ImplicitClientGetRequiredGlobalQueryOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/global/required/query"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -192,24 +192,25 @@ func (client *ImplicitClient) getRequiredGlobalQueryHandleError(resp *http.Respo
 
 // GetRequiredPath - Test implicitly required path parameter
 // If the operation fails it returns the *Error error type.
-// options - ImplicitGetRequiredPathOptions contains the optional parameters for the ImplicitClient.GetRequiredPath method.
-func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter string, options *ImplicitGetRequiredPathOptions) (ImplicitGetRequiredPathResponse, error) {
+// options - ImplicitClientGetRequiredPathOptions contains the optional parameters for the ImplicitClient.GetRequiredPath
+// method.
+func (client *ImplicitClient) GetRequiredPath(ctx context.Context, pathParameter string, options *ImplicitClientGetRequiredPathOptions) (ImplicitClientGetRequiredPathResponse, error) {
 	req, err := client.getRequiredPathCreateRequest(ctx, pathParameter, options)
 	if err != nil {
-		return ImplicitGetRequiredPathResponse{}, err
+		return ImplicitClientGetRequiredPathResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ImplicitGetRequiredPathResponse{}, err
+		return ImplicitClientGetRequiredPathResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitGetRequiredPathResponse{}, client.getRequiredPathHandleError(resp)
+		return ImplicitClientGetRequiredPathResponse{}, client.getRequiredPathHandleError(resp)
 	}
-	return ImplicitGetRequiredPathResponse{RawResponse: resp}, nil
+	return ImplicitClientGetRequiredPathResponse{RawResponse: resp}, nil
 }
 
 // getRequiredPathCreateRequest creates the GetRequiredPath request.
-func (client *ImplicitClient) getRequiredPathCreateRequest(ctx context.Context, pathParameter string, options *ImplicitGetRequiredPathOptions) (*policy.Request, error) {
+func (client *ImplicitClient) getRequiredPathCreateRequest(ctx context.Context, pathParameter string, options *ImplicitClientGetRequiredPathOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/required/path/{pathParameter}"
 	if pathParameter == "" {
 		return nil, errors.New("parameter pathParameter cannot be empty")
@@ -238,25 +239,25 @@ func (client *ImplicitClient) getRequiredPathHandleError(resp *http.Response) er
 
 // PutOptionalBinaryBody - Test implicitly optional body parameter
 // If the operation fails it returns the *Error error type.
-// options - ImplicitPutOptionalBinaryBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBinaryBody
+// options - ImplicitClientPutOptionalBinaryBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBinaryBody
 // method.
-func (client *ImplicitClient) PutOptionalBinaryBody(ctx context.Context, options *ImplicitPutOptionalBinaryBodyOptions) (ImplicitPutOptionalBinaryBodyResponse, error) {
+func (client *ImplicitClient) PutOptionalBinaryBody(ctx context.Context, options *ImplicitClientPutOptionalBinaryBodyOptions) (ImplicitClientPutOptionalBinaryBodyResponse, error) {
 	req, err := client.putOptionalBinaryBodyCreateRequest(ctx, options)
 	if err != nil {
-		return ImplicitPutOptionalBinaryBodyResponse{}, err
+		return ImplicitClientPutOptionalBinaryBodyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ImplicitPutOptionalBinaryBodyResponse{}, err
+		return ImplicitClientPutOptionalBinaryBodyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitPutOptionalBinaryBodyResponse{}, client.putOptionalBinaryBodyHandleError(resp)
+		return ImplicitClientPutOptionalBinaryBodyResponse{}, client.putOptionalBinaryBodyHandleError(resp)
 	}
-	return ImplicitPutOptionalBinaryBodyResponse{RawResponse: resp}, nil
+	return ImplicitClientPutOptionalBinaryBodyResponse{RawResponse: resp}, nil
 }
 
 // putOptionalBinaryBodyCreateRequest creates the PutOptionalBinaryBody request.
-func (client *ImplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Context, options *ImplicitPutOptionalBinaryBodyOptions) (*policy.Request, error) {
+func (client *ImplicitClient) putOptionalBinaryBodyCreateRequest(ctx context.Context, options *ImplicitClientPutOptionalBinaryBodyOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/optional/binary-body"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -284,24 +285,25 @@ func (client *ImplicitClient) putOptionalBinaryBodyHandleError(resp *http.Respon
 
 // PutOptionalBody - Test implicitly optional body parameter
 // If the operation fails it returns the *Error error type.
-// options - ImplicitPutOptionalBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBody method.
-func (client *ImplicitClient) PutOptionalBody(ctx context.Context, options *ImplicitPutOptionalBodyOptions) (ImplicitPutOptionalBodyResponse, error) {
+// options - ImplicitClientPutOptionalBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBody
+// method.
+func (client *ImplicitClient) PutOptionalBody(ctx context.Context, options *ImplicitClientPutOptionalBodyOptions) (ImplicitClientPutOptionalBodyResponse, error) {
 	req, err := client.putOptionalBodyCreateRequest(ctx, options)
 	if err != nil {
-		return ImplicitPutOptionalBodyResponse{}, err
+		return ImplicitClientPutOptionalBodyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ImplicitPutOptionalBodyResponse{}, err
+		return ImplicitClientPutOptionalBodyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitPutOptionalBodyResponse{}, client.putOptionalBodyHandleError(resp)
+		return ImplicitClientPutOptionalBodyResponse{}, client.putOptionalBodyHandleError(resp)
 	}
-	return ImplicitPutOptionalBodyResponse{RawResponse: resp}, nil
+	return ImplicitClientPutOptionalBodyResponse{RawResponse: resp}, nil
 }
 
 // putOptionalBodyCreateRequest creates the PutOptionalBody request.
-func (client *ImplicitClient) putOptionalBodyCreateRequest(ctx context.Context, options *ImplicitPutOptionalBodyOptions) (*policy.Request, error) {
+func (client *ImplicitClient) putOptionalBodyCreateRequest(ctx context.Context, options *ImplicitClientPutOptionalBodyOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/optional/body"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -329,24 +331,25 @@ func (client *ImplicitClient) putOptionalBodyHandleError(resp *http.Response) er
 
 // PutOptionalHeader - Test implicitly optional header parameter
 // If the operation fails it returns the *Error error type.
-// options - ImplicitPutOptionalHeaderOptions contains the optional parameters for the ImplicitClient.PutOptionalHeader method.
-func (client *ImplicitClient) PutOptionalHeader(ctx context.Context, options *ImplicitPutOptionalHeaderOptions) (ImplicitPutOptionalHeaderResponse, error) {
+// options - ImplicitClientPutOptionalHeaderOptions contains the optional parameters for the ImplicitClient.PutOptionalHeader
+// method.
+func (client *ImplicitClient) PutOptionalHeader(ctx context.Context, options *ImplicitClientPutOptionalHeaderOptions) (ImplicitClientPutOptionalHeaderResponse, error) {
 	req, err := client.putOptionalHeaderCreateRequest(ctx, options)
 	if err != nil {
-		return ImplicitPutOptionalHeaderResponse{}, err
+		return ImplicitClientPutOptionalHeaderResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ImplicitPutOptionalHeaderResponse{}, err
+		return ImplicitClientPutOptionalHeaderResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitPutOptionalHeaderResponse{}, client.putOptionalHeaderHandleError(resp)
+		return ImplicitClientPutOptionalHeaderResponse{}, client.putOptionalHeaderHandleError(resp)
 	}
-	return ImplicitPutOptionalHeaderResponse{RawResponse: resp}, nil
+	return ImplicitClientPutOptionalHeaderResponse{RawResponse: resp}, nil
 }
 
 // putOptionalHeaderCreateRequest creates the PutOptionalHeader request.
-func (client *ImplicitClient) putOptionalHeaderCreateRequest(ctx context.Context, options *ImplicitPutOptionalHeaderOptions) (*policy.Request, error) {
+func (client *ImplicitClient) putOptionalHeaderCreateRequest(ctx context.Context, options *ImplicitClientPutOptionalHeaderOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/optional/header"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -374,24 +377,25 @@ func (client *ImplicitClient) putOptionalHeaderHandleError(resp *http.Response) 
 
 // PutOptionalQuery - Test implicitly optional query parameter
 // If the operation fails it returns the *Error error type.
-// options - ImplicitPutOptionalQueryOptions contains the optional parameters for the ImplicitClient.PutOptionalQuery method.
-func (client *ImplicitClient) PutOptionalQuery(ctx context.Context, options *ImplicitPutOptionalQueryOptions) (ImplicitPutOptionalQueryResponse, error) {
+// options - ImplicitClientPutOptionalQueryOptions contains the optional parameters for the ImplicitClient.PutOptionalQuery
+// method.
+func (client *ImplicitClient) PutOptionalQuery(ctx context.Context, options *ImplicitClientPutOptionalQueryOptions) (ImplicitClientPutOptionalQueryResponse, error) {
 	req, err := client.putOptionalQueryCreateRequest(ctx, options)
 	if err != nil {
-		return ImplicitPutOptionalQueryResponse{}, err
+		return ImplicitClientPutOptionalQueryResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ImplicitPutOptionalQueryResponse{}, err
+		return ImplicitClientPutOptionalQueryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ImplicitPutOptionalQueryResponse{}, client.putOptionalQueryHandleError(resp)
+		return ImplicitClientPutOptionalQueryResponse{}, client.putOptionalQueryHandleError(resp)
 	}
-	return ImplicitPutOptionalQueryResponse{RawResponse: resp}, nil
+	return ImplicitClientPutOptionalQueryResponse{RawResponse: resp}, nil
 }
 
 // putOptionalQueryCreateRequest creates the PutOptionalQuery request.
-func (client *ImplicitClient) putOptionalQueryCreateRequest(ctx context.Context, options *ImplicitPutOptionalQueryOptions) (*policy.Request, error) {
+func (client *ImplicitClient) putOptionalQueryCreateRequest(ctx context.Context, options *ImplicitClientPutOptionalQueryOptions) (*policy.Request, error) {
 	urlPath := "/reqopt/implicit/optional/query"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

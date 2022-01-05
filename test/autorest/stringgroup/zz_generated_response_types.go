@@ -10,187 +10,187 @@ package stringgroup
 
 import "net/http"
 
-// EnumGetNotExpandableResponse contains the response from method Enum.GetNotExpandable.
-type EnumGetNotExpandableResponse struct {
-	EnumGetNotExpandableResult
+// EnumClientGetNotExpandableResponse contains the response from method EnumClient.GetNotExpandable.
+type EnumClientGetNotExpandableResponse struct {
+	EnumClientGetNotExpandableResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// EnumGetNotExpandableResult contains the result from method Enum.GetNotExpandable.
-type EnumGetNotExpandableResult struct {
+// EnumClientGetNotExpandableResult contains the result from method EnumClient.GetNotExpandable.
+type EnumClientGetNotExpandableResult struct {
 	// Referenced Color Enum Description.
 	Value *Colors
 }
 
-// EnumGetReferencedConstantResponse contains the response from method Enum.GetReferencedConstant.
-type EnumGetReferencedConstantResponse struct {
-	EnumGetReferencedConstantResult
+// EnumClientGetReferencedConstantResponse contains the response from method EnumClient.GetReferencedConstant.
+type EnumClientGetReferencedConstantResponse struct {
+	EnumClientGetReferencedConstantResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// EnumGetReferencedConstantResult contains the result from method Enum.GetReferencedConstant.
-type EnumGetReferencedConstantResult struct {
+// EnumClientGetReferencedConstantResult contains the result from method EnumClient.GetReferencedConstant.
+type EnumClientGetReferencedConstantResult struct {
 	RefColorConstant
 }
 
-// EnumGetReferencedResponse contains the response from method Enum.GetReferenced.
-type EnumGetReferencedResponse struct {
-	EnumGetReferencedResult
+// EnumClientGetReferencedResponse contains the response from method EnumClient.GetReferenced.
+type EnumClientGetReferencedResponse struct {
+	EnumClientGetReferencedResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// EnumGetReferencedResult contains the result from method Enum.GetReferenced.
-type EnumGetReferencedResult struct {
+// EnumClientGetReferencedResult contains the result from method EnumClient.GetReferenced.
+type EnumClientGetReferencedResult struct {
 	// Referenced Color Enum Description.
 	Value *Colors
 }
 
-// EnumPutNotExpandableResponse contains the response from method Enum.PutNotExpandable.
-type EnumPutNotExpandableResponse struct {
+// EnumClientPutNotExpandableResponse contains the response from method EnumClient.PutNotExpandable.
+type EnumClientPutNotExpandableResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// EnumPutReferencedConstantResponse contains the response from method Enum.PutReferencedConstant.
-type EnumPutReferencedConstantResponse struct {
+// EnumClientPutReferencedConstantResponse contains the response from method EnumClient.PutReferencedConstant.
+type EnumClientPutReferencedConstantResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// EnumPutReferencedResponse contains the response from method Enum.PutReferenced.
-type EnumPutReferencedResponse struct {
+// EnumClientPutReferencedResponse contains the response from method EnumClient.PutReferenced.
+type EnumClientPutReferencedResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// StringGetBase64EncodedResponse contains the response from method String.GetBase64Encoded.
-type StringGetBase64EncodedResponse struct {
-	StringGetBase64EncodedResult
+// StringClientGetBase64EncodedResponse contains the response from method StringClient.GetBase64Encoded.
+type StringClientGetBase64EncodedResponse struct {
+	StringClientGetBase64EncodedResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// StringGetBase64EncodedResult contains the result from method String.GetBase64Encoded.
-type StringGetBase64EncodedResult struct {
+// StringClientGetBase64EncodedResult contains the result from method StringClient.GetBase64Encoded.
+type StringClientGetBase64EncodedResult struct {
 	Value []byte
 }
 
-// StringGetBase64URLEncodedResponse contains the response from method String.GetBase64URLEncoded.
-type StringGetBase64URLEncodedResponse struct {
-	StringGetBase64URLEncodedResult
+// StringClientGetBase64URLEncodedResponse contains the response from method StringClient.GetBase64URLEncoded.
+type StringClientGetBase64URLEncodedResponse struct {
+	StringClientGetBase64URLEncodedResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// StringGetBase64URLEncodedResult contains the result from method String.GetBase64URLEncoded.
-type StringGetBase64URLEncodedResult struct {
+// StringClientGetBase64URLEncodedResult contains the result from method StringClient.GetBase64URLEncoded.
+type StringClientGetBase64URLEncodedResult struct {
 	Value []byte
 }
 
-// StringGetEmptyResponse contains the response from method String.GetEmpty.
-type StringGetEmptyResponse struct {
-	StringGetEmptyResult
+// StringClientGetEmptyResponse contains the response from method StringClient.GetEmpty.
+type StringClientGetEmptyResponse struct {
+	StringClientGetEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// StringGetEmptyResult contains the result from method String.GetEmpty.
-type StringGetEmptyResult struct {
+// StringClientGetEmptyResult contains the result from method StringClient.GetEmpty.
+type StringClientGetEmptyResult struct {
 	// simple string
 	Value *string
 }
 
-// StringGetMBCSResponse contains the response from method String.GetMBCS.
-type StringGetMBCSResponse struct {
-	StringGetMBCSResult
+// StringClientGetMBCSResponse contains the response from method StringClient.GetMBCS.
+type StringClientGetMBCSResponse struct {
+	StringClientGetMBCSResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// StringGetMBCSResult contains the result from method String.GetMBCS.
-type StringGetMBCSResult struct {
+// StringClientGetMBCSResult contains the result from method StringClient.GetMBCS.
+type StringClientGetMBCSResult struct {
 	// simple string
 	Value *string
 }
 
-// StringGetNotProvidedResponse contains the response from method String.GetNotProvided.
-type StringGetNotProvidedResponse struct {
-	StringGetNotProvidedResult
+// StringClientGetNotProvidedResponse contains the response from method StringClient.GetNotProvided.
+type StringClientGetNotProvidedResponse struct {
+	StringClientGetNotProvidedResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// StringGetNotProvidedResult contains the result from method String.GetNotProvided.
-type StringGetNotProvidedResult struct {
+// StringClientGetNotProvidedResult contains the result from method StringClient.GetNotProvided.
+type StringClientGetNotProvidedResult struct {
 	Value *string
 }
 
-// StringGetNullBase64URLEncodedResponse contains the response from method String.GetNullBase64URLEncoded.
-type StringGetNullBase64URLEncodedResponse struct {
-	StringGetNullBase64URLEncodedResult
+// StringClientGetNullBase64URLEncodedResponse contains the response from method StringClient.GetNullBase64URLEncoded.
+type StringClientGetNullBase64URLEncodedResponse struct {
+	StringClientGetNullBase64URLEncodedResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// StringGetNullBase64URLEncodedResult contains the result from method String.GetNullBase64URLEncoded.
-type StringGetNullBase64URLEncodedResult struct {
+// StringClientGetNullBase64URLEncodedResult contains the result from method StringClient.GetNullBase64URLEncoded.
+type StringClientGetNullBase64URLEncodedResult struct {
 	Value []byte
 }
 
-// StringGetNullResponse contains the response from method String.GetNull.
-type StringGetNullResponse struct {
-	StringGetNullResult
+// StringClientGetNullResponse contains the response from method StringClient.GetNull.
+type StringClientGetNullResponse struct {
+	StringClientGetNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// StringGetNullResult contains the result from method String.GetNull.
-type StringGetNullResult struct {
+// StringClientGetNullResult contains the result from method StringClient.GetNull.
+type StringClientGetNullResult struct {
 	Value *string
 }
 
-// StringGetWhitespaceResponse contains the response from method String.GetWhitespace.
-type StringGetWhitespaceResponse struct {
-	StringGetWhitespaceResult
+// StringClientGetWhitespaceResponse contains the response from method StringClient.GetWhitespace.
+type StringClientGetWhitespaceResponse struct {
+	StringClientGetWhitespaceResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// StringGetWhitespaceResult contains the result from method String.GetWhitespace.
-type StringGetWhitespaceResult struct {
+// StringClientGetWhitespaceResult contains the result from method StringClient.GetWhitespace.
+type StringClientGetWhitespaceResult struct {
 	// simple string
 	Value *string
 }
 
-// StringPutBase64URLEncodedResponse contains the response from method String.PutBase64URLEncoded.
-type StringPutBase64URLEncodedResponse struct {
+// StringClientPutBase64URLEncodedResponse contains the response from method StringClient.PutBase64URLEncoded.
+type StringClientPutBase64URLEncodedResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// StringPutEmptyResponse contains the response from method String.PutEmpty.
-type StringPutEmptyResponse struct {
+// StringClientPutEmptyResponse contains the response from method StringClient.PutEmpty.
+type StringClientPutEmptyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// StringPutMBCSResponse contains the response from method String.PutMBCS.
-type StringPutMBCSResponse struct {
+// StringClientPutMBCSResponse contains the response from method StringClient.PutMBCS.
+type StringClientPutMBCSResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// StringPutNullResponse contains the response from method String.PutNull.
-type StringPutNullResponse struct {
+// StringClientPutNullResponse contains the response from method StringClient.PutNull.
+type StringClientPutNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// StringPutWhitespaceResponse contains the response from method String.PutWhitespace.
-type StringPutWhitespaceResponse struct {
+// StringClientPutWhitespaceResponse contains the response from method StringClient.PutWhitespace.
+type StringClientPutWhitespaceResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

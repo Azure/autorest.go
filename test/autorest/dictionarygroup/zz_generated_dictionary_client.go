@@ -39,24 +39,25 @@ func NewDictionaryClient(options *azcore.ClientOptions) *DictionaryClient {
 
 // GetArrayEmpty - Get an empty dictionary {}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetArrayEmptyOptions contains the optional parameters for the DictionaryClient.GetArrayEmpty method.
-func (client *DictionaryClient) GetArrayEmpty(ctx context.Context, options *DictionaryGetArrayEmptyOptions) (DictionaryGetArrayEmptyResponse, error) {
+// options - DictionaryClientGetArrayEmptyOptions contains the optional parameters for the DictionaryClient.GetArrayEmpty
+// method.
+func (client *DictionaryClient) GetArrayEmpty(ctx context.Context, options *DictionaryClientGetArrayEmptyOptions) (DictionaryClientGetArrayEmptyResponse, error) {
 	req, err := client.getArrayEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetArrayEmptyResponse{}, err
+		return DictionaryClientGetArrayEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetArrayEmptyResponse{}, err
+		return DictionaryClientGetArrayEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetArrayEmptyResponse{}, client.getArrayEmptyHandleError(resp)
+		return DictionaryClientGetArrayEmptyResponse{}, client.getArrayEmptyHandleError(resp)
 	}
 	return client.getArrayEmptyHandleResponse(resp)
 }
 
 // getArrayEmptyCreateRequest creates the GetArrayEmpty request.
-func (client *DictionaryClient) getArrayEmptyCreateRequest(ctx context.Context, options *DictionaryGetArrayEmptyOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getArrayEmptyCreateRequest(ctx context.Context, options *DictionaryClientGetArrayEmptyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/array/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -67,10 +68,10 @@ func (client *DictionaryClient) getArrayEmptyCreateRequest(ctx context.Context, 
 }
 
 // getArrayEmptyHandleResponse handles the GetArrayEmpty response.
-func (client *DictionaryClient) getArrayEmptyHandleResponse(resp *http.Response) (DictionaryGetArrayEmptyResponse, error) {
-	result := DictionaryGetArrayEmptyResponse{RawResponse: resp}
+func (client *DictionaryClient) getArrayEmptyHandleResponse(resp *http.Response) (DictionaryClientGetArrayEmptyResponse, error) {
+	result := DictionaryClientGetArrayEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetArrayEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetArrayEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -90,25 +91,25 @@ func (client *DictionaryClient) getArrayEmptyHandleError(resp *http.Response) er
 
 // GetArrayItemEmpty - Get an array of array of strings [{"0": ["1", "2", "3"], "1": [], "2": ["7", "8", "9"]}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetArrayItemEmptyOptions contains the optional parameters for the DictionaryClient.GetArrayItemEmpty
+// options - DictionaryClientGetArrayItemEmptyOptions contains the optional parameters for the DictionaryClient.GetArrayItemEmpty
 // method.
-func (client *DictionaryClient) GetArrayItemEmpty(ctx context.Context, options *DictionaryGetArrayItemEmptyOptions) (DictionaryGetArrayItemEmptyResponse, error) {
+func (client *DictionaryClient) GetArrayItemEmpty(ctx context.Context, options *DictionaryClientGetArrayItemEmptyOptions) (DictionaryClientGetArrayItemEmptyResponse, error) {
 	req, err := client.getArrayItemEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetArrayItemEmptyResponse{}, err
+		return DictionaryClientGetArrayItemEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetArrayItemEmptyResponse{}, err
+		return DictionaryClientGetArrayItemEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetArrayItemEmptyResponse{}, client.getArrayItemEmptyHandleError(resp)
+		return DictionaryClientGetArrayItemEmptyResponse{}, client.getArrayItemEmptyHandleError(resp)
 	}
 	return client.getArrayItemEmptyHandleResponse(resp)
 }
 
 // getArrayItemEmptyCreateRequest creates the GetArrayItemEmpty request.
-func (client *DictionaryClient) getArrayItemEmptyCreateRequest(ctx context.Context, options *DictionaryGetArrayItemEmptyOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getArrayItemEmptyCreateRequest(ctx context.Context, options *DictionaryClientGetArrayItemEmptyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/array/itemempty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -119,10 +120,10 @@ func (client *DictionaryClient) getArrayItemEmptyCreateRequest(ctx context.Conte
 }
 
 // getArrayItemEmptyHandleResponse handles the GetArrayItemEmpty response.
-func (client *DictionaryClient) getArrayItemEmptyHandleResponse(resp *http.Response) (DictionaryGetArrayItemEmptyResponse, error) {
-	result := DictionaryGetArrayItemEmptyResponse{RawResponse: resp}
+func (client *DictionaryClient) getArrayItemEmptyHandleResponse(resp *http.Response) (DictionaryClientGetArrayItemEmptyResponse, error) {
+	result := DictionaryClientGetArrayItemEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetArrayItemEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetArrayItemEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -142,25 +143,25 @@ func (client *DictionaryClient) getArrayItemEmptyHandleError(resp *http.Response
 
 // GetArrayItemNull - Get an dictionary of array of strings {"0": ["1", "2", "3"], "1": null, "2": ["7", "8", "9"]}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetArrayItemNullOptions contains the optional parameters for the DictionaryClient.GetArrayItemNull
+// options - DictionaryClientGetArrayItemNullOptions contains the optional parameters for the DictionaryClient.GetArrayItemNull
 // method.
-func (client *DictionaryClient) GetArrayItemNull(ctx context.Context, options *DictionaryGetArrayItemNullOptions) (DictionaryGetArrayItemNullResponse, error) {
+func (client *DictionaryClient) GetArrayItemNull(ctx context.Context, options *DictionaryClientGetArrayItemNullOptions) (DictionaryClientGetArrayItemNullResponse, error) {
 	req, err := client.getArrayItemNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetArrayItemNullResponse{}, err
+		return DictionaryClientGetArrayItemNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetArrayItemNullResponse{}, err
+		return DictionaryClientGetArrayItemNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetArrayItemNullResponse{}, client.getArrayItemNullHandleError(resp)
+		return DictionaryClientGetArrayItemNullResponse{}, client.getArrayItemNullHandleError(resp)
 	}
 	return client.getArrayItemNullHandleResponse(resp)
 }
 
 // getArrayItemNullCreateRequest creates the GetArrayItemNull request.
-func (client *DictionaryClient) getArrayItemNullCreateRequest(ctx context.Context, options *DictionaryGetArrayItemNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getArrayItemNullCreateRequest(ctx context.Context, options *DictionaryClientGetArrayItemNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/array/itemnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -171,10 +172,10 @@ func (client *DictionaryClient) getArrayItemNullCreateRequest(ctx context.Contex
 }
 
 // getArrayItemNullHandleResponse handles the GetArrayItemNull response.
-func (client *DictionaryClient) getArrayItemNullHandleResponse(resp *http.Response) (DictionaryGetArrayItemNullResponse, error) {
-	result := DictionaryGetArrayItemNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getArrayItemNullHandleResponse(resp *http.Response) (DictionaryClientGetArrayItemNullResponse, error) {
+	result := DictionaryClientGetArrayItemNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetArrayItemNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetArrayItemNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -194,24 +195,24 @@ func (client *DictionaryClient) getArrayItemNullHandleError(resp *http.Response)
 
 // GetArrayNull - Get a null array
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetArrayNullOptions contains the optional parameters for the DictionaryClient.GetArrayNull method.
-func (client *DictionaryClient) GetArrayNull(ctx context.Context, options *DictionaryGetArrayNullOptions) (DictionaryGetArrayNullResponse, error) {
+// options - DictionaryClientGetArrayNullOptions contains the optional parameters for the DictionaryClient.GetArrayNull method.
+func (client *DictionaryClient) GetArrayNull(ctx context.Context, options *DictionaryClientGetArrayNullOptions) (DictionaryClientGetArrayNullResponse, error) {
 	req, err := client.getArrayNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetArrayNullResponse{}, err
+		return DictionaryClientGetArrayNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetArrayNullResponse{}, err
+		return DictionaryClientGetArrayNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetArrayNullResponse{}, client.getArrayNullHandleError(resp)
+		return DictionaryClientGetArrayNullResponse{}, client.getArrayNullHandleError(resp)
 	}
 	return client.getArrayNullHandleResponse(resp)
 }
 
 // getArrayNullCreateRequest creates the GetArrayNull request.
-func (client *DictionaryClient) getArrayNullCreateRequest(ctx context.Context, options *DictionaryGetArrayNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getArrayNullCreateRequest(ctx context.Context, options *DictionaryClientGetArrayNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/array/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -222,10 +223,10 @@ func (client *DictionaryClient) getArrayNullCreateRequest(ctx context.Context, o
 }
 
 // getArrayNullHandleResponse handles the GetArrayNull response.
-func (client *DictionaryClient) getArrayNullHandleResponse(resp *http.Response) (DictionaryGetArrayNullResponse, error) {
-	result := DictionaryGetArrayNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getArrayNullHandleResponse(resp *http.Response) (DictionaryClientGetArrayNullResponse, error) {
+	result := DictionaryClientGetArrayNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetArrayNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetArrayNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -245,24 +246,25 @@ func (client *DictionaryClient) getArrayNullHandleError(resp *http.Response) err
 
 // GetArrayValid - Get an array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetArrayValidOptions contains the optional parameters for the DictionaryClient.GetArrayValid method.
-func (client *DictionaryClient) GetArrayValid(ctx context.Context, options *DictionaryGetArrayValidOptions) (DictionaryGetArrayValidResponse, error) {
+// options - DictionaryClientGetArrayValidOptions contains the optional parameters for the DictionaryClient.GetArrayValid
+// method.
+func (client *DictionaryClient) GetArrayValid(ctx context.Context, options *DictionaryClientGetArrayValidOptions) (DictionaryClientGetArrayValidResponse, error) {
 	req, err := client.getArrayValidCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetArrayValidResponse{}, err
+		return DictionaryClientGetArrayValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetArrayValidResponse{}, err
+		return DictionaryClientGetArrayValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetArrayValidResponse{}, client.getArrayValidHandleError(resp)
+		return DictionaryClientGetArrayValidResponse{}, client.getArrayValidHandleError(resp)
 	}
 	return client.getArrayValidHandleResponse(resp)
 }
 
 // getArrayValidCreateRequest creates the GetArrayValid request.
-func (client *DictionaryClient) getArrayValidCreateRequest(ctx context.Context, options *DictionaryGetArrayValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getArrayValidCreateRequest(ctx context.Context, options *DictionaryClientGetArrayValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/array/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -273,10 +275,10 @@ func (client *DictionaryClient) getArrayValidCreateRequest(ctx context.Context, 
 }
 
 // getArrayValidHandleResponse handles the GetArrayValid response.
-func (client *DictionaryClient) getArrayValidHandleResponse(resp *http.Response) (DictionaryGetArrayValidResponse, error) {
-	result := DictionaryGetArrayValidResponse{RawResponse: resp}
+func (client *DictionaryClient) getArrayValidHandleResponse(resp *http.Response) (DictionaryClientGetArrayValidResponse, error) {
+	result := DictionaryClientGetArrayValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetArrayValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetArrayValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -297,24 +299,24 @@ func (client *DictionaryClient) getArrayValidHandleError(resp *http.Response) er
 // GetBase64URL - Get base64url dictionary value {"0": "a string that gets encoded with base64url", "1": "test string", "2":
 // "Lorem ipsum"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetBase64URLOptions contains the optional parameters for the DictionaryClient.GetBase64URL method.
-func (client *DictionaryClient) GetBase64URL(ctx context.Context, options *DictionaryGetBase64URLOptions) (DictionaryGetBase64URLResponse, error) {
+// options - DictionaryClientGetBase64URLOptions contains the optional parameters for the DictionaryClient.GetBase64URL method.
+func (client *DictionaryClient) GetBase64URL(ctx context.Context, options *DictionaryClientGetBase64URLOptions) (DictionaryClientGetBase64URLResponse, error) {
 	req, err := client.getBase64URLCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetBase64URLResponse{}, err
+		return DictionaryClientGetBase64URLResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetBase64URLResponse{}, err
+		return DictionaryClientGetBase64URLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetBase64URLResponse{}, client.getBase64URLHandleError(resp)
+		return DictionaryClientGetBase64URLResponse{}, client.getBase64URLHandleError(resp)
 	}
 	return client.getBase64URLHandleResponse(resp)
 }
 
 // getBase64URLCreateRequest creates the GetBase64URL request.
-func (client *DictionaryClient) getBase64URLCreateRequest(ctx context.Context, options *DictionaryGetBase64URLOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getBase64URLCreateRequest(ctx context.Context, options *DictionaryClientGetBase64URLOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/base64url/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -325,10 +327,10 @@ func (client *DictionaryClient) getBase64URLCreateRequest(ctx context.Context, o
 }
 
 // getBase64URLHandleResponse handles the GetBase64URL response.
-func (client *DictionaryClient) getBase64URLHandleResponse(resp *http.Response) (DictionaryGetBase64URLResponse, error) {
-	result := DictionaryGetBase64URLResponse{RawResponse: resp}
+func (client *DictionaryClient) getBase64URLHandleResponse(resp *http.Response) (DictionaryClientGetBase64URLResponse, error) {
+	result := DictionaryClientGetBase64URLResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetBase64URLResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetBase64URLResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -348,25 +350,25 @@ func (client *DictionaryClient) getBase64URLHandleError(resp *http.Response) err
 
 // GetBooleanInvalidNull - Get boolean dictionary value {"0": true, "1": null, "2": false }
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetBooleanInvalidNullOptions contains the optional parameters for the DictionaryClient.GetBooleanInvalidNull
+// options - DictionaryClientGetBooleanInvalidNullOptions contains the optional parameters for the DictionaryClient.GetBooleanInvalidNull
 // method.
-func (client *DictionaryClient) GetBooleanInvalidNull(ctx context.Context, options *DictionaryGetBooleanInvalidNullOptions) (DictionaryGetBooleanInvalidNullResponse, error) {
+func (client *DictionaryClient) GetBooleanInvalidNull(ctx context.Context, options *DictionaryClientGetBooleanInvalidNullOptions) (DictionaryClientGetBooleanInvalidNullResponse, error) {
 	req, err := client.getBooleanInvalidNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetBooleanInvalidNullResponse{}, err
+		return DictionaryClientGetBooleanInvalidNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetBooleanInvalidNullResponse{}, err
+		return DictionaryClientGetBooleanInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetBooleanInvalidNullResponse{}, client.getBooleanInvalidNullHandleError(resp)
+		return DictionaryClientGetBooleanInvalidNullResponse{}, client.getBooleanInvalidNullHandleError(resp)
 	}
 	return client.getBooleanInvalidNullHandleResponse(resp)
 }
 
 // getBooleanInvalidNullCreateRequest creates the GetBooleanInvalidNull request.
-func (client *DictionaryClient) getBooleanInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetBooleanInvalidNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getBooleanInvalidNullCreateRequest(ctx context.Context, options *DictionaryClientGetBooleanInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/boolean/true.null.false"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -377,10 +379,10 @@ func (client *DictionaryClient) getBooleanInvalidNullCreateRequest(ctx context.C
 }
 
 // getBooleanInvalidNullHandleResponse handles the GetBooleanInvalidNull response.
-func (client *DictionaryClient) getBooleanInvalidNullHandleResponse(resp *http.Response) (DictionaryGetBooleanInvalidNullResponse, error) {
-	result := DictionaryGetBooleanInvalidNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getBooleanInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetBooleanInvalidNullResponse, error) {
+	result := DictionaryClientGetBooleanInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetBooleanInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetBooleanInvalidNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -400,25 +402,25 @@ func (client *DictionaryClient) getBooleanInvalidNullHandleError(resp *http.Resp
 
 // GetBooleanInvalidString - Get boolean dictionary value '{"0": true, "1": "boolean", "2": false}'
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetBooleanInvalidStringOptions contains the optional parameters for the DictionaryClient.GetBooleanInvalidString
+// options - DictionaryClientGetBooleanInvalidStringOptions contains the optional parameters for the DictionaryClient.GetBooleanInvalidString
 // method.
-func (client *DictionaryClient) GetBooleanInvalidString(ctx context.Context, options *DictionaryGetBooleanInvalidStringOptions) (DictionaryGetBooleanInvalidStringResponse, error) {
+func (client *DictionaryClient) GetBooleanInvalidString(ctx context.Context, options *DictionaryClientGetBooleanInvalidStringOptions) (DictionaryClientGetBooleanInvalidStringResponse, error) {
 	req, err := client.getBooleanInvalidStringCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetBooleanInvalidStringResponse{}, err
+		return DictionaryClientGetBooleanInvalidStringResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetBooleanInvalidStringResponse{}, err
+		return DictionaryClientGetBooleanInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetBooleanInvalidStringResponse{}, client.getBooleanInvalidStringHandleError(resp)
+		return DictionaryClientGetBooleanInvalidStringResponse{}, client.getBooleanInvalidStringHandleError(resp)
 	}
 	return client.getBooleanInvalidStringHandleResponse(resp)
 }
 
 // getBooleanInvalidStringCreateRequest creates the GetBooleanInvalidString request.
-func (client *DictionaryClient) getBooleanInvalidStringCreateRequest(ctx context.Context, options *DictionaryGetBooleanInvalidStringOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getBooleanInvalidStringCreateRequest(ctx context.Context, options *DictionaryClientGetBooleanInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/boolean/true.boolean.false"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -429,10 +431,10 @@ func (client *DictionaryClient) getBooleanInvalidStringCreateRequest(ctx context
 }
 
 // getBooleanInvalidStringHandleResponse handles the GetBooleanInvalidString response.
-func (client *DictionaryClient) getBooleanInvalidStringHandleResponse(resp *http.Response) (DictionaryGetBooleanInvalidStringResponse, error) {
-	result := DictionaryGetBooleanInvalidStringResponse{RawResponse: resp}
+func (client *DictionaryClient) getBooleanInvalidStringHandleResponse(resp *http.Response) (DictionaryClientGetBooleanInvalidStringResponse, error) {
+	result := DictionaryClientGetBooleanInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetBooleanInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetBooleanInvalidStringResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -452,24 +454,25 @@ func (client *DictionaryClient) getBooleanInvalidStringHandleError(resp *http.Re
 
 // GetBooleanTfft - Get boolean dictionary value {"0": true, "1": false, "2": false, "3": true }
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetBooleanTfftOptions contains the optional parameters for the DictionaryClient.GetBooleanTfft method.
-func (client *DictionaryClient) GetBooleanTfft(ctx context.Context, options *DictionaryGetBooleanTfftOptions) (DictionaryGetBooleanTfftResponse, error) {
+// options - DictionaryClientGetBooleanTfftOptions contains the optional parameters for the DictionaryClient.GetBooleanTfft
+// method.
+func (client *DictionaryClient) GetBooleanTfft(ctx context.Context, options *DictionaryClientGetBooleanTfftOptions) (DictionaryClientGetBooleanTfftResponse, error) {
 	req, err := client.getBooleanTfftCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetBooleanTfftResponse{}, err
+		return DictionaryClientGetBooleanTfftResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetBooleanTfftResponse{}, err
+		return DictionaryClientGetBooleanTfftResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetBooleanTfftResponse{}, client.getBooleanTfftHandleError(resp)
+		return DictionaryClientGetBooleanTfftResponse{}, client.getBooleanTfftHandleError(resp)
 	}
 	return client.getBooleanTfftHandleResponse(resp)
 }
 
 // getBooleanTfftCreateRequest creates the GetBooleanTfft request.
-func (client *DictionaryClient) getBooleanTfftCreateRequest(ctx context.Context, options *DictionaryGetBooleanTfftOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getBooleanTfftCreateRequest(ctx context.Context, options *DictionaryClientGetBooleanTfftOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/boolean/tfft"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -480,10 +483,10 @@ func (client *DictionaryClient) getBooleanTfftCreateRequest(ctx context.Context,
 }
 
 // getBooleanTfftHandleResponse handles the GetBooleanTfft response.
-func (client *DictionaryClient) getBooleanTfftHandleResponse(resp *http.Response) (DictionaryGetBooleanTfftResponse, error) {
-	result := DictionaryGetBooleanTfftResponse{RawResponse: resp}
+func (client *DictionaryClient) getBooleanTfftHandleResponse(resp *http.Response) (DictionaryClientGetBooleanTfftResponse, error) {
+	result := DictionaryClientGetBooleanTfftResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetBooleanTfftResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetBooleanTfftResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -503,25 +506,25 @@ func (client *DictionaryClient) getBooleanTfftHandleError(resp *http.Response) e
 
 // GetByteInvalidNull - Get byte dictionary value {"0": hex(FF FF FF FA), "1": null} with the first item base64 encoded
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetByteInvalidNullOptions contains the optional parameters for the DictionaryClient.GetByteInvalidNull
+// options - DictionaryClientGetByteInvalidNullOptions contains the optional parameters for the DictionaryClient.GetByteInvalidNull
 // method.
-func (client *DictionaryClient) GetByteInvalidNull(ctx context.Context, options *DictionaryGetByteInvalidNullOptions) (DictionaryGetByteInvalidNullResponse, error) {
+func (client *DictionaryClient) GetByteInvalidNull(ctx context.Context, options *DictionaryClientGetByteInvalidNullOptions) (DictionaryClientGetByteInvalidNullResponse, error) {
 	req, err := client.getByteInvalidNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetByteInvalidNullResponse{}, err
+		return DictionaryClientGetByteInvalidNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetByteInvalidNullResponse{}, err
+		return DictionaryClientGetByteInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetByteInvalidNullResponse{}, client.getByteInvalidNullHandleError(resp)
+		return DictionaryClientGetByteInvalidNullResponse{}, client.getByteInvalidNullHandleError(resp)
 	}
 	return client.getByteInvalidNullHandleResponse(resp)
 }
 
 // getByteInvalidNullCreateRequest creates the GetByteInvalidNull request.
-func (client *DictionaryClient) getByteInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetByteInvalidNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getByteInvalidNullCreateRequest(ctx context.Context, options *DictionaryClientGetByteInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/byte/invalidnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -532,10 +535,10 @@ func (client *DictionaryClient) getByteInvalidNullCreateRequest(ctx context.Cont
 }
 
 // getByteInvalidNullHandleResponse handles the GetByteInvalidNull response.
-func (client *DictionaryClient) getByteInvalidNullHandleResponse(resp *http.Response) (DictionaryGetByteInvalidNullResponse, error) {
-	result := DictionaryGetByteInvalidNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getByteInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetByteInvalidNullResponse, error) {
+	result := DictionaryClientGetByteInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetByteInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetByteInvalidNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -556,24 +559,24 @@ func (client *DictionaryClient) getByteInvalidNullHandleError(resp *http.Respons
 // GetByteValid - Get byte dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each item
 // encoded in base64
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetByteValidOptions contains the optional parameters for the DictionaryClient.GetByteValid method.
-func (client *DictionaryClient) GetByteValid(ctx context.Context, options *DictionaryGetByteValidOptions) (DictionaryGetByteValidResponse, error) {
+// options - DictionaryClientGetByteValidOptions contains the optional parameters for the DictionaryClient.GetByteValid method.
+func (client *DictionaryClient) GetByteValid(ctx context.Context, options *DictionaryClientGetByteValidOptions) (DictionaryClientGetByteValidResponse, error) {
 	req, err := client.getByteValidCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetByteValidResponse{}, err
+		return DictionaryClientGetByteValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetByteValidResponse{}, err
+		return DictionaryClientGetByteValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetByteValidResponse{}, client.getByteValidHandleError(resp)
+		return DictionaryClientGetByteValidResponse{}, client.getByteValidHandleError(resp)
 	}
 	return client.getByteValidHandleResponse(resp)
 }
 
 // getByteValidCreateRequest creates the GetByteValid request.
-func (client *DictionaryClient) getByteValidCreateRequest(ctx context.Context, options *DictionaryGetByteValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getByteValidCreateRequest(ctx context.Context, options *DictionaryClientGetByteValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/byte/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -584,10 +587,10 @@ func (client *DictionaryClient) getByteValidCreateRequest(ctx context.Context, o
 }
 
 // getByteValidHandleResponse handles the GetByteValid response.
-func (client *DictionaryClient) getByteValidHandleResponse(resp *http.Response) (DictionaryGetByteValidResponse, error) {
-	result := DictionaryGetByteValidResponse{RawResponse: resp}
+func (client *DictionaryClient) getByteValidHandleResponse(resp *http.Response) (DictionaryClientGetByteValidResponse, error) {
+	result := DictionaryClientGetByteValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetByteValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetByteValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -607,24 +610,25 @@ func (client *DictionaryClient) getByteValidHandleError(resp *http.Response) err
 
 // GetComplexEmpty - Get empty dictionary of complex type {}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetComplexEmptyOptions contains the optional parameters for the DictionaryClient.GetComplexEmpty method.
-func (client *DictionaryClient) GetComplexEmpty(ctx context.Context, options *DictionaryGetComplexEmptyOptions) (DictionaryGetComplexEmptyResponse, error) {
+// options - DictionaryClientGetComplexEmptyOptions contains the optional parameters for the DictionaryClient.GetComplexEmpty
+// method.
+func (client *DictionaryClient) GetComplexEmpty(ctx context.Context, options *DictionaryClientGetComplexEmptyOptions) (DictionaryClientGetComplexEmptyResponse, error) {
 	req, err := client.getComplexEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetComplexEmptyResponse{}, err
+		return DictionaryClientGetComplexEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetComplexEmptyResponse{}, err
+		return DictionaryClientGetComplexEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetComplexEmptyResponse{}, client.getComplexEmptyHandleError(resp)
+		return DictionaryClientGetComplexEmptyResponse{}, client.getComplexEmptyHandleError(resp)
 	}
 	return client.getComplexEmptyHandleResponse(resp)
 }
 
 // getComplexEmptyCreateRequest creates the GetComplexEmpty request.
-func (client *DictionaryClient) getComplexEmptyCreateRequest(ctx context.Context, options *DictionaryGetComplexEmptyOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getComplexEmptyCreateRequest(ctx context.Context, options *DictionaryClientGetComplexEmptyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/complex/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -635,10 +639,10 @@ func (client *DictionaryClient) getComplexEmptyCreateRequest(ctx context.Context
 }
 
 // getComplexEmptyHandleResponse handles the GetComplexEmpty response.
-func (client *DictionaryClient) getComplexEmptyHandleResponse(resp *http.Response) (DictionaryGetComplexEmptyResponse, error) {
-	result := DictionaryGetComplexEmptyResponse{RawResponse: resp}
+func (client *DictionaryClient) getComplexEmptyHandleResponse(resp *http.Response) (DictionaryClientGetComplexEmptyResponse, error) {
+	result := DictionaryClientGetComplexEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetComplexEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetComplexEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -659,25 +663,25 @@ func (client *DictionaryClient) getComplexEmptyHandleError(resp *http.Response) 
 // GetComplexItemEmpty - Get dictionary of complex type with empty item {"0": {"integer": 1, "string": "2"}, "1:" {}, "2":
 // {"integer": 5, "string": "6"}}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetComplexItemEmptyOptions contains the optional parameters for the DictionaryClient.GetComplexItemEmpty
+// options - DictionaryClientGetComplexItemEmptyOptions contains the optional parameters for the DictionaryClient.GetComplexItemEmpty
 // method.
-func (client *DictionaryClient) GetComplexItemEmpty(ctx context.Context, options *DictionaryGetComplexItemEmptyOptions) (DictionaryGetComplexItemEmptyResponse, error) {
+func (client *DictionaryClient) GetComplexItemEmpty(ctx context.Context, options *DictionaryClientGetComplexItemEmptyOptions) (DictionaryClientGetComplexItemEmptyResponse, error) {
 	req, err := client.getComplexItemEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetComplexItemEmptyResponse{}, err
+		return DictionaryClientGetComplexItemEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetComplexItemEmptyResponse{}, err
+		return DictionaryClientGetComplexItemEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetComplexItemEmptyResponse{}, client.getComplexItemEmptyHandleError(resp)
+		return DictionaryClientGetComplexItemEmptyResponse{}, client.getComplexItemEmptyHandleError(resp)
 	}
 	return client.getComplexItemEmptyHandleResponse(resp)
 }
 
 // getComplexItemEmptyCreateRequest creates the GetComplexItemEmpty request.
-func (client *DictionaryClient) getComplexItemEmptyCreateRequest(ctx context.Context, options *DictionaryGetComplexItemEmptyOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getComplexItemEmptyCreateRequest(ctx context.Context, options *DictionaryClientGetComplexItemEmptyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/complex/itemempty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -688,10 +692,10 @@ func (client *DictionaryClient) getComplexItemEmptyCreateRequest(ctx context.Con
 }
 
 // getComplexItemEmptyHandleResponse handles the GetComplexItemEmpty response.
-func (client *DictionaryClient) getComplexItemEmptyHandleResponse(resp *http.Response) (DictionaryGetComplexItemEmptyResponse, error) {
-	result := DictionaryGetComplexItemEmptyResponse{RawResponse: resp}
+func (client *DictionaryClient) getComplexItemEmptyHandleResponse(resp *http.Response) (DictionaryClientGetComplexItemEmptyResponse, error) {
+	result := DictionaryClientGetComplexItemEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetComplexItemEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetComplexItemEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -712,25 +716,25 @@ func (client *DictionaryClient) getComplexItemEmptyHandleError(resp *http.Respon
 // GetComplexItemNull - Get dictionary of complex type with null item {"0": {"integer": 1, "string": "2"}, "1": null, "2":
 // {"integer": 5, "string": "6"}}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetComplexItemNullOptions contains the optional parameters for the DictionaryClient.GetComplexItemNull
+// options - DictionaryClientGetComplexItemNullOptions contains the optional parameters for the DictionaryClient.GetComplexItemNull
 // method.
-func (client *DictionaryClient) GetComplexItemNull(ctx context.Context, options *DictionaryGetComplexItemNullOptions) (DictionaryGetComplexItemNullResponse, error) {
+func (client *DictionaryClient) GetComplexItemNull(ctx context.Context, options *DictionaryClientGetComplexItemNullOptions) (DictionaryClientGetComplexItemNullResponse, error) {
 	req, err := client.getComplexItemNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetComplexItemNullResponse{}, err
+		return DictionaryClientGetComplexItemNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetComplexItemNullResponse{}, err
+		return DictionaryClientGetComplexItemNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetComplexItemNullResponse{}, client.getComplexItemNullHandleError(resp)
+		return DictionaryClientGetComplexItemNullResponse{}, client.getComplexItemNullHandleError(resp)
 	}
 	return client.getComplexItemNullHandleResponse(resp)
 }
 
 // getComplexItemNullCreateRequest creates the GetComplexItemNull request.
-func (client *DictionaryClient) getComplexItemNullCreateRequest(ctx context.Context, options *DictionaryGetComplexItemNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getComplexItemNullCreateRequest(ctx context.Context, options *DictionaryClientGetComplexItemNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/complex/itemnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -741,10 +745,10 @@ func (client *DictionaryClient) getComplexItemNullCreateRequest(ctx context.Cont
 }
 
 // getComplexItemNullHandleResponse handles the GetComplexItemNull response.
-func (client *DictionaryClient) getComplexItemNullHandleResponse(resp *http.Response) (DictionaryGetComplexItemNullResponse, error) {
-	result := DictionaryGetComplexItemNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getComplexItemNullHandleResponse(resp *http.Response) (DictionaryClientGetComplexItemNullResponse, error) {
+	result := DictionaryClientGetComplexItemNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetComplexItemNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetComplexItemNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -764,24 +768,25 @@ func (client *DictionaryClient) getComplexItemNullHandleError(resp *http.Respons
 
 // GetComplexNull - Get dictionary of complex type null value
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetComplexNullOptions contains the optional parameters for the DictionaryClient.GetComplexNull method.
-func (client *DictionaryClient) GetComplexNull(ctx context.Context, options *DictionaryGetComplexNullOptions) (DictionaryGetComplexNullResponse, error) {
+// options - DictionaryClientGetComplexNullOptions contains the optional parameters for the DictionaryClient.GetComplexNull
+// method.
+func (client *DictionaryClient) GetComplexNull(ctx context.Context, options *DictionaryClientGetComplexNullOptions) (DictionaryClientGetComplexNullResponse, error) {
 	req, err := client.getComplexNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetComplexNullResponse{}, err
+		return DictionaryClientGetComplexNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetComplexNullResponse{}, err
+		return DictionaryClientGetComplexNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetComplexNullResponse{}, client.getComplexNullHandleError(resp)
+		return DictionaryClientGetComplexNullResponse{}, client.getComplexNullHandleError(resp)
 	}
 	return client.getComplexNullHandleResponse(resp)
 }
 
 // getComplexNullCreateRequest creates the GetComplexNull request.
-func (client *DictionaryClient) getComplexNullCreateRequest(ctx context.Context, options *DictionaryGetComplexNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getComplexNullCreateRequest(ctx context.Context, options *DictionaryClientGetComplexNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/complex/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -792,10 +797,10 @@ func (client *DictionaryClient) getComplexNullCreateRequest(ctx context.Context,
 }
 
 // getComplexNullHandleResponse handles the GetComplexNull response.
-func (client *DictionaryClient) getComplexNullHandleResponse(resp *http.Response) (DictionaryGetComplexNullResponse, error) {
-	result := DictionaryGetComplexNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getComplexNullHandleResponse(resp *http.Response) (DictionaryClientGetComplexNullResponse, error) {
+	result := DictionaryClientGetComplexNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetComplexNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetComplexNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -816,24 +821,25 @@ func (client *DictionaryClient) getComplexNullHandleError(resp *http.Response) e
 // GetComplexValid - Get dictionary of complex type with {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3, "string":
 // "4"}, "2": {"integer": 5, "string": "6"}}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetComplexValidOptions contains the optional parameters for the DictionaryClient.GetComplexValid method.
-func (client *DictionaryClient) GetComplexValid(ctx context.Context, options *DictionaryGetComplexValidOptions) (DictionaryGetComplexValidResponse, error) {
+// options - DictionaryClientGetComplexValidOptions contains the optional parameters for the DictionaryClient.GetComplexValid
+// method.
+func (client *DictionaryClient) GetComplexValid(ctx context.Context, options *DictionaryClientGetComplexValidOptions) (DictionaryClientGetComplexValidResponse, error) {
 	req, err := client.getComplexValidCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetComplexValidResponse{}, err
+		return DictionaryClientGetComplexValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetComplexValidResponse{}, err
+		return DictionaryClientGetComplexValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetComplexValidResponse{}, client.getComplexValidHandleError(resp)
+		return DictionaryClientGetComplexValidResponse{}, client.getComplexValidHandleError(resp)
 	}
 	return client.getComplexValidHandleResponse(resp)
 }
 
 // getComplexValidCreateRequest creates the GetComplexValid request.
-func (client *DictionaryClient) getComplexValidCreateRequest(ctx context.Context, options *DictionaryGetComplexValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getComplexValidCreateRequest(ctx context.Context, options *DictionaryClientGetComplexValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/complex/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -844,10 +850,10 @@ func (client *DictionaryClient) getComplexValidCreateRequest(ctx context.Context
 }
 
 // getComplexValidHandleResponse handles the GetComplexValid response.
-func (client *DictionaryClient) getComplexValidHandleResponse(resp *http.Response) (DictionaryGetComplexValidResponse, error) {
-	result := DictionaryGetComplexValidResponse{RawResponse: resp}
+func (client *DictionaryClient) getComplexValidHandleResponse(resp *http.Response) (DictionaryClientGetComplexValidResponse, error) {
+	result := DictionaryClientGetComplexValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetComplexValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetComplexValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -867,25 +873,25 @@ func (client *DictionaryClient) getComplexValidHandleError(resp *http.Response) 
 
 // GetDateInvalidChars - Get date dictionary value {"0": "2011-03-22", "1": "date"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDateInvalidCharsOptions contains the optional parameters for the DictionaryClient.GetDateInvalidChars
+// options - DictionaryClientGetDateInvalidCharsOptions contains the optional parameters for the DictionaryClient.GetDateInvalidChars
 // method.
-func (client *DictionaryClient) GetDateInvalidChars(ctx context.Context, options *DictionaryGetDateInvalidCharsOptions) (DictionaryGetDateInvalidCharsResponse, error) {
+func (client *DictionaryClient) GetDateInvalidChars(ctx context.Context, options *DictionaryClientGetDateInvalidCharsOptions) (DictionaryClientGetDateInvalidCharsResponse, error) {
 	req, err := client.getDateInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetDateInvalidCharsResponse{}, err
+		return DictionaryClientGetDateInvalidCharsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetDateInvalidCharsResponse{}, err
+		return DictionaryClientGetDateInvalidCharsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetDateInvalidCharsResponse{}, client.getDateInvalidCharsHandleError(resp)
+		return DictionaryClientGetDateInvalidCharsResponse{}, client.getDateInvalidCharsHandleError(resp)
 	}
 	return client.getDateInvalidCharsHandleResponse(resp)
 }
 
 // getDateInvalidCharsCreateRequest creates the GetDateInvalidChars request.
-func (client *DictionaryClient) getDateInvalidCharsCreateRequest(ctx context.Context, options *DictionaryGetDateInvalidCharsOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getDateInvalidCharsCreateRequest(ctx context.Context, options *DictionaryClientGetDateInvalidCharsOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date/invalidchars"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -896,11 +902,11 @@ func (client *DictionaryClient) getDateInvalidCharsCreateRequest(ctx context.Con
 }
 
 // getDateInvalidCharsHandleResponse handles the GetDateInvalidChars response.
-func (client *DictionaryClient) getDateInvalidCharsHandleResponse(resp *http.Response) (DictionaryGetDateInvalidCharsResponse, error) {
-	result := DictionaryGetDateInvalidCharsResponse{RawResponse: resp}
+func (client *DictionaryClient) getDateInvalidCharsHandleResponse(resp *http.Response) (DictionaryClientGetDateInvalidCharsResponse, error) {
+	result := DictionaryClientGetDateInvalidCharsResponse{RawResponse: resp}
 	aux := map[string]*dateType{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryGetDateInvalidCharsResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDateInvalidCharsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -925,25 +931,25 @@ func (client *DictionaryClient) getDateInvalidCharsHandleError(resp *http.Respon
 
 // GetDateInvalidNull - Get date dictionary value {"0": "2012-01-01", "1": null, "2": "1776-07-04"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDateInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDateInvalidNull
+// options - DictionaryClientGetDateInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDateInvalidNull
 // method.
-func (client *DictionaryClient) GetDateInvalidNull(ctx context.Context, options *DictionaryGetDateInvalidNullOptions) (DictionaryGetDateInvalidNullResponse, error) {
+func (client *DictionaryClient) GetDateInvalidNull(ctx context.Context, options *DictionaryClientGetDateInvalidNullOptions) (DictionaryClientGetDateInvalidNullResponse, error) {
 	req, err := client.getDateInvalidNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetDateInvalidNullResponse{}, err
+		return DictionaryClientGetDateInvalidNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetDateInvalidNullResponse{}, err
+		return DictionaryClientGetDateInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetDateInvalidNullResponse{}, client.getDateInvalidNullHandleError(resp)
+		return DictionaryClientGetDateInvalidNullResponse{}, client.getDateInvalidNullHandleError(resp)
 	}
 	return client.getDateInvalidNullHandleResponse(resp)
 }
 
 // getDateInvalidNullCreateRequest creates the GetDateInvalidNull request.
-func (client *DictionaryClient) getDateInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetDateInvalidNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getDateInvalidNullCreateRequest(ctx context.Context, options *DictionaryClientGetDateInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date/invalidnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -954,11 +960,11 @@ func (client *DictionaryClient) getDateInvalidNullCreateRequest(ctx context.Cont
 }
 
 // getDateInvalidNullHandleResponse handles the GetDateInvalidNull response.
-func (client *DictionaryClient) getDateInvalidNullHandleResponse(resp *http.Response) (DictionaryGetDateInvalidNullResponse, error) {
-	result := DictionaryGetDateInvalidNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getDateInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetDateInvalidNullResponse, error) {
+	result := DictionaryClientGetDateInvalidNullResponse{RawResponse: resp}
 	aux := map[string]*dateType{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryGetDateInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDateInvalidNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -983,25 +989,25 @@ func (client *DictionaryClient) getDateInvalidNullHandleError(resp *http.Respons
 
 // GetDateTimeInvalidChars - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": "date-time"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDateTimeInvalidCharsOptions contains the optional parameters for the DictionaryClient.GetDateTimeInvalidChars
+// options - DictionaryClientGetDateTimeInvalidCharsOptions contains the optional parameters for the DictionaryClient.GetDateTimeInvalidChars
 // method.
-func (client *DictionaryClient) GetDateTimeInvalidChars(ctx context.Context, options *DictionaryGetDateTimeInvalidCharsOptions) (DictionaryGetDateTimeInvalidCharsResponse, error) {
+func (client *DictionaryClient) GetDateTimeInvalidChars(ctx context.Context, options *DictionaryClientGetDateTimeInvalidCharsOptions) (DictionaryClientGetDateTimeInvalidCharsResponse, error) {
 	req, err := client.getDateTimeInvalidCharsCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetDateTimeInvalidCharsResponse{}, err
+		return DictionaryClientGetDateTimeInvalidCharsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetDateTimeInvalidCharsResponse{}, err
+		return DictionaryClientGetDateTimeInvalidCharsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetDateTimeInvalidCharsResponse{}, client.getDateTimeInvalidCharsHandleError(resp)
+		return DictionaryClientGetDateTimeInvalidCharsResponse{}, client.getDateTimeInvalidCharsHandleError(resp)
 	}
 	return client.getDateTimeInvalidCharsHandleResponse(resp)
 }
 
 // getDateTimeInvalidCharsCreateRequest creates the GetDateTimeInvalidChars request.
-func (client *DictionaryClient) getDateTimeInvalidCharsCreateRequest(ctx context.Context, options *DictionaryGetDateTimeInvalidCharsOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getDateTimeInvalidCharsCreateRequest(ctx context.Context, options *DictionaryClientGetDateTimeInvalidCharsOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date-time/invalidchars"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1012,11 +1018,11 @@ func (client *DictionaryClient) getDateTimeInvalidCharsCreateRequest(ctx context
 }
 
 // getDateTimeInvalidCharsHandleResponse handles the GetDateTimeInvalidChars response.
-func (client *DictionaryClient) getDateTimeInvalidCharsHandleResponse(resp *http.Response) (DictionaryGetDateTimeInvalidCharsResponse, error) {
-	result := DictionaryGetDateTimeInvalidCharsResponse{RawResponse: resp}
+func (client *DictionaryClient) getDateTimeInvalidCharsHandleResponse(resp *http.Response) (DictionaryClientGetDateTimeInvalidCharsResponse, error) {
+	result := DictionaryClientGetDateTimeInvalidCharsResponse{RawResponse: resp}
 	aux := map[string]*timeRFC3339{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryGetDateTimeInvalidCharsResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDateTimeInvalidCharsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -1041,25 +1047,25 @@ func (client *DictionaryClient) getDateTimeInvalidCharsHandleError(resp *http.Re
 
 // GetDateTimeInvalidNull - Get date dictionary value {"0": "2000-12-01t00:00:01z", "1": null}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDateTimeInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDateTimeInvalidNull
+// options - DictionaryClientGetDateTimeInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDateTimeInvalidNull
 // method.
-func (client *DictionaryClient) GetDateTimeInvalidNull(ctx context.Context, options *DictionaryGetDateTimeInvalidNullOptions) (DictionaryGetDateTimeInvalidNullResponse, error) {
+func (client *DictionaryClient) GetDateTimeInvalidNull(ctx context.Context, options *DictionaryClientGetDateTimeInvalidNullOptions) (DictionaryClientGetDateTimeInvalidNullResponse, error) {
 	req, err := client.getDateTimeInvalidNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetDateTimeInvalidNullResponse{}, err
+		return DictionaryClientGetDateTimeInvalidNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetDateTimeInvalidNullResponse{}, err
+		return DictionaryClientGetDateTimeInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetDateTimeInvalidNullResponse{}, client.getDateTimeInvalidNullHandleError(resp)
+		return DictionaryClientGetDateTimeInvalidNullResponse{}, client.getDateTimeInvalidNullHandleError(resp)
 	}
 	return client.getDateTimeInvalidNullHandleResponse(resp)
 }
 
 // getDateTimeInvalidNullCreateRequest creates the GetDateTimeInvalidNull request.
-func (client *DictionaryClient) getDateTimeInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetDateTimeInvalidNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getDateTimeInvalidNullCreateRequest(ctx context.Context, options *DictionaryClientGetDateTimeInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date-time/invalidnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1070,11 +1076,11 @@ func (client *DictionaryClient) getDateTimeInvalidNullCreateRequest(ctx context.
 }
 
 // getDateTimeInvalidNullHandleResponse handles the GetDateTimeInvalidNull response.
-func (client *DictionaryClient) getDateTimeInvalidNullHandleResponse(resp *http.Response) (DictionaryGetDateTimeInvalidNullResponse, error) {
-	result := DictionaryGetDateTimeInvalidNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getDateTimeInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetDateTimeInvalidNullResponse, error) {
+	result := DictionaryClientGetDateTimeInvalidNullResponse{RawResponse: resp}
 	aux := map[string]*timeRFC3339{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryGetDateTimeInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDateTimeInvalidNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -1100,25 +1106,25 @@ func (client *DictionaryClient) getDateTimeInvalidNullHandleError(resp *http.Res
 // GetDateTimeRFC1123Valid - Get date-time-rfc1123 dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan
 // 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDateTimeRFC1123ValidOptions contains the optional parameters for the DictionaryClient.GetDateTimeRFC1123Valid
+// options - DictionaryClientGetDateTimeRFC1123ValidOptions contains the optional parameters for the DictionaryClient.GetDateTimeRFC1123Valid
 // method.
-func (client *DictionaryClient) GetDateTimeRFC1123Valid(ctx context.Context, options *DictionaryGetDateTimeRFC1123ValidOptions) (DictionaryGetDateTimeRFC1123ValidResponse, error) {
+func (client *DictionaryClient) GetDateTimeRFC1123Valid(ctx context.Context, options *DictionaryClientGetDateTimeRFC1123ValidOptions) (DictionaryClientGetDateTimeRFC1123ValidResponse, error) {
 	req, err := client.getDateTimeRFC1123ValidCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetDateTimeRFC1123ValidResponse{}, err
+		return DictionaryClientGetDateTimeRFC1123ValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetDateTimeRFC1123ValidResponse{}, err
+		return DictionaryClientGetDateTimeRFC1123ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetDateTimeRFC1123ValidResponse{}, client.getDateTimeRFC1123ValidHandleError(resp)
+		return DictionaryClientGetDateTimeRFC1123ValidResponse{}, client.getDateTimeRFC1123ValidHandleError(resp)
 	}
 	return client.getDateTimeRFC1123ValidHandleResponse(resp)
 }
 
 // getDateTimeRFC1123ValidCreateRequest creates the GetDateTimeRFC1123Valid request.
-func (client *DictionaryClient) getDateTimeRFC1123ValidCreateRequest(ctx context.Context, options *DictionaryGetDateTimeRFC1123ValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getDateTimeRFC1123ValidCreateRequest(ctx context.Context, options *DictionaryClientGetDateTimeRFC1123ValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date-time-rfc1123/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1129,11 +1135,11 @@ func (client *DictionaryClient) getDateTimeRFC1123ValidCreateRequest(ctx context
 }
 
 // getDateTimeRFC1123ValidHandleResponse handles the GetDateTimeRFC1123Valid response.
-func (client *DictionaryClient) getDateTimeRFC1123ValidHandleResponse(resp *http.Response) (DictionaryGetDateTimeRFC1123ValidResponse, error) {
-	result := DictionaryGetDateTimeRFC1123ValidResponse{RawResponse: resp}
+func (client *DictionaryClient) getDateTimeRFC1123ValidHandleResponse(resp *http.Response) (DictionaryClientGetDateTimeRFC1123ValidResponse, error) {
+	result := DictionaryClientGetDateTimeRFC1123ValidResponse{RawResponse: resp}
 	aux := map[string]*timeRFC1123{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryGetDateTimeRFC1123ValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDateTimeRFC1123ValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -1159,25 +1165,25 @@ func (client *DictionaryClient) getDateTimeRFC1123ValidHandleError(resp *http.Re
 // GetDateTimeValid - Get date-time dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2":
 // "1492-10-12T10:15:01-08:00"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDateTimeValidOptions contains the optional parameters for the DictionaryClient.GetDateTimeValid
+// options - DictionaryClientGetDateTimeValidOptions contains the optional parameters for the DictionaryClient.GetDateTimeValid
 // method.
-func (client *DictionaryClient) GetDateTimeValid(ctx context.Context, options *DictionaryGetDateTimeValidOptions) (DictionaryGetDateTimeValidResponse, error) {
+func (client *DictionaryClient) GetDateTimeValid(ctx context.Context, options *DictionaryClientGetDateTimeValidOptions) (DictionaryClientGetDateTimeValidResponse, error) {
 	req, err := client.getDateTimeValidCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetDateTimeValidResponse{}, err
+		return DictionaryClientGetDateTimeValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetDateTimeValidResponse{}, err
+		return DictionaryClientGetDateTimeValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetDateTimeValidResponse{}, client.getDateTimeValidHandleError(resp)
+		return DictionaryClientGetDateTimeValidResponse{}, client.getDateTimeValidHandleError(resp)
 	}
 	return client.getDateTimeValidHandleResponse(resp)
 }
 
 // getDateTimeValidCreateRequest creates the GetDateTimeValid request.
-func (client *DictionaryClient) getDateTimeValidCreateRequest(ctx context.Context, options *DictionaryGetDateTimeValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getDateTimeValidCreateRequest(ctx context.Context, options *DictionaryClientGetDateTimeValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date-time/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1188,11 +1194,11 @@ func (client *DictionaryClient) getDateTimeValidCreateRequest(ctx context.Contex
 }
 
 // getDateTimeValidHandleResponse handles the GetDateTimeValid response.
-func (client *DictionaryClient) getDateTimeValidHandleResponse(resp *http.Response) (DictionaryGetDateTimeValidResponse, error) {
-	result := DictionaryGetDateTimeValidResponse{RawResponse: resp}
+func (client *DictionaryClient) getDateTimeValidHandleResponse(resp *http.Response) (DictionaryClientGetDateTimeValidResponse, error) {
+	result := DictionaryClientGetDateTimeValidResponse{RawResponse: resp}
 	aux := map[string]*timeRFC3339{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryGetDateTimeValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDateTimeValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -1217,24 +1223,24 @@ func (client *DictionaryClient) getDateTimeValidHandleError(resp *http.Response)
 
 // GetDateValid - Get integer dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDateValidOptions contains the optional parameters for the DictionaryClient.GetDateValid method.
-func (client *DictionaryClient) GetDateValid(ctx context.Context, options *DictionaryGetDateValidOptions) (DictionaryGetDateValidResponse, error) {
+// options - DictionaryClientGetDateValidOptions contains the optional parameters for the DictionaryClient.GetDateValid method.
+func (client *DictionaryClient) GetDateValid(ctx context.Context, options *DictionaryClientGetDateValidOptions) (DictionaryClientGetDateValidResponse, error) {
 	req, err := client.getDateValidCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetDateValidResponse{}, err
+		return DictionaryClientGetDateValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetDateValidResponse{}, err
+		return DictionaryClientGetDateValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetDateValidResponse{}, client.getDateValidHandleError(resp)
+		return DictionaryClientGetDateValidResponse{}, client.getDateValidHandleError(resp)
 	}
 	return client.getDateValidHandleResponse(resp)
 }
 
 // getDateValidCreateRequest creates the GetDateValid request.
-func (client *DictionaryClient) getDateValidCreateRequest(ctx context.Context, options *DictionaryGetDateValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getDateValidCreateRequest(ctx context.Context, options *DictionaryClientGetDateValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1245,11 +1251,11 @@ func (client *DictionaryClient) getDateValidCreateRequest(ctx context.Context, o
 }
 
 // getDateValidHandleResponse handles the GetDateValid response.
-func (client *DictionaryClient) getDateValidHandleResponse(resp *http.Response) (DictionaryGetDateValidResponse, error) {
-	result := DictionaryGetDateValidResponse{RawResponse: resp}
+func (client *DictionaryClient) getDateValidHandleResponse(resp *http.Response) (DictionaryClientGetDateValidResponse, error) {
+	result := DictionaryClientGetDateValidResponse{RawResponse: resp}
 	aux := map[string]*dateType{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryGetDateValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDateValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -1274,25 +1280,25 @@ func (client *DictionaryClient) getDateValidHandleError(resp *http.Response) err
 
 // GetDictionaryEmpty - Get an dictionaries of dictionaries of type with value {}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDictionaryEmptyOptions contains the optional parameters for the DictionaryClient.GetDictionaryEmpty
+// options - DictionaryClientGetDictionaryEmptyOptions contains the optional parameters for the DictionaryClient.GetDictionaryEmpty
 // method.
-func (client *DictionaryClient) GetDictionaryEmpty(ctx context.Context, options *DictionaryGetDictionaryEmptyOptions) (DictionaryGetDictionaryEmptyResponse, error) {
+func (client *DictionaryClient) GetDictionaryEmpty(ctx context.Context, options *DictionaryClientGetDictionaryEmptyOptions) (DictionaryClientGetDictionaryEmptyResponse, error) {
 	req, err := client.getDictionaryEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetDictionaryEmptyResponse{}, err
+		return DictionaryClientGetDictionaryEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetDictionaryEmptyResponse{}, err
+		return DictionaryClientGetDictionaryEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetDictionaryEmptyResponse{}, client.getDictionaryEmptyHandleError(resp)
+		return DictionaryClientGetDictionaryEmptyResponse{}, client.getDictionaryEmptyHandleError(resp)
 	}
 	return client.getDictionaryEmptyHandleResponse(resp)
 }
 
 // getDictionaryEmptyCreateRequest creates the GetDictionaryEmpty request.
-func (client *DictionaryClient) getDictionaryEmptyCreateRequest(ctx context.Context, options *DictionaryGetDictionaryEmptyOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getDictionaryEmptyCreateRequest(ctx context.Context, options *DictionaryClientGetDictionaryEmptyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/dictionary/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1303,10 +1309,10 @@ func (client *DictionaryClient) getDictionaryEmptyCreateRequest(ctx context.Cont
 }
 
 // getDictionaryEmptyHandleResponse handles the GetDictionaryEmpty response.
-func (client *DictionaryClient) getDictionaryEmptyHandleResponse(resp *http.Response) (DictionaryGetDictionaryEmptyResponse, error) {
-	result := DictionaryGetDictionaryEmptyResponse{RawResponse: resp}
+func (client *DictionaryClient) getDictionaryEmptyHandleResponse(resp *http.Response) (DictionaryClientGetDictionaryEmptyResponse, error) {
+	result := DictionaryClientGetDictionaryEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetDictionaryEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDictionaryEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1327,25 +1333,25 @@ func (client *DictionaryClient) getDictionaryEmptyHandleError(resp *http.Respons
 // GetDictionaryItemEmpty - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
 // "1": {}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDictionaryItemEmptyOptions contains the optional parameters for the DictionaryClient.GetDictionaryItemEmpty
+// options - DictionaryClientGetDictionaryItemEmptyOptions contains the optional parameters for the DictionaryClient.GetDictionaryItemEmpty
 // method.
-func (client *DictionaryClient) GetDictionaryItemEmpty(ctx context.Context, options *DictionaryGetDictionaryItemEmptyOptions) (DictionaryGetDictionaryItemEmptyResponse, error) {
+func (client *DictionaryClient) GetDictionaryItemEmpty(ctx context.Context, options *DictionaryClientGetDictionaryItemEmptyOptions) (DictionaryClientGetDictionaryItemEmptyResponse, error) {
 	req, err := client.getDictionaryItemEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetDictionaryItemEmptyResponse{}, err
+		return DictionaryClientGetDictionaryItemEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetDictionaryItemEmptyResponse{}, err
+		return DictionaryClientGetDictionaryItemEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetDictionaryItemEmptyResponse{}, client.getDictionaryItemEmptyHandleError(resp)
+		return DictionaryClientGetDictionaryItemEmptyResponse{}, client.getDictionaryItemEmptyHandleError(resp)
 	}
 	return client.getDictionaryItemEmptyHandleResponse(resp)
 }
 
 // getDictionaryItemEmptyCreateRequest creates the GetDictionaryItemEmpty request.
-func (client *DictionaryClient) getDictionaryItemEmptyCreateRequest(ctx context.Context, options *DictionaryGetDictionaryItemEmptyOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getDictionaryItemEmptyCreateRequest(ctx context.Context, options *DictionaryClientGetDictionaryItemEmptyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/dictionary/itemempty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1356,10 +1362,10 @@ func (client *DictionaryClient) getDictionaryItemEmptyCreateRequest(ctx context.
 }
 
 // getDictionaryItemEmptyHandleResponse handles the GetDictionaryItemEmpty response.
-func (client *DictionaryClient) getDictionaryItemEmptyHandleResponse(resp *http.Response) (DictionaryGetDictionaryItemEmptyResponse, error) {
-	result := DictionaryGetDictionaryItemEmptyResponse{RawResponse: resp}
+func (client *DictionaryClient) getDictionaryItemEmptyHandleResponse(resp *http.Response) (DictionaryClientGetDictionaryItemEmptyResponse, error) {
+	result := DictionaryClientGetDictionaryItemEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetDictionaryItemEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDictionaryItemEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1380,25 +1386,25 @@ func (client *DictionaryClient) getDictionaryItemEmptyHandleError(resp *http.Res
 // GetDictionaryItemNull - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
 // "1": null, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDictionaryItemNullOptions contains the optional parameters for the DictionaryClient.GetDictionaryItemNull
+// options - DictionaryClientGetDictionaryItemNullOptions contains the optional parameters for the DictionaryClient.GetDictionaryItemNull
 // method.
-func (client *DictionaryClient) GetDictionaryItemNull(ctx context.Context, options *DictionaryGetDictionaryItemNullOptions) (DictionaryGetDictionaryItemNullResponse, error) {
+func (client *DictionaryClient) GetDictionaryItemNull(ctx context.Context, options *DictionaryClientGetDictionaryItemNullOptions) (DictionaryClientGetDictionaryItemNullResponse, error) {
 	req, err := client.getDictionaryItemNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetDictionaryItemNullResponse{}, err
+		return DictionaryClientGetDictionaryItemNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetDictionaryItemNullResponse{}, err
+		return DictionaryClientGetDictionaryItemNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetDictionaryItemNullResponse{}, client.getDictionaryItemNullHandleError(resp)
+		return DictionaryClientGetDictionaryItemNullResponse{}, client.getDictionaryItemNullHandleError(resp)
 	}
 	return client.getDictionaryItemNullHandleResponse(resp)
 }
 
 // getDictionaryItemNullCreateRequest creates the GetDictionaryItemNull request.
-func (client *DictionaryClient) getDictionaryItemNullCreateRequest(ctx context.Context, options *DictionaryGetDictionaryItemNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getDictionaryItemNullCreateRequest(ctx context.Context, options *DictionaryClientGetDictionaryItemNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/dictionary/itemnull"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1409,10 +1415,10 @@ func (client *DictionaryClient) getDictionaryItemNullCreateRequest(ctx context.C
 }
 
 // getDictionaryItemNullHandleResponse handles the GetDictionaryItemNull response.
-func (client *DictionaryClient) getDictionaryItemNullHandleResponse(resp *http.Response) (DictionaryGetDictionaryItemNullResponse, error) {
-	result := DictionaryGetDictionaryItemNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getDictionaryItemNullHandleResponse(resp *http.Response) (DictionaryClientGetDictionaryItemNullResponse, error) {
+	result := DictionaryClientGetDictionaryItemNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetDictionaryItemNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDictionaryItemNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1432,25 +1438,25 @@ func (client *DictionaryClient) getDictionaryItemNullHandleError(resp *http.Resp
 
 // GetDictionaryNull - Get an dictionaries of dictionaries with value null
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDictionaryNullOptions contains the optional parameters for the DictionaryClient.GetDictionaryNull
+// options - DictionaryClientGetDictionaryNullOptions contains the optional parameters for the DictionaryClient.GetDictionaryNull
 // method.
-func (client *DictionaryClient) GetDictionaryNull(ctx context.Context, options *DictionaryGetDictionaryNullOptions) (DictionaryGetDictionaryNullResponse, error) {
+func (client *DictionaryClient) GetDictionaryNull(ctx context.Context, options *DictionaryClientGetDictionaryNullOptions) (DictionaryClientGetDictionaryNullResponse, error) {
 	req, err := client.getDictionaryNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetDictionaryNullResponse{}, err
+		return DictionaryClientGetDictionaryNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetDictionaryNullResponse{}, err
+		return DictionaryClientGetDictionaryNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetDictionaryNullResponse{}, client.getDictionaryNullHandleError(resp)
+		return DictionaryClientGetDictionaryNullResponse{}, client.getDictionaryNullHandleError(resp)
 	}
 	return client.getDictionaryNullHandleResponse(resp)
 }
 
 // getDictionaryNullCreateRequest creates the GetDictionaryNull request.
-func (client *DictionaryClient) getDictionaryNullCreateRequest(ctx context.Context, options *DictionaryGetDictionaryNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getDictionaryNullCreateRequest(ctx context.Context, options *DictionaryClientGetDictionaryNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/dictionary/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1461,10 +1467,10 @@ func (client *DictionaryClient) getDictionaryNullCreateRequest(ctx context.Conte
 }
 
 // getDictionaryNullHandleResponse handles the GetDictionaryNull response.
-func (client *DictionaryClient) getDictionaryNullHandleResponse(resp *http.Response) (DictionaryGetDictionaryNullResponse, error) {
-	result := DictionaryGetDictionaryNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getDictionaryNullHandleResponse(resp *http.Response) (DictionaryClientGetDictionaryNullResponse, error) {
+	result := DictionaryClientGetDictionaryNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetDictionaryNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDictionaryNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1485,25 +1491,25 @@ func (client *DictionaryClient) getDictionaryNullHandleError(resp *http.Response
 // GetDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
 // "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDictionaryValidOptions contains the optional parameters for the DictionaryClient.GetDictionaryValid
+// options - DictionaryClientGetDictionaryValidOptions contains the optional parameters for the DictionaryClient.GetDictionaryValid
 // method.
-func (client *DictionaryClient) GetDictionaryValid(ctx context.Context, options *DictionaryGetDictionaryValidOptions) (DictionaryGetDictionaryValidResponse, error) {
+func (client *DictionaryClient) GetDictionaryValid(ctx context.Context, options *DictionaryClientGetDictionaryValidOptions) (DictionaryClientGetDictionaryValidResponse, error) {
 	req, err := client.getDictionaryValidCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetDictionaryValidResponse{}, err
+		return DictionaryClientGetDictionaryValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetDictionaryValidResponse{}, err
+		return DictionaryClientGetDictionaryValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetDictionaryValidResponse{}, client.getDictionaryValidHandleError(resp)
+		return DictionaryClientGetDictionaryValidResponse{}, client.getDictionaryValidHandleError(resp)
 	}
 	return client.getDictionaryValidHandleResponse(resp)
 }
 
 // getDictionaryValidCreateRequest creates the GetDictionaryValid request.
-func (client *DictionaryClient) getDictionaryValidCreateRequest(ctx context.Context, options *DictionaryGetDictionaryValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getDictionaryValidCreateRequest(ctx context.Context, options *DictionaryClientGetDictionaryValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/dictionary/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1514,10 +1520,10 @@ func (client *DictionaryClient) getDictionaryValidCreateRequest(ctx context.Cont
 }
 
 // getDictionaryValidHandleResponse handles the GetDictionaryValid response.
-func (client *DictionaryClient) getDictionaryValidHandleResponse(resp *http.Response) (DictionaryGetDictionaryValidResponse, error) {
-	result := DictionaryGetDictionaryValidResponse{RawResponse: resp}
+func (client *DictionaryClient) getDictionaryValidHandleResponse(resp *http.Response) (DictionaryClientGetDictionaryValidResponse, error) {
+	result := DictionaryClientGetDictionaryValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetDictionaryValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDictionaryValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1537,25 +1543,25 @@ func (client *DictionaryClient) getDictionaryValidHandleError(resp *http.Respons
 
 // GetDoubleInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDoubleInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDoubleInvalidNull
+// options - DictionaryClientGetDoubleInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDoubleInvalidNull
 // method.
-func (client *DictionaryClient) GetDoubleInvalidNull(ctx context.Context, options *DictionaryGetDoubleInvalidNullOptions) (DictionaryGetDoubleInvalidNullResponse, error) {
+func (client *DictionaryClient) GetDoubleInvalidNull(ctx context.Context, options *DictionaryClientGetDoubleInvalidNullOptions) (DictionaryClientGetDoubleInvalidNullResponse, error) {
 	req, err := client.getDoubleInvalidNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetDoubleInvalidNullResponse{}, err
+		return DictionaryClientGetDoubleInvalidNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetDoubleInvalidNullResponse{}, err
+		return DictionaryClientGetDoubleInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetDoubleInvalidNullResponse{}, client.getDoubleInvalidNullHandleError(resp)
+		return DictionaryClientGetDoubleInvalidNullResponse{}, client.getDoubleInvalidNullHandleError(resp)
 	}
 	return client.getDoubleInvalidNullHandleResponse(resp)
 }
 
 // getDoubleInvalidNullCreateRequest creates the GetDoubleInvalidNull request.
-func (client *DictionaryClient) getDoubleInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetDoubleInvalidNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getDoubleInvalidNullCreateRequest(ctx context.Context, options *DictionaryClientGetDoubleInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/double/0.0-null-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1566,10 +1572,10 @@ func (client *DictionaryClient) getDoubleInvalidNullCreateRequest(ctx context.Co
 }
 
 // getDoubleInvalidNullHandleResponse handles the GetDoubleInvalidNull response.
-func (client *DictionaryClient) getDoubleInvalidNullHandleResponse(resp *http.Response) (DictionaryGetDoubleInvalidNullResponse, error) {
-	result := DictionaryGetDoubleInvalidNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getDoubleInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetDoubleInvalidNullResponse, error) {
+	result := DictionaryClientGetDoubleInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetDoubleInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDoubleInvalidNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1589,25 +1595,25 @@ func (client *DictionaryClient) getDoubleInvalidNullHandleError(resp *http.Respo
 
 // GetDoubleInvalidString - Get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDoubleInvalidStringOptions contains the optional parameters for the DictionaryClient.GetDoubleInvalidString
+// options - DictionaryClientGetDoubleInvalidStringOptions contains the optional parameters for the DictionaryClient.GetDoubleInvalidString
 // method.
-func (client *DictionaryClient) GetDoubleInvalidString(ctx context.Context, options *DictionaryGetDoubleInvalidStringOptions) (DictionaryGetDoubleInvalidStringResponse, error) {
+func (client *DictionaryClient) GetDoubleInvalidString(ctx context.Context, options *DictionaryClientGetDoubleInvalidStringOptions) (DictionaryClientGetDoubleInvalidStringResponse, error) {
 	req, err := client.getDoubleInvalidStringCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetDoubleInvalidStringResponse{}, err
+		return DictionaryClientGetDoubleInvalidStringResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetDoubleInvalidStringResponse{}, err
+		return DictionaryClientGetDoubleInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetDoubleInvalidStringResponse{}, client.getDoubleInvalidStringHandleError(resp)
+		return DictionaryClientGetDoubleInvalidStringResponse{}, client.getDoubleInvalidStringHandleError(resp)
 	}
 	return client.getDoubleInvalidStringHandleResponse(resp)
 }
 
 // getDoubleInvalidStringCreateRequest creates the GetDoubleInvalidString request.
-func (client *DictionaryClient) getDoubleInvalidStringCreateRequest(ctx context.Context, options *DictionaryGetDoubleInvalidStringOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getDoubleInvalidStringCreateRequest(ctx context.Context, options *DictionaryClientGetDoubleInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/double/1.number.0"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1618,10 +1624,10 @@ func (client *DictionaryClient) getDoubleInvalidStringCreateRequest(ctx context.
 }
 
 // getDoubleInvalidStringHandleResponse handles the GetDoubleInvalidString response.
-func (client *DictionaryClient) getDoubleInvalidStringHandleResponse(resp *http.Response) (DictionaryGetDoubleInvalidStringResponse, error) {
-	result := DictionaryGetDoubleInvalidStringResponse{RawResponse: resp}
+func (client *DictionaryClient) getDoubleInvalidStringHandleResponse(resp *http.Response) (DictionaryClientGetDoubleInvalidStringResponse, error) {
+	result := DictionaryClientGetDoubleInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetDoubleInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDoubleInvalidStringResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1641,24 +1647,25 @@ func (client *DictionaryClient) getDoubleInvalidStringHandleError(resp *http.Res
 
 // GetDoubleValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDoubleValidOptions contains the optional parameters for the DictionaryClient.GetDoubleValid method.
-func (client *DictionaryClient) GetDoubleValid(ctx context.Context, options *DictionaryGetDoubleValidOptions) (DictionaryGetDoubleValidResponse, error) {
+// options - DictionaryClientGetDoubleValidOptions contains the optional parameters for the DictionaryClient.GetDoubleValid
+// method.
+func (client *DictionaryClient) GetDoubleValid(ctx context.Context, options *DictionaryClientGetDoubleValidOptions) (DictionaryClientGetDoubleValidResponse, error) {
 	req, err := client.getDoubleValidCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetDoubleValidResponse{}, err
+		return DictionaryClientGetDoubleValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetDoubleValidResponse{}, err
+		return DictionaryClientGetDoubleValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetDoubleValidResponse{}, client.getDoubleValidHandleError(resp)
+		return DictionaryClientGetDoubleValidResponse{}, client.getDoubleValidHandleError(resp)
 	}
 	return client.getDoubleValidHandleResponse(resp)
 }
 
 // getDoubleValidCreateRequest creates the GetDoubleValid request.
-func (client *DictionaryClient) getDoubleValidCreateRequest(ctx context.Context, options *DictionaryGetDoubleValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getDoubleValidCreateRequest(ctx context.Context, options *DictionaryClientGetDoubleValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/double/0--0.01-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1669,10 +1676,10 @@ func (client *DictionaryClient) getDoubleValidCreateRequest(ctx context.Context,
 }
 
 // getDoubleValidHandleResponse handles the GetDoubleValid response.
-func (client *DictionaryClient) getDoubleValidHandleResponse(resp *http.Response) (DictionaryGetDoubleValidResponse, error) {
-	result := DictionaryGetDoubleValidResponse{RawResponse: resp}
+func (client *DictionaryClient) getDoubleValidHandleResponse(resp *http.Response) (DictionaryClientGetDoubleValidResponse, error) {
+	result := DictionaryClientGetDoubleValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetDoubleValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDoubleValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1692,25 +1699,25 @@ func (client *DictionaryClient) getDoubleValidHandleError(resp *http.Response) e
 
 // GetDurationValid - Get duration dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetDurationValidOptions contains the optional parameters for the DictionaryClient.GetDurationValid
+// options - DictionaryClientGetDurationValidOptions contains the optional parameters for the DictionaryClient.GetDurationValid
 // method.
-func (client *DictionaryClient) GetDurationValid(ctx context.Context, options *DictionaryGetDurationValidOptions) (DictionaryGetDurationValidResponse, error) {
+func (client *DictionaryClient) GetDurationValid(ctx context.Context, options *DictionaryClientGetDurationValidOptions) (DictionaryClientGetDurationValidResponse, error) {
 	req, err := client.getDurationValidCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetDurationValidResponse{}, err
+		return DictionaryClientGetDurationValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetDurationValidResponse{}, err
+		return DictionaryClientGetDurationValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetDurationValidResponse{}, client.getDurationValidHandleError(resp)
+		return DictionaryClientGetDurationValidResponse{}, client.getDurationValidHandleError(resp)
 	}
 	return client.getDurationValidHandleResponse(resp)
 }
 
 // getDurationValidCreateRequest creates the GetDurationValid request.
-func (client *DictionaryClient) getDurationValidCreateRequest(ctx context.Context, options *DictionaryGetDurationValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getDurationValidCreateRequest(ctx context.Context, options *DictionaryClientGetDurationValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/duration/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1721,10 +1728,10 @@ func (client *DictionaryClient) getDurationValidCreateRequest(ctx context.Contex
 }
 
 // getDurationValidHandleResponse handles the GetDurationValid response.
-func (client *DictionaryClient) getDurationValidHandleResponse(resp *http.Response) (DictionaryGetDurationValidResponse, error) {
-	result := DictionaryGetDurationValidResponse{RawResponse: resp}
+func (client *DictionaryClient) getDurationValidHandleResponse(resp *http.Response) (DictionaryClientGetDurationValidResponse, error) {
+	result := DictionaryClientGetDurationValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetDurationValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetDurationValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1744,24 +1751,24 @@ func (client *DictionaryClient) getDurationValidHandleError(resp *http.Response)
 
 // GetEmpty - Get empty dictionary value {}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetEmptyOptions contains the optional parameters for the DictionaryClient.GetEmpty method.
-func (client *DictionaryClient) GetEmpty(ctx context.Context, options *DictionaryGetEmptyOptions) (DictionaryGetEmptyResponse, error) {
+// options - DictionaryClientGetEmptyOptions contains the optional parameters for the DictionaryClient.GetEmpty method.
+func (client *DictionaryClient) GetEmpty(ctx context.Context, options *DictionaryClientGetEmptyOptions) (DictionaryClientGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetEmptyResponse{}, err
+		return DictionaryClientGetEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetEmptyResponse{}, err
+		return DictionaryClientGetEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetEmptyResponse{}, client.getEmptyHandleError(resp)
+		return DictionaryClientGetEmptyResponse{}, client.getEmptyHandleError(resp)
 	}
 	return client.getEmptyHandleResponse(resp)
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *DictionaryClient) getEmptyCreateRequest(ctx context.Context, options *DictionaryGetEmptyOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getEmptyCreateRequest(ctx context.Context, options *DictionaryClientGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1772,10 +1779,10 @@ func (client *DictionaryClient) getEmptyCreateRequest(ctx context.Context, optio
 }
 
 // getEmptyHandleResponse handles the GetEmpty response.
-func (client *DictionaryClient) getEmptyHandleResponse(resp *http.Response) (DictionaryGetEmptyResponse, error) {
-	result := DictionaryGetEmptyResponse{RawResponse: resp}
+func (client *DictionaryClient) getEmptyHandleResponse(resp *http.Response) (DictionaryClientGetEmptyResponse, error) {
+	result := DictionaryClientGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1795,25 +1802,25 @@ func (client *DictionaryClient) getEmptyHandleError(resp *http.Response) error {
 
 // GetEmptyStringKey - Get Dictionary with key as empty string
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetEmptyStringKeyOptions contains the optional parameters for the DictionaryClient.GetEmptyStringKey
+// options - DictionaryClientGetEmptyStringKeyOptions contains the optional parameters for the DictionaryClient.GetEmptyStringKey
 // method.
-func (client *DictionaryClient) GetEmptyStringKey(ctx context.Context, options *DictionaryGetEmptyStringKeyOptions) (DictionaryGetEmptyStringKeyResponse, error) {
+func (client *DictionaryClient) GetEmptyStringKey(ctx context.Context, options *DictionaryClientGetEmptyStringKeyOptions) (DictionaryClientGetEmptyStringKeyResponse, error) {
 	req, err := client.getEmptyStringKeyCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetEmptyStringKeyResponse{}, err
+		return DictionaryClientGetEmptyStringKeyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetEmptyStringKeyResponse{}, err
+		return DictionaryClientGetEmptyStringKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetEmptyStringKeyResponse{}, client.getEmptyStringKeyHandleError(resp)
+		return DictionaryClientGetEmptyStringKeyResponse{}, client.getEmptyStringKeyHandleError(resp)
 	}
 	return client.getEmptyStringKeyHandleResponse(resp)
 }
 
 // getEmptyStringKeyCreateRequest creates the GetEmptyStringKey request.
-func (client *DictionaryClient) getEmptyStringKeyCreateRequest(ctx context.Context, options *DictionaryGetEmptyStringKeyOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getEmptyStringKeyCreateRequest(ctx context.Context, options *DictionaryClientGetEmptyStringKeyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/keyemptystring"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1824,10 +1831,10 @@ func (client *DictionaryClient) getEmptyStringKeyCreateRequest(ctx context.Conte
 }
 
 // getEmptyStringKeyHandleResponse handles the GetEmptyStringKey response.
-func (client *DictionaryClient) getEmptyStringKeyHandleResponse(resp *http.Response) (DictionaryGetEmptyStringKeyResponse, error) {
-	result := DictionaryGetEmptyStringKeyResponse{RawResponse: resp}
+func (client *DictionaryClient) getEmptyStringKeyHandleResponse(resp *http.Response) (DictionaryClientGetEmptyStringKeyResponse, error) {
+	result := DictionaryClientGetEmptyStringKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetEmptyStringKeyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetEmptyStringKeyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1847,25 +1854,25 @@ func (client *DictionaryClient) getEmptyStringKeyHandleError(resp *http.Response
 
 // GetFloatInvalidNull - Get float dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetFloatInvalidNullOptions contains the optional parameters for the DictionaryClient.GetFloatInvalidNull
+// options - DictionaryClientGetFloatInvalidNullOptions contains the optional parameters for the DictionaryClient.GetFloatInvalidNull
 // method.
-func (client *DictionaryClient) GetFloatInvalidNull(ctx context.Context, options *DictionaryGetFloatInvalidNullOptions) (DictionaryGetFloatInvalidNullResponse, error) {
+func (client *DictionaryClient) GetFloatInvalidNull(ctx context.Context, options *DictionaryClientGetFloatInvalidNullOptions) (DictionaryClientGetFloatInvalidNullResponse, error) {
 	req, err := client.getFloatInvalidNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetFloatInvalidNullResponse{}, err
+		return DictionaryClientGetFloatInvalidNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetFloatInvalidNullResponse{}, err
+		return DictionaryClientGetFloatInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetFloatInvalidNullResponse{}, client.getFloatInvalidNullHandleError(resp)
+		return DictionaryClientGetFloatInvalidNullResponse{}, client.getFloatInvalidNullHandleError(resp)
 	}
 	return client.getFloatInvalidNullHandleResponse(resp)
 }
 
 // getFloatInvalidNullCreateRequest creates the GetFloatInvalidNull request.
-func (client *DictionaryClient) getFloatInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetFloatInvalidNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getFloatInvalidNullCreateRequest(ctx context.Context, options *DictionaryClientGetFloatInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/float/0.0-null-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1876,10 +1883,10 @@ func (client *DictionaryClient) getFloatInvalidNullCreateRequest(ctx context.Con
 }
 
 // getFloatInvalidNullHandleResponse handles the GetFloatInvalidNull response.
-func (client *DictionaryClient) getFloatInvalidNullHandleResponse(resp *http.Response) (DictionaryGetFloatInvalidNullResponse, error) {
-	result := DictionaryGetFloatInvalidNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getFloatInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetFloatInvalidNullResponse, error) {
+	result := DictionaryClientGetFloatInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetFloatInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetFloatInvalidNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1899,25 +1906,25 @@ func (client *DictionaryClient) getFloatInvalidNullHandleError(resp *http.Respon
 
 // GetFloatInvalidString - Get boolean dictionary value {"0": 1.0, "1": "number", "2": 0.0}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetFloatInvalidStringOptions contains the optional parameters for the DictionaryClient.GetFloatInvalidString
+// options - DictionaryClientGetFloatInvalidStringOptions contains the optional parameters for the DictionaryClient.GetFloatInvalidString
 // method.
-func (client *DictionaryClient) GetFloatInvalidString(ctx context.Context, options *DictionaryGetFloatInvalidStringOptions) (DictionaryGetFloatInvalidStringResponse, error) {
+func (client *DictionaryClient) GetFloatInvalidString(ctx context.Context, options *DictionaryClientGetFloatInvalidStringOptions) (DictionaryClientGetFloatInvalidStringResponse, error) {
 	req, err := client.getFloatInvalidStringCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetFloatInvalidStringResponse{}, err
+		return DictionaryClientGetFloatInvalidStringResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetFloatInvalidStringResponse{}, err
+		return DictionaryClientGetFloatInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetFloatInvalidStringResponse{}, client.getFloatInvalidStringHandleError(resp)
+		return DictionaryClientGetFloatInvalidStringResponse{}, client.getFloatInvalidStringHandleError(resp)
 	}
 	return client.getFloatInvalidStringHandleResponse(resp)
 }
 
 // getFloatInvalidStringCreateRequest creates the GetFloatInvalidString request.
-func (client *DictionaryClient) getFloatInvalidStringCreateRequest(ctx context.Context, options *DictionaryGetFloatInvalidStringOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getFloatInvalidStringCreateRequest(ctx context.Context, options *DictionaryClientGetFloatInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/float/1.number.0"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1928,10 +1935,10 @@ func (client *DictionaryClient) getFloatInvalidStringCreateRequest(ctx context.C
 }
 
 // getFloatInvalidStringHandleResponse handles the GetFloatInvalidString response.
-func (client *DictionaryClient) getFloatInvalidStringHandleResponse(resp *http.Response) (DictionaryGetFloatInvalidStringResponse, error) {
-	result := DictionaryGetFloatInvalidStringResponse{RawResponse: resp}
+func (client *DictionaryClient) getFloatInvalidStringHandleResponse(resp *http.Response) (DictionaryClientGetFloatInvalidStringResponse, error) {
+	result := DictionaryClientGetFloatInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetFloatInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetFloatInvalidStringResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1951,24 +1958,25 @@ func (client *DictionaryClient) getFloatInvalidStringHandleError(resp *http.Resp
 
 // GetFloatValid - Get float dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetFloatValidOptions contains the optional parameters for the DictionaryClient.GetFloatValid method.
-func (client *DictionaryClient) GetFloatValid(ctx context.Context, options *DictionaryGetFloatValidOptions) (DictionaryGetFloatValidResponse, error) {
+// options - DictionaryClientGetFloatValidOptions contains the optional parameters for the DictionaryClient.GetFloatValid
+// method.
+func (client *DictionaryClient) GetFloatValid(ctx context.Context, options *DictionaryClientGetFloatValidOptions) (DictionaryClientGetFloatValidResponse, error) {
 	req, err := client.getFloatValidCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetFloatValidResponse{}, err
+		return DictionaryClientGetFloatValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetFloatValidResponse{}, err
+		return DictionaryClientGetFloatValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetFloatValidResponse{}, client.getFloatValidHandleError(resp)
+		return DictionaryClientGetFloatValidResponse{}, client.getFloatValidHandleError(resp)
 	}
 	return client.getFloatValidHandleResponse(resp)
 }
 
 // getFloatValidCreateRequest creates the GetFloatValid request.
-func (client *DictionaryClient) getFloatValidCreateRequest(ctx context.Context, options *DictionaryGetFloatValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getFloatValidCreateRequest(ctx context.Context, options *DictionaryClientGetFloatValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/float/0--0.01-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1979,10 +1987,10 @@ func (client *DictionaryClient) getFloatValidCreateRequest(ctx context.Context, 
 }
 
 // getFloatValidHandleResponse handles the GetFloatValid response.
-func (client *DictionaryClient) getFloatValidHandleResponse(resp *http.Response) (DictionaryGetFloatValidResponse, error) {
-	result := DictionaryGetFloatValidResponse{RawResponse: resp}
+func (client *DictionaryClient) getFloatValidHandleResponse(resp *http.Response) (DictionaryClientGetFloatValidResponse, error) {
+	result := DictionaryClientGetFloatValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetFloatValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetFloatValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2002,25 +2010,25 @@ func (client *DictionaryClient) getFloatValidHandleError(resp *http.Response) er
 
 // GetIntInvalidNull - Get integer dictionary value {"0": 1, "1": null, "2": 0}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetIntInvalidNullOptions contains the optional parameters for the DictionaryClient.GetIntInvalidNull
+// options - DictionaryClientGetIntInvalidNullOptions contains the optional parameters for the DictionaryClient.GetIntInvalidNull
 // method.
-func (client *DictionaryClient) GetIntInvalidNull(ctx context.Context, options *DictionaryGetIntInvalidNullOptions) (DictionaryGetIntInvalidNullResponse, error) {
+func (client *DictionaryClient) GetIntInvalidNull(ctx context.Context, options *DictionaryClientGetIntInvalidNullOptions) (DictionaryClientGetIntInvalidNullResponse, error) {
 	req, err := client.getIntInvalidNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetIntInvalidNullResponse{}, err
+		return DictionaryClientGetIntInvalidNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetIntInvalidNullResponse{}, err
+		return DictionaryClientGetIntInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetIntInvalidNullResponse{}, client.getIntInvalidNullHandleError(resp)
+		return DictionaryClientGetIntInvalidNullResponse{}, client.getIntInvalidNullHandleError(resp)
 	}
 	return client.getIntInvalidNullHandleResponse(resp)
 }
 
 // getIntInvalidNullCreateRequest creates the GetIntInvalidNull request.
-func (client *DictionaryClient) getIntInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetIntInvalidNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getIntInvalidNullCreateRequest(ctx context.Context, options *DictionaryClientGetIntInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/integer/1.null.zero"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2031,10 +2039,10 @@ func (client *DictionaryClient) getIntInvalidNullCreateRequest(ctx context.Conte
 }
 
 // getIntInvalidNullHandleResponse handles the GetIntInvalidNull response.
-func (client *DictionaryClient) getIntInvalidNullHandleResponse(resp *http.Response) (DictionaryGetIntInvalidNullResponse, error) {
-	result := DictionaryGetIntInvalidNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getIntInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetIntInvalidNullResponse, error) {
+	result := DictionaryClientGetIntInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetIntInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetIntInvalidNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2054,25 +2062,25 @@ func (client *DictionaryClient) getIntInvalidNullHandleError(resp *http.Response
 
 // GetIntInvalidString - Get integer dictionary value {"0": 1, "1": "integer", "2": 0}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetIntInvalidStringOptions contains the optional parameters for the DictionaryClient.GetIntInvalidString
+// options - DictionaryClientGetIntInvalidStringOptions contains the optional parameters for the DictionaryClient.GetIntInvalidString
 // method.
-func (client *DictionaryClient) GetIntInvalidString(ctx context.Context, options *DictionaryGetIntInvalidStringOptions) (DictionaryGetIntInvalidStringResponse, error) {
+func (client *DictionaryClient) GetIntInvalidString(ctx context.Context, options *DictionaryClientGetIntInvalidStringOptions) (DictionaryClientGetIntInvalidStringResponse, error) {
 	req, err := client.getIntInvalidStringCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetIntInvalidStringResponse{}, err
+		return DictionaryClientGetIntInvalidStringResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetIntInvalidStringResponse{}, err
+		return DictionaryClientGetIntInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetIntInvalidStringResponse{}, client.getIntInvalidStringHandleError(resp)
+		return DictionaryClientGetIntInvalidStringResponse{}, client.getIntInvalidStringHandleError(resp)
 	}
 	return client.getIntInvalidStringHandleResponse(resp)
 }
 
 // getIntInvalidStringCreateRequest creates the GetIntInvalidString request.
-func (client *DictionaryClient) getIntInvalidStringCreateRequest(ctx context.Context, options *DictionaryGetIntInvalidStringOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getIntInvalidStringCreateRequest(ctx context.Context, options *DictionaryClientGetIntInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/integer/1.integer.0"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2083,10 +2091,10 @@ func (client *DictionaryClient) getIntInvalidStringCreateRequest(ctx context.Con
 }
 
 // getIntInvalidStringHandleResponse handles the GetIntInvalidString response.
-func (client *DictionaryClient) getIntInvalidStringHandleResponse(resp *http.Response) (DictionaryGetIntInvalidStringResponse, error) {
-	result := DictionaryGetIntInvalidStringResponse{RawResponse: resp}
+func (client *DictionaryClient) getIntInvalidStringHandleResponse(resp *http.Response) (DictionaryClientGetIntInvalidStringResponse, error) {
+	result := DictionaryClientGetIntInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetIntInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetIntInvalidStringResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2106,24 +2114,25 @@ func (client *DictionaryClient) getIntInvalidStringHandleError(resp *http.Respon
 
 // GetIntegerValid - Get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetIntegerValidOptions contains the optional parameters for the DictionaryClient.GetIntegerValid method.
-func (client *DictionaryClient) GetIntegerValid(ctx context.Context, options *DictionaryGetIntegerValidOptions) (DictionaryGetIntegerValidResponse, error) {
+// options - DictionaryClientGetIntegerValidOptions contains the optional parameters for the DictionaryClient.GetIntegerValid
+// method.
+func (client *DictionaryClient) GetIntegerValid(ctx context.Context, options *DictionaryClientGetIntegerValidOptions) (DictionaryClientGetIntegerValidResponse, error) {
 	req, err := client.getIntegerValidCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetIntegerValidResponse{}, err
+		return DictionaryClientGetIntegerValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetIntegerValidResponse{}, err
+		return DictionaryClientGetIntegerValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetIntegerValidResponse{}, client.getIntegerValidHandleError(resp)
+		return DictionaryClientGetIntegerValidResponse{}, client.getIntegerValidHandleError(resp)
 	}
 	return client.getIntegerValidHandleResponse(resp)
 }
 
 // getIntegerValidCreateRequest creates the GetIntegerValid request.
-func (client *DictionaryClient) getIntegerValidCreateRequest(ctx context.Context, options *DictionaryGetIntegerValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getIntegerValidCreateRequest(ctx context.Context, options *DictionaryClientGetIntegerValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/integer/1.-1.3.300"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2134,10 +2143,10 @@ func (client *DictionaryClient) getIntegerValidCreateRequest(ctx context.Context
 }
 
 // getIntegerValidHandleResponse handles the GetIntegerValid response.
-func (client *DictionaryClient) getIntegerValidHandleResponse(resp *http.Response) (DictionaryGetIntegerValidResponse, error) {
-	result := DictionaryGetIntegerValidResponse{RawResponse: resp}
+func (client *DictionaryClient) getIntegerValidHandleResponse(resp *http.Response) (DictionaryClientGetIntegerValidResponse, error) {
+	result := DictionaryClientGetIntegerValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetIntegerValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetIntegerValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2157,24 +2166,24 @@ func (client *DictionaryClient) getIntegerValidHandleError(resp *http.Response) 
 
 // GetInvalid - Get invalid Dictionary value
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetInvalidOptions contains the optional parameters for the DictionaryClient.GetInvalid method.
-func (client *DictionaryClient) GetInvalid(ctx context.Context, options *DictionaryGetInvalidOptions) (DictionaryGetInvalidResponse, error) {
+// options - DictionaryClientGetInvalidOptions contains the optional parameters for the DictionaryClient.GetInvalid method.
+func (client *DictionaryClient) GetInvalid(ctx context.Context, options *DictionaryClientGetInvalidOptions) (DictionaryClientGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetInvalidResponse{}, err
+		return DictionaryClientGetInvalidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetInvalidResponse{}, err
+		return DictionaryClientGetInvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetInvalidResponse{}, client.getInvalidHandleError(resp)
+		return DictionaryClientGetInvalidResponse{}, client.getInvalidHandleError(resp)
 	}
 	return client.getInvalidHandleResponse(resp)
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
-func (client *DictionaryClient) getInvalidCreateRequest(ctx context.Context, options *DictionaryGetInvalidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getInvalidCreateRequest(ctx context.Context, options *DictionaryClientGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/invalid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2185,10 +2194,10 @@ func (client *DictionaryClient) getInvalidCreateRequest(ctx context.Context, opt
 }
 
 // getInvalidHandleResponse handles the GetInvalid response.
-func (client *DictionaryClient) getInvalidHandleResponse(resp *http.Response) (DictionaryGetInvalidResponse, error) {
-	result := DictionaryGetInvalidResponse{RawResponse: resp}
+func (client *DictionaryClient) getInvalidHandleResponse(resp *http.Response) (DictionaryClientGetInvalidResponse, error) {
+	result := DictionaryClientGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetInvalidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetInvalidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2208,25 +2217,25 @@ func (client *DictionaryClient) getInvalidHandleError(resp *http.Response) error
 
 // GetLongInvalidNull - Get long dictionary value {"0": 1, "1": null, "2": 0}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetLongInvalidNullOptions contains the optional parameters for the DictionaryClient.GetLongInvalidNull
+// options - DictionaryClientGetLongInvalidNullOptions contains the optional parameters for the DictionaryClient.GetLongInvalidNull
 // method.
-func (client *DictionaryClient) GetLongInvalidNull(ctx context.Context, options *DictionaryGetLongInvalidNullOptions) (DictionaryGetLongInvalidNullResponse, error) {
+func (client *DictionaryClient) GetLongInvalidNull(ctx context.Context, options *DictionaryClientGetLongInvalidNullOptions) (DictionaryClientGetLongInvalidNullResponse, error) {
 	req, err := client.getLongInvalidNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetLongInvalidNullResponse{}, err
+		return DictionaryClientGetLongInvalidNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetLongInvalidNullResponse{}, err
+		return DictionaryClientGetLongInvalidNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetLongInvalidNullResponse{}, client.getLongInvalidNullHandleError(resp)
+		return DictionaryClientGetLongInvalidNullResponse{}, client.getLongInvalidNullHandleError(resp)
 	}
 	return client.getLongInvalidNullHandleResponse(resp)
 }
 
 // getLongInvalidNullCreateRequest creates the GetLongInvalidNull request.
-func (client *DictionaryClient) getLongInvalidNullCreateRequest(ctx context.Context, options *DictionaryGetLongInvalidNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getLongInvalidNullCreateRequest(ctx context.Context, options *DictionaryClientGetLongInvalidNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/long/1.null.zero"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2237,10 +2246,10 @@ func (client *DictionaryClient) getLongInvalidNullCreateRequest(ctx context.Cont
 }
 
 // getLongInvalidNullHandleResponse handles the GetLongInvalidNull response.
-func (client *DictionaryClient) getLongInvalidNullHandleResponse(resp *http.Response) (DictionaryGetLongInvalidNullResponse, error) {
-	result := DictionaryGetLongInvalidNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getLongInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetLongInvalidNullResponse, error) {
+	result := DictionaryClientGetLongInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetLongInvalidNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetLongInvalidNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2260,25 +2269,25 @@ func (client *DictionaryClient) getLongInvalidNullHandleError(resp *http.Respons
 
 // GetLongInvalidString - Get long dictionary value {"0": 1, "1": "integer", "2": 0}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetLongInvalidStringOptions contains the optional parameters for the DictionaryClient.GetLongInvalidString
+// options - DictionaryClientGetLongInvalidStringOptions contains the optional parameters for the DictionaryClient.GetLongInvalidString
 // method.
-func (client *DictionaryClient) GetLongInvalidString(ctx context.Context, options *DictionaryGetLongInvalidStringOptions) (DictionaryGetLongInvalidStringResponse, error) {
+func (client *DictionaryClient) GetLongInvalidString(ctx context.Context, options *DictionaryClientGetLongInvalidStringOptions) (DictionaryClientGetLongInvalidStringResponse, error) {
 	req, err := client.getLongInvalidStringCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetLongInvalidStringResponse{}, err
+		return DictionaryClientGetLongInvalidStringResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetLongInvalidStringResponse{}, err
+		return DictionaryClientGetLongInvalidStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetLongInvalidStringResponse{}, client.getLongInvalidStringHandleError(resp)
+		return DictionaryClientGetLongInvalidStringResponse{}, client.getLongInvalidStringHandleError(resp)
 	}
 	return client.getLongInvalidStringHandleResponse(resp)
 }
 
 // getLongInvalidStringCreateRequest creates the GetLongInvalidString request.
-func (client *DictionaryClient) getLongInvalidStringCreateRequest(ctx context.Context, options *DictionaryGetLongInvalidStringOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getLongInvalidStringCreateRequest(ctx context.Context, options *DictionaryClientGetLongInvalidStringOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/long/1.integer.0"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2289,10 +2298,10 @@ func (client *DictionaryClient) getLongInvalidStringCreateRequest(ctx context.Co
 }
 
 // getLongInvalidStringHandleResponse handles the GetLongInvalidString response.
-func (client *DictionaryClient) getLongInvalidStringHandleResponse(resp *http.Response) (DictionaryGetLongInvalidStringResponse, error) {
-	result := DictionaryGetLongInvalidStringResponse{RawResponse: resp}
+func (client *DictionaryClient) getLongInvalidStringHandleResponse(resp *http.Response) (DictionaryClientGetLongInvalidStringResponse, error) {
+	result := DictionaryClientGetLongInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetLongInvalidStringResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetLongInvalidStringResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2312,24 +2321,24 @@ func (client *DictionaryClient) getLongInvalidStringHandleError(resp *http.Respo
 
 // GetLongValid - Get integer dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetLongValidOptions contains the optional parameters for the DictionaryClient.GetLongValid method.
-func (client *DictionaryClient) GetLongValid(ctx context.Context, options *DictionaryGetLongValidOptions) (DictionaryGetLongValidResponse, error) {
+// options - DictionaryClientGetLongValidOptions contains the optional parameters for the DictionaryClient.GetLongValid method.
+func (client *DictionaryClient) GetLongValid(ctx context.Context, options *DictionaryClientGetLongValidOptions) (DictionaryClientGetLongValidResponse, error) {
 	req, err := client.getLongValidCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetLongValidResponse{}, err
+		return DictionaryClientGetLongValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetLongValidResponse{}, err
+		return DictionaryClientGetLongValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetLongValidResponse{}, client.getLongValidHandleError(resp)
+		return DictionaryClientGetLongValidResponse{}, client.getLongValidHandleError(resp)
 	}
 	return client.getLongValidHandleResponse(resp)
 }
 
 // getLongValidCreateRequest creates the GetLongValid request.
-func (client *DictionaryClient) getLongValidCreateRequest(ctx context.Context, options *DictionaryGetLongValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getLongValidCreateRequest(ctx context.Context, options *DictionaryClientGetLongValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/long/1.-1.3.300"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2340,10 +2349,10 @@ func (client *DictionaryClient) getLongValidCreateRequest(ctx context.Context, o
 }
 
 // getLongValidHandleResponse handles the GetLongValid response.
-func (client *DictionaryClient) getLongValidHandleResponse(resp *http.Response) (DictionaryGetLongValidResponse, error) {
-	result := DictionaryGetLongValidResponse{RawResponse: resp}
+func (client *DictionaryClient) getLongValidHandleResponse(resp *http.Response) (DictionaryClientGetLongValidResponse, error) {
+	result := DictionaryClientGetLongValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetLongValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetLongValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2363,24 +2372,24 @@ func (client *DictionaryClient) getLongValidHandleError(resp *http.Response) err
 
 // GetNull - Get null dictionary value
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetNullOptions contains the optional parameters for the DictionaryClient.GetNull method.
-func (client *DictionaryClient) GetNull(ctx context.Context, options *DictionaryGetNullOptions) (DictionaryGetNullResponse, error) {
+// options - DictionaryClientGetNullOptions contains the optional parameters for the DictionaryClient.GetNull method.
+func (client *DictionaryClient) GetNull(ctx context.Context, options *DictionaryClientGetNullOptions) (DictionaryClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetNullResponse{}, err
+		return DictionaryClientGetNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetNullResponse{}, err
+		return DictionaryClientGetNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetNullResponse{}, client.getNullHandleError(resp)
+		return DictionaryClientGetNullResponse{}, client.getNullHandleError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *DictionaryClient) getNullCreateRequest(ctx context.Context, options *DictionaryGetNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getNullCreateRequest(ctx context.Context, options *DictionaryClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2391,10 +2400,10 @@ func (client *DictionaryClient) getNullCreateRequest(ctx context.Context, option
 }
 
 // getNullHandleResponse handles the GetNull response.
-func (client *DictionaryClient) getNullHandleResponse(resp *http.Response) (DictionaryGetNullResponse, error) {
-	result := DictionaryGetNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getNullHandleResponse(resp *http.Response) (DictionaryClientGetNullResponse, error) {
+	result := DictionaryClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2414,24 +2423,24 @@ func (client *DictionaryClient) getNullHandleError(resp *http.Response) error {
 
 // GetNullKey - Get Dictionary with null key
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetNullKeyOptions contains the optional parameters for the DictionaryClient.GetNullKey method.
-func (client *DictionaryClient) GetNullKey(ctx context.Context, options *DictionaryGetNullKeyOptions) (DictionaryGetNullKeyResponse, error) {
+// options - DictionaryClientGetNullKeyOptions contains the optional parameters for the DictionaryClient.GetNullKey method.
+func (client *DictionaryClient) GetNullKey(ctx context.Context, options *DictionaryClientGetNullKeyOptions) (DictionaryClientGetNullKeyResponse, error) {
 	req, err := client.getNullKeyCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetNullKeyResponse{}, err
+		return DictionaryClientGetNullKeyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetNullKeyResponse{}, err
+		return DictionaryClientGetNullKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetNullKeyResponse{}, client.getNullKeyHandleError(resp)
+		return DictionaryClientGetNullKeyResponse{}, client.getNullKeyHandleError(resp)
 	}
 	return client.getNullKeyHandleResponse(resp)
 }
 
 // getNullKeyCreateRequest creates the GetNullKey request.
-func (client *DictionaryClient) getNullKeyCreateRequest(ctx context.Context, options *DictionaryGetNullKeyOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getNullKeyCreateRequest(ctx context.Context, options *DictionaryClientGetNullKeyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/nullkey"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2442,10 +2451,10 @@ func (client *DictionaryClient) getNullKeyCreateRequest(ctx context.Context, opt
 }
 
 // getNullKeyHandleResponse handles the GetNullKey response.
-func (client *DictionaryClient) getNullKeyHandleResponse(resp *http.Response) (DictionaryGetNullKeyResponse, error) {
-	result := DictionaryGetNullKeyResponse{RawResponse: resp}
+func (client *DictionaryClient) getNullKeyHandleResponse(resp *http.Response) (DictionaryClientGetNullKeyResponse, error) {
+	result := DictionaryClientGetNullKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetNullKeyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetNullKeyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2465,24 +2474,24 @@ func (client *DictionaryClient) getNullKeyHandleError(resp *http.Response) error
 
 // GetNullValue - Get Dictionary with null value
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetNullValueOptions contains the optional parameters for the DictionaryClient.GetNullValue method.
-func (client *DictionaryClient) GetNullValue(ctx context.Context, options *DictionaryGetNullValueOptions) (DictionaryGetNullValueResponse, error) {
+// options - DictionaryClientGetNullValueOptions contains the optional parameters for the DictionaryClient.GetNullValue method.
+func (client *DictionaryClient) GetNullValue(ctx context.Context, options *DictionaryClientGetNullValueOptions) (DictionaryClientGetNullValueResponse, error) {
 	req, err := client.getNullValueCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetNullValueResponse{}, err
+		return DictionaryClientGetNullValueResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetNullValueResponse{}, err
+		return DictionaryClientGetNullValueResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetNullValueResponse{}, client.getNullValueHandleError(resp)
+		return DictionaryClientGetNullValueResponse{}, client.getNullValueHandleError(resp)
 	}
 	return client.getNullValueHandleResponse(resp)
 }
 
 // getNullValueCreateRequest creates the GetNullValue request.
-func (client *DictionaryClient) getNullValueCreateRequest(ctx context.Context, options *DictionaryGetNullValueOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getNullValueCreateRequest(ctx context.Context, options *DictionaryClientGetNullValueOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/nullvalue"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2493,10 +2502,10 @@ func (client *DictionaryClient) getNullValueCreateRequest(ctx context.Context, o
 }
 
 // getNullValueHandleResponse handles the GetNullValue response.
-func (client *DictionaryClient) getNullValueHandleResponse(resp *http.Response) (DictionaryGetNullValueResponse, error) {
-	result := DictionaryGetNullValueResponse{RawResponse: resp}
+func (client *DictionaryClient) getNullValueHandleResponse(resp *http.Response) (DictionaryClientGetNullValueResponse, error) {
+	result := DictionaryClientGetNullValueResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetNullValueResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetNullValueResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2516,24 +2525,25 @@ func (client *DictionaryClient) getNullValueHandleError(resp *http.Response) err
 
 // GetStringValid - Get string dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetStringValidOptions contains the optional parameters for the DictionaryClient.GetStringValid method.
-func (client *DictionaryClient) GetStringValid(ctx context.Context, options *DictionaryGetStringValidOptions) (DictionaryGetStringValidResponse, error) {
+// options - DictionaryClientGetStringValidOptions contains the optional parameters for the DictionaryClient.GetStringValid
+// method.
+func (client *DictionaryClient) GetStringValid(ctx context.Context, options *DictionaryClientGetStringValidOptions) (DictionaryClientGetStringValidResponse, error) {
 	req, err := client.getStringValidCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetStringValidResponse{}, err
+		return DictionaryClientGetStringValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetStringValidResponse{}, err
+		return DictionaryClientGetStringValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetStringValidResponse{}, client.getStringValidHandleError(resp)
+		return DictionaryClientGetStringValidResponse{}, client.getStringValidHandleError(resp)
 	}
 	return client.getStringValidHandleResponse(resp)
 }
 
 // getStringValidCreateRequest creates the GetStringValid request.
-func (client *DictionaryClient) getStringValidCreateRequest(ctx context.Context, options *DictionaryGetStringValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getStringValidCreateRequest(ctx context.Context, options *DictionaryClientGetStringValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/string/foo1.foo2.foo3"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2544,10 +2554,10 @@ func (client *DictionaryClient) getStringValidCreateRequest(ctx context.Context,
 }
 
 // getStringValidHandleResponse handles the GetStringValid response.
-func (client *DictionaryClient) getStringValidHandleResponse(resp *http.Response) (DictionaryGetStringValidResponse, error) {
-	result := DictionaryGetStringValidResponse{RawResponse: resp}
+func (client *DictionaryClient) getStringValidHandleResponse(resp *http.Response) (DictionaryClientGetStringValidResponse, error) {
+	result := DictionaryClientGetStringValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetStringValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetStringValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2567,25 +2577,25 @@ func (client *DictionaryClient) getStringValidHandleError(resp *http.Response) e
 
 // GetStringWithInvalid - Get string dictionary value {"0": "foo", "1": 123, "2": "foo2"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetStringWithInvalidOptions contains the optional parameters for the DictionaryClient.GetStringWithInvalid
+// options - DictionaryClientGetStringWithInvalidOptions contains the optional parameters for the DictionaryClient.GetStringWithInvalid
 // method.
-func (client *DictionaryClient) GetStringWithInvalid(ctx context.Context, options *DictionaryGetStringWithInvalidOptions) (DictionaryGetStringWithInvalidResponse, error) {
+func (client *DictionaryClient) GetStringWithInvalid(ctx context.Context, options *DictionaryClientGetStringWithInvalidOptions) (DictionaryClientGetStringWithInvalidResponse, error) {
 	req, err := client.getStringWithInvalidCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetStringWithInvalidResponse{}, err
+		return DictionaryClientGetStringWithInvalidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetStringWithInvalidResponse{}, err
+		return DictionaryClientGetStringWithInvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetStringWithInvalidResponse{}, client.getStringWithInvalidHandleError(resp)
+		return DictionaryClientGetStringWithInvalidResponse{}, client.getStringWithInvalidHandleError(resp)
 	}
 	return client.getStringWithInvalidHandleResponse(resp)
 }
 
 // getStringWithInvalidCreateRequest creates the GetStringWithInvalid request.
-func (client *DictionaryClient) getStringWithInvalidCreateRequest(ctx context.Context, options *DictionaryGetStringWithInvalidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getStringWithInvalidCreateRequest(ctx context.Context, options *DictionaryClientGetStringWithInvalidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/string/foo.123.foo2"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2596,10 +2606,10 @@ func (client *DictionaryClient) getStringWithInvalidCreateRequest(ctx context.Co
 }
 
 // getStringWithInvalidHandleResponse handles the GetStringWithInvalid response.
-func (client *DictionaryClient) getStringWithInvalidHandleResponse(resp *http.Response) (DictionaryGetStringWithInvalidResponse, error) {
-	result := DictionaryGetStringWithInvalidResponse{RawResponse: resp}
+func (client *DictionaryClient) getStringWithInvalidHandleResponse(resp *http.Response) (DictionaryClientGetStringWithInvalidResponse, error) {
+	result := DictionaryClientGetStringWithInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetStringWithInvalidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetStringWithInvalidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2619,25 +2629,25 @@ func (client *DictionaryClient) getStringWithInvalidHandleError(resp *http.Respo
 
 // GetStringWithNull - Get string dictionary value {"0": "foo", "1": null, "2": "foo2"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetStringWithNullOptions contains the optional parameters for the DictionaryClient.GetStringWithNull
+// options - DictionaryClientGetStringWithNullOptions contains the optional parameters for the DictionaryClient.GetStringWithNull
 // method.
-func (client *DictionaryClient) GetStringWithNull(ctx context.Context, options *DictionaryGetStringWithNullOptions) (DictionaryGetStringWithNullResponse, error) {
+func (client *DictionaryClient) GetStringWithNull(ctx context.Context, options *DictionaryClientGetStringWithNullOptions) (DictionaryClientGetStringWithNullResponse, error) {
 	req, err := client.getStringWithNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetStringWithNullResponse{}, err
+		return DictionaryClientGetStringWithNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetStringWithNullResponse{}, err
+		return DictionaryClientGetStringWithNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetStringWithNullResponse{}, client.getStringWithNullHandleError(resp)
+		return DictionaryClientGetStringWithNullResponse{}, client.getStringWithNullHandleError(resp)
 	}
 	return client.getStringWithNullHandleResponse(resp)
 }
 
 // getStringWithNullCreateRequest creates the GetStringWithNull request.
-func (client *DictionaryClient) getStringWithNullCreateRequest(ctx context.Context, options *DictionaryGetStringWithNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getStringWithNullCreateRequest(ctx context.Context, options *DictionaryClientGetStringWithNullOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/string/foo.null.foo2"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2648,10 +2658,10 @@ func (client *DictionaryClient) getStringWithNullCreateRequest(ctx context.Conte
 }
 
 // getStringWithNullHandleResponse handles the GetStringWithNull response.
-func (client *DictionaryClient) getStringWithNullHandleResponse(resp *http.Response) (DictionaryGetStringWithNullResponse, error) {
-	result := DictionaryGetStringWithNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getStringWithNullHandleResponse(resp *http.Response) (DictionaryClientGetStringWithNullResponse, error) {
+	result := DictionaryClientGetStringWithNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryGetStringWithNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetStringWithNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -2671,24 +2681,25 @@ func (client *DictionaryClient) getStringWithNullHandleError(resp *http.Response
 
 // PutArrayValid - Put An array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutArrayValidOptions contains the optional parameters for the DictionaryClient.PutArrayValid method.
-func (client *DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[string][]*string, options *DictionaryPutArrayValidOptions) (DictionaryPutArrayValidResponse, error) {
+// options - DictionaryClientPutArrayValidOptions contains the optional parameters for the DictionaryClient.PutArrayValid
+// method.
+func (client *DictionaryClient) PutArrayValid(ctx context.Context, arrayBody map[string][]*string, options *DictionaryClientPutArrayValidOptions) (DictionaryClientPutArrayValidResponse, error) {
 	req, err := client.putArrayValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return DictionaryPutArrayValidResponse{}, err
+		return DictionaryClientPutArrayValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutArrayValidResponse{}, err
+		return DictionaryClientPutArrayValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutArrayValidResponse{}, client.putArrayValidHandleError(resp)
+		return DictionaryClientPutArrayValidResponse{}, client.putArrayValidHandleError(resp)
 	}
-	return DictionaryPutArrayValidResponse{RawResponse: resp}, nil
+	return DictionaryClientPutArrayValidResponse{RawResponse: resp}, nil
 }
 
 // putArrayValidCreateRequest creates the PutArrayValid request.
-func (client *DictionaryClient) putArrayValidCreateRequest(ctx context.Context, arrayBody map[string][]*string, options *DictionaryPutArrayValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putArrayValidCreateRequest(ctx context.Context, arrayBody map[string][]*string, options *DictionaryClientPutArrayValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/array/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2713,24 +2724,25 @@ func (client *DictionaryClient) putArrayValidHandleError(resp *http.Response) er
 
 // PutBooleanTfft - Set dictionary value empty {"0": true, "1": false, "2": false, "3": true }
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutBooleanTfftOptions contains the optional parameters for the DictionaryClient.PutBooleanTfft method.
-func (client *DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map[string]*bool, options *DictionaryPutBooleanTfftOptions) (DictionaryPutBooleanTfftResponse, error) {
+// options - DictionaryClientPutBooleanTfftOptions contains the optional parameters for the DictionaryClient.PutBooleanTfft
+// method.
+func (client *DictionaryClient) PutBooleanTfft(ctx context.Context, arrayBody map[string]*bool, options *DictionaryClientPutBooleanTfftOptions) (DictionaryClientPutBooleanTfftResponse, error) {
 	req, err := client.putBooleanTfftCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return DictionaryPutBooleanTfftResponse{}, err
+		return DictionaryClientPutBooleanTfftResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutBooleanTfftResponse{}, err
+		return DictionaryClientPutBooleanTfftResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutBooleanTfftResponse{}, client.putBooleanTfftHandleError(resp)
+		return DictionaryClientPutBooleanTfftResponse{}, client.putBooleanTfftHandleError(resp)
 	}
-	return DictionaryPutBooleanTfftResponse{RawResponse: resp}, nil
+	return DictionaryClientPutBooleanTfftResponse{RawResponse: resp}, nil
 }
 
 // putBooleanTfftCreateRequest creates the PutBooleanTfft request.
-func (client *DictionaryClient) putBooleanTfftCreateRequest(ctx context.Context, arrayBody map[string]*bool, options *DictionaryPutBooleanTfftOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putBooleanTfftCreateRequest(ctx context.Context, arrayBody map[string]*bool, options *DictionaryClientPutBooleanTfftOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/boolean/tfft"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2756,24 +2768,24 @@ func (client *DictionaryClient) putBooleanTfftHandleError(resp *http.Response) e
 // PutByteValid - Put the dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each elementencoded
 // in base 64
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutByteValidOptions contains the optional parameters for the DictionaryClient.PutByteValid method.
-func (client *DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[string][]byte, options *DictionaryPutByteValidOptions) (DictionaryPutByteValidResponse, error) {
+// options - DictionaryClientPutByteValidOptions contains the optional parameters for the DictionaryClient.PutByteValid method.
+func (client *DictionaryClient) PutByteValid(ctx context.Context, arrayBody map[string][]byte, options *DictionaryClientPutByteValidOptions) (DictionaryClientPutByteValidResponse, error) {
 	req, err := client.putByteValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return DictionaryPutByteValidResponse{}, err
+		return DictionaryClientPutByteValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutByteValidResponse{}, err
+		return DictionaryClientPutByteValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutByteValidResponse{}, client.putByteValidHandleError(resp)
+		return DictionaryClientPutByteValidResponse{}, client.putByteValidHandleError(resp)
 	}
-	return DictionaryPutByteValidResponse{RawResponse: resp}, nil
+	return DictionaryClientPutByteValidResponse{RawResponse: resp}, nil
 }
 
 // putByteValidCreateRequest creates the PutByteValid request.
-func (client *DictionaryClient) putByteValidCreateRequest(ctx context.Context, arrayBody map[string][]byte, options *DictionaryPutByteValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putByteValidCreateRequest(ctx context.Context, arrayBody map[string][]byte, options *DictionaryClientPutByteValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/byte/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2799,24 +2811,25 @@ func (client *DictionaryClient) putByteValidHandleError(resp *http.Response) err
 // PutComplexValid - Put an dictionary of complex type with values {"0": {"integer": 1, "string": "2"}, "1": {"integer": 3,
 // "string": "4"}, "2": {"integer": 5, "string": "6"}}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutComplexValidOptions contains the optional parameters for the DictionaryClient.PutComplexValid method.
-func (client *DictionaryClient) PutComplexValid(ctx context.Context, arrayBody map[string]*Widget, options *DictionaryPutComplexValidOptions) (DictionaryPutComplexValidResponse, error) {
+// options - DictionaryClientPutComplexValidOptions contains the optional parameters for the DictionaryClient.PutComplexValid
+// method.
+func (client *DictionaryClient) PutComplexValid(ctx context.Context, arrayBody map[string]*Widget, options *DictionaryClientPutComplexValidOptions) (DictionaryClientPutComplexValidResponse, error) {
 	req, err := client.putComplexValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return DictionaryPutComplexValidResponse{}, err
+		return DictionaryClientPutComplexValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutComplexValidResponse{}, err
+		return DictionaryClientPutComplexValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutComplexValidResponse{}, client.putComplexValidHandleError(resp)
+		return DictionaryClientPutComplexValidResponse{}, client.putComplexValidHandleError(resp)
 	}
-	return DictionaryPutComplexValidResponse{RawResponse: resp}, nil
+	return DictionaryClientPutComplexValidResponse{RawResponse: resp}, nil
 }
 
 // putComplexValidCreateRequest creates the PutComplexValid request.
-func (client *DictionaryClient) putComplexValidCreateRequest(ctx context.Context, arrayBody map[string]*Widget, options *DictionaryPutComplexValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putComplexValidCreateRequest(ctx context.Context, arrayBody map[string]*Widget, options *DictionaryClientPutComplexValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/complex/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2842,25 +2855,25 @@ func (client *DictionaryClient) putComplexValidHandleError(resp *http.Response) 
 // PutDateTimeRFC1123Valid - Set dictionary value empty {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35
 // GMT", "2": "Wed, 12 Oct 1492 10:15:01 GMT"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutDateTimeRFC1123ValidOptions contains the optional parameters for the DictionaryClient.PutDateTimeRFC1123Valid
+// options - DictionaryClientPutDateTimeRFC1123ValidOptions contains the optional parameters for the DictionaryClient.PutDateTimeRFC1123Valid
 // method.
-func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (DictionaryPutDateTimeRFC1123ValidResponse, error) {
+func (client *DictionaryClient) PutDateTimeRFC1123Valid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryClientPutDateTimeRFC1123ValidOptions) (DictionaryClientPutDateTimeRFC1123ValidResponse, error) {
 	req, err := client.putDateTimeRFC1123ValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return DictionaryPutDateTimeRFC1123ValidResponse{}, err
+		return DictionaryClientPutDateTimeRFC1123ValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutDateTimeRFC1123ValidResponse{}, err
+		return DictionaryClientPutDateTimeRFC1123ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutDateTimeRFC1123ValidResponse{}, client.putDateTimeRFC1123ValidHandleError(resp)
+		return DictionaryClientPutDateTimeRFC1123ValidResponse{}, client.putDateTimeRFC1123ValidHandleError(resp)
 	}
-	return DictionaryPutDateTimeRFC1123ValidResponse{RawResponse: resp}, nil
+	return DictionaryClientPutDateTimeRFC1123ValidResponse{RawResponse: resp}, nil
 }
 
 // putDateTimeRFC1123ValidCreateRequest creates the PutDateTimeRFC1123Valid request.
-func (client *DictionaryClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateTimeRFC1123ValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putDateTimeRFC1123ValidCreateRequest(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryClientPutDateTimeRFC1123ValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date-time-rfc1123/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2889,25 +2902,25 @@ func (client *DictionaryClient) putDateTimeRFC1123ValidHandleError(resp *http.Re
 
 // PutDateTimeValid - Set dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutDateTimeValidOptions contains the optional parameters for the DictionaryClient.PutDateTimeValid
+// options - DictionaryClientPutDateTimeValidOptions contains the optional parameters for the DictionaryClient.PutDateTimeValid
 // method.
-func (client *DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateTimeValidOptions) (DictionaryPutDateTimeValidResponse, error) {
+func (client *DictionaryClient) PutDateTimeValid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryClientPutDateTimeValidOptions) (DictionaryClientPutDateTimeValidResponse, error) {
 	req, err := client.putDateTimeValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return DictionaryPutDateTimeValidResponse{}, err
+		return DictionaryClientPutDateTimeValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutDateTimeValidResponse{}, err
+		return DictionaryClientPutDateTimeValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutDateTimeValidResponse{}, client.putDateTimeValidHandleError(resp)
+		return DictionaryClientPutDateTimeValidResponse{}, client.putDateTimeValidHandleError(resp)
 	}
-	return DictionaryPutDateTimeValidResponse{RawResponse: resp}, nil
+	return DictionaryClientPutDateTimeValidResponse{RawResponse: resp}, nil
 }
 
 // putDateTimeValidCreateRequest creates the PutDateTimeValid request.
-func (client *DictionaryClient) putDateTimeValidCreateRequest(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateTimeValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putDateTimeValidCreateRequest(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryClientPutDateTimeValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date-time/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2936,24 +2949,24 @@ func (client *DictionaryClient) putDateTimeValidHandleError(resp *http.Response)
 
 // PutDateValid - Set dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutDateValidOptions contains the optional parameters for the DictionaryClient.PutDateValid method.
-func (client *DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateValidOptions) (DictionaryPutDateValidResponse, error) {
+// options - DictionaryClientPutDateValidOptions contains the optional parameters for the DictionaryClient.PutDateValid method.
+func (client *DictionaryClient) PutDateValid(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryClientPutDateValidOptions) (DictionaryClientPutDateValidResponse, error) {
 	req, err := client.putDateValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return DictionaryPutDateValidResponse{}, err
+		return DictionaryClientPutDateValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutDateValidResponse{}, err
+		return DictionaryClientPutDateValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutDateValidResponse{}, client.putDateValidHandleError(resp)
+		return DictionaryClientPutDateValidResponse{}, client.putDateValidHandleError(resp)
 	}
-	return DictionaryPutDateValidResponse{RawResponse: resp}, nil
+	return DictionaryClientPutDateValidResponse{RawResponse: resp}, nil
 }
 
 // putDateValidCreateRequest creates the PutDateValid request.
-func (client *DictionaryClient) putDateValidCreateRequest(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryPutDateValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putDateValidCreateRequest(ctx context.Context, arrayBody map[string]*time.Time, options *DictionaryClientPutDateValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/date/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -2983,25 +2996,25 @@ func (client *DictionaryClient) putDateValidHandleError(resp *http.Response) err
 // PutDictionaryValid - Get an dictionaries of dictionaries of type with value {"0": {"1": "one", "2": "two", "3": "three"},
 // "1": {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutDictionaryValidOptions contains the optional parameters for the DictionaryClient.PutDictionaryValid
+// options - DictionaryClientPutDictionaryValidOptions contains the optional parameters for the DictionaryClient.PutDictionaryValid
 // method.
-func (client *DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]map[string]*string, options *DictionaryPutDictionaryValidOptions) (DictionaryPutDictionaryValidResponse, error) {
+func (client *DictionaryClient) PutDictionaryValid(ctx context.Context, arrayBody map[string]map[string]*string, options *DictionaryClientPutDictionaryValidOptions) (DictionaryClientPutDictionaryValidResponse, error) {
 	req, err := client.putDictionaryValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return DictionaryPutDictionaryValidResponse{}, err
+		return DictionaryClientPutDictionaryValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutDictionaryValidResponse{}, err
+		return DictionaryClientPutDictionaryValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutDictionaryValidResponse{}, client.putDictionaryValidHandleError(resp)
+		return DictionaryClientPutDictionaryValidResponse{}, client.putDictionaryValidHandleError(resp)
 	}
-	return DictionaryPutDictionaryValidResponse{RawResponse: resp}, nil
+	return DictionaryClientPutDictionaryValidResponse{RawResponse: resp}, nil
 }
 
 // putDictionaryValidCreateRequest creates the PutDictionaryValid request.
-func (client *DictionaryClient) putDictionaryValidCreateRequest(ctx context.Context, arrayBody map[string]map[string]*string, options *DictionaryPutDictionaryValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putDictionaryValidCreateRequest(ctx context.Context, arrayBody map[string]map[string]*string, options *DictionaryClientPutDictionaryValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/dictionary/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3026,24 +3039,25 @@ func (client *DictionaryClient) putDictionaryValidHandleError(resp *http.Respons
 
 // PutDoubleValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutDoubleValidOptions contains the optional parameters for the DictionaryClient.PutDoubleValid method.
-func (client *DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map[string]*float64, options *DictionaryPutDoubleValidOptions) (DictionaryPutDoubleValidResponse, error) {
+// options - DictionaryClientPutDoubleValidOptions contains the optional parameters for the DictionaryClient.PutDoubleValid
+// method.
+func (client *DictionaryClient) PutDoubleValid(ctx context.Context, arrayBody map[string]*float64, options *DictionaryClientPutDoubleValidOptions) (DictionaryClientPutDoubleValidResponse, error) {
 	req, err := client.putDoubleValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return DictionaryPutDoubleValidResponse{}, err
+		return DictionaryClientPutDoubleValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutDoubleValidResponse{}, err
+		return DictionaryClientPutDoubleValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutDoubleValidResponse{}, client.putDoubleValidHandleError(resp)
+		return DictionaryClientPutDoubleValidResponse{}, client.putDoubleValidHandleError(resp)
 	}
-	return DictionaryPutDoubleValidResponse{RawResponse: resp}, nil
+	return DictionaryClientPutDoubleValidResponse{RawResponse: resp}, nil
 }
 
 // putDoubleValidCreateRequest creates the PutDoubleValid request.
-func (client *DictionaryClient) putDoubleValidCreateRequest(ctx context.Context, arrayBody map[string]*float64, options *DictionaryPutDoubleValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putDoubleValidCreateRequest(ctx context.Context, arrayBody map[string]*float64, options *DictionaryClientPutDoubleValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/double/0--0.01-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3068,25 +3082,25 @@ func (client *DictionaryClient) putDoubleValidHandleError(resp *http.Response) e
 
 // PutDurationValid - Set dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutDurationValidOptions contains the optional parameters for the DictionaryClient.PutDurationValid
+// options - DictionaryClientPutDurationValidOptions contains the optional parameters for the DictionaryClient.PutDurationValid
 // method.
-func (client *DictionaryClient) PutDurationValid(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutDurationValidOptions) (DictionaryPutDurationValidResponse, error) {
+func (client *DictionaryClient) PutDurationValid(ctx context.Context, arrayBody map[string]*string, options *DictionaryClientPutDurationValidOptions) (DictionaryClientPutDurationValidResponse, error) {
 	req, err := client.putDurationValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return DictionaryPutDurationValidResponse{}, err
+		return DictionaryClientPutDurationValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutDurationValidResponse{}, err
+		return DictionaryClientPutDurationValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutDurationValidResponse{}, client.putDurationValidHandleError(resp)
+		return DictionaryClientPutDurationValidResponse{}, client.putDurationValidHandleError(resp)
 	}
-	return DictionaryPutDurationValidResponse{RawResponse: resp}, nil
+	return DictionaryClientPutDurationValidResponse{RawResponse: resp}, nil
 }
 
 // putDurationValidCreateRequest creates the PutDurationValid request.
-func (client *DictionaryClient) putDurationValidCreateRequest(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutDurationValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putDurationValidCreateRequest(ctx context.Context, arrayBody map[string]*string, options *DictionaryClientPutDurationValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/duration/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3111,24 +3125,24 @@ func (client *DictionaryClient) putDurationValidHandleError(resp *http.Response)
 
 // PutEmpty - Set dictionary value empty {}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutEmptyOptions contains the optional parameters for the DictionaryClient.PutEmpty method.
-func (client *DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutEmptyOptions) (DictionaryPutEmptyResponse, error) {
+// options - DictionaryClientPutEmptyOptions contains the optional parameters for the DictionaryClient.PutEmpty method.
+func (client *DictionaryClient) PutEmpty(ctx context.Context, arrayBody map[string]*string, options *DictionaryClientPutEmptyOptions) (DictionaryClientPutEmptyResponse, error) {
 	req, err := client.putEmptyCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return DictionaryPutEmptyResponse{}, err
+		return DictionaryClientPutEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutEmptyResponse{}, err
+		return DictionaryClientPutEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutEmptyResponse{}, client.putEmptyHandleError(resp)
+		return DictionaryClientPutEmptyResponse{}, client.putEmptyHandleError(resp)
 	}
-	return DictionaryPutEmptyResponse{RawResponse: resp}, nil
+	return DictionaryClientPutEmptyResponse{RawResponse: resp}, nil
 }
 
 // putEmptyCreateRequest creates the PutEmpty request.
-func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutEmptyOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, arrayBody map[string]*string, options *DictionaryClientPutEmptyOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3153,24 +3167,25 @@ func (client *DictionaryClient) putEmptyHandleError(resp *http.Response) error {
 
 // PutFloatValid - Set dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutFloatValidOptions contains the optional parameters for the DictionaryClient.PutFloatValid method.
-func (client *DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[string]*float32, options *DictionaryPutFloatValidOptions) (DictionaryPutFloatValidResponse, error) {
+// options - DictionaryClientPutFloatValidOptions contains the optional parameters for the DictionaryClient.PutFloatValid
+// method.
+func (client *DictionaryClient) PutFloatValid(ctx context.Context, arrayBody map[string]*float32, options *DictionaryClientPutFloatValidOptions) (DictionaryClientPutFloatValidResponse, error) {
 	req, err := client.putFloatValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return DictionaryPutFloatValidResponse{}, err
+		return DictionaryClientPutFloatValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutFloatValidResponse{}, err
+		return DictionaryClientPutFloatValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutFloatValidResponse{}, client.putFloatValidHandleError(resp)
+		return DictionaryClientPutFloatValidResponse{}, client.putFloatValidHandleError(resp)
 	}
-	return DictionaryPutFloatValidResponse{RawResponse: resp}, nil
+	return DictionaryClientPutFloatValidResponse{RawResponse: resp}, nil
 }
 
 // putFloatValidCreateRequest creates the PutFloatValid request.
-func (client *DictionaryClient) putFloatValidCreateRequest(ctx context.Context, arrayBody map[string]*float32, options *DictionaryPutFloatValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putFloatValidCreateRequest(ctx context.Context, arrayBody map[string]*float32, options *DictionaryClientPutFloatValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/float/0--0.01-1.2e20"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3195,24 +3210,25 @@ func (client *DictionaryClient) putFloatValidHandleError(resp *http.Response) er
 
 // PutIntegerValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutIntegerValidOptions contains the optional parameters for the DictionaryClient.PutIntegerValid method.
-func (client *DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody map[string]*int32, options *DictionaryPutIntegerValidOptions) (DictionaryPutIntegerValidResponse, error) {
+// options - DictionaryClientPutIntegerValidOptions contains the optional parameters for the DictionaryClient.PutIntegerValid
+// method.
+func (client *DictionaryClient) PutIntegerValid(ctx context.Context, arrayBody map[string]*int32, options *DictionaryClientPutIntegerValidOptions) (DictionaryClientPutIntegerValidResponse, error) {
 	req, err := client.putIntegerValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return DictionaryPutIntegerValidResponse{}, err
+		return DictionaryClientPutIntegerValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutIntegerValidResponse{}, err
+		return DictionaryClientPutIntegerValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutIntegerValidResponse{}, client.putIntegerValidHandleError(resp)
+		return DictionaryClientPutIntegerValidResponse{}, client.putIntegerValidHandleError(resp)
 	}
-	return DictionaryPutIntegerValidResponse{RawResponse: resp}, nil
+	return DictionaryClientPutIntegerValidResponse{RawResponse: resp}, nil
 }
 
 // putIntegerValidCreateRequest creates the PutIntegerValid request.
-func (client *DictionaryClient) putIntegerValidCreateRequest(ctx context.Context, arrayBody map[string]*int32, options *DictionaryPutIntegerValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putIntegerValidCreateRequest(ctx context.Context, arrayBody map[string]*int32, options *DictionaryClientPutIntegerValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/integer/1.-1.3.300"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3237,24 +3253,24 @@ func (client *DictionaryClient) putIntegerValidHandleError(resp *http.Response) 
 
 // PutLongValid - Set dictionary value empty {"0": 1, "1": -1, "2": 3, "3": 300}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutLongValidOptions contains the optional parameters for the DictionaryClient.PutLongValid method.
-func (client *DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[string]*int64, options *DictionaryPutLongValidOptions) (DictionaryPutLongValidResponse, error) {
+// options - DictionaryClientPutLongValidOptions contains the optional parameters for the DictionaryClient.PutLongValid method.
+func (client *DictionaryClient) PutLongValid(ctx context.Context, arrayBody map[string]*int64, options *DictionaryClientPutLongValidOptions) (DictionaryClientPutLongValidResponse, error) {
 	req, err := client.putLongValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return DictionaryPutLongValidResponse{}, err
+		return DictionaryClientPutLongValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutLongValidResponse{}, err
+		return DictionaryClientPutLongValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutLongValidResponse{}, client.putLongValidHandleError(resp)
+		return DictionaryClientPutLongValidResponse{}, client.putLongValidHandleError(resp)
 	}
-	return DictionaryPutLongValidResponse{RawResponse: resp}, nil
+	return DictionaryClientPutLongValidResponse{RawResponse: resp}, nil
 }
 
 // putLongValidCreateRequest creates the PutLongValid request.
-func (client *DictionaryClient) putLongValidCreateRequest(ctx context.Context, arrayBody map[string]*int64, options *DictionaryPutLongValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putLongValidCreateRequest(ctx context.Context, arrayBody map[string]*int64, options *DictionaryClientPutLongValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/long/1.-1.3.300"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -3279,24 +3295,25 @@ func (client *DictionaryClient) putLongValidHandleError(resp *http.Response) err
 
 // PutStringValid - Set dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
 // If the operation fails it returns the *Error error type.
-// options - DictionaryPutStringValidOptions contains the optional parameters for the DictionaryClient.PutStringValid method.
-func (client *DictionaryClient) PutStringValid(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutStringValidOptions) (DictionaryPutStringValidResponse, error) {
+// options - DictionaryClientPutStringValidOptions contains the optional parameters for the DictionaryClient.PutStringValid
+// method.
+func (client *DictionaryClient) PutStringValid(ctx context.Context, arrayBody map[string]*string, options *DictionaryClientPutStringValidOptions) (DictionaryClientPutStringValidResponse, error) {
 	req, err := client.putStringValidCreateRequest(ctx, arrayBody, options)
 	if err != nil {
-		return DictionaryPutStringValidResponse{}, err
+		return DictionaryClientPutStringValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutStringValidResponse{}, err
+		return DictionaryClientPutStringValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutStringValidResponse{}, client.putStringValidHandleError(resp)
+		return DictionaryClientPutStringValidResponse{}, client.putStringValidHandleError(resp)
 	}
-	return DictionaryPutStringValidResponse{RawResponse: resp}, nil
+	return DictionaryClientPutStringValidResponse{RawResponse: resp}, nil
 }
 
 // putStringValidCreateRequest creates the PutStringValid request.
-func (client *DictionaryClient) putStringValidCreateRequest(ctx context.Context, arrayBody map[string]*string, options *DictionaryPutStringValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putStringValidCreateRequest(ctx context.Context, arrayBody map[string]*string, options *DictionaryClientPutStringValidOptions) (*policy.Request, error) {
 	urlPath := "/dictionary/prim/string/foo1.foo2.foo3"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

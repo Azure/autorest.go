@@ -47,38 +47,38 @@ func newBlockBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *bl
 // the most recently uploaded version of the block, whichever list it may
 // belong to.
 // If the operation fails it returns the *StorageError error type.
-// BlockBlobCommitBlockListOptions - BlockBlobCommitBlockListOptions contains the optional parameters for the blockBlobClient.CommitBlockList
-// method.
-// BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the Blob.SetHTTPHeaders method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
-// CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
-// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
-func (client *blockBlobClient) CommitBlockList(ctx context.Context, comp Enum34, blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobCommitBlockListResponse, error) {
-	req, err := client.commitBlockListCreateRequest(ctx, comp, blocks, blockBlobCommitBlockListOptions, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
+// blockBlobClientCommitBlockListOptions - blockBlobClientCommitBlockListOptions contains the optional parameters for the
+// blockBlobClient.CommitBlockList method.
+// BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
+// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
+// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
+// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+func (client *blockBlobClient) CommitBlockList(ctx context.Context, comp Enum34, blocks BlockLookupList, blockBlobClientCommitBlockListOptions *blockBlobClientCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (blockBlobClientCommitBlockListResponse, error) {
+	req, err := client.commitBlockListCreateRequest(ctx, comp, blocks, blockBlobClientCommitBlockListOptions, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return BlockBlobCommitBlockListResponse{}, err
+		return blockBlobClientCommitBlockListResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BlockBlobCommitBlockListResponse{}, err
+		return blockBlobClientCommitBlockListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return BlockBlobCommitBlockListResponse{}, client.commitBlockListHandleError(resp)
+		return blockBlobClientCommitBlockListResponse{}, client.commitBlockListHandleError(resp)
 	}
 	return client.commitBlockListHandleResponse(resp)
 }
 
 // commitBlockListCreateRequest creates the CommitBlockList request.
-func (client *blockBlobClient) commitBlockListCreateRequest(ctx context.Context, comp Enum34, blocks BlockLookupList, blockBlobCommitBlockListOptions *BlockBlobCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *blockBlobClient) commitBlockListCreateRequest(ctx context.Context, comp Enum34, blocks BlockLookupList, blockBlobClientCommitBlockListOptions *blockBlobClientCommitBlockListOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", string(comp))
-	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobCommitBlockListOptions.Timeout), 10))
+	if blockBlobClientCommitBlockListOptions != nil && blockBlobClientCommitBlockListOptions.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobClientCommitBlockListOptions.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobCacheControl != nil {
@@ -96,14 +96,14 @@ func (client *blockBlobClient) commitBlockListCreateRequest(ctx context.Context,
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobContentMD5 != nil {
 		req.Raw().Header.Set("x-ms-blob-content-md5", base64.StdEncoding.EncodeToString(blobHTTPHeaders.BlobContentMD5))
 	}
-	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.TransactionalContentMD5 != nil {
-		req.Raw().Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(blockBlobCommitBlockListOptions.TransactionalContentMD5))
+	if blockBlobClientCommitBlockListOptions != nil && blockBlobClientCommitBlockListOptions.TransactionalContentMD5 != nil {
+		req.Raw().Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(blockBlobClientCommitBlockListOptions.TransactionalContentMD5))
 	}
-	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.TransactionalContentCRC64 != nil {
-		req.Raw().Header.Set("x-ms-content-crc64", base64.StdEncoding.EncodeToString(blockBlobCommitBlockListOptions.TransactionalContentCRC64))
+	if blockBlobClientCommitBlockListOptions != nil && blockBlobClientCommitBlockListOptions.TransactionalContentCRC64 != nil {
+		req.Raw().Header.Set("x-ms-content-crc64", base64.StdEncoding.EncodeToString(blockBlobClientCommitBlockListOptions.TransactionalContentCRC64))
 	}
-	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.Metadata != nil {
-		for k, v := range blockBlobCommitBlockListOptions.Metadata {
+	if blockBlobClientCommitBlockListOptions != nil && blockBlobClientCommitBlockListOptions.Metadata != nil {
+		for k, v := range blockBlobClientCommitBlockListOptions.Metadata {
 			req.Raw().Header.Set("x-ms-meta-"+k, v)
 		}
 	}
@@ -125,8 +125,8 @@ func (client *blockBlobClient) commitBlockListCreateRequest(ctx context.Context,
 	if cpkScopeInfo != nil && cpkScopeInfo.EncryptionScope != nil {
 		req.Raw().Header.Set("x-ms-encryption-scope", *cpkScopeInfo.EncryptionScope)
 	}
-	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.Tier != nil {
-		req.Raw().Header.Set("x-ms-access-tier", string(*blockBlobCommitBlockListOptions.Tier))
+	if blockBlobClientCommitBlockListOptions != nil && blockBlobClientCommitBlockListOptions.Tier != nil {
+		req.Raw().Header.Set("x-ms-access-tier", string(*blockBlobClientCommitBlockListOptions.Tier))
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Raw().Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
@@ -144,49 +144,49 @@ func (client *blockBlobClient) commitBlockListCreateRequest(ctx context.Context,
 		req.Raw().Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobCommitBlockListOptions.RequestID)
+	if blockBlobClientCommitBlockListOptions != nil && blockBlobClientCommitBlockListOptions.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobClientCommitBlockListOptions.RequestID)
 	}
-	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.BlobTagsString != nil {
-		req.Raw().Header.Set("x-ms-tags", *blockBlobCommitBlockListOptions.BlobTagsString)
+	if blockBlobClientCommitBlockListOptions != nil && blockBlobClientCommitBlockListOptions.BlobTagsString != nil {
+		req.Raw().Header.Set("x-ms-tags", *blockBlobClientCommitBlockListOptions.BlobTagsString)
 	}
-	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.ImmutabilityPolicyExpiry != nil {
-		req.Raw().Header.Set("x-ms-immutability-policy-until-date", blockBlobCommitBlockListOptions.ImmutabilityPolicyExpiry.Format(time.RFC1123))
+	if blockBlobClientCommitBlockListOptions != nil && blockBlobClientCommitBlockListOptions.ImmutabilityPolicyExpiry != nil {
+		req.Raw().Header.Set("x-ms-immutability-policy-until-date", blockBlobClientCommitBlockListOptions.ImmutabilityPolicyExpiry.Format(time.RFC1123))
 	}
-	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.ImmutabilityPolicyMode != nil {
-		req.Raw().Header.Set("x-ms-immutability-policy-mode", string(*blockBlobCommitBlockListOptions.ImmutabilityPolicyMode))
+	if blockBlobClientCommitBlockListOptions != nil && blockBlobClientCommitBlockListOptions.ImmutabilityPolicyMode != nil {
+		req.Raw().Header.Set("x-ms-immutability-policy-mode", string(*blockBlobClientCommitBlockListOptions.ImmutabilityPolicyMode))
 	}
-	if blockBlobCommitBlockListOptions != nil && blockBlobCommitBlockListOptions.LegalHold != nil {
-		req.Raw().Header.Set("x-ms-legal-hold", strconv.FormatBool(*blockBlobCommitBlockListOptions.LegalHold))
+	if blockBlobClientCommitBlockListOptions != nil && blockBlobClientCommitBlockListOptions.LegalHold != nil {
+		req.Raw().Header.Set("x-ms-legal-hold", strconv.FormatBool(*blockBlobClientCommitBlockListOptions.LegalHold))
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
 	return req, runtime.MarshalAsXML(req, blocks)
 }
 
 // commitBlockListHandleResponse handles the CommitBlockList response.
-func (client *blockBlobClient) commitBlockListHandleResponse(resp *http.Response) (BlockBlobCommitBlockListResponse, error) {
-	result := BlockBlobCommitBlockListResponse{RawResponse: resp}
+func (client *blockBlobClient) commitBlockListHandleResponse(resp *http.Response) (blockBlobClientCommitBlockListResponse, error) {
+	result := blockBlobClientCommitBlockListResponse{RawResponse: resp}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return BlockBlobCommitBlockListResponse{}, err
+			return blockBlobClientCommitBlockListResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return BlockBlobCommitBlockListResponse{}, err
+			return blockBlobClientCommitBlockListResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return BlockBlobCommitBlockListResponse{}, err
+			return blockBlobClientCommitBlockListResponse{}, err
 		}
 		result.XMSContentCRC64 = xMSContentCRC64
 	}
@@ -205,14 +205,14 @@ func (client *blockBlobClient) commitBlockListHandleResponse(resp *http.Response
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return BlockBlobCommitBlockListResponse{}, err
+			return blockBlobClientCommitBlockListResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return BlockBlobCommitBlockListResponse{}, err
+			return blockBlobClientCommitBlockListResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -241,39 +241,39 @@ func (client *blockBlobClient) commitBlockListHandleError(resp *http.Response) e
 // GetBlockList - The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob
 // If the operation fails it returns the *StorageError error type.
 // listType - Specifies whether to return the list of committed blocks, the list of uncommitted blocks, or both lists together.
-// BlockBlobGetBlockListOptions - BlockBlobGetBlockListOptions contains the optional parameters for the blockBlobClient.GetBlockList
+// blockBlobClientGetBlockListOptions - blockBlobClientGetBlockListOptions contains the optional parameters for the blockBlobClient.GetBlockList
 // method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
-func (client *blockBlobClient) GetBlockList(ctx context.Context, comp Enum34, listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobGetBlockListResponse, error) {
-	req, err := client.getBlockListCreateRequest(ctx, comp, listType, blockBlobGetBlockListOptions, leaseAccessConditions, modifiedAccessConditions)
+// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+func (client *blockBlobClient) GetBlockList(ctx context.Context, comp Enum34, listType BlockListType, blockBlobClientGetBlockListOptions *blockBlobClientGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (blockBlobClientGetBlockListResponse, error) {
+	req, err := client.getBlockListCreateRequest(ctx, comp, listType, blockBlobClientGetBlockListOptions, leaseAccessConditions, modifiedAccessConditions)
 	if err != nil {
-		return BlockBlobGetBlockListResponse{}, err
+		return blockBlobClientGetBlockListResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BlockBlobGetBlockListResponse{}, err
+		return blockBlobClientGetBlockListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BlockBlobGetBlockListResponse{}, client.getBlockListHandleError(resp)
+		return blockBlobClientGetBlockListResponse{}, client.getBlockListHandleError(resp)
 	}
 	return client.getBlockListHandleResponse(resp)
 }
 
 // getBlockListCreateRequest creates the GetBlockList request.
-func (client *blockBlobClient) getBlockListCreateRequest(ctx context.Context, comp Enum34, listType BlockListType, blockBlobGetBlockListOptions *BlockBlobGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *blockBlobClient) getBlockListCreateRequest(ctx context.Context, comp Enum34, listType BlockListType, blockBlobClientGetBlockListOptions *blockBlobClientGetBlockListOptions, leaseAccessConditions *LeaseAccessConditions, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodGet, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", string(comp))
-	if blockBlobGetBlockListOptions != nil && blockBlobGetBlockListOptions.Snapshot != nil {
-		reqQP.Set("snapshot", *blockBlobGetBlockListOptions.Snapshot)
+	if blockBlobClientGetBlockListOptions != nil && blockBlobClientGetBlockListOptions.Snapshot != nil {
+		reqQP.Set("snapshot", *blockBlobClientGetBlockListOptions.Snapshot)
 	}
 	reqQP.Set("blocklisttype", string(listType))
-	if blockBlobGetBlockListOptions != nil && blockBlobGetBlockListOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobGetBlockListOptions.Timeout), 10))
+	if blockBlobClientGetBlockListOptions != nil && blockBlobClientGetBlockListOptions.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobClientGetBlockListOptions.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
@@ -283,20 +283,20 @@ func (client *blockBlobClient) getBlockListCreateRequest(ctx context.Context, co
 		req.Raw().Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if blockBlobGetBlockListOptions != nil && blockBlobGetBlockListOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobGetBlockListOptions.RequestID)
+	if blockBlobClientGetBlockListOptions != nil && blockBlobClientGetBlockListOptions.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobClientGetBlockListOptions.RequestID)
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
 // getBlockListHandleResponse handles the GetBlockList response.
-func (client *blockBlobClient) getBlockListHandleResponse(resp *http.Response) (BlockBlobGetBlockListResponse, error) {
-	result := BlockBlobGetBlockListResponse{RawResponse: resp}
+func (client *blockBlobClient) getBlockListHandleResponse(resp *http.Response) (blockBlobClientGetBlockListResponse, error) {
+	result := blockBlobClientGetBlockListResponse{RawResponse: resp}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return BlockBlobGetBlockListResponse{}, err
+			return blockBlobClientGetBlockListResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
@@ -309,7 +309,7 @@ func (client *blockBlobClient) getBlockListHandleResponse(resp *http.Response) (
 	if val := resp.Header.Get("x-ms-blob-content-length"); val != "" {
 		blobContentLength, err := strconv.ParseInt(val, 10, 64)
 		if err != nil {
-			return BlockBlobGetBlockListResponse{}, err
+			return blockBlobClientGetBlockListResponse{}, err
 		}
 		result.BlobContentLength = &blobContentLength
 	}
@@ -325,12 +325,12 @@ func (client *blockBlobClient) getBlockListHandleResponse(resp *http.Response) (
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return BlockBlobGetBlockListResponse{}, err
+			return blockBlobClientGetBlockListResponse{}, err
 		}
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.BlockList); err != nil {
-		return BlockBlobGetBlockListResponse{}, runtime.NewResponseError(err, resp)
+		return blockBlobClientGetBlockListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -358,44 +358,44 @@ func (client *blockBlobClient) getBlockListHandleError(resp *http.Response) erro
 // copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 // a page blob snapshot. The value should be URL-encoded as it would appear in a request
 // URI. The source blob must either be public or must be authenticated via a shared access signature.
-// BlockBlobPutBlobFromURLOptions - BlockBlobPutBlobFromURLOptions contains the optional parameters for the blockBlobClient.PutBlobFromURL
+// blockBlobClientPutBlobFromURLOptions - blockBlobClientPutBlobFromURLOptions contains the optional parameters for the blockBlobClient.PutBlobFromURL
 // method.
-// BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the Blob.SetHTTPHeaders method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
-// CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
-// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
-// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Directory.Rename
+// BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
+// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
+// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
+// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
 // method.
-func (client *blockBlobClient) PutBlobFromURL(ctx context.Context, contentLength int64, copySource string, blockBlobPutBlobFromURLOptions *BlockBlobPutBlobFromURLOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobPutBlobFromURLResponse, error) {
-	req, err := client.putBlobFromURLCreateRequest(ctx, contentLength, copySource, blockBlobPutBlobFromURLOptions, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, sourceModifiedAccessConditions)
+func (client *blockBlobClient) PutBlobFromURL(ctx context.Context, contentLength int64, copySource string, blockBlobClientPutBlobFromURLOptions *blockBlobClientPutBlobFromURLOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (blockBlobClientPutBlobFromURLResponse, error) {
+	req, err := client.putBlobFromURLCreateRequest(ctx, contentLength, copySource, blockBlobClientPutBlobFromURLOptions, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
-		return BlockBlobPutBlobFromURLResponse{}, err
+		return blockBlobClientPutBlobFromURLResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BlockBlobPutBlobFromURLResponse{}, err
+		return blockBlobClientPutBlobFromURLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return BlockBlobPutBlobFromURLResponse{}, client.putBlobFromURLHandleError(resp)
+		return blockBlobClientPutBlobFromURLResponse{}, client.putBlobFromURLHandleError(resp)
 	}
 	return client.putBlobFromURLHandleResponse(resp)
 }
 
 // putBlobFromURLCreateRequest creates the PutBlobFromURL request.
-func (client *blockBlobClient) putBlobFromURLCreateRequest(ctx context.Context, contentLength int64, copySource string, blockBlobPutBlobFromURLOptions *BlockBlobPutBlobFromURLOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
+func (client *blockBlobClient) putBlobFromURLCreateRequest(ctx context.Context, contentLength int64, copySource string, blockBlobClientPutBlobFromURLOptions *blockBlobClientPutBlobFromURLOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	if blockBlobPutBlobFromURLOptions != nil && blockBlobPutBlobFromURLOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobPutBlobFromURLOptions.Timeout), 10))
+	if blockBlobClientPutBlobFromURLOptions != nil && blockBlobClientPutBlobFromURLOptions.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobClientPutBlobFromURLOptions.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("x-ms-blob-type", "BlockBlob")
-	if blockBlobPutBlobFromURLOptions != nil && blockBlobPutBlobFromURLOptions.TransactionalContentMD5 != nil {
-		req.Raw().Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(blockBlobPutBlobFromURLOptions.TransactionalContentMD5))
+	if blockBlobClientPutBlobFromURLOptions != nil && blockBlobClientPutBlobFromURLOptions.TransactionalContentMD5 != nil {
+		req.Raw().Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(blockBlobClientPutBlobFromURLOptions.TransactionalContentMD5))
 	}
 	req.Raw().Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobContentType != nil {
@@ -413,8 +413,8 @@ func (client *blockBlobClient) putBlobFromURLCreateRequest(ctx context.Context, 
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobCacheControl != nil {
 		req.Raw().Header.Set("x-ms-blob-cache-control", *blobHTTPHeaders.BlobCacheControl)
 	}
-	if blockBlobPutBlobFromURLOptions != nil && blockBlobPutBlobFromURLOptions.Metadata != nil {
-		for k, v := range blockBlobPutBlobFromURLOptions.Metadata {
+	if blockBlobClientPutBlobFromURLOptions != nil && blockBlobClientPutBlobFromURLOptions.Metadata != nil {
+		for k, v := range blockBlobClientPutBlobFromURLOptions.Metadata {
 			req.Raw().Header.Set("x-ms-meta-"+k, v)
 		}
 	}
@@ -436,8 +436,8 @@ func (client *blockBlobClient) putBlobFromURLCreateRequest(ctx context.Context, 
 	if cpkScopeInfo != nil && cpkScopeInfo.EncryptionScope != nil {
 		req.Raw().Header.Set("x-ms-encryption-scope", *cpkScopeInfo.EncryptionScope)
 	}
-	if blockBlobPutBlobFromURLOptions != nil && blockBlobPutBlobFromURLOptions.Tier != nil {
-		req.Raw().Header.Set("x-ms-access-tier", string(*blockBlobPutBlobFromURLOptions.Tier))
+	if blockBlobClientPutBlobFromURLOptions != nil && blockBlobClientPutBlobFromURLOptions.Tier != nil {
+		req.Raw().Header.Set("x-ms-access-tier", string(*blockBlobClientPutBlobFromURLOptions.Tier))
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Raw().Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
@@ -470,40 +470,40 @@ func (client *blockBlobClient) putBlobFromURLCreateRequest(ctx context.Context, 
 		req.Raw().Header.Set("x-ms-source-if-tags", *sourceModifiedAccessConditions.SourceIfTags)
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if blockBlobPutBlobFromURLOptions != nil && blockBlobPutBlobFromURLOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobPutBlobFromURLOptions.RequestID)
+	if blockBlobClientPutBlobFromURLOptions != nil && blockBlobClientPutBlobFromURLOptions.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobClientPutBlobFromURLOptions.RequestID)
 	}
-	if blockBlobPutBlobFromURLOptions != nil && blockBlobPutBlobFromURLOptions.SourceContentMD5 != nil {
-		req.Raw().Header.Set("x-ms-source-content-md5", base64.StdEncoding.EncodeToString(blockBlobPutBlobFromURLOptions.SourceContentMD5))
+	if blockBlobClientPutBlobFromURLOptions != nil && blockBlobClientPutBlobFromURLOptions.SourceContentMD5 != nil {
+		req.Raw().Header.Set("x-ms-source-content-md5", base64.StdEncoding.EncodeToString(blockBlobClientPutBlobFromURLOptions.SourceContentMD5))
 	}
-	if blockBlobPutBlobFromURLOptions != nil && blockBlobPutBlobFromURLOptions.BlobTagsString != nil {
-		req.Raw().Header.Set("x-ms-tags", *blockBlobPutBlobFromURLOptions.BlobTagsString)
+	if blockBlobClientPutBlobFromURLOptions != nil && blockBlobClientPutBlobFromURLOptions.BlobTagsString != nil {
+		req.Raw().Header.Set("x-ms-tags", *blockBlobClientPutBlobFromURLOptions.BlobTagsString)
 	}
 	req.Raw().Header.Set("x-ms-copy-source", copySource)
-	if blockBlobPutBlobFromURLOptions != nil && blockBlobPutBlobFromURLOptions.CopySourceBlobProperties != nil {
-		req.Raw().Header.Set("x-ms-copy-source-blob-properties", strconv.FormatBool(*blockBlobPutBlobFromURLOptions.CopySourceBlobProperties))
+	if blockBlobClientPutBlobFromURLOptions != nil && blockBlobClientPutBlobFromURLOptions.CopySourceBlobProperties != nil {
+		req.Raw().Header.Set("x-ms-copy-source-blob-properties", strconv.FormatBool(*blockBlobClientPutBlobFromURLOptions.CopySourceBlobProperties))
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
 // putBlobFromURLHandleResponse handles the PutBlobFromURL response.
-func (client *blockBlobClient) putBlobFromURLHandleResponse(resp *http.Response) (BlockBlobPutBlobFromURLResponse, error) {
-	result := BlockBlobPutBlobFromURLResponse{RawResponse: resp}
+func (client *blockBlobClient) putBlobFromURLHandleResponse(resp *http.Response) (blockBlobClientPutBlobFromURLResponse, error) {
+	result := blockBlobClientPutBlobFromURLResponse{RawResponse: resp}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return BlockBlobPutBlobFromURLResponse{}, err
+			return blockBlobClientPutBlobFromURLResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return BlockBlobPutBlobFromURLResponse{}, err
+			return blockBlobClientPutBlobFromURLResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
@@ -522,14 +522,14 @@ func (client *blockBlobClient) putBlobFromURLHandleResponse(resp *http.Response)
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return BlockBlobPutBlobFromURLResponse{}, err
+			return blockBlobClientPutBlobFromURLResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return BlockBlobPutBlobFromURLResponse{}, err
+			return blockBlobClientPutBlobFromURLResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -562,28 +562,28 @@ func (client *blockBlobClient) putBlobFromURLHandleError(resp *http.Response) er
 // parameter must be the same size for each block.
 // contentLength - The length of the request.
 // body - Initial data
-// BlockBlobStageBlockOptions - BlockBlobStageBlockOptions contains the optional parameters for the blockBlobClient.StageBlock
+// blockBlobClientStageBlockOptions - blockBlobClientStageBlockOptions contains the optional parameters for the blockBlobClient.StageBlock
 // method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
-// CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
-// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
-func (client *blockBlobClient) StageBlock(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, blockBlobStageBlockOptions *BlockBlobStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (BlockBlobStageBlockResponse, error) {
-	req, err := client.stageBlockCreateRequest(ctx, comp, blockID, contentLength, body, blockBlobStageBlockOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo)
+// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
+// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
+func (client *blockBlobClient) StageBlock(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, blockBlobClientStageBlockOptions *blockBlobClientStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (blockBlobClientStageBlockResponse, error) {
+	req, err := client.stageBlockCreateRequest(ctx, comp, blockID, contentLength, body, blockBlobClientStageBlockOptions, leaseAccessConditions, cpkInfo, cpkScopeInfo)
 	if err != nil {
-		return BlockBlobStageBlockResponse{}, err
+		return blockBlobClientStageBlockResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BlockBlobStageBlockResponse{}, err
+		return blockBlobClientStageBlockResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return BlockBlobStageBlockResponse{}, client.stageBlockHandleError(resp)
+		return blockBlobClientStageBlockResponse{}, client.stageBlockHandleError(resp)
 	}
 	return client.stageBlockHandleResponse(resp)
 }
 
 // stageBlockCreateRequest creates the StageBlock request.
-func (client *blockBlobClient) stageBlockCreateRequest(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, blockBlobStageBlockOptions *BlockBlobStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (*policy.Request, error) {
+func (client *blockBlobClient) stageBlockCreateRequest(ctx context.Context, comp Enum33, blockID string, contentLength int64, body io.ReadSeekCloser, blockBlobClientStageBlockOptions *blockBlobClientStageBlockOptions, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -591,16 +591,16 @@ func (client *blockBlobClient) stageBlockCreateRequest(ctx context.Context, comp
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", string(comp))
 	reqQP.Set("blockid", blockID)
-	if blockBlobStageBlockOptions != nil && blockBlobStageBlockOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobStageBlockOptions.Timeout), 10))
+	if blockBlobClientStageBlockOptions != nil && blockBlobClientStageBlockOptions.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobClientStageBlockOptions.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
-	if blockBlobStageBlockOptions != nil && blockBlobStageBlockOptions.TransactionalContentMD5 != nil {
-		req.Raw().Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(blockBlobStageBlockOptions.TransactionalContentMD5))
+	if blockBlobClientStageBlockOptions != nil && blockBlobClientStageBlockOptions.TransactionalContentMD5 != nil {
+		req.Raw().Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(blockBlobClientStageBlockOptions.TransactionalContentMD5))
 	}
-	if blockBlobStageBlockOptions != nil && blockBlobStageBlockOptions.TransactionalContentCRC64 != nil {
-		req.Raw().Header.Set("x-ms-content-crc64", base64.StdEncoding.EncodeToString(blockBlobStageBlockOptions.TransactionalContentCRC64))
+	if blockBlobClientStageBlockOptions != nil && blockBlobClientStageBlockOptions.TransactionalContentCRC64 != nil {
+		req.Raw().Header.Set("x-ms-content-crc64", base64.StdEncoding.EncodeToString(blockBlobClientStageBlockOptions.TransactionalContentCRC64))
 	}
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Raw().Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
@@ -618,20 +618,20 @@ func (client *blockBlobClient) stageBlockCreateRequest(ctx context.Context, comp
 		req.Raw().Header.Set("x-ms-encryption-scope", *cpkScopeInfo.EncryptionScope)
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if blockBlobStageBlockOptions != nil && blockBlobStageBlockOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobStageBlockOptions.RequestID)
+	if blockBlobClientStageBlockOptions != nil && blockBlobClientStageBlockOptions.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobClientStageBlockOptions.RequestID)
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
 	return req, req.SetBody(body, "application/octet-stream")
 }
 
 // stageBlockHandleResponse handles the StageBlock response.
-func (client *blockBlobClient) stageBlockHandleResponse(resp *http.Response) (BlockBlobStageBlockResponse, error) {
-	result := BlockBlobStageBlockResponse{RawResponse: resp}
+func (client *blockBlobClient) stageBlockHandleResponse(resp *http.Response) (blockBlobClientStageBlockResponse, error) {
+	result := blockBlobClientStageBlockResponse{RawResponse: resp}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return BlockBlobStageBlockResponse{}, err
+			return blockBlobClientStageBlockResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
@@ -647,21 +647,21 @@ func (client *blockBlobClient) stageBlockHandleResponse(resp *http.Response) (Bl
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return BlockBlobStageBlockResponse{}, err
+			return blockBlobClientStageBlockResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return BlockBlobStageBlockResponse{}, err
+			return blockBlobClientStageBlockResponse{}, err
 		}
 		result.XMSContentCRC64 = xMSContentCRC64
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return BlockBlobStageBlockResponse{}, err
+			return blockBlobClientStageBlockResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -695,30 +695,30 @@ func (client *blockBlobClient) stageBlockHandleError(resp *http.Response) error 
 // parameter must be the same size for each block.
 // contentLength - The length of the request.
 // sourceURL - Specify a URL to the copy source.
-// BlockBlobStageBlockFromURLOptions - BlockBlobStageBlockFromURLOptions contains the optional parameters for the blockBlobClient.StageBlockFromURL
+// blockBlobClientStageBlockFromURLOptions - blockBlobClientStageBlockFromURLOptions contains the optional parameters for
+// the blockBlobClient.StageBlockFromURL method.
+// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
+// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
+// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the directoryClient.Rename
 // method.
-// CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
-// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
-// SourceModifiedAccessConditions - SourceModifiedAccessConditions contains a group of parameters for the Directory.Rename
-// method.
-func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, comp Enum33, blockID string, contentLength int64, sourceURL string, blockBlobStageBlockFromURLOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (BlockBlobStageBlockFromURLResponse, error) {
-	req, err := client.stageBlockFromURLCreateRequest(ctx, comp, blockID, contentLength, sourceURL, blockBlobStageBlockFromURLOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions)
+func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, comp Enum33, blockID string, contentLength int64, sourceURL string, blockBlobClientStageBlockFromURLOptions *blockBlobClientStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (blockBlobClientStageBlockFromURLResponse, error) {
+	req, err := client.stageBlockFromURLCreateRequest(ctx, comp, blockID, contentLength, sourceURL, blockBlobClientStageBlockFromURLOptions, cpkInfo, cpkScopeInfo, leaseAccessConditions, sourceModifiedAccessConditions)
 	if err != nil {
-		return BlockBlobStageBlockFromURLResponse{}, err
+		return blockBlobClientStageBlockFromURLResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BlockBlobStageBlockFromURLResponse{}, err
+		return blockBlobClientStageBlockFromURLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return BlockBlobStageBlockFromURLResponse{}, client.stageBlockFromURLHandleError(resp)
+		return blockBlobClientStageBlockFromURLResponse{}, client.stageBlockFromURLHandleError(resp)
 	}
 	return client.stageBlockFromURLHandleResponse(resp)
 }
 
 // stageBlockFromURLCreateRequest creates the StageBlockFromURL request.
-func (client *blockBlobClient) stageBlockFromURLCreateRequest(ctx context.Context, comp Enum33, blockID string, contentLength int64, sourceURL string, blockBlobStageBlockFromURLOptions *BlockBlobStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
+func (client *blockBlobClient) stageBlockFromURLCreateRequest(ctx context.Context, comp Enum33, blockID string, contentLength int64, sourceURL string, blockBlobClientStageBlockFromURLOptions *blockBlobClientStageBlockFromURLOptions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, leaseAccessConditions *LeaseAccessConditions, sourceModifiedAccessConditions *SourceModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
@@ -726,20 +726,20 @@ func (client *blockBlobClient) stageBlockFromURLCreateRequest(ctx context.Contex
 	reqQP := req.Raw().URL.Query()
 	reqQP.Set("comp", string(comp))
 	reqQP.Set("blockid", blockID)
-	if blockBlobStageBlockFromURLOptions != nil && blockBlobStageBlockFromURLOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobStageBlockFromURLOptions.Timeout), 10))
+	if blockBlobClientStageBlockFromURLOptions != nil && blockBlobClientStageBlockFromURLOptions.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobClientStageBlockFromURLOptions.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	req.Raw().Header.Set("x-ms-copy-source", sourceURL)
-	if blockBlobStageBlockFromURLOptions != nil && blockBlobStageBlockFromURLOptions.SourceRange != nil {
-		req.Raw().Header.Set("x-ms-source-range", *blockBlobStageBlockFromURLOptions.SourceRange)
+	if blockBlobClientStageBlockFromURLOptions != nil && blockBlobClientStageBlockFromURLOptions.SourceRange != nil {
+		req.Raw().Header.Set("x-ms-source-range", *blockBlobClientStageBlockFromURLOptions.SourceRange)
 	}
-	if blockBlobStageBlockFromURLOptions != nil && blockBlobStageBlockFromURLOptions.SourceContentMD5 != nil {
-		req.Raw().Header.Set("x-ms-source-content-md5", base64.StdEncoding.EncodeToString(blockBlobStageBlockFromURLOptions.SourceContentMD5))
+	if blockBlobClientStageBlockFromURLOptions != nil && blockBlobClientStageBlockFromURLOptions.SourceContentMD5 != nil {
+		req.Raw().Header.Set("x-ms-source-content-md5", base64.StdEncoding.EncodeToString(blockBlobClientStageBlockFromURLOptions.SourceContentMD5))
 	}
-	if blockBlobStageBlockFromURLOptions != nil && blockBlobStageBlockFromURLOptions.SourceContentcrc64 != nil {
-		req.Raw().Header.Set("x-ms-source-content-crc64", base64.StdEncoding.EncodeToString(blockBlobStageBlockFromURLOptions.SourceContentcrc64))
+	if blockBlobClientStageBlockFromURLOptions != nil && blockBlobClientStageBlockFromURLOptions.SourceContentcrc64 != nil {
+		req.Raw().Header.Set("x-ms-source-content-crc64", base64.StdEncoding.EncodeToString(blockBlobClientStageBlockFromURLOptions.SourceContentcrc64))
 	}
 	if cpkInfo != nil && cpkInfo.EncryptionKey != nil {
 		req.Raw().Header.Set("x-ms-encryption-key", *cpkInfo.EncryptionKey)
@@ -769,27 +769,27 @@ func (client *blockBlobClient) stageBlockFromURLCreateRequest(ctx context.Contex
 		req.Raw().Header.Set("x-ms-source-if-none-match", *sourceModifiedAccessConditions.SourceIfNoneMatch)
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if blockBlobStageBlockFromURLOptions != nil && blockBlobStageBlockFromURLOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobStageBlockFromURLOptions.RequestID)
+	if blockBlobClientStageBlockFromURLOptions != nil && blockBlobClientStageBlockFromURLOptions.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobClientStageBlockFromURLOptions.RequestID)
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
 	return req, nil
 }
 
 // stageBlockFromURLHandleResponse handles the StageBlockFromURL response.
-func (client *blockBlobClient) stageBlockFromURLHandleResponse(resp *http.Response) (BlockBlobStageBlockFromURLResponse, error) {
-	result := BlockBlobStageBlockFromURLResponse{RawResponse: resp}
+func (client *blockBlobClient) stageBlockFromURLHandleResponse(resp *http.Response) (blockBlobClientStageBlockFromURLResponse, error) {
+	result := blockBlobClientStageBlockFromURLResponse{RawResponse: resp}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return BlockBlobStageBlockFromURLResponse{}, err
+			return blockBlobClientStageBlockFromURLResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
 	if val := resp.Header.Get("x-ms-content-crc64"); val != "" {
 		xMSContentCRC64, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return BlockBlobStageBlockFromURLResponse{}, err
+			return blockBlobClientStageBlockFromURLResponse{}, err
 		}
 		result.XMSContentCRC64 = xMSContentCRC64
 	}
@@ -805,14 +805,14 @@ func (client *blockBlobClient) stageBlockFromURLHandleResponse(resp *http.Respon
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return BlockBlobStageBlockFromURLResponse{}, err
+			return blockBlobClientStageBlockFromURLResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return BlockBlobStageBlockFromURLResponse{}, err
+			return blockBlobClientStageBlockFromURLResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}
@@ -845,41 +845,42 @@ func (client *blockBlobClient) stageBlockFromURLHandleError(resp *http.Response)
 // If the operation fails it returns the *StorageError error type.
 // contentLength - The length of the request.
 // body - Initial data
-// BlockBlobUploadOptions - BlockBlobUploadOptions contains the optional parameters for the blockBlobClient.Upload method.
-// BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the Blob.SetHTTPHeaders method.
-// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the Container.GetProperties method.
-// CpkInfo - CpkInfo contains a group of parameters for the Blob.Download method.
-// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the Blob.SetMetadata method.
-// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the Container.Delete method.
-func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, body io.ReadSeekCloser, blockBlobUploadOptions *BlockBlobUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (BlockBlobUploadResponse, error) {
-	req, err := client.uploadCreateRequest(ctx, contentLength, body, blockBlobUploadOptions, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
+// blockBlobClientUploadOptions - blockBlobClientUploadOptions contains the optional parameters for the blockBlobClient.Upload
+// method.
+// BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
+// LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
+// CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
+// CpkScopeInfo - CpkScopeInfo contains a group of parameters for the client.SetMetadata method.
+// ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
+func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, body io.ReadSeekCloser, blockBlobClientUploadOptions *blockBlobClientUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (blockBlobClientUploadResponse, error) {
+	req, err := client.uploadCreateRequest(ctx, contentLength, body, blockBlobClientUploadOptions, blobHTTPHeaders, leaseAccessConditions, cpkInfo, cpkScopeInfo, modifiedAccessConditions)
 	if err != nil {
-		return BlockBlobUploadResponse{}, err
+		return blockBlobClientUploadResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BlockBlobUploadResponse{}, err
+		return blockBlobClientUploadResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return BlockBlobUploadResponse{}, client.uploadHandleError(resp)
+		return blockBlobClientUploadResponse{}, client.uploadHandleError(resp)
 	}
 	return client.uploadHandleResponse(resp)
 }
 
 // uploadCreateRequest creates the Upload request.
-func (client *blockBlobClient) uploadCreateRequest(ctx context.Context, contentLength int64, body io.ReadSeekCloser, blockBlobUploadOptions *BlockBlobUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
+func (client *blockBlobClient) uploadCreateRequest(ctx context.Context, contentLength int64, body io.ReadSeekCloser, blockBlobClientUploadOptions *blockBlobClientUploadOptions, blobHTTPHeaders *BlobHTTPHeaders, leaseAccessConditions *LeaseAccessConditions, cpkInfo *CpkInfo, cpkScopeInfo *CpkScopeInfo, modifiedAccessConditions *ModifiedAccessConditions) (*policy.Request, error) {
 	req, err := runtime.NewRequest(ctx, http.MethodPut, client.endpoint)
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	if blockBlobUploadOptions != nil && blockBlobUploadOptions.Timeout != nil {
-		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobUploadOptions.Timeout), 10))
+	if blockBlobClientUploadOptions != nil && blockBlobClientUploadOptions.Timeout != nil {
+		reqQP.Set("timeout", strconv.FormatInt(int64(*blockBlobClientUploadOptions.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("x-ms-blob-type", "BlockBlob")
-	if blockBlobUploadOptions != nil && blockBlobUploadOptions.TransactionalContentMD5 != nil {
-		req.Raw().Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(blockBlobUploadOptions.TransactionalContentMD5))
+	if blockBlobClientUploadOptions != nil && blockBlobClientUploadOptions.TransactionalContentMD5 != nil {
+		req.Raw().Header.Set("Content-MD5", base64.StdEncoding.EncodeToString(blockBlobClientUploadOptions.TransactionalContentMD5))
 	}
 	req.Raw().Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobContentType != nil {
@@ -897,8 +898,8 @@ func (client *blockBlobClient) uploadCreateRequest(ctx context.Context, contentL
 	if blobHTTPHeaders != nil && blobHTTPHeaders.BlobCacheControl != nil {
 		req.Raw().Header.Set("x-ms-blob-cache-control", *blobHTTPHeaders.BlobCacheControl)
 	}
-	if blockBlobUploadOptions != nil && blockBlobUploadOptions.Metadata != nil {
-		for k, v := range blockBlobUploadOptions.Metadata {
+	if blockBlobClientUploadOptions != nil && blockBlobClientUploadOptions.Metadata != nil {
+		for k, v := range blockBlobClientUploadOptions.Metadata {
 			req.Raw().Header.Set("x-ms-meta-"+k, v)
 		}
 	}
@@ -920,8 +921,8 @@ func (client *blockBlobClient) uploadCreateRequest(ctx context.Context, contentL
 	if cpkScopeInfo != nil && cpkScopeInfo.EncryptionScope != nil {
 		req.Raw().Header.Set("x-ms-encryption-scope", *cpkScopeInfo.EncryptionScope)
 	}
-	if blockBlobUploadOptions != nil && blockBlobUploadOptions.Tier != nil {
-		req.Raw().Header.Set("x-ms-access-tier", string(*blockBlobUploadOptions.Tier))
+	if blockBlobClientUploadOptions != nil && blockBlobClientUploadOptions.Tier != nil {
+		req.Raw().Header.Set("x-ms-access-tier", string(*blockBlobClientUploadOptions.Tier))
 	}
 	if modifiedAccessConditions != nil && modifiedAccessConditions.IfModifiedSince != nil {
 		req.Raw().Header.Set("If-Modified-Since", modifiedAccessConditions.IfModifiedSince.Format(time.RFC1123))
@@ -939,42 +940,42 @@ func (client *blockBlobClient) uploadCreateRequest(ctx context.Context, contentL
 		req.Raw().Header.Set("x-ms-if-tags", *modifiedAccessConditions.IfTags)
 	}
 	req.Raw().Header.Set("x-ms-version", string(client.version))
-	if blockBlobUploadOptions != nil && blockBlobUploadOptions.RequestID != nil {
-		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobUploadOptions.RequestID)
+	if blockBlobClientUploadOptions != nil && blockBlobClientUploadOptions.RequestID != nil {
+		req.Raw().Header.Set("x-ms-client-request-id", *blockBlobClientUploadOptions.RequestID)
 	}
-	if blockBlobUploadOptions != nil && blockBlobUploadOptions.BlobTagsString != nil {
-		req.Raw().Header.Set("x-ms-tags", *blockBlobUploadOptions.BlobTagsString)
+	if blockBlobClientUploadOptions != nil && blockBlobClientUploadOptions.BlobTagsString != nil {
+		req.Raw().Header.Set("x-ms-tags", *blockBlobClientUploadOptions.BlobTagsString)
 	}
-	if blockBlobUploadOptions != nil && blockBlobUploadOptions.ImmutabilityPolicyExpiry != nil {
-		req.Raw().Header.Set("x-ms-immutability-policy-until-date", blockBlobUploadOptions.ImmutabilityPolicyExpiry.Format(time.RFC1123))
+	if blockBlobClientUploadOptions != nil && blockBlobClientUploadOptions.ImmutabilityPolicyExpiry != nil {
+		req.Raw().Header.Set("x-ms-immutability-policy-until-date", blockBlobClientUploadOptions.ImmutabilityPolicyExpiry.Format(time.RFC1123))
 	}
-	if blockBlobUploadOptions != nil && blockBlobUploadOptions.ImmutabilityPolicyMode != nil {
-		req.Raw().Header.Set("x-ms-immutability-policy-mode", string(*blockBlobUploadOptions.ImmutabilityPolicyMode))
+	if blockBlobClientUploadOptions != nil && blockBlobClientUploadOptions.ImmutabilityPolicyMode != nil {
+		req.Raw().Header.Set("x-ms-immutability-policy-mode", string(*blockBlobClientUploadOptions.ImmutabilityPolicyMode))
 	}
-	if blockBlobUploadOptions != nil && blockBlobUploadOptions.LegalHold != nil {
-		req.Raw().Header.Set("x-ms-legal-hold", strconv.FormatBool(*blockBlobUploadOptions.LegalHold))
+	if blockBlobClientUploadOptions != nil && blockBlobClientUploadOptions.LegalHold != nil {
+		req.Raw().Header.Set("x-ms-legal-hold", strconv.FormatBool(*blockBlobClientUploadOptions.LegalHold))
 	}
 	req.Raw().Header.Set("Accept", "application/xml")
 	return req, req.SetBody(body, "application/octet-stream")
 }
 
 // uploadHandleResponse handles the Upload response.
-func (client *blockBlobClient) uploadHandleResponse(resp *http.Response) (BlockBlobUploadResponse, error) {
-	result := BlockBlobUploadResponse{RawResponse: resp}
+func (client *blockBlobClient) uploadHandleResponse(resp *http.Response) (blockBlobClientUploadResponse, error) {
+	result := blockBlobClientUploadResponse{RawResponse: resp}
 	if val := resp.Header.Get("ETag"); val != "" {
 		result.ETag = &val
 	}
 	if val := resp.Header.Get("Last-Modified"); val != "" {
 		lastModified, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return BlockBlobUploadResponse{}, err
+			return blockBlobClientUploadResponse{}, err
 		}
 		result.LastModified = &lastModified
 	}
 	if val := resp.Header.Get("Content-MD5"); val != "" {
 		contentMD5, err := base64.StdEncoding.DecodeString(val)
 		if err != nil {
-			return BlockBlobUploadResponse{}, err
+			return blockBlobClientUploadResponse{}, err
 		}
 		result.ContentMD5 = contentMD5
 	}
@@ -993,14 +994,14 @@ func (client *blockBlobClient) uploadHandleResponse(resp *http.Response) (BlockB
 	if val := resp.Header.Get("Date"); val != "" {
 		date, err := time.Parse(time.RFC1123, val)
 		if err != nil {
-			return BlockBlobUploadResponse{}, err
+			return blockBlobClientUploadResponse{}, err
 		}
 		result.Date = &date
 	}
 	if val := resp.Header.Get("x-ms-request-server-encrypted"); val != "" {
 		isServerEncrypted, err := strconv.ParseBool(val)
 		if err != nil {
-			return BlockBlobUploadResponse{}, err
+			return blockBlobClientUploadResponse{}, err
 		}
 		result.IsServerEncrypted = &isServerEncrypted
 	}

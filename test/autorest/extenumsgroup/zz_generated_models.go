@@ -19,13 +19,13 @@ type Pet struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// PetAddPetOptions contains the optional parameters for the PetClient.AddPet method.
-type PetAddPetOptions struct {
+// PetClientAddPetOptions contains the optional parameters for the PetClient.AddPet method.
+type PetClientAddPetOptions struct {
 	// pet param
 	PetParam *Pet
 }
 
-// PetGetByPetIDOptions contains the optional parameters for the PetClient.GetByPetID method.
-type PetGetByPetIDOptions struct {
+// PetClientGetByPetIDOptions contains the optional parameters for the PetClient.GetByPetID method.
+type PetClientGetByPetIDOptions struct {
 	// placeholder for future optional parameters
 }

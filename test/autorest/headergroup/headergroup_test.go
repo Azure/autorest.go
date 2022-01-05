@@ -97,7 +97,7 @@ func TestHeaderParamDatetimeRFC1123(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Unable to parse time: %v", err)
 	}
-	result, err := client.ParamDatetimeRFC1123(context.Background(), "valid", &HeaderParamDatetimeRFC1123Options{Value: &val})
+	result, err := client.ParamDatetimeRFC1123(context.Background(), "valid", &HeaderClientParamDatetimeRFC1123Options{Value: &val})
 	if err != nil {
 		t.Fatalf("ParamDatetimeRFC1123: %v", err)
 	}
@@ -139,7 +139,7 @@ func TestHeaderParamDuration(t *testing.T) {
 func TestHeaderParamEnum(t *testing.T) {
 	client := newHeaderClient()
 	val := GreyscaleColorsGREY
-	result, err := client.ParamEnum(context.Background(), "valid", &HeaderParamEnumOptions{Value: &val})
+	result, err := client.ParamEnum(context.Background(), "valid", &HeaderClientParamEnumOptions{Value: &val})
 	if err != nil {
 		t.Fatalf("ParamEnum: %v", err)
 	}
@@ -238,7 +238,7 @@ func TestHeaderParamProtectedKey(t *testing.T) {
 func TestHeaderParamString(t *testing.T) {
 	client := newHeaderClient()
 	val := "The quick brown fox jumps over the lazy dog"
-	result, err := client.ParamString(context.Background(), "valid", &HeaderParamStringOptions{Value: &val})
+	result, err := client.ParamString(context.Background(), "valid", &HeaderClientParamStringOptions{Value: &val})
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}
@@ -255,7 +255,7 @@ func TestHeaderParamString(t *testing.T) {
 	}
 
 	val = ""
-	result, err = client.ParamString(context.Background(), "empty", &HeaderParamStringOptions{Value: &val})
+	result, err = client.ParamString(context.Background(), "empty", &HeaderClientParamStringOptions{Value: &val})
 	if err != nil {
 		t.Fatalf("ParamString: %v", err)
 	}

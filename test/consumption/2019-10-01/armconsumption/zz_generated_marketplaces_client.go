@@ -58,21 +58,21 @@ func NewMarketplacesClient(credential azcore.TokenCredential, options *arm.Clien
 // add billing period to the scope using '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g. to specify
 // billing period at department scope use
 // '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
-// options - MarketplacesListOptions contains the optional parameters for the MarketplacesClient.List method.
-func (client *MarketplacesClient) List(scope string, options *MarketplacesListOptions) *MarketplacesListPager {
-	return &MarketplacesListPager{
+// options - MarketplacesClientListOptions contains the optional parameters for the MarketplacesClient.List method.
+func (client *MarketplacesClient) List(scope string, options *MarketplacesClientListOptions) *MarketplacesClientListPager {
+	return &MarketplacesClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, scope, options)
 		},
-		advancer: func(ctx context.Context, resp MarketplacesListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp MarketplacesClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.MarketplacesListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *MarketplacesClient) listCreateRequest(ctx context.Context, scope string, options *MarketplacesListOptions) (*policy.Request, error) {
+func (client *MarketplacesClient) listCreateRequest(ctx context.Context, scope string, options *MarketplacesClientListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/marketplaces"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
@@ -96,10 +96,10 @@ func (client *MarketplacesClient) listCreateRequest(ctx context.Context, scope s
 }
 
 // listHandleResponse handles the List response.
-func (client *MarketplacesClient) listHandleResponse(resp *http.Response) (MarketplacesListResponse, error) {
-	result := MarketplacesListResponse{RawResponse: resp}
+func (client *MarketplacesClient) listHandleResponse(resp *http.Response) (MarketplacesClientListResponse, error) {
+	result := MarketplacesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MarketplacesListResult); err != nil {
-		return MarketplacesListResponse{}, runtime.NewResponseError(err, resp)
+		return MarketplacesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

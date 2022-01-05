@@ -10,20 +10,20 @@ package filegroup
 
 import "net/http"
 
-// FilesGetEmptyFileResponse contains the response from method Files.GetEmptyFile.
-type FilesGetEmptyFileResponse struct {
+// FilesClientGetEmptyFileResponse contains the response from method FilesClient.GetEmptyFile.
+type FilesClientGetEmptyFileResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// FilesGetFileLargeResponse contains the response from method Files.GetFileLarge.
-type FilesGetFileLargeResponse struct {
+// FilesClientGetFileLargeResponse contains the response from method FilesClient.GetFileLarge.
+type FilesClientGetFileLargeResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// FilesGetFileResponse contains the response from method Files.GetFile.
-type FilesGetFileResponse struct {
+// FilesClientGetFileResponse contains the response from method FilesClient.GetFile.
+type FilesClientGetFileResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

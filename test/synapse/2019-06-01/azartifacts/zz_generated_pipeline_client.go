@@ -40,21 +40,21 @@ func newPipelineClient(endpoint string, pl runtime.Pipeline) *pipelineClient {
 // If the operation fails it returns the *CloudError error type.
 // pipelineName - The pipeline name.
 // pipeline - Pipeline resource definition.
-// options - PipelineBeginCreateOrUpdatePipelineOptions contains the optional parameters for the pipelineClient.BeginCreateOrUpdatePipeline
+// options - pipelineClientBeginCreateOrUpdatePipelineOptions contains the optional parameters for the pipelineClient.BeginCreateOrUpdatePipeline
 // method.
-func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (PipelineCreateOrUpdatePipelinePollerResponse, error) {
+func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *pipelineClientBeginCreateOrUpdatePipelineOptions) (pipelineClientCreateOrUpdatePipelinePollerResponse, error) {
 	resp, err := client.createOrUpdatePipeline(ctx, pipelineName, pipeline, options)
 	if err != nil {
-		return PipelineCreateOrUpdatePipelinePollerResponse{}, err
+		return pipelineClientCreateOrUpdatePipelinePollerResponse{}, err
 	}
-	result := PipelineCreateOrUpdatePipelinePollerResponse{
+	result := pipelineClientCreateOrUpdatePipelinePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := runtime.NewPoller("pipelineClient.CreateOrUpdatePipeline", resp, client.pl, client.createOrUpdatePipelineHandleError)
 	if err != nil {
-		return PipelineCreateOrUpdatePipelinePollerResponse{}, err
+		return pipelineClientCreateOrUpdatePipelinePollerResponse{}, err
 	}
-	result.Poller = &PipelineCreateOrUpdatePipelinePoller{
+	result.Poller = &pipelineClientCreateOrUpdatePipelinePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -62,7 +62,7 @@ func (client *pipelineClient) BeginCreateOrUpdatePipeline(ctx context.Context, p
 
 // CreateOrUpdatePipeline - Creates or updates a pipeline.
 // If the operation fails it returns the *CloudError error type.
-func (client *pipelineClient) createOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (*http.Response, error) {
+func (client *pipelineClient) createOrUpdatePipeline(ctx context.Context, pipelineName string, pipeline PipelineResource, options *pipelineClientBeginCreateOrUpdatePipelineOptions) (*http.Response, error) {
 	req, err := client.createOrUpdatePipelineCreateRequest(ctx, pipelineName, pipeline, options)
 	if err != nil {
 		return nil, err
@@ -78,7 +78,7 @@ func (client *pipelineClient) createOrUpdatePipeline(ctx context.Context, pipeli
 }
 
 // createOrUpdatePipelineCreateRequest creates the CreateOrUpdatePipeline request.
-func (client *pipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Context, pipelineName string, pipeline PipelineResource, options *PipelineBeginCreateOrUpdatePipelineOptions) (*policy.Request, error) {
+func (client *pipelineClient) createOrUpdatePipelineCreateRequest(ctx context.Context, pipelineName string, pipeline PipelineResource, options *pipelineClientBeginCreateOrUpdatePipelineOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
@@ -114,24 +114,25 @@ func (client *pipelineClient) createOrUpdatePipelineHandleError(resp *http.Respo
 // CreatePipelineRun - Creates a run of a pipeline.
 // If the operation fails it returns the *CloudError error type.
 // pipelineName - The pipeline name.
-// options - PipelineCreatePipelineRunOptions contains the optional parameters for the pipelineClient.CreatePipelineRun method.
-func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, options *PipelineCreatePipelineRunOptions) (PipelineCreatePipelineRunResponse, error) {
+// options - pipelineClientCreatePipelineRunOptions contains the optional parameters for the pipelineClient.CreatePipelineRun
+// method.
+func (client *pipelineClient) CreatePipelineRun(ctx context.Context, pipelineName string, options *pipelineClientCreatePipelineRunOptions) (pipelineClientCreatePipelineRunResponse, error) {
 	req, err := client.createPipelineRunCreateRequest(ctx, pipelineName, options)
 	if err != nil {
-		return PipelineCreatePipelineRunResponse{}, err
+		return pipelineClientCreatePipelineRunResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PipelineCreatePipelineRunResponse{}, err
+		return pipelineClientCreatePipelineRunResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return PipelineCreatePipelineRunResponse{}, client.createPipelineRunHandleError(resp)
+		return pipelineClientCreatePipelineRunResponse{}, client.createPipelineRunHandleError(resp)
 	}
 	return client.createPipelineRunHandleResponse(resp)
 }
 
 // createPipelineRunCreateRequest creates the CreatePipelineRun request.
-func (client *pipelineClient) createPipelineRunCreateRequest(ctx context.Context, pipelineName string, options *PipelineCreatePipelineRunOptions) (*policy.Request, error) {
+func (client *pipelineClient) createPipelineRunCreateRequest(ctx context.Context, pipelineName string, options *pipelineClientCreatePipelineRunOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/createRun"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
@@ -161,10 +162,10 @@ func (client *pipelineClient) createPipelineRunCreateRequest(ctx context.Context
 }
 
 // createPipelineRunHandleResponse handles the CreatePipelineRun response.
-func (client *pipelineClient) createPipelineRunHandleResponse(resp *http.Response) (PipelineCreatePipelineRunResponse, error) {
-	result := PipelineCreatePipelineRunResponse{RawResponse: resp}
+func (client *pipelineClient) createPipelineRunHandleResponse(resp *http.Response) (pipelineClientCreatePipelineRunResponse, error) {
+	result := pipelineClientCreatePipelineRunResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CreateRunResponse); err != nil {
-		return PipelineCreatePipelineRunResponse{}, runtime.NewResponseError(err, resp)
+		return pipelineClientCreatePipelineRunResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -185,21 +186,21 @@ func (client *pipelineClient) createPipelineRunHandleError(resp *http.Response) 
 // BeginDeletePipeline - Deletes a pipeline.
 // If the operation fails it returns the *CloudError error type.
 // pipelineName - The pipeline name.
-// options - PipelineBeginDeletePipelineOptions contains the optional parameters for the pipelineClient.BeginDeletePipeline
+// options - pipelineClientBeginDeletePipelineOptions contains the optional parameters for the pipelineClient.BeginDeletePipeline
 // method.
-func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (PipelineDeletePipelinePollerResponse, error) {
+func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineName string, options *pipelineClientBeginDeletePipelineOptions) (pipelineClientDeletePipelinePollerResponse, error) {
 	resp, err := client.deletePipeline(ctx, pipelineName, options)
 	if err != nil {
-		return PipelineDeletePipelinePollerResponse{}, err
+		return pipelineClientDeletePipelinePollerResponse{}, err
 	}
-	result := PipelineDeletePipelinePollerResponse{
+	result := pipelineClientDeletePipelinePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := runtime.NewPoller("pipelineClient.DeletePipeline", resp, client.pl, client.deletePipelineHandleError)
 	if err != nil {
-		return PipelineDeletePipelinePollerResponse{}, err
+		return pipelineClientDeletePipelinePollerResponse{}, err
 	}
-	result.Poller = &PipelineDeletePipelinePoller{
+	result.Poller = &pipelineClientDeletePipelinePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -207,7 +208,7 @@ func (client *pipelineClient) BeginDeletePipeline(ctx context.Context, pipelineN
 
 // DeletePipeline - Deletes a pipeline.
 // If the operation fails it returns the *CloudError error type.
-func (client *pipelineClient) deletePipeline(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (*http.Response, error) {
+func (client *pipelineClient) deletePipeline(ctx context.Context, pipelineName string, options *pipelineClientBeginDeletePipelineOptions) (*http.Response, error) {
 	req, err := client.deletePipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
 		return nil, err
@@ -223,7 +224,7 @@ func (client *pipelineClient) deletePipeline(ctx context.Context, pipelineName s
 }
 
 // deletePipelineCreateRequest creates the DeletePipeline request.
-func (client *pipelineClient) deletePipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineBeginDeletePipelineOptions) (*policy.Request, error) {
+func (client *pipelineClient) deletePipelineCreateRequest(ctx context.Context, pipelineName string, options *pipelineClientBeginDeletePipelineOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
@@ -256,24 +257,24 @@ func (client *pipelineClient) deletePipelineHandleError(resp *http.Response) err
 // GetPipeline - Gets a pipeline.
 // If the operation fails it returns the *CloudError error type.
 // pipelineName - The pipeline name.
-// options - PipelineGetPipelineOptions contains the optional parameters for the pipelineClient.GetPipeline method.
-func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName string, options *PipelineGetPipelineOptions) (PipelineGetPipelineResponse, error) {
+// options - pipelineClientGetPipelineOptions contains the optional parameters for the pipelineClient.GetPipeline method.
+func (client *pipelineClient) GetPipeline(ctx context.Context, pipelineName string, options *pipelineClientGetPipelineOptions) (pipelineClientGetPipelineResponse, error) {
 	req, err := client.getPipelineCreateRequest(ctx, pipelineName, options)
 	if err != nil {
-		return PipelineGetPipelineResponse{}, err
+		return pipelineClientGetPipelineResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PipelineGetPipelineResponse{}, err
+		return pipelineClientGetPipelineResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
-		return PipelineGetPipelineResponse{}, client.getPipelineHandleError(resp)
+		return pipelineClientGetPipelineResponse{}, client.getPipelineHandleError(resp)
 	}
 	return client.getPipelineHandleResponse(resp)
 }
 
 // getPipelineCreateRequest creates the GetPipeline request.
-func (client *pipelineClient) getPipelineCreateRequest(ctx context.Context, pipelineName string, options *PipelineGetPipelineOptions) (*policy.Request, error) {
+func (client *pipelineClient) getPipelineCreateRequest(ctx context.Context, pipelineName string, options *pipelineClientGetPipelineOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")
@@ -294,10 +295,10 @@ func (client *pipelineClient) getPipelineCreateRequest(ctx context.Context, pipe
 }
 
 // getPipelineHandleResponse handles the GetPipeline response.
-func (client *pipelineClient) getPipelineHandleResponse(resp *http.Response) (PipelineGetPipelineResponse, error) {
-	result := PipelineGetPipelineResponse{RawResponse: resp}
+func (client *pipelineClient) getPipelineHandleResponse(resp *http.Response) (pipelineClientGetPipelineResponse, error) {
+	result := pipelineClientGetPipelineResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineResource); err != nil {
-		return PipelineGetPipelineResponse{}, runtime.NewResponseError(err, resp)
+		return pipelineClientGetPipelineResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -317,22 +318,22 @@ func (client *pipelineClient) getPipelineHandleError(resp *http.Response) error 
 
 // GetPipelinesByWorkspace - Lists pipelines.
 // If the operation fails it returns the *CloudError error type.
-// options - PipelineGetPipelinesByWorkspaceOptions contains the optional parameters for the pipelineClient.GetPipelinesByWorkspace
+// options - pipelineClientGetPipelinesByWorkspaceOptions contains the optional parameters for the pipelineClient.GetPipelinesByWorkspace
 // method.
-func (client *pipelineClient) GetPipelinesByWorkspace(options *PipelineGetPipelinesByWorkspaceOptions) *PipelineGetPipelinesByWorkspacePager {
-	return &PipelineGetPipelinesByWorkspacePager{
+func (client *pipelineClient) GetPipelinesByWorkspace(options *pipelineClientGetPipelinesByWorkspaceOptions) *pipelineClientGetPipelinesByWorkspacePager {
+	return &pipelineClientGetPipelinesByWorkspacePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getPipelinesByWorkspaceCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp PipelineGetPipelinesByWorkspaceResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp pipelineClientGetPipelinesByWorkspaceResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.PipelineListResponse.NextLink)
 		},
 	}
 }
 
 // getPipelinesByWorkspaceCreateRequest creates the GetPipelinesByWorkspace request.
-func (client *pipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.Context, options *PipelineGetPipelinesByWorkspaceOptions) (*policy.Request, error) {
+func (client *pipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.Context, options *pipelineClientGetPipelinesByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/pipelines"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -346,10 +347,10 @@ func (client *pipelineClient) getPipelinesByWorkspaceCreateRequest(ctx context.C
 }
 
 // getPipelinesByWorkspaceHandleResponse handles the GetPipelinesByWorkspace response.
-func (client *pipelineClient) getPipelinesByWorkspaceHandleResponse(resp *http.Response) (PipelineGetPipelinesByWorkspaceResponse, error) {
-	result := PipelineGetPipelinesByWorkspaceResponse{RawResponse: resp}
+func (client *pipelineClient) getPipelinesByWorkspaceHandleResponse(resp *http.Response) (pipelineClientGetPipelinesByWorkspaceResponse, error) {
+	result := pipelineClientGetPipelinesByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PipelineListResponse); err != nil {
-		return PipelineGetPipelinesByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
+		return pipelineClientGetPipelinesByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -371,21 +372,21 @@ func (client *pipelineClient) getPipelinesByWorkspaceHandleError(resp *http.Resp
 // If the operation fails it returns the *CloudError error type.
 // pipelineName - The pipeline name.
 // request - proposed new name.
-// options - PipelineBeginRenamePipelineOptions contains the optional parameters for the pipelineClient.BeginRenamePipeline
+// options - pipelineClientBeginRenamePipelineOptions contains the optional parameters for the pipelineClient.BeginRenamePipeline
 // method.
-func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (PipelineRenamePipelinePollerResponse, error) {
+func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *pipelineClientBeginRenamePipelineOptions) (pipelineClientRenamePipelinePollerResponse, error) {
 	resp, err := client.renamePipeline(ctx, pipelineName, request, options)
 	if err != nil {
-		return PipelineRenamePipelinePollerResponse{}, err
+		return pipelineClientRenamePipelinePollerResponse{}, err
 	}
-	result := PipelineRenamePipelinePollerResponse{
+	result := pipelineClientRenamePipelinePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := runtime.NewPoller("pipelineClient.RenamePipeline", resp, client.pl, client.renamePipelineHandleError)
 	if err != nil {
-		return PipelineRenamePipelinePollerResponse{}, err
+		return pipelineClientRenamePipelinePollerResponse{}, err
 	}
-	result.Poller = &PipelineRenamePipelinePoller{
+	result.Poller = &pipelineClientRenamePipelinePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -393,7 +394,7 @@ func (client *pipelineClient) BeginRenamePipeline(ctx context.Context, pipelineN
 
 // RenamePipeline - Renames a pipeline.
 // If the operation fails it returns the *CloudError error type.
-func (client *pipelineClient) renamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (*http.Response, error) {
+func (client *pipelineClient) renamePipeline(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *pipelineClientBeginRenamePipelineOptions) (*http.Response, error) {
 	req, err := client.renamePipelineCreateRequest(ctx, pipelineName, request, options)
 	if err != nil {
 		return nil, err
@@ -409,7 +410,7 @@ func (client *pipelineClient) renamePipeline(ctx context.Context, pipelineName s
 }
 
 // renamePipelineCreateRequest creates the RenamePipeline request.
-func (client *pipelineClient) renamePipelineCreateRequest(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *PipelineBeginRenamePipelineOptions) (*policy.Request, error) {
+func (client *pipelineClient) renamePipelineCreateRequest(ctx context.Context, pipelineName string, request ArtifactRenameRequest, options *pipelineClientBeginRenamePipelineOptions) (*policy.Request, error) {
 	urlPath := "/pipelines/{pipelineName}/rename"
 	if pipelineName == "" {
 		return nil, errors.New("parameter pipelineName cannot be empty")

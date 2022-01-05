@@ -53,24 +53,25 @@ func NewVirtualMachineSizesClient(subscriptionID string, credential azcore.Token
 // List - This API is deprecated. Use Resources Skus [https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list]
 // If the operation fails it returns a generic error.
 // location - The location upon which virtual-machine-sizes is queried.
-// options - VirtualMachineSizesListOptions contains the optional parameters for the VirtualMachineSizesClient.List method.
-func (client *VirtualMachineSizesClient) List(ctx context.Context, location string, options *VirtualMachineSizesListOptions) (VirtualMachineSizesListResponse, error) {
+// options - VirtualMachineSizesClientListOptions contains the optional parameters for the VirtualMachineSizesClient.List
+// method.
+func (client *VirtualMachineSizesClient) List(ctx context.Context, location string, options *VirtualMachineSizesClientListOptions) (VirtualMachineSizesClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, options)
 	if err != nil {
-		return VirtualMachineSizesListResponse{}, err
+		return VirtualMachineSizesClientListResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachineSizesListResponse{}, err
+		return VirtualMachineSizesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineSizesListResponse{}, client.listHandleError(resp)
+		return VirtualMachineSizesClientListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualMachineSizesClient) listCreateRequest(ctx context.Context, location string, options *VirtualMachineSizesListOptions) (*policy.Request, error) {
+func (client *VirtualMachineSizesClient) listCreateRequest(ctx context.Context, location string, options *VirtualMachineSizesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/vmSizes"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -92,10 +93,10 @@ func (client *VirtualMachineSizesClient) listCreateRequest(ctx context.Context, 
 }
 
 // listHandleResponse handles the List response.
-func (client *VirtualMachineSizesClient) listHandleResponse(resp *http.Response) (VirtualMachineSizesListResponse, error) {
-	result := VirtualMachineSizesListResponse{RawResponse: resp}
+func (client *VirtualMachineSizesClient) listHandleResponse(resp *http.Response) (VirtualMachineSizesClientListResponse, error) {
+	result := VirtualMachineSizesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineSizeListResult); err != nil {
-		return VirtualMachineSizesListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineSizesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

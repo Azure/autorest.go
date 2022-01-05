@@ -56,21 +56,21 @@ func NewAzureFirewallsClient(subscriptionID string, credential azcore.TokenCrede
 // resourceGroupName - The name of the resource group.
 // azureFirewallName - The name of the Azure Firewall.
 // parameters - Parameters supplied to the create or update Azure Firewall operation.
-// options - AzureFirewallsBeginCreateOrUpdateOptions contains the optional parameters for the AzureFirewallsClient.BeginCreateOrUpdate
+// options - AzureFirewallsClientBeginCreateOrUpdateOptions contains the optional parameters for the AzureFirewallsClient.BeginCreateOrUpdate
 // method.
-func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsBeginCreateOrUpdateOptions) (AzureFirewallsCreateOrUpdatePollerResponse, error) {
+func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsClientBeginCreateOrUpdateOptions) (AzureFirewallsClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, azureFirewallName, parameters, options)
 	if err != nil {
-		return AzureFirewallsCreateOrUpdatePollerResponse{}, err
+		return AzureFirewallsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := AzureFirewallsCreateOrUpdatePollerResponse{
+	result := AzureFirewallsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("AzureFirewallsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return AzureFirewallsCreateOrUpdatePollerResponse{}, err
+		return AzureFirewallsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &AzureFirewallsCreateOrUpdatePoller{
+	result.Poller = &AzureFirewallsClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *AzureFirewallsClient) BeginCreateOrUpdate(ctx context.Context, res
 
 // CreateOrUpdate - Creates or updates the specified Azure Firewall.
 // If the operation fails it returns the *CloudError error type.
-func (client *AzureFirewallsClient) createOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *AzureFirewallsClient) createOrUpdate(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, azureFirewallName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *AzureFirewallsClient) createOrUpdate(ctx context.Context, resource
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *AzureFirewallsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *AzureFirewallsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters AzureFirewall, options *AzureFirewallsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -136,20 +136,21 @@ func (client *AzureFirewallsClient) createOrUpdateHandleError(resp *http.Respons
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // azureFirewallName - The name of the Azure Firewall.
-// options - AzureFirewallsBeginDeleteOptions contains the optional parameters for the AzureFirewallsClient.BeginDelete method.
-func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsBeginDeleteOptions) (AzureFirewallsDeletePollerResponse, error) {
+// options - AzureFirewallsClientBeginDeleteOptions contains the optional parameters for the AzureFirewallsClient.BeginDelete
+// method.
+func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsClientBeginDeleteOptions) (AzureFirewallsClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, azureFirewallName, options)
 	if err != nil {
-		return AzureFirewallsDeletePollerResponse{}, err
+		return AzureFirewallsClientDeletePollerResponse{}, err
 	}
-	result := AzureFirewallsDeletePollerResponse{
+	result := AzureFirewallsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("AzureFirewallsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return AzureFirewallsDeletePollerResponse{}, err
+		return AzureFirewallsClientDeletePollerResponse{}, err
 	}
-	result.Poller = &AzureFirewallsDeletePoller{
+	result.Poller = &AzureFirewallsClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -157,7 +158,7 @@ func (client *AzureFirewallsClient) BeginDelete(ctx context.Context, resourceGro
 
 // Delete - Deletes the specified Azure Firewall.
 // If the operation fails it returns the *CloudError error type.
-func (client *AzureFirewallsClient) deleteOperation(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsBeginDeleteOptions) (*http.Response, error) {
+func (client *AzureFirewallsClient) deleteOperation(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, azureFirewallName, options)
 	if err != nil {
 		return nil, err
@@ -173,7 +174,7 @@ func (client *AzureFirewallsClient) deleteOperation(ctx context.Context, resourc
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *AzureFirewallsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsBeginDeleteOptions) (*policy.Request, error) {
+func (client *AzureFirewallsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -215,24 +216,24 @@ func (client *AzureFirewallsClient) deleteHandleError(resp *http.Response) error
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // azureFirewallName - The name of the Azure Firewall.
-// options - AzureFirewallsGetOptions contains the optional parameters for the AzureFirewallsClient.Get method.
-func (client *AzureFirewallsClient) Get(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsGetOptions) (AzureFirewallsGetResponse, error) {
+// options - AzureFirewallsClientGetOptions contains the optional parameters for the AzureFirewallsClient.Get method.
+func (client *AzureFirewallsClient) Get(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsClientGetOptions) (AzureFirewallsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, azureFirewallName, options)
 	if err != nil {
-		return AzureFirewallsGetResponse{}, err
+		return AzureFirewallsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return AzureFirewallsGetResponse{}, err
+		return AzureFirewallsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AzureFirewallsGetResponse{}, client.getHandleError(resp)
+		return AzureFirewallsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *AzureFirewallsClient) getCreateRequest(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsGetOptions) (*policy.Request, error) {
+func (client *AzureFirewallsClient) getCreateRequest(ctx context.Context, resourceGroupName string, azureFirewallName string, options *AzureFirewallsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -258,10 +259,10 @@ func (client *AzureFirewallsClient) getCreateRequest(ctx context.Context, resour
 }
 
 // getHandleResponse handles the Get response.
-func (client *AzureFirewallsClient) getHandleResponse(resp *http.Response) (AzureFirewallsGetResponse, error) {
-	result := AzureFirewallsGetResponse{RawResponse: resp}
+func (client *AzureFirewallsClient) getHandleResponse(resp *http.Response) (AzureFirewallsClientGetResponse, error) {
+	result := AzureFirewallsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureFirewall); err != nil {
-		return AzureFirewallsGetResponse{}, runtime.NewResponseError(err, resp)
+		return AzureFirewallsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -282,21 +283,21 @@ func (client *AzureFirewallsClient) getHandleError(resp *http.Response) error {
 // List - Lists all Azure Firewalls in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - AzureFirewallsListOptions contains the optional parameters for the AzureFirewallsClient.List method.
-func (client *AzureFirewallsClient) List(resourceGroupName string, options *AzureFirewallsListOptions) *AzureFirewallsListPager {
-	return &AzureFirewallsListPager{
+// options - AzureFirewallsClientListOptions contains the optional parameters for the AzureFirewallsClient.List method.
+func (client *AzureFirewallsClient) List(resourceGroupName string, options *AzureFirewallsClientListOptions) *AzureFirewallsClientListPager {
+	return &AzureFirewallsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp AzureFirewallsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp AzureFirewallsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.AzureFirewallListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *AzureFirewallsClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *AzureFirewallsListOptions) (*policy.Request, error) {
+func (client *AzureFirewallsClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *AzureFirewallsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -318,10 +319,10 @@ func (client *AzureFirewallsClient) listCreateRequest(ctx context.Context, resou
 }
 
 // listHandleResponse handles the List response.
-func (client *AzureFirewallsClient) listHandleResponse(resp *http.Response) (AzureFirewallsListResponse, error) {
-	result := AzureFirewallsListResponse{RawResponse: resp}
+func (client *AzureFirewallsClient) listHandleResponse(resp *http.Response) (AzureFirewallsClientListResponse, error) {
+	result := AzureFirewallsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureFirewallListResult); err != nil {
-		return AzureFirewallsListResponse{}, runtime.NewResponseError(err, resp)
+		return AzureFirewallsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -341,21 +342,21 @@ func (client *AzureFirewallsClient) listHandleError(resp *http.Response) error {
 
 // ListAll - Gets all the Azure Firewalls in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - AzureFirewallsListAllOptions contains the optional parameters for the AzureFirewallsClient.ListAll method.
-func (client *AzureFirewallsClient) ListAll(options *AzureFirewallsListAllOptions) *AzureFirewallsListAllPager {
-	return &AzureFirewallsListAllPager{
+// options - AzureFirewallsClientListAllOptions contains the optional parameters for the AzureFirewallsClient.ListAll method.
+func (client *AzureFirewallsClient) ListAll(options *AzureFirewallsClientListAllOptions) *AzureFirewallsClientListAllPager {
+	return &AzureFirewallsClientListAllPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listAllCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp AzureFirewallsListAllResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp AzureFirewallsClientListAllResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.AzureFirewallListResult.NextLink)
 		},
 	}
 }
 
 // listAllCreateRequest creates the ListAll request.
-func (client *AzureFirewallsClient) listAllCreateRequest(ctx context.Context, options *AzureFirewallsListAllOptions) (*policy.Request, error) {
+func (client *AzureFirewallsClient) listAllCreateRequest(ctx context.Context, options *AzureFirewallsClientListAllOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -373,10 +374,10 @@ func (client *AzureFirewallsClient) listAllCreateRequest(ctx context.Context, op
 }
 
 // listAllHandleResponse handles the ListAll response.
-func (client *AzureFirewallsClient) listAllHandleResponse(resp *http.Response) (AzureFirewallsListAllResponse, error) {
-	result := AzureFirewallsListAllResponse{RawResponse: resp}
+func (client *AzureFirewallsClient) listAllHandleResponse(resp *http.Response) (AzureFirewallsClientListAllResponse, error) {
+	result := AzureFirewallsClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureFirewallListResult); err != nil {
-		return AzureFirewallsListAllResponse{}, runtime.NewResponseError(err, resp)
+		return AzureFirewallsClientListAllResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -399,21 +400,21 @@ func (client *AzureFirewallsClient) listAllHandleError(resp *http.Response) erro
 // resourceGroupName - The name of the resource group.
 // azureFirewallName - The name of the Azure Firewall.
 // parameters - Parameters supplied to update azure firewall tags.
-// options - AzureFirewallsBeginUpdateTagsOptions contains the optional parameters for the AzureFirewallsClient.BeginUpdateTags
+// options - AzureFirewallsClientBeginUpdateTagsOptions contains the optional parameters for the AzureFirewallsClient.BeginUpdateTags
 // method.
-func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject, options *AzureFirewallsBeginUpdateTagsOptions) (AzureFirewallsUpdateTagsPollerResponse, error) {
+func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject, options *AzureFirewallsClientBeginUpdateTagsOptions) (AzureFirewallsClientUpdateTagsPollerResponse, error) {
 	resp, err := client.updateTags(ctx, resourceGroupName, azureFirewallName, parameters, options)
 	if err != nil {
-		return AzureFirewallsUpdateTagsPollerResponse{}, err
+		return AzureFirewallsClientUpdateTagsPollerResponse{}, err
 	}
-	result := AzureFirewallsUpdateTagsPollerResponse{
+	result := AzureFirewallsClientUpdateTagsPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("AzureFirewallsClient.UpdateTags", "azure-async-operation", resp, client.pl, client.updateTagsHandleError)
 	if err != nil {
-		return AzureFirewallsUpdateTagsPollerResponse{}, err
+		return AzureFirewallsClientUpdateTagsPollerResponse{}, err
 	}
-	result.Poller = &AzureFirewallsUpdateTagsPoller{
+	result.Poller = &AzureFirewallsClientUpdateTagsPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -421,7 +422,7 @@ func (client *AzureFirewallsClient) BeginUpdateTags(ctx context.Context, resourc
 
 // UpdateTags - Updates tags of an Azure Firewall resource.
 // If the operation fails it returns the *CloudError error type.
-func (client *AzureFirewallsClient) updateTags(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject, options *AzureFirewallsBeginUpdateTagsOptions) (*http.Response, error) {
+func (client *AzureFirewallsClient) updateTags(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject, options *AzureFirewallsClientBeginUpdateTagsOptions) (*http.Response, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, azureFirewallName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -437,7 +438,7 @@ func (client *AzureFirewallsClient) updateTags(ctx context.Context, resourceGrou
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *AzureFirewallsClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject, options *AzureFirewallsBeginUpdateTagsOptions) (*policy.Request, error) {
+func (client *AzureFirewallsClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, azureFirewallName string, parameters TagsObject, options *AzureFirewallsClientBeginUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

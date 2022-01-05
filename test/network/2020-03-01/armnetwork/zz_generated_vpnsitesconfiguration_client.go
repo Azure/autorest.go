@@ -56,21 +56,21 @@ func NewVPNSitesConfigurationClient(subscriptionID string, credential azcore.Tok
 // resourceGroupName - The resource group name.
 // virtualWANName - The name of the VirtualWAN for which configuration of all vpn-sites is needed.
 // request - Parameters supplied to download vpn-sites configuration.
-// options - VPNSitesConfigurationBeginDownloadOptions contains the optional parameters for the VPNSitesConfigurationClient.BeginDownload
+// options - VPNSitesConfigurationClientBeginDownloadOptions contains the optional parameters for the VPNSitesConfigurationClient.BeginDownload
 // method.
-func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (VPNSitesConfigurationDownloadPollerResponse, error) {
+func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationClientBeginDownloadOptions) (VPNSitesConfigurationClientDownloadPollerResponse, error) {
 	resp, err := client.download(ctx, resourceGroupName, virtualWANName, request, options)
 	if err != nil {
-		return VPNSitesConfigurationDownloadPollerResponse{}, err
+		return VPNSitesConfigurationClientDownloadPollerResponse{}, err
 	}
-	result := VPNSitesConfigurationDownloadPollerResponse{
+	result := VPNSitesConfigurationClientDownloadPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VPNSitesConfigurationClient.Download", "location", resp, client.pl, client.downloadHandleError)
 	if err != nil {
-		return VPNSitesConfigurationDownloadPollerResponse{}, err
+		return VPNSitesConfigurationClientDownloadPollerResponse{}, err
 	}
-	result.Poller = &VPNSitesConfigurationDownloadPoller{
+	result.Poller = &VPNSitesConfigurationClientDownloadPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *VPNSitesConfigurationClient) BeginDownload(ctx context.Context, re
 
 // Download - Gives the sas-url to download the configurations for vpn-sites in a resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *VPNSitesConfigurationClient) download(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (*http.Response, error) {
+func (client *VPNSitesConfigurationClient) download(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationClientBeginDownloadOptions) (*http.Response, error) {
 	req, err := client.downloadCreateRequest(ctx, resourceGroupName, virtualWANName, request, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *VPNSitesConfigurationClient) download(ctx context.Context, resourc
 }
 
 // downloadCreateRequest creates the Download request.
-func (client *VPNSitesConfigurationClient) downloadCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationBeginDownloadOptions) (*policy.Request, error) {
+func (client *VPNSitesConfigurationClient) downloadCreateRequest(ctx context.Context, resourceGroupName string, virtualWANName string, request GetVPNSitesConfigurationRequest, options *VPNSitesConfigurationClientBeginDownloadOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnConfiguration"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

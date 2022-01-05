@@ -56,25 +56,25 @@ func NewLoadBalancerLoadBalancingRulesClient(subscriptionID string, credential a
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // loadBalancingRuleName - The name of the load balancing rule.
-// options - LoadBalancerLoadBalancingRulesGetOptions contains the optional parameters for the LoadBalancerLoadBalancingRulesClient.Get
+// options - LoadBalancerLoadBalancingRulesClientGetOptions contains the optional parameters for the LoadBalancerLoadBalancingRulesClient.Get
 // method.
-func (client *LoadBalancerLoadBalancingRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string, options *LoadBalancerLoadBalancingRulesGetOptions) (LoadBalancerLoadBalancingRulesGetResponse, error) {
+func (client *LoadBalancerLoadBalancingRulesClient) Get(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string, options *LoadBalancerLoadBalancingRulesClientGetOptions) (LoadBalancerLoadBalancingRulesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, loadBalancerName, loadBalancingRuleName, options)
 	if err != nil {
-		return LoadBalancerLoadBalancingRulesGetResponse{}, err
+		return LoadBalancerLoadBalancingRulesClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return LoadBalancerLoadBalancingRulesGetResponse{}, err
+		return LoadBalancerLoadBalancingRulesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LoadBalancerLoadBalancingRulesGetResponse{}, client.getHandleError(resp)
+		return LoadBalancerLoadBalancingRulesClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *LoadBalancerLoadBalancingRulesClient) getCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string, options *LoadBalancerLoadBalancingRulesGetOptions) (*policy.Request, error) {
+func (client *LoadBalancerLoadBalancingRulesClient) getCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, loadBalancingRuleName string, options *LoadBalancerLoadBalancingRulesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -104,10 +104,10 @@ func (client *LoadBalancerLoadBalancingRulesClient) getCreateRequest(ctx context
 }
 
 // getHandleResponse handles the Get response.
-func (client *LoadBalancerLoadBalancingRulesClient) getHandleResponse(resp *http.Response) (LoadBalancerLoadBalancingRulesGetResponse, error) {
-	result := LoadBalancerLoadBalancingRulesGetResponse{RawResponse: resp}
+func (client *LoadBalancerLoadBalancingRulesClient) getHandleResponse(resp *http.Response) (LoadBalancerLoadBalancingRulesClientGetResponse, error) {
+	result := LoadBalancerLoadBalancingRulesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancingRule); err != nil {
-		return LoadBalancerLoadBalancingRulesGetResponse{}, runtime.NewResponseError(err, resp)
+		return LoadBalancerLoadBalancingRulesClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -129,22 +129,22 @@ func (client *LoadBalancerLoadBalancingRulesClient) getHandleError(resp *http.Re
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
-// options - LoadBalancerLoadBalancingRulesListOptions contains the optional parameters for the LoadBalancerLoadBalancingRulesClient.List
+// options - LoadBalancerLoadBalancingRulesClientListOptions contains the optional parameters for the LoadBalancerLoadBalancingRulesClient.List
 // method.
-func (client *LoadBalancerLoadBalancingRulesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerLoadBalancingRulesListOptions) *LoadBalancerLoadBalancingRulesListPager {
-	return &LoadBalancerLoadBalancingRulesListPager{
+func (client *LoadBalancerLoadBalancingRulesClient) List(resourceGroupName string, loadBalancerName string, options *LoadBalancerLoadBalancingRulesClientListOptions) *LoadBalancerLoadBalancingRulesClientListPager {
+	return &LoadBalancerLoadBalancingRulesClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, loadBalancerName, options)
 		},
-		advancer: func(ctx context.Context, resp LoadBalancerLoadBalancingRulesListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp LoadBalancerLoadBalancingRulesClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.LoadBalancerLoadBalancingRuleListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *LoadBalancerLoadBalancingRulesClient) listCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancerLoadBalancingRulesListOptions) (*policy.Request, error) {
+func (client *LoadBalancerLoadBalancingRulesClient) listCreateRequest(ctx context.Context, resourceGroupName string, loadBalancerName string, options *LoadBalancerLoadBalancingRulesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -170,10 +170,10 @@ func (client *LoadBalancerLoadBalancingRulesClient) listCreateRequest(ctx contex
 }
 
 // listHandleResponse handles the List response.
-func (client *LoadBalancerLoadBalancingRulesClient) listHandleResponse(resp *http.Response) (LoadBalancerLoadBalancingRulesListResponse, error) {
-	result := LoadBalancerLoadBalancingRulesListResponse{RawResponse: resp}
+func (client *LoadBalancerLoadBalancingRulesClient) listHandleResponse(resp *http.Response) (LoadBalancerLoadBalancingRulesClientListResponse, error) {
+	result := LoadBalancerLoadBalancingRulesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancerLoadBalancingRuleListResult); err != nil {
-		return LoadBalancerLoadBalancingRulesListResponse{}, runtime.NewResponseError(err, resp)
+		return LoadBalancerLoadBalancingRulesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

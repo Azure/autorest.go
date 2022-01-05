@@ -10,44 +10,44 @@ package validationgroup
 
 import "net/http"
 
-// AutoRestValidationTestGetWithConstantInPathResponse contains the response from method AutoRestValidationTest.GetWithConstantInPath.
-type AutoRestValidationTestGetWithConstantInPathResponse struct {
+// AutoRestValidationTestClientGetWithConstantInPathResponse contains the response from method AutoRestValidationTestClient.GetWithConstantInPath.
+type AutoRestValidationTestClientGetWithConstantInPathResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// AutoRestValidationTestPostWithConstantInBodyResponse contains the response from method AutoRestValidationTest.PostWithConstantInBody.
-type AutoRestValidationTestPostWithConstantInBodyResponse struct {
-	AutoRestValidationTestPostWithConstantInBodyResult
+// AutoRestValidationTestClientPostWithConstantInBodyResponse contains the response from method AutoRestValidationTestClient.PostWithConstantInBody.
+type AutoRestValidationTestClientPostWithConstantInBodyResponse struct {
+	AutoRestValidationTestClientPostWithConstantInBodyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// AutoRestValidationTestPostWithConstantInBodyResult contains the result from method AutoRestValidationTest.PostWithConstantInBody.
-type AutoRestValidationTestPostWithConstantInBodyResult struct {
+// AutoRestValidationTestClientPostWithConstantInBodyResult contains the result from method AutoRestValidationTestClient.PostWithConstantInBody.
+type AutoRestValidationTestClientPostWithConstantInBodyResult struct {
 	Product
 }
 
-// AutoRestValidationTestValidationOfBodyResponse contains the response from method AutoRestValidationTest.ValidationOfBody.
-type AutoRestValidationTestValidationOfBodyResponse struct {
-	AutoRestValidationTestValidationOfBodyResult
+// AutoRestValidationTestClientValidationOfBodyResponse contains the response from method AutoRestValidationTestClient.ValidationOfBody.
+type AutoRestValidationTestClientValidationOfBodyResponse struct {
+	AutoRestValidationTestClientValidationOfBodyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// AutoRestValidationTestValidationOfBodyResult contains the result from method AutoRestValidationTest.ValidationOfBody.
-type AutoRestValidationTestValidationOfBodyResult struct {
+// AutoRestValidationTestClientValidationOfBodyResult contains the result from method AutoRestValidationTestClient.ValidationOfBody.
+type AutoRestValidationTestClientValidationOfBodyResult struct {
 	Product
 }
 
-// AutoRestValidationTestValidationOfMethodParametersResponse contains the response from method AutoRestValidationTest.ValidationOfMethodParameters.
-type AutoRestValidationTestValidationOfMethodParametersResponse struct {
-	AutoRestValidationTestValidationOfMethodParametersResult
+// AutoRestValidationTestClientValidationOfMethodParametersResponse contains the response from method AutoRestValidationTestClient.ValidationOfMethodParameters.
+type AutoRestValidationTestClientValidationOfMethodParametersResponse struct {
+	AutoRestValidationTestClientValidationOfMethodParametersResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// AutoRestValidationTestValidationOfMethodParametersResult contains the result from method AutoRestValidationTest.ValidationOfMethodParameters.
-type AutoRestValidationTestValidationOfMethodParametersResult struct {
+// AutoRestValidationTestClientValidationOfMethodParametersResult contains the result from method AutoRestValidationTestClient.ValidationOfMethodParameters.
+type AutoRestValidationTestClientValidationOfMethodParametersResult struct {
 	Product
 }

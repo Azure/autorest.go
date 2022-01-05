@@ -10,32 +10,32 @@ package errorsgroup
 
 import "net/http"
 
-// PetDoSomethingResponse contains the response from method Pet.DoSomething.
-type PetDoSomethingResponse struct {
-	PetDoSomethingResult
+// PetClientDoSomethingResponse contains the response from method PetClient.DoSomething.
+type PetClientDoSomethingResponse struct {
+	PetClientDoSomethingResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PetDoSomethingResult contains the result from method Pet.DoSomething.
-type PetDoSomethingResult struct {
+// PetClientDoSomethingResult contains the result from method PetClient.DoSomething.
+type PetClientDoSomethingResult struct {
 	PetAction
 }
 
-// PetGetPetByIDResponse contains the response from method Pet.GetPetByID.
-type PetGetPetByIDResponse struct {
-	PetGetPetByIDResult
+// PetClientGetPetByIDResponse contains the response from method PetClient.GetPetByID.
+type PetClientGetPetByIDResponse struct {
+	PetClientGetPetByIDResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PetGetPetByIDResult contains the result from method Pet.GetPetByID.
-type PetGetPetByIDResult struct {
+// PetClientGetPetByIDResult contains the result from method PetClient.GetPetByID.
+type PetClientGetPetByIDResult struct {
 	Pet
 }
 
-// PetHasModelsParamResponse contains the response from method Pet.HasModelsParam.
-type PetHasModelsParamResponse struct {
+// PetClientHasModelsParamResponse contains the response from method PetClient.HasModelsParam.
+type PetClientHasModelsParamResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

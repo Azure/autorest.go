@@ -10,74 +10,74 @@ package additionalpropsgroup
 
 import "net/http"
 
-// PetsCreateAPInPropertiesResponse contains the response from method Pets.CreateAPInProperties.
-type PetsCreateAPInPropertiesResponse struct {
-	PetsCreateAPInPropertiesResult
+// PetsClientCreateAPInPropertiesResponse contains the response from method PetsClient.CreateAPInProperties.
+type PetsClientCreateAPInPropertiesResponse struct {
+	PetsClientCreateAPInPropertiesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PetsCreateAPInPropertiesResult contains the result from method Pets.CreateAPInProperties.
-type PetsCreateAPInPropertiesResult struct {
+// PetsClientCreateAPInPropertiesResult contains the result from method PetsClient.CreateAPInProperties.
+type PetsClientCreateAPInPropertiesResult struct {
 	PetAPInProperties
 }
 
-// PetsCreateAPInPropertiesWithAPStringResponse contains the response from method Pets.CreateAPInPropertiesWithAPString.
-type PetsCreateAPInPropertiesWithAPStringResponse struct {
-	PetsCreateAPInPropertiesWithAPStringResult
+// PetsClientCreateAPInPropertiesWithAPStringResponse contains the response from method PetsClient.CreateAPInPropertiesWithAPString.
+type PetsClientCreateAPInPropertiesWithAPStringResponse struct {
+	PetsClientCreateAPInPropertiesWithAPStringResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PetsCreateAPInPropertiesWithAPStringResult contains the result from method Pets.CreateAPInPropertiesWithAPString.
-type PetsCreateAPInPropertiesWithAPStringResult struct {
+// PetsClientCreateAPInPropertiesWithAPStringResult contains the result from method PetsClient.CreateAPInPropertiesWithAPString.
+type PetsClientCreateAPInPropertiesWithAPStringResult struct {
 	PetAPInPropertiesWithAPString
 }
 
-// PetsCreateAPObjectResponse contains the response from method Pets.CreateAPObject.
-type PetsCreateAPObjectResponse struct {
-	PetsCreateAPObjectResult
+// PetsClientCreateAPObjectResponse contains the response from method PetsClient.CreateAPObject.
+type PetsClientCreateAPObjectResponse struct {
+	PetsClientCreateAPObjectResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PetsCreateAPObjectResult contains the result from method Pets.CreateAPObject.
-type PetsCreateAPObjectResult struct {
+// PetsClientCreateAPObjectResult contains the result from method PetsClient.CreateAPObject.
+type PetsClientCreateAPObjectResult struct {
 	PetAPObject
 }
 
-// PetsCreateAPStringResponse contains the response from method Pets.CreateAPString.
-type PetsCreateAPStringResponse struct {
-	PetsCreateAPStringResult
+// PetsClientCreateAPStringResponse contains the response from method PetsClient.CreateAPString.
+type PetsClientCreateAPStringResponse struct {
+	PetsClientCreateAPStringResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PetsCreateAPStringResult contains the result from method Pets.CreateAPString.
-type PetsCreateAPStringResult struct {
+// PetsClientCreateAPStringResult contains the result from method PetsClient.CreateAPString.
+type PetsClientCreateAPStringResult struct {
 	PetAPString
 }
 
-// PetsCreateAPTrueResponse contains the response from method Pets.CreateAPTrue.
-type PetsCreateAPTrueResponse struct {
-	PetsCreateAPTrueResult
+// PetsClientCreateAPTrueResponse contains the response from method PetsClient.CreateAPTrue.
+type PetsClientCreateAPTrueResponse struct {
+	PetsClientCreateAPTrueResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PetsCreateAPTrueResult contains the result from method Pets.CreateAPTrue.
-type PetsCreateAPTrueResult struct {
+// PetsClientCreateAPTrueResult contains the result from method PetsClient.CreateAPTrue.
+type PetsClientCreateAPTrueResult struct {
 	PetAPTrue
 }
 
-// PetsCreateCatAPTrueResponse contains the response from method Pets.CreateCatAPTrue.
-type PetsCreateCatAPTrueResponse struct {
-	PetsCreateCatAPTrueResult
+// PetsClientCreateCatAPTrueResponse contains the response from method PetsClient.CreateCatAPTrue.
+type PetsClientCreateCatAPTrueResponse struct {
+	PetsClientCreateCatAPTrueResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PetsCreateCatAPTrueResult contains the result from method Pets.CreateCatAPTrue.
-type PetsCreateCatAPTrueResult struct {
+// PetsClientCreateCatAPTrueResult contains the result from method PetsClient.CreateCatAPTrue.
+type PetsClientCreateCatAPTrueResult struct {
 	CatAPTrue
 }

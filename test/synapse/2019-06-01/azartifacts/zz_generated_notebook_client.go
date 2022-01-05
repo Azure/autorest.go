@@ -39,21 +39,21 @@ func newNotebookClient(endpoint string, pl runtime.Pipeline) *notebookClient {
 // If the operation fails it returns the *CloudError error type.
 // notebookName - The notebook name.
 // notebook - Note book resource definition.
-// options - NotebookBeginCreateOrUpdateNotebookOptions contains the optional parameters for the notebookClient.BeginCreateOrUpdateNotebook
+// options - notebookClientBeginCreateOrUpdateNotebookOptions contains the optional parameters for the notebookClient.BeginCreateOrUpdateNotebook
 // method.
-func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (NotebookCreateOrUpdateNotebookPollerResponse, error) {
+func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *notebookClientBeginCreateOrUpdateNotebookOptions) (notebookClientCreateOrUpdateNotebookPollerResponse, error) {
 	resp, err := client.createOrUpdateNotebook(ctx, notebookName, notebook, options)
 	if err != nil {
-		return NotebookCreateOrUpdateNotebookPollerResponse{}, err
+		return notebookClientCreateOrUpdateNotebookPollerResponse{}, err
 	}
-	result := NotebookCreateOrUpdateNotebookPollerResponse{
+	result := notebookClientCreateOrUpdateNotebookPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := runtime.NewPoller("notebookClient.CreateOrUpdateNotebook", resp, client.pl, client.createOrUpdateNotebookHandleError)
 	if err != nil {
-		return NotebookCreateOrUpdateNotebookPollerResponse{}, err
+		return notebookClientCreateOrUpdateNotebookPollerResponse{}, err
 	}
-	result.Poller = &NotebookCreateOrUpdateNotebookPoller{
+	result.Poller = &notebookClientCreateOrUpdateNotebookPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -61,7 +61,7 @@ func (client *notebookClient) BeginCreateOrUpdateNotebook(ctx context.Context, n
 
 // CreateOrUpdateNotebook - Creates or updates a Note Book.
 // If the operation fails it returns the *CloudError error type.
-func (client *notebookClient) createOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (*http.Response, error) {
+func (client *notebookClient) createOrUpdateNotebook(ctx context.Context, notebookName string, notebook NotebookResource, options *notebookClientBeginCreateOrUpdateNotebookOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateNotebookCreateRequest(ctx, notebookName, notebook, options)
 	if err != nil {
 		return nil, err
@@ -77,7 +77,7 @@ func (client *notebookClient) createOrUpdateNotebook(ctx context.Context, notebo
 }
 
 // createOrUpdateNotebookCreateRequest creates the CreateOrUpdateNotebook request.
-func (client *notebookClient) createOrUpdateNotebookCreateRequest(ctx context.Context, notebookName string, notebook NotebookResource, options *NotebookBeginCreateOrUpdateNotebookOptions) (*policy.Request, error) {
+func (client *notebookClient) createOrUpdateNotebookCreateRequest(ctx context.Context, notebookName string, notebook NotebookResource, options *notebookClientBeginCreateOrUpdateNotebookOptions) (*policy.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	if notebookName == "" {
 		return nil, errors.New("parameter notebookName cannot be empty")
@@ -113,21 +113,21 @@ func (client *notebookClient) createOrUpdateNotebookHandleError(resp *http.Respo
 // BeginDeleteNotebook - Deletes a Note book.
 // If the operation fails it returns the *CloudError error type.
 // notebookName - The notebook name.
-// options - NotebookBeginDeleteNotebookOptions contains the optional parameters for the notebookClient.BeginDeleteNotebook
+// options - notebookClientBeginDeleteNotebookOptions contains the optional parameters for the notebookClient.BeginDeleteNotebook
 // method.
-func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookName string, options *NotebookBeginDeleteNotebookOptions) (NotebookDeleteNotebookPollerResponse, error) {
+func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookName string, options *notebookClientBeginDeleteNotebookOptions) (notebookClientDeleteNotebookPollerResponse, error) {
 	resp, err := client.deleteNotebook(ctx, notebookName, options)
 	if err != nil {
-		return NotebookDeleteNotebookPollerResponse{}, err
+		return notebookClientDeleteNotebookPollerResponse{}, err
 	}
-	result := NotebookDeleteNotebookPollerResponse{
+	result := notebookClientDeleteNotebookPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := runtime.NewPoller("notebookClient.DeleteNotebook", resp, client.pl, client.deleteNotebookHandleError)
 	if err != nil {
-		return NotebookDeleteNotebookPollerResponse{}, err
+		return notebookClientDeleteNotebookPollerResponse{}, err
 	}
-	result.Poller = &NotebookDeleteNotebookPoller{
+	result.Poller = &notebookClientDeleteNotebookPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -135,7 +135,7 @@ func (client *notebookClient) BeginDeleteNotebook(ctx context.Context, notebookN
 
 // DeleteNotebook - Deletes a Note book.
 // If the operation fails it returns the *CloudError error type.
-func (client *notebookClient) deleteNotebook(ctx context.Context, notebookName string, options *NotebookBeginDeleteNotebookOptions) (*http.Response, error) {
+func (client *notebookClient) deleteNotebook(ctx context.Context, notebookName string, options *notebookClientBeginDeleteNotebookOptions) (*http.Response, error) {
 	req, err := client.deleteNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
 		return nil, err
@@ -151,7 +151,7 @@ func (client *notebookClient) deleteNotebook(ctx context.Context, notebookName s
 }
 
 // deleteNotebookCreateRequest creates the DeleteNotebook request.
-func (client *notebookClient) deleteNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookBeginDeleteNotebookOptions) (*policy.Request, error) {
+func (client *notebookClient) deleteNotebookCreateRequest(ctx context.Context, notebookName string, options *notebookClientBeginDeleteNotebookOptions) (*policy.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	if notebookName == "" {
 		return nil, errors.New("parameter notebookName cannot be empty")
@@ -184,24 +184,24 @@ func (client *notebookClient) deleteNotebookHandleError(resp *http.Response) err
 // GetNotebook - Gets a Note Book.
 // If the operation fails it returns the *CloudError error type.
 // notebookName - The notebook name.
-// options - NotebookGetNotebookOptions contains the optional parameters for the notebookClient.GetNotebook method.
-func (client *notebookClient) GetNotebook(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (NotebookGetNotebookResponse, error) {
+// options - notebookClientGetNotebookOptions contains the optional parameters for the notebookClient.GetNotebook method.
+func (client *notebookClient) GetNotebook(ctx context.Context, notebookName string, options *notebookClientGetNotebookOptions) (notebookClientGetNotebookResponse, error) {
 	req, err := client.getNotebookCreateRequest(ctx, notebookName, options)
 	if err != nil {
-		return NotebookGetNotebookResponse{}, err
+		return notebookClientGetNotebookResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NotebookGetNotebookResponse{}, err
+		return notebookClientGetNotebookResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
-		return NotebookGetNotebookResponse{}, client.getNotebookHandleError(resp)
+		return notebookClientGetNotebookResponse{}, client.getNotebookHandleError(resp)
 	}
 	return client.getNotebookHandleResponse(resp)
 }
 
 // getNotebookCreateRequest creates the GetNotebook request.
-func (client *notebookClient) getNotebookCreateRequest(ctx context.Context, notebookName string, options *NotebookGetNotebookOptions) (*policy.Request, error) {
+func (client *notebookClient) getNotebookCreateRequest(ctx context.Context, notebookName string, options *notebookClientGetNotebookOptions) (*policy.Request, error) {
 	urlPath := "/notebooks/{notebookName}"
 	if notebookName == "" {
 		return nil, errors.New("parameter notebookName cannot be empty")
@@ -222,10 +222,10 @@ func (client *notebookClient) getNotebookCreateRequest(ctx context.Context, note
 }
 
 // getNotebookHandleResponse handles the GetNotebook response.
-func (client *notebookClient) getNotebookHandleResponse(resp *http.Response) (NotebookGetNotebookResponse, error) {
-	result := NotebookGetNotebookResponse{RawResponse: resp}
+func (client *notebookClient) getNotebookHandleResponse(resp *http.Response) (notebookClientGetNotebookResponse, error) {
+	result := notebookClientGetNotebookResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NotebookResource); err != nil {
-		return NotebookGetNotebookResponse{}, runtime.NewResponseError(err, resp)
+		return notebookClientGetNotebookResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -245,22 +245,22 @@ func (client *notebookClient) getNotebookHandleError(resp *http.Response) error 
 
 // GetNotebookSummaryByWorkSpace - Lists a summary of Notebooks.
 // If the operation fails it returns the *CloudError error type.
-// options - NotebookGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the notebookClient.GetNotebookSummaryByWorkSpace
+// options - notebookClientGetNotebookSummaryByWorkSpaceOptions contains the optional parameters for the notebookClient.GetNotebookSummaryByWorkSpace
 // method.
-func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *NotebookGetNotebookSummaryByWorkSpaceOptions) *NotebookGetNotebookSummaryByWorkSpacePager {
-	return &NotebookGetNotebookSummaryByWorkSpacePager{
+func (client *notebookClient) GetNotebookSummaryByWorkSpace(options *notebookClientGetNotebookSummaryByWorkSpaceOptions) *notebookClientGetNotebookSummaryByWorkSpacePager {
+	return &notebookClientGetNotebookSummaryByWorkSpacePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getNotebookSummaryByWorkSpaceCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp NotebookGetNotebookSummaryByWorkSpaceResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp notebookClientGetNotebookSummaryByWorkSpaceResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.NotebookListResponse.NextLink)
 		},
 	}
 }
 
 // getNotebookSummaryByWorkSpaceCreateRequest creates the GetNotebookSummaryByWorkSpace request.
-func (client *notebookClient) getNotebookSummaryByWorkSpaceCreateRequest(ctx context.Context, options *NotebookGetNotebookSummaryByWorkSpaceOptions) (*policy.Request, error) {
+func (client *notebookClient) getNotebookSummaryByWorkSpaceCreateRequest(ctx context.Context, options *notebookClientGetNotebookSummaryByWorkSpaceOptions) (*policy.Request, error) {
 	urlPath := "/notebooks/summary"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -274,10 +274,10 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceCreateRequest(ctx con
 }
 
 // getNotebookSummaryByWorkSpaceHandleResponse handles the GetNotebookSummaryByWorkSpace response.
-func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleResponse(resp *http.Response) (NotebookGetNotebookSummaryByWorkSpaceResponse, error) {
-	result := NotebookGetNotebookSummaryByWorkSpaceResponse{RawResponse: resp}
+func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleResponse(resp *http.Response) (notebookClientGetNotebookSummaryByWorkSpaceResponse, error) {
+	result := notebookClientGetNotebookSummaryByWorkSpaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NotebookListResponse); err != nil {
-		return NotebookGetNotebookSummaryByWorkSpaceResponse{}, runtime.NewResponseError(err, resp)
+		return notebookClientGetNotebookSummaryByWorkSpaceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -297,22 +297,22 @@ func (client *notebookClient) getNotebookSummaryByWorkSpaceHandleError(resp *htt
 
 // GetNotebooksByWorkspace - Lists Notebooks.
 // If the operation fails it returns the *CloudError error type.
-// options - NotebookGetNotebooksByWorkspaceOptions contains the optional parameters for the notebookClient.GetNotebooksByWorkspace
+// options - notebookClientGetNotebooksByWorkspaceOptions contains the optional parameters for the notebookClient.GetNotebooksByWorkspace
 // method.
-func (client *notebookClient) GetNotebooksByWorkspace(options *NotebookGetNotebooksByWorkspaceOptions) *NotebookGetNotebooksByWorkspacePager {
-	return &NotebookGetNotebooksByWorkspacePager{
+func (client *notebookClient) GetNotebooksByWorkspace(options *notebookClientGetNotebooksByWorkspaceOptions) *notebookClientGetNotebooksByWorkspacePager {
+	return &notebookClientGetNotebooksByWorkspacePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getNotebooksByWorkspaceCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp NotebookGetNotebooksByWorkspaceResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp notebookClientGetNotebooksByWorkspaceResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.NotebookListResponse.NextLink)
 		},
 	}
 }
 
 // getNotebooksByWorkspaceCreateRequest creates the GetNotebooksByWorkspace request.
-func (client *notebookClient) getNotebooksByWorkspaceCreateRequest(ctx context.Context, options *NotebookGetNotebooksByWorkspaceOptions) (*policy.Request, error) {
+func (client *notebookClient) getNotebooksByWorkspaceCreateRequest(ctx context.Context, options *notebookClientGetNotebooksByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/notebooks"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -326,10 +326,10 @@ func (client *notebookClient) getNotebooksByWorkspaceCreateRequest(ctx context.C
 }
 
 // getNotebooksByWorkspaceHandleResponse handles the GetNotebooksByWorkspace response.
-func (client *notebookClient) getNotebooksByWorkspaceHandleResponse(resp *http.Response) (NotebookGetNotebooksByWorkspaceResponse, error) {
-	result := NotebookGetNotebooksByWorkspaceResponse{RawResponse: resp}
+func (client *notebookClient) getNotebooksByWorkspaceHandleResponse(resp *http.Response) (notebookClientGetNotebooksByWorkspaceResponse, error) {
+	result := notebookClientGetNotebooksByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NotebookListResponse); err != nil {
-		return NotebookGetNotebooksByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
+		return notebookClientGetNotebooksByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -351,21 +351,21 @@ func (client *notebookClient) getNotebooksByWorkspaceHandleError(resp *http.Resp
 // If the operation fails it returns the *CloudError error type.
 // notebookName - The notebook name.
 // request - proposed new name.
-// options - NotebookBeginRenameNotebookOptions contains the optional parameters for the notebookClient.BeginRenameNotebook
+// options - notebookClientBeginRenameNotebookOptions contains the optional parameters for the notebookClient.BeginRenameNotebook
 // method.
-func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookBeginRenameNotebookOptions) (NotebookRenameNotebookPollerResponse, error) {
+func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *notebookClientBeginRenameNotebookOptions) (notebookClientRenameNotebookPollerResponse, error) {
 	resp, err := client.renameNotebook(ctx, notebookName, request, options)
 	if err != nil {
-		return NotebookRenameNotebookPollerResponse{}, err
+		return notebookClientRenameNotebookPollerResponse{}, err
 	}
-	result := NotebookRenameNotebookPollerResponse{
+	result := notebookClientRenameNotebookPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := runtime.NewPoller("notebookClient.RenameNotebook", resp, client.pl, client.renameNotebookHandleError)
 	if err != nil {
-		return NotebookRenameNotebookPollerResponse{}, err
+		return notebookClientRenameNotebookPollerResponse{}, err
 	}
-	result.Poller = &NotebookRenameNotebookPoller{
+	result.Poller = &notebookClientRenameNotebookPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -373,7 +373,7 @@ func (client *notebookClient) BeginRenameNotebook(ctx context.Context, notebookN
 
 // RenameNotebook - Renames a notebook.
 // If the operation fails it returns the *CloudError error type.
-func (client *notebookClient) renameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookBeginRenameNotebookOptions) (*http.Response, error) {
+func (client *notebookClient) renameNotebook(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *notebookClientBeginRenameNotebookOptions) (*http.Response, error) {
 	req, err := client.renameNotebookCreateRequest(ctx, notebookName, request, options)
 	if err != nil {
 		return nil, err
@@ -389,7 +389,7 @@ func (client *notebookClient) renameNotebook(ctx context.Context, notebookName s
 }
 
 // renameNotebookCreateRequest creates the RenameNotebook request.
-func (client *notebookClient) renameNotebookCreateRequest(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *NotebookBeginRenameNotebookOptions) (*policy.Request, error) {
+func (client *notebookClient) renameNotebookCreateRequest(ctx context.Context, notebookName string, request ArtifactRenameRequest, options *notebookClientBeginRenameNotebookOptions) (*policy.Request, error) {
 	urlPath := "/notebooks/{notebookName}/rename"
 	if notebookName == "" {
 		return nil, errors.New("parameter notebookName cannot be empty")

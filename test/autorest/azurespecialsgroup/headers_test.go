@@ -45,7 +45,7 @@ func TestCustomNamedRequestIDHead(t *testing.T) {
 // CustomNamedRequestIDParamGrouping - Send foo-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 in the header of the request, via a parameter group
 func TestCustomNamedRequestIDParamGrouping(t *testing.T) {
 	client := newHeaderClient()
-	result, err := client.CustomNamedRequestIDParamGrouping(context.Background(), HeaderCustomNamedRequestIDParamGroupingParameters{
+	result, err := client.CustomNamedRequestIDParamGrouping(context.Background(), HeaderClientCustomNamedRequestIDParamGroupingParameters{
 		FooClientRequestID: "9C4D50EE-2D56-4CD3-8152-34347DC9F2B0",
 	})
 	if err != nil {

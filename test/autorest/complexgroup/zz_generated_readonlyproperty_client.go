@@ -38,24 +38,25 @@ func NewReadonlypropertyClient(options *azcore.ClientOptions) *ReadonlypropertyC
 
 // GetValid - Get complex types that have readonly properties
 // If the operation fails it returns the *Error error type.
-// options - ReadonlypropertyGetValidOptions contains the optional parameters for the ReadonlypropertyClient.GetValid method.
-func (client *ReadonlypropertyClient) GetValid(ctx context.Context, options *ReadonlypropertyGetValidOptions) (ReadonlypropertyGetValidResponse, error) {
+// options - ReadonlypropertyClientGetValidOptions contains the optional parameters for the ReadonlypropertyClient.GetValid
+// method.
+func (client *ReadonlypropertyClient) GetValid(ctx context.Context, options *ReadonlypropertyClientGetValidOptions) (ReadonlypropertyClientGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
-		return ReadonlypropertyGetValidResponse{}, err
+		return ReadonlypropertyClientGetValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ReadonlypropertyGetValidResponse{}, err
+		return ReadonlypropertyClientGetValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ReadonlypropertyGetValidResponse{}, client.getValidHandleError(resp)
+		return ReadonlypropertyClientGetValidResponse{}, client.getValidHandleError(resp)
 	}
 	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client *ReadonlypropertyClient) getValidCreateRequest(ctx context.Context, options *ReadonlypropertyGetValidOptions) (*policy.Request, error) {
+func (client *ReadonlypropertyClient) getValidCreateRequest(ctx context.Context, options *ReadonlypropertyClientGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/readonlyproperty/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -66,10 +67,10 @@ func (client *ReadonlypropertyClient) getValidCreateRequest(ctx context.Context,
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client *ReadonlypropertyClient) getValidHandleResponse(resp *http.Response) (ReadonlypropertyGetValidResponse, error) {
-	result := ReadonlypropertyGetValidResponse{RawResponse: resp}
+func (client *ReadonlypropertyClient) getValidHandleResponse(resp *http.Response) (ReadonlypropertyClientGetValidResponse, error) {
+	result := ReadonlypropertyClientGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReadonlyObj); err != nil {
-		return ReadonlypropertyGetValidResponse{}, runtime.NewResponseError(err, resp)
+		return ReadonlypropertyClientGetValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -89,24 +90,25 @@ func (client *ReadonlypropertyClient) getValidHandleError(resp *http.Response) e
 
 // PutValid - Put complex types that have readonly properties
 // If the operation fails it returns the *Error error type.
-// options - ReadonlypropertyPutValidOptions contains the optional parameters for the ReadonlypropertyClient.PutValid method.
-func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyPutValidOptions) (ReadonlypropertyPutValidResponse, error) {
+// options - ReadonlypropertyClientPutValidOptions contains the optional parameters for the ReadonlypropertyClient.PutValid
+// method.
+func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyClientPutValidOptions) (ReadonlypropertyClientPutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return ReadonlypropertyPutValidResponse{}, err
+		return ReadonlypropertyClientPutValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ReadonlypropertyPutValidResponse{}, err
+		return ReadonlypropertyClientPutValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ReadonlypropertyPutValidResponse{}, client.putValidHandleError(resp)
+		return ReadonlypropertyClientPutValidResponse{}, client.putValidHandleError(resp)
 	}
-	return ReadonlypropertyPutValidResponse{RawResponse: resp}, nil
+	return ReadonlypropertyClientPutValidResponse{RawResponse: resp}, nil
 }
 
 // putValidCreateRequest creates the PutValid request.
-func (client *ReadonlypropertyClient) putValidCreateRequest(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyPutValidOptions) (*policy.Request, error) {
+func (client *ReadonlypropertyClient) putValidCreateRequest(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyClientPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/readonlyproperty/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

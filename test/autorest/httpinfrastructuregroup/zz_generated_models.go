@@ -42,592 +42,592 @@ func (e Error) Error() string {
 	return e.raw
 }
 
-// HTTPClientFailureDelete400Options contains the optional parameters for the HTTPClientFailureClient.Delete400 method.
-type HTTPClientFailureDelete400Options struct {
+// HTTPClientFailureClientDelete400Options contains the optional parameters for the HTTPClientFailureClient.Delete400 method.
+type HTTPClientFailureClientDelete400Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailureDelete407Options contains the optional parameters for the HTTPClientFailureClient.Delete407 method.
-type HTTPClientFailureDelete407Options struct {
+// HTTPClientFailureClientDelete407Options contains the optional parameters for the HTTPClientFailureClient.Delete407 method.
+type HTTPClientFailureClientDelete407Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailureDelete417Options contains the optional parameters for the HTTPClientFailureClient.Delete417 method.
-type HTTPClientFailureDelete417Options struct {
+// HTTPClientFailureClientDelete417Options contains the optional parameters for the HTTPClientFailureClient.Delete417 method.
+type HTTPClientFailureClientDelete417Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailureGet400Options contains the optional parameters for the HTTPClientFailureClient.Get400 method.
-type HTTPClientFailureGet400Options struct {
+// HTTPClientFailureClientGet400Options contains the optional parameters for the HTTPClientFailureClient.Get400 method.
+type HTTPClientFailureClientGet400Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailureGet402Options contains the optional parameters for the HTTPClientFailureClient.Get402 method.
-type HTTPClientFailureGet402Options struct {
+// HTTPClientFailureClientGet402Options contains the optional parameters for the HTTPClientFailureClient.Get402 method.
+type HTTPClientFailureClientGet402Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailureGet403Options contains the optional parameters for the HTTPClientFailureClient.Get403 method.
-type HTTPClientFailureGet403Options struct {
+// HTTPClientFailureClientGet403Options contains the optional parameters for the HTTPClientFailureClient.Get403 method.
+type HTTPClientFailureClientGet403Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailureGet411Options contains the optional parameters for the HTTPClientFailureClient.Get411 method.
-type HTTPClientFailureGet411Options struct {
+// HTTPClientFailureClientGet411Options contains the optional parameters for the HTTPClientFailureClient.Get411 method.
+type HTTPClientFailureClientGet411Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailureGet412Options contains the optional parameters for the HTTPClientFailureClient.Get412 method.
-type HTTPClientFailureGet412Options struct {
+// HTTPClientFailureClientGet412Options contains the optional parameters for the HTTPClientFailureClient.Get412 method.
+type HTTPClientFailureClientGet412Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailureGet416Options contains the optional parameters for the HTTPClientFailureClient.Get416 method.
-type HTTPClientFailureGet416Options struct {
+// HTTPClientFailureClientGet416Options contains the optional parameters for the HTTPClientFailureClient.Get416 method.
+type HTTPClientFailureClientGet416Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailureHead400Options contains the optional parameters for the HTTPClientFailureClient.Head400 method.
-type HTTPClientFailureHead400Options struct {
+// HTTPClientFailureClientHead400Options contains the optional parameters for the HTTPClientFailureClient.Head400 method.
+type HTTPClientFailureClientHead400Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailureHead401Options contains the optional parameters for the HTTPClientFailureClient.Head401 method.
-type HTTPClientFailureHead401Options struct {
+// HTTPClientFailureClientHead401Options contains the optional parameters for the HTTPClientFailureClient.Head401 method.
+type HTTPClientFailureClientHead401Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailureHead410Options contains the optional parameters for the HTTPClientFailureClient.Head410 method.
-type HTTPClientFailureHead410Options struct {
+// HTTPClientFailureClientHead410Options contains the optional parameters for the HTTPClientFailureClient.Head410 method.
+type HTTPClientFailureClientHead410Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailureHead429Options contains the optional parameters for the HTTPClientFailureClient.Head429 method.
-type HTTPClientFailureHead429Options struct {
+// HTTPClientFailureClientHead429Options contains the optional parameters for the HTTPClientFailureClient.Head429 method.
+type HTTPClientFailureClientHead429Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailureOptions400Options contains the optional parameters for the HTTPClientFailureClient.Options400 method.
-type HTTPClientFailureOptions400Options struct {
+// HTTPClientFailureClientOptions400Options contains the optional parameters for the HTTPClientFailureClient.Options400 method.
+type HTTPClientFailureClientOptions400Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailureOptions403Options contains the optional parameters for the HTTPClientFailureClient.Options403 method.
-type HTTPClientFailureOptions403Options struct {
+// HTTPClientFailureClientOptions403Options contains the optional parameters for the HTTPClientFailureClient.Options403 method.
+type HTTPClientFailureClientOptions403Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailureOptions412Options contains the optional parameters for the HTTPClientFailureClient.Options412 method.
-type HTTPClientFailureOptions412Options struct {
+// HTTPClientFailureClientOptions412Options contains the optional parameters for the HTTPClientFailureClient.Options412 method.
+type HTTPClientFailureClientOptions412Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailurePatch400Options contains the optional parameters for the HTTPClientFailureClient.Patch400 method.
-type HTTPClientFailurePatch400Options struct {
+// HTTPClientFailureClientPatch400Options contains the optional parameters for the HTTPClientFailureClient.Patch400 method.
+type HTTPClientFailureClientPatch400Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailurePatch405Options contains the optional parameters for the HTTPClientFailureClient.Patch405 method.
-type HTTPClientFailurePatch405Options struct {
+// HTTPClientFailureClientPatch405Options contains the optional parameters for the HTTPClientFailureClient.Patch405 method.
+type HTTPClientFailureClientPatch405Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailurePatch414Options contains the optional parameters for the HTTPClientFailureClient.Patch414 method.
-type HTTPClientFailurePatch414Options struct {
+// HTTPClientFailureClientPatch414Options contains the optional parameters for the HTTPClientFailureClient.Patch414 method.
+type HTTPClientFailureClientPatch414Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailurePost400Options contains the optional parameters for the HTTPClientFailureClient.Post400 method.
-type HTTPClientFailurePost400Options struct {
+// HTTPClientFailureClientPost400Options contains the optional parameters for the HTTPClientFailureClient.Post400 method.
+type HTTPClientFailureClientPost400Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailurePost406Options contains the optional parameters for the HTTPClientFailureClient.Post406 method.
-type HTTPClientFailurePost406Options struct {
+// HTTPClientFailureClientPost406Options contains the optional parameters for the HTTPClientFailureClient.Post406 method.
+type HTTPClientFailureClientPost406Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailurePost415Options contains the optional parameters for the HTTPClientFailureClient.Post415 method.
-type HTTPClientFailurePost415Options struct {
+// HTTPClientFailureClientPost415Options contains the optional parameters for the HTTPClientFailureClient.Post415 method.
+type HTTPClientFailureClientPost415Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailurePut400Options contains the optional parameters for the HTTPClientFailureClient.Put400 method.
-type HTTPClientFailurePut400Options struct {
+// HTTPClientFailureClientPut400Options contains the optional parameters for the HTTPClientFailureClient.Put400 method.
+type HTTPClientFailureClientPut400Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailurePut404Options contains the optional parameters for the HTTPClientFailureClient.Put404 method.
-type HTTPClientFailurePut404Options struct {
+// HTTPClientFailureClientPut404Options contains the optional parameters for the HTTPClientFailureClient.Put404 method.
+type HTTPClientFailureClientPut404Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailurePut409Options contains the optional parameters for the HTTPClientFailureClient.Put409 method.
-type HTTPClientFailurePut409Options struct {
+// HTTPClientFailureClientPut409Options contains the optional parameters for the HTTPClientFailureClient.Put409 method.
+type HTTPClientFailureClientPut409Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPClientFailurePut413Options contains the optional parameters for the HTTPClientFailureClient.Put413 method.
-type HTTPClientFailurePut413Options struct {
+// HTTPClientFailureClientPut413Options contains the optional parameters for the HTTPClientFailureClient.Put413 method.
+type HTTPClientFailureClientPut413Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPFailureGetEmptyErrorOptions contains the optional parameters for the HTTPFailureClient.GetEmptyError method.
-type HTTPFailureGetEmptyErrorOptions struct {
+// HTTPFailureClientGetEmptyErrorOptions contains the optional parameters for the HTTPFailureClient.GetEmptyError method.
+type HTTPFailureClientGetEmptyErrorOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPFailureGetNoModelEmptyOptions contains the optional parameters for the HTTPFailureClient.GetNoModelEmpty method.
-type HTTPFailureGetNoModelEmptyOptions struct {
+// HTTPFailureClientGetNoModelEmptyOptions contains the optional parameters for the HTTPFailureClient.GetNoModelEmpty method.
+type HTTPFailureClientGetNoModelEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPFailureGetNoModelErrorOptions contains the optional parameters for the HTTPFailureClient.GetNoModelError method.
-type HTTPFailureGetNoModelErrorOptions struct {
+// HTTPFailureClientGetNoModelErrorOptions contains the optional parameters for the HTTPFailureClient.GetNoModelError method.
+type HTTPFailureClientGetNoModelErrorOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsDelete307Options contains the optional parameters for the HTTPRedirectsClient.Delete307 method.
-type HTTPRedirectsDelete307Options struct {
+// HTTPRedirectsClientDelete307Options contains the optional parameters for the HTTPRedirectsClient.Delete307 method.
+type HTTPRedirectsClientDelete307Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsGet300Options contains the optional parameters for the HTTPRedirectsClient.Get300 method.
-type HTTPRedirectsGet300Options struct {
+// HTTPRedirectsClientGet300Options contains the optional parameters for the HTTPRedirectsClient.Get300 method.
+type HTTPRedirectsClientGet300Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsGet301Options contains the optional parameters for the HTTPRedirectsClient.Get301 method.
-type HTTPRedirectsGet301Options struct {
+// HTTPRedirectsClientGet301Options contains the optional parameters for the HTTPRedirectsClient.Get301 method.
+type HTTPRedirectsClientGet301Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsGet302Options contains the optional parameters for the HTTPRedirectsClient.Get302 method.
-type HTTPRedirectsGet302Options struct {
+// HTTPRedirectsClientGet302Options contains the optional parameters for the HTTPRedirectsClient.Get302 method.
+type HTTPRedirectsClientGet302Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsGet307Options contains the optional parameters for the HTTPRedirectsClient.Get307 method.
-type HTTPRedirectsGet307Options struct {
+// HTTPRedirectsClientGet307Options contains the optional parameters for the HTTPRedirectsClient.Get307 method.
+type HTTPRedirectsClientGet307Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsHead300Options contains the optional parameters for the HTTPRedirectsClient.Head300 method.
-type HTTPRedirectsHead300Options struct {
+// HTTPRedirectsClientHead300Options contains the optional parameters for the HTTPRedirectsClient.Head300 method.
+type HTTPRedirectsClientHead300Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsHead301Options contains the optional parameters for the HTTPRedirectsClient.Head301 method.
-type HTTPRedirectsHead301Options struct {
+// HTTPRedirectsClientHead301Options contains the optional parameters for the HTTPRedirectsClient.Head301 method.
+type HTTPRedirectsClientHead301Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsHead302Options contains the optional parameters for the HTTPRedirectsClient.Head302 method.
-type HTTPRedirectsHead302Options struct {
+// HTTPRedirectsClientHead302Options contains the optional parameters for the HTTPRedirectsClient.Head302 method.
+type HTTPRedirectsClientHead302Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsHead307Options contains the optional parameters for the HTTPRedirectsClient.Head307 method.
-type HTTPRedirectsHead307Options struct {
+// HTTPRedirectsClientHead307Options contains the optional parameters for the HTTPRedirectsClient.Head307 method.
+type HTTPRedirectsClientHead307Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsOptions307Options contains the optional parameters for the HTTPRedirectsClient.Options307 method.
-type HTTPRedirectsOptions307Options struct {
+// HTTPRedirectsClientOptions307Options contains the optional parameters for the HTTPRedirectsClient.Options307 method.
+type HTTPRedirectsClientOptions307Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsPatch302Options contains the optional parameters for the HTTPRedirectsClient.Patch302 method.
-type HTTPRedirectsPatch302Options struct {
+// HTTPRedirectsClientPatch302Options contains the optional parameters for the HTTPRedirectsClient.Patch302 method.
+type HTTPRedirectsClientPatch302Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsPatch307Options contains the optional parameters for the HTTPRedirectsClient.Patch307 method.
-type HTTPRedirectsPatch307Options struct {
+// HTTPRedirectsClientPatch307Options contains the optional parameters for the HTTPRedirectsClient.Patch307 method.
+type HTTPRedirectsClientPatch307Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsPost303Options contains the optional parameters for the HTTPRedirectsClient.Post303 method.
-type HTTPRedirectsPost303Options struct {
+// HTTPRedirectsClientPost303Options contains the optional parameters for the HTTPRedirectsClient.Post303 method.
+type HTTPRedirectsClientPost303Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsPost307Options contains the optional parameters for the HTTPRedirectsClient.Post307 method.
-type HTTPRedirectsPost307Options struct {
+// HTTPRedirectsClientPost307Options contains the optional parameters for the HTTPRedirectsClient.Post307 method.
+type HTTPRedirectsClientPost307Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsPut301Options contains the optional parameters for the HTTPRedirectsClient.Put301 method.
-type HTTPRedirectsPut301Options struct {
+// HTTPRedirectsClientPut301Options contains the optional parameters for the HTTPRedirectsClient.Put301 method.
+type HTTPRedirectsClientPut301Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRedirectsPut307Options contains the optional parameters for the HTTPRedirectsClient.Put307 method.
-type HTTPRedirectsPut307Options struct {
+// HTTPRedirectsClientPut307Options contains the optional parameters for the HTTPRedirectsClient.Put307 method.
+type HTTPRedirectsClientPut307Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRetryDelete503Options contains the optional parameters for the HTTPRetryClient.Delete503 method.
-type HTTPRetryDelete503Options struct {
+// HTTPRetryClientDelete503Options contains the optional parameters for the HTTPRetryClient.Delete503 method.
+type HTTPRetryClientDelete503Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRetryGet502Options contains the optional parameters for the HTTPRetryClient.Get502 method.
-type HTTPRetryGet502Options struct {
+// HTTPRetryClientGet502Options contains the optional parameters for the HTTPRetryClient.Get502 method.
+type HTTPRetryClientGet502Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRetryHead408Options contains the optional parameters for the HTTPRetryClient.Head408 method.
-type HTTPRetryHead408Options struct {
+// HTTPRetryClientHead408Options contains the optional parameters for the HTTPRetryClient.Head408 method.
+type HTTPRetryClientHead408Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRetryOptions502Options contains the optional parameters for the HTTPRetryClient.Options502 method.
-type HTTPRetryOptions502Options struct {
+// HTTPRetryClientOptions502Options contains the optional parameters for the HTTPRetryClient.Options502 method.
+type HTTPRetryClientOptions502Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRetryPatch500Options contains the optional parameters for the HTTPRetryClient.Patch500 method.
-type HTTPRetryPatch500Options struct {
+// HTTPRetryClientPatch500Options contains the optional parameters for the HTTPRetryClient.Patch500 method.
+type HTTPRetryClientPatch500Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRetryPatch504Options contains the optional parameters for the HTTPRetryClient.Patch504 method.
-type HTTPRetryPatch504Options struct {
+// HTTPRetryClientPatch504Options contains the optional parameters for the HTTPRetryClient.Patch504 method.
+type HTTPRetryClientPatch504Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRetryPost503Options contains the optional parameters for the HTTPRetryClient.Post503 method.
-type HTTPRetryPost503Options struct {
+// HTTPRetryClientPost503Options contains the optional parameters for the HTTPRetryClient.Post503 method.
+type HTTPRetryClientPost503Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRetryPut500Options contains the optional parameters for the HTTPRetryClient.Put500 method.
-type HTTPRetryPut500Options struct {
+// HTTPRetryClientPut500Options contains the optional parameters for the HTTPRetryClient.Put500 method.
+type HTTPRetryClientPut500Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPRetryPut504Options contains the optional parameters for the HTTPRetryClient.Put504 method.
-type HTTPRetryPut504Options struct {
+// HTTPRetryClientPut504Options contains the optional parameters for the HTTPRetryClient.Put504 method.
+type HTTPRetryClientPut504Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPServerFailureDelete505Options contains the optional parameters for the HTTPServerFailureClient.Delete505 method.
-type HTTPServerFailureDelete505Options struct {
+// HTTPServerFailureClientDelete505Options contains the optional parameters for the HTTPServerFailureClient.Delete505 method.
+type HTTPServerFailureClientDelete505Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPServerFailureGet501Options contains the optional parameters for the HTTPServerFailureClient.Get501 method.
-type HTTPServerFailureGet501Options struct {
+// HTTPServerFailureClientGet501Options contains the optional parameters for the HTTPServerFailureClient.Get501 method.
+type HTTPServerFailureClientGet501Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPServerFailureHead501Options contains the optional parameters for the HTTPServerFailureClient.Head501 method.
-type HTTPServerFailureHead501Options struct {
+// HTTPServerFailureClientHead501Options contains the optional parameters for the HTTPServerFailureClient.Head501 method.
+type HTTPServerFailureClientHead501Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPServerFailurePost505Options contains the optional parameters for the HTTPServerFailureClient.Post505 method.
-type HTTPServerFailurePost505Options struct {
+// HTTPServerFailureClientPost505Options contains the optional parameters for the HTTPServerFailureClient.Post505 method.
+type HTTPServerFailureClientPost505Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessDelete200Options contains the optional parameters for the HTTPSuccessClient.Delete200 method.
-type HTTPSuccessDelete200Options struct {
+// HTTPSuccessClientDelete200Options contains the optional parameters for the HTTPSuccessClient.Delete200 method.
+type HTTPSuccessClientDelete200Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessDelete202Options contains the optional parameters for the HTTPSuccessClient.Delete202 method.
-type HTTPSuccessDelete202Options struct {
+// HTTPSuccessClientDelete202Options contains the optional parameters for the HTTPSuccessClient.Delete202 method.
+type HTTPSuccessClientDelete202Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessDelete204Options contains the optional parameters for the HTTPSuccessClient.Delete204 method.
-type HTTPSuccessDelete204Options struct {
+// HTTPSuccessClientDelete204Options contains the optional parameters for the HTTPSuccessClient.Delete204 method.
+type HTTPSuccessClientDelete204Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessGet200Options contains the optional parameters for the HTTPSuccessClient.Get200 method.
-type HTTPSuccessGet200Options struct {
+// HTTPSuccessClientGet200Options contains the optional parameters for the HTTPSuccessClient.Get200 method.
+type HTTPSuccessClientGet200Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessHead200Options contains the optional parameters for the HTTPSuccessClient.Head200 method.
-type HTTPSuccessHead200Options struct {
+// HTTPSuccessClientHead200Options contains the optional parameters for the HTTPSuccessClient.Head200 method.
+type HTTPSuccessClientHead200Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessHead204Options contains the optional parameters for the HTTPSuccessClient.Head204 method.
-type HTTPSuccessHead204Options struct {
+// HTTPSuccessClientHead204Options contains the optional parameters for the HTTPSuccessClient.Head204 method.
+type HTTPSuccessClientHead204Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessHead404Options contains the optional parameters for the HTTPSuccessClient.Head404 method.
-type HTTPSuccessHead404Options struct {
+// HTTPSuccessClientHead404Options contains the optional parameters for the HTTPSuccessClient.Head404 method.
+type HTTPSuccessClientHead404Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessOptions200Options contains the optional parameters for the HTTPSuccessClient.Options200 method.
-type HTTPSuccessOptions200Options struct {
+// HTTPSuccessClientOptions200Options contains the optional parameters for the HTTPSuccessClient.Options200 method.
+type HTTPSuccessClientOptions200Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessPatch200Options contains the optional parameters for the HTTPSuccessClient.Patch200 method.
-type HTTPSuccessPatch200Options struct {
+// HTTPSuccessClientPatch200Options contains the optional parameters for the HTTPSuccessClient.Patch200 method.
+type HTTPSuccessClientPatch200Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessPatch202Options contains the optional parameters for the HTTPSuccessClient.Patch202 method.
-type HTTPSuccessPatch202Options struct {
+// HTTPSuccessClientPatch202Options contains the optional parameters for the HTTPSuccessClient.Patch202 method.
+type HTTPSuccessClientPatch202Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessPatch204Options contains the optional parameters for the HTTPSuccessClient.Patch204 method.
-type HTTPSuccessPatch204Options struct {
+// HTTPSuccessClientPatch204Options contains the optional parameters for the HTTPSuccessClient.Patch204 method.
+type HTTPSuccessClientPatch204Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessPost200Options contains the optional parameters for the HTTPSuccessClient.Post200 method.
-type HTTPSuccessPost200Options struct {
+// HTTPSuccessClientPost200Options contains the optional parameters for the HTTPSuccessClient.Post200 method.
+type HTTPSuccessClientPost200Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessPost201Options contains the optional parameters for the HTTPSuccessClient.Post201 method.
-type HTTPSuccessPost201Options struct {
+// HTTPSuccessClientPost201Options contains the optional parameters for the HTTPSuccessClient.Post201 method.
+type HTTPSuccessClientPost201Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessPost202Options contains the optional parameters for the HTTPSuccessClient.Post202 method.
-type HTTPSuccessPost202Options struct {
+// HTTPSuccessClientPost202Options contains the optional parameters for the HTTPSuccessClient.Post202 method.
+type HTTPSuccessClientPost202Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessPost204Options contains the optional parameters for the HTTPSuccessClient.Post204 method.
-type HTTPSuccessPost204Options struct {
+// HTTPSuccessClientPost204Options contains the optional parameters for the HTTPSuccessClient.Post204 method.
+type HTTPSuccessClientPost204Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessPut200Options contains the optional parameters for the HTTPSuccessClient.Put200 method.
-type HTTPSuccessPut200Options struct {
+// HTTPSuccessClientPut200Options contains the optional parameters for the HTTPSuccessClient.Put200 method.
+type HTTPSuccessClientPut200Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessPut201Options contains the optional parameters for the HTTPSuccessClient.Put201 method.
-type HTTPSuccessPut201Options struct {
+// HTTPSuccessClientPut201Options contains the optional parameters for the HTTPSuccessClient.Put201 method.
+type HTTPSuccessClientPut201Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessPut202Options contains the optional parameters for the HTTPSuccessClient.Put202 method.
-type HTTPSuccessPut202Options struct {
+// HTTPSuccessClientPut202Options contains the optional parameters for the HTTPSuccessClient.Put202 method.
+type HTTPSuccessClientPut202Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessPut204Options contains the optional parameters for the HTTPSuccessClient.Put204 method.
-type HTTPSuccessPut204Options struct {
+// HTTPSuccessClientPut204Options contains the optional parameters for the HTTPSuccessClient.Put204 method.
+type HTTPSuccessClientPut204Options struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200Model201ModelDefaultError200ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200Model201ModelDefaultError200Valid
+// MultipleResponsesClientGet200Model201ModelDefaultError200ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200Model201ModelDefaultError200Valid
 // method.
-type MultipleResponsesGet200Model201ModelDefaultError200ValidOptions struct {
+type MultipleResponsesClientGet200Model201ModelDefaultError200ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200Model201ModelDefaultError201ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200Model201ModelDefaultError201Valid
+// MultipleResponsesClientGet200Model201ModelDefaultError201ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200Model201ModelDefaultError201Valid
 // method.
-type MultipleResponsesGet200Model201ModelDefaultError201ValidOptions struct {
+type MultipleResponsesClientGet200Model201ModelDefaultError201ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200Model201ModelDefaultError400ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200Model201ModelDefaultError400Valid
+// MultipleResponsesClientGet200Model201ModelDefaultError400ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200Model201ModelDefaultError400Valid
 // method.
-type MultipleResponsesGet200Model201ModelDefaultError400ValidOptions struct {
+type MultipleResponsesClientGet200Model201ModelDefaultError400ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200Model204NoModelDefaultError200ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid
+// MultipleResponsesClientGet200Model204NoModelDefaultError200ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid
 // method.
-type MultipleResponsesGet200Model204NoModelDefaultError200ValidOptions struct {
+type MultipleResponsesClientGet200Model204NoModelDefaultError200ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200Model204NoModelDefaultError201InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid
+// MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid
 // method.
-type MultipleResponsesGet200Model204NoModelDefaultError201InvalidOptions struct {
+type MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200Model204NoModelDefaultError202NoneOptions contains the optional parameters for the MultipleResponsesClient.Get200Model204NoModelDefaultError202None
+// MultipleResponsesClientGet200Model204NoModelDefaultError202NoneOptions contains the optional parameters for the MultipleResponsesClient.Get200Model204NoModelDefaultError202None
 // method.
-type MultipleResponsesGet200Model204NoModelDefaultError202NoneOptions struct {
+type MultipleResponsesClientGet200Model204NoModelDefaultError202NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200Model204NoModelDefaultError204ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid
+// MultipleResponsesClientGet200Model204NoModelDefaultError204ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid
 // method.
-type MultipleResponsesGet200Model204NoModelDefaultError204ValidOptions struct {
+type MultipleResponsesClientGet200Model204NoModelDefaultError204ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200Model204NoModelDefaultError400ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid
+// MultipleResponsesClientGet200Model204NoModelDefaultError400ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid
 // method.
-type MultipleResponsesGet200Model204NoModelDefaultError400ValidOptions struct {
+type MultipleResponsesClientGet200Model204NoModelDefaultError400ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA200InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200Invalid
+// MultipleResponsesClientGet200ModelA200InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200Invalid
 // method.
-type MultipleResponsesGet200ModelA200InvalidOptions struct {
+type MultipleResponsesClientGet200ModelA200InvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA200NoneOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200None
+// MultipleResponsesClientGet200ModelA200NoneOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200None
 // method.
-type MultipleResponsesGet200ModelA200NoneOptions struct {
+type MultipleResponsesClientGet200ModelA200NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA200ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200Valid
+// MultipleResponsesClientGet200ModelA200ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200Valid
 // method.
-type MultipleResponsesGet200ModelA200ValidOptions struct {
+type MultipleResponsesClientGet200ModelA200ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError200ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid
-// method.
-type MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError200ValidOptions struct {
+// MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidOptions contains the optional parameters for the
+// MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid method.
+type MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError201ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid
-// method.
-type MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError201ValidOptions struct {
+// MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidOptions contains the optional parameters for the
+// MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid method.
+type MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError400ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid
-// method.
-type MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError400ValidOptions struct {
+// MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidOptions contains the optional parameters for the
+// MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid method.
+type MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError404ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid
-// method.
-type MultipleResponsesGet200ModelA201ModelC404ModelDDefaultError404ValidOptions struct {
+// MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidOptions contains the optional parameters for the
+// MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid method.
+type MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA202ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA202Valid
+// MultipleResponsesClientGet200ModelA202ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA202Valid
 // method.
-type MultipleResponsesGet200ModelA202ValidOptions struct {
+type MultipleResponsesClientGet200ModelA202ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA400InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400Invalid
+// MultipleResponsesClientGet200ModelA400InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400Invalid
 // method.
-type MultipleResponsesGet200ModelA400InvalidOptions struct {
+type MultipleResponsesClientGet200ModelA400InvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA400NoneOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400None
+// MultipleResponsesClientGet200ModelA400NoneOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400None
 // method.
-type MultipleResponsesGet200ModelA400NoneOptions struct {
+type MultipleResponsesClientGet200ModelA400NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet200ModelA400ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400Valid
+// MultipleResponsesClientGet200ModelA400ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400Valid
 // method.
-type MultipleResponsesGet200ModelA400ValidOptions struct {
+type MultipleResponsesClientGet200ModelA400ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet202None204NoneDefaultError202NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultError202None
+// MultipleResponsesClientGet202None204NoneDefaultError202NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultError202None
 // method.
-type MultipleResponsesGet202None204NoneDefaultError202NoneOptions struct {
+type MultipleResponsesClientGet202None204NoneDefaultError202NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet202None204NoneDefaultError204NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultError204None
+// MultipleResponsesClientGet202None204NoneDefaultError204NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultError204None
 // method.
-type MultipleResponsesGet202None204NoneDefaultError204NoneOptions struct {
+type MultipleResponsesClientGet202None204NoneDefaultError204NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet202None204NoneDefaultError400ValidOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultError400Valid
+// MultipleResponsesClientGet202None204NoneDefaultError400ValidOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultError400Valid
 // method.
-type MultipleResponsesGet202None204NoneDefaultError400ValidOptions struct {
+type MultipleResponsesClientGet202None204NoneDefaultError400ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet202None204NoneDefaultNone202InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone202Invalid
+// MultipleResponsesClientGet202None204NoneDefaultNone202InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone202Invalid
 // method.
-type MultipleResponsesGet202None204NoneDefaultNone202InvalidOptions struct {
+type MultipleResponsesClientGet202None204NoneDefaultNone202InvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet202None204NoneDefaultNone204NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone204None
+// MultipleResponsesClientGet202None204NoneDefaultNone204NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone204None
 // method.
-type MultipleResponsesGet202None204NoneDefaultNone204NoneOptions struct {
+type MultipleResponsesClientGet202None204NoneDefaultNone204NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet202None204NoneDefaultNone400InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone400Invalid
+// MultipleResponsesClientGet202None204NoneDefaultNone400InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone400Invalid
 // method.
-type MultipleResponsesGet202None204NoneDefaultNone400InvalidOptions struct {
+type MultipleResponsesClientGet202None204NoneDefaultNone400InvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGet202None204NoneDefaultNone400NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone400None
+// MultipleResponsesClientGet202None204NoneDefaultNone400NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone400None
 // method.
-type MultipleResponsesGet202None204NoneDefaultNone400NoneOptions struct {
+type MultipleResponsesClientGet202None204NoneDefaultNone400NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGetDefaultModelA200NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA200None
+// MultipleResponsesClientGetDefaultModelA200NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA200None
 // method.
-type MultipleResponsesGetDefaultModelA200NoneOptions struct {
+type MultipleResponsesClientGetDefaultModelA200NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGetDefaultModelA200ValidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA200Valid
+// MultipleResponsesClientGetDefaultModelA200ValidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA200Valid
 // method.
-type MultipleResponsesGetDefaultModelA200ValidOptions struct {
+type MultipleResponsesClientGetDefaultModelA200ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGetDefaultModelA400NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA400None
+// MultipleResponsesClientGetDefaultModelA400NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA400None
 // method.
-type MultipleResponsesGetDefaultModelA400NoneOptions struct {
+type MultipleResponsesClientGetDefaultModelA400NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGetDefaultModelA400ValidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA400Valid
+// MultipleResponsesClientGetDefaultModelA400ValidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA400Valid
 // method.
-type MultipleResponsesGetDefaultModelA400ValidOptions struct {
+type MultipleResponsesClientGetDefaultModelA400ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGetDefaultNone200InvalidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone200Invalid
+// MultipleResponsesClientGetDefaultNone200InvalidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone200Invalid
 // method.
-type MultipleResponsesGetDefaultNone200InvalidOptions struct {
+type MultipleResponsesClientGetDefaultNone200InvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGetDefaultNone200NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone200None
+// MultipleResponsesClientGetDefaultNone200NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone200None
 // method.
-type MultipleResponsesGetDefaultNone200NoneOptions struct {
+type MultipleResponsesClientGetDefaultNone200NoneOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGetDefaultNone400InvalidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone400Invalid
+// MultipleResponsesClientGetDefaultNone400InvalidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone400Invalid
 // method.
-type MultipleResponsesGetDefaultNone400InvalidOptions struct {
+type MultipleResponsesClientGetDefaultNone400InvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// MultipleResponsesGetDefaultNone400NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone400None
+// MultipleResponsesClientGetDefaultNone400NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone400None
 // method.
-type MultipleResponsesGetDefaultNone400NoneOptions struct {
+type MultipleResponsesClientGetDefaultNone400NoneOptions struct {
 	// placeholder for future optional parameters
 }
 

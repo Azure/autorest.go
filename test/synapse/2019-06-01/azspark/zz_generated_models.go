@@ -597,86 +597,6 @@ func (s *SessionState) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// SparkBatchCancelSparkBatchJobOptions contains the optional parameters for the batchClient.CancelSparkBatchJob method.
-type SparkBatchCancelSparkBatchJobOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SparkBatchCreateSparkBatchJobOptions contains the optional parameters for the batchClient.CreateSparkBatchJob method.
-type SparkBatchCreateSparkBatchJobOptions struct {
-	// Optional query param specifying whether detailed response is returned beyond plain livy.
-	Detailed *bool
-}
-
-// SparkBatchGetSparkBatchJobOptions contains the optional parameters for the batchClient.GetSparkBatchJob method.
-type SparkBatchGetSparkBatchJobOptions struct {
-	// Optional query param specifying whether detailed response is returned beyond plain livy.
-	Detailed *bool
-}
-
-// SparkBatchGetSparkBatchJobsOptions contains the optional parameters for the batchClient.GetSparkBatchJobs method.
-type SparkBatchGetSparkBatchJobsOptions struct {
-	// Optional query param specifying whether detailed response is returned beyond plain livy.
-	Detailed *bool
-	// Optional param specifying which index the list should begin from.
-	From *int32
-	// Optional param specifying the size of the returned list. By default it is 20 and that is the maximum.
-	Size *int32
-}
-
-// SparkSessionCancelSparkSessionOptions contains the optional parameters for the sessionClient.CancelSparkSession method.
-type SparkSessionCancelSparkSessionOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SparkSessionCancelSparkStatementOptions contains the optional parameters for the sessionClient.CancelSparkStatement method.
-type SparkSessionCancelSparkStatementOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SparkSessionCreateSparkSessionOptions contains the optional parameters for the sessionClient.CreateSparkSession method.
-type SparkSessionCreateSparkSessionOptions struct {
-	// Optional query param specifying whether detailed response is returned beyond plain livy.
-	Detailed *bool
-}
-
-// SparkSessionCreateSparkStatementOptions contains the optional parameters for the sessionClient.CreateSparkStatement method.
-type SparkSessionCreateSparkStatementOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SparkSessionGetSparkSessionOptions contains the optional parameters for the sessionClient.GetSparkSession method.
-type SparkSessionGetSparkSessionOptions struct {
-	// Optional query param specifying whether detailed response is returned beyond plain livy.
-	Detailed *bool
-}
-
-// SparkSessionGetSparkSessionsOptions contains the optional parameters for the sessionClient.GetSparkSessions method.
-type SparkSessionGetSparkSessionsOptions struct {
-	// Optional query param specifying whether detailed response is returned beyond plain livy.
-	Detailed *bool
-	// Optional param specifying which index the list should begin from.
-	From *int32
-	// Optional param specifying the size of the returned list. By default it is 20 and that is the maximum.
-	Size *int32
-}
-
-// SparkSessionGetSparkStatementOptions contains the optional parameters for the sessionClient.GetSparkStatement method.
-type SparkSessionGetSparkStatementOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SparkSessionGetSparkStatementsOptions contains the optional parameters for the sessionClient.GetSparkStatements method.
-type SparkSessionGetSparkStatementsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// SparkSessionResetSparkSessionTimeoutOptions contains the optional parameters for the sessionClient.ResetSparkSessionTimeout
-// method.
-type SparkSessionResetSparkSessionTimeoutOptions struct {
-	// placeholder for future optional parameters
-}
-
 type Statement struct {
 	// REQUIRED
 	ID     *int32           `json:"id,omitempty"`
@@ -731,6 +651,86 @@ func (s StatementOutput) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "status", s.Status)
 	populate(objectMap, "traceback", s.Traceback)
 	return json.Marshal(objectMap)
+}
+
+// batchClientCancelSparkBatchJobOptions contains the optional parameters for the batchClient.CancelSparkBatchJob method.
+type batchClientCancelSparkBatchJobOptions struct {
+	// placeholder for future optional parameters
+}
+
+// batchClientCreateSparkBatchJobOptions contains the optional parameters for the batchClient.CreateSparkBatchJob method.
+type batchClientCreateSparkBatchJobOptions struct {
+	// Optional query param specifying whether detailed response is returned beyond plain livy.
+	Detailed *bool
+}
+
+// batchClientGetSparkBatchJobOptions contains the optional parameters for the batchClient.GetSparkBatchJob method.
+type batchClientGetSparkBatchJobOptions struct {
+	// Optional query param specifying whether detailed response is returned beyond plain livy.
+	Detailed *bool
+}
+
+// batchClientGetSparkBatchJobsOptions contains the optional parameters for the batchClient.GetSparkBatchJobs method.
+type batchClientGetSparkBatchJobsOptions struct {
+	// Optional query param specifying whether detailed response is returned beyond plain livy.
+	Detailed *bool
+	// Optional param specifying which index the list should begin from.
+	From *int32
+	// Optional param specifying the size of the returned list. By default it is 20 and that is the maximum.
+	Size *int32
+}
+
+// sessionClientCancelSparkSessionOptions contains the optional parameters for the sessionClient.CancelSparkSession method.
+type sessionClientCancelSparkSessionOptions struct {
+	// placeholder for future optional parameters
+}
+
+// sessionClientCancelSparkStatementOptions contains the optional parameters for the sessionClient.CancelSparkStatement method.
+type sessionClientCancelSparkStatementOptions struct {
+	// placeholder for future optional parameters
+}
+
+// sessionClientCreateSparkSessionOptions contains the optional parameters for the sessionClient.CreateSparkSession method.
+type sessionClientCreateSparkSessionOptions struct {
+	// Optional query param specifying whether detailed response is returned beyond plain livy.
+	Detailed *bool
+}
+
+// sessionClientCreateSparkStatementOptions contains the optional parameters for the sessionClient.CreateSparkStatement method.
+type sessionClientCreateSparkStatementOptions struct {
+	// placeholder for future optional parameters
+}
+
+// sessionClientGetSparkSessionOptions contains the optional parameters for the sessionClient.GetSparkSession method.
+type sessionClientGetSparkSessionOptions struct {
+	// Optional query param specifying whether detailed response is returned beyond plain livy.
+	Detailed *bool
+}
+
+// sessionClientGetSparkSessionsOptions contains the optional parameters for the sessionClient.GetSparkSessions method.
+type sessionClientGetSparkSessionsOptions struct {
+	// Optional query param specifying whether detailed response is returned beyond plain livy.
+	Detailed *bool
+	// Optional param specifying which index the list should begin from.
+	From *int32
+	// Optional param specifying the size of the returned list. By default it is 20 and that is the maximum.
+	Size *int32
+}
+
+// sessionClientGetSparkStatementOptions contains the optional parameters for the sessionClient.GetSparkStatement method.
+type sessionClientGetSparkStatementOptions struct {
+	// placeholder for future optional parameters
+}
+
+// sessionClientGetSparkStatementsOptions contains the optional parameters for the sessionClient.GetSparkStatements method.
+type sessionClientGetSparkStatementsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// sessionClientResetSparkSessionTimeoutOptions contains the optional parameters for the sessionClient.ResetSparkSessionTimeout
+// method.
+type sessionClientResetSparkSessionTimeoutOptions struct {
+	// placeholder for future optional parameters
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {

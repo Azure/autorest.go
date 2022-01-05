@@ -43,21 +43,22 @@ func NewPagingClient(options *azcore.ClientOptions) *PagingClient {
 // FirstResponseEmpty - A paging operation whose first response's items list is empty, but still returns a next link. Second
 // (and final) call, will give you an items list of 1.
 // If the operation fails it returns a generic error.
-// options - PagingFirstResponseEmptyOptions contains the optional parameters for the PagingClient.FirstResponseEmpty method.
-func (client *PagingClient) FirstResponseEmpty(options *PagingFirstResponseEmptyOptions) *PagingFirstResponseEmptyPager {
-	return &PagingFirstResponseEmptyPager{
+// options - PagingClientFirstResponseEmptyOptions contains the optional parameters for the PagingClient.FirstResponseEmpty
+// method.
+func (client *PagingClient) FirstResponseEmpty(options *PagingClientFirstResponseEmptyOptions) *PagingClientFirstResponseEmptyPager {
+	return &PagingClientFirstResponseEmptyPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.firstResponseEmptyCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp PagingFirstResponseEmptyResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PagingClientFirstResponseEmptyResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ProductResultValue.NextLink)
 		},
 	}
 }
 
 // firstResponseEmptyCreateRequest creates the FirstResponseEmpty request.
-func (client *PagingClient) firstResponseEmptyCreateRequest(ctx context.Context, options *PagingFirstResponseEmptyOptions) (*policy.Request, error) {
+func (client *PagingClient) firstResponseEmptyCreateRequest(ctx context.Context, options *PagingClientFirstResponseEmptyOptions) (*policy.Request, error) {
 	urlPath := "/paging/firstResponseEmpty/1"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -68,10 +69,10 @@ func (client *PagingClient) firstResponseEmptyCreateRequest(ctx context.Context,
 }
 
 // firstResponseEmptyHandleResponse handles the FirstResponseEmpty response.
-func (client *PagingClient) firstResponseEmptyHandleResponse(resp *http.Response) (PagingFirstResponseEmptyResponse, error) {
-	result := PagingFirstResponseEmptyResponse{RawResponse: resp}
+func (client *PagingClient) firstResponseEmptyHandleResponse(resp *http.Response) (PagingClientFirstResponseEmptyResponse, error) {
+	result := PagingClientFirstResponseEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResultValue); err != nil {
-		return PagingFirstResponseEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientFirstResponseEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -90,21 +91,21 @@ func (client *PagingClient) firstResponseEmptyHandleError(resp *http.Response) e
 
 // GetMultiplePages - A paging operation that includes a nextLink that has 10 pages
 // If the operation fails it returns a generic error.
-// options - PagingGetMultiplePagesOptions contains the optional parameters for the PagingClient.GetMultiplePages method.
-func (client *PagingClient) GetMultiplePages(options *PagingGetMultiplePagesOptions) *PagingGetMultiplePagesPager {
-	return &PagingGetMultiplePagesPager{
+// options - PagingClientGetMultiplePagesOptions contains the optional parameters for the PagingClient.GetMultiplePages method.
+func (client *PagingClient) GetMultiplePages(options *PagingClientGetMultiplePagesOptions) *PagingClientGetMultiplePagesPager {
+	return &PagingClientGetMultiplePagesPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getMultiplePagesCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp PagingGetMultiplePagesResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PagingClientGetMultiplePagesResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
 	}
 }
 
 // getMultiplePagesCreateRequest creates the GetMultiplePages request.
-func (client *PagingClient) getMultiplePagesCreateRequest(ctx context.Context, options *PagingGetMultiplePagesOptions) (*policy.Request, error) {
+func (client *PagingClient) getMultiplePagesCreateRequest(ctx context.Context, options *PagingClientGetMultiplePagesOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -124,10 +125,10 @@ func (client *PagingClient) getMultiplePagesCreateRequest(ctx context.Context, o
 }
 
 // getMultiplePagesHandleResponse handles the GetMultiplePages response.
-func (client *PagingClient) getMultiplePagesHandleResponse(resp *http.Response) (PagingGetMultiplePagesResponse, error) {
-	result := PagingGetMultiplePagesResponse{RawResponse: resp}
+func (client *PagingClient) getMultiplePagesHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesResponse, error) {
+	result := PagingClientGetMultiplePagesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
-		return PagingGetMultiplePagesResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientGetMultiplePagesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -146,22 +147,22 @@ func (client *PagingClient) getMultiplePagesHandleError(resp *http.Response) err
 
 // GetMultiplePagesFailure - A paging operation that receives a 400 on the second call
 // If the operation fails it returns a generic error.
-// options - PagingGetMultiplePagesFailureOptions contains the optional parameters for the PagingClient.GetMultiplePagesFailure
+// options - PagingClientGetMultiplePagesFailureOptions contains the optional parameters for the PagingClient.GetMultiplePagesFailure
 // method.
-func (client *PagingClient) GetMultiplePagesFailure(options *PagingGetMultiplePagesFailureOptions) *PagingGetMultiplePagesFailurePager {
-	return &PagingGetMultiplePagesFailurePager{
+func (client *PagingClient) GetMultiplePagesFailure(options *PagingClientGetMultiplePagesFailureOptions) *PagingClientGetMultiplePagesFailurePager {
+	return &PagingClientGetMultiplePagesFailurePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getMultiplePagesFailureCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp PagingGetMultiplePagesFailureResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PagingClientGetMultiplePagesFailureResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
 	}
 }
 
 // getMultiplePagesFailureCreateRequest creates the GetMultiplePagesFailure request.
-func (client *PagingClient) getMultiplePagesFailureCreateRequest(ctx context.Context, options *PagingGetMultiplePagesFailureOptions) (*policy.Request, error) {
+func (client *PagingClient) getMultiplePagesFailureCreateRequest(ctx context.Context, options *PagingClientGetMultiplePagesFailureOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/failure"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -172,10 +173,10 @@ func (client *PagingClient) getMultiplePagesFailureCreateRequest(ctx context.Con
 }
 
 // getMultiplePagesFailureHandleResponse handles the GetMultiplePagesFailure response.
-func (client *PagingClient) getMultiplePagesFailureHandleResponse(resp *http.Response) (PagingGetMultiplePagesFailureResponse, error) {
-	result := PagingGetMultiplePagesFailureResponse{RawResponse: resp}
+func (client *PagingClient) getMultiplePagesFailureHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesFailureResponse, error) {
+	result := PagingClientGetMultiplePagesFailureResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
-		return PagingGetMultiplePagesFailureResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientGetMultiplePagesFailureResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -194,22 +195,22 @@ func (client *PagingClient) getMultiplePagesFailureHandleError(resp *http.Respon
 
 // GetMultiplePagesFailureURI - A paging operation that receives an invalid nextLink
 // If the operation fails it returns a generic error.
-// options - PagingGetMultiplePagesFailureURIOptions contains the optional parameters for the PagingClient.GetMultiplePagesFailureURI
+// options - PagingClientGetMultiplePagesFailureURIOptions contains the optional parameters for the PagingClient.GetMultiplePagesFailureURI
 // method.
-func (client *PagingClient) GetMultiplePagesFailureURI(options *PagingGetMultiplePagesFailureURIOptions) *PagingGetMultiplePagesFailureURIPager {
-	return &PagingGetMultiplePagesFailureURIPager{
+func (client *PagingClient) GetMultiplePagesFailureURI(options *PagingClientGetMultiplePagesFailureURIOptions) *PagingClientGetMultiplePagesFailureURIPager {
+	return &PagingClientGetMultiplePagesFailureURIPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getMultiplePagesFailureURICreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp PagingGetMultiplePagesFailureURIResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PagingClientGetMultiplePagesFailureURIResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
 	}
 }
 
 // getMultiplePagesFailureURICreateRequest creates the GetMultiplePagesFailureURI request.
-func (client *PagingClient) getMultiplePagesFailureURICreateRequest(ctx context.Context, options *PagingGetMultiplePagesFailureURIOptions) (*policy.Request, error) {
+func (client *PagingClient) getMultiplePagesFailureURICreateRequest(ctx context.Context, options *PagingClientGetMultiplePagesFailureURIOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/failureuri"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -220,10 +221,10 @@ func (client *PagingClient) getMultiplePagesFailureURICreateRequest(ctx context.
 }
 
 // getMultiplePagesFailureURIHandleResponse handles the GetMultiplePagesFailureURI response.
-func (client *PagingClient) getMultiplePagesFailureURIHandleResponse(resp *http.Response) (PagingGetMultiplePagesFailureURIResponse, error) {
-	result := PagingGetMultiplePagesFailureURIResponse{RawResponse: resp}
+func (client *PagingClient) getMultiplePagesFailureURIHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesFailureURIResponse, error) {
+	result := PagingClientGetMultiplePagesFailureURIResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
-		return PagingGetMultiplePagesFailureURIResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientGetMultiplePagesFailureURIResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -244,22 +245,22 @@ func (client *PagingClient) getMultiplePagesFailureURIHandleError(resp *http.Res
 // If the operation fails it returns a generic error.
 // apiVersion - Sets the api version to use.
 // tenant - Sets the tenant to use.
-// options - PagingGetMultiplePagesFragmentNextLinkOptions contains the optional parameters for the PagingClient.GetMultiplePagesFragmentNextLink
+// options - PagingClientGetMultiplePagesFragmentNextLinkOptions contains the optional parameters for the PagingClient.GetMultiplePagesFragmentNextLink
 // method.
-func (client *PagingClient) GetMultiplePagesFragmentNextLink(apiVersion string, tenant string, options *PagingGetMultiplePagesFragmentNextLinkOptions) *PagingGetMultiplePagesFragmentNextLinkPager {
-	return &PagingGetMultiplePagesFragmentNextLinkPager{
+func (client *PagingClient) GetMultiplePagesFragmentNextLink(apiVersion string, tenant string, options *PagingClientGetMultiplePagesFragmentNextLinkOptions) *PagingClientGetMultiplePagesFragmentNextLinkPager {
+	return &PagingClientGetMultiplePagesFragmentNextLinkPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getMultiplePagesFragmentNextLinkCreateRequest(ctx, apiVersion, tenant, options)
 		},
-		advancer: func(ctx context.Context, resp PagingGetMultiplePagesFragmentNextLinkResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PagingClientGetMultiplePagesFragmentNextLinkResponse) (*policy.Request, error) {
 			return client.nextFragmentCreateRequest(ctx, apiVersion, tenant, *resp.ODataProductResult.ODataNextLink)
 		},
 	}
 }
 
 // getMultiplePagesFragmentNextLinkCreateRequest creates the GetMultiplePagesFragmentNextLink request.
-func (client *PagingClient) getMultiplePagesFragmentNextLinkCreateRequest(ctx context.Context, apiVersion string, tenant string, options *PagingGetMultiplePagesFragmentNextLinkOptions) (*policy.Request, error) {
+func (client *PagingClient) getMultiplePagesFragmentNextLinkCreateRequest(ctx context.Context, apiVersion string, tenant string, options *PagingClientGetMultiplePagesFragmentNextLinkOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/fragment/{tenant}"
 	if tenant == "" {
 		return nil, errors.New("parameter tenant cannot be empty")
@@ -277,10 +278,10 @@ func (client *PagingClient) getMultiplePagesFragmentNextLinkCreateRequest(ctx co
 }
 
 // getMultiplePagesFragmentNextLinkHandleResponse handles the GetMultiplePagesFragmentNextLink response.
-func (client *PagingClient) getMultiplePagesFragmentNextLinkHandleResponse(resp *http.Response) (PagingGetMultiplePagesFragmentNextLinkResponse, error) {
-	result := PagingGetMultiplePagesFragmentNextLinkResponse{RawResponse: resp}
+func (client *PagingClient) getMultiplePagesFragmentNextLinkHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesFragmentNextLinkResponse, error) {
+	result := PagingClientGetMultiplePagesFragmentNextLinkResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ODataProductResult); err != nil {
-		return PagingGetMultiplePagesFragmentNextLinkResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientGetMultiplePagesFragmentNextLinkResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -300,15 +301,15 @@ func (client *PagingClient) getMultiplePagesFragmentNextLinkHandleError(resp *ht
 // GetMultiplePagesFragmentWithGroupingNextLink - A paging operation that doesn't return a full URL, just a fragment with
 // parameters grouped
 // If the operation fails it returns a generic error.
-// CustomParameterGroup - CustomParameterGroup contains a group of parameters for the Paging.GetMultiplePagesFragmentWithGroupingNextLink
+// CustomParameterGroup - CustomParameterGroup contains a group of parameters for the PagingClient.GetMultiplePagesFragmentWithGroupingNextLink
 // method.
-func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) *PagingGetMultiplePagesFragmentWithGroupingNextLinkPager {
-	return &PagingGetMultiplePagesFragmentWithGroupingNextLinkPager{
+func (client *PagingClient) GetMultiplePagesFragmentWithGroupingNextLink(customParameterGroup CustomParameterGroup) *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager {
+	return &PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getMultiplePagesFragmentWithGroupingNextLinkCreateRequest(ctx, customParameterGroup)
 		},
-		advancer: func(ctx context.Context, resp PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse) (*policy.Request, error) {
 			return client.nextFragmentWithGroupingCreateRequest(ctx, *resp.ODataProductResult.ODataNextLink, customParameterGroup)
 		},
 	}
@@ -333,10 +334,10 @@ func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkCreateRe
 }
 
 // getMultiplePagesFragmentWithGroupingNextLinkHandleResponse handles the GetMultiplePagesFragmentWithGroupingNextLink response.
-func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkHandleResponse(resp *http.Response) (PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse, error) {
-	result := PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse{RawResponse: resp}
+func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse, error) {
+	result := PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ODataProductResult); err != nil {
-		return PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -355,21 +356,21 @@ func (client *PagingClient) getMultiplePagesFragmentWithGroupingNextLinkHandleEr
 
 // BeginGetMultiplePagesLRO - A long-running paging operation that includes a nextLink that has 10 pages
 // If the operation fails it returns a generic error.
-// options - PagingBeginGetMultiplePagesLROOptions contains the optional parameters for the PagingClient.BeginGetMultiplePagesLRO
+// options - PagingClientBeginGetMultiplePagesLROOptions contains the optional parameters for the PagingClient.BeginGetMultiplePagesLRO
 // method.
-func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, options *PagingBeginGetMultiplePagesLROOptions) (PagingGetMultiplePagesLROPollerResponse, error) {
+func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (PagingClientGetMultiplePagesLROPollerResponse, error) {
 	resp, err := client.getMultiplePagesLRO(ctx, options)
 	if err != nil {
-		return PagingGetMultiplePagesLROPollerResponse{}, err
+		return PagingClientGetMultiplePagesLROPollerResponse{}, err
 	}
-	result := PagingGetMultiplePagesLROPollerResponse{
+	result := PagingClientGetMultiplePagesLROPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("PagingClient.GetMultiplePagesLRO", "", resp, client.pl, client.getMultiplePagesLROHandleError)
 	if err != nil {
-		return PagingGetMultiplePagesLROPollerResponse{}, err
+		return PagingClientGetMultiplePagesLROPollerResponse{}, err
 	}
-	result.Poller = &PagingGetMultiplePagesLROPoller{
+	result.Poller = &PagingClientGetMultiplePagesLROPoller{
 		pt:     pt,
 		client: client,
 	}
@@ -378,7 +379,7 @@ func (client *PagingClient) BeginGetMultiplePagesLRO(ctx context.Context, option
 
 // GetMultiplePagesLRO - A long-running paging operation that includes a nextLink that has 10 pages
 // If the operation fails it returns a generic error.
-func (client *PagingClient) getMultiplePagesLRO(ctx context.Context, options *PagingBeginGetMultiplePagesLROOptions) (*http.Response, error) {
+func (client *PagingClient) getMultiplePagesLRO(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (*http.Response, error) {
 	req, err := client.getMultiplePagesLROCreateRequest(ctx, options)
 	if err != nil {
 		return nil, err
@@ -394,7 +395,7 @@ func (client *PagingClient) getMultiplePagesLRO(ctx context.Context, options *Pa
 }
 
 // getMultiplePagesLROCreateRequest creates the GetMultiplePagesLRO request.
-func (client *PagingClient) getMultiplePagesLROCreateRequest(ctx context.Context, options *PagingBeginGetMultiplePagesLROOptions) (*policy.Request, error) {
+func (client *PagingClient) getMultiplePagesLROCreateRequest(ctx context.Context, options *PagingClientBeginGetMultiplePagesLROOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/lro"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -414,10 +415,10 @@ func (client *PagingClient) getMultiplePagesLROCreateRequest(ctx context.Context
 }
 
 // getMultiplePagesLROHandleResponse handles the GetMultiplePagesLRO response.
-func (client *PagingClient) getMultiplePagesLROHandleResponse(resp *http.Response) (PagingGetMultiplePagesLROResponse, error) {
-	result := PagingGetMultiplePagesLROResponse{RawResponse: resp}
+func (client *PagingClient) getMultiplePagesLROHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesLROResponse, error) {
+	result := PagingClientGetMultiplePagesLROResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
-		return PagingGetMultiplePagesLROResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientGetMultiplePagesLROResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -437,22 +438,22 @@ func (client *PagingClient) getMultiplePagesLROHandleError(resp *http.Response) 
 // GetMultiplePagesRetryFirst - A paging operation that fails on the first call with 500 and then retries and then get a response
 // including a nextLink that has 10 pages
 // If the operation fails it returns a generic error.
-// options - PagingGetMultiplePagesRetryFirstOptions contains the optional parameters for the PagingClient.GetMultiplePagesRetryFirst
+// options - PagingClientGetMultiplePagesRetryFirstOptions contains the optional parameters for the PagingClient.GetMultiplePagesRetryFirst
 // method.
-func (client *PagingClient) GetMultiplePagesRetryFirst(options *PagingGetMultiplePagesRetryFirstOptions) *PagingGetMultiplePagesRetryFirstPager {
-	return &PagingGetMultiplePagesRetryFirstPager{
+func (client *PagingClient) GetMultiplePagesRetryFirst(options *PagingClientGetMultiplePagesRetryFirstOptions) *PagingClientGetMultiplePagesRetryFirstPager {
+	return &PagingClientGetMultiplePagesRetryFirstPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getMultiplePagesRetryFirstCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp PagingGetMultiplePagesRetryFirstResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PagingClientGetMultiplePagesRetryFirstResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
 	}
 }
 
 // getMultiplePagesRetryFirstCreateRequest creates the GetMultiplePagesRetryFirst request.
-func (client *PagingClient) getMultiplePagesRetryFirstCreateRequest(ctx context.Context, options *PagingGetMultiplePagesRetryFirstOptions) (*policy.Request, error) {
+func (client *PagingClient) getMultiplePagesRetryFirstCreateRequest(ctx context.Context, options *PagingClientGetMultiplePagesRetryFirstOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/retryfirst"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -463,10 +464,10 @@ func (client *PagingClient) getMultiplePagesRetryFirstCreateRequest(ctx context.
 }
 
 // getMultiplePagesRetryFirstHandleResponse handles the GetMultiplePagesRetryFirst response.
-func (client *PagingClient) getMultiplePagesRetryFirstHandleResponse(resp *http.Response) (PagingGetMultiplePagesRetryFirstResponse, error) {
-	result := PagingGetMultiplePagesRetryFirstResponse{RawResponse: resp}
+func (client *PagingClient) getMultiplePagesRetryFirstHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesRetryFirstResponse, error) {
+	result := PagingClientGetMultiplePagesRetryFirstResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
-		return PagingGetMultiplePagesRetryFirstResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientGetMultiplePagesRetryFirstResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -486,22 +487,22 @@ func (client *PagingClient) getMultiplePagesRetryFirstHandleError(resp *http.Res
 // GetMultiplePagesRetrySecond - A paging operation that includes a nextLink that has 10 pages, of which the 2nd call fails
 // first with 500. The client should retry and finish all 10 pages eventually.
 // If the operation fails it returns a generic error.
-// options - PagingGetMultiplePagesRetrySecondOptions contains the optional parameters for the PagingClient.GetMultiplePagesRetrySecond
+// options - PagingClientGetMultiplePagesRetrySecondOptions contains the optional parameters for the PagingClient.GetMultiplePagesRetrySecond
 // method.
-func (client *PagingClient) GetMultiplePagesRetrySecond(options *PagingGetMultiplePagesRetrySecondOptions) *PagingGetMultiplePagesRetrySecondPager {
-	return &PagingGetMultiplePagesRetrySecondPager{
+func (client *PagingClient) GetMultiplePagesRetrySecond(options *PagingClientGetMultiplePagesRetrySecondOptions) *PagingClientGetMultiplePagesRetrySecondPager {
+	return &PagingClientGetMultiplePagesRetrySecondPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getMultiplePagesRetrySecondCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp PagingGetMultiplePagesRetrySecondResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PagingClientGetMultiplePagesRetrySecondResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
 	}
 }
 
 // getMultiplePagesRetrySecondCreateRequest creates the GetMultiplePagesRetrySecond request.
-func (client *PagingClient) getMultiplePagesRetrySecondCreateRequest(ctx context.Context, options *PagingGetMultiplePagesRetrySecondOptions) (*policy.Request, error) {
+func (client *PagingClient) getMultiplePagesRetrySecondCreateRequest(ctx context.Context, options *PagingClientGetMultiplePagesRetrySecondOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/retrysecond"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -512,10 +513,10 @@ func (client *PagingClient) getMultiplePagesRetrySecondCreateRequest(ctx context
 }
 
 // getMultiplePagesRetrySecondHandleResponse handles the GetMultiplePagesRetrySecond response.
-func (client *PagingClient) getMultiplePagesRetrySecondHandleResponse(resp *http.Response) (PagingGetMultiplePagesRetrySecondResponse, error) {
-	result := PagingGetMultiplePagesRetrySecondResponse{RawResponse: resp}
+func (client *PagingClient) getMultiplePagesRetrySecondHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesRetrySecondResponse, error) {
+	result := PagingClientGetMultiplePagesRetrySecondResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
-		return PagingGetMultiplePagesRetrySecondResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientGetMultiplePagesRetrySecondResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -534,46 +535,46 @@ func (client *PagingClient) getMultiplePagesRetrySecondHandleError(resp *http.Re
 
 // GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
 // If the operation fails it returns a generic error.
-// PagingGetMultiplePagesWithOffsetOptions - PagingGetMultiplePagesWithOffsetOptions contains the optional parameters for
-// the PagingClient.GetMultiplePagesWithOffset method.
-func (client *PagingClient) GetMultiplePagesWithOffset(pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) *PagingGetMultiplePagesWithOffsetPager {
-	return &PagingGetMultiplePagesWithOffsetPager{
+// PagingClientGetMultiplePagesWithOffsetOptions - PagingClientGetMultiplePagesWithOffsetOptions contains the optional parameters
+// for the PagingClient.GetMultiplePagesWithOffset method.
+func (client *PagingClient) GetMultiplePagesWithOffset(pagingClientGetMultiplePagesWithOffsetOptions PagingClientGetMultiplePagesWithOffsetOptions) *PagingClientGetMultiplePagesWithOffsetPager {
+	return &PagingClientGetMultiplePagesWithOffsetPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
-			return client.getMultiplePagesWithOffsetCreateRequest(ctx, pagingGetMultiplePagesWithOffsetOptions)
+			return client.getMultiplePagesWithOffsetCreateRequest(ctx, pagingClientGetMultiplePagesWithOffsetOptions)
 		},
-		advancer: func(ctx context.Context, resp PagingGetMultiplePagesWithOffsetResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PagingClientGetMultiplePagesWithOffsetResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
 	}
 }
 
 // getMultiplePagesWithOffsetCreateRequest creates the GetMultiplePagesWithOffset request.
-func (client *PagingClient) getMultiplePagesWithOffsetCreateRequest(ctx context.Context, pagingGetMultiplePagesWithOffsetOptions PagingGetMultiplePagesWithOffsetOptions) (*policy.Request, error) {
+func (client *PagingClient) getMultiplePagesWithOffsetCreateRequest(ctx context.Context, pagingClientGetMultiplePagesWithOffsetOptions PagingClientGetMultiplePagesWithOffsetOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/withpath/{offset}"
-	urlPath = strings.ReplaceAll(urlPath, "{offset}", url.PathEscape(strconv.FormatInt(int64(pagingGetMultiplePagesWithOffsetOptions.Offset), 10)))
+	urlPath = strings.ReplaceAll(urlPath, "{offset}", url.PathEscape(strconv.FormatInt(int64(pagingClientGetMultiplePagesWithOffsetOptions.Offset), 10)))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
-	if pagingGetMultiplePagesWithOffsetOptions.ClientRequestID != nil {
-		req.Raw().Header.Set("client-request-id", *pagingGetMultiplePagesWithOffsetOptions.ClientRequestID)
+	if pagingClientGetMultiplePagesWithOffsetOptions.ClientRequestID != nil {
+		req.Raw().Header.Set("client-request-id", *pagingClientGetMultiplePagesWithOffsetOptions.ClientRequestID)
 	}
-	if pagingGetMultiplePagesWithOffsetOptions.Maxresults != nil {
-		req.Raw().Header.Set("maxresults", strconv.FormatInt(int64(*pagingGetMultiplePagesWithOffsetOptions.Maxresults), 10))
+	if pagingClientGetMultiplePagesWithOffsetOptions.Maxresults != nil {
+		req.Raw().Header.Set("maxresults", strconv.FormatInt(int64(*pagingClientGetMultiplePagesWithOffsetOptions.Maxresults), 10))
 	}
-	if pagingGetMultiplePagesWithOffsetOptions.Timeout != nil {
-		req.Raw().Header.Set("timeout", strconv.FormatInt(int64(*pagingGetMultiplePagesWithOffsetOptions.Timeout), 10))
+	if pagingClientGetMultiplePagesWithOffsetOptions.Timeout != nil {
+		req.Raw().Header.Set("timeout", strconv.FormatInt(int64(*pagingClientGetMultiplePagesWithOffsetOptions.Timeout), 10))
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
 }
 
 // getMultiplePagesWithOffsetHandleResponse handles the GetMultiplePagesWithOffset response.
-func (client *PagingClient) getMultiplePagesWithOffsetHandleResponse(resp *http.Response) (PagingGetMultiplePagesWithOffsetResponse, error) {
-	result := PagingGetMultiplePagesWithOffsetResponse{RawResponse: resp}
+func (client *PagingClient) getMultiplePagesWithOffsetHandleResponse(resp *http.Response) (PagingClientGetMultiplePagesWithOffsetResponse, error) {
+	result := PagingClientGetMultiplePagesWithOffsetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
-		return PagingGetMultiplePagesWithOffsetResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientGetMultiplePagesWithOffsetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -592,21 +593,22 @@ func (client *PagingClient) getMultiplePagesWithOffsetHandleError(resp *http.Res
 
 // GetNoItemNamePages - A paging operation that must return result of the default 'value' node.
 // If the operation fails it returns a generic error.
-// options - PagingGetNoItemNamePagesOptions contains the optional parameters for the PagingClient.GetNoItemNamePages method.
-func (client *PagingClient) GetNoItemNamePages(options *PagingGetNoItemNamePagesOptions) *PagingGetNoItemNamePagesPager {
-	return &PagingGetNoItemNamePagesPager{
+// options - PagingClientGetNoItemNamePagesOptions contains the optional parameters for the PagingClient.GetNoItemNamePages
+// method.
+func (client *PagingClient) GetNoItemNamePages(options *PagingClientGetNoItemNamePagesOptions) *PagingClientGetNoItemNamePagesPager {
+	return &PagingClientGetNoItemNamePagesPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getNoItemNamePagesCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp PagingGetNoItemNamePagesResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PagingClientGetNoItemNamePagesResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ProductResultValue.NextLink)
 		},
 	}
 }
 
 // getNoItemNamePagesCreateRequest creates the GetNoItemNamePages request.
-func (client *PagingClient) getNoItemNamePagesCreateRequest(ctx context.Context, options *PagingGetNoItemNamePagesOptions) (*policy.Request, error) {
+func (client *PagingClient) getNoItemNamePagesCreateRequest(ctx context.Context, options *PagingClientGetNoItemNamePagesOptions) (*policy.Request, error) {
 	urlPath := "/paging/noitemname"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -617,10 +619,10 @@ func (client *PagingClient) getNoItemNamePagesCreateRequest(ctx context.Context,
 }
 
 // getNoItemNamePagesHandleResponse handles the GetNoItemNamePages response.
-func (client *PagingClient) getNoItemNamePagesHandleResponse(resp *http.Response) (PagingGetNoItemNamePagesResponse, error) {
-	result := PagingGetNoItemNamePagesResponse{RawResponse: resp}
+func (client *PagingClient) getNoItemNamePagesHandleResponse(resp *http.Response) (PagingClientGetNoItemNamePagesResponse, error) {
+	result := PagingClientGetNoItemNamePagesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResultValue); err != nil {
-		return PagingGetNoItemNamePagesResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientGetNoItemNamePagesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -639,25 +641,25 @@ func (client *PagingClient) getNoItemNamePagesHandleError(resp *http.Response) e
 
 // GetNullNextLinkNamePages - A paging operation that must ignore any kind of nextLink, and stop after page 1.
 // If the operation fails it returns a generic error.
-// options - PagingGetNullNextLinkNamePagesOptions contains the optional parameters for the PagingClient.GetNullNextLinkNamePages
+// options - PagingClientGetNullNextLinkNamePagesOptions contains the optional parameters for the PagingClient.GetNullNextLinkNamePages
 // method.
-func (client *PagingClient) GetNullNextLinkNamePages(ctx context.Context, options *PagingGetNullNextLinkNamePagesOptions) (PagingGetNullNextLinkNamePagesResponse, error) {
+func (client *PagingClient) GetNullNextLinkNamePages(ctx context.Context, options *PagingClientGetNullNextLinkNamePagesOptions) (PagingClientGetNullNextLinkNamePagesResponse, error) {
 	req, err := client.getNullNextLinkNamePagesCreateRequest(ctx, options)
 	if err != nil {
-		return PagingGetNullNextLinkNamePagesResponse{}, err
+		return PagingClientGetNullNextLinkNamePagesResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PagingGetNullNextLinkNamePagesResponse{}, err
+		return PagingClientGetNullNextLinkNamePagesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PagingGetNullNextLinkNamePagesResponse{}, client.getNullNextLinkNamePagesHandleError(resp)
+		return PagingClientGetNullNextLinkNamePagesResponse{}, client.getNullNextLinkNamePagesHandleError(resp)
 	}
 	return client.getNullNextLinkNamePagesHandleResponse(resp)
 }
 
 // getNullNextLinkNamePagesCreateRequest creates the GetNullNextLinkNamePages request.
-func (client *PagingClient) getNullNextLinkNamePagesCreateRequest(ctx context.Context, options *PagingGetNullNextLinkNamePagesOptions) (*policy.Request, error) {
+func (client *PagingClient) getNullNextLinkNamePagesCreateRequest(ctx context.Context, options *PagingClientGetNullNextLinkNamePagesOptions) (*policy.Request, error) {
 	urlPath := "/paging/nullnextlink"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -668,10 +670,10 @@ func (client *PagingClient) getNullNextLinkNamePagesCreateRequest(ctx context.Co
 }
 
 // getNullNextLinkNamePagesHandleResponse handles the GetNullNextLinkNamePages response.
-func (client *PagingClient) getNullNextLinkNamePagesHandleResponse(resp *http.Response) (PagingGetNullNextLinkNamePagesResponse, error) {
-	result := PagingGetNullNextLinkNamePagesResponse{RawResponse: resp}
+func (client *PagingClient) getNullNextLinkNamePagesHandleResponse(resp *http.Response) (PagingClientGetNullNextLinkNamePagesResponse, error) {
+	result := PagingClientGetNullNextLinkNamePagesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
-		return PagingGetNullNextLinkNamePagesResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientGetNullNextLinkNamePagesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -690,22 +692,22 @@ func (client *PagingClient) getNullNextLinkNamePagesHandleError(resp *http.Respo
 
 // GetODataMultiplePages - A paging operation that includes a nextLink in odata format that has 10 pages
 // If the operation fails it returns a generic error.
-// options - PagingGetODataMultiplePagesOptions contains the optional parameters for the PagingClient.GetODataMultiplePages
+// options - PagingClientGetODataMultiplePagesOptions contains the optional parameters for the PagingClient.GetODataMultiplePages
 // method.
-func (client *PagingClient) GetODataMultiplePages(options *PagingGetODataMultiplePagesOptions) *PagingGetODataMultiplePagesPager {
-	return &PagingGetODataMultiplePagesPager{
+func (client *PagingClient) GetODataMultiplePages(options *PagingClientGetODataMultiplePagesOptions) *PagingClientGetODataMultiplePagesPager {
+	return &PagingClientGetODataMultiplePagesPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getODataMultiplePagesCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp PagingGetODataMultiplePagesResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PagingClientGetODataMultiplePagesResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ODataProductResult.ODataNextLink)
 		},
 	}
 }
 
 // getODataMultiplePagesCreateRequest creates the GetODataMultiplePages request.
-func (client *PagingClient) getODataMultiplePagesCreateRequest(ctx context.Context, options *PagingGetODataMultiplePagesOptions) (*policy.Request, error) {
+func (client *PagingClient) getODataMultiplePagesCreateRequest(ctx context.Context, options *PagingClientGetODataMultiplePagesOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/odata"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -725,10 +727,10 @@ func (client *PagingClient) getODataMultiplePagesCreateRequest(ctx context.Conte
 }
 
 // getODataMultiplePagesHandleResponse handles the GetODataMultiplePages response.
-func (client *PagingClient) getODataMultiplePagesHandleResponse(resp *http.Response) (PagingGetODataMultiplePagesResponse, error) {
-	result := PagingGetODataMultiplePagesResponse{RawResponse: resp}
+func (client *PagingClient) getODataMultiplePagesHandleResponse(resp *http.Response) (PagingClientGetODataMultiplePagesResponse, error) {
+	result := PagingClientGetODataMultiplePagesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ODataProductResult); err != nil {
-		return PagingGetODataMultiplePagesResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientGetODataMultiplePagesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -748,22 +750,22 @@ func (client *PagingClient) getODataMultiplePagesHandleError(resp *http.Response
 // GetPagingModelWithItemNameWithXMSClientName - A paging operation that returns a paging model whose item name is is overriden
 // by x-ms-client-name 'indexes'.
 // If the operation fails it returns a generic error.
-// options - PagingGetPagingModelWithItemNameWithXMSClientNameOptions contains the optional parameters for the PagingClient.GetPagingModelWithItemNameWithXMSClientName
+// options - PagingClientGetPagingModelWithItemNameWithXMSClientNameOptions contains the optional parameters for the PagingClient.GetPagingModelWithItemNameWithXMSClientName
 // method.
-func (client *PagingClient) GetPagingModelWithItemNameWithXMSClientName(options *PagingGetPagingModelWithItemNameWithXMSClientNameOptions) *PagingGetPagingModelWithItemNameWithXMSClientNamePager {
-	return &PagingGetPagingModelWithItemNameWithXMSClientNamePager{
+func (client *PagingClient) GetPagingModelWithItemNameWithXMSClientName(options *PagingClientGetPagingModelWithItemNameWithXMSClientNameOptions) *PagingClientGetPagingModelWithItemNameWithXMSClientNamePager {
+	return &PagingClientGetPagingModelWithItemNameWithXMSClientNamePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getPagingModelWithItemNameWithXMSClientNameCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp PagingGetPagingModelWithItemNameWithXMSClientNameResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ProductResultValueWithXMSClientName.NextLink)
 		},
 	}
 }
 
 // getPagingModelWithItemNameWithXMSClientNameCreateRequest creates the GetPagingModelWithItemNameWithXMSClientName request.
-func (client *PagingClient) getPagingModelWithItemNameWithXMSClientNameCreateRequest(ctx context.Context, options *PagingGetPagingModelWithItemNameWithXMSClientNameOptions) (*policy.Request, error) {
+func (client *PagingClient) getPagingModelWithItemNameWithXMSClientNameCreateRequest(ctx context.Context, options *PagingClientGetPagingModelWithItemNameWithXMSClientNameOptions) (*policy.Request, error) {
 	urlPath := "/paging/itemNameWithXMSClientName"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -774,10 +776,10 @@ func (client *PagingClient) getPagingModelWithItemNameWithXMSClientNameCreateReq
 }
 
 // getPagingModelWithItemNameWithXMSClientNameHandleResponse handles the GetPagingModelWithItemNameWithXMSClientName response.
-func (client *PagingClient) getPagingModelWithItemNameWithXMSClientNameHandleResponse(resp *http.Response) (PagingGetPagingModelWithItemNameWithXMSClientNameResponse, error) {
-	result := PagingGetPagingModelWithItemNameWithXMSClientNameResponse{RawResponse: resp}
+func (client *PagingClient) getPagingModelWithItemNameWithXMSClientNameHandleResponse(resp *http.Response) (PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse, error) {
+	result := PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResultValueWithXMSClientName); err != nil {
-		return PagingGetPagingModelWithItemNameWithXMSClientNameResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -796,21 +798,21 @@ func (client *PagingClient) getPagingModelWithItemNameWithXMSClientNameHandleErr
 
 // GetSinglePages - A paging operation that finishes on the first call without a nextlink
 // If the operation fails it returns a generic error.
-// options - PagingGetSinglePagesOptions contains the optional parameters for the PagingClient.GetSinglePages method.
-func (client *PagingClient) GetSinglePages(options *PagingGetSinglePagesOptions) *PagingGetSinglePagesPager {
-	return &PagingGetSinglePagesPager{
+// options - PagingClientGetSinglePagesOptions contains the optional parameters for the PagingClient.GetSinglePages method.
+func (client *PagingClient) GetSinglePages(options *PagingClientGetSinglePagesOptions) *PagingClientGetSinglePagesPager {
+	return &PagingClientGetSinglePagesPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getSinglePagesCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp PagingGetSinglePagesResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PagingClientGetSinglePagesResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
 	}
 }
 
 // getSinglePagesCreateRequest creates the GetSinglePages request.
-func (client *PagingClient) getSinglePagesCreateRequest(ctx context.Context, options *PagingGetSinglePagesOptions) (*policy.Request, error) {
+func (client *PagingClient) getSinglePagesCreateRequest(ctx context.Context, options *PagingClientGetSinglePagesOptions) (*policy.Request, error) {
 	urlPath := "/paging/single"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -821,10 +823,10 @@ func (client *PagingClient) getSinglePagesCreateRequest(ctx context.Context, opt
 }
 
 // getSinglePagesHandleResponse handles the GetSinglePages response.
-func (client *PagingClient) getSinglePagesHandleResponse(resp *http.Response) (PagingGetSinglePagesResponse, error) {
-	result := PagingGetSinglePagesResponse{RawResponse: resp}
+func (client *PagingClient) getSinglePagesHandleResponse(resp *http.Response) (PagingClientGetSinglePagesResponse, error) {
+	result := PagingClientGetSinglePagesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
-		return PagingGetSinglePagesResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientGetSinglePagesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -843,22 +845,22 @@ func (client *PagingClient) getSinglePagesHandleError(resp *http.Response) error
 
 // GetSinglePagesFailure - A paging operation that receives a 400 on the first call
 // If the operation fails it returns a generic error.
-// options - PagingGetSinglePagesFailureOptions contains the optional parameters for the PagingClient.GetSinglePagesFailure
+// options - PagingClientGetSinglePagesFailureOptions contains the optional parameters for the PagingClient.GetSinglePagesFailure
 // method.
-func (client *PagingClient) GetSinglePagesFailure(options *PagingGetSinglePagesFailureOptions) *PagingGetSinglePagesFailurePager {
-	return &PagingGetSinglePagesFailurePager{
+func (client *PagingClient) GetSinglePagesFailure(options *PagingClientGetSinglePagesFailureOptions) *PagingClientGetSinglePagesFailurePager {
+	return &PagingClientGetSinglePagesFailurePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getSinglePagesFailureCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp PagingGetSinglePagesFailureResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PagingClientGetSinglePagesFailureResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ProductResult.NextLink)
 		},
 	}
 }
 
 // getSinglePagesFailureCreateRequest creates the GetSinglePagesFailure request.
-func (client *PagingClient) getSinglePagesFailureCreateRequest(ctx context.Context, options *PagingGetSinglePagesFailureOptions) (*policy.Request, error) {
+func (client *PagingClient) getSinglePagesFailureCreateRequest(ctx context.Context, options *PagingClientGetSinglePagesFailureOptions) (*policy.Request, error) {
 	urlPath := "/paging/single/failure"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -869,10 +871,10 @@ func (client *PagingClient) getSinglePagesFailureCreateRequest(ctx context.Conte
 }
 
 // getSinglePagesFailureHandleResponse handles the GetSinglePagesFailure response.
-func (client *PagingClient) getSinglePagesFailureHandleResponse(resp *http.Response) (PagingGetSinglePagesFailureResponse, error) {
-	result := PagingGetSinglePagesFailureResponse{RawResponse: resp}
+func (client *PagingClient) getSinglePagesFailureHandleResponse(resp *http.Response) (PagingClientGetSinglePagesFailureResponse, error) {
+	result := PagingClientGetSinglePagesFailureResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
-		return PagingGetSinglePagesFailureResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientGetSinglePagesFailureResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -893,21 +895,22 @@ func (client *PagingClient) getSinglePagesFailureHandleError(resp *http.Response
 // operation nextOperationWithQueryParams. Returns a ProductResult
 // If the operation fails it returns a generic error.
 // requiredQueryParameter - A required integer query parameter. Put in value '100' to pass test.
-// options - PagingGetWithQueryParamsOptions contains the optional parameters for the PagingClient.GetWithQueryParams method.
-func (client *PagingClient) GetWithQueryParams(requiredQueryParameter int32, options *PagingGetWithQueryParamsOptions) *PagingGetWithQueryParamsPager {
-	return &PagingGetWithQueryParamsPager{
+// options - PagingClientGetWithQueryParamsOptions contains the optional parameters for the PagingClient.GetWithQueryParams
+// method.
+func (client *PagingClient) GetWithQueryParams(requiredQueryParameter int32, options *PagingClientGetWithQueryParamsOptions) *PagingClientGetWithQueryParamsPager {
+	return &PagingClientGetWithQueryParamsPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getWithQueryParamsCreateRequest(ctx, requiredQueryParameter, options)
 		},
-		advancer: func(ctx context.Context, resp PagingGetWithQueryParamsResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp PagingClientGetWithQueryParamsResponse) (*policy.Request, error) {
 			return client.nextOperationWithQueryParamsCreateRequest(ctx)
 		},
 	}
 }
 
 // getWithQueryParamsCreateRequest creates the GetWithQueryParams request.
-func (client *PagingClient) getWithQueryParamsCreateRequest(ctx context.Context, requiredQueryParameter int32, options *PagingGetWithQueryParamsOptions) (*policy.Request, error) {
+func (client *PagingClient) getWithQueryParamsCreateRequest(ctx context.Context, requiredQueryParameter int32, options *PagingClientGetWithQueryParamsOptions) (*policy.Request, error) {
 	urlPath := "/paging/multiple/getWithQueryParams"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -922,10 +925,10 @@ func (client *PagingClient) getWithQueryParamsCreateRequest(ctx context.Context,
 }
 
 // getWithQueryParamsHandleResponse handles the GetWithQueryParams response.
-func (client *PagingClient) getWithQueryParamsHandleResponse(resp *http.Response) (PagingGetWithQueryParamsResponse, error) {
-	result := PagingGetWithQueryParamsResponse{RawResponse: resp}
+func (client *PagingClient) getWithQueryParamsHandleResponse(resp *http.Response) (PagingClientGetWithQueryParamsResponse, error) {
+	result := PagingClientGetWithQueryParamsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
-		return PagingGetWithQueryParamsResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientGetWithQueryParamsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -962,10 +965,10 @@ func (client *PagingClient) nextFragmentCreateRequest(ctx context.Context, apiVe
 }
 
 // nextFragmentHandleResponse handles the NextFragment response.
-func (client *PagingClient) nextFragmentHandleResponse(resp *http.Response) (PagingNextFragmentResponse, error) {
-	result := PagingNextFragmentResponse{RawResponse: resp}
+func (client *PagingClient) nextFragmentHandleResponse(resp *http.Response) (PagingClientNextFragmentResponse, error) {
+	result := PagingClientNextFragmentResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ODataProductResult); err != nil {
-		return PagingNextFragmentResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientNextFragmentResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1002,10 +1005,10 @@ func (client *PagingClient) nextFragmentWithGroupingCreateRequest(ctx context.Co
 }
 
 // nextFragmentWithGroupingHandleResponse handles the NextFragmentWithGrouping response.
-func (client *PagingClient) nextFragmentWithGroupingHandleResponse(resp *http.Response) (PagingNextFragmentWithGroupingResponse, error) {
-	result := PagingNextFragmentWithGroupingResponse{RawResponse: resp}
+func (client *PagingClient) nextFragmentWithGroupingHandleResponse(resp *http.Response) (PagingClientNextFragmentWithGroupingResponse, error) {
+	result := PagingClientNextFragmentWithGroupingResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ODataProductResult); err != nil {
-		return PagingNextFragmentWithGroupingResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientNextFragmentWithGroupingResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -1037,10 +1040,10 @@ func (client *PagingClient) nextOperationWithQueryParamsCreateRequest(ctx contex
 }
 
 // nextOperationWithQueryParamsHandleResponse handles the NextOperationWithQueryParams response.
-func (client *PagingClient) nextOperationWithQueryParamsHandleResponse(resp *http.Response) (PagingNextOperationWithQueryParamsResponse, error) {
-	result := PagingNextOperationWithQueryParamsResponse{RawResponse: resp}
+func (client *PagingClient) nextOperationWithQueryParamsHandleResponse(resp *http.Response) (PagingClientNextOperationWithQueryParamsResponse, error) {
+	result := PagingClientNextOperationWithQueryParamsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProductResult); err != nil {
-		return PagingNextOperationWithQueryParamsResponse{}, runtime.NewResponseError(err, resp)
+		return PagingClientNextOperationWithQueryParamsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

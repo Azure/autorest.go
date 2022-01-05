@@ -17,7 +17,7 @@ func newPetClient() *PetClient {
 
 func TestAddPet(t *testing.T) {
 	client := newPetClient()
-	result, err := client.AddPet(context.Background(), &PetAddPetOptions{
+	result, err := client.AddPet(context.Background(), &PetClientAddPetOptions{
 		PetParam: &Pet{
 			Name: to.StringPtr("Retriever"),
 		},

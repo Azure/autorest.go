@@ -54,21 +54,21 @@ func NewUsageClient(subscriptionID string, credential azcore.TokenCredential, op
 // resources under the subscription.
 // If the operation fails it returns a generic error.
 // location - The location for which resource usage is queried.
-// options - UsageListOptions contains the optional parameters for the UsageClient.List method.
-func (client *UsageClient) List(location string, options *UsageListOptions) *UsageListPager {
-	return &UsageListPager{
+// options - UsageClientListOptions contains the optional parameters for the UsageClient.List method.
+func (client *UsageClient) List(location string, options *UsageClientListOptions) *UsageClientListPager {
+	return &UsageClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, location, options)
 		},
-		advancer: func(ctx context.Context, resp UsageListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp UsageClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListUsagesResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *UsageClient) listCreateRequest(ctx context.Context, location string, options *UsageListOptions) (*policy.Request, error) {
+func (client *UsageClient) listCreateRequest(ctx context.Context, location string, options *UsageClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/usages"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -90,10 +90,10 @@ func (client *UsageClient) listCreateRequest(ctx context.Context, location strin
 }
 
 // listHandleResponse handles the List response.
-func (client *UsageClient) listHandleResponse(resp *http.Response) (UsageListResponse, error) {
-	result := UsageListResponse{RawResponse: resp}
+func (client *UsageClient) listHandleResponse(resp *http.Response) (UsageClientListResponse, error) {
+	result := UsageClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListUsagesResult); err != nil {
-		return UsageListResponse{}, runtime.NewResponseError(err, resp)
+		return UsageClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

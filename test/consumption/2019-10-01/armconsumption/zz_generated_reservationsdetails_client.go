@@ -53,21 +53,22 @@ func NewReservationsDetailsClient(credential azcore.TokenCredential, options *ar
 // for BillingAccount scope (legacy), and
 // '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile
 // scope (modern).
-// options - ReservationsDetailsListOptions contains the optional parameters for the ReservationsDetailsClient.List method.
-func (client *ReservationsDetailsClient) List(scope string, options *ReservationsDetailsListOptions) *ReservationsDetailsListPager {
-	return &ReservationsDetailsListPager{
+// options - ReservationsDetailsClientListOptions contains the optional parameters for the ReservationsDetailsClient.List
+// method.
+func (client *ReservationsDetailsClient) List(scope string, options *ReservationsDetailsClientListOptions) *ReservationsDetailsClientListPager {
+	return &ReservationsDetailsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, scope, options)
 		},
-		advancer: func(ctx context.Context, resp ReservationsDetailsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp ReservationsDetailsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ReservationDetailsListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *ReservationsDetailsClient) listCreateRequest(ctx context.Context, scope string, options *ReservationsDetailsListOptions) (*policy.Request, error) {
+func (client *ReservationsDetailsClient) listCreateRequest(ctx context.Context, scope string, options *ReservationsDetailsClientListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/reservationDetails"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
@@ -97,10 +98,10 @@ func (client *ReservationsDetailsClient) listCreateRequest(ctx context.Context, 
 }
 
 // listHandleResponse handles the List response.
-func (client *ReservationsDetailsClient) listHandleResponse(resp *http.Response) (ReservationsDetailsListResponse, error) {
-	result := ReservationsDetailsListResponse{RawResponse: resp}
+func (client *ReservationsDetailsClient) listHandleResponse(resp *http.Response) (ReservationsDetailsClientListResponse, error) {
+	result := ReservationsDetailsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationDetailsListResult); err != nil {
-		return ReservationsDetailsListResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationsDetailsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -123,22 +124,22 @@ func (client *ReservationsDetailsClient) listHandleError(resp *http.Response) er
 // reservationOrderID - Order Id of the reservation
 // filter - Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports
 // 'le' and 'ge'
-// options - ReservationsDetailsListByReservationOrderOptions contains the optional parameters for the ReservationsDetailsClient.ListByReservationOrder
+// options - ReservationsDetailsClientListByReservationOrderOptions contains the optional parameters for the ReservationsDetailsClient.ListByReservationOrder
 // method.
-func (client *ReservationsDetailsClient) ListByReservationOrder(reservationOrderID string, filter string, options *ReservationsDetailsListByReservationOrderOptions) *ReservationsDetailsListByReservationOrderPager {
-	return &ReservationsDetailsListByReservationOrderPager{
+func (client *ReservationsDetailsClient) ListByReservationOrder(reservationOrderID string, filter string, options *ReservationsDetailsClientListByReservationOrderOptions) *ReservationsDetailsClientListByReservationOrderPager {
+	return &ReservationsDetailsClientListByReservationOrderPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByReservationOrderCreateRequest(ctx, reservationOrderID, filter, options)
 		},
-		advancer: func(ctx context.Context, resp ReservationsDetailsListByReservationOrderResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp ReservationsDetailsClientListByReservationOrderResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ReservationDetailsListResult.NextLink)
 		},
 	}
 }
 
 // listByReservationOrderCreateRequest creates the ListByReservationOrder request.
-func (client *ReservationsDetailsClient) listByReservationOrderCreateRequest(ctx context.Context, reservationOrderID string, filter string, options *ReservationsDetailsListByReservationOrderOptions) (*policy.Request, error) {
+func (client *ReservationsDetailsClient) listByReservationOrderCreateRequest(ctx context.Context, reservationOrderID string, filter string, options *ReservationsDetailsClientListByReservationOrderOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationDetails"
 	if reservationOrderID == "" {
 		return nil, errors.New("parameter reservationOrderID cannot be empty")
@@ -157,10 +158,10 @@ func (client *ReservationsDetailsClient) listByReservationOrderCreateRequest(ctx
 }
 
 // listByReservationOrderHandleResponse handles the ListByReservationOrder response.
-func (client *ReservationsDetailsClient) listByReservationOrderHandleResponse(resp *http.Response) (ReservationsDetailsListByReservationOrderResponse, error) {
-	result := ReservationsDetailsListByReservationOrderResponse{RawResponse: resp}
+func (client *ReservationsDetailsClient) listByReservationOrderHandleResponse(resp *http.Response) (ReservationsDetailsClientListByReservationOrderResponse, error) {
+	result := ReservationsDetailsClientListByReservationOrderResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationDetailsListResult); err != nil {
-		return ReservationsDetailsListByReservationOrderResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationsDetailsClientListByReservationOrderResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -184,22 +185,22 @@ func (client *ReservationsDetailsClient) listByReservationOrderHandleError(resp 
 // reservationID - Id of the reservation
 // filter - Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports
 // 'le' and 'ge'
-// options - ReservationsDetailsListByReservationOrderAndReservationOptions contains the optional parameters for the ReservationsDetailsClient.ListByReservationOrderAndReservation
-// method.
-func (client *ReservationsDetailsClient) ListByReservationOrderAndReservation(reservationOrderID string, reservationID string, filter string, options *ReservationsDetailsListByReservationOrderAndReservationOptions) *ReservationsDetailsListByReservationOrderAndReservationPager {
-	return &ReservationsDetailsListByReservationOrderAndReservationPager{
+// options - ReservationsDetailsClientListByReservationOrderAndReservationOptions contains the optional parameters for the
+// ReservationsDetailsClient.ListByReservationOrderAndReservation method.
+func (client *ReservationsDetailsClient) ListByReservationOrderAndReservation(reservationOrderID string, reservationID string, filter string, options *ReservationsDetailsClientListByReservationOrderAndReservationOptions) *ReservationsDetailsClientListByReservationOrderAndReservationPager {
+	return &ReservationsDetailsClientListByReservationOrderAndReservationPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByReservationOrderAndReservationCreateRequest(ctx, reservationOrderID, reservationID, filter, options)
 		},
-		advancer: func(ctx context.Context, resp ReservationsDetailsListByReservationOrderAndReservationResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp ReservationsDetailsClientListByReservationOrderAndReservationResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ReservationDetailsListResult.NextLink)
 		},
 	}
 }
 
 // listByReservationOrderAndReservationCreateRequest creates the ListByReservationOrderAndReservation request.
-func (client *ReservationsDetailsClient) listByReservationOrderAndReservationCreateRequest(ctx context.Context, reservationOrderID string, reservationID string, filter string, options *ReservationsDetailsListByReservationOrderAndReservationOptions) (*policy.Request, error) {
+func (client *ReservationsDetailsClient) listByReservationOrderAndReservationCreateRequest(ctx context.Context, reservationOrderID string, reservationID string, filter string, options *ReservationsDetailsClientListByReservationOrderAndReservationOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationDetails"
 	if reservationOrderID == "" {
 		return nil, errors.New("parameter reservationOrderID cannot be empty")
@@ -222,10 +223,10 @@ func (client *ReservationsDetailsClient) listByReservationOrderAndReservationCre
 }
 
 // listByReservationOrderAndReservationHandleResponse handles the ListByReservationOrderAndReservation response.
-func (client *ReservationsDetailsClient) listByReservationOrderAndReservationHandleResponse(resp *http.Response) (ReservationsDetailsListByReservationOrderAndReservationResponse, error) {
-	result := ReservationsDetailsListByReservationOrderAndReservationResponse{RawResponse: resp}
+func (client *ReservationsDetailsClient) listByReservationOrderAndReservationHandleResponse(resp *http.Response) (ReservationsDetailsClientListByReservationOrderAndReservationResponse, error) {
+	result := ReservationsDetailsClientListByReservationOrderAndReservationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationDetailsListResult); err != nil {
-		return ReservationsDetailsListByReservationOrderAndReservationResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationsDetailsClientListByReservationOrderAndReservationResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -52,21 +52,21 @@ func NewAvailableSKUsClient(subscriptionID string, credential azcore.TokenCreden
 
 // List - List all the available Skus and information related to them.
 // If the operation fails it returns the *CloudError error type.
-// options - AvailableSKUsListOptions contains the optional parameters for the AvailableSKUsClient.List method.
-func (client *AvailableSKUsClient) List(options *AvailableSKUsListOptions) *AvailableSKUsListPager {
-	return &AvailableSKUsListPager{
+// options - AvailableSKUsClientListOptions contains the optional parameters for the AvailableSKUsClient.List method.
+func (client *AvailableSKUsClient) List(options *AvailableSKUsClientListOptions) *AvailableSKUsClientListPager {
+	return &AvailableSKUsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp AvailableSKUsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp AvailableSKUsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.SKUList.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *AvailableSKUsClient) listCreateRequest(ctx context.Context, options *AvailableSKUsListOptions) (*policy.Request, error) {
+func (client *AvailableSKUsClient) listCreateRequest(ctx context.Context, options *AvailableSKUsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.DataBoxEdge/availableSkus"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -84,10 +84,10 @@ func (client *AvailableSKUsClient) listCreateRequest(ctx context.Context, option
 }
 
 // listHandleResponse handles the List response.
-func (client *AvailableSKUsClient) listHandleResponse(resp *http.Response) (AvailableSKUsListResponse, error) {
-	result := AvailableSKUsListResponse{RawResponse: resp}
+func (client *AvailableSKUsClient) listHandleResponse(resp *http.Response) (AvailableSKUsClientListResponse, error) {
+	result := AvailableSKUsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SKUList); err != nil {
-		return AvailableSKUsListResponse{}, runtime.NewResponseError(err, resp)
+		return AvailableSKUsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

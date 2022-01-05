@@ -38,25 +38,25 @@ func NewAutoRestReportServiceForAzureClient(options *azcore.ClientOptions) *Auto
 
 // GetReport - Get test coverage report
 // If the operation fails it returns the *Error error type.
-// options - AutoRestReportServiceForAzureGetReportOptions contains the optional parameters for the AutoRestReportServiceForAzureClient.GetReport
+// options - AutoRestReportServiceForAzureClientGetReportOptions contains the optional parameters for the AutoRestReportServiceForAzureClient.GetReport
 // method.
-func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (AutoRestReportServiceForAzureGetReportResponse, error) {
+func (client *AutoRestReportServiceForAzureClient) GetReport(ctx context.Context, options *AutoRestReportServiceForAzureClientGetReportOptions) (AutoRestReportServiceForAzureClientGetReportResponse, error) {
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {
-		return AutoRestReportServiceForAzureGetReportResponse{}, err
+		return AutoRestReportServiceForAzureClientGetReportResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return AutoRestReportServiceForAzureGetReportResponse{}, err
+		return AutoRestReportServiceForAzureClientGetReportResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AutoRestReportServiceForAzureGetReportResponse{}, client.getReportHandleError(resp)
+		return AutoRestReportServiceForAzureClientGetReportResponse{}, client.getReportHandleError(resp)
 	}
 	return client.getReportHandleResponse(resp)
 }
 
 // getReportCreateRequest creates the GetReport request.
-func (client *AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx context.Context, options *AutoRestReportServiceForAzureGetReportOptions) (*policy.Request, error) {
+func (client *AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx context.Context, options *AutoRestReportServiceForAzureClientGetReportOptions) (*policy.Request, error) {
 	urlPath := "/report/azure"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -72,10 +72,10 @@ func (client *AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx co
 }
 
 // getReportHandleResponse handles the GetReport response.
-func (client *AutoRestReportServiceForAzureClient) getReportHandleResponse(resp *http.Response) (AutoRestReportServiceForAzureGetReportResponse, error) {
-	result := AutoRestReportServiceForAzureGetReportResponse{RawResponse: resp}
+func (client *AutoRestReportServiceForAzureClient) getReportHandleResponse(resp *http.Response) (AutoRestReportServiceForAzureClientGetReportResponse, error) {
+	result := AutoRestReportServiceForAzureClientGetReportResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return AutoRestReportServiceForAzureGetReportResponse{}, runtime.NewResponseError(err, resp)
+		return AutoRestReportServiceForAzureClientGetReportResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

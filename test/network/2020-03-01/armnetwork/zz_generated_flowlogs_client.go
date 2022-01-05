@@ -57,21 +57,21 @@ func NewFlowLogsClient(subscriptionID string, credential azcore.TokenCredential,
 // networkWatcherName - The name of the network watcher.
 // flowLogName - The name of the flow log.
 // parameters - Parameters that define the create or update flow log resource.
-// options - FlowLogsBeginCreateOrUpdateOptions contains the optional parameters for the FlowLogsClient.BeginCreateOrUpdate
+// options - FlowLogsClientBeginCreateOrUpdateOptions contains the optional parameters for the FlowLogsClient.BeginCreateOrUpdate
 // method.
-func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsBeginCreateOrUpdateOptions) (FlowLogsCreateOrUpdatePollerResponse, error) {
+func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsClientBeginCreateOrUpdateOptions) (FlowLogsClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkWatcherName, flowLogName, parameters, options)
 	if err != nil {
-		return FlowLogsCreateOrUpdatePollerResponse{}, err
+		return FlowLogsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := FlowLogsCreateOrUpdatePollerResponse{
+	result := FlowLogsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("FlowLogsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return FlowLogsCreateOrUpdatePollerResponse{}, err
+		return FlowLogsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &FlowLogsCreateOrUpdatePoller{
+	result.Poller = &FlowLogsClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -79,7 +79,7 @@ func (client *FlowLogsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 
 // CreateOrUpdate - Create or update a flow log for the specified network security group.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *FlowLogsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *FlowLogsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -95,7 +95,7 @@ func (client *FlowLogsClient) createOrUpdate(ctx context.Context, resourceGroupN
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *FlowLogsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *FlowLogsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, parameters FlowLog, options *FlowLogsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -142,20 +142,20 @@ func (client *FlowLogsClient) createOrUpdateHandleError(resp *http.Response) err
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // flowLogName - The name of the flow log resource.
-// options - FlowLogsBeginDeleteOptions contains the optional parameters for the FlowLogsClient.BeginDelete method.
-func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsBeginDeleteOptions) (FlowLogsDeletePollerResponse, error) {
+// options - FlowLogsClientBeginDeleteOptions contains the optional parameters for the FlowLogsClient.BeginDelete method.
+func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsClientBeginDeleteOptions) (FlowLogsClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
-		return FlowLogsDeletePollerResponse{}, err
+		return FlowLogsClientDeletePollerResponse{}, err
 	}
-	result := FlowLogsDeletePollerResponse{
+	result := FlowLogsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("FlowLogsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return FlowLogsDeletePollerResponse{}, err
+		return FlowLogsClientDeletePollerResponse{}, err
 	}
-	result.Poller = &FlowLogsDeletePoller{
+	result.Poller = &FlowLogsClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -163,7 +163,7 @@ func (client *FlowLogsClient) BeginDelete(ctx context.Context, resourceGroupName
 
 // Delete - Deletes the specified flow log resource.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *FlowLogsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsBeginDeleteOptions) (*http.Response, error) {
+func (client *FlowLogsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
 		return nil, err
@@ -179,7 +179,7 @@ func (client *FlowLogsClient) deleteOperation(ctx context.Context, resourceGroup
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *FlowLogsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsBeginDeleteOptions) (*policy.Request, error) {
+func (client *FlowLogsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -226,24 +226,24 @@ func (client *FlowLogsClient) deleteHandleError(resp *http.Response) error {
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // flowLogName - The name of the flow log resource.
-// options - FlowLogsGetOptions contains the optional parameters for the FlowLogsClient.Get method.
-func (client *FlowLogsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsGetOptions) (FlowLogsGetResponse, error) {
+// options - FlowLogsClientGetOptions contains the optional parameters for the FlowLogsClient.Get method.
+func (client *FlowLogsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsClientGetOptions) (FlowLogsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkWatcherName, flowLogName, options)
 	if err != nil {
-		return FlowLogsGetResponse{}, err
+		return FlowLogsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return FlowLogsGetResponse{}, err
+		return FlowLogsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FlowLogsGetResponse{}, client.getHandleError(resp)
+		return FlowLogsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *FlowLogsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsGetOptions) (*policy.Request, error) {
+func (client *FlowLogsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, flowLogName string, options *FlowLogsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -273,10 +273,10 @@ func (client *FlowLogsClient) getCreateRequest(ctx context.Context, resourceGrou
 }
 
 // getHandleResponse handles the Get response.
-func (client *FlowLogsClient) getHandleResponse(resp *http.Response) (FlowLogsGetResponse, error) {
-	result := FlowLogsGetResponse{RawResponse: resp}
+func (client *FlowLogsClient) getHandleResponse(resp *http.Response) (FlowLogsClientGetResponse, error) {
+	result := FlowLogsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FlowLog); err != nil {
-		return FlowLogsGetResponse{}, runtime.NewResponseError(err, resp)
+		return FlowLogsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -298,21 +298,21 @@ func (client *FlowLogsClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *ErrorResponse error type.
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
-// options - FlowLogsListOptions contains the optional parameters for the FlowLogsClient.List method.
-func (client *FlowLogsClient) List(resourceGroupName string, networkWatcherName string, options *FlowLogsListOptions) *FlowLogsListPager {
-	return &FlowLogsListPager{
+// options - FlowLogsClientListOptions contains the optional parameters for the FlowLogsClient.List method.
+func (client *FlowLogsClient) List(resourceGroupName string, networkWatcherName string, options *FlowLogsClientListOptions) *FlowLogsClientListPager {
+	return &FlowLogsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
 		},
-		advancer: func(ctx context.Context, resp FlowLogsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp FlowLogsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.FlowLogListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *FlowLogsClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, options *FlowLogsListOptions) (*policy.Request, error) {
+func (client *FlowLogsClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, options *FlowLogsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -338,10 +338,10 @@ func (client *FlowLogsClient) listCreateRequest(ctx context.Context, resourceGro
 }
 
 // listHandleResponse handles the List response.
-func (client *FlowLogsClient) listHandleResponse(resp *http.Response) (FlowLogsListResponse, error) {
-	result := FlowLogsListResponse{RawResponse: resp}
+func (client *FlowLogsClient) listHandleResponse(resp *http.Response) (FlowLogsClientListResponse, error) {
+	result := FlowLogsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FlowLogListResult); err != nil {
-		return FlowLogsListResponse{}, runtime.NewResponseError(err, resp)
+		return FlowLogsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

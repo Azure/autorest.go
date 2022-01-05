@@ -56,21 +56,21 @@ func NewDdosProtectionPlansClient(subscriptionID string, credential azcore.Token
 // resourceGroupName - The name of the resource group.
 // ddosProtectionPlanName - The name of the DDoS protection plan.
 // parameters - Parameters supplied to the create or update operation.
-// options - DdosProtectionPlansBeginCreateOrUpdateOptions contains the optional parameters for the DdosProtectionPlansClient.BeginCreateOrUpdate
+// options - DdosProtectionPlansClientBeginCreateOrUpdateOptions contains the optional parameters for the DdosProtectionPlansClient.BeginCreateOrUpdate
 // method.
-func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansBeginCreateOrUpdateOptions) (DdosProtectionPlansCreateOrUpdatePollerResponse, error) {
+func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansClientBeginCreateOrUpdateOptions) (DdosProtectionPlansClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
 	if err != nil {
-		return DdosProtectionPlansCreateOrUpdatePollerResponse{}, err
+		return DdosProtectionPlansClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := DdosProtectionPlansCreateOrUpdatePollerResponse{
+	result := DdosProtectionPlansClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("DdosProtectionPlansClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return DdosProtectionPlansCreateOrUpdatePollerResponse{}, err
+		return DdosProtectionPlansClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &DdosProtectionPlansCreateOrUpdatePoller{
+	result.Poller = &DdosProtectionPlansClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *DdosProtectionPlansClient) BeginCreateOrUpdate(ctx context.Context
 
 // CreateOrUpdate - Creates or updates a DDoS protection plan.
 // If the operation fails it returns the *CloudError error type.
-func (client *DdosProtectionPlansClient) createOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *DdosProtectionPlansClient) createOrUpdate(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *DdosProtectionPlansClient) createOrUpdate(ctx context.Context, res
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *DdosProtectionPlansClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *DdosProtectionPlansClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters DdosProtectionPlan, options *DdosProtectionPlansClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -136,21 +136,21 @@ func (client *DdosProtectionPlansClient) createOrUpdateHandleError(resp *http.Re
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // ddosProtectionPlanName - The name of the DDoS protection plan.
-// options - DdosProtectionPlansBeginDeleteOptions contains the optional parameters for the DdosProtectionPlansClient.BeginDelete
+// options - DdosProtectionPlansClientBeginDeleteOptions contains the optional parameters for the DdosProtectionPlansClient.BeginDelete
 // method.
-func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansBeginDeleteOptions) (DdosProtectionPlansDeletePollerResponse, error) {
+func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientBeginDeleteOptions) (DdosProtectionPlansClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
-		return DdosProtectionPlansDeletePollerResponse{}, err
+		return DdosProtectionPlansClientDeletePollerResponse{}, err
 	}
-	result := DdosProtectionPlansDeletePollerResponse{
+	result := DdosProtectionPlansClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("DdosProtectionPlansClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return DdosProtectionPlansDeletePollerResponse{}, err
+		return DdosProtectionPlansClientDeletePollerResponse{}, err
 	}
-	result.Poller = &DdosProtectionPlansDeletePoller{
+	result.Poller = &DdosProtectionPlansClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -158,7 +158,7 @@ func (client *DdosProtectionPlansClient) BeginDelete(ctx context.Context, resour
 
 // Delete - Deletes the specified DDoS protection plan.
 // If the operation fails it returns the *CloudError error type.
-func (client *DdosProtectionPlansClient) deleteOperation(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansBeginDeleteOptions) (*http.Response, error) {
+func (client *DdosProtectionPlansClient) deleteOperation(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
 		return nil, err
@@ -174,7 +174,7 @@ func (client *DdosProtectionPlansClient) deleteOperation(ctx context.Context, re
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *DdosProtectionPlansClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansBeginDeleteOptions) (*policy.Request, error) {
+func (client *DdosProtectionPlansClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -216,24 +216,24 @@ func (client *DdosProtectionPlansClient) deleteHandleError(resp *http.Response) 
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // ddosProtectionPlanName - The name of the DDoS protection plan.
-// options - DdosProtectionPlansGetOptions contains the optional parameters for the DdosProtectionPlansClient.Get method.
-func (client *DdosProtectionPlansClient) Get(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansGetOptions) (DdosProtectionPlansGetResponse, error) {
+// options - DdosProtectionPlansClientGetOptions contains the optional parameters for the DdosProtectionPlansClient.Get method.
+func (client *DdosProtectionPlansClient) Get(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientGetOptions) (DdosProtectionPlansClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, options)
 	if err != nil {
-		return DdosProtectionPlansGetResponse{}, err
+		return DdosProtectionPlansClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DdosProtectionPlansGetResponse{}, err
+		return DdosProtectionPlansClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DdosProtectionPlansGetResponse{}, client.getHandleError(resp)
+		return DdosProtectionPlansClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *DdosProtectionPlansClient) getCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansGetOptions) (*policy.Request, error) {
+func (client *DdosProtectionPlansClient) getCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, options *DdosProtectionPlansClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -259,10 +259,10 @@ func (client *DdosProtectionPlansClient) getCreateRequest(ctx context.Context, r
 }
 
 // getHandleResponse handles the Get response.
-func (client *DdosProtectionPlansClient) getHandleResponse(resp *http.Response) (DdosProtectionPlansGetResponse, error) {
-	result := DdosProtectionPlansGetResponse{RawResponse: resp}
+func (client *DdosProtectionPlansClient) getHandleResponse(resp *http.Response) (DdosProtectionPlansClientGetResponse, error) {
+	result := DdosProtectionPlansClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DdosProtectionPlan); err != nil {
-		return DdosProtectionPlansGetResponse{}, runtime.NewResponseError(err, resp)
+		return DdosProtectionPlansClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -282,21 +282,22 @@ func (client *DdosProtectionPlansClient) getHandleError(resp *http.Response) err
 
 // List - Gets all DDoS protection plans in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - DdosProtectionPlansListOptions contains the optional parameters for the DdosProtectionPlansClient.List method.
-func (client *DdosProtectionPlansClient) List(options *DdosProtectionPlansListOptions) *DdosProtectionPlansListPager {
-	return &DdosProtectionPlansListPager{
+// options - DdosProtectionPlansClientListOptions contains the optional parameters for the DdosProtectionPlansClient.List
+// method.
+func (client *DdosProtectionPlansClient) List(options *DdosProtectionPlansClientListOptions) *DdosProtectionPlansClientListPager {
+	return &DdosProtectionPlansClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp DdosProtectionPlansListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp DdosProtectionPlansClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.DdosProtectionPlanListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *DdosProtectionPlansClient) listCreateRequest(ctx context.Context, options *DdosProtectionPlansListOptions) (*policy.Request, error) {
+func (client *DdosProtectionPlansClient) listCreateRequest(ctx context.Context, options *DdosProtectionPlansClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -314,10 +315,10 @@ func (client *DdosProtectionPlansClient) listCreateRequest(ctx context.Context, 
 }
 
 // listHandleResponse handles the List response.
-func (client *DdosProtectionPlansClient) listHandleResponse(resp *http.Response) (DdosProtectionPlansListResponse, error) {
-	result := DdosProtectionPlansListResponse{RawResponse: resp}
+func (client *DdosProtectionPlansClient) listHandleResponse(resp *http.Response) (DdosProtectionPlansClientListResponse, error) {
+	result := DdosProtectionPlansClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DdosProtectionPlanListResult); err != nil {
-		return DdosProtectionPlansListResponse{}, runtime.NewResponseError(err, resp)
+		return DdosProtectionPlansClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -338,22 +339,22 @@ func (client *DdosProtectionPlansClient) listHandleError(resp *http.Response) er
 // ListByResourceGroup - Gets all the DDoS protection plans in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - DdosProtectionPlansListByResourceGroupOptions contains the optional parameters for the DdosProtectionPlansClient.ListByResourceGroup
+// options - DdosProtectionPlansClientListByResourceGroupOptions contains the optional parameters for the DdosProtectionPlansClient.ListByResourceGroup
 // method.
-func (client *DdosProtectionPlansClient) ListByResourceGroup(resourceGroupName string, options *DdosProtectionPlansListByResourceGroupOptions) *DdosProtectionPlansListByResourceGroupPager {
-	return &DdosProtectionPlansListByResourceGroupPager{
+func (client *DdosProtectionPlansClient) ListByResourceGroup(resourceGroupName string, options *DdosProtectionPlansClientListByResourceGroupOptions) *DdosProtectionPlansClientListByResourceGroupPager {
+	return &DdosProtectionPlansClientListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp DdosProtectionPlansListByResourceGroupResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp DdosProtectionPlansClientListByResourceGroupResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.DdosProtectionPlanListResult.NextLink)
 		},
 	}
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *DdosProtectionPlansClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *DdosProtectionPlansListByResourceGroupOptions) (*policy.Request, error) {
+func (client *DdosProtectionPlansClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *DdosProtectionPlansClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -375,10 +376,10 @@ func (client *DdosProtectionPlansClient) listByResourceGroupCreateRequest(ctx co
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *DdosProtectionPlansClient) listByResourceGroupHandleResponse(resp *http.Response) (DdosProtectionPlansListByResourceGroupResponse, error) {
-	result := DdosProtectionPlansListByResourceGroupResponse{RawResponse: resp}
+func (client *DdosProtectionPlansClient) listByResourceGroupHandleResponse(resp *http.Response) (DdosProtectionPlansClientListByResourceGroupResponse, error) {
+	result := DdosProtectionPlansClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DdosProtectionPlanListResult); err != nil {
-		return DdosProtectionPlansListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return DdosProtectionPlansClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -401,25 +402,25 @@ func (client *DdosProtectionPlansClient) listByResourceGroupHandleError(resp *ht
 // resourceGroupName - The name of the resource group.
 // ddosProtectionPlanName - The name of the DDoS protection plan.
 // parameters - Parameters supplied to the update DDoS protection plan resource tags.
-// options - DdosProtectionPlansUpdateTagsOptions contains the optional parameters for the DdosProtectionPlansClient.UpdateTags
+// options - DdosProtectionPlansClientUpdateTagsOptions contains the optional parameters for the DdosProtectionPlansClient.UpdateTags
 // method.
-func (client *DdosProtectionPlansClient) UpdateTags(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters TagsObject, options *DdosProtectionPlansUpdateTagsOptions) (DdosProtectionPlansUpdateTagsResponse, error) {
+func (client *DdosProtectionPlansClient) UpdateTags(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters TagsObject, options *DdosProtectionPlansClientUpdateTagsOptions) (DdosProtectionPlansClientUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, ddosProtectionPlanName, parameters, options)
 	if err != nil {
-		return DdosProtectionPlansUpdateTagsResponse{}, err
+		return DdosProtectionPlansClientUpdateTagsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DdosProtectionPlansUpdateTagsResponse{}, err
+		return DdosProtectionPlansClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DdosProtectionPlansUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return DdosProtectionPlansClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *DdosProtectionPlansClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters TagsObject, options *DdosProtectionPlansUpdateTagsOptions) (*policy.Request, error) {
+func (client *DdosProtectionPlansClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, ddosProtectionPlanName string, parameters TagsObject, options *DdosProtectionPlansClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -445,10 +446,10 @@ func (client *DdosProtectionPlansClient) updateTagsCreateRequest(ctx context.Con
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *DdosProtectionPlansClient) updateTagsHandleResponse(resp *http.Response) (DdosProtectionPlansUpdateTagsResponse, error) {
-	result := DdosProtectionPlansUpdateTagsResponse{RawResponse: resp}
+func (client *DdosProtectionPlansClient) updateTagsHandleResponse(resp *http.Response) (DdosProtectionPlansClientUpdateTagsResponse, error) {
+	result := DdosProtectionPlansClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DdosProtectionPlan); err != nil {
-		return DdosProtectionPlansUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return DdosProtectionPlansClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

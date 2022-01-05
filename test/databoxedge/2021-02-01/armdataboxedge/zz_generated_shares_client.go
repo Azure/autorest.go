@@ -56,20 +56,21 @@ func NewSharesClient(subscriptionID string, credential azcore.TokenCredential, o
 // name - The share name.
 // resourceGroupName - The resource group name.
 // share - The share properties.
-// options - SharesBeginCreateOrUpdateOptions contains the optional parameters for the SharesClient.BeginCreateOrUpdate method.
-func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesBeginCreateOrUpdateOptions) (SharesCreateOrUpdatePollerResponse, error) {
+// options - SharesClientBeginCreateOrUpdateOptions contains the optional parameters for the SharesClient.BeginCreateOrUpdate
+// method.
+func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesClientBeginCreateOrUpdateOptions) (SharesClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, share, options)
 	if err != nil {
-		return SharesCreateOrUpdatePollerResponse{}, err
+		return SharesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := SharesCreateOrUpdatePollerResponse{
+	result := SharesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("SharesClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return SharesCreateOrUpdatePollerResponse{}, err
+		return SharesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &SharesCreateOrUpdatePoller{
+	result.Poller = &SharesClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -77,7 +78,7 @@ func (client *SharesClient) BeginCreateOrUpdate(ctx context.Context, deviceName 
 
 // CreateOrUpdate - Creates a new share or updates an existing share on the device.
 // If the operation fails it returns the *CloudError error type.
-func (client *SharesClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *SharesClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, share, options)
 	if err != nil {
 		return nil, err
@@ -93,7 +94,7 @@ func (client *SharesClient) createOrUpdate(ctx context.Context, deviceName strin
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *SharesClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *SharesClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, share Share, options *SharesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -140,20 +141,20 @@ func (client *SharesClient) createOrUpdateHandleError(resp *http.Response) error
 // deviceName - The device name.
 // name - The share name.
 // resourceGroupName - The resource group name.
-// options - SharesBeginDeleteOptions contains the optional parameters for the SharesClient.BeginDelete method.
-func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesBeginDeleteOptions) (SharesDeletePollerResponse, error) {
+// options - SharesClientBeginDeleteOptions contains the optional parameters for the SharesClient.BeginDelete method.
+func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginDeleteOptions) (SharesClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return SharesDeletePollerResponse{}, err
+		return SharesClientDeletePollerResponse{}, err
 	}
-	result := SharesDeletePollerResponse{
+	result := SharesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("SharesClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return SharesDeletePollerResponse{}, err
+		return SharesClientDeletePollerResponse{}, err
 	}
-	result.Poller = &SharesDeletePoller{
+	result.Poller = &SharesClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -161,7 +162,7 @@ func (client *SharesClient) BeginDelete(ctx context.Context, deviceName string, 
 
 // Delete - Deletes the share on the Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
-func (client *SharesClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesBeginDeleteOptions) (*http.Response, error) {
+func (client *SharesClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -177,7 +178,7 @@ func (client *SharesClient) deleteOperation(ctx context.Context, deviceName stri
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *SharesClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesBeginDeleteOptions) (*policy.Request, error) {
+func (client *SharesClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -224,24 +225,24 @@ func (client *SharesClient) deleteHandleError(resp *http.Response) error {
 // deviceName - The device name.
 // name - The share name.
 // resourceGroupName - The resource group name.
-// options - SharesGetOptions contains the optional parameters for the SharesClient.Get method.
-func (client *SharesClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesGetOptions) (SharesGetResponse, error) {
+// options - SharesClientGetOptions contains the optional parameters for the SharesClient.Get method.
+func (client *SharesClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientGetOptions) (SharesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return SharesGetResponse{}, err
+		return SharesClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SharesGetResponse{}, err
+		return SharesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SharesGetResponse{}, client.getHandleError(resp)
+		return SharesClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *SharesClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesGetOptions) (*policy.Request, error) {
+func (client *SharesClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -271,10 +272,10 @@ func (client *SharesClient) getCreateRequest(ctx context.Context, deviceName str
 }
 
 // getHandleResponse handles the Get response.
-func (client *SharesClient) getHandleResponse(resp *http.Response) (SharesGetResponse, error) {
-	result := SharesGetResponse{RawResponse: resp}
+func (client *SharesClient) getHandleResponse(resp *http.Response) (SharesClientGetResponse, error) {
+	result := SharesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Share); err != nil {
-		return SharesGetResponse{}, runtime.NewResponseError(err, resp)
+		return SharesClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -296,22 +297,22 @@ func (client *SharesClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - SharesListByDataBoxEdgeDeviceOptions contains the optional parameters for the SharesClient.ListByDataBoxEdgeDevice
+// options - SharesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the SharesClient.ListByDataBoxEdgeDevice
 // method.
-func (client *SharesClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *SharesListByDataBoxEdgeDeviceOptions) *SharesListByDataBoxEdgeDevicePager {
-	return &SharesListByDataBoxEdgeDevicePager{
+func (client *SharesClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *SharesClientListByDataBoxEdgeDeviceOptions) *SharesClientListByDataBoxEdgeDevicePager {
+	return &SharesClientListByDataBoxEdgeDevicePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp SharesListByDataBoxEdgeDeviceResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp SharesClientListByDataBoxEdgeDeviceResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ShareList.NextLink)
 		},
 	}
 }
 
 // listByDataBoxEdgeDeviceCreateRequest creates the ListByDataBoxEdgeDevice request.
-func (client *SharesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *SharesListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
+func (client *SharesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *SharesClientListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -337,10 +338,10 @@ func (client *SharesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Con
 }
 
 // listByDataBoxEdgeDeviceHandleResponse handles the ListByDataBoxEdgeDevice response.
-func (client *SharesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (SharesListByDataBoxEdgeDeviceResponse, error) {
-	result := SharesListByDataBoxEdgeDeviceResponse{RawResponse: resp}
+func (client *SharesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (SharesClientListByDataBoxEdgeDeviceResponse, error) {
+	result := SharesClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ShareList); err != nil {
-		return SharesListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
+		return SharesClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -363,20 +364,20 @@ func (client *SharesClient) listByDataBoxEdgeDeviceHandleError(resp *http.Respon
 // deviceName - The device name.
 // name - The share name.
 // resourceGroupName - The resource group name.
-// options - SharesBeginRefreshOptions contains the optional parameters for the SharesClient.BeginRefresh method.
-func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesBeginRefreshOptions) (SharesRefreshPollerResponse, error) {
+// options - SharesClientBeginRefreshOptions contains the optional parameters for the SharesClient.BeginRefresh method.
+func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginRefreshOptions) (SharesClientRefreshPollerResponse, error) {
 	resp, err := client.refresh(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return SharesRefreshPollerResponse{}, err
+		return SharesClientRefreshPollerResponse{}, err
 	}
-	result := SharesRefreshPollerResponse{
+	result := SharesClientRefreshPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("SharesClient.Refresh", "", resp, client.pl, client.refreshHandleError)
 	if err != nil {
-		return SharesRefreshPollerResponse{}, err
+		return SharesClientRefreshPollerResponse{}, err
 	}
-	result.Poller = &SharesRefreshPoller{
+	result.Poller = &SharesClientRefreshPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -384,7 +385,7 @@ func (client *SharesClient) BeginRefresh(ctx context.Context, deviceName string,
 
 // Refresh - Refreshes the share metadata with the data from the cloud.
 // If the operation fails it returns the *CloudError error type.
-func (client *SharesClient) refresh(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesBeginRefreshOptions) (*http.Response, error) {
+func (client *SharesClient) refresh(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginRefreshOptions) (*http.Response, error) {
 	req, err := client.refreshCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -400,7 +401,7 @@ func (client *SharesClient) refresh(ctx context.Context, deviceName string, name
 }
 
 // refreshCreateRequest creates the Refresh request.
-func (client *SharesClient) refreshCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesBeginRefreshOptions) (*policy.Request, error) {
+func (client *SharesClient) refreshCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *SharesClientBeginRefreshOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}/refresh"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")

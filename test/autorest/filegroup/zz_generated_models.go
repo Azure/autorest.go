@@ -21,17 +21,17 @@ func (e Error) Error() string {
 	return e.raw
 }
 
-// FilesGetEmptyFileOptions contains the optional parameters for the FilesClient.GetEmptyFile method.
-type FilesGetEmptyFileOptions struct {
+// FilesClientGetEmptyFileOptions contains the optional parameters for the FilesClient.GetEmptyFile method.
+type FilesClientGetEmptyFileOptions struct {
 	// placeholder for future optional parameters
 }
 
-// FilesGetFileLargeOptions contains the optional parameters for the FilesClient.GetFileLarge method.
-type FilesGetFileLargeOptions struct {
+// FilesClientGetFileLargeOptions contains the optional parameters for the FilesClient.GetFileLarge method.
+type FilesClientGetFileLargeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// FilesGetFileOptions contains the optional parameters for the FilesClient.GetFile method.
-type FilesGetFileOptions struct {
+// FilesClientGetFileOptions contains the optional parameters for the FilesClient.GetFile method.
+type FilesClientGetFileOptions struct {
 	// placeholder for future optional parameters
 }

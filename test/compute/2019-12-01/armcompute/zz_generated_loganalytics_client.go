@@ -55,21 +55,21 @@ func NewLogAnalyticsClient(subscriptionID string, credential azcore.TokenCredent
 // If the operation fails it returns a generic error.
 // location - The location upon which virtual-machine-sizes is queried.
 // parameters - Parameters supplied to the LogAnalytics getRequestRateByInterval Api.
-// options - LogAnalyticsBeginExportRequestRateByIntervalOptions contains the optional parameters for the LogAnalyticsClient.BeginExportRequestRateByInterval
+// options - LogAnalyticsClientBeginExportRequestRateByIntervalOptions contains the optional parameters for the LogAnalyticsClient.BeginExportRequestRateByInterval
 // method.
-func (client *LogAnalyticsClient) BeginExportRequestRateByInterval(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsBeginExportRequestRateByIntervalOptions) (LogAnalyticsExportRequestRateByIntervalPollerResponse, error) {
+func (client *LogAnalyticsClient) BeginExportRequestRateByInterval(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsClientBeginExportRequestRateByIntervalOptions) (LogAnalyticsClientExportRequestRateByIntervalPollerResponse, error) {
 	resp, err := client.exportRequestRateByInterval(ctx, location, parameters, options)
 	if err != nil {
-		return LogAnalyticsExportRequestRateByIntervalPollerResponse{}, err
+		return LogAnalyticsClientExportRequestRateByIntervalPollerResponse{}, err
 	}
-	result := LogAnalyticsExportRequestRateByIntervalPollerResponse{
+	result := LogAnalyticsClientExportRequestRateByIntervalPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("LogAnalyticsClient.ExportRequestRateByInterval", "azure-async-operation", resp, client.pl, client.exportRequestRateByIntervalHandleError)
 	if err != nil {
-		return LogAnalyticsExportRequestRateByIntervalPollerResponse{}, err
+		return LogAnalyticsClientExportRequestRateByIntervalPollerResponse{}, err
 	}
-	result.Poller = &LogAnalyticsExportRequestRateByIntervalPoller{
+	result.Poller = &LogAnalyticsClientExportRequestRateByIntervalPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *LogAnalyticsClient) BeginExportRequestRateByInterval(ctx context.C
 // ExportRequestRateByInterval - Export logs that show Api requests made by this subscription in the given time window to
 // show throttling activities.
 // If the operation fails it returns a generic error.
-func (client *LogAnalyticsClient) exportRequestRateByInterval(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsBeginExportRequestRateByIntervalOptions) (*http.Response, error) {
+func (client *LogAnalyticsClient) exportRequestRateByInterval(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsClientBeginExportRequestRateByIntervalOptions) (*http.Response, error) {
 	req, err := client.exportRequestRateByIntervalCreateRequest(ctx, location, parameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *LogAnalyticsClient) exportRequestRateByInterval(ctx context.Contex
 }
 
 // exportRequestRateByIntervalCreateRequest creates the ExportRequestRateByInterval request.
-func (client *LogAnalyticsClient) exportRequestRateByIntervalCreateRequest(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsBeginExportRequestRateByIntervalOptions) (*policy.Request, error) {
+func (client *LogAnalyticsClient) exportRequestRateByIntervalCreateRequest(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsClientBeginExportRequestRateByIntervalOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/logAnalytics/apiAccess/getRequestRateByInterval"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -132,21 +132,21 @@ func (client *LogAnalyticsClient) exportRequestRateByIntervalHandleError(resp *h
 // If the operation fails it returns a generic error.
 // location - The location upon which virtual-machine-sizes is queried.
 // parameters - Parameters supplied to the LogAnalytics getThrottledRequests Api.
-// options - LogAnalyticsBeginExportThrottledRequestsOptions contains the optional parameters for the LogAnalyticsClient.BeginExportThrottledRequests
+// options - LogAnalyticsClientBeginExportThrottledRequestsOptions contains the optional parameters for the LogAnalyticsClient.BeginExportThrottledRequests
 // method.
-func (client *LogAnalyticsClient) BeginExportThrottledRequests(ctx context.Context, location string, parameters ThrottledRequestsInput, options *LogAnalyticsBeginExportThrottledRequestsOptions) (LogAnalyticsExportThrottledRequestsPollerResponse, error) {
+func (client *LogAnalyticsClient) BeginExportThrottledRequests(ctx context.Context, location string, parameters ThrottledRequestsInput, options *LogAnalyticsClientBeginExportThrottledRequestsOptions) (LogAnalyticsClientExportThrottledRequestsPollerResponse, error) {
 	resp, err := client.exportThrottledRequests(ctx, location, parameters, options)
 	if err != nil {
-		return LogAnalyticsExportThrottledRequestsPollerResponse{}, err
+		return LogAnalyticsClientExportThrottledRequestsPollerResponse{}, err
 	}
-	result := LogAnalyticsExportThrottledRequestsPollerResponse{
+	result := LogAnalyticsClientExportThrottledRequestsPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("LogAnalyticsClient.ExportThrottledRequests", "azure-async-operation", resp, client.pl, client.exportThrottledRequestsHandleError)
 	if err != nil {
-		return LogAnalyticsExportThrottledRequestsPollerResponse{}, err
+		return LogAnalyticsClientExportThrottledRequestsPollerResponse{}, err
 	}
-	result.Poller = &LogAnalyticsExportThrottledRequestsPoller{
+	result.Poller = &LogAnalyticsClientExportThrottledRequestsPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -154,7 +154,7 @@ func (client *LogAnalyticsClient) BeginExportThrottledRequests(ctx context.Conte
 
 // ExportThrottledRequests - Export logs that show total throttled Api requests for this subscription in the given time window.
 // If the operation fails it returns a generic error.
-func (client *LogAnalyticsClient) exportThrottledRequests(ctx context.Context, location string, parameters ThrottledRequestsInput, options *LogAnalyticsBeginExportThrottledRequestsOptions) (*http.Response, error) {
+func (client *LogAnalyticsClient) exportThrottledRequests(ctx context.Context, location string, parameters ThrottledRequestsInput, options *LogAnalyticsClientBeginExportThrottledRequestsOptions) (*http.Response, error) {
 	req, err := client.exportThrottledRequestsCreateRequest(ctx, location, parameters, options)
 	if err != nil {
 		return nil, err
@@ -170,7 +170,7 @@ func (client *LogAnalyticsClient) exportThrottledRequests(ctx context.Context, l
 }
 
 // exportThrottledRequestsCreateRequest creates the ExportThrottledRequests request.
-func (client *LogAnalyticsClient) exportThrottledRequestsCreateRequest(ctx context.Context, location string, parameters ThrottledRequestsInput, options *LogAnalyticsBeginExportThrottledRequestsOptions) (*policy.Request, error) {
+func (client *LogAnalyticsClient) exportThrottledRequestsCreateRequest(ctx context.Context, location string, parameters ThrottledRequestsInput, options *LogAnalyticsClientBeginExportThrottledRequestsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/logAnalytics/apiAccess/getThrottledRequests"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")

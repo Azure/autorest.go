@@ -57,21 +57,21 @@ func NewSecurityRulesClient(subscriptionID string, credential azcore.TokenCreden
 // networkSecurityGroupName - The name of the network security group.
 // securityRuleName - The name of the security rule.
 // securityRuleParameters - Parameters supplied to the create or update network security rule operation.
-// options - SecurityRulesBeginCreateOrUpdateOptions contains the optional parameters for the SecurityRulesClient.BeginCreateOrUpdate
+// options - SecurityRulesClientBeginCreateOrUpdateOptions contains the optional parameters for the SecurityRulesClient.BeginCreateOrUpdate
 // method.
-func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (SecurityRulesCreateOrUpdatePollerResponse, error) {
+func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesClientBeginCreateOrUpdateOptions) (SecurityRulesClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, options)
 	if err != nil {
-		return SecurityRulesCreateOrUpdatePollerResponse{}, err
+		return SecurityRulesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := SecurityRulesCreateOrUpdatePollerResponse{
+	result := SecurityRulesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("SecurityRulesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return SecurityRulesCreateOrUpdatePollerResponse{}, err
+		return SecurityRulesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &SecurityRulesCreateOrUpdatePoller{
+	result.Poller = &SecurityRulesClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -79,7 +79,7 @@ func (client *SecurityRulesClient) BeginCreateOrUpdate(ctx context.Context, reso
 
 // CreateOrUpdate - Creates or updates a security rule in the specified network security group.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *SecurityRulesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, securityRuleParameters, options)
 	if err != nil {
 		return nil, err
@@ -95,7 +95,7 @@ func (client *SecurityRulesClient) createOrUpdate(ctx context.Context, resourceG
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *SecurityRulesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *SecurityRulesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, securityRuleParameters SecurityRule, options *SecurityRulesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -142,20 +142,21 @@ func (client *SecurityRulesClient) createOrUpdateHandleError(resp *http.Response
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
 // securityRuleName - The name of the security rule.
-// options - SecurityRulesBeginDeleteOptions contains the optional parameters for the SecurityRulesClient.BeginDelete method.
-func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesBeginDeleteOptions) (SecurityRulesDeletePollerResponse, error) {
+// options - SecurityRulesClientBeginDeleteOptions contains the optional parameters for the SecurityRulesClient.BeginDelete
+// method.
+func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesClientBeginDeleteOptions) (SecurityRulesClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
-		return SecurityRulesDeletePollerResponse{}, err
+		return SecurityRulesClientDeletePollerResponse{}, err
 	}
-	result := SecurityRulesDeletePollerResponse{
+	result := SecurityRulesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("SecurityRulesClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return SecurityRulesDeletePollerResponse{}, err
+		return SecurityRulesClientDeletePollerResponse{}, err
 	}
-	result.Poller = &SecurityRulesDeletePoller{
+	result.Poller = &SecurityRulesClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -163,7 +164,7 @@ func (client *SecurityRulesClient) BeginDelete(ctx context.Context, resourceGrou
 
 // Delete - Deletes the specified network security rule.
 // If the operation fails it returns the *CloudError error type.
-func (client *SecurityRulesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesBeginDeleteOptions) (*http.Response, error) {
+func (client *SecurityRulesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
 		return nil, err
@@ -179,7 +180,7 @@ func (client *SecurityRulesClient) deleteOperation(ctx context.Context, resource
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *SecurityRulesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesBeginDeleteOptions) (*policy.Request, error) {
+func (client *SecurityRulesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -226,24 +227,24 @@ func (client *SecurityRulesClient) deleteHandleError(resp *http.Response) error 
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
 // securityRuleName - The name of the security rule.
-// options - SecurityRulesGetOptions contains the optional parameters for the SecurityRulesClient.Get method.
-func (client *SecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesGetOptions) (SecurityRulesGetResponse, error) {
+// options - SecurityRulesClientGetOptions contains the optional parameters for the SecurityRulesClient.Get method.
+func (client *SecurityRulesClient) Get(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesClientGetOptions) (SecurityRulesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, securityRuleName, options)
 	if err != nil {
-		return SecurityRulesGetResponse{}, err
+		return SecurityRulesClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SecurityRulesGetResponse{}, err
+		return SecurityRulesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SecurityRulesGetResponse{}, client.getHandleError(resp)
+		return SecurityRulesClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *SecurityRulesClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesGetOptions) (*policy.Request, error) {
+func (client *SecurityRulesClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, securityRuleName string, options *SecurityRulesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -273,10 +274,10 @@ func (client *SecurityRulesClient) getCreateRequest(ctx context.Context, resourc
 }
 
 // getHandleResponse handles the Get response.
-func (client *SecurityRulesClient) getHandleResponse(resp *http.Response) (SecurityRulesGetResponse, error) {
-	result := SecurityRulesGetResponse{RawResponse: resp}
+func (client *SecurityRulesClient) getHandleResponse(resp *http.Response) (SecurityRulesClientGetResponse, error) {
+	result := SecurityRulesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityRule); err != nil {
-		return SecurityRulesGetResponse{}, runtime.NewResponseError(err, resp)
+		return SecurityRulesClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -298,21 +299,21 @@ func (client *SecurityRulesClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // networkSecurityGroupName - The name of the network security group.
-// options - SecurityRulesListOptions contains the optional parameters for the SecurityRulesClient.List method.
-func (client *SecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesListOptions) *SecurityRulesListPager {
-	return &SecurityRulesListPager{
+// options - SecurityRulesClientListOptions contains the optional parameters for the SecurityRulesClient.List method.
+func (client *SecurityRulesClient) List(resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesClientListOptions) *SecurityRulesClientListPager {
+	return &SecurityRulesClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, networkSecurityGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp SecurityRulesListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp SecurityRulesClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.SecurityRuleListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *SecurityRulesClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesListOptions) (*policy.Request, error) {
+func (client *SecurityRulesClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkSecurityGroupName string, options *SecurityRulesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -338,10 +339,10 @@ func (client *SecurityRulesClient) listCreateRequest(ctx context.Context, resour
 }
 
 // listHandleResponse handles the List response.
-func (client *SecurityRulesClient) listHandleResponse(resp *http.Response) (SecurityRulesListResponse, error) {
-	result := SecurityRulesListResponse{RawResponse: resp}
+func (client *SecurityRulesClient) listHandleResponse(resp *http.Response) (SecurityRulesClientListResponse, error) {
+	result := SecurityRulesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityRuleListResult); err != nil {
-		return SecurityRulesListResponse{}, runtime.NewResponseError(err, resp)
+		return SecurityRulesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

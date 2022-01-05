@@ -23,367 +23,376 @@ func (e Error) Error() string {
 	return e.raw
 }
 
-// PathItemsGetAllWithValuesOptions contains the optional parameters for the PathItemsClient.GetAllWithValues method.
-type PathItemsGetAllWithValuesOptions struct {
+// PathItemsClientGetAllWithValuesOptions contains the optional parameters for the PathItemsClient.GetAllWithValues method.
+type PathItemsClientGetAllWithValuesOptions struct {
 	// should contain value 'localStringQuery'
 	LocalStringQuery *string
 	// A string value 'pathItemStringQuery' that appears as a query parameter
 	PathItemStringQuery *string
 }
 
-// PathItemsGetGlobalAndLocalQueryNullOptions contains the optional parameters for the PathItemsClient.GetGlobalAndLocalQueryNull
+// PathItemsClientGetGlobalAndLocalQueryNullOptions contains the optional parameters for the PathItemsClient.GetGlobalAndLocalQueryNull
 // method.
-type PathItemsGetGlobalAndLocalQueryNullOptions struct {
+type PathItemsClientGetGlobalAndLocalQueryNullOptions struct {
 	// should contain null value
 	LocalStringQuery *string
 	// A string value 'pathItemStringQuery' that appears as a query parameter
 	PathItemStringQuery *string
 }
 
-// PathItemsGetGlobalQueryNullOptions contains the optional parameters for the PathItemsClient.GetGlobalQueryNull method.
-type PathItemsGetGlobalQueryNullOptions struct {
+// PathItemsClientGetGlobalQueryNullOptions contains the optional parameters for the PathItemsClient.GetGlobalQueryNull method.
+type PathItemsClientGetGlobalQueryNullOptions struct {
 	// should contain value 'localStringQuery'
 	LocalStringQuery *string
 	// A string value 'pathItemStringQuery' that appears as a query parameter
 	PathItemStringQuery *string
 }
 
-// PathItemsGetLocalPathItemQueryNullOptions contains the optional parameters for the PathItemsClient.GetLocalPathItemQueryNull
+// PathItemsClientGetLocalPathItemQueryNullOptions contains the optional parameters for the PathItemsClient.GetLocalPathItemQueryNull
 // method.
-type PathItemsGetLocalPathItemQueryNullOptions struct {
+type PathItemsClientGetLocalPathItemQueryNullOptions struct {
 	// should contain value null
 	LocalStringQuery *string
 	// should contain value null
 	PathItemStringQuery *string
 }
 
-// PathsArrayCSVInPathOptions contains the optional parameters for the PathsClient.ArrayCSVInPath method.
-type PathsArrayCSVInPathOptions struct {
+// PathsClientArrayCSVInPathOptions contains the optional parameters for the PathsClient.ArrayCSVInPath method.
+type PathsClientArrayCSVInPathOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsBase64URLOptions contains the optional parameters for the PathsClient.Base64URL method.
-type PathsBase64URLOptions struct {
+// PathsClientBase64URLOptions contains the optional parameters for the PathsClient.Base64URL method.
+type PathsClientBase64URLOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsByteEmptyOptions contains the optional parameters for the PathsClient.ByteEmpty method.
-type PathsByteEmptyOptions struct {
+// PathsClientByteEmptyOptions contains the optional parameters for the PathsClient.ByteEmpty method.
+type PathsClientByteEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsByteMultiByteOptions contains the optional parameters for the PathsClient.ByteMultiByte method.
-type PathsByteMultiByteOptions struct {
+// PathsClientByteMultiByteOptions contains the optional parameters for the PathsClient.ByteMultiByte method.
+type PathsClientByteMultiByteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsByteNullOptions contains the optional parameters for the PathsClient.ByteNull method.
-type PathsByteNullOptions struct {
+// PathsClientByteNullOptions contains the optional parameters for the PathsClient.ByteNull method.
+type PathsClientByteNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsDateNullOptions contains the optional parameters for the PathsClient.DateNull method.
-type PathsDateNullOptions struct {
+// PathsClientDateNullOptions contains the optional parameters for the PathsClient.DateNull method.
+type PathsClientDateNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsDateTimeNullOptions contains the optional parameters for the PathsClient.DateTimeNull method.
-type PathsDateTimeNullOptions struct {
+// PathsClientDateTimeNullOptions contains the optional parameters for the PathsClient.DateTimeNull method.
+type PathsClientDateTimeNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsDateTimeValidOptions contains the optional parameters for the PathsClient.DateTimeValid method.
-type PathsDateTimeValidOptions struct {
+// PathsClientDateTimeValidOptions contains the optional parameters for the PathsClient.DateTimeValid method.
+type PathsClientDateTimeValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsDateValidOptions contains the optional parameters for the PathsClient.DateValid method.
-type PathsDateValidOptions struct {
+// PathsClientDateValidOptions contains the optional parameters for the PathsClient.DateValid method.
+type PathsClientDateValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsDoubleDecimalNegativeOptions contains the optional parameters for the PathsClient.DoubleDecimalNegative method.
-type PathsDoubleDecimalNegativeOptions struct {
+// PathsClientDoubleDecimalNegativeOptions contains the optional parameters for the PathsClient.DoubleDecimalNegative method.
+type PathsClientDoubleDecimalNegativeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsDoubleDecimalPositiveOptions contains the optional parameters for the PathsClient.DoubleDecimalPositive method.
-type PathsDoubleDecimalPositiveOptions struct {
+// PathsClientDoubleDecimalPositiveOptions contains the optional parameters for the PathsClient.DoubleDecimalPositive method.
+type PathsClientDoubleDecimalPositiveOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsEnumNullOptions contains the optional parameters for the PathsClient.EnumNull method.
-type PathsEnumNullOptions struct {
+// PathsClientEnumNullOptions contains the optional parameters for the PathsClient.EnumNull method.
+type PathsClientEnumNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsEnumValidOptions contains the optional parameters for the PathsClient.EnumValid method.
-type PathsEnumValidOptions struct {
+// PathsClientEnumValidOptions contains the optional parameters for the PathsClient.EnumValid method.
+type PathsClientEnumValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsFloatScientificNegativeOptions contains the optional parameters for the PathsClient.FloatScientificNegative method.
-type PathsFloatScientificNegativeOptions struct {
+// PathsClientFloatScientificNegativeOptions contains the optional parameters for the PathsClient.FloatScientificNegative
+// method.
+type PathsClientFloatScientificNegativeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsFloatScientificPositiveOptions contains the optional parameters for the PathsClient.FloatScientificPositive method.
-type PathsFloatScientificPositiveOptions struct {
+// PathsClientFloatScientificPositiveOptions contains the optional parameters for the PathsClient.FloatScientificPositive
+// method.
+type PathsClientFloatScientificPositiveOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsGetBooleanFalseOptions contains the optional parameters for the PathsClient.GetBooleanFalse method.
-type PathsGetBooleanFalseOptions struct {
+// PathsClientGetBooleanFalseOptions contains the optional parameters for the PathsClient.GetBooleanFalse method.
+type PathsClientGetBooleanFalseOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsGetBooleanTrueOptions contains the optional parameters for the PathsClient.GetBooleanTrue method.
-type PathsGetBooleanTrueOptions struct {
+// PathsClientGetBooleanTrueOptions contains the optional parameters for the PathsClient.GetBooleanTrue method.
+type PathsClientGetBooleanTrueOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsGetIntNegativeOneMillionOptions contains the optional parameters for the PathsClient.GetIntNegativeOneMillion method.
-type PathsGetIntNegativeOneMillionOptions struct {
+// PathsClientGetIntNegativeOneMillionOptions contains the optional parameters for the PathsClient.GetIntNegativeOneMillion
+// method.
+type PathsClientGetIntNegativeOneMillionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsGetIntOneMillionOptions contains the optional parameters for the PathsClient.GetIntOneMillion method.
-type PathsGetIntOneMillionOptions struct {
+// PathsClientGetIntOneMillionOptions contains the optional parameters for the PathsClient.GetIntOneMillion method.
+type PathsClientGetIntOneMillionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsGetNegativeTenBillionOptions contains the optional parameters for the PathsClient.GetNegativeTenBillion method.
-type PathsGetNegativeTenBillionOptions struct {
+// PathsClientGetNegativeTenBillionOptions contains the optional parameters for the PathsClient.GetNegativeTenBillion method.
+type PathsClientGetNegativeTenBillionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsGetTenBillionOptions contains the optional parameters for the PathsClient.GetTenBillion method.
-type PathsGetTenBillionOptions struct {
+// PathsClientGetTenBillionOptions contains the optional parameters for the PathsClient.GetTenBillion method.
+type PathsClientGetTenBillionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsStringEmptyOptions contains the optional parameters for the PathsClient.StringEmpty method.
-type PathsStringEmptyOptions struct {
+// PathsClientStringEmptyOptions contains the optional parameters for the PathsClient.StringEmpty method.
+type PathsClientStringEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsStringNullOptions contains the optional parameters for the PathsClient.StringNull method.
-type PathsStringNullOptions struct {
+// PathsClientStringNullOptions contains the optional parameters for the PathsClient.StringNull method.
+type PathsClientStringNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsStringURLEncodedOptions contains the optional parameters for the PathsClient.StringURLEncoded method.
-type PathsStringURLEncodedOptions struct {
+// PathsClientStringURLEncodedOptions contains the optional parameters for the PathsClient.StringURLEncoded method.
+type PathsClientStringURLEncodedOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsStringURLNonEncodedOptions contains the optional parameters for the PathsClient.StringURLNonEncoded method.
-type PathsStringURLNonEncodedOptions struct {
+// PathsClientStringURLNonEncodedOptions contains the optional parameters for the PathsClient.StringURLNonEncoded method.
+type PathsClientStringURLNonEncodedOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsStringUnicodeOptions contains the optional parameters for the PathsClient.StringUnicode method.
-type PathsStringUnicodeOptions struct {
+// PathsClientStringUnicodeOptions contains the optional parameters for the PathsClient.StringUnicode method.
+type PathsClientStringUnicodeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PathsUnixTimeURLOptions contains the optional parameters for the PathsClient.UnixTimeURL method.
-type PathsUnixTimeURLOptions struct {
+// PathsClientUnixTimeURLOptions contains the optional parameters for the PathsClient.UnixTimeURL method.
+type PathsClientUnixTimeURLOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueriesArrayStringCSVEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringCSVEmpty method.
-type QueriesArrayStringCSVEmptyOptions struct {
+// QueriesClientArrayStringCSVEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringCSVEmpty method.
+type QueriesClientArrayStringCSVEmptyOptions struct {
 	// an empty array [] of string using the csv-array format
 	ArrayQuery []string
 }
 
-// QueriesArrayStringCSVNullOptions contains the optional parameters for the QueriesClient.ArrayStringCSVNull method.
-type QueriesArrayStringCSVNullOptions struct {
+// QueriesClientArrayStringCSVNullOptions contains the optional parameters for the QueriesClient.ArrayStringCSVNull method.
+type QueriesClientArrayStringCSVNullOptions struct {
 	// a null array of string using the csv-array format
 	ArrayQuery []string
 }
 
-// QueriesArrayStringCSVValidOptions contains the optional parameters for the QueriesClient.ArrayStringCSVValid method.
-type QueriesArrayStringCSVValidOptions struct {
+// QueriesClientArrayStringCSVValidOptions contains the optional parameters for the QueriesClient.ArrayStringCSVValid method.
+type QueriesClientArrayStringCSVValidOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the csv-array format
 	ArrayQuery []string
 }
 
-// QueriesArrayStringNoCollectionFormatEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringNoCollectionFormatEmpty
+// QueriesClientArrayStringNoCollectionFormatEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringNoCollectionFormatEmpty
 // method.
-type QueriesArrayStringNoCollectionFormatEmptyOptions struct {
+type QueriesClientArrayStringNoCollectionFormatEmptyOptions struct {
 	// Array-typed query parameter. Pass in ['hello', 'nihao', 'bonjour'].
 	ArrayQuery []string
 }
 
-// QueriesArrayStringPipesValidOptions contains the optional parameters for the QueriesClient.ArrayStringPipesValid method.
-type QueriesArrayStringPipesValidOptions struct {
+// QueriesClientArrayStringPipesValidOptions contains the optional parameters for the QueriesClient.ArrayStringPipesValid
+// method.
+type QueriesClientArrayStringPipesValidOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the pipes-array format
 	ArrayQuery []string
 }
 
-// QueriesArrayStringSsvValidOptions contains the optional parameters for the QueriesClient.ArrayStringSsvValid method.
-type QueriesArrayStringSsvValidOptions struct {
+// QueriesClientArrayStringSsvValidOptions contains the optional parameters for the QueriesClient.ArrayStringSsvValid method.
+type QueriesClientArrayStringSsvValidOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the ssv-array format
 	ArrayQuery []string
 }
 
-// QueriesArrayStringTsvValidOptions contains the optional parameters for the QueriesClient.ArrayStringTsvValid method.
-type QueriesArrayStringTsvValidOptions struct {
+// QueriesClientArrayStringTsvValidOptions contains the optional parameters for the QueriesClient.ArrayStringTsvValid method.
+type QueriesClientArrayStringTsvValidOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the tsv-array format
 	ArrayQuery []string
 }
 
-// QueriesByteEmptyOptions contains the optional parameters for the QueriesClient.ByteEmpty method.
-type QueriesByteEmptyOptions struct {
+// QueriesClientByteEmptyOptions contains the optional parameters for the QueriesClient.ByteEmpty method.
+type QueriesClientByteEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueriesByteMultiByteOptions contains the optional parameters for the QueriesClient.ByteMultiByte method.
-type QueriesByteMultiByteOptions struct {
+// QueriesClientByteMultiByteOptions contains the optional parameters for the QueriesClient.ByteMultiByte method.
+type QueriesClientByteMultiByteOptions struct {
 	// '啊齄丂狛狜隣郎隣兀﨩' multibyte value as utf-8 encoded byte array
 	ByteQuery []byte
 }
 
-// QueriesByteNullOptions contains the optional parameters for the QueriesClient.ByteNull method.
-type QueriesByteNullOptions struct {
+// QueriesClientByteNullOptions contains the optional parameters for the QueriesClient.ByteNull method.
+type QueriesClientByteNullOptions struct {
 	// null as byte array (no query parameters in uri)
 	ByteQuery []byte
 }
 
-// QueriesDateNullOptions contains the optional parameters for the QueriesClient.DateNull method.
-type QueriesDateNullOptions struct {
+// QueriesClientDateNullOptions contains the optional parameters for the QueriesClient.DateNull method.
+type QueriesClientDateNullOptions struct {
 	// null as date (no query parameters in uri)
 	DateQuery *time.Time
 }
 
-// QueriesDateTimeNullOptions contains the optional parameters for the QueriesClient.DateTimeNull method.
-type QueriesDateTimeNullOptions struct {
+// QueriesClientDateTimeNullOptions contains the optional parameters for the QueriesClient.DateTimeNull method.
+type QueriesClientDateTimeNullOptions struct {
 	// null as date-time (no query parameters)
 	DateTimeQuery *time.Time
 }
 
-// QueriesDateTimeValidOptions contains the optional parameters for the QueriesClient.DateTimeValid method.
-type QueriesDateTimeValidOptions struct {
+// QueriesClientDateTimeValidOptions contains the optional parameters for the QueriesClient.DateTimeValid method.
+type QueriesClientDateTimeValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueriesDateValidOptions contains the optional parameters for the QueriesClient.DateValid method.
-type QueriesDateValidOptions struct {
+// QueriesClientDateValidOptions contains the optional parameters for the QueriesClient.DateValid method.
+type QueriesClientDateValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueriesDoubleDecimalNegativeOptions contains the optional parameters for the QueriesClient.DoubleDecimalNegative method.
-type QueriesDoubleDecimalNegativeOptions struct {
+// QueriesClientDoubleDecimalNegativeOptions contains the optional parameters for the QueriesClient.DoubleDecimalNegative
+// method.
+type QueriesClientDoubleDecimalNegativeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueriesDoubleDecimalPositiveOptions contains the optional parameters for the QueriesClient.DoubleDecimalPositive method.
-type QueriesDoubleDecimalPositiveOptions struct {
+// QueriesClientDoubleDecimalPositiveOptions contains the optional parameters for the QueriesClient.DoubleDecimalPositive
+// method.
+type QueriesClientDoubleDecimalPositiveOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueriesDoubleNullOptions contains the optional parameters for the QueriesClient.DoubleNull method.
-type QueriesDoubleNullOptions struct {
+// QueriesClientDoubleNullOptions contains the optional parameters for the QueriesClient.DoubleNull method.
+type QueriesClientDoubleNullOptions struct {
 	// null numeric value
 	DoubleQuery *float64
 }
 
-// QueriesEnumNullOptions contains the optional parameters for the QueriesClient.EnumNull method.
-type QueriesEnumNullOptions struct {
+// QueriesClientEnumNullOptions contains the optional parameters for the QueriesClient.EnumNull method.
+type QueriesClientEnumNullOptions struct {
 	// null string value
 	EnumQuery *URIColor
 }
 
-// QueriesEnumValidOptions contains the optional parameters for the QueriesClient.EnumValid method.
-type QueriesEnumValidOptions struct {
+// QueriesClientEnumValidOptions contains the optional parameters for the QueriesClient.EnumValid method.
+type QueriesClientEnumValidOptions struct {
 	// 'green color' enum value
 	EnumQuery *URIColor
 }
 
-// QueriesFloatNullOptions contains the optional parameters for the QueriesClient.FloatNull method.
-type QueriesFloatNullOptions struct {
+// QueriesClientFloatNullOptions contains the optional parameters for the QueriesClient.FloatNull method.
+type QueriesClientFloatNullOptions struct {
 	// null numeric value
 	FloatQuery *float32
 }
 
-// QueriesFloatScientificNegativeOptions contains the optional parameters for the QueriesClient.FloatScientificNegative method.
-type QueriesFloatScientificNegativeOptions struct {
+// QueriesClientFloatScientificNegativeOptions contains the optional parameters for the QueriesClient.FloatScientificNegative
+// method.
+type QueriesClientFloatScientificNegativeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueriesFloatScientificPositiveOptions contains the optional parameters for the QueriesClient.FloatScientificPositive method.
-type QueriesFloatScientificPositiveOptions struct {
+// QueriesClientFloatScientificPositiveOptions contains the optional parameters for the QueriesClient.FloatScientificPositive
+// method.
+type QueriesClientFloatScientificPositiveOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueriesGetBooleanFalseOptions contains the optional parameters for the QueriesClient.GetBooleanFalse method.
-type QueriesGetBooleanFalseOptions struct {
+// QueriesClientGetBooleanFalseOptions contains the optional parameters for the QueriesClient.GetBooleanFalse method.
+type QueriesClientGetBooleanFalseOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueriesGetBooleanNullOptions contains the optional parameters for the QueriesClient.GetBooleanNull method.
-type QueriesGetBooleanNullOptions struct {
+// QueriesClientGetBooleanNullOptions contains the optional parameters for the QueriesClient.GetBooleanNull method.
+type QueriesClientGetBooleanNullOptions struct {
 	// null boolean value
 	BoolQuery *bool
 }
 
-// QueriesGetBooleanTrueOptions contains the optional parameters for the QueriesClient.GetBooleanTrue method.
-type QueriesGetBooleanTrueOptions struct {
+// QueriesClientGetBooleanTrueOptions contains the optional parameters for the QueriesClient.GetBooleanTrue method.
+type QueriesClientGetBooleanTrueOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueriesGetIntNegativeOneMillionOptions contains the optional parameters for the QueriesClient.GetIntNegativeOneMillion
+// QueriesClientGetIntNegativeOneMillionOptions contains the optional parameters for the QueriesClient.GetIntNegativeOneMillion
 // method.
-type QueriesGetIntNegativeOneMillionOptions struct {
+type QueriesClientGetIntNegativeOneMillionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueriesGetIntNullOptions contains the optional parameters for the QueriesClient.GetIntNull method.
-type QueriesGetIntNullOptions struct {
+// QueriesClientGetIntNullOptions contains the optional parameters for the QueriesClient.GetIntNull method.
+type QueriesClientGetIntNullOptions struct {
 	// null integer value
 	IntQuery *int32
 }
 
-// QueriesGetIntOneMillionOptions contains the optional parameters for the QueriesClient.GetIntOneMillion method.
-type QueriesGetIntOneMillionOptions struct {
+// QueriesClientGetIntOneMillionOptions contains the optional parameters for the QueriesClient.GetIntOneMillion method.
+type QueriesClientGetIntOneMillionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueriesGetLongNullOptions contains the optional parameters for the QueriesClient.GetLongNull method.
-type QueriesGetLongNullOptions struct {
+// QueriesClientGetLongNullOptions contains the optional parameters for the QueriesClient.GetLongNull method.
+type QueriesClientGetLongNullOptions struct {
 	// null 64 bit integer value
 	LongQuery *int64
 }
 
-// QueriesGetNegativeTenBillionOptions contains the optional parameters for the QueriesClient.GetNegativeTenBillion method.
-type QueriesGetNegativeTenBillionOptions struct {
+// QueriesClientGetNegativeTenBillionOptions contains the optional parameters for the QueriesClient.GetNegativeTenBillion
+// method.
+type QueriesClientGetNegativeTenBillionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueriesGetTenBillionOptions contains the optional parameters for the QueriesClient.GetTenBillion method.
-type QueriesGetTenBillionOptions struct {
+// QueriesClientGetTenBillionOptions contains the optional parameters for the QueriesClient.GetTenBillion method.
+type QueriesClientGetTenBillionOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueriesStringEmptyOptions contains the optional parameters for the QueriesClient.StringEmpty method.
-type QueriesStringEmptyOptions struct {
+// QueriesClientStringEmptyOptions contains the optional parameters for the QueriesClient.StringEmpty method.
+type QueriesClientStringEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueriesStringNullOptions contains the optional parameters for the QueriesClient.StringNull method.
-type QueriesStringNullOptions struct {
+// QueriesClientStringNullOptions contains the optional parameters for the QueriesClient.StringNull method.
+type QueriesClientStringNullOptions struct {
 	// null string value
 	StringQuery *string
 }
 
-// QueriesStringURLEncodedOptions contains the optional parameters for the QueriesClient.StringURLEncoded method.
-type QueriesStringURLEncodedOptions struct {
+// QueriesClientStringURLEncodedOptions contains the optional parameters for the QueriesClient.StringURLEncoded method.
+type QueriesClientStringURLEncodedOptions struct {
 	// placeholder for future optional parameters
 }
 
-// QueriesStringUnicodeOptions contains the optional parameters for the QueriesClient.StringUnicode method.
-type QueriesStringUnicodeOptions struct {
+// QueriesClientStringUnicodeOptions contains the optional parameters for the QueriesClient.StringUnicode method.
+type QueriesClientStringUnicodeOptions struct {
 	// placeholder for future optional parameters
 }

@@ -57,20 +57,21 @@ func NewPacketCapturesClient(subscriptionID string, credential azcore.TokenCrede
 // networkWatcherName - The name of the network watcher.
 // packetCaptureName - The name of the packet capture session.
 // parameters - Parameters that define the create packet capture operation.
-// options - PacketCapturesBeginCreateOptions contains the optional parameters for the PacketCapturesClient.BeginCreate method.
-func (client *PacketCapturesClient) BeginCreate(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, parameters PacketCapture, options *PacketCapturesBeginCreateOptions) (PacketCapturesCreatePollerResponse, error) {
+// options - PacketCapturesClientBeginCreateOptions contains the optional parameters for the PacketCapturesClient.BeginCreate
+// method.
+func (client *PacketCapturesClient) BeginCreate(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, parameters PacketCapture, options *PacketCapturesClientBeginCreateOptions) (PacketCapturesClientCreatePollerResponse, error) {
 	resp, err := client.create(ctx, resourceGroupName, networkWatcherName, packetCaptureName, parameters, options)
 	if err != nil {
-		return PacketCapturesCreatePollerResponse{}, err
+		return PacketCapturesClientCreatePollerResponse{}, err
 	}
-	result := PacketCapturesCreatePollerResponse{
+	result := PacketCapturesClientCreatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("PacketCapturesClient.Create", "azure-async-operation", resp, client.pl, client.createHandleError)
 	if err != nil {
-		return PacketCapturesCreatePollerResponse{}, err
+		return PacketCapturesClientCreatePollerResponse{}, err
 	}
-	result.Poller = &PacketCapturesCreatePoller{
+	result.Poller = &PacketCapturesClientCreatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +79,7 @@ func (client *PacketCapturesClient) BeginCreate(ctx context.Context, resourceGro
 
 // Create - Create and start a packet capture on the specified VM.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *PacketCapturesClient) create(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, parameters PacketCapture, options *PacketCapturesBeginCreateOptions) (*http.Response, error) {
+func (client *PacketCapturesClient) create(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, parameters PacketCapture, options *PacketCapturesClientBeginCreateOptions) (*http.Response, error) {
 	req, err := client.createCreateRequest(ctx, resourceGroupName, networkWatcherName, packetCaptureName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +95,7 @@ func (client *PacketCapturesClient) create(ctx context.Context, resourceGroupNam
 }
 
 // createCreateRequest creates the Create request.
-func (client *PacketCapturesClient) createCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, parameters PacketCapture, options *PacketCapturesBeginCreateOptions) (*policy.Request, error) {
+func (client *PacketCapturesClient) createCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, parameters PacketCapture, options *PacketCapturesClientBeginCreateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -141,20 +142,21 @@ func (client *PacketCapturesClient) createHandleError(resp *http.Response) error
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // packetCaptureName - The name of the packet capture session.
-// options - PacketCapturesBeginDeleteOptions contains the optional parameters for the PacketCapturesClient.BeginDelete method.
-func (client *PacketCapturesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesBeginDeleteOptions) (PacketCapturesDeletePollerResponse, error) {
+// options - PacketCapturesClientBeginDeleteOptions contains the optional parameters for the PacketCapturesClient.BeginDelete
+// method.
+func (client *PacketCapturesClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginDeleteOptions) (PacketCapturesClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 	if err != nil {
-		return PacketCapturesDeletePollerResponse{}, err
+		return PacketCapturesClientDeletePollerResponse{}, err
 	}
-	result := PacketCapturesDeletePollerResponse{
+	result := PacketCapturesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("PacketCapturesClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return PacketCapturesDeletePollerResponse{}, err
+		return PacketCapturesClientDeletePollerResponse{}, err
 	}
-	result.Poller = &PacketCapturesDeletePoller{
+	result.Poller = &PacketCapturesClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -162,7 +164,7 @@ func (client *PacketCapturesClient) BeginDelete(ctx context.Context, resourceGro
 
 // Delete - Deletes the specified packet capture session.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *PacketCapturesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesBeginDeleteOptions) (*http.Response, error) {
+func (client *PacketCapturesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 	if err != nil {
 		return nil, err
@@ -178,7 +180,7 @@ func (client *PacketCapturesClient) deleteOperation(ctx context.Context, resourc
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *PacketCapturesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesBeginDeleteOptions) (*policy.Request, error) {
+func (client *PacketCapturesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -225,24 +227,24 @@ func (client *PacketCapturesClient) deleteHandleError(resp *http.Response) error
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // packetCaptureName - The name of the packet capture session.
-// options - PacketCapturesGetOptions contains the optional parameters for the PacketCapturesClient.Get method.
-func (client *PacketCapturesClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesGetOptions) (PacketCapturesGetResponse, error) {
+// options - PacketCapturesClientGetOptions contains the optional parameters for the PacketCapturesClient.Get method.
+func (client *PacketCapturesClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientGetOptions) (PacketCapturesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 	if err != nil {
-		return PacketCapturesGetResponse{}, err
+		return PacketCapturesClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PacketCapturesGetResponse{}, err
+		return PacketCapturesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PacketCapturesGetResponse{}, client.getHandleError(resp)
+		return PacketCapturesClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *PacketCapturesClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesGetOptions) (*policy.Request, error) {
+func (client *PacketCapturesClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -272,10 +274,10 @@ func (client *PacketCapturesClient) getCreateRequest(ctx context.Context, resour
 }
 
 // getHandleResponse handles the Get response.
-func (client *PacketCapturesClient) getHandleResponse(resp *http.Response) (PacketCapturesGetResponse, error) {
-	result := PacketCapturesGetResponse{RawResponse: resp}
+func (client *PacketCapturesClient) getHandleResponse(resp *http.Response) (PacketCapturesClientGetResponse, error) {
+	result := PacketCapturesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PacketCaptureResult); err != nil {
-		return PacketCapturesGetResponse{}, runtime.NewResponseError(err, resp)
+		return PacketCapturesClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -298,21 +300,21 @@ func (client *PacketCapturesClient) getHandleError(resp *http.Response) error {
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the Network Watcher resource.
 // packetCaptureName - The name given to the packet capture session.
-// options - PacketCapturesBeginGetStatusOptions contains the optional parameters for the PacketCapturesClient.BeginGetStatus
+// options - PacketCapturesClientBeginGetStatusOptions contains the optional parameters for the PacketCapturesClient.BeginGetStatus
 // method.
-func (client *PacketCapturesClient) BeginGetStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesBeginGetStatusOptions) (PacketCapturesGetStatusPollerResponse, error) {
+func (client *PacketCapturesClient) BeginGetStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginGetStatusOptions) (PacketCapturesClientGetStatusPollerResponse, error) {
 	resp, err := client.getStatus(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 	if err != nil {
-		return PacketCapturesGetStatusPollerResponse{}, err
+		return PacketCapturesClientGetStatusPollerResponse{}, err
 	}
-	result := PacketCapturesGetStatusPollerResponse{
+	result := PacketCapturesClientGetStatusPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("PacketCapturesClient.GetStatus", "location", resp, client.pl, client.getStatusHandleError)
 	if err != nil {
-		return PacketCapturesGetStatusPollerResponse{}, err
+		return PacketCapturesClientGetStatusPollerResponse{}, err
 	}
-	result.Poller = &PacketCapturesGetStatusPoller{
+	result.Poller = &PacketCapturesClientGetStatusPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -320,7 +322,7 @@ func (client *PacketCapturesClient) BeginGetStatus(ctx context.Context, resource
 
 // GetStatus - Query the status of a running packet capture session.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *PacketCapturesClient) getStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesBeginGetStatusOptions) (*http.Response, error) {
+func (client *PacketCapturesClient) getStatus(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginGetStatusOptions) (*http.Response, error) {
 	req, err := client.getStatusCreateRequest(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 	if err != nil {
 		return nil, err
@@ -336,7 +338,7 @@ func (client *PacketCapturesClient) getStatus(ctx context.Context, resourceGroup
 }
 
 // getStatusCreateRequest creates the GetStatus request.
-func (client *PacketCapturesClient) getStatusCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesBeginGetStatusOptions) (*policy.Request, error) {
+func (client *PacketCapturesClient) getStatusCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginGetStatusOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}/queryStatus"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -382,24 +384,24 @@ func (client *PacketCapturesClient) getStatusHandleError(resp *http.Response) er
 // If the operation fails it returns the *ErrorResponse error type.
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the Network Watcher resource.
-// options - PacketCapturesListOptions contains the optional parameters for the PacketCapturesClient.List method.
-func (client *PacketCapturesClient) List(ctx context.Context, resourceGroupName string, networkWatcherName string, options *PacketCapturesListOptions) (PacketCapturesListResponse, error) {
+// options - PacketCapturesClientListOptions contains the optional parameters for the PacketCapturesClient.List method.
+func (client *PacketCapturesClient) List(ctx context.Context, resourceGroupName string, networkWatcherName string, options *PacketCapturesClientListOptions) (PacketCapturesClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
 	if err != nil {
-		return PacketCapturesListResponse{}, err
+		return PacketCapturesClientListResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PacketCapturesListResponse{}, err
+		return PacketCapturesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PacketCapturesListResponse{}, client.listHandleError(resp)
+		return PacketCapturesClientListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
-func (client *PacketCapturesClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, options *PacketCapturesListOptions) (*policy.Request, error) {
+func (client *PacketCapturesClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, options *PacketCapturesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -425,10 +427,10 @@ func (client *PacketCapturesClient) listCreateRequest(ctx context.Context, resou
 }
 
 // listHandleResponse handles the List response.
-func (client *PacketCapturesClient) listHandleResponse(resp *http.Response) (PacketCapturesListResponse, error) {
-	result := PacketCapturesListResponse{RawResponse: resp}
+func (client *PacketCapturesClient) listHandleResponse(resp *http.Response) (PacketCapturesClientListResponse, error) {
+	result := PacketCapturesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PacketCaptureListResult); err != nil {
-		return PacketCapturesListResponse{}, runtime.NewResponseError(err, resp)
+		return PacketCapturesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -451,20 +453,21 @@ func (client *PacketCapturesClient) listHandleError(resp *http.Response) error {
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // packetCaptureName - The name of the packet capture session.
-// options - PacketCapturesBeginStopOptions contains the optional parameters for the PacketCapturesClient.BeginStop method.
-func (client *PacketCapturesClient) BeginStop(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesBeginStopOptions) (PacketCapturesStopPollerResponse, error) {
+// options - PacketCapturesClientBeginStopOptions contains the optional parameters for the PacketCapturesClient.BeginStop
+// method.
+func (client *PacketCapturesClient) BeginStop(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginStopOptions) (PacketCapturesClientStopPollerResponse, error) {
 	resp, err := client.stop(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 	if err != nil {
-		return PacketCapturesStopPollerResponse{}, err
+		return PacketCapturesClientStopPollerResponse{}, err
 	}
-	result := PacketCapturesStopPollerResponse{
+	result := PacketCapturesClientStopPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("PacketCapturesClient.Stop", "location", resp, client.pl, client.stopHandleError)
 	if err != nil {
-		return PacketCapturesStopPollerResponse{}, err
+		return PacketCapturesClientStopPollerResponse{}, err
 	}
-	result.Poller = &PacketCapturesStopPoller{
+	result.Poller = &PacketCapturesClientStopPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -472,7 +475,7 @@ func (client *PacketCapturesClient) BeginStop(ctx context.Context, resourceGroup
 
 // Stop - Stops a specified packet capture session.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *PacketCapturesClient) stop(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesBeginStopOptions) (*http.Response, error) {
+func (client *PacketCapturesClient) stop(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginStopOptions) (*http.Response, error) {
 	req, err := client.stopCreateRequest(ctx, resourceGroupName, networkWatcherName, packetCaptureName, options)
 	if err != nil {
 		return nil, err
@@ -488,7 +491,7 @@ func (client *PacketCapturesClient) stop(ctx context.Context, resourceGroupName 
 }
 
 // stopCreateRequest creates the Stop request.
-func (client *PacketCapturesClient) stopCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesBeginStopOptions) (*policy.Request, error) {
+func (client *PacketCapturesClient) stopCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, packetCaptureName string, options *PacketCapturesClientBeginStopOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}/stop"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")

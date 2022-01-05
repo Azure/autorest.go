@@ -56,21 +56,21 @@ func NewVirtualRoutersClient(subscriptionID string, credential azcore.TokenCrede
 // resourceGroupName - The name of the resource group.
 // virtualRouterName - The name of the Virtual Router.
 // parameters - Parameters supplied to the create or update Virtual Router.
-// options - VirtualRoutersBeginCreateOrUpdateOptions contains the optional parameters for the VirtualRoutersClient.BeginCreateOrUpdate
+// options - VirtualRoutersClientBeginCreateOrUpdateOptions contains the optional parameters for the VirtualRoutersClient.BeginCreateOrUpdate
 // method.
-func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersBeginCreateOrUpdateOptions) (VirtualRoutersCreateOrUpdatePollerResponse, error) {
+func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersClientBeginCreateOrUpdateOptions) (VirtualRoutersClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, virtualRouterName, parameters, options)
 	if err != nil {
-		return VirtualRoutersCreateOrUpdatePollerResponse{}, err
+		return VirtualRoutersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := VirtualRoutersCreateOrUpdatePollerResponse{
+	result := VirtualRoutersClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualRoutersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return VirtualRoutersCreateOrUpdatePollerResponse{}, err
+		return VirtualRoutersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &VirtualRoutersCreateOrUpdatePoller{
+	result.Poller = &VirtualRoutersClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *VirtualRoutersClient) BeginCreateOrUpdate(ctx context.Context, res
 
 // CreateOrUpdate - Creates or updates the specified Virtual Router.
 // If the operation fails it returns the *Error error type.
-func (client *VirtualRoutersClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *VirtualRoutersClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualRouterName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *VirtualRoutersClient) createOrUpdate(ctx context.Context, resource
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *VirtualRoutersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *VirtualRoutersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, virtualRouterName string, parameters VirtualRouter, options *VirtualRoutersClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -136,20 +136,21 @@ func (client *VirtualRoutersClient) createOrUpdateHandleError(resp *http.Respons
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
 // virtualRouterName - The name of the Virtual Router.
-// options - VirtualRoutersBeginDeleteOptions contains the optional parameters for the VirtualRoutersClient.BeginDelete method.
-func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersBeginDeleteOptions) (VirtualRoutersDeletePollerResponse, error) {
+// options - VirtualRoutersClientBeginDeleteOptions contains the optional parameters for the VirtualRoutersClient.BeginDelete
+// method.
+func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientBeginDeleteOptions) (VirtualRoutersClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, virtualRouterName, options)
 	if err != nil {
-		return VirtualRoutersDeletePollerResponse{}, err
+		return VirtualRoutersClientDeletePollerResponse{}, err
 	}
-	result := VirtualRoutersDeletePollerResponse{
+	result := VirtualRoutersClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("VirtualRoutersClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return VirtualRoutersDeletePollerResponse{}, err
+		return VirtualRoutersClientDeletePollerResponse{}, err
 	}
-	result.Poller = &VirtualRoutersDeletePoller{
+	result.Poller = &VirtualRoutersClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -157,7 +158,7 @@ func (client *VirtualRoutersClient) BeginDelete(ctx context.Context, resourceGro
 
 // Delete - Deletes the specified Virtual Router.
 // If the operation fails it returns the *Error error type.
-func (client *VirtualRoutersClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersBeginDeleteOptions) (*http.Response, error) {
+func (client *VirtualRoutersClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualRouterName, options)
 	if err != nil {
 		return nil, err
@@ -173,7 +174,7 @@ func (client *VirtualRoutersClient) deleteOperation(ctx context.Context, resourc
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *VirtualRoutersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersBeginDeleteOptions) (*policy.Request, error) {
+func (client *VirtualRoutersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -215,24 +216,24 @@ func (client *VirtualRoutersClient) deleteHandleError(resp *http.Response) error
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
 // virtualRouterName - The name of the Virtual Router.
-// options - VirtualRoutersGetOptions contains the optional parameters for the VirtualRoutersClient.Get method.
-func (client *VirtualRoutersClient) Get(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersGetOptions) (VirtualRoutersGetResponse, error) {
+// options - VirtualRoutersClientGetOptions contains the optional parameters for the VirtualRoutersClient.Get method.
+func (client *VirtualRoutersClient) Get(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientGetOptions) (VirtualRoutersClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, virtualRouterName, options)
 	if err != nil {
-		return VirtualRoutersGetResponse{}, err
+		return VirtualRoutersClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualRoutersGetResponse{}, err
+		return VirtualRoutersClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualRoutersGetResponse{}, client.getHandleError(resp)
+		return VirtualRoutersClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualRoutersClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersGetOptions) (*policy.Request, error) {
+func (client *VirtualRoutersClient) getCreateRequest(ctx context.Context, resourceGroupName string, virtualRouterName string, options *VirtualRoutersClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -261,10 +262,10 @@ func (client *VirtualRoutersClient) getCreateRequest(ctx context.Context, resour
 }
 
 // getHandleResponse handles the Get response.
-func (client *VirtualRoutersClient) getHandleResponse(resp *http.Response) (VirtualRoutersGetResponse, error) {
-	result := VirtualRoutersGetResponse{RawResponse: resp}
+func (client *VirtualRoutersClient) getHandleResponse(resp *http.Response) (VirtualRoutersClientGetResponse, error) {
+	result := VirtualRoutersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualRouter); err != nil {
-		return VirtualRoutersGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualRoutersClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -284,21 +285,21 @@ func (client *VirtualRoutersClient) getHandleError(resp *http.Response) error {
 
 // List - Gets all the Virtual Routers in a subscription.
 // If the operation fails it returns the *Error error type.
-// options - VirtualRoutersListOptions contains the optional parameters for the VirtualRoutersClient.List method.
-func (client *VirtualRoutersClient) List(options *VirtualRoutersListOptions) *VirtualRoutersListPager {
-	return &VirtualRoutersListPager{
+// options - VirtualRoutersClientListOptions contains the optional parameters for the VirtualRoutersClient.List method.
+func (client *VirtualRoutersClient) List(options *VirtualRoutersClientListOptions) *VirtualRoutersClientListPager {
+	return &VirtualRoutersClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp VirtualRoutersListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualRoutersClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualRouterListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualRoutersClient) listCreateRequest(ctx context.Context, options *VirtualRoutersListOptions) (*policy.Request, error) {
+func (client *VirtualRoutersClient) listCreateRequest(ctx context.Context, options *VirtualRoutersClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -316,10 +317,10 @@ func (client *VirtualRoutersClient) listCreateRequest(ctx context.Context, optio
 }
 
 // listHandleResponse handles the List response.
-func (client *VirtualRoutersClient) listHandleResponse(resp *http.Response) (VirtualRoutersListResponse, error) {
-	result := VirtualRoutersListResponse{RawResponse: resp}
+func (client *VirtualRoutersClient) listHandleResponse(resp *http.Response) (VirtualRoutersClientListResponse, error) {
+	result := VirtualRoutersClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualRouterListResult); err != nil {
-		return VirtualRoutersListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualRoutersClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -340,22 +341,22 @@ func (client *VirtualRoutersClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Lists all Virtual Routers in a resource group.
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
-// options - VirtualRoutersListByResourceGroupOptions contains the optional parameters for the VirtualRoutersClient.ListByResourceGroup
+// options - VirtualRoutersClientListByResourceGroupOptions contains the optional parameters for the VirtualRoutersClient.ListByResourceGroup
 // method.
-func (client *VirtualRoutersClient) ListByResourceGroup(resourceGroupName string, options *VirtualRoutersListByResourceGroupOptions) *VirtualRoutersListByResourceGroupPager {
-	return &VirtualRoutersListByResourceGroupPager{
+func (client *VirtualRoutersClient) ListByResourceGroup(resourceGroupName string, options *VirtualRoutersClientListByResourceGroupOptions) *VirtualRoutersClientListByResourceGroupPager {
+	return &VirtualRoutersClientListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp VirtualRoutersListByResourceGroupResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualRoutersClientListByResourceGroupResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.VirtualRouterListResult.NextLink)
 		},
 	}
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *VirtualRoutersClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualRoutersListByResourceGroupOptions) (*policy.Request, error) {
+func (client *VirtualRoutersClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *VirtualRoutersClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -377,10 +378,10 @@ func (client *VirtualRoutersClient) listByResourceGroupCreateRequest(ctx context
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *VirtualRoutersClient) listByResourceGroupHandleResponse(resp *http.Response) (VirtualRoutersListByResourceGroupResponse, error) {
-	result := VirtualRoutersListByResourceGroupResponse{RawResponse: resp}
+func (client *VirtualRoutersClient) listByResourceGroupHandleResponse(resp *http.Response) (VirtualRoutersClientListByResourceGroupResponse, error) {
+	result := VirtualRoutersClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualRouterListResult); err != nil {
-		return VirtualRoutersListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualRoutersClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -8,28 +8,28 @@
 
 package bytegroup
 
-// ByteGetEmptyOptions contains the optional parameters for the ByteClient.GetEmpty method.
-type ByteGetEmptyOptions struct {
+// ByteClientGetEmptyOptions contains the optional parameters for the ByteClient.GetEmpty method.
+type ByteClientGetEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ByteGetInvalidOptions contains the optional parameters for the ByteClient.GetInvalid method.
-type ByteGetInvalidOptions struct {
+// ByteClientGetInvalidOptions contains the optional parameters for the ByteClient.GetInvalid method.
+type ByteClientGetInvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ByteGetNonASCIIOptions contains the optional parameters for the ByteClient.GetNonASCII method.
-type ByteGetNonASCIIOptions struct {
+// ByteClientGetNonASCIIOptions contains the optional parameters for the ByteClient.GetNonASCII method.
+type ByteClientGetNonASCIIOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ByteGetNullOptions contains the optional parameters for the ByteClient.GetNull method.
-type ByteGetNullOptions struct {
+// ByteClientGetNullOptions contains the optional parameters for the ByteClient.GetNull method.
+type ByteClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BytePutNonASCIIOptions contains the optional parameters for the ByteClient.PutNonASCII method.
-type BytePutNonASCIIOptions struct {
+// ByteClientPutNonASCIIOptions contains the optional parameters for the ByteClient.PutNonASCII method.
+type ByteClientPutNonASCIIOptions struct {
 	// placeholder for future optional parameters
 }
 

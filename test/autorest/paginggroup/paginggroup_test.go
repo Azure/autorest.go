@@ -162,7 +162,7 @@ func TestGetMultiplePagesLro(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	resp = PagingGetMultiplePagesLROPollerResponse{}
+	resp = PagingClientGetMultiplePagesLROPollerResponse{}
 	if err = resp.Resume(context.Background(), client, rt); err != nil {
 		t.Fatal(err)
 	}
@@ -236,7 +236,7 @@ func TestGetMultiplePagesRetrySecond(t *testing.T) {
 // GetMultiplePagesWithOffset - A paging operation that includes a nextLink that has 10 pages
 func TestGetMultiplePagesWithOffset(t *testing.T) {
 	client := newPagingClient()
-	page := client.GetMultiplePagesWithOffset(PagingGetMultiplePagesWithOffsetOptions{})
+	page := client.GetMultiplePagesWithOffset(PagingClientGetMultiplePagesWithOffsetOptions{})
 	count := 0
 	for page.NextPage(context.Background()) {
 		resp := page.PageResponse()

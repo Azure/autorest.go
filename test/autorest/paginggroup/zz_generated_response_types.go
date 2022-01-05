@@ -15,70 +15,70 @@ import (
 	"time"
 )
 
-// PagingFirstResponseEmptyResponse contains the response from method Paging.FirstResponseEmpty.
-type PagingFirstResponseEmptyResponse struct {
-	PagingFirstResponseEmptyResult
+// PagingClientFirstResponseEmptyResponse contains the response from method PagingClient.FirstResponseEmpty.
+type PagingClientFirstResponseEmptyResponse struct {
+	PagingClientFirstResponseEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingFirstResponseEmptyResult contains the result from method Paging.FirstResponseEmpty.
-type PagingFirstResponseEmptyResult struct {
+// PagingClientFirstResponseEmptyResult contains the result from method PagingClient.FirstResponseEmpty.
+type PagingClientFirstResponseEmptyResult struct {
 	ProductResultValue
 }
 
-// PagingGetMultiplePagesFailureResponse contains the response from method Paging.GetMultiplePagesFailure.
-type PagingGetMultiplePagesFailureResponse struct {
-	PagingGetMultiplePagesFailureResult
+// PagingClientGetMultiplePagesFailureResponse contains the response from method PagingClient.GetMultiplePagesFailure.
+type PagingClientGetMultiplePagesFailureResponse struct {
+	PagingClientGetMultiplePagesFailureResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetMultiplePagesFailureResult contains the result from method Paging.GetMultiplePagesFailure.
-type PagingGetMultiplePagesFailureResult struct {
+// PagingClientGetMultiplePagesFailureResult contains the result from method PagingClient.GetMultiplePagesFailure.
+type PagingClientGetMultiplePagesFailureResult struct {
 	ProductResult
 }
 
-// PagingGetMultiplePagesFailureURIResponse contains the response from method Paging.GetMultiplePagesFailureURI.
-type PagingGetMultiplePagesFailureURIResponse struct {
-	PagingGetMultiplePagesFailureURIResult
+// PagingClientGetMultiplePagesFailureURIResponse contains the response from method PagingClient.GetMultiplePagesFailureURI.
+type PagingClientGetMultiplePagesFailureURIResponse struct {
+	PagingClientGetMultiplePagesFailureURIResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetMultiplePagesFailureURIResult contains the result from method Paging.GetMultiplePagesFailureURI.
-type PagingGetMultiplePagesFailureURIResult struct {
+// PagingClientGetMultiplePagesFailureURIResult contains the result from method PagingClient.GetMultiplePagesFailureURI.
+type PagingClientGetMultiplePagesFailureURIResult struct {
 	ProductResult
 }
 
-// PagingGetMultiplePagesFragmentNextLinkResponse contains the response from method Paging.GetMultiplePagesFragmentNextLink.
-type PagingGetMultiplePagesFragmentNextLinkResponse struct {
-	PagingGetMultiplePagesFragmentNextLinkResult
+// PagingClientGetMultiplePagesFragmentNextLinkResponse contains the response from method PagingClient.GetMultiplePagesFragmentNextLink.
+type PagingClientGetMultiplePagesFragmentNextLinkResponse struct {
+	PagingClientGetMultiplePagesFragmentNextLinkResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetMultiplePagesFragmentNextLinkResult contains the result from method Paging.GetMultiplePagesFragmentNextLink.
-type PagingGetMultiplePagesFragmentNextLinkResult struct {
+// PagingClientGetMultiplePagesFragmentNextLinkResult contains the result from method PagingClient.GetMultiplePagesFragmentNextLink.
+type PagingClientGetMultiplePagesFragmentNextLinkResult struct {
 	ODataProductResult
 }
 
-// PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse contains the response from method Paging.GetMultiplePagesFragmentWithGroupingNextLink.
-type PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse struct {
-	PagingGetMultiplePagesFragmentWithGroupingNextLinkResult
+// PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse contains the response from method PagingClient.GetMultiplePagesFragmentWithGroupingNextLink.
+type PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse struct {
+	PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetMultiplePagesFragmentWithGroupingNextLinkResult contains the result from method Paging.GetMultiplePagesFragmentWithGroupingNextLink.
-type PagingGetMultiplePagesFragmentWithGroupingNextLinkResult struct {
+// PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResult contains the result from method PagingClient.GetMultiplePagesFragmentWithGroupingNextLink.
+type PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResult struct {
 	ODataProductResult
 }
 
-// PagingGetMultiplePagesLROPollerResponse contains the response from method Paging.GetMultiplePagesLRO.
-type PagingGetMultiplePagesLROPollerResponse struct {
+// PagingClientGetMultiplePagesLROPollerResponse contains the response from method PagingClient.GetMultiplePagesLRO.
+type PagingClientGetMultiplePagesLROPollerResponse struct {
 	// Poller contains an initialized poller.
-	Poller *PagingGetMultiplePagesLROPoller
+	Poller *PagingClientGetMultiplePagesLROPoller
 
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
@@ -86,8 +86,8 @@ type PagingGetMultiplePagesLROPollerResponse struct {
 
 // PollUntilDone will poll the service endpoint until a terminal state is reached or an error is received.
 // freq: the time to wait between intervals in absence of a Retry-After header. Allowed minimum is one second.
-func (l PagingGetMultiplePagesLROPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (*PagingGetMultiplePagesLROPager, error) {
-	respType := &PagingGetMultiplePagesLROPager{}
+func (l PagingClientGetMultiplePagesLROPollerResponse) PollUntilDone(ctx context.Context, freq time.Duration) (*PagingClientGetMultiplePagesLROPager, error) {
+	respType := &PagingClientGetMultiplePagesLROPager{}
 	resp, err := l.Poller.pt.PollUntilDone(ctx, freq, &respType.current.ProductResult)
 	if err != nil {
 		return respType, err
@@ -97,13 +97,13 @@ func (l PagingGetMultiplePagesLROPollerResponse) PollUntilDone(ctx context.Conte
 	return respType, nil
 }
 
-// Resume rehydrates a PagingGetMultiplePagesLROPollerResponse from the provided client and resume token.
-func (l *PagingGetMultiplePagesLROPollerResponse) Resume(ctx context.Context, client *PagingClient, token string) error {
+// Resume rehydrates a PagingClientGetMultiplePagesLROPollerResponse from the provided client and resume token.
+func (l *PagingClientGetMultiplePagesLROPollerResponse) Resume(ctx context.Context, client *PagingClient, token string) error {
 	pt, err := armruntime.NewPollerFromResumeToken("PagingClient.GetMultiplePagesLRO", token, client.pl, client.getMultiplePagesLROHandleError)
 	if err != nil {
 		return err
 	}
-	poller := &PagingGetMultiplePagesLROPoller{
+	poller := &PagingClientGetMultiplePagesLROPoller{
 		pt:     pt,
 		client: client,
 	}
@@ -116,182 +116,182 @@ func (l *PagingGetMultiplePagesLROPollerResponse) Resume(ctx context.Context, cl
 	return nil
 }
 
-// PagingGetMultiplePagesLROResponse contains the response from method Paging.GetMultiplePagesLRO.
-type PagingGetMultiplePagesLROResponse struct {
-	PagingGetMultiplePagesLROResult
+// PagingClientGetMultiplePagesLROResponse contains the response from method PagingClient.GetMultiplePagesLRO.
+type PagingClientGetMultiplePagesLROResponse struct {
+	PagingClientGetMultiplePagesLROResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetMultiplePagesLROResult contains the result from method Paging.GetMultiplePagesLRO.
-type PagingGetMultiplePagesLROResult struct {
+// PagingClientGetMultiplePagesLROResult contains the result from method PagingClient.GetMultiplePagesLRO.
+type PagingClientGetMultiplePagesLROResult struct {
 	ProductResult
 }
 
-// PagingGetMultiplePagesResponse contains the response from method Paging.GetMultiplePages.
-type PagingGetMultiplePagesResponse struct {
-	PagingGetMultiplePagesResult
+// PagingClientGetMultiplePagesResponse contains the response from method PagingClient.GetMultiplePages.
+type PagingClientGetMultiplePagesResponse struct {
+	PagingClientGetMultiplePagesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetMultiplePagesResult contains the result from method Paging.GetMultiplePages.
-type PagingGetMultiplePagesResult struct {
+// PagingClientGetMultiplePagesResult contains the result from method PagingClient.GetMultiplePages.
+type PagingClientGetMultiplePagesResult struct {
 	ProductResult
 }
 
-// PagingGetMultiplePagesRetryFirstResponse contains the response from method Paging.GetMultiplePagesRetryFirst.
-type PagingGetMultiplePagesRetryFirstResponse struct {
-	PagingGetMultiplePagesRetryFirstResult
+// PagingClientGetMultiplePagesRetryFirstResponse contains the response from method PagingClient.GetMultiplePagesRetryFirst.
+type PagingClientGetMultiplePagesRetryFirstResponse struct {
+	PagingClientGetMultiplePagesRetryFirstResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetMultiplePagesRetryFirstResult contains the result from method Paging.GetMultiplePagesRetryFirst.
-type PagingGetMultiplePagesRetryFirstResult struct {
+// PagingClientGetMultiplePagesRetryFirstResult contains the result from method PagingClient.GetMultiplePagesRetryFirst.
+type PagingClientGetMultiplePagesRetryFirstResult struct {
 	ProductResult
 }
 
-// PagingGetMultiplePagesRetrySecondResponse contains the response from method Paging.GetMultiplePagesRetrySecond.
-type PagingGetMultiplePagesRetrySecondResponse struct {
-	PagingGetMultiplePagesRetrySecondResult
+// PagingClientGetMultiplePagesRetrySecondResponse contains the response from method PagingClient.GetMultiplePagesRetrySecond.
+type PagingClientGetMultiplePagesRetrySecondResponse struct {
+	PagingClientGetMultiplePagesRetrySecondResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetMultiplePagesRetrySecondResult contains the result from method Paging.GetMultiplePagesRetrySecond.
-type PagingGetMultiplePagesRetrySecondResult struct {
+// PagingClientGetMultiplePagesRetrySecondResult contains the result from method PagingClient.GetMultiplePagesRetrySecond.
+type PagingClientGetMultiplePagesRetrySecondResult struct {
 	ProductResult
 }
 
-// PagingGetMultiplePagesWithOffsetResponse contains the response from method Paging.GetMultiplePagesWithOffset.
-type PagingGetMultiplePagesWithOffsetResponse struct {
-	PagingGetMultiplePagesWithOffsetResult
+// PagingClientGetMultiplePagesWithOffsetResponse contains the response from method PagingClient.GetMultiplePagesWithOffset.
+type PagingClientGetMultiplePagesWithOffsetResponse struct {
+	PagingClientGetMultiplePagesWithOffsetResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetMultiplePagesWithOffsetResult contains the result from method Paging.GetMultiplePagesWithOffset.
-type PagingGetMultiplePagesWithOffsetResult struct {
+// PagingClientGetMultiplePagesWithOffsetResult contains the result from method PagingClient.GetMultiplePagesWithOffset.
+type PagingClientGetMultiplePagesWithOffsetResult struct {
 	ProductResult
 }
 
-// PagingGetNoItemNamePagesResponse contains the response from method Paging.GetNoItemNamePages.
-type PagingGetNoItemNamePagesResponse struct {
-	PagingGetNoItemNamePagesResult
+// PagingClientGetNoItemNamePagesResponse contains the response from method PagingClient.GetNoItemNamePages.
+type PagingClientGetNoItemNamePagesResponse struct {
+	PagingClientGetNoItemNamePagesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetNoItemNamePagesResult contains the result from method Paging.GetNoItemNamePages.
-type PagingGetNoItemNamePagesResult struct {
+// PagingClientGetNoItemNamePagesResult contains the result from method PagingClient.GetNoItemNamePages.
+type PagingClientGetNoItemNamePagesResult struct {
 	ProductResultValue
 }
 
-// PagingGetNullNextLinkNamePagesResponse contains the response from method Paging.GetNullNextLinkNamePages.
-type PagingGetNullNextLinkNamePagesResponse struct {
-	PagingGetNullNextLinkNamePagesResult
+// PagingClientGetNullNextLinkNamePagesResponse contains the response from method PagingClient.GetNullNextLinkNamePages.
+type PagingClientGetNullNextLinkNamePagesResponse struct {
+	PagingClientGetNullNextLinkNamePagesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetNullNextLinkNamePagesResult contains the result from method Paging.GetNullNextLinkNamePages.
-type PagingGetNullNextLinkNamePagesResult struct {
+// PagingClientGetNullNextLinkNamePagesResult contains the result from method PagingClient.GetNullNextLinkNamePages.
+type PagingClientGetNullNextLinkNamePagesResult struct {
 	ProductResult
 }
 
-// PagingGetODataMultiplePagesResponse contains the response from method Paging.GetODataMultiplePages.
-type PagingGetODataMultiplePagesResponse struct {
-	PagingGetODataMultiplePagesResult
+// PagingClientGetODataMultiplePagesResponse contains the response from method PagingClient.GetODataMultiplePages.
+type PagingClientGetODataMultiplePagesResponse struct {
+	PagingClientGetODataMultiplePagesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetODataMultiplePagesResult contains the result from method Paging.GetODataMultiplePages.
-type PagingGetODataMultiplePagesResult struct {
+// PagingClientGetODataMultiplePagesResult contains the result from method PagingClient.GetODataMultiplePages.
+type PagingClientGetODataMultiplePagesResult struct {
 	ODataProductResult
 }
 
-// PagingGetPagingModelWithItemNameWithXMSClientNameResponse contains the response from method Paging.GetPagingModelWithItemNameWithXMSClientName.
-type PagingGetPagingModelWithItemNameWithXMSClientNameResponse struct {
-	PagingGetPagingModelWithItemNameWithXMSClientNameResult
+// PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse contains the response from method PagingClient.GetPagingModelWithItemNameWithXMSClientName.
+type PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse struct {
+	PagingClientGetPagingModelWithItemNameWithXMSClientNameResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetPagingModelWithItemNameWithXMSClientNameResult contains the result from method Paging.GetPagingModelWithItemNameWithXMSClientName.
-type PagingGetPagingModelWithItemNameWithXMSClientNameResult struct {
+// PagingClientGetPagingModelWithItemNameWithXMSClientNameResult contains the result from method PagingClient.GetPagingModelWithItemNameWithXMSClientName.
+type PagingClientGetPagingModelWithItemNameWithXMSClientNameResult struct {
 	ProductResultValueWithXMSClientName
 }
 
-// PagingGetSinglePagesFailureResponse contains the response from method Paging.GetSinglePagesFailure.
-type PagingGetSinglePagesFailureResponse struct {
-	PagingGetSinglePagesFailureResult
+// PagingClientGetSinglePagesFailureResponse contains the response from method PagingClient.GetSinglePagesFailure.
+type PagingClientGetSinglePagesFailureResponse struct {
+	PagingClientGetSinglePagesFailureResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetSinglePagesFailureResult contains the result from method Paging.GetSinglePagesFailure.
-type PagingGetSinglePagesFailureResult struct {
+// PagingClientGetSinglePagesFailureResult contains the result from method PagingClient.GetSinglePagesFailure.
+type PagingClientGetSinglePagesFailureResult struct {
 	ProductResult
 }
 
-// PagingGetSinglePagesResponse contains the response from method Paging.GetSinglePages.
-type PagingGetSinglePagesResponse struct {
-	PagingGetSinglePagesResult
+// PagingClientGetSinglePagesResponse contains the response from method PagingClient.GetSinglePages.
+type PagingClientGetSinglePagesResponse struct {
+	PagingClientGetSinglePagesResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetSinglePagesResult contains the result from method Paging.GetSinglePages.
-type PagingGetSinglePagesResult struct {
+// PagingClientGetSinglePagesResult contains the result from method PagingClient.GetSinglePages.
+type PagingClientGetSinglePagesResult struct {
 	ProductResult
 }
 
-// PagingGetWithQueryParamsResponse contains the response from method Paging.GetWithQueryParams.
-type PagingGetWithQueryParamsResponse struct {
-	PagingGetWithQueryParamsResult
+// PagingClientGetWithQueryParamsResponse contains the response from method PagingClient.GetWithQueryParams.
+type PagingClientGetWithQueryParamsResponse struct {
+	PagingClientGetWithQueryParamsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingGetWithQueryParamsResult contains the result from method Paging.GetWithQueryParams.
-type PagingGetWithQueryParamsResult struct {
+// PagingClientGetWithQueryParamsResult contains the result from method PagingClient.GetWithQueryParams.
+type PagingClientGetWithQueryParamsResult struct {
 	ProductResult
 }
 
-// PagingNextFragmentResponse contains the response from method Paging.NextFragment.
-type PagingNextFragmentResponse struct {
-	PagingNextFragmentResult
+// PagingClientNextFragmentResponse contains the response from method PagingClient.NextFragment.
+type PagingClientNextFragmentResponse struct {
+	PagingClientNextFragmentResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingNextFragmentResult contains the result from method Paging.NextFragment.
-type PagingNextFragmentResult struct {
+// PagingClientNextFragmentResult contains the result from method PagingClient.NextFragment.
+type PagingClientNextFragmentResult struct {
 	ODataProductResult
 }
 
-// PagingNextFragmentWithGroupingResponse contains the response from method Paging.NextFragmentWithGrouping.
-type PagingNextFragmentWithGroupingResponse struct {
-	PagingNextFragmentWithGroupingResult
+// PagingClientNextFragmentWithGroupingResponse contains the response from method PagingClient.NextFragmentWithGrouping.
+type PagingClientNextFragmentWithGroupingResponse struct {
+	PagingClientNextFragmentWithGroupingResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingNextFragmentWithGroupingResult contains the result from method Paging.NextFragmentWithGrouping.
-type PagingNextFragmentWithGroupingResult struct {
+// PagingClientNextFragmentWithGroupingResult contains the result from method PagingClient.NextFragmentWithGrouping.
+type PagingClientNextFragmentWithGroupingResult struct {
 	ODataProductResult
 }
 
-// PagingNextOperationWithQueryParamsResponse contains the response from method Paging.NextOperationWithQueryParams.
-type PagingNextOperationWithQueryParamsResponse struct {
-	PagingNextOperationWithQueryParamsResult
+// PagingClientNextOperationWithQueryParamsResponse contains the response from method PagingClient.NextOperationWithQueryParams.
+type PagingClientNextOperationWithQueryParamsResponse struct {
+	PagingClientNextOperationWithQueryParamsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PagingNextOperationWithQueryParamsResult contains the result from method Paging.NextOperationWithQueryParams.
-type PagingNextOperationWithQueryParamsResult struct {
+// PagingClientNextOperationWithQueryParamsResult contains the result from method PagingClient.NextOperationWithQueryParams.
+type PagingClientNextOperationWithQueryParamsResult struct {
 	ProductResult
 }

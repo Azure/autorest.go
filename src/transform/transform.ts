@@ -410,17 +410,17 @@ function processOperationRequests(session: Session<CodeModel>) {
         // check for grouping
         if (param.extensions?.['x-ms-parameter-grouping'] && <boolean>session.model.language.go!.groupParameters) {
           // this param belongs to a param group, init name with default
-          let paramGroupName = `${group.language.go!.name}${opName}Parameters`;
+          let paramGroupName = `${group.language.go!.clientName}${opName}Parameters`;
           if (param.extensions['x-ms-parameter-grouping'].name) {
             // use the specified name
             paramGroupName = <string>param.extensions['x-ms-parameter-grouping'].name;
           } else if (param.extensions['x-ms-parameter-grouping'].postfix) {
             // use the suffix
-            paramGroupName = `${group.language.go!.name}${opName}${<string>param.extensions['x-ms-parameter-grouping'].postfix}`;
+            paramGroupName = `${group.language.go!.clientName}${opName}${<string>param.extensions['x-ms-parameter-grouping'].postfix}`;
           }
           // create group entry and add the param to it
           if (!paramGroups.has(paramGroupName)) {
-            const desc = `${paramGroupName} contains a group of parameters for the ${group.language.go!.name}.${opName} method.`;
+            const desc = `${paramGroupName} contains a group of parameters for the ${group.language.go!.clientName}.${opName} method.`;
             paramGroups.set(paramGroupName, createGroupProperty(paramGroupName, desc));
           }
           // associate the group with the param
@@ -446,7 +446,7 @@ function processOperationRequests(session: Session<CodeModel>) {
           continue;
         }
         // create a type named <OperationGroup><Operation>Options
-        const paramGroupName = `${group.language.go!.name}${opName}Options`;
+        const paramGroupName = `${group.language.go!.clientName}${opName}Options`;
         if (!paramGroups.has(paramGroupName)) {
           const desc = `${paramGroupName} contains the optional parameters for the ${group.language.go!.clientName}.${opName} method.`;
           const gp = createGroupProperty(paramGroupName, desc);
@@ -624,7 +624,7 @@ function processOperationResponses(session: Session<CodeModel>) {
         if (session.model.language.go!.pageableTypes === undefined) {
           session.model.language.go!.pageableTypes = new Array<PagerInfo>();
         }
-        const name = `${group.language.go!.name}${op.language.go!.name}Pager`;
+        const name = `${group.language.go!.clientName}${op.language.go!.name}Pager`;
         // create a new one, add to global list and assign to method
         const pager = {
           name: name,
@@ -737,8 +737,8 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
   // contains all the response envelopes
   const responseEnvelopes = <Array<ObjectSchema>>codeModel.language.go!.responseEnvelopes;
   // first create the response envelope, each operation gets one
-  const respEnvName = ensureUniqueModelName(codeModel, `${group.language.go!.name}${op.language.go!.name}Response`, 'Envelope');
-  const respEnv = newObject(respEnvName, `${respEnvName} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`);
+  const respEnvName = ensureUniqueModelName(codeModel, `${group.language.go!.clientName}${op.language.go!.name}Response`, 'Envelope');
+  const respEnv = newObject(respEnvName, `${respEnvName} contains the response from method ${group.language.go!.clientName}.${op.language.go!.name}.`);
   respEnv.language.go!.responseType = true;
   respEnv.properties = new Array<Property>();
   respEnv.properties.push(createRawResponseProp());
@@ -749,8 +749,8 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
 
   if (codeModel.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head') {
     op.language.go!.headAsBoolean = true;
-    const name = ensureUniqueModelName(codeModel, `${group.language.go!.name}${op.language.go!.name}Result`, 'Envelope');
-    const resultEnv = newObject(name, `${name} contains the result from method ${group.language.go!.name}.${op.language.go!.name}.`);
+    const name = ensureUniqueModelName(codeModel, `${group.language.go!.clientName}${op.language.go!.name}Result`, 'Envelope');
+    const resultEnv = newObject(name, `${name} contains the result from method ${group.language.go!.clientName}.${op.language.go!.name}.`);
     resultEnv.language.go!.responseType = true;
     const successProp = newProperty('Success', 'Success indicates if the operation succeeded or failed.', newBoolean('bool', 'bool response'));
     successProp.language.go!.byValue = true;
@@ -785,8 +785,8 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
   const response = getSchemaResponse(op);
   // if the response defines a schema then create a result envelope and add it to the response envelope.
   if (response) {
-    const name = ensureUniqueModelName(codeModel, `${group.language.go!.name}${op.language.go!.name}Result`, 'Envelope');
-    const resultEnv = newObject(name, `${name} contains the result from method ${group.language.go!.name}.${op.language.go!.name}.`);
+    const name = ensureUniqueModelName(codeModel, `${group.language.go!.clientName}${op.language.go!.name}Result`, 'Envelope');
+    const resultEnv = newObject(name, `${name} contains the result from method ${group.language.go!.clientName}.${op.language.go!.name}.`);
     resultEnv.language.go!.responseType = true;
     // propagate marshalling format to the result envelope
     resultEnv.language.go!.marshallingFormat = response.schema.language.go!.marshallingFormat;
@@ -823,8 +823,8 @@ function createResponseEnvelope(codeModel: CodeModel, group: OperationGroup, op:
   } else if (headers.size > 0) {
     // the response doesn't return a model.  if it returns
     // headers then create a result envelope that contains them.
-    const name = ensureUniqueModelName(codeModel, `${group.language.go!.name}${op.language.go!.name}Result`, 'Envelope');
-    const resultEnv = newObject(name, `${name} contains the result from method ${group.language.go!.name}.${op.language.go!.name}.`);
+    const name = ensureUniqueModelName(codeModel, `${group.language.go!.clientName}${op.language.go!.name}Result`, 'Envelope');
+    const resultEnv = newObject(name, `${name} contains the result from method ${group.language.go!.clientName}.${op.language.go!.name}.`);
     resultEnv.language.go!.responseType = true;
     resultEnv.properties = new Array<Property>();
     addHeadersToSchema(resultEnv);
@@ -977,7 +977,7 @@ function createLROResponseEnvelope(codeModel: CodeModel, group: OperationGroup, 
   if (codeModel.language.go!.pollerTypes === undefined) {
     codeModel.language.go!.pollerTypes = new Array<PollerInfo>();
   }
-  const pollerName = `${group.language.go!.name}${op.language.go!.name}Poller`;
+  const pollerName = `${group.language.go!.clientName}${op.language.go!.name}Poller`;
   const pollers = <Array<PollerInfo>>codeModel.language.go!.pollerTypes;
   const poller = {
     name: pollerName,
@@ -987,8 +987,8 @@ function createLROResponseEnvelope(codeModel: CodeModel, group: OperationGroup, 
   op.language.go!.pollerType = poller;
 
   // finally create the outer response envelope
-  const outerRespEnvName = `${group.language.go!.name}${op.language.go!.name}PollerResponse`;
-  const outerRespEnv = newObject(outerRespEnvName, `${outerRespEnvName} contains the response from method ${group.language.go!.name}.${op.language.go!.name}.`);
+  const outerRespEnvName = `${group.language.go!.clientName}${op.language.go!.name}PollerResponse`;
+  const outerRespEnv = newObject(outerRespEnvName, `${outerRespEnvName} contains the response from method ${group.language.go!.clientName}.${op.language.go!.name}.`);
   outerRespEnv.language.go!.responseType = true;
   outerRespEnv.language.go!.isLRO = true;
   outerRespEnv.language.go!.pollerInfo = poller;

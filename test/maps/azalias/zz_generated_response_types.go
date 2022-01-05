@@ -10,40 +10,40 @@ package azalias
 
 import "net/http"
 
-// AliasCreateResponse contains the response from method Alias.Create.
-type AliasCreateResponse struct {
-	AliasCreateResult
+// clientCreateResponse contains the response from method client.Create.
+type clientCreateResponse struct {
+	clientCreateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// AliasCreateResult contains the result from method Alias.Create.
-type AliasCreateResult struct {
+// clientCreateResult contains the result from method client.Create.
+type clientCreateResult struct {
 	AliasesCreateResponse
 	// AccessControlExposeHeaders contains the information returned from the Access-Control-Expose-Headers header response.
 	AccessControlExposeHeaders *string
 }
 
-// AliasGetScriptResponse contains the response from method Alias.GetScript.
-type AliasGetScriptResponse struct {
-	AliasGetScriptResult
+// clientGetScriptResponse contains the response from method client.GetScript.
+type clientGetScriptResponse struct {
+	clientGetScriptResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// AliasGetScriptResult contains the result from method Alias.GetScript.
-type AliasGetScriptResult struct {
+// clientGetScriptResult contains the result from method client.GetScript.
+type clientGetScriptResult struct {
 	Value *string
 }
 
-// AliasListResponse contains the response from method Alias.List.
-type AliasListResponse struct {
-	AliasListResult
+// clientListResponse contains the response from method client.List.
+type clientListResponse struct {
+	clientListResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// AliasListResult contains the result from method Alias.List.
-type AliasListResult struct {
+// clientListResult contains the result from method client.List.
+type clientListResult struct {
 	ListResponse
 }

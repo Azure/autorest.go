@@ -51,25 +51,25 @@ func NewBalancesClient(credential azcore.TokenCredential, options *arm.ClientOpt
 // 1, 2014 or later.
 // If the operation fails it returns the *ErrorResponse error type.
 // billingAccountID - BillingAccount ID
-// options - BalancesGetByBillingAccountOptions contains the optional parameters for the BalancesClient.GetByBillingAccount
+// options - BalancesClientGetByBillingAccountOptions contains the optional parameters for the BalancesClient.GetByBillingAccount
 // method.
-func (client *BalancesClient) GetByBillingAccount(ctx context.Context, billingAccountID string, options *BalancesGetByBillingAccountOptions) (BalancesGetByBillingAccountResponse, error) {
+func (client *BalancesClient) GetByBillingAccount(ctx context.Context, billingAccountID string, options *BalancesClientGetByBillingAccountOptions) (BalancesClientGetByBillingAccountResponse, error) {
 	req, err := client.getByBillingAccountCreateRequest(ctx, billingAccountID, options)
 	if err != nil {
-		return BalancesGetByBillingAccountResponse{}, err
+		return BalancesClientGetByBillingAccountResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BalancesGetByBillingAccountResponse{}, err
+		return BalancesClientGetByBillingAccountResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BalancesGetByBillingAccountResponse{}, client.getByBillingAccountHandleError(resp)
+		return BalancesClientGetByBillingAccountResponse{}, client.getByBillingAccountHandleError(resp)
 	}
 	return client.getByBillingAccountHandleResponse(resp)
 }
 
 // getByBillingAccountCreateRequest creates the GetByBillingAccount request.
-func (client *BalancesClient) getByBillingAccountCreateRequest(ctx context.Context, billingAccountID string, options *BalancesGetByBillingAccountOptions) (*policy.Request, error) {
+func (client *BalancesClient) getByBillingAccountCreateRequest(ctx context.Context, billingAccountID string, options *BalancesClientGetByBillingAccountOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/balances"
 	if billingAccountID == "" {
 		return nil, errors.New("parameter billingAccountID cannot be empty")
@@ -87,10 +87,10 @@ func (client *BalancesClient) getByBillingAccountCreateRequest(ctx context.Conte
 }
 
 // getByBillingAccountHandleResponse handles the GetByBillingAccount response.
-func (client *BalancesClient) getByBillingAccountHandleResponse(resp *http.Response) (BalancesGetByBillingAccountResponse, error) {
-	result := BalancesGetByBillingAccountResponse{RawResponse: resp}
+func (client *BalancesClient) getByBillingAccountHandleResponse(resp *http.Response) (BalancesClientGetByBillingAccountResponse, error) {
+	result := BalancesClientGetByBillingAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Balance); err != nil {
-		return BalancesGetByBillingAccountResponse{}, runtime.NewResponseError(err, resp)
+		return BalancesClientGetByBillingAccountResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -113,25 +113,25 @@ func (client *BalancesClient) getByBillingAccountHandleError(resp *http.Response
 // If the operation fails it returns the *ErrorResponse error type.
 // billingAccountID - BillingAccount ID
 // billingPeriodName - Billing Period Name.
-// options - BalancesGetForBillingPeriodByBillingAccountOptions contains the optional parameters for the BalancesClient.GetForBillingPeriodByBillingAccount
+// options - BalancesClientGetForBillingPeriodByBillingAccountOptions contains the optional parameters for the BalancesClient.GetForBillingPeriodByBillingAccount
 // method.
-func (client *BalancesClient) GetForBillingPeriodByBillingAccount(ctx context.Context, billingAccountID string, billingPeriodName string, options *BalancesGetForBillingPeriodByBillingAccountOptions) (BalancesGetForBillingPeriodByBillingAccountResponse, error) {
+func (client *BalancesClient) GetForBillingPeriodByBillingAccount(ctx context.Context, billingAccountID string, billingPeriodName string, options *BalancesClientGetForBillingPeriodByBillingAccountOptions) (BalancesClientGetForBillingPeriodByBillingAccountResponse, error) {
 	req, err := client.getForBillingPeriodByBillingAccountCreateRequest(ctx, billingAccountID, billingPeriodName, options)
 	if err != nil {
-		return BalancesGetForBillingPeriodByBillingAccountResponse{}, err
+		return BalancesClientGetForBillingPeriodByBillingAccountResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BalancesGetForBillingPeriodByBillingAccountResponse{}, err
+		return BalancesClientGetForBillingPeriodByBillingAccountResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BalancesGetForBillingPeriodByBillingAccountResponse{}, client.getForBillingPeriodByBillingAccountHandleError(resp)
+		return BalancesClientGetForBillingPeriodByBillingAccountResponse{}, client.getForBillingPeriodByBillingAccountHandleError(resp)
 	}
 	return client.getForBillingPeriodByBillingAccountHandleResponse(resp)
 }
 
 // getForBillingPeriodByBillingAccountCreateRequest creates the GetForBillingPeriodByBillingAccount request.
-func (client *BalancesClient) getForBillingPeriodByBillingAccountCreateRequest(ctx context.Context, billingAccountID string, billingPeriodName string, options *BalancesGetForBillingPeriodByBillingAccountOptions) (*policy.Request, error) {
+func (client *BalancesClient) getForBillingPeriodByBillingAccountCreateRequest(ctx context.Context, billingAccountID string, billingPeriodName string, options *BalancesClientGetForBillingPeriodByBillingAccountOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances"
 	if billingAccountID == "" {
 		return nil, errors.New("parameter billingAccountID cannot be empty")
@@ -153,10 +153,10 @@ func (client *BalancesClient) getForBillingPeriodByBillingAccountCreateRequest(c
 }
 
 // getForBillingPeriodByBillingAccountHandleResponse handles the GetForBillingPeriodByBillingAccount response.
-func (client *BalancesClient) getForBillingPeriodByBillingAccountHandleResponse(resp *http.Response) (BalancesGetForBillingPeriodByBillingAccountResponse, error) {
-	result := BalancesGetForBillingPeriodByBillingAccountResponse{RawResponse: resp}
+func (client *BalancesClient) getForBillingPeriodByBillingAccountHandleResponse(resp *http.Response) (BalancesClientGetForBillingPeriodByBillingAccountResponse, error) {
+	result := BalancesClientGetForBillingPeriodByBillingAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Balance); err != nil {
-		return BalancesGetForBillingPeriodByBillingAccountResponse{}, runtime.NewResponseError(err, resp)
+		return BalancesClientGetForBillingPeriodByBillingAccountResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

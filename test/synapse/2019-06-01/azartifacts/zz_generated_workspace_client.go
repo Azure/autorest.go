@@ -34,24 +34,24 @@ func newWorkspaceClient(endpoint string, pl runtime.Pipeline) *workspaceClient {
 
 // Get - Get Workspace
 // If the operation fails it returns the *ErrorContract error type.
-// options - WorkspaceGetOptions contains the optional parameters for the workspaceClient.Get method.
-func (client *workspaceClient) Get(ctx context.Context, options *WorkspaceGetOptions) (WorkspaceGetResponse, error) {
+// options - workspaceClientGetOptions contains the optional parameters for the workspaceClient.Get method.
+func (client *workspaceClient) Get(ctx context.Context, options *workspaceClientGetOptions) (workspaceClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return WorkspaceGetResponse{}, err
+		return workspaceClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return WorkspaceGetResponse{}, err
+		return workspaceClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return WorkspaceGetResponse{}, client.getHandleError(resp)
+		return workspaceClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *workspaceClient) getCreateRequest(ctx context.Context, options *WorkspaceGetOptions) (*policy.Request, error) {
+func (client *workspaceClient) getCreateRequest(ctx context.Context, options *workspaceClientGetOptions) (*policy.Request, error) {
 	urlPath := "/workspace"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -65,10 +65,10 @@ func (client *workspaceClient) getCreateRequest(ctx context.Context, options *Wo
 }
 
 // getHandleResponse handles the Get response.
-func (client *workspaceClient) getHandleResponse(resp *http.Response) (WorkspaceGetResponse, error) {
-	result := WorkspaceGetResponse{RawResponse: resp}
+func (client *workspaceClient) getHandleResponse(resp *http.Response) (workspaceClientGetResponse, error) {
+	result := workspaceClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Workspace); err != nil {
-		return WorkspaceGetResponse{}, runtime.NewResponseError(err, resp)
+		return workspaceClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

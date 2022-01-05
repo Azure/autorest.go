@@ -50,21 +50,21 @@ func NewLotsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 // scope - The scope associated with Lots operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
 // for Billing Profile scope, and
 // 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
-// options - LotsListOptions contains the optional parameters for the LotsClient.List method.
-func (client *LotsClient) List(scope string, options *LotsListOptions) *LotsListPager {
-	return &LotsListPager{
+// options - LotsClientListOptions contains the optional parameters for the LotsClient.List method.
+func (client *LotsClient) List(scope string, options *LotsClientListOptions) *LotsClientListPager {
+	return &LotsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, scope, options)
 		},
-		advancer: func(ctx context.Context, resp LotsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp LotsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.Lots.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *LotsClient) listCreateRequest(ctx context.Context, scope string, options *LotsListOptions) (*policy.Request, error) {
+func (client *LotsClient) listCreateRequest(ctx context.Context, scope string, options *LotsClientListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/lots"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
@@ -79,10 +79,10 @@ func (client *LotsClient) listCreateRequest(ctx context.Context, scope string, o
 }
 
 // listHandleResponse handles the List response.
-func (client *LotsClient) listHandleResponse(resp *http.Response) (LotsListResponse, error) {
-	result := LotsListResponse{RawResponse: resp}
+func (client *LotsClient) listHandleResponse(resp *http.Response) (LotsClientListResponse, error) {
+	result := LotsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Lots); err != nil {
-		return LotsListResponse{}, runtime.NewResponseError(err, resp)
+		return LotsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

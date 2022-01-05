@@ -56,21 +56,21 @@ func NewIPGroupsClient(subscriptionID string, credential azcore.TokenCredential,
 // resourceGroupName - The name of the resource group.
 // ipGroupsName - The name of the ipGroups.
 // parameters - Parameters supplied to the create or update IpGroups operation.
-// options - IPGroupsBeginCreateOrUpdateOptions contains the optional parameters for the IPGroupsClient.BeginCreateOrUpdate
+// options - IPGroupsClientBeginCreateOrUpdateOptions contains the optional parameters for the IPGroupsClient.BeginCreateOrUpdate
 // method.
-func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsBeginCreateOrUpdateOptions) (IPGroupsCreateOrUpdatePollerResponse, error) {
+func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsClientBeginCreateOrUpdateOptions) (IPGroupsClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, ipGroupsName, parameters, options)
 	if err != nil {
-		return IPGroupsCreateOrUpdatePollerResponse{}, err
+		return IPGroupsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := IPGroupsCreateOrUpdatePollerResponse{
+	result := IPGroupsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("IPGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return IPGroupsCreateOrUpdatePollerResponse{}, err
+		return IPGroupsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &IPGroupsCreateOrUpdatePoller{
+	result.Poller = &IPGroupsClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *IPGroupsClient) BeginCreateOrUpdate(ctx context.Context, resourceG
 
 // CreateOrUpdate - Creates or updates an ipGroups in a specified resource group.
 // If the operation fails it returns the *Error error type.
-func (client *IPGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *IPGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, ipGroupsName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *IPGroupsClient) createOrUpdate(ctx context.Context, resourceGroupN
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *IPGroupsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *IPGroupsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters IPGroup, options *IPGroupsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -136,20 +136,20 @@ func (client *IPGroupsClient) createOrUpdateHandleError(resp *http.Response) err
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
 // ipGroupsName - The name of the ipGroups.
-// options - IPGroupsBeginDeleteOptions contains the optional parameters for the IPGroupsClient.BeginDelete method.
-func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsBeginDeleteOptions) (IPGroupsDeletePollerResponse, error) {
+// options - IPGroupsClientBeginDeleteOptions contains the optional parameters for the IPGroupsClient.BeginDelete method.
+func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsClientBeginDeleteOptions) (IPGroupsClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, ipGroupsName, options)
 	if err != nil {
-		return IPGroupsDeletePollerResponse{}, err
+		return IPGroupsClientDeletePollerResponse{}, err
 	}
-	result := IPGroupsDeletePollerResponse{
+	result := IPGroupsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("IPGroupsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return IPGroupsDeletePollerResponse{}, err
+		return IPGroupsClientDeletePollerResponse{}, err
 	}
-	result.Poller = &IPGroupsDeletePoller{
+	result.Poller = &IPGroupsClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -157,7 +157,7 @@ func (client *IPGroupsClient) BeginDelete(ctx context.Context, resourceGroupName
 
 // Delete - Deletes the specified ipGroups.
 // If the operation fails it returns the *Error error type.
-func (client *IPGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsBeginDeleteOptions) (*http.Response, error) {
+func (client *IPGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, ipGroupsName, options)
 	if err != nil {
 		return nil, err
@@ -173,7 +173,7 @@ func (client *IPGroupsClient) deleteOperation(ctx context.Context, resourceGroup
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *IPGroupsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsBeginDeleteOptions) (*policy.Request, error) {
+func (client *IPGroupsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -215,24 +215,24 @@ func (client *IPGroupsClient) deleteHandleError(resp *http.Response) error {
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
 // ipGroupsName - The name of the ipGroups.
-// options - IPGroupsGetOptions contains the optional parameters for the IPGroupsClient.Get method.
-func (client *IPGroupsClient) Get(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsGetOptions) (IPGroupsGetResponse, error) {
+// options - IPGroupsClientGetOptions contains the optional parameters for the IPGroupsClient.Get method.
+func (client *IPGroupsClient) Get(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsClientGetOptions) (IPGroupsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, ipGroupsName, options)
 	if err != nil {
-		return IPGroupsGetResponse{}, err
+		return IPGroupsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return IPGroupsGetResponse{}, err
+		return IPGroupsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IPGroupsGetResponse{}, client.getHandleError(resp)
+		return IPGroupsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *IPGroupsClient) getCreateRequest(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsGetOptions) (*policy.Request, error) {
+func (client *IPGroupsClient) getCreateRequest(ctx context.Context, resourceGroupName string, ipGroupsName string, options *IPGroupsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -261,10 +261,10 @@ func (client *IPGroupsClient) getCreateRequest(ctx context.Context, resourceGrou
 }
 
 // getHandleResponse handles the Get response.
-func (client *IPGroupsClient) getHandleResponse(resp *http.Response) (IPGroupsGetResponse, error) {
-	result := IPGroupsGetResponse{RawResponse: resp}
+func (client *IPGroupsClient) getHandleResponse(resp *http.Response) (IPGroupsClientGetResponse, error) {
+	result := IPGroupsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPGroup); err != nil {
-		return IPGroupsGetResponse{}, runtime.NewResponseError(err, resp)
+		return IPGroupsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -284,21 +284,21 @@ func (client *IPGroupsClient) getHandleError(resp *http.Response) error {
 
 // List - Gets all IpGroups in a subscription.
 // If the operation fails it returns the *Error error type.
-// options - IPGroupsListOptions contains the optional parameters for the IPGroupsClient.List method.
-func (client *IPGroupsClient) List(options *IPGroupsListOptions) *IPGroupsListPager {
-	return &IPGroupsListPager{
+// options - IPGroupsClientListOptions contains the optional parameters for the IPGroupsClient.List method.
+func (client *IPGroupsClient) List(options *IPGroupsClientListOptions) *IPGroupsClientListPager {
+	return &IPGroupsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp IPGroupsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp IPGroupsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.IPGroupListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *IPGroupsClient) listCreateRequest(ctx context.Context, options *IPGroupsListOptions) (*policy.Request, error) {
+func (client *IPGroupsClient) listCreateRequest(ctx context.Context, options *IPGroupsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -316,10 +316,10 @@ func (client *IPGroupsClient) listCreateRequest(ctx context.Context, options *IP
 }
 
 // listHandleResponse handles the List response.
-func (client *IPGroupsClient) listHandleResponse(resp *http.Response) (IPGroupsListResponse, error) {
-	result := IPGroupsListResponse{RawResponse: resp}
+func (client *IPGroupsClient) listHandleResponse(resp *http.Response) (IPGroupsClientListResponse, error) {
+	result := IPGroupsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPGroupListResult); err != nil {
-		return IPGroupsListResponse{}, runtime.NewResponseError(err, resp)
+		return IPGroupsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -340,22 +340,22 @@ func (client *IPGroupsClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Gets all IpGroups in a resource group.
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - The name of the resource group.
-// options - IPGroupsListByResourceGroupOptions contains the optional parameters for the IPGroupsClient.ListByResourceGroup
+// options - IPGroupsClientListByResourceGroupOptions contains the optional parameters for the IPGroupsClient.ListByResourceGroup
 // method.
-func (client *IPGroupsClient) ListByResourceGroup(resourceGroupName string, options *IPGroupsListByResourceGroupOptions) *IPGroupsListByResourceGroupPager {
-	return &IPGroupsListByResourceGroupPager{
+func (client *IPGroupsClient) ListByResourceGroup(resourceGroupName string, options *IPGroupsClientListByResourceGroupOptions) *IPGroupsClientListByResourceGroupPager {
+	return &IPGroupsClientListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp IPGroupsListByResourceGroupResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp IPGroupsClientListByResourceGroupResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.IPGroupListResult.NextLink)
 		},
 	}
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *IPGroupsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *IPGroupsListByResourceGroupOptions) (*policy.Request, error) {
+func (client *IPGroupsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *IPGroupsClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -377,10 +377,10 @@ func (client *IPGroupsClient) listByResourceGroupCreateRequest(ctx context.Conte
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *IPGroupsClient) listByResourceGroupHandleResponse(resp *http.Response) (IPGroupsListByResourceGroupResponse, error) {
-	result := IPGroupsListByResourceGroupResponse{RawResponse: resp}
+func (client *IPGroupsClient) listByResourceGroupHandleResponse(resp *http.Response) (IPGroupsClientListByResourceGroupResponse, error) {
+	result := IPGroupsClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPGroupListResult); err != nil {
-		return IPGroupsListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return IPGroupsClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -403,24 +403,24 @@ func (client *IPGroupsClient) listByResourceGroupHandleError(resp *http.Response
 // resourceGroupName - The name of the resource group.
 // ipGroupsName - The name of the ipGroups.
 // parameters - Parameters supplied to the update ipGroups operation.
-// options - IPGroupsUpdateGroupsOptions contains the optional parameters for the IPGroupsClient.UpdateGroups method.
-func (client *IPGroupsClient) UpdateGroups(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters TagsObject, options *IPGroupsUpdateGroupsOptions) (IPGroupsUpdateGroupsResponse, error) {
+// options - IPGroupsClientUpdateGroupsOptions contains the optional parameters for the IPGroupsClient.UpdateGroups method.
+func (client *IPGroupsClient) UpdateGroups(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters TagsObject, options *IPGroupsClientUpdateGroupsOptions) (IPGroupsClientUpdateGroupsResponse, error) {
 	req, err := client.updateGroupsCreateRequest(ctx, resourceGroupName, ipGroupsName, parameters, options)
 	if err != nil {
-		return IPGroupsUpdateGroupsResponse{}, err
+		return IPGroupsClientUpdateGroupsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return IPGroupsUpdateGroupsResponse{}, err
+		return IPGroupsClientUpdateGroupsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IPGroupsUpdateGroupsResponse{}, client.updateGroupsHandleError(resp)
+		return IPGroupsClientUpdateGroupsResponse{}, client.updateGroupsHandleError(resp)
 	}
 	return client.updateGroupsHandleResponse(resp)
 }
 
 // updateGroupsCreateRequest creates the UpdateGroups request.
-func (client *IPGroupsClient) updateGroupsCreateRequest(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters TagsObject, options *IPGroupsUpdateGroupsOptions) (*policy.Request, error) {
+func (client *IPGroupsClient) updateGroupsCreateRequest(ctx context.Context, resourceGroupName string, ipGroupsName string, parameters TagsObject, options *IPGroupsClientUpdateGroupsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -446,10 +446,10 @@ func (client *IPGroupsClient) updateGroupsCreateRequest(ctx context.Context, res
 }
 
 // updateGroupsHandleResponse handles the UpdateGroups response.
-func (client *IPGroupsClient) updateGroupsHandleResponse(resp *http.Response) (IPGroupsUpdateGroupsResponse, error) {
-	result := IPGroupsUpdateGroupsResponse{RawResponse: resp}
+func (client *IPGroupsClient) updateGroupsHandleResponse(resp *http.Response) (IPGroupsClientUpdateGroupsResponse, error) {
+	result := IPGroupsClientUpdateGroupsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPGroup); err != nil {
-		return IPGroupsUpdateGroupsResponse{}, runtime.NewResponseError(err, resp)
+		return IPGroupsClientUpdateGroupsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

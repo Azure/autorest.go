@@ -56,21 +56,21 @@ func NewBandwidthSchedulesClient(subscriptionID string, credential azcore.TokenC
 // name - The bandwidth schedule name which needs to be added/updated.
 // resourceGroupName - The resource group name.
 // parameters - The bandwidth schedule to be added or updated.
-// options - BandwidthSchedulesBeginCreateOrUpdateOptions contains the optional parameters for the BandwidthSchedulesClient.BeginCreateOrUpdate
+// options - BandwidthSchedulesClientBeginCreateOrUpdateOptions contains the optional parameters for the BandwidthSchedulesClient.BeginCreateOrUpdate
 // method.
-func (client *BandwidthSchedulesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, parameters BandwidthSchedule, options *BandwidthSchedulesBeginCreateOrUpdateOptions) (BandwidthSchedulesCreateOrUpdatePollerResponse, error) {
+func (client *BandwidthSchedulesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, parameters BandwidthSchedule, options *BandwidthSchedulesClientBeginCreateOrUpdateOptions) (BandwidthSchedulesClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, parameters, options)
 	if err != nil {
-		return BandwidthSchedulesCreateOrUpdatePollerResponse{}, err
+		return BandwidthSchedulesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := BandwidthSchedulesCreateOrUpdatePollerResponse{
+	result := BandwidthSchedulesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("BandwidthSchedulesClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return BandwidthSchedulesCreateOrUpdatePollerResponse{}, err
+		return BandwidthSchedulesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &BandwidthSchedulesCreateOrUpdatePoller{
+	result.Poller = &BandwidthSchedulesClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *BandwidthSchedulesClient) BeginCreateOrUpdate(ctx context.Context,
 
 // CreateOrUpdate - Creates or updates a bandwidth schedule.
 // If the operation fails it returns the *CloudError error type.
-func (client *BandwidthSchedulesClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, parameters BandwidthSchedule, options *BandwidthSchedulesBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *BandwidthSchedulesClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, parameters BandwidthSchedule, options *BandwidthSchedulesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *BandwidthSchedulesClient) createOrUpdate(ctx context.Context, devi
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *BandwidthSchedulesClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, parameters BandwidthSchedule, options *BandwidthSchedulesBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *BandwidthSchedulesClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, parameters BandwidthSchedule, options *BandwidthSchedulesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -141,21 +141,21 @@ func (client *BandwidthSchedulesClient) createOrUpdateHandleError(resp *http.Res
 // deviceName - The device name.
 // name - The bandwidth schedule name.
 // resourceGroupName - The resource group name.
-// options - BandwidthSchedulesBeginDeleteOptions contains the optional parameters for the BandwidthSchedulesClient.BeginDelete
+// options - BandwidthSchedulesClientBeginDeleteOptions contains the optional parameters for the BandwidthSchedulesClient.BeginDelete
 // method.
-func (client *BandwidthSchedulesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesBeginDeleteOptions) (BandwidthSchedulesDeletePollerResponse, error) {
+func (client *BandwidthSchedulesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesClientBeginDeleteOptions) (BandwidthSchedulesClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return BandwidthSchedulesDeletePollerResponse{}, err
+		return BandwidthSchedulesClientDeletePollerResponse{}, err
 	}
-	result := BandwidthSchedulesDeletePollerResponse{
+	result := BandwidthSchedulesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("BandwidthSchedulesClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return BandwidthSchedulesDeletePollerResponse{}, err
+		return BandwidthSchedulesClientDeletePollerResponse{}, err
 	}
-	result.Poller = &BandwidthSchedulesDeletePoller{
+	result.Poller = &BandwidthSchedulesClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -163,7 +163,7 @@ func (client *BandwidthSchedulesClient) BeginDelete(ctx context.Context, deviceN
 
 // Delete - Deletes the specified bandwidth schedule.
 // If the operation fails it returns the *CloudError error type.
-func (client *BandwidthSchedulesClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesBeginDeleteOptions) (*http.Response, error) {
+func (client *BandwidthSchedulesClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -179,7 +179,7 @@ func (client *BandwidthSchedulesClient) deleteOperation(ctx context.Context, dev
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *BandwidthSchedulesClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesBeginDeleteOptions) (*policy.Request, error) {
+func (client *BandwidthSchedulesClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -226,24 +226,24 @@ func (client *BandwidthSchedulesClient) deleteHandleError(resp *http.Response) e
 // deviceName - The device name.
 // name - The bandwidth schedule name.
 // resourceGroupName - The resource group name.
-// options - BandwidthSchedulesGetOptions contains the optional parameters for the BandwidthSchedulesClient.Get method.
-func (client *BandwidthSchedulesClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesGetOptions) (BandwidthSchedulesGetResponse, error) {
+// options - BandwidthSchedulesClientGetOptions contains the optional parameters for the BandwidthSchedulesClient.Get method.
+func (client *BandwidthSchedulesClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesClientGetOptions) (BandwidthSchedulesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return BandwidthSchedulesGetResponse{}, err
+		return BandwidthSchedulesClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BandwidthSchedulesGetResponse{}, err
+		return BandwidthSchedulesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BandwidthSchedulesGetResponse{}, client.getHandleError(resp)
+		return BandwidthSchedulesClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *BandwidthSchedulesClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesGetOptions) (*policy.Request, error) {
+func (client *BandwidthSchedulesClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -273,10 +273,10 @@ func (client *BandwidthSchedulesClient) getCreateRequest(ctx context.Context, de
 }
 
 // getHandleResponse handles the Get response.
-func (client *BandwidthSchedulesClient) getHandleResponse(resp *http.Response) (BandwidthSchedulesGetResponse, error) {
-	result := BandwidthSchedulesGetResponse{RawResponse: resp}
+func (client *BandwidthSchedulesClient) getHandleResponse(resp *http.Response) (BandwidthSchedulesClientGetResponse, error) {
+	result := BandwidthSchedulesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BandwidthSchedule); err != nil {
-		return BandwidthSchedulesGetResponse{}, runtime.NewResponseError(err, resp)
+		return BandwidthSchedulesClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -298,22 +298,22 @@ func (client *BandwidthSchedulesClient) getHandleError(resp *http.Response) erro
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - BandwidthSchedulesListByDataBoxEdgeDeviceOptions contains the optional parameters for the BandwidthSchedulesClient.ListByDataBoxEdgeDevice
+// options - BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the BandwidthSchedulesClient.ListByDataBoxEdgeDevice
 // method.
-func (client *BandwidthSchedulesClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *BandwidthSchedulesListByDataBoxEdgeDeviceOptions) *BandwidthSchedulesListByDataBoxEdgeDevicePager {
-	return &BandwidthSchedulesListByDataBoxEdgeDevicePager{
+func (client *BandwidthSchedulesClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions) *BandwidthSchedulesClientListByDataBoxEdgeDevicePager {
+	return &BandwidthSchedulesClientListByDataBoxEdgeDevicePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp BandwidthSchedulesListByDataBoxEdgeDeviceResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.BandwidthSchedulesList.NextLink)
 		},
 	}
 }
 
 // listByDataBoxEdgeDeviceCreateRequest creates the ListByDataBoxEdgeDevice request.
-func (client *BandwidthSchedulesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *BandwidthSchedulesListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
+func (client *BandwidthSchedulesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -339,10 +339,10 @@ func (client *BandwidthSchedulesClient) listByDataBoxEdgeDeviceCreateRequest(ctx
 }
 
 // listByDataBoxEdgeDeviceHandleResponse handles the ListByDataBoxEdgeDevice response.
-func (client *BandwidthSchedulesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (BandwidthSchedulesListByDataBoxEdgeDeviceResponse, error) {
-	result := BandwidthSchedulesListByDataBoxEdgeDeviceResponse{RawResponse: resp}
+func (client *BandwidthSchedulesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse, error) {
+	result := BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BandwidthSchedulesList); err != nil {
-		return BandwidthSchedulesListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
+		return BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
