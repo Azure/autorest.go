@@ -229,6 +229,37 @@ func (l ListResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+type ParameterMetadataValue struct {
+	// a JSON object
+	Value map[string]interface{} `json:"value,omitempty"`
+}
+
+// ParameterValuesValue - The value of a parameter.
+type ParameterValuesValue struct {
+	// The value of the parameter.
+	Value interface{} `json:"value,omitempty"`
+}
+
+type PolicyAssignmentProperties struct {
+	// The display name of the policy assignment.
+	DisplayName *string `json:"displayName,omitempty"`
+
+	// Key-value pairs of extra info.
+	Metadata map[string]*ParameterMetadataValue `json:"metadata,omitempty"`
+
+	// The parameter values for the assigned policy rule. The keys are the parameter names.
+	Parameters map[string]*ParameterValuesValue `json:"parameters,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface for type PolicyAssignmentProperties.
+func (p PolicyAssignmentProperties) MarshalJSON() ([]byte, error) {
+	objectMap := make(map[string]interface{})
+	populate(objectMap, "displayName", p.DisplayName)
+	populate(objectMap, "metadata", p.Metadata)
+	populate(objectMap, "parameters", p.Parameters)
+	return json.Marshal(objectMap)
+}
+
 // ScheduleCreateOrUpdateProperties - The parameters supplied to the create or update schedule operation.
 type ScheduleCreateOrUpdateProperties struct {
 	// A list of all the previously created aliases.
