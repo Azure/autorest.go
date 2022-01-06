@@ -250,7 +250,7 @@ func (client *PacketCapturesClient) getCreateRequest(ctx context.Context, resour
 func (client *PacketCapturesClient) getHandleResponse(resp *http.Response) (PacketCapturesClientGetResponse, error) {
 	result := PacketCapturesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PacketCaptureResult); err != nil {
-		return PacketCapturesClientGetResponse{}, runtime.NewResponseError(resp)
+		return PacketCapturesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -377,7 +377,7 @@ func (client *PacketCapturesClient) listCreateRequest(ctx context.Context, resou
 func (client *PacketCapturesClient) listHandleResponse(resp *http.Response) (PacketCapturesClientListResponse, error) {
 	result := PacketCapturesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PacketCaptureListResult); err != nil {
-		return PacketCapturesClientListResponse{}, runtime.NewResponseError(resp)
+		return PacketCapturesClientListResponse{}, err
 	}
 	return result, nil
 }

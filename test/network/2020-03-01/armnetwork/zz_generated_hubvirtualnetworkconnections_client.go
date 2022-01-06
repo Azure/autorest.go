@@ -106,7 +106,7 @@ func (client *HubVirtualNetworkConnectionsClient) getCreateRequest(ctx context.C
 func (client *HubVirtualNetworkConnectionsClient) getHandleResponse(resp *http.Response) (HubVirtualNetworkConnectionsClientGetResponse, error) {
 	result := HubVirtualNetworkConnectionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.HubVirtualNetworkConnection); err != nil {
-		return HubVirtualNetworkConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
+		return HubVirtualNetworkConnectionsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -159,7 +159,7 @@ func (client *HubVirtualNetworkConnectionsClient) listCreateRequest(ctx context.
 func (client *HubVirtualNetworkConnectionsClient) listHandleResponse(resp *http.Response) (HubVirtualNetworkConnectionsClientListResponse, error) {
 	result := HubVirtualNetworkConnectionsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListHubVirtualNetworkConnectionsResult); err != nil {
-		return HubVirtualNetworkConnectionsClientListResponse{}, runtime.NewResponseError(resp)
+		return HubVirtualNetworkConnectionsClientListResponse{}, err
 	}
 	return result, nil
 }

@@ -238,7 +238,7 @@ func (client *PrivateEndpointsClient) getCreateRequest(ctx context.Context, reso
 func (client *PrivateEndpointsClient) getHandleResponse(resp *http.Response) (PrivateEndpointsClientGetResponse, error) {
 	result := PrivateEndpointsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateEndpoint); err != nil {
-		return PrivateEndpointsClientGetResponse{}, runtime.NewResponseError(resp)
+		return PrivateEndpointsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -285,7 +285,7 @@ func (client *PrivateEndpointsClient) listCreateRequest(ctx context.Context, res
 func (client *PrivateEndpointsClient) listHandleResponse(resp *http.Response) (PrivateEndpointsClientListResponse, error) {
 	result := PrivateEndpointsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateEndpointListResult); err != nil {
-		return PrivateEndpointsClientListResponse{}, runtime.NewResponseError(resp)
+		return PrivateEndpointsClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -328,7 +328,7 @@ func (client *PrivateEndpointsClient) listBySubscriptionCreateRequest(ctx contex
 func (client *PrivateEndpointsClient) listBySubscriptionHandleResponse(resp *http.Response) (PrivateEndpointsClientListBySubscriptionResponse, error) {
 	result := PrivateEndpointsClientListBySubscriptionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateEndpointListResult); err != nil {
-		return PrivateEndpointsClientListBySubscriptionResponse{}, runtime.NewResponseError(resp)
+		return PrivateEndpointsClientListBySubscriptionResponse{}, err
 	}
 	return result, nil
 }

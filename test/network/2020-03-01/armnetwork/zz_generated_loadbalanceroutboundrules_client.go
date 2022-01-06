@@ -106,7 +106,7 @@ func (client *LoadBalancerOutboundRulesClient) getCreateRequest(ctx context.Cont
 func (client *LoadBalancerOutboundRulesClient) getHandleResponse(resp *http.Response) (LoadBalancerOutboundRulesClientGetResponse, error) {
 	result := LoadBalancerOutboundRulesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.OutboundRule); err != nil {
-		return LoadBalancerOutboundRulesClientGetResponse{}, runtime.NewResponseError(resp)
+		return LoadBalancerOutboundRulesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -159,7 +159,7 @@ func (client *LoadBalancerOutboundRulesClient) listCreateRequest(ctx context.Con
 func (client *LoadBalancerOutboundRulesClient) listHandleResponse(resp *http.Response) (LoadBalancerOutboundRulesClientListResponse, error) {
 	result := LoadBalancerOutboundRulesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancerOutboundRuleListResult); err != nil {
-		return LoadBalancerOutboundRulesClientListResponse{}, runtime.NewResponseError(resp)
+		return LoadBalancerOutboundRulesClientListResponse{}, err
 	}
 	return result, nil
 }

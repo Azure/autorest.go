@@ -101,7 +101,7 @@ func (client *ProfilesClient) createOrUpdateCreateRequest(ctx context.Context, r
 func (client *ProfilesClient) createOrUpdateHandleResponse(resp *http.Response) (ProfilesClientCreateOrUpdateResponse, error) {
 	result := ProfilesClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Profile); err != nil {
-		return ProfilesClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+		return ProfilesClientCreateOrUpdateResponse{}, err
 	}
 	return result, nil
 }
@@ -225,7 +225,7 @@ func (client *ProfilesClient) getCreateRequest(ctx context.Context, resourceGrou
 func (client *ProfilesClient) getHandleResponse(resp *http.Response) (ProfilesClientGetResponse, error) {
 	result := ProfilesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Profile); err != nil {
-		return ProfilesClientGetResponse{}, runtime.NewResponseError(resp)
+		return ProfilesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -272,7 +272,7 @@ func (client *ProfilesClient) listCreateRequest(ctx context.Context, resourceGro
 func (client *ProfilesClient) listHandleResponse(resp *http.Response) (ProfilesClientListResponse, error) {
 	result := ProfilesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProfileListResult); err != nil {
-		return ProfilesClientListResponse{}, runtime.NewResponseError(resp)
+		return ProfilesClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -314,7 +314,7 @@ func (client *ProfilesClient) listAllCreateRequest(ctx context.Context, options 
 func (client *ProfilesClient) listAllHandleResponse(resp *http.Response) (ProfilesClientListAllResponse, error) {
 	result := ProfilesClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProfileListResult); err != nil {
-		return ProfilesClientListAllResponse{}, runtime.NewResponseError(resp)
+		return ProfilesClientListAllResponse{}, err
 	}
 	return result, nil
 }
@@ -370,7 +370,7 @@ func (client *ProfilesClient) updateTagsCreateRequest(ctx context.Context, resou
 func (client *ProfilesClient) updateTagsHandleResponse(resp *http.Response) (ProfilesClientUpdateTagsResponse, error) {
 	result := ProfilesClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Profile); err != nil {
-		return ProfilesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return ProfilesClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

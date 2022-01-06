@@ -239,7 +239,7 @@ func (client *ServiceEndpointPoliciesClient) getCreateRequest(ctx context.Contex
 func (client *ServiceEndpointPoliciesClient) getHandleResponse(resp *http.Response) (ServiceEndpointPoliciesClientGetResponse, error) {
 	result := ServiceEndpointPoliciesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ServiceEndpointPolicy); err != nil {
-		return ServiceEndpointPoliciesClientGetResponse{}, runtime.NewResponseError(resp)
+		return ServiceEndpointPoliciesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -282,7 +282,7 @@ func (client *ServiceEndpointPoliciesClient) listCreateRequest(ctx context.Conte
 func (client *ServiceEndpointPoliciesClient) listHandleResponse(resp *http.Response) (ServiceEndpointPoliciesClientListResponse, error) {
 	result := ServiceEndpointPoliciesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ServiceEndpointPolicyListResult); err != nil {
-		return ServiceEndpointPoliciesClientListResponse{}, runtime.NewResponseError(resp)
+		return ServiceEndpointPoliciesClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -330,7 +330,7 @@ func (client *ServiceEndpointPoliciesClient) listByResourceGroupCreateRequest(ct
 func (client *ServiceEndpointPoliciesClient) listByResourceGroupHandleResponse(resp *http.Response) (ServiceEndpointPoliciesClientListByResourceGroupResponse, error) {
 	result := ServiceEndpointPoliciesClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ServiceEndpointPolicyListResult); err != nil {
-		return ServiceEndpointPoliciesClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return ServiceEndpointPoliciesClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -387,7 +387,7 @@ func (client *ServiceEndpointPoliciesClient) updateTagsCreateRequest(ctx context
 func (client *ServiceEndpointPoliciesClient) updateTagsHandleResponse(resp *http.Response) (ServiceEndpointPoliciesClientUpdateTagsResponse, error) {
 	result := ServiceEndpointPoliciesClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ServiceEndpointPolicy); err != nil {
-		return ServiceEndpointPoliciesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return ServiceEndpointPoliciesClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

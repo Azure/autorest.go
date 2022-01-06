@@ -249,7 +249,7 @@ func (client *RoutesClient) getCreateRequest(ctx context.Context, resourceGroupN
 func (client *RoutesClient) getHandleResponse(resp *http.Response) (RoutesClientGetResponse, error) {
 	result := RoutesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Route); err != nil {
-		return RoutesClientGetResponse{}, runtime.NewResponseError(resp)
+		return RoutesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -301,7 +301,7 @@ func (client *RoutesClient) listCreateRequest(ctx context.Context, resourceGroup
 func (client *RoutesClient) listHandleResponse(resp *http.Response) (RoutesClientListResponse, error) {
 	result := RoutesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteListResult); err != nil {
-		return RoutesClientListResponse{}, runtime.NewResponseError(resp)
+		return RoutesClientListResponse{}, err
 	}
 	return result, nil
 }

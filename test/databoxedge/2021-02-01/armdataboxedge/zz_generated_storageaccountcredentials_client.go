@@ -250,7 +250,7 @@ func (client *StorageAccountCredentialsClient) getCreateRequest(ctx context.Cont
 func (client *StorageAccountCredentialsClient) getHandleResponse(resp *http.Response) (StorageAccountCredentialsClientGetResponse, error) {
 	result := StorageAccountCredentialsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageAccountCredential); err != nil {
-		return StorageAccountCredentialsClientGetResponse{}, runtime.NewResponseError(resp)
+		return StorageAccountCredentialsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -303,7 +303,7 @@ func (client *StorageAccountCredentialsClient) listByDataBoxEdgeDeviceCreateRequ
 func (client *StorageAccountCredentialsClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse, error) {
 	result := StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageAccountCredentialList); err != nil {
-		return StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(resp)
+		return StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	return result, nil
 }

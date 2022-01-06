@@ -263,7 +263,7 @@ func (client *ContainersClient) getCreateRequest(ctx context.Context, deviceName
 func (client *ContainersClient) getHandleResponse(resp *http.Response) (ContainersClientGetResponse, error) {
 	result := ContainersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Container); err != nil {
-		return ContainersClientGetResponse{}, runtime.NewResponseError(resp)
+		return ContainersClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -321,7 +321,7 @@ func (client *ContainersClient) listByStorageAccountCreateRequest(ctx context.Co
 func (client *ContainersClient) listByStorageAccountHandleResponse(resp *http.Response) (ContainersClientListByStorageAccountResponse, error) {
 	result := ContainersClientListByStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ContainerList); err != nil {
-		return ContainersClientListByStorageAccountResponse{}, runtime.NewResponseError(resp)
+		return ContainersClientListByStorageAccountResponse{}, err
 	}
 	return result, nil
 }

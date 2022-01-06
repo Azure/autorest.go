@@ -68,7 +68,7 @@ func (client *BoolClient) getFalseCreateRequest(ctx context.Context, options *Bo
 func (client *BoolClient) getFalseHandleResponse(resp *http.Response) (BoolClientGetFalseResponse, error) {
 	result := BoolClientGetFalseResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return BoolClientGetFalseResponse{}, runtime.NewResponseError(resp)
+		return BoolClientGetFalseResponse{}, err
 	}
 	return result, nil
 }
@@ -106,7 +106,7 @@ func (client *BoolClient) getInvalidCreateRequest(ctx context.Context, options *
 func (client *BoolClient) getInvalidHandleResponse(resp *http.Response) (BoolClientGetInvalidResponse, error) {
 	result := BoolClientGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return BoolClientGetInvalidResponse{}, runtime.NewResponseError(resp)
+		return BoolClientGetInvalidResponse{}, err
 	}
 	return result, nil
 }
@@ -144,7 +144,7 @@ func (client *BoolClient) getNullCreateRequest(ctx context.Context, options *Boo
 func (client *BoolClient) getNullHandleResponse(resp *http.Response) (BoolClientGetNullResponse, error) {
 	result := BoolClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return BoolClientGetNullResponse{}, runtime.NewResponseError(resp)
+		return BoolClientGetNullResponse{}, err
 	}
 	return result, nil
 }
@@ -182,7 +182,7 @@ func (client *BoolClient) getTrueCreateRequest(ctx context.Context, options *Boo
 func (client *BoolClient) getTrueHandleResponse(resp *http.Response) (BoolClientGetTrueResponse, error) {
 	result := BoolClientGetTrueResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return BoolClientGetTrueResponse{}, runtime.NewResponseError(resp)
+		return BoolClientGetTrueResponse{}, err
 	}
 	return result, nil
 }

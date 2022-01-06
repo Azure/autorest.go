@@ -267,7 +267,7 @@ func (client *ExpressRouteCircuitConnectionsClient) getCreateRequest(ctx context
 func (client *ExpressRouteCircuitConnectionsClient) getHandleResponse(resp *http.Response) (ExpressRouteCircuitConnectionsClientGetResponse, error) {
 	result := ExpressRouteCircuitConnectionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuitConnection); err != nil {
-		return ExpressRouteCircuitConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
+		return ExpressRouteCircuitConnectionsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -325,7 +325,7 @@ func (client *ExpressRouteCircuitConnectionsClient) listCreateRequest(ctx contex
 func (client *ExpressRouteCircuitConnectionsClient) listHandleResponse(resp *http.Response) (ExpressRouteCircuitConnectionsClientListResponse, error) {
 	result := ExpressRouteCircuitConnectionsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuitConnectionListResult); err != nil {
-		return ExpressRouteCircuitConnectionsClientListResponse{}, runtime.NewResponseError(resp)
+		return ExpressRouteCircuitConnectionsClientListResponse{}, err
 	}
 	return result, nil
 }

@@ -111,7 +111,7 @@ func (client *UsageDetailsClient) listCreateRequest(ctx context.Context, scope s
 func (client *UsageDetailsClient) listHandleResponse(resp *http.Response) (UsageDetailsClientListResponse, error) {
 	result := UsageDetailsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.UsageDetailsListResult); err != nil {
-		return UsageDetailsClientListResponse{}, runtime.NewResponseError(resp)
+		return UsageDetailsClientListResponse{}, err
 	}
 	return result, nil
 }

@@ -238,7 +238,7 @@ func (client *RouteFiltersClient) getCreateRequest(ctx context.Context, resource
 func (client *RouteFiltersClient) getHandleResponse(resp *http.Response) (RouteFiltersClientGetResponse, error) {
 	result := RouteFiltersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilter); err != nil {
-		return RouteFiltersClientGetResponse{}, runtime.NewResponseError(resp)
+		return RouteFiltersClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -280,7 +280,7 @@ func (client *RouteFiltersClient) listCreateRequest(ctx context.Context, options
 func (client *RouteFiltersClient) listHandleResponse(resp *http.Response) (RouteFiltersClientListResponse, error) {
 	result := RouteFiltersClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilterListResult); err != nil {
-		return RouteFiltersClientListResponse{}, runtime.NewResponseError(resp)
+		return RouteFiltersClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -328,7 +328,7 @@ func (client *RouteFiltersClient) listByResourceGroupCreateRequest(ctx context.C
 func (client *RouteFiltersClient) listByResourceGroupHandleResponse(resp *http.Response) (RouteFiltersClientListByResourceGroupResponse, error) {
 	result := RouteFiltersClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilterListResult); err != nil {
-		return RouteFiltersClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return RouteFiltersClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -384,7 +384,7 @@ func (client *RouteFiltersClient) updateTagsCreateRequest(ctx context.Context, r
 func (client *RouteFiltersClient) updateTagsHandleResponse(resp *http.Response) (RouteFiltersClientUpdateTagsResponse, error) {
 	result := RouteFiltersClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilter); err != nil {
-		return RouteFiltersClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return RouteFiltersClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

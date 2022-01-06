@@ -109,7 +109,7 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 		result.PreferenceApplied = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Response); err != nil {
-		return ClientCreateResponse{}, runtime.NewResponseError(resp)
+		return ClientCreateResponse{}, err
 	}
 	return result, nil
 }
@@ -323,7 +323,7 @@ func (client *Client) getAccessPolicyHandleResponse(resp *http.Response) (Client
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
-		return ClientGetAccessPolicyResponse{}, runtime.NewResponseError(resp)
+		return ClientGetAccessPolicyResponse{}, err
 	}
 	return result, nil
 }
@@ -411,7 +411,7 @@ func (client *Client) insertEntityHandleResponse(resp *http.Response) (ClientIns
 		result.ContentType = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return ClientInsertEntityResponse{}, runtime.NewResponseError(resp)
+		return ClientInsertEntityResponse{}, err
 	}
 	return result, nil
 }
@@ -580,7 +580,7 @@ func (client *Client) queryHandleResponse(resp *http.Response) (ClientQueryRespo
 		result.XMSContinuationNextTableName = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.QueryResponse); err != nil {
-		return ClientQueryResponse{}, runtime.NewResponseError(resp)
+		return ClientQueryResponse{}, err
 	}
 	return result, nil
 }
@@ -674,7 +674,7 @@ func (client *Client) queryEntitiesHandleResponse(resp *http.Response) (ClientQu
 		result.XMSContinuationNextRowKey = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.EntityQueryResponse); err != nil {
-		return ClientQueryEntitiesResponse{}, runtime.NewResponseError(resp)
+		return ClientQueryEntitiesResponse{}, err
 	}
 	return result, nil
 }
@@ -773,7 +773,7 @@ func (client *Client) queryEntityWithPartitionAndRowKeyHandleResponse(resp *http
 		result.XMSContinuationNextRowKey = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, runtime.NewResponseError(resp)
+		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, err
 	}
 	return result, nil
 }

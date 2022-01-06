@@ -70,7 +70,7 @@ func (client *DateClient) getInvalidDateHandleResponse(resp *http.Response) (Dat
 	result := DateClientGetInvalidDateResponse{RawResponse: resp}
 	var aux *dateType
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DateClientGetInvalidDateResponse{}, runtime.NewResponseError(resp)
+		return DateClientGetInvalidDateResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil
@@ -110,7 +110,7 @@ func (client *DateClient) getMaxDateHandleResponse(resp *http.Response) (DateCli
 	result := DateClientGetMaxDateResponse{RawResponse: resp}
 	var aux *dateType
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DateClientGetMaxDateResponse{}, runtime.NewResponseError(resp)
+		return DateClientGetMaxDateResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil
@@ -150,7 +150,7 @@ func (client *DateClient) getMinDateHandleResponse(resp *http.Response) (DateCli
 	result := DateClientGetMinDateResponse{RawResponse: resp}
 	var aux *dateType
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DateClientGetMinDateResponse{}, runtime.NewResponseError(resp)
+		return DateClientGetMinDateResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil
@@ -190,7 +190,7 @@ func (client *DateClient) getNullHandleResponse(resp *http.Response) (DateClient
 	result := DateClientGetNullResponse{RawResponse: resp}
 	var aux *dateType
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DateClientGetNullResponse{}, runtime.NewResponseError(resp)
+		return DateClientGetNullResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil
@@ -230,7 +230,7 @@ func (client *DateClient) getOverflowDateHandleResponse(resp *http.Response) (Da
 	result := DateClientGetOverflowDateResponse{RawResponse: resp}
 	var aux *dateType
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DateClientGetOverflowDateResponse{}, runtime.NewResponseError(resp)
+		return DateClientGetOverflowDateResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil
@@ -270,7 +270,7 @@ func (client *DateClient) getUnderflowDateHandleResponse(resp *http.Response) (D
 	result := DateClientGetUnderflowDateResponse{RawResponse: resp}
 	var aux *dateType
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DateClientGetUnderflowDateResponse{}, runtime.NewResponseError(resp)
+		return DateClientGetUnderflowDateResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil

@@ -86,7 +86,7 @@ func (client *AvailableSKUsClient) listCreateRequest(ctx context.Context, option
 func (client *AvailableSKUsClient) listHandleResponse(resp *http.Response) (AvailableSKUsClientListResponse, error) {
 	result := AvailableSKUsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SKUList); err != nil {
-		return AvailableSKUsClientListResponse{}, runtime.NewResponseError(resp)
+		return AvailableSKUsClientListResponse{}, err
 	}
 	return result, nil
 }

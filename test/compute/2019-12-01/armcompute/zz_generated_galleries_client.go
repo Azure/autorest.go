@@ -235,7 +235,7 @@ func (client *GalleriesClient) getCreateRequest(ctx context.Context, resourceGro
 func (client *GalleriesClient) getHandleResponse(resp *http.Response) (GalleriesClientGetResponse, error) {
 	result := GalleriesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Gallery); err != nil {
-		return GalleriesClientGetResponse{}, runtime.NewResponseError(resp)
+		return GalleriesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -277,7 +277,7 @@ func (client *GalleriesClient) listCreateRequest(ctx context.Context, options *G
 func (client *GalleriesClient) listHandleResponse(resp *http.Response) (GalleriesClientListResponse, error) {
 	result := GalleriesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GalleryList); err != nil {
-		return GalleriesClientListResponse{}, runtime.NewResponseError(resp)
+		return GalleriesClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -325,7 +325,7 @@ func (client *GalleriesClient) listByResourceGroupCreateRequest(ctx context.Cont
 func (client *GalleriesClient) listByResourceGroupHandleResponse(resp *http.Response) (GalleriesClientListByResourceGroupResponse, error) {
 	result := GalleriesClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GalleryList); err != nil {
-		return GalleriesClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return GalleriesClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }

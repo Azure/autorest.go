@@ -198,7 +198,7 @@ func (client *sqlScriptClient) getSQLScriptCreateRequest(ctx context.Context, sq
 func (client *sqlScriptClient) getSQLScriptHandleResponse(resp *http.Response) (sqlScriptClientGetSQLScriptResponse, error) {
 	result := sqlScriptClientGetSQLScriptResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SQLScriptResource); err != nil {
-		return sqlScriptClientGetSQLScriptResponse{}, runtime.NewResponseError(resp)
+		return sqlScriptClientGetSQLScriptResponse{}, err
 	}
 	return result, nil
 }
@@ -237,7 +237,7 @@ func (client *sqlScriptClient) getSQLScriptsByWorkspaceCreateRequest(ctx context
 func (client *sqlScriptClient) getSQLScriptsByWorkspaceHandleResponse(resp *http.Response) (sqlScriptClientGetSQLScriptsByWorkspaceResponse, error) {
 	result := sqlScriptClientGetSQLScriptsByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SQLScriptsListResponse); err != nil {
-		return sqlScriptClientGetSQLScriptsByWorkspaceResponse{}, runtime.NewResponseError(resp)
+		return sqlScriptClientGetSQLScriptsByWorkspaceResponse{}, err
 	}
 	return result, nil
 }

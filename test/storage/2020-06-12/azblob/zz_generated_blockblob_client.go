@@ -316,7 +316,7 @@ func (client *blockBlobClient) getBlockListHandleResponse(resp *http.Response) (
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.BlockList); err != nil {
-		return blockBlobClientGetBlockListResponse{}, runtime.NewResponseError(resp)
+		return blockBlobClientGetBlockListResponse{}, err
 	}
 	return result, nil
 }

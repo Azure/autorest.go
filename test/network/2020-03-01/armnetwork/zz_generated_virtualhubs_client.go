@@ -234,7 +234,7 @@ func (client *VirtualHubsClient) getCreateRequest(ctx context.Context, resourceG
 func (client *VirtualHubsClient) getHandleResponse(resp *http.Response) (VirtualHubsClientGetResponse, error) {
 	result := VirtualHubsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualHub); err != nil {
-		return VirtualHubsClientGetResponse{}, runtime.NewResponseError(resp)
+		return VirtualHubsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -276,7 +276,7 @@ func (client *VirtualHubsClient) listCreateRequest(ctx context.Context, options 
 func (client *VirtualHubsClient) listHandleResponse(resp *http.Response) (VirtualHubsClientListResponse, error) {
 	result := VirtualHubsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVirtualHubsResult); err != nil {
-		return VirtualHubsClientListResponse{}, runtime.NewResponseError(resp)
+		return VirtualHubsClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -324,7 +324,7 @@ func (client *VirtualHubsClient) listByResourceGroupCreateRequest(ctx context.Co
 func (client *VirtualHubsClient) listByResourceGroupHandleResponse(resp *http.Response) (VirtualHubsClientListByResourceGroupResponse, error) {
 	result := VirtualHubsClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVirtualHubsResult); err != nil {
-		return VirtualHubsClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return VirtualHubsClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -380,7 +380,7 @@ func (client *VirtualHubsClient) updateTagsCreateRequest(ctx context.Context, re
 func (client *VirtualHubsClient) updateTagsHandleResponse(resp *http.Response) (VirtualHubsClientUpdateTagsResponse, error) {
 	result := VirtualHubsClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualHub); err != nil {
-		return VirtualHubsClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return VirtualHubsClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

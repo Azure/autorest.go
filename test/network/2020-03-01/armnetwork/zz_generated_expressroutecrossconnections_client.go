@@ -169,7 +169,7 @@ func (client *ExpressRouteCrossConnectionsClient) getCreateRequest(ctx context.C
 func (client *ExpressRouteCrossConnectionsClient) getHandleResponse(resp *http.Response) (ExpressRouteCrossConnectionsClientGetResponse, error) {
 	result := ExpressRouteCrossConnectionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCrossConnection); err != nil {
-		return ExpressRouteCrossConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
+		return ExpressRouteCrossConnectionsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -212,7 +212,7 @@ func (client *ExpressRouteCrossConnectionsClient) listCreateRequest(ctx context.
 func (client *ExpressRouteCrossConnectionsClient) listHandleResponse(resp *http.Response) (ExpressRouteCrossConnectionsClientListResponse, error) {
 	result := ExpressRouteCrossConnectionsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCrossConnectionListResult); err != nil {
-		return ExpressRouteCrossConnectionsClientListResponse{}, runtime.NewResponseError(resp)
+		return ExpressRouteCrossConnectionsClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -339,7 +339,7 @@ func (client *ExpressRouteCrossConnectionsClient) listByResourceGroupCreateReque
 func (client *ExpressRouteCrossConnectionsClient) listByResourceGroupHandleResponse(resp *http.Response) (ExpressRouteCrossConnectionsClientListByResourceGroupResponse, error) {
 	result := ExpressRouteCrossConnectionsClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCrossConnectionListResult); err != nil {
-		return ExpressRouteCrossConnectionsClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return ExpressRouteCrossConnectionsClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -554,7 +554,7 @@ func (client *ExpressRouteCrossConnectionsClient) updateTagsCreateRequest(ctx co
 func (client *ExpressRouteCrossConnectionsClient) updateTagsHandleResponse(resp *http.Response) (ExpressRouteCrossConnectionsClientUpdateTagsResponse, error) {
 	result := ExpressRouteCrossConnectionsClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCrossConnection); err != nil {
-		return ExpressRouteCrossConnectionsClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return ExpressRouteCrossConnectionsClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

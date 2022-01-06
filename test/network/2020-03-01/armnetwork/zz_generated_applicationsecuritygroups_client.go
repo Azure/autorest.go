@@ -236,7 +236,7 @@ func (client *ApplicationSecurityGroupsClient) getCreateRequest(ctx context.Cont
 func (client *ApplicationSecurityGroupsClient) getHandleResponse(resp *http.Response) (ApplicationSecurityGroupsClientGetResponse, error) {
 	result := ApplicationSecurityGroupsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationSecurityGroup); err != nil {
-		return ApplicationSecurityGroupsClientGetResponse{}, runtime.NewResponseError(resp)
+		return ApplicationSecurityGroupsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -284,7 +284,7 @@ func (client *ApplicationSecurityGroupsClient) listCreateRequest(ctx context.Con
 func (client *ApplicationSecurityGroupsClient) listHandleResponse(resp *http.Response) (ApplicationSecurityGroupsClientListResponse, error) {
 	result := ApplicationSecurityGroupsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationSecurityGroupListResult); err != nil {
-		return ApplicationSecurityGroupsClientListResponse{}, runtime.NewResponseError(resp)
+		return ApplicationSecurityGroupsClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -327,7 +327,7 @@ func (client *ApplicationSecurityGroupsClient) listAllCreateRequest(ctx context.
 func (client *ApplicationSecurityGroupsClient) listAllHandleResponse(resp *http.Response) (ApplicationSecurityGroupsClientListAllResponse, error) {
 	result := ApplicationSecurityGroupsClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationSecurityGroupListResult); err != nil {
-		return ApplicationSecurityGroupsClientListAllResponse{}, runtime.NewResponseError(resp)
+		return ApplicationSecurityGroupsClientListAllResponse{}, err
 	}
 	return result, nil
 }
@@ -384,7 +384,7 @@ func (client *ApplicationSecurityGroupsClient) updateTagsCreateRequest(ctx conte
 func (client *ApplicationSecurityGroupsClient) updateTagsHandleResponse(resp *http.Response) (ApplicationSecurityGroupsClientUpdateTagsResponse, error) {
 	result := ApplicationSecurityGroupsClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ApplicationSecurityGroup); err != nil {
-		return ApplicationSecurityGroupsClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return ApplicationSecurityGroupsClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

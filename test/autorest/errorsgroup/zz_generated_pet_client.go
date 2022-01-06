@@ -76,7 +76,7 @@ func (client *PetClient) doSomethingCreateRequest(ctx context.Context, whatActio
 func (client *PetClient) doSomethingHandleResponse(resp *http.Response) (PetClientDoSomethingResponse, error) {
 	result := PetClientDoSomethingResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PetAction); err != nil {
-		return PetClientDoSomethingResponse{}, runtime.NewResponseError(resp)
+		return PetClientDoSomethingResponse{}, err
 	}
 	return result, nil
 }
@@ -119,7 +119,7 @@ func (client *PetClient) getPetByIDCreateRequest(ctx context.Context, petID stri
 func (client *PetClient) getPetByIDHandleResponse(resp *http.Response) (PetClientGetPetByIDResponse, error) {
 	result := PetClientGetPetByIDResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Pet); err != nil {
-		return PetClientGetPetByIDResponse{}, runtime.NewResponseError(resp)
+		return PetClientGetPetByIDResponse{}, err
 	}
 	return result, nil
 }

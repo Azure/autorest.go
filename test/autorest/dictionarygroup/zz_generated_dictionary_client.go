@@ -70,7 +70,7 @@ func (client *DictionaryClient) getArrayEmptyCreateRequest(ctx context.Context, 
 func (client *DictionaryClient) getArrayEmptyHandleResponse(resp *http.Response) (DictionaryClientGetArrayEmptyResponse, error) {
 	result := DictionaryClientGetArrayEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetArrayEmptyResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetArrayEmptyResponse{}, err
 	}
 	return result, nil
 }
@@ -109,7 +109,7 @@ func (client *DictionaryClient) getArrayItemEmptyCreateRequest(ctx context.Conte
 func (client *DictionaryClient) getArrayItemEmptyHandleResponse(resp *http.Response) (DictionaryClientGetArrayItemEmptyResponse, error) {
 	result := DictionaryClientGetArrayItemEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetArrayItemEmptyResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetArrayItemEmptyResponse{}, err
 	}
 	return result, nil
 }
@@ -148,7 +148,7 @@ func (client *DictionaryClient) getArrayItemNullCreateRequest(ctx context.Contex
 func (client *DictionaryClient) getArrayItemNullHandleResponse(resp *http.Response) (DictionaryClientGetArrayItemNullResponse, error) {
 	result := DictionaryClientGetArrayItemNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetArrayItemNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetArrayItemNullResponse{}, err
 	}
 	return result, nil
 }
@@ -186,7 +186,7 @@ func (client *DictionaryClient) getArrayNullCreateRequest(ctx context.Context, o
 func (client *DictionaryClient) getArrayNullHandleResponse(resp *http.Response) (DictionaryClientGetArrayNullResponse, error) {
 	result := DictionaryClientGetArrayNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetArrayNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetArrayNullResponse{}, err
 	}
 	return result, nil
 }
@@ -225,7 +225,7 @@ func (client *DictionaryClient) getArrayValidCreateRequest(ctx context.Context, 
 func (client *DictionaryClient) getArrayValidHandleResponse(resp *http.Response) (DictionaryClientGetArrayValidResponse, error) {
 	result := DictionaryClientGetArrayValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetArrayValidResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetArrayValidResponse{}, err
 	}
 	return result, nil
 }
@@ -264,7 +264,7 @@ func (client *DictionaryClient) getBase64URLCreateRequest(ctx context.Context, o
 func (client *DictionaryClient) getBase64URLHandleResponse(resp *http.Response) (DictionaryClientGetBase64URLResponse, error) {
 	result := DictionaryClientGetBase64URLResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetBase64URLResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetBase64URLResponse{}, err
 	}
 	return result, nil
 }
@@ -303,7 +303,7 @@ func (client *DictionaryClient) getBooleanInvalidNullCreateRequest(ctx context.C
 func (client *DictionaryClient) getBooleanInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetBooleanInvalidNullResponse, error) {
 	result := DictionaryClientGetBooleanInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetBooleanInvalidNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetBooleanInvalidNullResponse{}, err
 	}
 	return result, nil
 }
@@ -342,7 +342,7 @@ func (client *DictionaryClient) getBooleanInvalidStringCreateRequest(ctx context
 func (client *DictionaryClient) getBooleanInvalidStringHandleResponse(resp *http.Response) (DictionaryClientGetBooleanInvalidStringResponse, error) {
 	result := DictionaryClientGetBooleanInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetBooleanInvalidStringResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetBooleanInvalidStringResponse{}, err
 	}
 	return result, nil
 }
@@ -381,7 +381,7 @@ func (client *DictionaryClient) getBooleanTfftCreateRequest(ctx context.Context,
 func (client *DictionaryClient) getBooleanTfftHandleResponse(resp *http.Response) (DictionaryClientGetBooleanTfftResponse, error) {
 	result := DictionaryClientGetBooleanTfftResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetBooleanTfftResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetBooleanTfftResponse{}, err
 	}
 	return result, nil
 }
@@ -420,7 +420,7 @@ func (client *DictionaryClient) getByteInvalidNullCreateRequest(ctx context.Cont
 func (client *DictionaryClient) getByteInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetByteInvalidNullResponse, error) {
 	result := DictionaryClientGetByteInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetByteInvalidNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetByteInvalidNullResponse{}, err
 	}
 	return result, nil
 }
@@ -459,7 +459,7 @@ func (client *DictionaryClient) getByteValidCreateRequest(ctx context.Context, o
 func (client *DictionaryClient) getByteValidHandleResponse(resp *http.Response) (DictionaryClientGetByteValidResponse, error) {
 	result := DictionaryClientGetByteValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetByteValidResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetByteValidResponse{}, err
 	}
 	return result, nil
 }
@@ -498,7 +498,7 @@ func (client *DictionaryClient) getComplexEmptyCreateRequest(ctx context.Context
 func (client *DictionaryClient) getComplexEmptyHandleResponse(resp *http.Response) (DictionaryClientGetComplexEmptyResponse, error) {
 	result := DictionaryClientGetComplexEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetComplexEmptyResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetComplexEmptyResponse{}, err
 	}
 	return result, nil
 }
@@ -538,7 +538,7 @@ func (client *DictionaryClient) getComplexItemEmptyCreateRequest(ctx context.Con
 func (client *DictionaryClient) getComplexItemEmptyHandleResponse(resp *http.Response) (DictionaryClientGetComplexItemEmptyResponse, error) {
 	result := DictionaryClientGetComplexItemEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetComplexItemEmptyResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetComplexItemEmptyResponse{}, err
 	}
 	return result, nil
 }
@@ -578,7 +578,7 @@ func (client *DictionaryClient) getComplexItemNullCreateRequest(ctx context.Cont
 func (client *DictionaryClient) getComplexItemNullHandleResponse(resp *http.Response) (DictionaryClientGetComplexItemNullResponse, error) {
 	result := DictionaryClientGetComplexItemNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetComplexItemNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetComplexItemNullResponse{}, err
 	}
 	return result, nil
 }
@@ -617,7 +617,7 @@ func (client *DictionaryClient) getComplexNullCreateRequest(ctx context.Context,
 func (client *DictionaryClient) getComplexNullHandleResponse(resp *http.Response) (DictionaryClientGetComplexNullResponse, error) {
 	result := DictionaryClientGetComplexNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetComplexNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetComplexNullResponse{}, err
 	}
 	return result, nil
 }
@@ -657,7 +657,7 @@ func (client *DictionaryClient) getComplexValidCreateRequest(ctx context.Context
 func (client *DictionaryClient) getComplexValidHandleResponse(resp *http.Response) (DictionaryClientGetComplexValidResponse, error) {
 	result := DictionaryClientGetComplexValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetComplexValidResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetComplexValidResponse{}, err
 	}
 	return result, nil
 }
@@ -697,7 +697,7 @@ func (client *DictionaryClient) getDateInvalidCharsHandleResponse(resp *http.Res
 	result := DictionaryClientGetDateInvalidCharsResponse{RawResponse: resp}
 	aux := map[string]*dateType{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryClientGetDateInvalidCharsResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetDateInvalidCharsResponse{}, err
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -742,7 +742,7 @@ func (client *DictionaryClient) getDateInvalidNullHandleResponse(resp *http.Resp
 	result := DictionaryClientGetDateInvalidNullResponse{RawResponse: resp}
 	aux := map[string]*dateType{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryClientGetDateInvalidNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetDateInvalidNullResponse{}, err
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -787,7 +787,7 @@ func (client *DictionaryClient) getDateTimeInvalidCharsHandleResponse(resp *http
 	result := DictionaryClientGetDateTimeInvalidCharsResponse{RawResponse: resp}
 	aux := map[string]*timeRFC3339{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryClientGetDateTimeInvalidCharsResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetDateTimeInvalidCharsResponse{}, err
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -832,7 +832,7 @@ func (client *DictionaryClient) getDateTimeInvalidNullHandleResponse(resp *http.
 	result := DictionaryClientGetDateTimeInvalidNullResponse{RawResponse: resp}
 	aux := map[string]*timeRFC3339{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryClientGetDateTimeInvalidNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetDateTimeInvalidNullResponse{}, err
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -878,7 +878,7 @@ func (client *DictionaryClient) getDateTimeRFC1123ValidHandleResponse(resp *http
 	result := DictionaryClientGetDateTimeRFC1123ValidResponse{RawResponse: resp}
 	aux := map[string]*timeRFC1123{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryClientGetDateTimeRFC1123ValidResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetDateTimeRFC1123ValidResponse{}, err
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -924,7 +924,7 @@ func (client *DictionaryClient) getDateTimeValidHandleResponse(resp *http.Respon
 	result := DictionaryClientGetDateTimeValidResponse{RawResponse: resp}
 	aux := map[string]*timeRFC3339{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryClientGetDateTimeValidResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetDateTimeValidResponse{}, err
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -968,7 +968,7 @@ func (client *DictionaryClient) getDateValidHandleResponse(resp *http.Response) 
 	result := DictionaryClientGetDateValidResponse{RawResponse: resp}
 	aux := map[string]*dateType{}
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return DictionaryClientGetDateValidResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetDateValidResponse{}, err
 	}
 	cp := map[string]*time.Time{}
 	for k, v := range aux {
@@ -1012,7 +1012,7 @@ func (client *DictionaryClient) getDictionaryEmptyCreateRequest(ctx context.Cont
 func (client *DictionaryClient) getDictionaryEmptyHandleResponse(resp *http.Response) (DictionaryClientGetDictionaryEmptyResponse, error) {
 	result := DictionaryClientGetDictionaryEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDictionaryEmptyResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetDictionaryEmptyResponse{}, err
 	}
 	return result, nil
 }
@@ -1052,7 +1052,7 @@ func (client *DictionaryClient) getDictionaryItemEmptyCreateRequest(ctx context.
 func (client *DictionaryClient) getDictionaryItemEmptyHandleResponse(resp *http.Response) (DictionaryClientGetDictionaryItemEmptyResponse, error) {
 	result := DictionaryClientGetDictionaryItemEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDictionaryItemEmptyResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetDictionaryItemEmptyResponse{}, err
 	}
 	return result, nil
 }
@@ -1092,7 +1092,7 @@ func (client *DictionaryClient) getDictionaryItemNullCreateRequest(ctx context.C
 func (client *DictionaryClient) getDictionaryItemNullHandleResponse(resp *http.Response) (DictionaryClientGetDictionaryItemNullResponse, error) {
 	result := DictionaryClientGetDictionaryItemNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDictionaryItemNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetDictionaryItemNullResponse{}, err
 	}
 	return result, nil
 }
@@ -1131,7 +1131,7 @@ func (client *DictionaryClient) getDictionaryNullCreateRequest(ctx context.Conte
 func (client *DictionaryClient) getDictionaryNullHandleResponse(resp *http.Response) (DictionaryClientGetDictionaryNullResponse, error) {
 	result := DictionaryClientGetDictionaryNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDictionaryNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetDictionaryNullResponse{}, err
 	}
 	return result, nil
 }
@@ -1171,7 +1171,7 @@ func (client *DictionaryClient) getDictionaryValidCreateRequest(ctx context.Cont
 func (client *DictionaryClient) getDictionaryValidHandleResponse(resp *http.Response) (DictionaryClientGetDictionaryValidResponse, error) {
 	result := DictionaryClientGetDictionaryValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDictionaryValidResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetDictionaryValidResponse{}, err
 	}
 	return result, nil
 }
@@ -1210,7 +1210,7 @@ func (client *DictionaryClient) getDoubleInvalidNullCreateRequest(ctx context.Co
 func (client *DictionaryClient) getDoubleInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetDoubleInvalidNullResponse, error) {
 	result := DictionaryClientGetDoubleInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDoubleInvalidNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetDoubleInvalidNullResponse{}, err
 	}
 	return result, nil
 }
@@ -1249,7 +1249,7 @@ func (client *DictionaryClient) getDoubleInvalidStringCreateRequest(ctx context.
 func (client *DictionaryClient) getDoubleInvalidStringHandleResponse(resp *http.Response) (DictionaryClientGetDoubleInvalidStringResponse, error) {
 	result := DictionaryClientGetDoubleInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDoubleInvalidStringResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetDoubleInvalidStringResponse{}, err
 	}
 	return result, nil
 }
@@ -1288,7 +1288,7 @@ func (client *DictionaryClient) getDoubleValidCreateRequest(ctx context.Context,
 func (client *DictionaryClient) getDoubleValidHandleResponse(resp *http.Response) (DictionaryClientGetDoubleValidResponse, error) {
 	result := DictionaryClientGetDoubleValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDoubleValidResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetDoubleValidResponse{}, err
 	}
 	return result, nil
 }
@@ -1327,7 +1327,7 @@ func (client *DictionaryClient) getDurationValidCreateRequest(ctx context.Contex
 func (client *DictionaryClient) getDurationValidHandleResponse(resp *http.Response) (DictionaryClientGetDurationValidResponse, error) {
 	result := DictionaryClientGetDurationValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetDurationValidResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetDurationValidResponse{}, err
 	}
 	return result, nil
 }
@@ -1365,7 +1365,7 @@ func (client *DictionaryClient) getEmptyCreateRequest(ctx context.Context, optio
 func (client *DictionaryClient) getEmptyHandleResponse(resp *http.Response) (DictionaryClientGetEmptyResponse, error) {
 	result := DictionaryClientGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetEmptyResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetEmptyResponse{}, err
 	}
 	return result, nil
 }
@@ -1404,7 +1404,7 @@ func (client *DictionaryClient) getEmptyStringKeyCreateRequest(ctx context.Conte
 func (client *DictionaryClient) getEmptyStringKeyHandleResponse(resp *http.Response) (DictionaryClientGetEmptyStringKeyResponse, error) {
 	result := DictionaryClientGetEmptyStringKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetEmptyStringKeyResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetEmptyStringKeyResponse{}, err
 	}
 	return result, nil
 }
@@ -1443,7 +1443,7 @@ func (client *DictionaryClient) getFloatInvalidNullCreateRequest(ctx context.Con
 func (client *DictionaryClient) getFloatInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetFloatInvalidNullResponse, error) {
 	result := DictionaryClientGetFloatInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetFloatInvalidNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetFloatInvalidNullResponse{}, err
 	}
 	return result, nil
 }
@@ -1482,7 +1482,7 @@ func (client *DictionaryClient) getFloatInvalidStringCreateRequest(ctx context.C
 func (client *DictionaryClient) getFloatInvalidStringHandleResponse(resp *http.Response) (DictionaryClientGetFloatInvalidStringResponse, error) {
 	result := DictionaryClientGetFloatInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetFloatInvalidStringResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetFloatInvalidStringResponse{}, err
 	}
 	return result, nil
 }
@@ -1521,7 +1521,7 @@ func (client *DictionaryClient) getFloatValidCreateRequest(ctx context.Context, 
 func (client *DictionaryClient) getFloatValidHandleResponse(resp *http.Response) (DictionaryClientGetFloatValidResponse, error) {
 	result := DictionaryClientGetFloatValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetFloatValidResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetFloatValidResponse{}, err
 	}
 	return result, nil
 }
@@ -1560,7 +1560,7 @@ func (client *DictionaryClient) getIntInvalidNullCreateRequest(ctx context.Conte
 func (client *DictionaryClient) getIntInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetIntInvalidNullResponse, error) {
 	result := DictionaryClientGetIntInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetIntInvalidNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetIntInvalidNullResponse{}, err
 	}
 	return result, nil
 }
@@ -1599,7 +1599,7 @@ func (client *DictionaryClient) getIntInvalidStringCreateRequest(ctx context.Con
 func (client *DictionaryClient) getIntInvalidStringHandleResponse(resp *http.Response) (DictionaryClientGetIntInvalidStringResponse, error) {
 	result := DictionaryClientGetIntInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetIntInvalidStringResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetIntInvalidStringResponse{}, err
 	}
 	return result, nil
 }
@@ -1638,7 +1638,7 @@ func (client *DictionaryClient) getIntegerValidCreateRequest(ctx context.Context
 func (client *DictionaryClient) getIntegerValidHandleResponse(resp *http.Response) (DictionaryClientGetIntegerValidResponse, error) {
 	result := DictionaryClientGetIntegerValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetIntegerValidResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetIntegerValidResponse{}, err
 	}
 	return result, nil
 }
@@ -1676,7 +1676,7 @@ func (client *DictionaryClient) getInvalidCreateRequest(ctx context.Context, opt
 func (client *DictionaryClient) getInvalidHandleResponse(resp *http.Response) (DictionaryClientGetInvalidResponse, error) {
 	result := DictionaryClientGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetInvalidResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetInvalidResponse{}, err
 	}
 	return result, nil
 }
@@ -1715,7 +1715,7 @@ func (client *DictionaryClient) getLongInvalidNullCreateRequest(ctx context.Cont
 func (client *DictionaryClient) getLongInvalidNullHandleResponse(resp *http.Response) (DictionaryClientGetLongInvalidNullResponse, error) {
 	result := DictionaryClientGetLongInvalidNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetLongInvalidNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetLongInvalidNullResponse{}, err
 	}
 	return result, nil
 }
@@ -1754,7 +1754,7 @@ func (client *DictionaryClient) getLongInvalidStringCreateRequest(ctx context.Co
 func (client *DictionaryClient) getLongInvalidStringHandleResponse(resp *http.Response) (DictionaryClientGetLongInvalidStringResponse, error) {
 	result := DictionaryClientGetLongInvalidStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetLongInvalidStringResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetLongInvalidStringResponse{}, err
 	}
 	return result, nil
 }
@@ -1792,7 +1792,7 @@ func (client *DictionaryClient) getLongValidCreateRequest(ctx context.Context, o
 func (client *DictionaryClient) getLongValidHandleResponse(resp *http.Response) (DictionaryClientGetLongValidResponse, error) {
 	result := DictionaryClientGetLongValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetLongValidResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetLongValidResponse{}, err
 	}
 	return result, nil
 }
@@ -1830,7 +1830,7 @@ func (client *DictionaryClient) getNullCreateRequest(ctx context.Context, option
 func (client *DictionaryClient) getNullHandleResponse(resp *http.Response) (DictionaryClientGetNullResponse, error) {
 	result := DictionaryClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetNullResponse{}, err
 	}
 	return result, nil
 }
@@ -1868,7 +1868,7 @@ func (client *DictionaryClient) getNullKeyCreateRequest(ctx context.Context, opt
 func (client *DictionaryClient) getNullKeyHandleResponse(resp *http.Response) (DictionaryClientGetNullKeyResponse, error) {
 	result := DictionaryClientGetNullKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetNullKeyResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetNullKeyResponse{}, err
 	}
 	return result, nil
 }
@@ -1906,7 +1906,7 @@ func (client *DictionaryClient) getNullValueCreateRequest(ctx context.Context, o
 func (client *DictionaryClient) getNullValueHandleResponse(resp *http.Response) (DictionaryClientGetNullValueResponse, error) {
 	result := DictionaryClientGetNullValueResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetNullValueResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetNullValueResponse{}, err
 	}
 	return result, nil
 }
@@ -1945,7 +1945,7 @@ func (client *DictionaryClient) getStringValidCreateRequest(ctx context.Context,
 func (client *DictionaryClient) getStringValidHandleResponse(resp *http.Response) (DictionaryClientGetStringValidResponse, error) {
 	result := DictionaryClientGetStringValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetStringValidResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetStringValidResponse{}, err
 	}
 	return result, nil
 }
@@ -1984,7 +1984,7 @@ func (client *DictionaryClient) getStringWithInvalidCreateRequest(ctx context.Co
 func (client *DictionaryClient) getStringWithInvalidHandleResponse(resp *http.Response) (DictionaryClientGetStringWithInvalidResponse, error) {
 	result := DictionaryClientGetStringWithInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetStringWithInvalidResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetStringWithInvalidResponse{}, err
 	}
 	return result, nil
 }
@@ -2023,7 +2023,7 @@ func (client *DictionaryClient) getStringWithNullCreateRequest(ctx context.Conte
 func (client *DictionaryClient) getStringWithNullHandleResponse(resp *http.Response) (DictionaryClientGetStringWithNullResponse, error) {
 	result := DictionaryClientGetStringWithNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DictionaryClientGetStringWithNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetStringWithNullResponse{}, err
 	}
 	return result, nil
 }

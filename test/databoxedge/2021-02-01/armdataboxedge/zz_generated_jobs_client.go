@@ -104,7 +104,7 @@ func (client *JobsClient) getCreateRequest(ctx context.Context, deviceName strin
 func (client *JobsClient) getHandleResponse(resp *http.Response) (JobsClientGetResponse, error) {
 	result := JobsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Job); err != nil {
-		return JobsClientGetResponse{}, runtime.NewResponseError(resp)
+		return JobsClientGetResponse{}, err
 	}
 	return result, nil
 }

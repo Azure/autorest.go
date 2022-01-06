@@ -199,7 +199,7 @@ func (client *linkedServiceClient) getLinkedServiceCreateRequest(ctx context.Con
 func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *http.Response) (linkedServiceClientGetLinkedServiceResponse, error) {
 	result := linkedServiceClientGetLinkedServiceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LinkedServiceResource); err != nil {
-		return linkedServiceClientGetLinkedServiceResponse{}, runtime.NewResponseError(resp)
+		return linkedServiceClientGetLinkedServiceResponse{}, err
 	}
 	return result, nil
 }
@@ -238,7 +238,7 @@ func (client *linkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx
 func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(resp *http.Response) (linkedServiceClientGetLinkedServicesByWorkspaceResponse, error) {
 	result := linkedServiceClientGetLinkedServicesByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LinkedServiceListResponse); err != nil {
-		return linkedServiceClientGetLinkedServicesByWorkspaceResponse{}, runtime.NewResponseError(resp)
+		return linkedServiceClientGetLinkedServicesByWorkspaceResponse{}, err
 	}
 	return result, nil
 }

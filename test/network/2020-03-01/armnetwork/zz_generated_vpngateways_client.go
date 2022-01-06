@@ -234,7 +234,7 @@ func (client *VPNGatewaysClient) getCreateRequest(ctx context.Context, resourceG
 func (client *VPNGatewaysClient) getHandleResponse(resp *http.Response) (VPNGatewaysClientGetResponse, error) {
 	result := VPNGatewaysClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNGateway); err != nil {
-		return VPNGatewaysClientGetResponse{}, runtime.NewResponseError(resp)
+		return VPNGatewaysClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -276,7 +276,7 @@ func (client *VPNGatewaysClient) listCreateRequest(ctx context.Context, options 
 func (client *VPNGatewaysClient) listHandleResponse(resp *http.Response) (VPNGatewaysClientListResponse, error) {
 	result := VPNGatewaysClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNGatewaysResult); err != nil {
-		return VPNGatewaysClientListResponse{}, runtime.NewResponseError(resp)
+		return VPNGatewaysClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -324,7 +324,7 @@ func (client *VPNGatewaysClient) listByResourceGroupCreateRequest(ctx context.Co
 func (client *VPNGatewaysClient) listByResourceGroupHandleResponse(resp *http.Response) (VPNGatewaysClientListByResourceGroupResponse, error) {
 	result := VPNGatewaysClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNGatewaysResult); err != nil {
-		return VPNGatewaysClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return VPNGatewaysClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -446,7 +446,7 @@ func (client *VPNGatewaysClient) updateTagsCreateRequest(ctx context.Context, re
 func (client *VPNGatewaysClient) updateTagsHandleResponse(resp *http.Response) (VPNGatewaysClientUpdateTagsResponse, error) {
 	result := VPNGatewaysClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNGateway); err != nil {
-		return VPNGatewaysClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return VPNGatewaysClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

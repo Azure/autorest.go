@@ -69,7 +69,7 @@ func (client *IntClient) getInvalidCreateRequest(ctx context.Context, options *I
 func (client *IntClient) getInvalidHandleResponse(resp *http.Response) (IntClientGetInvalidResponse, error) {
 	result := IntClientGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntClientGetInvalidResponse{}, runtime.NewResponseError(resp)
+		return IntClientGetInvalidResponse{}, err
 	}
 	return result, nil
 }
@@ -108,7 +108,7 @@ func (client *IntClient) getInvalidUnixTimeHandleResponse(resp *http.Response) (
 	result := IntClientGetInvalidUnixTimeResponse{RawResponse: resp}
 	var aux *timeUnix
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return IntClientGetInvalidUnixTimeResponse{}, runtime.NewResponseError(resp)
+		return IntClientGetInvalidUnixTimeResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil
@@ -147,7 +147,7 @@ func (client *IntClient) getNullCreateRequest(ctx context.Context, options *IntC
 func (client *IntClient) getNullHandleResponse(resp *http.Response) (IntClientGetNullResponse, error) {
 	result := IntClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntClientGetNullResponse{}, runtime.NewResponseError(resp)
+		return IntClientGetNullResponse{}, err
 	}
 	return result, nil
 }
@@ -186,7 +186,7 @@ func (client *IntClient) getNullUnixTimeHandleResponse(resp *http.Response) (Int
 	result := IntClientGetNullUnixTimeResponse{RawResponse: resp}
 	var aux *timeUnix
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return IntClientGetNullUnixTimeResponse{}, runtime.NewResponseError(resp)
+		return IntClientGetNullUnixTimeResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil
@@ -225,7 +225,7 @@ func (client *IntClient) getOverflowInt32CreateRequest(ctx context.Context, opti
 func (client *IntClient) getOverflowInt32HandleResponse(resp *http.Response) (IntClientGetOverflowInt32Response, error) {
 	result := IntClientGetOverflowInt32Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntClientGetOverflowInt32Response{}, runtime.NewResponseError(resp)
+		return IntClientGetOverflowInt32Response{}, err
 	}
 	return result, nil
 }
@@ -263,7 +263,7 @@ func (client *IntClient) getOverflowInt64CreateRequest(ctx context.Context, opti
 func (client *IntClient) getOverflowInt64HandleResponse(resp *http.Response) (IntClientGetOverflowInt64Response, error) {
 	result := IntClientGetOverflowInt64Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntClientGetOverflowInt64Response{}, runtime.NewResponseError(resp)
+		return IntClientGetOverflowInt64Response{}, err
 	}
 	return result, nil
 }
@@ -301,7 +301,7 @@ func (client *IntClient) getUnderflowInt32CreateRequest(ctx context.Context, opt
 func (client *IntClient) getUnderflowInt32HandleResponse(resp *http.Response) (IntClientGetUnderflowInt32Response, error) {
 	result := IntClientGetUnderflowInt32Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntClientGetUnderflowInt32Response{}, runtime.NewResponseError(resp)
+		return IntClientGetUnderflowInt32Response{}, err
 	}
 	return result, nil
 }
@@ -339,7 +339,7 @@ func (client *IntClient) getUnderflowInt64CreateRequest(ctx context.Context, opt
 func (client *IntClient) getUnderflowInt64HandleResponse(resp *http.Response) (IntClientGetUnderflowInt64Response, error) {
 	result := IntClientGetUnderflowInt64Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntClientGetUnderflowInt64Response{}, runtime.NewResponseError(resp)
+		return IntClientGetUnderflowInt64Response{}, err
 	}
 	return result, nil
 }
@@ -378,7 +378,7 @@ func (client *IntClient) getUnixTimeHandleResponse(resp *http.Response) (IntClie
 	result := IntClientGetUnixTimeResponse{RawResponse: resp}
 	var aux *timeUnix
 	if err := runtime.UnmarshalAsJSON(resp, &aux); err != nil {
-		return IntClientGetUnixTimeResponse{}, runtime.NewResponseError(resp)
+		return IntClientGetUnixTimeResponse{}, err
 	}
 	result.Value = (*time.Time)(aux)
 	return result, nil

@@ -235,7 +235,7 @@ func (client *DdosCustomPoliciesClient) getCreateRequest(ctx context.Context, re
 func (client *DdosCustomPoliciesClient) getHandleResponse(resp *http.Response) (DdosCustomPoliciesClientGetResponse, error) {
 	result := DdosCustomPoliciesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DdosCustomPolicy); err != nil {
-		return DdosCustomPoliciesClientGetResponse{}, runtime.NewResponseError(resp)
+		return DdosCustomPoliciesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -292,7 +292,7 @@ func (client *DdosCustomPoliciesClient) updateTagsCreateRequest(ctx context.Cont
 func (client *DdosCustomPoliciesClient) updateTagsHandleResponse(resp *http.Response) (DdosCustomPoliciesClientUpdateTagsResponse, error) {
 	result := DdosCustomPoliciesClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DdosCustomPolicy); err != nil {
-		return DdosCustomPoliciesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return DdosCustomPoliciesClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

@@ -502,7 +502,7 @@ func (client *VirtualMachinesClient) getCreateRequest(ctx context.Context, resou
 func (client *VirtualMachinesClient) getHandleResponse(resp *http.Response) (VirtualMachinesClientGetResponse, error) {
 	result := VirtualMachinesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachine); err != nil {
-		return VirtualMachinesClientGetResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachinesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -558,7 +558,7 @@ func (client *VirtualMachinesClient) instanceViewCreateRequest(ctx context.Conte
 func (client *VirtualMachinesClient) instanceViewHandleResponse(resp *http.Response) (VirtualMachinesClientInstanceViewResponse, error) {
 	result := VirtualMachinesClientInstanceViewResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineInstanceView); err != nil {
-		return VirtualMachinesClientInstanceViewResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachinesClientInstanceViewResponse{}, err
 	}
 	return result, nil
 }
@@ -606,7 +606,7 @@ func (client *VirtualMachinesClient) listCreateRequest(ctx context.Context, reso
 func (client *VirtualMachinesClient) listHandleResponse(resp *http.Response) (VirtualMachinesClientListResponse, error) {
 	result := VirtualMachinesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineListResult); err != nil {
-		return VirtualMachinesClientListResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachinesClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -652,7 +652,7 @@ func (client *VirtualMachinesClient) listAllCreateRequest(ctx context.Context, o
 func (client *VirtualMachinesClient) listAllHandleResponse(resp *http.Response) (VirtualMachinesClientListAllResponse, error) {
 	result := VirtualMachinesClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineListResult); err != nil {
-		return VirtualMachinesClientListAllResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachinesClientListAllResponse{}, err
 	}
 	return result, nil
 }
@@ -708,7 +708,7 @@ func (client *VirtualMachinesClient) listAvailableSizesCreateRequest(ctx context
 func (client *VirtualMachinesClient) listAvailableSizesHandleResponse(resp *http.Response) (VirtualMachinesClientListAvailableSizesResponse, error) {
 	result := VirtualMachinesClientListAvailableSizesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineSizeListResult); err != nil {
-		return VirtualMachinesClientListAvailableSizesResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachinesClientListAvailableSizesResponse{}, err
 	}
 	return result, nil
 }
@@ -756,7 +756,7 @@ func (client *VirtualMachinesClient) listByLocationCreateRequest(ctx context.Con
 func (client *VirtualMachinesClient) listByLocationHandleResponse(resp *http.Response) (VirtualMachinesClientListByLocationResponse, error) {
 	result := VirtualMachinesClientListByLocationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineListResult); err != nil {
-		return VirtualMachinesClientListByLocationResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachinesClientListByLocationResponse{}, err
 	}
 	return result, nil
 }

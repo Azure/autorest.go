@@ -238,7 +238,7 @@ func (client *LoadBalancersClient) getCreateRequest(ctx context.Context, resourc
 func (client *LoadBalancersClient) getHandleResponse(resp *http.Response) (LoadBalancersClientGetResponse, error) {
 	result := LoadBalancersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancer); err != nil {
-		return LoadBalancersClientGetResponse{}, runtime.NewResponseError(resp)
+		return LoadBalancersClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -285,7 +285,7 @@ func (client *LoadBalancersClient) listCreateRequest(ctx context.Context, resour
 func (client *LoadBalancersClient) listHandleResponse(resp *http.Response) (LoadBalancersClientListResponse, error) {
 	result := LoadBalancersClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancerListResult); err != nil {
-		return LoadBalancersClientListResponse{}, runtime.NewResponseError(resp)
+		return LoadBalancersClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -327,7 +327,7 @@ func (client *LoadBalancersClient) listAllCreateRequest(ctx context.Context, opt
 func (client *LoadBalancersClient) listAllHandleResponse(resp *http.Response) (LoadBalancersClientListAllResponse, error) {
 	result := LoadBalancersClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancerListResult); err != nil {
-		return LoadBalancersClientListAllResponse{}, runtime.NewResponseError(resp)
+		return LoadBalancersClientListAllResponse{}, err
 	}
 	return result, nil
 }
@@ -384,7 +384,7 @@ func (client *LoadBalancersClient) updateTagsCreateRequest(ctx context.Context, 
 func (client *LoadBalancersClient) updateTagsHandleResponse(resp *http.Response) (LoadBalancersClientUpdateTagsResponse, error) {
 	result := LoadBalancersClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancer); err != nil {
-		return LoadBalancersClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return LoadBalancersClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

@@ -68,7 +68,7 @@ func (client *DurationClient) getInvalidCreateRequest(ctx context.Context, optio
 func (client *DurationClient) getInvalidHandleResponse(resp *http.Response) (DurationClientGetInvalidResponse, error) {
 	result := DurationClientGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DurationClientGetInvalidResponse{}, runtime.NewResponseError(resp)
+		return DurationClientGetInvalidResponse{}, err
 	}
 	return result, nil
 }
@@ -106,7 +106,7 @@ func (client *DurationClient) getNullCreateRequest(ctx context.Context, options 
 func (client *DurationClient) getNullHandleResponse(resp *http.Response) (DurationClientGetNullResponse, error) {
 	result := DurationClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DurationClientGetNullResponse{}, runtime.NewResponseError(resp)
+		return DurationClientGetNullResponse{}, err
 	}
 	return result, nil
 }
@@ -145,7 +145,7 @@ func (client *DurationClient) getPositiveDurationCreateRequest(ctx context.Conte
 func (client *DurationClient) getPositiveDurationHandleResponse(resp *http.Response) (DurationClientGetPositiveDurationResponse, error) {
 	result := DurationClientGetPositiveDurationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return DurationClientGetPositiveDurationResponse{}, runtime.NewResponseError(resp)
+		return DurationClientGetPositiveDurationResponse{}, err
 	}
 	return result, nil
 }

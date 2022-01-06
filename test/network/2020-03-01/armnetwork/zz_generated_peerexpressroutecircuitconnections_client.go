@@ -111,7 +111,7 @@ func (client *PeerExpressRouteCircuitConnectionsClient) getCreateRequest(ctx con
 func (client *PeerExpressRouteCircuitConnectionsClient) getHandleResponse(resp *http.Response) (PeerExpressRouteCircuitConnectionsClientGetResponse, error) {
 	result := PeerExpressRouteCircuitConnectionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PeerExpressRouteCircuitConnection); err != nil {
-		return PeerExpressRouteCircuitConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
+		return PeerExpressRouteCircuitConnectionsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -169,7 +169,7 @@ func (client *PeerExpressRouteCircuitConnectionsClient) listCreateRequest(ctx co
 func (client *PeerExpressRouteCircuitConnectionsClient) listHandleResponse(resp *http.Response) (PeerExpressRouteCircuitConnectionsClientListResponse, error) {
 	result := PeerExpressRouteCircuitConnectionsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PeerExpressRouteCircuitConnectionListResult); err != nil {
-		return PeerExpressRouteCircuitConnectionsClientListResponse{}, runtime.NewResponseError(resp)
+		return PeerExpressRouteCircuitConnectionsClientListResponse{}, err
 	}
 	return result, nil
 }

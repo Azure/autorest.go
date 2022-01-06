@@ -100,7 +100,7 @@ func (client *HTTPRedirectsClient) get300HandleResponse(resp *http.Response) (HT
 		result.Location = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return HTTPRedirectsClientGet300Response{}, runtime.NewResponseError(resp)
+		return HTTPRedirectsClientGet300Response{}, err
 	}
 	return result, nil
 }

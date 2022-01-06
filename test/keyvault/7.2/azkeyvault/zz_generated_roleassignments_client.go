@@ -80,7 +80,7 @@ func (client *RoleAssignmentsClient) createCreateRequest(ctx context.Context, va
 func (client *RoleAssignmentsClient) createHandleResponse(resp *http.Response) (RoleAssignmentsClientCreateResponse, error) {
 	result := RoleAssignmentsClientCreateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleAssignment); err != nil {
-		return RoleAssignmentsClientCreateResponse{}, runtime.NewResponseError(resp)
+		return RoleAssignmentsClientCreateResponse{}, err
 	}
 	return result, nil
 }
@@ -131,7 +131,7 @@ func (client *RoleAssignmentsClient) deleteCreateRequest(ctx context.Context, va
 func (client *RoleAssignmentsClient) deleteHandleResponse(resp *http.Response) (RoleAssignmentsClientDeleteResponse, error) {
 	result := RoleAssignmentsClientDeleteResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleAssignment); err != nil {
-		return RoleAssignmentsClientDeleteResponse{}, runtime.NewResponseError(resp)
+		return RoleAssignmentsClientDeleteResponse{}, err
 	}
 	return result, nil
 }
@@ -182,7 +182,7 @@ func (client *RoleAssignmentsClient) getCreateRequest(ctx context.Context, vault
 func (client *RoleAssignmentsClient) getHandleResponse(resp *http.Response) (RoleAssignmentsClientGetResponse, error) {
 	result := RoleAssignmentsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleAssignment); err != nil {
-		return RoleAssignmentsClientGetResponse{}, runtime.NewResponseError(resp)
+		return RoleAssignmentsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -229,7 +229,7 @@ func (client *RoleAssignmentsClient) listForScopeCreateRequest(ctx context.Conte
 func (client *RoleAssignmentsClient) listForScopeHandleResponse(resp *http.Response) (RoleAssignmentsClientListForScopeResponse, error) {
 	result := RoleAssignmentsClientListForScopeResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleAssignmentListResult); err != nil {
-		return RoleAssignmentsClientListForScopeResponse{}, runtime.NewResponseError(resp)
+		return RoleAssignmentsClientListForScopeResponse{}, err
 	}
 	return result, nil
 }

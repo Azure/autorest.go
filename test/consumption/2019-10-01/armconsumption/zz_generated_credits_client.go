@@ -84,7 +84,7 @@ func (client *CreditsClient) getCreateRequest(ctx context.Context, scope string,
 func (client *CreditsClient) getHandleResponse(resp *http.Response) (CreditsClientGetResponse, error) {
 	result := CreditsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CreditSummary); err != nil {
-		return CreditsClientGetResponse{}, runtime.NewResponseError(resp)
+		return CreditsClientGetResponse{}, err
 	}
 	return result, nil
 }

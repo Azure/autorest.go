@@ -155,7 +155,7 @@ func (client *HTTPRetryClient) options502CreateRequest(ctx context.Context, opti
 func (client *HTTPRetryClient) options502HandleResponse(resp *http.Response) (HTTPRetryClientOptions502Response, error) {
 	result := HTTPRetryClientOptions502Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return HTTPRetryClientOptions502Response{}, runtime.NewResponseError(resp)
+		return HTTPRetryClientOptions502Response{}, err
 	}
 	return result, nil
 }

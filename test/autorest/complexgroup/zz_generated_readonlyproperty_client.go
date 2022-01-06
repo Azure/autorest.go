@@ -69,7 +69,7 @@ func (client *ReadonlypropertyClient) getValidCreateRequest(ctx context.Context,
 func (client *ReadonlypropertyClient) getValidHandleResponse(resp *http.Response) (ReadonlypropertyClientGetValidResponse, error) {
 	result := ReadonlypropertyClientGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReadonlyObj); err != nil {
-		return ReadonlypropertyClientGetValidResponse{}, runtime.NewResponseError(resp)
+		return ReadonlypropertyClientGetValidResponse{}, err
 	}
 	return result, nil
 }

@@ -68,7 +68,7 @@ func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, options *A
 func (client *ArrayClient) getEmptyHandleResponse(resp *http.Response) (ArrayClientGetEmptyResponse, error) {
 	result := ArrayClientGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ArrayWrapper); err != nil {
-		return ArrayClientGetEmptyResponse{}, runtime.NewResponseError(resp)
+		return ArrayClientGetEmptyResponse{}, err
 	}
 	return result, nil
 }
@@ -106,7 +106,7 @@ func (client *ArrayClient) getNotProvidedCreateRequest(ctx context.Context, opti
 func (client *ArrayClient) getNotProvidedHandleResponse(resp *http.Response) (ArrayClientGetNotProvidedResponse, error) {
 	result := ArrayClientGetNotProvidedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ArrayWrapper); err != nil {
-		return ArrayClientGetNotProvidedResponse{}, runtime.NewResponseError(resp)
+		return ArrayClientGetNotProvidedResponse{}, err
 	}
 	return result, nil
 }
@@ -144,7 +144,7 @@ func (client *ArrayClient) getValidCreateRequest(ctx context.Context, options *A
 func (client *ArrayClient) getValidHandleResponse(resp *http.Response) (ArrayClientGetValidResponse, error) {
 	result := ArrayClientGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ArrayWrapper); err != nil {
-		return ArrayClientGetValidResponse{}, runtime.NewResponseError(resp)
+		return ArrayClientGetValidResponse{}, err
 	}
 	return result, nil
 }

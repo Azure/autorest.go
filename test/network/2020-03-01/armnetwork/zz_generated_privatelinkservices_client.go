@@ -443,7 +443,7 @@ func (client *PrivateLinkServicesClient) getCreateRequest(ctx context.Context, r
 func (client *PrivateLinkServicesClient) getHandleResponse(resp *http.Response) (PrivateLinkServicesClientGetResponse, error) {
 	result := PrivateLinkServicesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateLinkService); err != nil {
-		return PrivateLinkServicesClientGetResponse{}, runtime.NewResponseError(resp)
+		return PrivateLinkServicesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -508,7 +508,7 @@ func (client *PrivateLinkServicesClient) getPrivateEndpointConnectionCreateReque
 func (client *PrivateLinkServicesClient) getPrivateEndpointConnectionHandleResponse(resp *http.Response) (PrivateLinkServicesClientGetPrivateEndpointConnectionResponse, error) {
 	result := PrivateLinkServicesClientGetPrivateEndpointConnectionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateEndpointConnection); err != nil {
-		return PrivateLinkServicesClientGetPrivateEndpointConnectionResponse{}, runtime.NewResponseError(resp)
+		return PrivateLinkServicesClientGetPrivateEndpointConnectionResponse{}, err
 	}
 	return result, nil
 }
@@ -556,7 +556,7 @@ func (client *PrivateLinkServicesClient) listCreateRequest(ctx context.Context, 
 func (client *PrivateLinkServicesClient) listHandleResponse(resp *http.Response) (PrivateLinkServicesClientListResponse, error) {
 	result := PrivateLinkServicesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateLinkServiceListResult); err != nil {
-		return PrivateLinkServicesClientListResponse{}, runtime.NewResponseError(resp)
+		return PrivateLinkServicesClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -605,7 +605,7 @@ func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesCrea
 func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesHandleResponse(resp *http.Response) (PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResponse, error) {
 	result := PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AutoApprovedPrivateLinkServicesResult); err != nil {
-		return PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResponse{}, runtime.NewResponseError(resp)
+		return PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesResponse{}, err
 	}
 	return result, nil
 }
@@ -659,7 +659,7 @@ func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesByRe
 func (client *PrivateLinkServicesClient) listAutoApprovedPrivateLinkServicesByResourceGroupHandleResponse(resp *http.Response) (PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResponse, error) {
 	result := PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AutoApprovedPrivateLinkServicesResult); err != nil {
-		return PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -702,7 +702,7 @@ func (client *PrivateLinkServicesClient) listBySubscriptionCreateRequest(ctx con
 func (client *PrivateLinkServicesClient) listBySubscriptionHandleResponse(resp *http.Response) (PrivateLinkServicesClientListBySubscriptionResponse, error) {
 	result := PrivateLinkServicesClientListBySubscriptionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateLinkServiceListResult); err != nil {
-		return PrivateLinkServicesClientListBySubscriptionResponse{}, runtime.NewResponseError(resp)
+		return PrivateLinkServicesClientListBySubscriptionResponse{}, err
 	}
 	return result, nil
 }
@@ -755,7 +755,7 @@ func (client *PrivateLinkServicesClient) listPrivateEndpointConnectionsCreateReq
 func (client *PrivateLinkServicesClient) listPrivateEndpointConnectionsHandleResponse(resp *http.Response) (PrivateLinkServicesClientListPrivateEndpointConnectionsResponse, error) {
 	result := PrivateLinkServicesClientListPrivateEndpointConnectionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateEndpointConnectionListResult); err != nil {
-		return PrivateLinkServicesClientListPrivateEndpointConnectionsResponse{}, runtime.NewResponseError(resp)
+		return PrivateLinkServicesClientListPrivateEndpointConnectionsResponse{}, err
 	}
 	return result, nil
 }
@@ -817,7 +817,7 @@ func (client *PrivateLinkServicesClient) updatePrivateEndpointConnectionCreateRe
 func (client *PrivateLinkServicesClient) updatePrivateEndpointConnectionHandleResponse(resp *http.Response) (PrivateLinkServicesClientUpdatePrivateEndpointConnectionResponse, error) {
 	result := PrivateLinkServicesClientUpdatePrivateEndpointConnectionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateEndpointConnection); err != nil {
-		return PrivateLinkServicesClientUpdatePrivateEndpointConnectionResponse{}, runtime.NewResponseError(resp)
+		return PrivateLinkServicesClientUpdatePrivateEndpointConnectionResponse{}, err
 	}
 	return result, nil
 }

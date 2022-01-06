@@ -102,7 +102,7 @@ func (client *AvailabilitySetsClient) createOrUpdateCreateRequest(ctx context.Co
 func (client *AvailabilitySetsClient) createOrUpdateHandleResponse(resp *http.Response) (AvailabilitySetsClientCreateOrUpdateResponse, error) {
 	result := AvailabilitySetsClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySet); err != nil {
-		return AvailabilitySetsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+		return AvailabilitySetsClientCreateOrUpdateResponse{}, err
 	}
 	return result, nil
 }
@@ -202,7 +202,7 @@ func (client *AvailabilitySetsClient) getCreateRequest(ctx context.Context, reso
 func (client *AvailabilitySetsClient) getHandleResponse(resp *http.Response) (AvailabilitySetsClientGetResponse, error) {
 	result := AvailabilitySetsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySet); err != nil {
-		return AvailabilitySetsClientGetResponse{}, runtime.NewResponseError(resp)
+		return AvailabilitySetsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -249,7 +249,7 @@ func (client *AvailabilitySetsClient) listCreateRequest(ctx context.Context, res
 func (client *AvailabilitySetsClient) listHandleResponse(resp *http.Response) (AvailabilitySetsClientListResponse, error) {
 	result := AvailabilitySetsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySetListResult); err != nil {
-		return AvailabilitySetsClientListResponse{}, runtime.NewResponseError(resp)
+		return AvailabilitySetsClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -306,7 +306,7 @@ func (client *AvailabilitySetsClient) listAvailableSizesCreateRequest(ctx contex
 func (client *AvailabilitySetsClient) listAvailableSizesHandleResponse(resp *http.Response) (AvailabilitySetsClientListAvailableSizesResponse, error) {
 	result := AvailabilitySetsClientListAvailableSizesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineSizeListResult); err != nil {
-		return AvailabilitySetsClientListAvailableSizesResponse{}, runtime.NewResponseError(resp)
+		return AvailabilitySetsClientListAvailableSizesResponse{}, err
 	}
 	return result, nil
 }
@@ -352,7 +352,7 @@ func (client *AvailabilitySetsClient) listBySubscriptionCreateRequest(ctx contex
 func (client *AvailabilitySetsClient) listBySubscriptionHandleResponse(resp *http.Response) (AvailabilitySetsClientListBySubscriptionResponse, error) {
 	result := AvailabilitySetsClientListBySubscriptionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySetListResult); err != nil {
-		return AvailabilitySetsClientListBySubscriptionResponse{}, runtime.NewResponseError(resp)
+		return AvailabilitySetsClientListBySubscriptionResponse{}, err
 	}
 	return result, nil
 }
@@ -408,7 +408,7 @@ func (client *AvailabilitySetsClient) updateCreateRequest(ctx context.Context, r
 func (client *AvailabilitySetsClient) updateHandleResponse(resp *http.Response) (AvailabilitySetsClientUpdateResponse, error) {
 	result := AvailabilitySetsClientUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySet); err != nil {
-		return AvailabilitySetsClientUpdateResponse{}, runtime.NewResponseError(resp)
+		return AvailabilitySetsClientUpdateResponse{}, err
 	}
 	return result, nil
 }

@@ -252,7 +252,7 @@ func (client *DedicatedHostsClient) getCreateRequest(ctx context.Context, resour
 func (client *DedicatedHostsClient) getHandleResponse(resp *http.Response) (DedicatedHostsClientGetResponse, error) {
 	result := DedicatedHostsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DedicatedHost); err != nil {
-		return DedicatedHostsClientGetResponse{}, runtime.NewResponseError(resp)
+		return DedicatedHostsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -306,7 +306,7 @@ func (client *DedicatedHostsClient) listByHostGroupCreateRequest(ctx context.Con
 func (client *DedicatedHostsClient) listByHostGroupHandleResponse(resp *http.Response) (DedicatedHostsClientListByHostGroupResponse, error) {
 	result := DedicatedHostsClientListByHostGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DedicatedHostListResult); err != nil {
-		return DedicatedHostsClientListByHostGroupResponse{}, runtime.NewResponseError(resp)
+		return DedicatedHostsClientListByHostGroupResponse{}, err
 	}
 	return result, nil
 }

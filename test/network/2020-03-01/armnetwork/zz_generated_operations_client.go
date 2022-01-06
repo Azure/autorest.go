@@ -76,7 +76,7 @@ func (client *OperationsClient) listCreateRequest(ctx context.Context, options *
 func (client *OperationsClient) listHandleResponse(resp *http.Response) (OperationsClientListResponse, error) {
 	result := OperationsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.OperationListResult); err != nil {
-		return OperationsClientListResponse{}, runtime.NewResponseError(resp)
+		return OperationsClientListResponse{}, err
 	}
 	return result, nil
 }

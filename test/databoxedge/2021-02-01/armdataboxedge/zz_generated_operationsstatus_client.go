@@ -104,7 +104,7 @@ func (client *OperationsStatusClient) getCreateRequest(ctx context.Context, devi
 func (client *OperationsStatusClient) getHandleResponse(resp *http.Response) (OperationsStatusClientGetResponse, error) {
 	result := OperationsStatusClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Job); err != nil {
-		return OperationsStatusClientGetResponse{}, runtime.NewResponseError(resp)
+		return OperationsStatusClientGetResponse{}, err
 	}
 	return result, nil
 }

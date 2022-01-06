@@ -1681,7 +1681,7 @@ func (client *client) getTagsHandleResponse(resp *http.Response) (clientGetTagsR
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.Tags); err != nil {
-		return clientGetTagsResponse{}, runtime.NewResponseError(resp)
+		return clientGetTagsResponse{}, err
 	}
 	return result, nil
 }

@@ -237,7 +237,7 @@ func (client *RouteTablesClient) getCreateRequest(ctx context.Context, resourceG
 func (client *RouteTablesClient) getHandleResponse(resp *http.Response) (RouteTablesClientGetResponse, error) {
 	result := RouteTablesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteTable); err != nil {
-		return RouteTablesClientGetResponse{}, runtime.NewResponseError(resp)
+		return RouteTablesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -284,7 +284,7 @@ func (client *RouteTablesClient) listCreateRequest(ctx context.Context, resource
 func (client *RouteTablesClient) listHandleResponse(resp *http.Response) (RouteTablesClientListResponse, error) {
 	result := RouteTablesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteTableListResult); err != nil {
-		return RouteTablesClientListResponse{}, runtime.NewResponseError(resp)
+		return RouteTablesClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -326,7 +326,7 @@ func (client *RouteTablesClient) listAllCreateRequest(ctx context.Context, optio
 func (client *RouteTablesClient) listAllHandleResponse(resp *http.Response) (RouteTablesClientListAllResponse, error) {
 	result := RouteTablesClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteTableListResult); err != nil {
-		return RouteTablesClientListAllResponse{}, runtime.NewResponseError(resp)
+		return RouteTablesClientListAllResponse{}, err
 	}
 	return result, nil
 }
@@ -382,7 +382,7 @@ func (client *RouteTablesClient) updateTagsCreateRequest(ctx context.Context, re
 func (client *RouteTablesClient) updateTagsHandleResponse(resp *http.Response) (RouteTablesClientUpdateTagsResponse, error) {
 	result := RouteTablesClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteTable); err != nil {
-		return RouteTablesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return RouteTablesClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

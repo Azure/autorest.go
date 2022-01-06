@@ -68,7 +68,7 @@ func (client *EnumClient) getNotExpandableCreateRequest(ctx context.Context, opt
 func (client *EnumClient) getNotExpandableHandleResponse(resp *http.Response) (EnumClientGetNotExpandableResponse, error) {
 	result := EnumClientGetNotExpandableResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return EnumClientGetNotExpandableResponse{}, runtime.NewResponseError(resp)
+		return EnumClientGetNotExpandableResponse{}, err
 	}
 	return result, nil
 }
@@ -106,7 +106,7 @@ func (client *EnumClient) getReferencedCreateRequest(ctx context.Context, option
 func (client *EnumClient) getReferencedHandleResponse(resp *http.Response) (EnumClientGetReferencedResponse, error) {
 	result := EnumClientGetReferencedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return EnumClientGetReferencedResponse{}, runtime.NewResponseError(resp)
+		return EnumClientGetReferencedResponse{}, err
 	}
 	return result, nil
 }
@@ -145,7 +145,7 @@ func (client *EnumClient) getReferencedConstantCreateRequest(ctx context.Context
 func (client *EnumClient) getReferencedConstantHandleResponse(resp *http.Response) (EnumClientGetReferencedConstantResponse, error) {
 	result := EnumClientGetReferencedConstantResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RefColorConstant); err != nil {
-		return EnumClientGetReferencedConstantResponse{}, runtime.NewResponseError(resp)
+		return EnumClientGetReferencedConstantResponse{}, err
 	}
 	return result, nil
 }

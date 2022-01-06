@@ -68,7 +68,7 @@ func (client *PrimitiveClient) getBoolCreateRequest(ctx context.Context, options
 func (client *PrimitiveClient) getBoolHandleResponse(resp *http.Response) (PrimitiveClientGetBoolResponse, error) {
 	result := PrimitiveClientGetBoolResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BooleanWrapper); err != nil {
-		return PrimitiveClientGetBoolResponse{}, runtime.NewResponseError(resp)
+		return PrimitiveClientGetBoolResponse{}, err
 	}
 	return result, nil
 }
@@ -106,7 +106,7 @@ func (client *PrimitiveClient) getByteCreateRequest(ctx context.Context, options
 func (client *PrimitiveClient) getByteHandleResponse(resp *http.Response) (PrimitiveClientGetByteResponse, error) {
 	result := PrimitiveClientGetByteResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ByteWrapper); err != nil {
-		return PrimitiveClientGetByteResponse{}, runtime.NewResponseError(resp)
+		return PrimitiveClientGetByteResponse{}, err
 	}
 	return result, nil
 }
@@ -144,7 +144,7 @@ func (client *PrimitiveClient) getDateCreateRequest(ctx context.Context, options
 func (client *PrimitiveClient) getDateHandleResponse(resp *http.Response) (PrimitiveClientGetDateResponse, error) {
 	result := PrimitiveClientGetDateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DateWrapper); err != nil {
-		return PrimitiveClientGetDateResponse{}, runtime.NewResponseError(resp)
+		return PrimitiveClientGetDateResponse{}, err
 	}
 	return result, nil
 }
@@ -182,7 +182,7 @@ func (client *PrimitiveClient) getDateTimeCreateRequest(ctx context.Context, opt
 func (client *PrimitiveClient) getDateTimeHandleResponse(resp *http.Response) (PrimitiveClientGetDateTimeResponse, error) {
 	result := PrimitiveClientGetDateTimeResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DatetimeWrapper); err != nil {
-		return PrimitiveClientGetDateTimeResponse{}, runtime.NewResponseError(resp)
+		return PrimitiveClientGetDateTimeResponse{}, err
 	}
 	return result, nil
 }
@@ -221,7 +221,7 @@ func (client *PrimitiveClient) getDateTimeRFC1123CreateRequest(ctx context.Conte
 func (client *PrimitiveClient) getDateTimeRFC1123HandleResponse(resp *http.Response) (PrimitiveClientGetDateTimeRFC1123Response, error) {
 	result := PrimitiveClientGetDateTimeRFC1123Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Datetimerfc1123Wrapper); err != nil {
-		return PrimitiveClientGetDateTimeRFC1123Response{}, runtime.NewResponseError(resp)
+		return PrimitiveClientGetDateTimeRFC1123Response{}, err
 	}
 	return result, nil
 }
@@ -259,7 +259,7 @@ func (client *PrimitiveClient) getDoubleCreateRequest(ctx context.Context, optio
 func (client *PrimitiveClient) getDoubleHandleResponse(resp *http.Response) (PrimitiveClientGetDoubleResponse, error) {
 	result := PrimitiveClientGetDoubleResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DoubleWrapper); err != nil {
-		return PrimitiveClientGetDoubleResponse{}, runtime.NewResponseError(resp)
+		return PrimitiveClientGetDoubleResponse{}, err
 	}
 	return result, nil
 }
@@ -297,7 +297,7 @@ func (client *PrimitiveClient) getDurationCreateRequest(ctx context.Context, opt
 func (client *PrimitiveClient) getDurationHandleResponse(resp *http.Response) (PrimitiveClientGetDurationResponse, error) {
 	result := PrimitiveClientGetDurationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DurationWrapper); err != nil {
-		return PrimitiveClientGetDurationResponse{}, runtime.NewResponseError(resp)
+		return PrimitiveClientGetDurationResponse{}, err
 	}
 	return result, nil
 }
@@ -335,7 +335,7 @@ func (client *PrimitiveClient) getFloatCreateRequest(ctx context.Context, option
 func (client *PrimitiveClient) getFloatHandleResponse(resp *http.Response) (PrimitiveClientGetFloatResponse, error) {
 	result := PrimitiveClientGetFloatResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FloatWrapper); err != nil {
-		return PrimitiveClientGetFloatResponse{}, runtime.NewResponseError(resp)
+		return PrimitiveClientGetFloatResponse{}, err
 	}
 	return result, nil
 }
@@ -373,7 +373,7 @@ func (client *PrimitiveClient) getIntCreateRequest(ctx context.Context, options 
 func (client *PrimitiveClient) getIntHandleResponse(resp *http.Response) (PrimitiveClientGetIntResponse, error) {
 	result := PrimitiveClientGetIntResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IntWrapper); err != nil {
-		return PrimitiveClientGetIntResponse{}, runtime.NewResponseError(resp)
+		return PrimitiveClientGetIntResponse{}, err
 	}
 	return result, nil
 }
@@ -411,7 +411,7 @@ func (client *PrimitiveClient) getLongCreateRequest(ctx context.Context, options
 func (client *PrimitiveClient) getLongHandleResponse(resp *http.Response) (PrimitiveClientGetLongResponse, error) {
 	result := PrimitiveClientGetLongResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LongWrapper); err != nil {
-		return PrimitiveClientGetLongResponse{}, runtime.NewResponseError(resp)
+		return PrimitiveClientGetLongResponse{}, err
 	}
 	return result, nil
 }
@@ -449,7 +449,7 @@ func (client *PrimitiveClient) getStringCreateRequest(ctx context.Context, optio
 func (client *PrimitiveClient) getStringHandleResponse(resp *http.Response) (PrimitiveClientGetStringResponse, error) {
 	result := PrimitiveClientGetStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringWrapper); err != nil {
-		return PrimitiveClientGetStringResponse{}, runtime.NewResponseError(resp)
+		return PrimitiveClientGetStringResponse{}, err
 	}
 	return result, nil
 }

@@ -89,7 +89,7 @@ func (client *BalancesClient) getByBillingAccountCreateRequest(ctx context.Conte
 func (client *BalancesClient) getByBillingAccountHandleResponse(resp *http.Response) (BalancesClientGetByBillingAccountResponse, error) {
 	result := BalancesClientGetByBillingAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Balance); err != nil {
-		return BalancesClientGetByBillingAccountResponse{}, runtime.NewResponseError(resp)
+		return BalancesClientGetByBillingAccountResponse{}, err
 	}
 	return result, nil
 }
@@ -142,7 +142,7 @@ func (client *BalancesClient) getForBillingPeriodByBillingAccountCreateRequest(c
 func (client *BalancesClient) getForBillingPeriodByBillingAccountHandleResponse(resp *http.Response) (BalancesClientGetForBillingPeriodByBillingAccountResponse, error) {
 	result := BalancesClientGetForBillingPeriodByBillingAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Balance); err != nil {
-		return BalancesClientGetForBillingPeriodByBillingAccountResponse{}, runtime.NewResponseError(resp)
+		return BalancesClientGetForBillingPeriodByBillingAccountResponse{}, err
 	}
 	return result, nil
 }

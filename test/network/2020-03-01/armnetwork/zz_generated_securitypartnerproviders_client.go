@@ -236,7 +236,7 @@ func (client *SecurityPartnerProvidersClient) getCreateRequest(ctx context.Conte
 func (client *SecurityPartnerProvidersClient) getHandleResponse(resp *http.Response) (SecurityPartnerProvidersClientGetResponse, error) {
 	result := SecurityPartnerProvidersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityPartnerProvider); err != nil {
-		return SecurityPartnerProvidersClientGetResponse{}, runtime.NewResponseError(resp)
+		return SecurityPartnerProvidersClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -279,7 +279,7 @@ func (client *SecurityPartnerProvidersClient) listCreateRequest(ctx context.Cont
 func (client *SecurityPartnerProvidersClient) listHandleResponse(resp *http.Response) (SecurityPartnerProvidersClientListResponse, error) {
 	result := SecurityPartnerProvidersClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityPartnerProviderListResult); err != nil {
-		return SecurityPartnerProvidersClientListResponse{}, runtime.NewResponseError(resp)
+		return SecurityPartnerProvidersClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -327,7 +327,7 @@ func (client *SecurityPartnerProvidersClient) listByResourceGroupCreateRequest(c
 func (client *SecurityPartnerProvidersClient) listByResourceGroupHandleResponse(resp *http.Response) (SecurityPartnerProvidersClientListByResourceGroupResponse, error) {
 	result := SecurityPartnerProvidersClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityPartnerProviderListResult); err != nil {
-		return SecurityPartnerProvidersClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return SecurityPartnerProvidersClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -384,7 +384,7 @@ func (client *SecurityPartnerProvidersClient) updateTagsCreateRequest(ctx contex
 func (client *SecurityPartnerProvidersClient) updateTagsHandleResponse(resp *http.Response) (SecurityPartnerProvidersClientUpdateTagsResponse, error) {
 	result := SecurityPartnerProvidersClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityPartnerProvider); err != nil {
-		return SecurityPartnerProvidersClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return SecurityPartnerProvidersClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

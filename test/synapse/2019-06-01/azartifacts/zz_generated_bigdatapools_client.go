@@ -75,7 +75,7 @@ func (client *bigDataPoolsClient) getCreateRequest(ctx context.Context, bigDataP
 func (client *bigDataPoolsClient) getHandleResponse(resp *http.Response) (bigDataPoolsClientGetResponse, error) {
 	result := bigDataPoolsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BigDataPoolResourceInfo); err != nil {
-		return bigDataPoolsClientGetResponse{}, runtime.NewResponseError(resp)
+		return bigDataPoolsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -116,7 +116,7 @@ func (client *bigDataPoolsClient) listCreateRequest(ctx context.Context, options
 func (client *bigDataPoolsClient) listHandleResponse(resp *http.Response) (bigDataPoolsClientListResponse, error) {
 	result := bigDataPoolsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BigDataPoolResourceInfoListResult); err != nil {
-		return bigDataPoolsClientListResponse{}, runtime.NewResponseError(resp)
+		return bigDataPoolsClientListResponse{}, err
 	}
 	return result, nil
 }

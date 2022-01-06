@@ -105,7 +105,7 @@ func (client *VPNSiteLinksClient) getCreateRequest(ctx context.Context, resource
 func (client *VPNSiteLinksClient) getHandleResponse(resp *http.Response) (VPNSiteLinksClientGetResponse, error) {
 	result := VPNSiteLinksClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNSiteLink); err != nil {
-		return VPNSiteLinksClientGetResponse{}, runtime.NewResponseError(resp)
+		return VPNSiteLinksClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -158,7 +158,7 @@ func (client *VPNSiteLinksClient) listByVPNSiteCreateRequest(ctx context.Context
 func (client *VPNSiteLinksClient) listByVPNSiteHandleResponse(resp *http.Response) (VPNSiteLinksClientListByVPNSiteResponse, error) {
 	result := VPNSiteLinksClientListByVPNSiteResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNSiteLinksResult); err != nil {
-		return VPNSiteLinksClientListByVPNSiteResponse{}, runtime.NewResponseError(resp)
+		return VPNSiteLinksClientListByVPNSiteResponse{}, err
 	}
 	return result, nil
 }

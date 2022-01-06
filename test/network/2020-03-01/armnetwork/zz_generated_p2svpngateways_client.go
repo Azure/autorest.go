@@ -373,7 +373,7 @@ func (client *P2SVPNGatewaysClient) getCreateRequest(ctx context.Context, resour
 func (client *P2SVPNGatewaysClient) getHandleResponse(resp *http.Response) (P2SVPNGatewaysClientGetResponse, error) {
 	result := P2SVPNGatewaysClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.P2SVPNGateway); err != nil {
-		return P2SVPNGatewaysClientGetResponse{}, runtime.NewResponseError(resp)
+		return P2SVPNGatewaysClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -554,7 +554,7 @@ func (client *P2SVPNGatewaysClient) listCreateRequest(ctx context.Context, optio
 func (client *P2SVPNGatewaysClient) listHandleResponse(resp *http.Response) (P2SVPNGatewaysClientListResponse, error) {
 	result := P2SVPNGatewaysClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListP2SVPNGatewaysResult); err != nil {
-		return P2SVPNGatewaysClientListResponse{}, runtime.NewResponseError(resp)
+		return P2SVPNGatewaysClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -602,7 +602,7 @@ func (client *P2SVPNGatewaysClient) listByResourceGroupCreateRequest(ctx context
 func (client *P2SVPNGatewaysClient) listByResourceGroupHandleResponse(resp *http.Response) (P2SVPNGatewaysClientListByResourceGroupResponse, error) {
 	result := P2SVPNGatewaysClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListP2SVPNGatewaysResult); err != nil {
-		return P2SVPNGatewaysClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return P2SVPNGatewaysClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -659,7 +659,7 @@ func (client *P2SVPNGatewaysClient) updateTagsCreateRequest(ctx context.Context,
 func (client *P2SVPNGatewaysClient) updateTagsHandleResponse(resp *http.Response) (P2SVPNGatewaysClientUpdateTagsResponse, error) {
 	result := P2SVPNGatewaysClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.P2SVPNGateway); err != nil {
-		return P2SVPNGatewaysClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return P2SVPNGatewaysClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

@@ -67,7 +67,7 @@ func (client *workspaceClient) getCreateRequest(ctx context.Context, options *wo
 func (client *workspaceClient) getHandleResponse(resp *http.Response) (workspaceClientGetResponse, error) {
 	result := workspaceClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Workspace); err != nil {
-		return workspaceClientGetResponse{}, runtime.NewResponseError(resp)
+		return workspaceClientGetResponse{}, err
 	}
 	return result, nil
 }

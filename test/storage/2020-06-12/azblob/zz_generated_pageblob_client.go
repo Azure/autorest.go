@@ -560,7 +560,7 @@ func (client *pageBlobClient) getPageRangesHandleResponse(resp *http.Response) (
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.PageList); err != nil {
-		return pageBlobClientGetPageRangesResponse{}, runtime.NewResponseError(resp)
+		return pageBlobClientGetPageRangesResponse{}, err
 	}
 	return result, nil
 }
@@ -674,7 +674,7 @@ func (client *pageBlobClient) getPageRangesDiffHandleResponse(resp *http.Respons
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.PageList); err != nil {
-		return pageBlobClientGetPageRangesDiffResponse{}, runtime.NewResponseError(resp)
+		return pageBlobClientGetPageRangesDiffResponse{}, err
 	}
 	return result, nil
 }

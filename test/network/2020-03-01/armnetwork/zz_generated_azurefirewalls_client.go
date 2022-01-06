@@ -235,7 +235,7 @@ func (client *AzureFirewallsClient) getCreateRequest(ctx context.Context, resour
 func (client *AzureFirewallsClient) getHandleResponse(resp *http.Response) (AzureFirewallsClientGetResponse, error) {
 	result := AzureFirewallsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureFirewall); err != nil {
-		return AzureFirewallsClientGetResponse{}, runtime.NewResponseError(resp)
+		return AzureFirewallsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -282,7 +282,7 @@ func (client *AzureFirewallsClient) listCreateRequest(ctx context.Context, resou
 func (client *AzureFirewallsClient) listHandleResponse(resp *http.Response) (AzureFirewallsClientListResponse, error) {
 	result := AzureFirewallsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureFirewallListResult); err != nil {
-		return AzureFirewallsClientListResponse{}, runtime.NewResponseError(resp)
+		return AzureFirewallsClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -324,7 +324,7 @@ func (client *AzureFirewallsClient) listAllCreateRequest(ctx context.Context, op
 func (client *AzureFirewallsClient) listAllHandleResponse(resp *http.Response) (AzureFirewallsClientListAllResponse, error) {
 	result := AzureFirewallsClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AzureFirewallListResult); err != nil {
-		return AzureFirewallsClientListAllResponse{}, runtime.NewResponseError(resp)
+		return AzureFirewallsClientListAllResponse{}, err
 	}
 	return result, nil
 }

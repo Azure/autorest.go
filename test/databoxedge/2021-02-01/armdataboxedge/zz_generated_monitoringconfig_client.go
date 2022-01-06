@@ -249,7 +249,7 @@ func (client *MonitoringConfigClient) getCreateRequest(ctx context.Context, devi
 func (client *MonitoringConfigClient) getHandleResponse(resp *http.Response) (MonitoringConfigClientGetResponse, error) {
 	result := MonitoringConfigClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MonitoringMetricConfiguration); err != nil {
-		return MonitoringConfigClientGetResponse{}, runtime.NewResponseError(resp)
+		return MonitoringConfigClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -306,7 +306,7 @@ func (client *MonitoringConfigClient) listCreateRequest(ctx context.Context, dev
 func (client *MonitoringConfigClient) listHandleResponse(resp *http.Response) (MonitoringConfigClientListResponse, error) {
 	result := MonitoringConfigClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MonitoringMetricConfigurationList); err != nil {
-		return MonitoringConfigClientListResponse{}, runtime.NewResponseError(resp)
+		return MonitoringConfigClientListResponse{}, err
 	}
 	return result, nil
 }

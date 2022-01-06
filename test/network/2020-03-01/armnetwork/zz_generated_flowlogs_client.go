@@ -249,7 +249,7 @@ func (client *FlowLogsClient) getCreateRequest(ctx context.Context, resourceGrou
 func (client *FlowLogsClient) getHandleResponse(resp *http.Response) (FlowLogsClientGetResponse, error) {
 	result := FlowLogsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FlowLog); err != nil {
-		return FlowLogsClientGetResponse{}, runtime.NewResponseError(resp)
+		return FlowLogsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -301,7 +301,7 @@ func (client *FlowLogsClient) listCreateRequest(ctx context.Context, resourceGro
 func (client *FlowLogsClient) listHandleResponse(resp *http.Response) (FlowLogsClientListResponse, error) {
 	result := FlowLogsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FlowLogListResult); err != nil {
-		return FlowLogsClientListResponse{}, runtime.NewResponseError(resp)
+		return FlowLogsClientListResponse{}, err
 	}
 	return result, nil
 }

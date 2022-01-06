@@ -237,7 +237,7 @@ func (client *IPGroupsClient) getCreateRequest(ctx context.Context, resourceGrou
 func (client *IPGroupsClient) getHandleResponse(resp *http.Response) (IPGroupsClientGetResponse, error) {
 	result := IPGroupsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPGroup); err != nil {
-		return IPGroupsClientGetResponse{}, runtime.NewResponseError(resp)
+		return IPGroupsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -279,7 +279,7 @@ func (client *IPGroupsClient) listCreateRequest(ctx context.Context, options *IP
 func (client *IPGroupsClient) listHandleResponse(resp *http.Response) (IPGroupsClientListResponse, error) {
 	result := IPGroupsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPGroupListResult); err != nil {
-		return IPGroupsClientListResponse{}, runtime.NewResponseError(resp)
+		return IPGroupsClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -327,7 +327,7 @@ func (client *IPGroupsClient) listByResourceGroupCreateRequest(ctx context.Conte
 func (client *IPGroupsClient) listByResourceGroupHandleResponse(resp *http.Response) (IPGroupsClientListByResourceGroupResponse, error) {
 	result := IPGroupsClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPGroupListResult); err != nil {
-		return IPGroupsClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return IPGroupsClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -383,7 +383,7 @@ func (client *IPGroupsClient) updateGroupsCreateRequest(ctx context.Context, res
 func (client *IPGroupsClient) updateGroupsHandleResponse(resp *http.Response) (IPGroupsClientUpdateGroupsResponse, error) {
 	result := IPGroupsClientUpdateGroupsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPGroup); err != nil {
-		return IPGroupsClientUpdateGroupsResponse{}, runtime.NewResponseError(resp)
+		return IPGroupsClientUpdateGroupsResponse{}, err
 	}
 	return result, nil
 }

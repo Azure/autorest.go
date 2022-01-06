@@ -102,7 +102,7 @@ func (client *WebApplicationFirewallPoliciesClient) createOrUpdateCreateRequest(
 func (client *WebApplicationFirewallPoliciesClient) createOrUpdateHandleResponse(resp *http.Response) (WebApplicationFirewallPoliciesClientCreateOrUpdateResponse, error) {
 	result := WebApplicationFirewallPoliciesClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.WebApplicationFirewallPolicy); err != nil {
-		return WebApplicationFirewallPoliciesClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+		return WebApplicationFirewallPoliciesClientCreateOrUpdateResponse{}, err
 	}
 	return result, nil
 }
@@ -225,7 +225,7 @@ func (client *WebApplicationFirewallPoliciesClient) getCreateRequest(ctx context
 func (client *WebApplicationFirewallPoliciesClient) getHandleResponse(resp *http.Response) (WebApplicationFirewallPoliciesClientGetResponse, error) {
 	result := WebApplicationFirewallPoliciesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.WebApplicationFirewallPolicy); err != nil {
-		return WebApplicationFirewallPoliciesClientGetResponse{}, runtime.NewResponseError(resp)
+		return WebApplicationFirewallPoliciesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -273,7 +273,7 @@ func (client *WebApplicationFirewallPoliciesClient) listCreateRequest(ctx contex
 func (client *WebApplicationFirewallPoliciesClient) listHandleResponse(resp *http.Response) (WebApplicationFirewallPoliciesClientListResponse, error) {
 	result := WebApplicationFirewallPoliciesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.WebApplicationFirewallPolicyListResult); err != nil {
-		return WebApplicationFirewallPoliciesClientListResponse{}, runtime.NewResponseError(resp)
+		return WebApplicationFirewallPoliciesClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -316,7 +316,7 @@ func (client *WebApplicationFirewallPoliciesClient) listAllCreateRequest(ctx con
 func (client *WebApplicationFirewallPoliciesClient) listAllHandleResponse(resp *http.Response) (WebApplicationFirewallPoliciesClientListAllResponse, error) {
 	result := WebApplicationFirewallPoliciesClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.WebApplicationFirewallPolicyListResult); err != nil {
-		return WebApplicationFirewallPoliciesClientListAllResponse{}, runtime.NewResponseError(resp)
+		return WebApplicationFirewallPoliciesClientListAllResponse{}, err
 	}
 	return result, nil
 }

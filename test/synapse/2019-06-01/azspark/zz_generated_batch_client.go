@@ -115,7 +115,7 @@ func (client *batchClient) createSparkBatchJobCreateRequest(ctx context.Context,
 func (client *batchClient) createSparkBatchJobHandleResponse(resp *http.Response) (batchClientCreateSparkBatchJobResponse, error) {
 	result := batchClientCreateSparkBatchJobResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BatchJob); err != nil {
-		return batchClientCreateSparkBatchJobResponse{}, runtime.NewResponseError(resp)
+		return batchClientCreateSparkBatchJobResponse{}, err
 	}
 	return result, nil
 }
@@ -160,7 +160,7 @@ func (client *batchClient) getSparkBatchJobCreateRequest(ctx context.Context, ba
 func (client *batchClient) getSparkBatchJobHandleResponse(resp *http.Response) (batchClientGetSparkBatchJobResponse, error) {
 	result := batchClientGetSparkBatchJobResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BatchJob); err != nil {
-		return batchClientGetSparkBatchJobResponse{}, runtime.NewResponseError(resp)
+		return batchClientGetSparkBatchJobResponse{}, err
 	}
 	return result, nil
 }
@@ -209,7 +209,7 @@ func (client *batchClient) getSparkBatchJobsCreateRequest(ctx context.Context, o
 func (client *batchClient) getSparkBatchJobsHandleResponse(resp *http.Response) (batchClientGetSparkBatchJobsResponse, error) {
 	result := batchClientGetSparkBatchJobsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BatchJobCollection); err != nil {
-		return batchClientGetSparkBatchJobsResponse{}, runtime.NewResponseError(resp)
+		return batchClientGetSparkBatchJobsResponse{}, err
 	}
 	return result, nil
 }

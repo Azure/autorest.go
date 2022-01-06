@@ -81,7 +81,7 @@ func (client *RoleDefinitionsClient) createOrUpdateCreateRequest(ctx context.Con
 func (client *RoleDefinitionsClient) createOrUpdateHandleResponse(resp *http.Response) (RoleDefinitionsClientCreateOrUpdateResponse, error) {
 	result := RoleDefinitionsClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinition); err != nil {
-		return RoleDefinitionsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+		return RoleDefinitionsClientCreateOrUpdateResponse{}, err
 	}
 	return result, nil
 }
@@ -132,7 +132,7 @@ func (client *RoleDefinitionsClient) deleteCreateRequest(ctx context.Context, va
 func (client *RoleDefinitionsClient) deleteHandleResponse(resp *http.Response) (RoleDefinitionsClientDeleteResponse, error) {
 	result := RoleDefinitionsClientDeleteResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinition); err != nil {
-		return RoleDefinitionsClientDeleteResponse{}, runtime.NewResponseError(resp)
+		return RoleDefinitionsClientDeleteResponse{}, err
 	}
 	return result, nil
 }
@@ -183,7 +183,7 @@ func (client *RoleDefinitionsClient) getCreateRequest(ctx context.Context, vault
 func (client *RoleDefinitionsClient) getHandleResponse(resp *http.Response) (RoleDefinitionsClientGetResponse, error) {
 	result := RoleDefinitionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinition); err != nil {
-		return RoleDefinitionsClientGetResponse{}, runtime.NewResponseError(resp)
+		return RoleDefinitionsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -229,7 +229,7 @@ func (client *RoleDefinitionsClient) listCreateRequest(ctx context.Context, vaul
 func (client *RoleDefinitionsClient) listHandleResponse(resp *http.Response) (RoleDefinitionsClientListResponse, error) {
 	result := RoleDefinitionsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinitionListResult); err != nil {
-		return RoleDefinitionsClientListResponse{}, runtime.NewResponseError(resp)
+		return RoleDefinitionsClientListResponse{}, err
 	}
 	return result, nil
 }

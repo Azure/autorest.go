@@ -234,7 +234,7 @@ func (client *VPNSitesClient) getCreateRequest(ctx context.Context, resourceGrou
 func (client *VPNSitesClient) getHandleResponse(resp *http.Response) (VPNSitesClientGetResponse, error) {
 	result := VPNSitesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNSite); err != nil {
-		return VPNSitesClientGetResponse{}, runtime.NewResponseError(resp)
+		return VPNSitesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -276,7 +276,7 @@ func (client *VPNSitesClient) listCreateRequest(ctx context.Context, options *VP
 func (client *VPNSitesClient) listHandleResponse(resp *http.Response) (VPNSitesClientListResponse, error) {
 	result := VPNSitesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNSitesResult); err != nil {
-		return VPNSitesClientListResponse{}, runtime.NewResponseError(resp)
+		return VPNSitesClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -324,7 +324,7 @@ func (client *VPNSitesClient) listByResourceGroupCreateRequest(ctx context.Conte
 func (client *VPNSitesClient) listByResourceGroupHandleResponse(resp *http.Response) (VPNSitesClientListByResourceGroupResponse, error) {
 	result := VPNSitesClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNSitesResult); err != nil {
-		return VPNSitesClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return VPNSitesClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -380,7 +380,7 @@ func (client *VPNSitesClient) updateTagsCreateRequest(ctx context.Context, resou
 func (client *VPNSitesClient) updateTagsHandleResponse(resp *http.Response) (VPNSitesClientUpdateTagsResponse, error) {
 	result := VPNSitesClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNSite); err != nil {
-		return VPNSitesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return VPNSitesClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

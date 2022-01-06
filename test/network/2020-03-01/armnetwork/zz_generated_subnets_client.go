@@ -252,7 +252,7 @@ func (client *SubnetsClient) getCreateRequest(ctx context.Context, resourceGroup
 func (client *SubnetsClient) getHandleResponse(resp *http.Response) (SubnetsClientGetResponse, error) {
 	result := SubnetsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Subnet); err != nil {
-		return SubnetsClientGetResponse{}, runtime.NewResponseError(resp)
+		return SubnetsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -304,7 +304,7 @@ func (client *SubnetsClient) listCreateRequest(ctx context.Context, resourceGrou
 func (client *SubnetsClient) listHandleResponse(resp *http.Response) (SubnetsClientListResponse, error) {
 	result := SubnetsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SubnetListResult); err != nil {
-		return SubnetsClientListResponse{}, runtime.NewResponseError(resp)
+		return SubnetsClientListResponse{}, err
 	}
 	return result, nil
 }

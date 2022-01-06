@@ -88,7 +88,7 @@ func (client *ReservationTransactionsClient) listCreateRequest(ctx context.Conte
 func (client *ReservationTransactionsClient) listHandleResponse(resp *http.Response) (ReservationTransactionsClientListResponse, error) {
 	result := ReservationTransactionsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationTransactionsListResult); err != nil {
-		return ReservationTransactionsClientListResponse{}, runtime.NewResponseError(resp)
+		return ReservationTransactionsClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -140,7 +140,7 @@ func (client *ReservationTransactionsClient) listByBillingProfileCreateRequest(c
 func (client *ReservationTransactionsClient) listByBillingProfileHandleResponse(resp *http.Response) (ReservationTransactionsClientListByBillingProfileResponse, error) {
 	result := ReservationTransactionsClientListByBillingProfileResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ModernReservationTransactionsListResult); err != nil {
-		return ReservationTransactionsClientListByBillingProfileResponse{}, runtime.NewResponseError(resp)
+		return ReservationTransactionsClientListByBillingProfileResponse{}, err
 	}
 	return result, nil
 }

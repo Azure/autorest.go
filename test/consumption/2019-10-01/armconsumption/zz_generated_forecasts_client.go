@@ -94,7 +94,7 @@ func (client *ForecastsClient) listCreateRequest(ctx context.Context, options *F
 func (client *ForecastsClient) listHandleResponse(resp *http.Response) (ForecastsClientListResponse, error) {
 	result := ForecastsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ForecastsListResult); err != nil {
-		return ForecastsClientListResponse{}, runtime.NewResponseError(resp)
+		return ForecastsClientListResponse{}, err
 	}
 	return result, nil
 }

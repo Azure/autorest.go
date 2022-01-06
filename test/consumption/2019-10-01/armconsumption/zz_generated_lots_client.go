@@ -81,7 +81,7 @@ func (client *LotsClient) listCreateRequest(ctx context.Context, scope string, o
 func (client *LotsClient) listHandleResponse(resp *http.Response) (LotsClientListResponse, error) {
 	result := LotsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Lots); err != nil {
-		return LotsClientListResponse{}, runtime.NewResponseError(resp)
+		return LotsClientListResponse{}, err
 	}
 	return result, nil
 }

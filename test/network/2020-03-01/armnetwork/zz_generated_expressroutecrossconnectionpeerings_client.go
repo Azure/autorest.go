@@ -251,7 +251,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) getCreateRequest(ctx co
 func (client *ExpressRouteCrossConnectionPeeringsClient) getHandleResponse(resp *http.Response) (ExpressRouteCrossConnectionPeeringsClientGetResponse, error) {
 	result := ExpressRouteCrossConnectionPeeringsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCrossConnectionPeering); err != nil {
-		return ExpressRouteCrossConnectionPeeringsClientGetResponse{}, runtime.NewResponseError(resp)
+		return ExpressRouteCrossConnectionPeeringsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -304,7 +304,7 @@ func (client *ExpressRouteCrossConnectionPeeringsClient) listCreateRequest(ctx c
 func (client *ExpressRouteCrossConnectionPeeringsClient) listHandleResponse(resp *http.Response) (ExpressRouteCrossConnectionPeeringsClientListResponse, error) {
 	result := ExpressRouteCrossConnectionPeeringsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCrossConnectionPeeringList); err != nil {
-		return ExpressRouteCrossConnectionPeeringsClientListResponse{}, runtime.NewResponseError(resp)
+		return ExpressRouteCrossConnectionPeeringsClientListResponse{}, err
 	}
 	return result, nil
 }

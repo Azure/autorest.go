@@ -234,7 +234,7 @@ func (client *VirtualWansClient) getCreateRequest(ctx context.Context, resourceG
 func (client *VirtualWansClient) getHandleResponse(resp *http.Response) (VirtualWansClientGetResponse, error) {
 	result := VirtualWansClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualWAN); err != nil {
-		return VirtualWansClientGetResponse{}, runtime.NewResponseError(resp)
+		return VirtualWansClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -276,7 +276,7 @@ func (client *VirtualWansClient) listCreateRequest(ctx context.Context, options 
 func (client *VirtualWansClient) listHandleResponse(resp *http.Response) (VirtualWansClientListResponse, error) {
 	result := VirtualWansClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVirtualWANsResult); err != nil {
-		return VirtualWansClientListResponse{}, runtime.NewResponseError(resp)
+		return VirtualWansClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -324,7 +324,7 @@ func (client *VirtualWansClient) listByResourceGroupCreateRequest(ctx context.Co
 func (client *VirtualWansClient) listByResourceGroupHandleResponse(resp *http.Response) (VirtualWansClientListByResourceGroupResponse, error) {
 	result := VirtualWansClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVirtualWANsResult); err != nil {
-		return VirtualWansClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return VirtualWansClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -380,7 +380,7 @@ func (client *VirtualWansClient) updateTagsCreateRequest(ctx context.Context, re
 func (client *VirtualWansClient) updateTagsHandleResponse(resp *http.Response) (VirtualWansClientUpdateTagsResponse, error) {
 	result := VirtualWansClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualWAN); err != nil {
-		return VirtualWansClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return VirtualWansClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

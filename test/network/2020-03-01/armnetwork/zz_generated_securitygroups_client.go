@@ -238,7 +238,7 @@ func (client *SecurityGroupsClient) getCreateRequest(ctx context.Context, resour
 func (client *SecurityGroupsClient) getHandleResponse(resp *http.Response) (SecurityGroupsClientGetResponse, error) {
 	result := SecurityGroupsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityGroup); err != nil {
-		return SecurityGroupsClientGetResponse{}, runtime.NewResponseError(resp)
+		return SecurityGroupsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -285,7 +285,7 @@ func (client *SecurityGroupsClient) listCreateRequest(ctx context.Context, resou
 func (client *SecurityGroupsClient) listHandleResponse(resp *http.Response) (SecurityGroupsClientListResponse, error) {
 	result := SecurityGroupsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityGroupListResult); err != nil {
-		return SecurityGroupsClientListResponse{}, runtime.NewResponseError(resp)
+		return SecurityGroupsClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -327,7 +327,7 @@ func (client *SecurityGroupsClient) listAllCreateRequest(ctx context.Context, op
 func (client *SecurityGroupsClient) listAllHandleResponse(resp *http.Response) (SecurityGroupsClientListAllResponse, error) {
 	result := SecurityGroupsClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityGroupListResult); err != nil {
-		return SecurityGroupsClientListAllResponse{}, runtime.NewResponseError(resp)
+		return SecurityGroupsClientListAllResponse{}, err
 	}
 	return result, nil
 }
@@ -384,7 +384,7 @@ func (client *SecurityGroupsClient) updateTagsCreateRequest(ctx context.Context,
 func (client *SecurityGroupsClient) updateTagsHandleResponse(resp *http.Response) (SecurityGroupsClientUpdateTagsResponse, error) {
 	result := SecurityGroupsClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityGroup); err != nil {
-		return SecurityGroupsClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return SecurityGroupsClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

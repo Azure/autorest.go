@@ -68,7 +68,7 @@ func (client *ByteClient) getEmptyCreateRequest(ctx context.Context, options *By
 func (client *ByteClient) getEmptyHandleResponse(resp *http.Response) (ByteClientGetEmptyResponse, error) {
 	result := ByteClientGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return ByteClientGetEmptyResponse{}, runtime.NewResponseError(resp)
+		return ByteClientGetEmptyResponse{}, err
 	}
 	return result, nil
 }
@@ -106,7 +106,7 @@ func (client *ByteClient) getInvalidCreateRequest(ctx context.Context, options *
 func (client *ByteClient) getInvalidHandleResponse(resp *http.Response) (ByteClientGetInvalidResponse, error) {
 	result := ByteClientGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return ByteClientGetInvalidResponse{}, runtime.NewResponseError(resp)
+		return ByteClientGetInvalidResponse{}, err
 	}
 	return result, nil
 }
@@ -144,7 +144,7 @@ func (client *ByteClient) getNonASCIICreateRequest(ctx context.Context, options 
 func (client *ByteClient) getNonASCIIHandleResponse(resp *http.Response) (ByteClientGetNonASCIIResponse, error) {
 	result := ByteClientGetNonASCIIResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return ByteClientGetNonASCIIResponse{}, runtime.NewResponseError(resp)
+		return ByteClientGetNonASCIIResponse{}, err
 	}
 	return result, nil
 }
@@ -182,7 +182,7 @@ func (client *ByteClient) getNullCreateRequest(ctx context.Context, options *Byt
 func (client *ByteClient) getNullHandleResponse(resp *http.Response) (ByteClientGetNullResponse, error) {
 	result := ByteClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return ByteClientGetNullResponse{}, runtime.NewResponseError(resp)
+		return ByteClientGetNullResponse{}, err
 	}
 	return result, nil
 }

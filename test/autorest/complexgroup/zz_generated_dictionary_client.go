@@ -68,7 +68,7 @@ func (client *DictionaryClient) getEmptyCreateRequest(ctx context.Context, optio
 func (client *DictionaryClient) getEmptyHandleResponse(resp *http.Response) (DictionaryClientGetEmptyResponse, error) {
 	result := DictionaryClientGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DictionaryWrapper); err != nil {
-		return DictionaryClientGetEmptyResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetEmptyResponse{}, err
 	}
 	return result, nil
 }
@@ -107,7 +107,7 @@ func (client *DictionaryClient) getNotProvidedCreateRequest(ctx context.Context,
 func (client *DictionaryClient) getNotProvidedHandleResponse(resp *http.Response) (DictionaryClientGetNotProvidedResponse, error) {
 	result := DictionaryClientGetNotProvidedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DictionaryWrapper); err != nil {
-		return DictionaryClientGetNotProvidedResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetNotProvidedResponse{}, err
 	}
 	return result, nil
 }
@@ -145,7 +145,7 @@ func (client *DictionaryClient) getNullCreateRequest(ctx context.Context, option
 func (client *DictionaryClient) getNullHandleResponse(resp *http.Response) (DictionaryClientGetNullResponse, error) {
 	result := DictionaryClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DictionaryWrapper); err != nil {
-		return DictionaryClientGetNullResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetNullResponse{}, err
 	}
 	return result, nil
 }
@@ -183,7 +183,7 @@ func (client *DictionaryClient) getValidCreateRequest(ctx context.Context, optio
 func (client *DictionaryClient) getValidHandleResponse(resp *http.Response) (DictionaryClientGetValidResponse, error) {
 	result := DictionaryClientGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DictionaryWrapper); err != nil {
-		return DictionaryClientGetValidResponse{}, runtime.NewResponseError(resp)
+		return DictionaryClientGetValidResponse{}, err
 	}
 	return result, nil
 }

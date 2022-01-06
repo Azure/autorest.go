@@ -250,7 +250,7 @@ func (client *RouteFilterRulesClient) getCreateRequest(ctx context.Context, reso
 func (client *RouteFilterRulesClient) getHandleResponse(resp *http.Response) (RouteFilterRulesClientGetResponse, error) {
 	result := RouteFilterRulesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilterRule); err != nil {
-		return RouteFilterRulesClientGetResponse{}, runtime.NewResponseError(resp)
+		return RouteFilterRulesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -303,7 +303,7 @@ func (client *RouteFilterRulesClient) listByRouteFilterCreateRequest(ctx context
 func (client *RouteFilterRulesClient) listByRouteFilterHandleResponse(resp *http.Response) (RouteFilterRulesClientListByRouteFilterResponse, error) {
 	result := RouteFilterRulesClientListByRouteFilterResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilterRuleListResult); err != nil {
-		return RouteFilterRulesClientListByRouteFilterResponse{}, runtime.NewResponseError(resp)
+		return RouteFilterRulesClientListByRouteFilterResponse{}, err
 	}
 	return result, nil
 }

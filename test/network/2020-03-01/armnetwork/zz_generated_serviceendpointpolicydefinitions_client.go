@@ -251,7 +251,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) getCreateRequest(ctx conte
 func (client *ServiceEndpointPolicyDefinitionsClient) getHandleResponse(resp *http.Response) (ServiceEndpointPolicyDefinitionsClientGetResponse, error) {
 	result := ServiceEndpointPolicyDefinitionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ServiceEndpointPolicyDefinition); err != nil {
-		return ServiceEndpointPolicyDefinitionsClientGetResponse{}, runtime.NewResponseError(resp)
+		return ServiceEndpointPolicyDefinitionsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -304,7 +304,7 @@ func (client *ServiceEndpointPolicyDefinitionsClient) listByResourceGroupCreateR
 func (client *ServiceEndpointPolicyDefinitionsClient) listByResourceGroupHandleResponse(resp *http.Response) (ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse, error) {
 	result := ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ServiceEndpointPolicyDefinitionListResult); err != nil {
-		return ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return ServiceEndpointPolicyDefinitionsClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }

@@ -73,7 +73,7 @@ func (client *XMLClient) getACLsCreateRequest(ctx context.Context, options *XMLC
 func (client *XMLClient) getACLsHandleResponse(resp *http.Response) (XMLClientGetACLsResponse, error) {
 	result := XMLClientGetACLsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
-		return XMLClientGetACLsResponse{}, runtime.NewResponseError(resp)
+		return XMLClientGetACLsResponse{}, err
 	}
 	return result, nil
 }
@@ -111,7 +111,7 @@ func (client *XMLClient) getBytesCreateRequest(ctx context.Context, options *XML
 func (client *XMLClient) getBytesHandleResponse(resp *http.Response) (XMLClientGetBytesResponse, error) {
 	result := XMLClientGetBytesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result.ModelWithByteProperty); err != nil {
-		return XMLClientGetBytesResponse{}, runtime.NewResponseError(resp)
+		return XMLClientGetBytesResponse{}, err
 	}
 	return result, nil
 }
@@ -150,7 +150,7 @@ func (client *XMLClient) getComplexTypeRefNoMetaCreateRequest(ctx context.Contex
 func (client *XMLClient) getComplexTypeRefNoMetaHandleResponse(resp *http.Response) (XMLClientGetComplexTypeRefNoMetaResponse, error) {
 	result := XMLClientGetComplexTypeRefNoMetaResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result.RootWithRefAndNoMeta); err != nil {
-		return XMLClientGetComplexTypeRefNoMetaResponse{}, runtime.NewResponseError(resp)
+		return XMLClientGetComplexTypeRefNoMetaResponse{}, err
 	}
 	return result, nil
 }
@@ -189,7 +189,7 @@ func (client *XMLClient) getComplexTypeRefWithMetaCreateRequest(ctx context.Cont
 func (client *XMLClient) getComplexTypeRefWithMetaHandleResponse(resp *http.Response) (XMLClientGetComplexTypeRefWithMetaResponse, error) {
 	result := XMLClientGetComplexTypeRefWithMetaResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result.RootWithRefAndMeta); err != nil {
-		return XMLClientGetComplexTypeRefWithMetaResponse{}, runtime.NewResponseError(resp)
+		return XMLClientGetComplexTypeRefWithMetaResponse{}, err
 	}
 	return result, nil
 }
@@ -228,7 +228,7 @@ func (client *XMLClient) getEmptyChildElementCreateRequest(ctx context.Context, 
 func (client *XMLClient) getEmptyChildElementHandleResponse(resp *http.Response) (XMLClientGetEmptyChildElementResponse, error) {
 	result := XMLClientGetEmptyChildElementResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result.Banana); err != nil {
-		return XMLClientGetEmptyChildElementResponse{}, runtime.NewResponseError(resp)
+		return XMLClientGetEmptyChildElementResponse{}, err
 	}
 	return result, nil
 }
@@ -266,7 +266,7 @@ func (client *XMLClient) getEmptyListCreateRequest(ctx context.Context, options 
 func (client *XMLClient) getEmptyListHandleResponse(resp *http.Response) (XMLClientGetEmptyListResponse, error) {
 	result := XMLClientGetEmptyListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result.Slideshow); err != nil {
-		return XMLClientGetEmptyListResponse{}, runtime.NewResponseError(resp)
+		return XMLClientGetEmptyListResponse{}, err
 	}
 	return result, nil
 }
@@ -304,7 +304,7 @@ func (client *XMLClient) getEmptyRootListCreateRequest(ctx context.Context, opti
 func (client *XMLClient) getEmptyRootListHandleResponse(resp *http.Response) (XMLClientGetEmptyRootListResponse, error) {
 	result := XMLClientGetEmptyRootListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
-		return XMLClientGetEmptyRootListResponse{}, runtime.NewResponseError(resp)
+		return XMLClientGetEmptyRootListResponse{}, err
 	}
 	return result, nil
 }
@@ -343,7 +343,7 @@ func (client *XMLClient) getEmptyWrappedListsCreateRequest(ctx context.Context, 
 func (client *XMLClient) getEmptyWrappedListsHandleResponse(resp *http.Response) (XMLClientGetEmptyWrappedListsResponse, error) {
 	result := XMLClientGetEmptyWrappedListsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result.AppleBarrel); err != nil {
-		return XMLClientGetEmptyWrappedListsResponse{}, runtime.NewResponseError(resp)
+		return XMLClientGetEmptyWrappedListsResponse{}, err
 	}
 	return result, nil
 }
@@ -418,7 +418,7 @@ func (client *XMLClient) getRootListCreateRequest(ctx context.Context, options *
 func (client *XMLClient) getRootListHandleResponse(resp *http.Response) (XMLClientGetRootListResponse, error) {
 	result := XMLClientGetRootListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
-		return XMLClientGetRootListResponse{}, runtime.NewResponseError(resp)
+		return XMLClientGetRootListResponse{}, err
 	}
 	return result, nil
 }
@@ -457,7 +457,7 @@ func (client *XMLClient) getRootListSingleItemCreateRequest(ctx context.Context,
 func (client *XMLClient) getRootListSingleItemHandleResponse(resp *http.Response) (XMLClientGetRootListSingleItemResponse, error) {
 	result := XMLClientGetRootListSingleItemResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
-		return XMLClientGetRootListSingleItemResponse{}, runtime.NewResponseError(resp)
+		return XMLClientGetRootListSingleItemResponse{}, err
 	}
 	return result, nil
 }
@@ -500,7 +500,7 @@ func (client *XMLClient) getServicePropertiesCreateRequest(ctx context.Context, 
 func (client *XMLClient) getServicePropertiesHandleResponse(resp *http.Response) (XMLClientGetServicePropertiesResponse, error) {
 	result := XMLClientGetServicePropertiesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result.StorageServiceProperties); err != nil {
-		return XMLClientGetServicePropertiesResponse{}, runtime.NewResponseError(resp)
+		return XMLClientGetServicePropertiesResponse{}, err
 	}
 	return result, nil
 }
@@ -538,7 +538,7 @@ func (client *XMLClient) getSimpleCreateRequest(ctx context.Context, options *XM
 func (client *XMLClient) getSimpleHandleResponse(resp *http.Response) (XMLClientGetSimpleResponse, error) {
 	result := XMLClientGetSimpleResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result.Slideshow); err != nil {
-		return XMLClientGetSimpleResponse{}, runtime.NewResponseError(resp)
+		return XMLClientGetSimpleResponse{}, err
 	}
 	return result, nil
 }
@@ -576,7 +576,7 @@ func (client *XMLClient) getURICreateRequest(ctx context.Context, options *XMLCl
 func (client *XMLClient) getURIHandleResponse(resp *http.Response) (XMLClientGetURIResponse, error) {
 	result := XMLClientGetURIResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result.ModelWithURLProperty); err != nil {
-		return XMLClientGetURIResponse{}, runtime.NewResponseError(resp)
+		return XMLClientGetURIResponse{}, err
 	}
 	return result, nil
 }
@@ -614,7 +614,7 @@ func (client *XMLClient) getWrappedListsCreateRequest(ctx context.Context, optio
 func (client *XMLClient) getWrappedListsHandleResponse(resp *http.Response) (XMLClientGetWrappedListsResponse, error) {
 	result := XMLClientGetWrappedListsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result.AppleBarrel); err != nil {
-		return XMLClientGetWrappedListsResponse{}, runtime.NewResponseError(resp)
+		return XMLClientGetWrappedListsResponse{}, err
 	}
 	return result, nil
 }
@@ -653,7 +653,7 @@ func (client *XMLClient) getXMsTextCreateRequest(ctx context.Context, options *X
 func (client *XMLClient) getXMsTextHandleResponse(resp *http.Response) (XMLClientGetXMsTextResponse, error) {
 	result := XMLClientGetXMsTextResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result.ObjectWithXMsTextProperty); err != nil {
-		return XMLClientGetXMsTextResponse{}, runtime.NewResponseError(resp)
+		return XMLClientGetXMsTextResponse{}, err
 	}
 	return result, nil
 }
@@ -719,7 +719,7 @@ func (client *XMLClient) jsonOutputCreateRequest(ctx context.Context, options *X
 func (client *XMLClient) jsonOutputHandleResponse(resp *http.Response) (XMLClientJSONOutputResponse, error) {
 	result := XMLClientJSONOutputResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.JSONOutput); err != nil {
-		return XMLClientJSONOutputResponse{}, runtime.NewResponseError(resp)
+		return XMLClientJSONOutputResponse{}, err
 	}
 	return result, nil
 }
@@ -761,7 +761,7 @@ func (client *XMLClient) listBlobsCreateRequest(ctx context.Context, options *XM
 func (client *XMLClient) listBlobsHandleResponse(resp *http.Response) (XMLClientListBlobsResponse, error) {
 	result := XMLClientListBlobsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result.ListBlobsResponse); err != nil {
-		return XMLClientListBlobsResponse{}, runtime.NewResponseError(resp)
+		return XMLClientListBlobsResponse{}, err
 	}
 	return result, nil
 }
@@ -802,7 +802,7 @@ func (client *XMLClient) listContainersCreateRequest(ctx context.Context, option
 func (client *XMLClient) listContainersHandleResponse(resp *http.Response) (XMLClientListContainersResponse, error) {
 	result := XMLClientListContainersResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsXML(resp, &result.ListContainersResponse); err != nil {
-		return XMLClientListContainersResponse{}, runtime.NewResponseError(resp)
+		return XMLClientListContainersResponse{}, err
 	}
 	return result, nil
 }

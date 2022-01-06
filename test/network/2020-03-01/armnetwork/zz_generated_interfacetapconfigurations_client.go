@@ -251,7 +251,7 @@ func (client *InterfaceTapConfigurationsClient) getCreateRequest(ctx context.Con
 func (client *InterfaceTapConfigurationsClient) getHandleResponse(resp *http.Response) (InterfaceTapConfigurationsClientGetResponse, error) {
 	result := InterfaceTapConfigurationsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceTapConfiguration); err != nil {
-		return InterfaceTapConfigurationsClientGetResponse{}, runtime.NewResponseError(resp)
+		return InterfaceTapConfigurationsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -304,7 +304,7 @@ func (client *InterfaceTapConfigurationsClient) listCreateRequest(ctx context.Co
 func (client *InterfaceTapConfigurationsClient) listHandleResponse(resp *http.Response) (InterfaceTapConfigurationsClientListResponse, error) {
 	result := InterfaceTapConfigurationsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceTapConfigurationListResult); err != nil {
-		return InterfaceTapConfigurationsClientListResponse{}, runtime.NewResponseError(resp)
+		return InterfaceTapConfigurationsClientListResponse{}, err
 	}
 	return result, nil
 }

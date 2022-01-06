@@ -426,7 +426,7 @@ func (client *VirtualMachineScaleSetsClient) forceRecoveryServiceFabricPlatformU
 func (client *VirtualMachineScaleSetsClient) forceRecoveryServiceFabricPlatformUpdateDomainWalkHandleResponse(resp *http.Response) (VirtualMachineScaleSetsClientForceRecoveryServiceFabricPlatformUpdateDomainWalkResponse, error) {
 	result := VirtualMachineScaleSetsClientForceRecoveryServiceFabricPlatformUpdateDomainWalkResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RecoveryWalkResponse); err != nil {
-		return VirtualMachineScaleSetsClientForceRecoveryServiceFabricPlatformUpdateDomainWalkResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachineScaleSetsClientForceRecoveryServiceFabricPlatformUpdateDomainWalkResponse{}, err
 	}
 	return result, nil
 }
@@ -482,7 +482,7 @@ func (client *VirtualMachineScaleSetsClient) getCreateRequest(ctx context.Contex
 func (client *VirtualMachineScaleSetsClient) getHandleResponse(resp *http.Response) (VirtualMachineScaleSetsClientGetResponse, error) {
 	result := VirtualMachineScaleSetsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSet); err != nil {
-		return VirtualMachineScaleSetsClientGetResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachineScaleSetsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -538,7 +538,7 @@ func (client *VirtualMachineScaleSetsClient) getInstanceViewCreateRequest(ctx co
 func (client *VirtualMachineScaleSetsClient) getInstanceViewHandleResponse(resp *http.Response) (VirtualMachineScaleSetsClientGetInstanceViewResponse, error) {
 	result := VirtualMachineScaleSetsClientGetInstanceViewResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetInstanceView); err != nil {
-		return VirtualMachineScaleSetsClientGetInstanceViewResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachineScaleSetsClientGetInstanceViewResponse{}, err
 	}
 	return result, nil
 }
@@ -591,7 +591,7 @@ func (client *VirtualMachineScaleSetsClient) getOSUpgradeHistoryCreateRequest(ct
 func (client *VirtualMachineScaleSetsClient) getOSUpgradeHistoryHandleResponse(resp *http.Response) (VirtualMachineScaleSetsClientGetOSUpgradeHistoryResponse, error) {
 	result := VirtualMachineScaleSetsClientGetOSUpgradeHistoryResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetListOSUpgradeHistory); err != nil {
-		return VirtualMachineScaleSetsClientGetOSUpgradeHistoryResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachineScaleSetsClientGetOSUpgradeHistoryResponse{}, err
 	}
 	return result, nil
 }
@@ -639,7 +639,7 @@ func (client *VirtualMachineScaleSetsClient) listCreateRequest(ctx context.Conte
 func (client *VirtualMachineScaleSetsClient) listHandleResponse(resp *http.Response) (VirtualMachineScaleSetsClientListResponse, error) {
 	result := VirtualMachineScaleSetsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetListResult); err != nil {
-		return VirtualMachineScaleSetsClientListResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachineScaleSetsClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -684,7 +684,7 @@ func (client *VirtualMachineScaleSetsClient) listAllCreateRequest(ctx context.Co
 func (client *VirtualMachineScaleSetsClient) listAllHandleResponse(resp *http.Response) (VirtualMachineScaleSetsClientListAllResponse, error) {
 	result := VirtualMachineScaleSetsClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetListWithLinkResult); err != nil {
-		return VirtualMachineScaleSetsClientListAllResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachineScaleSetsClientListAllResponse{}, err
 	}
 	return result, nil
 }
@@ -738,7 +738,7 @@ func (client *VirtualMachineScaleSetsClient) listSKUsCreateRequest(ctx context.C
 func (client *VirtualMachineScaleSetsClient) listSKUsHandleResponse(resp *http.Response) (VirtualMachineScaleSetsClientListSKUsResponse, error) {
 	result := VirtualMachineScaleSetsClientListSKUsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetListSKUsResult); err != nil {
-		return VirtualMachineScaleSetsClientListSKUsResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachineScaleSetsClientListSKUsResponse{}, err
 	}
 	return result, nil
 }

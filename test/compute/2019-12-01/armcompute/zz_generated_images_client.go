@@ -236,7 +236,7 @@ func (client *ImagesClient) getCreateRequest(ctx context.Context, resourceGroupN
 func (client *ImagesClient) getHandleResponse(resp *http.Response) (ImagesClientGetResponse, error) {
 	result := ImagesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Image); err != nil {
-		return ImagesClientGetResponse{}, runtime.NewResponseError(resp)
+		return ImagesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -279,7 +279,7 @@ func (client *ImagesClient) listCreateRequest(ctx context.Context, options *Imag
 func (client *ImagesClient) listHandleResponse(resp *http.Response) (ImagesClientListResponse, error) {
 	result := ImagesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ImageListResult); err != nil {
-		return ImagesClientListResponse{}, runtime.NewResponseError(resp)
+		return ImagesClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -327,7 +327,7 @@ func (client *ImagesClient) listByResourceGroupCreateRequest(ctx context.Context
 func (client *ImagesClient) listByResourceGroupHandleResponse(resp *http.Response) (ImagesClientListByResourceGroupResponse, error) {
 	result := ImagesClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ImageListResult); err != nil {
-		return ImagesClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return ImagesClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }

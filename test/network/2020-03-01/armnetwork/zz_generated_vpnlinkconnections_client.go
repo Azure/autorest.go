@@ -103,7 +103,7 @@ func (client *VPNLinkConnectionsClient) listByVPNConnectionCreateRequest(ctx con
 func (client *VPNLinkConnectionsClient) listByVPNConnectionHandleResponse(resp *http.Response) (VPNLinkConnectionsClientListByVPNConnectionResponse, error) {
 	result := VPNLinkConnectionsClientListByVPNConnectionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNSiteLinkConnectionsResult); err != nil {
-		return VPNLinkConnectionsClientListByVPNConnectionResponse{}, runtime.NewResponseError(resp)
+		return VPNLinkConnectionsClientListByVPNConnectionResponse{}, err
 	}
 	return result, nil
 }

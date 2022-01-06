@@ -238,7 +238,7 @@ func (client *IPAllocationsClient) getCreateRequest(ctx context.Context, resourc
 func (client *IPAllocationsClient) getHandleResponse(resp *http.Response) (IPAllocationsClientGetResponse, error) {
 	result := IPAllocationsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPAllocation); err != nil {
-		return IPAllocationsClientGetResponse{}, runtime.NewResponseError(resp)
+		return IPAllocationsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -280,7 +280,7 @@ func (client *IPAllocationsClient) listCreateRequest(ctx context.Context, option
 func (client *IPAllocationsClient) listHandleResponse(resp *http.Response) (IPAllocationsClientListResponse, error) {
 	result := IPAllocationsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPAllocationListResult); err != nil {
-		return IPAllocationsClientListResponse{}, runtime.NewResponseError(resp)
+		return IPAllocationsClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -328,7 +328,7 @@ func (client *IPAllocationsClient) listByResourceGroupCreateRequest(ctx context.
 func (client *IPAllocationsClient) listByResourceGroupHandleResponse(resp *http.Response) (IPAllocationsClientListByResourceGroupResponse, error) {
 	result := IPAllocationsClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPAllocationListResult); err != nil {
-		return IPAllocationsClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return IPAllocationsClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -385,7 +385,7 @@ func (client *IPAllocationsClient) updateTagsCreateRequest(ctx context.Context, 
 func (client *IPAllocationsClient) updateTagsHandleResponse(resp *http.Response) (IPAllocationsClientUpdateTagsResponse, error) {
 	result := IPAllocationsClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IPAllocation); err != nil {
-		return IPAllocationsClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return IPAllocationsClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

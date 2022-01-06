@@ -251,7 +251,7 @@ func (client *ExpressRouteCircuitPeeringsClient) getCreateRequest(ctx context.Co
 func (client *ExpressRouteCircuitPeeringsClient) getHandleResponse(resp *http.Response) (ExpressRouteCircuitPeeringsClientGetResponse, error) {
 	result := ExpressRouteCircuitPeeringsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuitPeering); err != nil {
-		return ExpressRouteCircuitPeeringsClientGetResponse{}, runtime.NewResponseError(resp)
+		return ExpressRouteCircuitPeeringsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -304,7 +304,7 @@ func (client *ExpressRouteCircuitPeeringsClient) listCreateRequest(ctx context.C
 func (client *ExpressRouteCircuitPeeringsClient) listHandleResponse(resp *http.Response) (ExpressRouteCircuitPeeringsClientListResponse, error) {
 	result := ExpressRouteCircuitPeeringsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuitPeeringListResult); err != nil {
-		return ExpressRouteCircuitPeeringsClientListResponse{}, runtime.NewResponseError(resp)
+		return ExpressRouteCircuitPeeringsClientListResponse{}, err
 	}
 	return result, nil
 }

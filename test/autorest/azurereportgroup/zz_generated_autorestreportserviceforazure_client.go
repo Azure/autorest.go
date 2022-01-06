@@ -74,7 +74,7 @@ func (client *AutoRestReportServiceForAzureClient) getReportCreateRequest(ctx co
 func (client *AutoRestReportServiceForAzureClient) getReportHandleResponse(resp *http.Response) (AutoRestReportServiceForAzureClientGetReportResponse, error) {
 	result := AutoRestReportServiceForAzureClientGetReportResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return AutoRestReportServiceForAzureClientGetReportResponse{}, runtime.NewResponseError(resp)
+		return AutoRestReportServiceForAzureClientGetReportResponse{}, err
 	}
 	return result, nil
 }

@@ -104,7 +104,7 @@ func (client *client) createHandleResponse(resp *http.Response) (clientCreateRes
 		result.AccessControlExposeHeaders = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AliasesCreateResponse); err != nil {
-		return clientCreateResponse{}, runtime.NewResponseError(resp)
+		return clientCreateResponse{}, err
 	}
 	return result, nil
 }
@@ -143,7 +143,7 @@ func (client *client) getScriptHandleResponse(resp *http.Response) (clientGetScr
 	result := clientGetScriptResponse{RawResponse: resp}
 	body, err := runtime.Payload(resp)
 	if err != nil {
-		return clientGetScriptResponse{}, runtime.NewResponseError(resp)
+		return clientGetScriptResponse{}, err
 	}
 	txt := string(body)
 	result.Value = &txt
@@ -207,7 +207,7 @@ func (client *client) listCreateRequest(ctx context.Context, options *clientList
 func (client *client) listHandleResponse(resp *http.Response) (clientListResponse, error) {
 	result := clientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListResponse); err != nil {
-		return clientListResponse{}, runtime.NewResponseError(resp)
+		return clientListResponse{}, err
 	}
 	return result, nil
 }

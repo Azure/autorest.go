@@ -97,7 +97,7 @@ func (client *NodesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Cont
 func (client *NodesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (NodesClientListByDataBoxEdgeDeviceResponse, error) {
 	result := NodesClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NodeList); err != nil {
-		return NodesClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(resp)
+		return NodesClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	return result, nil
 }

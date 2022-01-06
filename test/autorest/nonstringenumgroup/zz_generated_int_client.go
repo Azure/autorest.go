@@ -68,7 +68,7 @@ func (client *IntClient) getCreateRequest(ctx context.Context, options *IntClien
 func (client *IntClient) getHandleResponse(resp *http.Response) (IntClientGetResponse, error) {
 	result := IntClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntClientGetResponse{}, runtime.NewResponseError(resp)
+		return IntClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -109,7 +109,7 @@ func (client *IntClient) putCreateRequest(ctx context.Context, options *IntClien
 func (client *IntClient) putHandleResponse(resp *http.Response) (IntClientPutResponse, error) {
 	result := IntClientPutResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntClientPutResponse{}, runtime.NewResponseError(resp)
+		return IntClientPutResponse{}, err
 	}
 	return result, nil
 }

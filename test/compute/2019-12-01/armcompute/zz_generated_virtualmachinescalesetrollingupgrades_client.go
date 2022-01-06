@@ -167,7 +167,7 @@ func (client *VirtualMachineScaleSetRollingUpgradesClient) getLatestCreateReques
 func (client *VirtualMachineScaleSetRollingUpgradesClient) getLatestHandleResponse(resp *http.Response) (VirtualMachineScaleSetRollingUpgradesClientGetLatestResponse, error) {
 	result := VirtualMachineScaleSetRollingUpgradesClientGetLatestResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RollingUpgradeStatusInfo); err != nil {
-		return VirtualMachineScaleSetRollingUpgradesClientGetLatestResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachineScaleSetRollingUpgradesClientGetLatestResponse{}, err
 	}
 	return result, nil
 }

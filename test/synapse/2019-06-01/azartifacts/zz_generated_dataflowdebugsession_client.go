@@ -69,7 +69,7 @@ func (client *dataFlowDebugSessionClient) addDataFlowCreateRequest(ctx context.C
 func (client *dataFlowDebugSessionClient) addDataFlowHandleResponse(resp *http.Response) (dataFlowDebugSessionClientAddDataFlowResponse, error) {
 	result := dataFlowDebugSessionClientAddDataFlowResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AddDataFlowToDebugSessionResponse); err != nil {
-		return dataFlowDebugSessionClientAddDataFlowResponse{}, runtime.NewResponseError(resp)
+		return dataFlowDebugSessionClientAddDataFlowResponse{}, err
 	}
 	return result, nil
 }
@@ -250,7 +250,7 @@ func (client *dataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceC
 func (client *dataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceHandleResponse(resp *http.Response) (dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse, error) {
 	result := dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.QueryDataFlowDebugSessionsResponse); err != nil {
-		return dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse{}, runtime.NewResponseError(resp)
+		return dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse{}, err
 	}
 	return result, nil
 }

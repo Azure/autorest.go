@@ -256,7 +256,7 @@ func (client *VirtualMachineScaleSetVMsClient) getCreateRequest(ctx context.Cont
 func (client *VirtualMachineScaleSetVMsClient) getHandleResponse(resp *http.Response) (VirtualMachineScaleSetVMsClientGetResponse, error) {
 	result := VirtualMachineScaleSetVMsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetVM); err != nil {
-		return VirtualMachineScaleSetVMsClientGetResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachineScaleSetVMsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -317,7 +317,7 @@ func (client *VirtualMachineScaleSetVMsClient) getInstanceViewCreateRequest(ctx 
 func (client *VirtualMachineScaleSetVMsClient) getInstanceViewHandleResponse(resp *http.Response) (VirtualMachineScaleSetVMsClientGetInstanceViewResponse, error) {
 	result := VirtualMachineScaleSetVMsClientGetInstanceViewResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetVMInstanceView); err != nil {
-		return VirtualMachineScaleSetVMsClientGetInstanceViewResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachineScaleSetVMsClientGetInstanceViewResponse{}, err
 	}
 	return result, nil
 }
@@ -379,7 +379,7 @@ func (client *VirtualMachineScaleSetVMsClient) listCreateRequest(ctx context.Con
 func (client *VirtualMachineScaleSetVMsClient) listHandleResponse(resp *http.Response) (VirtualMachineScaleSetVMsClientListResponse, error) {
 	result := VirtualMachineScaleSetVMsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineScaleSetVMListResult); err != nil {
-		return VirtualMachineScaleSetVMsClientListResponse{}, runtime.NewResponseError(resp)
+		return VirtualMachineScaleSetVMsClientListResponse{}, err
 	}
 	return result, nil
 }

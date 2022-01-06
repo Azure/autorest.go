@@ -198,7 +198,7 @@ func (client *datasetClient) getDatasetCreateRequest(ctx context.Context, datase
 func (client *datasetClient) getDatasetHandleResponse(resp *http.Response) (datasetClientGetDatasetResponse, error) {
 	result := datasetClientGetDatasetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DatasetResource); err != nil {
-		return datasetClientGetDatasetResponse{}, runtime.NewResponseError(resp)
+		return datasetClientGetDatasetResponse{}, err
 	}
 	return result, nil
 }
@@ -237,7 +237,7 @@ func (client *datasetClient) getDatasetsByWorkspaceCreateRequest(ctx context.Con
 func (client *datasetClient) getDatasetsByWorkspaceHandleResponse(resp *http.Response) (datasetClientGetDatasetsByWorkspaceResponse, error) {
 	result := datasetClientGetDatasetsByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DatasetListResponse); err != nil {
-		return datasetClientGetDatasetsByWorkspaceResponse{}, runtime.NewResponseError(resp)
+		return datasetClientGetDatasetsByWorkspaceResponse{}, err
 	}
 	return result, nil
 }

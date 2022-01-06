@@ -93,7 +93,7 @@ func (client *AvailablePrivateEndpointTypesClient) listCreateRequest(ctx context
 func (client *AvailablePrivateEndpointTypesClient) listHandleResponse(resp *http.Response) (AvailablePrivateEndpointTypesClientListResponse, error) {
 	result := AvailablePrivateEndpointTypesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailablePrivateEndpointTypesResult); err != nil {
-		return AvailablePrivateEndpointTypesClientListResponse{}, runtime.NewResponseError(resp)
+		return AvailablePrivateEndpointTypesClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -147,7 +147,7 @@ func (client *AvailablePrivateEndpointTypesClient) listByResourceGroupCreateRequ
 func (client *AvailablePrivateEndpointTypesClient) listByResourceGroupHandleResponse(resp *http.Response) (AvailablePrivateEndpointTypesClientListByResourceGroupResponse, error) {
 	result := AvailablePrivateEndpointTypesClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailablePrivateEndpointTypesResult); err != nil {
-		return AvailablePrivateEndpointTypesClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return AvailablePrivateEndpointTypesClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }

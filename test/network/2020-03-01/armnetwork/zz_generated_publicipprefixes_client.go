@@ -238,7 +238,7 @@ func (client *PublicIPPrefixesClient) getCreateRequest(ctx context.Context, reso
 func (client *PublicIPPrefixesClient) getHandleResponse(resp *http.Response) (PublicIPPrefixesClientGetResponse, error) {
 	result := PublicIPPrefixesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPPrefix); err != nil {
-		return PublicIPPrefixesClientGetResponse{}, runtime.NewResponseError(resp)
+		return PublicIPPrefixesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -285,7 +285,7 @@ func (client *PublicIPPrefixesClient) listCreateRequest(ctx context.Context, res
 func (client *PublicIPPrefixesClient) listHandleResponse(resp *http.Response) (PublicIPPrefixesClientListResponse, error) {
 	result := PublicIPPrefixesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPPrefixListResult); err != nil {
-		return PublicIPPrefixesClientListResponse{}, runtime.NewResponseError(resp)
+		return PublicIPPrefixesClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -328,7 +328,7 @@ func (client *PublicIPPrefixesClient) listAllCreateRequest(ctx context.Context, 
 func (client *PublicIPPrefixesClient) listAllHandleResponse(resp *http.Response) (PublicIPPrefixesClientListAllResponse, error) {
 	result := PublicIPPrefixesClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPPrefixListResult); err != nil {
-		return PublicIPPrefixesClientListAllResponse{}, runtime.NewResponseError(resp)
+		return PublicIPPrefixesClientListAllResponse{}, err
 	}
 	return result, nil
 }
@@ -385,7 +385,7 @@ func (client *PublicIPPrefixesClient) updateTagsCreateRequest(ctx context.Contex
 func (client *PublicIPPrefixesClient) updateTagsHandleResponse(resp *http.Response) (PublicIPPrefixesClientUpdateTagsResponse, error) {
 	result := PublicIPPrefixesClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPPrefix); err != nil {
-		return PublicIPPrefixesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return PublicIPPrefixesClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

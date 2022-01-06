@@ -68,7 +68,7 @@ func (client *StringClient) getBase64EncodedCreateRequest(ctx context.Context, o
 func (client *StringClient) getBase64EncodedHandleResponse(resp *http.Response) (StringClientGetBase64EncodedResponse, error) {
 	result := StringClientGetBase64EncodedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return StringClientGetBase64EncodedResponse{}, runtime.NewResponseError(resp)
+		return StringClientGetBase64EncodedResponse{}, err
 	}
 	return result, nil
 }
@@ -107,7 +107,7 @@ func (client *StringClient) getBase64URLEncodedCreateRequest(ctx context.Context
 func (client *StringClient) getBase64URLEncodedHandleResponse(resp *http.Response) (StringClientGetBase64URLEncodedResponse, error) {
 	result := StringClientGetBase64URLEncodedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64URLFormat); err != nil {
-		return StringClientGetBase64URLEncodedResponse{}, runtime.NewResponseError(resp)
+		return StringClientGetBase64URLEncodedResponse{}, err
 	}
 	return result, nil
 }
@@ -145,7 +145,7 @@ func (client *StringClient) getEmptyCreateRequest(ctx context.Context, options *
 func (client *StringClient) getEmptyHandleResponse(resp *http.Response) (StringClientGetEmptyResponse, error) {
 	result := StringClientGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringClientGetEmptyResponse{}, runtime.NewResponseError(resp)
+		return StringClientGetEmptyResponse{}, err
 	}
 	return result, nil
 }
@@ -183,7 +183,7 @@ func (client *StringClient) getMBCSCreateRequest(ctx context.Context, options *S
 func (client *StringClient) getMBCSHandleResponse(resp *http.Response) (StringClientGetMBCSResponse, error) {
 	result := StringClientGetMBCSResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringClientGetMBCSResponse{}, runtime.NewResponseError(resp)
+		return StringClientGetMBCSResponse{}, err
 	}
 	return result, nil
 }
@@ -221,7 +221,7 @@ func (client *StringClient) getNotProvidedCreateRequest(ctx context.Context, opt
 func (client *StringClient) getNotProvidedHandleResponse(resp *http.Response) (StringClientGetNotProvidedResponse, error) {
 	result := StringClientGetNotProvidedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringClientGetNotProvidedResponse{}, runtime.NewResponseError(resp)
+		return StringClientGetNotProvidedResponse{}, err
 	}
 	return result, nil
 }
@@ -259,7 +259,7 @@ func (client *StringClient) getNullCreateRequest(ctx context.Context, options *S
 func (client *StringClient) getNullHandleResponse(resp *http.Response) (StringClientGetNullResponse, error) {
 	result := StringClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringClientGetNullResponse{}, runtime.NewResponseError(resp)
+		return StringClientGetNullResponse{}, err
 	}
 	return result, nil
 }
@@ -298,7 +298,7 @@ func (client *StringClient) getNullBase64URLEncodedCreateRequest(ctx context.Con
 func (client *StringClient) getNullBase64URLEncodedHandleResponse(resp *http.Response) (StringClientGetNullBase64URLEncodedResponse, error) {
 	result := StringClientGetNullBase64URLEncodedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64URLFormat); err != nil {
-		return StringClientGetNullBase64URLEncodedResponse{}, runtime.NewResponseError(resp)
+		return StringClientGetNullBase64URLEncodedResponse{}, err
 	}
 	return result, nil
 }
@@ -337,7 +337,7 @@ func (client *StringClient) getWhitespaceCreateRequest(ctx context.Context, opti
 func (client *StringClient) getWhitespaceHandleResponse(resp *http.Response) (StringClientGetWhitespaceResponse, error) {
 	result := StringClientGetWhitespaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringClientGetWhitespaceResponse{}, runtime.NewResponseError(resp)
+		return StringClientGetWhitespaceResponse{}, err
 	}
 	return result, nil
 }

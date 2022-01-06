@@ -251,7 +251,7 @@ func (client *VPNConnectionsClient) getCreateRequest(ctx context.Context, resour
 func (client *VPNConnectionsClient) getHandleResponse(resp *http.Response) (VPNConnectionsClientGetResponse, error) {
 	result := VPNConnectionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNConnection); err != nil {
-		return VPNConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
+		return VPNConnectionsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -304,7 +304,7 @@ func (client *VPNConnectionsClient) listByVPNGatewayCreateRequest(ctx context.Co
 func (client *VPNConnectionsClient) listByVPNGatewayHandleResponse(resp *http.Response) (VPNConnectionsClientListByVPNGatewayResponse, error) {
 	result := VPNConnectionsClientListByVPNGatewayResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNConnectionsResult); err != nil {
-		return VPNConnectionsClientListByVPNGatewayResponse{}, runtime.NewResponseError(resp)
+		return VPNConnectionsClientListByVPNGatewayResponse{}, err
 	}
 	return result, nil
 }

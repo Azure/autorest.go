@@ -237,7 +237,7 @@ func (client *NatGatewaysClient) getCreateRequest(ctx context.Context, resourceG
 func (client *NatGatewaysClient) getHandleResponse(resp *http.Response) (NatGatewaysClientGetResponse, error) {
 	result := NatGatewaysClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NatGateway); err != nil {
-		return NatGatewaysClientGetResponse{}, runtime.NewResponseError(resp)
+		return NatGatewaysClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -284,7 +284,7 @@ func (client *NatGatewaysClient) listCreateRequest(ctx context.Context, resource
 func (client *NatGatewaysClient) listHandleResponse(resp *http.Response) (NatGatewaysClientListResponse, error) {
 	result := NatGatewaysClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NatGatewayListResult); err != nil {
-		return NatGatewaysClientListResponse{}, runtime.NewResponseError(resp)
+		return NatGatewaysClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -326,7 +326,7 @@ func (client *NatGatewaysClient) listAllCreateRequest(ctx context.Context, optio
 func (client *NatGatewaysClient) listAllHandleResponse(resp *http.Response) (NatGatewaysClientListAllResponse, error) {
 	result := NatGatewaysClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NatGatewayListResult); err != nil {
-		return NatGatewaysClientListAllResponse{}, runtime.NewResponseError(resp)
+		return NatGatewaysClientListAllResponse{}, err
 	}
 	return result, nil
 }
@@ -382,7 +382,7 @@ func (client *NatGatewaysClient) updateTagsCreateRequest(ctx context.Context, re
 func (client *NatGatewaysClient) updateTagsHandleResponse(resp *http.Response) (NatGatewaysClientUpdateTagsResponse, error) {
 	result := NatGatewaysClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NatGateway); err != nil {
-		return NatGatewaysClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return NatGatewaysClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

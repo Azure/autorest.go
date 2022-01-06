@@ -238,7 +238,7 @@ func (client *PublicIPAddressesClient) getCreateRequest(ctx context.Context, res
 func (client *PublicIPAddressesClient) getHandleResponse(resp *http.Response) (PublicIPAddressesClientGetResponse, error) {
 	result := PublicIPAddressesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPAddress); err != nil {
-		return PublicIPAddressesClientGetResponse{}, runtime.NewResponseError(resp)
+		return PublicIPAddressesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -317,7 +317,7 @@ func (client *PublicIPAddressesClient) getVirtualMachineScaleSetPublicIPAddressC
 func (client *PublicIPAddressesClient) getVirtualMachineScaleSetPublicIPAddressHandleResponse(resp *http.Response) (PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressResponse, error) {
 	result := PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPAddress); err != nil {
-		return PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressResponse{}, runtime.NewResponseError(resp)
+		return PublicIPAddressesClientGetVirtualMachineScaleSetPublicIPAddressResponse{}, err
 	}
 	return result, nil
 }
@@ -364,7 +364,7 @@ func (client *PublicIPAddressesClient) listCreateRequest(ctx context.Context, re
 func (client *PublicIPAddressesClient) listHandleResponse(resp *http.Response) (PublicIPAddressesClientListResponse, error) {
 	result := PublicIPAddressesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPAddressListResult); err != nil {
-		return PublicIPAddressesClientListResponse{}, runtime.NewResponseError(resp)
+		return PublicIPAddressesClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -407,7 +407,7 @@ func (client *PublicIPAddressesClient) listAllCreateRequest(ctx context.Context,
 func (client *PublicIPAddressesClient) listAllHandleResponse(resp *http.Response) (PublicIPAddressesClientListAllResponse, error) {
 	result := PublicIPAddressesClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPAddressListResult); err != nil {
-		return PublicIPAddressesClientListAllResponse{}, runtime.NewResponseError(resp)
+		return PublicIPAddressesClientListAllResponse{}, err
 	}
 	return result, nil
 }
@@ -461,7 +461,7 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetPublicIPAddress
 func (client *PublicIPAddressesClient) listVirtualMachineScaleSetPublicIPAddressesHandleResponse(resp *http.Response) (PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse, error) {
 	result := PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPAddressListResult); err != nil {
-		return PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse{}, runtime.NewResponseError(resp)
+		return PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesResponse{}, err
 	}
 	return result, nil
 }
@@ -530,7 +530,7 @@ func (client *PublicIPAddressesClient) listVirtualMachineScaleSetVMPublicIPAddre
 func (client *PublicIPAddressesClient) listVirtualMachineScaleSetVMPublicIPAddressesHandleResponse(resp *http.Response) (PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse, error) {
 	result := PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPAddressListResult); err != nil {
-		return PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse{}, runtime.NewResponseError(resp)
+		return PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesResponse{}, err
 	}
 	return result, nil
 }
@@ -587,7 +587,7 @@ func (client *PublicIPAddressesClient) updateTagsCreateRequest(ctx context.Conte
 func (client *PublicIPAddressesClient) updateTagsHandleResponse(resp *http.Response) (PublicIPAddressesClientUpdateTagsResponse, error) {
 	result := PublicIPAddressesClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PublicIPAddress); err != nil {
-		return PublicIPAddressesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return PublicIPAddressesClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

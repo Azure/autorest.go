@@ -239,7 +239,7 @@ func (client *DisksClient) getCreateRequest(ctx context.Context, resourceGroupNa
 func (client *DisksClient) getHandleResponse(resp *http.Response) (DisksClientGetResponse, error) {
 	result := DisksClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Disk); err != nil {
-		return DisksClientGetResponse{}, runtime.NewResponseError(resp)
+		return DisksClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -350,7 +350,7 @@ func (client *DisksClient) listCreateRequest(ctx context.Context, options *Disks
 func (client *DisksClient) listHandleResponse(resp *http.Response) (DisksClientListResponse, error) {
 	result := DisksClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DiskList); err != nil {
-		return DisksClientListResponse{}, runtime.NewResponseError(resp)
+		return DisksClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -398,7 +398,7 @@ func (client *DisksClient) listByResourceGroupCreateRequest(ctx context.Context,
 func (client *DisksClient) listByResourceGroupHandleResponse(resp *http.Response) (DisksClientListByResourceGroupResponse, error) {
 	result := DisksClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DiskList); err != nil {
-		return DisksClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return DisksClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }

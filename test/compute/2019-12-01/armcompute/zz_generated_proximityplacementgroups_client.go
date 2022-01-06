@@ -102,7 +102,7 @@ func (client *ProximityPlacementGroupsClient) createOrUpdateCreateRequest(ctx co
 func (client *ProximityPlacementGroupsClient) createOrUpdateHandleResponse(resp *http.Response) (ProximityPlacementGroupsClientCreateOrUpdateResponse, error) {
 	result := ProximityPlacementGroupsClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProximityPlacementGroup); err != nil {
-		return ProximityPlacementGroupsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+		return ProximityPlacementGroupsClientCreateOrUpdateResponse{}, err
 	}
 	return result, nil
 }
@@ -207,7 +207,7 @@ func (client *ProximityPlacementGroupsClient) getCreateRequest(ctx context.Conte
 func (client *ProximityPlacementGroupsClient) getHandleResponse(resp *http.Response) (ProximityPlacementGroupsClientGetResponse, error) {
 	result := ProximityPlacementGroupsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProximityPlacementGroup); err != nil {
-		return ProximityPlacementGroupsClientGetResponse{}, runtime.NewResponseError(resp)
+		return ProximityPlacementGroupsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -255,7 +255,7 @@ func (client *ProximityPlacementGroupsClient) listByResourceGroupCreateRequest(c
 func (client *ProximityPlacementGroupsClient) listByResourceGroupHandleResponse(resp *http.Response) (ProximityPlacementGroupsClientListByResourceGroupResponse, error) {
 	result := ProximityPlacementGroupsClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProximityPlacementGroupListResult); err != nil {
-		return ProximityPlacementGroupsClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return ProximityPlacementGroupsClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -298,7 +298,7 @@ func (client *ProximityPlacementGroupsClient) listBySubscriptionCreateRequest(ct
 func (client *ProximityPlacementGroupsClient) listBySubscriptionHandleResponse(resp *http.Response) (ProximityPlacementGroupsClientListBySubscriptionResponse, error) {
 	result := ProximityPlacementGroupsClientListBySubscriptionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProximityPlacementGroupListResult); err != nil {
-		return ProximityPlacementGroupsClientListBySubscriptionResponse{}, runtime.NewResponseError(resp)
+		return ProximityPlacementGroupsClientListBySubscriptionResponse{}, err
 	}
 	return result, nil
 }
@@ -355,7 +355,7 @@ func (client *ProximityPlacementGroupsClient) updateCreateRequest(ctx context.Co
 func (client *ProximityPlacementGroupsClient) updateHandleResponse(resp *http.Response) (ProximityPlacementGroupsClientUpdateResponse, error) {
 	result := ProximityPlacementGroupsClientUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ProximityPlacementGroup); err != nil {
-		return ProximityPlacementGroupsClientUpdateResponse{}, runtime.NewResponseError(resp)
+		return ProximityPlacementGroupsClientUpdateResponse{}, err
 	}
 	return result, nil
 }

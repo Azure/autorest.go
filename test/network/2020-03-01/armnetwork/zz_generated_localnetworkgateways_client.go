@@ -236,7 +236,7 @@ func (client *LocalNetworkGatewaysClient) getCreateRequest(ctx context.Context, 
 func (client *LocalNetworkGatewaysClient) getHandleResponse(resp *http.Response) (LocalNetworkGatewaysClientGetResponse, error) {
 	result := LocalNetworkGatewaysClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LocalNetworkGateway); err != nil {
-		return LocalNetworkGatewaysClientGetResponse{}, runtime.NewResponseError(resp)
+		return LocalNetworkGatewaysClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -284,7 +284,7 @@ func (client *LocalNetworkGatewaysClient) listCreateRequest(ctx context.Context,
 func (client *LocalNetworkGatewaysClient) listHandleResponse(resp *http.Response) (LocalNetworkGatewaysClientListResponse, error) {
 	result := LocalNetworkGatewaysClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LocalNetworkGatewayListResult); err != nil {
-		return LocalNetworkGatewaysClientListResponse{}, runtime.NewResponseError(resp)
+		return LocalNetworkGatewaysClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -341,7 +341,7 @@ func (client *LocalNetworkGatewaysClient) updateTagsCreateRequest(ctx context.Co
 func (client *LocalNetworkGatewaysClient) updateTagsHandleResponse(resp *http.Response) (LocalNetworkGatewaysClientUpdateTagsResponse, error) {
 	result := LocalNetworkGatewaysClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LocalNetworkGateway); err != nil {
-		return LocalNetworkGatewaysClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return LocalNetworkGatewaysClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

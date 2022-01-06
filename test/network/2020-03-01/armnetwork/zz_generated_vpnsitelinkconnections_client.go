@@ -111,7 +111,7 @@ func (client *VPNSiteLinkConnectionsClient) getCreateRequest(ctx context.Context
 func (client *VPNSiteLinkConnectionsClient) getHandleResponse(resp *http.Response) (VPNSiteLinkConnectionsClientGetResponse, error) {
 	result := VPNSiteLinkConnectionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNSiteLinkConnection); err != nil {
-		return VPNSiteLinkConnectionsClientGetResponse{}, runtime.NewResponseError(resp)
+		return VPNSiteLinkConnectionsClientGetResponse{}, err
 	}
 	return result, nil
 }

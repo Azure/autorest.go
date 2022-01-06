@@ -251,7 +251,7 @@ func (client *PrivateDNSZoneGroupsClient) getCreateRequest(ctx context.Context, 
 func (client *PrivateDNSZoneGroupsClient) getHandleResponse(resp *http.Response) (PrivateDNSZoneGroupsClientGetResponse, error) {
 	result := PrivateDNSZoneGroupsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateDNSZoneGroup); err != nil {
-		return PrivateDNSZoneGroupsClientGetResponse{}, runtime.NewResponseError(resp)
+		return PrivateDNSZoneGroupsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -304,7 +304,7 @@ func (client *PrivateDNSZoneGroupsClient) listCreateRequest(ctx context.Context,
 func (client *PrivateDNSZoneGroupsClient) listHandleResponse(resp *http.Response) (PrivateDNSZoneGroupsClientListResponse, error) {
 	result := PrivateDNSZoneGroupsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PrivateDNSZoneGroupListResult); err != nil {
-		return PrivateDNSZoneGroupsClientListResponse{}, runtime.NewResponseError(resp)
+		return PrivateDNSZoneGroupsClientListResponse{}, err
 	}
 	return result, nil
 }

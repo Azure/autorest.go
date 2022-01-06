@@ -100,7 +100,7 @@ func (client *BudgetsClient) createOrUpdateCreateRequest(ctx context.Context, sc
 func (client *BudgetsClient) createOrUpdateHandleResponse(resp *http.Response) (BudgetsClientCreateOrUpdateResponse, error) {
 	result := BudgetsClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Budget); err != nil {
-		return BudgetsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+		return BudgetsClientCreateOrUpdateResponse{}, err
 	}
 	return result, nil
 }
@@ -203,7 +203,7 @@ func (client *BudgetsClient) getCreateRequest(ctx context.Context, scope string,
 func (client *BudgetsClient) getHandleResponse(resp *http.Response) (BudgetsClientGetResponse, error) {
 	result := BudgetsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Budget); err != nil {
-		return BudgetsClientGetResponse{}, runtime.NewResponseError(resp)
+		return BudgetsClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -251,7 +251,7 @@ func (client *BudgetsClient) listCreateRequest(ctx context.Context, scope string
 func (client *BudgetsClient) listHandleResponse(resp *http.Response) (BudgetsClientListResponse, error) {
 	result := BudgetsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BudgetsListResult); err != nil {
-		return BudgetsClientListResponse{}, runtime.NewResponseError(resp)
+		return BudgetsClientListResponse{}, err
 	}
 	return result, nil
 }

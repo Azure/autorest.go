@@ -238,7 +238,7 @@ func (client *FirewallPoliciesClient) getCreateRequest(ctx context.Context, reso
 func (client *FirewallPoliciesClient) getHandleResponse(resp *http.Response) (FirewallPoliciesClientGetResponse, error) {
 	result := FirewallPoliciesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FirewallPolicy); err != nil {
-		return FirewallPoliciesClientGetResponse{}, runtime.NewResponseError(resp)
+		return FirewallPoliciesClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -285,7 +285,7 @@ func (client *FirewallPoliciesClient) listCreateRequest(ctx context.Context, res
 func (client *FirewallPoliciesClient) listHandleResponse(resp *http.Response) (FirewallPoliciesClientListResponse, error) {
 	result := FirewallPoliciesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FirewallPolicyListResult); err != nil {
-		return FirewallPoliciesClientListResponse{}, runtime.NewResponseError(resp)
+		return FirewallPoliciesClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -328,7 +328,7 @@ func (client *FirewallPoliciesClient) listAllCreateRequest(ctx context.Context, 
 func (client *FirewallPoliciesClient) listAllHandleResponse(resp *http.Response) (FirewallPoliciesClientListAllResponse, error) {
 	result := FirewallPoliciesClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FirewallPolicyListResult); err != nil {
-		return FirewallPoliciesClientListAllResponse{}, runtime.NewResponseError(resp)
+		return FirewallPoliciesClientListAllResponse{}, err
 	}
 	return result, nil
 }

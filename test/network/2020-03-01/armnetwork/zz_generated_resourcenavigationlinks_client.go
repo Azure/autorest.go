@@ -106,7 +106,7 @@ func (client *ResourceNavigationLinksClient) listCreateRequest(ctx context.Conte
 func (client *ResourceNavigationLinksClient) listHandleResponse(resp *http.Response) (ResourceNavigationLinksClientListResponse, error) {
 	result := ResourceNavigationLinksClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ResourceNavigationLinksListResult); err != nil {
-		return ResourceNavigationLinksClientListResponse{}, runtime.NewResponseError(resp)
+		return ResourceNavigationLinksClientListResponse{}, err
 	}
 	return result, nil
 }

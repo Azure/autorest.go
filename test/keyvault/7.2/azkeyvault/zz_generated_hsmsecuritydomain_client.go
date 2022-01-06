@@ -128,7 +128,7 @@ func (client *HSMSecurityDomainClient) downloadPendingCreateRequest(ctx context.
 func (client *HSMSecurityDomainClient) downloadPendingHandleResponse(resp *http.Response) (HSMSecurityDomainClientDownloadPendingResponse, error) {
 	result := HSMSecurityDomainClientDownloadPendingResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityDomainOperationStatus); err != nil {
-		return HSMSecurityDomainClientDownloadPendingResponse{}, runtime.NewResponseError(resp)
+		return HSMSecurityDomainClientDownloadPendingResponse{}, err
 	}
 	return result, nil
 }
@@ -173,7 +173,7 @@ func (client *HSMSecurityDomainClient) transferKeyCreateRequest(ctx context.Cont
 func (client *HSMSecurityDomainClient) transferKeyHandleResponse(resp *http.Response) (HSMSecurityDomainClientTransferKeyResponse, error) {
 	result := HSMSecurityDomainClientTransferKeyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TransferKey); err != nil {
-		return HSMSecurityDomainClientTransferKeyResponse{}, runtime.NewResponseError(resp)
+		return HSMSecurityDomainClientTransferKeyResponse{}, err
 	}
 	return result, nil
 }
@@ -269,7 +269,7 @@ func (client *HSMSecurityDomainClient) uploadPendingCreateRequest(ctx context.Co
 func (client *HSMSecurityDomainClient) uploadPendingHandleResponse(resp *http.Response) (HSMSecurityDomainClientUploadPendingResponse, error) {
 	result := HSMSecurityDomainClientUploadPendingResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityDomainOperationStatus); err != nil {
-		return HSMSecurityDomainClientUploadPendingResponse{}, runtime.NewResponseError(resp)
+		return HSMSecurityDomainClientUploadPendingResponse{}, err
 	}
 	return result, nil
 }

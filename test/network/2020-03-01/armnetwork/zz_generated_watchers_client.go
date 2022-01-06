@@ -171,7 +171,7 @@ func (client *WatchersClient) createOrUpdateCreateRequest(ctx context.Context, r
 func (client *WatchersClient) createOrUpdateHandleResponse(resp *http.Response) (WatchersClientCreateOrUpdateResponse, error) {
 	result := WatchersClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Watcher); err != nil {
-		return WatchersClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
+		return WatchersClientCreateOrUpdateResponse{}, err
 	}
 	return result, nil
 }
@@ -292,7 +292,7 @@ func (client *WatchersClient) getCreateRequest(ctx context.Context, resourceGrou
 func (client *WatchersClient) getHandleResponse(resp *http.Response) (WatchersClientGetResponse, error) {
 	result := WatchersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Watcher); err != nil {
-		return WatchersClientGetResponse{}, runtime.NewResponseError(resp)
+		return WatchersClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -630,7 +630,7 @@ func (client *WatchersClient) getTopologyCreateRequest(ctx context.Context, reso
 func (client *WatchersClient) getTopologyHandleResponse(resp *http.Response) (WatchersClientGetTopologyResponse, error) {
 	result := WatchersClientGetTopologyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Topology); err != nil {
-		return WatchersClientGetTopologyResponse{}, runtime.NewResponseError(resp)
+		return WatchersClientGetTopologyResponse{}, err
 	}
 	return result, nil
 }
@@ -884,7 +884,7 @@ func (client *WatchersClient) listCreateRequest(ctx context.Context, resourceGro
 func (client *WatchersClient) listHandleResponse(resp *http.Response) (WatchersClientListResponse, error) {
 	result := WatchersClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.WatcherListResult); err != nil {
-		return WatchersClientListResponse{}, runtime.NewResponseError(resp)
+		return WatchersClientListResponse{}, err
 	}
 	return result, nil
 }
@@ -929,7 +929,7 @@ func (client *WatchersClient) listAllCreateRequest(ctx context.Context, options 
 func (client *WatchersClient) listAllHandleResponse(resp *http.Response) (WatchersClientListAllResponse, error) {
 	result := WatchersClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.WatcherListResult); err != nil {
-		return WatchersClientListAllResponse{}, runtime.NewResponseError(resp)
+		return WatchersClientListAllResponse{}, err
 	}
 	return result, nil
 }
@@ -1123,7 +1123,7 @@ func (client *WatchersClient) updateTagsCreateRequest(ctx context.Context, resou
 func (client *WatchersClient) updateTagsHandleResponse(resp *http.Response) (WatchersClientUpdateTagsResponse, error) {
 	result := WatchersClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Watcher); err != nil {
-		return WatchersClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
+		return WatchersClientUpdateTagsResponse{}, err
 	}
 	return result, nil
 }

@@ -68,7 +68,7 @@ func (client *BasicClient) getEmptyCreateRequest(ctx context.Context, options *B
 func (client *BasicClient) getEmptyHandleResponse(resp *http.Response) (BasicClientGetEmptyResponse, error) {
 	result := BasicClientGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
-		return BasicClientGetEmptyResponse{}, runtime.NewResponseError(resp)
+		return BasicClientGetEmptyResponse{}, err
 	}
 	return result, nil
 }
@@ -106,7 +106,7 @@ func (client *BasicClient) getInvalidCreateRequest(ctx context.Context, options 
 func (client *BasicClient) getInvalidHandleResponse(resp *http.Response) (BasicClientGetInvalidResponse, error) {
 	result := BasicClientGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
-		return BasicClientGetInvalidResponse{}, runtime.NewResponseError(resp)
+		return BasicClientGetInvalidResponse{}, err
 	}
 	return result, nil
 }
@@ -144,7 +144,7 @@ func (client *BasicClient) getNotProvidedCreateRequest(ctx context.Context, opti
 func (client *BasicClient) getNotProvidedHandleResponse(resp *http.Response) (BasicClientGetNotProvidedResponse, error) {
 	result := BasicClientGetNotProvidedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
-		return BasicClientGetNotProvidedResponse{}, runtime.NewResponseError(resp)
+		return BasicClientGetNotProvidedResponse{}, err
 	}
 	return result, nil
 }
@@ -182,7 +182,7 @@ func (client *BasicClient) getNullCreateRequest(ctx context.Context, options *Ba
 func (client *BasicClient) getNullHandleResponse(resp *http.Response) (BasicClientGetNullResponse, error) {
 	result := BasicClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
-		return BasicClientGetNullResponse{}, runtime.NewResponseError(resp)
+		return BasicClientGetNullResponse{}, err
 	}
 	return result, nil
 }
@@ -220,7 +220,7 @@ func (client *BasicClient) getValidCreateRequest(ctx context.Context, options *B
 func (client *BasicClient) getValidHandleResponse(resp *http.Response) (BasicClientGetValidResponse, error) {
 	result := BasicClientGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
-		return BasicClientGetValidResponse{}, runtime.NewResponseError(resp)
+		return BasicClientGetValidResponse{}, err
 	}
 	return result, nil
 }

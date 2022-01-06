@@ -238,7 +238,7 @@ func (client *ExpressRouteGatewaysClient) getCreateRequest(ctx context.Context, 
 func (client *ExpressRouteGatewaysClient) getHandleResponse(resp *http.Response) (ExpressRouteGatewaysClientGetResponse, error) {
 	result := ExpressRouteGatewaysClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteGateway); err != nil {
-		return ExpressRouteGatewaysClientGetResponse{}, runtime.NewResponseError(resp)
+		return ExpressRouteGatewaysClientGetResponse{}, err
 	}
 	return result, nil
 }
@@ -289,7 +289,7 @@ func (client *ExpressRouteGatewaysClient) listByResourceGroupCreateRequest(ctx c
 func (client *ExpressRouteGatewaysClient) listByResourceGroupHandleResponse(resp *http.Response) (ExpressRouteGatewaysClientListByResourceGroupResponse, error) {
 	result := ExpressRouteGatewaysClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteGatewayList); err != nil {
-		return ExpressRouteGatewaysClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
+		return ExpressRouteGatewaysClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
@@ -335,7 +335,7 @@ func (client *ExpressRouteGatewaysClient) listBySubscriptionCreateRequest(ctx co
 func (client *ExpressRouteGatewaysClient) listBySubscriptionHandleResponse(resp *http.Response) (ExpressRouteGatewaysClientListBySubscriptionResponse, error) {
 	result := ExpressRouteGatewaysClientListBySubscriptionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteGatewayList); err != nil {
-		return ExpressRouteGatewaysClientListBySubscriptionResponse{}, runtime.NewResponseError(resp)
+		return ExpressRouteGatewaysClientListBySubscriptionResponse{}, err
 	}
 	return result, nil
 }
