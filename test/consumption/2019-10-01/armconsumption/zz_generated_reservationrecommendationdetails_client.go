@@ -59,25 +59,25 @@ func NewReservationRecommendationDetailsClient(credential azcore.TokenCredential
 // lookBackPeriod - Filter the time period on which reservation recommendation results are based.
 // product - Filter the products for which reservation recommendation results are generated. Examples: StandardDS1v2 (for
 // VM), PremiumSSDManagedDisksP30 (for Managed Disks)
-// options - ReservationRecommendationDetailsGetOptions contains the optional parameters for the ReservationRecommendationDetailsClient.Get
+// options - ReservationRecommendationDetailsClientGetOptions contains the optional parameters for the ReservationRecommendationDetailsClient.Get
 // method.
-func (client *ReservationRecommendationDetailsClient) Get(ctx context.Context, billingScope string, scope Scope, region string, term Term, lookBackPeriod LookBackPeriod, product string, options *ReservationRecommendationDetailsGetOptions) (ReservationRecommendationDetailsGetResponse, error) {
+func (client *ReservationRecommendationDetailsClient) Get(ctx context.Context, billingScope string, scope Scope, region string, term Term, lookBackPeriod LookBackPeriod, product string, options *ReservationRecommendationDetailsClientGetOptions) (ReservationRecommendationDetailsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, billingScope, scope, region, term, lookBackPeriod, product, options)
 	if err != nil {
-		return ReservationRecommendationDetailsGetResponse{}, err
+		return ReservationRecommendationDetailsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ReservationRecommendationDetailsGetResponse{}, err
+		return ReservationRecommendationDetailsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return ReservationRecommendationDetailsGetResponse{}, client.getHandleError(resp)
+		return ReservationRecommendationDetailsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *ReservationRecommendationDetailsClient) getCreateRequest(ctx context.Context, billingScope string, scope Scope, region string, term Term, lookBackPeriod LookBackPeriod, product string, options *ReservationRecommendationDetailsGetOptions) (*policy.Request, error) {
+func (client *ReservationRecommendationDetailsClient) getCreateRequest(ctx context.Context, billingScope string, scope Scope, region string, term Term, lookBackPeriod LookBackPeriod, product string, options *ReservationRecommendationDetailsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/{billingScope}/providers/Microsoft.Consumption/reservationRecommendationDetails"
 	urlPath = strings.ReplaceAll(urlPath, "{billingScope}", billingScope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
@@ -97,10 +97,10 @@ func (client *ReservationRecommendationDetailsClient) getCreateRequest(ctx conte
 }
 
 // getHandleResponse handles the Get response.
-func (client *ReservationRecommendationDetailsClient) getHandleResponse(resp *http.Response) (ReservationRecommendationDetailsGetResponse, error) {
-	result := ReservationRecommendationDetailsGetResponse{RawResponse: resp}
+func (client *ReservationRecommendationDetailsClient) getHandleResponse(resp *http.Response) (ReservationRecommendationDetailsClientGetResponse, error) {
+	result := ReservationRecommendationDetailsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationRecommendationDetailsModel); err != nil {
-		return ReservationRecommendationDetailsGetResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationRecommendationDetailsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

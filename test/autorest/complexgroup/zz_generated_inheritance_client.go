@@ -38,24 +38,24 @@ func NewInheritanceClient(options *azcore.ClientOptions) *InheritanceClient {
 
 // GetValid - Get complex types that extend others
 // If the operation fails it returns the *Error error type.
-// options - InheritanceGetValidOptions contains the optional parameters for the InheritanceClient.GetValid method.
-func (client *InheritanceClient) GetValid(ctx context.Context, options *InheritanceGetValidOptions) (InheritanceGetValidResponse, error) {
+// options - InheritanceClientGetValidOptions contains the optional parameters for the InheritanceClient.GetValid method.
+func (client *InheritanceClient) GetValid(ctx context.Context, options *InheritanceClientGetValidOptions) (InheritanceClientGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
-		return InheritanceGetValidResponse{}, err
+		return InheritanceClientGetValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return InheritanceGetValidResponse{}, err
+		return InheritanceClientGetValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return InheritanceGetValidResponse{}, client.getValidHandleError(resp)
+		return InheritanceClientGetValidResponse{}, client.getValidHandleError(resp)
 	}
 	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client *InheritanceClient) getValidCreateRequest(ctx context.Context, options *InheritanceGetValidOptions) (*policy.Request, error) {
+func (client *InheritanceClient) getValidCreateRequest(ctx context.Context, options *InheritanceClientGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/inheritance/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -66,10 +66,10 @@ func (client *InheritanceClient) getValidCreateRequest(ctx context.Context, opti
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client *InheritanceClient) getValidHandleResponse(resp *http.Response) (InheritanceGetValidResponse, error) {
-	result := InheritanceGetValidResponse{RawResponse: resp}
+func (client *InheritanceClient) getValidHandleResponse(resp *http.Response) (InheritanceClientGetValidResponse, error) {
+	result := InheritanceClientGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Siamese); err != nil {
-		return InheritanceGetValidResponse{}, runtime.NewResponseError(err, resp)
+		return InheritanceClientGetValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -92,24 +92,24 @@ func (client *InheritanceClient) getValidHandleError(resp *http.Response) error 
 // complexBody - Please put a siamese with id=2, name="Siameee", color=green, breed=persion, which hates 2 dogs, the 1st one
 // named "Potato" with id=1 and food="tomato", and the 2nd one named "Tomato" with id=-1 and
 // food="french fries".
-// options - InheritancePutValidOptions contains the optional parameters for the InheritanceClient.PutValid method.
-func (client *InheritanceClient) PutValid(ctx context.Context, complexBody Siamese, options *InheritancePutValidOptions) (InheritancePutValidResponse, error) {
+// options - InheritanceClientPutValidOptions contains the optional parameters for the InheritanceClient.PutValid method.
+func (client *InheritanceClient) PutValid(ctx context.Context, complexBody Siamese, options *InheritanceClientPutValidOptions) (InheritanceClientPutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return InheritancePutValidResponse{}, err
+		return InheritanceClientPutValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return InheritancePutValidResponse{}, err
+		return InheritanceClientPutValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return InheritancePutValidResponse{}, client.putValidHandleError(resp)
+		return InheritanceClientPutValidResponse{}, client.putValidHandleError(resp)
 	}
-	return InheritancePutValidResponse{RawResponse: resp}, nil
+	return InheritanceClientPutValidResponse{RawResponse: resp}, nil
 }
 
 // putValidCreateRequest creates the PutValid request.
-func (client *InheritanceClient) putValidCreateRequest(ctx context.Context, complexBody Siamese, options *InheritancePutValidOptions) (*policy.Request, error) {
+func (client *InheritanceClient) putValidCreateRequest(ctx context.Context, complexBody Siamese, options *InheritanceClientPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/inheritance/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

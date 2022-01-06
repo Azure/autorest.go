@@ -8,338 +8,352 @@
 
 package dictionarygroup
 
-// DictionaryGetArrayEmptyOptions contains the optional parameters for the DictionaryClient.GetArrayEmpty method.
-type DictionaryGetArrayEmptyOptions struct {
+// DictionaryClientGetArrayEmptyOptions contains the optional parameters for the DictionaryClient.GetArrayEmpty method.
+type DictionaryClientGetArrayEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetArrayItemEmptyOptions contains the optional parameters for the DictionaryClient.GetArrayItemEmpty method.
-type DictionaryGetArrayItemEmptyOptions struct {
+// DictionaryClientGetArrayItemEmptyOptions contains the optional parameters for the DictionaryClient.GetArrayItemEmpty method.
+type DictionaryClientGetArrayItemEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetArrayItemNullOptions contains the optional parameters for the DictionaryClient.GetArrayItemNull method.
-type DictionaryGetArrayItemNullOptions struct {
+// DictionaryClientGetArrayItemNullOptions contains the optional parameters for the DictionaryClient.GetArrayItemNull method.
+type DictionaryClientGetArrayItemNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetArrayNullOptions contains the optional parameters for the DictionaryClient.GetArrayNull method.
-type DictionaryGetArrayNullOptions struct {
+// DictionaryClientGetArrayNullOptions contains the optional parameters for the DictionaryClient.GetArrayNull method.
+type DictionaryClientGetArrayNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetArrayValidOptions contains the optional parameters for the DictionaryClient.GetArrayValid method.
-type DictionaryGetArrayValidOptions struct {
+// DictionaryClientGetArrayValidOptions contains the optional parameters for the DictionaryClient.GetArrayValid method.
+type DictionaryClientGetArrayValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetBase64URLOptions contains the optional parameters for the DictionaryClient.GetBase64URL method.
-type DictionaryGetBase64URLOptions struct {
+// DictionaryClientGetBase64URLOptions contains the optional parameters for the DictionaryClient.GetBase64URL method.
+type DictionaryClientGetBase64URLOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetBooleanInvalidNullOptions contains the optional parameters for the DictionaryClient.GetBooleanInvalidNull
+// DictionaryClientGetBooleanInvalidNullOptions contains the optional parameters for the DictionaryClient.GetBooleanInvalidNull
 // method.
-type DictionaryGetBooleanInvalidNullOptions struct {
+type DictionaryClientGetBooleanInvalidNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetBooleanInvalidStringOptions contains the optional parameters for the DictionaryClient.GetBooleanInvalidString
+// DictionaryClientGetBooleanInvalidStringOptions contains the optional parameters for the DictionaryClient.GetBooleanInvalidString
 // method.
-type DictionaryGetBooleanInvalidStringOptions struct {
+type DictionaryClientGetBooleanInvalidStringOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetBooleanTfftOptions contains the optional parameters for the DictionaryClient.GetBooleanTfft method.
-type DictionaryGetBooleanTfftOptions struct {
+// DictionaryClientGetBooleanTfftOptions contains the optional parameters for the DictionaryClient.GetBooleanTfft method.
+type DictionaryClientGetBooleanTfftOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetByteInvalidNullOptions contains the optional parameters for the DictionaryClient.GetByteInvalidNull method.
-type DictionaryGetByteInvalidNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetByteValidOptions contains the optional parameters for the DictionaryClient.GetByteValid method.
-type DictionaryGetByteValidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetComplexEmptyOptions contains the optional parameters for the DictionaryClient.GetComplexEmpty method.
-type DictionaryGetComplexEmptyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetComplexItemEmptyOptions contains the optional parameters for the DictionaryClient.GetComplexItemEmpty method.
-type DictionaryGetComplexItemEmptyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetComplexItemNullOptions contains the optional parameters for the DictionaryClient.GetComplexItemNull method.
-type DictionaryGetComplexItemNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetComplexNullOptions contains the optional parameters for the DictionaryClient.GetComplexNull method.
-type DictionaryGetComplexNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetComplexValidOptions contains the optional parameters for the DictionaryClient.GetComplexValid method.
-type DictionaryGetComplexValidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetDateInvalidCharsOptions contains the optional parameters for the DictionaryClient.GetDateInvalidChars method.
-type DictionaryGetDateInvalidCharsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetDateInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDateInvalidNull method.
-type DictionaryGetDateInvalidNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetDateTimeInvalidCharsOptions contains the optional parameters for the DictionaryClient.GetDateTimeInvalidChars
+// DictionaryClientGetByteInvalidNullOptions contains the optional parameters for the DictionaryClient.GetByteInvalidNull
 // method.
-type DictionaryGetDateTimeInvalidCharsOptions struct {
+type DictionaryClientGetByteInvalidNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetDateTimeInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDateTimeInvalidNull
+// DictionaryClientGetByteValidOptions contains the optional parameters for the DictionaryClient.GetByteValid method.
+type DictionaryClientGetByteValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetComplexEmptyOptions contains the optional parameters for the DictionaryClient.GetComplexEmpty method.
+type DictionaryClientGetComplexEmptyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetComplexItemEmptyOptions contains the optional parameters for the DictionaryClient.GetComplexItemEmpty
 // method.
-type DictionaryGetDateTimeInvalidNullOptions struct {
+type DictionaryClientGetComplexItemEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetDateTimeRFC1123ValidOptions contains the optional parameters for the DictionaryClient.GetDateTimeRFC1123Valid
+// DictionaryClientGetComplexItemNullOptions contains the optional parameters for the DictionaryClient.GetComplexItemNull
 // method.
-type DictionaryGetDateTimeRFC1123ValidOptions struct {
+type DictionaryClientGetComplexItemNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetDateTimeValidOptions contains the optional parameters for the DictionaryClient.GetDateTimeValid method.
-type DictionaryGetDateTimeValidOptions struct {
+// DictionaryClientGetComplexNullOptions contains the optional parameters for the DictionaryClient.GetComplexNull method.
+type DictionaryClientGetComplexNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetDateValidOptions contains the optional parameters for the DictionaryClient.GetDateValid method.
-type DictionaryGetDateValidOptions struct {
+// DictionaryClientGetComplexValidOptions contains the optional parameters for the DictionaryClient.GetComplexValid method.
+type DictionaryClientGetComplexValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetDictionaryEmptyOptions contains the optional parameters for the DictionaryClient.GetDictionaryEmpty method.
-type DictionaryGetDictionaryEmptyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetDictionaryItemEmptyOptions contains the optional parameters for the DictionaryClient.GetDictionaryItemEmpty
+// DictionaryClientGetDateInvalidCharsOptions contains the optional parameters for the DictionaryClient.GetDateInvalidChars
 // method.
-type DictionaryGetDictionaryItemEmptyOptions struct {
+type DictionaryClientGetDateInvalidCharsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetDictionaryItemNullOptions contains the optional parameters for the DictionaryClient.GetDictionaryItemNull
+// DictionaryClientGetDateInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDateInvalidNull
 // method.
-type DictionaryGetDictionaryItemNullOptions struct {
+type DictionaryClientGetDateInvalidNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetDictionaryNullOptions contains the optional parameters for the DictionaryClient.GetDictionaryNull method.
-type DictionaryGetDictionaryNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetDictionaryValidOptions contains the optional parameters for the DictionaryClient.GetDictionaryValid method.
-type DictionaryGetDictionaryValidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetDoubleInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDoubleInvalidNull method.
-type DictionaryGetDoubleInvalidNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetDoubleInvalidStringOptions contains the optional parameters for the DictionaryClient.GetDoubleInvalidString
+// DictionaryClientGetDateTimeInvalidCharsOptions contains the optional parameters for the DictionaryClient.GetDateTimeInvalidChars
 // method.
-type DictionaryGetDoubleInvalidStringOptions struct {
+type DictionaryClientGetDateTimeInvalidCharsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetDoubleValidOptions contains the optional parameters for the DictionaryClient.GetDoubleValid method.
-type DictionaryGetDoubleValidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetDurationValidOptions contains the optional parameters for the DictionaryClient.GetDurationValid method.
-type DictionaryGetDurationValidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetEmptyOptions contains the optional parameters for the DictionaryClient.GetEmpty method.
-type DictionaryGetEmptyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetEmptyStringKeyOptions contains the optional parameters for the DictionaryClient.GetEmptyStringKey method.
-type DictionaryGetEmptyStringKeyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetFloatInvalidNullOptions contains the optional parameters for the DictionaryClient.GetFloatInvalidNull method.
-type DictionaryGetFloatInvalidNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetFloatInvalidStringOptions contains the optional parameters for the DictionaryClient.GetFloatInvalidString
+// DictionaryClientGetDateTimeInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDateTimeInvalidNull
 // method.
-type DictionaryGetFloatInvalidStringOptions struct {
+type DictionaryClientGetDateTimeInvalidNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryGetFloatValidOptions contains the optional parameters for the DictionaryClient.GetFloatValid method.
-type DictionaryGetFloatValidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetIntInvalidNullOptions contains the optional parameters for the DictionaryClient.GetIntInvalidNull method.
-type DictionaryGetIntInvalidNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetIntInvalidStringOptions contains the optional parameters for the DictionaryClient.GetIntInvalidString method.
-type DictionaryGetIntInvalidStringOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetIntegerValidOptions contains the optional parameters for the DictionaryClient.GetIntegerValid method.
-type DictionaryGetIntegerValidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetInvalidOptions contains the optional parameters for the DictionaryClient.GetInvalid method.
-type DictionaryGetInvalidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetLongInvalidNullOptions contains the optional parameters for the DictionaryClient.GetLongInvalidNull method.
-type DictionaryGetLongInvalidNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetLongInvalidStringOptions contains the optional parameters for the DictionaryClient.GetLongInvalidString method.
-type DictionaryGetLongInvalidStringOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetLongValidOptions contains the optional parameters for the DictionaryClient.GetLongValid method.
-type DictionaryGetLongValidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetNullKeyOptions contains the optional parameters for the DictionaryClient.GetNullKey method.
-type DictionaryGetNullKeyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetNullOptions contains the optional parameters for the DictionaryClient.GetNull method.
-type DictionaryGetNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetNullValueOptions contains the optional parameters for the DictionaryClient.GetNullValue method.
-type DictionaryGetNullValueOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetStringValidOptions contains the optional parameters for the DictionaryClient.GetStringValid method.
-type DictionaryGetStringValidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetStringWithInvalidOptions contains the optional parameters for the DictionaryClient.GetStringWithInvalid method.
-type DictionaryGetStringWithInvalidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryGetStringWithNullOptions contains the optional parameters for the DictionaryClient.GetStringWithNull method.
-type DictionaryGetStringWithNullOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryPutArrayValidOptions contains the optional parameters for the DictionaryClient.PutArrayValid method.
-type DictionaryPutArrayValidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryPutBooleanTfftOptions contains the optional parameters for the DictionaryClient.PutBooleanTfft method.
-type DictionaryPutBooleanTfftOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryPutByteValidOptions contains the optional parameters for the DictionaryClient.PutByteValid method.
-type DictionaryPutByteValidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryPutComplexValidOptions contains the optional parameters for the DictionaryClient.PutComplexValid method.
-type DictionaryPutComplexValidOptions struct {
-	// placeholder for future optional parameters
-}
-
-// DictionaryPutDateTimeRFC1123ValidOptions contains the optional parameters for the DictionaryClient.PutDateTimeRFC1123Valid
+// DictionaryClientGetDateTimeRFC1123ValidOptions contains the optional parameters for the DictionaryClient.GetDateTimeRFC1123Valid
 // method.
-type DictionaryPutDateTimeRFC1123ValidOptions struct {
+type DictionaryClientGetDateTimeRFC1123ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryPutDateTimeValidOptions contains the optional parameters for the DictionaryClient.PutDateTimeValid method.
-type DictionaryPutDateTimeValidOptions struct {
+// DictionaryClientGetDateTimeValidOptions contains the optional parameters for the DictionaryClient.GetDateTimeValid method.
+type DictionaryClientGetDateTimeValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryPutDateValidOptions contains the optional parameters for the DictionaryClient.PutDateValid method.
-type DictionaryPutDateValidOptions struct {
+// DictionaryClientGetDateValidOptions contains the optional parameters for the DictionaryClient.GetDateValid method.
+type DictionaryClientGetDateValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryPutDictionaryValidOptions contains the optional parameters for the DictionaryClient.PutDictionaryValid method.
-type DictionaryPutDictionaryValidOptions struct {
+// DictionaryClientGetDictionaryEmptyOptions contains the optional parameters for the DictionaryClient.GetDictionaryEmpty
+// method.
+type DictionaryClientGetDictionaryEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryPutDoubleValidOptions contains the optional parameters for the DictionaryClient.PutDoubleValid method.
-type DictionaryPutDoubleValidOptions struct {
+// DictionaryClientGetDictionaryItemEmptyOptions contains the optional parameters for the DictionaryClient.GetDictionaryItemEmpty
+// method.
+type DictionaryClientGetDictionaryItemEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryPutDurationValidOptions contains the optional parameters for the DictionaryClient.PutDurationValid method.
-type DictionaryPutDurationValidOptions struct {
+// DictionaryClientGetDictionaryItemNullOptions contains the optional parameters for the DictionaryClient.GetDictionaryItemNull
+// method.
+type DictionaryClientGetDictionaryItemNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryPutEmptyOptions contains the optional parameters for the DictionaryClient.PutEmpty method.
-type DictionaryPutEmptyOptions struct {
+// DictionaryClientGetDictionaryNullOptions contains the optional parameters for the DictionaryClient.GetDictionaryNull method.
+type DictionaryClientGetDictionaryNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryPutFloatValidOptions contains the optional parameters for the DictionaryClient.PutFloatValid method.
-type DictionaryPutFloatValidOptions struct {
+// DictionaryClientGetDictionaryValidOptions contains the optional parameters for the DictionaryClient.GetDictionaryValid
+// method.
+type DictionaryClientGetDictionaryValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryPutIntegerValidOptions contains the optional parameters for the DictionaryClient.PutIntegerValid method.
-type DictionaryPutIntegerValidOptions struct {
+// DictionaryClientGetDoubleInvalidNullOptions contains the optional parameters for the DictionaryClient.GetDoubleInvalidNull
+// method.
+type DictionaryClientGetDoubleInvalidNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryPutLongValidOptions contains the optional parameters for the DictionaryClient.PutLongValid method.
-type DictionaryPutLongValidOptions struct {
+// DictionaryClientGetDoubleInvalidStringOptions contains the optional parameters for the DictionaryClient.GetDoubleInvalidString
+// method.
+type DictionaryClientGetDoubleInvalidStringOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DictionaryPutStringValidOptions contains the optional parameters for the DictionaryClient.PutStringValid method.
-type DictionaryPutStringValidOptions struct {
+// DictionaryClientGetDoubleValidOptions contains the optional parameters for the DictionaryClient.GetDoubleValid method.
+type DictionaryClientGetDoubleValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetDurationValidOptions contains the optional parameters for the DictionaryClient.GetDurationValid method.
+type DictionaryClientGetDurationValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetEmptyOptions contains the optional parameters for the DictionaryClient.GetEmpty method.
+type DictionaryClientGetEmptyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetEmptyStringKeyOptions contains the optional parameters for the DictionaryClient.GetEmptyStringKey method.
+type DictionaryClientGetEmptyStringKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetFloatInvalidNullOptions contains the optional parameters for the DictionaryClient.GetFloatInvalidNull
+// method.
+type DictionaryClientGetFloatInvalidNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetFloatInvalidStringOptions contains the optional parameters for the DictionaryClient.GetFloatInvalidString
+// method.
+type DictionaryClientGetFloatInvalidStringOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetFloatValidOptions contains the optional parameters for the DictionaryClient.GetFloatValid method.
+type DictionaryClientGetFloatValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetIntInvalidNullOptions contains the optional parameters for the DictionaryClient.GetIntInvalidNull method.
+type DictionaryClientGetIntInvalidNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetIntInvalidStringOptions contains the optional parameters for the DictionaryClient.GetIntInvalidString
+// method.
+type DictionaryClientGetIntInvalidStringOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetIntegerValidOptions contains the optional parameters for the DictionaryClient.GetIntegerValid method.
+type DictionaryClientGetIntegerValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetInvalidOptions contains the optional parameters for the DictionaryClient.GetInvalid method.
+type DictionaryClientGetInvalidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetLongInvalidNullOptions contains the optional parameters for the DictionaryClient.GetLongInvalidNull
+// method.
+type DictionaryClientGetLongInvalidNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetLongInvalidStringOptions contains the optional parameters for the DictionaryClient.GetLongInvalidString
+// method.
+type DictionaryClientGetLongInvalidStringOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetLongValidOptions contains the optional parameters for the DictionaryClient.GetLongValid method.
+type DictionaryClientGetLongValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetNullKeyOptions contains the optional parameters for the DictionaryClient.GetNullKey method.
+type DictionaryClientGetNullKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetNullOptions contains the optional parameters for the DictionaryClient.GetNull method.
+type DictionaryClientGetNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetNullValueOptions contains the optional parameters for the DictionaryClient.GetNullValue method.
+type DictionaryClientGetNullValueOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetStringValidOptions contains the optional parameters for the DictionaryClient.GetStringValid method.
+type DictionaryClientGetStringValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetStringWithInvalidOptions contains the optional parameters for the DictionaryClient.GetStringWithInvalid
+// method.
+type DictionaryClientGetStringWithInvalidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientGetStringWithNullOptions contains the optional parameters for the DictionaryClient.GetStringWithNull method.
+type DictionaryClientGetStringWithNullOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientPutArrayValidOptions contains the optional parameters for the DictionaryClient.PutArrayValid method.
+type DictionaryClientPutArrayValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientPutBooleanTfftOptions contains the optional parameters for the DictionaryClient.PutBooleanTfft method.
+type DictionaryClientPutBooleanTfftOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientPutByteValidOptions contains the optional parameters for the DictionaryClient.PutByteValid method.
+type DictionaryClientPutByteValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientPutComplexValidOptions contains the optional parameters for the DictionaryClient.PutComplexValid method.
+type DictionaryClientPutComplexValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientPutDateTimeRFC1123ValidOptions contains the optional parameters for the DictionaryClient.PutDateTimeRFC1123Valid
+// method.
+type DictionaryClientPutDateTimeRFC1123ValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientPutDateTimeValidOptions contains the optional parameters for the DictionaryClient.PutDateTimeValid method.
+type DictionaryClientPutDateTimeValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientPutDateValidOptions contains the optional parameters for the DictionaryClient.PutDateValid method.
+type DictionaryClientPutDateValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientPutDictionaryValidOptions contains the optional parameters for the DictionaryClient.PutDictionaryValid
+// method.
+type DictionaryClientPutDictionaryValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientPutDoubleValidOptions contains the optional parameters for the DictionaryClient.PutDoubleValid method.
+type DictionaryClientPutDoubleValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientPutDurationValidOptions contains the optional parameters for the DictionaryClient.PutDurationValid method.
+type DictionaryClientPutDurationValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientPutEmptyOptions contains the optional parameters for the DictionaryClient.PutEmpty method.
+type DictionaryClientPutEmptyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientPutFloatValidOptions contains the optional parameters for the DictionaryClient.PutFloatValid method.
+type DictionaryClientPutFloatValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientPutIntegerValidOptions contains the optional parameters for the DictionaryClient.PutIntegerValid method.
+type DictionaryClientPutIntegerValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientPutLongValidOptions contains the optional parameters for the DictionaryClient.PutLongValid method.
+type DictionaryClientPutLongValidOptions struct {
+	// placeholder for future optional parameters
+}
+
+// DictionaryClientPutStringValidOptions contains the optional parameters for the DictionaryClient.PutStringValid method.
+type DictionaryClientPutStringValidOptions struct {
 	// placeholder for future optional parameters
 }
 

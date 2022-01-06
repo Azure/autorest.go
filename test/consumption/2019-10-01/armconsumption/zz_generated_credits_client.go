@@ -50,24 +50,24 @@ func NewCreditsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 // scope - The scope associated with credits operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfile/{billingProfileId}'
 // for Billing Profile scope, and
 // 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
-// options - CreditsGetOptions contains the optional parameters for the CreditsClient.Get method.
-func (client *CreditsClient) Get(ctx context.Context, scope string, options *CreditsGetOptions) (CreditsGetResponse, error) {
+// options - CreditsClientGetOptions contains the optional parameters for the CreditsClient.Get method.
+func (client *CreditsClient) Get(ctx context.Context, scope string, options *CreditsClientGetOptions) (CreditsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, scope, options)
 	if err != nil {
-		return CreditsGetResponse{}, err
+		return CreditsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return CreditsGetResponse{}, err
+		return CreditsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return CreditsGetResponse{}, client.getHandleError(resp)
+		return CreditsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *CreditsClient) getCreateRequest(ctx context.Context, scope string, options *CreditsGetOptions) (*policy.Request, error) {
+func (client *CreditsClient) getCreateRequest(ctx context.Context, scope string, options *CreditsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/credits/balanceSummary"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
@@ -82,10 +82,10 @@ func (client *CreditsClient) getCreateRequest(ctx context.Context, scope string,
 }
 
 // getHandleResponse handles the Get response.
-func (client *CreditsClient) getHandleResponse(resp *http.Response) (CreditsGetResponse, error) {
-	result := CreditsGetResponse{RawResponse: resp}
+func (client *CreditsClient) getHandleResponse(resp *http.Response) (CreditsClientGetResponse, error) {
+	result := CreditsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CreditSummary); err != nil {
-		return CreditsGetResponse{}, runtime.NewResponseError(err, resp)
+		return CreditsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

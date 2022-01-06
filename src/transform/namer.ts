@@ -143,24 +143,35 @@ export async function namer(session: Session<CodeModel>) {
     }
   }
 
+  // fix up any missing operation group names and add client names
   const fallbackGroupName = ensureNameCase(session.model.info.title);
-  const exportClient = session.model.language.go!.openApiType === 'arm' || exportClients;
-  // fix up empty operation group names and operations
+  const clientNames = new Set<string>();
   for (const group of values(model.operationGroups)) {
-    const groupDetails = <Language>group.language.go;
     // use the swagger title as the default name for operation groups that don't specify a group name
-    if (groupDetails.name.length === 0) {
+    if (group.language.go!.name.length === 0) {
       if (groupNames.has(fallbackGroupName)) {
         throw new Error(`the fallback operation group name ${fallbackGroupName} collides with an existing group name`);
       }
-      groupDetails.name = fallbackGroupName;
+      group.language.go!.name = fallbackGroupName;
     }
-    groupDetails.clientName = groupDetails.name;
+    group.language.go!.clientName = group.language.go!.name;
     // don't generate a name like FooClientClient
-    if (!groupDetails.clientName.endsWith('Client')) {
-      groupDetails.clientName = `${groupDetails.name}Client`;
+    if (!group.language.go!.clientName.endsWith('Client')) {
+      group.language.go!.clientName = `${group.language.go!.name}Client`;
     }
-    groupDetails.clientName = trimPackagePrefix(stutteringPrefix, groupDetails.clientName);
+    clientNames.add(group.language.go!.clientName);
+  }
+
+  const exportClient = session.model.language.go!.openApiType === 'arm' || exportClients;
+  // fix up stuttering client names and operation names
+  for (const group of values(model.operationGroups)) {
+    const groupDetails = <Language>group.language.go;
+    const originalName = groupDetails.clientName;
+    groupDetails.clientName = trimPackagePrefix(stutteringPrefix, originalName);
+    // if the client was renamed to remove stuttering, check if it collides with an existing client
+    if (groupDetails.clientName !== originalName && clientNames.has(groupDetails.clientName)) {
+      throw new Error(`client ${originalName} was renamed to ${groupDetails.clientName} which collides with an existing client name`);
+    }
     groupDetails.clientCtorName = `New${groupDetails.clientName}`;
     if (!exportClient) {
       groupDetails.clientName = ensureNameCase(groupDetails.clientName, true);

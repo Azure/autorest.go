@@ -38,25 +38,25 @@ func NewHTTPServerFailureClient(options *azcore.ClientOptions) *HTTPServerFailur
 
 // Delete505 - Return 505 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPServerFailureDelete505Options contains the optional parameters for the HTTPServerFailureClient.Delete505
+// options - HTTPServerFailureClientDelete505Options contains the optional parameters for the HTTPServerFailureClient.Delete505
 // method.
-func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *HTTPServerFailureDelete505Options) (HTTPServerFailureDelete505Response, error) {
+func (client *HTTPServerFailureClient) Delete505(ctx context.Context, options *HTTPServerFailureClientDelete505Options) (HTTPServerFailureClientDelete505Response, error) {
 	req, err := client.delete505CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPServerFailureDelete505Response{}, err
+		return HTTPServerFailureClientDelete505Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPServerFailureDelete505Response{}, err
+		return HTTPServerFailureClientDelete505Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPServerFailureDelete505Response{}, client.delete505HandleError(resp)
+		return HTTPServerFailureClientDelete505Response{}, client.delete505HandleError(resp)
 	}
-	return HTTPServerFailureDelete505Response{RawResponse: resp}, nil
+	return HTTPServerFailureClientDelete505Response{RawResponse: resp}, nil
 }
 
 // delete505CreateRequest creates the Delete505 request.
-func (client *HTTPServerFailureClient) delete505CreateRequest(ctx context.Context, options *HTTPServerFailureDelete505Options) (*policy.Request, error) {
+func (client *HTTPServerFailureClient) delete505CreateRequest(ctx context.Context, options *HTTPServerFailureClientDelete505Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/505"
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -81,24 +81,25 @@ func (client *HTTPServerFailureClient) delete505HandleError(resp *http.Response)
 
 // Get501 - Return 501 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPServerFailureGet501Options contains the optional parameters for the HTTPServerFailureClient.Get501 method.
-func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTPServerFailureGet501Options) (HTTPServerFailureGet501Response, error) {
+// options - HTTPServerFailureClientGet501Options contains the optional parameters for the HTTPServerFailureClient.Get501
+// method.
+func (client *HTTPServerFailureClient) Get501(ctx context.Context, options *HTTPServerFailureClientGet501Options) (HTTPServerFailureClientGet501Response, error) {
 	req, err := client.get501CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPServerFailureGet501Response{}, err
+		return HTTPServerFailureClientGet501Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPServerFailureGet501Response{}, err
+		return HTTPServerFailureClientGet501Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPServerFailureGet501Response{}, client.get501HandleError(resp)
+		return HTTPServerFailureClientGet501Response{}, client.get501HandleError(resp)
 	}
-	return HTTPServerFailureGet501Response{RawResponse: resp}, nil
+	return HTTPServerFailureClientGet501Response{RawResponse: resp}, nil
 }
 
 // get501CreateRequest creates the Get501 request.
-func (client *HTTPServerFailureClient) get501CreateRequest(ctx context.Context, options *HTTPServerFailureGet501Options) (*policy.Request, error) {
+func (client *HTTPServerFailureClient) get501CreateRequest(ctx context.Context, options *HTTPServerFailureClientGet501Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/501"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -123,17 +124,18 @@ func (client *HTTPServerFailureClient) get501HandleError(resp *http.Response) er
 
 // Head501 - Return 501 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPServerFailureHead501Options contains the optional parameters for the HTTPServerFailureClient.Head501 method.
-func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTTPServerFailureHead501Options) (HTTPServerFailureHead501Response, error) {
+// options - HTTPServerFailureClientHead501Options contains the optional parameters for the HTTPServerFailureClient.Head501
+// method.
+func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTTPServerFailureClientHead501Options) (HTTPServerFailureClientHead501Response, error) {
 	req, err := client.head501CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPServerFailureHead501Response{}, err
+		return HTTPServerFailureClientHead501Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPServerFailureHead501Response{}, err
+		return HTTPServerFailureClientHead501Response{}, err
 	}
-	result := HTTPServerFailureHead501Response{RawResponse: resp}
+	result := HTTPServerFailureClientHead501Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -141,7 +143,7 @@ func (client *HTTPServerFailureClient) Head501(ctx context.Context, options *HTT
 }
 
 // head501CreateRequest creates the Head501 request.
-func (client *HTTPServerFailureClient) head501CreateRequest(ctx context.Context, options *HTTPServerFailureHead501Options) (*policy.Request, error) {
+func (client *HTTPServerFailureClient) head501CreateRequest(ctx context.Context, options *HTTPServerFailureClientHead501Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/501"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -153,24 +155,25 @@ func (client *HTTPServerFailureClient) head501CreateRequest(ctx context.Context,
 
 // Post505 - Return 505 status code - should be represented in the client as an error
 // If the operation fails it returns the *Error error type.
-// options - HTTPServerFailurePost505Options contains the optional parameters for the HTTPServerFailureClient.Post505 method.
-func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTTPServerFailurePost505Options) (HTTPServerFailurePost505Response, error) {
+// options - HTTPServerFailureClientPost505Options contains the optional parameters for the HTTPServerFailureClient.Post505
+// method.
+func (client *HTTPServerFailureClient) Post505(ctx context.Context, options *HTTPServerFailureClientPost505Options) (HTTPServerFailureClientPost505Response, error) {
 	req, err := client.post505CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPServerFailurePost505Response{}, err
+		return HTTPServerFailureClientPost505Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPServerFailurePost505Response{}, err
+		return HTTPServerFailureClientPost505Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted, http.StatusNoContent) {
-		return HTTPServerFailurePost505Response{}, client.post505HandleError(resp)
+		return HTTPServerFailureClientPost505Response{}, client.post505HandleError(resp)
 	}
-	return HTTPServerFailurePost505Response{RawResponse: resp}, nil
+	return HTTPServerFailureClientPost505Response{RawResponse: resp}, nil
 }
 
 // post505CreateRequest creates the Post505 request.
-func (client *HTTPServerFailureClient) post505CreateRequest(ctx context.Context, options *HTTPServerFailurePost505Options) (*policy.Request, error) {
+func (client *HTTPServerFailureClient) post505CreateRequest(ctx context.Context, options *HTTPServerFailureClientPost505Options) (*policy.Request, error) {
 	urlPath := "/http/failure/server/505"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

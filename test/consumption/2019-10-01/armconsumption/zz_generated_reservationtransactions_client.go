@@ -50,22 +50,22 @@ func NewReservationTransactionsClient(credential azcore.TokenCredential, options
 // List - List of transactions for reserved instances on billing account scope
 // If the operation fails it returns the *ErrorResponse error type.
 // billingAccountID - BillingAccount ID
-// options - ReservationTransactionsListOptions contains the optional parameters for the ReservationTransactionsClient.List
+// options - ReservationTransactionsClientListOptions contains the optional parameters for the ReservationTransactionsClient.List
 // method.
-func (client *ReservationTransactionsClient) List(billingAccountID string, options *ReservationTransactionsListOptions) *ReservationTransactionsListPager {
-	return &ReservationTransactionsListPager{
+func (client *ReservationTransactionsClient) List(billingAccountID string, options *ReservationTransactionsClientListOptions) *ReservationTransactionsClientListPager {
+	return &ReservationTransactionsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, billingAccountID, options)
 		},
-		advancer: func(ctx context.Context, resp ReservationTransactionsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp ReservationTransactionsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ReservationTransactionsListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *ReservationTransactionsClient) listCreateRequest(ctx context.Context, billingAccountID string, options *ReservationTransactionsListOptions) (*policy.Request, error) {
+func (client *ReservationTransactionsClient) listCreateRequest(ctx context.Context, billingAccountID string, options *ReservationTransactionsClientListOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions"
 	if billingAccountID == "" {
 		return nil, errors.New("parameter billingAccountID cannot be empty")
@@ -86,10 +86,10 @@ func (client *ReservationTransactionsClient) listCreateRequest(ctx context.Conte
 }
 
 // listHandleResponse handles the List response.
-func (client *ReservationTransactionsClient) listHandleResponse(resp *http.Response) (ReservationTransactionsListResponse, error) {
-	result := ReservationTransactionsListResponse{RawResponse: resp}
+func (client *ReservationTransactionsClient) listHandleResponse(resp *http.Response) (ReservationTransactionsClientListResponse, error) {
+	result := ReservationTransactionsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationTransactionsListResult); err != nil {
-		return ReservationTransactionsListResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationTransactionsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -111,22 +111,22 @@ func (client *ReservationTransactionsClient) listHandleError(resp *http.Response
 // If the operation fails it returns the *ErrorResponse error type.
 // billingAccountID - BillingAccount ID
 // billingProfileID - Azure Billing Profile ID.
-// options - ReservationTransactionsListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.ListByBillingProfile
+// options - ReservationTransactionsClientListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.ListByBillingProfile
 // method.
-func (client *ReservationTransactionsClient) ListByBillingProfile(billingAccountID string, billingProfileID string, options *ReservationTransactionsListByBillingProfileOptions) *ReservationTransactionsListByBillingProfilePager {
-	return &ReservationTransactionsListByBillingProfilePager{
+func (client *ReservationTransactionsClient) ListByBillingProfile(billingAccountID string, billingProfileID string, options *ReservationTransactionsClientListByBillingProfileOptions) *ReservationTransactionsClientListByBillingProfilePager {
+	return &ReservationTransactionsClientListByBillingProfilePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByBillingProfileCreateRequest(ctx, billingAccountID, billingProfileID, options)
 		},
-		advancer: func(ctx context.Context, resp ReservationTransactionsListByBillingProfileResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp ReservationTransactionsClientListByBillingProfileResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ModernReservationTransactionsListResult.NextLink)
 		},
 	}
 }
 
 // listByBillingProfileCreateRequest creates the ListByBillingProfile request.
-func (client *ReservationTransactionsClient) listByBillingProfileCreateRequest(ctx context.Context, billingAccountID string, billingProfileID string, options *ReservationTransactionsListByBillingProfileOptions) (*policy.Request, error) {
+func (client *ReservationTransactionsClient) listByBillingProfileCreateRequest(ctx context.Context, billingAccountID string, billingProfileID string, options *ReservationTransactionsClientListByBillingProfileOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/reservationTransactions"
 	if billingAccountID == "" {
 		return nil, errors.New("parameter billingAccountID cannot be empty")
@@ -151,10 +151,10 @@ func (client *ReservationTransactionsClient) listByBillingProfileCreateRequest(c
 }
 
 // listByBillingProfileHandleResponse handles the ListByBillingProfile response.
-func (client *ReservationTransactionsClient) listByBillingProfileHandleResponse(resp *http.Response) (ReservationTransactionsListByBillingProfileResponse, error) {
-	result := ReservationTransactionsListByBillingProfileResponse{RawResponse: resp}
+func (client *ReservationTransactionsClient) listByBillingProfileHandleResponse(resp *http.Response) (ReservationTransactionsClientListByBillingProfileResponse, error) {
+	result := ReservationTransactionsClientListByBillingProfileResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ModernReservationTransactionsListResult); err != nil {
-		return ReservationTransactionsListByBillingProfileResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationTransactionsClientListByBillingProfileResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

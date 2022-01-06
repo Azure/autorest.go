@@ -56,21 +56,21 @@ func NewMonitoringConfigClient(subscriptionID string, credential azcore.TokenCre
 // roleName - The role name.
 // resourceGroupName - The resource group name.
 // monitoringMetricConfiguration - The metric configuration.
-// options - MonitoringConfigBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfigClient.BeginCreateOrUpdate
+// options - MonitoringConfigClientBeginCreateOrUpdateOptions contains the optional parameters for the MonitoringConfigClient.BeginCreateOrUpdate
 // method.
-func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigBeginCreateOrUpdateOptions) (MonitoringConfigCreateOrUpdatePollerResponse, error) {
+func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigClientBeginCreateOrUpdateOptions) (MonitoringConfigClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, roleName, resourceGroupName, monitoringMetricConfiguration, options)
 	if err != nil {
-		return MonitoringConfigCreateOrUpdatePollerResponse{}, err
+		return MonitoringConfigClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := MonitoringConfigCreateOrUpdatePollerResponse{
+	result := MonitoringConfigClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("MonitoringConfigClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return MonitoringConfigCreateOrUpdatePollerResponse{}, err
+		return MonitoringConfigClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &MonitoringConfigCreateOrUpdatePoller{
+	result.Poller = &MonitoringConfigClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *MonitoringConfigClient) BeginCreateOrUpdate(ctx context.Context, d
 
 // CreateOrUpdate - Creates a new metric configuration or updates an existing one for a role.
 // If the operation fails it returns the *CloudError error type.
-func (client *MonitoringConfigClient) createOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *MonitoringConfigClient) createOrUpdate(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, roleName, resourceGroupName, monitoringMetricConfiguration, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *MonitoringConfigClient) createOrUpdate(ctx context.Context, device
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *MonitoringConfigClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *MonitoringConfigClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, monitoringMetricConfiguration MonitoringMetricConfiguration, options *MonitoringConfigClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/monitoringConfig/default"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -141,21 +141,21 @@ func (client *MonitoringConfigClient) createOrUpdateHandleError(resp *http.Respo
 // deviceName - The device name.
 // roleName - The role name.
 // resourceGroupName - The resource group name.
-// options - MonitoringConfigBeginDeleteOptions contains the optional parameters for the MonitoringConfigClient.BeginDelete
+// options - MonitoringConfigClientBeginDeleteOptions contains the optional parameters for the MonitoringConfigClient.BeginDelete
 // method.
-func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigBeginDeleteOptions) (MonitoringConfigDeletePollerResponse, error) {
+func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientBeginDeleteOptions) (MonitoringConfigClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, roleName, resourceGroupName, options)
 	if err != nil {
-		return MonitoringConfigDeletePollerResponse{}, err
+		return MonitoringConfigClientDeletePollerResponse{}, err
 	}
-	result := MonitoringConfigDeletePollerResponse{
+	result := MonitoringConfigClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("MonitoringConfigClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return MonitoringConfigDeletePollerResponse{}, err
+		return MonitoringConfigClientDeletePollerResponse{}, err
 	}
-	result.Poller = &MonitoringConfigDeletePoller{
+	result.Poller = &MonitoringConfigClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -163,7 +163,7 @@ func (client *MonitoringConfigClient) BeginDelete(ctx context.Context, deviceNam
 
 // Delete - deletes a new metric configuration for a role.
 // If the operation fails it returns the *CloudError error type.
-func (client *MonitoringConfigClient) deleteOperation(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigBeginDeleteOptions) (*http.Response, error) {
+func (client *MonitoringConfigClient) deleteOperation(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -179,7 +179,7 @@ func (client *MonitoringConfigClient) deleteOperation(ctx context.Context, devic
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *MonitoringConfigClient) deleteCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigBeginDeleteOptions) (*policy.Request, error) {
+func (client *MonitoringConfigClient) deleteCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/monitoringConfig/default"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -226,24 +226,24 @@ func (client *MonitoringConfigClient) deleteHandleError(resp *http.Response) err
 // deviceName - The device name.
 // roleName - The role name.
 // resourceGroupName - The resource group name.
-// options - MonitoringConfigGetOptions contains the optional parameters for the MonitoringConfigClient.Get method.
-func (client *MonitoringConfigClient) Get(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigGetOptions) (MonitoringConfigGetResponse, error) {
+// options - MonitoringConfigClientGetOptions contains the optional parameters for the MonitoringConfigClient.Get method.
+func (client *MonitoringConfigClient) Get(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientGetOptions) (MonitoringConfigClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
 	if err != nil {
-		return MonitoringConfigGetResponse{}, err
+		return MonitoringConfigClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return MonitoringConfigGetResponse{}, err
+		return MonitoringConfigClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MonitoringConfigGetResponse{}, client.getHandleError(resp)
+		return MonitoringConfigClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *MonitoringConfigClient) getCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigGetOptions) (*policy.Request, error) {
+func (client *MonitoringConfigClient) getCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/monitoringConfig/default"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -273,10 +273,10 @@ func (client *MonitoringConfigClient) getCreateRequest(ctx context.Context, devi
 }
 
 // getHandleResponse handles the Get response.
-func (client *MonitoringConfigClient) getHandleResponse(resp *http.Response) (MonitoringConfigGetResponse, error) {
-	result := MonitoringConfigGetResponse{RawResponse: resp}
+func (client *MonitoringConfigClient) getHandleResponse(resp *http.Response) (MonitoringConfigClientGetResponse, error) {
+	result := MonitoringConfigClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MonitoringMetricConfiguration); err != nil {
-		return MonitoringConfigGetResponse{}, runtime.NewResponseError(err, resp)
+		return MonitoringConfigClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -299,21 +299,21 @@ func (client *MonitoringConfigClient) getHandleError(resp *http.Response) error 
 // deviceName - The device name.
 // roleName - The role name.
 // resourceGroupName - The resource group name.
-// options - MonitoringConfigListOptions contains the optional parameters for the MonitoringConfigClient.List method.
-func (client *MonitoringConfigClient) List(deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigListOptions) *MonitoringConfigListPager {
-	return &MonitoringConfigListPager{
+// options - MonitoringConfigClientListOptions contains the optional parameters for the MonitoringConfigClient.List method.
+func (client *MonitoringConfigClient) List(deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientListOptions) *MonitoringConfigClientListPager {
+	return &MonitoringConfigClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, deviceName, roleName, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp MonitoringConfigListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp MonitoringConfigClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.MonitoringMetricConfigurationList.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *MonitoringConfigClient) listCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigListOptions) (*policy.Request, error) {
+func (client *MonitoringConfigClient) listCreateRequest(ctx context.Context, deviceName string, roleName string, resourceGroupName string, options *MonitoringConfigClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/monitoringConfig"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -343,10 +343,10 @@ func (client *MonitoringConfigClient) listCreateRequest(ctx context.Context, dev
 }
 
 // listHandleResponse handles the List response.
-func (client *MonitoringConfigClient) listHandleResponse(resp *http.Response) (MonitoringConfigListResponse, error) {
-	result := MonitoringConfigListResponse{RawResponse: resp}
+func (client *MonitoringConfigClient) listHandleResponse(resp *http.Response) (MonitoringConfigClientListResponse, error) {
+	result := MonitoringConfigClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MonitoringMetricConfigurationList); err != nil {
-		return MonitoringConfigListResponse{}, runtime.NewResponseError(err, resp)
+		return MonitoringConfigClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

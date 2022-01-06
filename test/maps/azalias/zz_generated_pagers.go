@@ -16,23 +16,23 @@ import (
 	"reflect"
 )
 
-// AliasListPager provides operations for iterating over paged responses.
-type AliasListPager struct {
+// clientListPager provides operations for iterating over paged responses.
+type clientListPager struct {
 	client    *client
-	current   AliasListResponse
+	current   clientListResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, AliasListResponse) (*policy.Request, error)
+	advancer  func(context.Context, clientListResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *AliasListPager) Err() error {
+func (p *clientListPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *AliasListPager) NextPage(ctx context.Context) bool {
+func (p *clientListPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -65,7 +65,7 @@ func (p *AliasListPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-// PageResponse returns the current AliasListResponse page.
-func (p *AliasListPager) PageResponse() AliasListResponse {
+// PageResponse returns the current clientListResponse page.
+func (p *clientListPager) PageResponse() clientListResponse {
 	return p.current
 }

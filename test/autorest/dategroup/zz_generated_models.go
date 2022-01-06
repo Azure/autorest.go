@@ -8,43 +8,43 @@
 
 package dategroup
 
-// DateGetInvalidDateOptions contains the optional parameters for the DateClient.GetInvalidDate method.
-type DateGetInvalidDateOptions struct {
+// DateClientGetInvalidDateOptions contains the optional parameters for the DateClient.GetInvalidDate method.
+type DateClientGetInvalidDateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DateGetMaxDateOptions contains the optional parameters for the DateClient.GetMaxDate method.
-type DateGetMaxDateOptions struct {
+// DateClientGetMaxDateOptions contains the optional parameters for the DateClient.GetMaxDate method.
+type DateClientGetMaxDateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DateGetMinDateOptions contains the optional parameters for the DateClient.GetMinDate method.
-type DateGetMinDateOptions struct {
+// DateClientGetMinDateOptions contains the optional parameters for the DateClient.GetMinDate method.
+type DateClientGetMinDateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DateGetNullOptions contains the optional parameters for the DateClient.GetNull method.
-type DateGetNullOptions struct {
+// DateClientGetNullOptions contains the optional parameters for the DateClient.GetNull method.
+type DateClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DateGetOverflowDateOptions contains the optional parameters for the DateClient.GetOverflowDate method.
-type DateGetOverflowDateOptions struct {
+// DateClientGetOverflowDateOptions contains the optional parameters for the DateClient.GetOverflowDate method.
+type DateClientGetOverflowDateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DateGetUnderflowDateOptions contains the optional parameters for the DateClient.GetUnderflowDate method.
-type DateGetUnderflowDateOptions struct {
+// DateClientGetUnderflowDateOptions contains the optional parameters for the DateClient.GetUnderflowDate method.
+type DateClientGetUnderflowDateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatePutMaxDateOptions contains the optional parameters for the DateClient.PutMaxDate method.
-type DatePutMaxDateOptions struct {
+// DateClientPutMaxDateOptions contains the optional parameters for the DateClient.PutMaxDate method.
+type DateClientPutMaxDateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DatePutMinDateOptions contains the optional parameters for the DateClient.PutMinDate method.
-type DatePutMinDateOptions struct {
+// DateClientPutMinDateOptions contains the optional parameters for the DateClient.PutMinDate method.
+type DateClientPutMinDateOptions struct {
 	// placeholder for future optional parameters
 }
 

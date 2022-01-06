@@ -58,24 +58,25 @@ func NewVirtualMachineImagesClient(subscriptionID string, credential azcore.Toke
 // offer - A valid image publisher offer.
 // skus - A valid image SKU.
 // version - A valid image SKU version.
-// options - VirtualMachineImagesGetOptions contains the optional parameters for the VirtualMachineImagesClient.Get method.
-func (client *VirtualMachineImagesClient) Get(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesGetOptions) (VirtualMachineImagesGetResponse, error) {
+// options - VirtualMachineImagesClientGetOptions contains the optional parameters for the VirtualMachineImagesClient.Get
+// method.
+func (client *VirtualMachineImagesClient) Get(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesClientGetOptions) (VirtualMachineImagesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, publisherName, offer, skus, version, options)
 	if err != nil {
-		return VirtualMachineImagesGetResponse{}, err
+		return VirtualMachineImagesClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachineImagesGetResponse{}, err
+		return VirtualMachineImagesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesGetResponse{}, client.getHandleError(resp)
+		return VirtualMachineImagesClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualMachineImagesClient) getCreateRequest(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesGetOptions) (*policy.Request, error) {
+func (client *VirtualMachineImagesClient) getCreateRequest(ctx context.Context, location string, publisherName string, offer string, skus string, version string, options *VirtualMachineImagesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -113,10 +114,10 @@ func (client *VirtualMachineImagesClient) getCreateRequest(ctx context.Context, 
 }
 
 // getHandleResponse handles the Get response.
-func (client *VirtualMachineImagesClient) getHandleResponse(resp *http.Response) (VirtualMachineImagesGetResponse, error) {
-	result := VirtualMachineImagesGetResponse{RawResponse: resp}
+func (client *VirtualMachineImagesClient) getHandleResponse(resp *http.Response) (VirtualMachineImagesClientGetResponse, error) {
+	result := VirtualMachineImagesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImage); err != nil {
-		return VirtualMachineImagesGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineImagesClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -139,24 +140,25 @@ func (client *VirtualMachineImagesClient) getHandleError(resp *http.Response) er
 // publisherName - A valid image publisher.
 // offer - A valid image publisher offer.
 // skus - A valid image SKU.
-// options - VirtualMachineImagesListOptions contains the optional parameters for the VirtualMachineImagesClient.List method.
-func (client *VirtualMachineImagesClient) List(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesListOptions) (VirtualMachineImagesListResponse, error) {
+// options - VirtualMachineImagesClientListOptions contains the optional parameters for the VirtualMachineImagesClient.List
+// method.
+func (client *VirtualMachineImagesClient) List(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesClientListOptions) (VirtualMachineImagesClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, publisherName, offer, skus, options)
 	if err != nil {
-		return VirtualMachineImagesListResponse{}, err
+		return VirtualMachineImagesClientListResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachineImagesListResponse{}, err
+		return VirtualMachineImagesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesListResponse{}, client.listHandleError(resp)
+		return VirtualMachineImagesClientListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualMachineImagesClient) listCreateRequest(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesListOptions) (*policy.Request, error) {
+func (client *VirtualMachineImagesClient) listCreateRequest(ctx context.Context, location string, publisherName string, offer string, skus string, options *VirtualMachineImagesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -199,10 +201,10 @@ func (client *VirtualMachineImagesClient) listCreateRequest(ctx context.Context,
 }
 
 // listHandleResponse handles the List response.
-func (client *VirtualMachineImagesClient) listHandleResponse(resp *http.Response) (VirtualMachineImagesListResponse, error) {
-	result := VirtualMachineImagesListResponse{RawResponse: resp}
+func (client *VirtualMachineImagesClient) listHandleResponse(resp *http.Response) (VirtualMachineImagesClientListResponse, error) {
+	result := VirtualMachineImagesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImageResourceArray); err != nil {
-		return VirtualMachineImagesListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineImagesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -223,25 +225,25 @@ func (client *VirtualMachineImagesClient) listHandleError(resp *http.Response) e
 // If the operation fails it returns a generic error.
 // location - The name of a supported Azure region.
 // publisherName - A valid image publisher.
-// options - VirtualMachineImagesListOffersOptions contains the optional parameters for the VirtualMachineImagesClient.ListOffers
+// options - VirtualMachineImagesClientListOffersOptions contains the optional parameters for the VirtualMachineImagesClient.ListOffers
 // method.
-func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesListOffersOptions) (VirtualMachineImagesListOffersResponse, error) {
+func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesClientListOffersOptions) (VirtualMachineImagesClientListOffersResponse, error) {
 	req, err := client.listOffersCreateRequest(ctx, location, publisherName, options)
 	if err != nil {
-		return VirtualMachineImagesListOffersResponse{}, err
+		return VirtualMachineImagesClientListOffersResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachineImagesListOffersResponse{}, err
+		return VirtualMachineImagesClientListOffersResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesListOffersResponse{}, client.listOffersHandleError(resp)
+		return VirtualMachineImagesClientListOffersResponse{}, client.listOffersHandleError(resp)
 	}
 	return client.listOffersHandleResponse(resp)
 }
 
 // listOffersCreateRequest creates the ListOffers request.
-func (client *VirtualMachineImagesClient) listOffersCreateRequest(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesListOffersOptions) (*policy.Request, error) {
+func (client *VirtualMachineImagesClient) listOffersCreateRequest(ctx context.Context, location string, publisherName string, options *VirtualMachineImagesClientListOffersOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -267,10 +269,10 @@ func (client *VirtualMachineImagesClient) listOffersCreateRequest(ctx context.Co
 }
 
 // listOffersHandleResponse handles the ListOffers response.
-func (client *VirtualMachineImagesClient) listOffersHandleResponse(resp *http.Response) (VirtualMachineImagesListOffersResponse, error) {
-	result := VirtualMachineImagesListOffersResponse{RawResponse: resp}
+func (client *VirtualMachineImagesClient) listOffersHandleResponse(resp *http.Response) (VirtualMachineImagesClientListOffersResponse, error) {
+	result := VirtualMachineImagesClientListOffersResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImageResourceArray); err != nil {
-		return VirtualMachineImagesListOffersResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineImagesClientListOffersResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -290,25 +292,25 @@ func (client *VirtualMachineImagesClient) listOffersHandleError(resp *http.Respo
 // ListPublishers - Gets a list of virtual machine image publishers for the specified Azure location.
 // If the operation fails it returns a generic error.
 // location - The name of a supported Azure region.
-// options - VirtualMachineImagesListPublishersOptions contains the optional parameters for the VirtualMachineImagesClient.ListPublishers
+// options - VirtualMachineImagesClientListPublishersOptions contains the optional parameters for the VirtualMachineImagesClient.ListPublishers
 // method.
-func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, location string, options *VirtualMachineImagesListPublishersOptions) (VirtualMachineImagesListPublishersResponse, error) {
+func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, location string, options *VirtualMachineImagesClientListPublishersOptions) (VirtualMachineImagesClientListPublishersResponse, error) {
 	req, err := client.listPublishersCreateRequest(ctx, location, options)
 	if err != nil {
-		return VirtualMachineImagesListPublishersResponse{}, err
+		return VirtualMachineImagesClientListPublishersResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachineImagesListPublishersResponse{}, err
+		return VirtualMachineImagesClientListPublishersResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesListPublishersResponse{}, client.listPublishersHandleError(resp)
+		return VirtualMachineImagesClientListPublishersResponse{}, client.listPublishersHandleError(resp)
 	}
 	return client.listPublishersHandleResponse(resp)
 }
 
 // listPublishersCreateRequest creates the ListPublishers request.
-func (client *VirtualMachineImagesClient) listPublishersCreateRequest(ctx context.Context, location string, options *VirtualMachineImagesListPublishersOptions) (*policy.Request, error) {
+func (client *VirtualMachineImagesClient) listPublishersCreateRequest(ctx context.Context, location string, options *VirtualMachineImagesClientListPublishersOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -330,10 +332,10 @@ func (client *VirtualMachineImagesClient) listPublishersCreateRequest(ctx contex
 }
 
 // listPublishersHandleResponse handles the ListPublishers response.
-func (client *VirtualMachineImagesClient) listPublishersHandleResponse(resp *http.Response) (VirtualMachineImagesListPublishersResponse, error) {
-	result := VirtualMachineImagesListPublishersResponse{RawResponse: resp}
+func (client *VirtualMachineImagesClient) listPublishersHandleResponse(resp *http.Response) (VirtualMachineImagesClientListPublishersResponse, error) {
+	result := VirtualMachineImagesClientListPublishersResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImageResourceArray); err != nil {
-		return VirtualMachineImagesListPublishersResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineImagesClientListPublishersResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -355,25 +357,25 @@ func (client *VirtualMachineImagesClient) listPublishersHandleError(resp *http.R
 // location - The name of a supported Azure region.
 // publisherName - A valid image publisher.
 // offer - A valid image publisher offer.
-// options - VirtualMachineImagesListSKUsOptions contains the optional parameters for the VirtualMachineImagesClient.ListSKUs
+// options - VirtualMachineImagesClientListSKUsOptions contains the optional parameters for the VirtualMachineImagesClient.ListSKUs
 // method.
-func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (VirtualMachineImagesListSKUsResponse, error) {
+func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesClientListSKUsOptions) (VirtualMachineImagesClientListSKUsResponse, error) {
 	req, err := client.listSKUsCreateRequest(ctx, location, publisherName, offer, options)
 	if err != nil {
-		return VirtualMachineImagesListSKUsResponse{}, err
+		return VirtualMachineImagesClientListSKUsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachineImagesListSKUsResponse{}, err
+		return VirtualMachineImagesClientListSKUsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesListSKUsResponse{}, client.listSKUsHandleError(resp)
+		return VirtualMachineImagesClientListSKUsResponse{}, client.listSKUsHandleError(resp)
 	}
 	return client.listSKUsHandleResponse(resp)
 }
 
 // listSKUsCreateRequest creates the ListSKUs request.
-func (client *VirtualMachineImagesClient) listSKUsCreateRequest(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesListSKUsOptions) (*policy.Request, error) {
+func (client *VirtualMachineImagesClient) listSKUsCreateRequest(ctx context.Context, location string, publisherName string, offer string, options *VirtualMachineImagesClientListSKUsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -403,10 +405,10 @@ func (client *VirtualMachineImagesClient) listSKUsCreateRequest(ctx context.Cont
 }
 
 // listSKUsHandleResponse handles the ListSKUs response.
-func (client *VirtualMachineImagesClient) listSKUsHandleResponse(resp *http.Response) (VirtualMachineImagesListSKUsResponse, error) {
-	result := VirtualMachineImagesListSKUsResponse{RawResponse: resp}
+func (client *VirtualMachineImagesClient) listSKUsHandleResponse(resp *http.Response) (VirtualMachineImagesClientListSKUsResponse, error) {
+	result := VirtualMachineImagesClientListSKUsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImageResourceArray); err != nil {
-		return VirtualMachineImagesListSKUsResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineImagesClientListSKUsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

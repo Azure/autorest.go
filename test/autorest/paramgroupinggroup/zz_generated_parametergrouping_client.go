@@ -42,27 +42,27 @@ func NewParameterGroupingClient(options *azcore.ClientOptions) *ParameterGroupin
 
 // PostMultiParamGroups - Post parameters from multiple different parameter groups
 // If the operation fails it returns the *Error error type.
-// FirstParameterGroup - FirstParameterGroup contains a group of parameters for the ParameterGrouping.PostMultiParamGroups
+// FirstParameterGroup - FirstParameterGroup contains a group of parameters for the ParameterGroupingClient.PostMultiParamGroups
 // method.
-// ParameterGroupingPostMultiParamGroupsSecondParamGroup - ParameterGroupingPostMultiParamGroupsSecondParamGroup contains
-// a group of parameters for the ParameterGrouping.PostMultiParamGroups method.
-func (client *ParameterGroupingClient) PostMultiParamGroups(ctx context.Context, firstParameterGroup *FirstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup *ParameterGroupingPostMultiParamGroupsSecondParamGroup) (ParameterGroupingPostMultiParamGroupsResponse, error) {
-	req, err := client.postMultiParamGroupsCreateRequest(ctx, firstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup)
+// ParameterGroupingClientPostMultiParamGroupsSecondParamGroup - ParameterGroupingClientPostMultiParamGroupsSecondParamGroup
+// contains a group of parameters for the ParameterGroupingClient.PostMultiParamGroups method.
+func (client *ParameterGroupingClient) PostMultiParamGroups(ctx context.Context, firstParameterGroup *FirstParameterGroup, parameterGroupingClientPostMultiParamGroupsSecondParamGroup *ParameterGroupingClientPostMultiParamGroupsSecondParamGroup) (ParameterGroupingClientPostMultiParamGroupsResponse, error) {
+	req, err := client.postMultiParamGroupsCreateRequest(ctx, firstParameterGroup, parameterGroupingClientPostMultiParamGroupsSecondParamGroup)
 	if err != nil {
-		return ParameterGroupingPostMultiParamGroupsResponse{}, err
+		return ParameterGroupingClientPostMultiParamGroupsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ParameterGroupingPostMultiParamGroupsResponse{}, err
+		return ParameterGroupingClientPostMultiParamGroupsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ParameterGroupingPostMultiParamGroupsResponse{}, client.postMultiParamGroupsHandleError(resp)
+		return ParameterGroupingClientPostMultiParamGroupsResponse{}, client.postMultiParamGroupsHandleError(resp)
 	}
-	return ParameterGroupingPostMultiParamGroupsResponse{RawResponse: resp}, nil
+	return ParameterGroupingClientPostMultiParamGroupsResponse{RawResponse: resp}, nil
 }
 
 // postMultiParamGroupsCreateRequest creates the PostMultiParamGroups request.
-func (client *ParameterGroupingClient) postMultiParamGroupsCreateRequest(ctx context.Context, firstParameterGroup *FirstParameterGroup, parameterGroupingPostMultiParamGroupsSecondParamGroup *ParameterGroupingPostMultiParamGroupsSecondParamGroup) (*policy.Request, error) {
+func (client *ParameterGroupingClient) postMultiParamGroupsCreateRequest(ctx context.Context, firstParameterGroup *FirstParameterGroup, parameterGroupingClientPostMultiParamGroupsSecondParamGroup *ParameterGroupingClientPostMultiParamGroupsSecondParamGroup) (*policy.Request, error) {
 	urlPath := "/parameterGrouping/postMultipleParameterGroups"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -72,15 +72,15 @@ func (client *ParameterGroupingClient) postMultiParamGroupsCreateRequest(ctx con
 	if firstParameterGroup != nil && firstParameterGroup.QueryOne != nil {
 		reqQP.Set("query-one", strconv.FormatInt(int64(*firstParameterGroup.QueryOne), 10))
 	}
-	if parameterGroupingPostMultiParamGroupsSecondParamGroup != nil && parameterGroupingPostMultiParamGroupsSecondParamGroup.QueryTwo != nil {
-		reqQP.Set("query-two", strconv.FormatInt(int64(*parameterGroupingPostMultiParamGroupsSecondParamGroup.QueryTwo), 10))
+	if parameterGroupingClientPostMultiParamGroupsSecondParamGroup != nil && parameterGroupingClientPostMultiParamGroupsSecondParamGroup.QueryTwo != nil {
+		reqQP.Set("query-two", strconv.FormatInt(int64(*parameterGroupingClientPostMultiParamGroupsSecondParamGroup.QueryTwo), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	if firstParameterGroup != nil && firstParameterGroup.HeaderOne != nil {
 		req.Raw().Header.Set("header-one", *firstParameterGroup.HeaderOne)
 	}
-	if parameterGroupingPostMultiParamGroupsSecondParamGroup != nil && parameterGroupingPostMultiParamGroupsSecondParamGroup.HeaderTwo != nil {
-		req.Raw().Header.Set("header-two", *parameterGroupingPostMultiParamGroupsSecondParamGroup.HeaderTwo)
+	if parameterGroupingClientPostMultiParamGroupsSecondParamGroup != nil && parameterGroupingClientPostMultiParamGroupsSecondParamGroup.HeaderTwo != nil {
+		req.Raw().Header.Set("header-two", *parameterGroupingClientPostMultiParamGroupsSecondParamGroup.HeaderTwo)
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
@@ -101,25 +101,25 @@ func (client *ParameterGroupingClient) postMultiParamGroupsHandleError(resp *htt
 
 // PostOptional - Post a bunch of optional parameters grouped
 // If the operation fails it returns the *Error error type.
-// options - ParameterGroupingPostOptionalParameters contains a group of parameters for the ParameterGrouping.PostOptional
+// options - ParameterGroupingClientPostOptionalParameters contains a group of parameters for the ParameterGroupingClient.PostOptional
 // method.
-func (client *ParameterGroupingClient) PostOptional(ctx context.Context, options *ParameterGroupingPostOptionalParameters) (ParameterGroupingPostOptionalResponse, error) {
+func (client *ParameterGroupingClient) PostOptional(ctx context.Context, options *ParameterGroupingClientPostOptionalParameters) (ParameterGroupingClientPostOptionalResponse, error) {
 	req, err := client.postOptionalCreateRequest(ctx, options)
 	if err != nil {
-		return ParameterGroupingPostOptionalResponse{}, err
+		return ParameterGroupingClientPostOptionalResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ParameterGroupingPostOptionalResponse{}, err
+		return ParameterGroupingClientPostOptionalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ParameterGroupingPostOptionalResponse{}, client.postOptionalHandleError(resp)
+		return ParameterGroupingClientPostOptionalResponse{}, client.postOptionalHandleError(resp)
 	}
-	return ParameterGroupingPostOptionalResponse{RawResponse: resp}, nil
+	return ParameterGroupingClientPostOptionalResponse{RawResponse: resp}, nil
 }
 
 // postOptionalCreateRequest creates the PostOptional request.
-func (client *ParameterGroupingClient) postOptionalCreateRequest(ctx context.Context, options *ParameterGroupingPostOptionalParameters) (*policy.Request, error) {
+func (client *ParameterGroupingClient) postOptionalCreateRequest(ctx context.Context, options *ParameterGroupingClientPostOptionalParameters) (*policy.Request, error) {
 	urlPath := "/parameterGrouping/postOptional"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -152,44 +152,44 @@ func (client *ParameterGroupingClient) postOptionalHandleError(resp *http.Respon
 
 // PostRequired - Post a bunch of required parameters grouped
 // If the operation fails it returns the *Error error type.
-// ParameterGroupingPostRequiredParameters - ParameterGroupingPostRequiredParameters contains a group of parameters for the
-// ParameterGrouping.PostRequired method.
-func (client *ParameterGroupingClient) PostRequired(ctx context.Context, parameterGroupingPostRequiredParameters ParameterGroupingPostRequiredParameters) (ParameterGroupingPostRequiredResponse, error) {
-	req, err := client.postRequiredCreateRequest(ctx, parameterGroupingPostRequiredParameters)
+// ParameterGroupingClientPostRequiredParameters - ParameterGroupingClientPostRequiredParameters contains a group of parameters
+// for the ParameterGroupingClient.PostRequired method.
+func (client *ParameterGroupingClient) PostRequired(ctx context.Context, parameterGroupingClientPostRequiredParameters ParameterGroupingClientPostRequiredParameters) (ParameterGroupingClientPostRequiredResponse, error) {
+	req, err := client.postRequiredCreateRequest(ctx, parameterGroupingClientPostRequiredParameters)
 	if err != nil {
-		return ParameterGroupingPostRequiredResponse{}, err
+		return ParameterGroupingClientPostRequiredResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ParameterGroupingPostRequiredResponse{}, err
+		return ParameterGroupingClientPostRequiredResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ParameterGroupingPostRequiredResponse{}, client.postRequiredHandleError(resp)
+		return ParameterGroupingClientPostRequiredResponse{}, client.postRequiredHandleError(resp)
 	}
-	return ParameterGroupingPostRequiredResponse{RawResponse: resp}, nil
+	return ParameterGroupingClientPostRequiredResponse{RawResponse: resp}, nil
 }
 
 // postRequiredCreateRequest creates the PostRequired request.
-func (client *ParameterGroupingClient) postRequiredCreateRequest(ctx context.Context, parameterGroupingPostRequiredParameters ParameterGroupingPostRequiredParameters) (*policy.Request, error) {
+func (client *ParameterGroupingClient) postRequiredCreateRequest(ctx context.Context, parameterGroupingClientPostRequiredParameters ParameterGroupingClientPostRequiredParameters) (*policy.Request, error) {
 	urlPath := "/parameterGrouping/postRequired/{path}"
-	if parameterGroupingPostRequiredParameters.Path == "" {
-		return nil, errors.New("parameter parameterGroupingPostRequiredParameters.Path cannot be empty")
+	if parameterGroupingClientPostRequiredParameters.Path == "" {
+		return nil, errors.New("parameter parameterGroupingClientPostRequiredParameters.Path cannot be empty")
 	}
-	urlPath = strings.ReplaceAll(urlPath, "{path}", url.PathEscape(parameterGroupingPostRequiredParameters.Path))
+	urlPath = strings.ReplaceAll(urlPath, "{path}", url.PathEscape(parameterGroupingClientPostRequiredParameters.Path))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	if parameterGroupingPostRequiredParameters.Query != nil {
-		reqQP.Set("query", strconv.FormatInt(int64(*parameterGroupingPostRequiredParameters.Query), 10))
+	if parameterGroupingClientPostRequiredParameters.Query != nil {
+		reqQP.Set("query", strconv.FormatInt(int64(*parameterGroupingClientPostRequiredParameters.Query), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	if parameterGroupingPostRequiredParameters.CustomHeader != nil {
-		req.Raw().Header.Set("customHeader", *parameterGroupingPostRequiredParameters.CustomHeader)
+	if parameterGroupingClientPostRequiredParameters.CustomHeader != nil {
+		req.Raw().Header.Set("customHeader", *parameterGroupingClientPostRequiredParameters.CustomHeader)
 	}
 	req.Raw().Header.Set("Accept", "application/json")
-	return req, runtime.MarshalAsJSON(req, parameterGroupingPostRequiredParameters.Body)
+	return req, runtime.MarshalAsJSON(req, parameterGroupingClientPostRequiredParameters.Body)
 }
 
 // postRequiredHandleError handles the PostRequired error response.
@@ -207,25 +207,25 @@ func (client *ParameterGroupingClient) postRequiredHandleError(resp *http.Respon
 
 // PostReservedWords - Post a grouped parameters with reserved words
 // If the operation fails it returns the *Error error type.
-// options - ParameterGroupingPostReservedWordsParameters contains a group of parameters for the ParameterGrouping.PostReservedWords
+// options - ParameterGroupingClientPostReservedWordsParameters contains a group of parameters for the ParameterGroupingClient.PostReservedWords
 // method.
-func (client *ParameterGroupingClient) PostReservedWords(ctx context.Context, options *ParameterGroupingPostReservedWordsParameters) (ParameterGroupingPostReservedWordsResponse, error) {
+func (client *ParameterGroupingClient) PostReservedWords(ctx context.Context, options *ParameterGroupingClientPostReservedWordsParameters) (ParameterGroupingClientPostReservedWordsResponse, error) {
 	req, err := client.postReservedWordsCreateRequest(ctx, options)
 	if err != nil {
-		return ParameterGroupingPostReservedWordsResponse{}, err
+		return ParameterGroupingClientPostReservedWordsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ParameterGroupingPostReservedWordsResponse{}, err
+		return ParameterGroupingClientPostReservedWordsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ParameterGroupingPostReservedWordsResponse{}, client.postReservedWordsHandleError(resp)
+		return ParameterGroupingClientPostReservedWordsResponse{}, client.postReservedWordsHandleError(resp)
 	}
-	return ParameterGroupingPostReservedWordsResponse{RawResponse: resp}, nil
+	return ParameterGroupingClientPostReservedWordsResponse{RawResponse: resp}, nil
 }
 
 // postReservedWordsCreateRequest creates the PostReservedWords request.
-func (client *ParameterGroupingClient) postReservedWordsCreateRequest(ctx context.Context, options *ParameterGroupingPostReservedWordsParameters) (*policy.Request, error) {
+func (client *ParameterGroupingClient) postReservedWordsCreateRequest(ctx context.Context, options *ParameterGroupingClientPostReservedWordsParameters) (*policy.Request, error) {
 	urlPath := "/parameterGrouping/postReservedWords"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -258,20 +258,20 @@ func (client *ParameterGroupingClient) postReservedWordsHandleError(resp *http.R
 
 // PostSharedParameterGroupObject - Post parameters with a shared parameter group object
 // If the operation fails it returns the *Error error type.
-// options - FirstParameterGroup contains a group of parameters for the ParameterGrouping.PostMultiParamGroups method.
-func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx context.Context, options *FirstParameterGroup) (ParameterGroupingPostSharedParameterGroupObjectResponse, error) {
+// options - FirstParameterGroup contains a group of parameters for the ParameterGroupingClient.PostMultiParamGroups method.
+func (client *ParameterGroupingClient) PostSharedParameterGroupObject(ctx context.Context, options *FirstParameterGroup) (ParameterGroupingClientPostSharedParameterGroupObjectResponse, error) {
 	req, err := client.postSharedParameterGroupObjectCreateRequest(ctx, options)
 	if err != nil {
-		return ParameterGroupingPostSharedParameterGroupObjectResponse{}, err
+		return ParameterGroupingClientPostSharedParameterGroupObjectResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ParameterGroupingPostSharedParameterGroupObjectResponse{}, err
+		return ParameterGroupingClientPostSharedParameterGroupObjectResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ParameterGroupingPostSharedParameterGroupObjectResponse{}, client.postSharedParameterGroupObjectHandleError(resp)
+		return ParameterGroupingClientPostSharedParameterGroupObjectResponse{}, client.postSharedParameterGroupObjectHandleError(resp)
 	}
-	return ParameterGroupingPostSharedParameterGroupObjectResponse{RawResponse: resp}, nil
+	return ParameterGroupingClientPostSharedParameterGroupObjectResponse{RawResponse: resp}, nil
 }
 
 // postSharedParameterGroupObjectCreateRequest creates the PostSharedParameterGroupObject request.

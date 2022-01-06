@@ -43,25 +43,25 @@ func NewSubscriptionInMethodClient(options *azcore.ClientOptions) *SubscriptionI
 // validation should prevent you from making this call
 // If the operation fails it returns the *Error error type.
 // subscriptionID - This should appear as a method parameter, use value null, client-side validation should prvenet the call
-// options - SubscriptionInMethodPostMethodLocalNullOptions contains the optional parameters for the SubscriptionInMethodClient.PostMethodLocalNull
+// options - SubscriptionInMethodClientPostMethodLocalNullOptions contains the optional parameters for the SubscriptionInMethodClient.PostMethodLocalNull
 // method.
-func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostMethodLocalNullOptions) (SubscriptionInMethodPostMethodLocalNullResponse, error) {
+func (client *SubscriptionInMethodClient) PostMethodLocalNull(ctx context.Context, subscriptionID string, options *SubscriptionInMethodClientPostMethodLocalNullOptions) (SubscriptionInMethodClientPostMethodLocalNullResponse, error) {
 	req, err := client.postMethodLocalNullCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
-		return SubscriptionInMethodPostMethodLocalNullResponse{}, err
+		return SubscriptionInMethodClientPostMethodLocalNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SubscriptionInMethodPostMethodLocalNullResponse{}, err
+		return SubscriptionInMethodClientPostMethodLocalNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SubscriptionInMethodPostMethodLocalNullResponse{}, client.postMethodLocalNullHandleError(resp)
+		return SubscriptionInMethodClientPostMethodLocalNullResponse{}, client.postMethodLocalNullHandleError(resp)
 	}
-	return SubscriptionInMethodPostMethodLocalNullResponse{RawResponse: resp}, nil
+	return SubscriptionInMethodClientPostMethodLocalNullResponse{RawResponse: resp}, nil
 }
 
 // postMethodLocalNullCreateRequest creates the PostMethodLocalNull request.
-func (client *SubscriptionInMethodClient) postMethodLocalNullCreateRequest(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostMethodLocalNullOptions) (*policy.Request, error) {
+func (client *SubscriptionInMethodClient) postMethodLocalNullCreateRequest(ctx context.Context, subscriptionID string, options *SubscriptionInMethodClientPostMethodLocalNullOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/local/null/{subscriptionId}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -92,25 +92,25 @@ func (client *SubscriptionInMethodClient) postMethodLocalNullHandleError(resp *h
 // to succeed
 // If the operation fails it returns the *Error error type.
 // subscriptionID - This should appear as a method parameter, use value '1234-5678-9012-3456'
-// options - SubscriptionInMethodPostMethodLocalValidOptions contains the optional parameters for the SubscriptionInMethodClient.PostMethodLocalValid
+// options - SubscriptionInMethodClientPostMethodLocalValidOptions contains the optional parameters for the SubscriptionInMethodClient.PostMethodLocalValid
 // method.
-func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostMethodLocalValidOptions) (SubscriptionInMethodPostMethodLocalValidResponse, error) {
+func (client *SubscriptionInMethodClient) PostMethodLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodClientPostMethodLocalValidOptions) (SubscriptionInMethodClientPostMethodLocalValidResponse, error) {
 	req, err := client.postMethodLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
-		return SubscriptionInMethodPostMethodLocalValidResponse{}, err
+		return SubscriptionInMethodClientPostMethodLocalValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SubscriptionInMethodPostMethodLocalValidResponse{}, err
+		return SubscriptionInMethodClientPostMethodLocalValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SubscriptionInMethodPostMethodLocalValidResponse{}, client.postMethodLocalValidHandleError(resp)
+		return SubscriptionInMethodClientPostMethodLocalValidResponse{}, client.postMethodLocalValidHandleError(resp)
 	}
-	return SubscriptionInMethodPostMethodLocalValidResponse{RawResponse: resp}, nil
+	return SubscriptionInMethodClientPostMethodLocalValidResponse{RawResponse: resp}, nil
 }
 
 // postMethodLocalValidCreateRequest creates the PostMethodLocalValid request.
-func (client *SubscriptionInMethodClient) postMethodLocalValidCreateRequest(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostMethodLocalValidOptions) (*policy.Request, error) {
+func (client *SubscriptionInMethodClient) postMethodLocalValidCreateRequest(ctx context.Context, subscriptionID string, options *SubscriptionInMethodClientPostMethodLocalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/local/1234-5678-9012-3456/{subscriptionId}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -141,25 +141,25 @@ func (client *SubscriptionInMethodClient) postMethodLocalValidHandleError(resp *
 // to succeed
 // If the operation fails it returns the *Error error type.
 // subscriptionID - Should appear as a method parameter -use value '1234-5678-9012-3456'
-// options - SubscriptionInMethodPostPathLocalValidOptions contains the optional parameters for the SubscriptionInMethodClient.PostPathLocalValid
+// options - SubscriptionInMethodClientPostPathLocalValidOptions contains the optional parameters for the SubscriptionInMethodClient.PostPathLocalValid
 // method.
-func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostPathLocalValidOptions) (SubscriptionInMethodPostPathLocalValidResponse, error) {
+func (client *SubscriptionInMethodClient) PostPathLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodClientPostPathLocalValidOptions) (SubscriptionInMethodClientPostPathLocalValidResponse, error) {
 	req, err := client.postPathLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
-		return SubscriptionInMethodPostPathLocalValidResponse{}, err
+		return SubscriptionInMethodClientPostPathLocalValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SubscriptionInMethodPostPathLocalValidResponse{}, err
+		return SubscriptionInMethodClientPostPathLocalValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SubscriptionInMethodPostPathLocalValidResponse{}, client.postPathLocalValidHandleError(resp)
+		return SubscriptionInMethodClientPostPathLocalValidResponse{}, client.postPathLocalValidHandleError(resp)
 	}
-	return SubscriptionInMethodPostPathLocalValidResponse{RawResponse: resp}, nil
+	return SubscriptionInMethodClientPostPathLocalValidResponse{RawResponse: resp}, nil
 }
 
 // postPathLocalValidCreateRequest creates the PostPathLocalValid request.
-func (client *SubscriptionInMethodClient) postPathLocalValidCreateRequest(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostPathLocalValidOptions) (*policy.Request, error) {
+func (client *SubscriptionInMethodClient) postPathLocalValidCreateRequest(ctx context.Context, subscriptionID string, options *SubscriptionInMethodClientPostPathLocalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/path/string/none/path/local/1234-5678-9012-3456/{subscriptionId}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")
@@ -190,25 +190,25 @@ func (client *SubscriptionInMethodClient) postPathLocalValidHandleError(resp *ht
 // to succeed
 // If the operation fails it returns the *Error error type.
 // subscriptionID - The subscriptionId, which appears in the path, the value is always '1234-5678-9012-3456'
-// options - SubscriptionInMethodPostSwaggerLocalValidOptions contains the optional parameters for the SubscriptionInMethodClient.PostSwaggerLocalValid
+// options - SubscriptionInMethodClientPostSwaggerLocalValidOptions contains the optional parameters for the SubscriptionInMethodClient.PostSwaggerLocalValid
 // method.
-func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostSwaggerLocalValidOptions) (SubscriptionInMethodPostSwaggerLocalValidResponse, error) {
+func (client *SubscriptionInMethodClient) PostSwaggerLocalValid(ctx context.Context, subscriptionID string, options *SubscriptionInMethodClientPostSwaggerLocalValidOptions) (SubscriptionInMethodClientPostSwaggerLocalValidResponse, error) {
 	req, err := client.postSwaggerLocalValidCreateRequest(ctx, subscriptionID, options)
 	if err != nil {
-		return SubscriptionInMethodPostSwaggerLocalValidResponse{}, err
+		return SubscriptionInMethodClientPostSwaggerLocalValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SubscriptionInMethodPostSwaggerLocalValidResponse{}, err
+		return SubscriptionInMethodClientPostSwaggerLocalValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SubscriptionInMethodPostSwaggerLocalValidResponse{}, client.postSwaggerLocalValidHandleError(resp)
+		return SubscriptionInMethodClientPostSwaggerLocalValidResponse{}, client.postSwaggerLocalValidHandleError(resp)
 	}
-	return SubscriptionInMethodPostSwaggerLocalValidResponse{RawResponse: resp}, nil
+	return SubscriptionInMethodClientPostSwaggerLocalValidResponse{RawResponse: resp}, nil
 }
 
 // postSwaggerLocalValidCreateRequest creates the PostSwaggerLocalValid request.
-func (client *SubscriptionInMethodClient) postSwaggerLocalValidCreateRequest(ctx context.Context, subscriptionID string, options *SubscriptionInMethodPostSwaggerLocalValidOptions) (*policy.Request, error) {
+func (client *SubscriptionInMethodClient) postSwaggerLocalValidCreateRequest(ctx context.Context, subscriptionID string, options *SubscriptionInMethodClientPostSwaggerLocalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/swagger/string/none/path/local/1234-5678-9012-3456/{subscriptionId}"
 	if subscriptionID == "" {
 		return nil, errors.New("parameter subscriptionID cannot be empty")

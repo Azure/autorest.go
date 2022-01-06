@@ -18,7 +18,7 @@ func newODataClient() *ODataClient {
 // GetWithFilter - Specify filter parameter with value '$filter=id gt 5 and name eq 'foo'&$orderby=id&$top=10'
 func TestGetWithFilter(t *testing.T) {
 	client := newODataClient()
-	result, err := client.GetWithFilter(context.Background(), &ODataGetWithFilterOptions{
+	result, err := client.GetWithFilter(context.Background(), &ODataClientGetWithFilterOptions{
 		Filter:  to.StringPtr("id gt 5 and name eq 'foo'"),
 		Orderby: to.StringPtr("id"),
 		Top:     to.Int32Ptr(10),

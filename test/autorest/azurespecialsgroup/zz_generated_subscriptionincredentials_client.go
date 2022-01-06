@@ -45,25 +45,25 @@ func NewSubscriptionInCredentialsClient(subscriptionID string, options *azcore.C
 // PostMethodGlobalNotProvidedValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId
 // to '1234-5678-9012-3456' to succeed
 // If the operation fails it returns the *Error error type.
-// options - SubscriptionInCredentialsPostMethodGlobalNotProvidedValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostMethodGlobalNotProvidedValid
-// method.
-func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValid(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalNotProvidedValidOptions) (SubscriptionInCredentialsPostMethodGlobalNotProvidedValidResponse, error) {
+// options - SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidOptions contains the optional parameters for the
+// SubscriptionInCredentialsClient.PostMethodGlobalNotProvidedValid method.
+func (client *SubscriptionInCredentialsClient) PostMethodGlobalNotProvidedValid(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidOptions) (SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidResponse, error) {
 	req, err := client.postMethodGlobalNotProvidedValidCreateRequest(ctx, options)
 	if err != nil {
-		return SubscriptionInCredentialsPostMethodGlobalNotProvidedValidResponse{}, err
+		return SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SubscriptionInCredentialsPostMethodGlobalNotProvidedValidResponse{}, err
+		return SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SubscriptionInCredentialsPostMethodGlobalNotProvidedValidResponse{}, client.postMethodGlobalNotProvidedValidHandleError(resp)
+		return SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidResponse{}, client.postMethodGlobalNotProvidedValidHandleError(resp)
 	}
-	return SubscriptionInCredentialsPostMethodGlobalNotProvidedValidResponse{RawResponse: resp}, nil
+	return SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidResponse{RawResponse: resp}, nil
 }
 
 // postMethodGlobalNotProvidedValidCreateRequest creates the PostMethodGlobalNotProvidedValid request.
-func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidCreateRequest(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalNotProvidedValidOptions) (*policy.Request, error) {
+func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidCreateRequest(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalNotProvidedValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/globalNotProvided/1234-5678-9012-3456/{subscriptionId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -96,25 +96,25 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNotProvidedValidH
 // PostMethodGlobalNull - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to null,
 // and client-side validation should prevent you from making this call
 // If the operation fails it returns the *Error error type.
-// options - SubscriptionInCredentialsPostMethodGlobalNullOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostMethodGlobalNull
+// options - SubscriptionInCredentialsClientPostMethodGlobalNullOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostMethodGlobalNull
 // method.
-func (client *SubscriptionInCredentialsClient) PostMethodGlobalNull(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalNullOptions) (SubscriptionInCredentialsPostMethodGlobalNullResponse, error) {
+func (client *SubscriptionInCredentialsClient) PostMethodGlobalNull(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalNullOptions) (SubscriptionInCredentialsClientPostMethodGlobalNullResponse, error) {
 	req, err := client.postMethodGlobalNullCreateRequest(ctx, options)
 	if err != nil {
-		return SubscriptionInCredentialsPostMethodGlobalNullResponse{}, err
+		return SubscriptionInCredentialsClientPostMethodGlobalNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SubscriptionInCredentialsPostMethodGlobalNullResponse{}, err
+		return SubscriptionInCredentialsClientPostMethodGlobalNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SubscriptionInCredentialsPostMethodGlobalNullResponse{}, client.postMethodGlobalNullHandleError(resp)
+		return SubscriptionInCredentialsClientPostMethodGlobalNullResponse{}, client.postMethodGlobalNullHandleError(resp)
 	}
-	return SubscriptionInCredentialsPostMethodGlobalNullResponse{RawResponse: resp}, nil
+	return SubscriptionInCredentialsClientPostMethodGlobalNullResponse{RawResponse: resp}, nil
 }
 
 // postMethodGlobalNullCreateRequest creates the PostMethodGlobalNull request.
-func (client *SubscriptionInCredentialsClient) postMethodGlobalNullCreateRequest(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalNullOptions) (*policy.Request, error) {
+func (client *SubscriptionInCredentialsClient) postMethodGlobalNullCreateRequest(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalNullOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/global/null/{subscriptionId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -144,25 +144,25 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalNullHandleError(r
 // PostMethodGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
 // to succeed
 // If the operation fails it returns the *Error error type.
-// options - SubscriptionInCredentialsPostMethodGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostMethodGlobalValid
+// options - SubscriptionInCredentialsClientPostMethodGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostMethodGlobalValid
 // method.
-func (client *SubscriptionInCredentialsClient) PostMethodGlobalValid(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalValidOptions) (SubscriptionInCredentialsPostMethodGlobalValidResponse, error) {
+func (client *SubscriptionInCredentialsClient) PostMethodGlobalValid(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalValidOptions) (SubscriptionInCredentialsClientPostMethodGlobalValidResponse, error) {
 	req, err := client.postMethodGlobalValidCreateRequest(ctx, options)
 	if err != nil {
-		return SubscriptionInCredentialsPostMethodGlobalValidResponse{}, err
+		return SubscriptionInCredentialsClientPostMethodGlobalValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SubscriptionInCredentialsPostMethodGlobalValidResponse{}, err
+		return SubscriptionInCredentialsClientPostMethodGlobalValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SubscriptionInCredentialsPostMethodGlobalValidResponse{}, client.postMethodGlobalValidHandleError(resp)
+		return SubscriptionInCredentialsClientPostMethodGlobalValidResponse{}, client.postMethodGlobalValidHandleError(resp)
 	}
-	return SubscriptionInCredentialsPostMethodGlobalValidResponse{RawResponse: resp}, nil
+	return SubscriptionInCredentialsClientPostMethodGlobalValidResponse{RawResponse: resp}, nil
 }
 
 // postMethodGlobalValidCreateRequest creates the PostMethodGlobalValid request.
-func (client *SubscriptionInCredentialsClient) postMethodGlobalValidCreateRequest(ctx context.Context, options *SubscriptionInCredentialsPostMethodGlobalValidOptions) (*policy.Request, error) {
+func (client *SubscriptionInCredentialsClient) postMethodGlobalValidCreateRequest(ctx context.Context, options *SubscriptionInCredentialsClientPostMethodGlobalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/method/string/none/path/global/1234-5678-9012-3456/{subscriptionId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -192,25 +192,25 @@ func (client *SubscriptionInCredentialsClient) postMethodGlobalValidHandleError(
 // PostPathGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
 // to succeed
 // If the operation fails it returns the *Error error type.
-// options - SubscriptionInCredentialsPostPathGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostPathGlobalValid
+// options - SubscriptionInCredentialsClientPostPathGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostPathGlobalValid
 // method.
-func (client *SubscriptionInCredentialsClient) PostPathGlobalValid(ctx context.Context, options *SubscriptionInCredentialsPostPathGlobalValidOptions) (SubscriptionInCredentialsPostPathGlobalValidResponse, error) {
+func (client *SubscriptionInCredentialsClient) PostPathGlobalValid(ctx context.Context, options *SubscriptionInCredentialsClientPostPathGlobalValidOptions) (SubscriptionInCredentialsClientPostPathGlobalValidResponse, error) {
 	req, err := client.postPathGlobalValidCreateRequest(ctx, options)
 	if err != nil {
-		return SubscriptionInCredentialsPostPathGlobalValidResponse{}, err
+		return SubscriptionInCredentialsClientPostPathGlobalValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SubscriptionInCredentialsPostPathGlobalValidResponse{}, err
+		return SubscriptionInCredentialsClientPostPathGlobalValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SubscriptionInCredentialsPostPathGlobalValidResponse{}, client.postPathGlobalValidHandleError(resp)
+		return SubscriptionInCredentialsClientPostPathGlobalValidResponse{}, client.postPathGlobalValidHandleError(resp)
 	}
-	return SubscriptionInCredentialsPostPathGlobalValidResponse{RawResponse: resp}, nil
+	return SubscriptionInCredentialsClientPostPathGlobalValidResponse{RawResponse: resp}, nil
 }
 
 // postPathGlobalValidCreateRequest creates the PostPathGlobalValid request.
-func (client *SubscriptionInCredentialsClient) postPathGlobalValidCreateRequest(ctx context.Context, options *SubscriptionInCredentialsPostPathGlobalValidOptions) (*policy.Request, error) {
+func (client *SubscriptionInCredentialsClient) postPathGlobalValidCreateRequest(ctx context.Context, options *SubscriptionInCredentialsClientPostPathGlobalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/path/string/none/path/global/1234-5678-9012-3456/{subscriptionId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -240,25 +240,25 @@ func (client *SubscriptionInCredentialsClient) postPathGlobalValidHandleError(re
 // PostSwaggerGlobalValid - POST method with subscriptionId modeled in credentials. Set the credential subscriptionId to '1234-5678-9012-3456'
 // to succeed
 // If the operation fails it returns the *Error error type.
-// options - SubscriptionInCredentialsPostSwaggerGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostSwaggerGlobalValid
+// options - SubscriptionInCredentialsClientPostSwaggerGlobalValidOptions contains the optional parameters for the SubscriptionInCredentialsClient.PostSwaggerGlobalValid
 // method.
-func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValid(ctx context.Context, options *SubscriptionInCredentialsPostSwaggerGlobalValidOptions) (SubscriptionInCredentialsPostSwaggerGlobalValidResponse, error) {
+func (client *SubscriptionInCredentialsClient) PostSwaggerGlobalValid(ctx context.Context, options *SubscriptionInCredentialsClientPostSwaggerGlobalValidOptions) (SubscriptionInCredentialsClientPostSwaggerGlobalValidResponse, error) {
 	req, err := client.postSwaggerGlobalValidCreateRequest(ctx, options)
 	if err != nil {
-		return SubscriptionInCredentialsPostSwaggerGlobalValidResponse{}, err
+		return SubscriptionInCredentialsClientPostSwaggerGlobalValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SubscriptionInCredentialsPostSwaggerGlobalValidResponse{}, err
+		return SubscriptionInCredentialsClientPostSwaggerGlobalValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SubscriptionInCredentialsPostSwaggerGlobalValidResponse{}, client.postSwaggerGlobalValidHandleError(resp)
+		return SubscriptionInCredentialsClientPostSwaggerGlobalValidResponse{}, client.postSwaggerGlobalValidHandleError(resp)
 	}
-	return SubscriptionInCredentialsPostSwaggerGlobalValidResponse{RawResponse: resp}, nil
+	return SubscriptionInCredentialsClientPostSwaggerGlobalValidResponse{RawResponse: resp}, nil
 }
 
 // postSwaggerGlobalValidCreateRequest creates the PostSwaggerGlobalValid request.
-func (client *SubscriptionInCredentialsClient) postSwaggerGlobalValidCreateRequest(ctx context.Context, options *SubscriptionInCredentialsPostSwaggerGlobalValidOptions) (*policy.Request, error) {
+func (client *SubscriptionInCredentialsClient) postSwaggerGlobalValidCreateRequest(ctx context.Context, options *SubscriptionInCredentialsClientPostSwaggerGlobalValidOptions) (*policy.Request, error) {
 	urlPath := "/azurespecials/subscriptionId/swagger/string/none/path/global/1234-5678-9012-3456/{subscriptionId}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

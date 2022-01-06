@@ -38,24 +38,24 @@ func newBigDataPoolsClient(endpoint string, pl runtime.Pipeline) *bigDataPoolsCl
 // Get - Get Big Data Pool
 // If the operation fails it returns the *ErrorContract error type.
 // bigDataPoolName - The Big Data Pool name
-// options - BigDataPoolsGetOptions contains the optional parameters for the bigDataPoolsClient.Get method.
-func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *BigDataPoolsGetOptions) (BigDataPoolsGetResponse, error) {
+// options - bigDataPoolsClientGetOptions contains the optional parameters for the bigDataPoolsClient.Get method.
+func (client *bigDataPoolsClient) Get(ctx context.Context, bigDataPoolName string, options *bigDataPoolsClientGetOptions) (bigDataPoolsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, bigDataPoolName, options)
 	if err != nil {
-		return BigDataPoolsGetResponse{}, err
+		return bigDataPoolsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BigDataPoolsGetResponse{}, err
+		return bigDataPoolsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BigDataPoolsGetResponse{}, client.getHandleError(resp)
+		return bigDataPoolsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *bigDataPoolsClient) getCreateRequest(ctx context.Context, bigDataPoolName string, options *BigDataPoolsGetOptions) (*policy.Request, error) {
+func (client *bigDataPoolsClient) getCreateRequest(ctx context.Context, bigDataPoolName string, options *bigDataPoolsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/bigDataPools/{bigDataPoolName}"
 	if bigDataPoolName == "" {
 		return nil, errors.New("parameter bigDataPoolName cannot be empty")
@@ -73,10 +73,10 @@ func (client *bigDataPoolsClient) getCreateRequest(ctx context.Context, bigDataP
 }
 
 // getHandleResponse handles the Get response.
-func (client *bigDataPoolsClient) getHandleResponse(resp *http.Response) (BigDataPoolsGetResponse, error) {
-	result := BigDataPoolsGetResponse{RawResponse: resp}
+func (client *bigDataPoolsClient) getHandleResponse(resp *http.Response) (bigDataPoolsClientGetResponse, error) {
+	result := bigDataPoolsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BigDataPoolResourceInfo); err != nil {
-		return BigDataPoolsGetResponse{}, runtime.NewResponseError(err, resp)
+		return bigDataPoolsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -96,24 +96,24 @@ func (client *bigDataPoolsClient) getHandleError(resp *http.Response) error {
 
 // List - List Big Data Pools
 // If the operation fails it returns the *ErrorContract error type.
-// options - BigDataPoolsListOptions contains the optional parameters for the bigDataPoolsClient.List method.
-func (client *bigDataPoolsClient) List(ctx context.Context, options *BigDataPoolsListOptions) (BigDataPoolsListResponse, error) {
+// options - bigDataPoolsClientListOptions contains the optional parameters for the bigDataPoolsClient.List method.
+func (client *bigDataPoolsClient) List(ctx context.Context, options *bigDataPoolsClientListOptions) (bigDataPoolsClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
-		return BigDataPoolsListResponse{}, err
+		return bigDataPoolsClientListResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BigDataPoolsListResponse{}, err
+		return bigDataPoolsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BigDataPoolsListResponse{}, client.listHandleError(resp)
+		return bigDataPoolsClientListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
-func (client *bigDataPoolsClient) listCreateRequest(ctx context.Context, options *BigDataPoolsListOptions) (*policy.Request, error) {
+func (client *bigDataPoolsClient) listCreateRequest(ctx context.Context, options *bigDataPoolsClientListOptions) (*policy.Request, error) {
 	urlPath := "/bigDataPools"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -127,10 +127,10 @@ func (client *bigDataPoolsClient) listCreateRequest(ctx context.Context, options
 }
 
 // listHandleResponse handles the List response.
-func (client *bigDataPoolsClient) listHandleResponse(resp *http.Response) (BigDataPoolsListResponse, error) {
-	result := BigDataPoolsListResponse{RawResponse: resp}
+func (client *bigDataPoolsClient) listHandleResponse(resp *http.Response) (bigDataPoolsClientListResponse, error) {
+	result := bigDataPoolsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BigDataPoolResourceInfoListResult); err != nil {
-		return BigDataPoolsListResponse{}, runtime.NewResponseError(err, resp)
+		return bigDataPoolsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

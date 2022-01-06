@@ -21,46 +21,50 @@ func (e Error) Error() string {
 	return e.raw
 }
 
-// FirstParameterGroup contains a group of parameters for the ParameterGrouping.PostMultiParamGroups method.
+// FirstParameterGroup contains a group of parameters for the ParameterGroupingClient.PostMultiParamGroups method.
 type FirstParameterGroup struct {
 	HeaderOne *string
 	// Query parameter with default
 	QueryOne *int32
 }
 
-// ParameterGroupingPostMultiParamGroupsOptions contains the optional parameters for the ParameterGroupingClient.PostMultiParamGroups
+// ParameterGroupingClientPostMultiParamGroupsOptions contains the optional parameters for the ParameterGroupingClient.PostMultiParamGroups
 // method.
-type ParameterGroupingPostMultiParamGroupsOptions struct {
+type ParameterGroupingClientPostMultiParamGroupsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParameterGroupingPostMultiParamGroupsSecondParamGroup contains a group of parameters for the ParameterGrouping.PostMultiParamGroups
+// ParameterGroupingClientPostMultiParamGroupsSecondParamGroup contains a group of parameters for the ParameterGroupingClient.PostMultiParamGroups
 // method.
-type ParameterGroupingPostMultiParamGroupsSecondParamGroup struct {
+type ParameterGroupingClientPostMultiParamGroupsSecondParamGroup struct {
 	HeaderTwo *string
 	// Query parameter with default
 	QueryTwo *int32
 }
 
-// ParameterGroupingPostOptionalOptions contains the optional parameters for the ParameterGroupingClient.PostOptional method.
-type ParameterGroupingPostOptionalOptions struct {
+// ParameterGroupingClientPostOptionalOptions contains the optional parameters for the ParameterGroupingClient.PostOptional
+// method.
+type ParameterGroupingClientPostOptionalOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParameterGroupingPostOptionalParameters contains a group of parameters for the ParameterGrouping.PostOptional method.
-type ParameterGroupingPostOptionalParameters struct {
+// ParameterGroupingClientPostOptionalParameters contains a group of parameters for the ParameterGroupingClient.PostOptional
+// method.
+type ParameterGroupingClientPostOptionalParameters struct {
 	CustomHeader *string
 	// Query parameter with default
 	Query *int32
 }
 
-// ParameterGroupingPostRequiredOptions contains the optional parameters for the ParameterGroupingClient.PostRequired method.
-type ParameterGroupingPostRequiredOptions struct {
+// ParameterGroupingClientPostRequiredOptions contains the optional parameters for the ParameterGroupingClient.PostRequired
+// method.
+type ParameterGroupingClientPostRequiredOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParameterGroupingPostRequiredParameters contains a group of parameters for the ParameterGrouping.PostRequired method.
-type ParameterGroupingPostRequiredParameters struct {
+// ParameterGroupingClientPostRequiredParameters contains a group of parameters for the ParameterGroupingClient.PostRequired
+// method.
+type ParameterGroupingClientPostRequiredParameters struct {
 	Body         int32
 	CustomHeader *string
 	// Path parameter
@@ -69,23 +73,23 @@ type ParameterGroupingPostRequiredParameters struct {
 	Query *int32
 }
 
-// ParameterGroupingPostReservedWordsOptions contains the optional parameters for the ParameterGroupingClient.PostReservedWords
+// ParameterGroupingClientPostReservedWordsOptions contains the optional parameters for the ParameterGroupingClient.PostReservedWords
 // method.
-type ParameterGroupingPostReservedWordsOptions struct {
+type ParameterGroupingClientPostReservedWordsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ParameterGroupingPostReservedWordsParameters contains a group of parameters for the ParameterGrouping.PostReservedWords
+// ParameterGroupingClientPostReservedWordsParameters contains a group of parameters for the ParameterGroupingClient.PostReservedWords
 // method.
-type ParameterGroupingPostReservedWordsParameters struct {
+type ParameterGroupingClientPostReservedWordsParameters struct {
 	// 'accept' is a reserved word. Pass in 'yes' to pass.
 	Accept *string
 	// 'from' is a reserved word. Pass in 'bob' to pass.
 	From *string
 }
 
-// ParameterGroupingPostSharedParameterGroupObjectOptions contains the optional parameters for the ParameterGroupingClient.PostSharedParameterGroupObject
+// ParameterGroupingClientPostSharedParameterGroupObjectOptions contains the optional parameters for the ParameterGroupingClient.PostSharedParameterGroupObject
 // method.
-type ParameterGroupingPostSharedParameterGroupObjectOptions struct {
+type ParameterGroupingClientPostSharedParameterGroupObjectOptions struct {
 	// placeholder for future optional parameters
 }

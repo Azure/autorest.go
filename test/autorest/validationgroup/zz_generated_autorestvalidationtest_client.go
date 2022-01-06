@@ -45,25 +45,25 @@ func NewAutoRestValidationTestClient(subscriptionID string, options *azcore.Clie
 
 // GetWithConstantInPath -
 // If the operation fails it returns a generic error.
-// options - AutoRestValidationTestGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTestClient.GetWithConstantInPath
+// options - AutoRestValidationTestClientGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTestClient.GetWithConstantInPath
 // method.
-func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Context, options *AutoRestValidationTestGetWithConstantInPathOptions) (AutoRestValidationTestGetWithConstantInPathResponse, error) {
+func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Context, options *AutoRestValidationTestClientGetWithConstantInPathOptions) (AutoRestValidationTestClientGetWithConstantInPathResponse, error) {
 	req, err := client.getWithConstantInPathCreateRequest(ctx, options)
 	if err != nil {
-		return AutoRestValidationTestGetWithConstantInPathResponse{}, err
+		return AutoRestValidationTestClientGetWithConstantInPathResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return AutoRestValidationTestGetWithConstantInPathResponse{}, err
+		return AutoRestValidationTestClientGetWithConstantInPathResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AutoRestValidationTestGetWithConstantInPathResponse{}, client.getWithConstantInPathHandleError(resp)
+		return AutoRestValidationTestClientGetWithConstantInPathResponse{}, client.getWithConstantInPathHandleError(resp)
 	}
-	return AutoRestValidationTestGetWithConstantInPathResponse{RawResponse: resp}, nil
+	return AutoRestValidationTestClientGetWithConstantInPathResponse{RawResponse: resp}, nil
 }
 
 // getWithConstantInPathCreateRequest creates the GetWithConstantInPath request.
-func (client *AutoRestValidationTestClient) getWithConstantInPathCreateRequest(ctx context.Context, options *AutoRestValidationTestGetWithConstantInPathOptions) (*policy.Request, error) {
+func (client *AutoRestValidationTestClient) getWithConstantInPathCreateRequest(ctx context.Context, options *AutoRestValidationTestClientGetWithConstantInPathOptions) (*policy.Request, error) {
 	urlPath := "/validation/constantsInPath/{constantParam}/value"
 	urlPath = strings.ReplaceAll(urlPath, "{constantParam}", url.PathEscape("constant"))
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
@@ -87,25 +87,25 @@ func (client *AutoRestValidationTestClient) getWithConstantInPathHandleError(res
 
 // PostWithConstantInBody -
 // If the operation fails it returns a generic error.
-// options - AutoRestValidationTestPostWithConstantInBodyOptions contains the optional parameters for the AutoRestValidationTestClient.PostWithConstantInBody
+// options - AutoRestValidationTestClientPostWithConstantInBodyOptions contains the optional parameters for the AutoRestValidationTestClient.PostWithConstantInBody
 // method.
-func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.Context, options *AutoRestValidationTestPostWithConstantInBodyOptions) (AutoRestValidationTestPostWithConstantInBodyResponse, error) {
+func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.Context, options *AutoRestValidationTestClientPostWithConstantInBodyOptions) (AutoRestValidationTestClientPostWithConstantInBodyResponse, error) {
 	req, err := client.postWithConstantInBodyCreateRequest(ctx, options)
 	if err != nil {
-		return AutoRestValidationTestPostWithConstantInBodyResponse{}, err
+		return AutoRestValidationTestClientPostWithConstantInBodyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return AutoRestValidationTestPostWithConstantInBodyResponse{}, err
+		return AutoRestValidationTestClientPostWithConstantInBodyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AutoRestValidationTestPostWithConstantInBodyResponse{}, client.postWithConstantInBodyHandleError(resp)
+		return AutoRestValidationTestClientPostWithConstantInBodyResponse{}, client.postWithConstantInBodyHandleError(resp)
 	}
 	return client.postWithConstantInBodyHandleResponse(resp)
 }
 
 // postWithConstantInBodyCreateRequest creates the PostWithConstantInBody request.
-func (client *AutoRestValidationTestClient) postWithConstantInBodyCreateRequest(ctx context.Context, options *AutoRestValidationTestPostWithConstantInBodyOptions) (*policy.Request, error) {
+func (client *AutoRestValidationTestClient) postWithConstantInBodyCreateRequest(ctx context.Context, options *AutoRestValidationTestClientPostWithConstantInBodyOptions) (*policy.Request, error) {
 	urlPath := "/validation/constantsInPath/{constantParam}/value"
 	urlPath = strings.ReplaceAll(urlPath, "{constantParam}", url.PathEscape("constant"))
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
@@ -120,10 +120,10 @@ func (client *AutoRestValidationTestClient) postWithConstantInBodyCreateRequest(
 }
 
 // postWithConstantInBodyHandleResponse handles the PostWithConstantInBody response.
-func (client *AutoRestValidationTestClient) postWithConstantInBodyHandleResponse(resp *http.Response) (AutoRestValidationTestPostWithConstantInBodyResponse, error) {
-	result := AutoRestValidationTestPostWithConstantInBodyResponse{RawResponse: resp}
+func (client *AutoRestValidationTestClient) postWithConstantInBodyHandleResponse(resp *http.Response) (AutoRestValidationTestClientPostWithConstantInBodyResponse, error) {
+	result := AutoRestValidationTestClientPostWithConstantInBodyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Product); err != nil {
-		return AutoRestValidationTestPostWithConstantInBodyResponse{}, runtime.NewResponseError(err, resp)
+		return AutoRestValidationTestClientPostWithConstantInBodyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -144,25 +144,25 @@ func (client *AutoRestValidationTestClient) postWithConstantInBodyHandleError(re
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - Required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
 // id - Required int multiple of 10 from 100 to 1000.
-// options - AutoRestValidationTestValidationOfBodyOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfBody
+// options - AutoRestValidationTestClientValidationOfBodyOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfBody
 // method.
-func (client *AutoRestValidationTestClient) ValidationOfBody(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestValidationOfBodyOptions) (AutoRestValidationTestValidationOfBodyResponse, error) {
+func (client *AutoRestValidationTestClient) ValidationOfBody(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestClientValidationOfBodyOptions) (AutoRestValidationTestClientValidationOfBodyResponse, error) {
 	req, err := client.validationOfBodyCreateRequest(ctx, resourceGroupName, id, options)
 	if err != nil {
-		return AutoRestValidationTestValidationOfBodyResponse{}, err
+		return AutoRestValidationTestClientValidationOfBodyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return AutoRestValidationTestValidationOfBodyResponse{}, err
+		return AutoRestValidationTestClientValidationOfBodyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AutoRestValidationTestValidationOfBodyResponse{}, client.validationOfBodyHandleError(resp)
+		return AutoRestValidationTestClientValidationOfBodyResponse{}, client.validationOfBodyHandleError(resp)
 	}
 	return client.validationOfBodyHandleResponse(resp)
 }
 
 // validationOfBodyCreateRequest creates the ValidationOfBody request.
-func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestValidationOfBodyOptions) (*policy.Request, error) {
+func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestClientValidationOfBodyOptions) (*policy.Request, error) {
 	urlPath := "/fakepath/{subscriptionId}/{resourceGroupName}/{id}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -188,10 +188,10 @@ func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx co
 }
 
 // validationOfBodyHandleResponse handles the ValidationOfBody response.
-func (client *AutoRestValidationTestClient) validationOfBodyHandleResponse(resp *http.Response) (AutoRestValidationTestValidationOfBodyResponse, error) {
-	result := AutoRestValidationTestValidationOfBodyResponse{RawResponse: resp}
+func (client *AutoRestValidationTestClient) validationOfBodyHandleResponse(resp *http.Response) (AutoRestValidationTestClientValidationOfBodyResponse, error) {
+	result := AutoRestValidationTestClientValidationOfBodyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Product); err != nil {
-		return AutoRestValidationTestValidationOfBodyResponse{}, runtime.NewResponseError(err, resp)
+		return AutoRestValidationTestClientValidationOfBodyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -213,25 +213,25 @@ func (client *AutoRestValidationTestClient) validationOfBodyHandleError(resp *ht
 // If the operation fails it returns the *Error error type.
 // resourceGroupName - Required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
 // id - Required int multiple of 10 from 100 to 1000.
-// options - AutoRestValidationTestValidationOfMethodParametersOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfMethodParameters
+// options - AutoRestValidationTestClientValidationOfMethodParametersOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfMethodParameters
 // method.
-func (client *AutoRestValidationTestClient) ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestValidationOfMethodParametersOptions) (AutoRestValidationTestValidationOfMethodParametersResponse, error) {
+func (client *AutoRestValidationTestClient) ValidationOfMethodParameters(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestClientValidationOfMethodParametersOptions) (AutoRestValidationTestClientValidationOfMethodParametersResponse, error) {
 	req, err := client.validationOfMethodParametersCreateRequest(ctx, resourceGroupName, id, options)
 	if err != nil {
-		return AutoRestValidationTestValidationOfMethodParametersResponse{}, err
+		return AutoRestValidationTestClientValidationOfMethodParametersResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return AutoRestValidationTestValidationOfMethodParametersResponse{}, err
+		return AutoRestValidationTestClientValidationOfMethodParametersResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AutoRestValidationTestValidationOfMethodParametersResponse{}, client.validationOfMethodParametersHandleError(resp)
+		return AutoRestValidationTestClientValidationOfMethodParametersResponse{}, client.validationOfMethodParametersHandleError(resp)
 	}
 	return client.validationOfMethodParametersHandleResponse(resp)
 }
 
 // validationOfMethodParametersCreateRequest creates the ValidationOfMethodParameters request.
-func (client *AutoRestValidationTestClient) validationOfMethodParametersCreateRequest(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestValidationOfMethodParametersOptions) (*policy.Request, error) {
+func (client *AutoRestValidationTestClient) validationOfMethodParametersCreateRequest(ctx context.Context, resourceGroupName string, id int32, options *AutoRestValidationTestClientValidationOfMethodParametersOptions) (*policy.Request, error) {
 	urlPath := "/fakepath/{subscriptionId}/{resourceGroupName}/{id}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -254,10 +254,10 @@ func (client *AutoRestValidationTestClient) validationOfMethodParametersCreateRe
 }
 
 // validationOfMethodParametersHandleResponse handles the ValidationOfMethodParameters response.
-func (client *AutoRestValidationTestClient) validationOfMethodParametersHandleResponse(resp *http.Response) (AutoRestValidationTestValidationOfMethodParametersResponse, error) {
-	result := AutoRestValidationTestValidationOfMethodParametersResponse{RawResponse: resp}
+func (client *AutoRestValidationTestClient) validationOfMethodParametersHandleResponse(resp *http.Response) (AutoRestValidationTestClientValidationOfMethodParametersResponse, error) {
+	result := AutoRestValidationTestClientValidationOfMethodParametersResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Product); err != nil {
-		return AutoRestValidationTestValidationOfMethodParametersResponse{}, runtime.NewResponseError(err, resp)
+		return AutoRestValidationTestClientValidationOfMethodParametersResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

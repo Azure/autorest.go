@@ -38,24 +38,24 @@ func NewBasicClient(options *azcore.ClientOptions) *BasicClient {
 
 // GetEmpty - Get a basic complex type that is empty
 // If the operation fails it returns the *Error error type.
-// options - BasicGetEmptyOptions contains the optional parameters for the BasicClient.GetEmpty method.
-func (client *BasicClient) GetEmpty(ctx context.Context, options *BasicGetEmptyOptions) (BasicGetEmptyResponse, error) {
+// options - BasicClientGetEmptyOptions contains the optional parameters for the BasicClient.GetEmpty method.
+func (client *BasicClient) GetEmpty(ctx context.Context, options *BasicClientGetEmptyOptions) (BasicClientGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return BasicGetEmptyResponse{}, err
+		return BasicClientGetEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BasicGetEmptyResponse{}, err
+		return BasicClientGetEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BasicGetEmptyResponse{}, client.getEmptyHandleError(resp)
+		return BasicClientGetEmptyResponse{}, client.getEmptyHandleError(resp)
 	}
 	return client.getEmptyHandleResponse(resp)
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *BasicClient) getEmptyCreateRequest(ctx context.Context, options *BasicGetEmptyOptions) (*policy.Request, error) {
+func (client *BasicClient) getEmptyCreateRequest(ctx context.Context, options *BasicClientGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -66,10 +66,10 @@ func (client *BasicClient) getEmptyCreateRequest(ctx context.Context, options *B
 }
 
 // getEmptyHandleResponse handles the GetEmpty response.
-func (client *BasicClient) getEmptyHandleResponse(resp *http.Response) (BasicGetEmptyResponse, error) {
-	result := BasicGetEmptyResponse{RawResponse: resp}
+func (client *BasicClient) getEmptyHandleResponse(resp *http.Response) (BasicClientGetEmptyResponse, error) {
+	result := BasicClientGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
-		return BasicGetEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return BasicClientGetEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -89,24 +89,24 @@ func (client *BasicClient) getEmptyHandleError(resp *http.Response) error {
 
 // GetInvalid - Get a basic complex type that is invalid for the local strong type
 // If the operation fails it returns the *Error error type.
-// options - BasicGetInvalidOptions contains the optional parameters for the BasicClient.GetInvalid method.
-func (client *BasicClient) GetInvalid(ctx context.Context, options *BasicGetInvalidOptions) (BasicGetInvalidResponse, error) {
+// options - BasicClientGetInvalidOptions contains the optional parameters for the BasicClient.GetInvalid method.
+func (client *BasicClient) GetInvalid(ctx context.Context, options *BasicClientGetInvalidOptions) (BasicClientGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
-		return BasicGetInvalidResponse{}, err
+		return BasicClientGetInvalidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BasicGetInvalidResponse{}, err
+		return BasicClientGetInvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BasicGetInvalidResponse{}, client.getInvalidHandleError(resp)
+		return BasicClientGetInvalidResponse{}, client.getInvalidHandleError(resp)
 	}
 	return client.getInvalidHandleResponse(resp)
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
-func (client *BasicClient) getInvalidCreateRequest(ctx context.Context, options *BasicGetInvalidOptions) (*policy.Request, error) {
+func (client *BasicClient) getInvalidCreateRequest(ctx context.Context, options *BasicClientGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/invalid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -117,10 +117,10 @@ func (client *BasicClient) getInvalidCreateRequest(ctx context.Context, options 
 }
 
 // getInvalidHandleResponse handles the GetInvalid response.
-func (client *BasicClient) getInvalidHandleResponse(resp *http.Response) (BasicGetInvalidResponse, error) {
-	result := BasicGetInvalidResponse{RawResponse: resp}
+func (client *BasicClient) getInvalidHandleResponse(resp *http.Response) (BasicClientGetInvalidResponse, error) {
+	result := BasicClientGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
-		return BasicGetInvalidResponse{}, runtime.NewResponseError(err, resp)
+		return BasicClientGetInvalidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -140,24 +140,24 @@ func (client *BasicClient) getInvalidHandleError(resp *http.Response) error {
 
 // GetNotProvided - Get a basic complex type while the server doesn't provide a response payload
 // If the operation fails it returns the *Error error type.
-// options - BasicGetNotProvidedOptions contains the optional parameters for the BasicClient.GetNotProvided method.
-func (client *BasicClient) GetNotProvided(ctx context.Context, options *BasicGetNotProvidedOptions) (BasicGetNotProvidedResponse, error) {
+// options - BasicClientGetNotProvidedOptions contains the optional parameters for the BasicClient.GetNotProvided method.
+func (client *BasicClient) GetNotProvided(ctx context.Context, options *BasicClientGetNotProvidedOptions) (BasicClientGetNotProvidedResponse, error) {
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
-		return BasicGetNotProvidedResponse{}, err
+		return BasicClientGetNotProvidedResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BasicGetNotProvidedResponse{}, err
+		return BasicClientGetNotProvidedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BasicGetNotProvidedResponse{}, client.getNotProvidedHandleError(resp)
+		return BasicClientGetNotProvidedResponse{}, client.getNotProvidedHandleError(resp)
 	}
 	return client.getNotProvidedHandleResponse(resp)
 }
 
 // getNotProvidedCreateRequest creates the GetNotProvided request.
-func (client *BasicClient) getNotProvidedCreateRequest(ctx context.Context, options *BasicGetNotProvidedOptions) (*policy.Request, error) {
+func (client *BasicClient) getNotProvidedCreateRequest(ctx context.Context, options *BasicClientGetNotProvidedOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/notprovided"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -168,10 +168,10 @@ func (client *BasicClient) getNotProvidedCreateRequest(ctx context.Context, opti
 }
 
 // getNotProvidedHandleResponse handles the GetNotProvided response.
-func (client *BasicClient) getNotProvidedHandleResponse(resp *http.Response) (BasicGetNotProvidedResponse, error) {
-	result := BasicGetNotProvidedResponse{RawResponse: resp}
+func (client *BasicClient) getNotProvidedHandleResponse(resp *http.Response) (BasicClientGetNotProvidedResponse, error) {
+	result := BasicClientGetNotProvidedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
-		return BasicGetNotProvidedResponse{}, runtime.NewResponseError(err, resp)
+		return BasicClientGetNotProvidedResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -191,24 +191,24 @@ func (client *BasicClient) getNotProvidedHandleError(resp *http.Response) error 
 
 // GetNull - Get a basic complex type whose properties are null
 // If the operation fails it returns the *Error error type.
-// options - BasicGetNullOptions contains the optional parameters for the BasicClient.GetNull method.
-func (client *BasicClient) GetNull(ctx context.Context, options *BasicGetNullOptions) (BasicGetNullResponse, error) {
+// options - BasicClientGetNullOptions contains the optional parameters for the BasicClient.GetNull method.
+func (client *BasicClient) GetNull(ctx context.Context, options *BasicClientGetNullOptions) (BasicClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
-		return BasicGetNullResponse{}, err
+		return BasicClientGetNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BasicGetNullResponse{}, err
+		return BasicClientGetNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BasicGetNullResponse{}, client.getNullHandleError(resp)
+		return BasicClientGetNullResponse{}, client.getNullHandleError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *BasicClient) getNullCreateRequest(ctx context.Context, options *BasicGetNullOptions) (*policy.Request, error) {
+func (client *BasicClient) getNullCreateRequest(ctx context.Context, options *BasicClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -219,10 +219,10 @@ func (client *BasicClient) getNullCreateRequest(ctx context.Context, options *Ba
 }
 
 // getNullHandleResponse handles the GetNull response.
-func (client *BasicClient) getNullHandleResponse(resp *http.Response) (BasicGetNullResponse, error) {
-	result := BasicGetNullResponse{RawResponse: resp}
+func (client *BasicClient) getNullHandleResponse(resp *http.Response) (BasicClientGetNullResponse, error) {
+	result := BasicClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
-		return BasicGetNullResponse{}, runtime.NewResponseError(err, resp)
+		return BasicClientGetNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -242,24 +242,24 @@ func (client *BasicClient) getNullHandleError(resp *http.Response) error {
 
 // GetValid - Get complex type {id: 2, name: 'abc', color: 'YELLOW'}
 // If the operation fails it returns the *Error error type.
-// options - BasicGetValidOptions contains the optional parameters for the BasicClient.GetValid method.
-func (client *BasicClient) GetValid(ctx context.Context, options *BasicGetValidOptions) (BasicGetValidResponse, error) {
+// options - BasicClientGetValidOptions contains the optional parameters for the BasicClient.GetValid method.
+func (client *BasicClient) GetValid(ctx context.Context, options *BasicClientGetValidOptions) (BasicClientGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
-		return BasicGetValidResponse{}, err
+		return BasicClientGetValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BasicGetValidResponse{}, err
+		return BasicClientGetValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BasicGetValidResponse{}, client.getValidHandleError(resp)
+		return BasicClientGetValidResponse{}, client.getValidHandleError(resp)
 	}
 	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client *BasicClient) getValidCreateRequest(ctx context.Context, options *BasicGetValidOptions) (*policy.Request, error) {
+func (client *BasicClient) getValidCreateRequest(ctx context.Context, options *BasicClientGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -270,10 +270,10 @@ func (client *BasicClient) getValidCreateRequest(ctx context.Context, options *B
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client *BasicClient) getValidHandleResponse(resp *http.Response) (BasicGetValidResponse, error) {
-	result := BasicGetValidResponse{RawResponse: resp}
+func (client *BasicClient) getValidHandleResponse(resp *http.Response) (BasicClientGetValidResponse, error) {
+	result := BasicClientGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Basic); err != nil {
-		return BasicGetValidResponse{}, runtime.NewResponseError(err, resp)
+		return BasicClientGetValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -294,24 +294,24 @@ func (client *BasicClient) getValidHandleError(resp *http.Response) error {
 // PutValid - Please put {id: 2, name: 'abc', color: 'Magenta'}
 // If the operation fails it returns the *Error error type.
 // complexBody - Please put {id: 2, name: 'abc', color: 'Magenta'}
-// options - BasicPutValidOptions contains the optional parameters for the BasicClient.PutValid method.
-func (client *BasicClient) PutValid(ctx context.Context, complexBody Basic, options *BasicPutValidOptions) (BasicPutValidResponse, error) {
+// options - BasicClientPutValidOptions contains the optional parameters for the BasicClient.PutValid method.
+func (client *BasicClient) PutValid(ctx context.Context, complexBody Basic, options *BasicClientPutValidOptions) (BasicClientPutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return BasicPutValidResponse{}, err
+		return BasicClientPutValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BasicPutValidResponse{}, err
+		return BasicClientPutValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BasicPutValidResponse{}, client.putValidHandleError(resp)
+		return BasicClientPutValidResponse{}, client.putValidHandleError(resp)
 	}
-	return BasicPutValidResponse{RawResponse: resp}, nil
+	return BasicClientPutValidResponse{RawResponse: resp}, nil
 }
 
 // putValidCreateRequest creates the PutValid request.
-func (client *BasicClient) putValidCreateRequest(ctx context.Context, complexBody Basic, options *BasicPutValidOptions) (*policy.Request, error) {
+func (client *BasicClient) putValidCreateRequest(ctx context.Context, complexBody Basic, options *BasicClientPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/basic/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

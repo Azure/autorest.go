@@ -57,21 +57,21 @@ func NewConnectionMonitorsClient(subscriptionID string, credential azcore.TokenC
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
 // parameters - Parameters that define the operation to create a connection monitor.
-// options - ConnectionMonitorsBeginCreateOrUpdateOptions contains the optional parameters for the ConnectionMonitorsClient.BeginCreateOrUpdate
+// options - ConnectionMonitorsClientBeginCreateOrUpdateOptions contains the optional parameters for the ConnectionMonitorsClient.BeginCreateOrUpdate
 // method.
-func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsBeginCreateOrUpdateOptions) (ConnectionMonitorsCreateOrUpdatePollerResponse, error) {
+func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsClientBeginCreateOrUpdateOptions) (ConnectionMonitorsClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, options)
 	if err != nil {
-		return ConnectionMonitorsCreateOrUpdatePollerResponse{}, err
+		return ConnectionMonitorsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := ConnectionMonitorsCreateOrUpdatePollerResponse{
+	result := ConnectionMonitorsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return ConnectionMonitorsCreateOrUpdatePollerResponse{}, err
+		return ConnectionMonitorsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &ConnectionMonitorsCreateOrUpdatePoller{
+	result.Poller = &ConnectionMonitorsClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -79,7 +79,7 @@ func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context,
 
 // CreateOrUpdate - Create or update a connection monitor.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *ConnectionMonitorsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *ConnectionMonitorsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -95,7 +95,7 @@ func (client *ConnectionMonitorsClient) createOrUpdate(ctx context.Context, reso
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ConnectionMonitorsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *ConnectionMonitorsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -142,21 +142,21 @@ func (client *ConnectionMonitorsClient) createOrUpdateHandleError(resp *http.Res
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
-// options - ConnectionMonitorsBeginDeleteOptions contains the optional parameters for the ConnectionMonitorsClient.BeginDelete
+// options - ConnectionMonitorsClientBeginDeleteOptions contains the optional parameters for the ConnectionMonitorsClient.BeginDelete
 // method.
-func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginDeleteOptions) (ConnectionMonitorsDeletePollerResponse, error) {
+func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginDeleteOptions) (ConnectionMonitorsClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
-		return ConnectionMonitorsDeletePollerResponse{}, err
+		return ConnectionMonitorsClientDeletePollerResponse{}, err
 	}
-	result := ConnectionMonitorsDeletePollerResponse{
+	result := ConnectionMonitorsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return ConnectionMonitorsDeletePollerResponse{}, err
+		return ConnectionMonitorsClientDeletePollerResponse{}, err
 	}
-	result.Poller = &ConnectionMonitorsDeletePoller{
+	result.Poller = &ConnectionMonitorsClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -164,7 +164,7 @@ func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourc
 
 // Delete - Deletes the specified connection monitor.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *ConnectionMonitorsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginDeleteOptions) (*http.Response, error) {
+func (client *ConnectionMonitorsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
 		return nil, err
@@ -180,7 +180,7 @@ func (client *ConnectionMonitorsClient) deleteOperation(ctx context.Context, res
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *ConnectionMonitorsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginDeleteOptions) (*policy.Request, error) {
+func (client *ConnectionMonitorsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -227,24 +227,24 @@ func (client *ConnectionMonitorsClient) deleteHandleError(resp *http.Response) e
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
-// options - ConnectionMonitorsGetOptions contains the optional parameters for the ConnectionMonitorsClient.Get method.
-func (client *ConnectionMonitorsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsGetOptions) (ConnectionMonitorsGetResponse, error) {
+// options - ConnectionMonitorsClientGetOptions contains the optional parameters for the ConnectionMonitorsClient.Get method.
+func (client *ConnectionMonitorsClient) Get(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientGetOptions) (ConnectionMonitorsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
-		return ConnectionMonitorsGetResponse{}, err
+		return ConnectionMonitorsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ConnectionMonitorsGetResponse{}, err
+		return ConnectionMonitorsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ConnectionMonitorsGetResponse{}, client.getHandleError(resp)
+		return ConnectionMonitorsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *ConnectionMonitorsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsGetOptions) (*policy.Request, error) {
+func (client *ConnectionMonitorsClient) getCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -274,10 +274,10 @@ func (client *ConnectionMonitorsClient) getCreateRequest(ctx context.Context, re
 }
 
 // getHandleResponse handles the Get response.
-func (client *ConnectionMonitorsClient) getHandleResponse(resp *http.Response) (ConnectionMonitorsGetResponse, error) {
-	result := ConnectionMonitorsGetResponse{RawResponse: resp}
+func (client *ConnectionMonitorsClient) getHandleResponse(resp *http.Response) (ConnectionMonitorsClientGetResponse, error) {
+	result := ConnectionMonitorsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ConnectionMonitorResult); err != nil {
-		return ConnectionMonitorsGetResponse{}, runtime.NewResponseError(err, resp)
+		return ConnectionMonitorsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -299,24 +299,24 @@ func (client *ConnectionMonitorsClient) getHandleError(resp *http.Response) erro
 // If the operation fails it returns the *ErrorResponse error type.
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
-// options - ConnectionMonitorsListOptions contains the optional parameters for the ConnectionMonitorsClient.List method.
-func (client *ConnectionMonitorsClient) List(ctx context.Context, resourceGroupName string, networkWatcherName string, options *ConnectionMonitorsListOptions) (ConnectionMonitorsListResponse, error) {
+// options - ConnectionMonitorsClientListOptions contains the optional parameters for the ConnectionMonitorsClient.List method.
+func (client *ConnectionMonitorsClient) List(ctx context.Context, resourceGroupName string, networkWatcherName string, options *ConnectionMonitorsClientListOptions) (ConnectionMonitorsClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, resourceGroupName, networkWatcherName, options)
 	if err != nil {
-		return ConnectionMonitorsListResponse{}, err
+		return ConnectionMonitorsClientListResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ConnectionMonitorsListResponse{}, err
+		return ConnectionMonitorsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ConnectionMonitorsListResponse{}, client.listHandleError(resp)
+		return ConnectionMonitorsClientListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
-func (client *ConnectionMonitorsClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, options *ConnectionMonitorsListOptions) (*policy.Request, error) {
+func (client *ConnectionMonitorsClient) listCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, options *ConnectionMonitorsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -342,10 +342,10 @@ func (client *ConnectionMonitorsClient) listCreateRequest(ctx context.Context, r
 }
 
 // listHandleResponse handles the List response.
-func (client *ConnectionMonitorsClient) listHandleResponse(resp *http.Response) (ConnectionMonitorsListResponse, error) {
-	result := ConnectionMonitorsListResponse{RawResponse: resp}
+func (client *ConnectionMonitorsClient) listHandleResponse(resp *http.Response) (ConnectionMonitorsClientListResponse, error) {
+	result := ConnectionMonitorsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ConnectionMonitorListResult); err != nil {
-		return ConnectionMonitorsListResponse{}, runtime.NewResponseError(err, resp)
+		return ConnectionMonitorsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -368,21 +368,21 @@ func (client *ConnectionMonitorsClient) listHandleError(resp *http.Response) err
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name given to the connection monitor.
-// options - ConnectionMonitorsBeginQueryOptions contains the optional parameters for the ConnectionMonitorsClient.BeginQuery
+// options - ConnectionMonitorsClientBeginQueryOptions contains the optional parameters for the ConnectionMonitorsClient.BeginQuery
 // method.
-func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginQueryOptions) (ConnectionMonitorsQueryPollerResponse, error) {
+func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginQueryOptions) (ConnectionMonitorsClientQueryPollerResponse, error) {
 	resp, err := client.query(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
-		return ConnectionMonitorsQueryPollerResponse{}, err
+		return ConnectionMonitorsClientQueryPollerResponse{}, err
 	}
-	result := ConnectionMonitorsQueryPollerResponse{
+	result := ConnectionMonitorsClientQueryPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Query", "location", resp, client.pl, client.queryHandleError)
 	if err != nil {
-		return ConnectionMonitorsQueryPollerResponse{}, err
+		return ConnectionMonitorsClientQueryPollerResponse{}, err
 	}
-	result.Poller = &ConnectionMonitorsQueryPoller{
+	result.Poller = &ConnectionMonitorsClientQueryPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -390,7 +390,7 @@ func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resource
 
 // Query - Query a snapshot of the most recent connection states.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *ConnectionMonitorsClient) query(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginQueryOptions) (*http.Response, error) {
+func (client *ConnectionMonitorsClient) query(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginQueryOptions) (*http.Response, error) {
 	req, err := client.queryCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
 		return nil, err
@@ -406,7 +406,7 @@ func (client *ConnectionMonitorsClient) query(ctx context.Context, resourceGroup
 }
 
 // queryCreateRequest creates the Query request.
-func (client *ConnectionMonitorsClient) queryCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginQueryOptions) (*policy.Request, error) {
+func (client *ConnectionMonitorsClient) queryCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginQueryOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/query"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -453,21 +453,21 @@ func (client *ConnectionMonitorsClient) queryHandleError(resp *http.Response) er
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
-// options - ConnectionMonitorsBeginStartOptions contains the optional parameters for the ConnectionMonitorsClient.BeginStart
+// options - ConnectionMonitorsClientBeginStartOptions contains the optional parameters for the ConnectionMonitorsClient.BeginStart
 // method.
-func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginStartOptions) (ConnectionMonitorsStartPollerResponse, error) {
+func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStartOptions) (ConnectionMonitorsClientStartPollerResponse, error) {
 	resp, err := client.start(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
-		return ConnectionMonitorsStartPollerResponse{}, err
+		return ConnectionMonitorsClientStartPollerResponse{}, err
 	}
-	result := ConnectionMonitorsStartPollerResponse{
+	result := ConnectionMonitorsClientStartPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Start", "location", resp, client.pl, client.startHandleError)
 	if err != nil {
-		return ConnectionMonitorsStartPollerResponse{}, err
+		return ConnectionMonitorsClientStartPollerResponse{}, err
 	}
-	result.Poller = &ConnectionMonitorsStartPoller{
+	result.Poller = &ConnectionMonitorsClientStartPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -475,7 +475,7 @@ func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resource
 
 // Start - Starts the specified connection monitor.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *ConnectionMonitorsClient) start(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginStartOptions) (*http.Response, error) {
+func (client *ConnectionMonitorsClient) start(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStartOptions) (*http.Response, error) {
 	req, err := client.startCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
 		return nil, err
@@ -491,7 +491,7 @@ func (client *ConnectionMonitorsClient) start(ctx context.Context, resourceGroup
 }
 
 // startCreateRequest creates the Start request.
-func (client *ConnectionMonitorsClient) startCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginStartOptions) (*policy.Request, error) {
+func (client *ConnectionMonitorsClient) startCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStartOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/start"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -538,21 +538,21 @@ func (client *ConnectionMonitorsClient) startHandleError(resp *http.Response) er
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
-// options - ConnectionMonitorsBeginStopOptions contains the optional parameters for the ConnectionMonitorsClient.BeginStop
+// options - ConnectionMonitorsClientBeginStopOptions contains the optional parameters for the ConnectionMonitorsClient.BeginStop
 // method.
-func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginStopOptions) (ConnectionMonitorsStopPollerResponse, error) {
+func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStopOptions) (ConnectionMonitorsClientStopPollerResponse, error) {
 	resp, err := client.stop(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
-		return ConnectionMonitorsStopPollerResponse{}, err
+		return ConnectionMonitorsClientStopPollerResponse{}, err
 	}
-	result := ConnectionMonitorsStopPollerResponse{
+	result := ConnectionMonitorsClientStopPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Stop", "location", resp, client.pl, client.stopHandleError)
 	if err != nil {
-		return ConnectionMonitorsStopPollerResponse{}, err
+		return ConnectionMonitorsClientStopPollerResponse{}, err
 	}
-	result.Poller = &ConnectionMonitorsStopPoller{
+	result.Poller = &ConnectionMonitorsClientStopPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -560,7 +560,7 @@ func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceG
 
 // Stop - Stops the specified connection monitor.
 // If the operation fails it returns the *ErrorResponse error type.
-func (client *ConnectionMonitorsClient) stop(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginStopOptions) (*http.Response, error) {
+func (client *ConnectionMonitorsClient) stop(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStopOptions) (*http.Response, error) {
 	req, err := client.stopCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
 		return nil, err
@@ -576,7 +576,7 @@ func (client *ConnectionMonitorsClient) stop(ctx context.Context, resourceGroupN
 }
 
 // stopCreateRequest creates the Stop request.
-func (client *ConnectionMonitorsClient) stopCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsBeginStopOptions) (*policy.Request, error) {
+func (client *ConnectionMonitorsClient) stopCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStopOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/stop"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -624,25 +624,25 @@ func (client *ConnectionMonitorsClient) stopHandleError(resp *http.Response) err
 // networkWatcherName - The name of the network watcher.
 // connectionMonitorName - The name of the connection monitor.
 // parameters - Parameters supplied to update connection monitor tags.
-// options - ConnectionMonitorsUpdateTagsOptions contains the optional parameters for the ConnectionMonitorsClient.UpdateTags
+// options - ConnectionMonitorsClientUpdateTagsOptions contains the optional parameters for the ConnectionMonitorsClient.UpdateTags
 // method.
-func (client *ConnectionMonitorsClient) UpdateTags(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters TagsObject, options *ConnectionMonitorsUpdateTagsOptions) (ConnectionMonitorsUpdateTagsResponse, error) {
+func (client *ConnectionMonitorsClient) UpdateTags(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters TagsObject, options *ConnectionMonitorsClientUpdateTagsOptions) (ConnectionMonitorsClientUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, options)
 	if err != nil {
-		return ConnectionMonitorsUpdateTagsResponse{}, err
+		return ConnectionMonitorsClientUpdateTagsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ConnectionMonitorsUpdateTagsResponse{}, err
+		return ConnectionMonitorsClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ConnectionMonitorsUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return ConnectionMonitorsClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *ConnectionMonitorsClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters TagsObject, options *ConnectionMonitorsUpdateTagsOptions) (*policy.Request, error) {
+func (client *ConnectionMonitorsClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters TagsObject, options *ConnectionMonitorsClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -672,10 +672,10 @@ func (client *ConnectionMonitorsClient) updateTagsCreateRequest(ctx context.Cont
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *ConnectionMonitorsClient) updateTagsHandleResponse(resp *http.Response) (ConnectionMonitorsUpdateTagsResponse, error) {
-	result := ConnectionMonitorsUpdateTagsResponse{RawResponse: resp}
+func (client *ConnectionMonitorsClient) updateTagsHandleResponse(resp *http.Response) (ConnectionMonitorsClientUpdateTagsResponse, error) {
+	result := ConnectionMonitorsClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ConnectionMonitorResult); err != nil {
-		return ConnectionMonitorsUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return ConnectionMonitorsClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

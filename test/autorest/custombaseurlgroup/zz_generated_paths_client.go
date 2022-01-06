@@ -51,24 +51,24 @@ func NewPathsClient(options *PathsClientOptions) *PathsClient {
 // GetEmpty - Get a 200 to test a valid base uri
 // If the operation fails it returns the *Error error type.
 // accountName - Account Name
-// options - PathsGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
-func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, options *PathsGetEmptyOptions) (PathsGetEmptyResponse, error) {
+// options - PathsClientGetEmptyOptions contains the optional parameters for the PathsClient.GetEmpty method.
+func (client *PathsClient) GetEmpty(ctx context.Context, accountName string, options *PathsClientGetEmptyOptions) (PathsClientGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, accountName, options)
 	if err != nil {
-		return PathsGetEmptyResponse{}, err
+		return PathsClientGetEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PathsGetEmptyResponse{}, err
+		return PathsClientGetEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsGetEmptyResponse{}, client.getEmptyHandleError(resp)
+		return PathsClientGetEmptyResponse{}, client.getEmptyHandleError(resp)
 	}
-	return PathsGetEmptyResponse{RawResponse: resp}, nil
+	return PathsClientGetEmptyResponse{RawResponse: resp}, nil
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, accountName string, options *PathsGetEmptyOptions) (*policy.Request, error) {
+func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, accountName string, options *PathsClientGetEmptyOptions) (*policy.Request, error) {
 	host := "http://{accountName}{host}"
 	host = strings.ReplaceAll(host, "{host}", client.host)
 	host = strings.ReplaceAll(host, "{accountName}", accountName)

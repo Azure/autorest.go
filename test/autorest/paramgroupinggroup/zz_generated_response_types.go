@@ -10,32 +10,32 @@ package paramgroupinggroup
 
 import "net/http"
 
-// ParameterGroupingPostMultiParamGroupsResponse contains the response from method ParameterGrouping.PostMultiParamGroups.
-type ParameterGroupingPostMultiParamGroupsResponse struct {
+// ParameterGroupingClientPostMultiParamGroupsResponse contains the response from method ParameterGroupingClient.PostMultiParamGroups.
+type ParameterGroupingClientPostMultiParamGroupsResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ParameterGroupingPostOptionalResponse contains the response from method ParameterGrouping.PostOptional.
-type ParameterGroupingPostOptionalResponse struct {
+// ParameterGroupingClientPostOptionalResponse contains the response from method ParameterGroupingClient.PostOptional.
+type ParameterGroupingClientPostOptionalResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ParameterGroupingPostRequiredResponse contains the response from method ParameterGrouping.PostRequired.
-type ParameterGroupingPostRequiredResponse struct {
+// ParameterGroupingClientPostRequiredResponse contains the response from method ParameterGroupingClient.PostRequired.
+type ParameterGroupingClientPostRequiredResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ParameterGroupingPostReservedWordsResponse contains the response from method ParameterGrouping.PostReservedWords.
-type ParameterGroupingPostReservedWordsResponse struct {
+// ParameterGroupingClientPostReservedWordsResponse contains the response from method ParameterGroupingClient.PostReservedWords.
+type ParameterGroupingClientPostReservedWordsResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ParameterGroupingPostSharedParameterGroupObjectResponse contains the response from method ParameterGrouping.PostSharedParameterGroupObject.
-type ParameterGroupingPostSharedParameterGroupObjectResponse struct {
+// ParameterGroupingClientPostSharedParameterGroupObjectResponse contains the response from method ParameterGroupingClient.PostSharedParameterGroupObject.
+type ParameterGroupingClientPostSharedParameterGroupObjectResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

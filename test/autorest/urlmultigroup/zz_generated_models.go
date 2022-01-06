@@ -21,20 +21,22 @@ func (e Error) Error() string {
 	return e.raw
 }
 
-// QueriesArrayStringMultiEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringMultiEmpty method.
-type QueriesArrayStringMultiEmptyOptions struct {
+// QueriesClientArrayStringMultiEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringMultiEmpty
+// method.
+type QueriesClientArrayStringMultiEmptyOptions struct {
 	// an empty array [] of string using the multi-array format
 	ArrayQuery []string
 }
 
-// QueriesArrayStringMultiNullOptions contains the optional parameters for the QueriesClient.ArrayStringMultiNull method.
-type QueriesArrayStringMultiNullOptions struct {
+// QueriesClientArrayStringMultiNullOptions contains the optional parameters for the QueriesClient.ArrayStringMultiNull method.
+type QueriesClientArrayStringMultiNullOptions struct {
 	// a null array of string using the multi-array format
 	ArrayQuery []string
 }
 
-// QueriesArrayStringMultiValidOptions contains the optional parameters for the QueriesClient.ArrayStringMultiValid method.
-type QueriesArrayStringMultiValidOptions struct {
+// QueriesClientArrayStringMultiValidOptions contains the optional parameters for the QueriesClient.ArrayStringMultiValid
+// method.
+type QueriesClientArrayStringMultiValidOptions struct {
 	// an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array format
 	ArrayQuery []string
 }

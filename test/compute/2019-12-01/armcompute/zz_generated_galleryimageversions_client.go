@@ -60,21 +60,21 @@ func NewGalleryImageVersionsClient(subscriptionID string, credential azcore.Toke
 // The allowed characters are digit and period. Digits must be within the range of a 32-bit integer.
 // Format: ..
 // galleryImageVersion - Parameters supplied to the create or update gallery Image Version operation.
-// options - GalleryImageVersionsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryImageVersionsClient.BeginCreateOrUpdate
+// options - GalleryImageVersionsClientBeginCreateOrUpdateOptions contains the optional parameters for the GalleryImageVersionsClient.BeginCreateOrUpdate
 // method.
-func (client *GalleryImageVersionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersion, options *GalleryImageVersionsBeginCreateOrUpdateOptions) (GalleryImageVersionsCreateOrUpdatePollerResponse, error) {
+func (client *GalleryImageVersionsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersion, options *GalleryImageVersionsClientBeginCreateOrUpdateOptions) (GalleryImageVersionsClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, options)
 	if err != nil {
-		return GalleryImageVersionsCreateOrUpdatePollerResponse{}, err
+		return GalleryImageVersionsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := GalleryImageVersionsCreateOrUpdatePollerResponse{
+	result := GalleryImageVersionsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("GalleryImageVersionsClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return GalleryImageVersionsCreateOrUpdatePollerResponse{}, err
+		return GalleryImageVersionsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &GalleryImageVersionsCreateOrUpdatePoller{
+	result.Poller = &GalleryImageVersionsClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -82,7 +82,7 @@ func (client *GalleryImageVersionsClient) BeginCreateOrUpdate(ctx context.Contex
 
 // CreateOrUpdate - Create or update a gallery Image Version.
 // If the operation fails it returns the *CloudError error type.
-func (client *GalleryImageVersionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersion, options *GalleryImageVersionsBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *GalleryImageVersionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersion, options *GalleryImageVersionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, options)
 	if err != nil {
 		return nil, err
@@ -98,7 +98,7 @@ func (client *GalleryImageVersionsClient) createOrUpdate(ctx context.Context, re
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *GalleryImageVersionsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersion, options *GalleryImageVersionsBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *GalleryImageVersionsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersion, options *GalleryImageVersionsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -150,21 +150,21 @@ func (client *GalleryImageVersionsClient) createOrUpdateHandleError(resp *http.R
 // galleryName - The name of the Shared Image Gallery in which the Image Definition resides.
 // galleryImageName - The name of the gallery Image Definition in which the Image Version resides.
 // galleryImageVersionName - The name of the gallery Image Version to be deleted.
-// options - GalleryImageVersionsBeginDeleteOptions contains the optional parameters for the GalleryImageVersionsClient.BeginDelete
+// options - GalleryImageVersionsClientBeginDeleteOptions contains the optional parameters for the GalleryImageVersionsClient.BeginDelete
 // method.
-func (client *GalleryImageVersionsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsBeginDeleteOptions) (GalleryImageVersionsDeletePollerResponse, error) {
+func (client *GalleryImageVersionsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsClientBeginDeleteOptions) (GalleryImageVersionsClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, options)
 	if err != nil {
-		return GalleryImageVersionsDeletePollerResponse{}, err
+		return GalleryImageVersionsClientDeletePollerResponse{}, err
 	}
-	result := GalleryImageVersionsDeletePollerResponse{
+	result := GalleryImageVersionsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("GalleryImageVersionsClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return GalleryImageVersionsDeletePollerResponse{}, err
+		return GalleryImageVersionsClientDeletePollerResponse{}, err
 	}
-	result.Poller = &GalleryImageVersionsDeletePoller{
+	result.Poller = &GalleryImageVersionsClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -172,7 +172,7 @@ func (client *GalleryImageVersionsClient) BeginDelete(ctx context.Context, resou
 
 // Delete - Delete a gallery Image Version.
 // If the operation fails it returns the *CloudError error type.
-func (client *GalleryImageVersionsClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsBeginDeleteOptions) (*http.Response, error) {
+func (client *GalleryImageVersionsClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, options)
 	if err != nil {
 		return nil, err
@@ -188,7 +188,7 @@ func (client *GalleryImageVersionsClient) deleteOperation(ctx context.Context, r
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *GalleryImageVersionsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsBeginDeleteOptions) (*policy.Request, error) {
+func (client *GalleryImageVersionsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -240,24 +240,25 @@ func (client *GalleryImageVersionsClient) deleteHandleError(resp *http.Response)
 // galleryName - The name of the Shared Image Gallery in which the Image Definition resides.
 // galleryImageName - The name of the gallery Image Definition in which the Image Version resides.
 // galleryImageVersionName - The name of the gallery Image Version to be retrieved.
-// options - GalleryImageVersionsGetOptions contains the optional parameters for the GalleryImageVersionsClient.Get method.
-func (client *GalleryImageVersionsClient) Get(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsGetOptions) (GalleryImageVersionsGetResponse, error) {
+// options - GalleryImageVersionsClientGetOptions contains the optional parameters for the GalleryImageVersionsClient.Get
+// method.
+func (client *GalleryImageVersionsClient) Get(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsClientGetOptions) (GalleryImageVersionsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, options)
 	if err != nil {
-		return GalleryImageVersionsGetResponse{}, err
+		return GalleryImageVersionsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return GalleryImageVersionsGetResponse{}, err
+		return GalleryImageVersionsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return GalleryImageVersionsGetResponse{}, client.getHandleError(resp)
+		return GalleryImageVersionsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *GalleryImageVersionsClient) getCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsGetOptions) (*policy.Request, error) {
+func (client *GalleryImageVersionsClient) getCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, options *GalleryImageVersionsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -294,10 +295,10 @@ func (client *GalleryImageVersionsClient) getCreateRequest(ctx context.Context, 
 }
 
 // getHandleResponse handles the Get response.
-func (client *GalleryImageVersionsClient) getHandleResponse(resp *http.Response) (GalleryImageVersionsGetResponse, error) {
-	result := GalleryImageVersionsGetResponse{RawResponse: resp}
+func (client *GalleryImageVersionsClient) getHandleResponse(resp *http.Response) (GalleryImageVersionsClientGetResponse, error) {
+	result := GalleryImageVersionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GalleryImageVersion); err != nil {
-		return GalleryImageVersionsGetResponse{}, runtime.NewResponseError(err, resp)
+		return GalleryImageVersionsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -320,22 +321,22 @@ func (client *GalleryImageVersionsClient) getHandleError(resp *http.Response) er
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Image Gallery in which the Image Definition resides.
 // galleryImageName - The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed.
-// options - GalleryImageVersionsListByGalleryImageOptions contains the optional parameters for the GalleryImageVersionsClient.ListByGalleryImage
+// options - GalleryImageVersionsClientListByGalleryImageOptions contains the optional parameters for the GalleryImageVersionsClient.ListByGalleryImage
 // method.
-func (client *GalleryImageVersionsClient) ListByGalleryImage(resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImageVersionsListByGalleryImageOptions) *GalleryImageVersionsListByGalleryImagePager {
-	return &GalleryImageVersionsListByGalleryImagePager{
+func (client *GalleryImageVersionsClient) ListByGalleryImage(resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImageVersionsClientListByGalleryImageOptions) *GalleryImageVersionsClientListByGalleryImagePager {
+	return &GalleryImageVersionsClientListByGalleryImagePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByGalleryImageCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, options)
 		},
-		advancer: func(ctx context.Context, resp GalleryImageVersionsListByGalleryImageResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp GalleryImageVersionsClientListByGalleryImageResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.GalleryImageVersionList.NextLink)
 		},
 	}
 }
 
 // listByGalleryImageCreateRequest creates the ListByGalleryImage request.
-func (client *GalleryImageVersionsClient) listByGalleryImageCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImageVersionsListByGalleryImageOptions) (*policy.Request, error) {
+func (client *GalleryImageVersionsClient) listByGalleryImageCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, options *GalleryImageVersionsClientListByGalleryImageOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -365,10 +366,10 @@ func (client *GalleryImageVersionsClient) listByGalleryImageCreateRequest(ctx co
 }
 
 // listByGalleryImageHandleResponse handles the ListByGalleryImage response.
-func (client *GalleryImageVersionsClient) listByGalleryImageHandleResponse(resp *http.Response) (GalleryImageVersionsListByGalleryImageResponse, error) {
-	result := GalleryImageVersionsListByGalleryImageResponse{RawResponse: resp}
+func (client *GalleryImageVersionsClient) listByGalleryImageHandleResponse(resp *http.Response) (GalleryImageVersionsClientListByGalleryImageResponse, error) {
+	result := GalleryImageVersionsClientListByGalleryImageResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GalleryImageVersionList); err != nil {
-		return GalleryImageVersionsListByGalleryImageResponse{}, runtime.NewResponseError(err, resp)
+		return GalleryImageVersionsClientListByGalleryImageResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -395,21 +396,21 @@ func (client *GalleryImageVersionsClient) listByGalleryImageHandleError(resp *ht
 // The allowed characters are digit and period. Digits must be within the range of a 32-bit integer.
 // Format: ..
 // galleryImageVersion - Parameters supplied to the update gallery Image Version operation.
-// options - GalleryImageVersionsBeginUpdateOptions contains the optional parameters for the GalleryImageVersionsClient.BeginUpdate
+// options - GalleryImageVersionsClientBeginUpdateOptions contains the optional parameters for the GalleryImageVersionsClient.BeginUpdate
 // method.
-func (client *GalleryImageVersionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersionUpdate, options *GalleryImageVersionsBeginUpdateOptions) (GalleryImageVersionsUpdatePollerResponse, error) {
+func (client *GalleryImageVersionsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersionUpdate, options *GalleryImageVersionsClientBeginUpdateOptions) (GalleryImageVersionsClientUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, options)
 	if err != nil {
-		return GalleryImageVersionsUpdatePollerResponse{}, err
+		return GalleryImageVersionsClientUpdatePollerResponse{}, err
 	}
-	result := GalleryImageVersionsUpdatePollerResponse{
+	result := GalleryImageVersionsClientUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("GalleryImageVersionsClient.Update", "", resp, client.pl, client.updateHandleError)
 	if err != nil {
-		return GalleryImageVersionsUpdatePollerResponse{}, err
+		return GalleryImageVersionsClientUpdatePollerResponse{}, err
 	}
-	result.Poller = &GalleryImageVersionsUpdatePoller{
+	result.Poller = &GalleryImageVersionsClientUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -417,7 +418,7 @@ func (client *GalleryImageVersionsClient) BeginUpdate(ctx context.Context, resou
 
 // Update - Update a gallery Image Version.
 // If the operation fails it returns the *CloudError error type.
-func (client *GalleryImageVersionsClient) update(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersionUpdate, options *GalleryImageVersionsBeginUpdateOptions) (*http.Response, error) {
+func (client *GalleryImageVersionsClient) update(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersionUpdate, options *GalleryImageVersionsClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, options)
 	if err != nil {
 		return nil, err
@@ -433,7 +434,7 @@ func (client *GalleryImageVersionsClient) update(ctx context.Context, resourceGr
 }
 
 // updateCreateRequest creates the Update request.
-func (client *GalleryImageVersionsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersionUpdate, options *GalleryImageVersionsBeginUpdateOptions) (*policy.Request, error) {
+func (client *GalleryImageVersionsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryImageName string, galleryImageVersionName string, galleryImageVersion GalleryImageVersionUpdate, options *GalleryImageVersionsClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

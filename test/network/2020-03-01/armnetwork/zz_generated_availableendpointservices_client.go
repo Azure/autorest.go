@@ -54,22 +54,22 @@ func NewAvailableEndpointServicesClient(subscriptionID string, credential azcore
 // List - List what values of endpoint services are available for use.
 // If the operation fails it returns the *CloudError error type.
 // location - The location to check available endpoint services.
-// options - AvailableEndpointServicesListOptions contains the optional parameters for the AvailableEndpointServicesClient.List
+// options - AvailableEndpointServicesClientListOptions contains the optional parameters for the AvailableEndpointServicesClient.List
 // method.
-func (client *AvailableEndpointServicesClient) List(location string, options *AvailableEndpointServicesListOptions) *AvailableEndpointServicesListPager {
-	return &AvailableEndpointServicesListPager{
+func (client *AvailableEndpointServicesClient) List(location string, options *AvailableEndpointServicesClientListOptions) *AvailableEndpointServicesClientListPager {
+	return &AvailableEndpointServicesClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, location, options)
 		},
-		advancer: func(ctx context.Context, resp AvailableEndpointServicesListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp AvailableEndpointServicesClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.EndpointServicesListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *AvailableEndpointServicesClient) listCreateRequest(ctx context.Context, location string, options *AvailableEndpointServicesListOptions) (*policy.Request, error) {
+func (client *AvailableEndpointServicesClient) listCreateRequest(ctx context.Context, location string, options *AvailableEndpointServicesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -91,10 +91,10 @@ func (client *AvailableEndpointServicesClient) listCreateRequest(ctx context.Con
 }
 
 // listHandleResponse handles the List response.
-func (client *AvailableEndpointServicesClient) listHandleResponse(resp *http.Response) (AvailableEndpointServicesListResponse, error) {
-	result := AvailableEndpointServicesListResponse{RawResponse: resp}
+func (client *AvailableEndpointServicesClient) listHandleResponse(resp *http.Response) (AvailableEndpointServicesClientListResponse, error) {
+	result := AvailableEndpointServicesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.EndpointServicesListResult); err != nil {
-		return AvailableEndpointServicesListResponse{}, runtime.NewResponseError(err, resp)
+		return AvailableEndpointServicesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

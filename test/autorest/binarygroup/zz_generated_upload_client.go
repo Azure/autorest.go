@@ -40,24 +40,24 @@ func NewUploadClient(options *azcore.ClientOptions) *UploadClient {
 // Binary - Uploading binary file
 // If the operation fails it returns a generic error.
 // fileParam - Non-empty binary file
-// options - UploadBinaryOptions contains the optional parameters for the UploadClient.Binary method.
-func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadBinaryOptions) (UploadBinaryResponse, error) {
+// options - UploadClientBinaryOptions contains the optional parameters for the UploadClient.Binary method.
+func (client *UploadClient) Binary(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientBinaryOptions) (UploadClientBinaryResponse, error) {
 	req, err := client.binaryCreateRequest(ctx, fileParam, options)
 	if err != nil {
-		return UploadBinaryResponse{}, err
+		return UploadClientBinaryResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return UploadBinaryResponse{}, err
+		return UploadClientBinaryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return UploadBinaryResponse{}, client.binaryHandleError(resp)
+		return UploadClientBinaryResponse{}, client.binaryHandleError(resp)
 	}
-	return UploadBinaryResponse{RawResponse: resp}, nil
+	return UploadClientBinaryResponse{RawResponse: resp}, nil
 }
 
 // binaryCreateRequest creates the Binary request.
-func (client *UploadClient) binaryCreateRequest(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadBinaryOptions) (*policy.Request, error) {
+func (client *UploadClient) binaryCreateRequest(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientBinaryOptions) (*policy.Request, error) {
 	urlPath := "/binary/octet"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -81,24 +81,24 @@ func (client *UploadClient) binaryHandleError(resp *http.Response) error {
 // File - Uploading json file
 // If the operation fails it returns a generic error.
 // fileParam - JSON file with payload { "more": "cowbell" }
-// options - UploadFileOptions contains the optional parameters for the UploadClient.File method.
-func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadFileOptions) (UploadFileResponse, error) {
+// options - UploadClientFileOptions contains the optional parameters for the UploadClient.File method.
+func (client *UploadClient) File(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientFileOptions) (UploadClientFileResponse, error) {
 	req, err := client.fileCreateRequest(ctx, fileParam, options)
 	if err != nil {
-		return UploadFileResponse{}, err
+		return UploadClientFileResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return UploadFileResponse{}, err
+		return UploadClientFileResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return UploadFileResponse{}, client.fileHandleError(resp)
+		return UploadClientFileResponse{}, client.fileHandleError(resp)
 	}
-	return UploadFileResponse{RawResponse: resp}, nil
+	return UploadClientFileResponse{RawResponse: resp}, nil
 }
 
 // fileCreateRequest creates the File request.
-func (client *UploadClient) fileCreateRequest(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadFileOptions) (*policy.Request, error) {
+func (client *UploadClient) fileCreateRequest(ctx context.Context, fileParam io.ReadSeekCloser, options *UploadClientFileOptions) (*policy.Request, error) {
 	urlPath := "/binary/file"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

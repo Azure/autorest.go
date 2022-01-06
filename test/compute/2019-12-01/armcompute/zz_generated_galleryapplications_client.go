@@ -59,21 +59,21 @@ func NewGalleryApplicationsClient(subscriptionID string, credential azcore.Token
 // are alphabets and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80
 // characters.
 // galleryApplication - Parameters supplied to the create or update gallery Application operation.
-// options - GalleryApplicationsBeginCreateOrUpdateOptions contains the optional parameters for the GalleryApplicationsClient.BeginCreateOrUpdate
+// options - GalleryApplicationsClientBeginCreateOrUpdateOptions contains the optional parameters for the GalleryApplicationsClient.BeginCreateOrUpdate
 // method.
-func (client *GalleryApplicationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication, options *GalleryApplicationsBeginCreateOrUpdateOptions) (GalleryApplicationsCreateOrUpdatePollerResponse, error) {
+func (client *GalleryApplicationsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication, options *GalleryApplicationsClientBeginCreateOrUpdateOptions) (GalleryApplicationsClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)
 	if err != nil {
-		return GalleryApplicationsCreateOrUpdatePollerResponse{}, err
+		return GalleryApplicationsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := GalleryApplicationsCreateOrUpdatePollerResponse{
+	result := GalleryApplicationsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("GalleryApplicationsClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return GalleryApplicationsCreateOrUpdatePollerResponse{}, err
+		return GalleryApplicationsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &GalleryApplicationsCreateOrUpdatePoller{
+	result.Poller = &GalleryApplicationsClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -81,7 +81,7 @@ func (client *GalleryApplicationsClient) BeginCreateOrUpdate(ctx context.Context
 
 // CreateOrUpdate - Create or update a gallery Application Definition.
 // If the operation fails it returns the *CloudError error type.
-func (client *GalleryApplicationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication, options *GalleryApplicationsBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *GalleryApplicationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication, options *GalleryApplicationsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)
 	if err != nil {
 		return nil, err
@@ -97,7 +97,7 @@ func (client *GalleryApplicationsClient) createOrUpdate(ctx context.Context, res
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *GalleryApplicationsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication, options *GalleryApplicationsBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *GalleryApplicationsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplication, options *GalleryApplicationsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -144,21 +144,21 @@ func (client *GalleryApplicationsClient) createOrUpdateHandleError(resp *http.Re
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition is to be deleted.
 // galleryApplicationName - The name of the gallery Application Definition to be deleted.
-// options - GalleryApplicationsBeginDeleteOptions contains the optional parameters for the GalleryApplicationsClient.BeginDelete
+// options - GalleryApplicationsClientBeginDeleteOptions contains the optional parameters for the GalleryApplicationsClient.BeginDelete
 // method.
-func (client *GalleryApplicationsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsBeginDeleteOptions) (GalleryApplicationsDeletePollerResponse, error) {
+func (client *GalleryApplicationsClient) BeginDelete(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsClientBeginDeleteOptions) (GalleryApplicationsClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, galleryName, galleryApplicationName, options)
 	if err != nil {
-		return GalleryApplicationsDeletePollerResponse{}, err
+		return GalleryApplicationsClientDeletePollerResponse{}, err
 	}
-	result := GalleryApplicationsDeletePollerResponse{
+	result := GalleryApplicationsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("GalleryApplicationsClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return GalleryApplicationsDeletePollerResponse{}, err
+		return GalleryApplicationsClientDeletePollerResponse{}, err
 	}
-	result.Poller = &GalleryApplicationsDeletePoller{
+	result.Poller = &GalleryApplicationsClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -166,7 +166,7 @@ func (client *GalleryApplicationsClient) BeginDelete(ctx context.Context, resour
 
 // Delete - Delete a gallery Application.
 // If the operation fails it returns the *CloudError error type.
-func (client *GalleryApplicationsClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsBeginDeleteOptions) (*http.Response, error) {
+func (client *GalleryApplicationsClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, options)
 	if err != nil {
 		return nil, err
@@ -182,7 +182,7 @@ func (client *GalleryApplicationsClient) deleteOperation(ctx context.Context, re
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *GalleryApplicationsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsBeginDeleteOptions) (*policy.Request, error) {
+func (client *GalleryApplicationsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -229,24 +229,24 @@ func (client *GalleryApplicationsClient) deleteHandleError(resp *http.Response) 
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery from which the Application Definitions are to be retrieved.
 // galleryApplicationName - The name of the gallery Application Definition to be retrieved.
-// options - GalleryApplicationsGetOptions contains the optional parameters for the GalleryApplicationsClient.Get method.
-func (client *GalleryApplicationsClient) Get(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsGetOptions) (GalleryApplicationsGetResponse, error) {
+// options - GalleryApplicationsClientGetOptions contains the optional parameters for the GalleryApplicationsClient.Get method.
+func (client *GalleryApplicationsClient) Get(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsClientGetOptions) (GalleryApplicationsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, options)
 	if err != nil {
-		return GalleryApplicationsGetResponse{}, err
+		return GalleryApplicationsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return GalleryApplicationsGetResponse{}, err
+		return GalleryApplicationsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return GalleryApplicationsGetResponse{}, client.getHandleError(resp)
+		return GalleryApplicationsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *GalleryApplicationsClient) getCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsGetOptions) (*policy.Request, error) {
+func (client *GalleryApplicationsClient) getCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, options *GalleryApplicationsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -276,10 +276,10 @@ func (client *GalleryApplicationsClient) getCreateRequest(ctx context.Context, r
 }
 
 // getHandleResponse handles the Get response.
-func (client *GalleryApplicationsClient) getHandleResponse(resp *http.Response) (GalleryApplicationsGetResponse, error) {
-	result := GalleryApplicationsGetResponse{RawResponse: resp}
+func (client *GalleryApplicationsClient) getHandleResponse(resp *http.Response) (GalleryApplicationsClientGetResponse, error) {
+	result := GalleryApplicationsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GalleryApplication); err != nil {
-		return GalleryApplicationsGetResponse{}, runtime.NewResponseError(err, resp)
+		return GalleryApplicationsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -301,22 +301,22 @@ func (client *GalleryApplicationsClient) getHandleError(resp *http.Response) err
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery from which Application Definitions are to be listed.
-// options - GalleryApplicationsListByGalleryOptions contains the optional parameters for the GalleryApplicationsClient.ListByGallery
+// options - GalleryApplicationsClientListByGalleryOptions contains the optional parameters for the GalleryApplicationsClient.ListByGallery
 // method.
-func (client *GalleryApplicationsClient) ListByGallery(resourceGroupName string, galleryName string, options *GalleryApplicationsListByGalleryOptions) *GalleryApplicationsListByGalleryPager {
-	return &GalleryApplicationsListByGalleryPager{
+func (client *GalleryApplicationsClient) ListByGallery(resourceGroupName string, galleryName string, options *GalleryApplicationsClientListByGalleryOptions) *GalleryApplicationsClientListByGalleryPager {
+	return &GalleryApplicationsClientListByGalleryPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByGalleryCreateRequest(ctx, resourceGroupName, galleryName, options)
 		},
-		advancer: func(ctx context.Context, resp GalleryApplicationsListByGalleryResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp GalleryApplicationsClientListByGalleryResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.GalleryApplicationList.NextLink)
 		},
 	}
 }
 
 // listByGalleryCreateRequest creates the ListByGallery request.
-func (client *GalleryApplicationsClient) listByGalleryCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, options *GalleryApplicationsListByGalleryOptions) (*policy.Request, error) {
+func (client *GalleryApplicationsClient) listByGalleryCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, options *GalleryApplicationsClientListByGalleryOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -342,10 +342,10 @@ func (client *GalleryApplicationsClient) listByGalleryCreateRequest(ctx context.
 }
 
 // listByGalleryHandleResponse handles the ListByGallery response.
-func (client *GalleryApplicationsClient) listByGalleryHandleResponse(resp *http.Response) (GalleryApplicationsListByGalleryResponse, error) {
-	result := GalleryApplicationsListByGalleryResponse{RawResponse: resp}
+func (client *GalleryApplicationsClient) listByGalleryHandleResponse(resp *http.Response) (GalleryApplicationsClientListByGalleryResponse, error) {
+	result := GalleryApplicationsClientListByGalleryResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GalleryApplicationList); err != nil {
-		return GalleryApplicationsListByGalleryResponse{}, runtime.NewResponseError(err, resp)
+		return GalleryApplicationsClientListByGalleryResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -371,21 +371,21 @@ func (client *GalleryApplicationsClient) listByGalleryHandleError(resp *http.Res
 // and numbers with dots, dashes, and periods allowed in the middle. The maximum length is 80
 // characters.
 // galleryApplication - Parameters supplied to the update gallery Application operation.
-// options - GalleryApplicationsBeginUpdateOptions contains the optional parameters for the GalleryApplicationsClient.BeginUpdate
+// options - GalleryApplicationsClientBeginUpdateOptions contains the optional parameters for the GalleryApplicationsClient.BeginUpdate
 // method.
-func (client *GalleryApplicationsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplicationUpdate, options *GalleryApplicationsBeginUpdateOptions) (GalleryApplicationsUpdatePollerResponse, error) {
+func (client *GalleryApplicationsClient) BeginUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplicationUpdate, options *GalleryApplicationsClientBeginUpdateOptions) (GalleryApplicationsClientUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)
 	if err != nil {
-		return GalleryApplicationsUpdatePollerResponse{}, err
+		return GalleryApplicationsClientUpdatePollerResponse{}, err
 	}
-	result := GalleryApplicationsUpdatePollerResponse{
+	result := GalleryApplicationsClientUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("GalleryApplicationsClient.Update", "", resp, client.pl, client.updateHandleError)
 	if err != nil {
-		return GalleryApplicationsUpdatePollerResponse{}, err
+		return GalleryApplicationsClientUpdatePollerResponse{}, err
 	}
-	result.Poller = &GalleryApplicationsUpdatePoller{
+	result.Poller = &GalleryApplicationsClientUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -393,7 +393,7 @@ func (client *GalleryApplicationsClient) BeginUpdate(ctx context.Context, resour
 
 // Update - Update a gallery Application Definition.
 // If the operation fails it returns the *CloudError error type.
-func (client *GalleryApplicationsClient) update(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplicationUpdate, options *GalleryApplicationsBeginUpdateOptions) (*http.Response, error) {
+func (client *GalleryApplicationsClient) update(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplicationUpdate, options *GalleryApplicationsClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplication, options)
 	if err != nil {
 		return nil, err
@@ -409,7 +409,7 @@ func (client *GalleryApplicationsClient) update(ctx context.Context, resourceGro
 }
 
 // updateCreateRequest creates the Update request.
-func (client *GalleryApplicationsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplicationUpdate, options *GalleryApplicationsBeginUpdateOptions) (*policy.Request, error) {
+func (client *GalleryApplicationsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplication GalleryApplicationUpdate, options *GalleryApplicationsClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

@@ -38,25 +38,25 @@ func NewAutoRestReportServiceClient(options *azcore.ClientOptions) *AutoRestRepo
 
 // GetOptionalReport - Get optional test coverage report
 // If the operation fails it returns the *Error error type.
-// options - AutoRestReportServiceGetOptionalReportOptions contains the optional parameters for the AutoRestReportServiceClient.GetOptionalReport
+// options - AutoRestReportServiceClientGetOptionalReportOptions contains the optional parameters for the AutoRestReportServiceClient.GetOptionalReport
 // method.
-func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (AutoRestReportServiceGetOptionalReportResponse, error) {
+func (client *AutoRestReportServiceClient) GetOptionalReport(ctx context.Context, options *AutoRestReportServiceClientGetOptionalReportOptions) (AutoRestReportServiceClientGetOptionalReportResponse, error) {
 	req, err := client.getOptionalReportCreateRequest(ctx, options)
 	if err != nil {
-		return AutoRestReportServiceGetOptionalReportResponse{}, err
+		return AutoRestReportServiceClientGetOptionalReportResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return AutoRestReportServiceGetOptionalReportResponse{}, err
+		return AutoRestReportServiceClientGetOptionalReportResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AutoRestReportServiceGetOptionalReportResponse{}, client.getOptionalReportHandleError(resp)
+		return AutoRestReportServiceClientGetOptionalReportResponse{}, client.getOptionalReportHandleError(resp)
 	}
 	return client.getOptionalReportHandleResponse(resp)
 }
 
 // getOptionalReportCreateRequest creates the GetOptionalReport request.
-func (client *AutoRestReportServiceClient) getOptionalReportCreateRequest(ctx context.Context, options *AutoRestReportServiceGetOptionalReportOptions) (*policy.Request, error) {
+func (client *AutoRestReportServiceClient) getOptionalReportCreateRequest(ctx context.Context, options *AutoRestReportServiceClientGetOptionalReportOptions) (*policy.Request, error) {
 	urlPath := "/report/optional"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -72,10 +72,10 @@ func (client *AutoRestReportServiceClient) getOptionalReportCreateRequest(ctx co
 }
 
 // getOptionalReportHandleResponse handles the GetOptionalReport response.
-func (client *AutoRestReportServiceClient) getOptionalReportHandleResponse(resp *http.Response) (AutoRestReportServiceGetOptionalReportResponse, error) {
-	result := AutoRestReportServiceGetOptionalReportResponse{RawResponse: resp}
+func (client *AutoRestReportServiceClient) getOptionalReportHandleResponse(resp *http.Response) (AutoRestReportServiceClientGetOptionalReportResponse, error) {
+	result := AutoRestReportServiceClientGetOptionalReportResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return AutoRestReportServiceGetOptionalReportResponse{}, runtime.NewResponseError(err, resp)
+		return AutoRestReportServiceClientGetOptionalReportResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -95,25 +95,25 @@ func (client *AutoRestReportServiceClient) getOptionalReportHandleError(resp *ht
 
 // GetReport - Get test coverage report
 // If the operation fails it returns the *Error error type.
-// options - AutoRestReportServiceGetReportOptions contains the optional parameters for the AutoRestReportServiceClient.GetReport
+// options - AutoRestReportServiceClientGetReportOptions contains the optional parameters for the AutoRestReportServiceClient.GetReport
 // method.
-func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (AutoRestReportServiceGetReportResponse, error) {
+func (client *AutoRestReportServiceClient) GetReport(ctx context.Context, options *AutoRestReportServiceClientGetReportOptions) (AutoRestReportServiceClientGetReportResponse, error) {
 	req, err := client.getReportCreateRequest(ctx, options)
 	if err != nil {
-		return AutoRestReportServiceGetReportResponse{}, err
+		return AutoRestReportServiceClientGetReportResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return AutoRestReportServiceGetReportResponse{}, err
+		return AutoRestReportServiceClientGetReportResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AutoRestReportServiceGetReportResponse{}, client.getReportHandleError(resp)
+		return AutoRestReportServiceClientGetReportResponse{}, client.getReportHandleError(resp)
 	}
 	return client.getReportHandleResponse(resp)
 }
 
 // getReportCreateRequest creates the GetReport request.
-func (client *AutoRestReportServiceClient) getReportCreateRequest(ctx context.Context, options *AutoRestReportServiceGetReportOptions) (*policy.Request, error) {
+func (client *AutoRestReportServiceClient) getReportCreateRequest(ctx context.Context, options *AutoRestReportServiceClientGetReportOptions) (*policy.Request, error) {
 	urlPath := "/report"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -129,10 +129,10 @@ func (client *AutoRestReportServiceClient) getReportCreateRequest(ctx context.Co
 }
 
 // getReportHandleResponse handles the GetReport response.
-func (client *AutoRestReportServiceClient) getReportHandleResponse(resp *http.Response) (AutoRestReportServiceGetReportResponse, error) {
-	result := AutoRestReportServiceGetReportResponse{RawResponse: resp}
+func (client *AutoRestReportServiceClient) getReportHandleResponse(resp *http.Response) (AutoRestReportServiceClientGetReportResponse, error) {
+	result := AutoRestReportServiceClientGetReportResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return AutoRestReportServiceGetReportResponse{}, runtime.NewResponseError(err, resp)
+		return AutoRestReportServiceClientGetReportResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -816,6 +816,446 @@ func (c CertificateUpdateParameters) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
+// ClientBackupCertificateOptions contains the optional parameters for the Client.BackupCertificate method.
+type ClientBackupCertificateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientBackupKeyOptions contains the optional parameters for the Client.BackupKey method.
+type ClientBackupKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientBackupSecretOptions contains the optional parameters for the Client.BackupSecret method.
+type ClientBackupSecretOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientBackupStorageAccountOptions contains the optional parameters for the Client.BackupStorageAccount method.
+type ClientBackupStorageAccountOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientBeginFullBackupOptions contains the optional parameters for the Client.BeginFullBackup method.
+type ClientBeginFullBackupOptions struct {
+	// Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored.
+	// This token needs to be valid for at least next 24 hours from the time of making
+	// this call
+	AzureStorageBlobContainerURI *SASTokenParameter
+}
+
+// ClientBeginFullRestoreOperationOptions contains the optional parameters for the Client.BeginFullRestoreOperation method.
+type ClientBeginFullRestoreOperationOptions struct {
+	// The Azure blob SAS token pointing to a folder where the previous successful full backup was stored
+	RestoreBlobDetails *RestoreOperationParameters
+}
+
+// ClientBeginSelectiveKeyRestoreOperationOptions contains the optional parameters for the Client.BeginSelectiveKeyRestoreOperation
+// method.
+type ClientBeginSelectiveKeyRestoreOperationOptions struct {
+	// The Azure blob SAS token pointing to a folder where the previous successful full backup was stored
+	RestoreBlobDetails *SelectiveKeyRestoreOperationParameters
+}
+
+// ClientCreateCertificateOptions contains the optional parameters for the Client.CreateCertificate method.
+type ClientCreateCertificateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientCreateKeyOptions contains the optional parameters for the Client.CreateKey method.
+type ClientCreateKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientDecryptOptions contains the optional parameters for the Client.Decrypt method.
+type ClientDecryptOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientDeleteCertificateContactsOptions contains the optional parameters for the Client.DeleteCertificateContacts method.
+type ClientDeleteCertificateContactsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientDeleteCertificateIssuerOptions contains the optional parameters for the Client.DeleteCertificateIssuer method.
+type ClientDeleteCertificateIssuerOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientDeleteCertificateOperationOptions contains the optional parameters for the Client.DeleteCertificateOperation method.
+type ClientDeleteCertificateOperationOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientDeleteCertificateOptions contains the optional parameters for the Client.DeleteCertificate method.
+type ClientDeleteCertificateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientDeleteKeyOptions contains the optional parameters for the Client.DeleteKey method.
+type ClientDeleteKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientDeleteSasDefinitionOptions contains the optional parameters for the Client.DeleteSasDefinition method.
+type ClientDeleteSasDefinitionOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientDeleteSecretOptions contains the optional parameters for the Client.DeleteSecret method.
+type ClientDeleteSecretOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientDeleteStorageAccountOptions contains the optional parameters for the Client.DeleteStorageAccount method.
+type ClientDeleteStorageAccountOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientEncryptOptions contains the optional parameters for the Client.Encrypt method.
+type ClientEncryptOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientFullBackupStatusOptions contains the optional parameters for the Client.FullBackupStatus method.
+type ClientFullBackupStatusOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetCertificateContactsOptions contains the optional parameters for the Client.GetCertificateContacts method.
+type ClientGetCertificateContactsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetCertificateIssuerOptions contains the optional parameters for the Client.GetCertificateIssuer method.
+type ClientGetCertificateIssuerOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetCertificateIssuersOptions contains the optional parameters for the Client.GetCertificateIssuers method.
+type ClientGetCertificateIssuersOptions struct {
+	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+	Maxresults *int32
+}
+
+// ClientGetCertificateOperationOptions contains the optional parameters for the Client.GetCertificateOperation method.
+type ClientGetCertificateOperationOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetCertificateOptions contains the optional parameters for the Client.GetCertificate method.
+type ClientGetCertificateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetCertificatePolicyOptions contains the optional parameters for the Client.GetCertificatePolicy method.
+type ClientGetCertificatePolicyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetCertificateVersionsOptions contains the optional parameters for the Client.GetCertificateVersions method.
+type ClientGetCertificateVersionsOptions struct {
+	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+	Maxresults *int32
+}
+
+// ClientGetCertificatesOptions contains the optional parameters for the Client.GetCertificates method.
+type ClientGetCertificatesOptions struct {
+	// Specifies whether to include certificates which are not completely provisioned.
+	IncludePending *bool
+	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+	Maxresults *int32
+}
+
+// ClientGetDeletedCertificateOptions contains the optional parameters for the Client.GetDeletedCertificate method.
+type ClientGetDeletedCertificateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetDeletedCertificatesOptions contains the optional parameters for the Client.GetDeletedCertificates method.
+type ClientGetDeletedCertificatesOptions struct {
+	// Specifies whether to include certificates which are not completely provisioned.
+	IncludePending *bool
+	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+	Maxresults *int32
+}
+
+// ClientGetDeletedKeyOptions contains the optional parameters for the Client.GetDeletedKey method.
+type ClientGetDeletedKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetDeletedKeysOptions contains the optional parameters for the Client.GetDeletedKeys method.
+type ClientGetDeletedKeysOptions struct {
+	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+	Maxresults *int32
+}
+
+// ClientGetDeletedSasDefinitionOptions contains the optional parameters for the Client.GetDeletedSasDefinition method.
+type ClientGetDeletedSasDefinitionOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetDeletedSasDefinitionsOptions contains the optional parameters for the Client.GetDeletedSasDefinitions method.
+type ClientGetDeletedSasDefinitionsOptions struct {
+	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+	Maxresults *int32
+}
+
+// ClientGetDeletedSecretOptions contains the optional parameters for the Client.GetDeletedSecret method.
+type ClientGetDeletedSecretOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetDeletedSecretsOptions contains the optional parameters for the Client.GetDeletedSecrets method.
+type ClientGetDeletedSecretsOptions struct {
+	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+	Maxresults *int32
+}
+
+// ClientGetDeletedStorageAccountOptions contains the optional parameters for the Client.GetDeletedStorageAccount method.
+type ClientGetDeletedStorageAccountOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetDeletedStorageAccountsOptions contains the optional parameters for the Client.GetDeletedStorageAccounts method.
+type ClientGetDeletedStorageAccountsOptions struct {
+	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+	Maxresults *int32
+}
+
+// ClientGetKeyOptions contains the optional parameters for the Client.GetKey method.
+type ClientGetKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetKeyVersionsOptions contains the optional parameters for the Client.GetKeyVersions method.
+type ClientGetKeyVersionsOptions struct {
+	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+	Maxresults *int32
+}
+
+// ClientGetKeysOptions contains the optional parameters for the Client.GetKeys method.
+type ClientGetKeysOptions struct {
+	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+	Maxresults *int32
+}
+
+// ClientGetSasDefinitionOptions contains the optional parameters for the Client.GetSasDefinition method.
+type ClientGetSasDefinitionOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetSasDefinitionsOptions contains the optional parameters for the Client.GetSasDefinitions method.
+type ClientGetSasDefinitionsOptions struct {
+	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+	Maxresults *int32
+}
+
+// ClientGetSecretOptions contains the optional parameters for the Client.GetSecret method.
+type ClientGetSecretOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetSecretVersionsOptions contains the optional parameters for the Client.GetSecretVersions method.
+type ClientGetSecretVersionsOptions struct {
+	// Maximum number of results to return in a page. If not specified, the service will return up to 25 results.
+	Maxresults *int32
+}
+
+// ClientGetSecretsOptions contains the optional parameters for the Client.GetSecrets method.
+type ClientGetSecretsOptions struct {
+	// Maximum number of results to return in a page. If not specified, the service will return up to 25 results.
+	Maxresults *int32
+}
+
+// ClientGetStorageAccountOptions contains the optional parameters for the Client.GetStorageAccount method.
+type ClientGetStorageAccountOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientGetStorageAccountsOptions contains the optional parameters for the Client.GetStorageAccounts method.
+type ClientGetStorageAccountsOptions struct {
+	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+	Maxresults *int32
+}
+
+// ClientImportCertificateOptions contains the optional parameters for the Client.ImportCertificate method.
+type ClientImportCertificateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientImportKeyOptions contains the optional parameters for the Client.ImportKey method.
+type ClientImportKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientMergeCertificateOptions contains the optional parameters for the Client.MergeCertificate method.
+type ClientMergeCertificateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientPurgeDeletedCertificateOptions contains the optional parameters for the Client.PurgeDeletedCertificate method.
+type ClientPurgeDeletedCertificateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientPurgeDeletedKeyOptions contains the optional parameters for the Client.PurgeDeletedKey method.
+type ClientPurgeDeletedKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientPurgeDeletedSecretOptions contains the optional parameters for the Client.PurgeDeletedSecret method.
+type ClientPurgeDeletedSecretOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientPurgeDeletedStorageAccountOptions contains the optional parameters for the Client.PurgeDeletedStorageAccount method.
+type ClientPurgeDeletedStorageAccountOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientRecoverDeletedCertificateOptions contains the optional parameters for the Client.RecoverDeletedCertificate method.
+type ClientRecoverDeletedCertificateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientRecoverDeletedKeyOptions contains the optional parameters for the Client.RecoverDeletedKey method.
+type ClientRecoverDeletedKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientRecoverDeletedSasDefinitionOptions contains the optional parameters for the Client.RecoverDeletedSasDefinition method.
+type ClientRecoverDeletedSasDefinitionOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientRecoverDeletedSecretOptions contains the optional parameters for the Client.RecoverDeletedSecret method.
+type ClientRecoverDeletedSecretOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientRecoverDeletedStorageAccountOptions contains the optional parameters for the Client.RecoverDeletedStorageAccount
+// method.
+type ClientRecoverDeletedStorageAccountOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientRegenerateStorageAccountKeyOptions contains the optional parameters for the Client.RegenerateStorageAccountKey method.
+type ClientRegenerateStorageAccountKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientRestoreCertificateOptions contains the optional parameters for the Client.RestoreCertificate method.
+type ClientRestoreCertificateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientRestoreKeyOptions contains the optional parameters for the Client.RestoreKey method.
+type ClientRestoreKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientRestoreSecretOptions contains the optional parameters for the Client.RestoreSecret method.
+type ClientRestoreSecretOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientRestoreStatusOptions contains the optional parameters for the Client.RestoreStatus method.
+type ClientRestoreStatusOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientRestoreStorageAccountOptions contains the optional parameters for the Client.RestoreStorageAccount method.
+type ClientRestoreStorageAccountOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientSetCertificateContactsOptions contains the optional parameters for the Client.SetCertificateContacts method.
+type ClientSetCertificateContactsOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientSetCertificateIssuerOptions contains the optional parameters for the Client.SetCertificateIssuer method.
+type ClientSetCertificateIssuerOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientSetSasDefinitionOptions contains the optional parameters for the Client.SetSasDefinition method.
+type ClientSetSasDefinitionOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientSetSecretOptions contains the optional parameters for the Client.SetSecret method.
+type ClientSetSecretOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientSetStorageAccountOptions contains the optional parameters for the Client.SetStorageAccount method.
+type ClientSetStorageAccountOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientSignOptions contains the optional parameters for the Client.Sign method.
+type ClientSignOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientUnwrapKeyOptions contains the optional parameters for the Client.UnwrapKey method.
+type ClientUnwrapKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientUpdateCertificateIssuerOptions contains the optional parameters for the Client.UpdateCertificateIssuer method.
+type ClientUpdateCertificateIssuerOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientUpdateCertificateOperationOptions contains the optional parameters for the Client.UpdateCertificateOperation method.
+type ClientUpdateCertificateOperationOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientUpdateCertificateOptions contains the optional parameters for the Client.UpdateCertificate method.
+type ClientUpdateCertificateOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientUpdateCertificatePolicyOptions contains the optional parameters for the Client.UpdateCertificatePolicy method.
+type ClientUpdateCertificatePolicyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientUpdateKeyOptions contains the optional parameters for the Client.UpdateKey method.
+type ClientUpdateKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientUpdateSasDefinitionOptions contains the optional parameters for the Client.UpdateSasDefinition method.
+type ClientUpdateSasDefinitionOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientUpdateSecretOptions contains the optional parameters for the Client.UpdateSecret method.
+type ClientUpdateSecretOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientUpdateStorageAccountOptions contains the optional parameters for the Client.UpdateStorageAccount method.
+type ClientUpdateStorageAccountOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientVerifyOptions contains the optional parameters for the Client.Verify method.
+type ClientVerifyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// ClientWrapKeyOptions contains the optional parameters for the Client.WrapKey method.
+type ClientWrapKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
 // Contact - The contact information for the vault certificates.
 type Contact struct {
 	// Email address.
@@ -1901,29 +2341,33 @@ func (f *FullBackupOperation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// HSMSecurityDomainBeginDownloadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginDownload method.
-type HSMSecurityDomainBeginDownloadOptions struct {
-	// placeholder for future optional parameters
-}
-
-// HSMSecurityDomainBeginUploadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginUpload method.
-type HSMSecurityDomainBeginUploadOptions struct {
-	// placeholder for future optional parameters
-}
-
-// HSMSecurityDomainDownloadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.DownloadPending
+// HSMSecurityDomainClientBeginDownloadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginDownload
 // method.
-type HSMSecurityDomainDownloadPendingOptions struct {
+type HSMSecurityDomainClientBeginDownloadOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HSMSecurityDomainTransferKeyOptions contains the optional parameters for the HSMSecurityDomainClient.TransferKey method.
-type HSMSecurityDomainTransferKeyOptions struct {
+// HSMSecurityDomainClientBeginUploadOptions contains the optional parameters for the HSMSecurityDomainClient.BeginUpload
+// method.
+type HSMSecurityDomainClientBeginUploadOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HSMSecurityDomainUploadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.UploadPending method.
-type HSMSecurityDomainUploadPendingOptions struct {
+// HSMSecurityDomainClientDownloadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.DownloadPending
+// method.
+type HSMSecurityDomainClientDownloadPendingOptions struct {
+	// placeholder for future optional parameters
+}
+
+// HSMSecurityDomainClientTransferKeyOptions contains the optional parameters for the HSMSecurityDomainClient.TransferKey
+// method.
+type HSMSecurityDomainClientTransferKeyOptions struct {
+	// placeholder for future optional parameters
+}
+
+// HSMSecurityDomainClientUploadPendingOptions contains the optional parameters for the HSMSecurityDomainClient.UploadPending
+// method.
+type HSMSecurityDomainClientUploadPendingOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -2589,457 +3033,6 @@ func (k KeyUpdateParameters) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// KeyVaultClientBackupCertificateOptions contains the optional parameters for the Client.BackupCertificate method.
-type KeyVaultClientBackupCertificateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientBackupKeyOptions contains the optional parameters for the Client.BackupKey method.
-type KeyVaultClientBackupKeyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientBackupSecretOptions contains the optional parameters for the Client.BackupSecret method.
-type KeyVaultClientBackupSecretOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientBackupStorageAccountOptions contains the optional parameters for the Client.BackupStorageAccount method.
-type KeyVaultClientBackupStorageAccountOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientBeginFullBackupOptions contains the optional parameters for the Client.BeginFullBackup method.
-type KeyVaultClientBeginFullBackupOptions struct {
-	// Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored.
-	// This token needs to be valid for at least next 24 hours from the time of making
-	// this call
-	AzureStorageBlobContainerURI *SASTokenParameter
-}
-
-// KeyVaultClientBeginFullRestoreOperationOptions contains the optional parameters for the Client.BeginFullRestoreOperation
-// method.
-type KeyVaultClientBeginFullRestoreOperationOptions struct {
-	// The Azure blob SAS token pointing to a folder where the previous successful full backup was stored
-	RestoreBlobDetails *RestoreOperationParameters
-}
-
-// KeyVaultClientBeginSelectiveKeyRestoreOperationOptions contains the optional parameters for the Client.BeginSelectiveKeyRestoreOperation
-// method.
-type KeyVaultClientBeginSelectiveKeyRestoreOperationOptions struct {
-	// The Azure blob SAS token pointing to a folder where the previous successful full backup was stored
-	RestoreBlobDetails *SelectiveKeyRestoreOperationParameters
-}
-
-// KeyVaultClientCreateCertificateOptions contains the optional parameters for the Client.CreateCertificate method.
-type KeyVaultClientCreateCertificateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientCreateKeyOptions contains the optional parameters for the Client.CreateKey method.
-type KeyVaultClientCreateKeyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientDecryptOptions contains the optional parameters for the Client.Decrypt method.
-type KeyVaultClientDecryptOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientDeleteCertificateContactsOptions contains the optional parameters for the Client.DeleteCertificateContacts
-// method.
-type KeyVaultClientDeleteCertificateContactsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientDeleteCertificateIssuerOptions contains the optional parameters for the Client.DeleteCertificateIssuer method.
-type KeyVaultClientDeleteCertificateIssuerOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientDeleteCertificateOperationOptions contains the optional parameters for the Client.DeleteCertificateOperation
-// method.
-type KeyVaultClientDeleteCertificateOperationOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientDeleteCertificateOptions contains the optional parameters for the Client.DeleteCertificate method.
-type KeyVaultClientDeleteCertificateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientDeleteKeyOptions contains the optional parameters for the Client.DeleteKey method.
-type KeyVaultClientDeleteKeyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientDeleteSasDefinitionOptions contains the optional parameters for the Client.DeleteSasDefinition method.
-type KeyVaultClientDeleteSasDefinitionOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientDeleteSecretOptions contains the optional parameters for the Client.DeleteSecret method.
-type KeyVaultClientDeleteSecretOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientDeleteStorageAccountOptions contains the optional parameters for the Client.DeleteStorageAccount method.
-type KeyVaultClientDeleteStorageAccountOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientEncryptOptions contains the optional parameters for the Client.Encrypt method.
-type KeyVaultClientEncryptOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientFullBackupStatusOptions contains the optional parameters for the Client.FullBackupStatus method.
-type KeyVaultClientFullBackupStatusOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientGetCertificateContactsOptions contains the optional parameters for the Client.GetCertificateContacts method.
-type KeyVaultClientGetCertificateContactsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientGetCertificateIssuerOptions contains the optional parameters for the Client.GetCertificateIssuer method.
-type KeyVaultClientGetCertificateIssuerOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientGetCertificateIssuersOptions contains the optional parameters for the Client.GetCertificateIssuers method.
-type KeyVaultClientGetCertificateIssuersOptions struct {
-	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientGetCertificateOperationOptions contains the optional parameters for the Client.GetCertificateOperation method.
-type KeyVaultClientGetCertificateOperationOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientGetCertificateOptions contains the optional parameters for the Client.GetCertificate method.
-type KeyVaultClientGetCertificateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientGetCertificatePolicyOptions contains the optional parameters for the Client.GetCertificatePolicy method.
-type KeyVaultClientGetCertificatePolicyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientGetCertificateVersionsOptions contains the optional parameters for the Client.GetCertificateVersions method.
-type KeyVaultClientGetCertificateVersionsOptions struct {
-	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientGetCertificatesOptions contains the optional parameters for the Client.GetCertificates method.
-type KeyVaultClientGetCertificatesOptions struct {
-	// Specifies whether to include certificates which are not completely provisioned.
-	IncludePending *bool
-	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientGetDeletedCertificateOptions contains the optional parameters for the Client.GetDeletedCertificate method.
-type KeyVaultClientGetDeletedCertificateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientGetDeletedCertificatesOptions contains the optional parameters for the Client.GetDeletedCertificates method.
-type KeyVaultClientGetDeletedCertificatesOptions struct {
-	// Specifies whether to include certificates which are not completely provisioned.
-	IncludePending *bool
-	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientGetDeletedKeyOptions contains the optional parameters for the Client.GetDeletedKey method.
-type KeyVaultClientGetDeletedKeyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientGetDeletedKeysOptions contains the optional parameters for the Client.GetDeletedKeys method.
-type KeyVaultClientGetDeletedKeysOptions struct {
-	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientGetDeletedSasDefinitionOptions contains the optional parameters for the Client.GetDeletedSasDefinition method.
-type KeyVaultClientGetDeletedSasDefinitionOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientGetDeletedSasDefinitionsOptions contains the optional parameters for the Client.GetDeletedSasDefinitions
-// method.
-type KeyVaultClientGetDeletedSasDefinitionsOptions struct {
-	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientGetDeletedSecretOptions contains the optional parameters for the Client.GetDeletedSecret method.
-type KeyVaultClientGetDeletedSecretOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientGetDeletedSecretsOptions contains the optional parameters for the Client.GetDeletedSecrets method.
-type KeyVaultClientGetDeletedSecretsOptions struct {
-	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientGetDeletedStorageAccountOptions contains the optional parameters for the Client.GetDeletedStorageAccount
-// method.
-type KeyVaultClientGetDeletedStorageAccountOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientGetDeletedStorageAccountsOptions contains the optional parameters for the Client.GetDeletedStorageAccounts
-// method.
-type KeyVaultClientGetDeletedStorageAccountsOptions struct {
-	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientGetKeyOptions contains the optional parameters for the Client.GetKey method.
-type KeyVaultClientGetKeyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientGetKeyVersionsOptions contains the optional parameters for the Client.GetKeyVersions method.
-type KeyVaultClientGetKeyVersionsOptions struct {
-	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientGetKeysOptions contains the optional parameters for the Client.GetKeys method.
-type KeyVaultClientGetKeysOptions struct {
-	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientGetSasDefinitionOptions contains the optional parameters for the Client.GetSasDefinition method.
-type KeyVaultClientGetSasDefinitionOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientGetSasDefinitionsOptions contains the optional parameters for the Client.GetSasDefinitions method.
-type KeyVaultClientGetSasDefinitionsOptions struct {
-	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientGetSecretOptions contains the optional parameters for the Client.GetSecret method.
-type KeyVaultClientGetSecretOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientGetSecretVersionsOptions contains the optional parameters for the Client.GetSecretVersions method.
-type KeyVaultClientGetSecretVersionsOptions struct {
-	// Maximum number of results to return in a page. If not specified, the service will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientGetSecretsOptions contains the optional parameters for the Client.GetSecrets method.
-type KeyVaultClientGetSecretsOptions struct {
-	// Maximum number of results to return in a page. If not specified, the service will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientGetStorageAccountOptions contains the optional parameters for the Client.GetStorageAccount method.
-type KeyVaultClientGetStorageAccountOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientGetStorageAccountsOptions contains the optional parameters for the Client.GetStorageAccounts method.
-type KeyVaultClientGetStorageAccountsOptions struct {
-	// Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-	Maxresults *int32
-}
-
-// KeyVaultClientImportCertificateOptions contains the optional parameters for the Client.ImportCertificate method.
-type KeyVaultClientImportCertificateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientImportKeyOptions contains the optional parameters for the Client.ImportKey method.
-type KeyVaultClientImportKeyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientMergeCertificateOptions contains the optional parameters for the Client.MergeCertificate method.
-type KeyVaultClientMergeCertificateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientPurgeDeletedCertificateOptions contains the optional parameters for the Client.PurgeDeletedCertificate method.
-type KeyVaultClientPurgeDeletedCertificateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientPurgeDeletedKeyOptions contains the optional parameters for the Client.PurgeDeletedKey method.
-type KeyVaultClientPurgeDeletedKeyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientPurgeDeletedSecretOptions contains the optional parameters for the Client.PurgeDeletedSecret method.
-type KeyVaultClientPurgeDeletedSecretOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientPurgeDeletedStorageAccountOptions contains the optional parameters for the Client.PurgeDeletedStorageAccount
-// method.
-type KeyVaultClientPurgeDeletedStorageAccountOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientRecoverDeletedCertificateOptions contains the optional parameters for the Client.RecoverDeletedCertificate
-// method.
-type KeyVaultClientRecoverDeletedCertificateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientRecoverDeletedKeyOptions contains the optional parameters for the Client.RecoverDeletedKey method.
-type KeyVaultClientRecoverDeletedKeyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientRecoverDeletedSasDefinitionOptions contains the optional parameters for the Client.RecoverDeletedSasDefinition
-// method.
-type KeyVaultClientRecoverDeletedSasDefinitionOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientRecoverDeletedSecretOptions contains the optional parameters for the Client.RecoverDeletedSecret method.
-type KeyVaultClientRecoverDeletedSecretOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientRecoverDeletedStorageAccountOptions contains the optional parameters for the Client.RecoverDeletedStorageAccount
-// method.
-type KeyVaultClientRecoverDeletedStorageAccountOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientRegenerateStorageAccountKeyOptions contains the optional parameters for the Client.RegenerateStorageAccountKey
-// method.
-type KeyVaultClientRegenerateStorageAccountKeyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientRestoreCertificateOptions contains the optional parameters for the Client.RestoreCertificate method.
-type KeyVaultClientRestoreCertificateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientRestoreKeyOptions contains the optional parameters for the Client.RestoreKey method.
-type KeyVaultClientRestoreKeyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientRestoreSecretOptions contains the optional parameters for the Client.RestoreSecret method.
-type KeyVaultClientRestoreSecretOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientRestoreStatusOptions contains the optional parameters for the Client.RestoreStatus method.
-type KeyVaultClientRestoreStatusOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientRestoreStorageAccountOptions contains the optional parameters for the Client.RestoreStorageAccount method.
-type KeyVaultClientRestoreStorageAccountOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientSetCertificateContactsOptions contains the optional parameters for the Client.SetCertificateContacts method.
-type KeyVaultClientSetCertificateContactsOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientSetCertificateIssuerOptions contains the optional parameters for the Client.SetCertificateIssuer method.
-type KeyVaultClientSetCertificateIssuerOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientSetSasDefinitionOptions contains the optional parameters for the Client.SetSasDefinition method.
-type KeyVaultClientSetSasDefinitionOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientSetSecretOptions contains the optional parameters for the Client.SetSecret method.
-type KeyVaultClientSetSecretOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientSetStorageAccountOptions contains the optional parameters for the Client.SetStorageAccount method.
-type KeyVaultClientSetStorageAccountOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientSignOptions contains the optional parameters for the Client.Sign method.
-type KeyVaultClientSignOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientUnwrapKeyOptions contains the optional parameters for the Client.UnwrapKey method.
-type KeyVaultClientUnwrapKeyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientUpdateCertificateIssuerOptions contains the optional parameters for the Client.UpdateCertificateIssuer method.
-type KeyVaultClientUpdateCertificateIssuerOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientUpdateCertificateOperationOptions contains the optional parameters for the Client.UpdateCertificateOperation
-// method.
-type KeyVaultClientUpdateCertificateOperationOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientUpdateCertificateOptions contains the optional parameters for the Client.UpdateCertificate method.
-type KeyVaultClientUpdateCertificateOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientUpdateCertificatePolicyOptions contains the optional parameters for the Client.UpdateCertificatePolicy method.
-type KeyVaultClientUpdateCertificatePolicyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientUpdateKeyOptions contains the optional parameters for the Client.UpdateKey method.
-type KeyVaultClientUpdateKeyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientUpdateSasDefinitionOptions contains the optional parameters for the Client.UpdateSasDefinition method.
-type KeyVaultClientUpdateSasDefinitionOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientUpdateSecretOptions contains the optional parameters for the Client.UpdateSecret method.
-type KeyVaultClientUpdateSecretOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientUpdateStorageAccountOptions contains the optional parameters for the Client.UpdateStorageAccount method.
-type KeyVaultClientUpdateStorageAccountOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientVerifyOptions contains the optional parameters for the Client.Verify method.
-type KeyVaultClientVerifyOptions struct {
-	// placeholder for future optional parameters
-}
-
-// KeyVaultClientWrapKeyOptions contains the optional parameters for the Client.WrapKey method.
-type KeyVaultClientWrapKeyOptions struct {
-	// placeholder for future optional parameters
-}
-
 // KeyVerifyParameters - The key verify parameters.
 type KeyVerifyParameters struct {
 	// REQUIRED; The signing/verification algorithm. For more information on possible algorithm types, see JsonWebKeySignatureAlgorithm.
@@ -3292,23 +3285,23 @@ type RoleAssignmentPropertiesWithScope struct {
 	Scope *RoleScope `json:"scope,omitempty"`
 }
 
-// RoleAssignmentsCreateOptions contains the optional parameters for the RoleAssignmentsClient.Create method.
-type RoleAssignmentsCreateOptions struct {
+// RoleAssignmentsClientCreateOptions contains the optional parameters for the RoleAssignmentsClient.Create method.
+type RoleAssignmentsClientCreateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RoleAssignmentsDeleteOptions contains the optional parameters for the RoleAssignmentsClient.Delete method.
-type RoleAssignmentsDeleteOptions struct {
+// RoleAssignmentsClientDeleteOptions contains the optional parameters for the RoleAssignmentsClient.Delete method.
+type RoleAssignmentsClientDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RoleAssignmentsGetOptions contains the optional parameters for the RoleAssignmentsClient.Get method.
-type RoleAssignmentsGetOptions struct {
+// RoleAssignmentsClientGetOptions contains the optional parameters for the RoleAssignmentsClient.Get method.
+type RoleAssignmentsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RoleAssignmentsListForScopeOptions contains the optional parameters for the RoleAssignmentsClient.ListForScope method.
-type RoleAssignmentsListForScopeOptions struct {
+// RoleAssignmentsClientListForScopeOptions contains the optional parameters for the RoleAssignmentsClient.ListForScope method.
+type RoleAssignmentsClientListForScopeOptions struct {
 	// The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId
 	// eq {id} to return all role assignments at, above or below the
 	// scope for the specified principal.
@@ -3388,23 +3381,24 @@ func (r RoleDefinitionProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// RoleDefinitionsCreateOrUpdateOptions contains the optional parameters for the RoleDefinitionsClient.CreateOrUpdate method.
-type RoleDefinitionsCreateOrUpdateOptions struct {
+// RoleDefinitionsClientCreateOrUpdateOptions contains the optional parameters for the RoleDefinitionsClient.CreateOrUpdate
+// method.
+type RoleDefinitionsClientCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RoleDefinitionsDeleteOptions contains the optional parameters for the RoleDefinitionsClient.Delete method.
-type RoleDefinitionsDeleteOptions struct {
+// RoleDefinitionsClientDeleteOptions contains the optional parameters for the RoleDefinitionsClient.Delete method.
+type RoleDefinitionsClientDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RoleDefinitionsGetOptions contains the optional parameters for the RoleDefinitionsClient.Get method.
-type RoleDefinitionsGetOptions struct {
+// RoleDefinitionsClientGetOptions contains the optional parameters for the RoleDefinitionsClient.Get method.
+type RoleDefinitionsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// RoleDefinitionsListOptions contains the optional parameters for the RoleDefinitionsClient.List method.
-type RoleDefinitionsListOptions struct {
+// RoleDefinitionsClientListOptions contains the optional parameters for the RoleDefinitionsClient.List method.
+type RoleDefinitionsClientListOptions struct {
 	// The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well.
 	Filter *string
 }

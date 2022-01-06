@@ -54,21 +54,22 @@ func NewReservationsSummariesClient(credential azcore.TokenCredential, options *
 // '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile
 // scope (modern).
 // grain - Can be daily or monthly
-// options - ReservationsSummariesListOptions contains the optional parameters for the ReservationsSummariesClient.List method.
-func (client *ReservationsSummariesClient) List(scope string, grain Datagrain, options *ReservationsSummariesListOptions) *ReservationsSummariesListPager {
-	return &ReservationsSummariesListPager{
+// options - ReservationsSummariesClientListOptions contains the optional parameters for the ReservationsSummariesClient.List
+// method.
+func (client *ReservationsSummariesClient) List(scope string, grain Datagrain, options *ReservationsSummariesClientListOptions) *ReservationsSummariesClientListPager {
+	return &ReservationsSummariesClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, scope, grain, options)
 		},
-		advancer: func(ctx context.Context, resp ReservationsSummariesListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp ReservationsSummariesClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ReservationSummariesListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *ReservationsSummariesClient) listCreateRequest(ctx context.Context, scope string, grain Datagrain, options *ReservationsSummariesListOptions) (*policy.Request, error) {
+func (client *ReservationsSummariesClient) listCreateRequest(ctx context.Context, scope string, grain Datagrain, options *ReservationsSummariesClientListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/reservationSummaries"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
@@ -99,10 +100,10 @@ func (client *ReservationsSummariesClient) listCreateRequest(ctx context.Context
 }
 
 // listHandleResponse handles the List response.
-func (client *ReservationsSummariesClient) listHandleResponse(resp *http.Response) (ReservationsSummariesListResponse, error) {
-	result := ReservationsSummariesListResponse{RawResponse: resp}
+func (client *ReservationsSummariesClient) listHandleResponse(resp *http.Response) (ReservationsSummariesClientListResponse, error) {
+	result := ReservationsSummariesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationSummariesListResult); err != nil {
-		return ReservationsSummariesListResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationsSummariesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -124,22 +125,22 @@ func (client *ReservationsSummariesClient) listHandleError(resp *http.Response) 
 // If the operation fails it returns the *ErrorResponse error type.
 // reservationOrderID - Order Id of the reservation
 // grain - Can be daily or monthly
-// options - ReservationsSummariesListByReservationOrderOptions contains the optional parameters for the ReservationsSummariesClient.ListByReservationOrder
+// options - ReservationsSummariesClientListByReservationOrderOptions contains the optional parameters for the ReservationsSummariesClient.ListByReservationOrder
 // method.
-func (client *ReservationsSummariesClient) ListByReservationOrder(reservationOrderID string, grain Datagrain, options *ReservationsSummariesListByReservationOrderOptions) *ReservationsSummariesListByReservationOrderPager {
-	return &ReservationsSummariesListByReservationOrderPager{
+func (client *ReservationsSummariesClient) ListByReservationOrder(reservationOrderID string, grain Datagrain, options *ReservationsSummariesClientListByReservationOrderOptions) *ReservationsSummariesClientListByReservationOrderPager {
+	return &ReservationsSummariesClientListByReservationOrderPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByReservationOrderCreateRequest(ctx, reservationOrderID, grain, options)
 		},
-		advancer: func(ctx context.Context, resp ReservationsSummariesListByReservationOrderResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp ReservationsSummariesClientListByReservationOrderResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ReservationSummariesListResult.NextLink)
 		},
 	}
 }
 
 // listByReservationOrderCreateRequest creates the ListByReservationOrder request.
-func (client *ReservationsSummariesClient) listByReservationOrderCreateRequest(ctx context.Context, reservationOrderID string, grain Datagrain, options *ReservationsSummariesListByReservationOrderOptions) (*policy.Request, error) {
+func (client *ReservationsSummariesClient) listByReservationOrderCreateRequest(ctx context.Context, reservationOrderID string, grain Datagrain, options *ReservationsSummariesClientListByReservationOrderOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationSummaries"
 	if reservationOrderID == "" {
 		return nil, errors.New("parameter reservationOrderID cannot be empty")
@@ -161,10 +162,10 @@ func (client *ReservationsSummariesClient) listByReservationOrderCreateRequest(c
 }
 
 // listByReservationOrderHandleResponse handles the ListByReservationOrder response.
-func (client *ReservationsSummariesClient) listByReservationOrderHandleResponse(resp *http.Response) (ReservationsSummariesListByReservationOrderResponse, error) {
-	result := ReservationsSummariesListByReservationOrderResponse{RawResponse: resp}
+func (client *ReservationsSummariesClient) listByReservationOrderHandleResponse(resp *http.Response) (ReservationsSummariesClientListByReservationOrderResponse, error) {
+	result := ReservationsSummariesClientListByReservationOrderResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationSummariesListResult); err != nil {
-		return ReservationsSummariesListByReservationOrderResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationsSummariesClientListByReservationOrderResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -187,22 +188,22 @@ func (client *ReservationsSummariesClient) listByReservationOrderHandleError(res
 // reservationOrderID - Order Id of the reservation
 // reservationID - Id of the reservation
 // grain - Can be daily or monthly
-// options - ReservationsSummariesListByReservationOrderAndReservationOptions contains the optional parameters for the ReservationsSummariesClient.ListByReservationOrderAndReservation
-// method.
-func (client *ReservationsSummariesClient) ListByReservationOrderAndReservation(reservationOrderID string, reservationID string, grain Datagrain, options *ReservationsSummariesListByReservationOrderAndReservationOptions) *ReservationsSummariesListByReservationOrderAndReservationPager {
-	return &ReservationsSummariesListByReservationOrderAndReservationPager{
+// options - ReservationsSummariesClientListByReservationOrderAndReservationOptions contains the optional parameters for the
+// ReservationsSummariesClient.ListByReservationOrderAndReservation method.
+func (client *ReservationsSummariesClient) ListByReservationOrderAndReservation(reservationOrderID string, reservationID string, grain Datagrain, options *ReservationsSummariesClientListByReservationOrderAndReservationOptions) *ReservationsSummariesClientListByReservationOrderAndReservationPager {
+	return &ReservationsSummariesClientListByReservationOrderAndReservationPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByReservationOrderAndReservationCreateRequest(ctx, reservationOrderID, reservationID, grain, options)
 		},
-		advancer: func(ctx context.Context, resp ReservationsSummariesListByReservationOrderAndReservationResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp ReservationsSummariesClientListByReservationOrderAndReservationResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ReservationSummariesListResult.NextLink)
 		},
 	}
 }
 
 // listByReservationOrderAndReservationCreateRequest creates the ListByReservationOrderAndReservation request.
-func (client *ReservationsSummariesClient) listByReservationOrderAndReservationCreateRequest(ctx context.Context, reservationOrderID string, reservationID string, grain Datagrain, options *ReservationsSummariesListByReservationOrderAndReservationOptions) (*policy.Request, error) {
+func (client *ReservationsSummariesClient) listByReservationOrderAndReservationCreateRequest(ctx context.Context, reservationOrderID string, reservationID string, grain Datagrain, options *ReservationsSummariesClientListByReservationOrderAndReservationOptions) (*policy.Request, error) {
 	urlPath := "/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationSummaries"
 	if reservationOrderID == "" {
 		return nil, errors.New("parameter reservationOrderID cannot be empty")
@@ -228,10 +229,10 @@ func (client *ReservationsSummariesClient) listByReservationOrderAndReservationC
 }
 
 // listByReservationOrderAndReservationHandleResponse handles the ListByReservationOrderAndReservation response.
-func (client *ReservationsSummariesClient) listByReservationOrderAndReservationHandleResponse(resp *http.Response) (ReservationsSummariesListByReservationOrderAndReservationResponse, error) {
-	result := ReservationsSummariesListByReservationOrderAndReservationResponse{RawResponse: resp}
+func (client *ReservationsSummariesClient) listByReservationOrderAndReservationHandleResponse(resp *http.Response) (ReservationsSummariesClientListByReservationOrderAndReservationResponse, error) {
+	result := ReservationsSummariesClientListByReservationOrderAndReservationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationSummariesListResult); err != nil {
-		return ReservationsSummariesListByReservationOrderAndReservationResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationsSummariesClientListByReservationOrderAndReservationResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

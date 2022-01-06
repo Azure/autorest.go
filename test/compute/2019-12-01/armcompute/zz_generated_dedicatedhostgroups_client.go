@@ -56,25 +56,25 @@ func NewDedicatedHostGroupsClient(subscriptionID string, credential azcore.Token
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.
 // parameters - Parameters supplied to the Create Dedicated Host Group.
-// options - DedicatedHostGroupsCreateOrUpdateOptions contains the optional parameters for the DedicatedHostGroupsClient.CreateOrUpdate
+// options - DedicatedHostGroupsClientCreateOrUpdateOptions contains the optional parameters for the DedicatedHostGroupsClient.CreateOrUpdate
 // method.
-func (client *DedicatedHostGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, options *DedicatedHostGroupsCreateOrUpdateOptions) (DedicatedHostGroupsCreateOrUpdateResponse, error) {
+func (client *DedicatedHostGroupsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, options *DedicatedHostGroupsClientCreateOrUpdateOptions) (DedicatedHostGroupsClientCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, hostGroupName, parameters, options)
 	if err != nil {
-		return DedicatedHostGroupsCreateOrUpdateResponse{}, err
+		return DedicatedHostGroupsClientCreateOrUpdateResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DedicatedHostGroupsCreateOrUpdateResponse{}, err
+		return DedicatedHostGroupsClientCreateOrUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return DedicatedHostGroupsCreateOrUpdateResponse{}, client.createOrUpdateHandleError(resp)
+		return DedicatedHostGroupsClientCreateOrUpdateResponse{}, client.createOrUpdateHandleError(resp)
 	}
 	return client.createOrUpdateHandleResponse(resp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *DedicatedHostGroupsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, options *DedicatedHostGroupsCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *DedicatedHostGroupsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroup, options *DedicatedHostGroupsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -100,10 +100,10 @@ func (client *DedicatedHostGroupsClient) createOrUpdateCreateRequest(ctx context
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *DedicatedHostGroupsClient) createOrUpdateHandleResponse(resp *http.Response) (DedicatedHostGroupsCreateOrUpdateResponse, error) {
-	result := DedicatedHostGroupsCreateOrUpdateResponse{RawResponse: resp}
+func (client *DedicatedHostGroupsClient) createOrUpdateHandleResponse(resp *http.Response) (DedicatedHostGroupsClientCreateOrUpdateResponse, error) {
+	result := DedicatedHostGroupsClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DedicatedHostGroup); err != nil {
-		return DedicatedHostGroupsCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
+		return DedicatedHostGroupsClientCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -124,24 +124,25 @@ func (client *DedicatedHostGroupsClient) createOrUpdateHandleError(resp *http.Re
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.
-// options - DedicatedHostGroupsDeleteOptions contains the optional parameters for the DedicatedHostGroupsClient.Delete method.
-func (client *DedicatedHostGroupsClient) Delete(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsDeleteOptions) (DedicatedHostGroupsDeleteResponse, error) {
+// options - DedicatedHostGroupsClientDeleteOptions contains the optional parameters for the DedicatedHostGroupsClient.Delete
+// method.
+func (client *DedicatedHostGroupsClient) Delete(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsClientDeleteOptions) (DedicatedHostGroupsClientDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, hostGroupName, options)
 	if err != nil {
-		return DedicatedHostGroupsDeleteResponse{}, err
+		return DedicatedHostGroupsClientDeleteResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DedicatedHostGroupsDeleteResponse{}, err
+		return DedicatedHostGroupsClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return DedicatedHostGroupsDeleteResponse{}, client.deleteHandleError(resp)
+		return DedicatedHostGroupsClientDeleteResponse{}, client.deleteHandleError(resp)
 	}
-	return DedicatedHostGroupsDeleteResponse{RawResponse: resp}, nil
+	return DedicatedHostGroupsClientDeleteResponse{RawResponse: resp}, nil
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *DedicatedHostGroupsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsDeleteOptions) (*policy.Request, error) {
+func (client *DedicatedHostGroupsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -181,24 +182,24 @@ func (client *DedicatedHostGroupsClient) deleteHandleError(resp *http.Response) 
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.
-// options - DedicatedHostGroupsGetOptions contains the optional parameters for the DedicatedHostGroupsClient.Get method.
-func (client *DedicatedHostGroupsClient) Get(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsGetOptions) (DedicatedHostGroupsGetResponse, error) {
+// options - DedicatedHostGroupsClientGetOptions contains the optional parameters for the DedicatedHostGroupsClient.Get method.
+func (client *DedicatedHostGroupsClient) Get(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsClientGetOptions) (DedicatedHostGroupsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, hostGroupName, options)
 	if err != nil {
-		return DedicatedHostGroupsGetResponse{}, err
+		return DedicatedHostGroupsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DedicatedHostGroupsGetResponse{}, err
+		return DedicatedHostGroupsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DedicatedHostGroupsGetResponse{}, client.getHandleError(resp)
+		return DedicatedHostGroupsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *DedicatedHostGroupsClient) getCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsGetOptions) (*policy.Request, error) {
+func (client *DedicatedHostGroupsClient) getCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, options *DedicatedHostGroupsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -224,10 +225,10 @@ func (client *DedicatedHostGroupsClient) getCreateRequest(ctx context.Context, r
 }
 
 // getHandleResponse handles the Get response.
-func (client *DedicatedHostGroupsClient) getHandleResponse(resp *http.Response) (DedicatedHostGroupsGetResponse, error) {
-	result := DedicatedHostGroupsGetResponse{RawResponse: resp}
+func (client *DedicatedHostGroupsClient) getHandleResponse(resp *http.Response) (DedicatedHostGroupsClientGetResponse, error) {
+	result := DedicatedHostGroupsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DedicatedHostGroup); err != nil {
-		return DedicatedHostGroupsGetResponse{}, runtime.NewResponseError(err, resp)
+		return DedicatedHostGroupsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -248,22 +249,22 @@ func (client *DedicatedHostGroupsClient) getHandleError(resp *http.Response) err
 // in the response to get the next page of dedicated host groups.
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
-// options - DedicatedHostGroupsListByResourceGroupOptions contains the optional parameters for the DedicatedHostGroupsClient.ListByResourceGroup
+// options - DedicatedHostGroupsClientListByResourceGroupOptions contains the optional parameters for the DedicatedHostGroupsClient.ListByResourceGroup
 // method.
-func (client *DedicatedHostGroupsClient) ListByResourceGroup(resourceGroupName string, options *DedicatedHostGroupsListByResourceGroupOptions) *DedicatedHostGroupsListByResourceGroupPager {
-	return &DedicatedHostGroupsListByResourceGroupPager{
+func (client *DedicatedHostGroupsClient) ListByResourceGroup(resourceGroupName string, options *DedicatedHostGroupsClientListByResourceGroupOptions) *DedicatedHostGroupsClientListByResourceGroupPager {
+	return &DedicatedHostGroupsClientListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp DedicatedHostGroupsListByResourceGroupResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp DedicatedHostGroupsClientListByResourceGroupResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.DedicatedHostGroupListResult.NextLink)
 		},
 	}
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *DedicatedHostGroupsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *DedicatedHostGroupsListByResourceGroupOptions) (*policy.Request, error) {
+func (client *DedicatedHostGroupsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *DedicatedHostGroupsClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -285,10 +286,10 @@ func (client *DedicatedHostGroupsClient) listByResourceGroupCreateRequest(ctx co
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *DedicatedHostGroupsClient) listByResourceGroupHandleResponse(resp *http.Response) (DedicatedHostGroupsListByResourceGroupResponse, error) {
-	result := DedicatedHostGroupsListByResourceGroupResponse{RawResponse: resp}
+func (client *DedicatedHostGroupsClient) listByResourceGroupHandleResponse(resp *http.Response) (DedicatedHostGroupsClientListByResourceGroupResponse, error) {
+	result := DedicatedHostGroupsClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DedicatedHostGroupListResult); err != nil {
-		return DedicatedHostGroupsListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return DedicatedHostGroupsClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -308,22 +309,22 @@ func (client *DedicatedHostGroupsClient) listByResourceGroupHandleError(resp *ht
 // ListBySubscription - Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response
 // to get the next page of dedicated host groups.
 // If the operation fails it returns a generic error.
-// options - DedicatedHostGroupsListBySubscriptionOptions contains the optional parameters for the DedicatedHostGroupsClient.ListBySubscription
+// options - DedicatedHostGroupsClientListBySubscriptionOptions contains the optional parameters for the DedicatedHostGroupsClient.ListBySubscription
 // method.
-func (client *DedicatedHostGroupsClient) ListBySubscription(options *DedicatedHostGroupsListBySubscriptionOptions) *DedicatedHostGroupsListBySubscriptionPager {
-	return &DedicatedHostGroupsListBySubscriptionPager{
+func (client *DedicatedHostGroupsClient) ListBySubscription(options *DedicatedHostGroupsClientListBySubscriptionOptions) *DedicatedHostGroupsClientListBySubscriptionPager {
+	return &DedicatedHostGroupsClientListBySubscriptionPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listBySubscriptionCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp DedicatedHostGroupsListBySubscriptionResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp DedicatedHostGroupsClientListBySubscriptionResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.DedicatedHostGroupListResult.NextLink)
 		},
 	}
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *DedicatedHostGroupsClient) listBySubscriptionCreateRequest(ctx context.Context, options *DedicatedHostGroupsListBySubscriptionOptions) (*policy.Request, error) {
+func (client *DedicatedHostGroupsClient) listBySubscriptionCreateRequest(ctx context.Context, options *DedicatedHostGroupsClientListBySubscriptionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/hostGroups"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -341,10 +342,10 @@ func (client *DedicatedHostGroupsClient) listBySubscriptionCreateRequest(ctx con
 }
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
-func (client *DedicatedHostGroupsClient) listBySubscriptionHandleResponse(resp *http.Response) (DedicatedHostGroupsListBySubscriptionResponse, error) {
-	result := DedicatedHostGroupsListBySubscriptionResponse{RawResponse: resp}
+func (client *DedicatedHostGroupsClient) listBySubscriptionHandleResponse(resp *http.Response) (DedicatedHostGroupsClientListBySubscriptionResponse, error) {
+	result := DedicatedHostGroupsClientListBySubscriptionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DedicatedHostGroupListResult); err != nil {
-		return DedicatedHostGroupsListBySubscriptionResponse{}, runtime.NewResponseError(err, resp)
+		return DedicatedHostGroupsClientListBySubscriptionResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -366,24 +367,25 @@ func (client *DedicatedHostGroupsClient) listBySubscriptionHandleError(resp *htt
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.
 // parameters - Parameters supplied to the Update Dedicated Host Group operation.
-// options - DedicatedHostGroupsUpdateOptions contains the optional parameters for the DedicatedHostGroupsClient.Update method.
-func (client *DedicatedHostGroupsClient) Update(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroupUpdate, options *DedicatedHostGroupsUpdateOptions) (DedicatedHostGroupsUpdateResponse, error) {
+// options - DedicatedHostGroupsClientUpdateOptions contains the optional parameters for the DedicatedHostGroupsClient.Update
+// method.
+func (client *DedicatedHostGroupsClient) Update(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroupUpdate, options *DedicatedHostGroupsClientUpdateOptions) (DedicatedHostGroupsClientUpdateResponse, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, hostGroupName, parameters, options)
 	if err != nil {
-		return DedicatedHostGroupsUpdateResponse{}, err
+		return DedicatedHostGroupsClientUpdateResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DedicatedHostGroupsUpdateResponse{}, err
+		return DedicatedHostGroupsClientUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DedicatedHostGroupsUpdateResponse{}, client.updateHandleError(resp)
+		return DedicatedHostGroupsClientUpdateResponse{}, client.updateHandleError(resp)
 	}
 	return client.updateHandleResponse(resp)
 }
 
 // updateCreateRequest creates the Update request.
-func (client *DedicatedHostGroupsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroupUpdate, options *DedicatedHostGroupsUpdateOptions) (*policy.Request, error) {
+func (client *DedicatedHostGroupsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, hostGroupName string, parameters DedicatedHostGroupUpdate, options *DedicatedHostGroupsClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -409,10 +411,10 @@ func (client *DedicatedHostGroupsClient) updateCreateRequest(ctx context.Context
 }
 
 // updateHandleResponse handles the Update response.
-func (client *DedicatedHostGroupsClient) updateHandleResponse(resp *http.Response) (DedicatedHostGroupsUpdateResponse, error) {
-	result := DedicatedHostGroupsUpdateResponse{RawResponse: resp}
+func (client *DedicatedHostGroupsClient) updateHandleResponse(resp *http.Response) (DedicatedHostGroupsClientUpdateResponse, error) {
+	result := DedicatedHostGroupsClientUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DedicatedHostGroup); err != nil {
-		return DedicatedHostGroupsUpdateResponse{}, runtime.NewResponseError(err, resp)
+		return DedicatedHostGroupsClientUpdateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

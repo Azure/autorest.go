@@ -60,24 +60,24 @@ func NewChargesClient(credential azcore.TokenCredential, options *arm.ClientOpti
 // billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/invoiceSections/{invoiceSectionId}'
 // for invoiceSection scope, and
 // 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners.
-// options - ChargesListOptions contains the optional parameters for the ChargesClient.List method.
-func (client *ChargesClient) List(ctx context.Context, scope string, options *ChargesListOptions) (ChargesListResponse, error) {
+// options - ChargesClientListOptions contains the optional parameters for the ChargesClient.List method.
+func (client *ChargesClient) List(ctx context.Context, scope string, options *ChargesClientListOptions) (ChargesClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, scope, options)
 	if err != nil {
-		return ChargesListResponse{}, err
+		return ChargesClientListResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ChargesListResponse{}, err
+		return ChargesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ChargesListResponse{}, client.listHandleError(resp)
+		return ChargesClientListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
-func (client *ChargesClient) listCreateRequest(ctx context.Context, scope string, options *ChargesListOptions) (*policy.Request, error) {
+func (client *ChargesClient) listCreateRequest(ctx context.Context, scope string, options *ChargesClientListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/charges"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
@@ -104,10 +104,10 @@ func (client *ChargesClient) listCreateRequest(ctx context.Context, scope string
 }
 
 // listHandleResponse handles the List response.
-func (client *ChargesClient) listHandleResponse(resp *http.Response) (ChargesListResponse, error) {
-	result := ChargesListResponse{RawResponse: resp}
+func (client *ChargesClient) listHandleResponse(resp *http.Response) (ChargesClientListResponse, error) {
+	result := ChargesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ChargesListResult); err != nil {
-		return ChargesListResponse{}, runtime.NewResponseError(err, resp)
+		return ChargesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

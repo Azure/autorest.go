@@ -56,21 +56,21 @@ func NewStorageAccountCredentialsClient(subscriptionID string, credential azcore
 // name - The storage account credential name.
 // resourceGroupName - The resource group name.
 // storageAccountCredential - The storage account credential.
-// options - StorageAccountCredentialsBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginCreateOrUpdate
+// options - StorageAccountCredentialsClientBeginCreateOrUpdateOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginCreateOrUpdate
 // method.
-func (client *StorageAccountCredentialsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, storageAccountCredential StorageAccountCredential, options *StorageAccountCredentialsBeginCreateOrUpdateOptions) (StorageAccountCredentialsCreateOrUpdatePollerResponse, error) {
+func (client *StorageAccountCredentialsClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, storageAccountCredential StorageAccountCredential, options *StorageAccountCredentialsClientBeginCreateOrUpdateOptions) (StorageAccountCredentialsClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, storageAccountCredential, options)
 	if err != nil {
-		return StorageAccountCredentialsCreateOrUpdatePollerResponse{}, err
+		return StorageAccountCredentialsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := StorageAccountCredentialsCreateOrUpdatePollerResponse{
+	result := StorageAccountCredentialsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("StorageAccountCredentialsClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return StorageAccountCredentialsCreateOrUpdatePollerResponse{}, err
+		return StorageAccountCredentialsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &StorageAccountCredentialsCreateOrUpdatePoller{
+	result.Poller = &StorageAccountCredentialsClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *StorageAccountCredentialsClient) BeginCreateOrUpdate(ctx context.C
 
 // CreateOrUpdate - Creates or updates the storage account credential.
 // If the operation fails it returns the *CloudError error type.
-func (client *StorageAccountCredentialsClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, storageAccountCredential StorageAccountCredential, options *StorageAccountCredentialsBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *StorageAccountCredentialsClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, storageAccountCredential StorageAccountCredential, options *StorageAccountCredentialsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, storageAccountCredential, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *StorageAccountCredentialsClient) createOrUpdate(ctx context.Contex
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *StorageAccountCredentialsClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, storageAccountCredential StorageAccountCredential, options *StorageAccountCredentialsBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *StorageAccountCredentialsClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, storageAccountCredential StorageAccountCredential, options *StorageAccountCredentialsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -141,21 +141,21 @@ func (client *StorageAccountCredentialsClient) createOrUpdateHandleError(resp *h
 // deviceName - The device name.
 // name - The storage account credential name.
 // resourceGroupName - The resource group name.
-// options - StorageAccountCredentialsBeginDeleteOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginDelete
+// options - StorageAccountCredentialsClientBeginDeleteOptions contains the optional parameters for the StorageAccountCredentialsClient.BeginDelete
 // method.
-func (client *StorageAccountCredentialsClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsBeginDeleteOptions) (StorageAccountCredentialsDeletePollerResponse, error) {
+func (client *StorageAccountCredentialsClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsClientBeginDeleteOptions) (StorageAccountCredentialsClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return StorageAccountCredentialsDeletePollerResponse{}, err
+		return StorageAccountCredentialsClientDeletePollerResponse{}, err
 	}
-	result := StorageAccountCredentialsDeletePollerResponse{
+	result := StorageAccountCredentialsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("StorageAccountCredentialsClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return StorageAccountCredentialsDeletePollerResponse{}, err
+		return StorageAccountCredentialsClientDeletePollerResponse{}, err
 	}
-	result.Poller = &StorageAccountCredentialsDeletePoller{
+	result.Poller = &StorageAccountCredentialsClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -163,7 +163,7 @@ func (client *StorageAccountCredentialsClient) BeginDelete(ctx context.Context, 
 
 // Delete - Deletes the storage account credential.
 // If the operation fails it returns the *CloudError error type.
-func (client *StorageAccountCredentialsClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsBeginDeleteOptions) (*http.Response, error) {
+func (client *StorageAccountCredentialsClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -179,7 +179,7 @@ func (client *StorageAccountCredentialsClient) deleteOperation(ctx context.Conte
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *StorageAccountCredentialsClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsBeginDeleteOptions) (*policy.Request, error) {
+func (client *StorageAccountCredentialsClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -226,25 +226,25 @@ func (client *StorageAccountCredentialsClient) deleteHandleError(resp *http.Resp
 // deviceName - The device name.
 // name - The storage account credential name.
 // resourceGroupName - The resource group name.
-// options - StorageAccountCredentialsGetOptions contains the optional parameters for the StorageAccountCredentialsClient.Get
+// options - StorageAccountCredentialsClientGetOptions contains the optional parameters for the StorageAccountCredentialsClient.Get
 // method.
-func (client *StorageAccountCredentialsClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsGetOptions) (StorageAccountCredentialsGetResponse, error) {
+func (client *StorageAccountCredentialsClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsClientGetOptions) (StorageAccountCredentialsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return StorageAccountCredentialsGetResponse{}, err
+		return StorageAccountCredentialsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return StorageAccountCredentialsGetResponse{}, err
+		return StorageAccountCredentialsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StorageAccountCredentialsGetResponse{}, client.getHandleError(resp)
+		return StorageAccountCredentialsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *StorageAccountCredentialsClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsGetOptions) (*policy.Request, error) {
+func (client *StorageAccountCredentialsClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -274,10 +274,10 @@ func (client *StorageAccountCredentialsClient) getCreateRequest(ctx context.Cont
 }
 
 // getHandleResponse handles the Get response.
-func (client *StorageAccountCredentialsClient) getHandleResponse(resp *http.Response) (StorageAccountCredentialsGetResponse, error) {
-	result := StorageAccountCredentialsGetResponse{RawResponse: resp}
+func (client *StorageAccountCredentialsClient) getHandleResponse(resp *http.Response) (StorageAccountCredentialsClientGetResponse, error) {
+	result := StorageAccountCredentialsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageAccountCredential); err != nil {
-		return StorageAccountCredentialsGetResponse{}, runtime.NewResponseError(err, resp)
+		return StorageAccountCredentialsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -299,22 +299,22 @@ func (client *StorageAccountCredentialsClient) getHandleError(resp *http.Respons
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - StorageAccountCredentialsListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountCredentialsClient.ListByDataBoxEdgeDevice
+// options - StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountCredentialsClient.ListByDataBoxEdgeDevice
 // method.
-func (client *StorageAccountCredentialsClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *StorageAccountCredentialsListByDataBoxEdgeDeviceOptions) *StorageAccountCredentialsListByDataBoxEdgeDevicePager {
-	return &StorageAccountCredentialsListByDataBoxEdgeDevicePager{
+func (client *StorageAccountCredentialsClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions) *StorageAccountCredentialsClientListByDataBoxEdgeDevicePager {
+	return &StorageAccountCredentialsClientListByDataBoxEdgeDevicePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp StorageAccountCredentialsListByDataBoxEdgeDeviceResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.StorageAccountCredentialList.NextLink)
 		},
 	}
 }
 
 // listByDataBoxEdgeDeviceCreateRequest creates the ListByDataBoxEdgeDevice request.
-func (client *StorageAccountCredentialsClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *StorageAccountCredentialsListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
+func (client *StorageAccountCredentialsClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -340,10 +340,10 @@ func (client *StorageAccountCredentialsClient) listByDataBoxEdgeDeviceCreateRequ
 }
 
 // listByDataBoxEdgeDeviceHandleResponse handles the ListByDataBoxEdgeDevice response.
-func (client *StorageAccountCredentialsClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (StorageAccountCredentialsListByDataBoxEdgeDeviceResponse, error) {
-	result := StorageAccountCredentialsListByDataBoxEdgeDeviceResponse{RawResponse: resp}
+func (client *StorageAccountCredentialsClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse, error) {
+	result := StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageAccountCredentialList); err != nil {
-		return StorageAccountCredentialsListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
+		return StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

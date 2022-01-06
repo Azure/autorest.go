@@ -55,22 +55,22 @@ func NewAvailableResourceGroupDelegationsClient(subscriptionID string, credentia
 // If the operation fails it returns the *CloudError error type.
 // location - The location of the domain name.
 // resourceGroupName - The name of the resource group.
-// options - AvailableResourceGroupDelegationsListOptions contains the optional parameters for the AvailableResourceGroupDelegationsClient.List
+// options - AvailableResourceGroupDelegationsClientListOptions contains the optional parameters for the AvailableResourceGroupDelegationsClient.List
 // method.
-func (client *AvailableResourceGroupDelegationsClient) List(location string, resourceGroupName string, options *AvailableResourceGroupDelegationsListOptions) *AvailableResourceGroupDelegationsListPager {
-	return &AvailableResourceGroupDelegationsListPager{
+func (client *AvailableResourceGroupDelegationsClient) List(location string, resourceGroupName string, options *AvailableResourceGroupDelegationsClientListOptions) *AvailableResourceGroupDelegationsClientListPager {
+	return &AvailableResourceGroupDelegationsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, location, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp AvailableResourceGroupDelegationsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp AvailableResourceGroupDelegationsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.AvailableDelegationsResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *AvailableResourceGroupDelegationsClient) listCreateRequest(ctx context.Context, location string, resourceGroupName string, options *AvailableResourceGroupDelegationsListOptions) (*policy.Request, error) {
+func (client *AvailableResourceGroupDelegationsClient) listCreateRequest(ctx context.Context, location string, resourceGroupName string, options *AvailableResourceGroupDelegationsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -96,10 +96,10 @@ func (client *AvailableResourceGroupDelegationsClient) listCreateRequest(ctx con
 }
 
 // listHandleResponse handles the List response.
-func (client *AvailableResourceGroupDelegationsClient) listHandleResponse(resp *http.Response) (AvailableResourceGroupDelegationsListResponse, error) {
-	result := AvailableResourceGroupDelegationsListResponse{RawResponse: resp}
+func (client *AvailableResourceGroupDelegationsClient) listHandleResponse(resp *http.Response) (AvailableResourceGroupDelegationsClientListResponse, error) {
+	result := AvailableResourceGroupDelegationsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailableDelegationsResult); err != nil {
-		return AvailableResourceGroupDelegationsListResponse{}, runtime.NewResponseError(err, resp)
+		return AvailableResourceGroupDelegationsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

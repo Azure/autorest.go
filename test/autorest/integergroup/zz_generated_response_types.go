@@ -13,143 +13,143 @@ import (
 	"time"
 )
 
-// IntGetInvalidResponse contains the response from method Int.GetInvalid.
-type IntGetInvalidResponse struct {
-	IntGetInvalidResult
+// IntClientGetInvalidResponse contains the response from method IntClient.GetInvalid.
+type IntClientGetInvalidResponse struct {
+	IntClientGetInvalidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntGetInvalidResult contains the result from method Int.GetInvalid.
-type IntGetInvalidResult struct {
+// IntClientGetInvalidResult contains the result from method IntClient.GetInvalid.
+type IntClientGetInvalidResult struct {
 	Value *int32
 }
 
-// IntGetInvalidUnixTimeResponse contains the response from method Int.GetInvalidUnixTime.
-type IntGetInvalidUnixTimeResponse struct {
-	IntGetInvalidUnixTimeResult
+// IntClientGetInvalidUnixTimeResponse contains the response from method IntClient.GetInvalidUnixTime.
+type IntClientGetInvalidUnixTimeResponse struct {
+	IntClientGetInvalidUnixTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntGetInvalidUnixTimeResult contains the result from method Int.GetInvalidUnixTime.
-type IntGetInvalidUnixTimeResult struct {
+// IntClientGetInvalidUnixTimeResult contains the result from method IntClient.GetInvalidUnixTime.
+type IntClientGetInvalidUnixTimeResult struct {
 	// date in seconds since 1970-01-01T00:00:00Z.
 	Value *time.Time
 }
 
-// IntGetNullResponse contains the response from method Int.GetNull.
-type IntGetNullResponse struct {
-	IntGetNullResult
+// IntClientGetNullResponse contains the response from method IntClient.GetNull.
+type IntClientGetNullResponse struct {
+	IntClientGetNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntGetNullResult contains the result from method Int.GetNull.
-type IntGetNullResult struct {
+// IntClientGetNullResult contains the result from method IntClient.GetNull.
+type IntClientGetNullResult struct {
 	Value *int32
 }
 
-// IntGetNullUnixTimeResponse contains the response from method Int.GetNullUnixTime.
-type IntGetNullUnixTimeResponse struct {
-	IntGetNullUnixTimeResult
+// IntClientGetNullUnixTimeResponse contains the response from method IntClient.GetNullUnixTime.
+type IntClientGetNullUnixTimeResponse struct {
+	IntClientGetNullUnixTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntGetNullUnixTimeResult contains the result from method Int.GetNullUnixTime.
-type IntGetNullUnixTimeResult struct {
+// IntClientGetNullUnixTimeResult contains the result from method IntClient.GetNullUnixTime.
+type IntClientGetNullUnixTimeResult struct {
 	// date in seconds since 1970-01-01T00:00:00Z.
 	Value *time.Time
 }
 
-// IntGetOverflowInt32Response contains the response from method Int.GetOverflowInt32.
-type IntGetOverflowInt32Response struct {
-	IntGetOverflowInt32Result
+// IntClientGetOverflowInt32Response contains the response from method IntClient.GetOverflowInt32.
+type IntClientGetOverflowInt32Response struct {
+	IntClientGetOverflowInt32Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntGetOverflowInt32Result contains the result from method Int.GetOverflowInt32.
-type IntGetOverflowInt32Result struct {
+// IntClientGetOverflowInt32Result contains the result from method IntClient.GetOverflowInt32.
+type IntClientGetOverflowInt32Result struct {
 	Value *int32
 }
 
-// IntGetOverflowInt64Response contains the response from method Int.GetOverflowInt64.
-type IntGetOverflowInt64Response struct {
-	IntGetOverflowInt64Result
+// IntClientGetOverflowInt64Response contains the response from method IntClient.GetOverflowInt64.
+type IntClientGetOverflowInt64Response struct {
+	IntClientGetOverflowInt64Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntGetOverflowInt64Result contains the result from method Int.GetOverflowInt64.
-type IntGetOverflowInt64Result struct {
+// IntClientGetOverflowInt64Result contains the result from method IntClient.GetOverflowInt64.
+type IntClientGetOverflowInt64Result struct {
 	Value *int64
 }
 
-// IntGetUnderflowInt32Response contains the response from method Int.GetUnderflowInt32.
-type IntGetUnderflowInt32Response struct {
-	IntGetUnderflowInt32Result
+// IntClientGetUnderflowInt32Response contains the response from method IntClient.GetUnderflowInt32.
+type IntClientGetUnderflowInt32Response struct {
+	IntClientGetUnderflowInt32Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntGetUnderflowInt32Result contains the result from method Int.GetUnderflowInt32.
-type IntGetUnderflowInt32Result struct {
+// IntClientGetUnderflowInt32Result contains the result from method IntClient.GetUnderflowInt32.
+type IntClientGetUnderflowInt32Result struct {
 	Value *int32
 }
 
-// IntGetUnderflowInt64Response contains the response from method Int.GetUnderflowInt64.
-type IntGetUnderflowInt64Response struct {
-	IntGetUnderflowInt64Result
+// IntClientGetUnderflowInt64Response contains the response from method IntClient.GetUnderflowInt64.
+type IntClientGetUnderflowInt64Response struct {
+	IntClientGetUnderflowInt64Result
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntGetUnderflowInt64Result contains the result from method Int.GetUnderflowInt64.
-type IntGetUnderflowInt64Result struct {
+// IntClientGetUnderflowInt64Result contains the result from method IntClient.GetUnderflowInt64.
+type IntClientGetUnderflowInt64Result struct {
 	Value *int64
 }
 
-// IntGetUnixTimeResponse contains the response from method Int.GetUnixTime.
-type IntGetUnixTimeResponse struct {
-	IntGetUnixTimeResult
+// IntClientGetUnixTimeResponse contains the response from method IntClient.GetUnixTime.
+type IntClientGetUnixTimeResponse struct {
+	IntClientGetUnixTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntGetUnixTimeResult contains the result from method Int.GetUnixTime.
-type IntGetUnixTimeResult struct {
+// IntClientGetUnixTimeResult contains the result from method IntClient.GetUnixTime.
+type IntClientGetUnixTimeResult struct {
 	// date in seconds since 1970-01-01T00:00:00Z.
 	Value *time.Time
 }
 
-// IntPutMax32Response contains the response from method Int.PutMax32.
-type IntPutMax32Response struct {
+// IntClientPutMax32Response contains the response from method IntClient.PutMax32.
+type IntClientPutMax32Response struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntPutMax64Response contains the response from method Int.PutMax64.
-type IntPutMax64Response struct {
+// IntClientPutMax64Response contains the response from method IntClient.PutMax64.
+type IntClientPutMax64Response struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntPutMin32Response contains the response from method Int.PutMin32.
-type IntPutMin32Response struct {
+// IntClientPutMin32Response contains the response from method IntClient.PutMin32.
+type IntClientPutMin32Response struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntPutMin64Response contains the response from method Int.PutMin64.
-type IntPutMin64Response struct {
+// IntClientPutMin64Response contains the response from method IntClient.PutMin64.
+type IntClientPutMin64Response struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntPutUnixTimeDateResponse contains the response from method Int.PutUnixTimeDate.
-type IntPutUnixTimeDateResponse struct {
+// IntClientPutUnixTimeDateResponse contains the response from method IntClient.PutUnixTimeDate.
+type IntClientPutUnixTimeDateResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

@@ -55,24 +55,24 @@ func NewSSHPublicKeysClient(subscriptionID string, credential azcore.TokenCreden
 // resourceGroupName - The name of the resource group.
 // sshPublicKeyName - The name of the SSH public key.
 // parameters - Parameters supplied to create the SSH public key.
-// options - SSHPublicKeysCreateOptions contains the optional parameters for the SSHPublicKeysClient.Create method.
-func (client *SSHPublicKeysClient) Create(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource, options *SSHPublicKeysCreateOptions) (SSHPublicKeysCreateResponse, error) {
+// options - SSHPublicKeysClientCreateOptions contains the optional parameters for the SSHPublicKeysClient.Create method.
+func (client *SSHPublicKeysClient) Create(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource, options *SSHPublicKeysClientCreateOptions) (SSHPublicKeysClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, resourceGroupName, sshPublicKeyName, parameters, options)
 	if err != nil {
-		return SSHPublicKeysCreateResponse{}, err
+		return SSHPublicKeysClientCreateResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SSHPublicKeysCreateResponse{}, err
+		return SSHPublicKeysClientCreateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return SSHPublicKeysCreateResponse{}, client.createHandleError(resp)
+		return SSHPublicKeysClientCreateResponse{}, client.createHandleError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
 
 // createCreateRequest creates the Create request.
-func (client *SSHPublicKeysClient) createCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource, options *SSHPublicKeysCreateOptions) (*policy.Request, error) {
+func (client *SSHPublicKeysClient) createCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyResource, options *SSHPublicKeysClientCreateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -98,10 +98,10 @@ func (client *SSHPublicKeysClient) createCreateRequest(ctx context.Context, reso
 }
 
 // createHandleResponse handles the Create response.
-func (client *SSHPublicKeysClient) createHandleResponse(resp *http.Response) (SSHPublicKeysCreateResponse, error) {
-	result := SSHPublicKeysCreateResponse{RawResponse: resp}
+func (client *SSHPublicKeysClient) createHandleResponse(resp *http.Response) (SSHPublicKeysClientCreateResponse, error) {
+	result := SSHPublicKeysClientCreateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SSHPublicKeyResource); err != nil {
-		return SSHPublicKeysCreateResponse{}, runtime.NewResponseError(err, resp)
+		return SSHPublicKeysClientCreateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -122,24 +122,24 @@ func (client *SSHPublicKeysClient) createHandleError(resp *http.Response) error 
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // sshPublicKeyName - The name of the SSH public key.
-// options - SSHPublicKeysDeleteOptions contains the optional parameters for the SSHPublicKeysClient.Delete method.
-func (client *SSHPublicKeysClient) Delete(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysDeleteOptions) (SSHPublicKeysDeleteResponse, error) {
+// options - SSHPublicKeysClientDeleteOptions contains the optional parameters for the SSHPublicKeysClient.Delete method.
+func (client *SSHPublicKeysClient) Delete(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientDeleteOptions) (SSHPublicKeysClientDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, sshPublicKeyName, options)
 	if err != nil {
-		return SSHPublicKeysDeleteResponse{}, err
+		return SSHPublicKeysClientDeleteResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SSHPublicKeysDeleteResponse{}, err
+		return SSHPublicKeysClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return SSHPublicKeysDeleteResponse{}, client.deleteHandleError(resp)
+		return SSHPublicKeysClientDeleteResponse{}, client.deleteHandleError(resp)
 	}
-	return SSHPublicKeysDeleteResponse{RawResponse: resp}, nil
+	return SSHPublicKeysClientDeleteResponse{RawResponse: resp}, nil
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *SSHPublicKeysClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysDeleteOptions) (*policy.Request, error) {
+func (client *SSHPublicKeysClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -181,25 +181,25 @@ func (client *SSHPublicKeysClient) deleteHandleError(resp *http.Response) error 
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // sshPublicKeyName - The name of the SSH public key.
-// options - SSHPublicKeysGenerateKeyPairOptions contains the optional parameters for the SSHPublicKeysClient.GenerateKeyPair
+// options - SSHPublicKeysClientGenerateKeyPairOptions contains the optional parameters for the SSHPublicKeysClient.GenerateKeyPair
 // method.
-func (client *SSHPublicKeysClient) GenerateKeyPair(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysGenerateKeyPairOptions) (SSHPublicKeysGenerateKeyPairResponse, error) {
+func (client *SSHPublicKeysClient) GenerateKeyPair(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientGenerateKeyPairOptions) (SSHPublicKeysClientGenerateKeyPairResponse, error) {
 	req, err := client.generateKeyPairCreateRequest(ctx, resourceGroupName, sshPublicKeyName, options)
 	if err != nil {
-		return SSHPublicKeysGenerateKeyPairResponse{}, err
+		return SSHPublicKeysClientGenerateKeyPairResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SSHPublicKeysGenerateKeyPairResponse{}, err
+		return SSHPublicKeysClientGenerateKeyPairResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SSHPublicKeysGenerateKeyPairResponse{}, client.generateKeyPairHandleError(resp)
+		return SSHPublicKeysClientGenerateKeyPairResponse{}, client.generateKeyPairHandleError(resp)
 	}
 	return client.generateKeyPairHandleResponse(resp)
 }
 
 // generateKeyPairCreateRequest creates the GenerateKeyPair request.
-func (client *SSHPublicKeysClient) generateKeyPairCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysGenerateKeyPairOptions) (*policy.Request, error) {
+func (client *SSHPublicKeysClient) generateKeyPairCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientGenerateKeyPairOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}/generateKeyPair"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -225,10 +225,10 @@ func (client *SSHPublicKeysClient) generateKeyPairCreateRequest(ctx context.Cont
 }
 
 // generateKeyPairHandleResponse handles the GenerateKeyPair response.
-func (client *SSHPublicKeysClient) generateKeyPairHandleResponse(resp *http.Response) (SSHPublicKeysGenerateKeyPairResponse, error) {
-	result := SSHPublicKeysGenerateKeyPairResponse{RawResponse: resp}
+func (client *SSHPublicKeysClient) generateKeyPairHandleResponse(resp *http.Response) (SSHPublicKeysClientGenerateKeyPairResponse, error) {
+	result := SSHPublicKeysClientGenerateKeyPairResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SSHPublicKeyGenerateKeyPairResult); err != nil {
-		return SSHPublicKeysGenerateKeyPairResponse{}, runtime.NewResponseError(err, resp)
+		return SSHPublicKeysClientGenerateKeyPairResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -249,24 +249,24 @@ func (client *SSHPublicKeysClient) generateKeyPairHandleError(resp *http.Respons
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // sshPublicKeyName - The name of the SSH public key.
-// options - SSHPublicKeysGetOptions contains the optional parameters for the SSHPublicKeysClient.Get method.
-func (client *SSHPublicKeysClient) Get(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysGetOptions) (SSHPublicKeysGetResponse, error) {
+// options - SSHPublicKeysClientGetOptions contains the optional parameters for the SSHPublicKeysClient.Get method.
+func (client *SSHPublicKeysClient) Get(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientGetOptions) (SSHPublicKeysClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, sshPublicKeyName, options)
 	if err != nil {
-		return SSHPublicKeysGetResponse{}, err
+		return SSHPublicKeysClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SSHPublicKeysGetResponse{}, err
+		return SSHPublicKeysClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SSHPublicKeysGetResponse{}, client.getHandleError(resp)
+		return SSHPublicKeysClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *SSHPublicKeysClient) getCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysGetOptions) (*policy.Request, error) {
+func (client *SSHPublicKeysClient) getCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, options *SSHPublicKeysClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -292,10 +292,10 @@ func (client *SSHPublicKeysClient) getCreateRequest(ctx context.Context, resourc
 }
 
 // getHandleResponse handles the Get response.
-func (client *SSHPublicKeysClient) getHandleResponse(resp *http.Response) (SSHPublicKeysGetResponse, error) {
-	result := SSHPublicKeysGetResponse{RawResponse: resp}
+func (client *SSHPublicKeysClient) getHandleResponse(resp *http.Response) (SSHPublicKeysClientGetResponse, error) {
+	result := SSHPublicKeysClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SSHPublicKeyResource); err != nil {
-		return SSHPublicKeysGetResponse{}, runtime.NewResponseError(err, resp)
+		return SSHPublicKeysClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -316,22 +316,22 @@ func (client *SSHPublicKeysClient) getHandleError(resp *http.Response) error {
 // response to get the next page of SSH public keys.
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
-// options - SSHPublicKeysListByResourceGroupOptions contains the optional parameters for the SSHPublicKeysClient.ListByResourceGroup
+// options - SSHPublicKeysClientListByResourceGroupOptions contains the optional parameters for the SSHPublicKeysClient.ListByResourceGroup
 // method.
-func (client *SSHPublicKeysClient) ListByResourceGroup(resourceGroupName string, options *SSHPublicKeysListByResourceGroupOptions) *SSHPublicKeysListByResourceGroupPager {
-	return &SSHPublicKeysListByResourceGroupPager{
+func (client *SSHPublicKeysClient) ListByResourceGroup(resourceGroupName string, options *SSHPublicKeysClientListByResourceGroupOptions) *SSHPublicKeysClientListByResourceGroupPager {
+	return &SSHPublicKeysClientListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp SSHPublicKeysListByResourceGroupResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp SSHPublicKeysClientListByResourceGroupResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.SSHPublicKeysGroupListResult.NextLink)
 		},
 	}
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *SSHPublicKeysClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *SSHPublicKeysListByResourceGroupOptions) (*policy.Request, error) {
+func (client *SSHPublicKeysClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *SSHPublicKeysClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -353,10 +353,10 @@ func (client *SSHPublicKeysClient) listByResourceGroupCreateRequest(ctx context.
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *SSHPublicKeysClient) listByResourceGroupHandleResponse(resp *http.Response) (SSHPublicKeysListByResourceGroupResponse, error) {
-	result := SSHPublicKeysListByResourceGroupResponse{RawResponse: resp}
+func (client *SSHPublicKeysClient) listByResourceGroupHandleResponse(resp *http.Response) (SSHPublicKeysClientListByResourceGroupResponse, error) {
+	result := SSHPublicKeysClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SSHPublicKeysGroupListResult); err != nil {
-		return SSHPublicKeysListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return SSHPublicKeysClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -376,22 +376,22 @@ func (client *SSHPublicKeysClient) listByResourceGroupHandleError(resp *http.Res
 // ListBySubscription - Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to
 // get the next page of SSH public keys.
 // If the operation fails it returns a generic error.
-// options - SSHPublicKeysListBySubscriptionOptions contains the optional parameters for the SSHPublicKeysClient.ListBySubscription
+// options - SSHPublicKeysClientListBySubscriptionOptions contains the optional parameters for the SSHPublicKeysClient.ListBySubscription
 // method.
-func (client *SSHPublicKeysClient) ListBySubscription(options *SSHPublicKeysListBySubscriptionOptions) *SSHPublicKeysListBySubscriptionPager {
-	return &SSHPublicKeysListBySubscriptionPager{
+func (client *SSHPublicKeysClient) ListBySubscription(options *SSHPublicKeysClientListBySubscriptionOptions) *SSHPublicKeysClientListBySubscriptionPager {
+	return &SSHPublicKeysClientListBySubscriptionPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listBySubscriptionCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp SSHPublicKeysListBySubscriptionResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp SSHPublicKeysClientListBySubscriptionResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.SSHPublicKeysGroupListResult.NextLink)
 		},
 	}
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *SSHPublicKeysClient) listBySubscriptionCreateRequest(ctx context.Context, options *SSHPublicKeysListBySubscriptionOptions) (*policy.Request, error) {
+func (client *SSHPublicKeysClient) listBySubscriptionCreateRequest(ctx context.Context, options *SSHPublicKeysClientListBySubscriptionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/sshPublicKeys"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -409,10 +409,10 @@ func (client *SSHPublicKeysClient) listBySubscriptionCreateRequest(ctx context.C
 }
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
-func (client *SSHPublicKeysClient) listBySubscriptionHandleResponse(resp *http.Response) (SSHPublicKeysListBySubscriptionResponse, error) {
-	result := SSHPublicKeysListBySubscriptionResponse{RawResponse: resp}
+func (client *SSHPublicKeysClient) listBySubscriptionHandleResponse(resp *http.Response) (SSHPublicKeysClientListBySubscriptionResponse, error) {
+	result := SSHPublicKeysClientListBySubscriptionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SSHPublicKeysGroupListResult); err != nil {
-		return SSHPublicKeysListBySubscriptionResponse{}, runtime.NewResponseError(err, resp)
+		return SSHPublicKeysClientListBySubscriptionResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -434,24 +434,24 @@ func (client *SSHPublicKeysClient) listBySubscriptionHandleError(resp *http.Resp
 // resourceGroupName - The name of the resource group.
 // sshPublicKeyName - The name of the SSH public key.
 // parameters - Parameters supplied to update the SSH public key.
-// options - SSHPublicKeysUpdateOptions contains the optional parameters for the SSHPublicKeysClient.Update method.
-func (client *SSHPublicKeysClient) Update(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource, options *SSHPublicKeysUpdateOptions) (SSHPublicKeysUpdateResponse, error) {
+// options - SSHPublicKeysClientUpdateOptions contains the optional parameters for the SSHPublicKeysClient.Update method.
+func (client *SSHPublicKeysClient) Update(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource, options *SSHPublicKeysClientUpdateOptions) (SSHPublicKeysClientUpdateResponse, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, sshPublicKeyName, parameters, options)
 	if err != nil {
-		return SSHPublicKeysUpdateResponse{}, err
+		return SSHPublicKeysClientUpdateResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return SSHPublicKeysUpdateResponse{}, err
+		return SSHPublicKeysClientUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SSHPublicKeysUpdateResponse{}, client.updateHandleError(resp)
+		return SSHPublicKeysClientUpdateResponse{}, client.updateHandleError(resp)
 	}
 	return client.updateHandleResponse(resp)
 }
 
 // updateCreateRequest creates the Update request.
-func (client *SSHPublicKeysClient) updateCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource, options *SSHPublicKeysUpdateOptions) (*policy.Request, error) {
+func (client *SSHPublicKeysClient) updateCreateRequest(ctx context.Context, resourceGroupName string, sshPublicKeyName string, parameters SSHPublicKeyUpdateResource, options *SSHPublicKeysClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -477,10 +477,10 @@ func (client *SSHPublicKeysClient) updateCreateRequest(ctx context.Context, reso
 }
 
 // updateHandleResponse handles the Update response.
-func (client *SSHPublicKeysClient) updateHandleResponse(resp *http.Response) (SSHPublicKeysUpdateResponse, error) {
-	result := SSHPublicKeysUpdateResponse{RawResponse: resp}
+func (client *SSHPublicKeysClient) updateHandleResponse(resp *http.Response) (SSHPublicKeysClientUpdateResponse, error) {
+	result := SSHPublicKeysClientUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SSHPublicKeyResource); err != nil {
-		return SSHPublicKeysUpdateResponse{}, runtime.NewResponseError(err, resp)
+		return SSHPublicKeysClientUpdateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

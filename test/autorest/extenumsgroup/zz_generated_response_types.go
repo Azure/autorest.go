@@ -10,26 +10,26 @@ package extenumsgroup
 
 import "net/http"
 
-// PetAddPetResponse contains the response from method Pet.AddPet.
-type PetAddPetResponse struct {
-	PetAddPetResult
+// PetClientAddPetResponse contains the response from method PetClient.AddPet.
+type PetClientAddPetResponse struct {
+	PetClientAddPetResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PetAddPetResult contains the result from method Pet.AddPet.
-type PetAddPetResult struct {
+// PetClientAddPetResult contains the result from method PetClient.AddPet.
+type PetClientAddPetResult struct {
 	Pet
 }
 
-// PetGetByPetIDResponse contains the response from method Pet.GetByPetID.
-type PetGetByPetIDResponse struct {
-	PetGetByPetIDResult
+// PetClientGetByPetIDResponse contains the response from method PetClient.GetByPetID.
+type PetClientGetByPetIDResponse struct {
+	PetClientGetByPetIDResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PetGetByPetIDResult contains the result from method Pet.GetByPetID.
-type PetGetByPetIDResult struct {
+// PetClientGetByPetIDResult contains the result from method PetClient.GetByPetID.
+type PetClientGetByPetIDResult struct {
 	Pet
 }

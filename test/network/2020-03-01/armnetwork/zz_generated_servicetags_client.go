@@ -56,24 +56,24 @@ func NewServiceTagsClient(subscriptionID string, credential azcore.TokenCredenti
 // location - The location that will be used as a reference for version (not as a filter based on location, you will get the
 // list of service tags with prefix details across all regions but limited to the cloud that
 // your subscription belongs to).
-// options - ServiceTagsListOptions contains the optional parameters for the ServiceTagsClient.List method.
-func (client *ServiceTagsClient) List(ctx context.Context, location string, options *ServiceTagsListOptions) (ServiceTagsListResponse, error) {
+// options - ServiceTagsClientListOptions contains the optional parameters for the ServiceTagsClient.List method.
+func (client *ServiceTagsClient) List(ctx context.Context, location string, options *ServiceTagsClientListOptions) (ServiceTagsClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, location, options)
 	if err != nil {
-		return ServiceTagsListResponse{}, err
+		return ServiceTagsClientListResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ServiceTagsListResponse{}, err
+		return ServiceTagsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ServiceTagsListResponse{}, client.listHandleError(resp)
+		return ServiceTagsClientListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
-func (client *ServiceTagsClient) listCreateRequest(ctx context.Context, location string, options *ServiceTagsListOptions) (*policy.Request, error) {
+func (client *ServiceTagsClient) listCreateRequest(ctx context.Context, location string, options *ServiceTagsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -95,10 +95,10 @@ func (client *ServiceTagsClient) listCreateRequest(ctx context.Context, location
 }
 
 // listHandleResponse handles the List response.
-func (client *ServiceTagsClient) listHandleResponse(resp *http.Response) (ServiceTagsListResponse, error) {
-	result := ServiceTagsListResponse{RawResponse: resp}
+func (client *ServiceTagsClient) listHandleResponse(resp *http.Response) (ServiceTagsClientListResponse, error) {
+	result := ServiceTagsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ServiceTagsListResult); err != nil {
-		return ServiceTagsListResponse{}, runtime.NewResponseError(err, resp)
+		return ServiceTagsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

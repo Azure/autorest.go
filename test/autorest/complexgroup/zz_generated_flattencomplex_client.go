@@ -38,24 +38,24 @@ func NewFlattencomplexClient(options *azcore.ClientOptions) *FlattencomplexClien
 
 // GetValid -
 // If the operation fails it returns a generic error.
-// options - FlattencomplexGetValidOptions contains the optional parameters for the FlattencomplexClient.GetValid method.
-func (client *FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexGetValidOptions) (FlattencomplexGetValidResponse, error) {
+// options - FlattencomplexClientGetValidOptions contains the optional parameters for the FlattencomplexClient.GetValid method.
+func (client *FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexClientGetValidOptions) (FlattencomplexClientGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
-		return FlattencomplexGetValidResponse{}, err
+		return FlattencomplexClientGetValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return FlattencomplexGetValidResponse{}, err
+		return FlattencomplexClientGetValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FlattencomplexGetValidResponse{}, client.getValidHandleError(resp)
+		return FlattencomplexClientGetValidResponse{}, client.getValidHandleError(resp)
 	}
 	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client *FlattencomplexClient) getValidCreateRequest(ctx context.Context, options *FlattencomplexGetValidOptions) (*policy.Request, error) {
+func (client *FlattencomplexClient) getValidCreateRequest(ctx context.Context, options *FlattencomplexClientGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/flatten/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -66,10 +66,10 @@ func (client *FlattencomplexClient) getValidCreateRequest(ctx context.Context, o
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client *FlattencomplexClient) getValidHandleResponse(resp *http.Response) (FlattencomplexGetValidResponse, error) {
-	result := FlattencomplexGetValidResponse{RawResponse: resp}
+func (client *FlattencomplexClient) getValidHandleResponse(resp *http.Response) (FlattencomplexClientGetValidResponse, error) {
+	result := FlattencomplexClientGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return FlattencomplexGetValidResponse{}, runtime.NewResponseError(err, resp)
+		return FlattencomplexClientGetValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

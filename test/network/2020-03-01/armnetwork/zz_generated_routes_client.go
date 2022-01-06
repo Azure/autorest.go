@@ -57,20 +57,21 @@ func NewRoutesClient(subscriptionID string, credential azcore.TokenCredential, o
 // routeTableName - The name of the route table.
 // routeName - The name of the route.
 // routeParameters - Parameters supplied to the create or update route operation.
-// options - RoutesBeginCreateOrUpdateOptions contains the optional parameters for the RoutesClient.BeginCreateOrUpdate method.
-func (client *RoutesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, options *RoutesBeginCreateOrUpdateOptions) (RoutesCreateOrUpdatePollerResponse, error) {
+// options - RoutesClientBeginCreateOrUpdateOptions contains the optional parameters for the RoutesClient.BeginCreateOrUpdate
+// method.
+func (client *RoutesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, options *RoutesClientBeginCreateOrUpdateOptions) (RoutesClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeTableName, routeName, routeParameters, options)
 	if err != nil {
-		return RoutesCreateOrUpdatePollerResponse{}, err
+		return RoutesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := RoutesCreateOrUpdatePollerResponse{
+	result := RoutesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("RoutesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return RoutesCreateOrUpdatePollerResponse{}, err
+		return RoutesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &RoutesCreateOrUpdatePoller{
+	result.Poller = &RoutesClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +79,7 @@ func (client *RoutesClient) BeginCreateOrUpdate(ctx context.Context, resourceGro
 
 // CreateOrUpdate - Creates or updates a route in the specified route table.
 // If the operation fails it returns the *CloudError error type.
-func (client *RoutesClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, options *RoutesBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *RoutesClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, options *RoutesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, routeTableName, routeName, routeParameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +95,7 @@ func (client *RoutesClient) createOrUpdate(ctx context.Context, resourceGroupNam
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *RoutesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, options *RoutesBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *RoutesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, routeParameters Route, options *RoutesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}/routes/{routeName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -141,20 +142,20 @@ func (client *RoutesClient) createOrUpdateHandleError(resp *http.Response) error
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
 // routeName - The name of the route.
-// options - RoutesBeginDeleteOptions contains the optional parameters for the RoutesClient.BeginDelete method.
-func (client *RoutesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesBeginDeleteOptions) (RoutesDeletePollerResponse, error) {
+// options - RoutesClientBeginDeleteOptions contains the optional parameters for the RoutesClient.BeginDelete method.
+func (client *RoutesClient) BeginDelete(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesClientBeginDeleteOptions) (RoutesClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, routeTableName, routeName, options)
 	if err != nil {
-		return RoutesDeletePollerResponse{}, err
+		return RoutesClientDeletePollerResponse{}, err
 	}
-	result := RoutesDeletePollerResponse{
+	result := RoutesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("RoutesClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return RoutesDeletePollerResponse{}, err
+		return RoutesClientDeletePollerResponse{}, err
 	}
-	result.Poller = &RoutesDeletePoller{
+	result.Poller = &RoutesClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -162,7 +163,7 @@ func (client *RoutesClient) BeginDelete(ctx context.Context, resourceGroupName s
 
 // Delete - Deletes the specified route from a route table.
 // If the operation fails it returns the *CloudError error type.
-func (client *RoutesClient) deleteOperation(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesBeginDeleteOptions) (*http.Response, error) {
+func (client *RoutesClient) deleteOperation(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, routeTableName, routeName, options)
 	if err != nil {
 		return nil, err
@@ -178,7 +179,7 @@ func (client *RoutesClient) deleteOperation(ctx context.Context, resourceGroupNa
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *RoutesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesBeginDeleteOptions) (*policy.Request, error) {
+func (client *RoutesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}/routes/{routeName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -225,24 +226,24 @@ func (client *RoutesClient) deleteHandleError(resp *http.Response) error {
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
 // routeName - The name of the route.
-// options - RoutesGetOptions contains the optional parameters for the RoutesClient.Get method.
-func (client *RoutesClient) Get(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesGetOptions) (RoutesGetResponse, error) {
+// options - RoutesClientGetOptions contains the optional parameters for the RoutesClient.Get method.
+func (client *RoutesClient) Get(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesClientGetOptions) (RoutesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, routeTableName, routeName, options)
 	if err != nil {
-		return RoutesGetResponse{}, err
+		return RoutesClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return RoutesGetResponse{}, err
+		return RoutesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RoutesGetResponse{}, client.getHandleError(resp)
+		return RoutesClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *RoutesClient) getCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesGetOptions) (*policy.Request, error) {
+func (client *RoutesClient) getCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, routeName string, options *RoutesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}/routes/{routeName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -272,10 +273,10 @@ func (client *RoutesClient) getCreateRequest(ctx context.Context, resourceGroupN
 }
 
 // getHandleResponse handles the Get response.
-func (client *RoutesClient) getHandleResponse(resp *http.Response) (RoutesGetResponse, error) {
-	result := RoutesGetResponse{RawResponse: resp}
+func (client *RoutesClient) getHandleResponse(resp *http.Response) (RoutesClientGetResponse, error) {
+	result := RoutesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Route); err != nil {
-		return RoutesGetResponse{}, runtime.NewResponseError(err, resp)
+		return RoutesClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -297,21 +298,21 @@ func (client *RoutesClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // routeTableName - The name of the route table.
-// options - RoutesListOptions contains the optional parameters for the RoutesClient.List method.
-func (client *RoutesClient) List(resourceGroupName string, routeTableName string, options *RoutesListOptions) *RoutesListPager {
-	return &RoutesListPager{
+// options - RoutesClientListOptions contains the optional parameters for the RoutesClient.List method.
+func (client *RoutesClient) List(resourceGroupName string, routeTableName string, options *RoutesClientListOptions) *RoutesClientListPager {
+	return &RoutesClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, routeTableName, options)
 		},
-		advancer: func(ctx context.Context, resp RoutesListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp RoutesClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.RouteListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *RoutesClient) listCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, options *RoutesListOptions) (*policy.Request, error) {
+func (client *RoutesClient) listCreateRequest(ctx context.Context, resourceGroupName string, routeTableName string, options *RoutesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}/routes"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -337,10 +338,10 @@ func (client *RoutesClient) listCreateRequest(ctx context.Context, resourceGroup
 }
 
 // listHandleResponse handles the List response.
-func (client *RoutesClient) listHandleResponse(resp *http.Response) (RoutesListResponse, error) {
-	result := RoutesListResponse{RawResponse: resp}
+func (client *RoutesClient) listHandleResponse(resp *http.Response) (RoutesClientListResponse, error) {
+	result := RoutesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteListResult); err != nil {
-		return RoutesListResponse{}, runtime.NewResponseError(err, resp)
+		return RoutesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

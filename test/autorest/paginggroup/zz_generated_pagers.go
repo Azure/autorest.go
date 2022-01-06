@@ -16,23 +16,23 @@ import (
 	"reflect"
 )
 
-// PagingFirstResponseEmptyPager provides operations for iterating over paged responses.
-type PagingFirstResponseEmptyPager struct {
+// PagingClientFirstResponseEmptyPager provides operations for iterating over paged responses.
+type PagingClientFirstResponseEmptyPager struct {
 	client    *PagingClient
-	current   PagingFirstResponseEmptyResponse
+	current   PagingClientFirstResponseEmptyResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingFirstResponseEmptyResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientFirstResponseEmptyResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingFirstResponseEmptyPager) Err() error {
+func (p *PagingClientFirstResponseEmptyPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingFirstResponseEmptyPager) NextPage(ctx context.Context) bool {
+func (p *PagingClientFirstResponseEmptyPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -65,28 +65,28 @@ func (p *PagingFirstResponseEmptyPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-// PageResponse returns the current PagingFirstResponseEmptyResponse page.
-func (p *PagingFirstResponseEmptyPager) PageResponse() PagingFirstResponseEmptyResponse {
+// PageResponse returns the current PagingClientFirstResponseEmptyResponse page.
+func (p *PagingClientFirstResponseEmptyPager) PageResponse() PagingClientFirstResponseEmptyResponse {
 	return p.current
 }
 
-// PagingGetMultiplePagesFailurePager provides operations for iterating over paged responses.
-type PagingGetMultiplePagesFailurePager struct {
+// PagingClientGetMultiplePagesFailurePager provides operations for iterating over paged responses.
+type PagingClientGetMultiplePagesFailurePager struct {
 	client    *PagingClient
-	current   PagingGetMultiplePagesFailureResponse
+	current   PagingClientGetMultiplePagesFailureResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingGetMultiplePagesFailureResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientGetMultiplePagesFailureResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingGetMultiplePagesFailurePager) Err() error {
+func (p *PagingClientGetMultiplePagesFailurePager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingGetMultiplePagesFailurePager) NextPage(ctx context.Context) bool {
+func (p *PagingClientGetMultiplePagesFailurePager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -119,28 +119,28 @@ func (p *PagingGetMultiplePagesFailurePager) NextPage(ctx context.Context) bool 
 	return true
 }
 
-// PageResponse returns the current PagingGetMultiplePagesFailureResponse page.
-func (p *PagingGetMultiplePagesFailurePager) PageResponse() PagingGetMultiplePagesFailureResponse {
+// PageResponse returns the current PagingClientGetMultiplePagesFailureResponse page.
+func (p *PagingClientGetMultiplePagesFailurePager) PageResponse() PagingClientGetMultiplePagesFailureResponse {
 	return p.current
 }
 
-// PagingGetMultiplePagesFailureURIPager provides operations for iterating over paged responses.
-type PagingGetMultiplePagesFailureURIPager struct {
+// PagingClientGetMultiplePagesFailureURIPager provides operations for iterating over paged responses.
+type PagingClientGetMultiplePagesFailureURIPager struct {
 	client    *PagingClient
-	current   PagingGetMultiplePagesFailureURIResponse
+	current   PagingClientGetMultiplePagesFailureURIResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingGetMultiplePagesFailureURIResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientGetMultiplePagesFailureURIResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingGetMultiplePagesFailureURIPager) Err() error {
+func (p *PagingClientGetMultiplePagesFailureURIPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingGetMultiplePagesFailureURIPager) NextPage(ctx context.Context) bool {
+func (p *PagingClientGetMultiplePagesFailureURIPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -173,28 +173,28 @@ func (p *PagingGetMultiplePagesFailureURIPager) NextPage(ctx context.Context) bo
 	return true
 }
 
-// PageResponse returns the current PagingGetMultiplePagesFailureURIResponse page.
-func (p *PagingGetMultiplePagesFailureURIPager) PageResponse() PagingGetMultiplePagesFailureURIResponse {
+// PageResponse returns the current PagingClientGetMultiplePagesFailureURIResponse page.
+func (p *PagingClientGetMultiplePagesFailureURIPager) PageResponse() PagingClientGetMultiplePagesFailureURIResponse {
 	return p.current
 }
 
-// PagingGetMultiplePagesFragmentNextLinkPager provides operations for iterating over paged responses.
-type PagingGetMultiplePagesFragmentNextLinkPager struct {
+// PagingClientGetMultiplePagesFragmentNextLinkPager provides operations for iterating over paged responses.
+type PagingClientGetMultiplePagesFragmentNextLinkPager struct {
 	client    *PagingClient
-	current   PagingGetMultiplePagesFragmentNextLinkResponse
+	current   PagingClientGetMultiplePagesFragmentNextLinkResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingGetMultiplePagesFragmentNextLinkResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientGetMultiplePagesFragmentNextLinkResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingGetMultiplePagesFragmentNextLinkPager) Err() error {
+func (p *PagingClientGetMultiplePagesFragmentNextLinkPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingGetMultiplePagesFragmentNextLinkPager) NextPage(ctx context.Context) bool {
+func (p *PagingClientGetMultiplePagesFragmentNextLinkPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -227,28 +227,28 @@ func (p *PagingGetMultiplePagesFragmentNextLinkPager) NextPage(ctx context.Conte
 	return true
 }
 
-// PageResponse returns the current PagingGetMultiplePagesFragmentNextLinkResponse page.
-func (p *PagingGetMultiplePagesFragmentNextLinkPager) PageResponse() PagingGetMultiplePagesFragmentNextLinkResponse {
+// PageResponse returns the current PagingClientGetMultiplePagesFragmentNextLinkResponse page.
+func (p *PagingClientGetMultiplePagesFragmentNextLinkPager) PageResponse() PagingClientGetMultiplePagesFragmentNextLinkResponse {
 	return p.current
 }
 
-// PagingGetMultiplePagesFragmentWithGroupingNextLinkPager provides operations for iterating over paged responses.
-type PagingGetMultiplePagesFragmentWithGroupingNextLinkPager struct {
+// PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager provides operations for iterating over paged responses.
+type PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager struct {
 	client    *PagingClient
-	current   PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse
+	current   PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingGetMultiplePagesFragmentWithGroupingNextLinkPager) Err() error {
+func (p *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingGetMultiplePagesFragmentWithGroupingNextLinkPager) NextPage(ctx context.Context) bool {
+func (p *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -281,27 +281,27 @@ func (p *PagingGetMultiplePagesFragmentWithGroupingNextLinkPager) NextPage(ctx c
 	return true
 }
 
-// PageResponse returns the current PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse page.
-func (p *PagingGetMultiplePagesFragmentWithGroupingNextLinkPager) PageResponse() PagingGetMultiplePagesFragmentWithGroupingNextLinkResponse {
+// PageResponse returns the current PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse page.
+func (p *PagingClientGetMultiplePagesFragmentWithGroupingNextLinkPager) PageResponse() PagingClientGetMultiplePagesFragmentWithGroupingNextLinkResponse {
 	return p.current
 }
 
-// PagingGetMultiplePagesLROPager provides operations for iterating over paged responses.
-type PagingGetMultiplePagesLROPager struct {
+// PagingClientGetMultiplePagesLROPager provides operations for iterating over paged responses.
+type PagingClientGetMultiplePagesLROPager struct {
 	client  *PagingClient
-	current PagingGetMultiplePagesLROResponse
+	current PagingClientGetMultiplePagesLROResponse
 	err     error
 	second  bool
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingGetMultiplePagesLROPager) Err() error {
+func (p *PagingClientGetMultiplePagesLROPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingGetMultiplePagesLROPager) NextPage(ctx context.Context) bool {
+func (p *PagingClientGetMultiplePagesLROPager) NextPage(ctx context.Context) bool {
 	if !p.second {
 		p.second = true
 		return true
@@ -333,28 +333,28 @@ func (p *PagingGetMultiplePagesLROPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-// PageResponse returns the current PagingGetMultiplePagesLROResponse page.
-func (p *PagingGetMultiplePagesLROPager) PageResponse() PagingGetMultiplePagesLROResponse {
+// PageResponse returns the current PagingClientGetMultiplePagesLROResponse page.
+func (p *PagingClientGetMultiplePagesLROPager) PageResponse() PagingClientGetMultiplePagesLROResponse {
 	return p.current
 }
 
-// PagingGetMultiplePagesPager provides operations for iterating over paged responses.
-type PagingGetMultiplePagesPager struct {
+// PagingClientGetMultiplePagesPager provides operations for iterating over paged responses.
+type PagingClientGetMultiplePagesPager struct {
 	client    *PagingClient
-	current   PagingGetMultiplePagesResponse
+	current   PagingClientGetMultiplePagesResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingGetMultiplePagesResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientGetMultiplePagesResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingGetMultiplePagesPager) Err() error {
+func (p *PagingClientGetMultiplePagesPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingGetMultiplePagesPager) NextPage(ctx context.Context) bool {
+func (p *PagingClientGetMultiplePagesPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -387,28 +387,28 @@ func (p *PagingGetMultiplePagesPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-// PageResponse returns the current PagingGetMultiplePagesResponse page.
-func (p *PagingGetMultiplePagesPager) PageResponse() PagingGetMultiplePagesResponse {
+// PageResponse returns the current PagingClientGetMultiplePagesResponse page.
+func (p *PagingClientGetMultiplePagesPager) PageResponse() PagingClientGetMultiplePagesResponse {
 	return p.current
 }
 
-// PagingGetMultiplePagesRetryFirstPager provides operations for iterating over paged responses.
-type PagingGetMultiplePagesRetryFirstPager struct {
+// PagingClientGetMultiplePagesRetryFirstPager provides operations for iterating over paged responses.
+type PagingClientGetMultiplePagesRetryFirstPager struct {
 	client    *PagingClient
-	current   PagingGetMultiplePagesRetryFirstResponse
+	current   PagingClientGetMultiplePagesRetryFirstResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingGetMultiplePagesRetryFirstResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientGetMultiplePagesRetryFirstResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingGetMultiplePagesRetryFirstPager) Err() error {
+func (p *PagingClientGetMultiplePagesRetryFirstPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingGetMultiplePagesRetryFirstPager) NextPage(ctx context.Context) bool {
+func (p *PagingClientGetMultiplePagesRetryFirstPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -441,28 +441,28 @@ func (p *PagingGetMultiplePagesRetryFirstPager) NextPage(ctx context.Context) bo
 	return true
 }
 
-// PageResponse returns the current PagingGetMultiplePagesRetryFirstResponse page.
-func (p *PagingGetMultiplePagesRetryFirstPager) PageResponse() PagingGetMultiplePagesRetryFirstResponse {
+// PageResponse returns the current PagingClientGetMultiplePagesRetryFirstResponse page.
+func (p *PagingClientGetMultiplePagesRetryFirstPager) PageResponse() PagingClientGetMultiplePagesRetryFirstResponse {
 	return p.current
 }
 
-// PagingGetMultiplePagesRetrySecondPager provides operations for iterating over paged responses.
-type PagingGetMultiplePagesRetrySecondPager struct {
+// PagingClientGetMultiplePagesRetrySecondPager provides operations for iterating over paged responses.
+type PagingClientGetMultiplePagesRetrySecondPager struct {
 	client    *PagingClient
-	current   PagingGetMultiplePagesRetrySecondResponse
+	current   PagingClientGetMultiplePagesRetrySecondResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingGetMultiplePagesRetrySecondResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientGetMultiplePagesRetrySecondResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingGetMultiplePagesRetrySecondPager) Err() error {
+func (p *PagingClientGetMultiplePagesRetrySecondPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingGetMultiplePagesRetrySecondPager) NextPage(ctx context.Context) bool {
+func (p *PagingClientGetMultiplePagesRetrySecondPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -495,28 +495,28 @@ func (p *PagingGetMultiplePagesRetrySecondPager) NextPage(ctx context.Context) b
 	return true
 }
 
-// PageResponse returns the current PagingGetMultiplePagesRetrySecondResponse page.
-func (p *PagingGetMultiplePagesRetrySecondPager) PageResponse() PagingGetMultiplePagesRetrySecondResponse {
+// PageResponse returns the current PagingClientGetMultiplePagesRetrySecondResponse page.
+func (p *PagingClientGetMultiplePagesRetrySecondPager) PageResponse() PagingClientGetMultiplePagesRetrySecondResponse {
 	return p.current
 }
 
-// PagingGetMultiplePagesWithOffsetPager provides operations for iterating over paged responses.
-type PagingGetMultiplePagesWithOffsetPager struct {
+// PagingClientGetMultiplePagesWithOffsetPager provides operations for iterating over paged responses.
+type PagingClientGetMultiplePagesWithOffsetPager struct {
 	client    *PagingClient
-	current   PagingGetMultiplePagesWithOffsetResponse
+	current   PagingClientGetMultiplePagesWithOffsetResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingGetMultiplePagesWithOffsetResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientGetMultiplePagesWithOffsetResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingGetMultiplePagesWithOffsetPager) Err() error {
+func (p *PagingClientGetMultiplePagesWithOffsetPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingGetMultiplePagesWithOffsetPager) NextPage(ctx context.Context) bool {
+func (p *PagingClientGetMultiplePagesWithOffsetPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -549,28 +549,28 @@ func (p *PagingGetMultiplePagesWithOffsetPager) NextPage(ctx context.Context) bo
 	return true
 }
 
-// PageResponse returns the current PagingGetMultiplePagesWithOffsetResponse page.
-func (p *PagingGetMultiplePagesWithOffsetPager) PageResponse() PagingGetMultiplePagesWithOffsetResponse {
+// PageResponse returns the current PagingClientGetMultiplePagesWithOffsetResponse page.
+func (p *PagingClientGetMultiplePagesWithOffsetPager) PageResponse() PagingClientGetMultiplePagesWithOffsetResponse {
 	return p.current
 }
 
-// PagingGetNoItemNamePagesPager provides operations for iterating over paged responses.
-type PagingGetNoItemNamePagesPager struct {
+// PagingClientGetNoItemNamePagesPager provides operations for iterating over paged responses.
+type PagingClientGetNoItemNamePagesPager struct {
 	client    *PagingClient
-	current   PagingGetNoItemNamePagesResponse
+	current   PagingClientGetNoItemNamePagesResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingGetNoItemNamePagesResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientGetNoItemNamePagesResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingGetNoItemNamePagesPager) Err() error {
+func (p *PagingClientGetNoItemNamePagesPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingGetNoItemNamePagesPager) NextPage(ctx context.Context) bool {
+func (p *PagingClientGetNoItemNamePagesPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -603,28 +603,28 @@ func (p *PagingGetNoItemNamePagesPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-// PageResponse returns the current PagingGetNoItemNamePagesResponse page.
-func (p *PagingGetNoItemNamePagesPager) PageResponse() PagingGetNoItemNamePagesResponse {
+// PageResponse returns the current PagingClientGetNoItemNamePagesResponse page.
+func (p *PagingClientGetNoItemNamePagesPager) PageResponse() PagingClientGetNoItemNamePagesResponse {
 	return p.current
 }
 
-// PagingGetODataMultiplePagesPager provides operations for iterating over paged responses.
-type PagingGetODataMultiplePagesPager struct {
+// PagingClientGetODataMultiplePagesPager provides operations for iterating over paged responses.
+type PagingClientGetODataMultiplePagesPager struct {
 	client    *PagingClient
-	current   PagingGetODataMultiplePagesResponse
+	current   PagingClientGetODataMultiplePagesResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingGetODataMultiplePagesResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientGetODataMultiplePagesResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingGetODataMultiplePagesPager) Err() error {
+func (p *PagingClientGetODataMultiplePagesPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingGetODataMultiplePagesPager) NextPage(ctx context.Context) bool {
+func (p *PagingClientGetODataMultiplePagesPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -657,28 +657,28 @@ func (p *PagingGetODataMultiplePagesPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-// PageResponse returns the current PagingGetODataMultiplePagesResponse page.
-func (p *PagingGetODataMultiplePagesPager) PageResponse() PagingGetODataMultiplePagesResponse {
+// PageResponse returns the current PagingClientGetODataMultiplePagesResponse page.
+func (p *PagingClientGetODataMultiplePagesPager) PageResponse() PagingClientGetODataMultiplePagesResponse {
 	return p.current
 }
 
-// PagingGetPagingModelWithItemNameWithXMSClientNamePager provides operations for iterating over paged responses.
-type PagingGetPagingModelWithItemNameWithXMSClientNamePager struct {
+// PagingClientGetPagingModelWithItemNameWithXMSClientNamePager provides operations for iterating over paged responses.
+type PagingClientGetPagingModelWithItemNameWithXMSClientNamePager struct {
 	client    *PagingClient
-	current   PagingGetPagingModelWithItemNameWithXMSClientNameResponse
+	current   PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingGetPagingModelWithItemNameWithXMSClientNameResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingGetPagingModelWithItemNameWithXMSClientNamePager) Err() error {
+func (p *PagingClientGetPagingModelWithItemNameWithXMSClientNamePager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingGetPagingModelWithItemNameWithXMSClientNamePager) NextPage(ctx context.Context) bool {
+func (p *PagingClientGetPagingModelWithItemNameWithXMSClientNamePager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -711,28 +711,28 @@ func (p *PagingGetPagingModelWithItemNameWithXMSClientNamePager) NextPage(ctx co
 	return true
 }
 
-// PageResponse returns the current PagingGetPagingModelWithItemNameWithXMSClientNameResponse page.
-func (p *PagingGetPagingModelWithItemNameWithXMSClientNamePager) PageResponse() PagingGetPagingModelWithItemNameWithXMSClientNameResponse {
+// PageResponse returns the current PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse page.
+func (p *PagingClientGetPagingModelWithItemNameWithXMSClientNamePager) PageResponse() PagingClientGetPagingModelWithItemNameWithXMSClientNameResponse {
 	return p.current
 }
 
-// PagingGetSinglePagesFailurePager provides operations for iterating over paged responses.
-type PagingGetSinglePagesFailurePager struct {
+// PagingClientGetSinglePagesFailurePager provides operations for iterating over paged responses.
+type PagingClientGetSinglePagesFailurePager struct {
 	client    *PagingClient
-	current   PagingGetSinglePagesFailureResponse
+	current   PagingClientGetSinglePagesFailureResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingGetSinglePagesFailureResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientGetSinglePagesFailureResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingGetSinglePagesFailurePager) Err() error {
+func (p *PagingClientGetSinglePagesFailurePager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingGetSinglePagesFailurePager) NextPage(ctx context.Context) bool {
+func (p *PagingClientGetSinglePagesFailurePager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -765,28 +765,28 @@ func (p *PagingGetSinglePagesFailurePager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-// PageResponse returns the current PagingGetSinglePagesFailureResponse page.
-func (p *PagingGetSinglePagesFailurePager) PageResponse() PagingGetSinglePagesFailureResponse {
+// PageResponse returns the current PagingClientGetSinglePagesFailureResponse page.
+func (p *PagingClientGetSinglePagesFailurePager) PageResponse() PagingClientGetSinglePagesFailureResponse {
 	return p.current
 }
 
-// PagingGetSinglePagesPager provides operations for iterating over paged responses.
-type PagingGetSinglePagesPager struct {
+// PagingClientGetSinglePagesPager provides operations for iterating over paged responses.
+type PagingClientGetSinglePagesPager struct {
 	client    *PagingClient
-	current   PagingGetSinglePagesResponse
+	current   PagingClientGetSinglePagesResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingGetSinglePagesResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientGetSinglePagesResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingGetSinglePagesPager) Err() error {
+func (p *PagingClientGetSinglePagesPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingGetSinglePagesPager) NextPage(ctx context.Context) bool {
+func (p *PagingClientGetSinglePagesPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -819,28 +819,28 @@ func (p *PagingGetSinglePagesPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-// PageResponse returns the current PagingGetSinglePagesResponse page.
-func (p *PagingGetSinglePagesPager) PageResponse() PagingGetSinglePagesResponse {
+// PageResponse returns the current PagingClientGetSinglePagesResponse page.
+func (p *PagingClientGetSinglePagesPager) PageResponse() PagingClientGetSinglePagesResponse {
 	return p.current
 }
 
-// PagingGetWithQueryParamsPager provides operations for iterating over paged responses.
-type PagingGetWithQueryParamsPager struct {
+// PagingClientGetWithQueryParamsPager provides operations for iterating over paged responses.
+type PagingClientGetWithQueryParamsPager struct {
 	client    *PagingClient
-	current   PagingGetWithQueryParamsResponse
+	current   PagingClientGetWithQueryParamsResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingGetWithQueryParamsResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientGetWithQueryParamsResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingGetWithQueryParamsPager) Err() error {
+func (p *PagingClientGetWithQueryParamsPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingGetWithQueryParamsPager) NextPage(ctx context.Context) bool {
+func (p *PagingClientGetWithQueryParamsPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -873,28 +873,28 @@ func (p *PagingGetWithQueryParamsPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-// PageResponse returns the current PagingGetWithQueryParamsResponse page.
-func (p *PagingGetWithQueryParamsPager) PageResponse() PagingGetWithQueryParamsResponse {
+// PageResponse returns the current PagingClientGetWithQueryParamsResponse page.
+func (p *PagingClientGetWithQueryParamsPager) PageResponse() PagingClientGetWithQueryParamsResponse {
 	return p.current
 }
 
-// PagingNextFragmentPager provides operations for iterating over paged responses.
-type PagingNextFragmentPager struct {
+// PagingClientNextFragmentPager provides operations for iterating over paged responses.
+type PagingClientNextFragmentPager struct {
 	client    *PagingClient
-	current   PagingNextFragmentResponse
+	current   PagingClientNextFragmentResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingNextFragmentResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientNextFragmentResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingNextFragmentPager) Err() error {
+func (p *PagingClientNextFragmentPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingNextFragmentPager) NextPage(ctx context.Context) bool {
+func (p *PagingClientNextFragmentPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -927,28 +927,28 @@ func (p *PagingNextFragmentPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-// PageResponse returns the current PagingNextFragmentResponse page.
-func (p *PagingNextFragmentPager) PageResponse() PagingNextFragmentResponse {
+// PageResponse returns the current PagingClientNextFragmentResponse page.
+func (p *PagingClientNextFragmentPager) PageResponse() PagingClientNextFragmentResponse {
 	return p.current
 }
 
-// PagingNextFragmentWithGroupingPager provides operations for iterating over paged responses.
-type PagingNextFragmentWithGroupingPager struct {
+// PagingClientNextFragmentWithGroupingPager provides operations for iterating over paged responses.
+type PagingClientNextFragmentWithGroupingPager struct {
 	client    *PagingClient
-	current   PagingNextFragmentWithGroupingResponse
+	current   PagingClientNextFragmentWithGroupingResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PagingNextFragmentWithGroupingResponse) (*policy.Request, error)
+	advancer  func(context.Context, PagingClientNextFragmentWithGroupingResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PagingNextFragmentWithGroupingPager) Err() error {
+func (p *PagingClientNextFragmentWithGroupingPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PagingNextFragmentWithGroupingPager) NextPage(ctx context.Context) bool {
+func (p *PagingClientNextFragmentWithGroupingPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -981,7 +981,7 @@ func (p *PagingNextFragmentWithGroupingPager) NextPage(ctx context.Context) bool
 	return true
 }
 
-// PageResponse returns the current PagingNextFragmentWithGroupingResponse page.
-func (p *PagingNextFragmentWithGroupingPager) PageResponse() PagingNextFragmentWithGroupingResponse {
+// PageResponse returns the current PagingClientNextFragmentWithGroupingResponse page.
+func (p *PagingClientNextFragmentWithGroupingPager) PageResponse() PagingClientNextFragmentWithGroupingResponse {
 	return p.current
 }

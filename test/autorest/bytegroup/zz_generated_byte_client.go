@@ -38,24 +38,24 @@ func NewByteClient(options *azcore.ClientOptions) *ByteClient {
 
 // GetEmpty - Get empty byte value ''
 // If the operation fails it returns the *Error error type.
-// options - ByteGetEmptyOptions contains the optional parameters for the ByteClient.GetEmpty method.
-func (client *ByteClient) GetEmpty(ctx context.Context, options *ByteGetEmptyOptions) (ByteGetEmptyResponse, error) {
+// options - ByteClientGetEmptyOptions contains the optional parameters for the ByteClient.GetEmpty method.
+func (client *ByteClient) GetEmpty(ctx context.Context, options *ByteClientGetEmptyOptions) (ByteClientGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return ByteGetEmptyResponse{}, err
+		return ByteClientGetEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ByteGetEmptyResponse{}, err
+		return ByteClientGetEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ByteGetEmptyResponse{}, client.getEmptyHandleError(resp)
+		return ByteClientGetEmptyResponse{}, client.getEmptyHandleError(resp)
 	}
 	return client.getEmptyHandleResponse(resp)
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *ByteClient) getEmptyCreateRequest(ctx context.Context, options *ByteGetEmptyOptions) (*policy.Request, error) {
+func (client *ByteClient) getEmptyCreateRequest(ctx context.Context, options *ByteClientGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/byte/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -66,10 +66,10 @@ func (client *ByteClient) getEmptyCreateRequest(ctx context.Context, options *By
 }
 
 // getEmptyHandleResponse handles the GetEmpty response.
-func (client *ByteClient) getEmptyHandleResponse(resp *http.Response) (ByteGetEmptyResponse, error) {
-	result := ByteGetEmptyResponse{RawResponse: resp}
+func (client *ByteClient) getEmptyHandleResponse(resp *http.Response) (ByteClientGetEmptyResponse, error) {
+	result := ByteClientGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return ByteGetEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return ByteClientGetEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -89,24 +89,24 @@ func (client *ByteClient) getEmptyHandleError(resp *http.Response) error {
 
 // GetInvalid - Get invalid byte value ':::SWAGGER::::'
 // If the operation fails it returns the *Error error type.
-// options - ByteGetInvalidOptions contains the optional parameters for the ByteClient.GetInvalid method.
-func (client *ByteClient) GetInvalid(ctx context.Context, options *ByteGetInvalidOptions) (ByteGetInvalidResponse, error) {
+// options - ByteClientGetInvalidOptions contains the optional parameters for the ByteClient.GetInvalid method.
+func (client *ByteClient) GetInvalid(ctx context.Context, options *ByteClientGetInvalidOptions) (ByteClientGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
-		return ByteGetInvalidResponse{}, err
+		return ByteClientGetInvalidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ByteGetInvalidResponse{}, err
+		return ByteClientGetInvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ByteGetInvalidResponse{}, client.getInvalidHandleError(resp)
+		return ByteClientGetInvalidResponse{}, client.getInvalidHandleError(resp)
 	}
 	return client.getInvalidHandleResponse(resp)
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
-func (client *ByteClient) getInvalidCreateRequest(ctx context.Context, options *ByteGetInvalidOptions) (*policy.Request, error) {
+func (client *ByteClient) getInvalidCreateRequest(ctx context.Context, options *ByteClientGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/byte/invalid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -117,10 +117,10 @@ func (client *ByteClient) getInvalidCreateRequest(ctx context.Context, options *
 }
 
 // getInvalidHandleResponse handles the GetInvalid response.
-func (client *ByteClient) getInvalidHandleResponse(resp *http.Response) (ByteGetInvalidResponse, error) {
-	result := ByteGetInvalidResponse{RawResponse: resp}
+func (client *ByteClient) getInvalidHandleResponse(resp *http.Response) (ByteClientGetInvalidResponse, error) {
+	result := ByteClientGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return ByteGetInvalidResponse{}, runtime.NewResponseError(err, resp)
+		return ByteClientGetInvalidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -140,24 +140,24 @@ func (client *ByteClient) getInvalidHandleError(resp *http.Response) error {
 
 // GetNonASCII - Get non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 // If the operation fails it returns the *Error error type.
-// options - ByteGetNonASCIIOptions contains the optional parameters for the ByteClient.GetNonASCII method.
-func (client *ByteClient) GetNonASCII(ctx context.Context, options *ByteGetNonASCIIOptions) (ByteGetNonASCIIResponse, error) {
+// options - ByteClientGetNonASCIIOptions contains the optional parameters for the ByteClient.GetNonASCII method.
+func (client *ByteClient) GetNonASCII(ctx context.Context, options *ByteClientGetNonASCIIOptions) (ByteClientGetNonASCIIResponse, error) {
 	req, err := client.getNonASCIICreateRequest(ctx, options)
 	if err != nil {
-		return ByteGetNonASCIIResponse{}, err
+		return ByteClientGetNonASCIIResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ByteGetNonASCIIResponse{}, err
+		return ByteClientGetNonASCIIResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ByteGetNonASCIIResponse{}, client.getNonASCIIHandleError(resp)
+		return ByteClientGetNonASCIIResponse{}, client.getNonASCIIHandleError(resp)
 	}
 	return client.getNonASCIIHandleResponse(resp)
 }
 
 // getNonASCIICreateRequest creates the GetNonASCII request.
-func (client *ByteClient) getNonASCIICreateRequest(ctx context.Context, options *ByteGetNonASCIIOptions) (*policy.Request, error) {
+func (client *ByteClient) getNonASCIICreateRequest(ctx context.Context, options *ByteClientGetNonASCIIOptions) (*policy.Request, error) {
 	urlPath := "/byte/nonAscii"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -168,10 +168,10 @@ func (client *ByteClient) getNonASCIICreateRequest(ctx context.Context, options 
 }
 
 // getNonASCIIHandleResponse handles the GetNonASCII response.
-func (client *ByteClient) getNonASCIIHandleResponse(resp *http.Response) (ByteGetNonASCIIResponse, error) {
-	result := ByteGetNonASCIIResponse{RawResponse: resp}
+func (client *ByteClient) getNonASCIIHandleResponse(resp *http.Response) (ByteClientGetNonASCIIResponse, error) {
+	result := ByteClientGetNonASCIIResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return ByteGetNonASCIIResponse{}, runtime.NewResponseError(err, resp)
+		return ByteClientGetNonASCIIResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -191,24 +191,24 @@ func (client *ByteClient) getNonASCIIHandleError(resp *http.Response) error {
 
 // GetNull - Get null byte value
 // If the operation fails it returns the *Error error type.
-// options - ByteGetNullOptions contains the optional parameters for the ByteClient.GetNull method.
-func (client *ByteClient) GetNull(ctx context.Context, options *ByteGetNullOptions) (ByteGetNullResponse, error) {
+// options - ByteClientGetNullOptions contains the optional parameters for the ByteClient.GetNull method.
+func (client *ByteClient) GetNull(ctx context.Context, options *ByteClientGetNullOptions) (ByteClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
-		return ByteGetNullResponse{}, err
+		return ByteClientGetNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ByteGetNullResponse{}, err
+		return ByteClientGetNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ByteGetNullResponse{}, client.getNullHandleError(resp)
+		return ByteClientGetNullResponse{}, client.getNullHandleError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *ByteClient) getNullCreateRequest(ctx context.Context, options *ByteGetNullOptions) (*policy.Request, error) {
+func (client *ByteClient) getNullCreateRequest(ctx context.Context, options *ByteClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/byte/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -219,10 +219,10 @@ func (client *ByteClient) getNullCreateRequest(ctx context.Context, options *Byt
 }
 
 // getNullHandleResponse handles the GetNull response.
-func (client *ByteClient) getNullHandleResponse(resp *http.Response) (ByteGetNullResponse, error) {
-	result := ByteGetNullResponse{RawResponse: resp}
+func (client *ByteClient) getNullHandleResponse(resp *http.Response) (ByteClientGetNullResponse, error) {
+	result := ByteClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return ByteGetNullResponse{}, runtime.NewResponseError(err, resp)
+		return ByteClientGetNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -243,24 +243,24 @@ func (client *ByteClient) getNullHandleError(resp *http.Response) error {
 // PutNonASCII - Put non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
 // If the operation fails it returns the *Error error type.
 // byteBody - Base64-encoded non-ascii byte string hex(FF FE FD FC FB FA F9 F8 F7 F6)
-// options - BytePutNonASCIIOptions contains the optional parameters for the ByteClient.PutNonASCII method.
-func (client *ByteClient) PutNonASCII(ctx context.Context, byteBody []byte, options *BytePutNonASCIIOptions) (BytePutNonASCIIResponse, error) {
+// options - ByteClientPutNonASCIIOptions contains the optional parameters for the ByteClient.PutNonASCII method.
+func (client *ByteClient) PutNonASCII(ctx context.Context, byteBody []byte, options *ByteClientPutNonASCIIOptions) (ByteClientPutNonASCIIResponse, error) {
 	req, err := client.putNonASCIICreateRequest(ctx, byteBody, options)
 	if err != nil {
-		return BytePutNonASCIIResponse{}, err
+		return ByteClientPutNonASCIIResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BytePutNonASCIIResponse{}, err
+		return ByteClientPutNonASCIIResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BytePutNonASCIIResponse{}, client.putNonASCIIHandleError(resp)
+		return ByteClientPutNonASCIIResponse{}, client.putNonASCIIHandleError(resp)
 	}
-	return BytePutNonASCIIResponse{RawResponse: resp}, nil
+	return ByteClientPutNonASCIIResponse{RawResponse: resp}, nil
 }
 
 // putNonASCIICreateRequest creates the PutNonASCII request.
-func (client *ByteClient) putNonASCIICreateRequest(ctx context.Context, byteBody []byte, options *BytePutNonASCIIOptions) (*policy.Request, error) {
+func (client *ByteClient) putNonASCIICreateRequest(ctx context.Context, byteBody []byte, options *ByteClientPutNonASCIIOptions) (*policy.Request, error) {
 	urlPath := "/byte/nonAscii"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

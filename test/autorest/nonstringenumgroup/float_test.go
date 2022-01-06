@@ -30,7 +30,7 @@ func TestFloatGet(t *testing.T) {
 // Put - Put a float enum
 func TestFloatPut(t *testing.T) {
 	client := newFloatClient()
-	result, err := client.Put(context.Background(), &FloatPutOptions{
+	result, err := client.Put(context.Background(), &FloatClientPutOptions{
 		Input: FloatEnumTwoHundred4.ToPtr(),
 	})
 	if err != nil {

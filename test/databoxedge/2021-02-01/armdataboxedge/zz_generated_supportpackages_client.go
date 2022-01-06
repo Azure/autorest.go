@@ -55,21 +55,21 @@ func NewSupportPackagesClient(subscriptionID string, credential azcore.TokenCred
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // triggerSupportPackageRequest - The trigger support package request object
-// options - SupportPackagesBeginTriggerSupportPackageOptions contains the optional parameters for the SupportPackagesClient.BeginTriggerSupportPackage
+// options - SupportPackagesClientBeginTriggerSupportPackageOptions contains the optional parameters for the SupportPackagesClient.BeginTriggerSupportPackage
 // method.
-func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesBeginTriggerSupportPackageOptions) (SupportPackagesTriggerSupportPackagePollerResponse, error) {
+func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (SupportPackagesClientTriggerSupportPackagePollerResponse, error) {
 	resp, err := client.triggerSupportPackage(ctx, deviceName, resourceGroupName, triggerSupportPackageRequest, options)
 	if err != nil {
-		return SupportPackagesTriggerSupportPackagePollerResponse{}, err
+		return SupportPackagesClientTriggerSupportPackagePollerResponse{}, err
 	}
-	result := SupportPackagesTriggerSupportPackagePollerResponse{
+	result := SupportPackagesClientTriggerSupportPackagePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("SupportPackagesClient.TriggerSupportPackage", "", resp, client.pl, client.triggerSupportPackageHandleError)
 	if err != nil {
-		return SupportPackagesTriggerSupportPackagePollerResponse{}, err
+		return SupportPackagesClientTriggerSupportPackagePollerResponse{}, err
 	}
-	result.Poller = &SupportPackagesTriggerSupportPackagePoller{
+	result.Poller = &SupportPackagesClientTriggerSupportPackagePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -77,7 +77,7 @@ func (client *SupportPackagesClient) BeginTriggerSupportPackage(ctx context.Cont
 
 // TriggerSupportPackage - Triggers support package on the device
 // If the operation fails it returns the *CloudError error type.
-func (client *SupportPackagesClient) triggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesBeginTriggerSupportPackageOptions) (*http.Response, error) {
+func (client *SupportPackagesClient) triggerSupportPackage(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (*http.Response, error) {
 	req, err := client.triggerSupportPackageCreateRequest(ctx, deviceName, resourceGroupName, triggerSupportPackageRequest, options)
 	if err != nil {
 		return nil, err
@@ -93,7 +93,7 @@ func (client *SupportPackagesClient) triggerSupportPackage(ctx context.Context, 
 }
 
 // triggerSupportPackageCreateRequest creates the TriggerSupportPackage request.
-func (client *SupportPackagesClient) triggerSupportPackageCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesBeginTriggerSupportPackageOptions) (*policy.Request, error) {
+func (client *SupportPackagesClient) triggerSupportPackageCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, triggerSupportPackageRequest TriggerSupportPackageRequest, options *SupportPackagesClientBeginTriggerSupportPackageOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/triggerSupportPackage"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")

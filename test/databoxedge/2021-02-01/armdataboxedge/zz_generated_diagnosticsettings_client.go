@@ -55,25 +55,25 @@ func NewDiagnosticSettingsClient(subscriptionID string, credential azcore.TokenC
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters for the
-// DiagnosticSettingsClient.GetDiagnosticProactiveLogCollectionSettings method.
-func (client *DiagnosticSettingsClient) GetDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsOptions) (DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsResponse, error) {
+// options - DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters for
+// the DiagnosticSettingsClient.GetDiagnosticProactiveLogCollectionSettings method.
+func (client *DiagnosticSettingsClient) GetDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsOptions) (DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse, error) {
 	req, err := client.getDiagnosticProactiveLogCollectionSettingsCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsResponse{}, err
+		return DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsResponse{}, err
+		return DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsResponse{}, client.getDiagnosticProactiveLogCollectionSettingsHandleError(resp)
+		return DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse{}, client.getDiagnosticProactiveLogCollectionSettingsHandleError(resp)
 	}
 	return client.getDiagnosticProactiveLogCollectionSettingsHandleResponse(resp)
 }
 
 // getDiagnosticProactiveLogCollectionSettingsCreateRequest creates the GetDiagnosticProactiveLogCollectionSettings request.
-func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSettingsCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsOptions) (*policy.Request, error) {
+func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSettingsCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticProactiveLogCollectionSettings/default"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -99,10 +99,10 @@ func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSetti
 }
 
 // getDiagnosticProactiveLogCollectionSettingsHandleResponse handles the GetDiagnosticProactiveLogCollectionSettings response.
-func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSettingsHandleResponse(resp *http.Response) (DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsResponse, error) {
-	result := DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsResponse{RawResponse: resp}
+func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSettingsHandleResponse(resp *http.Response) (DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse, error) {
+	result := DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DiagnosticProactiveLogCollectionSettings); err != nil {
-		return DiagnosticSettingsGetDiagnosticProactiveLogCollectionSettingsResponse{}, runtime.NewResponseError(err, resp)
+		return DiagnosticSettingsClientGetDiagnosticProactiveLogCollectionSettingsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -125,25 +125,25 @@ func (client *DiagnosticSettingsClient) getDiagnosticProactiveLogCollectionSetti
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - DiagnosticSettingsGetDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the DiagnosticSettingsClient.GetDiagnosticRemoteSupportSettings
+// options - DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the DiagnosticSettingsClient.GetDiagnosticRemoteSupportSettings
 // method.
-func (client *DiagnosticSettingsClient) GetDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsGetDiagnosticRemoteSupportSettingsOptions) (DiagnosticSettingsGetDiagnosticRemoteSupportSettingsResponse, error) {
+func (client *DiagnosticSettingsClient) GetDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsOptions) (DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse, error) {
 	req, err := client.getDiagnosticRemoteSupportSettingsCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
-		return DiagnosticSettingsGetDiagnosticRemoteSupportSettingsResponse{}, err
+		return DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DiagnosticSettingsGetDiagnosticRemoteSupportSettingsResponse{}, err
+		return DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DiagnosticSettingsGetDiagnosticRemoteSupportSettingsResponse{}, client.getDiagnosticRemoteSupportSettingsHandleError(resp)
+		return DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse{}, client.getDiagnosticRemoteSupportSettingsHandleError(resp)
 	}
 	return client.getDiagnosticRemoteSupportSettingsHandleResponse(resp)
 }
 
 // getDiagnosticRemoteSupportSettingsCreateRequest creates the GetDiagnosticRemoteSupportSettings request.
-func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsGetDiagnosticRemoteSupportSettingsOptions) (*policy.Request, error) {
+func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticRemoteSupportSettings/default"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -169,10 +169,10 @@ func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsCreate
 }
 
 // getDiagnosticRemoteSupportSettingsHandleResponse handles the GetDiagnosticRemoteSupportSettings response.
-func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsHandleResponse(resp *http.Response) (DiagnosticSettingsGetDiagnosticRemoteSupportSettingsResponse, error) {
-	result := DiagnosticSettingsGetDiagnosticRemoteSupportSettingsResponse{RawResponse: resp}
+func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsHandleResponse(resp *http.Response) (DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse, error) {
+	result := DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DiagnosticRemoteSupportSettings); err != nil {
-		return DiagnosticSettingsGetDiagnosticRemoteSupportSettingsResponse{}, runtime.NewResponseError(err, resp)
+		return DiagnosticSettingsClientGetDiagnosticRemoteSupportSettingsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -196,21 +196,21 @@ func (client *DiagnosticSettingsClient) getDiagnosticRemoteSupportSettingsHandle
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // proactiveLogCollectionSettings - The proactive log collection settings.
-// options - DiagnosticSettingsBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters
+// options - DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions contains the optional parameters
 // for the DiagnosticSettingsClient.BeginUpdateDiagnosticProactiveLogCollectionSettings method.
-func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (DiagnosticSettingsUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse, error) {
+func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse, error) {
 	resp, err := client.updateDiagnosticProactiveLogCollectionSettings(ctx, deviceName, resourceGroupName, proactiveLogCollectionSettings, options)
 	if err != nil {
-		return DiagnosticSettingsUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse{}, err
+		return DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse{}, err
 	}
-	result := DiagnosticSettingsUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse{
+	result := DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("DiagnosticSettingsClient.UpdateDiagnosticProactiveLogCollectionSettings", "", resp, client.pl, client.updateDiagnosticProactiveLogCollectionSettingsHandleError)
 	if err != nil {
-		return DiagnosticSettingsUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse{}, err
+		return DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsPollerResponse{}, err
 	}
-	result.Poller = &DiagnosticSettingsUpdateDiagnosticProactiveLogCollectionSettingsPoller{
+	result.Poller = &DiagnosticSettingsClientUpdateDiagnosticProactiveLogCollectionSettingsPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -219,7 +219,7 @@ func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticProactiveLogCollect
 // UpdateDiagnosticProactiveLogCollectionSettings - Updates the proactive log collection settings on a Data Box Edge/Data
 // Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
-func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (*http.Response, error) {
+func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSettings(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (*http.Response, error) {
 	req, err := client.updateDiagnosticProactiveLogCollectionSettingsCreateRequest(ctx, deviceName, resourceGroupName, proactiveLogCollectionSettings, options)
 	if err != nil {
 		return nil, err
@@ -235,7 +235,7 @@ func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSe
 }
 
 // updateDiagnosticProactiveLogCollectionSettingsCreateRequest creates the UpdateDiagnosticProactiveLogCollectionSettings request.
-func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSettingsCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (*policy.Request, error) {
+func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSettingsCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, proactiveLogCollectionSettings DiagnosticProactiveLogCollectionSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticProactiveLogCollectionSettingsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticProactiveLogCollectionSettings/default"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -279,21 +279,21 @@ func (client *DiagnosticSettingsClient) updateDiagnosticProactiveLogCollectionSe
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // diagnosticRemoteSupportSettings - The diagnostic remote support settings.
-// options - DiagnosticSettingsBeginUpdateDiagnosticRemoteSupportSettingsOptions contains the optional parameters for the
-// DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings method.
-func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsBeginUpdateDiagnosticRemoteSupportSettingsOptions) (DiagnosticSettingsUpdateDiagnosticRemoteSupportSettingsPollerResponse, error) {
+// options - DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions contains the optional parameters for
+// the DiagnosticSettingsClient.BeginUpdateDiagnosticRemoteSupportSettings method.
+func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions) (DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsPollerResponse, error) {
 	resp, err := client.updateDiagnosticRemoteSupportSettings(ctx, deviceName, resourceGroupName, diagnosticRemoteSupportSettings, options)
 	if err != nil {
-		return DiagnosticSettingsUpdateDiagnosticRemoteSupportSettingsPollerResponse{}, err
+		return DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsPollerResponse{}, err
 	}
-	result := DiagnosticSettingsUpdateDiagnosticRemoteSupportSettingsPollerResponse{
+	result := DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsPollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("DiagnosticSettingsClient.UpdateDiagnosticRemoteSupportSettings", "", resp, client.pl, client.updateDiagnosticRemoteSupportSettingsHandleError)
 	if err != nil {
-		return DiagnosticSettingsUpdateDiagnosticRemoteSupportSettingsPollerResponse{}, err
+		return DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsPollerResponse{}, err
 	}
-	result.Poller = &DiagnosticSettingsUpdateDiagnosticRemoteSupportSettingsPoller{
+	result.Poller = &DiagnosticSettingsClientUpdateDiagnosticRemoteSupportSettingsPoller{
 		pt: pt,
 	}
 	return result, nil
@@ -302,7 +302,7 @@ func (client *DiagnosticSettingsClient) BeginUpdateDiagnosticRemoteSupportSettin
 // UpdateDiagnosticRemoteSupportSettings - Updates the diagnostic remote support settings on a Data Box Edge/Data Box Gateway
 // device.
 // If the operation fails it returns the *CloudError error type.
-func (client *DiagnosticSettingsClient) updateDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsBeginUpdateDiagnosticRemoteSupportSettingsOptions) (*http.Response, error) {
+func (client *DiagnosticSettingsClient) updateDiagnosticRemoteSupportSettings(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions) (*http.Response, error) {
 	req, err := client.updateDiagnosticRemoteSupportSettingsCreateRequest(ctx, deviceName, resourceGroupName, diagnosticRemoteSupportSettings, options)
 	if err != nil {
 		return nil, err
@@ -318,7 +318,7 @@ func (client *DiagnosticSettingsClient) updateDiagnosticRemoteSupportSettings(ct
 }
 
 // updateDiagnosticRemoteSupportSettingsCreateRequest creates the UpdateDiagnosticRemoteSupportSettings request.
-func (client *DiagnosticSettingsClient) updateDiagnosticRemoteSupportSettingsCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsBeginUpdateDiagnosticRemoteSupportSettingsOptions) (*policy.Request, error) {
+func (client *DiagnosticSettingsClient) updateDiagnosticRemoteSupportSettingsCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, diagnosticRemoteSupportSettings DiagnosticRemoteSupportSettings, options *DiagnosticSettingsClientBeginUpdateDiagnosticRemoteSupportSettingsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticRemoteSupportSettings/default"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")

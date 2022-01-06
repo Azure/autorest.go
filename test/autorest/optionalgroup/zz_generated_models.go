@@ -60,184 +60,190 @@ func (e Error) Error() string {
 	return e.raw
 }
 
-// ExplicitPostOptionalArrayHeaderOptions contains the optional parameters for the ExplicitClient.PostOptionalArrayHeader
+// ExplicitClientPostOptionalArrayHeaderOptions contains the optional parameters for the ExplicitClient.PostOptionalArrayHeader
 // method.
-type ExplicitPostOptionalArrayHeaderOptions struct {
+type ExplicitClientPostOptionalArrayHeaderOptions struct {
 	HeaderParameter []string
 }
 
-// ExplicitPostOptionalArrayParameterOptions contains the optional parameters for the ExplicitClient.PostOptionalArrayParameter
+// ExplicitClientPostOptionalArrayParameterOptions contains the optional parameters for the ExplicitClient.PostOptionalArrayParameter
 // method.
-type ExplicitPostOptionalArrayParameterOptions struct {
+type ExplicitClientPostOptionalArrayParameterOptions struct {
 	BodyParameter []*string
 }
 
-// ExplicitPostOptionalArrayPropertyOptions contains the optional parameters for the ExplicitClient.PostOptionalArrayProperty
+// ExplicitClientPostOptionalArrayPropertyOptions contains the optional parameters for the ExplicitClient.PostOptionalArrayProperty
 // method.
-type ExplicitPostOptionalArrayPropertyOptions struct {
+type ExplicitClientPostOptionalArrayPropertyOptions struct {
 	BodyParameter *ArrayOptionalWrapper
 }
 
-// ExplicitPostOptionalClassParameterOptions contains the optional parameters for the ExplicitClient.PostOptionalClassParameter
+// ExplicitClientPostOptionalClassParameterOptions contains the optional parameters for the ExplicitClient.PostOptionalClassParameter
 // method.
-type ExplicitPostOptionalClassParameterOptions struct {
+type ExplicitClientPostOptionalClassParameterOptions struct {
 	BodyParameter *Product
 }
 
-// ExplicitPostOptionalClassPropertyOptions contains the optional parameters for the ExplicitClient.PostOptionalClassProperty
+// ExplicitClientPostOptionalClassPropertyOptions contains the optional parameters for the ExplicitClient.PostOptionalClassProperty
 // method.
-type ExplicitPostOptionalClassPropertyOptions struct {
+type ExplicitClientPostOptionalClassPropertyOptions struct {
 	BodyParameter *ClassOptionalWrapper
 }
 
-// ExplicitPostOptionalIntegerHeaderOptions contains the optional parameters for the ExplicitClient.PostOptionalIntegerHeader
+// ExplicitClientPostOptionalIntegerHeaderOptions contains the optional parameters for the ExplicitClient.PostOptionalIntegerHeader
 // method.
-type ExplicitPostOptionalIntegerHeaderOptions struct {
+type ExplicitClientPostOptionalIntegerHeaderOptions struct {
 	HeaderParameter *int32
 }
 
-// ExplicitPostOptionalIntegerParameterOptions contains the optional parameters for the ExplicitClient.PostOptionalIntegerParameter
+// ExplicitClientPostOptionalIntegerParameterOptions contains the optional parameters for the ExplicitClient.PostOptionalIntegerParameter
 // method.
-type ExplicitPostOptionalIntegerParameterOptions struct {
+type ExplicitClientPostOptionalIntegerParameterOptions struct {
 	BodyParameter *int32
 }
 
-// ExplicitPostOptionalIntegerPropertyOptions contains the optional parameters for the ExplicitClient.PostOptionalIntegerProperty
+// ExplicitClientPostOptionalIntegerPropertyOptions contains the optional parameters for the ExplicitClient.PostOptionalIntegerProperty
 // method.
-type ExplicitPostOptionalIntegerPropertyOptions struct {
+type ExplicitClientPostOptionalIntegerPropertyOptions struct {
 	BodyParameter *IntOptionalWrapper
 }
 
-// ExplicitPostOptionalStringHeaderOptions contains the optional parameters for the ExplicitClient.PostOptionalStringHeader
+// ExplicitClientPostOptionalStringHeaderOptions contains the optional parameters for the ExplicitClient.PostOptionalStringHeader
 // method.
-type ExplicitPostOptionalStringHeaderOptions struct {
+type ExplicitClientPostOptionalStringHeaderOptions struct {
 	BodyParameter *string
 }
 
-// ExplicitPostOptionalStringParameterOptions contains the optional parameters for the ExplicitClient.PostOptionalStringParameter
+// ExplicitClientPostOptionalStringParameterOptions contains the optional parameters for the ExplicitClient.PostOptionalStringParameter
 // method.
-type ExplicitPostOptionalStringParameterOptions struct {
+type ExplicitClientPostOptionalStringParameterOptions struct {
 	BodyParameter *string
 }
 
-// ExplicitPostOptionalStringPropertyOptions contains the optional parameters for the ExplicitClient.PostOptionalStringProperty
+// ExplicitClientPostOptionalStringPropertyOptions contains the optional parameters for the ExplicitClient.PostOptionalStringProperty
 // method.
-type ExplicitPostOptionalStringPropertyOptions struct {
+type ExplicitClientPostOptionalStringPropertyOptions struct {
 	BodyParameter *StringOptionalWrapper
 }
 
-// ExplicitPostRequiredArrayHeaderOptions contains the optional parameters for the ExplicitClient.PostRequiredArrayHeader
+// ExplicitClientPostRequiredArrayHeaderOptions contains the optional parameters for the ExplicitClient.PostRequiredArrayHeader
 // method.
-type ExplicitPostRequiredArrayHeaderOptions struct {
+type ExplicitClientPostRequiredArrayHeaderOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPostRequiredArrayParameterOptions contains the optional parameters for the ExplicitClient.PostRequiredArrayParameter
+// ExplicitClientPostRequiredArrayParameterOptions contains the optional parameters for the ExplicitClient.PostRequiredArrayParameter
 // method.
-type ExplicitPostRequiredArrayParameterOptions struct {
+type ExplicitClientPostRequiredArrayParameterOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPostRequiredArrayPropertyOptions contains the optional parameters for the ExplicitClient.PostRequiredArrayProperty
+// ExplicitClientPostRequiredArrayPropertyOptions contains the optional parameters for the ExplicitClient.PostRequiredArrayProperty
 // method.
-type ExplicitPostRequiredArrayPropertyOptions struct {
+type ExplicitClientPostRequiredArrayPropertyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPostRequiredClassParameterOptions contains the optional parameters for the ExplicitClient.PostRequiredClassParameter
+// ExplicitClientPostRequiredClassParameterOptions contains the optional parameters for the ExplicitClient.PostRequiredClassParameter
 // method.
-type ExplicitPostRequiredClassParameterOptions struct {
+type ExplicitClientPostRequiredClassParameterOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPostRequiredClassPropertyOptions contains the optional parameters for the ExplicitClient.PostRequiredClassProperty
+// ExplicitClientPostRequiredClassPropertyOptions contains the optional parameters for the ExplicitClient.PostRequiredClassProperty
 // method.
-type ExplicitPostRequiredClassPropertyOptions struct {
+type ExplicitClientPostRequiredClassPropertyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPostRequiredIntegerHeaderOptions contains the optional parameters for the ExplicitClient.PostRequiredIntegerHeader
+// ExplicitClientPostRequiredIntegerHeaderOptions contains the optional parameters for the ExplicitClient.PostRequiredIntegerHeader
 // method.
-type ExplicitPostRequiredIntegerHeaderOptions struct {
+type ExplicitClientPostRequiredIntegerHeaderOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPostRequiredIntegerParameterOptions contains the optional parameters for the ExplicitClient.PostRequiredIntegerParameter
+// ExplicitClientPostRequiredIntegerParameterOptions contains the optional parameters for the ExplicitClient.PostRequiredIntegerParameter
 // method.
-type ExplicitPostRequiredIntegerParameterOptions struct {
+type ExplicitClientPostRequiredIntegerParameterOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPostRequiredIntegerPropertyOptions contains the optional parameters for the ExplicitClient.PostRequiredIntegerProperty
+// ExplicitClientPostRequiredIntegerPropertyOptions contains the optional parameters for the ExplicitClient.PostRequiredIntegerProperty
 // method.
-type ExplicitPostRequiredIntegerPropertyOptions struct {
+type ExplicitClientPostRequiredIntegerPropertyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPostRequiredStringHeaderOptions contains the optional parameters for the ExplicitClient.PostRequiredStringHeader
+// ExplicitClientPostRequiredStringHeaderOptions contains the optional parameters for the ExplicitClient.PostRequiredStringHeader
 // method.
-type ExplicitPostRequiredStringHeaderOptions struct {
+type ExplicitClientPostRequiredStringHeaderOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPostRequiredStringParameterOptions contains the optional parameters for the ExplicitClient.PostRequiredStringParameter
+// ExplicitClientPostRequiredStringParameterOptions contains the optional parameters for the ExplicitClient.PostRequiredStringParameter
 // method.
-type ExplicitPostRequiredStringParameterOptions struct {
+type ExplicitClientPostRequiredStringParameterOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPostRequiredStringPropertyOptions contains the optional parameters for the ExplicitClient.PostRequiredStringProperty
+// ExplicitClientPostRequiredStringPropertyOptions contains the optional parameters for the ExplicitClient.PostRequiredStringProperty
 // method.
-type ExplicitPostRequiredStringPropertyOptions struct {
+type ExplicitClientPostRequiredStringPropertyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ExplicitPutOptionalBinaryBodyOptions contains the optional parameters for the ExplicitClient.PutOptionalBinaryBody method.
-type ExplicitPutOptionalBinaryBodyOptions struct {
+// ExplicitClientPutOptionalBinaryBodyOptions contains the optional parameters for the ExplicitClient.PutOptionalBinaryBody
+// method.
+type ExplicitClientPutOptionalBinaryBodyOptions struct {
 	BodyParameter io.ReadSeekCloser
 }
 
-// ExplicitPutRequiredBinaryBodyOptions contains the optional parameters for the ExplicitClient.PutRequiredBinaryBody method.
-type ExplicitPutRequiredBinaryBodyOptions struct {
+// ExplicitClientPutRequiredBinaryBodyOptions contains the optional parameters for the ExplicitClient.PutRequiredBinaryBody
+// method.
+type ExplicitClientPutRequiredBinaryBodyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ImplicitGetOptionalGlobalQueryOptions contains the optional parameters for the ImplicitClient.GetOptionalGlobalQuery method.
-type ImplicitGetOptionalGlobalQueryOptions struct {
+// ImplicitClientGetOptionalGlobalQueryOptions contains the optional parameters for the ImplicitClient.GetOptionalGlobalQuery
+// method.
+type ImplicitClientGetOptionalGlobalQueryOptions struct {
 }
 
-// ImplicitGetRequiredGlobalPathOptions contains the optional parameters for the ImplicitClient.GetRequiredGlobalPath method.
-type ImplicitGetRequiredGlobalPathOptions struct {
+// ImplicitClientGetRequiredGlobalPathOptions contains the optional parameters for the ImplicitClient.GetRequiredGlobalPath
+// method.
+type ImplicitClientGetRequiredGlobalPathOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ImplicitGetRequiredGlobalQueryOptions contains the optional parameters for the ImplicitClient.GetRequiredGlobalQuery method.
-type ImplicitGetRequiredGlobalQueryOptions struct {
+// ImplicitClientGetRequiredGlobalQueryOptions contains the optional parameters for the ImplicitClient.GetRequiredGlobalQuery
+// method.
+type ImplicitClientGetRequiredGlobalQueryOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ImplicitGetRequiredPathOptions contains the optional parameters for the ImplicitClient.GetRequiredPath method.
-type ImplicitGetRequiredPathOptions struct {
+// ImplicitClientGetRequiredPathOptions contains the optional parameters for the ImplicitClient.GetRequiredPath method.
+type ImplicitClientGetRequiredPathOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ImplicitPutOptionalBinaryBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBinaryBody method.
-type ImplicitPutOptionalBinaryBodyOptions struct {
+// ImplicitClientPutOptionalBinaryBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBinaryBody
+// method.
+type ImplicitClientPutOptionalBinaryBodyOptions struct {
 	BodyParameter io.ReadSeekCloser
 }
 
-// ImplicitPutOptionalBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBody method.
-type ImplicitPutOptionalBodyOptions struct {
+// ImplicitClientPutOptionalBodyOptions contains the optional parameters for the ImplicitClient.PutOptionalBody method.
+type ImplicitClientPutOptionalBodyOptions struct {
 	BodyParameter *string
 }
 
-// ImplicitPutOptionalHeaderOptions contains the optional parameters for the ImplicitClient.PutOptionalHeader method.
-type ImplicitPutOptionalHeaderOptions struct {
+// ImplicitClientPutOptionalHeaderOptions contains the optional parameters for the ImplicitClient.PutOptionalHeader method.
+type ImplicitClientPutOptionalHeaderOptions struct {
 	QueryParameter *string
 }
 
-// ImplicitPutOptionalQueryOptions contains the optional parameters for the ImplicitClient.PutOptionalQuery method.
-type ImplicitPutOptionalQueryOptions struct {
+// ImplicitClientPutOptionalQueryOptions contains the optional parameters for the ImplicitClient.PutOptionalQuery method.
+type ImplicitClientPutOptionalQueryOptions struct {
 	QueryParameter *string
 }
 

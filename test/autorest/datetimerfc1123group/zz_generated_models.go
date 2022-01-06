@@ -8,53 +8,53 @@
 
 package datetimerfc1123group
 
-// Datetimerfc1123GetInvalidOptions contains the optional parameters for the Datetimerfc1123Client.GetInvalid method.
-type Datetimerfc1123GetInvalidOptions struct {
+// Datetimerfc1123ClientGetInvalidOptions contains the optional parameters for the Datetimerfc1123Client.GetInvalid method.
+type Datetimerfc1123ClientGetInvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Datetimerfc1123GetNullOptions contains the optional parameters for the Datetimerfc1123Client.GetNull method.
-type Datetimerfc1123GetNullOptions struct {
+// Datetimerfc1123ClientGetNullOptions contains the optional parameters for the Datetimerfc1123Client.GetNull method.
+type Datetimerfc1123ClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Datetimerfc1123GetOverflowOptions contains the optional parameters for the Datetimerfc1123Client.GetOverflow method.
-type Datetimerfc1123GetOverflowOptions struct {
+// Datetimerfc1123ClientGetOverflowOptions contains the optional parameters for the Datetimerfc1123Client.GetOverflow method.
+type Datetimerfc1123ClientGetOverflowOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Datetimerfc1123GetUTCLowercaseMaxDateTimeOptions contains the optional parameters for the Datetimerfc1123Client.GetUTCLowercaseMaxDateTime
+// Datetimerfc1123ClientGetUTCLowercaseMaxDateTimeOptions contains the optional parameters for the Datetimerfc1123Client.GetUTCLowercaseMaxDateTime
 // method.
-type Datetimerfc1123GetUTCLowercaseMaxDateTimeOptions struct {
+type Datetimerfc1123ClientGetUTCLowercaseMaxDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Datetimerfc1123GetUTCMinDateTimeOptions contains the optional parameters for the Datetimerfc1123Client.GetUTCMinDateTime
+// Datetimerfc1123ClientGetUTCMinDateTimeOptions contains the optional parameters for the Datetimerfc1123Client.GetUTCMinDateTime
 // method.
-type Datetimerfc1123GetUTCMinDateTimeOptions struct {
+type Datetimerfc1123ClientGetUTCMinDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Datetimerfc1123GetUTCUppercaseMaxDateTimeOptions contains the optional parameters for the Datetimerfc1123Client.GetUTCUppercaseMaxDateTime
+// Datetimerfc1123ClientGetUTCUppercaseMaxDateTimeOptions contains the optional parameters for the Datetimerfc1123Client.GetUTCUppercaseMaxDateTime
 // method.
-type Datetimerfc1123GetUTCUppercaseMaxDateTimeOptions struct {
+type Datetimerfc1123ClientGetUTCUppercaseMaxDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Datetimerfc1123GetUnderflowOptions contains the optional parameters for the Datetimerfc1123Client.GetUnderflow method.
-type Datetimerfc1123GetUnderflowOptions struct {
+// Datetimerfc1123ClientGetUnderflowOptions contains the optional parameters for the Datetimerfc1123Client.GetUnderflow method.
+type Datetimerfc1123ClientGetUnderflowOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Datetimerfc1123PutUTCMaxDateTimeOptions contains the optional parameters for the Datetimerfc1123Client.PutUTCMaxDateTime
+// Datetimerfc1123ClientPutUTCMaxDateTimeOptions contains the optional parameters for the Datetimerfc1123Client.PutUTCMaxDateTime
 // method.
-type Datetimerfc1123PutUTCMaxDateTimeOptions struct {
+type Datetimerfc1123ClientPutUTCMaxDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// Datetimerfc1123PutUTCMinDateTimeOptions contains the optional parameters for the Datetimerfc1123Client.PutUTCMinDateTime
+// Datetimerfc1123ClientPutUTCMinDateTimeOptions contains the optional parameters for the Datetimerfc1123Client.PutUTCMinDateTime
 // method.
-type Datetimerfc1123PutUTCMinDateTimeOptions struct {
+type Datetimerfc1123ClientPutUTCMinDateTimeOptions struct {
 	// placeholder for future optional parameters
 }
 

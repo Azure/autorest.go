@@ -56,20 +56,21 @@ func NewRolesClient(subscriptionID string, credential azcore.TokenCredential, op
 // name - The role name.
 // resourceGroupName - The resource group name.
 // role - The role properties.
-// options - RolesBeginCreateOrUpdateOptions contains the optional parameters for the RolesClient.BeginCreateOrUpdate method.
-func (client *RolesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, role RoleClassification, options *RolesBeginCreateOrUpdateOptions) (RolesCreateOrUpdatePollerResponse, error) {
+// options - RolesClientBeginCreateOrUpdateOptions contains the optional parameters for the RolesClient.BeginCreateOrUpdate
+// method.
+func (client *RolesClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, role RoleClassification, options *RolesClientBeginCreateOrUpdateOptions) (RolesClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, role, options)
 	if err != nil {
-		return RolesCreateOrUpdatePollerResponse{}, err
+		return RolesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := RolesCreateOrUpdatePollerResponse{
+	result := RolesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("RolesClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return RolesCreateOrUpdatePollerResponse{}, err
+		return RolesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &RolesCreateOrUpdatePoller{
+	result.Poller = &RolesClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -77,7 +78,7 @@ func (client *RolesClient) BeginCreateOrUpdate(ctx context.Context, deviceName s
 
 // CreateOrUpdate - Create or update a role.
 // If the operation fails it returns the *CloudError error type.
-func (client *RolesClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, role RoleClassification, options *RolesBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *RolesClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, role RoleClassification, options *RolesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, role, options)
 	if err != nil {
 		return nil, err
@@ -93,7 +94,7 @@ func (client *RolesClient) createOrUpdate(ctx context.Context, deviceName string
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *RolesClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, role RoleClassification, options *RolesBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *RolesClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, role RoleClassification, options *RolesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -140,20 +141,20 @@ func (client *RolesClient) createOrUpdateHandleError(resp *http.Response) error 
 // deviceName - The device name.
 // name - The role name.
 // resourceGroupName - The resource group name.
-// options - RolesBeginDeleteOptions contains the optional parameters for the RolesClient.BeginDelete method.
-func (client *RolesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesBeginDeleteOptions) (RolesDeletePollerResponse, error) {
+// options - RolesClientBeginDeleteOptions contains the optional parameters for the RolesClient.BeginDelete method.
+func (client *RolesClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesClientBeginDeleteOptions) (RolesClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return RolesDeletePollerResponse{}, err
+		return RolesClientDeletePollerResponse{}, err
 	}
-	result := RolesDeletePollerResponse{
+	result := RolesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("RolesClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return RolesDeletePollerResponse{}, err
+		return RolesClientDeletePollerResponse{}, err
 	}
-	result.Poller = &RolesDeletePoller{
+	result.Poller = &RolesClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -161,7 +162,7 @@ func (client *RolesClient) BeginDelete(ctx context.Context, deviceName string, n
 
 // Delete - Deletes the role on the device.
 // If the operation fails it returns the *CloudError error type.
-func (client *RolesClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesBeginDeleteOptions) (*http.Response, error) {
+func (client *RolesClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -177,7 +178,7 @@ func (client *RolesClient) deleteOperation(ctx context.Context, deviceName strin
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *RolesClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesBeginDeleteOptions) (*policy.Request, error) {
+func (client *RolesClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -224,24 +225,24 @@ func (client *RolesClient) deleteHandleError(resp *http.Response) error {
 // deviceName - The device name.
 // name - The role name.
 // resourceGroupName - The resource group name.
-// options - RolesGetOptions contains the optional parameters for the RolesClient.Get method.
-func (client *RolesClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesGetOptions) (RolesGetResponse, error) {
+// options - RolesClientGetOptions contains the optional parameters for the RolesClient.Get method.
+func (client *RolesClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesClientGetOptions) (RolesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return RolesGetResponse{}, err
+		return RolesClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return RolesGetResponse{}, err
+		return RolesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RolesGetResponse{}, client.getHandleError(resp)
+		return RolesClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *RolesClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesGetOptions) (*policy.Request, error) {
+func (client *RolesClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *RolesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -271,10 +272,10 @@ func (client *RolesClient) getCreateRequest(ctx context.Context, deviceName stri
 }
 
 // getHandleResponse handles the Get response.
-func (client *RolesClient) getHandleResponse(resp *http.Response) (RolesGetResponse, error) {
-	result := RolesGetResponse{RawResponse: resp}
+func (client *RolesClient) getHandleResponse(resp *http.Response) (RolesClientGetResponse, error) {
+	result := RolesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return RolesGetResponse{}, runtime.NewResponseError(err, resp)
+		return RolesClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -296,22 +297,22 @@ func (client *RolesClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - RolesListByDataBoxEdgeDeviceOptions contains the optional parameters for the RolesClient.ListByDataBoxEdgeDevice
+// options - RolesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the RolesClient.ListByDataBoxEdgeDevice
 // method.
-func (client *RolesClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *RolesListByDataBoxEdgeDeviceOptions) *RolesListByDataBoxEdgeDevicePager {
-	return &RolesListByDataBoxEdgeDevicePager{
+func (client *RolesClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *RolesClientListByDataBoxEdgeDeviceOptions) *RolesClientListByDataBoxEdgeDevicePager {
+	return &RolesClientListByDataBoxEdgeDevicePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp RolesListByDataBoxEdgeDeviceResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp RolesClientListByDataBoxEdgeDeviceResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.RoleList.NextLink)
 		},
 	}
 }
 
 // listByDataBoxEdgeDeviceCreateRequest creates the ListByDataBoxEdgeDevice request.
-func (client *RolesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *RolesListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
+func (client *RolesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *RolesClientListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -337,10 +338,10 @@ func (client *RolesClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Cont
 }
 
 // listByDataBoxEdgeDeviceHandleResponse handles the ListByDataBoxEdgeDevice response.
-func (client *RolesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (RolesListByDataBoxEdgeDeviceResponse, error) {
-	result := RolesListByDataBoxEdgeDeviceResponse{RawResponse: resp}
+func (client *RolesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (RolesClientListByDataBoxEdgeDeviceResponse, error) {
+	result := RolesClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleList); err != nil {
-		return RolesListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
+		return RolesClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

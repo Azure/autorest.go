@@ -8,17 +8,17 @@
 
 package headgroup
 
-// HTTPSuccessHead200Options contains the optional parameters for the HTTPSuccessClient.Head200 method.
-type HTTPSuccessHead200Options struct {
+// HTTPSuccessClientHead200Options contains the optional parameters for the HTTPSuccessClient.Head200 method.
+type HTTPSuccessClientHead200Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessHead204Options contains the optional parameters for the HTTPSuccessClient.Head204 method.
-type HTTPSuccessHead204Options struct {
+// HTTPSuccessClientHead204Options contains the optional parameters for the HTTPSuccessClient.Head204 method.
+type HTTPSuccessClientHead204Options struct {
 	// placeholder for future optional parameters
 }
 
-// HTTPSuccessHead404Options contains the optional parameters for the HTTPSuccessClient.Head404 method.
-type HTTPSuccessHead404Options struct {
+// HTTPSuccessClientHead404Options contains the optional parameters for the HTTPSuccessClient.Head404 method.
+type HTTPSuccessClientHead404Options struct {
 	// placeholder for future optional parameters
 }

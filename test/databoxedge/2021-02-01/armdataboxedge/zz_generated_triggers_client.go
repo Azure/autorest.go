@@ -56,21 +56,21 @@ func NewTriggersClient(subscriptionID string, credential azcore.TokenCredential,
 // name - The trigger name.
 // resourceGroupName - The resource group name.
 // trigger - The trigger.
-// options - TriggersBeginCreateOrUpdateOptions contains the optional parameters for the TriggersClient.BeginCreateOrUpdate
+// options - TriggersClientBeginCreateOrUpdateOptions contains the optional parameters for the TriggersClient.BeginCreateOrUpdate
 // method.
-func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersBeginCreateOrUpdateOptions) (TriggersCreateOrUpdatePollerResponse, error) {
+func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersClientBeginCreateOrUpdateOptions) (TriggersClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, trigger, options)
 	if err != nil {
-		return TriggersCreateOrUpdatePollerResponse{}, err
+		return TriggersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := TriggersCreateOrUpdatePollerResponse{
+	result := TriggersClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("TriggersClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return TriggersCreateOrUpdatePollerResponse{}, err
+		return TriggersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &TriggersCreateOrUpdatePoller{
+	result.Poller = &TriggersClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceNam
 
 // CreateOrUpdate - Creates or updates a trigger.
 // If the operation fails it returns the *CloudError error type.
-func (client *TriggersClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *TriggersClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, trigger, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *TriggersClient) createOrUpdate(ctx context.Context, deviceName str
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *TriggersClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *TriggersClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/triggers/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -141,20 +141,20 @@ func (client *TriggersClient) createOrUpdateHandleError(resp *http.Response) err
 // deviceName - The device name.
 // name - The trigger name.
 // resourceGroupName - The resource group name.
-// options - TriggersBeginDeleteOptions contains the optional parameters for the TriggersClient.BeginDelete method.
-func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersBeginDeleteOptions) (TriggersDeletePollerResponse, error) {
+// options - TriggersClientBeginDeleteOptions contains the optional parameters for the TriggersClient.BeginDelete method.
+func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientBeginDeleteOptions) (TriggersClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return TriggersDeletePollerResponse{}, err
+		return TriggersClientDeletePollerResponse{}, err
 	}
-	result := TriggersDeletePollerResponse{
+	result := TriggersClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("TriggersClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return TriggersDeletePollerResponse{}, err
+		return TriggersClientDeletePollerResponse{}, err
 	}
-	result.Poller = &TriggersDeletePoller{
+	result.Poller = &TriggersClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -162,7 +162,7 @@ func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string
 
 // Delete - Deletes the trigger on the gateway device.
 // If the operation fails it returns the *CloudError error type.
-func (client *TriggersClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersBeginDeleteOptions) (*http.Response, error) {
+func (client *TriggersClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -178,7 +178,7 @@ func (client *TriggersClient) deleteOperation(ctx context.Context, deviceName st
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *TriggersClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersBeginDeleteOptions) (*policy.Request, error) {
+func (client *TriggersClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/triggers/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -225,24 +225,24 @@ func (client *TriggersClient) deleteHandleError(resp *http.Response) error {
 // deviceName - The device name.
 // name - The trigger name.
 // resourceGroupName - The resource group name.
-// options - TriggersGetOptions contains the optional parameters for the TriggersClient.Get method.
-func (client *TriggersClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersGetOptions) (TriggersGetResponse, error) {
+// options - TriggersClientGetOptions contains the optional parameters for the TriggersClient.Get method.
+func (client *TriggersClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientGetOptions) (TriggersClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return TriggersGetResponse{}, err
+		return TriggersClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return TriggersGetResponse{}, err
+		return TriggersClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return TriggersGetResponse{}, client.getHandleError(resp)
+		return TriggersClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *TriggersClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersGetOptions) (*policy.Request, error) {
+func (client *TriggersClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/triggers/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -272,10 +272,10 @@ func (client *TriggersClient) getCreateRequest(ctx context.Context, deviceName s
 }
 
 // getHandleResponse handles the Get response.
-func (client *TriggersClient) getHandleResponse(resp *http.Response) (TriggersGetResponse, error) {
-	result := TriggersGetResponse{RawResponse: resp}
+func (client *TriggersClient) getHandleResponse(resp *http.Response) (TriggersClientGetResponse, error) {
+	result := TriggersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return TriggersGetResponse{}, runtime.NewResponseError(err, resp)
+		return TriggersClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -297,22 +297,22 @@ func (client *TriggersClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - TriggersListByDataBoxEdgeDeviceOptions contains the optional parameters for the TriggersClient.ListByDataBoxEdgeDevice
+// options - TriggersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the TriggersClient.ListByDataBoxEdgeDevice
 // method.
-func (client *TriggersClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *TriggersListByDataBoxEdgeDeviceOptions) *TriggersListByDataBoxEdgeDevicePager {
-	return &TriggersListByDataBoxEdgeDevicePager{
+func (client *TriggersClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *TriggersClientListByDataBoxEdgeDeviceOptions) *TriggersClientListByDataBoxEdgeDevicePager {
+	return &TriggersClientListByDataBoxEdgeDevicePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp TriggersListByDataBoxEdgeDeviceResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp TriggersClientListByDataBoxEdgeDeviceResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.TriggerList.NextLink)
 		},
 	}
 }
 
 // listByDataBoxEdgeDeviceCreateRequest creates the ListByDataBoxEdgeDevice request.
-func (client *TriggersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *TriggersListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
+func (client *TriggersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *TriggersClientListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/triggers"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -341,10 +341,10 @@ func (client *TriggersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.C
 }
 
 // listByDataBoxEdgeDeviceHandleResponse handles the ListByDataBoxEdgeDevice response.
-func (client *TriggersClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (TriggersListByDataBoxEdgeDeviceResponse, error) {
-	result := TriggersListByDataBoxEdgeDeviceResponse{RawResponse: resp}
+func (client *TriggersClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (TriggersClientListByDataBoxEdgeDeviceResponse, error) {
+	result := TriggersClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerList); err != nil {
-		return TriggersListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
+		return TriggersClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

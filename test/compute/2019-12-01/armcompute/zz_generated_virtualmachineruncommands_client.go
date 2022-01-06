@@ -54,25 +54,25 @@ func NewVirtualMachineRunCommandsClient(subscriptionID string, credential azcore
 // If the operation fails it returns a generic error.
 // location - The location upon which run commands is queried.
 // commandID - The command id.
-// options - VirtualMachineRunCommandsGetOptions contains the optional parameters for the VirtualMachineRunCommandsClient.Get
+// options - VirtualMachineRunCommandsClientGetOptions contains the optional parameters for the VirtualMachineRunCommandsClient.Get
 // method.
-func (client *VirtualMachineRunCommandsClient) Get(ctx context.Context, location string, commandID string, options *VirtualMachineRunCommandsGetOptions) (VirtualMachineRunCommandsGetResponse, error) {
+func (client *VirtualMachineRunCommandsClient) Get(ctx context.Context, location string, commandID string, options *VirtualMachineRunCommandsClientGetOptions) (VirtualMachineRunCommandsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, location, commandID, options)
 	if err != nil {
-		return VirtualMachineRunCommandsGetResponse{}, err
+		return VirtualMachineRunCommandsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return VirtualMachineRunCommandsGetResponse{}, err
+		return VirtualMachineRunCommandsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineRunCommandsGetResponse{}, client.getHandleError(resp)
+		return VirtualMachineRunCommandsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *VirtualMachineRunCommandsClient) getCreateRequest(ctx context.Context, location string, commandID string, options *VirtualMachineRunCommandsGetOptions) (*policy.Request, error) {
+func (client *VirtualMachineRunCommandsClient) getCreateRequest(ctx context.Context, location string, commandID string, options *VirtualMachineRunCommandsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands/{commandId}"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -98,10 +98,10 @@ func (client *VirtualMachineRunCommandsClient) getCreateRequest(ctx context.Cont
 }
 
 // getHandleResponse handles the Get response.
-func (client *VirtualMachineRunCommandsClient) getHandleResponse(resp *http.Response) (VirtualMachineRunCommandsGetResponse, error) {
-	result := VirtualMachineRunCommandsGetResponse{RawResponse: resp}
+func (client *VirtualMachineRunCommandsClient) getHandleResponse(resp *http.Response) (VirtualMachineRunCommandsClientGetResponse, error) {
+	result := VirtualMachineRunCommandsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RunCommandDocument); err != nil {
-		return VirtualMachineRunCommandsGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineRunCommandsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -121,22 +121,22 @@ func (client *VirtualMachineRunCommandsClient) getHandleError(resp *http.Respons
 // List - Lists all available run commands for a subscription in a location.
 // If the operation fails it returns a generic error.
 // location - The location upon which run commands is queried.
-// options - VirtualMachineRunCommandsListOptions contains the optional parameters for the VirtualMachineRunCommandsClient.List
+// options - VirtualMachineRunCommandsClientListOptions contains the optional parameters for the VirtualMachineRunCommandsClient.List
 // method.
-func (client *VirtualMachineRunCommandsClient) List(location string, options *VirtualMachineRunCommandsListOptions) *VirtualMachineRunCommandsListPager {
-	return &VirtualMachineRunCommandsListPager{
+func (client *VirtualMachineRunCommandsClient) List(location string, options *VirtualMachineRunCommandsClientListOptions) *VirtualMachineRunCommandsClientListPager {
+	return &VirtualMachineRunCommandsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, location, options)
 		},
-		advancer: func(ctx context.Context, resp VirtualMachineRunCommandsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp VirtualMachineRunCommandsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.RunCommandListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *VirtualMachineRunCommandsClient) listCreateRequest(ctx context.Context, location string, options *VirtualMachineRunCommandsListOptions) (*policy.Request, error) {
+func (client *VirtualMachineRunCommandsClient) listCreateRequest(ctx context.Context, location string, options *VirtualMachineRunCommandsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -158,10 +158,10 @@ func (client *VirtualMachineRunCommandsClient) listCreateRequest(ctx context.Con
 }
 
 // listHandleResponse handles the List response.
-func (client *VirtualMachineRunCommandsClient) listHandleResponse(resp *http.Response) (VirtualMachineRunCommandsListResponse, error) {
-	result := VirtualMachineRunCommandsListResponse{RawResponse: resp}
+func (client *VirtualMachineRunCommandsClient) listHandleResponse(resp *http.Response) (VirtualMachineRunCommandsClientListResponse, error) {
+	result := VirtualMachineRunCommandsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RunCommandListResult); err != nil {
-		return VirtualMachineRunCommandsListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineRunCommandsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

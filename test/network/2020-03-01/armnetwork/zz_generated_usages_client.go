@@ -54,21 +54,21 @@ func NewUsagesClient(subscriptionID string, credential azcore.TokenCredential, o
 // List - List network usages for a subscription.
 // If the operation fails it returns the *CloudError error type.
 // location - The location where resource usage is queried.
-// options - UsagesListOptions contains the optional parameters for the UsagesClient.List method.
-func (client *UsagesClient) List(location string, options *UsagesListOptions) *UsagesListPager {
-	return &UsagesListPager{
+// options - UsagesClientListOptions contains the optional parameters for the UsagesClient.List method.
+func (client *UsagesClient) List(location string, options *UsagesClientListOptions) *UsagesClientListPager {
+	return &UsagesClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, location, options)
 		},
-		advancer: func(ctx context.Context, resp UsagesListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp UsagesClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.UsagesListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *UsagesClient) listCreateRequest(ctx context.Context, location string, options *UsagesListOptions) (*policy.Request, error) {
+func (client *UsagesClient) listCreateRequest(ctx context.Context, location string, options *UsagesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -90,10 +90,10 @@ func (client *UsagesClient) listCreateRequest(ctx context.Context, location stri
 }
 
 // listHandleResponse handles the List response.
-func (client *UsagesClient) listHandleResponse(resp *http.Response) (UsagesListResponse, error) {
-	result := UsagesListResponse{RawResponse: resp}
+func (client *UsagesClient) listHandleResponse(resp *http.Response) (UsagesClientListResponse, error) {
+	result := UsagesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.UsagesListResult); err != nil {
-		return UsagesListResponse{}, runtime.NewResponseError(err, resp)
+		return UsagesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

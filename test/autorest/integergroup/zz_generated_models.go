@@ -21,72 +21,72 @@ func (e Error) Error() string {
 	return e.raw
 }
 
-// IntGetInvalidOptions contains the optional parameters for the IntClient.GetInvalid method.
-type IntGetInvalidOptions struct {
+// IntClientGetInvalidOptions contains the optional parameters for the IntClient.GetInvalid method.
+type IntClientGetInvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IntGetInvalidUnixTimeOptions contains the optional parameters for the IntClient.GetInvalidUnixTime method.
-type IntGetInvalidUnixTimeOptions struct {
+// IntClientGetInvalidUnixTimeOptions contains the optional parameters for the IntClient.GetInvalidUnixTime method.
+type IntClientGetInvalidUnixTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IntGetNullOptions contains the optional parameters for the IntClient.GetNull method.
-type IntGetNullOptions struct {
+// IntClientGetNullOptions contains the optional parameters for the IntClient.GetNull method.
+type IntClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IntGetNullUnixTimeOptions contains the optional parameters for the IntClient.GetNullUnixTime method.
-type IntGetNullUnixTimeOptions struct {
+// IntClientGetNullUnixTimeOptions contains the optional parameters for the IntClient.GetNullUnixTime method.
+type IntClientGetNullUnixTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IntGetOverflowInt32Options contains the optional parameters for the IntClient.GetOverflowInt32 method.
-type IntGetOverflowInt32Options struct {
+// IntClientGetOverflowInt32Options contains the optional parameters for the IntClient.GetOverflowInt32 method.
+type IntClientGetOverflowInt32Options struct {
 	// placeholder for future optional parameters
 }
 
-// IntGetOverflowInt64Options contains the optional parameters for the IntClient.GetOverflowInt64 method.
-type IntGetOverflowInt64Options struct {
+// IntClientGetOverflowInt64Options contains the optional parameters for the IntClient.GetOverflowInt64 method.
+type IntClientGetOverflowInt64Options struct {
 	// placeholder for future optional parameters
 }
 
-// IntGetUnderflowInt32Options contains the optional parameters for the IntClient.GetUnderflowInt32 method.
-type IntGetUnderflowInt32Options struct {
+// IntClientGetUnderflowInt32Options contains the optional parameters for the IntClient.GetUnderflowInt32 method.
+type IntClientGetUnderflowInt32Options struct {
 	// placeholder for future optional parameters
 }
 
-// IntGetUnderflowInt64Options contains the optional parameters for the IntClient.GetUnderflowInt64 method.
-type IntGetUnderflowInt64Options struct {
+// IntClientGetUnderflowInt64Options contains the optional parameters for the IntClient.GetUnderflowInt64 method.
+type IntClientGetUnderflowInt64Options struct {
 	// placeholder for future optional parameters
 }
 
-// IntGetUnixTimeOptions contains the optional parameters for the IntClient.GetUnixTime method.
-type IntGetUnixTimeOptions struct {
+// IntClientGetUnixTimeOptions contains the optional parameters for the IntClient.GetUnixTime method.
+type IntClientGetUnixTimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// IntPutMax32Options contains the optional parameters for the IntClient.PutMax32 method.
-type IntPutMax32Options struct {
+// IntClientPutMax32Options contains the optional parameters for the IntClient.PutMax32 method.
+type IntClientPutMax32Options struct {
 	// placeholder for future optional parameters
 }
 
-// IntPutMax64Options contains the optional parameters for the IntClient.PutMax64 method.
-type IntPutMax64Options struct {
+// IntClientPutMax64Options contains the optional parameters for the IntClient.PutMax64 method.
+type IntClientPutMax64Options struct {
 	// placeholder for future optional parameters
 }
 
-// IntPutMin32Options contains the optional parameters for the IntClient.PutMin32 method.
-type IntPutMin32Options struct {
+// IntClientPutMin32Options contains the optional parameters for the IntClient.PutMin32 method.
+type IntClientPutMin32Options struct {
 	// placeholder for future optional parameters
 }
 
-// IntPutMin64Options contains the optional parameters for the IntClient.PutMin64 method.
-type IntPutMin64Options struct {
+// IntClientPutMin64Options contains the optional parameters for the IntClient.PutMin64 method.
+type IntClientPutMin64Options struct {
 	// placeholder for future optional parameters
 }
 
-// IntPutUnixTimeDateOptions contains the optional parameters for the IntClient.PutUnixTimeDate method.
-type IntPutUnixTimeDateOptions struct {
+// IntClientPutUnixTimeDateOptions contains the optional parameters for the IntClient.PutUnixTimeDate method.
+type IntClientPutUnixTimeDateOptions struct {
 	// placeholder for future optional parameters
 }

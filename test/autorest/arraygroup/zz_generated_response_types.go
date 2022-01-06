@@ -13,776 +13,776 @@ import (
 	"time"
 )
 
-// ArrayGetArrayEmptyResponse contains the response from method Array.GetArrayEmpty.
-type ArrayGetArrayEmptyResponse struct {
-	ArrayGetArrayEmptyResult
+// ArrayClientGetArrayEmptyResponse contains the response from method ArrayClient.GetArrayEmpty.
+type ArrayClientGetArrayEmptyResponse struct {
+	ArrayClientGetArrayEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetArrayEmptyResult contains the result from method Array.GetArrayEmpty.
-type ArrayGetArrayEmptyResult struct {
+// ArrayClientGetArrayEmptyResult contains the result from method ArrayClient.GetArrayEmpty.
+type ArrayClientGetArrayEmptyResult struct {
 	// An empty array []
 	StringArrayArray [][]*string
 }
 
-// ArrayGetArrayItemEmptyResponse contains the response from method Array.GetArrayItemEmpty.
-type ArrayGetArrayItemEmptyResponse struct {
-	ArrayGetArrayItemEmptyResult
+// ArrayClientGetArrayItemEmptyResponse contains the response from method ArrayClient.GetArrayItemEmpty.
+type ArrayClientGetArrayItemEmptyResponse struct {
+	ArrayClientGetArrayItemEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetArrayItemEmptyResult contains the result from method Array.GetArrayItemEmpty.
-type ArrayGetArrayItemEmptyResult struct {
+// ArrayClientGetArrayItemEmptyResult contains the result from method ArrayClient.GetArrayItemEmpty.
+type ArrayClientGetArrayItemEmptyResult struct {
 	// An array of array of strings [['1', '2', '3'], [], ['7', '8', '9']]
 	StringArrayArray [][]*string
 }
 
-// ArrayGetArrayItemNullResponse contains the response from method Array.GetArrayItemNull.
-type ArrayGetArrayItemNullResponse struct {
-	ArrayGetArrayItemNullResult
+// ArrayClientGetArrayItemNullResponse contains the response from method ArrayClient.GetArrayItemNull.
+type ArrayClientGetArrayItemNullResponse struct {
+	ArrayClientGetArrayItemNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetArrayItemNullResult contains the result from method Array.GetArrayItemNull.
-type ArrayGetArrayItemNullResult struct {
+// ArrayClientGetArrayItemNullResult contains the result from method ArrayClient.GetArrayItemNull.
+type ArrayClientGetArrayItemNullResult struct {
 	// An array of array of strings [['1', '2', '3'], null, ['7', '8', '9']]
 	StringArrayArray [][]*string
 }
 
-// ArrayGetArrayNullResponse contains the response from method Array.GetArrayNull.
-type ArrayGetArrayNullResponse struct {
-	ArrayGetArrayNullResult
+// ArrayClientGetArrayNullResponse contains the response from method ArrayClient.GetArrayNull.
+type ArrayClientGetArrayNullResponse struct {
+	ArrayClientGetArrayNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetArrayNullResult contains the result from method Array.GetArrayNull.
-type ArrayGetArrayNullResult struct {
+// ArrayClientGetArrayNullResult contains the result from method ArrayClient.GetArrayNull.
+type ArrayClientGetArrayNullResult struct {
 	// a null array
 	StringArrayArray [][]*string
 }
 
-// ArrayGetArrayValidResponse contains the response from method Array.GetArrayValid.
-type ArrayGetArrayValidResponse struct {
-	ArrayGetArrayValidResult
+// ArrayClientGetArrayValidResponse contains the response from method ArrayClient.GetArrayValid.
+type ArrayClientGetArrayValidResponse struct {
+	ArrayClientGetArrayValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetArrayValidResult contains the result from method Array.GetArrayValid.
-type ArrayGetArrayValidResult struct {
+// ArrayClientGetArrayValidResult contains the result from method ArrayClient.GetArrayValid.
+type ArrayClientGetArrayValidResult struct {
 	// An array of array of strings [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
 	StringArrayArray [][]*string
 }
 
-// ArrayGetBase64URLResponse contains the response from method Array.GetBase64URL.
-type ArrayGetBase64URLResponse struct {
-	ArrayGetBase64URLResult
+// ArrayClientGetBase64URLResponse contains the response from method ArrayClient.GetBase64URL.
+type ArrayClientGetBase64URLResponse struct {
+	ArrayClientGetBase64URLResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetBase64URLResult contains the result from method Array.GetBase64URL.
-type ArrayGetBase64URLResult struct {
+// ArrayClientGetBase64URLResult contains the result from method ArrayClient.GetBase64URL.
+type ArrayClientGetBase64URLResult struct {
 	// Get array value ['a string that gets encoded with base64url', 'test string' 'Lorem ipsum'] with the items base64url encoded
 	ByteArrayArray [][]byte
 }
 
-// ArrayGetBooleanInvalidNullResponse contains the response from method Array.GetBooleanInvalidNull.
-type ArrayGetBooleanInvalidNullResponse struct {
-	ArrayGetBooleanInvalidNullResult
+// ArrayClientGetBooleanInvalidNullResponse contains the response from method ArrayClient.GetBooleanInvalidNull.
+type ArrayClientGetBooleanInvalidNullResponse struct {
+	ArrayClientGetBooleanInvalidNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetBooleanInvalidNullResult contains the result from method Array.GetBooleanInvalidNull.
-type ArrayGetBooleanInvalidNullResult struct {
+// ArrayClientGetBooleanInvalidNullResult contains the result from method ArrayClient.GetBooleanInvalidNull.
+type ArrayClientGetBooleanInvalidNullResult struct {
 	// The array value [true, null, false]
 	BoolArray []*bool
 }
 
-// ArrayGetBooleanInvalidStringResponse contains the response from method Array.GetBooleanInvalidString.
-type ArrayGetBooleanInvalidStringResponse struct {
-	ArrayGetBooleanInvalidStringResult
+// ArrayClientGetBooleanInvalidStringResponse contains the response from method ArrayClient.GetBooleanInvalidString.
+type ArrayClientGetBooleanInvalidStringResponse struct {
+	ArrayClientGetBooleanInvalidStringResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetBooleanInvalidStringResult contains the result from method Array.GetBooleanInvalidString.
-type ArrayGetBooleanInvalidStringResult struct {
+// ArrayClientGetBooleanInvalidStringResult contains the result from method ArrayClient.GetBooleanInvalidString.
+type ArrayClientGetBooleanInvalidStringResult struct {
 	// The array value [true, 'boolean', false]
 	BoolArray []*bool
 }
 
-// ArrayGetBooleanTfftResponse contains the response from method Array.GetBooleanTfft.
-type ArrayGetBooleanTfftResponse struct {
-	ArrayGetBooleanTfftResult
+// ArrayClientGetBooleanTfftResponse contains the response from method ArrayClient.GetBooleanTfft.
+type ArrayClientGetBooleanTfftResponse struct {
+	ArrayClientGetBooleanTfftResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetBooleanTfftResult contains the result from method Array.GetBooleanTfft.
-type ArrayGetBooleanTfftResult struct {
+// ArrayClientGetBooleanTfftResult contains the result from method ArrayClient.GetBooleanTfft.
+type ArrayClientGetBooleanTfftResult struct {
 	// The array value [true, false, false, true]
 	BoolArray []*bool
 }
 
-// ArrayGetByteInvalidNullResponse contains the response from method Array.GetByteInvalidNull.
-type ArrayGetByteInvalidNullResponse struct {
-	ArrayGetByteInvalidNullResult
+// ArrayClientGetByteInvalidNullResponse contains the response from method ArrayClient.GetByteInvalidNull.
+type ArrayClientGetByteInvalidNullResponse struct {
+	ArrayClientGetByteInvalidNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetByteInvalidNullResult contains the result from method Array.GetByteInvalidNull.
-type ArrayGetByteInvalidNullResult struct {
+// ArrayClientGetByteInvalidNullResult contains the result from method ArrayClient.GetByteInvalidNull.
+type ArrayClientGetByteInvalidNullResult struct {
 	// The byte array value [hex(AB, AC, AD), null] with the first item base64 encoded
 	ByteArrayArray [][]byte
 }
 
-// ArrayGetByteValidResponse contains the response from method Array.GetByteValid.
-type ArrayGetByteValidResponse struct {
-	ArrayGetByteValidResult
+// ArrayClientGetByteValidResponse contains the response from method ArrayClient.GetByteValid.
+type ArrayClientGetByteValidResponse struct {
+	ArrayClientGetByteValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetByteValidResult contains the result from method Array.GetByteValid.
-type ArrayGetByteValidResult struct {
+// ArrayClientGetByteValidResult contains the result from method ArrayClient.GetByteValid.
+type ArrayClientGetByteValidResult struct {
 	// The array value [hex(FF FF FF FA), hex(01 02 03), hex (25, 29, 43)] with each elementencoded in base 64
 	ByteArrayArray [][]byte
 }
 
-// ArrayGetComplexEmptyResponse contains the response from method Array.GetComplexEmpty.
-type ArrayGetComplexEmptyResponse struct {
-	ArrayGetComplexEmptyResult
+// ArrayClientGetComplexEmptyResponse contains the response from method ArrayClient.GetComplexEmpty.
+type ArrayClientGetComplexEmptyResponse struct {
+	ArrayClientGetComplexEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetComplexEmptyResult contains the result from method Array.GetComplexEmpty.
-type ArrayGetComplexEmptyResult struct {
+// ArrayClientGetComplexEmptyResult contains the result from method ArrayClient.GetComplexEmpty.
+type ArrayClientGetComplexEmptyResult struct {
 	// Empty array of complex type []
 	ProductArray []*Product
 }
 
-// ArrayGetComplexItemEmptyResponse contains the response from method Array.GetComplexItemEmpty.
-type ArrayGetComplexItemEmptyResponse struct {
-	ArrayGetComplexItemEmptyResult
+// ArrayClientGetComplexItemEmptyResponse contains the response from method ArrayClient.GetComplexItemEmpty.
+type ArrayClientGetComplexItemEmptyResponse struct {
+	ArrayClientGetComplexItemEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetComplexItemEmptyResult contains the result from method Array.GetComplexItemEmpty.
-type ArrayGetComplexItemEmptyResult struct {
+// ArrayClientGetComplexItemEmptyResult contains the result from method ArrayClient.GetComplexItemEmpty.
+type ArrayClientGetComplexItemEmptyResult struct {
 	// Array of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string': '6'}]
 	ProductArray []*Product
 }
 
-// ArrayGetComplexItemNullResponse contains the response from method Array.GetComplexItemNull.
-type ArrayGetComplexItemNullResponse struct {
-	ArrayGetComplexItemNullResult
+// ArrayClientGetComplexItemNullResponse contains the response from method ArrayClient.GetComplexItemNull.
+type ArrayClientGetComplexItemNullResponse struct {
+	ArrayClientGetComplexItemNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetComplexItemNullResult contains the result from method Array.GetComplexItemNull.
-type ArrayGetComplexItemNullResult struct {
+// ArrayClientGetComplexItemNullResult contains the result from method ArrayClient.GetComplexItemNull.
+type ArrayClientGetComplexItemNullResult struct {
 	// Array of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string': '6'}]
 	ProductArray []*Product
 }
 
-// ArrayGetComplexNullResponse contains the response from method Array.GetComplexNull.
-type ArrayGetComplexNullResponse struct {
-	ArrayGetComplexNullResult
+// ArrayClientGetComplexNullResponse contains the response from method ArrayClient.GetComplexNull.
+type ArrayClientGetComplexNullResponse struct {
+	ArrayClientGetComplexNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetComplexNullResult contains the result from method Array.GetComplexNull.
-type ArrayGetComplexNullResult struct {
+// ArrayClientGetComplexNullResult contains the result from method ArrayClient.GetComplexNull.
+type ArrayClientGetComplexNullResult struct {
 	// array of complex type with null value
 	ProductArray []*Product
 }
 
-// ArrayGetComplexValidResponse contains the response from method Array.GetComplexValid.
-type ArrayGetComplexValidResponse struct {
-	ArrayGetComplexValidResult
+// ArrayClientGetComplexValidResponse contains the response from method ArrayClient.GetComplexValid.
+type ArrayClientGetComplexValidResponse struct {
+	ArrayClientGetComplexValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetComplexValidResult contains the result from method Array.GetComplexValid.
-type ArrayGetComplexValidResult struct {
+// ArrayClientGetComplexValidResult contains the result from method ArrayClient.GetComplexValid.
+type ArrayClientGetComplexValidResult struct {
 	// array of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string': '6'}]
 	ProductArray []*Product
 }
 
-// ArrayGetDateInvalidCharsResponse contains the response from method Array.GetDateInvalidChars.
-type ArrayGetDateInvalidCharsResponse struct {
-	ArrayGetDateInvalidCharsResult
+// ArrayClientGetDateInvalidCharsResponse contains the response from method ArrayClient.GetDateInvalidChars.
+type ArrayClientGetDateInvalidCharsResponse struct {
+	ArrayClientGetDateInvalidCharsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetDateInvalidCharsResult contains the result from method Array.GetDateInvalidChars.
-type ArrayGetDateInvalidCharsResult struct {
+// ArrayClientGetDateInvalidCharsResult contains the result from method ArrayClient.GetDateInvalidChars.
+type ArrayClientGetDateInvalidCharsResult struct {
 	// The array value ['2011-03-22', 'date']
 	TimeArray []*time.Time
 }
 
-// ArrayGetDateInvalidNullResponse contains the response from method Array.GetDateInvalidNull.
-type ArrayGetDateInvalidNullResponse struct {
-	ArrayGetDateInvalidNullResult
+// ArrayClientGetDateInvalidNullResponse contains the response from method ArrayClient.GetDateInvalidNull.
+type ArrayClientGetDateInvalidNullResponse struct {
+	ArrayClientGetDateInvalidNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetDateInvalidNullResult contains the result from method Array.GetDateInvalidNull.
-type ArrayGetDateInvalidNullResult struct {
+// ArrayClientGetDateInvalidNullResult contains the result from method ArrayClient.GetDateInvalidNull.
+type ArrayClientGetDateInvalidNullResult struct {
 	// The array value ['2012-01-01', null, '1776-07-04']
 	TimeArray []*time.Time
 }
 
-// ArrayGetDateTimeInvalidCharsResponse contains the response from method Array.GetDateTimeInvalidChars.
-type ArrayGetDateTimeInvalidCharsResponse struct {
-	ArrayGetDateTimeInvalidCharsResult
+// ArrayClientGetDateTimeInvalidCharsResponse contains the response from method ArrayClient.GetDateTimeInvalidChars.
+type ArrayClientGetDateTimeInvalidCharsResponse struct {
+	ArrayClientGetDateTimeInvalidCharsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetDateTimeInvalidCharsResult contains the result from method Array.GetDateTimeInvalidChars.
-type ArrayGetDateTimeInvalidCharsResult struct {
+// ArrayClientGetDateTimeInvalidCharsResult contains the result from method ArrayClient.GetDateTimeInvalidChars.
+type ArrayClientGetDateTimeInvalidCharsResult struct {
 	// The array value ['2000-12-01t00:00:01z', 'date-time']
 	TimeArray []*time.Time
 }
 
-// ArrayGetDateTimeInvalidNullResponse contains the response from method Array.GetDateTimeInvalidNull.
-type ArrayGetDateTimeInvalidNullResponse struct {
-	ArrayGetDateTimeInvalidNullResult
+// ArrayClientGetDateTimeInvalidNullResponse contains the response from method ArrayClient.GetDateTimeInvalidNull.
+type ArrayClientGetDateTimeInvalidNullResponse struct {
+	ArrayClientGetDateTimeInvalidNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetDateTimeInvalidNullResult contains the result from method Array.GetDateTimeInvalidNull.
-type ArrayGetDateTimeInvalidNullResult struct {
+// ArrayClientGetDateTimeInvalidNullResult contains the result from method ArrayClient.GetDateTimeInvalidNull.
+type ArrayClientGetDateTimeInvalidNullResult struct {
 	// The array value ['2000-12-01t00:00:01z', null]
 	TimeArray []*time.Time
 }
 
-// ArrayGetDateTimeRFC1123ValidResponse contains the response from method Array.GetDateTimeRFC1123Valid.
-type ArrayGetDateTimeRFC1123ValidResponse struct {
-	ArrayGetDateTimeRFC1123ValidResult
+// ArrayClientGetDateTimeRFC1123ValidResponse contains the response from method ArrayClient.GetDateTimeRFC1123Valid.
+type ArrayClientGetDateTimeRFC1123ValidResponse struct {
+	ArrayClientGetDateTimeRFC1123ValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetDateTimeRFC1123ValidResult contains the result from method Array.GetDateTimeRFC1123Valid.
-type ArrayGetDateTimeRFC1123ValidResult struct {
+// ArrayClientGetDateTimeRFC1123ValidResult contains the result from method ArrayClient.GetDateTimeRFC1123Valid.
+type ArrayClientGetDateTimeRFC1123ValidResult struct {
 	// The array value ['Fri, 01 Dec 2000 00:00:01 GMT', 'Wed, 02 Jan 1980 00:11:35 GMT', 'Wed, 12 Oct 1492 10:15:01 GMT']
 	TimeArray []*time.Time
 }
 
-// ArrayGetDateTimeValidResponse contains the response from method Array.GetDateTimeValid.
-type ArrayGetDateTimeValidResponse struct {
-	ArrayGetDateTimeValidResult
+// ArrayClientGetDateTimeValidResponse contains the response from method ArrayClient.GetDateTimeValid.
+type ArrayClientGetDateTimeValidResponse struct {
+	ArrayClientGetDateTimeValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetDateTimeValidResult contains the result from method Array.GetDateTimeValid.
-type ArrayGetDateTimeValidResult struct {
+// ArrayClientGetDateTimeValidResult contains the result from method ArrayClient.GetDateTimeValid.
+type ArrayClientGetDateTimeValidResult struct {
 	// The array value ['2000-12-01t00:00:01z', '1980-01-02T00:11:35+01:00', '1492-10-12T10:15:01-08:00']
 	TimeArray []*time.Time
 }
 
-// ArrayGetDateValidResponse contains the response from method Array.GetDateValid.
-type ArrayGetDateValidResponse struct {
-	ArrayGetDateValidResult
+// ArrayClientGetDateValidResponse contains the response from method ArrayClient.GetDateValid.
+type ArrayClientGetDateValidResponse struct {
+	ArrayClientGetDateValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetDateValidResult contains the result from method Array.GetDateValid.
-type ArrayGetDateValidResult struct {
+// ArrayClientGetDateValidResult contains the result from method ArrayClient.GetDateValid.
+type ArrayClientGetDateValidResult struct {
 	// The array value ['2000-12-01', '1980-01-02', '1492-10-12']
 	TimeArray []*time.Time
 }
 
-// ArrayGetDictionaryEmptyResponse contains the response from method Array.GetDictionaryEmpty.
-type ArrayGetDictionaryEmptyResponse struct {
-	ArrayGetDictionaryEmptyResult
+// ArrayClientGetDictionaryEmptyResponse contains the response from method ArrayClient.GetDictionaryEmpty.
+type ArrayClientGetDictionaryEmptyResponse struct {
+	ArrayClientGetDictionaryEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetDictionaryEmptyResult contains the result from method Array.GetDictionaryEmpty.
-type ArrayGetDictionaryEmptyResult struct {
+// ArrayClientGetDictionaryEmptyResult contains the result from method ArrayClient.GetDictionaryEmpty.
+type ArrayClientGetDictionaryEmptyResult struct {
 	// An array of Dictionaries of type <string, string> with value []
 	MapOfStringArray []map[string]*string
 }
 
-// ArrayGetDictionaryItemEmptyResponse contains the response from method Array.GetDictionaryItemEmpty.
-type ArrayGetDictionaryItemEmptyResponse struct {
-	ArrayGetDictionaryItemEmptyResult
+// ArrayClientGetDictionaryItemEmptyResponse contains the response from method ArrayClient.GetDictionaryItemEmpty.
+type ArrayClientGetDictionaryItemEmptyResponse struct {
+	ArrayClientGetDictionaryItemEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetDictionaryItemEmptyResult contains the result from method Array.GetDictionaryItemEmpty.
-type ArrayGetDictionaryItemEmptyResult struct {
+// ArrayClientGetDictionaryItemEmptyResult contains the result from method ArrayClient.GetDictionaryItemEmpty.
+type ArrayClientGetDictionaryItemEmptyResult struct {
 	// An array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {}, {'7': 'seven',
 	// '8': 'eight', '9': 'nine'}]
 	MapOfStringArray []map[string]*string
 }
 
-// ArrayGetDictionaryItemNullResponse contains the response from method Array.GetDictionaryItemNull.
-type ArrayGetDictionaryItemNullResponse struct {
-	ArrayGetDictionaryItemNullResult
+// ArrayClientGetDictionaryItemNullResponse contains the response from method ArrayClient.GetDictionaryItemNull.
+type ArrayClientGetDictionaryItemNullResponse struct {
+	ArrayClientGetDictionaryItemNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetDictionaryItemNullResult contains the result from method Array.GetDictionaryItemNull.
-type ArrayGetDictionaryItemNullResult struct {
+// ArrayClientGetDictionaryItemNullResult contains the result from method ArrayClient.GetDictionaryItemNull.
+type ArrayClientGetDictionaryItemNullResult struct {
 	// An array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, null, {'7': 'seven',
 	// '8': 'eight', '9': 'nine'}]
 	MapOfStringArray []map[string]*string
 }
 
-// ArrayGetDictionaryNullResponse contains the response from method Array.GetDictionaryNull.
-type ArrayGetDictionaryNullResponse struct {
-	ArrayGetDictionaryNullResult
+// ArrayClientGetDictionaryNullResponse contains the response from method ArrayClient.GetDictionaryNull.
+type ArrayClientGetDictionaryNullResponse struct {
+	ArrayClientGetDictionaryNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetDictionaryNullResult contains the result from method Array.GetDictionaryNull.
-type ArrayGetDictionaryNullResult struct {
+// ArrayClientGetDictionaryNullResult contains the result from method ArrayClient.GetDictionaryNull.
+type ArrayClientGetDictionaryNullResult struct {
 	// An array of Dictionaries with value null
 	MapOfStringArray []map[string]*string
 }
 
-// ArrayGetDictionaryValidResponse contains the response from method Array.GetDictionaryValid.
-type ArrayGetDictionaryValidResponse struct {
-	ArrayGetDictionaryValidResult
+// ArrayClientGetDictionaryValidResponse contains the response from method ArrayClient.GetDictionaryValid.
+type ArrayClientGetDictionaryValidResponse struct {
+	ArrayClientGetDictionaryValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetDictionaryValidResult contains the result from method Array.GetDictionaryValid.
-type ArrayGetDictionaryValidResult struct {
+// ArrayClientGetDictionaryValidResult contains the result from method ArrayClient.GetDictionaryValid.
+type ArrayClientGetDictionaryValidResult struct {
 	// An array of Dictionaries of type <string, string> with value [{'1': 'one', '2': 'two', '3': 'three'}, {'4': 'four', '5':
 	// 'five', '6': 'six'}, {'7': 'seven', '8': 'eight', '9': 'nine'}]
 	MapOfStringArray []map[string]*string
 }
 
-// ArrayGetDoubleInvalidNullResponse contains the response from method Array.GetDoubleInvalidNull.
-type ArrayGetDoubleInvalidNullResponse struct {
-	ArrayGetDoubleInvalidNullResult
+// ArrayClientGetDoubleInvalidNullResponse contains the response from method ArrayClient.GetDoubleInvalidNull.
+type ArrayClientGetDoubleInvalidNullResponse struct {
+	ArrayClientGetDoubleInvalidNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetDoubleInvalidNullResult contains the result from method Array.GetDoubleInvalidNull.
-type ArrayGetDoubleInvalidNullResult struct {
+// ArrayClientGetDoubleInvalidNullResult contains the result from method ArrayClient.GetDoubleInvalidNull.
+type ArrayClientGetDoubleInvalidNullResult struct {
 	// The array value [0.0, null, -1.2e20]
 	Float64Array []*float64
 }
 
-// ArrayGetDoubleInvalidStringResponse contains the response from method Array.GetDoubleInvalidString.
-type ArrayGetDoubleInvalidStringResponse struct {
-	ArrayGetDoubleInvalidStringResult
+// ArrayClientGetDoubleInvalidStringResponse contains the response from method ArrayClient.GetDoubleInvalidString.
+type ArrayClientGetDoubleInvalidStringResponse struct {
+	ArrayClientGetDoubleInvalidStringResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetDoubleInvalidStringResult contains the result from method Array.GetDoubleInvalidString.
-type ArrayGetDoubleInvalidStringResult struct {
+// ArrayClientGetDoubleInvalidStringResult contains the result from method ArrayClient.GetDoubleInvalidString.
+type ArrayClientGetDoubleInvalidStringResult struct {
 	// The array value [1.0, 'number', 0.0]
 	Float64Array []*float64
 }
 
-// ArrayGetDoubleValidResponse contains the response from method Array.GetDoubleValid.
-type ArrayGetDoubleValidResponse struct {
-	ArrayGetDoubleValidResult
+// ArrayClientGetDoubleValidResponse contains the response from method ArrayClient.GetDoubleValid.
+type ArrayClientGetDoubleValidResponse struct {
+	ArrayClientGetDoubleValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetDoubleValidResult contains the result from method Array.GetDoubleValid.
-type ArrayGetDoubleValidResult struct {
+// ArrayClientGetDoubleValidResult contains the result from method ArrayClient.GetDoubleValid.
+type ArrayClientGetDoubleValidResult struct {
 	// The array value [0, -0.01, 1.2e20]
 	Float64Array []*float64
 }
 
-// ArrayGetDurationValidResponse contains the response from method Array.GetDurationValid.
-type ArrayGetDurationValidResponse struct {
-	ArrayGetDurationValidResult
+// ArrayClientGetDurationValidResponse contains the response from method ArrayClient.GetDurationValid.
+type ArrayClientGetDurationValidResponse struct {
+	ArrayClientGetDurationValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetDurationValidResult contains the result from method Array.GetDurationValid.
-type ArrayGetDurationValidResult struct {
+// ArrayClientGetDurationValidResult contains the result from method ArrayClient.GetDurationValid.
+type ArrayClientGetDurationValidResult struct {
 	// The array value ['P123DT22H14M12.011S', 'P5DT1H0M0S']
 	StringArray []*string
 }
 
-// ArrayGetEmptyResponse contains the response from method Array.GetEmpty.
-type ArrayGetEmptyResponse struct {
-	ArrayGetEmptyResult
+// ArrayClientGetEmptyResponse contains the response from method ArrayClient.GetEmpty.
+type ArrayClientGetEmptyResponse struct {
+	ArrayClientGetEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetEmptyResult contains the result from method Array.GetEmpty.
-type ArrayGetEmptyResult struct {
+// ArrayClientGetEmptyResult contains the result from method ArrayClient.GetEmpty.
+type ArrayClientGetEmptyResult struct {
 	// The empty array value []
 	Int32Array []*int32
 }
 
-// ArrayGetEnumValidResponse contains the response from method Array.GetEnumValid.
-type ArrayGetEnumValidResponse struct {
-	ArrayGetEnumValidResult
+// ArrayClientGetEnumValidResponse contains the response from method ArrayClient.GetEnumValid.
+type ArrayClientGetEnumValidResponse struct {
+	ArrayClientGetEnumValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetEnumValidResult contains the result from method Array.GetEnumValid.
-type ArrayGetEnumValidResult struct {
+// ArrayClientGetEnumValidResult contains the result from method ArrayClient.GetEnumValid.
+type ArrayClientGetEnumValidResult struct {
 	// The array value ['foo1', 'foo2', 'foo3']
 	FooEnumArray []*FooEnum
 }
 
-// ArrayGetFloatInvalidNullResponse contains the response from method Array.GetFloatInvalidNull.
-type ArrayGetFloatInvalidNullResponse struct {
-	ArrayGetFloatInvalidNullResult
+// ArrayClientGetFloatInvalidNullResponse contains the response from method ArrayClient.GetFloatInvalidNull.
+type ArrayClientGetFloatInvalidNullResponse struct {
+	ArrayClientGetFloatInvalidNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetFloatInvalidNullResult contains the result from method Array.GetFloatInvalidNull.
-type ArrayGetFloatInvalidNullResult struct {
+// ArrayClientGetFloatInvalidNullResult contains the result from method ArrayClient.GetFloatInvalidNull.
+type ArrayClientGetFloatInvalidNullResult struct {
 	// The array value [0.0, null, -1.2e20]
 	Float32Array []*float32
 }
 
-// ArrayGetFloatInvalidStringResponse contains the response from method Array.GetFloatInvalidString.
-type ArrayGetFloatInvalidStringResponse struct {
-	ArrayGetFloatInvalidStringResult
+// ArrayClientGetFloatInvalidStringResponse contains the response from method ArrayClient.GetFloatInvalidString.
+type ArrayClientGetFloatInvalidStringResponse struct {
+	ArrayClientGetFloatInvalidStringResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetFloatInvalidStringResult contains the result from method Array.GetFloatInvalidString.
-type ArrayGetFloatInvalidStringResult struct {
+// ArrayClientGetFloatInvalidStringResult contains the result from method ArrayClient.GetFloatInvalidString.
+type ArrayClientGetFloatInvalidStringResult struct {
 	// The array value [1.0, 'number', 0.0]
 	Float32Array []*float32
 }
 
-// ArrayGetFloatValidResponse contains the response from method Array.GetFloatValid.
-type ArrayGetFloatValidResponse struct {
-	ArrayGetFloatValidResult
+// ArrayClientGetFloatValidResponse contains the response from method ArrayClient.GetFloatValid.
+type ArrayClientGetFloatValidResponse struct {
+	ArrayClientGetFloatValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetFloatValidResult contains the result from method Array.GetFloatValid.
-type ArrayGetFloatValidResult struct {
+// ArrayClientGetFloatValidResult contains the result from method ArrayClient.GetFloatValid.
+type ArrayClientGetFloatValidResult struct {
 	// The array value [0, -0.01, 1.2e20]
 	Float32Array []*float32
 }
 
-// ArrayGetIntInvalidNullResponse contains the response from method Array.GetIntInvalidNull.
-type ArrayGetIntInvalidNullResponse struct {
-	ArrayGetIntInvalidNullResult
+// ArrayClientGetIntInvalidNullResponse contains the response from method ArrayClient.GetIntInvalidNull.
+type ArrayClientGetIntInvalidNullResponse struct {
+	ArrayClientGetIntInvalidNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetIntInvalidNullResult contains the result from method Array.GetIntInvalidNull.
-type ArrayGetIntInvalidNullResult struct {
+// ArrayClientGetIntInvalidNullResult contains the result from method ArrayClient.GetIntInvalidNull.
+type ArrayClientGetIntInvalidNullResult struct {
 	// The array value [1, null, 0]
 	Int32Array []*int32
 }
 
-// ArrayGetIntInvalidStringResponse contains the response from method Array.GetIntInvalidString.
-type ArrayGetIntInvalidStringResponse struct {
-	ArrayGetIntInvalidStringResult
+// ArrayClientGetIntInvalidStringResponse contains the response from method ArrayClient.GetIntInvalidString.
+type ArrayClientGetIntInvalidStringResponse struct {
+	ArrayClientGetIntInvalidStringResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetIntInvalidStringResult contains the result from method Array.GetIntInvalidString.
-type ArrayGetIntInvalidStringResult struct {
+// ArrayClientGetIntInvalidStringResult contains the result from method ArrayClient.GetIntInvalidString.
+type ArrayClientGetIntInvalidStringResult struct {
 	// The array value [1, 'integer', 0]
 	Int32Array []*int32
 }
 
-// ArrayGetIntegerValidResponse contains the response from method Array.GetIntegerValid.
-type ArrayGetIntegerValidResponse struct {
-	ArrayGetIntegerValidResult
+// ArrayClientGetIntegerValidResponse contains the response from method ArrayClient.GetIntegerValid.
+type ArrayClientGetIntegerValidResponse struct {
+	ArrayClientGetIntegerValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetIntegerValidResult contains the result from method Array.GetIntegerValid.
-type ArrayGetIntegerValidResult struct {
+// ArrayClientGetIntegerValidResult contains the result from method ArrayClient.GetIntegerValid.
+type ArrayClientGetIntegerValidResult struct {
 	// The array value [1, -1, 3, 300]
 	Int32Array []*int32
 }
 
-// ArrayGetInvalidResponse contains the response from method Array.GetInvalid.
-type ArrayGetInvalidResponse struct {
-	ArrayGetInvalidResult
+// ArrayClientGetInvalidResponse contains the response from method ArrayClient.GetInvalid.
+type ArrayClientGetInvalidResponse struct {
+	ArrayClientGetInvalidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetInvalidResult contains the result from method Array.GetInvalid.
-type ArrayGetInvalidResult struct {
+// ArrayClientGetInvalidResult contains the result from method ArrayClient.GetInvalid.
+type ArrayClientGetInvalidResult struct {
 	// The invalid Array [1, 2, 3
 	Int32Array []*int32
 }
 
-// ArrayGetLongInvalidNullResponse contains the response from method Array.GetLongInvalidNull.
-type ArrayGetLongInvalidNullResponse struct {
-	ArrayGetLongInvalidNullResult
+// ArrayClientGetLongInvalidNullResponse contains the response from method ArrayClient.GetLongInvalidNull.
+type ArrayClientGetLongInvalidNullResponse struct {
+	ArrayClientGetLongInvalidNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetLongInvalidNullResult contains the result from method Array.GetLongInvalidNull.
-type ArrayGetLongInvalidNullResult struct {
+// ArrayClientGetLongInvalidNullResult contains the result from method ArrayClient.GetLongInvalidNull.
+type ArrayClientGetLongInvalidNullResult struct {
 	// The array value [1, null, 0]
 	Int64Array []*int64
 }
 
-// ArrayGetLongInvalidStringResponse contains the response from method Array.GetLongInvalidString.
-type ArrayGetLongInvalidStringResponse struct {
-	ArrayGetLongInvalidStringResult
+// ArrayClientGetLongInvalidStringResponse contains the response from method ArrayClient.GetLongInvalidString.
+type ArrayClientGetLongInvalidStringResponse struct {
+	ArrayClientGetLongInvalidStringResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetLongInvalidStringResult contains the result from method Array.GetLongInvalidString.
-type ArrayGetLongInvalidStringResult struct {
+// ArrayClientGetLongInvalidStringResult contains the result from method ArrayClient.GetLongInvalidString.
+type ArrayClientGetLongInvalidStringResult struct {
 	// The array value [1, 'integer', 0]
 	Int64Array []*int64
 }
 
-// ArrayGetLongValidResponse contains the response from method Array.GetLongValid.
-type ArrayGetLongValidResponse struct {
-	ArrayGetLongValidResult
+// ArrayClientGetLongValidResponse contains the response from method ArrayClient.GetLongValid.
+type ArrayClientGetLongValidResponse struct {
+	ArrayClientGetLongValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetLongValidResult contains the result from method Array.GetLongValid.
-type ArrayGetLongValidResult struct {
+// ArrayClientGetLongValidResult contains the result from method ArrayClient.GetLongValid.
+type ArrayClientGetLongValidResult struct {
 	// The array value [1, -1, 3, 300]
 	Int64Array []*int64
 }
 
-// ArrayGetNullResponse contains the response from method Array.GetNull.
-type ArrayGetNullResponse struct {
-	ArrayGetNullResult
+// ArrayClientGetNullResponse contains the response from method ArrayClient.GetNull.
+type ArrayClientGetNullResponse struct {
+	ArrayClientGetNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetNullResult contains the result from method Array.GetNull.
-type ArrayGetNullResult struct {
+// ArrayClientGetNullResult contains the result from method ArrayClient.GetNull.
+type ArrayClientGetNullResult struct {
 	// The null Array value
 	Int32Array []*int32
 }
 
-// ArrayGetStringEnumValidResponse contains the response from method Array.GetStringEnumValid.
-type ArrayGetStringEnumValidResponse struct {
-	ArrayGetStringEnumValidResult
+// ArrayClientGetStringEnumValidResponse contains the response from method ArrayClient.GetStringEnumValid.
+type ArrayClientGetStringEnumValidResponse struct {
+	ArrayClientGetStringEnumValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetStringEnumValidResult contains the result from method Array.GetStringEnumValid.
-type ArrayGetStringEnumValidResult struct {
+// ArrayClientGetStringEnumValidResult contains the result from method ArrayClient.GetStringEnumValid.
+type ArrayClientGetStringEnumValidResult struct {
 	// The array value ['foo1', 'foo2', 'foo3']
 	Enum0Array []*Enum0
 }
 
-// ArrayGetStringValidResponse contains the response from method Array.GetStringValid.
-type ArrayGetStringValidResponse struct {
-	ArrayGetStringValidResult
+// ArrayClientGetStringValidResponse contains the response from method ArrayClient.GetStringValid.
+type ArrayClientGetStringValidResponse struct {
+	ArrayClientGetStringValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetStringValidResult contains the result from method Array.GetStringValid.
-type ArrayGetStringValidResult struct {
+// ArrayClientGetStringValidResult contains the result from method ArrayClient.GetStringValid.
+type ArrayClientGetStringValidResult struct {
 	// The array value ['foo1', 'foo2', 'foo3']
 	StringArray []*string
 }
 
-// ArrayGetStringWithInvalidResponse contains the response from method Array.GetStringWithInvalid.
-type ArrayGetStringWithInvalidResponse struct {
-	ArrayGetStringWithInvalidResult
+// ArrayClientGetStringWithInvalidResponse contains the response from method ArrayClient.GetStringWithInvalid.
+type ArrayClientGetStringWithInvalidResponse struct {
+	ArrayClientGetStringWithInvalidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetStringWithInvalidResult contains the result from method Array.GetStringWithInvalid.
-type ArrayGetStringWithInvalidResult struct {
+// ArrayClientGetStringWithInvalidResult contains the result from method ArrayClient.GetStringWithInvalid.
+type ArrayClientGetStringWithInvalidResult struct {
 	// The array value ['foo', 123, 'foo2']
 	StringArray []*string
 }
 
-// ArrayGetStringWithNullResponse contains the response from method Array.GetStringWithNull.
-type ArrayGetStringWithNullResponse struct {
-	ArrayGetStringWithNullResult
+// ArrayClientGetStringWithNullResponse contains the response from method ArrayClient.GetStringWithNull.
+type ArrayClientGetStringWithNullResponse struct {
+	ArrayClientGetStringWithNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetStringWithNullResult contains the result from method Array.GetStringWithNull.
-type ArrayGetStringWithNullResult struct {
+// ArrayClientGetStringWithNullResult contains the result from method ArrayClient.GetStringWithNull.
+type ArrayClientGetStringWithNullResult struct {
 	// The array value ['foo', null, 'foo2']
 	StringArray []*string
 }
 
-// ArrayGetUUIDInvalidCharsResponse contains the response from method Array.GetUUIDInvalidChars.
-type ArrayGetUUIDInvalidCharsResponse struct {
-	ArrayGetUUIDInvalidCharsResult
+// ArrayClientGetUUIDInvalidCharsResponse contains the response from method ArrayClient.GetUUIDInvalidChars.
+type ArrayClientGetUUIDInvalidCharsResponse struct {
+	ArrayClientGetUUIDInvalidCharsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetUUIDInvalidCharsResult contains the result from method Array.GetUUIDInvalidChars.
-type ArrayGetUUIDInvalidCharsResult struct {
+// ArrayClientGetUUIDInvalidCharsResult contains the result from method ArrayClient.GetUUIDInvalidChars.
+type ArrayClientGetUUIDInvalidCharsResult struct {
 	// The array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'foo']
 	StringArray []*string
 }
 
-// ArrayGetUUIDValidResponse contains the response from method Array.GetUUIDValid.
-type ArrayGetUUIDValidResponse struct {
-	ArrayGetUUIDValidResult
+// ArrayClientGetUUIDValidResponse contains the response from method ArrayClient.GetUUIDValid.
+type ArrayClientGetUUIDValidResponse struct {
+	ArrayClientGetUUIDValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayGetUUIDValidResult contains the result from method Array.GetUUIDValid.
-type ArrayGetUUIDValidResult struct {
+// ArrayClientGetUUIDValidResult contains the result from method ArrayClient.GetUUIDValid.
+type ArrayClientGetUUIDValidResult struct {
 	// The array value ['6dcc7237-45fe-45c4-8a6b-3a8a3f625652', 'd1399005-30f7-40d6-8da6-dd7c89ad34db', 'f42f6aa1-a5bc-4ddf-907e-5f915de43205']
 	StringArray []*string
 }
 
-// ArrayPutArrayValidResponse contains the response from method Array.PutArrayValid.
-type ArrayPutArrayValidResponse struct {
+// ArrayClientPutArrayValidResponse contains the response from method ArrayClient.PutArrayValid.
+type ArrayClientPutArrayValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutBooleanTfftResponse contains the response from method Array.PutBooleanTfft.
-type ArrayPutBooleanTfftResponse struct {
+// ArrayClientPutBooleanTfftResponse contains the response from method ArrayClient.PutBooleanTfft.
+type ArrayClientPutBooleanTfftResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutByteValidResponse contains the response from method Array.PutByteValid.
-type ArrayPutByteValidResponse struct {
+// ArrayClientPutByteValidResponse contains the response from method ArrayClient.PutByteValid.
+type ArrayClientPutByteValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutComplexValidResponse contains the response from method Array.PutComplexValid.
-type ArrayPutComplexValidResponse struct {
+// ArrayClientPutComplexValidResponse contains the response from method ArrayClient.PutComplexValid.
+type ArrayClientPutComplexValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutDateTimeRFC1123ValidResponse contains the response from method Array.PutDateTimeRFC1123Valid.
-type ArrayPutDateTimeRFC1123ValidResponse struct {
+// ArrayClientPutDateTimeRFC1123ValidResponse contains the response from method ArrayClient.PutDateTimeRFC1123Valid.
+type ArrayClientPutDateTimeRFC1123ValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutDateTimeValidResponse contains the response from method Array.PutDateTimeValid.
-type ArrayPutDateTimeValidResponse struct {
+// ArrayClientPutDateTimeValidResponse contains the response from method ArrayClient.PutDateTimeValid.
+type ArrayClientPutDateTimeValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutDateValidResponse contains the response from method Array.PutDateValid.
-type ArrayPutDateValidResponse struct {
+// ArrayClientPutDateValidResponse contains the response from method ArrayClient.PutDateValid.
+type ArrayClientPutDateValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutDictionaryValidResponse contains the response from method Array.PutDictionaryValid.
-type ArrayPutDictionaryValidResponse struct {
+// ArrayClientPutDictionaryValidResponse contains the response from method ArrayClient.PutDictionaryValid.
+type ArrayClientPutDictionaryValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutDoubleValidResponse contains the response from method Array.PutDoubleValid.
-type ArrayPutDoubleValidResponse struct {
+// ArrayClientPutDoubleValidResponse contains the response from method ArrayClient.PutDoubleValid.
+type ArrayClientPutDoubleValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutDurationValidResponse contains the response from method Array.PutDurationValid.
-type ArrayPutDurationValidResponse struct {
+// ArrayClientPutDurationValidResponse contains the response from method ArrayClient.PutDurationValid.
+type ArrayClientPutDurationValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutEmptyResponse contains the response from method Array.PutEmpty.
-type ArrayPutEmptyResponse struct {
+// ArrayClientPutEmptyResponse contains the response from method ArrayClient.PutEmpty.
+type ArrayClientPutEmptyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutEnumValidResponse contains the response from method Array.PutEnumValid.
-type ArrayPutEnumValidResponse struct {
+// ArrayClientPutEnumValidResponse contains the response from method ArrayClient.PutEnumValid.
+type ArrayClientPutEnumValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutFloatValidResponse contains the response from method Array.PutFloatValid.
-type ArrayPutFloatValidResponse struct {
+// ArrayClientPutFloatValidResponse contains the response from method ArrayClient.PutFloatValid.
+type ArrayClientPutFloatValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutIntegerValidResponse contains the response from method Array.PutIntegerValid.
-type ArrayPutIntegerValidResponse struct {
+// ArrayClientPutIntegerValidResponse contains the response from method ArrayClient.PutIntegerValid.
+type ArrayClientPutIntegerValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutLongValidResponse contains the response from method Array.PutLongValid.
-type ArrayPutLongValidResponse struct {
+// ArrayClientPutLongValidResponse contains the response from method ArrayClient.PutLongValid.
+type ArrayClientPutLongValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutStringEnumValidResponse contains the response from method Array.PutStringEnumValid.
-type ArrayPutStringEnumValidResponse struct {
+// ArrayClientPutStringEnumValidResponse contains the response from method ArrayClient.PutStringEnumValid.
+type ArrayClientPutStringEnumValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutStringValidResponse contains the response from method Array.PutStringValid.
-type ArrayPutStringValidResponse struct {
+// ArrayClientPutStringValidResponse contains the response from method ArrayClient.PutStringValid.
+type ArrayClientPutStringValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// ArrayPutUUIDValidResponse contains the response from method Array.PutUUIDValid.
-type ArrayPutUUIDValidResponse struct {
+// ArrayClientPutUUIDValidResponse contains the response from method ArrayClient.PutUUIDValid.
+type ArrayClientPutUUIDValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

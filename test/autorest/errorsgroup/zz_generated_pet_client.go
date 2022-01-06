@@ -43,24 +43,24 @@ func NewPetClient(options *azcore.ClientOptions) *PetClient {
 // If the operation fails it returns one of the following error types.
 // - *PetActionError, *PetHungryOrThirstyError, *PetSadError
 // whatAction - what action the pet should do
-// options - PetDoSomethingOptions contains the optional parameters for the PetClient.DoSomething method.
-func (client *PetClient) DoSomething(ctx context.Context, whatAction string, options *PetDoSomethingOptions) (PetDoSomethingResponse, error) {
+// options - PetClientDoSomethingOptions contains the optional parameters for the PetClient.DoSomething method.
+func (client *PetClient) DoSomething(ctx context.Context, whatAction string, options *PetClientDoSomethingOptions) (PetClientDoSomethingResponse, error) {
 	req, err := client.doSomethingCreateRequest(ctx, whatAction, options)
 	if err != nil {
-		return PetDoSomethingResponse{}, err
+		return PetClientDoSomethingResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PetDoSomethingResponse{}, err
+		return PetClientDoSomethingResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetDoSomethingResponse{}, client.doSomethingHandleError(resp)
+		return PetClientDoSomethingResponse{}, client.doSomethingHandleError(resp)
 	}
 	return client.doSomethingHandleResponse(resp)
 }
 
 // doSomethingCreateRequest creates the DoSomething request.
-func (client *PetClient) doSomethingCreateRequest(ctx context.Context, whatAction string, options *PetDoSomethingOptions) (*policy.Request, error) {
+func (client *PetClient) doSomethingCreateRequest(ctx context.Context, whatAction string, options *PetClientDoSomethingOptions) (*policy.Request, error) {
 	urlPath := "/errorStatusCodes/Pets/doSomething/{whatAction}"
 	if whatAction == "" {
 		return nil, errors.New("parameter whatAction cannot be empty")
@@ -75,10 +75,10 @@ func (client *PetClient) doSomethingCreateRequest(ctx context.Context, whatActio
 }
 
 // doSomethingHandleResponse handles the DoSomething response.
-func (client *PetClient) doSomethingHandleResponse(resp *http.Response) (PetDoSomethingResponse, error) {
-	result := PetDoSomethingResponse{RawResponse: resp}
+func (client *PetClient) doSomethingHandleResponse(resp *http.Response) (PetClientDoSomethingResponse, error) {
+	result := PetClientDoSomethingResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PetAction); err != nil {
-		return PetDoSomethingResponse{}, runtime.NewResponseError(err, resp)
+		return PetClientDoSomethingResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -100,24 +100,24 @@ func (client *PetClient) doSomethingHandleError(resp *http.Response) error {
 // If the operation fails it returns one of the following error types.
 // - *AnimalNotFound, *LinkNotFound, *NotFoundErrorBase
 // petID - pet id
-// options - PetGetPetByIDOptions contains the optional parameters for the PetClient.GetPetByID method.
-func (client *PetClient) GetPetByID(ctx context.Context, petID string, options *PetGetPetByIDOptions) (PetGetPetByIDResponse, error) {
+// options - PetClientGetPetByIDOptions contains the optional parameters for the PetClient.GetPetByID method.
+func (client *PetClient) GetPetByID(ctx context.Context, petID string, options *PetClientGetPetByIDOptions) (PetClientGetPetByIDResponse, error) {
 	req, err := client.getPetByIDCreateRequest(ctx, petID, options)
 	if err != nil {
-		return PetGetPetByIDResponse{}, err
+		return PetClientGetPetByIDResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PetGetPetByIDResponse{}, err
+		return PetClientGetPetByIDResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return PetGetPetByIDResponse{}, client.getPetByIDHandleError(resp)
+		return PetClientGetPetByIDResponse{}, client.getPetByIDHandleError(resp)
 	}
 	return client.getPetByIDHandleResponse(resp)
 }
 
 // getPetByIDCreateRequest creates the GetPetByID request.
-func (client *PetClient) getPetByIDCreateRequest(ctx context.Context, petID string, options *PetGetPetByIDOptions) (*policy.Request, error) {
+func (client *PetClient) getPetByIDCreateRequest(ctx context.Context, petID string, options *PetClientGetPetByIDOptions) (*policy.Request, error) {
 	urlPath := "/errorStatusCodes/Pets/{petId}/GetPet"
 	if petID == "" {
 		return nil, errors.New("parameter petID cannot be empty")
@@ -132,10 +132,10 @@ func (client *PetClient) getPetByIDCreateRequest(ctx context.Context, petID stri
 }
 
 // getPetByIDHandleResponse handles the GetPetByID response.
-func (client *PetClient) getPetByIDHandleResponse(resp *http.Response) (PetGetPetByIDResponse, error) {
-	result := PetGetPetByIDResponse{RawResponse: resp}
+func (client *PetClient) getPetByIDHandleResponse(resp *http.Response) (PetClientGetPetByIDResponse, error) {
+	result := PetClientGetPetByIDResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Pet); err != nil {
-		return PetGetPetByIDResponse{}, runtime.NewResponseError(err, resp)
+		return PetClientGetPetByIDResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -177,24 +177,24 @@ func (client *PetClient) getPetByIDHandleError(resp *http.Response) error {
 // with the input param name 'models'
 // If the operation fails it returns one of the following error types.
 // - *PetActionError, *PetHungryOrThirstyError, *PetSadError
-// options - PetHasModelsParamOptions contains the optional parameters for the PetClient.HasModelsParam method.
-func (client *PetClient) HasModelsParam(ctx context.Context, options *PetHasModelsParamOptions) (PetHasModelsParamResponse, error) {
+// options - PetClientHasModelsParamOptions contains the optional parameters for the PetClient.HasModelsParam method.
+func (client *PetClient) HasModelsParam(ctx context.Context, options *PetClientHasModelsParamOptions) (PetClientHasModelsParamResponse, error) {
 	req, err := client.hasModelsParamCreateRequest(ctx, options)
 	if err != nil {
-		return PetHasModelsParamResponse{}, err
+		return PetClientHasModelsParamResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PetHasModelsParamResponse{}, err
+		return PetClientHasModelsParamResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetHasModelsParamResponse{}, client.hasModelsParamHandleError(resp)
+		return PetClientHasModelsParamResponse{}, client.hasModelsParamHandleError(resp)
 	}
-	return PetHasModelsParamResponse{RawResponse: resp}, nil
+	return PetClientHasModelsParamResponse{RawResponse: resp}, nil
 }
 
 // hasModelsParamCreateRequest creates the HasModelsParam request.
-func (client *PetClient) hasModelsParamCreateRequest(ctx context.Context, options *PetHasModelsParamOptions) (*policy.Request, error) {
+func (client *PetClient) hasModelsParamCreateRequest(ctx context.Context, options *PetClientHasModelsParamOptions) (*policy.Request, error) {
 	urlPath := "/errorStatusCodes/Pets/hasModelsParam"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

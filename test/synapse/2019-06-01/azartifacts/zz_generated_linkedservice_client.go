@@ -39,21 +39,21 @@ func newLinkedServiceClient(endpoint string, pl runtime.Pipeline) *linkedService
 // If the operation fails it returns the *CloudError error type.
 // linkedServiceName - The linked service name.
 // linkedService - Linked service resource definition.
-// options - LinkedServiceBeginCreateOrUpdateLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginCreateOrUpdateLinkedService
+// options - linkedServiceClientBeginCreateOrUpdateLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginCreateOrUpdateLinkedService
 // method.
-func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceBeginCreateOrUpdateLinkedServiceOptions) (LinkedServiceCreateOrUpdateLinkedServicePollerResponse, error) {
+func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *linkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (linkedServiceClientCreateOrUpdateLinkedServicePollerResponse, error) {
 	resp, err := client.createOrUpdateLinkedService(ctx, linkedServiceName, linkedService, options)
 	if err != nil {
-		return LinkedServiceCreateOrUpdateLinkedServicePollerResponse{}, err
+		return linkedServiceClientCreateOrUpdateLinkedServicePollerResponse{}, err
 	}
-	result := LinkedServiceCreateOrUpdateLinkedServicePollerResponse{
+	result := linkedServiceClientCreateOrUpdateLinkedServicePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := runtime.NewPoller("linkedServiceClient.CreateOrUpdateLinkedService", resp, client.pl, client.createOrUpdateLinkedServiceHandleError)
 	if err != nil {
-		return LinkedServiceCreateOrUpdateLinkedServicePollerResponse{}, err
+		return linkedServiceClientCreateOrUpdateLinkedServicePollerResponse{}, err
 	}
-	result.Poller = &LinkedServiceCreateOrUpdateLinkedServicePoller{
+	result.Poller = &linkedServiceClientCreateOrUpdateLinkedServicePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -61,7 +61,7 @@ func (client *linkedServiceClient) BeginCreateOrUpdateLinkedService(ctx context.
 
 // CreateOrUpdateLinkedService - Creates or updates a linked service.
 // If the operation fails it returns the *CloudError error type.
-func (client *linkedServiceClient) createOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceBeginCreateOrUpdateLinkedServiceOptions) (*http.Response, error) {
+func (client *linkedServiceClient) createOrUpdateLinkedService(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *linkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateLinkedServiceCreateRequest(ctx, linkedServiceName, linkedService, options)
 	if err != nil {
 		return nil, err
@@ -77,7 +77,7 @@ func (client *linkedServiceClient) createOrUpdateLinkedService(ctx context.Conte
 }
 
 // createOrUpdateLinkedServiceCreateRequest creates the CreateOrUpdateLinkedService request.
-func (client *linkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *LinkedServiceBeginCreateOrUpdateLinkedServiceOptions) (*policy.Request, error) {
+func (client *linkedServiceClient) createOrUpdateLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, linkedService LinkedServiceResource, options *linkedServiceClientBeginCreateOrUpdateLinkedServiceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}"
 	if linkedServiceName == "" {
 		return nil, errors.New("parameter linkedServiceName cannot be empty")
@@ -113,21 +113,21 @@ func (client *linkedServiceClient) createOrUpdateLinkedServiceHandleError(resp *
 // BeginDeleteLinkedService - Deletes a linked service.
 // If the operation fails it returns the *CloudError error type.
 // linkedServiceName - The linked service name.
-// options - LinkedServiceBeginDeleteLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginDeleteLinkedService
+// options - linkedServiceClientBeginDeleteLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginDeleteLinkedService
 // method.
-func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceBeginDeleteLinkedServiceOptions) (LinkedServiceDeleteLinkedServicePollerResponse, error) {
+func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context, linkedServiceName string, options *linkedServiceClientBeginDeleteLinkedServiceOptions) (linkedServiceClientDeleteLinkedServicePollerResponse, error) {
 	resp, err := client.deleteLinkedService(ctx, linkedServiceName, options)
 	if err != nil {
-		return LinkedServiceDeleteLinkedServicePollerResponse{}, err
+		return linkedServiceClientDeleteLinkedServicePollerResponse{}, err
 	}
-	result := LinkedServiceDeleteLinkedServicePollerResponse{
+	result := linkedServiceClientDeleteLinkedServicePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := runtime.NewPoller("linkedServiceClient.DeleteLinkedService", resp, client.pl, client.deleteLinkedServiceHandleError)
 	if err != nil {
-		return LinkedServiceDeleteLinkedServicePollerResponse{}, err
+		return linkedServiceClientDeleteLinkedServicePollerResponse{}, err
 	}
-	result.Poller = &LinkedServiceDeleteLinkedServicePoller{
+	result.Poller = &linkedServiceClientDeleteLinkedServicePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -135,7 +135,7 @@ func (client *linkedServiceClient) BeginDeleteLinkedService(ctx context.Context,
 
 // DeleteLinkedService - Deletes a linked service.
 // If the operation fails it returns the *CloudError error type.
-func (client *linkedServiceClient) deleteLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceBeginDeleteLinkedServiceOptions) (*http.Response, error) {
+func (client *linkedServiceClient) deleteLinkedService(ctx context.Context, linkedServiceName string, options *linkedServiceClientBeginDeleteLinkedServiceOptions) (*http.Response, error) {
 	req, err := client.deleteLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
 		return nil, err
@@ -151,7 +151,7 @@ func (client *linkedServiceClient) deleteLinkedService(ctx context.Context, link
 }
 
 // deleteLinkedServiceCreateRequest creates the DeleteLinkedService request.
-func (client *linkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, options *LinkedServiceBeginDeleteLinkedServiceOptions) (*policy.Request, error) {
+func (client *linkedServiceClient) deleteLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, options *linkedServiceClientBeginDeleteLinkedServiceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}"
 	if linkedServiceName == "" {
 		return nil, errors.New("parameter linkedServiceName cannot be empty")
@@ -184,25 +184,25 @@ func (client *linkedServiceClient) deleteLinkedServiceHandleError(resp *http.Res
 // GetLinkedService - Gets a linked service.
 // If the operation fails it returns the *CloudError error type.
 // linkedServiceName - The linked service name.
-// options - LinkedServiceGetLinkedServiceOptions contains the optional parameters for the linkedServiceClient.GetLinkedService
+// options - linkedServiceClientGetLinkedServiceOptions contains the optional parameters for the linkedServiceClient.GetLinkedService
 // method.
-func (client *linkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, options *LinkedServiceGetLinkedServiceOptions) (LinkedServiceGetLinkedServiceResponse, error) {
+func (client *linkedServiceClient) GetLinkedService(ctx context.Context, linkedServiceName string, options *linkedServiceClientGetLinkedServiceOptions) (linkedServiceClientGetLinkedServiceResponse, error) {
 	req, err := client.getLinkedServiceCreateRequest(ctx, linkedServiceName, options)
 	if err != nil {
-		return LinkedServiceGetLinkedServiceResponse{}, err
+		return linkedServiceClientGetLinkedServiceResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return LinkedServiceGetLinkedServiceResponse{}, err
+		return linkedServiceClientGetLinkedServiceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
-		return LinkedServiceGetLinkedServiceResponse{}, client.getLinkedServiceHandleError(resp)
+		return linkedServiceClientGetLinkedServiceResponse{}, client.getLinkedServiceHandleError(resp)
 	}
 	return client.getLinkedServiceHandleResponse(resp)
 }
 
 // getLinkedServiceCreateRequest creates the GetLinkedService request.
-func (client *linkedServiceClient) getLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, options *LinkedServiceGetLinkedServiceOptions) (*policy.Request, error) {
+func (client *linkedServiceClient) getLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, options *linkedServiceClientGetLinkedServiceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}"
 	if linkedServiceName == "" {
 		return nil, errors.New("parameter linkedServiceName cannot be empty")
@@ -223,10 +223,10 @@ func (client *linkedServiceClient) getLinkedServiceCreateRequest(ctx context.Con
 }
 
 // getLinkedServiceHandleResponse handles the GetLinkedService response.
-func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *http.Response) (LinkedServiceGetLinkedServiceResponse, error) {
-	result := LinkedServiceGetLinkedServiceResponse{RawResponse: resp}
+func (client *linkedServiceClient) getLinkedServiceHandleResponse(resp *http.Response) (linkedServiceClientGetLinkedServiceResponse, error) {
+	result := linkedServiceClientGetLinkedServiceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LinkedServiceResource); err != nil {
-		return LinkedServiceGetLinkedServiceResponse{}, runtime.NewResponseError(err, resp)
+		return linkedServiceClientGetLinkedServiceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -246,22 +246,22 @@ func (client *linkedServiceClient) getLinkedServiceHandleError(resp *http.Respon
 
 // GetLinkedServicesByWorkspace - Lists linked services.
 // If the operation fails it returns the *CloudError error type.
-// options - LinkedServiceGetLinkedServicesByWorkspaceOptions contains the optional parameters for the linkedServiceClient.GetLinkedServicesByWorkspace
+// options - linkedServiceClientGetLinkedServicesByWorkspaceOptions contains the optional parameters for the linkedServiceClient.GetLinkedServicesByWorkspace
 // method.
-func (client *linkedServiceClient) GetLinkedServicesByWorkspace(options *LinkedServiceGetLinkedServicesByWorkspaceOptions) *LinkedServiceGetLinkedServicesByWorkspacePager {
-	return &LinkedServiceGetLinkedServicesByWorkspacePager{
+func (client *linkedServiceClient) GetLinkedServicesByWorkspace(options *linkedServiceClientGetLinkedServicesByWorkspaceOptions) *linkedServiceClientGetLinkedServicesByWorkspacePager {
+	return &linkedServiceClientGetLinkedServicesByWorkspacePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.getLinkedServicesByWorkspaceCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp LinkedServiceGetLinkedServicesByWorkspaceResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp linkedServiceClientGetLinkedServicesByWorkspaceResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.LinkedServiceListResponse.NextLink)
 		},
 	}
 }
 
 // getLinkedServicesByWorkspaceCreateRequest creates the GetLinkedServicesByWorkspace request.
-func (client *linkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx context.Context, options *LinkedServiceGetLinkedServicesByWorkspaceOptions) (*policy.Request, error) {
+func (client *linkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx context.Context, options *linkedServiceClientGetLinkedServicesByWorkspaceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
@@ -275,10 +275,10 @@ func (client *linkedServiceClient) getLinkedServicesByWorkspaceCreateRequest(ctx
 }
 
 // getLinkedServicesByWorkspaceHandleResponse handles the GetLinkedServicesByWorkspace response.
-func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(resp *http.Response) (LinkedServiceGetLinkedServicesByWorkspaceResponse, error) {
-	result := LinkedServiceGetLinkedServicesByWorkspaceResponse{RawResponse: resp}
+func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleResponse(resp *http.Response) (linkedServiceClientGetLinkedServicesByWorkspaceResponse, error) {
+	result := linkedServiceClientGetLinkedServicesByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LinkedServiceListResponse); err != nil {
-		return LinkedServiceGetLinkedServicesByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
+		return linkedServiceClientGetLinkedServicesByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -300,21 +300,21 @@ func (client *linkedServiceClient) getLinkedServicesByWorkspaceHandleError(resp 
 // If the operation fails it returns the *CloudError error type.
 // linkedServiceName - The linked service name.
 // request - proposed new name.
-// options - LinkedServiceBeginRenameLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginRenameLinkedService
+// options - linkedServiceClientBeginRenameLinkedServiceOptions contains the optional parameters for the linkedServiceClient.BeginRenameLinkedService
 // method.
-func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceBeginRenameLinkedServiceOptions) (LinkedServiceRenameLinkedServicePollerResponse, error) {
+func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *linkedServiceClientBeginRenameLinkedServiceOptions) (linkedServiceClientRenameLinkedServicePollerResponse, error) {
 	resp, err := client.renameLinkedService(ctx, linkedServiceName, request, options)
 	if err != nil {
-		return LinkedServiceRenameLinkedServicePollerResponse{}, err
+		return linkedServiceClientRenameLinkedServicePollerResponse{}, err
 	}
-	result := LinkedServiceRenameLinkedServicePollerResponse{
+	result := linkedServiceClientRenameLinkedServicePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := runtime.NewPoller("linkedServiceClient.RenameLinkedService", resp, client.pl, client.renameLinkedServiceHandleError)
 	if err != nil {
-		return LinkedServiceRenameLinkedServicePollerResponse{}, err
+		return linkedServiceClientRenameLinkedServicePollerResponse{}, err
 	}
-	result.Poller = &LinkedServiceRenameLinkedServicePoller{
+	result.Poller = &linkedServiceClientRenameLinkedServicePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -322,7 +322,7 @@ func (client *linkedServiceClient) BeginRenameLinkedService(ctx context.Context,
 
 // RenameLinkedService - Renames a linked service.
 // If the operation fails it returns the *CloudError error type.
-func (client *linkedServiceClient) renameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceBeginRenameLinkedServiceOptions) (*http.Response, error) {
+func (client *linkedServiceClient) renameLinkedService(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *linkedServiceClientBeginRenameLinkedServiceOptions) (*http.Response, error) {
 	req, err := client.renameLinkedServiceCreateRequest(ctx, linkedServiceName, request, options)
 	if err != nil {
 		return nil, err
@@ -338,7 +338,7 @@ func (client *linkedServiceClient) renameLinkedService(ctx context.Context, link
 }
 
 // renameLinkedServiceCreateRequest creates the RenameLinkedService request.
-func (client *linkedServiceClient) renameLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *LinkedServiceBeginRenameLinkedServiceOptions) (*policy.Request, error) {
+func (client *linkedServiceClient) renameLinkedServiceCreateRequest(ctx context.Context, linkedServiceName string, request ArtifactRenameRequest, options *linkedServiceClientBeginRenameLinkedServiceOptions) (*policy.Request, error) {
 	urlPath := "/linkedservices/{linkedServiceName}/rename"
 	if linkedServiceName == "" {
 		return nil, errors.New("parameter linkedServiceName cannot be empty")

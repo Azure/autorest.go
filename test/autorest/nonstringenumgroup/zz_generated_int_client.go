@@ -38,24 +38,24 @@ func NewIntClient(options *azcore.ClientOptions) *IntClient {
 
 // Get - Get an int enum
 // If the operation fails it returns a generic error.
-// options - IntGetOptions contains the optional parameters for the IntClient.Get method.
-func (client *IntClient) Get(ctx context.Context, options *IntGetOptions) (IntGetResponse, error) {
+// options - IntClientGetOptions contains the optional parameters for the IntClient.Get method.
+func (client *IntClient) Get(ctx context.Context, options *IntClientGetOptions) (IntClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return IntGetResponse{}, err
+		return IntClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return IntGetResponse{}, err
+		return IntClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntGetResponse{}, client.getHandleError(resp)
+		return IntClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *IntClient) getCreateRequest(ctx context.Context, options *IntGetOptions) (*policy.Request, error) {
+func (client *IntClient) getCreateRequest(ctx context.Context, options *IntClientGetOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/int/get"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -66,10 +66,10 @@ func (client *IntClient) getCreateRequest(ctx context.Context, options *IntGetOp
 }
 
 // getHandleResponse handles the Get response.
-func (client *IntClient) getHandleResponse(resp *http.Response) (IntGetResponse, error) {
-	result := IntGetResponse{RawResponse: resp}
+func (client *IntClient) getHandleResponse(resp *http.Response) (IntClientGetResponse, error) {
+	result := IntClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntGetResponse{}, runtime.NewResponseError(err, resp)
+		return IntClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -88,24 +88,24 @@ func (client *IntClient) getHandleError(resp *http.Response) error {
 
 // Put - Put an int enum
 // If the operation fails it returns a generic error.
-// options - IntPutOptions contains the optional parameters for the IntClient.Put method.
-func (client *IntClient) Put(ctx context.Context, options *IntPutOptions) (IntPutResponse, error) {
+// options - IntClientPutOptions contains the optional parameters for the IntClient.Put method.
+func (client *IntClient) Put(ctx context.Context, options *IntClientPutOptions) (IntClientPutResponse, error) {
 	req, err := client.putCreateRequest(ctx, options)
 	if err != nil {
-		return IntPutResponse{}, err
+		return IntClientPutResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return IntPutResponse{}, err
+		return IntClientPutResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return IntPutResponse{}, client.putHandleError(resp)
+		return IntClientPutResponse{}, client.putHandleError(resp)
 	}
 	return client.putHandleResponse(resp)
 }
 
 // putCreateRequest creates the Put request.
-func (client *IntClient) putCreateRequest(ctx context.Context, options *IntPutOptions) (*policy.Request, error) {
+func (client *IntClient) putCreateRequest(ctx context.Context, options *IntClientPutOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/int/put"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -119,10 +119,10 @@ func (client *IntClient) putCreateRequest(ctx context.Context, options *IntPutOp
 }
 
 // putHandleResponse handles the Put response.
-func (client *IntClient) putHandleResponse(resp *http.Response) (IntPutResponse, error) {
-	result := IntPutResponse{RawResponse: resp}
+func (client *IntClient) putHandleResponse(resp *http.Response) (IntClientPutResponse, error) {
+	result := IntClientPutResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return IntPutResponse{}, runtime.NewResponseError(err, resp)
+		return IntClientPutResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

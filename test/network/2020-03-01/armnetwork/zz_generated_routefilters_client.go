@@ -56,21 +56,21 @@ func NewRouteFiltersClient(subscriptionID string, credential azcore.TokenCredent
 // resourceGroupName - The name of the resource group.
 // routeFilterName - The name of the route filter.
 // routeFilterParameters - Parameters supplied to the create or update route filter operation.
-// options - RouteFiltersBeginCreateOrUpdateOptions contains the optional parameters for the RouteFiltersClient.BeginCreateOrUpdate
+// options - RouteFiltersClientBeginCreateOrUpdateOptions contains the optional parameters for the RouteFiltersClient.BeginCreateOrUpdate
 // method.
-func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter, options *RouteFiltersBeginCreateOrUpdateOptions) (RouteFiltersCreateOrUpdatePollerResponse, error) {
+func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter, options *RouteFiltersClientBeginCreateOrUpdateOptions) (RouteFiltersClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, routeFilterName, routeFilterParameters, options)
 	if err != nil {
-		return RouteFiltersCreateOrUpdatePollerResponse{}, err
+		return RouteFiltersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := RouteFiltersCreateOrUpdatePollerResponse{
+	result := RouteFiltersClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("RouteFiltersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return RouteFiltersCreateOrUpdatePollerResponse{}, err
+		return RouteFiltersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &RouteFiltersCreateOrUpdatePoller{
+	result.Poller = &RouteFiltersClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +78,7 @@ func (client *RouteFiltersClient) BeginCreateOrUpdate(ctx context.Context, resou
 
 // CreateOrUpdate - Creates or updates a route filter in a specified resource group.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteFiltersClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter, options *RouteFiltersBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *RouteFiltersClient) createOrUpdate(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter, options *RouteFiltersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, routeFilterName, routeFilterParameters, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (client *RouteFiltersClient) createOrUpdate(ctx context.Context, resourceGr
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *RouteFiltersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter, options *RouteFiltersBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *RouteFiltersClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, routeFilterParameters RouteFilter, options *RouteFiltersClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -136,20 +136,21 @@ func (client *RouteFiltersClient) createOrUpdateHandleError(resp *http.Response)
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // routeFilterName - The name of the route filter.
-// options - RouteFiltersBeginDeleteOptions contains the optional parameters for the RouteFiltersClient.BeginDelete method.
-func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersBeginDeleteOptions) (RouteFiltersDeletePollerResponse, error) {
+// options - RouteFiltersClientBeginDeleteOptions contains the optional parameters for the RouteFiltersClient.BeginDelete
+// method.
+func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersClientBeginDeleteOptions) (RouteFiltersClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, routeFilterName, options)
 	if err != nil {
-		return RouteFiltersDeletePollerResponse{}, err
+		return RouteFiltersClientDeletePollerResponse{}, err
 	}
-	result := RouteFiltersDeletePollerResponse{
+	result := RouteFiltersClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("RouteFiltersClient.Delete", "location", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return RouteFiltersDeletePollerResponse{}, err
+		return RouteFiltersClientDeletePollerResponse{}, err
 	}
-	result.Poller = &RouteFiltersDeletePoller{
+	result.Poller = &RouteFiltersClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -157,7 +158,7 @@ func (client *RouteFiltersClient) BeginDelete(ctx context.Context, resourceGroup
 
 // Delete - Deletes the specified route filter.
 // If the operation fails it returns the *CloudError error type.
-func (client *RouteFiltersClient) deleteOperation(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersBeginDeleteOptions) (*http.Response, error) {
+func (client *RouteFiltersClient) deleteOperation(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, routeFilterName, options)
 	if err != nil {
 		return nil, err
@@ -173,7 +174,7 @@ func (client *RouteFiltersClient) deleteOperation(ctx context.Context, resourceG
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *RouteFiltersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersBeginDeleteOptions) (*policy.Request, error) {
+func (client *RouteFiltersClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -215,24 +216,24 @@ func (client *RouteFiltersClient) deleteHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // routeFilterName - The name of the route filter.
-// options - RouteFiltersGetOptions contains the optional parameters for the RouteFiltersClient.Get method.
-func (client *RouteFiltersClient) Get(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersGetOptions) (RouteFiltersGetResponse, error) {
+// options - RouteFiltersClientGetOptions contains the optional parameters for the RouteFiltersClient.Get method.
+func (client *RouteFiltersClient) Get(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersClientGetOptions) (RouteFiltersClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, routeFilterName, options)
 	if err != nil {
-		return RouteFiltersGetResponse{}, err
+		return RouteFiltersClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return RouteFiltersGetResponse{}, err
+		return RouteFiltersClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RouteFiltersGetResponse{}, client.getHandleError(resp)
+		return RouteFiltersClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *RouteFiltersClient) getCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersGetOptions) (*policy.Request, error) {
+func (client *RouteFiltersClient) getCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, options *RouteFiltersClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -261,10 +262,10 @@ func (client *RouteFiltersClient) getCreateRequest(ctx context.Context, resource
 }
 
 // getHandleResponse handles the Get response.
-func (client *RouteFiltersClient) getHandleResponse(resp *http.Response) (RouteFiltersGetResponse, error) {
-	result := RouteFiltersGetResponse{RawResponse: resp}
+func (client *RouteFiltersClient) getHandleResponse(resp *http.Response) (RouteFiltersClientGetResponse, error) {
+	result := RouteFiltersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilter); err != nil {
-		return RouteFiltersGetResponse{}, runtime.NewResponseError(err, resp)
+		return RouteFiltersClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -284,21 +285,21 @@ func (client *RouteFiltersClient) getHandleError(resp *http.Response) error {
 
 // List - Gets all route filters in a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - RouteFiltersListOptions contains the optional parameters for the RouteFiltersClient.List method.
-func (client *RouteFiltersClient) List(options *RouteFiltersListOptions) *RouteFiltersListPager {
-	return &RouteFiltersListPager{
+// options - RouteFiltersClientListOptions contains the optional parameters for the RouteFiltersClient.List method.
+func (client *RouteFiltersClient) List(options *RouteFiltersClientListOptions) *RouteFiltersClientListPager {
+	return &RouteFiltersClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp RouteFiltersListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp RouteFiltersClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.RouteFilterListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *RouteFiltersClient) listCreateRequest(ctx context.Context, options *RouteFiltersListOptions) (*policy.Request, error) {
+func (client *RouteFiltersClient) listCreateRequest(ctx context.Context, options *RouteFiltersClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -316,10 +317,10 @@ func (client *RouteFiltersClient) listCreateRequest(ctx context.Context, options
 }
 
 // listHandleResponse handles the List response.
-func (client *RouteFiltersClient) listHandleResponse(resp *http.Response) (RouteFiltersListResponse, error) {
-	result := RouteFiltersListResponse{RawResponse: resp}
+func (client *RouteFiltersClient) listHandleResponse(resp *http.Response) (RouteFiltersClientListResponse, error) {
+	result := RouteFiltersClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilterListResult); err != nil {
-		return RouteFiltersListResponse{}, runtime.NewResponseError(err, resp)
+		return RouteFiltersClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -340,22 +341,22 @@ func (client *RouteFiltersClient) listHandleError(resp *http.Response) error {
 // ListByResourceGroup - Gets all route filters in a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - RouteFiltersListByResourceGroupOptions contains the optional parameters for the RouteFiltersClient.ListByResourceGroup
+// options - RouteFiltersClientListByResourceGroupOptions contains the optional parameters for the RouteFiltersClient.ListByResourceGroup
 // method.
-func (client *RouteFiltersClient) ListByResourceGroup(resourceGroupName string, options *RouteFiltersListByResourceGroupOptions) *RouteFiltersListByResourceGroupPager {
-	return &RouteFiltersListByResourceGroupPager{
+func (client *RouteFiltersClient) ListByResourceGroup(resourceGroupName string, options *RouteFiltersClientListByResourceGroupOptions) *RouteFiltersClientListByResourceGroupPager {
+	return &RouteFiltersClientListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp RouteFiltersListByResourceGroupResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp RouteFiltersClientListByResourceGroupResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.RouteFilterListResult.NextLink)
 		},
 	}
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *RouteFiltersClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *RouteFiltersListByResourceGroupOptions) (*policy.Request, error) {
+func (client *RouteFiltersClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *RouteFiltersClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -377,10 +378,10 @@ func (client *RouteFiltersClient) listByResourceGroupCreateRequest(ctx context.C
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *RouteFiltersClient) listByResourceGroupHandleResponse(resp *http.Response) (RouteFiltersListByResourceGroupResponse, error) {
-	result := RouteFiltersListByResourceGroupResponse{RawResponse: resp}
+func (client *RouteFiltersClient) listByResourceGroupHandleResponse(resp *http.Response) (RouteFiltersClientListByResourceGroupResponse, error) {
+	result := RouteFiltersClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilterListResult); err != nil {
-		return RouteFiltersListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return RouteFiltersClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -403,24 +404,24 @@ func (client *RouteFiltersClient) listByResourceGroupHandleError(resp *http.Resp
 // resourceGroupName - The name of the resource group.
 // routeFilterName - The name of the route filter.
 // parameters - Parameters supplied to update route filter tags.
-// options - RouteFiltersUpdateTagsOptions contains the optional parameters for the RouteFiltersClient.UpdateTags method.
-func (client *RouteFiltersClient) UpdateTags(ctx context.Context, resourceGroupName string, routeFilterName string, parameters TagsObject, options *RouteFiltersUpdateTagsOptions) (RouteFiltersUpdateTagsResponse, error) {
+// options - RouteFiltersClientUpdateTagsOptions contains the optional parameters for the RouteFiltersClient.UpdateTags method.
+func (client *RouteFiltersClient) UpdateTags(ctx context.Context, resourceGroupName string, routeFilterName string, parameters TagsObject, options *RouteFiltersClientUpdateTagsOptions) (RouteFiltersClientUpdateTagsResponse, error) {
 	req, err := client.updateTagsCreateRequest(ctx, resourceGroupName, routeFilterName, parameters, options)
 	if err != nil {
-		return RouteFiltersUpdateTagsResponse{}, err
+		return RouteFiltersClientUpdateTagsResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return RouteFiltersUpdateTagsResponse{}, err
+		return RouteFiltersClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RouteFiltersUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return RouteFiltersClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
 
 // updateTagsCreateRequest creates the UpdateTags request.
-func (client *RouteFiltersClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, parameters TagsObject, options *RouteFiltersUpdateTagsOptions) (*policy.Request, error) {
+func (client *RouteFiltersClient) updateTagsCreateRequest(ctx context.Context, resourceGroupName string, routeFilterName string, parameters TagsObject, options *RouteFiltersClientUpdateTagsOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -446,10 +447,10 @@ func (client *RouteFiltersClient) updateTagsCreateRequest(ctx context.Context, r
 }
 
 // updateTagsHandleResponse handles the UpdateTags response.
-func (client *RouteFiltersClient) updateTagsHandleResponse(resp *http.Response) (RouteFiltersUpdateTagsResponse, error) {
-	result := RouteFiltersUpdateTagsResponse{RawResponse: resp}
+func (client *RouteFiltersClient) updateTagsHandleResponse(resp *http.Response) (RouteFiltersClientUpdateTagsResponse, error) {
+	result := RouteFiltersClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RouteFilter); err != nil {
-		return RouteFiltersUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return RouteFiltersClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

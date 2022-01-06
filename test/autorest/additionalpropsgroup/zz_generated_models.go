@@ -378,34 +378,34 @@ func (p *PetAPTrue) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// PetsCreateAPInPropertiesOptions contains the optional parameters for the PetsClient.CreateAPInProperties method.
-type PetsCreateAPInPropertiesOptions struct {
+// PetsClientCreateAPInPropertiesOptions contains the optional parameters for the PetsClient.CreateAPInProperties method.
+type PetsClientCreateAPInPropertiesOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateAPInPropertiesWithAPStringOptions contains the optional parameters for the PetsClient.CreateAPInPropertiesWithAPString
+// PetsClientCreateAPInPropertiesWithAPStringOptions contains the optional parameters for the PetsClient.CreateAPInPropertiesWithAPString
 // method.
-type PetsCreateAPInPropertiesWithAPStringOptions struct {
+type PetsClientCreateAPInPropertiesWithAPStringOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateAPObjectOptions contains the optional parameters for the PetsClient.CreateAPObject method.
-type PetsCreateAPObjectOptions struct {
+// PetsClientCreateAPObjectOptions contains the optional parameters for the PetsClient.CreateAPObject method.
+type PetsClientCreateAPObjectOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateAPStringOptions contains the optional parameters for the PetsClient.CreateAPString method.
-type PetsCreateAPStringOptions struct {
+// PetsClientCreateAPStringOptions contains the optional parameters for the PetsClient.CreateAPString method.
+type PetsClientCreateAPStringOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateAPTrueOptions contains the optional parameters for the PetsClient.CreateAPTrue method.
-type PetsCreateAPTrueOptions struct {
+// PetsClientCreateAPTrueOptions contains the optional parameters for the PetsClient.CreateAPTrue method.
+type PetsClientCreateAPTrueOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PetsCreateCatAPTrueOptions contains the optional parameters for the PetsClient.CreateCatAPTrue method.
-type PetsCreateCatAPTrueOptions struct {
+// PetsClientCreateCatAPTrueOptions contains the optional parameters for the PetsClient.CreateCatAPTrue method.
+type PetsClientCreateCatAPTrueOptions struct {
 	// placeholder for future optional parameters
 }
 

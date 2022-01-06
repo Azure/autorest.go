@@ -62,24 +62,24 @@ func NewBudgetsClient(credential azcore.TokenCredential, options *arm.ClientOpti
 // for invoiceSection scope.
 // budgetName - Budget Name.
 // parameters - Parameters supplied to the Create Budget operation.
-// options - BudgetsCreateOrUpdateOptions contains the optional parameters for the BudgetsClient.CreateOrUpdate method.
-func (client *BudgetsClient) CreateOrUpdate(ctx context.Context, scope string, budgetName string, parameters Budget, options *BudgetsCreateOrUpdateOptions) (BudgetsCreateOrUpdateResponse, error) {
+// options - BudgetsClientCreateOrUpdateOptions contains the optional parameters for the BudgetsClient.CreateOrUpdate method.
+func (client *BudgetsClient) CreateOrUpdate(ctx context.Context, scope string, budgetName string, parameters Budget, options *BudgetsClientCreateOrUpdateOptions) (BudgetsClientCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, scope, budgetName, parameters, options)
 	if err != nil {
-		return BudgetsCreateOrUpdateResponse{}, err
+		return BudgetsClientCreateOrUpdateResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BudgetsCreateOrUpdateResponse{}, err
+		return BudgetsClientCreateOrUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return BudgetsCreateOrUpdateResponse{}, client.createOrUpdateHandleError(resp)
+		return BudgetsClientCreateOrUpdateResponse{}, client.createOrUpdateHandleError(resp)
 	}
 	return client.createOrUpdateHandleResponse(resp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *BudgetsClient) createOrUpdateCreateRequest(ctx context.Context, scope string, budgetName string, parameters Budget, options *BudgetsCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *BudgetsClient) createOrUpdateCreateRequest(ctx context.Context, scope string, budgetName string, parameters Budget, options *BudgetsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	if budgetName == "" {
@@ -98,10 +98,10 @@ func (client *BudgetsClient) createOrUpdateCreateRequest(ctx context.Context, sc
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *BudgetsClient) createOrUpdateHandleResponse(resp *http.Response) (BudgetsCreateOrUpdateResponse, error) {
-	result := BudgetsCreateOrUpdateResponse{RawResponse: resp}
+func (client *BudgetsClient) createOrUpdateHandleResponse(resp *http.Response) (BudgetsClientCreateOrUpdateResponse, error) {
+	result := BudgetsClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Budget); err != nil {
-		return BudgetsCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
+		return BudgetsClientCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -131,24 +131,24 @@ func (client *BudgetsClient) createOrUpdateHandleError(resp *http.Response) erro
 // for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
 // for invoiceSection scope.
 // budgetName - Budget Name.
-// options - BudgetsDeleteOptions contains the optional parameters for the BudgetsClient.Delete method.
-func (client *BudgetsClient) Delete(ctx context.Context, scope string, budgetName string, options *BudgetsDeleteOptions) (BudgetsDeleteResponse, error) {
+// options - BudgetsClientDeleteOptions contains the optional parameters for the BudgetsClient.Delete method.
+func (client *BudgetsClient) Delete(ctx context.Context, scope string, budgetName string, options *BudgetsClientDeleteOptions) (BudgetsClientDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, scope, budgetName, options)
 	if err != nil {
-		return BudgetsDeleteResponse{}, err
+		return BudgetsClientDeleteResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BudgetsDeleteResponse{}, err
+		return BudgetsClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BudgetsDeleteResponse{}, client.deleteHandleError(resp)
+		return BudgetsClientDeleteResponse{}, client.deleteHandleError(resp)
 	}
-	return BudgetsDeleteResponse{RawResponse: resp}, nil
+	return BudgetsClientDeleteResponse{RawResponse: resp}, nil
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *BudgetsClient) deleteCreateRequest(ctx context.Context, scope string, budgetName string, options *BudgetsDeleteOptions) (*policy.Request, error) {
+func (client *BudgetsClient) deleteCreateRequest(ctx context.Context, scope string, budgetName string, options *BudgetsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	if budgetName == "" {
@@ -191,24 +191,24 @@ func (client *BudgetsClient) deleteHandleError(resp *http.Response) error {
 // for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
 // for invoiceSection scope.
 // budgetName - Budget Name.
-// options - BudgetsGetOptions contains the optional parameters for the BudgetsClient.Get method.
-func (client *BudgetsClient) Get(ctx context.Context, scope string, budgetName string, options *BudgetsGetOptions) (BudgetsGetResponse, error) {
+// options - BudgetsClientGetOptions contains the optional parameters for the BudgetsClient.Get method.
+func (client *BudgetsClient) Get(ctx context.Context, scope string, budgetName string, options *BudgetsClientGetOptions) (BudgetsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, scope, budgetName, options)
 	if err != nil {
-		return BudgetsGetResponse{}, err
+		return BudgetsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BudgetsGetResponse{}, err
+		return BudgetsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BudgetsGetResponse{}, client.getHandleError(resp)
+		return BudgetsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *BudgetsClient) getCreateRequest(ctx context.Context, scope string, budgetName string, options *BudgetsGetOptions) (*policy.Request, error) {
+func (client *BudgetsClient) getCreateRequest(ctx context.Context, scope string, budgetName string, options *BudgetsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	if budgetName == "" {
@@ -227,10 +227,10 @@ func (client *BudgetsClient) getCreateRequest(ctx context.Context, scope string,
 }
 
 // getHandleResponse handles the Get response.
-func (client *BudgetsClient) getHandleResponse(resp *http.Response) (BudgetsGetResponse, error) {
-	result := BudgetsGetResponse{RawResponse: resp}
+func (client *BudgetsClient) getHandleResponse(resp *http.Response) (BudgetsClientGetResponse, error) {
+	result := BudgetsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Budget); err != nil {
-		return BudgetsGetResponse{}, runtime.NewResponseError(err, resp)
+		return BudgetsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -259,21 +259,21 @@ func (client *BudgetsClient) getHandleError(resp *http.Response) error {
 // '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
 // for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
 // for invoiceSection scope.
-// options - BudgetsListOptions contains the optional parameters for the BudgetsClient.List method.
-func (client *BudgetsClient) List(scope string, options *BudgetsListOptions) *BudgetsListPager {
-	return &BudgetsListPager{
+// options - BudgetsClientListOptions contains the optional parameters for the BudgetsClient.List method.
+func (client *BudgetsClient) List(scope string, options *BudgetsClientListOptions) *BudgetsClientListPager {
+	return &BudgetsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, scope, options)
 		},
-		advancer: func(ctx context.Context, resp BudgetsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp BudgetsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.BudgetsListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *BudgetsClient) listCreateRequest(ctx context.Context, scope string, options *BudgetsListOptions) (*policy.Request, error) {
+func (client *BudgetsClient) listCreateRequest(ctx context.Context, scope string, options *BudgetsClientListOptions) (*policy.Request, error) {
 	urlPath := "/{scope}/providers/Microsoft.Consumption/budgets"
 	urlPath = strings.ReplaceAll(urlPath, "{scope}", scope)
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.host, urlPath))
@@ -288,10 +288,10 @@ func (client *BudgetsClient) listCreateRequest(ctx context.Context, scope string
 }
 
 // listHandleResponse handles the List response.
-func (client *BudgetsClient) listHandleResponse(resp *http.Response) (BudgetsListResponse, error) {
-	result := BudgetsListResponse{RawResponse: resp}
+func (client *BudgetsClient) listHandleResponse(resp *http.Response) (BudgetsClientListResponse, error) {
+	result := BudgetsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BudgetsListResult); err != nil {
-		return BudgetsListResponse{}, runtime.NewResponseError(err, resp)
+		return BudgetsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

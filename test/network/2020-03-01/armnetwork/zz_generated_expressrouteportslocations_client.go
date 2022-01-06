@@ -55,25 +55,25 @@ func NewExpressRoutePortsLocationsClient(subscriptionID string, credential azcor
 // peering location.
 // If the operation fails it returns the *CloudError error type.
 // locationName - Name of the requested ExpressRoutePort peering location.
-// options - ExpressRoutePortsLocationsGetOptions contains the optional parameters for the ExpressRoutePortsLocationsClient.Get
+// options - ExpressRoutePortsLocationsClientGetOptions contains the optional parameters for the ExpressRoutePortsLocationsClient.Get
 // method.
-func (client *ExpressRoutePortsLocationsClient) Get(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (ExpressRoutePortsLocationsGetResponse, error) {
+func (client *ExpressRoutePortsLocationsClient) Get(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsClientGetOptions) (ExpressRoutePortsLocationsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, locationName, options)
 	if err != nil {
-		return ExpressRoutePortsLocationsGetResponse{}, err
+		return ExpressRoutePortsLocationsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ExpressRoutePortsLocationsGetResponse{}, err
+		return ExpressRoutePortsLocationsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExpressRoutePortsLocationsGetResponse{}, client.getHandleError(resp)
+		return ExpressRoutePortsLocationsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *ExpressRoutePortsLocationsClient) getCreateRequest(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsGetOptions) (*policy.Request, error) {
+func (client *ExpressRoutePortsLocationsClient) getCreateRequest(ctx context.Context, locationName string, options *ExpressRoutePortsLocationsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -95,10 +95,10 @@ func (client *ExpressRoutePortsLocationsClient) getCreateRequest(ctx context.Con
 }
 
 // getHandleResponse handles the Get response.
-func (client *ExpressRoutePortsLocationsClient) getHandleResponse(resp *http.Response) (ExpressRoutePortsLocationsGetResponse, error) {
-	result := ExpressRoutePortsLocationsGetResponse{RawResponse: resp}
+func (client *ExpressRoutePortsLocationsClient) getHandleResponse(resp *http.Response) (ExpressRoutePortsLocationsClientGetResponse, error) {
+	result := ExpressRoutePortsLocationsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePortsLocation); err != nil {
-		return ExpressRoutePortsLocationsGetResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRoutePortsLocationsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -119,22 +119,22 @@ func (client *ExpressRoutePortsLocationsClient) getHandleError(resp *http.Respon
 // List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available
 // bandwidths can only be obtained when retrieving a specific peering location.
 // If the operation fails it returns the *CloudError error type.
-// options - ExpressRoutePortsLocationsListOptions contains the optional parameters for the ExpressRoutePortsLocationsClient.List
+// options - ExpressRoutePortsLocationsClientListOptions contains the optional parameters for the ExpressRoutePortsLocationsClient.List
 // method.
-func (client *ExpressRoutePortsLocationsClient) List(options *ExpressRoutePortsLocationsListOptions) *ExpressRoutePortsLocationsListPager {
-	return &ExpressRoutePortsLocationsListPager{
+func (client *ExpressRoutePortsLocationsClient) List(options *ExpressRoutePortsLocationsClientListOptions) *ExpressRoutePortsLocationsClientListPager {
+	return &ExpressRoutePortsLocationsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp ExpressRoutePortsLocationsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp ExpressRoutePortsLocationsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ExpressRoutePortsLocationListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *ExpressRoutePortsLocationsClient) listCreateRequest(ctx context.Context, options *ExpressRoutePortsLocationsListOptions) (*policy.Request, error) {
+func (client *ExpressRoutePortsLocationsClient) listCreateRequest(ctx context.Context, options *ExpressRoutePortsLocationsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -152,10 +152,10 @@ func (client *ExpressRoutePortsLocationsClient) listCreateRequest(ctx context.Co
 }
 
 // listHandleResponse handles the List response.
-func (client *ExpressRoutePortsLocationsClient) listHandleResponse(resp *http.Response) (ExpressRoutePortsLocationsListResponse, error) {
-	result := ExpressRoutePortsLocationsListResponse{RawResponse: resp}
+func (client *ExpressRoutePortsLocationsClient) listHandleResponse(resp *http.Response) (ExpressRoutePortsLocationsClientListResponse, error) {
+	result := ExpressRoutePortsLocationsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePortsLocationListResult); err != nil {
-		return ExpressRoutePortsLocationsListResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRoutePortsLocationsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

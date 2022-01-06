@@ -40,24 +40,24 @@ func NewRoleAssignmentsClient(pl runtime.Pipeline) *RoleAssignmentsClient {
 // scope - The scope of the role assignment to create.
 // roleAssignmentName - The name of the role assignment to create. It can be any valid GUID.
 // parameters - Parameters for the role assignment.
-// options - RoleAssignmentsCreateOptions contains the optional parameters for the RoleAssignmentsClient.Create method.
-func (client *RoleAssignmentsClient) Create(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, parameters RoleAssignmentCreateParameters, options *RoleAssignmentsCreateOptions) (RoleAssignmentsCreateResponse, error) {
+// options - RoleAssignmentsClientCreateOptions contains the optional parameters for the RoleAssignmentsClient.Create method.
+func (client *RoleAssignmentsClient) Create(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, parameters RoleAssignmentCreateParameters, options *RoleAssignmentsClientCreateOptions) (RoleAssignmentsClientCreateResponse, error) {
 	req, err := client.createCreateRequest(ctx, vaultBaseURL, scope, roleAssignmentName, parameters, options)
 	if err != nil {
-		return RoleAssignmentsCreateResponse{}, err
+		return RoleAssignmentsClientCreateResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return RoleAssignmentsCreateResponse{}, err
+		return RoleAssignmentsClientCreateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return RoleAssignmentsCreateResponse{}, client.createHandleError(resp)
+		return RoleAssignmentsClientCreateResponse{}, client.createHandleError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
 
 // createCreateRequest creates the Create request.
-func (client *RoleAssignmentsClient) createCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, parameters RoleAssignmentCreateParameters, options *RoleAssignmentsCreateOptions) (*policy.Request, error) {
+func (client *RoleAssignmentsClient) createCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, parameters RoleAssignmentCreateParameters, options *RoleAssignmentsClientCreateOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}"
@@ -78,10 +78,10 @@ func (client *RoleAssignmentsClient) createCreateRequest(ctx context.Context, va
 }
 
 // createHandleResponse handles the Create response.
-func (client *RoleAssignmentsClient) createHandleResponse(resp *http.Response) (RoleAssignmentsCreateResponse, error) {
-	result := RoleAssignmentsCreateResponse{RawResponse: resp}
+func (client *RoleAssignmentsClient) createHandleResponse(resp *http.Response) (RoleAssignmentsClientCreateResponse, error) {
+	result := RoleAssignmentsClientCreateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleAssignment); err != nil {
-		return RoleAssignmentsCreateResponse{}, runtime.NewResponseError(err, resp)
+		return RoleAssignmentsClientCreateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -104,24 +104,24 @@ func (client *RoleAssignmentsClient) createHandleError(resp *http.Response) erro
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignment to delete.
 // roleAssignmentName - The name of the role assignment to delete.
-// options - RoleAssignmentsDeleteOptions contains the optional parameters for the RoleAssignmentsClient.Delete method.
-func (client *RoleAssignmentsClient) Delete(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsDeleteOptions) (RoleAssignmentsDeleteResponse, error) {
+// options - RoleAssignmentsClientDeleteOptions contains the optional parameters for the RoleAssignmentsClient.Delete method.
+func (client *RoleAssignmentsClient) Delete(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsClientDeleteOptions) (RoleAssignmentsClientDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, vaultBaseURL, scope, roleAssignmentName, options)
 	if err != nil {
-		return RoleAssignmentsDeleteResponse{}, err
+		return RoleAssignmentsClientDeleteResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return RoleAssignmentsDeleteResponse{}, err
+		return RoleAssignmentsClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RoleAssignmentsDeleteResponse{}, client.deleteHandleError(resp)
+		return RoleAssignmentsClientDeleteResponse{}, client.deleteHandleError(resp)
 	}
 	return client.deleteHandleResponse(resp)
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *RoleAssignmentsClient) deleteCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsDeleteOptions) (*policy.Request, error) {
+func (client *RoleAssignmentsClient) deleteCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsClientDeleteOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}"
@@ -142,10 +142,10 @@ func (client *RoleAssignmentsClient) deleteCreateRequest(ctx context.Context, va
 }
 
 // deleteHandleResponse handles the Delete response.
-func (client *RoleAssignmentsClient) deleteHandleResponse(resp *http.Response) (RoleAssignmentsDeleteResponse, error) {
-	result := RoleAssignmentsDeleteResponse{RawResponse: resp}
+func (client *RoleAssignmentsClient) deleteHandleResponse(resp *http.Response) (RoleAssignmentsClientDeleteResponse, error) {
+	result := RoleAssignmentsClientDeleteResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleAssignment); err != nil {
-		return RoleAssignmentsDeleteResponse{}, runtime.NewResponseError(err, resp)
+		return RoleAssignmentsClientDeleteResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -168,24 +168,24 @@ func (client *RoleAssignmentsClient) deleteHandleError(resp *http.Response) erro
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignment.
 // roleAssignmentName - The name of the role assignment to get.
-// options - RoleAssignmentsGetOptions contains the optional parameters for the RoleAssignmentsClient.Get method.
-func (client *RoleAssignmentsClient) Get(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsGetOptions) (RoleAssignmentsGetResponse, error) {
+// options - RoleAssignmentsClientGetOptions contains the optional parameters for the RoleAssignmentsClient.Get method.
+func (client *RoleAssignmentsClient) Get(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsClientGetOptions) (RoleAssignmentsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, vaultBaseURL, scope, roleAssignmentName, options)
 	if err != nil {
-		return RoleAssignmentsGetResponse{}, err
+		return RoleAssignmentsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return RoleAssignmentsGetResponse{}, err
+		return RoleAssignmentsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RoleAssignmentsGetResponse{}, client.getHandleError(resp)
+		return RoleAssignmentsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *RoleAssignmentsClient) getCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsGetOptions) (*policy.Request, error) {
+func (client *RoleAssignmentsClient) getCreateRequest(ctx context.Context, vaultBaseURL string, scope string, roleAssignmentName string, options *RoleAssignmentsClientGetOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}"
@@ -206,10 +206,10 @@ func (client *RoleAssignmentsClient) getCreateRequest(ctx context.Context, vault
 }
 
 // getHandleResponse handles the Get response.
-func (client *RoleAssignmentsClient) getHandleResponse(resp *http.Response) (RoleAssignmentsGetResponse, error) {
-	result := RoleAssignmentsGetResponse{RawResponse: resp}
+func (client *RoleAssignmentsClient) getHandleResponse(resp *http.Response) (RoleAssignmentsClientGetResponse, error) {
+	result := RoleAssignmentsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleAssignment); err != nil {
-		return RoleAssignmentsGetResponse{}, runtime.NewResponseError(err, resp)
+		return RoleAssignmentsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -231,22 +231,22 @@ func (client *RoleAssignmentsClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *Error error type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignments.
-// options - RoleAssignmentsListForScopeOptions contains the optional parameters for the RoleAssignmentsClient.ListForScope
+// options - RoleAssignmentsClientListForScopeOptions contains the optional parameters for the RoleAssignmentsClient.ListForScope
 // method.
-func (client *RoleAssignmentsClient) ListForScope(vaultBaseURL string, scope string, options *RoleAssignmentsListForScopeOptions) *RoleAssignmentsListForScopePager {
-	return &RoleAssignmentsListForScopePager{
+func (client *RoleAssignmentsClient) ListForScope(vaultBaseURL string, scope string, options *RoleAssignmentsClientListForScopeOptions) *RoleAssignmentsClientListForScopePager {
+	return &RoleAssignmentsClientListForScopePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listForScopeCreateRequest(ctx, vaultBaseURL, scope, options)
 		},
-		advancer: func(ctx context.Context, resp RoleAssignmentsListForScopeResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp RoleAssignmentsClientListForScopeResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.RoleAssignmentListResult.NextLink)
 		},
 	}
 }
 
 // listForScopeCreateRequest creates the ListForScope request.
-func (client *RoleAssignmentsClient) listForScopeCreateRequest(ctx context.Context, vaultBaseURL string, scope string, options *RoleAssignmentsListForScopeOptions) (*policy.Request, error) {
+func (client *RoleAssignmentsClient) listForScopeCreateRequest(ctx context.Context, vaultBaseURL string, scope string, options *RoleAssignmentsClientListForScopeOptions) (*policy.Request, error) {
 	host := "{vaultBaseUrl}"
 	host = strings.ReplaceAll(host, "{vaultBaseUrl}", vaultBaseURL)
 	urlPath := "/{scope}/providers/Microsoft.Authorization/roleAssignments"
@@ -266,10 +266,10 @@ func (client *RoleAssignmentsClient) listForScopeCreateRequest(ctx context.Conte
 }
 
 // listForScopeHandleResponse handles the ListForScope response.
-func (client *RoleAssignmentsClient) listForScopeHandleResponse(resp *http.Response) (RoleAssignmentsListForScopeResponse, error) {
-	result := RoleAssignmentsListForScopeResponse{RawResponse: resp}
+func (client *RoleAssignmentsClient) listForScopeHandleResponse(resp *http.Response) (RoleAssignmentsClientListForScopeResponse, error) {
+	result := RoleAssignmentsClientListForScopeResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleAssignmentListResult); err != nil {
-		return RoleAssignmentsListForScopeResponse{}, runtime.NewResponseError(err, resp)
+		return RoleAssignmentsClientListForScopeResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

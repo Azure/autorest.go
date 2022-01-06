@@ -28,7 +28,7 @@ func TestValidationGetWithConstantInPath(t *testing.T) {
 
 func TestValidationPostWithConstantInBody(t *testing.T) {
 	client := newAutoRestValidationTestClient()
-	result, err := client.PostWithConstantInBody(context.Background(), &AutoRestValidationTestPostWithConstantInBodyOptions{Body: &Product{
+	result, err := client.PostWithConstantInBody(context.Background(), &AutoRestValidationTestClientPostWithConstantInBodyOptions{Body: &Product{
 		Child: &ChildProduct{
 			ConstProperty: to.StringPtr("constant")},
 		ConstString: to.StringPtr("constant"),
@@ -47,7 +47,7 @@ func TestValidationPostWithConstantInBody(t *testing.T) {
 func TestValidationValidationOfBody(t *testing.T) {
 	t.Skip("need to confirm if this test will remain in the testserver and what values it's expecting")
 	client := newAutoRestValidationTestClient()
-	result, err := client.ValidationOfBody(context.Background(), "123", 150, &AutoRestValidationTestValidationOfBodyOptions{
+	result, err := client.ValidationOfBody(context.Background(), "123", 150, &AutoRestValidationTestClientValidationOfBodyOptions{
 		Body: &Product{
 			DisplayNames: []*string{
 				to.StringPtr("displayname1"),

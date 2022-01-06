@@ -10,44 +10,44 @@ package durationgroup
 
 import "net/http"
 
-// DurationGetInvalidResponse contains the response from method Duration.GetInvalid.
-type DurationGetInvalidResponse struct {
-	DurationGetInvalidResult
+// DurationClientGetInvalidResponse contains the response from method DurationClient.GetInvalid.
+type DurationClientGetInvalidResponse struct {
+	DurationClientGetInvalidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DurationGetInvalidResult contains the result from method Duration.GetInvalid.
-type DurationGetInvalidResult struct {
+// DurationClientGetInvalidResult contains the result from method DurationClient.GetInvalid.
+type DurationClientGetInvalidResult struct {
 	Value *string
 }
 
-// DurationGetNullResponse contains the response from method Duration.GetNull.
-type DurationGetNullResponse struct {
-	DurationGetNullResult
+// DurationClientGetNullResponse contains the response from method DurationClient.GetNull.
+type DurationClientGetNullResponse struct {
+	DurationClientGetNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DurationGetNullResult contains the result from method Duration.GetNull.
-type DurationGetNullResult struct {
+// DurationClientGetNullResult contains the result from method DurationClient.GetNull.
+type DurationClientGetNullResult struct {
 	Value *string
 }
 
-// DurationGetPositiveDurationResponse contains the response from method Duration.GetPositiveDuration.
-type DurationGetPositiveDurationResponse struct {
-	DurationGetPositiveDurationResult
+// DurationClientGetPositiveDurationResponse contains the response from method DurationClient.GetPositiveDuration.
+type DurationClientGetPositiveDurationResponse struct {
+	DurationClientGetPositiveDurationResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DurationGetPositiveDurationResult contains the result from method Duration.GetPositiveDuration.
-type DurationGetPositiveDurationResult struct {
+// DurationClientGetPositiveDurationResult contains the result from method DurationClient.GetPositiveDuration.
+type DurationClientGetPositiveDurationResult struct {
 	Value *string
 }
 
-// DurationPutPositiveDurationResponse contains the response from method Duration.PutPositiveDuration.
-type DurationPutPositiveDurationResponse struct {
+// DurationClientPutPositiveDurationResponse contains the response from method DurationClient.PutPositiveDuration.
+type DurationClientPutPositiveDurationResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

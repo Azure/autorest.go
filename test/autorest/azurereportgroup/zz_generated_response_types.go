@@ -10,15 +10,15 @@ package azurereportgroup
 
 import "net/http"
 
-// AutoRestReportServiceForAzureGetReportResponse contains the response from method AutoRestReportServiceForAzure.GetReport.
-type AutoRestReportServiceForAzureGetReportResponse struct {
-	AutoRestReportServiceForAzureGetReportResult
+// AutoRestReportServiceForAzureClientGetReportResponse contains the response from method AutoRestReportServiceForAzureClient.GetReport.
+type AutoRestReportServiceForAzureClientGetReportResponse struct {
+	AutoRestReportServiceForAzureClientGetReportResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// AutoRestReportServiceForAzureGetReportResult contains the result from method AutoRestReportServiceForAzure.GetReport.
-type AutoRestReportServiceForAzureGetReportResult struct {
+// AutoRestReportServiceForAzureClientGetReportResult contains the result from method AutoRestReportServiceForAzureClient.GetReport.
+type AutoRestReportServiceForAzureClientGetReportResult struct {
 	// Dictionary of <integer>
 	Value map[string]*int32
 }

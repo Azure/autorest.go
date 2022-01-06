@@ -56,22 +56,22 @@ func NewVPNLinkConnectionsClient(subscriptionID string, credential azcore.TokenC
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // connectionName - The name of the vpn connection.
-// options - VPNLinkConnectionsListByVPNConnectionOptions contains the optional parameters for the VPNLinkConnectionsClient.ListByVPNConnection
+// options - VPNLinkConnectionsClientListByVPNConnectionOptions contains the optional parameters for the VPNLinkConnectionsClient.ListByVPNConnection
 // method.
-func (client *VPNLinkConnectionsClient) ListByVPNConnection(resourceGroupName string, gatewayName string, connectionName string, options *VPNLinkConnectionsListByVPNConnectionOptions) *VPNLinkConnectionsListByVPNConnectionPager {
-	return &VPNLinkConnectionsListByVPNConnectionPager{
+func (client *VPNLinkConnectionsClient) ListByVPNConnection(resourceGroupName string, gatewayName string, connectionName string, options *VPNLinkConnectionsClientListByVPNConnectionOptions) *VPNLinkConnectionsClientListByVPNConnectionPager {
+	return &VPNLinkConnectionsClientListByVPNConnectionPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByVPNConnectionCreateRequest(ctx, resourceGroupName, gatewayName, connectionName, options)
 		},
-		advancer: func(ctx context.Context, resp VPNLinkConnectionsListByVPNConnectionResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp VPNLinkConnectionsClientListByVPNConnectionResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ListVPNSiteLinkConnectionsResult.NextLink)
 		},
 	}
 }
 
 // listByVPNConnectionCreateRequest creates the ListByVPNConnection request.
-func (client *VPNLinkConnectionsClient) listByVPNConnectionCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNLinkConnectionsListByVPNConnectionOptions) (*policy.Request, error) {
+func (client *VPNLinkConnectionsClient) listByVPNConnectionCreateRequest(ctx context.Context, resourceGroupName string, gatewayName string, connectionName string, options *VPNLinkConnectionsClientListByVPNConnectionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -101,10 +101,10 @@ func (client *VPNLinkConnectionsClient) listByVPNConnectionCreateRequest(ctx con
 }
 
 // listByVPNConnectionHandleResponse handles the ListByVPNConnection response.
-func (client *VPNLinkConnectionsClient) listByVPNConnectionHandleResponse(resp *http.Response) (VPNLinkConnectionsListByVPNConnectionResponse, error) {
-	result := VPNLinkConnectionsListByVPNConnectionResponse{RawResponse: resp}
+func (client *VPNLinkConnectionsClient) listByVPNConnectionHandleResponse(resp *http.Response) (VPNLinkConnectionsClientListByVPNConnectionResponse, error) {
+	result := VPNLinkConnectionsClientListByVPNConnectionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNSiteLinkConnectionsResult); err != nil {
-		return VPNLinkConnectionsListByVPNConnectionResponse{}, runtime.NewResponseError(err, resp)
+		return VPNLinkConnectionsClientListByVPNConnectionResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

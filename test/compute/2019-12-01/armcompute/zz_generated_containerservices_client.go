@@ -56,21 +56,21 @@ func NewContainerServicesClient(subscriptionID string, credential azcore.TokenCr
 // resourceGroupName - The name of the resource group.
 // containerServiceName - The name of the container service in the specified subscription and resource group.
 // parameters - Parameters supplied to the Create or Update a Container Service operation.
-// options - ContainerServicesBeginCreateOrUpdateOptions contains the optional parameters for the ContainerServicesClient.BeginCreateOrUpdate
+// options - ContainerServicesClientBeginCreateOrUpdateOptions contains the optional parameters for the ContainerServicesClient.BeginCreateOrUpdate
 // method.
-func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesBeginCreateOrUpdateOptions) (ContainerServicesCreateOrUpdatePollerResponse, error) {
+func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesClientBeginCreateOrUpdateOptions) (ContainerServicesClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, containerServiceName, parameters, options)
 	if err != nil {
-		return ContainerServicesCreateOrUpdatePollerResponse{}, err
+		return ContainerServicesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := ContainerServicesCreateOrUpdatePollerResponse{
+	result := ContainerServicesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("ContainerServicesClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return ContainerServicesCreateOrUpdatePollerResponse{}, err
+		return ContainerServicesClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &ContainerServicesCreateOrUpdatePoller{
+	result.Poller = &ContainerServicesClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -79,7 +79,7 @@ func (client *ContainerServicesClient) BeginCreateOrUpdate(ctx context.Context, 
 // CreateOrUpdate - Creates or updates a container service with the specified configuration of orchestrator, masters, and
 // agents.
 // If the operation fails it returns a generic error.
-func (client *ContainerServicesClient) createOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *ContainerServicesClient) createOrUpdate(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, containerServiceName, parameters, options)
 	if err != nil {
 		return nil, err
@@ -95,7 +95,7 @@ func (client *ContainerServicesClient) createOrUpdate(ctx context.Context, resou
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *ContainerServicesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *ContainerServicesClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, containerServiceName string, parameters ContainerService, options *ContainerServicesClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/containerServices/{containerServiceName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -139,21 +139,21 @@ func (client *ContainerServicesClient) createOrUpdateHandleError(resp *http.Resp
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // containerServiceName - The name of the container service in the specified subscription and resource group.
-// options - ContainerServicesBeginDeleteOptions contains the optional parameters for the ContainerServicesClient.BeginDelete
+// options - ContainerServicesClientBeginDeleteOptions contains the optional parameters for the ContainerServicesClient.BeginDelete
 // method.
-func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesBeginDeleteOptions) (ContainerServicesDeletePollerResponse, error) {
+func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesClientBeginDeleteOptions) (ContainerServicesClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
-		return ContainerServicesDeletePollerResponse{}, err
+		return ContainerServicesClientDeletePollerResponse{}, err
 	}
-	result := ContainerServicesDeletePollerResponse{
+	result := ContainerServicesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("ContainerServicesClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return ContainerServicesDeletePollerResponse{}, err
+		return ContainerServicesClientDeletePollerResponse{}, err
 	}
-	result.Poller = &ContainerServicesDeletePoller{
+	result.Poller = &ContainerServicesClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -164,7 +164,7 @@ func (client *ContainerServicesClient) BeginDelete(ctx context.Context, resource
 // storage accounts, VMs, and availability sets. All the other resources created with the container service are part of the
 // same resource group and can be deleted individually.
 // If the operation fails it returns a generic error.
-func (client *ContainerServicesClient) deleteOperation(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesBeginDeleteOptions) (*http.Response, error) {
+func (client *ContainerServicesClient) deleteOperation(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
 		return nil, err
@@ -180,7 +180,7 @@ func (client *ContainerServicesClient) deleteOperation(ctx context.Context, reso
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *ContainerServicesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesBeginDeleteOptions) (*policy.Request, error) {
+func (client *ContainerServicesClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/containerServices/{containerServiceName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -222,24 +222,24 @@ func (client *ContainerServicesClient) deleteHandleError(resp *http.Response) er
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // containerServiceName - The name of the container service in the specified subscription and resource group.
-// options - ContainerServicesGetOptions contains the optional parameters for the ContainerServicesClient.Get method.
-func (client *ContainerServicesClient) Get(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesGetOptions) (ContainerServicesGetResponse, error) {
+// options - ContainerServicesClientGetOptions contains the optional parameters for the ContainerServicesClient.Get method.
+func (client *ContainerServicesClient) Get(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesClientGetOptions) (ContainerServicesClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, containerServiceName, options)
 	if err != nil {
-		return ContainerServicesGetResponse{}, err
+		return ContainerServicesClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ContainerServicesGetResponse{}, err
+		return ContainerServicesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ContainerServicesGetResponse{}, client.getHandleError(resp)
+		return ContainerServicesClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *ContainerServicesClient) getCreateRequest(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesGetOptions) (*policy.Request, error) {
+func (client *ContainerServicesClient) getCreateRequest(ctx context.Context, resourceGroupName string, containerServiceName string, options *ContainerServicesClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/containerServices/{containerServiceName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -265,10 +265,10 @@ func (client *ContainerServicesClient) getCreateRequest(ctx context.Context, res
 }
 
 // getHandleResponse handles the Get response.
-func (client *ContainerServicesClient) getHandleResponse(resp *http.Response) (ContainerServicesGetResponse, error) {
-	result := ContainerServicesGetResponse{RawResponse: resp}
+func (client *ContainerServicesClient) getHandleResponse(resp *http.Response) (ContainerServicesClientGetResponse, error) {
+	result := ContainerServicesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ContainerService); err != nil {
-		return ContainerServicesGetResponse{}, runtime.NewResponseError(err, resp)
+		return ContainerServicesClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -289,21 +289,21 @@ func (client *ContainerServicesClient) getHandleError(resp *http.Response) error
 // service including state, orchestrator, number of masters and agents, and FQDNs of
 // masters and agents.
 // If the operation fails it returns a generic error.
-// options - ContainerServicesListOptions contains the optional parameters for the ContainerServicesClient.List method.
-func (client *ContainerServicesClient) List(options *ContainerServicesListOptions) *ContainerServicesListPager {
-	return &ContainerServicesListPager{
+// options - ContainerServicesClientListOptions contains the optional parameters for the ContainerServicesClient.List method.
+func (client *ContainerServicesClient) List(options *ContainerServicesClientListOptions) *ContainerServicesClientListPager {
+	return &ContainerServicesClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp ContainerServicesListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp ContainerServicesClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ContainerServiceListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *ContainerServicesClient) listCreateRequest(ctx context.Context, options *ContainerServicesListOptions) (*policy.Request, error) {
+func (client *ContainerServicesClient) listCreateRequest(ctx context.Context, options *ContainerServicesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/containerServices"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -321,10 +321,10 @@ func (client *ContainerServicesClient) listCreateRequest(ctx context.Context, op
 }
 
 // listHandleResponse handles the List response.
-func (client *ContainerServicesClient) listHandleResponse(resp *http.Response) (ContainerServicesListResponse, error) {
-	result := ContainerServicesListResponse{RawResponse: resp}
+func (client *ContainerServicesClient) listHandleResponse(resp *http.Response) (ContainerServicesClientListResponse, error) {
+	result := ContainerServicesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ContainerServiceListResult); err != nil {
-		return ContainerServicesListResponse{}, runtime.NewResponseError(err, resp)
+		return ContainerServicesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -346,22 +346,22 @@ func (client *ContainerServicesClient) listHandleError(resp *http.Response) erro
 // agents, and FQDNs of masters and agents.
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
-// options - ContainerServicesListByResourceGroupOptions contains the optional parameters for the ContainerServicesClient.ListByResourceGroup
+// options - ContainerServicesClientListByResourceGroupOptions contains the optional parameters for the ContainerServicesClient.ListByResourceGroup
 // method.
-func (client *ContainerServicesClient) ListByResourceGroup(resourceGroupName string, options *ContainerServicesListByResourceGroupOptions) *ContainerServicesListByResourceGroupPager {
-	return &ContainerServicesListByResourceGroupPager{
+func (client *ContainerServicesClient) ListByResourceGroup(resourceGroupName string, options *ContainerServicesClientListByResourceGroupOptions) *ContainerServicesClientListByResourceGroupPager {
+	return &ContainerServicesClientListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp ContainerServicesListByResourceGroupResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp ContainerServicesClientListByResourceGroupResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.ContainerServiceListResult.NextLink)
 		},
 	}
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *ContainerServicesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *ContainerServicesListByResourceGroupOptions) (*policy.Request, error) {
+func (client *ContainerServicesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *ContainerServicesClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/containerServices"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -383,10 +383,10 @@ func (client *ContainerServicesClient) listByResourceGroupCreateRequest(ctx cont
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *ContainerServicesClient) listByResourceGroupHandleResponse(resp *http.Response) (ContainerServicesListByResourceGroupResponse, error) {
-	result := ContainerServicesListByResourceGroupResponse{RawResponse: resp}
+func (client *ContainerServicesClient) listByResourceGroupHandleResponse(resp *http.Response) (ContainerServicesClientListByResourceGroupResponse, error) {
+	result := ContainerServicesClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ContainerServiceListResult); err != nil {
-		return ContainerServicesListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return ContainerServicesClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

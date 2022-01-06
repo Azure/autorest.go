@@ -38,24 +38,24 @@ func NewFilesClient(options *azcore.ClientOptions) *FilesClient {
 
 // GetEmptyFile - Get empty file
 // If the operation fails it returns the *Error error type.
-// options - FilesGetEmptyFileOptions contains the optional parameters for the FilesClient.GetEmptyFile method.
-func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesGetEmptyFileOptions) (FilesGetEmptyFileResponse, error) {
+// options - FilesClientGetEmptyFileOptions contains the optional parameters for the FilesClient.GetEmptyFile method.
+func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesClientGetEmptyFileOptions) (FilesClientGetEmptyFileResponse, error) {
 	req, err := client.getEmptyFileCreateRequest(ctx, options)
 	if err != nil {
-		return FilesGetEmptyFileResponse{}, err
+		return FilesClientGetEmptyFileResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return FilesGetEmptyFileResponse{}, err
+		return FilesClientGetEmptyFileResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FilesGetEmptyFileResponse{}, client.getEmptyFileHandleError(resp)
+		return FilesClientGetEmptyFileResponse{}, client.getEmptyFileHandleError(resp)
 	}
-	return FilesGetEmptyFileResponse{RawResponse: resp}, nil
+	return FilesClientGetEmptyFileResponse{RawResponse: resp}, nil
 }
 
 // getEmptyFileCreateRequest creates the GetEmptyFile request.
-func (client *FilesClient) getEmptyFileCreateRequest(ctx context.Context, options *FilesGetEmptyFileOptions) (*policy.Request, error) {
+func (client *FilesClient) getEmptyFileCreateRequest(ctx context.Context, options *FilesClientGetEmptyFileOptions) (*policy.Request, error) {
 	urlPath := "/files/stream/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -81,24 +81,24 @@ func (client *FilesClient) getEmptyFileHandleError(resp *http.Response) error {
 
 // GetFile - Get file
 // If the operation fails it returns the *Error error type.
-// options - FilesGetFileOptions contains the optional parameters for the FilesClient.GetFile method.
-func (client *FilesClient) GetFile(ctx context.Context, options *FilesGetFileOptions) (FilesGetFileResponse, error) {
+// options - FilesClientGetFileOptions contains the optional parameters for the FilesClient.GetFile method.
+func (client *FilesClient) GetFile(ctx context.Context, options *FilesClientGetFileOptions) (FilesClientGetFileResponse, error) {
 	req, err := client.getFileCreateRequest(ctx, options)
 	if err != nil {
-		return FilesGetFileResponse{}, err
+		return FilesClientGetFileResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return FilesGetFileResponse{}, err
+		return FilesClientGetFileResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FilesGetFileResponse{}, client.getFileHandleError(resp)
+		return FilesClientGetFileResponse{}, client.getFileHandleError(resp)
 	}
-	return FilesGetFileResponse{RawResponse: resp}, nil
+	return FilesClientGetFileResponse{RawResponse: resp}, nil
 }
 
 // getFileCreateRequest creates the GetFile request.
-func (client *FilesClient) getFileCreateRequest(ctx context.Context, options *FilesGetFileOptions) (*policy.Request, error) {
+func (client *FilesClient) getFileCreateRequest(ctx context.Context, options *FilesClientGetFileOptions) (*policy.Request, error) {
 	urlPath := "/files/stream/nonempty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -124,24 +124,24 @@ func (client *FilesClient) getFileHandleError(resp *http.Response) error {
 
 // GetFileLarge - Get a large file
 // If the operation fails it returns the *Error error type.
-// options - FilesGetFileLargeOptions contains the optional parameters for the FilesClient.GetFileLarge method.
-func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesGetFileLargeOptions) (FilesGetFileLargeResponse, error) {
+// options - FilesClientGetFileLargeOptions contains the optional parameters for the FilesClient.GetFileLarge method.
+func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesClientGetFileLargeOptions) (FilesClientGetFileLargeResponse, error) {
 	req, err := client.getFileLargeCreateRequest(ctx, options)
 	if err != nil {
-		return FilesGetFileLargeResponse{}, err
+		return FilesClientGetFileLargeResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return FilesGetFileLargeResponse{}, err
+		return FilesClientGetFileLargeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FilesGetFileLargeResponse{}, client.getFileLargeHandleError(resp)
+		return FilesClientGetFileLargeResponse{}, client.getFileLargeHandleError(resp)
 	}
-	return FilesGetFileLargeResponse{RawResponse: resp}, nil
+	return FilesClientGetFileLargeResponse{RawResponse: resp}, nil
 }
 
 // getFileLargeCreateRequest creates the GetFileLarge request.
-func (client *FilesClient) getFileLargeCreateRequest(ctx context.Context, options *FilesGetFileLargeOptions) (*policy.Request, error) {
+func (client *FilesClient) getFileLargeCreateRequest(ctx context.Context, options *FilesClientGetFileLargeOptions) (*policy.Request, error) {
 	urlPath := "/files/stream/verylarge"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {

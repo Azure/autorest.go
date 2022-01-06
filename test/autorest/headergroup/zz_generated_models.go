@@ -23,150 +23,151 @@ func (e Error) Error() string {
 	return e.raw
 }
 
-// HeaderCustomRequestIDOptions contains the optional parameters for the HeaderClient.CustomRequestID method.
-type HeaderCustomRequestIDOptions struct {
+// HeaderClientCustomRequestIDOptions contains the optional parameters for the HeaderClient.CustomRequestID method.
+type HeaderClientCustomRequestIDOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderParamBoolOptions contains the optional parameters for the HeaderClient.ParamBool method.
-type HeaderParamBoolOptions struct {
+// HeaderClientParamBoolOptions contains the optional parameters for the HeaderClient.ParamBool method.
+type HeaderClientParamBoolOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderParamByteOptions contains the optional parameters for the HeaderClient.ParamByte method.
-type HeaderParamByteOptions struct {
+// HeaderClientParamByteOptions contains the optional parameters for the HeaderClient.ParamByte method.
+type HeaderClientParamByteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderParamDateOptions contains the optional parameters for the HeaderClient.ParamDate method.
-type HeaderParamDateOptions struct {
+// HeaderClientParamDateOptions contains the optional parameters for the HeaderClient.ParamDate method.
+type HeaderClientParamDateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderParamDatetimeOptions contains the optional parameters for the HeaderClient.ParamDatetime method.
-type HeaderParamDatetimeOptions struct {
+// HeaderClientParamDatetimeOptions contains the optional parameters for the HeaderClient.ParamDatetime method.
+type HeaderClientParamDatetimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderParamDatetimeRFC1123Options contains the optional parameters for the HeaderClient.ParamDatetimeRFC1123 method.
-type HeaderParamDatetimeRFC1123Options struct {
+// HeaderClientParamDatetimeRFC1123Options contains the optional parameters for the HeaderClient.ParamDatetimeRFC1123 method.
+type HeaderClientParamDatetimeRFC1123Options struct {
 	// Send a post request with header values "Wed, 01 Jan 2010 12:34:56 GMT" or "Mon, 01 Jan 0001 00:00:00 GMT"
 	Value *time.Time
 }
 
-// HeaderParamDoubleOptions contains the optional parameters for the HeaderClient.ParamDouble method.
-type HeaderParamDoubleOptions struct {
+// HeaderClientParamDoubleOptions contains the optional parameters for the HeaderClient.ParamDouble method.
+type HeaderClientParamDoubleOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderParamDurationOptions contains the optional parameters for the HeaderClient.ParamDuration method.
-type HeaderParamDurationOptions struct {
+// HeaderClientParamDurationOptions contains the optional parameters for the HeaderClient.ParamDuration method.
+type HeaderClientParamDurationOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderParamEnumOptions contains the optional parameters for the HeaderClient.ParamEnum method.
-type HeaderParamEnumOptions struct {
+// HeaderClientParamEnumOptions contains the optional parameters for the HeaderClient.ParamEnum method.
+type HeaderClientParamEnumOptions struct {
 	// Send a post request with header values 'GREY'
 	Value *GreyscaleColors
 }
 
-// HeaderParamExistingKeyOptions contains the optional parameters for the HeaderClient.ParamExistingKey method.
-type HeaderParamExistingKeyOptions struct {
+// HeaderClientParamExistingKeyOptions contains the optional parameters for the HeaderClient.ParamExistingKey method.
+type HeaderClientParamExistingKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderParamFloatOptions contains the optional parameters for the HeaderClient.ParamFloat method.
-type HeaderParamFloatOptions struct {
+// HeaderClientParamFloatOptions contains the optional parameters for the HeaderClient.ParamFloat method.
+type HeaderClientParamFloatOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderParamIntegerOptions contains the optional parameters for the HeaderClient.ParamInteger method.
-type HeaderParamIntegerOptions struct {
+// HeaderClientParamIntegerOptions contains the optional parameters for the HeaderClient.ParamInteger method.
+type HeaderClientParamIntegerOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderParamLongOptions contains the optional parameters for the HeaderClient.ParamLong method.
-type HeaderParamLongOptions struct {
+// HeaderClientParamLongOptions contains the optional parameters for the HeaderClient.ParamLong method.
+type HeaderClientParamLongOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderParamProtectedKeyOptions contains the optional parameters for the HeaderClient.ParamProtectedKey method.
-type HeaderParamProtectedKeyOptions struct {
+// HeaderClientParamProtectedKeyOptions contains the optional parameters for the HeaderClient.ParamProtectedKey method.
+type HeaderClientParamProtectedKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderParamStringOptions contains the optional parameters for the HeaderClient.ParamString method.
-type HeaderParamStringOptions struct {
+// HeaderClientParamStringOptions contains the optional parameters for the HeaderClient.ParamString method.
+type HeaderClientParamStringOptions struct {
 	// Send a post request with header values "The quick brown fox jumps over the lazy dog" or null or ""
 	Value *string
 }
 
-// HeaderResponseBoolOptions contains the optional parameters for the HeaderClient.ResponseBool method.
-type HeaderResponseBoolOptions struct {
+// HeaderClientResponseBoolOptions contains the optional parameters for the HeaderClient.ResponseBool method.
+type HeaderClientResponseBoolOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseByteOptions contains the optional parameters for the HeaderClient.ResponseByte method.
-type HeaderResponseByteOptions struct {
+// HeaderClientResponseByteOptions contains the optional parameters for the HeaderClient.ResponseByte method.
+type HeaderClientResponseByteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseDateOptions contains the optional parameters for the HeaderClient.ResponseDate method.
-type HeaderResponseDateOptions struct {
+// HeaderClientResponseDateOptions contains the optional parameters for the HeaderClient.ResponseDate method.
+type HeaderClientResponseDateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseDatetimeOptions contains the optional parameters for the HeaderClient.ResponseDatetime method.
-type HeaderResponseDatetimeOptions struct {
+// HeaderClientResponseDatetimeOptions contains the optional parameters for the HeaderClient.ResponseDatetime method.
+type HeaderClientResponseDatetimeOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseDatetimeRFC1123Options contains the optional parameters for the HeaderClient.ResponseDatetimeRFC1123 method.
-type HeaderResponseDatetimeRFC1123Options struct {
+// HeaderClientResponseDatetimeRFC1123Options contains the optional parameters for the HeaderClient.ResponseDatetimeRFC1123
+// method.
+type HeaderClientResponseDatetimeRFC1123Options struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseDoubleOptions contains the optional parameters for the HeaderClient.ResponseDouble method.
-type HeaderResponseDoubleOptions struct {
+// HeaderClientResponseDoubleOptions contains the optional parameters for the HeaderClient.ResponseDouble method.
+type HeaderClientResponseDoubleOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseDurationOptions contains the optional parameters for the HeaderClient.ResponseDuration method.
-type HeaderResponseDurationOptions struct {
+// HeaderClientResponseDurationOptions contains the optional parameters for the HeaderClient.ResponseDuration method.
+type HeaderClientResponseDurationOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseEnumOptions contains the optional parameters for the HeaderClient.ResponseEnum method.
-type HeaderResponseEnumOptions struct {
+// HeaderClientResponseEnumOptions contains the optional parameters for the HeaderClient.ResponseEnum method.
+type HeaderClientResponseEnumOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseExistingKeyOptions contains the optional parameters for the HeaderClient.ResponseExistingKey method.
-type HeaderResponseExistingKeyOptions struct {
+// HeaderClientResponseExistingKeyOptions contains the optional parameters for the HeaderClient.ResponseExistingKey method.
+type HeaderClientResponseExistingKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseFloatOptions contains the optional parameters for the HeaderClient.ResponseFloat method.
-type HeaderResponseFloatOptions struct {
+// HeaderClientResponseFloatOptions contains the optional parameters for the HeaderClient.ResponseFloat method.
+type HeaderClientResponseFloatOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseIntegerOptions contains the optional parameters for the HeaderClient.ResponseInteger method.
-type HeaderResponseIntegerOptions struct {
+// HeaderClientResponseIntegerOptions contains the optional parameters for the HeaderClient.ResponseInteger method.
+type HeaderClientResponseIntegerOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseLongOptions contains the optional parameters for the HeaderClient.ResponseLong method.
-type HeaderResponseLongOptions struct {
+// HeaderClientResponseLongOptions contains the optional parameters for the HeaderClient.ResponseLong method.
+type HeaderClientResponseLongOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseProtectedKeyOptions contains the optional parameters for the HeaderClient.ResponseProtectedKey method.
-type HeaderResponseProtectedKeyOptions struct {
+// HeaderClientResponseProtectedKeyOptions contains the optional parameters for the HeaderClient.ResponseProtectedKey method.
+type HeaderClientResponseProtectedKeyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// HeaderResponseStringOptions contains the optional parameters for the HeaderClient.ResponseString method.
-type HeaderResponseStringOptions struct {
+// HeaderClientResponseStringOptions contains the optional parameters for the HeaderClient.ResponseString method.
+type HeaderClientResponseStringOptions struct {
 	// placeholder for future optional parameters
 }

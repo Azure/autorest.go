@@ -15,23 +15,6 @@ import (
 	"time"
 )
 
-// AliasCreateOptions contains the optional parameters for the client.Create method.
-type AliasCreateOptions struct {
-	// The unique id that references a creator data item to be aliased.
-	CreatorDataItemID *string
-	GroupBy           []SomethingCount
-}
-
-// AliasGetScriptOptions contains the optional parameters for the client.GetScript method.
-type AliasGetScriptOptions struct {
-	// placeholder for future optional parameters
-}
-
-// AliasListOptions contains the optional parameters for the client.List method.
-type AliasListOptions struct {
-	GroupBy []LogMetricsGroupBy
-}
-
 // AliasesCreateResponse - The response model for the Alias Create API for the case when the alias was successfully created.
 type AliasesCreateResponse struct {
 	// READ-ONLY; The id for the alias.
@@ -312,6 +295,23 @@ func (s *ScheduleCreateOrUpdateProperties) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// clientCreateOptions contains the optional parameters for the client.Create method.
+type clientCreateOptions struct {
+	// The unique id that references a creator data item to be aliased.
+	CreatorDataItemID *string
+	GroupBy           []SomethingCount
+}
+
+// clientGetScriptOptions contains the optional parameters for the client.GetScript method.
+type clientGetScriptOptions struct {
+	// placeholder for future optional parameters
+}
+
+// clientListOptions contains the optional parameters for the client.List method.
+type clientListOptions struct {
+	GroupBy []LogMetricsGroupBy
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {

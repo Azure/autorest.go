@@ -8,23 +8,23 @@
 
 package durationgroup
 
-// DurationGetInvalidOptions contains the optional parameters for the DurationClient.GetInvalid method.
-type DurationGetInvalidOptions struct {
+// DurationClientGetInvalidOptions contains the optional parameters for the DurationClient.GetInvalid method.
+type DurationClientGetInvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DurationGetNullOptions contains the optional parameters for the DurationClient.GetNull method.
-type DurationGetNullOptions struct {
+// DurationClientGetNullOptions contains the optional parameters for the DurationClient.GetNull method.
+type DurationClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DurationGetPositiveDurationOptions contains the optional parameters for the DurationClient.GetPositiveDuration method.
-type DurationGetPositiveDurationOptions struct {
+// DurationClientGetPositiveDurationOptions contains the optional parameters for the DurationClient.GetPositiveDuration method.
+type DurationClientGetPositiveDurationOptions struct {
 	// placeholder for future optional parameters
 }
 
-// DurationPutPositiveDurationOptions contains the optional parameters for the DurationClient.PutPositiveDuration method.
-type DurationPutPositiveDurationOptions struct {
+// DurationClientPutPositiveDurationOptions contains the optional parameters for the DurationClient.PutPositiveDuration method.
+type DurationClientPutPositiveDurationOptions struct {
 	// placeholder for future optional parameters
 }
 

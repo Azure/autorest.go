@@ -16,77 +16,23 @@ import (
 	"reflect"
 )
 
-// DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager provides operations for iterating over paged responses.
-type DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager struct {
-	client    *dataFlowDebugSessionClient
-	current   DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse
-	err       error
-	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse) (*policy.Request, error)
-}
-
-// Err returns the last error encountered while paging.
-func (p *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
-	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.QueryDataFlowDebugSessionsResponse.NextLink == nil || len(*p.current.QueryDataFlowDebugSessionsResponse.NextLink) == 0 {
-			return false
-		}
-		req, err = p.advancer(ctx, p.current)
-	} else {
-		req, err = p.requester(ctx)
-	}
-	if err != nil {
-		p.err = err
-		return false
-	}
-	resp, err := p.client.pl.Do(req)
-	if err != nil {
-		p.err = err
-		return false
-	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.queryDataFlowDebugSessionsByWorkspaceHandleError(resp)
-		return false
-	}
-	result, err := p.client.queryDataFlowDebugSessionsByWorkspaceHandleResponse(resp)
-	if err != nil {
-		p.err = err
-		return false
-	}
-	p.current = result
-	return true
-}
-
-// PageResponse returns the current DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse page.
-func (p *DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspacePager) PageResponse() DataFlowDebugSessionQueryDataFlowDebugSessionsByWorkspaceResponse {
-	return p.current
-}
-
-// DataFlowGetDataFlowsByWorkspacePager provides operations for iterating over paged responses.
-type DataFlowGetDataFlowsByWorkspacePager struct {
+// dataFlowClientGetDataFlowsByWorkspacePager provides operations for iterating over paged responses.
+type dataFlowClientGetDataFlowsByWorkspacePager struct {
 	client    *dataFlowClient
-	current   DataFlowGetDataFlowsByWorkspaceResponse
+	current   dataFlowClientGetDataFlowsByWorkspaceResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, DataFlowGetDataFlowsByWorkspaceResponse) (*policy.Request, error)
+	advancer  func(context.Context, dataFlowClientGetDataFlowsByWorkspaceResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *DataFlowGetDataFlowsByWorkspacePager) Err() error {
+func (p *dataFlowClientGetDataFlowsByWorkspacePager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *DataFlowGetDataFlowsByWorkspacePager) NextPage(ctx context.Context) bool {
+func (p *dataFlowClientGetDataFlowsByWorkspacePager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -119,28 +65,82 @@ func (p *DataFlowGetDataFlowsByWorkspacePager) NextPage(ctx context.Context) boo
 	return true
 }
 
-// PageResponse returns the current DataFlowGetDataFlowsByWorkspaceResponse page.
-func (p *DataFlowGetDataFlowsByWorkspacePager) PageResponse() DataFlowGetDataFlowsByWorkspaceResponse {
+// PageResponse returns the current dataFlowClientGetDataFlowsByWorkspaceResponse page.
+func (p *dataFlowClientGetDataFlowsByWorkspacePager) PageResponse() dataFlowClientGetDataFlowsByWorkspaceResponse {
 	return p.current
 }
 
-// DatasetGetDatasetsByWorkspacePager provides operations for iterating over paged responses.
-type DatasetGetDatasetsByWorkspacePager struct {
-	client    *datasetClient
-	current   DatasetGetDatasetsByWorkspaceResponse
+// dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspacePager provides operations for iterating over paged responses.
+type dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspacePager struct {
+	client    *dataFlowDebugSessionClient
+	current   dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, DatasetGetDatasetsByWorkspaceResponse) (*policy.Request, error)
+	advancer  func(context.Context, dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *DatasetGetDatasetsByWorkspacePager) Err() error {
+func (p *dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspacePager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *DatasetGetDatasetsByWorkspacePager) NextPage(ctx context.Context) bool {
+func (p *dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspacePager) NextPage(ctx context.Context) bool {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.QueryDataFlowDebugSessionsResponse.NextLink == nil || len(*p.current.QueryDataFlowDebugSessionsResponse.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.pl.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		p.err = p.client.queryDataFlowDebugSessionsByWorkspaceHandleError(resp)
+		return false
+	}
+	result, err := p.client.queryDataFlowDebugSessionsByWorkspaceHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+// PageResponse returns the current dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse page.
+func (p *dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspacePager) PageResponse() dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse {
+	return p.current
+}
+
+// datasetClientGetDatasetsByWorkspacePager provides operations for iterating over paged responses.
+type datasetClientGetDatasetsByWorkspacePager struct {
+	client    *datasetClient
+	current   datasetClientGetDatasetsByWorkspaceResponse
+	err       error
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, datasetClientGetDatasetsByWorkspaceResponse) (*policy.Request, error)
+}
+
+// Err returns the last error encountered while paging.
+func (p *datasetClientGetDatasetsByWorkspacePager) Err() error {
+	return p.err
+}
+
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *datasetClientGetDatasetsByWorkspacePager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -173,28 +173,28 @@ func (p *DatasetGetDatasetsByWorkspacePager) NextPage(ctx context.Context) bool 
 	return true
 }
 
-// PageResponse returns the current DatasetGetDatasetsByWorkspaceResponse page.
-func (p *DatasetGetDatasetsByWorkspacePager) PageResponse() DatasetGetDatasetsByWorkspaceResponse {
+// PageResponse returns the current datasetClientGetDatasetsByWorkspaceResponse page.
+func (p *datasetClientGetDatasetsByWorkspacePager) PageResponse() datasetClientGetDatasetsByWorkspaceResponse {
 	return p.current
 }
 
-// LibraryListPager provides operations for iterating over paged responses.
-type LibraryListPager struct {
+// libraryClientListPager provides operations for iterating over paged responses.
+type libraryClientListPager struct {
 	client    *libraryClient
-	current   LibraryListResponseEnvelope
+	current   libraryClientListResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, LibraryListResponseEnvelope) (*policy.Request, error)
+	advancer  func(context.Context, libraryClientListResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *LibraryListPager) Err() error {
+func (p *libraryClientListPager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *LibraryListPager) NextPage(ctx context.Context) bool {
+func (p *libraryClientListPager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -227,28 +227,28 @@ func (p *LibraryListPager) NextPage(ctx context.Context) bool {
 	return true
 }
 
-// PageResponse returns the current LibraryListResponseEnvelope page.
-func (p *LibraryListPager) PageResponse() LibraryListResponseEnvelope {
+// PageResponse returns the current libraryClientListResponse page.
+func (p *libraryClientListPager) PageResponse() libraryClientListResponse {
 	return p.current
 }
 
-// LinkedServiceGetLinkedServicesByWorkspacePager provides operations for iterating over paged responses.
-type LinkedServiceGetLinkedServicesByWorkspacePager struct {
+// linkedServiceClientGetLinkedServicesByWorkspacePager provides operations for iterating over paged responses.
+type linkedServiceClientGetLinkedServicesByWorkspacePager struct {
 	client    *linkedServiceClient
-	current   LinkedServiceGetLinkedServicesByWorkspaceResponse
+	current   linkedServiceClientGetLinkedServicesByWorkspaceResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, LinkedServiceGetLinkedServicesByWorkspaceResponse) (*policy.Request, error)
+	advancer  func(context.Context, linkedServiceClientGetLinkedServicesByWorkspaceResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *LinkedServiceGetLinkedServicesByWorkspacePager) Err() error {
+func (p *linkedServiceClientGetLinkedServicesByWorkspacePager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *LinkedServiceGetLinkedServicesByWorkspacePager) NextPage(ctx context.Context) bool {
+func (p *linkedServiceClientGetLinkedServicesByWorkspacePager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -281,28 +281,28 @@ func (p *LinkedServiceGetLinkedServicesByWorkspacePager) NextPage(ctx context.Co
 	return true
 }
 
-// PageResponse returns the current LinkedServiceGetLinkedServicesByWorkspaceResponse page.
-func (p *LinkedServiceGetLinkedServicesByWorkspacePager) PageResponse() LinkedServiceGetLinkedServicesByWorkspaceResponse {
+// PageResponse returns the current linkedServiceClientGetLinkedServicesByWorkspaceResponse page.
+func (p *linkedServiceClientGetLinkedServicesByWorkspacePager) PageResponse() linkedServiceClientGetLinkedServicesByWorkspaceResponse {
 	return p.current
 }
 
-// NotebookGetNotebookSummaryByWorkSpacePager provides operations for iterating over paged responses.
-type NotebookGetNotebookSummaryByWorkSpacePager struct {
+// notebookClientGetNotebookSummaryByWorkSpacePager provides operations for iterating over paged responses.
+type notebookClientGetNotebookSummaryByWorkSpacePager struct {
 	client    *notebookClient
-	current   NotebookGetNotebookSummaryByWorkSpaceResponse
+	current   notebookClientGetNotebookSummaryByWorkSpaceResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, NotebookGetNotebookSummaryByWorkSpaceResponse) (*policy.Request, error)
+	advancer  func(context.Context, notebookClientGetNotebookSummaryByWorkSpaceResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *NotebookGetNotebookSummaryByWorkSpacePager) Err() error {
+func (p *notebookClientGetNotebookSummaryByWorkSpacePager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *NotebookGetNotebookSummaryByWorkSpacePager) NextPage(ctx context.Context) bool {
+func (p *notebookClientGetNotebookSummaryByWorkSpacePager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -335,28 +335,28 @@ func (p *NotebookGetNotebookSummaryByWorkSpacePager) NextPage(ctx context.Contex
 	return true
 }
 
-// PageResponse returns the current NotebookGetNotebookSummaryByWorkSpaceResponse page.
-func (p *NotebookGetNotebookSummaryByWorkSpacePager) PageResponse() NotebookGetNotebookSummaryByWorkSpaceResponse {
+// PageResponse returns the current notebookClientGetNotebookSummaryByWorkSpaceResponse page.
+func (p *notebookClientGetNotebookSummaryByWorkSpacePager) PageResponse() notebookClientGetNotebookSummaryByWorkSpaceResponse {
 	return p.current
 }
 
-// NotebookGetNotebooksByWorkspacePager provides operations for iterating over paged responses.
-type NotebookGetNotebooksByWorkspacePager struct {
+// notebookClientGetNotebooksByWorkspacePager provides operations for iterating over paged responses.
+type notebookClientGetNotebooksByWorkspacePager struct {
 	client    *notebookClient
-	current   NotebookGetNotebooksByWorkspaceResponse
+	current   notebookClientGetNotebooksByWorkspaceResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, NotebookGetNotebooksByWorkspaceResponse) (*policy.Request, error)
+	advancer  func(context.Context, notebookClientGetNotebooksByWorkspaceResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *NotebookGetNotebooksByWorkspacePager) Err() error {
+func (p *notebookClientGetNotebooksByWorkspacePager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *NotebookGetNotebooksByWorkspacePager) NextPage(ctx context.Context) bool {
+func (p *notebookClientGetNotebooksByWorkspacePager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -389,28 +389,28 @@ func (p *NotebookGetNotebooksByWorkspacePager) NextPage(ctx context.Context) boo
 	return true
 }
 
-// PageResponse returns the current NotebookGetNotebooksByWorkspaceResponse page.
-func (p *NotebookGetNotebooksByWorkspacePager) PageResponse() NotebookGetNotebooksByWorkspaceResponse {
+// PageResponse returns the current notebookClientGetNotebooksByWorkspaceResponse page.
+func (p *notebookClientGetNotebooksByWorkspacePager) PageResponse() notebookClientGetNotebooksByWorkspaceResponse {
 	return p.current
 }
 
-// PipelineGetPipelinesByWorkspacePager provides operations for iterating over paged responses.
-type PipelineGetPipelinesByWorkspacePager struct {
+// pipelineClientGetPipelinesByWorkspacePager provides operations for iterating over paged responses.
+type pipelineClientGetPipelinesByWorkspacePager struct {
 	client    *pipelineClient
-	current   PipelineGetPipelinesByWorkspaceResponse
+	current   pipelineClientGetPipelinesByWorkspaceResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, PipelineGetPipelinesByWorkspaceResponse) (*policy.Request, error)
+	advancer  func(context.Context, pipelineClientGetPipelinesByWorkspaceResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *PipelineGetPipelinesByWorkspacePager) Err() error {
+func (p *pipelineClientGetPipelinesByWorkspacePager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *PipelineGetPipelinesByWorkspacePager) NextPage(ctx context.Context) bool {
+func (p *pipelineClientGetPipelinesByWorkspacePager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -443,82 +443,28 @@ func (p *PipelineGetPipelinesByWorkspacePager) NextPage(ctx context.Context) boo
 	return true
 }
 
-// PageResponse returns the current PipelineGetPipelinesByWorkspaceResponse page.
-func (p *PipelineGetPipelinesByWorkspacePager) PageResponse() PipelineGetPipelinesByWorkspaceResponse {
+// PageResponse returns the current pipelineClientGetPipelinesByWorkspaceResponse page.
+func (p *pipelineClientGetPipelinesByWorkspacePager) PageResponse() pipelineClientGetPipelinesByWorkspaceResponse {
 	return p.current
 }
 
-// SQLScriptGetSQLScriptsByWorkspacePager provides operations for iterating over paged responses.
-type SQLScriptGetSQLScriptsByWorkspacePager struct {
-	client    *sqlScriptClient
-	current   SQLScriptGetSQLScriptsByWorkspaceResponse
-	err       error
-	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, SQLScriptGetSQLScriptsByWorkspaceResponse) (*policy.Request, error)
-}
-
-// Err returns the last error encountered while paging.
-func (p *SQLScriptGetSQLScriptsByWorkspacePager) Err() error {
-	return p.err
-}
-
-// NextPage returns true if the pager advanced to the next page.
-// Returns false if there are no more pages or an error occurred.
-func (p *SQLScriptGetSQLScriptsByWorkspacePager) NextPage(ctx context.Context) bool {
-	var req *policy.Request
-	var err error
-	if !reflect.ValueOf(p.current).IsZero() {
-		if p.current.SQLScriptsListResponse.NextLink == nil || len(*p.current.SQLScriptsListResponse.NextLink) == 0 {
-			return false
-		}
-		req, err = p.advancer(ctx, p.current)
-	} else {
-		req, err = p.requester(ctx)
-	}
-	if err != nil {
-		p.err = err
-		return false
-	}
-	resp, err := p.client.pl.Do(req)
-	if err != nil {
-		p.err = err
-		return false
-	}
-	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getSQLScriptsByWorkspaceHandleError(resp)
-		return false
-	}
-	result, err := p.client.getSQLScriptsByWorkspaceHandleResponse(resp)
-	if err != nil {
-		p.err = err
-		return false
-	}
-	p.current = result
-	return true
-}
-
-// PageResponse returns the current SQLScriptGetSQLScriptsByWorkspaceResponse page.
-func (p *SQLScriptGetSQLScriptsByWorkspacePager) PageResponse() SQLScriptGetSQLScriptsByWorkspaceResponse {
-	return p.current
-}
-
-// SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager provides operations for iterating over paged responses.
-type SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager struct {
+// sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspacePager provides operations for iterating over paged responses.
+type sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspacePager struct {
 	client    *sparkJobDefinitionClient
-	current   SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse
+	current   sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse) (*policy.Request, error)
+	advancer  func(context.Context, sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager) Err() error {
+func (p *sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspacePager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager) NextPage(ctx context.Context) bool {
+func (p *sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspacePager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -551,28 +497,82 @@ func (p *SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager) NextPage(ctx 
 	return true
 }
 
-// PageResponse returns the current SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse page.
-func (p *SparkJobDefinitionGetSparkJobDefinitionsByWorkspacePager) PageResponse() SparkJobDefinitionGetSparkJobDefinitionsByWorkspaceResponse {
+// PageResponse returns the current sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse page.
+func (p *sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspacePager) PageResponse() sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspaceResponse {
 	return p.current
 }
 
-// TriggerGetTriggersByWorkspacePager provides operations for iterating over paged responses.
-type TriggerGetTriggersByWorkspacePager struct {
-	client    *triggerClient
-	current   TriggerGetTriggersByWorkspaceResponse
+// sqlScriptClientGetSQLScriptsByWorkspacePager provides operations for iterating over paged responses.
+type sqlScriptClientGetSQLScriptsByWorkspacePager struct {
+	client    *sqlScriptClient
+	current   sqlScriptClientGetSQLScriptsByWorkspaceResponse
 	err       error
 	requester func(context.Context) (*policy.Request, error)
-	advancer  func(context.Context, TriggerGetTriggersByWorkspaceResponse) (*policy.Request, error)
+	advancer  func(context.Context, sqlScriptClientGetSQLScriptsByWorkspaceResponse) (*policy.Request, error)
 }
 
 // Err returns the last error encountered while paging.
-func (p *TriggerGetTriggersByWorkspacePager) Err() error {
+func (p *sqlScriptClientGetSQLScriptsByWorkspacePager) Err() error {
 	return p.err
 }
 
 // NextPage returns true if the pager advanced to the next page.
 // Returns false if there are no more pages or an error occurred.
-func (p *TriggerGetTriggersByWorkspacePager) NextPage(ctx context.Context) bool {
+func (p *sqlScriptClientGetSQLScriptsByWorkspacePager) NextPage(ctx context.Context) bool {
+	var req *policy.Request
+	var err error
+	if !reflect.ValueOf(p.current).IsZero() {
+		if p.current.SQLScriptsListResponse.NextLink == nil || len(*p.current.SQLScriptsListResponse.NextLink) == 0 {
+			return false
+		}
+		req, err = p.advancer(ctx, p.current)
+	} else {
+		req, err = p.requester(ctx)
+	}
+	if err != nil {
+		p.err = err
+		return false
+	}
+	resp, err := p.client.pl.Do(req)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		p.err = p.client.getSQLScriptsByWorkspaceHandleError(resp)
+		return false
+	}
+	result, err := p.client.getSQLScriptsByWorkspaceHandleResponse(resp)
+	if err != nil {
+		p.err = err
+		return false
+	}
+	p.current = result
+	return true
+}
+
+// PageResponse returns the current sqlScriptClientGetSQLScriptsByWorkspaceResponse page.
+func (p *sqlScriptClientGetSQLScriptsByWorkspacePager) PageResponse() sqlScriptClientGetSQLScriptsByWorkspaceResponse {
+	return p.current
+}
+
+// triggerClientGetTriggersByWorkspacePager provides operations for iterating over paged responses.
+type triggerClientGetTriggersByWorkspacePager struct {
+	client    *triggerClient
+	current   triggerClientGetTriggersByWorkspaceResponse
+	err       error
+	requester func(context.Context) (*policy.Request, error)
+	advancer  func(context.Context, triggerClientGetTriggersByWorkspaceResponse) (*policy.Request, error)
+}
+
+// Err returns the last error encountered while paging.
+func (p *triggerClientGetTriggersByWorkspacePager) Err() error {
+	return p.err
+}
+
+// NextPage returns true if the pager advanced to the next page.
+// Returns false if there are no more pages or an error occurred.
+func (p *triggerClientGetTriggersByWorkspacePager) NextPage(ctx context.Context) bool {
 	var req *policy.Request
 	var err error
 	if !reflect.ValueOf(p.current).IsZero() {
@@ -605,7 +605,7 @@ func (p *TriggerGetTriggersByWorkspacePager) NextPage(ctx context.Context) bool 
 	return true
 }
 
-// PageResponse returns the current TriggerGetTriggersByWorkspaceResponse page.
-func (p *TriggerGetTriggersByWorkspacePager) PageResponse() TriggerGetTriggersByWorkspaceResponse {
+// PageResponse returns the current triggerClientGetTriggersByWorkspaceResponse page.
+func (p *triggerClientGetTriggersByWorkspacePager) PageResponse() triggerClientGetTriggersByWorkspaceResponse {
 	return p.current
 }

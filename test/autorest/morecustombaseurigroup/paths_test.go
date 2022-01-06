@@ -21,7 +21,7 @@ func newPathsClient() *PathsClient {
 func TestGetEmpty(t *testing.T) {
 	client := newPathsClient()
 	// vault string, secret string, keyName string, options *PathsGetEmptyOptions
-	result, err := client.GetEmpty(context.Background(), "http://localhost", "", "key1", &PathsGetEmptyOptions{
+	result, err := client.GetEmpty(context.Background(), "http://localhost", "", "key1", &PathsClientGetEmptyOptions{
 		KeyVersion: to.StringPtr("v1"),
 	})
 	if err != nil {

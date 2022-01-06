@@ -13,86 +13,86 @@ import (
 	"time"
 )
 
-// DateGetInvalidDateResponse contains the response from method Date.GetInvalidDate.
-type DateGetInvalidDateResponse struct {
-	DateGetInvalidDateResult
+// DateClientGetInvalidDateResponse contains the response from method DateClient.GetInvalidDate.
+type DateClientGetInvalidDateResponse struct {
+	DateClientGetInvalidDateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DateGetInvalidDateResult contains the result from method Date.GetInvalidDate.
-type DateGetInvalidDateResult struct {
+// DateClientGetInvalidDateResult contains the result from method DateClient.GetInvalidDate.
+type DateClientGetInvalidDateResult struct {
 	Value *time.Time
 }
 
-// DateGetMaxDateResponse contains the response from method Date.GetMaxDate.
-type DateGetMaxDateResponse struct {
-	DateGetMaxDateResult
+// DateClientGetMaxDateResponse contains the response from method DateClient.GetMaxDate.
+type DateClientGetMaxDateResponse struct {
+	DateClientGetMaxDateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DateGetMaxDateResult contains the result from method Date.GetMaxDate.
-type DateGetMaxDateResult struct {
+// DateClientGetMaxDateResult contains the result from method DateClient.GetMaxDate.
+type DateClientGetMaxDateResult struct {
 	Value *time.Time
 }
 
-// DateGetMinDateResponse contains the response from method Date.GetMinDate.
-type DateGetMinDateResponse struct {
-	DateGetMinDateResult
+// DateClientGetMinDateResponse contains the response from method DateClient.GetMinDate.
+type DateClientGetMinDateResponse struct {
+	DateClientGetMinDateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DateGetMinDateResult contains the result from method Date.GetMinDate.
-type DateGetMinDateResult struct {
+// DateClientGetMinDateResult contains the result from method DateClient.GetMinDate.
+type DateClientGetMinDateResult struct {
 	Value *time.Time
 }
 
-// DateGetNullResponse contains the response from method Date.GetNull.
-type DateGetNullResponse struct {
-	DateGetNullResult
+// DateClientGetNullResponse contains the response from method DateClient.GetNull.
+type DateClientGetNullResponse struct {
+	DateClientGetNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DateGetNullResult contains the result from method Date.GetNull.
-type DateGetNullResult struct {
+// DateClientGetNullResult contains the result from method DateClient.GetNull.
+type DateClientGetNullResult struct {
 	Value *time.Time
 }
 
-// DateGetOverflowDateResponse contains the response from method Date.GetOverflowDate.
-type DateGetOverflowDateResponse struct {
-	DateGetOverflowDateResult
+// DateClientGetOverflowDateResponse contains the response from method DateClient.GetOverflowDate.
+type DateClientGetOverflowDateResponse struct {
+	DateClientGetOverflowDateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DateGetOverflowDateResult contains the result from method Date.GetOverflowDate.
-type DateGetOverflowDateResult struct {
+// DateClientGetOverflowDateResult contains the result from method DateClient.GetOverflowDate.
+type DateClientGetOverflowDateResult struct {
 	Value *time.Time
 }
 
-// DateGetUnderflowDateResponse contains the response from method Date.GetUnderflowDate.
-type DateGetUnderflowDateResponse struct {
-	DateGetUnderflowDateResult
+// DateClientGetUnderflowDateResponse contains the response from method DateClient.GetUnderflowDate.
+type DateClientGetUnderflowDateResponse struct {
+	DateClientGetUnderflowDateResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DateGetUnderflowDateResult contains the result from method Date.GetUnderflowDate.
-type DateGetUnderflowDateResult struct {
+// DateClientGetUnderflowDateResult contains the result from method DateClient.GetUnderflowDate.
+type DateClientGetUnderflowDateResult struct {
 	Value *time.Time
 }
 
-// DatePutMaxDateResponse contains the response from method Date.PutMaxDate.
-type DatePutMaxDateResponse struct {
+// DateClientPutMaxDateResponse contains the response from method DateClient.PutMaxDate.
+type DateClientPutMaxDateResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DatePutMinDateResponse contains the response from method Date.PutMinDate.
-type DatePutMinDateResponse struct {
+// DateClientPutMinDateResponse contains the response from method DateClient.PutMinDate.
+type DateClientPutMinDateResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

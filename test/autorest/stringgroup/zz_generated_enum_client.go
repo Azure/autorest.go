@@ -38,24 +38,24 @@ func NewEnumClient(options *azcore.ClientOptions) *EnumClient {
 
 // GetNotExpandable - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 // If the operation fails it returns the *Error error type.
-// options - EnumGetNotExpandableOptions contains the optional parameters for the EnumClient.GetNotExpandable method.
-func (client *EnumClient) GetNotExpandable(ctx context.Context, options *EnumGetNotExpandableOptions) (EnumGetNotExpandableResponse, error) {
+// options - EnumClientGetNotExpandableOptions contains the optional parameters for the EnumClient.GetNotExpandable method.
+func (client *EnumClient) GetNotExpandable(ctx context.Context, options *EnumClientGetNotExpandableOptions) (EnumClientGetNotExpandableResponse, error) {
 	req, err := client.getNotExpandableCreateRequest(ctx, options)
 	if err != nil {
-		return EnumGetNotExpandableResponse{}, err
+		return EnumClientGetNotExpandableResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return EnumGetNotExpandableResponse{}, err
+		return EnumClientGetNotExpandableResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return EnumGetNotExpandableResponse{}, client.getNotExpandableHandleError(resp)
+		return EnumClientGetNotExpandableResponse{}, client.getNotExpandableHandleError(resp)
 	}
 	return client.getNotExpandableHandleResponse(resp)
 }
 
 // getNotExpandableCreateRequest creates the GetNotExpandable request.
-func (client *EnumClient) getNotExpandableCreateRequest(ctx context.Context, options *EnumGetNotExpandableOptions) (*policy.Request, error) {
+func (client *EnumClient) getNotExpandableCreateRequest(ctx context.Context, options *EnumClientGetNotExpandableOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/notExpandable"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -66,10 +66,10 @@ func (client *EnumClient) getNotExpandableCreateRequest(ctx context.Context, opt
 }
 
 // getNotExpandableHandleResponse handles the GetNotExpandable response.
-func (client *EnumClient) getNotExpandableHandleResponse(resp *http.Response) (EnumGetNotExpandableResponse, error) {
-	result := EnumGetNotExpandableResponse{RawResponse: resp}
+func (client *EnumClient) getNotExpandableHandleResponse(resp *http.Response) (EnumClientGetNotExpandableResponse, error) {
+	result := EnumClientGetNotExpandableResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return EnumGetNotExpandableResponse{}, runtime.NewResponseError(err, resp)
+		return EnumClientGetNotExpandableResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -89,24 +89,24 @@ func (client *EnumClient) getNotExpandableHandleError(resp *http.Response) error
 
 // GetReferenced - Get enum value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'.
 // If the operation fails it returns the *Error error type.
-// options - EnumGetReferencedOptions contains the optional parameters for the EnumClient.GetReferenced method.
-func (client *EnumClient) GetReferenced(ctx context.Context, options *EnumGetReferencedOptions) (EnumGetReferencedResponse, error) {
+// options - EnumClientGetReferencedOptions contains the optional parameters for the EnumClient.GetReferenced method.
+func (client *EnumClient) GetReferenced(ctx context.Context, options *EnumClientGetReferencedOptions) (EnumClientGetReferencedResponse, error) {
 	req, err := client.getReferencedCreateRequest(ctx, options)
 	if err != nil {
-		return EnumGetReferencedResponse{}, err
+		return EnumClientGetReferencedResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return EnumGetReferencedResponse{}, err
+		return EnumClientGetReferencedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return EnumGetReferencedResponse{}, client.getReferencedHandleError(resp)
+		return EnumClientGetReferencedResponse{}, client.getReferencedHandleError(resp)
 	}
 	return client.getReferencedHandleResponse(resp)
 }
 
 // getReferencedCreateRequest creates the GetReferenced request.
-func (client *EnumClient) getReferencedCreateRequest(ctx context.Context, options *EnumGetReferencedOptions) (*policy.Request, error) {
+func (client *EnumClient) getReferencedCreateRequest(ctx context.Context, options *EnumClientGetReferencedOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/Referenced"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -117,10 +117,10 @@ func (client *EnumClient) getReferencedCreateRequest(ctx context.Context, option
 }
 
 // getReferencedHandleResponse handles the GetReferenced response.
-func (client *EnumClient) getReferencedHandleResponse(resp *http.Response) (EnumGetReferencedResponse, error) {
-	result := EnumGetReferencedResponse{RawResponse: resp}
+func (client *EnumClient) getReferencedHandleResponse(resp *http.Response) (EnumClientGetReferencedResponse, error) {
+	result := EnumClientGetReferencedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return EnumGetReferencedResponse{}, runtime.NewResponseError(err, resp)
+		return EnumClientGetReferencedResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -140,24 +140,25 @@ func (client *EnumClient) getReferencedHandleError(resp *http.Response) error {
 
 // GetReferencedConstant - Get value 'green-color' from the constant.
 // If the operation fails it returns the *Error error type.
-// options - EnumGetReferencedConstantOptions contains the optional parameters for the EnumClient.GetReferencedConstant method.
-func (client *EnumClient) GetReferencedConstant(ctx context.Context, options *EnumGetReferencedConstantOptions) (EnumGetReferencedConstantResponse, error) {
+// options - EnumClientGetReferencedConstantOptions contains the optional parameters for the EnumClient.GetReferencedConstant
+// method.
+func (client *EnumClient) GetReferencedConstant(ctx context.Context, options *EnumClientGetReferencedConstantOptions) (EnumClientGetReferencedConstantResponse, error) {
 	req, err := client.getReferencedConstantCreateRequest(ctx, options)
 	if err != nil {
-		return EnumGetReferencedConstantResponse{}, err
+		return EnumClientGetReferencedConstantResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return EnumGetReferencedConstantResponse{}, err
+		return EnumClientGetReferencedConstantResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return EnumGetReferencedConstantResponse{}, client.getReferencedConstantHandleError(resp)
+		return EnumClientGetReferencedConstantResponse{}, client.getReferencedConstantHandleError(resp)
 	}
 	return client.getReferencedConstantHandleResponse(resp)
 }
 
 // getReferencedConstantCreateRequest creates the GetReferencedConstant request.
-func (client *EnumClient) getReferencedConstantCreateRequest(ctx context.Context, options *EnumGetReferencedConstantOptions) (*policy.Request, error) {
+func (client *EnumClient) getReferencedConstantCreateRequest(ctx context.Context, options *EnumClientGetReferencedConstantOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/ReferencedConstant"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -168,10 +169,10 @@ func (client *EnumClient) getReferencedConstantCreateRequest(ctx context.Context
 }
 
 // getReferencedConstantHandleResponse handles the GetReferencedConstant response.
-func (client *EnumClient) getReferencedConstantHandleResponse(resp *http.Response) (EnumGetReferencedConstantResponse, error) {
-	result := EnumGetReferencedConstantResponse{RawResponse: resp}
+func (client *EnumClient) getReferencedConstantHandleResponse(resp *http.Response) (EnumClientGetReferencedConstantResponse, error) {
+	result := EnumClientGetReferencedConstantResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RefColorConstant); err != nil {
-		return EnumGetReferencedConstantResponse{}, runtime.NewResponseError(err, resp)
+		return EnumClientGetReferencedConstantResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -192,24 +193,24 @@ func (client *EnumClient) getReferencedConstantHandleError(resp *http.Response) 
 // PutNotExpandable - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 // If the operation fails it returns the *Error error type.
 // stringBody - string body
-// options - EnumPutNotExpandableOptions contains the optional parameters for the EnumClient.PutNotExpandable method.
-func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors, options *EnumPutNotExpandableOptions) (EnumPutNotExpandableResponse, error) {
+// options - EnumClientPutNotExpandableOptions contains the optional parameters for the EnumClient.PutNotExpandable method.
+func (client *EnumClient) PutNotExpandable(ctx context.Context, stringBody Colors, options *EnumClientPutNotExpandableOptions) (EnumClientPutNotExpandableResponse, error) {
 	req, err := client.putNotExpandableCreateRequest(ctx, stringBody, options)
 	if err != nil {
-		return EnumPutNotExpandableResponse{}, err
+		return EnumClientPutNotExpandableResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return EnumPutNotExpandableResponse{}, err
+		return EnumClientPutNotExpandableResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return EnumPutNotExpandableResponse{}, client.putNotExpandableHandleError(resp)
+		return EnumClientPutNotExpandableResponse{}, client.putNotExpandableHandleError(resp)
 	}
-	return EnumPutNotExpandableResponse{RawResponse: resp}, nil
+	return EnumClientPutNotExpandableResponse{RawResponse: resp}, nil
 }
 
 // putNotExpandableCreateRequest creates the PutNotExpandable request.
-func (client *EnumClient) putNotExpandableCreateRequest(ctx context.Context, stringBody Colors, options *EnumPutNotExpandableOptions) (*policy.Request, error) {
+func (client *EnumClient) putNotExpandableCreateRequest(ctx context.Context, stringBody Colors, options *EnumClientPutNotExpandableOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/notExpandable"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -235,24 +236,24 @@ func (client *EnumClient) putNotExpandableHandleError(resp *http.Response) error
 // PutReferenced - Sends value 'red color' from enumeration of 'red color', 'green-color', 'blue_color'
 // If the operation fails it returns the *Error error type.
 // enumStringBody - enum string body
-// options - EnumPutReferencedOptions contains the optional parameters for the EnumClient.PutReferenced method.
-func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colors, options *EnumPutReferencedOptions) (EnumPutReferencedResponse, error) {
+// options - EnumClientPutReferencedOptions contains the optional parameters for the EnumClient.PutReferenced method.
+func (client *EnumClient) PutReferenced(ctx context.Context, enumStringBody Colors, options *EnumClientPutReferencedOptions) (EnumClientPutReferencedResponse, error) {
 	req, err := client.putReferencedCreateRequest(ctx, enumStringBody, options)
 	if err != nil {
-		return EnumPutReferencedResponse{}, err
+		return EnumClientPutReferencedResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return EnumPutReferencedResponse{}, err
+		return EnumClientPutReferencedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return EnumPutReferencedResponse{}, client.putReferencedHandleError(resp)
+		return EnumClientPutReferencedResponse{}, client.putReferencedHandleError(resp)
 	}
-	return EnumPutReferencedResponse{RawResponse: resp}, nil
+	return EnumClientPutReferencedResponse{RawResponse: resp}, nil
 }
 
 // putReferencedCreateRequest creates the PutReferenced request.
-func (client *EnumClient) putReferencedCreateRequest(ctx context.Context, enumStringBody Colors, options *EnumPutReferencedOptions) (*policy.Request, error) {
+func (client *EnumClient) putReferencedCreateRequest(ctx context.Context, enumStringBody Colors, options *EnumClientPutReferencedOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/Referenced"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -278,24 +279,25 @@ func (client *EnumClient) putReferencedHandleError(resp *http.Response) error {
 // PutReferencedConstant - Sends value 'green-color' from a constant
 // If the operation fails it returns the *Error error type.
 // enumStringBody - enum string body
-// options - EnumPutReferencedConstantOptions contains the optional parameters for the EnumClient.PutReferencedConstant method.
-func (client *EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant, options *EnumPutReferencedConstantOptions) (EnumPutReferencedConstantResponse, error) {
+// options - EnumClientPutReferencedConstantOptions contains the optional parameters for the EnumClient.PutReferencedConstant
+// method.
+func (client *EnumClient) PutReferencedConstant(ctx context.Context, enumStringBody RefColorConstant, options *EnumClientPutReferencedConstantOptions) (EnumClientPutReferencedConstantResponse, error) {
 	req, err := client.putReferencedConstantCreateRequest(ctx, enumStringBody, options)
 	if err != nil {
-		return EnumPutReferencedConstantResponse{}, err
+		return EnumClientPutReferencedConstantResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return EnumPutReferencedConstantResponse{}, err
+		return EnumClientPutReferencedConstantResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return EnumPutReferencedConstantResponse{}, client.putReferencedConstantHandleError(resp)
+		return EnumClientPutReferencedConstantResponse{}, client.putReferencedConstantHandleError(resp)
 	}
-	return EnumPutReferencedConstantResponse{RawResponse: resp}, nil
+	return EnumClientPutReferencedConstantResponse{RawResponse: resp}, nil
 }
 
 // putReferencedConstantCreateRequest creates the PutReferencedConstant request.
-func (client *EnumClient) putReferencedConstantCreateRequest(ctx context.Context, enumStringBody RefColorConstant, options *EnumPutReferencedConstantOptions) (*policy.Request, error) {
+func (client *EnumClient) putReferencedConstantCreateRequest(ctx context.Context, enumStringBody RefColorConstant, options *EnumClientPutReferencedConstantOptions) (*policy.Request, error) {
 	urlPath := "/string/enum/ReferencedConstant"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -55,25 +55,25 @@ func NewAvailabilitySetsClient(subscriptionID string, credential azcore.TokenCre
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
 // parameters - Parameters supplied to the Create Availability Set operation.
-// options - AvailabilitySetsCreateOrUpdateOptions contains the optional parameters for the AvailabilitySetsClient.CreateOrUpdate
+// options - AvailabilitySetsClientCreateOrUpdateOptions contains the optional parameters for the AvailabilitySetsClient.CreateOrUpdate
 // method.
-func (client *AvailabilitySetsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet, options *AvailabilitySetsCreateOrUpdateOptions) (AvailabilitySetsCreateOrUpdateResponse, error) {
+func (client *AvailabilitySetsClient) CreateOrUpdate(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet, options *AvailabilitySetsClientCreateOrUpdateOptions) (AvailabilitySetsClientCreateOrUpdateResponse, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, availabilitySetName, parameters, options)
 	if err != nil {
-		return AvailabilitySetsCreateOrUpdateResponse{}, err
+		return AvailabilitySetsClientCreateOrUpdateResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return AvailabilitySetsCreateOrUpdateResponse{}, err
+		return AvailabilitySetsClientCreateOrUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AvailabilitySetsCreateOrUpdateResponse{}, client.createOrUpdateHandleError(resp)
+		return AvailabilitySetsClientCreateOrUpdateResponse{}, client.createOrUpdateHandleError(resp)
 	}
 	return client.createOrUpdateHandleResponse(resp)
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *AvailabilitySetsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet, options *AvailabilitySetsCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *AvailabilitySetsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySet, options *AvailabilitySetsClientCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -99,10 +99,10 @@ func (client *AvailabilitySetsClient) createOrUpdateCreateRequest(ctx context.Co
 }
 
 // createOrUpdateHandleResponse handles the CreateOrUpdate response.
-func (client *AvailabilitySetsClient) createOrUpdateHandleResponse(resp *http.Response) (AvailabilitySetsCreateOrUpdateResponse, error) {
-	result := AvailabilitySetsCreateOrUpdateResponse{RawResponse: resp}
+func (client *AvailabilitySetsClient) createOrUpdateHandleResponse(resp *http.Response) (AvailabilitySetsClientCreateOrUpdateResponse, error) {
+	result := AvailabilitySetsClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySet); err != nil {
-		return AvailabilitySetsCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
+		return AvailabilitySetsClientCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -123,24 +123,24 @@ func (client *AvailabilitySetsClient) createOrUpdateHandleError(resp *http.Respo
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
-// options - AvailabilitySetsDeleteOptions contains the optional parameters for the AvailabilitySetsClient.Delete method.
-func (client *AvailabilitySetsClient) Delete(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsDeleteOptions) (AvailabilitySetsDeleteResponse, error) {
+// options - AvailabilitySetsClientDeleteOptions contains the optional parameters for the AvailabilitySetsClient.Delete method.
+func (client *AvailabilitySetsClient) Delete(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientDeleteOptions) (AvailabilitySetsClientDeleteResponse, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
-		return AvailabilitySetsDeleteResponse{}, err
+		return AvailabilitySetsClientDeleteResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return AvailabilitySetsDeleteResponse{}, err
+		return AvailabilitySetsClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return AvailabilitySetsDeleteResponse{}, client.deleteHandleError(resp)
+		return AvailabilitySetsClientDeleteResponse{}, client.deleteHandleError(resp)
 	}
-	return AvailabilitySetsDeleteResponse{RawResponse: resp}, nil
+	return AvailabilitySetsClientDeleteResponse{RawResponse: resp}, nil
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *AvailabilitySetsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsDeleteOptions) (*policy.Request, error) {
+func (client *AvailabilitySetsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -180,24 +180,24 @@ func (client *AvailabilitySetsClient) deleteHandleError(resp *http.Response) err
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
-// options - AvailabilitySetsGetOptions contains the optional parameters for the AvailabilitySetsClient.Get method.
-func (client *AvailabilitySetsClient) Get(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsGetOptions) (AvailabilitySetsGetResponse, error) {
+// options - AvailabilitySetsClientGetOptions contains the optional parameters for the AvailabilitySetsClient.Get method.
+func (client *AvailabilitySetsClient) Get(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientGetOptions) (AvailabilitySetsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
-		return AvailabilitySetsGetResponse{}, err
+		return AvailabilitySetsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return AvailabilitySetsGetResponse{}, err
+		return AvailabilitySetsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AvailabilitySetsGetResponse{}, client.getHandleError(resp)
+		return AvailabilitySetsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *AvailabilitySetsClient) getCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsGetOptions) (*policy.Request, error) {
+func (client *AvailabilitySetsClient) getCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -223,10 +223,10 @@ func (client *AvailabilitySetsClient) getCreateRequest(ctx context.Context, reso
 }
 
 // getHandleResponse handles the Get response.
-func (client *AvailabilitySetsClient) getHandleResponse(resp *http.Response) (AvailabilitySetsGetResponse, error) {
-	result := AvailabilitySetsGetResponse{RawResponse: resp}
+func (client *AvailabilitySetsClient) getHandleResponse(resp *http.Response) (AvailabilitySetsClientGetResponse, error) {
+	result := AvailabilitySetsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySet); err != nil {
-		return AvailabilitySetsGetResponse{}, runtime.NewResponseError(err, resp)
+		return AvailabilitySetsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -246,21 +246,21 @@ func (client *AvailabilitySetsClient) getHandleError(resp *http.Response) error 
 // List - Lists all availability sets in a resource group.
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
-// options - AvailabilitySetsListOptions contains the optional parameters for the AvailabilitySetsClient.List method.
-func (client *AvailabilitySetsClient) List(resourceGroupName string, options *AvailabilitySetsListOptions) *AvailabilitySetsListPager {
-	return &AvailabilitySetsListPager{
+// options - AvailabilitySetsClientListOptions contains the optional parameters for the AvailabilitySetsClient.List method.
+func (client *AvailabilitySetsClient) List(resourceGroupName string, options *AvailabilitySetsClientListOptions) *AvailabilitySetsClientListPager {
+	return &AvailabilitySetsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp AvailabilitySetsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp AvailabilitySetsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.AvailabilitySetListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *AvailabilitySetsClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *AvailabilitySetsListOptions) (*policy.Request, error) {
+func (client *AvailabilitySetsClient) listCreateRequest(ctx context.Context, resourceGroupName string, options *AvailabilitySetsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -282,10 +282,10 @@ func (client *AvailabilitySetsClient) listCreateRequest(ctx context.Context, res
 }
 
 // listHandleResponse handles the List response.
-func (client *AvailabilitySetsClient) listHandleResponse(resp *http.Response) (AvailabilitySetsListResponse, error) {
-	result := AvailabilitySetsListResponse{RawResponse: resp}
+func (client *AvailabilitySetsClient) listHandleResponse(resp *http.Response) (AvailabilitySetsClientListResponse, error) {
+	result := AvailabilitySetsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySetListResult); err != nil {
-		return AvailabilitySetsListResponse{}, runtime.NewResponseError(err, resp)
+		return AvailabilitySetsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -307,25 +307,25 @@ func (client *AvailabilitySetsClient) listHandleError(resp *http.Response) error
 // If the operation fails it returns a generic error.
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
-// options - AvailabilitySetsListAvailableSizesOptions contains the optional parameters for the AvailabilitySetsClient.ListAvailableSizes
+// options - AvailabilitySetsClientListAvailableSizesOptions contains the optional parameters for the AvailabilitySetsClient.ListAvailableSizes
 // method.
-func (client *AvailabilitySetsClient) ListAvailableSizes(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsListAvailableSizesOptions) (AvailabilitySetsListAvailableSizesResponse, error) {
+func (client *AvailabilitySetsClient) ListAvailableSizes(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientListAvailableSizesOptions) (AvailabilitySetsClientListAvailableSizesResponse, error) {
 	req, err := client.listAvailableSizesCreateRequest(ctx, resourceGroupName, availabilitySetName, options)
 	if err != nil {
-		return AvailabilitySetsListAvailableSizesResponse{}, err
+		return AvailabilitySetsClientListAvailableSizesResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return AvailabilitySetsListAvailableSizesResponse{}, err
+		return AvailabilitySetsClientListAvailableSizesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AvailabilitySetsListAvailableSizesResponse{}, client.listAvailableSizesHandleError(resp)
+		return AvailabilitySetsClientListAvailableSizesResponse{}, client.listAvailableSizesHandleError(resp)
 	}
 	return client.listAvailableSizesHandleResponse(resp)
 }
 
 // listAvailableSizesCreateRequest creates the ListAvailableSizes request.
-func (client *AvailabilitySetsClient) listAvailableSizesCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsListAvailableSizesOptions) (*policy.Request, error) {
+func (client *AvailabilitySetsClient) listAvailableSizesCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, options *AvailabilitySetsClientListAvailableSizesOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}/vmSizes"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -351,10 +351,10 @@ func (client *AvailabilitySetsClient) listAvailableSizesCreateRequest(ctx contex
 }
 
 // listAvailableSizesHandleResponse handles the ListAvailableSizes response.
-func (client *AvailabilitySetsClient) listAvailableSizesHandleResponse(resp *http.Response) (AvailabilitySetsListAvailableSizesResponse, error) {
-	result := AvailabilitySetsListAvailableSizesResponse{RawResponse: resp}
+func (client *AvailabilitySetsClient) listAvailableSizesHandleResponse(resp *http.Response) (AvailabilitySetsClientListAvailableSizesResponse, error) {
+	result := AvailabilitySetsClientListAvailableSizesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineSizeListResult); err != nil {
-		return AvailabilitySetsListAvailableSizesResponse{}, runtime.NewResponseError(err, resp)
+		return AvailabilitySetsClientListAvailableSizesResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -373,22 +373,22 @@ func (client *AvailabilitySetsClient) listAvailableSizesHandleError(resp *http.R
 
 // ListBySubscription - Lists all availability sets in a subscription.
 // If the operation fails it returns a generic error.
-// options - AvailabilitySetsListBySubscriptionOptions contains the optional parameters for the AvailabilitySetsClient.ListBySubscription
+// options - AvailabilitySetsClientListBySubscriptionOptions contains the optional parameters for the AvailabilitySetsClient.ListBySubscription
 // method.
-func (client *AvailabilitySetsClient) ListBySubscription(options *AvailabilitySetsListBySubscriptionOptions) *AvailabilitySetsListBySubscriptionPager {
-	return &AvailabilitySetsListBySubscriptionPager{
+func (client *AvailabilitySetsClient) ListBySubscription(options *AvailabilitySetsClientListBySubscriptionOptions) *AvailabilitySetsClientListBySubscriptionPager {
+	return &AvailabilitySetsClientListBySubscriptionPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listBySubscriptionCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp AvailabilitySetsListBySubscriptionResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp AvailabilitySetsClientListBySubscriptionResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.AvailabilitySetListResult.NextLink)
 		},
 	}
 }
 
 // listBySubscriptionCreateRequest creates the ListBySubscription request.
-func (client *AvailabilitySetsClient) listBySubscriptionCreateRequest(ctx context.Context, options *AvailabilitySetsListBySubscriptionOptions) (*policy.Request, error) {
+func (client *AvailabilitySetsClient) listBySubscriptionCreateRequest(ctx context.Context, options *AvailabilitySetsClientListBySubscriptionOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/availabilitySets"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -409,10 +409,10 @@ func (client *AvailabilitySetsClient) listBySubscriptionCreateRequest(ctx contex
 }
 
 // listBySubscriptionHandleResponse handles the ListBySubscription response.
-func (client *AvailabilitySetsClient) listBySubscriptionHandleResponse(resp *http.Response) (AvailabilitySetsListBySubscriptionResponse, error) {
-	result := AvailabilitySetsListBySubscriptionResponse{RawResponse: resp}
+func (client *AvailabilitySetsClient) listBySubscriptionHandleResponse(resp *http.Response) (AvailabilitySetsClientListBySubscriptionResponse, error) {
+	result := AvailabilitySetsClientListBySubscriptionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySetListResult); err != nil {
-		return AvailabilitySetsListBySubscriptionResponse{}, runtime.NewResponseError(err, resp)
+		return AvailabilitySetsClientListBySubscriptionResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -434,24 +434,24 @@ func (client *AvailabilitySetsClient) listBySubscriptionHandleError(resp *http.R
 // resourceGroupName - The name of the resource group.
 // availabilitySetName - The name of the availability set.
 // parameters - Parameters supplied to the Update Availability Set operation.
-// options - AvailabilitySetsUpdateOptions contains the optional parameters for the AvailabilitySetsClient.Update method.
-func (client *AvailabilitySetsClient) Update(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySetUpdate, options *AvailabilitySetsUpdateOptions) (AvailabilitySetsUpdateResponse, error) {
+// options - AvailabilitySetsClientUpdateOptions contains the optional parameters for the AvailabilitySetsClient.Update method.
+func (client *AvailabilitySetsClient) Update(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySetUpdate, options *AvailabilitySetsClientUpdateOptions) (AvailabilitySetsClientUpdateResponse, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, availabilitySetName, parameters, options)
 	if err != nil {
-		return AvailabilitySetsUpdateResponse{}, err
+		return AvailabilitySetsClientUpdateResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return AvailabilitySetsUpdateResponse{}, err
+		return AvailabilitySetsClientUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AvailabilitySetsUpdateResponse{}, client.updateHandleError(resp)
+		return AvailabilitySetsClientUpdateResponse{}, client.updateHandleError(resp)
 	}
 	return client.updateHandleResponse(resp)
 }
 
 // updateCreateRequest creates the Update request.
-func (client *AvailabilitySetsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySetUpdate, options *AvailabilitySetsUpdateOptions) (*policy.Request, error) {
+func (client *AvailabilitySetsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, availabilitySetName string, parameters AvailabilitySetUpdate, options *AvailabilitySetsClientUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -477,10 +477,10 @@ func (client *AvailabilitySetsClient) updateCreateRequest(ctx context.Context, r
 }
 
 // updateHandleResponse handles the Update response.
-func (client *AvailabilitySetsClient) updateHandleResponse(resp *http.Response) (AvailabilitySetsUpdateResponse, error) {
-	result := AvailabilitySetsUpdateResponse{RawResponse: resp}
+func (client *AvailabilitySetsClient) updateHandleResponse(resp *http.Response) (AvailabilitySetsClientUpdateResponse, error) {
+	result := AvailabilitySetsClientUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailabilitySet); err != nil {
-		return AvailabilitySetsUpdateResponse{}, runtime.NewResponseError(err, resp)
+		return AvailabilitySetsClientUpdateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -53,21 +53,22 @@ func NewBgpServiceCommunitiesClient(subscriptionID string, credential azcore.Tok
 
 // List - Gets all the available bgp service communities.
 // If the operation fails it returns the *CloudError error type.
-// options - BgpServiceCommunitiesListOptions contains the optional parameters for the BgpServiceCommunitiesClient.List method.
-func (client *BgpServiceCommunitiesClient) List(options *BgpServiceCommunitiesListOptions) *BgpServiceCommunitiesListPager {
-	return &BgpServiceCommunitiesListPager{
+// options - BgpServiceCommunitiesClientListOptions contains the optional parameters for the BgpServiceCommunitiesClient.List
+// method.
+func (client *BgpServiceCommunitiesClient) List(options *BgpServiceCommunitiesClientListOptions) *BgpServiceCommunitiesClientListPager {
+	return &BgpServiceCommunitiesClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp BgpServiceCommunitiesListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp BgpServiceCommunitiesClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.BgpServiceCommunityListResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *BgpServiceCommunitiesClient) listCreateRequest(ctx context.Context, options *BgpServiceCommunitiesListOptions) (*policy.Request, error) {
+func (client *BgpServiceCommunitiesClient) listCreateRequest(ctx context.Context, options *BgpServiceCommunitiesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -85,10 +86,10 @@ func (client *BgpServiceCommunitiesClient) listCreateRequest(ctx context.Context
 }
 
 // listHandleResponse handles the List response.
-func (client *BgpServiceCommunitiesClient) listHandleResponse(resp *http.Response) (BgpServiceCommunitiesListResponse, error) {
-	result := BgpServiceCommunitiesListResponse{RawResponse: resp}
+func (client *BgpServiceCommunitiesClient) listHandleResponse(resp *http.Response) (BgpServiceCommunitiesClientListResponse, error) {
+	result := BgpServiceCommunitiesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BgpServiceCommunityListResult); err != nil {
-		return BgpServiceCommunitiesListResponse{}, runtime.NewResponseError(err, resp)
+		return BgpServiceCommunitiesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

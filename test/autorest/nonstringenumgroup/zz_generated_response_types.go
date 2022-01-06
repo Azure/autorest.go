@@ -10,52 +10,52 @@ package nonstringenumgroup
 
 import "net/http"
 
-// FloatGetResponse contains the response from method Float.Get.
-type FloatGetResponse struct {
-	FloatGetResult
+// FloatClientGetResponse contains the response from method FloatClient.Get.
+type FloatClientGetResponse struct {
+	FloatClientGetResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// FloatGetResult contains the result from method Float.Get.
-type FloatGetResult struct {
+// FloatClientGetResult contains the result from method FloatClient.Get.
+type FloatClientGetResult struct {
 	// List of float enums
 	Value *FloatEnum
 }
 
-// FloatPutResponse contains the response from method Float.Put.
-type FloatPutResponse struct {
-	FloatPutResult
+// FloatClientPutResponse contains the response from method FloatClient.Put.
+type FloatClientPutResponse struct {
+	FloatClientPutResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// FloatPutResult contains the result from method Float.Put.
-type FloatPutResult struct {
+// FloatClientPutResult contains the result from method FloatClient.Put.
+type FloatClientPutResult struct {
 	Value *string
 }
 
-// IntGetResponse contains the response from method Int.Get.
-type IntGetResponse struct {
-	IntGetResult
+// IntClientGetResponse contains the response from method IntClient.Get.
+type IntClientGetResponse struct {
+	IntClientGetResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntGetResult contains the result from method Int.Get.
-type IntGetResult struct {
+// IntClientGetResult contains the result from method IntClient.Get.
+type IntClientGetResult struct {
 	// List of integer enums
 	Value *IntEnum
 }
 
-// IntPutResponse contains the response from method Int.Put.
-type IntPutResponse struct {
-	IntPutResult
+// IntClientPutResponse contains the response from method IntClient.Put.
+type IntClientPutResponse struct {
+	IntClientPutResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// IntPutResult contains the result from method Int.Put.
-type IntPutResult struct {
+// IntClientPutResult contains the result from method IntClient.Put.
+type IntClientPutResult struct {
 	Value *string
 }

@@ -38,24 +38,24 @@ func NewHTTPRedirectsClient(options *azcore.ClientOptions) *HTTPRedirectsClient 
 
 // Delete307 - Delete redirected with 307, resulting in a 200 after redirect
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsDelete307Options contains the optional parameters for the HTTPRedirectsClient.Delete307 method.
-func (client *HTTPRedirectsClient) Delete307(ctx context.Context, options *HTTPRedirectsDelete307Options) (HTTPRedirectsDelete307Response, error) {
+// options - HTTPRedirectsClientDelete307Options contains the optional parameters for the HTTPRedirectsClient.Delete307 method.
+func (client *HTTPRedirectsClient) Delete307(ctx context.Context, options *HTTPRedirectsClientDelete307Options) (HTTPRedirectsClientDelete307Response, error) {
 	req, err := client.delete307CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPRedirectsDelete307Response{}, err
+		return HTTPRedirectsClientDelete307Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPRedirectsDelete307Response{}, err
+		return HTTPRedirectsClientDelete307Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsDelete307Response{}, client.delete307HandleError(resp)
+		return HTTPRedirectsClientDelete307Response{}, client.delete307HandleError(resp)
 	}
-	return HTTPRedirectsDelete307Response{RawResponse: resp}, nil
+	return HTTPRedirectsClientDelete307Response{RawResponse: resp}, nil
 }
 
 // delete307CreateRequest creates the Delete307 request.
-func (client *HTTPRedirectsClient) delete307CreateRequest(ctx context.Context, options *HTTPRedirectsDelete307Options) (*policy.Request, error) {
+func (client *HTTPRedirectsClient) delete307CreateRequest(ctx context.Context, options *HTTPRedirectsClientDelete307Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/307"
 	req, err := runtime.NewRequest(ctx, http.MethodDelete, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -80,24 +80,24 @@ func (client *HTTPRedirectsClient) delete307HandleError(resp *http.Response) err
 
 // Get300 - Return 300 status code and redirect to /http/success/200
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsGet300Options contains the optional parameters for the HTTPRedirectsClient.Get300 method.
-func (client *HTTPRedirectsClient) Get300(ctx context.Context, options *HTTPRedirectsGet300Options) (HTTPRedirectsGet300Response, error) {
+// options - HTTPRedirectsClientGet300Options contains the optional parameters for the HTTPRedirectsClient.Get300 method.
+func (client *HTTPRedirectsClient) Get300(ctx context.Context, options *HTTPRedirectsClientGet300Options) (HTTPRedirectsClientGet300Response, error) {
 	req, err := client.get300CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPRedirectsGet300Response{}, err
+		return HTTPRedirectsClientGet300Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPRedirectsGet300Response{}, err
+		return HTTPRedirectsClientGet300Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusMultipleChoices) {
-		return HTTPRedirectsGet300Response{}, client.get300HandleError(resp)
+		return HTTPRedirectsClientGet300Response{}, client.get300HandleError(resp)
 	}
 	return client.get300HandleResponse(resp)
 }
 
 // get300CreateRequest creates the Get300 request.
-func (client *HTTPRedirectsClient) get300CreateRequest(ctx context.Context, options *HTTPRedirectsGet300Options) (*policy.Request, error) {
+func (client *HTTPRedirectsClient) get300CreateRequest(ctx context.Context, options *HTTPRedirectsClientGet300Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/300"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -108,13 +108,13 @@ func (client *HTTPRedirectsClient) get300CreateRequest(ctx context.Context, opti
 }
 
 // get300HandleResponse handles the Get300 response.
-func (client *HTTPRedirectsClient) get300HandleResponse(resp *http.Response) (HTTPRedirectsGet300Response, error) {
-	result := HTTPRedirectsGet300Response{RawResponse: resp}
+func (client *HTTPRedirectsClient) get300HandleResponse(resp *http.Response) (HTTPRedirectsClientGet300Response, error) {
+	result := HTTPRedirectsClientGet300Response{RawResponse: resp}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringArray); err != nil {
-		return HTTPRedirectsGet300Response{}, runtime.NewResponseError(err, resp)
+		return HTTPRedirectsClientGet300Response{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -134,24 +134,24 @@ func (client *HTTPRedirectsClient) get300HandleError(resp *http.Response) error 
 
 // Get301 - Return 301 status code and redirect to /http/success/200
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsGet301Options contains the optional parameters for the HTTPRedirectsClient.Get301 method.
-func (client *HTTPRedirectsClient) Get301(ctx context.Context, options *HTTPRedirectsGet301Options) (HTTPRedirectsGet301Response, error) {
+// options - HTTPRedirectsClientGet301Options contains the optional parameters for the HTTPRedirectsClient.Get301 method.
+func (client *HTTPRedirectsClient) Get301(ctx context.Context, options *HTTPRedirectsClientGet301Options) (HTTPRedirectsClientGet301Response, error) {
 	req, err := client.get301CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPRedirectsGet301Response{}, err
+		return HTTPRedirectsClientGet301Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPRedirectsGet301Response{}, err
+		return HTTPRedirectsClientGet301Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsGet301Response{}, client.get301HandleError(resp)
+		return HTTPRedirectsClientGet301Response{}, client.get301HandleError(resp)
 	}
-	return HTTPRedirectsGet301Response{RawResponse: resp}, nil
+	return HTTPRedirectsClientGet301Response{RawResponse: resp}, nil
 }
 
 // get301CreateRequest creates the Get301 request.
-func (client *HTTPRedirectsClient) get301CreateRequest(ctx context.Context, options *HTTPRedirectsGet301Options) (*policy.Request, error) {
+func (client *HTTPRedirectsClient) get301CreateRequest(ctx context.Context, options *HTTPRedirectsClientGet301Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/301"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -176,24 +176,24 @@ func (client *HTTPRedirectsClient) get301HandleError(resp *http.Response) error 
 
 // Get302 - Return 302 status code and redirect to /http/success/200
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsGet302Options contains the optional parameters for the HTTPRedirectsClient.Get302 method.
-func (client *HTTPRedirectsClient) Get302(ctx context.Context, options *HTTPRedirectsGet302Options) (HTTPRedirectsGet302Response, error) {
+// options - HTTPRedirectsClientGet302Options contains the optional parameters for the HTTPRedirectsClient.Get302 method.
+func (client *HTTPRedirectsClient) Get302(ctx context.Context, options *HTTPRedirectsClientGet302Options) (HTTPRedirectsClientGet302Response, error) {
 	req, err := client.get302CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPRedirectsGet302Response{}, err
+		return HTTPRedirectsClientGet302Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPRedirectsGet302Response{}, err
+		return HTTPRedirectsClientGet302Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsGet302Response{}, client.get302HandleError(resp)
+		return HTTPRedirectsClientGet302Response{}, client.get302HandleError(resp)
 	}
-	return HTTPRedirectsGet302Response{RawResponse: resp}, nil
+	return HTTPRedirectsClientGet302Response{RawResponse: resp}, nil
 }
 
 // get302CreateRequest creates the Get302 request.
-func (client *HTTPRedirectsClient) get302CreateRequest(ctx context.Context, options *HTTPRedirectsGet302Options) (*policy.Request, error) {
+func (client *HTTPRedirectsClient) get302CreateRequest(ctx context.Context, options *HTTPRedirectsClientGet302Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/302"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -218,24 +218,24 @@ func (client *HTTPRedirectsClient) get302HandleError(resp *http.Response) error 
 
 // Get307 - Redirect get with 307, resulting in a 200 success
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsGet307Options contains the optional parameters for the HTTPRedirectsClient.Get307 method.
-func (client *HTTPRedirectsClient) Get307(ctx context.Context, options *HTTPRedirectsGet307Options) (HTTPRedirectsGet307Response, error) {
+// options - HTTPRedirectsClientGet307Options contains the optional parameters for the HTTPRedirectsClient.Get307 method.
+func (client *HTTPRedirectsClient) Get307(ctx context.Context, options *HTTPRedirectsClientGet307Options) (HTTPRedirectsClientGet307Response, error) {
 	req, err := client.get307CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPRedirectsGet307Response{}, err
+		return HTTPRedirectsClientGet307Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPRedirectsGet307Response{}, err
+		return HTTPRedirectsClientGet307Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsGet307Response{}, client.get307HandleError(resp)
+		return HTTPRedirectsClientGet307Response{}, client.get307HandleError(resp)
 	}
-	return HTTPRedirectsGet307Response{RawResponse: resp}, nil
+	return HTTPRedirectsClientGet307Response{RawResponse: resp}, nil
 }
 
 // get307CreateRequest creates the Get307 request.
-func (client *HTTPRedirectsClient) get307CreateRequest(ctx context.Context, options *HTTPRedirectsGet307Options) (*policy.Request, error) {
+func (client *HTTPRedirectsClient) get307CreateRequest(ctx context.Context, options *HTTPRedirectsClientGet307Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/307"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -260,21 +260,21 @@ func (client *HTTPRedirectsClient) get307HandleError(resp *http.Response) error 
 
 // Head300 - Return 300 status code and redirect to /http/success/200
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsHead300Options contains the optional parameters for the HTTPRedirectsClient.Head300 method.
-func (client *HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRedirectsHead300Options) (HTTPRedirectsHead300Response, error) {
+// options - HTTPRedirectsClientHead300Options contains the optional parameters for the HTTPRedirectsClient.Head300 method.
+func (client *HTTPRedirectsClient) Head300(ctx context.Context, options *HTTPRedirectsClientHead300Options) (HTTPRedirectsClientHead300Response, error) {
 	req, err := client.head300CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPRedirectsHead300Response{}, err
+		return HTTPRedirectsClientHead300Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPRedirectsHead300Response{}, err
+		return HTTPRedirectsClientHead300Response{}, err
 	}
 	return client.head300HandleResponse(resp)
 }
 
 // head300CreateRequest creates the Head300 request.
-func (client *HTTPRedirectsClient) head300CreateRequest(ctx context.Context, options *HTTPRedirectsHead300Options) (*policy.Request, error) {
+func (client *HTTPRedirectsClient) head300CreateRequest(ctx context.Context, options *HTTPRedirectsClientHead300Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/300"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -285,8 +285,8 @@ func (client *HTTPRedirectsClient) head300CreateRequest(ctx context.Context, opt
 }
 
 // head300HandleResponse handles the Head300 response.
-func (client *HTTPRedirectsClient) head300HandleResponse(resp *http.Response) (HTTPRedirectsHead300Response, error) {
-	result := HTTPRedirectsHead300Response{RawResponse: resp}
+func (client *HTTPRedirectsClient) head300HandleResponse(resp *http.Response) (HTTPRedirectsClientHead300Response, error) {
+	result := HTTPRedirectsClientHead300Response{RawResponse: resp}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
@@ -298,17 +298,17 @@ func (client *HTTPRedirectsClient) head300HandleResponse(resp *http.Response) (H
 
 // Head301 - Return 301 status code and redirect to /http/success/200
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsHead301Options contains the optional parameters for the HTTPRedirectsClient.Head301 method.
-func (client *HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRedirectsHead301Options) (HTTPRedirectsHead301Response, error) {
+// options - HTTPRedirectsClientHead301Options contains the optional parameters for the HTTPRedirectsClient.Head301 method.
+func (client *HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRedirectsClientHead301Options) (HTTPRedirectsClientHead301Response, error) {
 	req, err := client.head301CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPRedirectsHead301Response{}, err
+		return HTTPRedirectsClientHead301Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPRedirectsHead301Response{}, err
+		return HTTPRedirectsClientHead301Response{}, err
 	}
-	result := HTTPRedirectsHead301Response{RawResponse: resp}
+	result := HTTPRedirectsClientHead301Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -316,7 +316,7 @@ func (client *HTTPRedirectsClient) Head301(ctx context.Context, options *HTTPRed
 }
 
 // head301CreateRequest creates the Head301 request.
-func (client *HTTPRedirectsClient) head301CreateRequest(ctx context.Context, options *HTTPRedirectsHead301Options) (*policy.Request, error) {
+func (client *HTTPRedirectsClient) head301CreateRequest(ctx context.Context, options *HTTPRedirectsClientHead301Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/301"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -328,17 +328,17 @@ func (client *HTTPRedirectsClient) head301CreateRequest(ctx context.Context, opt
 
 // Head302 - Return 302 status code and redirect to /http/success/200
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsHead302Options contains the optional parameters for the HTTPRedirectsClient.Head302 method.
-func (client *HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRedirectsHead302Options) (HTTPRedirectsHead302Response, error) {
+// options - HTTPRedirectsClientHead302Options contains the optional parameters for the HTTPRedirectsClient.Head302 method.
+func (client *HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRedirectsClientHead302Options) (HTTPRedirectsClientHead302Response, error) {
 	req, err := client.head302CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPRedirectsHead302Response{}, err
+		return HTTPRedirectsClientHead302Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPRedirectsHead302Response{}, err
+		return HTTPRedirectsClientHead302Response{}, err
 	}
-	result := HTTPRedirectsHead302Response{RawResponse: resp}
+	result := HTTPRedirectsClientHead302Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -346,7 +346,7 @@ func (client *HTTPRedirectsClient) Head302(ctx context.Context, options *HTTPRed
 }
 
 // head302CreateRequest creates the Head302 request.
-func (client *HTTPRedirectsClient) head302CreateRequest(ctx context.Context, options *HTTPRedirectsHead302Options) (*policy.Request, error) {
+func (client *HTTPRedirectsClient) head302CreateRequest(ctx context.Context, options *HTTPRedirectsClientHead302Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/302"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -358,17 +358,17 @@ func (client *HTTPRedirectsClient) head302CreateRequest(ctx context.Context, opt
 
 // Head307 - Redirect with 307, resulting in a 200 success
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsHead307Options contains the optional parameters for the HTTPRedirectsClient.Head307 method.
-func (client *HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRedirectsHead307Options) (HTTPRedirectsHead307Response, error) {
+// options - HTTPRedirectsClientHead307Options contains the optional parameters for the HTTPRedirectsClient.Head307 method.
+func (client *HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRedirectsClientHead307Options) (HTTPRedirectsClientHead307Response, error) {
 	req, err := client.head307CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPRedirectsHead307Response{}, err
+		return HTTPRedirectsClientHead307Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPRedirectsHead307Response{}, err
+		return HTTPRedirectsClientHead307Response{}, err
 	}
-	result := HTTPRedirectsHead307Response{RawResponse: resp}
+	result := HTTPRedirectsClientHead307Response{RawResponse: resp}
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
 		result.Success = true
 	}
@@ -376,7 +376,7 @@ func (client *HTTPRedirectsClient) Head307(ctx context.Context, options *HTTPRed
 }
 
 // head307CreateRequest creates the Head307 request.
-func (client *HTTPRedirectsClient) head307CreateRequest(ctx context.Context, options *HTTPRedirectsHead307Options) (*policy.Request, error) {
+func (client *HTTPRedirectsClient) head307CreateRequest(ctx context.Context, options *HTTPRedirectsClientHead307Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/307"
 	req, err := runtime.NewRequest(ctx, http.MethodHead, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -388,24 +388,25 @@ func (client *HTTPRedirectsClient) head307CreateRequest(ctx context.Context, opt
 
 // Options307 - options redirected with 307, resulting in a 200 after redirect
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsOptions307Options contains the optional parameters for the HTTPRedirectsClient.Options307 method.
-func (client *HTTPRedirectsClient) Options307(ctx context.Context, options *HTTPRedirectsOptions307Options) (HTTPRedirectsOptions307Response, error) {
+// options - HTTPRedirectsClientOptions307Options contains the optional parameters for the HTTPRedirectsClient.Options307
+// method.
+func (client *HTTPRedirectsClient) Options307(ctx context.Context, options *HTTPRedirectsClientOptions307Options) (HTTPRedirectsClientOptions307Response, error) {
 	req, err := client.options307CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPRedirectsOptions307Response{}, err
+		return HTTPRedirectsClientOptions307Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPRedirectsOptions307Response{}, err
+		return HTTPRedirectsClientOptions307Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsOptions307Response{}, client.options307HandleError(resp)
+		return HTTPRedirectsClientOptions307Response{}, client.options307HandleError(resp)
 	}
-	return HTTPRedirectsOptions307Response{RawResponse: resp}, nil
+	return HTTPRedirectsClientOptions307Response{RawResponse: resp}, nil
 }
 
 // options307CreateRequest creates the Options307 request.
-func (client *HTTPRedirectsClient) options307CreateRequest(ctx context.Context, options *HTTPRedirectsOptions307Options) (*policy.Request, error) {
+func (client *HTTPRedirectsClient) options307CreateRequest(ctx context.Context, options *HTTPRedirectsClientOptions307Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/307"
 	req, err := runtime.NewRequest(ctx, http.MethodOptions, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -431,24 +432,24 @@ func (client *HTTPRedirectsClient) options307HandleError(resp *http.Response) er
 // Patch302 - Patch true Boolean value in request returns 302. This request should not be automatically redirected, but should
 // return the received 302 to the caller for evaluation
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsPatch302Options contains the optional parameters for the HTTPRedirectsClient.Patch302 method.
-func (client *HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRedirectsPatch302Options) (HTTPRedirectsPatch302Response, error) {
+// options - HTTPRedirectsClientPatch302Options contains the optional parameters for the HTTPRedirectsClient.Patch302 method.
+func (client *HTTPRedirectsClient) Patch302(ctx context.Context, options *HTTPRedirectsClientPatch302Options) (HTTPRedirectsClientPatch302Response, error) {
 	req, err := client.patch302CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPRedirectsPatch302Response{}, err
+		return HTTPRedirectsClientPatch302Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPRedirectsPatch302Response{}, err
+		return HTTPRedirectsClientPatch302Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusFound) {
-		return HTTPRedirectsPatch302Response{}, client.patch302HandleError(resp)
+		return HTTPRedirectsClientPatch302Response{}, client.patch302HandleError(resp)
 	}
 	return client.patch302HandleResponse(resp)
 }
 
 // patch302CreateRequest creates the Patch302 request.
-func (client *HTTPRedirectsClient) patch302CreateRequest(ctx context.Context, options *HTTPRedirectsPatch302Options) (*policy.Request, error) {
+func (client *HTTPRedirectsClient) patch302CreateRequest(ctx context.Context, options *HTTPRedirectsClientPatch302Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/302"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -459,8 +460,8 @@ func (client *HTTPRedirectsClient) patch302CreateRequest(ctx context.Context, op
 }
 
 // patch302HandleResponse handles the Patch302 response.
-func (client *HTTPRedirectsClient) patch302HandleResponse(resp *http.Response) (HTTPRedirectsPatch302Response, error) {
-	result := HTTPRedirectsPatch302Response{RawResponse: resp}
+func (client *HTTPRedirectsClient) patch302HandleResponse(resp *http.Response) (HTTPRedirectsClientPatch302Response, error) {
+	result := HTTPRedirectsClientPatch302Response{RawResponse: resp}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
@@ -482,24 +483,24 @@ func (client *HTTPRedirectsClient) patch302HandleError(resp *http.Response) erro
 
 // Patch307 - Patch redirected with 307, resulting in a 200 after redirect
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsPatch307Options contains the optional parameters for the HTTPRedirectsClient.Patch307 method.
-func (client *HTTPRedirectsClient) Patch307(ctx context.Context, options *HTTPRedirectsPatch307Options) (HTTPRedirectsPatch307Response, error) {
+// options - HTTPRedirectsClientPatch307Options contains the optional parameters for the HTTPRedirectsClient.Patch307 method.
+func (client *HTTPRedirectsClient) Patch307(ctx context.Context, options *HTTPRedirectsClientPatch307Options) (HTTPRedirectsClientPatch307Response, error) {
 	req, err := client.patch307CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPRedirectsPatch307Response{}, err
+		return HTTPRedirectsClientPatch307Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPRedirectsPatch307Response{}, err
+		return HTTPRedirectsClientPatch307Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsPatch307Response{}, client.patch307HandleError(resp)
+		return HTTPRedirectsClientPatch307Response{}, client.patch307HandleError(resp)
 	}
-	return HTTPRedirectsPatch307Response{RawResponse: resp}, nil
+	return HTTPRedirectsClientPatch307Response{RawResponse: resp}, nil
 }
 
 // patch307CreateRequest creates the Patch307 request.
-func (client *HTTPRedirectsClient) patch307CreateRequest(ctx context.Context, options *HTTPRedirectsPatch307Options) (*policy.Request, error) {
+func (client *HTTPRedirectsClient) patch307CreateRequest(ctx context.Context, options *HTTPRedirectsClientPatch307Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/307"
 	req, err := runtime.NewRequest(ctx, http.MethodPatch, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -525,24 +526,24 @@ func (client *HTTPRedirectsClient) patch307HandleError(resp *http.Response) erro
 // Post303 - Post true Boolean value in request returns 303. This request should be automatically redirected usign a get,
 // ultimately returning a 200 status code
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsPost303Options contains the optional parameters for the HTTPRedirectsClient.Post303 method.
-func (client *HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRedirectsPost303Options) (HTTPRedirectsPost303Response, error) {
+// options - HTTPRedirectsClientPost303Options contains the optional parameters for the HTTPRedirectsClient.Post303 method.
+func (client *HTTPRedirectsClient) Post303(ctx context.Context, options *HTTPRedirectsClientPost303Options) (HTTPRedirectsClientPost303Response, error) {
 	req, err := client.post303CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPRedirectsPost303Response{}, err
+		return HTTPRedirectsClientPost303Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPRedirectsPost303Response{}, err
+		return HTTPRedirectsClientPost303Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusSeeOther) {
-		return HTTPRedirectsPost303Response{}, client.post303HandleError(resp)
+		return HTTPRedirectsClientPost303Response{}, client.post303HandleError(resp)
 	}
 	return client.post303HandleResponse(resp)
 }
 
 // post303CreateRequest creates the Post303 request.
-func (client *HTTPRedirectsClient) post303CreateRequest(ctx context.Context, options *HTTPRedirectsPost303Options) (*policy.Request, error) {
+func (client *HTTPRedirectsClient) post303CreateRequest(ctx context.Context, options *HTTPRedirectsClientPost303Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/303"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -553,8 +554,8 @@ func (client *HTTPRedirectsClient) post303CreateRequest(ctx context.Context, opt
 }
 
 // post303HandleResponse handles the Post303 response.
-func (client *HTTPRedirectsClient) post303HandleResponse(resp *http.Response) (HTTPRedirectsPost303Response, error) {
-	result := HTTPRedirectsPost303Response{RawResponse: resp}
+func (client *HTTPRedirectsClient) post303HandleResponse(resp *http.Response) (HTTPRedirectsClientPost303Response, error) {
+	result := HTTPRedirectsClientPost303Response{RawResponse: resp}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
@@ -576,24 +577,24 @@ func (client *HTTPRedirectsClient) post303HandleError(resp *http.Response) error
 
 // Post307 - Post redirected with 307, resulting in a 200 after redirect
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsPost307Options contains the optional parameters for the HTTPRedirectsClient.Post307 method.
-func (client *HTTPRedirectsClient) Post307(ctx context.Context, options *HTTPRedirectsPost307Options) (HTTPRedirectsPost307Response, error) {
+// options - HTTPRedirectsClientPost307Options contains the optional parameters for the HTTPRedirectsClient.Post307 method.
+func (client *HTTPRedirectsClient) Post307(ctx context.Context, options *HTTPRedirectsClientPost307Options) (HTTPRedirectsClientPost307Response, error) {
 	req, err := client.post307CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPRedirectsPost307Response{}, err
+		return HTTPRedirectsClientPost307Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPRedirectsPost307Response{}, err
+		return HTTPRedirectsClientPost307Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsPost307Response{}, client.post307HandleError(resp)
+		return HTTPRedirectsClientPost307Response{}, client.post307HandleError(resp)
 	}
-	return HTTPRedirectsPost307Response{RawResponse: resp}, nil
+	return HTTPRedirectsClientPost307Response{RawResponse: resp}, nil
 }
 
 // post307CreateRequest creates the Post307 request.
-func (client *HTTPRedirectsClient) post307CreateRequest(ctx context.Context, options *HTTPRedirectsPost307Options) (*policy.Request, error) {
+func (client *HTTPRedirectsClient) post307CreateRequest(ctx context.Context, options *HTTPRedirectsClientPost307Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/307"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -619,24 +620,24 @@ func (client *HTTPRedirectsClient) post307HandleError(resp *http.Response) error
 // Put301 - Put true Boolean value in request returns 301. This request should not be automatically redirected, but should
 // return the received 301 to the caller for evaluation
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsPut301Options contains the optional parameters for the HTTPRedirectsClient.Put301 method.
-func (client *HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedirectsPut301Options) (HTTPRedirectsPut301Response, error) {
+// options - HTTPRedirectsClientPut301Options contains the optional parameters for the HTTPRedirectsClient.Put301 method.
+func (client *HTTPRedirectsClient) Put301(ctx context.Context, options *HTTPRedirectsClientPut301Options) (HTTPRedirectsClientPut301Response, error) {
 	req, err := client.put301CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPRedirectsPut301Response{}, err
+		return HTTPRedirectsClientPut301Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPRedirectsPut301Response{}, err
+		return HTTPRedirectsClientPut301Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusMovedPermanently) {
-		return HTTPRedirectsPut301Response{}, client.put301HandleError(resp)
+		return HTTPRedirectsClientPut301Response{}, client.put301HandleError(resp)
 	}
 	return client.put301HandleResponse(resp)
 }
 
 // put301CreateRequest creates the Put301 request.
-func (client *HTTPRedirectsClient) put301CreateRequest(ctx context.Context, options *HTTPRedirectsPut301Options) (*policy.Request, error) {
+func (client *HTTPRedirectsClient) put301CreateRequest(ctx context.Context, options *HTTPRedirectsClientPut301Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/301"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -647,8 +648,8 @@ func (client *HTTPRedirectsClient) put301CreateRequest(ctx context.Context, opti
 }
 
 // put301HandleResponse handles the Put301 response.
-func (client *HTTPRedirectsClient) put301HandleResponse(resp *http.Response) (HTTPRedirectsPut301Response, error) {
-	result := HTTPRedirectsPut301Response{RawResponse: resp}
+func (client *HTTPRedirectsClient) put301HandleResponse(resp *http.Response) (HTTPRedirectsClientPut301Response, error) {
+	result := HTTPRedirectsClientPut301Response{RawResponse: resp}
 	if val := resp.Header.Get("Location"); val != "" {
 		result.Location = &val
 	}
@@ -670,24 +671,24 @@ func (client *HTTPRedirectsClient) put301HandleError(resp *http.Response) error 
 
 // Put307 - Put redirected with 307, resulting in a 200 after redirect
 // If the operation fails it returns the *Error error type.
-// options - HTTPRedirectsPut307Options contains the optional parameters for the HTTPRedirectsClient.Put307 method.
-func (client *HTTPRedirectsClient) Put307(ctx context.Context, options *HTTPRedirectsPut307Options) (HTTPRedirectsPut307Response, error) {
+// options - HTTPRedirectsClientPut307Options contains the optional parameters for the HTTPRedirectsClient.Put307 method.
+func (client *HTTPRedirectsClient) Put307(ctx context.Context, options *HTTPRedirectsClientPut307Options) (HTTPRedirectsClientPut307Response, error) {
 	req, err := client.put307CreateRequest(ctx, options)
 	if err != nil {
-		return HTTPRedirectsPut307Response{}, err
+		return HTTPRedirectsClientPut307Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return HTTPRedirectsPut307Response{}, err
+		return HTTPRedirectsClientPut307Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return HTTPRedirectsPut307Response{}, client.put307HandleError(resp)
+		return HTTPRedirectsClientPut307Response{}, client.put307HandleError(resp)
 	}
-	return HTTPRedirectsPut307Response{RawResponse: resp}, nil
+	return HTTPRedirectsClientPut307Response{RawResponse: resp}, nil
 }
 
 // put307CreateRequest creates the Put307 request.
-func (client *HTTPRedirectsClient) put307CreateRequest(ctx context.Context, options *HTTPRedirectsPut307Options) (*policy.Request, error) {
+func (client *HTTPRedirectsClient) put307CreateRequest(ctx context.Context, options *HTTPRedirectsClientPut307Options) (*policy.Request, error) {
 	urlPath := "/http/redirect/307"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

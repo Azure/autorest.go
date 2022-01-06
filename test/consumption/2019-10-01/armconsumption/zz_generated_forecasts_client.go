@@ -54,24 +54,24 @@ func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential
 // We recommend using our new Forecast API moving forward:
 // https://docs.microsoft.com/en-us/rest/api/cost-management/forecast/usage.
 // If the operation fails it returns the *ErrorResponse error type.
-// options - ForecastsListOptions contains the optional parameters for the ForecastsClient.List method.
-func (client *ForecastsClient) List(ctx context.Context, options *ForecastsListOptions) (ForecastsListResponse, error) {
+// options - ForecastsClientListOptions contains the optional parameters for the ForecastsClient.List method.
+func (client *ForecastsClient) List(ctx context.Context, options *ForecastsClientListOptions) (ForecastsClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
 	if err != nil {
-		return ForecastsListResponse{}, err
+		return ForecastsClientListResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ForecastsListResponse{}, err
+		return ForecastsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ForecastsListResponse{}, client.listHandleError(resp)
+		return ForecastsClientListResponse{}, client.listHandleError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
 
 // listCreateRequest creates the List request.
-func (client *ForecastsClient) listCreateRequest(ctx context.Context, options *ForecastsListOptions) (*policy.Request, error) {
+func (client *ForecastsClient) listCreateRequest(ctx context.Context, options *ForecastsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/forecasts"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -92,10 +92,10 @@ func (client *ForecastsClient) listCreateRequest(ctx context.Context, options *F
 }
 
 // listHandleResponse handles the List response.
-func (client *ForecastsClient) listHandleResponse(resp *http.Response) (ForecastsListResponse, error) {
-	result := ForecastsListResponse{RawResponse: resp}
+func (client *ForecastsClient) listHandleResponse(resp *http.Response) (ForecastsClientListResponse, error) {
+	result := ForecastsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ForecastsListResult); err != nil {
-		return ForecastsListResponse{}, runtime.NewResponseError(err, resp)
+		return ForecastsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

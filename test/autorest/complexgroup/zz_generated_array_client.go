@@ -38,24 +38,24 @@ func NewArrayClient(options *azcore.ClientOptions) *ArrayClient {
 
 // GetEmpty - Get complex types with array property which is empty
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetEmptyOptions contains the optional parameters for the ArrayClient.GetEmpty method.
-func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayGetEmptyOptions) (ArrayGetEmptyResponse, error) {
+// options - ArrayClientGetEmptyOptions contains the optional parameters for the ArrayClient.GetEmpty method.
+func (client *ArrayClient) GetEmpty(ctx context.Context, options *ArrayClientGetEmptyOptions) (ArrayClientGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetEmptyResponse{}, err
+		return ArrayClientGetEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetEmptyResponse{}, err
+		return ArrayClientGetEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetEmptyResponse{}, client.getEmptyHandleError(resp)
+		return ArrayClientGetEmptyResponse{}, client.getEmptyHandleError(resp)
 	}
 	return client.getEmptyHandleResponse(resp)
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, options *ArrayGetEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, options *ArrayClientGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/complex/array/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -66,10 +66,10 @@ func (client *ArrayClient) getEmptyCreateRequest(ctx context.Context, options *A
 }
 
 // getEmptyHandleResponse handles the GetEmpty response.
-func (client *ArrayClient) getEmptyHandleResponse(resp *http.Response) (ArrayGetEmptyResponse, error) {
-	result := ArrayGetEmptyResponse{RawResponse: resp}
+func (client *ArrayClient) getEmptyHandleResponse(resp *http.Response) (ArrayClientGetEmptyResponse, error) {
+	result := ArrayClientGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ArrayWrapper); err != nil {
-		return ArrayGetEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -89,24 +89,24 @@ func (client *ArrayClient) getEmptyHandleError(resp *http.Response) error {
 
 // GetNotProvided - Get complex types with array property while server doesn't provide a response payload
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetNotProvidedOptions contains the optional parameters for the ArrayClient.GetNotProvided method.
-func (client *ArrayClient) GetNotProvided(ctx context.Context, options *ArrayGetNotProvidedOptions) (ArrayGetNotProvidedResponse, error) {
+// options - ArrayClientGetNotProvidedOptions contains the optional parameters for the ArrayClient.GetNotProvided method.
+func (client *ArrayClient) GetNotProvided(ctx context.Context, options *ArrayClientGetNotProvidedOptions) (ArrayClientGetNotProvidedResponse, error) {
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetNotProvidedResponse{}, err
+		return ArrayClientGetNotProvidedResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetNotProvidedResponse{}, err
+		return ArrayClientGetNotProvidedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetNotProvidedResponse{}, client.getNotProvidedHandleError(resp)
+		return ArrayClientGetNotProvidedResponse{}, client.getNotProvidedHandleError(resp)
 	}
 	return client.getNotProvidedHandleResponse(resp)
 }
 
 // getNotProvidedCreateRequest creates the GetNotProvided request.
-func (client *ArrayClient) getNotProvidedCreateRequest(ctx context.Context, options *ArrayGetNotProvidedOptions) (*policy.Request, error) {
+func (client *ArrayClient) getNotProvidedCreateRequest(ctx context.Context, options *ArrayClientGetNotProvidedOptions) (*policy.Request, error) {
 	urlPath := "/complex/array/notprovided"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -117,10 +117,10 @@ func (client *ArrayClient) getNotProvidedCreateRequest(ctx context.Context, opti
 }
 
 // getNotProvidedHandleResponse handles the GetNotProvided response.
-func (client *ArrayClient) getNotProvidedHandleResponse(resp *http.Response) (ArrayGetNotProvidedResponse, error) {
-	result := ArrayGetNotProvidedResponse{RawResponse: resp}
+func (client *ArrayClient) getNotProvidedHandleResponse(resp *http.Response) (ArrayClientGetNotProvidedResponse, error) {
+	result := ArrayClientGetNotProvidedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ArrayWrapper); err != nil {
-		return ArrayGetNotProvidedResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetNotProvidedResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -140,24 +140,24 @@ func (client *ArrayClient) getNotProvidedHandleError(resp *http.Response) error 
 
 // GetValid - Get complex types with array property
 // If the operation fails it returns the *Error error type.
-// options - ArrayGetValidOptions contains the optional parameters for the ArrayClient.GetValid method.
-func (client *ArrayClient) GetValid(ctx context.Context, options *ArrayGetValidOptions) (ArrayGetValidResponse, error) {
+// options - ArrayClientGetValidOptions contains the optional parameters for the ArrayClient.GetValid method.
+func (client *ArrayClient) GetValid(ctx context.Context, options *ArrayClientGetValidOptions) (ArrayClientGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
-		return ArrayGetValidResponse{}, err
+		return ArrayClientGetValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayGetValidResponse{}, err
+		return ArrayClientGetValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayGetValidResponse{}, client.getValidHandleError(resp)
+		return ArrayClientGetValidResponse{}, client.getValidHandleError(resp)
 	}
 	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client *ArrayClient) getValidCreateRequest(ctx context.Context, options *ArrayGetValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) getValidCreateRequest(ctx context.Context, options *ArrayClientGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/array/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -168,10 +168,10 @@ func (client *ArrayClient) getValidCreateRequest(ctx context.Context, options *A
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client *ArrayClient) getValidHandleResponse(resp *http.Response) (ArrayGetValidResponse, error) {
-	result := ArrayGetValidResponse{RawResponse: resp}
+func (client *ArrayClient) getValidHandleResponse(resp *http.Response) (ArrayClientGetValidResponse, error) {
+	result := ArrayClientGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ArrayWrapper); err != nil {
-		return ArrayGetValidResponse{}, runtime.NewResponseError(err, resp)
+		return ArrayClientGetValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -192,24 +192,24 @@ func (client *ArrayClient) getValidHandleError(resp *http.Response) error {
 // PutEmpty - Put complex types with array property which is empty
 // If the operation fails it returns the *Error error type.
 // complexBody - Please put an empty array
-// options - ArrayPutEmptyOptions contains the optional parameters for the ArrayClient.PutEmpty method.
-func (client *ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutEmptyOptions) (ArrayPutEmptyResponse, error) {
+// options - ArrayClientPutEmptyOptions contains the optional parameters for the ArrayClient.PutEmpty method.
+func (client *ArrayClient) PutEmpty(ctx context.Context, complexBody ArrayWrapper, options *ArrayClientPutEmptyOptions) (ArrayClientPutEmptyResponse, error) {
 	req, err := client.putEmptyCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return ArrayPutEmptyResponse{}, err
+		return ArrayClientPutEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutEmptyResponse{}, err
+		return ArrayClientPutEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutEmptyResponse{}, client.putEmptyHandleError(resp)
+		return ArrayClientPutEmptyResponse{}, client.putEmptyHandleError(resp)
 	}
-	return ArrayPutEmptyResponse{RawResponse: resp}, nil
+	return ArrayClientPutEmptyResponse{RawResponse: resp}, nil
 }
 
 // putEmptyCreateRequest creates the PutEmpty request.
-func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutEmptyOptions) (*policy.Request, error) {
+func (client *ArrayClient) putEmptyCreateRequest(ctx context.Context, complexBody ArrayWrapper, options *ArrayClientPutEmptyOptions) (*policy.Request, error) {
 	urlPath := "/complex/array/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -236,24 +236,24 @@ func (client *ArrayClient) putEmptyHandleError(resp *http.Response) error {
 // If the operation fails it returns the *Error error type.
 // complexBody - Please put an array with 4 items: "1, 2, 3, 4", "", null, "&S#$(*Y", "The quick brown fox jumps over the
 // lazy dog"
-// options - ArrayPutValidOptions contains the optional parameters for the ArrayClient.PutValid method.
-func (client *ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutValidOptions) (ArrayPutValidResponse, error) {
+// options - ArrayClientPutValidOptions contains the optional parameters for the ArrayClient.PutValid method.
+func (client *ArrayClient) PutValid(ctx context.Context, complexBody ArrayWrapper, options *ArrayClientPutValidOptions) (ArrayClientPutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return ArrayPutValidResponse{}, err
+		return ArrayClientPutValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return ArrayPutValidResponse{}, err
+		return ArrayClientPutValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ArrayPutValidResponse{}, client.putValidHandleError(resp)
+		return ArrayClientPutValidResponse{}, client.putValidHandleError(resp)
 	}
-	return ArrayPutValidResponse{RawResponse: resp}, nil
+	return ArrayClientPutValidResponse{RawResponse: resp}, nil
 }
 
 // putValidCreateRequest creates the PutValid request.
-func (client *ArrayClient) putValidCreateRequest(ctx context.Context, complexBody ArrayWrapper, options *ArrayPutValidOptions) (*policy.Request, error) {
+func (client *ArrayClient) putValidCreateRequest(ctx context.Context, complexBody ArrayWrapper, options *ArrayClientPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/array/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

@@ -41,24 +41,24 @@ func NewFormdataClient(options *azcore.ClientOptions) *FormdataClient {
 // If the operation fails it returns the *Error error type.
 // fileContent - File to upload.
 // fileName - File name to upload. Name has to be spelled exactly as written here.
-// options - FormdataUploadFileOptions contains the optional parameters for the FormdataClient.UploadFile method.
-func (client *FormdataClient) UploadFile(ctx context.Context, fileContent io.ReadSeekCloser, fileName string, options *FormdataUploadFileOptions) (FormdataUploadFileResponse, error) {
+// options - FormdataClientUploadFileOptions contains the optional parameters for the FormdataClient.UploadFile method.
+func (client *FormdataClient) UploadFile(ctx context.Context, fileContent io.ReadSeekCloser, fileName string, options *FormdataClientUploadFileOptions) (FormdataClientUploadFileResponse, error) {
 	req, err := client.uploadFileCreateRequest(ctx, fileContent, fileName, options)
 	if err != nil {
-		return FormdataUploadFileResponse{}, err
+		return FormdataClientUploadFileResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return FormdataUploadFileResponse{}, err
+		return FormdataClientUploadFileResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FormdataUploadFileResponse{}, client.uploadFileHandleError(resp)
+		return FormdataClientUploadFileResponse{}, client.uploadFileHandleError(resp)
 	}
-	return FormdataUploadFileResponse{RawResponse: resp}, nil
+	return FormdataClientUploadFileResponse{RawResponse: resp}, nil
 }
 
 // uploadFileCreateRequest creates the UploadFile request.
-func (client *FormdataClient) uploadFileCreateRequest(ctx context.Context, fileContent io.ReadSeekCloser, fileName string, options *FormdataUploadFileOptions) (*policy.Request, error) {
+func (client *FormdataClient) uploadFileCreateRequest(ctx context.Context, fileContent io.ReadSeekCloser, fileName string, options *FormdataClientUploadFileOptions) (*policy.Request, error) {
 	urlPath := "/formdata/stream/uploadfile"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -91,24 +91,25 @@ func (client *FormdataClient) uploadFileHandleError(resp *http.Response) error {
 // UploadFileViaBody - Upload file
 // If the operation fails it returns the *Error error type.
 // fileContent - File to upload.
-// options - FormdataUploadFileViaBodyOptions contains the optional parameters for the FormdataClient.UploadFileViaBody method.
-func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent io.ReadSeekCloser, options *FormdataUploadFileViaBodyOptions) (FormdataUploadFileViaBodyResponse, error) {
+// options - FormdataClientUploadFileViaBodyOptions contains the optional parameters for the FormdataClient.UploadFileViaBody
+// method.
+func (client *FormdataClient) UploadFileViaBody(ctx context.Context, fileContent io.ReadSeekCloser, options *FormdataClientUploadFileViaBodyOptions) (FormdataClientUploadFileViaBodyResponse, error) {
 	req, err := client.uploadFileViaBodyCreateRequest(ctx, fileContent, options)
 	if err != nil {
-		return FormdataUploadFileViaBodyResponse{}, err
+		return FormdataClientUploadFileViaBodyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return FormdataUploadFileViaBodyResponse{}, err
+		return FormdataClientUploadFileViaBodyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FormdataUploadFileViaBodyResponse{}, client.uploadFileViaBodyHandleError(resp)
+		return FormdataClientUploadFileViaBodyResponse{}, client.uploadFileViaBodyHandleError(resp)
 	}
-	return FormdataUploadFileViaBodyResponse{RawResponse: resp}, nil
+	return FormdataClientUploadFileViaBodyResponse{RawResponse: resp}, nil
 }
 
 // uploadFileViaBodyCreateRequest creates the UploadFileViaBody request.
-func (client *FormdataClient) uploadFileViaBodyCreateRequest(ctx context.Context, fileContent io.ReadSeekCloser, options *FormdataUploadFileViaBodyOptions) (*policy.Request, error) {
+func (client *FormdataClient) uploadFileViaBodyCreateRequest(ctx context.Context, fileContent io.ReadSeekCloser, options *FormdataClientUploadFileViaBodyOptions) (*policy.Request, error) {
 	urlPath := "/formdata/stream/uploadfile"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -135,24 +136,24 @@ func (client *FormdataClient) uploadFileViaBodyHandleError(resp *http.Response) 
 // UploadFiles - Upload multiple files
 // If the operation fails it returns the *Error error type.
 // fileContent - Files to upload.
-// options - FormdataUploadFilesOptions contains the optional parameters for the FormdataClient.UploadFiles method.
-func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []io.ReadSeekCloser, options *FormdataUploadFilesOptions) (FormdataUploadFilesResponse, error) {
+// options - FormdataClientUploadFilesOptions contains the optional parameters for the FormdataClient.UploadFiles method.
+func (client *FormdataClient) UploadFiles(ctx context.Context, fileContent []io.ReadSeekCloser, options *FormdataClientUploadFilesOptions) (FormdataClientUploadFilesResponse, error) {
 	req, err := client.uploadFilesCreateRequest(ctx, fileContent, options)
 	if err != nil {
-		return FormdataUploadFilesResponse{}, err
+		return FormdataClientUploadFilesResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return FormdataUploadFilesResponse{}, err
+		return FormdataClientUploadFilesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FormdataUploadFilesResponse{}, client.uploadFilesHandleError(resp)
+		return FormdataClientUploadFilesResponse{}, client.uploadFilesHandleError(resp)
 	}
-	return FormdataUploadFilesResponse{RawResponse: resp}, nil
+	return FormdataClientUploadFilesResponse{RawResponse: resp}, nil
 }
 
 // uploadFilesCreateRequest creates the UploadFiles request.
-func (client *FormdataClient) uploadFilesCreateRequest(ctx context.Context, fileContent []io.ReadSeekCloser, options *FormdataUploadFilesOptions) (*policy.Request, error) {
+func (client *FormdataClient) uploadFilesCreateRequest(ctx context.Context, fileContent []io.ReadSeekCloser, options *FormdataClientUploadFilesOptions) (*policy.Request, error) {
 	urlPath := "/formdata/stream/uploadfiles"
 	req, err := runtime.NewRequest(ctx, http.MethodPost, runtime.JoinPaths(host, urlPath))
 	if err != nil {

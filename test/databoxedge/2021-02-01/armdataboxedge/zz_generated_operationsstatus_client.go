@@ -55,24 +55,24 @@ func NewOperationsStatusClient(subscriptionID string, credential azcore.TokenCre
 // deviceName - The device name.
 // name - The job name.
 // resourceGroupName - The resource group name.
-// options - OperationsStatusGetOptions contains the optional parameters for the OperationsStatusClient.Get method.
-func (client *OperationsStatusClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *OperationsStatusGetOptions) (OperationsStatusGetResponse, error) {
+// options - OperationsStatusClientGetOptions contains the optional parameters for the OperationsStatusClient.Get method.
+func (client *OperationsStatusClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *OperationsStatusClientGetOptions) (OperationsStatusClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return OperationsStatusGetResponse{}, err
+		return OperationsStatusClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return OperationsStatusGetResponse{}, err
+		return OperationsStatusClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return OperationsStatusGetResponse{}, client.getHandleError(resp)
+		return OperationsStatusClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *OperationsStatusClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *OperationsStatusGetOptions) (*policy.Request, error) {
+func (client *OperationsStatusClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *OperationsStatusClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/operationsStatus/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -102,10 +102,10 @@ func (client *OperationsStatusClient) getCreateRequest(ctx context.Context, devi
 }
 
 // getHandleResponse handles the Get response.
-func (client *OperationsStatusClient) getHandleResponse(resp *http.Response) (OperationsStatusGetResponse, error) {
-	result := OperationsStatusGetResponse{RawResponse: resp}
+func (client *OperationsStatusClient) getHandleResponse(resp *http.Response) (OperationsStatusClientGetResponse, error) {
+	result := OperationsStatusClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Job); err != nil {
-		return OperationsStatusGetResponse{}, runtime.NewResponseError(err, resp)
+		return OperationsStatusClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

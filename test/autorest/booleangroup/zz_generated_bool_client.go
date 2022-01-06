@@ -38,24 +38,24 @@ func NewBoolClient(options *azcore.ClientOptions) *BoolClient {
 
 // GetFalse - Get false Boolean value
 // If the operation fails it returns the *Error error type.
-// options - BoolGetFalseOptions contains the optional parameters for the BoolClient.GetFalse method.
-func (client *BoolClient) GetFalse(ctx context.Context, options *BoolGetFalseOptions) (BoolGetFalseResponse, error) {
+// options - BoolClientGetFalseOptions contains the optional parameters for the BoolClient.GetFalse method.
+func (client *BoolClient) GetFalse(ctx context.Context, options *BoolClientGetFalseOptions) (BoolClientGetFalseResponse, error) {
 	req, err := client.getFalseCreateRequest(ctx, options)
 	if err != nil {
-		return BoolGetFalseResponse{}, err
+		return BoolClientGetFalseResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BoolGetFalseResponse{}, err
+		return BoolClientGetFalseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BoolGetFalseResponse{}, client.getFalseHandleError(resp)
+		return BoolClientGetFalseResponse{}, client.getFalseHandleError(resp)
 	}
 	return client.getFalseHandleResponse(resp)
 }
 
 // getFalseCreateRequest creates the GetFalse request.
-func (client *BoolClient) getFalseCreateRequest(ctx context.Context, options *BoolGetFalseOptions) (*policy.Request, error) {
+func (client *BoolClient) getFalseCreateRequest(ctx context.Context, options *BoolClientGetFalseOptions) (*policy.Request, error) {
 	urlPath := "/bool/false"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -66,10 +66,10 @@ func (client *BoolClient) getFalseCreateRequest(ctx context.Context, options *Bo
 }
 
 // getFalseHandleResponse handles the GetFalse response.
-func (client *BoolClient) getFalseHandleResponse(resp *http.Response) (BoolGetFalseResponse, error) {
-	result := BoolGetFalseResponse{RawResponse: resp}
+func (client *BoolClient) getFalseHandleResponse(resp *http.Response) (BoolClientGetFalseResponse, error) {
+	result := BoolClientGetFalseResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return BoolGetFalseResponse{}, runtime.NewResponseError(err, resp)
+		return BoolClientGetFalseResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -89,24 +89,24 @@ func (client *BoolClient) getFalseHandleError(resp *http.Response) error {
 
 // GetInvalid - Get invalid Boolean value
 // If the operation fails it returns the *Error error type.
-// options - BoolGetInvalidOptions contains the optional parameters for the BoolClient.GetInvalid method.
-func (client *BoolClient) GetInvalid(ctx context.Context, options *BoolGetInvalidOptions) (BoolGetInvalidResponse, error) {
+// options - BoolClientGetInvalidOptions contains the optional parameters for the BoolClient.GetInvalid method.
+func (client *BoolClient) GetInvalid(ctx context.Context, options *BoolClientGetInvalidOptions) (BoolClientGetInvalidResponse, error) {
 	req, err := client.getInvalidCreateRequest(ctx, options)
 	if err != nil {
-		return BoolGetInvalidResponse{}, err
+		return BoolClientGetInvalidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BoolGetInvalidResponse{}, err
+		return BoolClientGetInvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BoolGetInvalidResponse{}, client.getInvalidHandleError(resp)
+		return BoolClientGetInvalidResponse{}, client.getInvalidHandleError(resp)
 	}
 	return client.getInvalidHandleResponse(resp)
 }
 
 // getInvalidCreateRequest creates the GetInvalid request.
-func (client *BoolClient) getInvalidCreateRequest(ctx context.Context, options *BoolGetInvalidOptions) (*policy.Request, error) {
+func (client *BoolClient) getInvalidCreateRequest(ctx context.Context, options *BoolClientGetInvalidOptions) (*policy.Request, error) {
 	urlPath := "/bool/invalid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -117,10 +117,10 @@ func (client *BoolClient) getInvalidCreateRequest(ctx context.Context, options *
 }
 
 // getInvalidHandleResponse handles the GetInvalid response.
-func (client *BoolClient) getInvalidHandleResponse(resp *http.Response) (BoolGetInvalidResponse, error) {
-	result := BoolGetInvalidResponse{RawResponse: resp}
+func (client *BoolClient) getInvalidHandleResponse(resp *http.Response) (BoolClientGetInvalidResponse, error) {
+	result := BoolClientGetInvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return BoolGetInvalidResponse{}, runtime.NewResponseError(err, resp)
+		return BoolClientGetInvalidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -140,24 +140,24 @@ func (client *BoolClient) getInvalidHandleError(resp *http.Response) error {
 
 // GetNull - Get null Boolean value
 // If the operation fails it returns the *Error error type.
-// options - BoolGetNullOptions contains the optional parameters for the BoolClient.GetNull method.
-func (client *BoolClient) GetNull(ctx context.Context, options *BoolGetNullOptions) (BoolGetNullResponse, error) {
+// options - BoolClientGetNullOptions contains the optional parameters for the BoolClient.GetNull method.
+func (client *BoolClient) GetNull(ctx context.Context, options *BoolClientGetNullOptions) (BoolClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
-		return BoolGetNullResponse{}, err
+		return BoolClientGetNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BoolGetNullResponse{}, err
+		return BoolClientGetNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BoolGetNullResponse{}, client.getNullHandleError(resp)
+		return BoolClientGetNullResponse{}, client.getNullHandleError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *BoolClient) getNullCreateRequest(ctx context.Context, options *BoolGetNullOptions) (*policy.Request, error) {
+func (client *BoolClient) getNullCreateRequest(ctx context.Context, options *BoolClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/bool/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -168,10 +168,10 @@ func (client *BoolClient) getNullCreateRequest(ctx context.Context, options *Boo
 }
 
 // getNullHandleResponse handles the GetNull response.
-func (client *BoolClient) getNullHandleResponse(resp *http.Response) (BoolGetNullResponse, error) {
-	result := BoolGetNullResponse{RawResponse: resp}
+func (client *BoolClient) getNullHandleResponse(resp *http.Response) (BoolClientGetNullResponse, error) {
+	result := BoolClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return BoolGetNullResponse{}, runtime.NewResponseError(err, resp)
+		return BoolClientGetNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -191,24 +191,24 @@ func (client *BoolClient) getNullHandleError(resp *http.Response) error {
 
 // GetTrue - Get true Boolean value
 // If the operation fails it returns the *Error error type.
-// options - BoolGetTrueOptions contains the optional parameters for the BoolClient.GetTrue method.
-func (client *BoolClient) GetTrue(ctx context.Context, options *BoolGetTrueOptions) (BoolGetTrueResponse, error) {
+// options - BoolClientGetTrueOptions contains the optional parameters for the BoolClient.GetTrue method.
+func (client *BoolClient) GetTrue(ctx context.Context, options *BoolClientGetTrueOptions) (BoolClientGetTrueResponse, error) {
 	req, err := client.getTrueCreateRequest(ctx, options)
 	if err != nil {
-		return BoolGetTrueResponse{}, err
+		return BoolClientGetTrueResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BoolGetTrueResponse{}, err
+		return BoolClientGetTrueResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BoolGetTrueResponse{}, client.getTrueHandleError(resp)
+		return BoolClientGetTrueResponse{}, client.getTrueHandleError(resp)
 	}
 	return client.getTrueHandleResponse(resp)
 }
 
 // getTrueCreateRequest creates the GetTrue request.
-func (client *BoolClient) getTrueCreateRequest(ctx context.Context, options *BoolGetTrueOptions) (*policy.Request, error) {
+func (client *BoolClient) getTrueCreateRequest(ctx context.Context, options *BoolClientGetTrueOptions) (*policy.Request, error) {
 	urlPath := "/bool/true"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -219,10 +219,10 @@ func (client *BoolClient) getTrueCreateRequest(ctx context.Context, options *Boo
 }
 
 // getTrueHandleResponse handles the GetTrue response.
-func (client *BoolClient) getTrueHandleResponse(resp *http.Response) (BoolGetTrueResponse, error) {
-	result := BoolGetTrueResponse{RawResponse: resp}
+func (client *BoolClient) getTrueHandleResponse(resp *http.Response) (BoolClientGetTrueResponse, error) {
+	result := BoolClientGetTrueResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return BoolGetTrueResponse{}, runtime.NewResponseError(err, resp)
+		return BoolClientGetTrueResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -242,24 +242,24 @@ func (client *BoolClient) getTrueHandleError(resp *http.Response) error {
 
 // PutFalse - Set Boolean value false
 // If the operation fails it returns the *Error error type.
-// options - BoolPutFalseOptions contains the optional parameters for the BoolClient.PutFalse method.
-func (client *BoolClient) PutFalse(ctx context.Context, options *BoolPutFalseOptions) (BoolPutFalseResponse, error) {
+// options - BoolClientPutFalseOptions contains the optional parameters for the BoolClient.PutFalse method.
+func (client *BoolClient) PutFalse(ctx context.Context, options *BoolClientPutFalseOptions) (BoolClientPutFalseResponse, error) {
 	req, err := client.putFalseCreateRequest(ctx, options)
 	if err != nil {
-		return BoolPutFalseResponse{}, err
+		return BoolClientPutFalseResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BoolPutFalseResponse{}, err
+		return BoolClientPutFalseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BoolPutFalseResponse{}, client.putFalseHandleError(resp)
+		return BoolClientPutFalseResponse{}, client.putFalseHandleError(resp)
 	}
-	return BoolPutFalseResponse{RawResponse: resp}, nil
+	return BoolClientPutFalseResponse{RawResponse: resp}, nil
 }
 
 // putFalseCreateRequest creates the PutFalse request.
-func (client *BoolClient) putFalseCreateRequest(ctx context.Context, options *BoolPutFalseOptions) (*policy.Request, error) {
+func (client *BoolClient) putFalseCreateRequest(ctx context.Context, options *BoolClientPutFalseOptions) (*policy.Request, error) {
 	urlPath := "/bool/false"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -284,24 +284,24 @@ func (client *BoolClient) putFalseHandleError(resp *http.Response) error {
 
 // PutTrue - Set Boolean value true
 // If the operation fails it returns the *Error error type.
-// options - BoolPutTrueOptions contains the optional parameters for the BoolClient.PutTrue method.
-func (client *BoolClient) PutTrue(ctx context.Context, options *BoolPutTrueOptions) (BoolPutTrueResponse, error) {
+// options - BoolClientPutTrueOptions contains the optional parameters for the BoolClient.PutTrue method.
+func (client *BoolClient) PutTrue(ctx context.Context, options *BoolClientPutTrueOptions) (BoolClientPutTrueResponse, error) {
 	req, err := client.putTrueCreateRequest(ctx, options)
 	if err != nil {
-		return BoolPutTrueResponse{}, err
+		return BoolClientPutTrueResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return BoolPutTrueResponse{}, err
+		return BoolClientPutTrueResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BoolPutTrueResponse{}, client.putTrueHandleError(resp)
+		return BoolClientPutTrueResponse{}, client.putTrueHandleError(resp)
 	}
-	return BoolPutTrueResponse{RawResponse: resp}, nil
+	return BoolClientPutTrueResponse{RawResponse: resp}, nil
 }
 
 // putTrueCreateRequest creates the PutTrue request.
-func (client *BoolClient) putTrueCreateRequest(ctx context.Context, options *BoolPutTrueOptions) (*policy.Request, error) {
+func (client *BoolClient) putTrueCreateRequest(ctx context.Context, options *BoolClientPutTrueOptions) (*policy.Request, error) {
 	urlPath := "/bool/true"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

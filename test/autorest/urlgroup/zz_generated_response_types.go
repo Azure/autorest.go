@@ -10,398 +10,398 @@ package urlgroup
 
 import "net/http"
 
-// PathItemsGetAllWithValuesResponse contains the response from method PathItems.GetAllWithValues.
-type PathItemsGetAllWithValuesResponse struct {
+// PathItemsClientGetAllWithValuesResponse contains the response from method PathItemsClient.GetAllWithValues.
+type PathItemsClientGetAllWithValuesResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathItemsGetGlobalAndLocalQueryNullResponse contains the response from method PathItems.GetGlobalAndLocalQueryNull.
-type PathItemsGetGlobalAndLocalQueryNullResponse struct {
+// PathItemsClientGetGlobalAndLocalQueryNullResponse contains the response from method PathItemsClient.GetGlobalAndLocalQueryNull.
+type PathItemsClientGetGlobalAndLocalQueryNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathItemsGetGlobalQueryNullResponse contains the response from method PathItems.GetGlobalQueryNull.
-type PathItemsGetGlobalQueryNullResponse struct {
+// PathItemsClientGetGlobalQueryNullResponse contains the response from method PathItemsClient.GetGlobalQueryNull.
+type PathItemsClientGetGlobalQueryNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathItemsGetLocalPathItemQueryNullResponse contains the response from method PathItems.GetLocalPathItemQueryNull.
-type PathItemsGetLocalPathItemQueryNullResponse struct {
+// PathItemsClientGetLocalPathItemQueryNullResponse contains the response from method PathItemsClient.GetLocalPathItemQueryNull.
+type PathItemsClientGetLocalPathItemQueryNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsArrayCSVInPathResponse contains the response from method Paths.ArrayCSVInPath.
-type PathsArrayCSVInPathResponse struct {
+// PathsClientArrayCSVInPathResponse contains the response from method PathsClient.ArrayCSVInPath.
+type PathsClientArrayCSVInPathResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsBase64URLResponse contains the response from method Paths.Base64URL.
-type PathsBase64URLResponse struct {
+// PathsClientBase64URLResponse contains the response from method PathsClient.Base64URL.
+type PathsClientBase64URLResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsByteEmptyResponse contains the response from method Paths.ByteEmpty.
-type PathsByteEmptyResponse struct {
+// PathsClientByteEmptyResponse contains the response from method PathsClient.ByteEmpty.
+type PathsClientByteEmptyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsByteMultiByteResponse contains the response from method Paths.ByteMultiByte.
-type PathsByteMultiByteResponse struct {
+// PathsClientByteMultiByteResponse contains the response from method PathsClient.ByteMultiByte.
+type PathsClientByteMultiByteResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsByteNullResponse contains the response from method Paths.ByteNull.
-type PathsByteNullResponse struct {
+// PathsClientByteNullResponse contains the response from method PathsClient.ByteNull.
+type PathsClientByteNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsDateNullResponse contains the response from method Paths.DateNull.
-type PathsDateNullResponse struct {
+// PathsClientDateNullResponse contains the response from method PathsClient.DateNull.
+type PathsClientDateNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsDateTimeNullResponse contains the response from method Paths.DateTimeNull.
-type PathsDateTimeNullResponse struct {
+// PathsClientDateTimeNullResponse contains the response from method PathsClient.DateTimeNull.
+type PathsClientDateTimeNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsDateTimeValidResponse contains the response from method Paths.DateTimeValid.
-type PathsDateTimeValidResponse struct {
+// PathsClientDateTimeValidResponse contains the response from method PathsClient.DateTimeValid.
+type PathsClientDateTimeValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsDateValidResponse contains the response from method Paths.DateValid.
-type PathsDateValidResponse struct {
+// PathsClientDateValidResponse contains the response from method PathsClient.DateValid.
+type PathsClientDateValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsDoubleDecimalNegativeResponse contains the response from method Paths.DoubleDecimalNegative.
-type PathsDoubleDecimalNegativeResponse struct {
+// PathsClientDoubleDecimalNegativeResponse contains the response from method PathsClient.DoubleDecimalNegative.
+type PathsClientDoubleDecimalNegativeResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsDoubleDecimalPositiveResponse contains the response from method Paths.DoubleDecimalPositive.
-type PathsDoubleDecimalPositiveResponse struct {
+// PathsClientDoubleDecimalPositiveResponse contains the response from method PathsClient.DoubleDecimalPositive.
+type PathsClientDoubleDecimalPositiveResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsEnumNullResponse contains the response from method Paths.EnumNull.
-type PathsEnumNullResponse struct {
+// PathsClientEnumNullResponse contains the response from method PathsClient.EnumNull.
+type PathsClientEnumNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsEnumValidResponse contains the response from method Paths.EnumValid.
-type PathsEnumValidResponse struct {
+// PathsClientEnumValidResponse contains the response from method PathsClient.EnumValid.
+type PathsClientEnumValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsFloatScientificNegativeResponse contains the response from method Paths.FloatScientificNegative.
-type PathsFloatScientificNegativeResponse struct {
+// PathsClientFloatScientificNegativeResponse contains the response from method PathsClient.FloatScientificNegative.
+type PathsClientFloatScientificNegativeResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsFloatScientificPositiveResponse contains the response from method Paths.FloatScientificPositive.
-type PathsFloatScientificPositiveResponse struct {
+// PathsClientFloatScientificPositiveResponse contains the response from method PathsClient.FloatScientificPositive.
+type PathsClientFloatScientificPositiveResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsGetBooleanFalseResponse contains the response from method Paths.GetBooleanFalse.
-type PathsGetBooleanFalseResponse struct {
+// PathsClientGetBooleanFalseResponse contains the response from method PathsClient.GetBooleanFalse.
+type PathsClientGetBooleanFalseResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsGetBooleanTrueResponse contains the response from method Paths.GetBooleanTrue.
-type PathsGetBooleanTrueResponse struct {
+// PathsClientGetBooleanTrueResponse contains the response from method PathsClient.GetBooleanTrue.
+type PathsClientGetBooleanTrueResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsGetIntNegativeOneMillionResponse contains the response from method Paths.GetIntNegativeOneMillion.
-type PathsGetIntNegativeOneMillionResponse struct {
+// PathsClientGetIntNegativeOneMillionResponse contains the response from method PathsClient.GetIntNegativeOneMillion.
+type PathsClientGetIntNegativeOneMillionResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsGetIntOneMillionResponse contains the response from method Paths.GetIntOneMillion.
-type PathsGetIntOneMillionResponse struct {
+// PathsClientGetIntOneMillionResponse contains the response from method PathsClient.GetIntOneMillion.
+type PathsClientGetIntOneMillionResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsGetNegativeTenBillionResponse contains the response from method Paths.GetNegativeTenBillion.
-type PathsGetNegativeTenBillionResponse struct {
+// PathsClientGetNegativeTenBillionResponse contains the response from method PathsClient.GetNegativeTenBillion.
+type PathsClientGetNegativeTenBillionResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsGetTenBillionResponse contains the response from method Paths.GetTenBillion.
-type PathsGetTenBillionResponse struct {
+// PathsClientGetTenBillionResponse contains the response from method PathsClient.GetTenBillion.
+type PathsClientGetTenBillionResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsStringEmptyResponse contains the response from method Paths.StringEmpty.
-type PathsStringEmptyResponse struct {
+// PathsClientStringEmptyResponse contains the response from method PathsClient.StringEmpty.
+type PathsClientStringEmptyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsStringNullResponse contains the response from method Paths.StringNull.
-type PathsStringNullResponse struct {
+// PathsClientStringNullResponse contains the response from method PathsClient.StringNull.
+type PathsClientStringNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsStringURLEncodedResponse contains the response from method Paths.StringURLEncoded.
-type PathsStringURLEncodedResponse struct {
+// PathsClientStringURLEncodedResponse contains the response from method PathsClient.StringURLEncoded.
+type PathsClientStringURLEncodedResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsStringURLNonEncodedResponse contains the response from method Paths.StringURLNonEncoded.
-type PathsStringURLNonEncodedResponse struct {
+// PathsClientStringURLNonEncodedResponse contains the response from method PathsClient.StringURLNonEncoded.
+type PathsClientStringURLNonEncodedResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsStringUnicodeResponse contains the response from method Paths.StringUnicode.
-type PathsStringUnicodeResponse struct {
+// PathsClientStringUnicodeResponse contains the response from method PathsClient.StringUnicode.
+type PathsClientStringUnicodeResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// PathsUnixTimeURLResponse contains the response from method Paths.UnixTimeURL.
-type PathsUnixTimeURLResponse struct {
+// PathsClientUnixTimeURLResponse contains the response from method PathsClient.UnixTimeURL.
+type PathsClientUnixTimeURLResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesArrayStringCSVEmptyResponse contains the response from method Queries.ArrayStringCSVEmpty.
-type QueriesArrayStringCSVEmptyResponse struct {
+// QueriesClientArrayStringCSVEmptyResponse contains the response from method QueriesClient.ArrayStringCSVEmpty.
+type QueriesClientArrayStringCSVEmptyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesArrayStringCSVNullResponse contains the response from method Queries.ArrayStringCSVNull.
-type QueriesArrayStringCSVNullResponse struct {
+// QueriesClientArrayStringCSVNullResponse contains the response from method QueriesClient.ArrayStringCSVNull.
+type QueriesClientArrayStringCSVNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesArrayStringCSVValidResponse contains the response from method Queries.ArrayStringCSVValid.
-type QueriesArrayStringCSVValidResponse struct {
+// QueriesClientArrayStringCSVValidResponse contains the response from method QueriesClient.ArrayStringCSVValid.
+type QueriesClientArrayStringCSVValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesArrayStringNoCollectionFormatEmptyResponse contains the response from method Queries.ArrayStringNoCollectionFormatEmpty.
-type QueriesArrayStringNoCollectionFormatEmptyResponse struct {
+// QueriesClientArrayStringNoCollectionFormatEmptyResponse contains the response from method QueriesClient.ArrayStringNoCollectionFormatEmpty.
+type QueriesClientArrayStringNoCollectionFormatEmptyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesArrayStringPipesValidResponse contains the response from method Queries.ArrayStringPipesValid.
-type QueriesArrayStringPipesValidResponse struct {
+// QueriesClientArrayStringPipesValidResponse contains the response from method QueriesClient.ArrayStringPipesValid.
+type QueriesClientArrayStringPipesValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesArrayStringSsvValidResponse contains the response from method Queries.ArrayStringSsvValid.
-type QueriesArrayStringSsvValidResponse struct {
+// QueriesClientArrayStringSsvValidResponse contains the response from method QueriesClient.ArrayStringSsvValid.
+type QueriesClientArrayStringSsvValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesArrayStringTsvValidResponse contains the response from method Queries.ArrayStringTsvValid.
-type QueriesArrayStringTsvValidResponse struct {
+// QueriesClientArrayStringTsvValidResponse contains the response from method QueriesClient.ArrayStringTsvValid.
+type QueriesClientArrayStringTsvValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesByteEmptyResponse contains the response from method Queries.ByteEmpty.
-type QueriesByteEmptyResponse struct {
+// QueriesClientByteEmptyResponse contains the response from method QueriesClient.ByteEmpty.
+type QueriesClientByteEmptyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesByteMultiByteResponse contains the response from method Queries.ByteMultiByte.
-type QueriesByteMultiByteResponse struct {
+// QueriesClientByteMultiByteResponse contains the response from method QueriesClient.ByteMultiByte.
+type QueriesClientByteMultiByteResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesByteNullResponse contains the response from method Queries.ByteNull.
-type QueriesByteNullResponse struct {
+// QueriesClientByteNullResponse contains the response from method QueriesClient.ByteNull.
+type QueriesClientByteNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesDateNullResponse contains the response from method Queries.DateNull.
-type QueriesDateNullResponse struct {
+// QueriesClientDateNullResponse contains the response from method QueriesClient.DateNull.
+type QueriesClientDateNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesDateTimeNullResponse contains the response from method Queries.DateTimeNull.
-type QueriesDateTimeNullResponse struct {
+// QueriesClientDateTimeNullResponse contains the response from method QueriesClient.DateTimeNull.
+type QueriesClientDateTimeNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesDateTimeValidResponse contains the response from method Queries.DateTimeValid.
-type QueriesDateTimeValidResponse struct {
+// QueriesClientDateTimeValidResponse contains the response from method QueriesClient.DateTimeValid.
+type QueriesClientDateTimeValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesDateValidResponse contains the response from method Queries.DateValid.
-type QueriesDateValidResponse struct {
+// QueriesClientDateValidResponse contains the response from method QueriesClient.DateValid.
+type QueriesClientDateValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesDoubleDecimalNegativeResponse contains the response from method Queries.DoubleDecimalNegative.
-type QueriesDoubleDecimalNegativeResponse struct {
+// QueriesClientDoubleDecimalNegativeResponse contains the response from method QueriesClient.DoubleDecimalNegative.
+type QueriesClientDoubleDecimalNegativeResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesDoubleDecimalPositiveResponse contains the response from method Queries.DoubleDecimalPositive.
-type QueriesDoubleDecimalPositiveResponse struct {
+// QueriesClientDoubleDecimalPositiveResponse contains the response from method QueriesClient.DoubleDecimalPositive.
+type QueriesClientDoubleDecimalPositiveResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesDoubleNullResponse contains the response from method Queries.DoubleNull.
-type QueriesDoubleNullResponse struct {
+// QueriesClientDoubleNullResponse contains the response from method QueriesClient.DoubleNull.
+type QueriesClientDoubleNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesEnumNullResponse contains the response from method Queries.EnumNull.
-type QueriesEnumNullResponse struct {
+// QueriesClientEnumNullResponse contains the response from method QueriesClient.EnumNull.
+type QueriesClientEnumNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesEnumValidResponse contains the response from method Queries.EnumValid.
-type QueriesEnumValidResponse struct {
+// QueriesClientEnumValidResponse contains the response from method QueriesClient.EnumValid.
+type QueriesClientEnumValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesFloatNullResponse contains the response from method Queries.FloatNull.
-type QueriesFloatNullResponse struct {
+// QueriesClientFloatNullResponse contains the response from method QueriesClient.FloatNull.
+type QueriesClientFloatNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesFloatScientificNegativeResponse contains the response from method Queries.FloatScientificNegative.
-type QueriesFloatScientificNegativeResponse struct {
+// QueriesClientFloatScientificNegativeResponse contains the response from method QueriesClient.FloatScientificNegative.
+type QueriesClientFloatScientificNegativeResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesFloatScientificPositiveResponse contains the response from method Queries.FloatScientificPositive.
-type QueriesFloatScientificPositiveResponse struct {
+// QueriesClientFloatScientificPositiveResponse contains the response from method QueriesClient.FloatScientificPositive.
+type QueriesClientFloatScientificPositiveResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesGetBooleanFalseResponse contains the response from method Queries.GetBooleanFalse.
-type QueriesGetBooleanFalseResponse struct {
+// QueriesClientGetBooleanFalseResponse contains the response from method QueriesClient.GetBooleanFalse.
+type QueriesClientGetBooleanFalseResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesGetBooleanNullResponse contains the response from method Queries.GetBooleanNull.
-type QueriesGetBooleanNullResponse struct {
+// QueriesClientGetBooleanNullResponse contains the response from method QueriesClient.GetBooleanNull.
+type QueriesClientGetBooleanNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesGetBooleanTrueResponse contains the response from method Queries.GetBooleanTrue.
-type QueriesGetBooleanTrueResponse struct {
+// QueriesClientGetBooleanTrueResponse contains the response from method QueriesClient.GetBooleanTrue.
+type QueriesClientGetBooleanTrueResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesGetIntNegativeOneMillionResponse contains the response from method Queries.GetIntNegativeOneMillion.
-type QueriesGetIntNegativeOneMillionResponse struct {
+// QueriesClientGetIntNegativeOneMillionResponse contains the response from method QueriesClient.GetIntNegativeOneMillion.
+type QueriesClientGetIntNegativeOneMillionResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesGetIntNullResponse contains the response from method Queries.GetIntNull.
-type QueriesGetIntNullResponse struct {
+// QueriesClientGetIntNullResponse contains the response from method QueriesClient.GetIntNull.
+type QueriesClientGetIntNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesGetIntOneMillionResponse contains the response from method Queries.GetIntOneMillion.
-type QueriesGetIntOneMillionResponse struct {
+// QueriesClientGetIntOneMillionResponse contains the response from method QueriesClient.GetIntOneMillion.
+type QueriesClientGetIntOneMillionResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesGetLongNullResponse contains the response from method Queries.GetLongNull.
-type QueriesGetLongNullResponse struct {
+// QueriesClientGetLongNullResponse contains the response from method QueriesClient.GetLongNull.
+type QueriesClientGetLongNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesGetNegativeTenBillionResponse contains the response from method Queries.GetNegativeTenBillion.
-type QueriesGetNegativeTenBillionResponse struct {
+// QueriesClientGetNegativeTenBillionResponse contains the response from method QueriesClient.GetNegativeTenBillion.
+type QueriesClientGetNegativeTenBillionResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesGetTenBillionResponse contains the response from method Queries.GetTenBillion.
-type QueriesGetTenBillionResponse struct {
+// QueriesClientGetTenBillionResponse contains the response from method QueriesClient.GetTenBillion.
+type QueriesClientGetTenBillionResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesStringEmptyResponse contains the response from method Queries.StringEmpty.
-type QueriesStringEmptyResponse struct {
+// QueriesClientStringEmptyResponse contains the response from method QueriesClient.StringEmpty.
+type QueriesClientStringEmptyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesStringNullResponse contains the response from method Queries.StringNull.
-type QueriesStringNullResponse struct {
+// QueriesClientStringNullResponse contains the response from method QueriesClient.StringNull.
+type QueriesClientStringNullResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesStringURLEncodedResponse contains the response from method Queries.StringURLEncoded.
-type QueriesStringURLEncodedResponse struct {
+// QueriesClientStringURLEncodedResponse contains the response from method QueriesClient.StringURLEncoded.
+type QueriesClientStringURLEncodedResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// QueriesStringUnicodeResponse contains the response from method Queries.StringUnicode.
-type QueriesStringUnicodeResponse struct {
+// QueriesClientStringUnicodeResponse contains the response from method QueriesClient.StringUnicode.
+type QueriesClientStringUnicodeResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

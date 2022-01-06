@@ -38,24 +38,24 @@ func NewDictionaryClient(options *azcore.ClientOptions) *DictionaryClient {
 
 // GetEmpty - Get complex types with dictionary property which is empty
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetEmptyOptions contains the optional parameters for the DictionaryClient.GetEmpty method.
-func (client *DictionaryClient) GetEmpty(ctx context.Context, options *DictionaryGetEmptyOptions) (DictionaryGetEmptyResponse, error) {
+// options - DictionaryClientGetEmptyOptions contains the optional parameters for the DictionaryClient.GetEmpty method.
+func (client *DictionaryClient) GetEmpty(ctx context.Context, options *DictionaryClientGetEmptyOptions) (DictionaryClientGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetEmptyResponse{}, err
+		return DictionaryClientGetEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetEmptyResponse{}, err
+		return DictionaryClientGetEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetEmptyResponse{}, client.getEmptyHandleError(resp)
+		return DictionaryClientGetEmptyResponse{}, client.getEmptyHandleError(resp)
 	}
 	return client.getEmptyHandleResponse(resp)
 }
 
 // getEmptyCreateRequest creates the GetEmpty request.
-func (client *DictionaryClient) getEmptyCreateRequest(ctx context.Context, options *DictionaryGetEmptyOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getEmptyCreateRequest(ctx context.Context, options *DictionaryClientGetEmptyOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -66,10 +66,10 @@ func (client *DictionaryClient) getEmptyCreateRequest(ctx context.Context, optio
 }
 
 // getEmptyHandleResponse handles the GetEmpty response.
-func (client *DictionaryClient) getEmptyHandleResponse(resp *http.Response) (DictionaryGetEmptyResponse, error) {
-	result := DictionaryGetEmptyResponse{RawResponse: resp}
+func (client *DictionaryClient) getEmptyHandleResponse(resp *http.Response) (DictionaryClientGetEmptyResponse, error) {
+	result := DictionaryClientGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DictionaryWrapper); err != nil {
-		return DictionaryGetEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetEmptyResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -89,24 +89,25 @@ func (client *DictionaryClient) getEmptyHandleError(resp *http.Response) error {
 
 // GetNotProvided - Get complex types with dictionary property while server doesn't provide a response payload
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetNotProvidedOptions contains the optional parameters for the DictionaryClient.GetNotProvided method.
-func (client *DictionaryClient) GetNotProvided(ctx context.Context, options *DictionaryGetNotProvidedOptions) (DictionaryGetNotProvidedResponse, error) {
+// options - DictionaryClientGetNotProvidedOptions contains the optional parameters for the DictionaryClient.GetNotProvided
+// method.
+func (client *DictionaryClient) GetNotProvided(ctx context.Context, options *DictionaryClientGetNotProvidedOptions) (DictionaryClientGetNotProvidedResponse, error) {
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetNotProvidedResponse{}, err
+		return DictionaryClientGetNotProvidedResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetNotProvidedResponse{}, err
+		return DictionaryClientGetNotProvidedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetNotProvidedResponse{}, client.getNotProvidedHandleError(resp)
+		return DictionaryClientGetNotProvidedResponse{}, client.getNotProvidedHandleError(resp)
 	}
 	return client.getNotProvidedHandleResponse(resp)
 }
 
 // getNotProvidedCreateRequest creates the GetNotProvided request.
-func (client *DictionaryClient) getNotProvidedCreateRequest(ctx context.Context, options *DictionaryGetNotProvidedOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getNotProvidedCreateRequest(ctx context.Context, options *DictionaryClientGetNotProvidedOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/notprovided"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -117,10 +118,10 @@ func (client *DictionaryClient) getNotProvidedCreateRequest(ctx context.Context,
 }
 
 // getNotProvidedHandleResponse handles the GetNotProvided response.
-func (client *DictionaryClient) getNotProvidedHandleResponse(resp *http.Response) (DictionaryGetNotProvidedResponse, error) {
-	result := DictionaryGetNotProvidedResponse{RawResponse: resp}
+func (client *DictionaryClient) getNotProvidedHandleResponse(resp *http.Response) (DictionaryClientGetNotProvidedResponse, error) {
+	result := DictionaryClientGetNotProvidedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DictionaryWrapper); err != nil {
-		return DictionaryGetNotProvidedResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetNotProvidedResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -140,24 +141,24 @@ func (client *DictionaryClient) getNotProvidedHandleError(resp *http.Response) e
 
 // GetNull - Get complex types with dictionary property which is null
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetNullOptions contains the optional parameters for the DictionaryClient.GetNull method.
-func (client *DictionaryClient) GetNull(ctx context.Context, options *DictionaryGetNullOptions) (DictionaryGetNullResponse, error) {
+// options - DictionaryClientGetNullOptions contains the optional parameters for the DictionaryClient.GetNull method.
+func (client *DictionaryClient) GetNull(ctx context.Context, options *DictionaryClientGetNullOptions) (DictionaryClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetNullResponse{}, err
+		return DictionaryClientGetNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetNullResponse{}, err
+		return DictionaryClientGetNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetNullResponse{}, client.getNullHandleError(resp)
+		return DictionaryClientGetNullResponse{}, client.getNullHandleError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *DictionaryClient) getNullCreateRequest(ctx context.Context, options *DictionaryGetNullOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getNullCreateRequest(ctx context.Context, options *DictionaryClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -168,10 +169,10 @@ func (client *DictionaryClient) getNullCreateRequest(ctx context.Context, option
 }
 
 // getNullHandleResponse handles the GetNull response.
-func (client *DictionaryClient) getNullHandleResponse(resp *http.Response) (DictionaryGetNullResponse, error) {
-	result := DictionaryGetNullResponse{RawResponse: resp}
+func (client *DictionaryClient) getNullHandleResponse(resp *http.Response) (DictionaryClientGetNullResponse, error) {
+	result := DictionaryClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DictionaryWrapper); err != nil {
-		return DictionaryGetNullResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -191,24 +192,24 @@ func (client *DictionaryClient) getNullHandleError(resp *http.Response) error {
 
 // GetValid - Get complex types with dictionary property
 // If the operation fails it returns the *Error error type.
-// options - DictionaryGetValidOptions contains the optional parameters for the DictionaryClient.GetValid method.
-func (client *DictionaryClient) GetValid(ctx context.Context, options *DictionaryGetValidOptions) (DictionaryGetValidResponse, error) {
+// options - DictionaryClientGetValidOptions contains the optional parameters for the DictionaryClient.GetValid method.
+func (client *DictionaryClient) GetValid(ctx context.Context, options *DictionaryClientGetValidOptions) (DictionaryClientGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
 	if err != nil {
-		return DictionaryGetValidResponse{}, err
+		return DictionaryClientGetValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryGetValidResponse{}, err
+		return DictionaryClientGetValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryGetValidResponse{}, client.getValidHandleError(resp)
+		return DictionaryClientGetValidResponse{}, client.getValidHandleError(resp)
 	}
 	return client.getValidHandleResponse(resp)
 }
 
 // getValidCreateRequest creates the GetValid request.
-func (client *DictionaryClient) getValidCreateRequest(ctx context.Context, options *DictionaryGetValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) getValidCreateRequest(ctx context.Context, options *DictionaryClientGetValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -219,10 +220,10 @@ func (client *DictionaryClient) getValidCreateRequest(ctx context.Context, optio
 }
 
 // getValidHandleResponse handles the GetValid response.
-func (client *DictionaryClient) getValidHandleResponse(resp *http.Response) (DictionaryGetValidResponse, error) {
-	result := DictionaryGetValidResponse{RawResponse: resp}
+func (client *DictionaryClient) getValidHandleResponse(resp *http.Response) (DictionaryClientGetValidResponse, error) {
+	result := DictionaryClientGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DictionaryWrapper); err != nil {
-		return DictionaryGetValidResponse{}, runtime.NewResponseError(err, resp)
+		return DictionaryClientGetValidResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -243,24 +244,24 @@ func (client *DictionaryClient) getValidHandleError(resp *http.Response) error {
 // PutEmpty - Put complex types with dictionary property which is empty
 // If the operation fails it returns the *Error error type.
 // complexBody - Please put an empty dictionary
-// options - DictionaryPutEmptyOptions contains the optional parameters for the DictionaryClient.PutEmpty method.
-func (client *DictionaryClient) PutEmpty(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryPutEmptyOptions) (DictionaryPutEmptyResponse, error) {
+// options - DictionaryClientPutEmptyOptions contains the optional parameters for the DictionaryClient.PutEmpty method.
+func (client *DictionaryClient) PutEmpty(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryClientPutEmptyOptions) (DictionaryClientPutEmptyResponse, error) {
 	req, err := client.putEmptyCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return DictionaryPutEmptyResponse{}, err
+		return DictionaryClientPutEmptyResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutEmptyResponse{}, err
+		return DictionaryClientPutEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutEmptyResponse{}, client.putEmptyHandleError(resp)
+		return DictionaryClientPutEmptyResponse{}, client.putEmptyHandleError(resp)
 	}
-	return DictionaryPutEmptyResponse{RawResponse: resp}, nil
+	return DictionaryClientPutEmptyResponse{RawResponse: resp}, nil
 }
 
 // putEmptyCreateRequest creates the PutEmpty request.
-func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryPutEmptyOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putEmptyCreateRequest(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryClientPutEmptyOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/empty"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -287,24 +288,24 @@ func (client *DictionaryClient) putEmptyHandleError(resp *http.Response) error {
 // If the operation fails it returns the *Error error type.
 // complexBody - Please put a dictionary with 5 key-value pairs: "txt":"notepad", "bmp":"mspaint", "xls":"excel", "exe":"",
 // "":null
-// options - DictionaryPutValidOptions contains the optional parameters for the DictionaryClient.PutValid method.
-func (client *DictionaryClient) PutValid(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryPutValidOptions) (DictionaryPutValidResponse, error) {
+// options - DictionaryClientPutValidOptions contains the optional parameters for the DictionaryClient.PutValid method.
+func (client *DictionaryClient) PutValid(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryClientPutValidOptions) (DictionaryClientPutValidResponse, error) {
 	req, err := client.putValidCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return DictionaryPutValidResponse{}, err
+		return DictionaryClientPutValidResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DictionaryPutValidResponse{}, err
+		return DictionaryClientPutValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DictionaryPutValidResponse{}, client.putValidHandleError(resp)
+		return DictionaryClientPutValidResponse{}, client.putValidHandleError(resp)
 	}
-	return DictionaryPutValidResponse{RawResponse: resp}, nil
+	return DictionaryClientPutValidResponse{RawResponse: resp}, nil
 }
 
 // putValidCreateRequest creates the PutValid request.
-func (client *DictionaryClient) putValidCreateRequest(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryPutValidOptions) (*policy.Request, error) {
+func (client *DictionaryClient) putValidCreateRequest(ctx context.Context, complexBody DictionaryWrapper, options *DictionaryClientPutValidOptions) (*policy.Request, error) {
 	urlPath := "/complex/dictionary/typed/valid"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

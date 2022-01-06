@@ -8,348 +8,352 @@
 
 package arraygroup
 
-// ArrayGetArrayEmptyOptions contains the optional parameters for the ArrayClient.GetArrayEmpty method.
-type ArrayGetArrayEmptyOptions struct {
+// ArrayClientGetArrayEmptyOptions contains the optional parameters for the ArrayClient.GetArrayEmpty method.
+type ArrayClientGetArrayEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetArrayItemEmptyOptions contains the optional parameters for the ArrayClient.GetArrayItemEmpty method.
-type ArrayGetArrayItemEmptyOptions struct {
+// ArrayClientGetArrayItemEmptyOptions contains the optional parameters for the ArrayClient.GetArrayItemEmpty method.
+type ArrayClientGetArrayItemEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetArrayItemNullOptions contains the optional parameters for the ArrayClient.GetArrayItemNull method.
-type ArrayGetArrayItemNullOptions struct {
+// ArrayClientGetArrayItemNullOptions contains the optional parameters for the ArrayClient.GetArrayItemNull method.
+type ArrayClientGetArrayItemNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetArrayNullOptions contains the optional parameters for the ArrayClient.GetArrayNull method.
-type ArrayGetArrayNullOptions struct {
+// ArrayClientGetArrayNullOptions contains the optional parameters for the ArrayClient.GetArrayNull method.
+type ArrayClientGetArrayNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetArrayValidOptions contains the optional parameters for the ArrayClient.GetArrayValid method.
-type ArrayGetArrayValidOptions struct {
+// ArrayClientGetArrayValidOptions contains the optional parameters for the ArrayClient.GetArrayValid method.
+type ArrayClientGetArrayValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetBase64URLOptions contains the optional parameters for the ArrayClient.GetBase64URL method.
-type ArrayGetBase64URLOptions struct {
+// ArrayClientGetBase64URLOptions contains the optional parameters for the ArrayClient.GetBase64URL method.
+type ArrayClientGetBase64URLOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetBooleanInvalidNullOptions contains the optional parameters for the ArrayClient.GetBooleanInvalidNull method.
-type ArrayGetBooleanInvalidNullOptions struct {
+// ArrayClientGetBooleanInvalidNullOptions contains the optional parameters for the ArrayClient.GetBooleanInvalidNull method.
+type ArrayClientGetBooleanInvalidNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetBooleanInvalidStringOptions contains the optional parameters for the ArrayClient.GetBooleanInvalidString method.
-type ArrayGetBooleanInvalidStringOptions struct {
+// ArrayClientGetBooleanInvalidStringOptions contains the optional parameters for the ArrayClient.GetBooleanInvalidString
+// method.
+type ArrayClientGetBooleanInvalidStringOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetBooleanTfftOptions contains the optional parameters for the ArrayClient.GetBooleanTfft method.
-type ArrayGetBooleanTfftOptions struct {
+// ArrayClientGetBooleanTfftOptions contains the optional parameters for the ArrayClient.GetBooleanTfft method.
+type ArrayClientGetBooleanTfftOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetByteInvalidNullOptions contains the optional parameters for the ArrayClient.GetByteInvalidNull method.
-type ArrayGetByteInvalidNullOptions struct {
+// ArrayClientGetByteInvalidNullOptions contains the optional parameters for the ArrayClient.GetByteInvalidNull method.
+type ArrayClientGetByteInvalidNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetByteValidOptions contains the optional parameters for the ArrayClient.GetByteValid method.
-type ArrayGetByteValidOptions struct {
+// ArrayClientGetByteValidOptions contains the optional parameters for the ArrayClient.GetByteValid method.
+type ArrayClientGetByteValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetComplexEmptyOptions contains the optional parameters for the ArrayClient.GetComplexEmpty method.
-type ArrayGetComplexEmptyOptions struct {
+// ArrayClientGetComplexEmptyOptions contains the optional parameters for the ArrayClient.GetComplexEmpty method.
+type ArrayClientGetComplexEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetComplexItemEmptyOptions contains the optional parameters for the ArrayClient.GetComplexItemEmpty method.
-type ArrayGetComplexItemEmptyOptions struct {
+// ArrayClientGetComplexItemEmptyOptions contains the optional parameters for the ArrayClient.GetComplexItemEmpty method.
+type ArrayClientGetComplexItemEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetComplexItemNullOptions contains the optional parameters for the ArrayClient.GetComplexItemNull method.
-type ArrayGetComplexItemNullOptions struct {
+// ArrayClientGetComplexItemNullOptions contains the optional parameters for the ArrayClient.GetComplexItemNull method.
+type ArrayClientGetComplexItemNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetComplexNullOptions contains the optional parameters for the ArrayClient.GetComplexNull method.
-type ArrayGetComplexNullOptions struct {
+// ArrayClientGetComplexNullOptions contains the optional parameters for the ArrayClient.GetComplexNull method.
+type ArrayClientGetComplexNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetComplexValidOptions contains the optional parameters for the ArrayClient.GetComplexValid method.
-type ArrayGetComplexValidOptions struct {
+// ArrayClientGetComplexValidOptions contains the optional parameters for the ArrayClient.GetComplexValid method.
+type ArrayClientGetComplexValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetDateInvalidCharsOptions contains the optional parameters for the ArrayClient.GetDateInvalidChars method.
-type ArrayGetDateInvalidCharsOptions struct {
+// ArrayClientGetDateInvalidCharsOptions contains the optional parameters for the ArrayClient.GetDateInvalidChars method.
+type ArrayClientGetDateInvalidCharsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetDateInvalidNullOptions contains the optional parameters for the ArrayClient.GetDateInvalidNull method.
-type ArrayGetDateInvalidNullOptions struct {
+// ArrayClientGetDateInvalidNullOptions contains the optional parameters for the ArrayClient.GetDateInvalidNull method.
+type ArrayClientGetDateInvalidNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetDateTimeInvalidCharsOptions contains the optional parameters for the ArrayClient.GetDateTimeInvalidChars method.
-type ArrayGetDateTimeInvalidCharsOptions struct {
+// ArrayClientGetDateTimeInvalidCharsOptions contains the optional parameters for the ArrayClient.GetDateTimeInvalidChars
+// method.
+type ArrayClientGetDateTimeInvalidCharsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetDateTimeInvalidNullOptions contains the optional parameters for the ArrayClient.GetDateTimeInvalidNull method.
-type ArrayGetDateTimeInvalidNullOptions struct {
+// ArrayClientGetDateTimeInvalidNullOptions contains the optional parameters for the ArrayClient.GetDateTimeInvalidNull method.
+type ArrayClientGetDateTimeInvalidNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetDateTimeRFC1123ValidOptions contains the optional parameters for the ArrayClient.GetDateTimeRFC1123Valid method.
-type ArrayGetDateTimeRFC1123ValidOptions struct {
+// ArrayClientGetDateTimeRFC1123ValidOptions contains the optional parameters for the ArrayClient.GetDateTimeRFC1123Valid
+// method.
+type ArrayClientGetDateTimeRFC1123ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetDateTimeValidOptions contains the optional parameters for the ArrayClient.GetDateTimeValid method.
-type ArrayGetDateTimeValidOptions struct {
+// ArrayClientGetDateTimeValidOptions contains the optional parameters for the ArrayClient.GetDateTimeValid method.
+type ArrayClientGetDateTimeValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetDateValidOptions contains the optional parameters for the ArrayClient.GetDateValid method.
-type ArrayGetDateValidOptions struct {
+// ArrayClientGetDateValidOptions contains the optional parameters for the ArrayClient.GetDateValid method.
+type ArrayClientGetDateValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetDictionaryEmptyOptions contains the optional parameters for the ArrayClient.GetDictionaryEmpty method.
-type ArrayGetDictionaryEmptyOptions struct {
+// ArrayClientGetDictionaryEmptyOptions contains the optional parameters for the ArrayClient.GetDictionaryEmpty method.
+type ArrayClientGetDictionaryEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetDictionaryItemEmptyOptions contains the optional parameters for the ArrayClient.GetDictionaryItemEmpty method.
-type ArrayGetDictionaryItemEmptyOptions struct {
+// ArrayClientGetDictionaryItemEmptyOptions contains the optional parameters for the ArrayClient.GetDictionaryItemEmpty method.
+type ArrayClientGetDictionaryItemEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetDictionaryItemNullOptions contains the optional parameters for the ArrayClient.GetDictionaryItemNull method.
-type ArrayGetDictionaryItemNullOptions struct {
+// ArrayClientGetDictionaryItemNullOptions contains the optional parameters for the ArrayClient.GetDictionaryItemNull method.
+type ArrayClientGetDictionaryItemNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetDictionaryNullOptions contains the optional parameters for the ArrayClient.GetDictionaryNull method.
-type ArrayGetDictionaryNullOptions struct {
+// ArrayClientGetDictionaryNullOptions contains the optional parameters for the ArrayClient.GetDictionaryNull method.
+type ArrayClientGetDictionaryNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetDictionaryValidOptions contains the optional parameters for the ArrayClient.GetDictionaryValid method.
-type ArrayGetDictionaryValidOptions struct {
+// ArrayClientGetDictionaryValidOptions contains the optional parameters for the ArrayClient.GetDictionaryValid method.
+type ArrayClientGetDictionaryValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetDoubleInvalidNullOptions contains the optional parameters for the ArrayClient.GetDoubleInvalidNull method.
-type ArrayGetDoubleInvalidNullOptions struct {
+// ArrayClientGetDoubleInvalidNullOptions contains the optional parameters for the ArrayClient.GetDoubleInvalidNull method.
+type ArrayClientGetDoubleInvalidNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetDoubleInvalidStringOptions contains the optional parameters for the ArrayClient.GetDoubleInvalidString method.
-type ArrayGetDoubleInvalidStringOptions struct {
+// ArrayClientGetDoubleInvalidStringOptions contains the optional parameters for the ArrayClient.GetDoubleInvalidString method.
+type ArrayClientGetDoubleInvalidStringOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetDoubleValidOptions contains the optional parameters for the ArrayClient.GetDoubleValid method.
-type ArrayGetDoubleValidOptions struct {
+// ArrayClientGetDoubleValidOptions contains the optional parameters for the ArrayClient.GetDoubleValid method.
+type ArrayClientGetDoubleValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetDurationValidOptions contains the optional parameters for the ArrayClient.GetDurationValid method.
-type ArrayGetDurationValidOptions struct {
+// ArrayClientGetDurationValidOptions contains the optional parameters for the ArrayClient.GetDurationValid method.
+type ArrayClientGetDurationValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetEmptyOptions contains the optional parameters for the ArrayClient.GetEmpty method.
-type ArrayGetEmptyOptions struct {
+// ArrayClientGetEmptyOptions contains the optional parameters for the ArrayClient.GetEmpty method.
+type ArrayClientGetEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetEnumValidOptions contains the optional parameters for the ArrayClient.GetEnumValid method.
-type ArrayGetEnumValidOptions struct {
+// ArrayClientGetEnumValidOptions contains the optional parameters for the ArrayClient.GetEnumValid method.
+type ArrayClientGetEnumValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetFloatInvalidNullOptions contains the optional parameters for the ArrayClient.GetFloatInvalidNull method.
-type ArrayGetFloatInvalidNullOptions struct {
+// ArrayClientGetFloatInvalidNullOptions contains the optional parameters for the ArrayClient.GetFloatInvalidNull method.
+type ArrayClientGetFloatInvalidNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetFloatInvalidStringOptions contains the optional parameters for the ArrayClient.GetFloatInvalidString method.
-type ArrayGetFloatInvalidStringOptions struct {
+// ArrayClientGetFloatInvalidStringOptions contains the optional parameters for the ArrayClient.GetFloatInvalidString method.
+type ArrayClientGetFloatInvalidStringOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetFloatValidOptions contains the optional parameters for the ArrayClient.GetFloatValid method.
-type ArrayGetFloatValidOptions struct {
+// ArrayClientGetFloatValidOptions contains the optional parameters for the ArrayClient.GetFloatValid method.
+type ArrayClientGetFloatValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetIntInvalidNullOptions contains the optional parameters for the ArrayClient.GetIntInvalidNull method.
-type ArrayGetIntInvalidNullOptions struct {
+// ArrayClientGetIntInvalidNullOptions contains the optional parameters for the ArrayClient.GetIntInvalidNull method.
+type ArrayClientGetIntInvalidNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetIntInvalidStringOptions contains the optional parameters for the ArrayClient.GetIntInvalidString method.
-type ArrayGetIntInvalidStringOptions struct {
+// ArrayClientGetIntInvalidStringOptions contains the optional parameters for the ArrayClient.GetIntInvalidString method.
+type ArrayClientGetIntInvalidStringOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetIntegerValidOptions contains the optional parameters for the ArrayClient.GetIntegerValid method.
-type ArrayGetIntegerValidOptions struct {
+// ArrayClientGetIntegerValidOptions contains the optional parameters for the ArrayClient.GetIntegerValid method.
+type ArrayClientGetIntegerValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetInvalidOptions contains the optional parameters for the ArrayClient.GetInvalid method.
-type ArrayGetInvalidOptions struct {
+// ArrayClientGetInvalidOptions contains the optional parameters for the ArrayClient.GetInvalid method.
+type ArrayClientGetInvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetLongInvalidNullOptions contains the optional parameters for the ArrayClient.GetLongInvalidNull method.
-type ArrayGetLongInvalidNullOptions struct {
+// ArrayClientGetLongInvalidNullOptions contains the optional parameters for the ArrayClient.GetLongInvalidNull method.
+type ArrayClientGetLongInvalidNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetLongInvalidStringOptions contains the optional parameters for the ArrayClient.GetLongInvalidString method.
-type ArrayGetLongInvalidStringOptions struct {
+// ArrayClientGetLongInvalidStringOptions contains the optional parameters for the ArrayClient.GetLongInvalidString method.
+type ArrayClientGetLongInvalidStringOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetLongValidOptions contains the optional parameters for the ArrayClient.GetLongValid method.
-type ArrayGetLongValidOptions struct {
+// ArrayClientGetLongValidOptions contains the optional parameters for the ArrayClient.GetLongValid method.
+type ArrayClientGetLongValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetNullOptions contains the optional parameters for the ArrayClient.GetNull method.
-type ArrayGetNullOptions struct {
+// ArrayClientGetNullOptions contains the optional parameters for the ArrayClient.GetNull method.
+type ArrayClientGetNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetStringEnumValidOptions contains the optional parameters for the ArrayClient.GetStringEnumValid method.
-type ArrayGetStringEnumValidOptions struct {
+// ArrayClientGetStringEnumValidOptions contains the optional parameters for the ArrayClient.GetStringEnumValid method.
+type ArrayClientGetStringEnumValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetStringValidOptions contains the optional parameters for the ArrayClient.GetStringValid method.
-type ArrayGetStringValidOptions struct {
+// ArrayClientGetStringValidOptions contains the optional parameters for the ArrayClient.GetStringValid method.
+type ArrayClientGetStringValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetStringWithInvalidOptions contains the optional parameters for the ArrayClient.GetStringWithInvalid method.
-type ArrayGetStringWithInvalidOptions struct {
+// ArrayClientGetStringWithInvalidOptions contains the optional parameters for the ArrayClient.GetStringWithInvalid method.
+type ArrayClientGetStringWithInvalidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetStringWithNullOptions contains the optional parameters for the ArrayClient.GetStringWithNull method.
-type ArrayGetStringWithNullOptions struct {
+// ArrayClientGetStringWithNullOptions contains the optional parameters for the ArrayClient.GetStringWithNull method.
+type ArrayClientGetStringWithNullOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetUUIDInvalidCharsOptions contains the optional parameters for the ArrayClient.GetUUIDInvalidChars method.
-type ArrayGetUUIDInvalidCharsOptions struct {
+// ArrayClientGetUUIDInvalidCharsOptions contains the optional parameters for the ArrayClient.GetUUIDInvalidChars method.
+type ArrayClientGetUUIDInvalidCharsOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayGetUUIDValidOptions contains the optional parameters for the ArrayClient.GetUUIDValid method.
-type ArrayGetUUIDValidOptions struct {
+// ArrayClientGetUUIDValidOptions contains the optional parameters for the ArrayClient.GetUUIDValid method.
+type ArrayClientGetUUIDValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutArrayValidOptions contains the optional parameters for the ArrayClient.PutArrayValid method.
-type ArrayPutArrayValidOptions struct {
+// ArrayClientPutArrayValidOptions contains the optional parameters for the ArrayClient.PutArrayValid method.
+type ArrayClientPutArrayValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutBooleanTfftOptions contains the optional parameters for the ArrayClient.PutBooleanTfft method.
-type ArrayPutBooleanTfftOptions struct {
+// ArrayClientPutBooleanTfftOptions contains the optional parameters for the ArrayClient.PutBooleanTfft method.
+type ArrayClientPutBooleanTfftOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutByteValidOptions contains the optional parameters for the ArrayClient.PutByteValid method.
-type ArrayPutByteValidOptions struct {
+// ArrayClientPutByteValidOptions contains the optional parameters for the ArrayClient.PutByteValid method.
+type ArrayClientPutByteValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutComplexValidOptions contains the optional parameters for the ArrayClient.PutComplexValid method.
-type ArrayPutComplexValidOptions struct {
+// ArrayClientPutComplexValidOptions contains the optional parameters for the ArrayClient.PutComplexValid method.
+type ArrayClientPutComplexValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutDateTimeRFC1123ValidOptions contains the optional parameters for the ArrayClient.PutDateTimeRFC1123Valid method.
-type ArrayPutDateTimeRFC1123ValidOptions struct {
+// ArrayClientPutDateTimeRFC1123ValidOptions contains the optional parameters for the ArrayClient.PutDateTimeRFC1123Valid
+// method.
+type ArrayClientPutDateTimeRFC1123ValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutDateTimeValidOptions contains the optional parameters for the ArrayClient.PutDateTimeValid method.
-type ArrayPutDateTimeValidOptions struct {
+// ArrayClientPutDateTimeValidOptions contains the optional parameters for the ArrayClient.PutDateTimeValid method.
+type ArrayClientPutDateTimeValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutDateValidOptions contains the optional parameters for the ArrayClient.PutDateValid method.
-type ArrayPutDateValidOptions struct {
+// ArrayClientPutDateValidOptions contains the optional parameters for the ArrayClient.PutDateValid method.
+type ArrayClientPutDateValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutDictionaryValidOptions contains the optional parameters for the ArrayClient.PutDictionaryValid method.
-type ArrayPutDictionaryValidOptions struct {
+// ArrayClientPutDictionaryValidOptions contains the optional parameters for the ArrayClient.PutDictionaryValid method.
+type ArrayClientPutDictionaryValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutDoubleValidOptions contains the optional parameters for the ArrayClient.PutDoubleValid method.
-type ArrayPutDoubleValidOptions struct {
+// ArrayClientPutDoubleValidOptions contains the optional parameters for the ArrayClient.PutDoubleValid method.
+type ArrayClientPutDoubleValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutDurationValidOptions contains the optional parameters for the ArrayClient.PutDurationValid method.
-type ArrayPutDurationValidOptions struct {
+// ArrayClientPutDurationValidOptions contains the optional parameters for the ArrayClient.PutDurationValid method.
+type ArrayClientPutDurationValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutEmptyOptions contains the optional parameters for the ArrayClient.PutEmpty method.
-type ArrayPutEmptyOptions struct {
+// ArrayClientPutEmptyOptions contains the optional parameters for the ArrayClient.PutEmpty method.
+type ArrayClientPutEmptyOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutEnumValidOptions contains the optional parameters for the ArrayClient.PutEnumValid method.
-type ArrayPutEnumValidOptions struct {
+// ArrayClientPutEnumValidOptions contains the optional parameters for the ArrayClient.PutEnumValid method.
+type ArrayClientPutEnumValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutFloatValidOptions contains the optional parameters for the ArrayClient.PutFloatValid method.
-type ArrayPutFloatValidOptions struct {
+// ArrayClientPutFloatValidOptions contains the optional parameters for the ArrayClient.PutFloatValid method.
+type ArrayClientPutFloatValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutIntegerValidOptions contains the optional parameters for the ArrayClient.PutIntegerValid method.
-type ArrayPutIntegerValidOptions struct {
+// ArrayClientPutIntegerValidOptions contains the optional parameters for the ArrayClient.PutIntegerValid method.
+type ArrayClientPutIntegerValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutLongValidOptions contains the optional parameters for the ArrayClient.PutLongValid method.
-type ArrayPutLongValidOptions struct {
+// ArrayClientPutLongValidOptions contains the optional parameters for the ArrayClient.PutLongValid method.
+type ArrayClientPutLongValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutStringEnumValidOptions contains the optional parameters for the ArrayClient.PutStringEnumValid method.
-type ArrayPutStringEnumValidOptions struct {
+// ArrayClientPutStringEnumValidOptions contains the optional parameters for the ArrayClient.PutStringEnumValid method.
+type ArrayClientPutStringEnumValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutStringValidOptions contains the optional parameters for the ArrayClient.PutStringValid method.
-type ArrayPutStringValidOptions struct {
+// ArrayClientPutStringValidOptions contains the optional parameters for the ArrayClient.PutStringValid method.
+type ArrayClientPutStringValidOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ArrayPutUUIDValidOptions contains the optional parameters for the ArrayClient.PutUUIDValid method.
-type ArrayPutUUIDValidOptions struct {
+// ArrayClientPutUUIDValidOptions contains the optional parameters for the ArrayClient.PutUUIDValid method.
+type ArrayClientPutUUIDValidOptions struct {
 	// placeholder for future optional parameters
 }
 

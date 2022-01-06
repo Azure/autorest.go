@@ -54,21 +54,22 @@ func NewAvailableDelegationsClient(subscriptionID string, credential azcore.Toke
 // List - Gets all of the available subnet delegations for this subscription in this region.
 // If the operation fails it returns the *CloudError error type.
 // location - The location of the subnet.
-// options - AvailableDelegationsListOptions contains the optional parameters for the AvailableDelegationsClient.List method.
-func (client *AvailableDelegationsClient) List(location string, options *AvailableDelegationsListOptions) *AvailableDelegationsListPager {
-	return &AvailableDelegationsListPager{
+// options - AvailableDelegationsClientListOptions contains the optional parameters for the AvailableDelegationsClient.List
+// method.
+func (client *AvailableDelegationsClient) List(location string, options *AvailableDelegationsClientListOptions) *AvailableDelegationsClientListPager {
+	return &AvailableDelegationsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, location, options)
 		},
-		advancer: func(ctx context.Context, resp AvailableDelegationsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp AvailableDelegationsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.AvailableDelegationsResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *AvailableDelegationsClient) listCreateRequest(ctx context.Context, location string, options *AvailableDelegationsListOptions) (*policy.Request, error) {
+func (client *AvailableDelegationsClient) listCreateRequest(ctx context.Context, location string, options *AvailableDelegationsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -90,10 +91,10 @@ func (client *AvailableDelegationsClient) listCreateRequest(ctx context.Context,
 }
 
 // listHandleResponse handles the List response.
-func (client *AvailableDelegationsClient) listHandleResponse(resp *http.Response) (AvailableDelegationsListResponse, error) {
-	result := AvailableDelegationsListResponse{RawResponse: resp}
+func (client *AvailableDelegationsClient) listHandleResponse(resp *http.Response) (AvailableDelegationsClientListResponse, error) {
+	result := AvailableDelegationsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailableDelegationsResult); err != nil {
-		return AvailableDelegationsListResponse{}, runtime.NewResponseError(err, resp)
+		return AvailableDelegationsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

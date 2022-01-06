@@ -38,24 +38,24 @@ func NewNumberClient(options *azcore.ClientOptions) *NumberClient {
 
 // GetBigDecimal - Get big decimal value 2.5976931e+101
 // If the operation fails it returns the *Error error type.
-// options - NumberGetBigDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimal method.
-func (client *NumberClient) GetBigDecimal(ctx context.Context, options *NumberGetBigDecimalOptions) (NumberGetBigDecimalResponse, error) {
+// options - NumberClientGetBigDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimal method.
+func (client *NumberClient) GetBigDecimal(ctx context.Context, options *NumberClientGetBigDecimalOptions) (NumberClientGetBigDecimalResponse, error) {
 	req, err := client.getBigDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return NumberGetBigDecimalResponse{}, err
+		return NumberClientGetBigDecimalResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberGetBigDecimalResponse{}, err
+		return NumberClientGetBigDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberGetBigDecimalResponse{}, client.getBigDecimalHandleError(resp)
+		return NumberClientGetBigDecimalResponse{}, client.getBigDecimalHandleError(resp)
 	}
 	return client.getBigDecimalHandleResponse(resp)
 }
 
 // getBigDecimalCreateRequest creates the GetBigDecimal request.
-func (client *NumberClient) getBigDecimalCreateRequest(ctx context.Context, options *NumberGetBigDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) getBigDecimalCreateRequest(ctx context.Context, options *NumberClientGetBigDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/decimal/2.5976931e+101"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -66,10 +66,10 @@ func (client *NumberClient) getBigDecimalCreateRequest(ctx context.Context, opti
 }
 
 // getBigDecimalHandleResponse handles the GetBigDecimal response.
-func (client *NumberClient) getBigDecimalHandleResponse(resp *http.Response) (NumberGetBigDecimalResponse, error) {
-	result := NumberGetBigDecimalResponse{RawResponse: resp}
+func (client *NumberClient) getBigDecimalHandleResponse(resp *http.Response) (NumberClientGetBigDecimalResponse, error) {
+	result := NumberClientGetBigDecimalResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberGetBigDecimalResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetBigDecimalResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -89,25 +89,25 @@ func (client *NumberClient) getBigDecimalHandleError(resp *http.Response) error 
 
 // GetBigDecimalNegativeDecimal - Get big decimal value -99999999.99
 // If the operation fails it returns the *Error error type.
-// options - NumberGetBigDecimalNegativeDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimalNegativeDecimal
+// options - NumberClientGetBigDecimalNegativeDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimalNegativeDecimal
 // method.
-func (client *NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context, options *NumberGetBigDecimalNegativeDecimalOptions) (NumberGetBigDecimalNegativeDecimalResponse, error) {
+func (client *NumberClient) GetBigDecimalNegativeDecimal(ctx context.Context, options *NumberClientGetBigDecimalNegativeDecimalOptions) (NumberClientGetBigDecimalNegativeDecimalResponse, error) {
 	req, err := client.getBigDecimalNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return NumberGetBigDecimalNegativeDecimalResponse{}, err
+		return NumberClientGetBigDecimalNegativeDecimalResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberGetBigDecimalNegativeDecimalResponse{}, err
+		return NumberClientGetBigDecimalNegativeDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberGetBigDecimalNegativeDecimalResponse{}, client.getBigDecimalNegativeDecimalHandleError(resp)
+		return NumberClientGetBigDecimalNegativeDecimalResponse{}, client.getBigDecimalNegativeDecimalHandleError(resp)
 	}
 	return client.getBigDecimalNegativeDecimalHandleResponse(resp)
 }
 
 // getBigDecimalNegativeDecimalCreateRequest creates the GetBigDecimalNegativeDecimal request.
-func (client *NumberClient) getBigDecimalNegativeDecimalCreateRequest(ctx context.Context, options *NumberGetBigDecimalNegativeDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) getBigDecimalNegativeDecimalCreateRequest(ctx context.Context, options *NumberClientGetBigDecimalNegativeDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/decimal/-99999999.99"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -118,10 +118,10 @@ func (client *NumberClient) getBigDecimalNegativeDecimalCreateRequest(ctx contex
 }
 
 // getBigDecimalNegativeDecimalHandleResponse handles the GetBigDecimalNegativeDecimal response.
-func (client *NumberClient) getBigDecimalNegativeDecimalHandleResponse(resp *http.Response) (NumberGetBigDecimalNegativeDecimalResponse, error) {
-	result := NumberGetBigDecimalNegativeDecimalResponse{RawResponse: resp}
+func (client *NumberClient) getBigDecimalNegativeDecimalHandleResponse(resp *http.Response) (NumberClientGetBigDecimalNegativeDecimalResponse, error) {
+	result := NumberClientGetBigDecimalNegativeDecimalResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberGetBigDecimalNegativeDecimalResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetBigDecimalNegativeDecimalResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -141,25 +141,25 @@ func (client *NumberClient) getBigDecimalNegativeDecimalHandleError(resp *http.R
 
 // GetBigDecimalPositiveDecimal - Get big decimal value 99999999.99
 // If the operation fails it returns the *Error error type.
-// options - NumberGetBigDecimalPositiveDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimalPositiveDecimal
+// options - NumberClientGetBigDecimalPositiveDecimalOptions contains the optional parameters for the NumberClient.GetBigDecimalPositiveDecimal
 // method.
-func (client *NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context, options *NumberGetBigDecimalPositiveDecimalOptions) (NumberGetBigDecimalPositiveDecimalResponse, error) {
+func (client *NumberClient) GetBigDecimalPositiveDecimal(ctx context.Context, options *NumberClientGetBigDecimalPositiveDecimalOptions) (NumberClientGetBigDecimalPositiveDecimalResponse, error) {
 	req, err := client.getBigDecimalPositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return NumberGetBigDecimalPositiveDecimalResponse{}, err
+		return NumberClientGetBigDecimalPositiveDecimalResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberGetBigDecimalPositiveDecimalResponse{}, err
+		return NumberClientGetBigDecimalPositiveDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberGetBigDecimalPositiveDecimalResponse{}, client.getBigDecimalPositiveDecimalHandleError(resp)
+		return NumberClientGetBigDecimalPositiveDecimalResponse{}, client.getBigDecimalPositiveDecimalHandleError(resp)
 	}
 	return client.getBigDecimalPositiveDecimalHandleResponse(resp)
 }
 
 // getBigDecimalPositiveDecimalCreateRequest creates the GetBigDecimalPositiveDecimal request.
-func (client *NumberClient) getBigDecimalPositiveDecimalCreateRequest(ctx context.Context, options *NumberGetBigDecimalPositiveDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) getBigDecimalPositiveDecimalCreateRequest(ctx context.Context, options *NumberClientGetBigDecimalPositiveDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/decimal/99999999.99"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -170,10 +170,10 @@ func (client *NumberClient) getBigDecimalPositiveDecimalCreateRequest(ctx contex
 }
 
 // getBigDecimalPositiveDecimalHandleResponse handles the GetBigDecimalPositiveDecimal response.
-func (client *NumberClient) getBigDecimalPositiveDecimalHandleResponse(resp *http.Response) (NumberGetBigDecimalPositiveDecimalResponse, error) {
-	result := NumberGetBigDecimalPositiveDecimalResponse{RawResponse: resp}
+func (client *NumberClient) getBigDecimalPositiveDecimalHandleResponse(resp *http.Response) (NumberClientGetBigDecimalPositiveDecimalResponse, error) {
+	result := NumberClientGetBigDecimalPositiveDecimalResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberGetBigDecimalPositiveDecimalResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetBigDecimalPositiveDecimalResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -193,24 +193,24 @@ func (client *NumberClient) getBigDecimalPositiveDecimalHandleError(resp *http.R
 
 // GetBigDouble - Get big double value 2.5976931e+101
 // If the operation fails it returns the *Error error type.
-// options - NumberGetBigDoubleOptions contains the optional parameters for the NumberClient.GetBigDouble method.
-func (client *NumberClient) GetBigDouble(ctx context.Context, options *NumberGetBigDoubleOptions) (NumberGetBigDoubleResponse, error) {
+// options - NumberClientGetBigDoubleOptions contains the optional parameters for the NumberClient.GetBigDouble method.
+func (client *NumberClient) GetBigDouble(ctx context.Context, options *NumberClientGetBigDoubleOptions) (NumberClientGetBigDoubleResponse, error) {
 	req, err := client.getBigDoubleCreateRequest(ctx, options)
 	if err != nil {
-		return NumberGetBigDoubleResponse{}, err
+		return NumberClientGetBigDoubleResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberGetBigDoubleResponse{}, err
+		return NumberClientGetBigDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberGetBigDoubleResponse{}, client.getBigDoubleHandleError(resp)
+		return NumberClientGetBigDoubleResponse{}, client.getBigDoubleHandleError(resp)
 	}
 	return client.getBigDoubleHandleResponse(resp)
 }
 
 // getBigDoubleCreateRequest creates the GetBigDouble request.
-func (client *NumberClient) getBigDoubleCreateRequest(ctx context.Context, options *NumberGetBigDoubleOptions) (*policy.Request, error) {
+func (client *NumberClient) getBigDoubleCreateRequest(ctx context.Context, options *NumberClientGetBigDoubleOptions) (*policy.Request, error) {
 	urlPath := "/number/big/double/2.5976931e+101"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -221,10 +221,10 @@ func (client *NumberClient) getBigDoubleCreateRequest(ctx context.Context, optio
 }
 
 // getBigDoubleHandleResponse handles the GetBigDouble response.
-func (client *NumberClient) getBigDoubleHandleResponse(resp *http.Response) (NumberGetBigDoubleResponse, error) {
-	result := NumberGetBigDoubleResponse{RawResponse: resp}
+func (client *NumberClient) getBigDoubleHandleResponse(resp *http.Response) (NumberClientGetBigDoubleResponse, error) {
+	result := NumberClientGetBigDoubleResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberGetBigDoubleResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetBigDoubleResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -244,25 +244,25 @@ func (client *NumberClient) getBigDoubleHandleError(resp *http.Response) error {
 
 // GetBigDoubleNegativeDecimal - Get big double value -99999999.99
 // If the operation fails it returns the *Error error type.
-// options - NumberGetBigDoubleNegativeDecimalOptions contains the optional parameters for the NumberClient.GetBigDoubleNegativeDecimal
+// options - NumberClientGetBigDoubleNegativeDecimalOptions contains the optional parameters for the NumberClient.GetBigDoubleNegativeDecimal
 // method.
-func (client *NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context, options *NumberGetBigDoubleNegativeDecimalOptions) (NumberGetBigDoubleNegativeDecimalResponse, error) {
+func (client *NumberClient) GetBigDoubleNegativeDecimal(ctx context.Context, options *NumberClientGetBigDoubleNegativeDecimalOptions) (NumberClientGetBigDoubleNegativeDecimalResponse, error) {
 	req, err := client.getBigDoubleNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return NumberGetBigDoubleNegativeDecimalResponse{}, err
+		return NumberClientGetBigDoubleNegativeDecimalResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberGetBigDoubleNegativeDecimalResponse{}, err
+		return NumberClientGetBigDoubleNegativeDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberGetBigDoubleNegativeDecimalResponse{}, client.getBigDoubleNegativeDecimalHandleError(resp)
+		return NumberClientGetBigDoubleNegativeDecimalResponse{}, client.getBigDoubleNegativeDecimalHandleError(resp)
 	}
 	return client.getBigDoubleNegativeDecimalHandleResponse(resp)
 }
 
 // getBigDoubleNegativeDecimalCreateRequest creates the GetBigDoubleNegativeDecimal request.
-func (client *NumberClient) getBigDoubleNegativeDecimalCreateRequest(ctx context.Context, options *NumberGetBigDoubleNegativeDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) getBigDoubleNegativeDecimalCreateRequest(ctx context.Context, options *NumberClientGetBigDoubleNegativeDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/double/-99999999.99"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -273,10 +273,10 @@ func (client *NumberClient) getBigDoubleNegativeDecimalCreateRequest(ctx context
 }
 
 // getBigDoubleNegativeDecimalHandleResponse handles the GetBigDoubleNegativeDecimal response.
-func (client *NumberClient) getBigDoubleNegativeDecimalHandleResponse(resp *http.Response) (NumberGetBigDoubleNegativeDecimalResponse, error) {
-	result := NumberGetBigDoubleNegativeDecimalResponse{RawResponse: resp}
+func (client *NumberClient) getBigDoubleNegativeDecimalHandleResponse(resp *http.Response) (NumberClientGetBigDoubleNegativeDecimalResponse, error) {
+	result := NumberClientGetBigDoubleNegativeDecimalResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberGetBigDoubleNegativeDecimalResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetBigDoubleNegativeDecimalResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -296,25 +296,25 @@ func (client *NumberClient) getBigDoubleNegativeDecimalHandleError(resp *http.Re
 
 // GetBigDoublePositiveDecimal - Get big double value 99999999.99
 // If the operation fails it returns the *Error error type.
-// options - NumberGetBigDoublePositiveDecimalOptions contains the optional parameters for the NumberClient.GetBigDoublePositiveDecimal
+// options - NumberClientGetBigDoublePositiveDecimalOptions contains the optional parameters for the NumberClient.GetBigDoublePositiveDecimal
 // method.
-func (client *NumberClient) GetBigDoublePositiveDecimal(ctx context.Context, options *NumberGetBigDoublePositiveDecimalOptions) (NumberGetBigDoublePositiveDecimalResponse, error) {
+func (client *NumberClient) GetBigDoublePositiveDecimal(ctx context.Context, options *NumberClientGetBigDoublePositiveDecimalOptions) (NumberClientGetBigDoublePositiveDecimalResponse, error) {
 	req, err := client.getBigDoublePositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return NumberGetBigDoublePositiveDecimalResponse{}, err
+		return NumberClientGetBigDoublePositiveDecimalResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberGetBigDoublePositiveDecimalResponse{}, err
+		return NumberClientGetBigDoublePositiveDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberGetBigDoublePositiveDecimalResponse{}, client.getBigDoublePositiveDecimalHandleError(resp)
+		return NumberClientGetBigDoublePositiveDecimalResponse{}, client.getBigDoublePositiveDecimalHandleError(resp)
 	}
 	return client.getBigDoublePositiveDecimalHandleResponse(resp)
 }
 
 // getBigDoublePositiveDecimalCreateRequest creates the GetBigDoublePositiveDecimal request.
-func (client *NumberClient) getBigDoublePositiveDecimalCreateRequest(ctx context.Context, options *NumberGetBigDoublePositiveDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) getBigDoublePositiveDecimalCreateRequest(ctx context.Context, options *NumberClientGetBigDoublePositiveDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/double/99999999.99"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -325,10 +325,10 @@ func (client *NumberClient) getBigDoublePositiveDecimalCreateRequest(ctx context
 }
 
 // getBigDoublePositiveDecimalHandleResponse handles the GetBigDoublePositiveDecimal response.
-func (client *NumberClient) getBigDoublePositiveDecimalHandleResponse(resp *http.Response) (NumberGetBigDoublePositiveDecimalResponse, error) {
-	result := NumberGetBigDoublePositiveDecimalResponse{RawResponse: resp}
+func (client *NumberClient) getBigDoublePositiveDecimalHandleResponse(resp *http.Response) (NumberClientGetBigDoublePositiveDecimalResponse, error) {
+	result := NumberClientGetBigDoublePositiveDecimalResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberGetBigDoublePositiveDecimalResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetBigDoublePositiveDecimalResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -348,24 +348,24 @@ func (client *NumberClient) getBigDoublePositiveDecimalHandleError(resp *http.Re
 
 // GetBigFloat - Get big float value 3.402823e+20
 // If the operation fails it returns the *Error error type.
-// options - NumberGetBigFloatOptions contains the optional parameters for the NumberClient.GetBigFloat method.
-func (client *NumberClient) GetBigFloat(ctx context.Context, options *NumberGetBigFloatOptions) (NumberGetBigFloatResponse, error) {
+// options - NumberClientGetBigFloatOptions contains the optional parameters for the NumberClient.GetBigFloat method.
+func (client *NumberClient) GetBigFloat(ctx context.Context, options *NumberClientGetBigFloatOptions) (NumberClientGetBigFloatResponse, error) {
 	req, err := client.getBigFloatCreateRequest(ctx, options)
 	if err != nil {
-		return NumberGetBigFloatResponse{}, err
+		return NumberClientGetBigFloatResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberGetBigFloatResponse{}, err
+		return NumberClientGetBigFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberGetBigFloatResponse{}, client.getBigFloatHandleError(resp)
+		return NumberClientGetBigFloatResponse{}, client.getBigFloatHandleError(resp)
 	}
 	return client.getBigFloatHandleResponse(resp)
 }
 
 // getBigFloatCreateRequest creates the GetBigFloat request.
-func (client *NumberClient) getBigFloatCreateRequest(ctx context.Context, options *NumberGetBigFloatOptions) (*policy.Request, error) {
+func (client *NumberClient) getBigFloatCreateRequest(ctx context.Context, options *NumberClientGetBigFloatOptions) (*policy.Request, error) {
 	urlPath := "/number/big/float/3.402823e+20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -376,10 +376,10 @@ func (client *NumberClient) getBigFloatCreateRequest(ctx context.Context, option
 }
 
 // getBigFloatHandleResponse handles the GetBigFloat response.
-func (client *NumberClient) getBigFloatHandleResponse(resp *http.Response) (NumberGetBigFloatResponse, error) {
-	result := NumberGetBigFloatResponse{RawResponse: resp}
+func (client *NumberClient) getBigFloatHandleResponse(resp *http.Response) (NumberClientGetBigFloatResponse, error) {
+	result := NumberClientGetBigFloatResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberGetBigFloatResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetBigFloatResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -399,24 +399,25 @@ func (client *NumberClient) getBigFloatHandleError(resp *http.Response) error {
 
 // GetInvalidDecimal - Get invalid decimal Number value
 // If the operation fails it returns the *Error error type.
-// options - NumberGetInvalidDecimalOptions contains the optional parameters for the NumberClient.GetInvalidDecimal method.
-func (client *NumberClient) GetInvalidDecimal(ctx context.Context, options *NumberGetInvalidDecimalOptions) (NumberGetInvalidDecimalResponse, error) {
+// options - NumberClientGetInvalidDecimalOptions contains the optional parameters for the NumberClient.GetInvalidDecimal
+// method.
+func (client *NumberClient) GetInvalidDecimal(ctx context.Context, options *NumberClientGetInvalidDecimalOptions) (NumberClientGetInvalidDecimalResponse, error) {
 	req, err := client.getInvalidDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return NumberGetInvalidDecimalResponse{}, err
+		return NumberClientGetInvalidDecimalResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberGetInvalidDecimalResponse{}, err
+		return NumberClientGetInvalidDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberGetInvalidDecimalResponse{}, client.getInvalidDecimalHandleError(resp)
+		return NumberClientGetInvalidDecimalResponse{}, client.getInvalidDecimalHandleError(resp)
 	}
 	return client.getInvalidDecimalHandleResponse(resp)
 }
 
 // getInvalidDecimalCreateRequest creates the GetInvalidDecimal request.
-func (client *NumberClient) getInvalidDecimalCreateRequest(ctx context.Context, options *NumberGetInvalidDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) getInvalidDecimalCreateRequest(ctx context.Context, options *NumberClientGetInvalidDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/invaliddecimal"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -427,10 +428,10 @@ func (client *NumberClient) getInvalidDecimalCreateRequest(ctx context.Context, 
 }
 
 // getInvalidDecimalHandleResponse handles the GetInvalidDecimal response.
-func (client *NumberClient) getInvalidDecimalHandleResponse(resp *http.Response) (NumberGetInvalidDecimalResponse, error) {
-	result := NumberGetInvalidDecimalResponse{RawResponse: resp}
+func (client *NumberClient) getInvalidDecimalHandleResponse(resp *http.Response) (NumberClientGetInvalidDecimalResponse, error) {
+	result := NumberClientGetInvalidDecimalResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberGetInvalidDecimalResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetInvalidDecimalResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -450,24 +451,24 @@ func (client *NumberClient) getInvalidDecimalHandleError(resp *http.Response) er
 
 // GetInvalidDouble - Get invalid double Number value
 // If the operation fails it returns the *Error error type.
-// options - NumberGetInvalidDoubleOptions contains the optional parameters for the NumberClient.GetInvalidDouble method.
-func (client *NumberClient) GetInvalidDouble(ctx context.Context, options *NumberGetInvalidDoubleOptions) (NumberGetInvalidDoubleResponse, error) {
+// options - NumberClientGetInvalidDoubleOptions contains the optional parameters for the NumberClient.GetInvalidDouble method.
+func (client *NumberClient) GetInvalidDouble(ctx context.Context, options *NumberClientGetInvalidDoubleOptions) (NumberClientGetInvalidDoubleResponse, error) {
 	req, err := client.getInvalidDoubleCreateRequest(ctx, options)
 	if err != nil {
-		return NumberGetInvalidDoubleResponse{}, err
+		return NumberClientGetInvalidDoubleResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberGetInvalidDoubleResponse{}, err
+		return NumberClientGetInvalidDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberGetInvalidDoubleResponse{}, client.getInvalidDoubleHandleError(resp)
+		return NumberClientGetInvalidDoubleResponse{}, client.getInvalidDoubleHandleError(resp)
 	}
 	return client.getInvalidDoubleHandleResponse(resp)
 }
 
 // getInvalidDoubleCreateRequest creates the GetInvalidDouble request.
-func (client *NumberClient) getInvalidDoubleCreateRequest(ctx context.Context, options *NumberGetInvalidDoubleOptions) (*policy.Request, error) {
+func (client *NumberClient) getInvalidDoubleCreateRequest(ctx context.Context, options *NumberClientGetInvalidDoubleOptions) (*policy.Request, error) {
 	urlPath := "/number/invaliddouble"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -478,10 +479,10 @@ func (client *NumberClient) getInvalidDoubleCreateRequest(ctx context.Context, o
 }
 
 // getInvalidDoubleHandleResponse handles the GetInvalidDouble response.
-func (client *NumberClient) getInvalidDoubleHandleResponse(resp *http.Response) (NumberGetInvalidDoubleResponse, error) {
-	result := NumberGetInvalidDoubleResponse{RawResponse: resp}
+func (client *NumberClient) getInvalidDoubleHandleResponse(resp *http.Response) (NumberClientGetInvalidDoubleResponse, error) {
+	result := NumberClientGetInvalidDoubleResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberGetInvalidDoubleResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetInvalidDoubleResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -501,24 +502,24 @@ func (client *NumberClient) getInvalidDoubleHandleError(resp *http.Response) err
 
 // GetInvalidFloat - Get invalid float Number value
 // If the operation fails it returns the *Error error type.
-// options - NumberGetInvalidFloatOptions contains the optional parameters for the NumberClient.GetInvalidFloat method.
-func (client *NumberClient) GetInvalidFloat(ctx context.Context, options *NumberGetInvalidFloatOptions) (NumberGetInvalidFloatResponse, error) {
+// options - NumberClientGetInvalidFloatOptions contains the optional parameters for the NumberClient.GetInvalidFloat method.
+func (client *NumberClient) GetInvalidFloat(ctx context.Context, options *NumberClientGetInvalidFloatOptions) (NumberClientGetInvalidFloatResponse, error) {
 	req, err := client.getInvalidFloatCreateRequest(ctx, options)
 	if err != nil {
-		return NumberGetInvalidFloatResponse{}, err
+		return NumberClientGetInvalidFloatResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberGetInvalidFloatResponse{}, err
+		return NumberClientGetInvalidFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberGetInvalidFloatResponse{}, client.getInvalidFloatHandleError(resp)
+		return NumberClientGetInvalidFloatResponse{}, client.getInvalidFloatHandleError(resp)
 	}
 	return client.getInvalidFloatHandleResponse(resp)
 }
 
 // getInvalidFloatCreateRequest creates the GetInvalidFloat request.
-func (client *NumberClient) getInvalidFloatCreateRequest(ctx context.Context, options *NumberGetInvalidFloatOptions) (*policy.Request, error) {
+func (client *NumberClient) getInvalidFloatCreateRequest(ctx context.Context, options *NumberClientGetInvalidFloatOptions) (*policy.Request, error) {
 	urlPath := "/number/invalidfloat"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -529,10 +530,10 @@ func (client *NumberClient) getInvalidFloatCreateRequest(ctx context.Context, op
 }
 
 // getInvalidFloatHandleResponse handles the GetInvalidFloat response.
-func (client *NumberClient) getInvalidFloatHandleResponse(resp *http.Response) (NumberGetInvalidFloatResponse, error) {
-	result := NumberGetInvalidFloatResponse{RawResponse: resp}
+func (client *NumberClient) getInvalidFloatHandleResponse(resp *http.Response) (NumberClientGetInvalidFloatResponse, error) {
+	result := NumberClientGetInvalidFloatResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberGetInvalidFloatResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetInvalidFloatResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -552,24 +553,24 @@ func (client *NumberClient) getInvalidFloatHandleError(resp *http.Response) erro
 
 // GetNull - Get null Number value
 // If the operation fails it returns the *Error error type.
-// options - NumberGetNullOptions contains the optional parameters for the NumberClient.GetNull method.
-func (client *NumberClient) GetNull(ctx context.Context, options *NumberGetNullOptions) (NumberGetNullResponse, error) {
+// options - NumberClientGetNullOptions contains the optional parameters for the NumberClient.GetNull method.
+func (client *NumberClient) GetNull(ctx context.Context, options *NumberClientGetNullOptions) (NumberClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
 	if err != nil {
-		return NumberGetNullResponse{}, err
+		return NumberClientGetNullResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberGetNullResponse{}, err
+		return NumberClientGetNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberGetNullResponse{}, client.getNullHandleError(resp)
+		return NumberClientGetNullResponse{}, client.getNullHandleError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
 
 // getNullCreateRequest creates the GetNull request.
-func (client *NumberClient) getNullCreateRequest(ctx context.Context, options *NumberGetNullOptions) (*policy.Request, error) {
+func (client *NumberClient) getNullCreateRequest(ctx context.Context, options *NumberClientGetNullOptions) (*policy.Request, error) {
 	urlPath := "/number/null"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -580,10 +581,10 @@ func (client *NumberClient) getNullCreateRequest(ctx context.Context, options *N
 }
 
 // getNullHandleResponse handles the GetNull response.
-func (client *NumberClient) getNullHandleResponse(resp *http.Response) (NumberGetNullResponse, error) {
-	result := NumberGetNullResponse{RawResponse: resp}
+func (client *NumberClient) getNullHandleResponse(resp *http.Response) (NumberClientGetNullResponse, error) {
+	result := NumberClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberGetNullResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetNullResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -603,24 +604,24 @@ func (client *NumberClient) getNullHandleError(resp *http.Response) error {
 
 // GetSmallDecimal - Get small decimal value 2.5976931e-101
 // If the operation fails it returns the *Error error type.
-// options - NumberGetSmallDecimalOptions contains the optional parameters for the NumberClient.GetSmallDecimal method.
-func (client *NumberClient) GetSmallDecimal(ctx context.Context, options *NumberGetSmallDecimalOptions) (NumberGetSmallDecimalResponse, error) {
+// options - NumberClientGetSmallDecimalOptions contains the optional parameters for the NumberClient.GetSmallDecimal method.
+func (client *NumberClient) GetSmallDecimal(ctx context.Context, options *NumberClientGetSmallDecimalOptions) (NumberClientGetSmallDecimalResponse, error) {
 	req, err := client.getSmallDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return NumberGetSmallDecimalResponse{}, err
+		return NumberClientGetSmallDecimalResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberGetSmallDecimalResponse{}, err
+		return NumberClientGetSmallDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberGetSmallDecimalResponse{}, client.getSmallDecimalHandleError(resp)
+		return NumberClientGetSmallDecimalResponse{}, client.getSmallDecimalHandleError(resp)
 	}
 	return client.getSmallDecimalHandleResponse(resp)
 }
 
 // getSmallDecimalCreateRequest creates the GetSmallDecimal request.
-func (client *NumberClient) getSmallDecimalCreateRequest(ctx context.Context, options *NumberGetSmallDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) getSmallDecimalCreateRequest(ctx context.Context, options *NumberClientGetSmallDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/small/decimal/2.5976931e-101"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -631,10 +632,10 @@ func (client *NumberClient) getSmallDecimalCreateRequest(ctx context.Context, op
 }
 
 // getSmallDecimalHandleResponse handles the GetSmallDecimal response.
-func (client *NumberClient) getSmallDecimalHandleResponse(resp *http.Response) (NumberGetSmallDecimalResponse, error) {
-	result := NumberGetSmallDecimalResponse{RawResponse: resp}
+func (client *NumberClient) getSmallDecimalHandleResponse(resp *http.Response) (NumberClientGetSmallDecimalResponse, error) {
+	result := NumberClientGetSmallDecimalResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberGetSmallDecimalResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetSmallDecimalResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -654,24 +655,24 @@ func (client *NumberClient) getSmallDecimalHandleError(resp *http.Response) erro
 
 // GetSmallDouble - Get big double value 2.5976931e-101
 // If the operation fails it returns the *Error error type.
-// options - NumberGetSmallDoubleOptions contains the optional parameters for the NumberClient.GetSmallDouble method.
-func (client *NumberClient) GetSmallDouble(ctx context.Context, options *NumberGetSmallDoubleOptions) (NumberGetSmallDoubleResponse, error) {
+// options - NumberClientGetSmallDoubleOptions contains the optional parameters for the NumberClient.GetSmallDouble method.
+func (client *NumberClient) GetSmallDouble(ctx context.Context, options *NumberClientGetSmallDoubleOptions) (NumberClientGetSmallDoubleResponse, error) {
 	req, err := client.getSmallDoubleCreateRequest(ctx, options)
 	if err != nil {
-		return NumberGetSmallDoubleResponse{}, err
+		return NumberClientGetSmallDoubleResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberGetSmallDoubleResponse{}, err
+		return NumberClientGetSmallDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberGetSmallDoubleResponse{}, client.getSmallDoubleHandleError(resp)
+		return NumberClientGetSmallDoubleResponse{}, client.getSmallDoubleHandleError(resp)
 	}
 	return client.getSmallDoubleHandleResponse(resp)
 }
 
 // getSmallDoubleCreateRequest creates the GetSmallDouble request.
-func (client *NumberClient) getSmallDoubleCreateRequest(ctx context.Context, options *NumberGetSmallDoubleOptions) (*policy.Request, error) {
+func (client *NumberClient) getSmallDoubleCreateRequest(ctx context.Context, options *NumberClientGetSmallDoubleOptions) (*policy.Request, error) {
 	urlPath := "/number/small/double/2.5976931e-101"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -682,10 +683,10 @@ func (client *NumberClient) getSmallDoubleCreateRequest(ctx context.Context, opt
 }
 
 // getSmallDoubleHandleResponse handles the GetSmallDouble response.
-func (client *NumberClient) getSmallDoubleHandleResponse(resp *http.Response) (NumberGetSmallDoubleResponse, error) {
-	result := NumberGetSmallDoubleResponse{RawResponse: resp}
+func (client *NumberClient) getSmallDoubleHandleResponse(resp *http.Response) (NumberClientGetSmallDoubleResponse, error) {
+	result := NumberClientGetSmallDoubleResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberGetSmallDoubleResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetSmallDoubleResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -705,24 +706,24 @@ func (client *NumberClient) getSmallDoubleHandleError(resp *http.Response) error
 
 // GetSmallFloat - Get big double value 3.402823e-20
 // If the operation fails it returns the *Error error type.
-// options - NumberGetSmallFloatOptions contains the optional parameters for the NumberClient.GetSmallFloat method.
-func (client *NumberClient) GetSmallFloat(ctx context.Context, options *NumberGetSmallFloatOptions) (NumberGetSmallFloatResponse, error) {
+// options - NumberClientGetSmallFloatOptions contains the optional parameters for the NumberClient.GetSmallFloat method.
+func (client *NumberClient) GetSmallFloat(ctx context.Context, options *NumberClientGetSmallFloatOptions) (NumberClientGetSmallFloatResponse, error) {
 	req, err := client.getSmallFloatCreateRequest(ctx, options)
 	if err != nil {
-		return NumberGetSmallFloatResponse{}, err
+		return NumberClientGetSmallFloatResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberGetSmallFloatResponse{}, err
+		return NumberClientGetSmallFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberGetSmallFloatResponse{}, client.getSmallFloatHandleError(resp)
+		return NumberClientGetSmallFloatResponse{}, client.getSmallFloatHandleError(resp)
 	}
 	return client.getSmallFloatHandleResponse(resp)
 }
 
 // getSmallFloatCreateRequest creates the GetSmallFloat request.
-func (client *NumberClient) getSmallFloatCreateRequest(ctx context.Context, options *NumberGetSmallFloatOptions) (*policy.Request, error) {
+func (client *NumberClient) getSmallFloatCreateRequest(ctx context.Context, options *NumberClientGetSmallFloatOptions) (*policy.Request, error) {
 	urlPath := "/number/small/float/3.402823e-20"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -733,10 +734,10 @@ func (client *NumberClient) getSmallFloatCreateRequest(ctx context.Context, opti
 }
 
 // getSmallFloatHandleResponse handles the GetSmallFloat response.
-func (client *NumberClient) getSmallFloatHandleResponse(resp *http.Response) (NumberGetSmallFloatResponse, error) {
-	result := NumberGetSmallFloatResponse{RawResponse: resp}
+func (client *NumberClient) getSmallFloatHandleResponse(resp *http.Response) (NumberClientGetSmallFloatResponse, error) {
+	result := NumberClientGetSmallFloatResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return NumberGetSmallFloatResponse{}, runtime.NewResponseError(err, resp)
+		return NumberClientGetSmallFloatResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -757,24 +758,24 @@ func (client *NumberClient) getSmallFloatHandleError(resp *http.Response) error 
 // PutBigDecimal - Put big decimal value 2.5976931e+101
 // If the operation fails it returns the *Error error type.
 // numberBody - number body
-// options - NumberPutBigDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimal method.
-func (client *NumberClient) PutBigDecimal(ctx context.Context, numberBody float64, options *NumberPutBigDecimalOptions) (NumberPutBigDecimalResponse, error) {
+// options - NumberClientPutBigDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimal method.
+func (client *NumberClient) PutBigDecimal(ctx context.Context, numberBody float64, options *NumberClientPutBigDecimalOptions) (NumberClientPutBigDecimalResponse, error) {
 	req, err := client.putBigDecimalCreateRequest(ctx, numberBody, options)
 	if err != nil {
-		return NumberPutBigDecimalResponse{}, err
+		return NumberClientPutBigDecimalResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberPutBigDecimalResponse{}, err
+		return NumberClientPutBigDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberPutBigDecimalResponse{}, client.putBigDecimalHandleError(resp)
+		return NumberClientPutBigDecimalResponse{}, client.putBigDecimalHandleError(resp)
 	}
-	return NumberPutBigDecimalResponse{RawResponse: resp}, nil
+	return NumberClientPutBigDecimalResponse{RawResponse: resp}, nil
 }
 
 // putBigDecimalCreateRequest creates the PutBigDecimal request.
-func (client *NumberClient) putBigDecimalCreateRequest(ctx context.Context, numberBody float64, options *NumberPutBigDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) putBigDecimalCreateRequest(ctx context.Context, numberBody float64, options *NumberClientPutBigDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/decimal/2.5976931e+101"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -799,25 +800,25 @@ func (client *NumberClient) putBigDecimalHandleError(resp *http.Response) error 
 
 // PutBigDecimalNegativeDecimal - Put big decimal value -99999999.99
 // If the operation fails it returns the *Error error type.
-// options - NumberPutBigDecimalNegativeDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimalNegativeDecimal
+// options - NumberClientPutBigDecimalNegativeDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimalNegativeDecimal
 // method.
-func (client *NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context, options *NumberPutBigDecimalNegativeDecimalOptions) (NumberPutBigDecimalNegativeDecimalResponse, error) {
+func (client *NumberClient) PutBigDecimalNegativeDecimal(ctx context.Context, options *NumberClientPutBigDecimalNegativeDecimalOptions) (NumberClientPutBigDecimalNegativeDecimalResponse, error) {
 	req, err := client.putBigDecimalNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return NumberPutBigDecimalNegativeDecimalResponse{}, err
+		return NumberClientPutBigDecimalNegativeDecimalResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberPutBigDecimalNegativeDecimalResponse{}, err
+		return NumberClientPutBigDecimalNegativeDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberPutBigDecimalNegativeDecimalResponse{}, client.putBigDecimalNegativeDecimalHandleError(resp)
+		return NumberClientPutBigDecimalNegativeDecimalResponse{}, client.putBigDecimalNegativeDecimalHandleError(resp)
 	}
-	return NumberPutBigDecimalNegativeDecimalResponse{RawResponse: resp}, nil
+	return NumberClientPutBigDecimalNegativeDecimalResponse{RawResponse: resp}, nil
 }
 
 // putBigDecimalNegativeDecimalCreateRequest creates the PutBigDecimalNegativeDecimal request.
-func (client *NumberClient) putBigDecimalNegativeDecimalCreateRequest(ctx context.Context, options *NumberPutBigDecimalNegativeDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) putBigDecimalNegativeDecimalCreateRequest(ctx context.Context, options *NumberClientPutBigDecimalNegativeDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/decimal/-99999999.99"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -842,25 +843,25 @@ func (client *NumberClient) putBigDecimalNegativeDecimalHandleError(resp *http.R
 
 // PutBigDecimalPositiveDecimal - Put big decimal value 99999999.99
 // If the operation fails it returns the *Error error type.
-// options - NumberPutBigDecimalPositiveDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimalPositiveDecimal
+// options - NumberClientPutBigDecimalPositiveDecimalOptions contains the optional parameters for the NumberClient.PutBigDecimalPositiveDecimal
 // method.
-func (client *NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context, options *NumberPutBigDecimalPositiveDecimalOptions) (NumberPutBigDecimalPositiveDecimalResponse, error) {
+func (client *NumberClient) PutBigDecimalPositiveDecimal(ctx context.Context, options *NumberClientPutBigDecimalPositiveDecimalOptions) (NumberClientPutBigDecimalPositiveDecimalResponse, error) {
 	req, err := client.putBigDecimalPositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return NumberPutBigDecimalPositiveDecimalResponse{}, err
+		return NumberClientPutBigDecimalPositiveDecimalResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberPutBigDecimalPositiveDecimalResponse{}, err
+		return NumberClientPutBigDecimalPositiveDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberPutBigDecimalPositiveDecimalResponse{}, client.putBigDecimalPositiveDecimalHandleError(resp)
+		return NumberClientPutBigDecimalPositiveDecimalResponse{}, client.putBigDecimalPositiveDecimalHandleError(resp)
 	}
-	return NumberPutBigDecimalPositiveDecimalResponse{RawResponse: resp}, nil
+	return NumberClientPutBigDecimalPositiveDecimalResponse{RawResponse: resp}, nil
 }
 
 // putBigDecimalPositiveDecimalCreateRequest creates the PutBigDecimalPositiveDecimal request.
-func (client *NumberClient) putBigDecimalPositiveDecimalCreateRequest(ctx context.Context, options *NumberPutBigDecimalPositiveDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) putBigDecimalPositiveDecimalCreateRequest(ctx context.Context, options *NumberClientPutBigDecimalPositiveDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/decimal/99999999.99"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -886,24 +887,24 @@ func (client *NumberClient) putBigDecimalPositiveDecimalHandleError(resp *http.R
 // PutBigDouble - Put big double value 2.5976931e+101
 // If the operation fails it returns the *Error error type.
 // numberBody - number body
-// options - NumberPutBigDoubleOptions contains the optional parameters for the NumberClient.PutBigDouble method.
-func (client *NumberClient) PutBigDouble(ctx context.Context, numberBody float64, options *NumberPutBigDoubleOptions) (NumberPutBigDoubleResponse, error) {
+// options - NumberClientPutBigDoubleOptions contains the optional parameters for the NumberClient.PutBigDouble method.
+func (client *NumberClient) PutBigDouble(ctx context.Context, numberBody float64, options *NumberClientPutBigDoubleOptions) (NumberClientPutBigDoubleResponse, error) {
 	req, err := client.putBigDoubleCreateRequest(ctx, numberBody, options)
 	if err != nil {
-		return NumberPutBigDoubleResponse{}, err
+		return NumberClientPutBigDoubleResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberPutBigDoubleResponse{}, err
+		return NumberClientPutBigDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberPutBigDoubleResponse{}, client.putBigDoubleHandleError(resp)
+		return NumberClientPutBigDoubleResponse{}, client.putBigDoubleHandleError(resp)
 	}
-	return NumberPutBigDoubleResponse{RawResponse: resp}, nil
+	return NumberClientPutBigDoubleResponse{RawResponse: resp}, nil
 }
 
 // putBigDoubleCreateRequest creates the PutBigDouble request.
-func (client *NumberClient) putBigDoubleCreateRequest(ctx context.Context, numberBody float64, options *NumberPutBigDoubleOptions) (*policy.Request, error) {
+func (client *NumberClient) putBigDoubleCreateRequest(ctx context.Context, numberBody float64, options *NumberClientPutBigDoubleOptions) (*policy.Request, error) {
 	urlPath := "/number/big/double/2.5976931e+101"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -928,25 +929,25 @@ func (client *NumberClient) putBigDoubleHandleError(resp *http.Response) error {
 
 // PutBigDoubleNegativeDecimal - Put big double value -99999999.99
 // If the operation fails it returns the *Error error type.
-// options - NumberPutBigDoubleNegativeDecimalOptions contains the optional parameters for the NumberClient.PutBigDoubleNegativeDecimal
+// options - NumberClientPutBigDoubleNegativeDecimalOptions contains the optional parameters for the NumberClient.PutBigDoubleNegativeDecimal
 // method.
-func (client *NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context, options *NumberPutBigDoubleNegativeDecimalOptions) (NumberPutBigDoubleNegativeDecimalResponse, error) {
+func (client *NumberClient) PutBigDoubleNegativeDecimal(ctx context.Context, options *NumberClientPutBigDoubleNegativeDecimalOptions) (NumberClientPutBigDoubleNegativeDecimalResponse, error) {
 	req, err := client.putBigDoubleNegativeDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return NumberPutBigDoubleNegativeDecimalResponse{}, err
+		return NumberClientPutBigDoubleNegativeDecimalResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberPutBigDoubleNegativeDecimalResponse{}, err
+		return NumberClientPutBigDoubleNegativeDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberPutBigDoubleNegativeDecimalResponse{}, client.putBigDoubleNegativeDecimalHandleError(resp)
+		return NumberClientPutBigDoubleNegativeDecimalResponse{}, client.putBigDoubleNegativeDecimalHandleError(resp)
 	}
-	return NumberPutBigDoubleNegativeDecimalResponse{RawResponse: resp}, nil
+	return NumberClientPutBigDoubleNegativeDecimalResponse{RawResponse: resp}, nil
 }
 
 // putBigDoubleNegativeDecimalCreateRequest creates the PutBigDoubleNegativeDecimal request.
-func (client *NumberClient) putBigDoubleNegativeDecimalCreateRequest(ctx context.Context, options *NumberPutBigDoubleNegativeDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) putBigDoubleNegativeDecimalCreateRequest(ctx context.Context, options *NumberClientPutBigDoubleNegativeDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/double/-99999999.99"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -971,25 +972,25 @@ func (client *NumberClient) putBigDoubleNegativeDecimalHandleError(resp *http.Re
 
 // PutBigDoublePositiveDecimal - Put big double value 99999999.99
 // If the operation fails it returns the *Error error type.
-// options - NumberPutBigDoublePositiveDecimalOptions contains the optional parameters for the NumberClient.PutBigDoublePositiveDecimal
+// options - NumberClientPutBigDoublePositiveDecimalOptions contains the optional parameters for the NumberClient.PutBigDoublePositiveDecimal
 // method.
-func (client *NumberClient) PutBigDoublePositiveDecimal(ctx context.Context, options *NumberPutBigDoublePositiveDecimalOptions) (NumberPutBigDoublePositiveDecimalResponse, error) {
+func (client *NumberClient) PutBigDoublePositiveDecimal(ctx context.Context, options *NumberClientPutBigDoublePositiveDecimalOptions) (NumberClientPutBigDoublePositiveDecimalResponse, error) {
 	req, err := client.putBigDoublePositiveDecimalCreateRequest(ctx, options)
 	if err != nil {
-		return NumberPutBigDoublePositiveDecimalResponse{}, err
+		return NumberClientPutBigDoublePositiveDecimalResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberPutBigDoublePositiveDecimalResponse{}, err
+		return NumberClientPutBigDoublePositiveDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberPutBigDoublePositiveDecimalResponse{}, client.putBigDoublePositiveDecimalHandleError(resp)
+		return NumberClientPutBigDoublePositiveDecimalResponse{}, client.putBigDoublePositiveDecimalHandleError(resp)
 	}
-	return NumberPutBigDoublePositiveDecimalResponse{RawResponse: resp}, nil
+	return NumberClientPutBigDoublePositiveDecimalResponse{RawResponse: resp}, nil
 }
 
 // putBigDoublePositiveDecimalCreateRequest creates the PutBigDoublePositiveDecimal request.
-func (client *NumberClient) putBigDoublePositiveDecimalCreateRequest(ctx context.Context, options *NumberPutBigDoublePositiveDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) putBigDoublePositiveDecimalCreateRequest(ctx context.Context, options *NumberClientPutBigDoublePositiveDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/big/double/99999999.99"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1015,24 +1016,24 @@ func (client *NumberClient) putBigDoublePositiveDecimalHandleError(resp *http.Re
 // PutBigFloat - Put big float value 3.402823e+20
 // If the operation fails it returns the *Error error type.
 // numberBody - number body
-// options - NumberPutBigFloatOptions contains the optional parameters for the NumberClient.PutBigFloat method.
-func (client *NumberClient) PutBigFloat(ctx context.Context, numberBody float32, options *NumberPutBigFloatOptions) (NumberPutBigFloatResponse, error) {
+// options - NumberClientPutBigFloatOptions contains the optional parameters for the NumberClient.PutBigFloat method.
+func (client *NumberClient) PutBigFloat(ctx context.Context, numberBody float32, options *NumberClientPutBigFloatOptions) (NumberClientPutBigFloatResponse, error) {
 	req, err := client.putBigFloatCreateRequest(ctx, numberBody, options)
 	if err != nil {
-		return NumberPutBigFloatResponse{}, err
+		return NumberClientPutBigFloatResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberPutBigFloatResponse{}, err
+		return NumberClientPutBigFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberPutBigFloatResponse{}, client.putBigFloatHandleError(resp)
+		return NumberClientPutBigFloatResponse{}, client.putBigFloatHandleError(resp)
 	}
-	return NumberPutBigFloatResponse{RawResponse: resp}, nil
+	return NumberClientPutBigFloatResponse{RawResponse: resp}, nil
 }
 
 // putBigFloatCreateRequest creates the PutBigFloat request.
-func (client *NumberClient) putBigFloatCreateRequest(ctx context.Context, numberBody float32, options *NumberPutBigFloatOptions) (*policy.Request, error) {
+func (client *NumberClient) putBigFloatCreateRequest(ctx context.Context, numberBody float32, options *NumberClientPutBigFloatOptions) (*policy.Request, error) {
 	urlPath := "/number/big/float/3.402823e+20"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1058,24 +1059,24 @@ func (client *NumberClient) putBigFloatHandleError(resp *http.Response) error {
 // PutSmallDecimal - Put small decimal value 2.5976931e-101
 // If the operation fails it returns the *Error error type.
 // numberBody - number body
-// options - NumberPutSmallDecimalOptions contains the optional parameters for the NumberClient.PutSmallDecimal method.
-func (client *NumberClient) PutSmallDecimal(ctx context.Context, numberBody float64, options *NumberPutSmallDecimalOptions) (NumberPutSmallDecimalResponse, error) {
+// options - NumberClientPutSmallDecimalOptions contains the optional parameters for the NumberClient.PutSmallDecimal method.
+func (client *NumberClient) PutSmallDecimal(ctx context.Context, numberBody float64, options *NumberClientPutSmallDecimalOptions) (NumberClientPutSmallDecimalResponse, error) {
 	req, err := client.putSmallDecimalCreateRequest(ctx, numberBody, options)
 	if err != nil {
-		return NumberPutSmallDecimalResponse{}, err
+		return NumberClientPutSmallDecimalResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberPutSmallDecimalResponse{}, err
+		return NumberClientPutSmallDecimalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberPutSmallDecimalResponse{}, client.putSmallDecimalHandleError(resp)
+		return NumberClientPutSmallDecimalResponse{}, client.putSmallDecimalHandleError(resp)
 	}
-	return NumberPutSmallDecimalResponse{RawResponse: resp}, nil
+	return NumberClientPutSmallDecimalResponse{RawResponse: resp}, nil
 }
 
 // putSmallDecimalCreateRequest creates the PutSmallDecimal request.
-func (client *NumberClient) putSmallDecimalCreateRequest(ctx context.Context, numberBody float64, options *NumberPutSmallDecimalOptions) (*policy.Request, error) {
+func (client *NumberClient) putSmallDecimalCreateRequest(ctx context.Context, numberBody float64, options *NumberClientPutSmallDecimalOptions) (*policy.Request, error) {
 	urlPath := "/number/small/decimal/2.5976931e-101"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1101,24 +1102,24 @@ func (client *NumberClient) putSmallDecimalHandleError(resp *http.Response) erro
 // PutSmallDouble - Put small double value 2.5976931e-101
 // If the operation fails it returns the *Error error type.
 // numberBody - number body
-// options - NumberPutSmallDoubleOptions contains the optional parameters for the NumberClient.PutSmallDouble method.
-func (client *NumberClient) PutSmallDouble(ctx context.Context, numberBody float64, options *NumberPutSmallDoubleOptions) (NumberPutSmallDoubleResponse, error) {
+// options - NumberClientPutSmallDoubleOptions contains the optional parameters for the NumberClient.PutSmallDouble method.
+func (client *NumberClient) PutSmallDouble(ctx context.Context, numberBody float64, options *NumberClientPutSmallDoubleOptions) (NumberClientPutSmallDoubleResponse, error) {
 	req, err := client.putSmallDoubleCreateRequest(ctx, numberBody, options)
 	if err != nil {
-		return NumberPutSmallDoubleResponse{}, err
+		return NumberClientPutSmallDoubleResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberPutSmallDoubleResponse{}, err
+		return NumberClientPutSmallDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberPutSmallDoubleResponse{}, client.putSmallDoubleHandleError(resp)
+		return NumberClientPutSmallDoubleResponse{}, client.putSmallDoubleHandleError(resp)
 	}
-	return NumberPutSmallDoubleResponse{RawResponse: resp}, nil
+	return NumberClientPutSmallDoubleResponse{RawResponse: resp}, nil
 }
 
 // putSmallDoubleCreateRequest creates the PutSmallDouble request.
-func (client *NumberClient) putSmallDoubleCreateRequest(ctx context.Context, numberBody float64, options *NumberPutSmallDoubleOptions) (*policy.Request, error) {
+func (client *NumberClient) putSmallDoubleCreateRequest(ctx context.Context, numberBody float64, options *NumberClientPutSmallDoubleOptions) (*policy.Request, error) {
 	urlPath := "/number/small/double/2.5976931e-101"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1144,24 +1145,24 @@ func (client *NumberClient) putSmallDoubleHandleError(resp *http.Response) error
 // PutSmallFloat - Put small float value 3.402823e-20
 // If the operation fails it returns the *Error error type.
 // numberBody - number body
-// options - NumberPutSmallFloatOptions contains the optional parameters for the NumberClient.PutSmallFloat method.
-func (client *NumberClient) PutSmallFloat(ctx context.Context, numberBody float32, options *NumberPutSmallFloatOptions) (NumberPutSmallFloatResponse, error) {
+// options - NumberClientPutSmallFloatOptions contains the optional parameters for the NumberClient.PutSmallFloat method.
+func (client *NumberClient) PutSmallFloat(ctx context.Context, numberBody float32, options *NumberClientPutSmallFloatOptions) (NumberClientPutSmallFloatResponse, error) {
 	req, err := client.putSmallFloatCreateRequest(ctx, numberBody, options)
 	if err != nil {
-		return NumberPutSmallFloatResponse{}, err
+		return NumberClientPutSmallFloatResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return NumberPutSmallFloatResponse{}, err
+		return NumberClientPutSmallFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return NumberPutSmallFloatResponse{}, client.putSmallFloatHandleError(resp)
+		return NumberClientPutSmallFloatResponse{}, client.putSmallFloatHandleError(resp)
 	}
-	return NumberPutSmallFloatResponse{RawResponse: resp}, nil
+	return NumberClientPutSmallFloatResponse{RawResponse: resp}, nil
 }
 
 // putSmallFloatCreateRequest creates the PutSmallFloat request.
-func (client *NumberClient) putSmallFloatCreateRequest(ctx context.Context, numberBody float32, options *NumberPutSmallFloatOptions) (*policy.Request, error) {
+func (client *NumberClient) putSmallFloatCreateRequest(ctx context.Context, numberBody float32, options *NumberClientPutSmallFloatOptions) (*policy.Request, error) {
 	urlPath := "/number/small/float/3.402823e-20"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {

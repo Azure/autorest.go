@@ -38,24 +38,24 @@ func NewFloatClient(options *azcore.ClientOptions) *FloatClient {
 
 // Get - Get a float enum
 // If the operation fails it returns a generic error.
-// options - FloatGetOptions contains the optional parameters for the FloatClient.Get method.
-func (client *FloatClient) Get(ctx context.Context, options *FloatGetOptions) (FloatGetResponse, error) {
+// options - FloatClientGetOptions contains the optional parameters for the FloatClient.Get method.
+func (client *FloatClient) Get(ctx context.Context, options *FloatClientGetOptions) (FloatClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, options)
 	if err != nil {
-		return FloatGetResponse{}, err
+		return FloatClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return FloatGetResponse{}, err
+		return FloatClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FloatGetResponse{}, client.getHandleError(resp)
+		return FloatClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *FloatClient) getCreateRequest(ctx context.Context, options *FloatGetOptions) (*policy.Request, error) {
+func (client *FloatClient) getCreateRequest(ctx context.Context, options *FloatClientGetOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/float/get"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -66,10 +66,10 @@ func (client *FloatClient) getCreateRequest(ctx context.Context, options *FloatG
 }
 
 // getHandleResponse handles the Get response.
-func (client *FloatClient) getHandleResponse(resp *http.Response) (FloatGetResponse, error) {
-	result := FloatGetResponse{RawResponse: resp}
+func (client *FloatClient) getHandleResponse(resp *http.Response) (FloatClientGetResponse, error) {
+	result := FloatClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return FloatGetResponse{}, runtime.NewResponseError(err, resp)
+		return FloatClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -88,24 +88,24 @@ func (client *FloatClient) getHandleError(resp *http.Response) error {
 
 // Put - Put a float enum
 // If the operation fails it returns a generic error.
-// options - FloatPutOptions contains the optional parameters for the FloatClient.Put method.
-func (client *FloatClient) Put(ctx context.Context, options *FloatPutOptions) (FloatPutResponse, error) {
+// options - FloatClientPutOptions contains the optional parameters for the FloatClient.Put method.
+func (client *FloatClient) Put(ctx context.Context, options *FloatClientPutOptions) (FloatClientPutResponse, error) {
 	req, err := client.putCreateRequest(ctx, options)
 	if err != nil {
-		return FloatPutResponse{}, err
+		return FloatClientPutResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return FloatPutResponse{}, err
+		return FloatClientPutResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FloatPutResponse{}, client.putHandleError(resp)
+		return FloatClientPutResponse{}, client.putHandleError(resp)
 	}
 	return client.putHandleResponse(resp)
 }
 
 // putCreateRequest creates the Put request.
-func (client *FloatClient) putCreateRequest(ctx context.Context, options *FloatPutOptions) (*policy.Request, error) {
+func (client *FloatClient) putCreateRequest(ctx context.Context, options *FloatClientPutOptions) (*policy.Request, error) {
 	urlPath := "/nonStringEnums/float/put"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -119,10 +119,10 @@ func (client *FloatClient) putCreateRequest(ctx context.Context, options *FloatP
 }
 
 // putHandleResponse handles the Put response.
-func (client *FloatClient) putHandleResponse(resp *http.Response) (FloatPutResponse, error) {
-	result := FloatPutResponse{RawResponse: resp}
+func (client *FloatClient) putHandleResponse(resp *http.Response) (FloatClientPutResponse, error) {
+	result := FloatClientPutResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return FloatPutResponse{}, runtime.NewResponseError(err, resp)
+		return FloatClientPutResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

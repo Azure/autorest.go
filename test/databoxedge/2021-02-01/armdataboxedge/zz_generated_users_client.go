@@ -57,20 +57,21 @@ func NewUsersClient(subscriptionID string, credential azcore.TokenCredential, op
 // name - The user name.
 // resourceGroupName - The resource group name.
 // userParam - The user details.
-// options - UsersBeginCreateOrUpdateOptions contains the optional parameters for the UsersClient.BeginCreateOrUpdate method.
-func (client *UsersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, userParam User, options *UsersBeginCreateOrUpdateOptions) (UsersCreateOrUpdatePollerResponse, error) {
+// options - UsersClientBeginCreateOrUpdateOptions contains the optional parameters for the UsersClient.BeginCreateOrUpdate
+// method.
+func (client *UsersClient) BeginCreateOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, userParam User, options *UsersClientBeginCreateOrUpdateOptions) (UsersClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, deviceName, name, resourceGroupName, userParam, options)
 	if err != nil {
-		return UsersCreateOrUpdatePollerResponse{}, err
+		return UsersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := UsersCreateOrUpdatePollerResponse{
+	result := UsersClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("UsersClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return UsersCreateOrUpdatePollerResponse{}, err
+		return UsersClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &UsersCreateOrUpdatePoller{
+	result.Poller = &UsersClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -78,7 +79,7 @@ func (client *UsersClient) BeginCreateOrUpdate(ctx context.Context, deviceName s
 
 // CreateOrUpdate - Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway device.
 // If the operation fails it returns the *CloudError error type.
-func (client *UsersClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, userParam User, options *UsersBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *UsersClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, userParam User, options *UsersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, userParam, options)
 	if err != nil {
 		return nil, err
@@ -94,7 +95,7 @@ func (client *UsersClient) createOrUpdate(ctx context.Context, deviceName string
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *UsersClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, userParam User, options *UsersBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *UsersClient) createOrUpdateCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, userParam User, options *UsersClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/users/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -141,20 +142,20 @@ func (client *UsersClient) createOrUpdateHandleError(resp *http.Response) error 
 // deviceName - The device name.
 // name - The user name.
 // resourceGroupName - The resource group name.
-// options - UsersBeginDeleteOptions contains the optional parameters for the UsersClient.BeginDelete method.
-func (client *UsersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersBeginDeleteOptions) (UsersDeletePollerResponse, error) {
+// options - UsersClientBeginDeleteOptions contains the optional parameters for the UsersClient.BeginDelete method.
+func (client *UsersClient) BeginDelete(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersClientBeginDeleteOptions) (UsersClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return UsersDeletePollerResponse{}, err
+		return UsersClientDeletePollerResponse{}, err
 	}
-	result := UsersDeletePollerResponse{
+	result := UsersClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("UsersClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return UsersDeletePollerResponse{}, err
+		return UsersClientDeletePollerResponse{}, err
 	}
-	result.Poller = &UsersDeletePoller{
+	result.Poller = &UsersClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -162,7 +163,7 @@ func (client *UsersClient) BeginDelete(ctx context.Context, deviceName string, n
 
 // Delete - Deletes the user on a databox edge/gateway device.
 // If the operation fails it returns the *CloudError error type.
-func (client *UsersClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersBeginDeleteOptions) (*http.Response, error) {
+func (client *UsersClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
 		return nil, err
@@ -178,7 +179,7 @@ func (client *UsersClient) deleteOperation(ctx context.Context, deviceName strin
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *UsersClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersBeginDeleteOptions) (*policy.Request, error) {
+func (client *UsersClient) deleteCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/users/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -225,24 +226,24 @@ func (client *UsersClient) deleteHandleError(resp *http.Response) error {
 // deviceName - The device name.
 // name - The user name.
 // resourceGroupName - The resource group name.
-// options - UsersGetOptions contains the optional parameters for the UsersClient.Get method.
-func (client *UsersClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersGetOptions) (UsersGetResponse, error) {
+// options - UsersClientGetOptions contains the optional parameters for the UsersClient.Get method.
+func (client *UsersClient) Get(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersClientGetOptions) (UsersClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
-		return UsersGetResponse{}, err
+		return UsersClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return UsersGetResponse{}, err
+		return UsersClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return UsersGetResponse{}, client.getHandleError(resp)
+		return UsersClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *UsersClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersGetOptions) (*policy.Request, error) {
+func (client *UsersClient) getCreateRequest(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/users/{name}"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -272,10 +273,10 @@ func (client *UsersClient) getCreateRequest(ctx context.Context, deviceName stri
 }
 
 // getHandleResponse handles the Get response.
-func (client *UsersClient) getHandleResponse(resp *http.Response) (UsersGetResponse, error) {
-	result := UsersGetResponse{RawResponse: resp}
+func (client *UsersClient) getHandleResponse(resp *http.Response) (UsersClientGetResponse, error) {
+	result := UsersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.User); err != nil {
-		return UsersGetResponse{}, runtime.NewResponseError(err, resp)
+		return UsersClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -297,22 +298,22 @@ func (client *UsersClient) getHandleError(resp *http.Response) error {
 // If the operation fails it returns the *CloudError error type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
-// options - UsersListByDataBoxEdgeDeviceOptions contains the optional parameters for the UsersClient.ListByDataBoxEdgeDevice
+// options - UsersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the UsersClient.ListByDataBoxEdgeDevice
 // method.
-func (client *UsersClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *UsersListByDataBoxEdgeDeviceOptions) *UsersListByDataBoxEdgeDevicePager {
-	return &UsersListByDataBoxEdgeDevicePager{
+func (client *UsersClient) ListByDataBoxEdgeDevice(deviceName string, resourceGroupName string, options *UsersClientListByDataBoxEdgeDeviceOptions) *UsersClientListByDataBoxEdgeDevicePager {
+	return &UsersClientListByDataBoxEdgeDevicePager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByDataBoxEdgeDeviceCreateRequest(ctx, deviceName, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp UsersListByDataBoxEdgeDeviceResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp UsersClientListByDataBoxEdgeDeviceResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.UserList.NextLink)
 		},
 	}
 }
 
 // listByDataBoxEdgeDeviceCreateRequest creates the ListByDataBoxEdgeDevice request.
-func (client *UsersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *UsersListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
+func (client *UsersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Context, deviceName string, resourceGroupName string, options *UsersClientListByDataBoxEdgeDeviceOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/users"
 	if deviceName == "" {
 		return nil, errors.New("parameter deviceName cannot be empty")
@@ -341,10 +342,10 @@ func (client *UsersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Cont
 }
 
 // listByDataBoxEdgeDeviceHandleResponse handles the ListByDataBoxEdgeDevice response.
-func (client *UsersClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (UsersListByDataBoxEdgeDeviceResponse, error) {
-	result := UsersListByDataBoxEdgeDeviceResponse{RawResponse: resp}
+func (client *UsersClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (UsersClientListByDataBoxEdgeDeviceResponse, error) {
+	result := UsersClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.UserList); err != nil {
-		return UsersListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
+		return UsersClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

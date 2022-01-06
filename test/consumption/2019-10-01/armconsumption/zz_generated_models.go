@@ -15,18 +15,18 @@ import (
 	"time"
 )
 
-// AggregatedCostGetByManagementGroupOptions contains the optional parameters for the AggregatedCostClient.GetByManagementGroup
+// AggregatedCostClientGetByManagementGroupOptions contains the optional parameters for the AggregatedCostClient.GetByManagementGroup
 // method.
-type AggregatedCostGetByManagementGroupOptions struct {
+type AggregatedCostClientGetByManagementGroupOptions struct {
 	// May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports
 	// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support
 	// 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:).
 	Filter *string
 }
 
-// AggregatedCostGetForBillingPeriodByManagementGroupOptions contains the optional parameters for the AggregatedCostClient.GetForBillingPeriodByManagementGroup
+// AggregatedCostClientGetForBillingPeriodByManagementGroupOptions contains the optional parameters for the AggregatedCostClient.GetForBillingPeriodByManagementGroup
 // method.
-type AggregatedCostGetForBillingPeriodByManagementGroupOptions struct {
+type AggregatedCostClientGetForBillingPeriodByManagementGroupOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -172,14 +172,14 @@ type BalancePropertiesNewPurchasesDetailsItem struct {
 	Value *float64 `json:"value,omitempty" azure:"ro"`
 }
 
-// BalancesGetByBillingAccountOptions contains the optional parameters for the BalancesClient.GetByBillingAccount method.
-type BalancesGetByBillingAccountOptions struct {
+// BalancesClientGetByBillingAccountOptions contains the optional parameters for the BalancesClient.GetByBillingAccount method.
+type BalancesClientGetByBillingAccountOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BalancesGetForBillingPeriodByBillingAccountOptions contains the optional parameters for the BalancesClient.GetForBillingPeriodByBillingAccount
+// BalancesClientGetForBillingPeriodByBillingAccountOptions contains the optional parameters for the BalancesClient.GetForBillingPeriodByBillingAccount
 // method.
-type BalancesGetForBillingPeriodByBillingAccountOptions struct {
+type BalancesClientGetForBillingPeriodByBillingAccountOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -342,23 +342,23 @@ func (b *BudgetTimePeriod) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// BudgetsCreateOrUpdateOptions contains the optional parameters for the BudgetsClient.CreateOrUpdate method.
-type BudgetsCreateOrUpdateOptions struct {
+// BudgetsClientCreateOrUpdateOptions contains the optional parameters for the BudgetsClient.CreateOrUpdate method.
+type BudgetsClientCreateOrUpdateOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BudgetsDeleteOptions contains the optional parameters for the BudgetsClient.Delete method.
-type BudgetsDeleteOptions struct {
+// BudgetsClientDeleteOptions contains the optional parameters for the BudgetsClient.Delete method.
+type BudgetsClientDeleteOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BudgetsGetOptions contains the optional parameters for the BudgetsClient.Get method.
-type BudgetsGetOptions struct {
+// BudgetsClientGetOptions contains the optional parameters for the BudgetsClient.Get method.
+type BudgetsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
-// BudgetsListOptions contains the optional parameters for the BudgetsClient.List method.
-type BudgetsListOptions struct {
+// BudgetsClientListOptions contains the optional parameters for the BudgetsClient.List method.
+type BudgetsClientListOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -424,8 +424,8 @@ func (c ChargeSummary) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ChargesListOptions contains the optional parameters for the ChargesClient.List method.
-type ChargesListOptions struct {
+// ChargesClientListOptions contains the optional parameters for the ChargesClient.List method.
+type ChargesClientListOptions struct {
 	// May be used to group charges for billingAccount scope by properties/billingProfileId, properties/invoiceSectionId, properties/customerId
 	// (specific for Partner Led), or for billingProfile scope by
 	// properties/invoiceSectionId.
@@ -545,8 +545,8 @@ type CreditSummaryProperties struct {
 	Reseller *Reseller `json:"reseller,omitempty" azure:"ro"`
 }
 
-// CreditsGetOptions contains the optional parameters for the CreditsClient.Get method.
-type CreditsGetOptions struct {
+// CreditsClientGetOptions contains the optional parameters for the CreditsClient.Get method.
+type CreditsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -794,8 +794,8 @@ func (e Events) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// EventsListOptions contains the optional parameters for the EventsClient.List method.
-type EventsListOptions struct {
+// EventsClientListOptions contains the optional parameters for the EventsClient.List method.
+type EventsClientListOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -888,8 +888,8 @@ type ForecastSpend struct {
 	Unit *string `json:"unit,omitempty" azure:"ro"`
 }
 
-// ForecastsListOptions contains the optional parameters for the ForecastsClient.List method.
-type ForecastsListOptions struct {
+// ForecastsClientListOptions contains the optional parameters for the ForecastsClient.List method.
+type ForecastsClientListOptions struct {
 	// May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter
 	// supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently
 	// support 'ne', 'or', or 'not'.
@@ -2050,8 +2050,8 @@ func (l Lots) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// LotsListOptions contains the optional parameters for the LotsClient.List method.
-type LotsListOptions struct {
+// LotsClientListOptions contains the optional parameters for the LotsClient.List method.
+type LotsClientListOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -2425,8 +2425,8 @@ func (m *MarketplaceProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MarketplacesListOptions contains the optional parameters for the MarketplacesClient.List method.
-type MarketplacesListOptions struct {
+// MarketplacesClientListOptions contains the optional parameters for the MarketplacesClient.List method.
+type MarketplacesClientListOptions struct {
 	// May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup,
 	// properties/instanceName or properties/instanceId. The filter supports
 	// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'.
@@ -3788,13 +3788,14 @@ func (o OperationListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// OperationsListOptions contains the optional parameters for the OperationsClient.List method.
-type OperationsListOptions struct {
+// OperationsClientListOptions contains the optional parameters for the OperationsClient.List method.
+type OperationsClientListOptions struct {
 	// placeholder for future optional parameters
 }
 
-// PriceSheetGetByBillingPeriodOptions contains the optional parameters for the PriceSheetClient.GetByBillingPeriod method.
-type PriceSheetGetByBillingPeriodOptions struct {
+// PriceSheetClientGetByBillingPeriodOptions contains the optional parameters for the PriceSheetClient.GetByBillingPeriod
+// method.
+type PriceSheetClientGetByBillingPeriodOptions struct {
 	// May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when
 	// returning price sheet.
 	Expand *string
@@ -3806,8 +3807,8 @@ type PriceSheetGetByBillingPeriodOptions struct {
 	Top *int32
 }
 
-// PriceSheetGetOptions contains the optional parameters for the PriceSheetClient.Get method.
-type PriceSheetGetOptions struct {
+// PriceSheetClientGetOptions contains the optional parameters for the PriceSheetClient.Get method.
+type PriceSheetClientGetOptions struct {
 	// May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when
 	// returning price sheet.
 	Expand *string
@@ -4165,9 +4166,9 @@ type ReservationRecommendationDetailsCalculatedSavingsProperties struct {
 	TotalReservationCost *float32 `json:"totalReservationCost,omitempty" azure:"ro"`
 }
 
-// ReservationRecommendationDetailsGetOptions contains the optional parameters for the ReservationRecommendationDetailsClient.Get
+// ReservationRecommendationDetailsClientGetOptions contains the optional parameters for the ReservationRecommendationDetailsClient.Get
 // method.
-type ReservationRecommendationDetailsGetOptions struct {
+type ReservationRecommendationDetailsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -4334,8 +4335,9 @@ func (r ReservationRecommendationDetailsUsageProperties) MarshalJSON() ([]byte, 
 	return json.Marshal(objectMap)
 }
 
-// ReservationRecommendationsListOptions contains the optional parameters for the ReservationRecommendationsClient.List method.
-type ReservationRecommendationsListOptions struct {
+// ReservationRecommendationsClientListOptions contains the optional parameters for the ReservationRecommendationsClient.List
+// method.
+type ReservationRecommendationsClientListOptions struct {
 	// May be used to filter reservationRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default
 	// value 'Single'; properties/resourceType with allowed values
 	// ['VirtualMachines', 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat', 'MariaDB', 'RedisCache', 'CosmosDB',
@@ -4644,16 +4646,16 @@ func (r ReservationTransactionResource) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ReservationTransactionsListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.ListByBillingProfile
+// ReservationTransactionsClientListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.ListByBillingProfile
 // method.
-type ReservationTransactionsListByBillingProfileOptions struct {
+type ReservationTransactionsClientListByBillingProfileOptions struct {
 	// Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports
 	// 'le' and 'ge'
 	Filter *string
 }
 
-// ReservationTransactionsListOptions contains the optional parameters for the ReservationTransactionsClient.List method.
-type ReservationTransactionsListOptions struct {
+// ReservationTransactionsClientListOptions contains the optional parameters for the ReservationTransactionsClient.List method.
+type ReservationTransactionsClientListOptions struct {
 	// Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports
 	// 'le' and 'ge'
 	Filter *string
@@ -4676,20 +4678,20 @@ func (r ReservationTransactionsListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// ReservationsDetailsListByReservationOrderAndReservationOptions contains the optional parameters for the ReservationsDetailsClient.ListByReservationOrderAndReservation
+// ReservationsDetailsClientListByReservationOrderAndReservationOptions contains the optional parameters for the ReservationsDetailsClient.ListByReservationOrderAndReservation
 // method.
-type ReservationsDetailsListByReservationOrderAndReservationOptions struct {
+type ReservationsDetailsClientListByReservationOrderAndReservationOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ReservationsDetailsListByReservationOrderOptions contains the optional parameters for the ReservationsDetailsClient.ListByReservationOrder
+// ReservationsDetailsClientListByReservationOrderOptions contains the optional parameters for the ReservationsDetailsClient.ListByReservationOrder
 // method.
-type ReservationsDetailsListByReservationOrderOptions struct {
+type ReservationsDetailsClientListByReservationOrderOptions struct {
 	// placeholder for future optional parameters
 }
 
-// ReservationsDetailsListOptions contains the optional parameters for the ReservationsDetailsClient.List method.
-type ReservationsDetailsListOptions struct {
+// ReservationsDetailsClientListOptions contains the optional parameters for the ReservationsDetailsClient.List method.
+type ReservationsDetailsClientListOptions struct {
 	// End date. Only applicable when querying with billing profile
 	EndDate *string
 	// Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le'
@@ -4703,22 +4705,22 @@ type ReservationsDetailsListOptions struct {
 	StartDate *string
 }
 
-// ReservationsSummariesListByReservationOrderAndReservationOptions contains the optional parameters for the ReservationsSummariesClient.ListByReservationOrderAndReservation
+// ReservationsSummariesClientListByReservationOrderAndReservationOptions contains the optional parameters for the ReservationsSummariesClient.ListByReservationOrderAndReservation
 // method.
-type ReservationsSummariesListByReservationOrderAndReservationOptions struct {
+type ReservationsSummariesClientListByReservationOrderAndReservationOptions struct {
 	// Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and 'ge'
 	Filter *string
 }
 
-// ReservationsSummariesListByReservationOrderOptions contains the optional parameters for the ReservationsSummariesClient.ListByReservationOrder
+// ReservationsSummariesClientListByReservationOrderOptions contains the optional parameters for the ReservationsSummariesClient.ListByReservationOrder
 // method.
-type ReservationsSummariesListByReservationOrderOptions struct {
+type ReservationsSummariesClientListByReservationOrderOptions struct {
 	// Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and 'ge'
 	Filter *string
 }
 
-// ReservationsSummariesListOptions contains the optional parameters for the ReservationsSummariesClient.List method.
-type ReservationsSummariesListOptions struct {
+// ReservationsSummariesClientListOptions contains the optional parameters for the ReservationsSummariesClient.List method.
+type ReservationsSummariesClientListOptions struct {
 	// End date. Required only when querying with billing profile
 	EndDate *string
 	// The properties/UsageDate for start date and end date. The filter supports 'le' and 'ge'. Not required when querying with
@@ -4817,8 +4819,8 @@ func (t TagProperties) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// TagsGetOptions contains the optional parameters for the TagsClient.Get method.
-type TagsGetOptions struct {
+// TagsClientGetOptions contains the optional parameters for the TagsClient.Get method.
+type TagsClientGetOptions struct {
 	// placeholder for future optional parameters
 }
 
@@ -4886,8 +4888,8 @@ func (u UsageDetail) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// UsageDetailsListOptions contains the optional parameters for the UsageDetailsClient.List method.
-type UsageDetailsListOptions struct {
+// UsageDetailsClientListOptions contains the optional parameters for the UsageDetailsClient.List method.
+type UsageDetailsClientListOptions struct {
 	// May be used to expand the properties/additionalInfo or properties/meterDetails within a list of usage details. By default,
 	// these fields are not included when listing usage details.
 	Expand *string

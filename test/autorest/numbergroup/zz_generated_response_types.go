@@ -10,230 +10,230 @@ package numbergroup
 
 import "net/http"
 
-// NumberGetBigDecimalNegativeDecimalResponse contains the response from method Number.GetBigDecimalNegativeDecimal.
-type NumberGetBigDecimalNegativeDecimalResponse struct {
-	NumberGetBigDecimalNegativeDecimalResult
+// NumberClientGetBigDecimalNegativeDecimalResponse contains the response from method NumberClient.GetBigDecimalNegativeDecimal.
+type NumberClientGetBigDecimalNegativeDecimalResponse struct {
+	NumberClientGetBigDecimalNegativeDecimalResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberGetBigDecimalNegativeDecimalResult contains the result from method Number.GetBigDecimalNegativeDecimal.
-type NumberGetBigDecimalNegativeDecimalResult struct {
+// NumberClientGetBigDecimalNegativeDecimalResult contains the result from method NumberClient.GetBigDecimalNegativeDecimal.
+type NumberClientGetBigDecimalNegativeDecimalResult struct {
 	Value *float64
 }
 
-// NumberGetBigDecimalPositiveDecimalResponse contains the response from method Number.GetBigDecimalPositiveDecimal.
-type NumberGetBigDecimalPositiveDecimalResponse struct {
-	NumberGetBigDecimalPositiveDecimalResult
+// NumberClientGetBigDecimalPositiveDecimalResponse contains the response from method NumberClient.GetBigDecimalPositiveDecimal.
+type NumberClientGetBigDecimalPositiveDecimalResponse struct {
+	NumberClientGetBigDecimalPositiveDecimalResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberGetBigDecimalPositiveDecimalResult contains the result from method Number.GetBigDecimalPositiveDecimal.
-type NumberGetBigDecimalPositiveDecimalResult struct {
+// NumberClientGetBigDecimalPositiveDecimalResult contains the result from method NumberClient.GetBigDecimalPositiveDecimal.
+type NumberClientGetBigDecimalPositiveDecimalResult struct {
 	Value *float64
 }
 
-// NumberGetBigDecimalResponse contains the response from method Number.GetBigDecimal.
-type NumberGetBigDecimalResponse struct {
-	NumberGetBigDecimalResult
+// NumberClientGetBigDecimalResponse contains the response from method NumberClient.GetBigDecimal.
+type NumberClientGetBigDecimalResponse struct {
+	NumberClientGetBigDecimalResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberGetBigDecimalResult contains the result from method Number.GetBigDecimal.
-type NumberGetBigDecimalResult struct {
+// NumberClientGetBigDecimalResult contains the result from method NumberClient.GetBigDecimal.
+type NumberClientGetBigDecimalResult struct {
 	Value *float64
 }
 
-// NumberGetBigDoubleNegativeDecimalResponse contains the response from method Number.GetBigDoubleNegativeDecimal.
-type NumberGetBigDoubleNegativeDecimalResponse struct {
-	NumberGetBigDoubleNegativeDecimalResult
+// NumberClientGetBigDoubleNegativeDecimalResponse contains the response from method NumberClient.GetBigDoubleNegativeDecimal.
+type NumberClientGetBigDoubleNegativeDecimalResponse struct {
+	NumberClientGetBigDoubleNegativeDecimalResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberGetBigDoubleNegativeDecimalResult contains the result from method Number.GetBigDoubleNegativeDecimal.
-type NumberGetBigDoubleNegativeDecimalResult struct {
+// NumberClientGetBigDoubleNegativeDecimalResult contains the result from method NumberClient.GetBigDoubleNegativeDecimal.
+type NumberClientGetBigDoubleNegativeDecimalResult struct {
 	Value *float64
 }
 
-// NumberGetBigDoublePositiveDecimalResponse contains the response from method Number.GetBigDoublePositiveDecimal.
-type NumberGetBigDoublePositiveDecimalResponse struct {
-	NumberGetBigDoublePositiveDecimalResult
+// NumberClientGetBigDoublePositiveDecimalResponse contains the response from method NumberClient.GetBigDoublePositiveDecimal.
+type NumberClientGetBigDoublePositiveDecimalResponse struct {
+	NumberClientGetBigDoublePositiveDecimalResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberGetBigDoublePositiveDecimalResult contains the result from method Number.GetBigDoublePositiveDecimal.
-type NumberGetBigDoublePositiveDecimalResult struct {
+// NumberClientGetBigDoublePositiveDecimalResult contains the result from method NumberClient.GetBigDoublePositiveDecimal.
+type NumberClientGetBigDoublePositiveDecimalResult struct {
 	Value *float64
 }
 
-// NumberGetBigDoubleResponse contains the response from method Number.GetBigDouble.
-type NumberGetBigDoubleResponse struct {
-	NumberGetBigDoubleResult
+// NumberClientGetBigDoubleResponse contains the response from method NumberClient.GetBigDouble.
+type NumberClientGetBigDoubleResponse struct {
+	NumberClientGetBigDoubleResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberGetBigDoubleResult contains the result from method Number.GetBigDouble.
-type NumberGetBigDoubleResult struct {
+// NumberClientGetBigDoubleResult contains the result from method NumberClient.GetBigDouble.
+type NumberClientGetBigDoubleResult struct {
 	Value *float64
 }
 
-// NumberGetBigFloatResponse contains the response from method Number.GetBigFloat.
-type NumberGetBigFloatResponse struct {
-	NumberGetBigFloatResult
+// NumberClientGetBigFloatResponse contains the response from method NumberClient.GetBigFloat.
+type NumberClientGetBigFloatResponse struct {
+	NumberClientGetBigFloatResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberGetBigFloatResult contains the result from method Number.GetBigFloat.
-type NumberGetBigFloatResult struct {
+// NumberClientGetBigFloatResult contains the result from method NumberClient.GetBigFloat.
+type NumberClientGetBigFloatResult struct {
 	Value *float32
 }
 
-// NumberGetInvalidDecimalResponse contains the response from method Number.GetInvalidDecimal.
-type NumberGetInvalidDecimalResponse struct {
-	NumberGetInvalidDecimalResult
+// NumberClientGetInvalidDecimalResponse contains the response from method NumberClient.GetInvalidDecimal.
+type NumberClientGetInvalidDecimalResponse struct {
+	NumberClientGetInvalidDecimalResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberGetInvalidDecimalResult contains the result from method Number.GetInvalidDecimal.
-type NumberGetInvalidDecimalResult struct {
+// NumberClientGetInvalidDecimalResult contains the result from method NumberClient.GetInvalidDecimal.
+type NumberClientGetInvalidDecimalResult struct {
 	Value *float64
 }
 
-// NumberGetInvalidDoubleResponse contains the response from method Number.GetInvalidDouble.
-type NumberGetInvalidDoubleResponse struct {
-	NumberGetInvalidDoubleResult
+// NumberClientGetInvalidDoubleResponse contains the response from method NumberClient.GetInvalidDouble.
+type NumberClientGetInvalidDoubleResponse struct {
+	NumberClientGetInvalidDoubleResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberGetInvalidDoubleResult contains the result from method Number.GetInvalidDouble.
-type NumberGetInvalidDoubleResult struct {
+// NumberClientGetInvalidDoubleResult contains the result from method NumberClient.GetInvalidDouble.
+type NumberClientGetInvalidDoubleResult struct {
 	Value *float64
 }
 
-// NumberGetInvalidFloatResponse contains the response from method Number.GetInvalidFloat.
-type NumberGetInvalidFloatResponse struct {
-	NumberGetInvalidFloatResult
+// NumberClientGetInvalidFloatResponse contains the response from method NumberClient.GetInvalidFloat.
+type NumberClientGetInvalidFloatResponse struct {
+	NumberClientGetInvalidFloatResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberGetInvalidFloatResult contains the result from method Number.GetInvalidFloat.
-type NumberGetInvalidFloatResult struct {
+// NumberClientGetInvalidFloatResult contains the result from method NumberClient.GetInvalidFloat.
+type NumberClientGetInvalidFloatResult struct {
 	Value *float32
 }
 
-// NumberGetNullResponse contains the response from method Number.GetNull.
-type NumberGetNullResponse struct {
-	NumberGetNullResult
+// NumberClientGetNullResponse contains the response from method NumberClient.GetNull.
+type NumberClientGetNullResponse struct {
+	NumberClientGetNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberGetNullResult contains the result from method Number.GetNull.
-type NumberGetNullResult struct {
+// NumberClientGetNullResult contains the result from method NumberClient.GetNull.
+type NumberClientGetNullResult struct {
 	Value *float32
 }
 
-// NumberGetSmallDecimalResponse contains the response from method Number.GetSmallDecimal.
-type NumberGetSmallDecimalResponse struct {
-	NumberGetSmallDecimalResult
+// NumberClientGetSmallDecimalResponse contains the response from method NumberClient.GetSmallDecimal.
+type NumberClientGetSmallDecimalResponse struct {
+	NumberClientGetSmallDecimalResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberGetSmallDecimalResult contains the result from method Number.GetSmallDecimal.
-type NumberGetSmallDecimalResult struct {
+// NumberClientGetSmallDecimalResult contains the result from method NumberClient.GetSmallDecimal.
+type NumberClientGetSmallDecimalResult struct {
 	Value *float64
 }
 
-// NumberGetSmallDoubleResponse contains the response from method Number.GetSmallDouble.
-type NumberGetSmallDoubleResponse struct {
-	NumberGetSmallDoubleResult
+// NumberClientGetSmallDoubleResponse contains the response from method NumberClient.GetSmallDouble.
+type NumberClientGetSmallDoubleResponse struct {
+	NumberClientGetSmallDoubleResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberGetSmallDoubleResult contains the result from method Number.GetSmallDouble.
-type NumberGetSmallDoubleResult struct {
+// NumberClientGetSmallDoubleResult contains the result from method NumberClient.GetSmallDouble.
+type NumberClientGetSmallDoubleResult struct {
 	Value *float64
 }
 
-// NumberGetSmallFloatResponse contains the response from method Number.GetSmallFloat.
-type NumberGetSmallFloatResponse struct {
-	NumberGetSmallFloatResult
+// NumberClientGetSmallFloatResponse contains the response from method NumberClient.GetSmallFloat.
+type NumberClientGetSmallFloatResponse struct {
+	NumberClientGetSmallFloatResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberGetSmallFloatResult contains the result from method Number.GetSmallFloat.
-type NumberGetSmallFloatResult struct {
+// NumberClientGetSmallFloatResult contains the result from method NumberClient.GetSmallFloat.
+type NumberClientGetSmallFloatResult struct {
 	Value *float64
 }
 
-// NumberPutBigDecimalNegativeDecimalResponse contains the response from method Number.PutBigDecimalNegativeDecimal.
-type NumberPutBigDecimalNegativeDecimalResponse struct {
+// NumberClientPutBigDecimalNegativeDecimalResponse contains the response from method NumberClient.PutBigDecimalNegativeDecimal.
+type NumberClientPutBigDecimalNegativeDecimalResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberPutBigDecimalPositiveDecimalResponse contains the response from method Number.PutBigDecimalPositiveDecimal.
-type NumberPutBigDecimalPositiveDecimalResponse struct {
+// NumberClientPutBigDecimalPositiveDecimalResponse contains the response from method NumberClient.PutBigDecimalPositiveDecimal.
+type NumberClientPutBigDecimalPositiveDecimalResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberPutBigDecimalResponse contains the response from method Number.PutBigDecimal.
-type NumberPutBigDecimalResponse struct {
+// NumberClientPutBigDecimalResponse contains the response from method NumberClient.PutBigDecimal.
+type NumberClientPutBigDecimalResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberPutBigDoubleNegativeDecimalResponse contains the response from method Number.PutBigDoubleNegativeDecimal.
-type NumberPutBigDoubleNegativeDecimalResponse struct {
+// NumberClientPutBigDoubleNegativeDecimalResponse contains the response from method NumberClient.PutBigDoubleNegativeDecimal.
+type NumberClientPutBigDoubleNegativeDecimalResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberPutBigDoublePositiveDecimalResponse contains the response from method Number.PutBigDoublePositiveDecimal.
-type NumberPutBigDoublePositiveDecimalResponse struct {
+// NumberClientPutBigDoublePositiveDecimalResponse contains the response from method NumberClient.PutBigDoublePositiveDecimal.
+type NumberClientPutBigDoublePositiveDecimalResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberPutBigDoubleResponse contains the response from method Number.PutBigDouble.
-type NumberPutBigDoubleResponse struct {
+// NumberClientPutBigDoubleResponse contains the response from method NumberClient.PutBigDouble.
+type NumberClientPutBigDoubleResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberPutBigFloatResponse contains the response from method Number.PutBigFloat.
-type NumberPutBigFloatResponse struct {
+// NumberClientPutBigFloatResponse contains the response from method NumberClient.PutBigFloat.
+type NumberClientPutBigFloatResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberPutSmallDecimalResponse contains the response from method Number.PutSmallDecimal.
-type NumberPutSmallDecimalResponse struct {
+// NumberClientPutSmallDecimalResponse contains the response from method NumberClient.PutSmallDecimal.
+type NumberClientPutSmallDecimalResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberPutSmallDoubleResponse contains the response from method Number.PutSmallDouble.
-type NumberPutSmallDoubleResponse struct {
+// NumberClientPutSmallDoubleResponse contains the response from method NumberClient.PutSmallDouble.
+type NumberClientPutSmallDoubleResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// NumberPutSmallFloatResponse contains the response from method Number.PutSmallFloat.
-type NumberPutSmallFloatResponse struct {
+// NumberClientPutSmallFloatResponse contains the response from method NumberClient.PutSmallFloat.
+type NumberClientPutSmallFloatResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

@@ -13,748 +13,748 @@ import (
 	"time"
 )
 
-// DictionaryGetArrayEmptyResponse contains the response from method Dictionary.GetArrayEmpty.
-type DictionaryGetArrayEmptyResponse struct {
-	DictionaryGetArrayEmptyResult
+// DictionaryClientGetArrayEmptyResponse contains the response from method DictionaryClient.GetArrayEmpty.
+type DictionaryClientGetArrayEmptyResponse struct {
+	DictionaryClientGetArrayEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetArrayEmptyResult contains the result from method Dictionary.GetArrayEmpty.
-type DictionaryGetArrayEmptyResult struct {
+// DictionaryClientGetArrayEmptyResult contains the result from method DictionaryClient.GetArrayEmpty.
+type DictionaryClientGetArrayEmptyResult struct {
 	// An empty dictionary {}
 	Value map[string][]*string
 }
 
-// DictionaryGetArrayItemEmptyResponse contains the response from method Dictionary.GetArrayItemEmpty.
-type DictionaryGetArrayItemEmptyResponse struct {
-	DictionaryGetArrayItemEmptyResult
+// DictionaryClientGetArrayItemEmptyResponse contains the response from method DictionaryClient.GetArrayItemEmpty.
+type DictionaryClientGetArrayItemEmptyResponse struct {
+	DictionaryClientGetArrayItemEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetArrayItemEmptyResult contains the result from method Dictionary.GetArrayItemEmpty.
-type DictionaryGetArrayItemEmptyResult struct {
+// DictionaryClientGetArrayItemEmptyResult contains the result from method DictionaryClient.GetArrayItemEmpty.
+type DictionaryClientGetArrayItemEmptyResult struct {
 	// An array of array of strings {"0": ["1", "2", "3"], "1": [], "2": ["7", "8", "9"]}
 	Value map[string][]*string
 }
 
-// DictionaryGetArrayItemNullResponse contains the response from method Dictionary.GetArrayItemNull.
-type DictionaryGetArrayItemNullResponse struct {
-	DictionaryGetArrayItemNullResult
+// DictionaryClientGetArrayItemNullResponse contains the response from method DictionaryClient.GetArrayItemNull.
+type DictionaryClientGetArrayItemNullResponse struct {
+	DictionaryClientGetArrayItemNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetArrayItemNullResult contains the result from method Dictionary.GetArrayItemNull.
-type DictionaryGetArrayItemNullResult struct {
+// DictionaryClientGetArrayItemNullResult contains the result from method DictionaryClient.GetArrayItemNull.
+type DictionaryClientGetArrayItemNullResult struct {
 	// An array of array of strings {"0": ["1", "2", "3"], "1": null, "2": ["7", "8", "9"]}
 	Value map[string][]*string
 }
 
-// DictionaryGetArrayNullResponse contains the response from method Dictionary.GetArrayNull.
-type DictionaryGetArrayNullResponse struct {
-	DictionaryGetArrayNullResult
+// DictionaryClientGetArrayNullResponse contains the response from method DictionaryClient.GetArrayNull.
+type DictionaryClientGetArrayNullResponse struct {
+	DictionaryClientGetArrayNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetArrayNullResult contains the result from method Dictionary.GetArrayNull.
-type DictionaryGetArrayNullResult struct {
+// DictionaryClientGetArrayNullResult contains the result from method DictionaryClient.GetArrayNull.
+type DictionaryClientGetArrayNullResult struct {
 	// a null array
 	Value map[string][]*string
 }
 
-// DictionaryGetArrayValidResponse contains the response from method Dictionary.GetArrayValid.
-type DictionaryGetArrayValidResponse struct {
-	DictionaryGetArrayValidResult
+// DictionaryClientGetArrayValidResponse contains the response from method DictionaryClient.GetArrayValid.
+type DictionaryClientGetArrayValidResponse struct {
+	DictionaryClientGetArrayValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetArrayValidResult contains the result from method Dictionary.GetArrayValid.
-type DictionaryGetArrayValidResult struct {
+// DictionaryClientGetArrayValidResult contains the result from method DictionaryClient.GetArrayValid.
+type DictionaryClientGetArrayValidResult struct {
 	// An array of array of strings {"0": ["1", "2", "3"], "1": ["4", "5", "6"], "2": ["7", "8", "9"]}
 	Value map[string][]*string
 }
 
-// DictionaryGetBase64URLResponse contains the response from method Dictionary.GetBase64URL.
-type DictionaryGetBase64URLResponse struct {
-	DictionaryGetBase64URLResult
+// DictionaryClientGetBase64URLResponse contains the response from method DictionaryClient.GetBase64URL.
+type DictionaryClientGetBase64URLResponse struct {
+	DictionaryClientGetBase64URLResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetBase64URLResult contains the result from method Dictionary.GetBase64URL.
-type DictionaryGetBase64URLResult struct {
+// DictionaryClientGetBase64URLResult contains the result from method DictionaryClient.GetBase64URL.
+type DictionaryClientGetBase64URLResult struct {
 	// The base64url dictionary value {"0": "a string that gets encoded with base64url", "1": "test string", "2": "Lorem ipsum"}
 	Value map[string][]byte
 }
 
-// DictionaryGetBooleanInvalidNullResponse contains the response from method Dictionary.GetBooleanInvalidNull.
-type DictionaryGetBooleanInvalidNullResponse struct {
-	DictionaryGetBooleanInvalidNullResult
+// DictionaryClientGetBooleanInvalidNullResponse contains the response from method DictionaryClient.GetBooleanInvalidNull.
+type DictionaryClientGetBooleanInvalidNullResponse struct {
+	DictionaryClientGetBooleanInvalidNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetBooleanInvalidNullResult contains the result from method Dictionary.GetBooleanInvalidNull.
-type DictionaryGetBooleanInvalidNullResult struct {
+// DictionaryClientGetBooleanInvalidNullResult contains the result from method DictionaryClient.GetBooleanInvalidNull.
+type DictionaryClientGetBooleanInvalidNullResult struct {
 	// The dictionary value {"0": true, "1": null, "2": false }
 	Value map[string]*bool
 }
 
-// DictionaryGetBooleanInvalidStringResponse contains the response from method Dictionary.GetBooleanInvalidString.
-type DictionaryGetBooleanInvalidStringResponse struct {
-	DictionaryGetBooleanInvalidStringResult
+// DictionaryClientGetBooleanInvalidStringResponse contains the response from method DictionaryClient.GetBooleanInvalidString.
+type DictionaryClientGetBooleanInvalidStringResponse struct {
+	DictionaryClientGetBooleanInvalidStringResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetBooleanInvalidStringResult contains the result from method Dictionary.GetBooleanInvalidString.
-type DictionaryGetBooleanInvalidStringResult struct {
+// DictionaryClientGetBooleanInvalidStringResult contains the result from method DictionaryClient.GetBooleanInvalidString.
+type DictionaryClientGetBooleanInvalidStringResult struct {
 	// The dictionary value [true, 'boolean', false]
 	Value map[string]*bool
 }
 
-// DictionaryGetBooleanTfftResponse contains the response from method Dictionary.GetBooleanTfft.
-type DictionaryGetBooleanTfftResponse struct {
-	DictionaryGetBooleanTfftResult
+// DictionaryClientGetBooleanTfftResponse contains the response from method DictionaryClient.GetBooleanTfft.
+type DictionaryClientGetBooleanTfftResponse struct {
+	DictionaryClientGetBooleanTfftResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetBooleanTfftResult contains the result from method Dictionary.GetBooleanTfft.
-type DictionaryGetBooleanTfftResult struct {
+// DictionaryClientGetBooleanTfftResult contains the result from method DictionaryClient.GetBooleanTfft.
+type DictionaryClientGetBooleanTfftResult struct {
 	// The dictionary value {"0": true, "1": false, "2": false, "3": true }
 	Value map[string]*bool
 }
 
-// DictionaryGetByteInvalidNullResponse contains the response from method Dictionary.GetByteInvalidNull.
-type DictionaryGetByteInvalidNullResponse struct {
-	DictionaryGetByteInvalidNullResult
+// DictionaryClientGetByteInvalidNullResponse contains the response from method DictionaryClient.GetByteInvalidNull.
+type DictionaryClientGetByteInvalidNullResponse struct {
+	DictionaryClientGetByteInvalidNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetByteInvalidNullResult contains the result from method Dictionary.GetByteInvalidNull.
-type DictionaryGetByteInvalidNullResult struct {
+// DictionaryClientGetByteInvalidNullResult contains the result from method DictionaryClient.GetByteInvalidNull.
+type DictionaryClientGetByteInvalidNullResult struct {
 	// The byte dictionary value {"0": hex(FF FF FF FA), "1": null} with the first item base64 encoded
 	Value map[string][]byte
 }
 
-// DictionaryGetByteValidResponse contains the response from method Dictionary.GetByteValid.
-type DictionaryGetByteValidResponse struct {
-	DictionaryGetByteValidResult
+// DictionaryClientGetByteValidResponse contains the response from method DictionaryClient.GetByteValid.
+type DictionaryClientGetByteValidResponse struct {
+	DictionaryClientGetByteValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetByteValidResult contains the result from method Dictionary.GetByteValid.
-type DictionaryGetByteValidResult struct {
+// DictionaryClientGetByteValidResult contains the result from method DictionaryClient.GetByteValid.
+type DictionaryClientGetByteValidResult struct {
 	// The dictionary value {"0": hex(FF FF FF FA), "1": hex(01 02 03), "2": hex (25, 29, 43)} with each elementencoded in base
 	// 64
 	Value map[string][]byte
 }
 
-// DictionaryGetComplexEmptyResponse contains the response from method Dictionary.GetComplexEmpty.
-type DictionaryGetComplexEmptyResponse struct {
-	DictionaryGetComplexEmptyResult
+// DictionaryClientGetComplexEmptyResponse contains the response from method DictionaryClient.GetComplexEmpty.
+type DictionaryClientGetComplexEmptyResponse struct {
+	DictionaryClientGetComplexEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetComplexEmptyResult contains the result from method Dictionary.GetComplexEmpty.
-type DictionaryGetComplexEmptyResult struct {
+// DictionaryClientGetComplexEmptyResult contains the result from method DictionaryClient.GetComplexEmpty.
+type DictionaryClientGetComplexEmptyResult struct {
 	// Empty dictionary of complex type {}
 	Value map[string]*Widget
 }
 
-// DictionaryGetComplexItemEmptyResponse contains the response from method Dictionary.GetComplexItemEmpty.
-type DictionaryGetComplexItemEmptyResponse struct {
-	DictionaryGetComplexItemEmptyResult
+// DictionaryClientGetComplexItemEmptyResponse contains the response from method DictionaryClient.GetComplexItemEmpty.
+type DictionaryClientGetComplexItemEmptyResponse struct {
+	DictionaryClientGetComplexItemEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetComplexItemEmptyResult contains the result from method Dictionary.GetComplexItemEmpty.
-type DictionaryGetComplexItemEmptyResult struct {
+// DictionaryClientGetComplexItemEmptyResult contains the result from method DictionaryClient.GetComplexItemEmpty.
+type DictionaryClientGetComplexItemEmptyResult struct {
 	// Dictionary of complex type with empty item [{'integer': 1 'string': '2'}, {}, {'integer': 5, 'string': '6'}]
 	Value map[string]*Widget
 }
 
-// DictionaryGetComplexItemNullResponse contains the response from method Dictionary.GetComplexItemNull.
-type DictionaryGetComplexItemNullResponse struct {
-	DictionaryGetComplexItemNullResult
+// DictionaryClientGetComplexItemNullResponse contains the response from method DictionaryClient.GetComplexItemNull.
+type DictionaryClientGetComplexItemNullResponse struct {
+	DictionaryClientGetComplexItemNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetComplexItemNullResult contains the result from method Dictionary.GetComplexItemNull.
-type DictionaryGetComplexItemNullResult struct {
+// DictionaryClientGetComplexItemNullResult contains the result from method DictionaryClient.GetComplexItemNull.
+type DictionaryClientGetComplexItemNullResult struct {
 	// Dictionary of complex type with null item [{'integer': 1 'string': '2'}, null, {'integer': 5, 'string': '6'}]
 	Value map[string]*Widget
 }
 
-// DictionaryGetComplexNullResponse contains the response from method Dictionary.GetComplexNull.
-type DictionaryGetComplexNullResponse struct {
-	DictionaryGetComplexNullResult
+// DictionaryClientGetComplexNullResponse contains the response from method DictionaryClient.GetComplexNull.
+type DictionaryClientGetComplexNullResponse struct {
+	DictionaryClientGetComplexNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetComplexNullResult contains the result from method Dictionary.GetComplexNull.
-type DictionaryGetComplexNullResult struct {
+// DictionaryClientGetComplexNullResult contains the result from method DictionaryClient.GetComplexNull.
+type DictionaryClientGetComplexNullResult struct {
 	// Dictionary of complex type with null value
 	Value map[string]*Widget
 }
 
-// DictionaryGetComplexValidResponse contains the response from method Dictionary.GetComplexValid.
-type DictionaryGetComplexValidResponse struct {
-	DictionaryGetComplexValidResult
+// DictionaryClientGetComplexValidResponse contains the response from method DictionaryClient.GetComplexValid.
+type DictionaryClientGetComplexValidResponse struct {
+	DictionaryClientGetComplexValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetComplexValidResult contains the result from method Dictionary.GetComplexValid.
-type DictionaryGetComplexValidResult struct {
+// DictionaryClientGetComplexValidResult contains the result from method DictionaryClient.GetComplexValid.
+type DictionaryClientGetComplexValidResult struct {
 	// Dictionary of complex type with [{'integer': 1 'string': '2'}, {'integer': 3, 'string': '4'}, {'integer': 5, 'string':
 	// '6'}]
 	Value map[string]*Widget
 }
 
-// DictionaryGetDateInvalidCharsResponse contains the response from method Dictionary.GetDateInvalidChars.
-type DictionaryGetDateInvalidCharsResponse struct {
-	DictionaryGetDateInvalidCharsResult
+// DictionaryClientGetDateInvalidCharsResponse contains the response from method DictionaryClient.GetDateInvalidChars.
+type DictionaryClientGetDateInvalidCharsResponse struct {
+	DictionaryClientGetDateInvalidCharsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetDateInvalidCharsResult contains the result from method Dictionary.GetDateInvalidChars.
-type DictionaryGetDateInvalidCharsResult struct {
+// DictionaryClientGetDateInvalidCharsResult contains the result from method DictionaryClient.GetDateInvalidChars.
+type DictionaryClientGetDateInvalidCharsResult struct {
 	// The dictionary value {"0": "2011-03-22", "1": "date"}
 	Value map[string]*time.Time
 }
 
-// DictionaryGetDateInvalidNullResponse contains the response from method Dictionary.GetDateInvalidNull.
-type DictionaryGetDateInvalidNullResponse struct {
-	DictionaryGetDateInvalidNullResult
+// DictionaryClientGetDateInvalidNullResponse contains the response from method DictionaryClient.GetDateInvalidNull.
+type DictionaryClientGetDateInvalidNullResponse struct {
+	DictionaryClientGetDateInvalidNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetDateInvalidNullResult contains the result from method Dictionary.GetDateInvalidNull.
-type DictionaryGetDateInvalidNullResult struct {
+// DictionaryClientGetDateInvalidNullResult contains the result from method DictionaryClient.GetDateInvalidNull.
+type DictionaryClientGetDateInvalidNullResult struct {
 	// The dictionary value {"0": "2012-01-01", "1": null, "2": "1776-07-04"}
 	Value map[string]*time.Time
 }
 
-// DictionaryGetDateTimeInvalidCharsResponse contains the response from method Dictionary.GetDateTimeInvalidChars.
-type DictionaryGetDateTimeInvalidCharsResponse struct {
-	DictionaryGetDateTimeInvalidCharsResult
+// DictionaryClientGetDateTimeInvalidCharsResponse contains the response from method DictionaryClient.GetDateTimeInvalidChars.
+type DictionaryClientGetDateTimeInvalidCharsResponse struct {
+	DictionaryClientGetDateTimeInvalidCharsResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetDateTimeInvalidCharsResult contains the result from method Dictionary.GetDateTimeInvalidChars.
-type DictionaryGetDateTimeInvalidCharsResult struct {
+// DictionaryClientGetDateTimeInvalidCharsResult contains the result from method DictionaryClient.GetDateTimeInvalidChars.
+type DictionaryClientGetDateTimeInvalidCharsResult struct {
 	// The dictionary value {"0": "2000-12-01t00:00:01z", "1": "date-time"}
 	Value map[string]*time.Time
 }
 
-// DictionaryGetDateTimeInvalidNullResponse contains the response from method Dictionary.GetDateTimeInvalidNull.
-type DictionaryGetDateTimeInvalidNullResponse struct {
-	DictionaryGetDateTimeInvalidNullResult
+// DictionaryClientGetDateTimeInvalidNullResponse contains the response from method DictionaryClient.GetDateTimeInvalidNull.
+type DictionaryClientGetDateTimeInvalidNullResponse struct {
+	DictionaryClientGetDateTimeInvalidNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetDateTimeInvalidNullResult contains the result from method Dictionary.GetDateTimeInvalidNull.
-type DictionaryGetDateTimeInvalidNullResult struct {
+// DictionaryClientGetDateTimeInvalidNullResult contains the result from method DictionaryClient.GetDateTimeInvalidNull.
+type DictionaryClientGetDateTimeInvalidNullResult struct {
 	// The dictionary value {"0": "2000-12-01t00:00:01z", "1": null}
 	Value map[string]*time.Time
 }
 
-// DictionaryGetDateTimeRFC1123ValidResponse contains the response from method Dictionary.GetDateTimeRFC1123Valid.
-type DictionaryGetDateTimeRFC1123ValidResponse struct {
-	DictionaryGetDateTimeRFC1123ValidResult
+// DictionaryClientGetDateTimeRFC1123ValidResponse contains the response from method DictionaryClient.GetDateTimeRFC1123Valid.
+type DictionaryClientGetDateTimeRFC1123ValidResponse struct {
+	DictionaryClientGetDateTimeRFC1123ValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetDateTimeRFC1123ValidResult contains the result from method Dictionary.GetDateTimeRFC1123Valid.
-type DictionaryGetDateTimeRFC1123ValidResult struct {
+// DictionaryClientGetDateTimeRFC1123ValidResult contains the result from method DictionaryClient.GetDateTimeRFC1123Valid.
+type DictionaryClientGetDateTimeRFC1123ValidResult struct {
 	// The dictionary value {"0": "Fri, 01 Dec 2000 00:00:01 GMT", "1": "Wed, 02 Jan 1980 00:11:35 GMT", "2": "Wed, 12 Oct 1492
 	// 10:15:01 GMT"}
 	Value map[string]*time.Time
 }
 
-// DictionaryGetDateTimeValidResponse contains the response from method Dictionary.GetDateTimeValid.
-type DictionaryGetDateTimeValidResponse struct {
-	DictionaryGetDateTimeValidResult
+// DictionaryClientGetDateTimeValidResponse contains the response from method DictionaryClient.GetDateTimeValid.
+type DictionaryClientGetDateTimeValidResponse struct {
+	DictionaryClientGetDateTimeValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetDateTimeValidResult contains the result from method Dictionary.GetDateTimeValid.
-type DictionaryGetDateTimeValidResult struct {
+// DictionaryClientGetDateTimeValidResult contains the result from method DictionaryClient.GetDateTimeValid.
+type DictionaryClientGetDateTimeValidResult struct {
 	// The dictionary value {"0": "2000-12-01t00:00:01z", "1": "1980-01-02T00:11:35+01:00", "2": "1492-10-12T10:15:01-08:00"}
 	Value map[string]*time.Time
 }
 
-// DictionaryGetDateValidResponse contains the response from method Dictionary.GetDateValid.
-type DictionaryGetDateValidResponse struct {
-	DictionaryGetDateValidResult
+// DictionaryClientGetDateValidResponse contains the response from method DictionaryClient.GetDateValid.
+type DictionaryClientGetDateValidResponse struct {
+	DictionaryClientGetDateValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetDateValidResult contains the result from method Dictionary.GetDateValid.
-type DictionaryGetDateValidResult struct {
+// DictionaryClientGetDateValidResult contains the result from method DictionaryClient.GetDateValid.
+type DictionaryClientGetDateValidResult struct {
 	// The dictionary value {"0": "2000-12-01", "1": "1980-01-02", "2": "1492-10-12"}
 	Value map[string]*time.Time
 }
 
-// DictionaryGetDictionaryEmptyResponse contains the response from method Dictionary.GetDictionaryEmpty.
-type DictionaryGetDictionaryEmptyResponse struct {
-	DictionaryGetDictionaryEmptyResult
+// DictionaryClientGetDictionaryEmptyResponse contains the response from method DictionaryClient.GetDictionaryEmpty.
+type DictionaryClientGetDictionaryEmptyResponse struct {
+	DictionaryClientGetDictionaryEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetDictionaryEmptyResult contains the result from method Dictionary.GetDictionaryEmpty.
-type DictionaryGetDictionaryEmptyResult struct {
+// DictionaryClientGetDictionaryEmptyResult contains the result from method DictionaryClient.GetDictionaryEmpty.
+type DictionaryClientGetDictionaryEmptyResult struct {
 	// An dictionaries of dictionaries of type <string, string> with value {}
 	Value map[string]map[string]*string
 }
 
-// DictionaryGetDictionaryItemEmptyResponse contains the response from method Dictionary.GetDictionaryItemEmpty.
-type DictionaryGetDictionaryItemEmptyResponse struct {
-	DictionaryGetDictionaryItemEmptyResult
+// DictionaryClientGetDictionaryItemEmptyResponse contains the response from method DictionaryClient.GetDictionaryItemEmpty.
+type DictionaryClientGetDictionaryItemEmptyResponse struct {
+	DictionaryClientGetDictionaryItemEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetDictionaryItemEmptyResult contains the result from method Dictionary.GetDictionaryItemEmpty.
-type DictionaryGetDictionaryItemEmptyResult struct {
+// DictionaryClientGetDictionaryItemEmptyResult contains the result from method DictionaryClient.GetDictionaryItemEmpty.
+type DictionaryClientGetDictionaryItemEmptyResult struct {
 	// An dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1":
 	// {}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 	Value map[string]map[string]*string
 }
 
-// DictionaryGetDictionaryItemNullResponse contains the response from method Dictionary.GetDictionaryItemNull.
-type DictionaryGetDictionaryItemNullResponse struct {
-	DictionaryGetDictionaryItemNullResult
+// DictionaryClientGetDictionaryItemNullResponse contains the response from method DictionaryClient.GetDictionaryItemNull.
+type DictionaryClientGetDictionaryItemNullResponse struct {
+	DictionaryClientGetDictionaryItemNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetDictionaryItemNullResult contains the result from method Dictionary.GetDictionaryItemNull.
-type DictionaryGetDictionaryItemNullResult struct {
+// DictionaryClientGetDictionaryItemNullResult contains the result from method DictionaryClient.GetDictionaryItemNull.
+type DictionaryClientGetDictionaryItemNullResult struct {
 	// An dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1":
 	// null, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 	Value map[string]map[string]*string
 }
 
-// DictionaryGetDictionaryNullResponse contains the response from method Dictionary.GetDictionaryNull.
-type DictionaryGetDictionaryNullResponse struct {
-	DictionaryGetDictionaryNullResult
+// DictionaryClientGetDictionaryNullResponse contains the response from method DictionaryClient.GetDictionaryNull.
+type DictionaryClientGetDictionaryNullResponse struct {
+	DictionaryClientGetDictionaryNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetDictionaryNullResult contains the result from method Dictionary.GetDictionaryNull.
-type DictionaryGetDictionaryNullResult struct {
+// DictionaryClientGetDictionaryNullResult contains the result from method DictionaryClient.GetDictionaryNull.
+type DictionaryClientGetDictionaryNullResult struct {
 	// An dictionaries of dictionaries with value null
 	Value map[string]map[string]*string
 }
 
-// DictionaryGetDictionaryValidResponse contains the response from method Dictionary.GetDictionaryValid.
-type DictionaryGetDictionaryValidResponse struct {
-	DictionaryGetDictionaryValidResult
+// DictionaryClientGetDictionaryValidResponse contains the response from method DictionaryClient.GetDictionaryValid.
+type DictionaryClientGetDictionaryValidResponse struct {
+	DictionaryClientGetDictionaryValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetDictionaryValidResult contains the result from method Dictionary.GetDictionaryValid.
-type DictionaryGetDictionaryValidResult struct {
+// DictionaryClientGetDictionaryValidResult contains the result from method DictionaryClient.GetDictionaryValid.
+type DictionaryClientGetDictionaryValidResult struct {
 	// An dictionaries of dictionaries of type <string, string> with value {"0": {"1": "one", "2": "two", "3": "three"}, "1":
 	// {"4": "four", "5": "five", "6": "six"}, "2": {"7": "seven", "8": "eight", "9": "nine"}}
 	Value map[string]map[string]*string
 }
 
-// DictionaryGetDoubleInvalidNullResponse contains the response from method Dictionary.GetDoubleInvalidNull.
-type DictionaryGetDoubleInvalidNullResponse struct {
-	DictionaryGetDoubleInvalidNullResult
+// DictionaryClientGetDoubleInvalidNullResponse contains the response from method DictionaryClient.GetDoubleInvalidNull.
+type DictionaryClientGetDoubleInvalidNullResponse struct {
+	DictionaryClientGetDoubleInvalidNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetDoubleInvalidNullResult contains the result from method Dictionary.GetDoubleInvalidNull.
-type DictionaryGetDoubleInvalidNullResult struct {
+// DictionaryClientGetDoubleInvalidNullResult contains the result from method DictionaryClient.GetDoubleInvalidNull.
+type DictionaryClientGetDoubleInvalidNullResult struct {
 	// The dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
 	Value map[string]*float64
 }
 
-// DictionaryGetDoubleInvalidStringResponse contains the response from method Dictionary.GetDoubleInvalidString.
-type DictionaryGetDoubleInvalidStringResponse struct {
-	DictionaryGetDoubleInvalidStringResult
+// DictionaryClientGetDoubleInvalidStringResponse contains the response from method DictionaryClient.GetDoubleInvalidString.
+type DictionaryClientGetDoubleInvalidStringResponse struct {
+	DictionaryClientGetDoubleInvalidStringResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetDoubleInvalidStringResult contains the result from method Dictionary.GetDoubleInvalidString.
-type DictionaryGetDoubleInvalidStringResult struct {
+// DictionaryClientGetDoubleInvalidStringResult contains the result from method DictionaryClient.GetDoubleInvalidString.
+type DictionaryClientGetDoubleInvalidStringResult struct {
 	// The dictionary value {"0": 1.0, "1": "number", "2": 0.0}
 	Value map[string]*float64
 }
 
-// DictionaryGetDoubleValidResponse contains the response from method Dictionary.GetDoubleValid.
-type DictionaryGetDoubleValidResponse struct {
-	DictionaryGetDoubleValidResult
+// DictionaryClientGetDoubleValidResponse contains the response from method DictionaryClient.GetDoubleValid.
+type DictionaryClientGetDoubleValidResponse struct {
+	DictionaryClientGetDoubleValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetDoubleValidResult contains the result from method Dictionary.GetDoubleValid.
-type DictionaryGetDoubleValidResult struct {
+// DictionaryClientGetDoubleValidResult contains the result from method DictionaryClient.GetDoubleValid.
+type DictionaryClientGetDoubleValidResult struct {
 	// The dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 	Value map[string]*float64
 }
 
-// DictionaryGetDurationValidResponse contains the response from method Dictionary.GetDurationValid.
-type DictionaryGetDurationValidResponse struct {
-	DictionaryGetDurationValidResult
+// DictionaryClientGetDurationValidResponse contains the response from method DictionaryClient.GetDurationValid.
+type DictionaryClientGetDurationValidResponse struct {
+	DictionaryClientGetDurationValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetDurationValidResult contains the result from method Dictionary.GetDurationValid.
-type DictionaryGetDurationValidResult struct {
+// DictionaryClientGetDurationValidResult contains the result from method DictionaryClient.GetDurationValid.
+type DictionaryClientGetDurationValidResult struct {
 	// The dictionary value {"0": "P123DT22H14M12.011S", "1": "P5DT1H0M0S"}
 	Value map[string]*string
 }
 
-// DictionaryGetEmptyResponse contains the response from method Dictionary.GetEmpty.
-type DictionaryGetEmptyResponse struct {
-	DictionaryGetEmptyResult
+// DictionaryClientGetEmptyResponse contains the response from method DictionaryClient.GetEmpty.
+type DictionaryClientGetEmptyResponse struct {
+	DictionaryClientGetEmptyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetEmptyResult contains the result from method Dictionary.GetEmpty.
-type DictionaryGetEmptyResult struct {
+// DictionaryClientGetEmptyResult contains the result from method DictionaryClient.GetEmpty.
+type DictionaryClientGetEmptyResult struct {
 	// The empty dictionary value {}
 	Value map[string]*int32
 }
 
-// DictionaryGetEmptyStringKeyResponse contains the response from method Dictionary.GetEmptyStringKey.
-type DictionaryGetEmptyStringKeyResponse struct {
-	DictionaryGetEmptyStringKeyResult
+// DictionaryClientGetEmptyStringKeyResponse contains the response from method DictionaryClient.GetEmptyStringKey.
+type DictionaryClientGetEmptyStringKeyResponse struct {
+	DictionaryClientGetEmptyStringKeyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetEmptyStringKeyResult contains the result from method Dictionary.GetEmptyStringKey.
-type DictionaryGetEmptyStringKeyResult struct {
+// DictionaryClientGetEmptyStringKeyResult contains the result from method DictionaryClient.GetEmptyStringKey.
+type DictionaryClientGetEmptyStringKeyResult struct {
 	// Dictionary of <string>
 	Value map[string]*string
 }
 
-// DictionaryGetFloatInvalidNullResponse contains the response from method Dictionary.GetFloatInvalidNull.
-type DictionaryGetFloatInvalidNullResponse struct {
-	DictionaryGetFloatInvalidNullResult
+// DictionaryClientGetFloatInvalidNullResponse contains the response from method DictionaryClient.GetFloatInvalidNull.
+type DictionaryClientGetFloatInvalidNullResponse struct {
+	DictionaryClientGetFloatInvalidNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetFloatInvalidNullResult contains the result from method Dictionary.GetFloatInvalidNull.
-type DictionaryGetFloatInvalidNullResult struct {
+// DictionaryClientGetFloatInvalidNullResult contains the result from method DictionaryClient.GetFloatInvalidNull.
+type DictionaryClientGetFloatInvalidNullResult struct {
 	// The dictionary value {"0": 0.0, "1": null, "2": 1.2e20}
 	Value map[string]*float32
 }
 
-// DictionaryGetFloatInvalidStringResponse contains the response from method Dictionary.GetFloatInvalidString.
-type DictionaryGetFloatInvalidStringResponse struct {
-	DictionaryGetFloatInvalidStringResult
+// DictionaryClientGetFloatInvalidStringResponse contains the response from method DictionaryClient.GetFloatInvalidString.
+type DictionaryClientGetFloatInvalidStringResponse struct {
+	DictionaryClientGetFloatInvalidStringResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetFloatInvalidStringResult contains the result from method Dictionary.GetFloatInvalidString.
-type DictionaryGetFloatInvalidStringResult struct {
+// DictionaryClientGetFloatInvalidStringResult contains the result from method DictionaryClient.GetFloatInvalidString.
+type DictionaryClientGetFloatInvalidStringResult struct {
 	// The dictionary value {"0": 1.0, "1": "number", "2": 0.0}
 	Value map[string]*float32
 }
 
-// DictionaryGetFloatValidResponse contains the response from method Dictionary.GetFloatValid.
-type DictionaryGetFloatValidResponse struct {
-	DictionaryGetFloatValidResult
+// DictionaryClientGetFloatValidResponse contains the response from method DictionaryClient.GetFloatValid.
+type DictionaryClientGetFloatValidResponse struct {
+	DictionaryClientGetFloatValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetFloatValidResult contains the result from method Dictionary.GetFloatValid.
-type DictionaryGetFloatValidResult struct {
+// DictionaryClientGetFloatValidResult contains the result from method DictionaryClient.GetFloatValid.
+type DictionaryClientGetFloatValidResult struct {
 	// The dictionary value {"0": 0, "1": -0.01, "2": 1.2e20}
 	Value map[string]*float32
 }
 
-// DictionaryGetIntInvalidNullResponse contains the response from method Dictionary.GetIntInvalidNull.
-type DictionaryGetIntInvalidNullResponse struct {
-	DictionaryGetIntInvalidNullResult
+// DictionaryClientGetIntInvalidNullResponse contains the response from method DictionaryClient.GetIntInvalidNull.
+type DictionaryClientGetIntInvalidNullResponse struct {
+	DictionaryClientGetIntInvalidNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetIntInvalidNullResult contains the result from method Dictionary.GetIntInvalidNull.
-type DictionaryGetIntInvalidNullResult struct {
+// DictionaryClientGetIntInvalidNullResult contains the result from method DictionaryClient.GetIntInvalidNull.
+type DictionaryClientGetIntInvalidNullResult struct {
 	// The dictionary value {"0": 1, "1": null, "2": 0}
 	Value map[string]*int32
 }
 
-// DictionaryGetIntInvalidStringResponse contains the response from method Dictionary.GetIntInvalidString.
-type DictionaryGetIntInvalidStringResponse struct {
-	DictionaryGetIntInvalidStringResult
+// DictionaryClientGetIntInvalidStringResponse contains the response from method DictionaryClient.GetIntInvalidString.
+type DictionaryClientGetIntInvalidStringResponse struct {
+	DictionaryClientGetIntInvalidStringResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetIntInvalidStringResult contains the result from method Dictionary.GetIntInvalidString.
-type DictionaryGetIntInvalidStringResult struct {
+// DictionaryClientGetIntInvalidStringResult contains the result from method DictionaryClient.GetIntInvalidString.
+type DictionaryClientGetIntInvalidStringResult struct {
 	// The dictionary value {"0": 1, "1": "integer", "2": 0}
 	Value map[string]*int32
 }
 
-// DictionaryGetIntegerValidResponse contains the response from method Dictionary.GetIntegerValid.
-type DictionaryGetIntegerValidResponse struct {
-	DictionaryGetIntegerValidResult
+// DictionaryClientGetIntegerValidResponse contains the response from method DictionaryClient.GetIntegerValid.
+type DictionaryClientGetIntegerValidResponse struct {
+	DictionaryClientGetIntegerValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetIntegerValidResult contains the result from method Dictionary.GetIntegerValid.
-type DictionaryGetIntegerValidResult struct {
+// DictionaryClientGetIntegerValidResult contains the result from method DictionaryClient.GetIntegerValid.
+type DictionaryClientGetIntegerValidResult struct {
 	// The dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
 	Value map[string]*int32
 }
 
-// DictionaryGetInvalidResponse contains the response from method Dictionary.GetInvalid.
-type DictionaryGetInvalidResponse struct {
-	DictionaryGetInvalidResult
+// DictionaryClientGetInvalidResponse contains the response from method DictionaryClient.GetInvalid.
+type DictionaryClientGetInvalidResponse struct {
+	DictionaryClientGetInvalidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetInvalidResult contains the result from method Dictionary.GetInvalid.
-type DictionaryGetInvalidResult struct {
+// DictionaryClientGetInvalidResult contains the result from method DictionaryClient.GetInvalid.
+type DictionaryClientGetInvalidResult struct {
 	// Dictionary of <string>
 	Value map[string]*string
 }
 
-// DictionaryGetLongInvalidNullResponse contains the response from method Dictionary.GetLongInvalidNull.
-type DictionaryGetLongInvalidNullResponse struct {
-	DictionaryGetLongInvalidNullResult
+// DictionaryClientGetLongInvalidNullResponse contains the response from method DictionaryClient.GetLongInvalidNull.
+type DictionaryClientGetLongInvalidNullResponse struct {
+	DictionaryClientGetLongInvalidNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetLongInvalidNullResult contains the result from method Dictionary.GetLongInvalidNull.
-type DictionaryGetLongInvalidNullResult struct {
+// DictionaryClientGetLongInvalidNullResult contains the result from method DictionaryClient.GetLongInvalidNull.
+type DictionaryClientGetLongInvalidNullResult struct {
 	// The dictionary value {"0": 1, "1": null, "2": 0}
 	Value map[string]*int64
 }
 
-// DictionaryGetLongInvalidStringResponse contains the response from method Dictionary.GetLongInvalidString.
-type DictionaryGetLongInvalidStringResponse struct {
-	DictionaryGetLongInvalidStringResult
+// DictionaryClientGetLongInvalidStringResponse contains the response from method DictionaryClient.GetLongInvalidString.
+type DictionaryClientGetLongInvalidStringResponse struct {
+	DictionaryClientGetLongInvalidStringResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetLongInvalidStringResult contains the result from method Dictionary.GetLongInvalidString.
-type DictionaryGetLongInvalidStringResult struct {
+// DictionaryClientGetLongInvalidStringResult contains the result from method DictionaryClient.GetLongInvalidString.
+type DictionaryClientGetLongInvalidStringResult struct {
 	// The dictionary value {"0": 1, "1": "integer", "2": 0}
 	Value map[string]*int64
 }
 
-// DictionaryGetLongValidResponse contains the response from method Dictionary.GetLongValid.
-type DictionaryGetLongValidResponse struct {
-	DictionaryGetLongValidResult
+// DictionaryClientGetLongValidResponse contains the response from method DictionaryClient.GetLongValid.
+type DictionaryClientGetLongValidResponse struct {
+	DictionaryClientGetLongValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetLongValidResult contains the result from method Dictionary.GetLongValid.
-type DictionaryGetLongValidResult struct {
+// DictionaryClientGetLongValidResult contains the result from method DictionaryClient.GetLongValid.
+type DictionaryClientGetLongValidResult struct {
 	// The dictionary value {"0": 1, "1": -1, "2": 3, "3": 300}
 	Value map[string]*int64
 }
 
-// DictionaryGetNullKeyResponse contains the response from method Dictionary.GetNullKey.
-type DictionaryGetNullKeyResponse struct {
-	DictionaryGetNullKeyResult
+// DictionaryClientGetNullKeyResponse contains the response from method DictionaryClient.GetNullKey.
+type DictionaryClientGetNullKeyResponse struct {
+	DictionaryClientGetNullKeyResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetNullKeyResult contains the result from method Dictionary.GetNullKey.
-type DictionaryGetNullKeyResult struct {
+// DictionaryClientGetNullKeyResult contains the result from method DictionaryClient.GetNullKey.
+type DictionaryClientGetNullKeyResult struct {
 	// Dictionary of <string>
 	Value map[string]*string
 }
 
-// DictionaryGetNullResponse contains the response from method Dictionary.GetNull.
-type DictionaryGetNullResponse struct {
-	DictionaryGetNullResult
+// DictionaryClientGetNullResponse contains the response from method DictionaryClient.GetNull.
+type DictionaryClientGetNullResponse struct {
+	DictionaryClientGetNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetNullResult contains the result from method Dictionary.GetNull.
-type DictionaryGetNullResult struct {
+// DictionaryClientGetNullResult contains the result from method DictionaryClient.GetNull.
+type DictionaryClientGetNullResult struct {
 	// The null dictionary value
 	Value map[string]*int32
 }
 
-// DictionaryGetNullValueResponse contains the response from method Dictionary.GetNullValue.
-type DictionaryGetNullValueResponse struct {
-	DictionaryGetNullValueResult
+// DictionaryClientGetNullValueResponse contains the response from method DictionaryClient.GetNullValue.
+type DictionaryClientGetNullValueResponse struct {
+	DictionaryClientGetNullValueResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetNullValueResult contains the result from method Dictionary.GetNullValue.
-type DictionaryGetNullValueResult struct {
+// DictionaryClientGetNullValueResult contains the result from method DictionaryClient.GetNullValue.
+type DictionaryClientGetNullValueResult struct {
 	// Dictionary of <string>
 	Value map[string]*string
 }
 
-// DictionaryGetStringValidResponse contains the response from method Dictionary.GetStringValid.
-type DictionaryGetStringValidResponse struct {
-	DictionaryGetStringValidResult
+// DictionaryClientGetStringValidResponse contains the response from method DictionaryClient.GetStringValid.
+type DictionaryClientGetStringValidResponse struct {
+	DictionaryClientGetStringValidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetStringValidResult contains the result from method Dictionary.GetStringValid.
-type DictionaryGetStringValidResult struct {
+// DictionaryClientGetStringValidResult contains the result from method DictionaryClient.GetStringValid.
+type DictionaryClientGetStringValidResult struct {
 	// The dictionary value {"0": "foo1", "1": "foo2", "2": "foo3"}
 	Value map[string]*string
 }
 
-// DictionaryGetStringWithInvalidResponse contains the response from method Dictionary.GetStringWithInvalid.
-type DictionaryGetStringWithInvalidResponse struct {
-	DictionaryGetStringWithInvalidResult
+// DictionaryClientGetStringWithInvalidResponse contains the response from method DictionaryClient.GetStringWithInvalid.
+type DictionaryClientGetStringWithInvalidResponse struct {
+	DictionaryClientGetStringWithInvalidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetStringWithInvalidResult contains the result from method Dictionary.GetStringWithInvalid.
-type DictionaryGetStringWithInvalidResult struct {
+// DictionaryClientGetStringWithInvalidResult contains the result from method DictionaryClient.GetStringWithInvalid.
+type DictionaryClientGetStringWithInvalidResult struct {
 	// The dictionary value {"0": "foo", "1": 123, "2": "foo2"}
 	Value map[string]*string
 }
 
-// DictionaryGetStringWithNullResponse contains the response from method Dictionary.GetStringWithNull.
-type DictionaryGetStringWithNullResponse struct {
-	DictionaryGetStringWithNullResult
+// DictionaryClientGetStringWithNullResponse contains the response from method DictionaryClient.GetStringWithNull.
+type DictionaryClientGetStringWithNullResponse struct {
+	DictionaryClientGetStringWithNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryGetStringWithNullResult contains the result from method Dictionary.GetStringWithNull.
-type DictionaryGetStringWithNullResult struct {
+// DictionaryClientGetStringWithNullResult contains the result from method DictionaryClient.GetStringWithNull.
+type DictionaryClientGetStringWithNullResult struct {
 	// The dictionary value {"0": "foo", "1": null, "2": "foo2"}
 	Value map[string]*string
 }
 
-// DictionaryPutArrayValidResponse contains the response from method Dictionary.PutArrayValid.
-type DictionaryPutArrayValidResponse struct {
+// DictionaryClientPutArrayValidResponse contains the response from method DictionaryClient.PutArrayValid.
+type DictionaryClientPutArrayValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryPutBooleanTfftResponse contains the response from method Dictionary.PutBooleanTfft.
-type DictionaryPutBooleanTfftResponse struct {
+// DictionaryClientPutBooleanTfftResponse contains the response from method DictionaryClient.PutBooleanTfft.
+type DictionaryClientPutBooleanTfftResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryPutByteValidResponse contains the response from method Dictionary.PutByteValid.
-type DictionaryPutByteValidResponse struct {
+// DictionaryClientPutByteValidResponse contains the response from method DictionaryClient.PutByteValid.
+type DictionaryClientPutByteValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryPutComplexValidResponse contains the response from method Dictionary.PutComplexValid.
-type DictionaryPutComplexValidResponse struct {
+// DictionaryClientPutComplexValidResponse contains the response from method DictionaryClient.PutComplexValid.
+type DictionaryClientPutComplexValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryPutDateTimeRFC1123ValidResponse contains the response from method Dictionary.PutDateTimeRFC1123Valid.
-type DictionaryPutDateTimeRFC1123ValidResponse struct {
+// DictionaryClientPutDateTimeRFC1123ValidResponse contains the response from method DictionaryClient.PutDateTimeRFC1123Valid.
+type DictionaryClientPutDateTimeRFC1123ValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryPutDateTimeValidResponse contains the response from method Dictionary.PutDateTimeValid.
-type DictionaryPutDateTimeValidResponse struct {
+// DictionaryClientPutDateTimeValidResponse contains the response from method DictionaryClient.PutDateTimeValid.
+type DictionaryClientPutDateTimeValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryPutDateValidResponse contains the response from method Dictionary.PutDateValid.
-type DictionaryPutDateValidResponse struct {
+// DictionaryClientPutDateValidResponse contains the response from method DictionaryClient.PutDateValid.
+type DictionaryClientPutDateValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryPutDictionaryValidResponse contains the response from method Dictionary.PutDictionaryValid.
-type DictionaryPutDictionaryValidResponse struct {
+// DictionaryClientPutDictionaryValidResponse contains the response from method DictionaryClient.PutDictionaryValid.
+type DictionaryClientPutDictionaryValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryPutDoubleValidResponse contains the response from method Dictionary.PutDoubleValid.
-type DictionaryPutDoubleValidResponse struct {
+// DictionaryClientPutDoubleValidResponse contains the response from method DictionaryClient.PutDoubleValid.
+type DictionaryClientPutDoubleValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryPutDurationValidResponse contains the response from method Dictionary.PutDurationValid.
-type DictionaryPutDurationValidResponse struct {
+// DictionaryClientPutDurationValidResponse contains the response from method DictionaryClient.PutDurationValid.
+type DictionaryClientPutDurationValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryPutEmptyResponse contains the response from method Dictionary.PutEmpty.
-type DictionaryPutEmptyResponse struct {
+// DictionaryClientPutEmptyResponse contains the response from method DictionaryClient.PutEmpty.
+type DictionaryClientPutEmptyResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryPutFloatValidResponse contains the response from method Dictionary.PutFloatValid.
-type DictionaryPutFloatValidResponse struct {
+// DictionaryClientPutFloatValidResponse contains the response from method DictionaryClient.PutFloatValid.
+type DictionaryClientPutFloatValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryPutIntegerValidResponse contains the response from method Dictionary.PutIntegerValid.
-type DictionaryPutIntegerValidResponse struct {
+// DictionaryClientPutIntegerValidResponse contains the response from method DictionaryClient.PutIntegerValid.
+type DictionaryClientPutIntegerValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryPutLongValidResponse contains the response from method Dictionary.PutLongValid.
-type DictionaryPutLongValidResponse struct {
+// DictionaryClientPutLongValidResponse contains the response from method DictionaryClient.PutLongValid.
+type DictionaryClientPutLongValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// DictionaryPutStringValidResponse contains the response from method Dictionary.PutStringValid.
-type DictionaryPutStringValidResponse struct {
+// DictionaryClientPutStringValidResponse contains the response from method DictionaryClient.PutStringValid.
+type DictionaryClientPutStringValidResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

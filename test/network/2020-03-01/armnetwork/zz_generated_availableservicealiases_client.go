@@ -54,22 +54,22 @@ func NewAvailableServiceAliasesClient(subscriptionID string, credential azcore.T
 // List - Gets all available service aliases for this subscription in this region.
 // If the operation fails it returns the *CloudError error type.
 // location - The location.
-// options - AvailableServiceAliasesListOptions contains the optional parameters for the AvailableServiceAliasesClient.List
+// options - AvailableServiceAliasesClientListOptions contains the optional parameters for the AvailableServiceAliasesClient.List
 // method.
-func (client *AvailableServiceAliasesClient) List(location string, options *AvailableServiceAliasesListOptions) *AvailableServiceAliasesListPager {
-	return &AvailableServiceAliasesListPager{
+func (client *AvailableServiceAliasesClient) List(location string, options *AvailableServiceAliasesClientListOptions) *AvailableServiceAliasesClientListPager {
+	return &AvailableServiceAliasesClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, location, options)
 		},
-		advancer: func(ctx context.Context, resp AvailableServiceAliasesListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp AvailableServiceAliasesClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.AvailableServiceAliasesResult.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *AvailableServiceAliasesClient) listCreateRequest(ctx context.Context, location string, options *AvailableServiceAliasesListOptions) (*policy.Request, error) {
+func (client *AvailableServiceAliasesClient) listCreateRequest(ctx context.Context, location string, options *AvailableServiceAliasesClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases"
 	if location == "" {
 		return nil, errors.New("parameter location cannot be empty")
@@ -91,10 +91,10 @@ func (client *AvailableServiceAliasesClient) listCreateRequest(ctx context.Conte
 }
 
 // listHandleResponse handles the List response.
-func (client *AvailableServiceAliasesClient) listHandleResponse(resp *http.Response) (AvailableServiceAliasesListResponse, error) {
-	result := AvailableServiceAliasesListResponse{RawResponse: resp}
+func (client *AvailableServiceAliasesClient) listHandleResponse(resp *http.Response) (AvailableServiceAliasesClientListResponse, error) {
+	result := AvailableServiceAliasesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailableServiceAliasesResult); err != nil {
-		return AvailableServiceAliasesListResponse{}, runtime.NewResponseError(err, resp)
+		return AvailableServiceAliasesClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -116,22 +116,22 @@ func (client *AvailableServiceAliasesClient) listHandleError(resp *http.Response
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
 // location - The location.
-// options - AvailableServiceAliasesListByResourceGroupOptions contains the optional parameters for the AvailableServiceAliasesClient.ListByResourceGroup
+// options - AvailableServiceAliasesClientListByResourceGroupOptions contains the optional parameters for the AvailableServiceAliasesClient.ListByResourceGroup
 // method.
-func (client *AvailableServiceAliasesClient) ListByResourceGroup(resourceGroupName string, location string, options *AvailableServiceAliasesListByResourceGroupOptions) *AvailableServiceAliasesListByResourceGroupPager {
-	return &AvailableServiceAliasesListByResourceGroupPager{
+func (client *AvailableServiceAliasesClient) ListByResourceGroup(resourceGroupName string, location string, options *AvailableServiceAliasesClientListByResourceGroupOptions) *AvailableServiceAliasesClientListByResourceGroupPager {
+	return &AvailableServiceAliasesClientListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, location, options)
 		},
-		advancer: func(ctx context.Context, resp AvailableServiceAliasesListByResourceGroupResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp AvailableServiceAliasesClientListByResourceGroupResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.AvailableServiceAliasesResult.NextLink)
 		},
 	}
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *AvailableServiceAliasesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, location string, options *AvailableServiceAliasesListByResourceGroupOptions) (*policy.Request, error) {
+func (client *AvailableServiceAliasesClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, location string, options *AvailableServiceAliasesClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases"
 	if resourceGroupName == "" {
 		return nil, errors.New("parameter resourceGroupName cannot be empty")
@@ -157,10 +157,10 @@ func (client *AvailableServiceAliasesClient) listByResourceGroupCreateRequest(ct
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *AvailableServiceAliasesClient) listByResourceGroupHandleResponse(resp *http.Response) (AvailableServiceAliasesListByResourceGroupResponse, error) {
-	result := AvailableServiceAliasesListByResourceGroupResponse{RawResponse: resp}
+func (client *AvailableServiceAliasesClient) listByResourceGroupHandleResponse(resp *http.Response) (AvailableServiceAliasesClientListByResourceGroupResponse, error) {
+	result := AvailableServiceAliasesClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AvailableServiceAliasesResult); err != nil {
-		return AvailableServiceAliasesListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return AvailableServiceAliasesClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }

@@ -13,98 +13,98 @@ import (
 	"time"
 )
 
-// Datetimerfc1123GetInvalidResponse contains the response from method Datetimerfc1123.GetInvalid.
-type Datetimerfc1123GetInvalidResponse struct {
-	Datetimerfc1123GetInvalidResult
+// Datetimerfc1123ClientGetInvalidResponse contains the response from method Datetimerfc1123Client.GetInvalid.
+type Datetimerfc1123ClientGetInvalidResponse struct {
+	Datetimerfc1123ClientGetInvalidResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// Datetimerfc1123GetInvalidResult contains the result from method Datetimerfc1123.GetInvalid.
-type Datetimerfc1123GetInvalidResult struct {
+// Datetimerfc1123ClientGetInvalidResult contains the result from method Datetimerfc1123Client.GetInvalid.
+type Datetimerfc1123ClientGetInvalidResult struct {
 	Value *time.Time
 }
 
-// Datetimerfc1123GetNullResponse contains the response from method Datetimerfc1123.GetNull.
-type Datetimerfc1123GetNullResponse struct {
-	Datetimerfc1123GetNullResult
+// Datetimerfc1123ClientGetNullResponse contains the response from method Datetimerfc1123Client.GetNull.
+type Datetimerfc1123ClientGetNullResponse struct {
+	Datetimerfc1123ClientGetNullResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// Datetimerfc1123GetNullResult contains the result from method Datetimerfc1123.GetNull.
-type Datetimerfc1123GetNullResult struct {
+// Datetimerfc1123ClientGetNullResult contains the result from method Datetimerfc1123Client.GetNull.
+type Datetimerfc1123ClientGetNullResult struct {
 	Value *time.Time
 }
 
-// Datetimerfc1123GetOverflowResponse contains the response from method Datetimerfc1123.GetOverflow.
-type Datetimerfc1123GetOverflowResponse struct {
-	Datetimerfc1123GetOverflowResult
+// Datetimerfc1123ClientGetOverflowResponse contains the response from method Datetimerfc1123Client.GetOverflow.
+type Datetimerfc1123ClientGetOverflowResponse struct {
+	Datetimerfc1123ClientGetOverflowResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// Datetimerfc1123GetOverflowResult contains the result from method Datetimerfc1123.GetOverflow.
-type Datetimerfc1123GetOverflowResult struct {
+// Datetimerfc1123ClientGetOverflowResult contains the result from method Datetimerfc1123Client.GetOverflow.
+type Datetimerfc1123ClientGetOverflowResult struct {
 	Value *time.Time
 }
 
-// Datetimerfc1123GetUTCLowercaseMaxDateTimeResponse contains the response from method Datetimerfc1123.GetUTCLowercaseMaxDateTime.
-type Datetimerfc1123GetUTCLowercaseMaxDateTimeResponse struct {
-	Datetimerfc1123GetUTCLowercaseMaxDateTimeResult
+// Datetimerfc1123ClientGetUTCLowercaseMaxDateTimeResponse contains the response from method Datetimerfc1123Client.GetUTCLowercaseMaxDateTime.
+type Datetimerfc1123ClientGetUTCLowercaseMaxDateTimeResponse struct {
+	Datetimerfc1123ClientGetUTCLowercaseMaxDateTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// Datetimerfc1123GetUTCLowercaseMaxDateTimeResult contains the result from method Datetimerfc1123.GetUTCLowercaseMaxDateTime.
-type Datetimerfc1123GetUTCLowercaseMaxDateTimeResult struct {
+// Datetimerfc1123ClientGetUTCLowercaseMaxDateTimeResult contains the result from method Datetimerfc1123Client.GetUTCLowercaseMaxDateTime.
+type Datetimerfc1123ClientGetUTCLowercaseMaxDateTimeResult struct {
 	Value *time.Time
 }
 
-// Datetimerfc1123GetUTCMinDateTimeResponse contains the response from method Datetimerfc1123.GetUTCMinDateTime.
-type Datetimerfc1123GetUTCMinDateTimeResponse struct {
-	Datetimerfc1123GetUTCMinDateTimeResult
+// Datetimerfc1123ClientGetUTCMinDateTimeResponse contains the response from method Datetimerfc1123Client.GetUTCMinDateTime.
+type Datetimerfc1123ClientGetUTCMinDateTimeResponse struct {
+	Datetimerfc1123ClientGetUTCMinDateTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// Datetimerfc1123GetUTCMinDateTimeResult contains the result from method Datetimerfc1123.GetUTCMinDateTime.
-type Datetimerfc1123GetUTCMinDateTimeResult struct {
+// Datetimerfc1123ClientGetUTCMinDateTimeResult contains the result from method Datetimerfc1123Client.GetUTCMinDateTime.
+type Datetimerfc1123ClientGetUTCMinDateTimeResult struct {
 	Value *time.Time
 }
 
-// Datetimerfc1123GetUTCUppercaseMaxDateTimeResponse contains the response from method Datetimerfc1123.GetUTCUppercaseMaxDateTime.
-type Datetimerfc1123GetUTCUppercaseMaxDateTimeResponse struct {
-	Datetimerfc1123GetUTCUppercaseMaxDateTimeResult
+// Datetimerfc1123ClientGetUTCUppercaseMaxDateTimeResponse contains the response from method Datetimerfc1123Client.GetUTCUppercaseMaxDateTime.
+type Datetimerfc1123ClientGetUTCUppercaseMaxDateTimeResponse struct {
+	Datetimerfc1123ClientGetUTCUppercaseMaxDateTimeResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// Datetimerfc1123GetUTCUppercaseMaxDateTimeResult contains the result from method Datetimerfc1123.GetUTCUppercaseMaxDateTime.
-type Datetimerfc1123GetUTCUppercaseMaxDateTimeResult struct {
+// Datetimerfc1123ClientGetUTCUppercaseMaxDateTimeResult contains the result from method Datetimerfc1123Client.GetUTCUppercaseMaxDateTime.
+type Datetimerfc1123ClientGetUTCUppercaseMaxDateTimeResult struct {
 	Value *time.Time
 }
 
-// Datetimerfc1123GetUnderflowResponse contains the response from method Datetimerfc1123.GetUnderflow.
-type Datetimerfc1123GetUnderflowResponse struct {
-	Datetimerfc1123GetUnderflowResult
+// Datetimerfc1123ClientGetUnderflowResponse contains the response from method Datetimerfc1123Client.GetUnderflow.
+type Datetimerfc1123ClientGetUnderflowResponse struct {
+	Datetimerfc1123ClientGetUnderflowResult
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// Datetimerfc1123GetUnderflowResult contains the result from method Datetimerfc1123.GetUnderflow.
-type Datetimerfc1123GetUnderflowResult struct {
+// Datetimerfc1123ClientGetUnderflowResult contains the result from method Datetimerfc1123Client.GetUnderflow.
+type Datetimerfc1123ClientGetUnderflowResult struct {
 	Value *time.Time
 }
 
-// Datetimerfc1123PutUTCMaxDateTimeResponse contains the response from method Datetimerfc1123.PutUTCMaxDateTime.
-type Datetimerfc1123PutUTCMaxDateTimeResponse struct {
+// Datetimerfc1123ClientPutUTCMaxDateTimeResponse contains the response from method Datetimerfc1123Client.PutUTCMaxDateTime.
+type Datetimerfc1123ClientPutUTCMaxDateTimeResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }
 
-// Datetimerfc1123PutUTCMinDateTimeResponse contains the response from method Datetimerfc1123.PutUTCMinDateTime.
-type Datetimerfc1123PutUTCMinDateTimeResponse struct {
+// Datetimerfc1123ClientPutUTCMinDateTimeResponse contains the response from method Datetimerfc1123Client.PutUTCMinDateTime.
+type Datetimerfc1123ClientPutUTCMinDateTimeResponse struct {
 	// RawResponse contains the underlying HTTP response.
 	RawResponse *http.Response
 }

@@ -58,21 +58,21 @@ func NewDiskEncryptionSetsClient(subscriptionID string, credential azcore.TokenC
 // disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum
 // name length is 80 characters.
 // diskEncryptionSet - disk encryption set object supplied in the body of the Put disk encryption set operation.
-// options - DiskEncryptionSetsBeginCreateOrUpdateOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginCreateOrUpdate
+// options - DiskEncryptionSetsClientBeginCreateOrUpdateOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginCreateOrUpdate
 // method.
-func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsBeginCreateOrUpdateOptions) (DiskEncryptionSetsCreateOrUpdatePollerResponse, error) {
+func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsClientBeginCreateOrUpdateOptions) (DiskEncryptionSetsClientCreateOrUpdatePollerResponse, error) {
 	resp, err := client.createOrUpdate(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 	if err != nil {
-		return DiskEncryptionSetsCreateOrUpdatePollerResponse{}, err
+		return DiskEncryptionSetsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result := DiskEncryptionSetsCreateOrUpdatePollerResponse{
+	result := DiskEncryptionSetsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("DiskEncryptionSetsClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
 	if err != nil {
-		return DiskEncryptionSetsCreateOrUpdatePollerResponse{}, err
+		return DiskEncryptionSetsClientCreateOrUpdatePollerResponse{}, err
 	}
-	result.Poller = &DiskEncryptionSetsCreateOrUpdatePoller{
+	result.Poller = &DiskEncryptionSetsClientCreateOrUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -80,7 +80,7 @@ func (client *DiskEncryptionSetsClient) BeginCreateOrUpdate(ctx context.Context,
 
 // CreateOrUpdate - Creates or updates a disk encryption set
 // If the operation fails it returns the *CloudError error type.
-func (client *DiskEncryptionSetsClient) createOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsBeginCreateOrUpdateOptions) (*http.Response, error) {
+func (client *DiskEncryptionSetsClient) createOrUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 	if err != nil {
 		return nil, err
@@ -96,7 +96,7 @@ func (client *DiskEncryptionSetsClient) createOrUpdate(ctx context.Context, reso
 }
 
 // createOrUpdateCreateRequest creates the CreateOrUpdate request.
-func (client *DiskEncryptionSetsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsBeginCreateOrUpdateOptions) (*policy.Request, error) {
+func (client *DiskEncryptionSetsClient) createOrUpdateCreateRequest(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSet, options *DiskEncryptionSetsClientBeginCreateOrUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -140,21 +140,21 @@ func (client *DiskEncryptionSetsClient) createOrUpdateHandleError(resp *http.Res
 // diskEncryptionSetName - The name of the disk encryption set that is being created. The name can't be changed after the
 // disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum
 // name length is 80 characters.
-// options - DiskEncryptionSetsBeginDeleteOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginDelete
+// options - DiskEncryptionSetsClientBeginDeleteOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginDelete
 // method.
-func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsBeginDeleteOptions) (DiskEncryptionSetsDeletePollerResponse, error) {
+func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsClientBeginDeleteOptions) (DiskEncryptionSetsClientDeletePollerResponse, error) {
 	resp, err := client.deleteOperation(ctx, resourceGroupName, diskEncryptionSetName, options)
 	if err != nil {
-		return DiskEncryptionSetsDeletePollerResponse{}, err
+		return DiskEncryptionSetsClientDeletePollerResponse{}, err
 	}
-	result := DiskEncryptionSetsDeletePollerResponse{
+	result := DiskEncryptionSetsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("DiskEncryptionSetsClient.Delete", "", resp, client.pl, client.deleteHandleError)
 	if err != nil {
-		return DiskEncryptionSetsDeletePollerResponse{}, err
+		return DiskEncryptionSetsClientDeletePollerResponse{}, err
 	}
-	result.Poller = &DiskEncryptionSetsDeletePoller{
+	result.Poller = &DiskEncryptionSetsClientDeletePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -162,7 +162,7 @@ func (client *DiskEncryptionSetsClient) BeginDelete(ctx context.Context, resourc
 
 // Delete - Deletes a disk encryption set.
 // If the operation fails it returns the *CloudError error type.
-func (client *DiskEncryptionSetsClient) deleteOperation(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsBeginDeleteOptions) (*http.Response, error) {
+func (client *DiskEncryptionSetsClient) deleteOperation(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, options)
 	if err != nil {
 		return nil, err
@@ -178,7 +178,7 @@ func (client *DiskEncryptionSetsClient) deleteOperation(ctx context.Context, res
 }
 
 // deleteCreateRequest creates the Delete request.
-func (client *DiskEncryptionSetsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsBeginDeleteOptions) (*policy.Request, error) {
+func (client *DiskEncryptionSetsClient) deleteCreateRequest(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsClientBeginDeleteOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -222,24 +222,24 @@ func (client *DiskEncryptionSetsClient) deleteHandleError(resp *http.Response) e
 // diskEncryptionSetName - The name of the disk encryption set that is being created. The name can't be changed after the
 // disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum
 // name length is 80 characters.
-// options - DiskEncryptionSetsGetOptions contains the optional parameters for the DiskEncryptionSetsClient.Get method.
-func (client *DiskEncryptionSetsClient) Get(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsGetOptions) (DiskEncryptionSetsGetResponse, error) {
+// options - DiskEncryptionSetsClientGetOptions contains the optional parameters for the DiskEncryptionSetsClient.Get method.
+func (client *DiskEncryptionSetsClient) Get(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsClientGetOptions) (DiskEncryptionSetsClientGetResponse, error) {
 	req, err := client.getCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, options)
 	if err != nil {
-		return DiskEncryptionSetsGetResponse{}, err
+		return DiskEncryptionSetsClientGetResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return DiskEncryptionSetsGetResponse{}, err
+		return DiskEncryptionSetsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DiskEncryptionSetsGetResponse{}, client.getHandleError(resp)
+		return DiskEncryptionSetsClientGetResponse{}, client.getHandleError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
 
 // getCreateRequest creates the Get request.
-func (client *DiskEncryptionSetsClient) getCreateRequest(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsGetOptions) (*policy.Request, error) {
+func (client *DiskEncryptionSetsClient) getCreateRequest(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, options *DiskEncryptionSetsClientGetOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -265,10 +265,10 @@ func (client *DiskEncryptionSetsClient) getCreateRequest(ctx context.Context, re
 }
 
 // getHandleResponse handles the Get response.
-func (client *DiskEncryptionSetsClient) getHandleResponse(resp *http.Response) (DiskEncryptionSetsGetResponse, error) {
-	result := DiskEncryptionSetsGetResponse{RawResponse: resp}
+func (client *DiskEncryptionSetsClient) getHandleResponse(resp *http.Response) (DiskEncryptionSetsClientGetResponse, error) {
+	result := DiskEncryptionSetsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DiskEncryptionSet); err != nil {
-		return DiskEncryptionSetsGetResponse{}, runtime.NewResponseError(err, resp)
+		return DiskEncryptionSetsClientGetResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -288,21 +288,21 @@ func (client *DiskEncryptionSetsClient) getHandleError(resp *http.Response) erro
 
 // List - Lists all the disk encryption sets under a subscription.
 // If the operation fails it returns the *CloudError error type.
-// options - DiskEncryptionSetsListOptions contains the optional parameters for the DiskEncryptionSetsClient.List method.
-func (client *DiskEncryptionSetsClient) List(options *DiskEncryptionSetsListOptions) *DiskEncryptionSetsListPager {
-	return &DiskEncryptionSetsListPager{
+// options - DiskEncryptionSetsClientListOptions contains the optional parameters for the DiskEncryptionSetsClient.List method.
+func (client *DiskEncryptionSetsClient) List(options *DiskEncryptionSetsClientListOptions) *DiskEncryptionSetsClientListPager {
+	return &DiskEncryptionSetsClientListPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listCreateRequest(ctx, options)
 		},
-		advancer: func(ctx context.Context, resp DiskEncryptionSetsListResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp DiskEncryptionSetsClientListResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.DiskEncryptionSetList.NextLink)
 		},
 	}
 }
 
 // listCreateRequest creates the List request.
-func (client *DiskEncryptionSetsClient) listCreateRequest(ctx context.Context, options *DiskEncryptionSetsListOptions) (*policy.Request, error) {
+func (client *DiskEncryptionSetsClient) listCreateRequest(ctx context.Context, options *DiskEncryptionSetsClientListOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskEncryptionSets"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -320,10 +320,10 @@ func (client *DiskEncryptionSetsClient) listCreateRequest(ctx context.Context, o
 }
 
 // listHandleResponse handles the List response.
-func (client *DiskEncryptionSetsClient) listHandleResponse(resp *http.Response) (DiskEncryptionSetsListResponse, error) {
-	result := DiskEncryptionSetsListResponse{RawResponse: resp}
+func (client *DiskEncryptionSetsClient) listHandleResponse(resp *http.Response) (DiskEncryptionSetsClientListResponse, error) {
+	result := DiskEncryptionSetsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DiskEncryptionSetList); err != nil {
-		return DiskEncryptionSetsListResponse{}, runtime.NewResponseError(err, resp)
+		return DiskEncryptionSetsClientListResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -344,22 +344,22 @@ func (client *DiskEncryptionSetsClient) listHandleError(resp *http.Response) err
 // ListByResourceGroup - Lists all the disk encryption sets under a resource group.
 // If the operation fails it returns the *CloudError error type.
 // resourceGroupName - The name of the resource group.
-// options - DiskEncryptionSetsListByResourceGroupOptions contains the optional parameters for the DiskEncryptionSetsClient.ListByResourceGroup
+// options - DiskEncryptionSetsClientListByResourceGroupOptions contains the optional parameters for the DiskEncryptionSetsClient.ListByResourceGroup
 // method.
-func (client *DiskEncryptionSetsClient) ListByResourceGroup(resourceGroupName string, options *DiskEncryptionSetsListByResourceGroupOptions) *DiskEncryptionSetsListByResourceGroupPager {
-	return &DiskEncryptionSetsListByResourceGroupPager{
+func (client *DiskEncryptionSetsClient) ListByResourceGroup(resourceGroupName string, options *DiskEncryptionSetsClientListByResourceGroupOptions) *DiskEncryptionSetsClientListByResourceGroupPager {
+	return &DiskEncryptionSetsClientListByResourceGroupPager{
 		client: client,
 		requester: func(ctx context.Context) (*policy.Request, error) {
 			return client.listByResourceGroupCreateRequest(ctx, resourceGroupName, options)
 		},
-		advancer: func(ctx context.Context, resp DiskEncryptionSetsListByResourceGroupResponse) (*policy.Request, error) {
+		advancer: func(ctx context.Context, resp DiskEncryptionSetsClientListByResourceGroupResponse) (*policy.Request, error) {
 			return runtime.NewRequest(ctx, http.MethodGet, *resp.DiskEncryptionSetList.NextLink)
 		},
 	}
 }
 
 // listByResourceGroupCreateRequest creates the ListByResourceGroup request.
-func (client *DiskEncryptionSetsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *DiskEncryptionSetsListByResourceGroupOptions) (*policy.Request, error) {
+func (client *DiskEncryptionSetsClient) listByResourceGroupCreateRequest(ctx context.Context, resourceGroupName string, options *DiskEncryptionSetsClientListByResourceGroupOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")
@@ -381,10 +381,10 @@ func (client *DiskEncryptionSetsClient) listByResourceGroupCreateRequest(ctx con
 }
 
 // listByResourceGroupHandleResponse handles the ListByResourceGroup response.
-func (client *DiskEncryptionSetsClient) listByResourceGroupHandleResponse(resp *http.Response) (DiskEncryptionSetsListByResourceGroupResponse, error) {
-	result := DiskEncryptionSetsListByResourceGroupResponse{RawResponse: resp}
+func (client *DiskEncryptionSetsClient) listByResourceGroupHandleResponse(resp *http.Response) (DiskEncryptionSetsClientListByResourceGroupResponse, error) {
+	result := DiskEncryptionSetsClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DiskEncryptionSetList); err != nil {
-		return DiskEncryptionSetsListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return DiskEncryptionSetsClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -409,21 +409,21 @@ func (client *DiskEncryptionSetsClient) listByResourceGroupHandleError(resp *htt
 // disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum
 // name length is 80 characters.
 // diskEncryptionSet - disk encryption set object supplied in the body of the Patch disk encryption set operation.
-// options - DiskEncryptionSetsBeginUpdateOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginUpdate
+// options - DiskEncryptionSetsClientBeginUpdateOptions contains the optional parameters for the DiskEncryptionSetsClient.BeginUpdate
 // method.
-func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsBeginUpdateOptions) (DiskEncryptionSetsUpdatePollerResponse, error) {
+func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsClientBeginUpdateOptions) (DiskEncryptionSetsClientUpdatePollerResponse, error) {
 	resp, err := client.update(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 	if err != nil {
-		return DiskEncryptionSetsUpdatePollerResponse{}, err
+		return DiskEncryptionSetsClientUpdatePollerResponse{}, err
 	}
-	result := DiskEncryptionSetsUpdatePollerResponse{
+	result := DiskEncryptionSetsClientUpdatePollerResponse{
 		RawResponse: resp,
 	}
 	pt, err := armruntime.NewPoller("DiskEncryptionSetsClient.Update", "", resp, client.pl, client.updateHandleError)
 	if err != nil {
-		return DiskEncryptionSetsUpdatePollerResponse{}, err
+		return DiskEncryptionSetsClientUpdatePollerResponse{}, err
 	}
-	result.Poller = &DiskEncryptionSetsUpdatePoller{
+	result.Poller = &DiskEncryptionSetsClientUpdatePoller{
 		pt: pt,
 	}
 	return result, nil
@@ -431,7 +431,7 @@ func (client *DiskEncryptionSetsClient) BeginUpdate(ctx context.Context, resourc
 
 // Update - Updates (patches) a disk encryption set.
 // If the operation fails it returns the *CloudError error type.
-func (client *DiskEncryptionSetsClient) update(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsBeginUpdateOptions) (*http.Response, error) {
+func (client *DiskEncryptionSetsClient) update(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, diskEncryptionSetName, diskEncryptionSet, options)
 	if err != nil {
 		return nil, err
@@ -447,7 +447,7 @@ func (client *DiskEncryptionSetsClient) update(ctx context.Context, resourceGrou
 }
 
 // updateCreateRequest creates the Update request.
-func (client *DiskEncryptionSetsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsBeginUpdateOptions) (*policy.Request, error) {
+func (client *DiskEncryptionSetsClient) updateCreateRequest(ctx context.Context, resourceGroupName string, diskEncryptionSetName string, diskEncryptionSet DiskEncryptionSetUpdate, options *DiskEncryptionSetsClientBeginUpdateOptions) (*policy.Request, error) {
 	urlPath := "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}"
 	if client.subscriptionID == "" {
 		return nil, errors.New("parameter client.subscriptionID cannot be empty")

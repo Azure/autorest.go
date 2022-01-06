@@ -605,7 +605,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
     // swagger defines a host, use its const
     hostParam = '\thost';
   } else {
-    throw new Error(`no host or endpoint defined for operation ${group.language.go!.name}.${op.language.go!.name}`);
+    throw new Error(`no host or endpoint defined for method ${group.language.go!.clientName}.${op.language.go!.name}`);
   }
   const hasPathParams = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined && each.protocol.http!.in === 'path'; }).any();
   // storage needs the client.u to be the source-of-truth for the full path.

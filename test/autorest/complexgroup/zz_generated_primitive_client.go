@@ -38,24 +38,24 @@ func NewPrimitiveClient(options *azcore.ClientOptions) *PrimitiveClient {
 
 // GetBool - Get complex types with bool properties
 // If the operation fails it returns the *Error error type.
-// options - PrimitiveGetBoolOptions contains the optional parameters for the PrimitiveClient.GetBool method.
-func (client *PrimitiveClient) GetBool(ctx context.Context, options *PrimitiveGetBoolOptions) (PrimitiveGetBoolResponse, error) {
+// options - PrimitiveClientGetBoolOptions contains the optional parameters for the PrimitiveClient.GetBool method.
+func (client *PrimitiveClient) GetBool(ctx context.Context, options *PrimitiveClientGetBoolOptions) (PrimitiveClientGetBoolResponse, error) {
 	req, err := client.getBoolCreateRequest(ctx, options)
 	if err != nil {
-		return PrimitiveGetBoolResponse{}, err
+		return PrimitiveClientGetBoolResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitiveGetBoolResponse{}, err
+		return PrimitiveClientGetBoolResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitiveGetBoolResponse{}, client.getBoolHandleError(resp)
+		return PrimitiveClientGetBoolResponse{}, client.getBoolHandleError(resp)
 	}
 	return client.getBoolHandleResponse(resp)
 }
 
 // getBoolCreateRequest creates the GetBool request.
-func (client *PrimitiveClient) getBoolCreateRequest(ctx context.Context, options *PrimitiveGetBoolOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) getBoolCreateRequest(ctx context.Context, options *PrimitiveClientGetBoolOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/bool"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -66,10 +66,10 @@ func (client *PrimitiveClient) getBoolCreateRequest(ctx context.Context, options
 }
 
 // getBoolHandleResponse handles the GetBool response.
-func (client *PrimitiveClient) getBoolHandleResponse(resp *http.Response) (PrimitiveGetBoolResponse, error) {
-	result := PrimitiveGetBoolResponse{RawResponse: resp}
+func (client *PrimitiveClient) getBoolHandleResponse(resp *http.Response) (PrimitiveClientGetBoolResponse, error) {
+	result := PrimitiveClientGetBoolResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BooleanWrapper); err != nil {
-		return PrimitiveGetBoolResponse{}, runtime.NewResponseError(err, resp)
+		return PrimitiveClientGetBoolResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -89,24 +89,24 @@ func (client *PrimitiveClient) getBoolHandleError(resp *http.Response) error {
 
 // GetByte - Get complex types with byte properties
 // If the operation fails it returns the *Error error type.
-// options - PrimitiveGetByteOptions contains the optional parameters for the PrimitiveClient.GetByte method.
-func (client *PrimitiveClient) GetByte(ctx context.Context, options *PrimitiveGetByteOptions) (PrimitiveGetByteResponse, error) {
+// options - PrimitiveClientGetByteOptions contains the optional parameters for the PrimitiveClient.GetByte method.
+func (client *PrimitiveClient) GetByte(ctx context.Context, options *PrimitiveClientGetByteOptions) (PrimitiveClientGetByteResponse, error) {
 	req, err := client.getByteCreateRequest(ctx, options)
 	if err != nil {
-		return PrimitiveGetByteResponse{}, err
+		return PrimitiveClientGetByteResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitiveGetByteResponse{}, err
+		return PrimitiveClientGetByteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitiveGetByteResponse{}, client.getByteHandleError(resp)
+		return PrimitiveClientGetByteResponse{}, client.getByteHandleError(resp)
 	}
 	return client.getByteHandleResponse(resp)
 }
 
 // getByteCreateRequest creates the GetByte request.
-func (client *PrimitiveClient) getByteCreateRequest(ctx context.Context, options *PrimitiveGetByteOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) getByteCreateRequest(ctx context.Context, options *PrimitiveClientGetByteOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/byte"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -117,10 +117,10 @@ func (client *PrimitiveClient) getByteCreateRequest(ctx context.Context, options
 }
 
 // getByteHandleResponse handles the GetByte response.
-func (client *PrimitiveClient) getByteHandleResponse(resp *http.Response) (PrimitiveGetByteResponse, error) {
-	result := PrimitiveGetByteResponse{RawResponse: resp}
+func (client *PrimitiveClient) getByteHandleResponse(resp *http.Response) (PrimitiveClientGetByteResponse, error) {
+	result := PrimitiveClientGetByteResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ByteWrapper); err != nil {
-		return PrimitiveGetByteResponse{}, runtime.NewResponseError(err, resp)
+		return PrimitiveClientGetByteResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -140,24 +140,24 @@ func (client *PrimitiveClient) getByteHandleError(resp *http.Response) error {
 
 // GetDate - Get complex types with date properties
 // If the operation fails it returns the *Error error type.
-// options - PrimitiveGetDateOptions contains the optional parameters for the PrimitiveClient.GetDate method.
-func (client *PrimitiveClient) GetDate(ctx context.Context, options *PrimitiveGetDateOptions) (PrimitiveGetDateResponse, error) {
+// options - PrimitiveClientGetDateOptions contains the optional parameters for the PrimitiveClient.GetDate method.
+func (client *PrimitiveClient) GetDate(ctx context.Context, options *PrimitiveClientGetDateOptions) (PrimitiveClientGetDateResponse, error) {
 	req, err := client.getDateCreateRequest(ctx, options)
 	if err != nil {
-		return PrimitiveGetDateResponse{}, err
+		return PrimitiveClientGetDateResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitiveGetDateResponse{}, err
+		return PrimitiveClientGetDateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitiveGetDateResponse{}, client.getDateHandleError(resp)
+		return PrimitiveClientGetDateResponse{}, client.getDateHandleError(resp)
 	}
 	return client.getDateHandleResponse(resp)
 }
 
 // getDateCreateRequest creates the GetDate request.
-func (client *PrimitiveClient) getDateCreateRequest(ctx context.Context, options *PrimitiveGetDateOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) getDateCreateRequest(ctx context.Context, options *PrimitiveClientGetDateOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/date"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -168,10 +168,10 @@ func (client *PrimitiveClient) getDateCreateRequest(ctx context.Context, options
 }
 
 // getDateHandleResponse handles the GetDate response.
-func (client *PrimitiveClient) getDateHandleResponse(resp *http.Response) (PrimitiveGetDateResponse, error) {
-	result := PrimitiveGetDateResponse{RawResponse: resp}
+func (client *PrimitiveClient) getDateHandleResponse(resp *http.Response) (PrimitiveClientGetDateResponse, error) {
+	result := PrimitiveClientGetDateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DateWrapper); err != nil {
-		return PrimitiveGetDateResponse{}, runtime.NewResponseError(err, resp)
+		return PrimitiveClientGetDateResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -191,24 +191,24 @@ func (client *PrimitiveClient) getDateHandleError(resp *http.Response) error {
 
 // GetDateTime - Get complex types with datetime properties
 // If the operation fails it returns the *Error error type.
-// options - PrimitiveGetDateTimeOptions contains the optional parameters for the PrimitiveClient.GetDateTime method.
-func (client *PrimitiveClient) GetDateTime(ctx context.Context, options *PrimitiveGetDateTimeOptions) (PrimitiveGetDateTimeResponse, error) {
+// options - PrimitiveClientGetDateTimeOptions contains the optional parameters for the PrimitiveClient.GetDateTime method.
+func (client *PrimitiveClient) GetDateTime(ctx context.Context, options *PrimitiveClientGetDateTimeOptions) (PrimitiveClientGetDateTimeResponse, error) {
 	req, err := client.getDateTimeCreateRequest(ctx, options)
 	if err != nil {
-		return PrimitiveGetDateTimeResponse{}, err
+		return PrimitiveClientGetDateTimeResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitiveGetDateTimeResponse{}, err
+		return PrimitiveClientGetDateTimeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitiveGetDateTimeResponse{}, client.getDateTimeHandleError(resp)
+		return PrimitiveClientGetDateTimeResponse{}, client.getDateTimeHandleError(resp)
 	}
 	return client.getDateTimeHandleResponse(resp)
 }
 
 // getDateTimeCreateRequest creates the GetDateTime request.
-func (client *PrimitiveClient) getDateTimeCreateRequest(ctx context.Context, options *PrimitiveGetDateTimeOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) getDateTimeCreateRequest(ctx context.Context, options *PrimitiveClientGetDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/datetime"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -219,10 +219,10 @@ func (client *PrimitiveClient) getDateTimeCreateRequest(ctx context.Context, opt
 }
 
 // getDateTimeHandleResponse handles the GetDateTime response.
-func (client *PrimitiveClient) getDateTimeHandleResponse(resp *http.Response) (PrimitiveGetDateTimeResponse, error) {
-	result := PrimitiveGetDateTimeResponse{RawResponse: resp}
+func (client *PrimitiveClient) getDateTimeHandleResponse(resp *http.Response) (PrimitiveClientGetDateTimeResponse, error) {
+	result := PrimitiveClientGetDateTimeResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DatetimeWrapper); err != nil {
-		return PrimitiveGetDateTimeResponse{}, runtime.NewResponseError(err, resp)
+		return PrimitiveClientGetDateTimeResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -242,25 +242,25 @@ func (client *PrimitiveClient) getDateTimeHandleError(resp *http.Response) error
 
 // GetDateTimeRFC1123 - Get complex types with datetimeRfc1123 properties
 // If the operation fails it returns the *Error error type.
-// options - PrimitiveGetDateTimeRFC1123Options contains the optional parameters for the PrimitiveClient.GetDateTimeRFC1123
+// options - PrimitiveClientGetDateTimeRFC1123Options contains the optional parameters for the PrimitiveClient.GetDateTimeRFC1123
 // method.
-func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *PrimitiveGetDateTimeRFC1123Options) (PrimitiveGetDateTimeRFC1123Response, error) {
+func (client *PrimitiveClient) GetDateTimeRFC1123(ctx context.Context, options *PrimitiveClientGetDateTimeRFC1123Options) (PrimitiveClientGetDateTimeRFC1123Response, error) {
 	req, err := client.getDateTimeRFC1123CreateRequest(ctx, options)
 	if err != nil {
-		return PrimitiveGetDateTimeRFC1123Response{}, err
+		return PrimitiveClientGetDateTimeRFC1123Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitiveGetDateTimeRFC1123Response{}, err
+		return PrimitiveClientGetDateTimeRFC1123Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitiveGetDateTimeRFC1123Response{}, client.getDateTimeRFC1123HandleError(resp)
+		return PrimitiveClientGetDateTimeRFC1123Response{}, client.getDateTimeRFC1123HandleError(resp)
 	}
 	return client.getDateTimeRFC1123HandleResponse(resp)
 }
 
 // getDateTimeRFC1123CreateRequest creates the GetDateTimeRFC1123 request.
-func (client *PrimitiveClient) getDateTimeRFC1123CreateRequest(ctx context.Context, options *PrimitiveGetDateTimeRFC1123Options) (*policy.Request, error) {
+func (client *PrimitiveClient) getDateTimeRFC1123CreateRequest(ctx context.Context, options *PrimitiveClientGetDateTimeRFC1123Options) (*policy.Request, error) {
 	urlPath := "/complex/primitive/datetimerfc1123"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -271,10 +271,10 @@ func (client *PrimitiveClient) getDateTimeRFC1123CreateRequest(ctx context.Conte
 }
 
 // getDateTimeRFC1123HandleResponse handles the GetDateTimeRFC1123 response.
-func (client *PrimitiveClient) getDateTimeRFC1123HandleResponse(resp *http.Response) (PrimitiveGetDateTimeRFC1123Response, error) {
-	result := PrimitiveGetDateTimeRFC1123Response{RawResponse: resp}
+func (client *PrimitiveClient) getDateTimeRFC1123HandleResponse(resp *http.Response) (PrimitiveClientGetDateTimeRFC1123Response, error) {
+	result := PrimitiveClientGetDateTimeRFC1123Response{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Datetimerfc1123Wrapper); err != nil {
-		return PrimitiveGetDateTimeRFC1123Response{}, runtime.NewResponseError(err, resp)
+		return PrimitiveClientGetDateTimeRFC1123Response{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -294,24 +294,24 @@ func (client *PrimitiveClient) getDateTimeRFC1123HandleError(resp *http.Response
 
 // GetDouble - Get complex types with double properties
 // If the operation fails it returns the *Error error type.
-// options - PrimitiveGetDoubleOptions contains the optional parameters for the PrimitiveClient.GetDouble method.
-func (client *PrimitiveClient) GetDouble(ctx context.Context, options *PrimitiveGetDoubleOptions) (PrimitiveGetDoubleResponse, error) {
+// options - PrimitiveClientGetDoubleOptions contains the optional parameters for the PrimitiveClient.GetDouble method.
+func (client *PrimitiveClient) GetDouble(ctx context.Context, options *PrimitiveClientGetDoubleOptions) (PrimitiveClientGetDoubleResponse, error) {
 	req, err := client.getDoubleCreateRequest(ctx, options)
 	if err != nil {
-		return PrimitiveGetDoubleResponse{}, err
+		return PrimitiveClientGetDoubleResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitiveGetDoubleResponse{}, err
+		return PrimitiveClientGetDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitiveGetDoubleResponse{}, client.getDoubleHandleError(resp)
+		return PrimitiveClientGetDoubleResponse{}, client.getDoubleHandleError(resp)
 	}
 	return client.getDoubleHandleResponse(resp)
 }
 
 // getDoubleCreateRequest creates the GetDouble request.
-func (client *PrimitiveClient) getDoubleCreateRequest(ctx context.Context, options *PrimitiveGetDoubleOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) getDoubleCreateRequest(ctx context.Context, options *PrimitiveClientGetDoubleOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/double"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -322,10 +322,10 @@ func (client *PrimitiveClient) getDoubleCreateRequest(ctx context.Context, optio
 }
 
 // getDoubleHandleResponse handles the GetDouble response.
-func (client *PrimitiveClient) getDoubleHandleResponse(resp *http.Response) (PrimitiveGetDoubleResponse, error) {
-	result := PrimitiveGetDoubleResponse{RawResponse: resp}
+func (client *PrimitiveClient) getDoubleHandleResponse(resp *http.Response) (PrimitiveClientGetDoubleResponse, error) {
+	result := PrimitiveClientGetDoubleResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DoubleWrapper); err != nil {
-		return PrimitiveGetDoubleResponse{}, runtime.NewResponseError(err, resp)
+		return PrimitiveClientGetDoubleResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -345,24 +345,24 @@ func (client *PrimitiveClient) getDoubleHandleError(resp *http.Response) error {
 
 // GetDuration - Get complex types with duration properties
 // If the operation fails it returns the *Error error type.
-// options - PrimitiveGetDurationOptions contains the optional parameters for the PrimitiveClient.GetDuration method.
-func (client *PrimitiveClient) GetDuration(ctx context.Context, options *PrimitiveGetDurationOptions) (PrimitiveGetDurationResponse, error) {
+// options - PrimitiveClientGetDurationOptions contains the optional parameters for the PrimitiveClient.GetDuration method.
+func (client *PrimitiveClient) GetDuration(ctx context.Context, options *PrimitiveClientGetDurationOptions) (PrimitiveClientGetDurationResponse, error) {
 	req, err := client.getDurationCreateRequest(ctx, options)
 	if err != nil {
-		return PrimitiveGetDurationResponse{}, err
+		return PrimitiveClientGetDurationResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitiveGetDurationResponse{}, err
+		return PrimitiveClientGetDurationResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitiveGetDurationResponse{}, client.getDurationHandleError(resp)
+		return PrimitiveClientGetDurationResponse{}, client.getDurationHandleError(resp)
 	}
 	return client.getDurationHandleResponse(resp)
 }
 
 // getDurationCreateRequest creates the GetDuration request.
-func (client *PrimitiveClient) getDurationCreateRequest(ctx context.Context, options *PrimitiveGetDurationOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) getDurationCreateRequest(ctx context.Context, options *PrimitiveClientGetDurationOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/duration"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -373,10 +373,10 @@ func (client *PrimitiveClient) getDurationCreateRequest(ctx context.Context, opt
 }
 
 // getDurationHandleResponse handles the GetDuration response.
-func (client *PrimitiveClient) getDurationHandleResponse(resp *http.Response) (PrimitiveGetDurationResponse, error) {
-	result := PrimitiveGetDurationResponse{RawResponse: resp}
+func (client *PrimitiveClient) getDurationHandleResponse(resp *http.Response) (PrimitiveClientGetDurationResponse, error) {
+	result := PrimitiveClientGetDurationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DurationWrapper); err != nil {
-		return PrimitiveGetDurationResponse{}, runtime.NewResponseError(err, resp)
+		return PrimitiveClientGetDurationResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -396,24 +396,24 @@ func (client *PrimitiveClient) getDurationHandleError(resp *http.Response) error
 
 // GetFloat - Get complex types with float properties
 // If the operation fails it returns the *Error error type.
-// options - PrimitiveGetFloatOptions contains the optional parameters for the PrimitiveClient.GetFloat method.
-func (client *PrimitiveClient) GetFloat(ctx context.Context, options *PrimitiveGetFloatOptions) (PrimitiveGetFloatResponse, error) {
+// options - PrimitiveClientGetFloatOptions contains the optional parameters for the PrimitiveClient.GetFloat method.
+func (client *PrimitiveClient) GetFloat(ctx context.Context, options *PrimitiveClientGetFloatOptions) (PrimitiveClientGetFloatResponse, error) {
 	req, err := client.getFloatCreateRequest(ctx, options)
 	if err != nil {
-		return PrimitiveGetFloatResponse{}, err
+		return PrimitiveClientGetFloatResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitiveGetFloatResponse{}, err
+		return PrimitiveClientGetFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitiveGetFloatResponse{}, client.getFloatHandleError(resp)
+		return PrimitiveClientGetFloatResponse{}, client.getFloatHandleError(resp)
 	}
 	return client.getFloatHandleResponse(resp)
 }
 
 // getFloatCreateRequest creates the GetFloat request.
-func (client *PrimitiveClient) getFloatCreateRequest(ctx context.Context, options *PrimitiveGetFloatOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) getFloatCreateRequest(ctx context.Context, options *PrimitiveClientGetFloatOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/float"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -424,10 +424,10 @@ func (client *PrimitiveClient) getFloatCreateRequest(ctx context.Context, option
 }
 
 // getFloatHandleResponse handles the GetFloat response.
-func (client *PrimitiveClient) getFloatHandleResponse(resp *http.Response) (PrimitiveGetFloatResponse, error) {
-	result := PrimitiveGetFloatResponse{RawResponse: resp}
+func (client *PrimitiveClient) getFloatHandleResponse(resp *http.Response) (PrimitiveClientGetFloatResponse, error) {
+	result := PrimitiveClientGetFloatResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FloatWrapper); err != nil {
-		return PrimitiveGetFloatResponse{}, runtime.NewResponseError(err, resp)
+		return PrimitiveClientGetFloatResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -447,24 +447,24 @@ func (client *PrimitiveClient) getFloatHandleError(resp *http.Response) error {
 
 // GetInt - Get complex types with integer properties
 // If the operation fails it returns the *Error error type.
-// options - PrimitiveGetIntOptions contains the optional parameters for the PrimitiveClient.GetInt method.
-func (client *PrimitiveClient) GetInt(ctx context.Context, options *PrimitiveGetIntOptions) (PrimitiveGetIntResponse, error) {
+// options - PrimitiveClientGetIntOptions contains the optional parameters for the PrimitiveClient.GetInt method.
+func (client *PrimitiveClient) GetInt(ctx context.Context, options *PrimitiveClientGetIntOptions) (PrimitiveClientGetIntResponse, error) {
 	req, err := client.getIntCreateRequest(ctx, options)
 	if err != nil {
-		return PrimitiveGetIntResponse{}, err
+		return PrimitiveClientGetIntResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitiveGetIntResponse{}, err
+		return PrimitiveClientGetIntResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitiveGetIntResponse{}, client.getIntHandleError(resp)
+		return PrimitiveClientGetIntResponse{}, client.getIntHandleError(resp)
 	}
 	return client.getIntHandleResponse(resp)
 }
 
 // getIntCreateRequest creates the GetInt request.
-func (client *PrimitiveClient) getIntCreateRequest(ctx context.Context, options *PrimitiveGetIntOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) getIntCreateRequest(ctx context.Context, options *PrimitiveClientGetIntOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/integer"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -475,10 +475,10 @@ func (client *PrimitiveClient) getIntCreateRequest(ctx context.Context, options 
 }
 
 // getIntHandleResponse handles the GetInt response.
-func (client *PrimitiveClient) getIntHandleResponse(resp *http.Response) (PrimitiveGetIntResponse, error) {
-	result := PrimitiveGetIntResponse{RawResponse: resp}
+func (client *PrimitiveClient) getIntHandleResponse(resp *http.Response) (PrimitiveClientGetIntResponse, error) {
+	result := PrimitiveClientGetIntResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IntWrapper); err != nil {
-		return PrimitiveGetIntResponse{}, runtime.NewResponseError(err, resp)
+		return PrimitiveClientGetIntResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -498,24 +498,24 @@ func (client *PrimitiveClient) getIntHandleError(resp *http.Response) error {
 
 // GetLong - Get complex types with long properties
 // If the operation fails it returns the *Error error type.
-// options - PrimitiveGetLongOptions contains the optional parameters for the PrimitiveClient.GetLong method.
-func (client *PrimitiveClient) GetLong(ctx context.Context, options *PrimitiveGetLongOptions) (PrimitiveGetLongResponse, error) {
+// options - PrimitiveClientGetLongOptions contains the optional parameters for the PrimitiveClient.GetLong method.
+func (client *PrimitiveClient) GetLong(ctx context.Context, options *PrimitiveClientGetLongOptions) (PrimitiveClientGetLongResponse, error) {
 	req, err := client.getLongCreateRequest(ctx, options)
 	if err != nil {
-		return PrimitiveGetLongResponse{}, err
+		return PrimitiveClientGetLongResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitiveGetLongResponse{}, err
+		return PrimitiveClientGetLongResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitiveGetLongResponse{}, client.getLongHandleError(resp)
+		return PrimitiveClientGetLongResponse{}, client.getLongHandleError(resp)
 	}
 	return client.getLongHandleResponse(resp)
 }
 
 // getLongCreateRequest creates the GetLong request.
-func (client *PrimitiveClient) getLongCreateRequest(ctx context.Context, options *PrimitiveGetLongOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) getLongCreateRequest(ctx context.Context, options *PrimitiveClientGetLongOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/long"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -526,10 +526,10 @@ func (client *PrimitiveClient) getLongCreateRequest(ctx context.Context, options
 }
 
 // getLongHandleResponse handles the GetLong response.
-func (client *PrimitiveClient) getLongHandleResponse(resp *http.Response) (PrimitiveGetLongResponse, error) {
-	result := PrimitiveGetLongResponse{RawResponse: resp}
+func (client *PrimitiveClient) getLongHandleResponse(resp *http.Response) (PrimitiveClientGetLongResponse, error) {
+	result := PrimitiveClientGetLongResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LongWrapper); err != nil {
-		return PrimitiveGetLongResponse{}, runtime.NewResponseError(err, resp)
+		return PrimitiveClientGetLongResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -549,24 +549,24 @@ func (client *PrimitiveClient) getLongHandleError(resp *http.Response) error {
 
 // GetString - Get complex types with string properties
 // If the operation fails it returns the *Error error type.
-// options - PrimitiveGetStringOptions contains the optional parameters for the PrimitiveClient.GetString method.
-func (client *PrimitiveClient) GetString(ctx context.Context, options *PrimitiveGetStringOptions) (PrimitiveGetStringResponse, error) {
+// options - PrimitiveClientGetStringOptions contains the optional parameters for the PrimitiveClient.GetString method.
+func (client *PrimitiveClient) GetString(ctx context.Context, options *PrimitiveClientGetStringOptions) (PrimitiveClientGetStringResponse, error) {
 	req, err := client.getStringCreateRequest(ctx, options)
 	if err != nil {
-		return PrimitiveGetStringResponse{}, err
+		return PrimitiveClientGetStringResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitiveGetStringResponse{}, err
+		return PrimitiveClientGetStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitiveGetStringResponse{}, client.getStringHandleError(resp)
+		return PrimitiveClientGetStringResponse{}, client.getStringHandleError(resp)
 	}
 	return client.getStringHandleResponse(resp)
 }
 
 // getStringCreateRequest creates the GetString request.
-func (client *PrimitiveClient) getStringCreateRequest(ctx context.Context, options *PrimitiveGetStringOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) getStringCreateRequest(ctx context.Context, options *PrimitiveClientGetStringOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/string"
 	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -577,10 +577,10 @@ func (client *PrimitiveClient) getStringCreateRequest(ctx context.Context, optio
 }
 
 // getStringHandleResponse handles the GetString response.
-func (client *PrimitiveClient) getStringHandleResponse(resp *http.Response) (PrimitiveGetStringResponse, error) {
-	result := PrimitiveGetStringResponse{RawResponse: resp}
+func (client *PrimitiveClient) getStringHandleResponse(resp *http.Response) (PrimitiveClientGetStringResponse, error) {
+	result := PrimitiveClientGetStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StringWrapper); err != nil {
-		return PrimitiveGetStringResponse{}, runtime.NewResponseError(err, resp)
+		return PrimitiveClientGetStringResponse{}, runtime.NewResponseError(err, resp)
 	}
 	return result, nil
 }
@@ -601,24 +601,24 @@ func (client *PrimitiveClient) getStringHandleError(resp *http.Response) error {
 // PutBool - Put complex types with bool properties
 // If the operation fails it returns the *Error error type.
 // complexBody - Please put true and false
-// options - PrimitivePutBoolOptions contains the optional parameters for the PrimitiveClient.PutBool method.
-func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWrapper, options *PrimitivePutBoolOptions) (PrimitivePutBoolResponse, error) {
+// options - PrimitiveClientPutBoolOptions contains the optional parameters for the PrimitiveClient.PutBool method.
+func (client *PrimitiveClient) PutBool(ctx context.Context, complexBody BooleanWrapper, options *PrimitiveClientPutBoolOptions) (PrimitiveClientPutBoolResponse, error) {
 	req, err := client.putBoolCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return PrimitivePutBoolResponse{}, err
+		return PrimitiveClientPutBoolResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitivePutBoolResponse{}, err
+		return PrimitiveClientPutBoolResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitivePutBoolResponse{}, client.putBoolHandleError(resp)
+		return PrimitiveClientPutBoolResponse{}, client.putBoolHandleError(resp)
 	}
-	return PrimitivePutBoolResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutBoolResponse{RawResponse: resp}, nil
 }
 
 // putBoolCreateRequest creates the PutBool request.
-func (client *PrimitiveClient) putBoolCreateRequest(ctx context.Context, complexBody BooleanWrapper, options *PrimitivePutBoolOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) putBoolCreateRequest(ctx context.Context, complexBody BooleanWrapper, options *PrimitiveClientPutBoolOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/bool"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -644,24 +644,24 @@ func (client *PrimitiveClient) putBoolHandleError(resp *http.Response) error {
 // PutByte - Put complex types with byte properties
 // If the operation fails it returns the *Error error type.
 // complexBody - Please put non-ascii byte string hex(FF FE FD FC 00 FA F9 F8 F7 F6)
-// options - PrimitivePutByteOptions contains the optional parameters for the PrimitiveClient.PutByte method.
-func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapper, options *PrimitivePutByteOptions) (PrimitivePutByteResponse, error) {
+// options - PrimitiveClientPutByteOptions contains the optional parameters for the PrimitiveClient.PutByte method.
+func (client *PrimitiveClient) PutByte(ctx context.Context, complexBody ByteWrapper, options *PrimitiveClientPutByteOptions) (PrimitiveClientPutByteResponse, error) {
 	req, err := client.putByteCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return PrimitivePutByteResponse{}, err
+		return PrimitiveClientPutByteResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitivePutByteResponse{}, err
+		return PrimitiveClientPutByteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitivePutByteResponse{}, client.putByteHandleError(resp)
+		return PrimitiveClientPutByteResponse{}, client.putByteHandleError(resp)
 	}
-	return PrimitivePutByteResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutByteResponse{RawResponse: resp}, nil
 }
 
 // putByteCreateRequest creates the PutByte request.
-func (client *PrimitiveClient) putByteCreateRequest(ctx context.Context, complexBody ByteWrapper, options *PrimitivePutByteOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) putByteCreateRequest(ctx context.Context, complexBody ByteWrapper, options *PrimitiveClientPutByteOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/byte"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -687,24 +687,24 @@ func (client *PrimitiveClient) putByteHandleError(resp *http.Response) error {
 // PutDate - Put complex types with date properties
 // If the operation fails it returns the *Error error type.
 // complexBody - Please put '0001-01-01' and '2016-02-29'
-// options - PrimitivePutDateOptions contains the optional parameters for the PrimitiveClient.PutDate method.
-func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper, options *PrimitivePutDateOptions) (PrimitivePutDateResponse, error) {
+// options - PrimitiveClientPutDateOptions contains the optional parameters for the PrimitiveClient.PutDate method.
+func (client *PrimitiveClient) PutDate(ctx context.Context, complexBody DateWrapper, options *PrimitiveClientPutDateOptions) (PrimitiveClientPutDateResponse, error) {
 	req, err := client.putDateCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return PrimitivePutDateResponse{}, err
+		return PrimitiveClientPutDateResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitivePutDateResponse{}, err
+		return PrimitiveClientPutDateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitivePutDateResponse{}, client.putDateHandleError(resp)
+		return PrimitiveClientPutDateResponse{}, client.putDateHandleError(resp)
 	}
-	return PrimitivePutDateResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutDateResponse{RawResponse: resp}, nil
 }
 
 // putDateCreateRequest creates the PutDate request.
-func (client *PrimitiveClient) putDateCreateRequest(ctx context.Context, complexBody DateWrapper, options *PrimitivePutDateOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) putDateCreateRequest(ctx context.Context, complexBody DateWrapper, options *PrimitiveClientPutDateOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/date"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -730,24 +730,24 @@ func (client *PrimitiveClient) putDateHandleError(resp *http.Response) error {
 // PutDateTime - Put complex types with datetime properties
 // If the operation fails it returns the *Error error type.
 // complexBody - Please put '0001-01-01T12:00:00-04:00' and '2015-05-18T11:38:00-08:00'
-// options - PrimitivePutDateTimeOptions contains the optional parameters for the PrimitiveClient.PutDateTime method.
-func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody DatetimeWrapper, options *PrimitivePutDateTimeOptions) (PrimitivePutDateTimeResponse, error) {
+// options - PrimitiveClientPutDateTimeOptions contains the optional parameters for the PrimitiveClient.PutDateTime method.
+func (client *PrimitiveClient) PutDateTime(ctx context.Context, complexBody DatetimeWrapper, options *PrimitiveClientPutDateTimeOptions) (PrimitiveClientPutDateTimeResponse, error) {
 	req, err := client.putDateTimeCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return PrimitivePutDateTimeResponse{}, err
+		return PrimitiveClientPutDateTimeResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitivePutDateTimeResponse{}, err
+		return PrimitiveClientPutDateTimeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitivePutDateTimeResponse{}, client.putDateTimeHandleError(resp)
+		return PrimitiveClientPutDateTimeResponse{}, client.putDateTimeHandleError(resp)
 	}
-	return PrimitivePutDateTimeResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutDateTimeResponse{RawResponse: resp}, nil
 }
 
 // putDateTimeCreateRequest creates the PutDateTime request.
-func (client *PrimitiveClient) putDateTimeCreateRequest(ctx context.Context, complexBody DatetimeWrapper, options *PrimitivePutDateTimeOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) putDateTimeCreateRequest(ctx context.Context, complexBody DatetimeWrapper, options *PrimitiveClientPutDateTimeOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/datetime"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -773,25 +773,25 @@ func (client *PrimitiveClient) putDateTimeHandleError(resp *http.Response) error
 // PutDateTimeRFC1123 - Put complex types with datetimeRfc1123 properties
 // If the operation fails it returns the *Error error type.
 // complexBody - Please put 'Mon, 01 Jan 0001 12:00:00 GMT' and 'Mon, 18 May 2015 11:38:00 GMT'
-// options - PrimitivePutDateTimeRFC1123Options contains the optional parameters for the PrimitiveClient.PutDateTimeRFC1123
+// options - PrimitiveClientPutDateTimeRFC1123Options contains the optional parameters for the PrimitiveClient.PutDateTimeRFC1123
 // method.
-func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitivePutDateTimeRFC1123Options) (PrimitivePutDateTimeRFC1123Response, error) {
+func (client *PrimitiveClient) PutDateTimeRFC1123(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitiveClientPutDateTimeRFC1123Options) (PrimitiveClientPutDateTimeRFC1123Response, error) {
 	req, err := client.putDateTimeRFC1123CreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return PrimitivePutDateTimeRFC1123Response{}, err
+		return PrimitiveClientPutDateTimeRFC1123Response{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitivePutDateTimeRFC1123Response{}, err
+		return PrimitiveClientPutDateTimeRFC1123Response{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitivePutDateTimeRFC1123Response{}, client.putDateTimeRFC1123HandleError(resp)
+		return PrimitiveClientPutDateTimeRFC1123Response{}, client.putDateTimeRFC1123HandleError(resp)
 	}
-	return PrimitivePutDateTimeRFC1123Response{RawResponse: resp}, nil
+	return PrimitiveClientPutDateTimeRFC1123Response{RawResponse: resp}, nil
 }
 
 // putDateTimeRFC1123CreateRequest creates the PutDateTimeRFC1123 request.
-func (client *PrimitiveClient) putDateTimeRFC1123CreateRequest(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitivePutDateTimeRFC1123Options) (*policy.Request, error) {
+func (client *PrimitiveClient) putDateTimeRFC1123CreateRequest(ctx context.Context, complexBody Datetimerfc1123Wrapper, options *PrimitiveClientPutDateTimeRFC1123Options) (*policy.Request, error) {
 	urlPath := "/complex/primitive/datetimerfc1123"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -817,24 +817,24 @@ func (client *PrimitiveClient) putDateTimeRFC1123HandleError(resp *http.Response
 // PutDouble - Put complex types with double properties
 // If the operation fails it returns the *Error error type.
 // complexBody - Please put 3e-100 and -0.000000000000000000000000000000000000000000000000000000005
-// options - PrimitivePutDoubleOptions contains the optional parameters for the PrimitiveClient.PutDouble method.
-func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleWrapper, options *PrimitivePutDoubleOptions) (PrimitivePutDoubleResponse, error) {
+// options - PrimitiveClientPutDoubleOptions contains the optional parameters for the PrimitiveClient.PutDouble method.
+func (client *PrimitiveClient) PutDouble(ctx context.Context, complexBody DoubleWrapper, options *PrimitiveClientPutDoubleOptions) (PrimitiveClientPutDoubleResponse, error) {
 	req, err := client.putDoubleCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return PrimitivePutDoubleResponse{}, err
+		return PrimitiveClientPutDoubleResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitivePutDoubleResponse{}, err
+		return PrimitiveClientPutDoubleResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitivePutDoubleResponse{}, client.putDoubleHandleError(resp)
+		return PrimitiveClientPutDoubleResponse{}, client.putDoubleHandleError(resp)
 	}
-	return PrimitivePutDoubleResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutDoubleResponse{RawResponse: resp}, nil
 }
 
 // putDoubleCreateRequest creates the PutDouble request.
-func (client *PrimitiveClient) putDoubleCreateRequest(ctx context.Context, complexBody DoubleWrapper, options *PrimitivePutDoubleOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) putDoubleCreateRequest(ctx context.Context, complexBody DoubleWrapper, options *PrimitiveClientPutDoubleOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/double"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -860,24 +860,24 @@ func (client *PrimitiveClient) putDoubleHandleError(resp *http.Response) error {
 // PutDuration - Put complex types with duration properties
 // If the operation fails it returns the *Error error type.
 // complexBody - Please put 'P123DT22H14M12.011S'
-// options - PrimitivePutDurationOptions contains the optional parameters for the PrimitiveClient.PutDuration method.
-func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody DurationWrapper, options *PrimitivePutDurationOptions) (PrimitivePutDurationResponse, error) {
+// options - PrimitiveClientPutDurationOptions contains the optional parameters for the PrimitiveClient.PutDuration method.
+func (client *PrimitiveClient) PutDuration(ctx context.Context, complexBody DurationWrapper, options *PrimitiveClientPutDurationOptions) (PrimitiveClientPutDurationResponse, error) {
 	req, err := client.putDurationCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return PrimitivePutDurationResponse{}, err
+		return PrimitiveClientPutDurationResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitivePutDurationResponse{}, err
+		return PrimitiveClientPutDurationResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitivePutDurationResponse{}, client.putDurationHandleError(resp)
+		return PrimitiveClientPutDurationResponse{}, client.putDurationHandleError(resp)
 	}
-	return PrimitivePutDurationResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutDurationResponse{RawResponse: resp}, nil
 }
 
 // putDurationCreateRequest creates the PutDuration request.
-func (client *PrimitiveClient) putDurationCreateRequest(ctx context.Context, complexBody DurationWrapper, options *PrimitivePutDurationOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) putDurationCreateRequest(ctx context.Context, complexBody DurationWrapper, options *PrimitiveClientPutDurationOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/duration"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -903,24 +903,24 @@ func (client *PrimitiveClient) putDurationHandleError(resp *http.Response) error
 // PutFloat - Put complex types with float properties
 // If the operation fails it returns the *Error error type.
 // complexBody - Please put 1.05 and -0.003
-// options - PrimitivePutFloatOptions contains the optional parameters for the PrimitiveClient.PutFloat method.
-func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWrapper, options *PrimitivePutFloatOptions) (PrimitivePutFloatResponse, error) {
+// options - PrimitiveClientPutFloatOptions contains the optional parameters for the PrimitiveClient.PutFloat method.
+func (client *PrimitiveClient) PutFloat(ctx context.Context, complexBody FloatWrapper, options *PrimitiveClientPutFloatOptions) (PrimitiveClientPutFloatResponse, error) {
 	req, err := client.putFloatCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return PrimitivePutFloatResponse{}, err
+		return PrimitiveClientPutFloatResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitivePutFloatResponse{}, err
+		return PrimitiveClientPutFloatResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitivePutFloatResponse{}, client.putFloatHandleError(resp)
+		return PrimitiveClientPutFloatResponse{}, client.putFloatHandleError(resp)
 	}
-	return PrimitivePutFloatResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutFloatResponse{RawResponse: resp}, nil
 }
 
 // putFloatCreateRequest creates the PutFloat request.
-func (client *PrimitiveClient) putFloatCreateRequest(ctx context.Context, complexBody FloatWrapper, options *PrimitivePutFloatOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) putFloatCreateRequest(ctx context.Context, complexBody FloatWrapper, options *PrimitiveClientPutFloatOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/float"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -946,24 +946,24 @@ func (client *PrimitiveClient) putFloatHandleError(resp *http.Response) error {
 // PutInt - Put complex types with integer properties
 // If the operation fails it returns the *Error error type.
 // complexBody - Please put -1 and 2
-// options - PrimitivePutIntOptions contains the optional parameters for the PrimitiveClient.PutInt method.
-func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper, options *PrimitivePutIntOptions) (PrimitivePutIntResponse, error) {
+// options - PrimitiveClientPutIntOptions contains the optional parameters for the PrimitiveClient.PutInt method.
+func (client *PrimitiveClient) PutInt(ctx context.Context, complexBody IntWrapper, options *PrimitiveClientPutIntOptions) (PrimitiveClientPutIntResponse, error) {
 	req, err := client.putIntCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return PrimitivePutIntResponse{}, err
+		return PrimitiveClientPutIntResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitivePutIntResponse{}, err
+		return PrimitiveClientPutIntResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitivePutIntResponse{}, client.putIntHandleError(resp)
+		return PrimitiveClientPutIntResponse{}, client.putIntHandleError(resp)
 	}
-	return PrimitivePutIntResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutIntResponse{RawResponse: resp}, nil
 }
 
 // putIntCreateRequest creates the PutInt request.
-func (client *PrimitiveClient) putIntCreateRequest(ctx context.Context, complexBody IntWrapper, options *PrimitivePutIntOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) putIntCreateRequest(ctx context.Context, complexBody IntWrapper, options *PrimitiveClientPutIntOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/integer"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -989,24 +989,24 @@ func (client *PrimitiveClient) putIntHandleError(resp *http.Response) error {
 // PutLong - Put complex types with long properties
 // If the operation fails it returns the *Error error type.
 // complexBody - Please put 1099511627775 and -999511627788
-// options - PrimitivePutLongOptions contains the optional parameters for the PrimitiveClient.PutLong method.
-func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapper, options *PrimitivePutLongOptions) (PrimitivePutLongResponse, error) {
+// options - PrimitiveClientPutLongOptions contains the optional parameters for the PrimitiveClient.PutLong method.
+func (client *PrimitiveClient) PutLong(ctx context.Context, complexBody LongWrapper, options *PrimitiveClientPutLongOptions) (PrimitiveClientPutLongResponse, error) {
 	req, err := client.putLongCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return PrimitivePutLongResponse{}, err
+		return PrimitiveClientPutLongResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitivePutLongResponse{}, err
+		return PrimitiveClientPutLongResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitivePutLongResponse{}, client.putLongHandleError(resp)
+		return PrimitiveClientPutLongResponse{}, client.putLongHandleError(resp)
 	}
-	return PrimitivePutLongResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutLongResponse{RawResponse: resp}, nil
 }
 
 // putLongCreateRequest creates the PutLong request.
-func (client *PrimitiveClient) putLongCreateRequest(ctx context.Context, complexBody LongWrapper, options *PrimitivePutLongOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) putLongCreateRequest(ctx context.Context, complexBody LongWrapper, options *PrimitiveClientPutLongOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/long"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
@@ -1032,24 +1032,24 @@ func (client *PrimitiveClient) putLongHandleError(resp *http.Response) error {
 // PutString - Put complex types with string properties
 // If the operation fails it returns the *Error error type.
 // complexBody - Please put 'goodrequest', '', and null
-// options - PrimitivePutStringOptions contains the optional parameters for the PrimitiveClient.PutString method.
-func (client *PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper, options *PrimitivePutStringOptions) (PrimitivePutStringResponse, error) {
+// options - PrimitiveClientPutStringOptions contains the optional parameters for the PrimitiveClient.PutString method.
+func (client *PrimitiveClient) PutString(ctx context.Context, complexBody StringWrapper, options *PrimitiveClientPutStringOptions) (PrimitiveClientPutStringResponse, error) {
 	req, err := client.putStringCreateRequest(ctx, complexBody, options)
 	if err != nil {
-		return PrimitivePutStringResponse{}, err
+		return PrimitiveClientPutStringResponse{}, err
 	}
 	resp, err := client.pl.Do(req)
 	if err != nil {
-		return PrimitivePutStringResponse{}, err
+		return PrimitiveClientPutStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PrimitivePutStringResponse{}, client.putStringHandleError(resp)
+		return PrimitiveClientPutStringResponse{}, client.putStringHandleError(resp)
 	}
-	return PrimitivePutStringResponse{RawResponse: resp}, nil
+	return PrimitiveClientPutStringResponse{RawResponse: resp}, nil
 }
 
 // putStringCreateRequest creates the PutString request.
-func (client *PrimitiveClient) putStringCreateRequest(ctx context.Context, complexBody StringWrapper, options *PrimitivePutStringOptions) (*policy.Request, error) {
+func (client *PrimitiveClient) putStringCreateRequest(ctx context.Context, complexBody StringWrapper, options *PrimitiveClientPutStringOptions) (*policy.Request, error) {
 	urlPath := "/complex/primitive/string"
 	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(host, urlPath))
 	if err != nil {
