@@ -44,7 +44,7 @@ func NewPathsClient(subscriptionID string, options *PathsClientOptions) *PathsCl
 	client := &PathsClient{
 		dnsSuffix:      "host",
 		subscriptionID: subscriptionID,
-		pl:             runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp.ClientOptions),
+		pl:             runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp.ClientOptions),
 	}
 	if options.DnsSuffix != nil {
 		client.dnsSuffix = *options.DnsSuffix

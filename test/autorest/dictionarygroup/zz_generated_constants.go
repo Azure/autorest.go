@@ -11,6 +11,6 @@ package dictionarygroup
 const host = "http://localhost:3000"
 
 const (
-	module  = "dictionarygroup"
-	version = "v0.1.0"
+	moduleName    = "dictionarygroup"
+	moduleVersion = "v0.1.0"
 )

@@ -37,7 +37,7 @@ func NewAutoRestValidationTestClient(subscriptionID string, options *azcore.Clie
 	}
 	client := &AutoRestValidationTestClient{
 		subscriptionID: subscriptionID,
-		pl:             runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl:             runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

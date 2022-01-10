@@ -11,6 +11,6 @@ package booleangroup
 const host = "http://localhost:3000"
 
 const (
-	module  = "booleangroup"
-	version = "v0.1.0"
+	moduleName    = "booleangroup"
+	moduleVersion = "v0.1.0"
 )

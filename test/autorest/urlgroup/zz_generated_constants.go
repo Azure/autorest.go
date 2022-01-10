@@ -11,8 +11,8 @@ package urlgroup
 const host = "http://localhost:3000"
 
 const (
-	module  = "urlgroup"
-	version = "v0.1.0"
+	moduleName    = "urlgroup"
+	moduleVersion = "v0.1.0"
 )
 
 type URIColor string

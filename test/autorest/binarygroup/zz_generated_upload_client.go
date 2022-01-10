@@ -31,7 +31,7 @@ func NewUploadClient(options *azcore.ClientOptions) *UploadClient {
 		cp = *options
 	}
 	client := &UploadClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

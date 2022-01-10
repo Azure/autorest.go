@@ -30,7 +30,7 @@ func NewFloatClient(options *azcore.ClientOptions) *FloatClient {
 		cp = *options
 	}
 	client := &FloatClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

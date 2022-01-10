@@ -30,7 +30,7 @@ func NewAPIVersionDefaultClient(options *azcore.ClientOptions) *APIVersionDefaul
 		cp = *options
 	}
 	client := &APIVersionDefaultClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

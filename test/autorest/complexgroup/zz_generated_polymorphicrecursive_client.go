@@ -30,7 +30,7 @@ func NewPolymorphicrecursiveClient(options *azcore.ClientOptions) *Polymorphicre
 		cp = *options
 	}
 	client := &PolymorphicrecursiveClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

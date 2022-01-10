@@ -30,7 +30,7 @@ func NewQueriesClient(options *azcore.ClientOptions) *QueriesClient {
 		cp = *options
 	}
 	client := &QueriesClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

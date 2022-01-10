@@ -30,7 +30,7 @@ func NewHTTPClientFailureClient(options *azcore.ClientOptions) *HTTPClientFailur
 		cp = *options
 	}
 	client := &HTTPClientFailureClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

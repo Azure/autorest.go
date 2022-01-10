@@ -31,7 +31,7 @@ func NewSkipURLEncodingClient(options *azcore.ClientOptions) *SkipURLEncodingCli
 		cp = *options
 	}
 	client := &SkipURLEncodingClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

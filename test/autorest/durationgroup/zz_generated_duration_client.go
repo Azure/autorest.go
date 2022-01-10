@@ -30,7 +30,7 @@ func NewDurationClient(options *azcore.ClientOptions) *DurationClient {
 		cp = *options
 	}
 	client := &DurationClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

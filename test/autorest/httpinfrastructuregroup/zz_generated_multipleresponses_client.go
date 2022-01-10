@@ -31,7 +31,7 @@ func NewMultipleResponsesClient(options *azcore.ClientOptions) *MultipleResponse
 		cp = *options
 	}
 	client := &MultipleResponsesClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

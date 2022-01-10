@@ -39,7 +39,7 @@ func NewPathsClient(options *PathsClientOptions) *PathsClient {
 	}
 	client := &PathsClient{
 		host: "host",
-		pl:   runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp.ClientOptions),
+		pl:   runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp.ClientOptions),
 	}
 	if options.Host != nil {
 		client.host = *options.Host

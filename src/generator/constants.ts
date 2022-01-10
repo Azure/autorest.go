@@ -21,8 +21,8 @@ export async function generateConstants(session: Session<CodeModel>, version: st
     text += `const host = "${session.model.language.go!.host}"\n\n`;
   }
   text += `const (\n`;
-  text += `\tmodule = "${session.model.language.go!.packageName}"\n`;
-  text += `\tversion = "v${version}"\n`;
+  text += `\tmoduleName = "${session.model.language.go!.packageName}"\n`;
+  text += `\tmoduleVersion = "v${version}"\n`;
   text += ')\n\n';
   for (const enm of values(getEnums(session.model.schemas))) {
     if (enm.desc) {

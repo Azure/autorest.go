@@ -36,7 +36,7 @@ func NewSubscriptionInCredentialsClient(subscriptionID string, options *azcore.C
 	}
 	client := &SubscriptionInCredentialsClient{
 		subscriptionID: subscriptionID,
-		pl:             runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl:             runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

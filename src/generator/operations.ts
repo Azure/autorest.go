@@ -279,9 +279,9 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     // create or add pipeline based on arm/vanilla/data-plane
     if (<boolean>session.model.language.go!.azureARM) {
       clientText += `\t\t${group.language.go!.hostParamName}: string(cp.Endpoint),\n`;
-      clientText += `\t\tpl: armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &${optionsCopy}),\n`;
+      clientText += `\t\tpl: armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &${optionsCopy}),\n`;
     } else if (isARM) {
-      clientText += `\t\tpl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &${optionsCopy}),\n`;
+      clientText += `\t\tpl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &${optionsCopy}),\n`;
     } else {
       clientText += '\t\tpl: pl,\n';
     }

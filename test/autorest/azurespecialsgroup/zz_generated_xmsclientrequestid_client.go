@@ -30,7 +30,7 @@ func NewXMSClientRequestIDClient(options *azcore.ClientOptions) *XMSClientReques
 		cp = *options
 	}
 	client := &XMSClientRequestIDClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

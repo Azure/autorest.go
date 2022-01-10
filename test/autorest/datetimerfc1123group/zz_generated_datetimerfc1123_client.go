@@ -31,7 +31,7 @@ func NewDatetimerfc1123Client(options *azcore.ClientOptions) *Datetimerfc1123Cli
 		cp = *options
 	}
 	client := &Datetimerfc1123Client{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

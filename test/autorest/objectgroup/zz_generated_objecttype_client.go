@@ -30,7 +30,7 @@ func NewObjectTypeClient(options *azcore.ClientOptions) *ObjectTypeClient {
 		cp = *options
 	}
 	client := &ObjectTypeClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

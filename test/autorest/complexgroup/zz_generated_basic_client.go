@@ -30,7 +30,7 @@ func NewBasicClient(options *azcore.ClientOptions) *BasicClient {
 		cp = *options
 	}
 	client := &BasicClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

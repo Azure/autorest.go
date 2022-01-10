@@ -31,7 +31,7 @@ func NewDateClient(options *azcore.ClientOptions) *DateClient {
 		cp = *options
 	}
 	client := &DateClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

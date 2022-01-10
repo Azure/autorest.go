@@ -11,8 +11,8 @@ package complexgroup
 const host = "http://localhost:3000"
 
 const (
-	module  = "complexgroup"
-	version = "v0.1.0"
+	moduleName    = "complexgroup"
+	moduleVersion = "v0.1.0"
 )
 
 type CMYKColors string

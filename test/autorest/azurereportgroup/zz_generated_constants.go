@@ -11,6 +11,6 @@ package azurereportgroup
 const host = "http://localhost:3000"
 
 const (
-	module  = "azurereportgroup"
-	version = "v0.1.0"
+	moduleName    = "azurereportgroup"
+	moduleVersion = "v0.1.0"
 )

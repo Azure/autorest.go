@@ -9,8 +9,8 @@
 package aztables
 
 const (
-	module  = "aztables"
-	version = "v0.1.0"
+	moduleName    = "aztables"
+	moduleVersion = "v0.1.0"
 )
 
 type Enum0 string

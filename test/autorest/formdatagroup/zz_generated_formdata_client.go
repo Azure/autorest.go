@@ -31,7 +31,7 @@ func NewFormdataClient(options *azcore.ClientOptions) *FormdataClient {
 		cp = *options
 	}
 	client := &FormdataClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

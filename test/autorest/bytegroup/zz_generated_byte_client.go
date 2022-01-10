@@ -30,7 +30,7 @@ func NewByteClient(options *azcore.ClientOptions) *ByteClient {
 		cp = *options
 	}
 	client := &ByteClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

@@ -30,7 +30,7 @@ func NewHTTPRetryClient(options *azcore.ClientOptions) *HTTPRetryClient {
 		cp = *options
 	}
 	client := &HTTPRetryClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

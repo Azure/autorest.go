@@ -30,7 +30,7 @@ func NewInheritanceClient(options *azcore.ClientOptions) *InheritanceClient {
 		cp = *options
 	}
 	client := &InheritanceClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

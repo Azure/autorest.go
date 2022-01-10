@@ -33,7 +33,7 @@ func NewSubscriptionInMethodClient(options *azcore.ClientOptions) *SubscriptionI
 		cp = *options
 	}
 	client := &SubscriptionInMethodClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

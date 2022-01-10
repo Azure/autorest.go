@@ -11,6 +11,6 @@ package validationgroup
 const host = "http://localhost:3000"
 
 const (
-	module  = "validationgroup"
-	version = "v0.1.0"
+	moduleName    = "validationgroup"
+	moduleVersion = "v0.1.0"
 )

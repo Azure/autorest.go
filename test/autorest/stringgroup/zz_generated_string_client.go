@@ -30,7 +30,7 @@ func NewStringClient(options *azcore.ClientOptions) *StringClient {
 		cp = *options
 	}
 	client := &StringClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

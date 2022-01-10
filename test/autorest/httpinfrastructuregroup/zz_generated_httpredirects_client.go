@@ -30,7 +30,7 @@ func NewHTTPRedirectsClient(options *azcore.ClientOptions) *HTTPRedirectsClient 
 		cp = *options
 	}
 	client := &HTTPRedirectsClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

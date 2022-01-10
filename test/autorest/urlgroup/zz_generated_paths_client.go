@@ -35,7 +35,7 @@ func NewPathsClient(options *azcore.ClientOptions) *PathsClient {
 		cp = *options
 	}
 	client := &PathsClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

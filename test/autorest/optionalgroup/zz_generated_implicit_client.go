@@ -43,7 +43,7 @@ func NewImplicitClient(requiredGlobalPath string, requiredGlobalQuery string, op
 		requiredGlobalPath:  requiredGlobalPath,
 		requiredGlobalQuery: requiredGlobalQuery,
 		optionalGlobalQuery: optionalGlobalQuery,
-		pl:                  runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl:                  runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

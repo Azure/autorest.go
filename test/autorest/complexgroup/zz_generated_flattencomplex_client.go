@@ -30,7 +30,7 @@ func NewFlattencomplexClient(options *azcore.ClientOptions) *FlattencomplexClien
 		cp = *options
 	}
 	client := &FlattencomplexClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

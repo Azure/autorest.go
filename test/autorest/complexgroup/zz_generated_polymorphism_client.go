@@ -30,7 +30,7 @@ func NewPolymorphismClient(options *azcore.ClientOptions) *PolymorphismClient {
 		cp = *options
 	}
 	client := &PolymorphismClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

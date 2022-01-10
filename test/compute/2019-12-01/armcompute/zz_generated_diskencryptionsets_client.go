@@ -45,7 +45,7 @@ func NewDiskEncryptionSetsClient(subscriptionID string, credential azcore.TokenC
 	client := &DiskEncryptionSetsClient{
 		subscriptionID: subscriptionID,
 		host:           string(cp.Endpoint),
-		pl:             armruntime.NewPipeline(module, version, credential, runtime.PipelineOptions{}, &cp),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

@@ -33,7 +33,7 @@ func NewExplicitClient(options *azcore.ClientOptions) *ExplicitClient {
 		cp = *options
 	}
 	client := &ExplicitClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

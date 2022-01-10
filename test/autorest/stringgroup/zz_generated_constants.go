@@ -11,8 +11,8 @@ package stringgroup
 const host = "http://localhost:3000"
 
 const (
-	module  = "stringgroup"
-	version = "v0.1.0"
+	moduleName    = "stringgroup"
+	moduleVersion = "v0.1.0"
 )
 
 // Colors - Referenced Color Enum Description.

@@ -11,6 +11,6 @@ package errorsgroup
 const host = "http://localhost:3000"
 
 const (
-	module  = "errorsgroup"
-	version = "v0.1.0"
+	moduleName    = "errorsgroup"
+	moduleVersion = "v0.1.0"
 )

@@ -30,7 +30,7 @@ func NewFilesClient(options *azcore.ClientOptions) *FilesClient {
 		cp = *options
 	}
 	client := &FilesClient{
-		pl: runtime.NewPipeline(module, version, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }

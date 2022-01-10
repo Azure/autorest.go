@@ -11,6 +11,6 @@ package bytegroup
 const host = "http://localhost:3000"
 
 const (
-	module  = "bytegroup"
-	version = "v0.1.0"
+	moduleName    = "bytegroup"
+	moduleVersion = "v0.1.0"
 )
