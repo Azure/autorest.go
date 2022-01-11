@@ -427,17 +427,9 @@ type ServiceClientSetPropertiesOptions struct {
 }
 
 // ServiceError - Table Service error.
-// Implements the error and azcore.HTTPResponse interfaces.
 type ServiceError struct {
-	raw string
 	// The error message.
 	Message *string `json:"Message,omitempty"`
-}
-
-// Error implements the error interface for type ServiceError.
-// The contents of the error text are not contractual and subject to change.
-func (e ServiceError) Error() string {
-	return e.raw
 }
 
 // ServiceProperties - Table Service Properties.

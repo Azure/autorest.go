@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewExpressRouteServiceProvidersClient(subscriptionID string, credential azc
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ExpressRouteServiceProvidersClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // List - Gets all the available express route service providers.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ExpressRouteServiceProvidersClientListOptions contains the optional parameters for the ExpressRouteServiceProvidersClient.List
 // method.
 func (client *ExpressRouteServiceProvidersClient) List(options *ExpressRouteServiceProvidersClientListOptions) *ExpressRouteServiceProvidersClientListPager {
@@ -89,20 +88,7 @@ func (client *ExpressRouteServiceProvidersClient) listCreateRequest(ctx context.
 func (client *ExpressRouteServiceProvidersClient) listHandleResponse(resp *http.Response) (ExpressRouteServiceProvidersClientListResponse, error) {
 	result := ExpressRouteServiceProvidersClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteServiceProviderListResult); err != nil {
-		return ExpressRouteServiceProvidersClientListResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRouteServiceProvidersClientListResponse{}, err
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *ExpressRouteServiceProvidersClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

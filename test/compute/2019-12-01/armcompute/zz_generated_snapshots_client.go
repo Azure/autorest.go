@@ -39,19 +39,19 @@ func NewSnapshotsClient(subscriptionID string, credential azcore.TokenCredential
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &SnapshotsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a snapshot.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // snapshotName - The name of the snapshot that is being created. The name can't be changed after the snapshot is created.
 // Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80
@@ -67,7 +67,7 @@ func (client *SnapshotsClient) BeginCreateOrUpdate(ctx context.Context, resource
 	result := SnapshotsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SnapshotsClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("SnapshotsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return SnapshotsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -78,7 +78,7 @@ func (client *SnapshotsClient) BeginCreateOrUpdate(ctx context.Context, resource
 }
 
 // CreateOrUpdate - Creates or updates a snapshot.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SnapshotsClient) createOrUpdate(ctx context.Context, resourceGroupName string, snapshotName string, snapshot Snapshot, options *SnapshotsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, snapshotName, snapshot, options)
 	if err != nil {
@@ -89,7 +89,7 @@ func (client *SnapshotsClient) createOrUpdate(ctx context.Context, resourceGroup
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -120,20 +120,8 @@ func (client *SnapshotsClient) createOrUpdateCreateRequest(ctx context.Context, 
 	return req, runtime.MarshalAsJSON(req, snapshot)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *SnapshotsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BeginDelete - Deletes a snapshot.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // snapshotName - The name of the snapshot that is being created. The name can't be changed after the snapshot is created.
 // Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80
@@ -147,7 +135,7 @@ func (client *SnapshotsClient) BeginDelete(ctx context.Context, resourceGroupNam
 	result := SnapshotsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SnapshotsClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("SnapshotsClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return SnapshotsClientDeletePollerResponse{}, err
 	}
@@ -158,7 +146,7 @@ func (client *SnapshotsClient) BeginDelete(ctx context.Context, resourceGroupNam
 }
 
 // Delete - Deletes a snapshot.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SnapshotsClient) deleteOperation(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, snapshotName, options)
 	if err != nil {
@@ -169,7 +157,7 @@ func (client *SnapshotsClient) deleteOperation(ctx context.Context, resourceGrou
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -199,20 +187,8 @@ func (client *SnapshotsClient) deleteCreateRequest(ctx context.Context, resource
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *SnapshotsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get - Gets information about a snapshot.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // snapshotName - The name of the snapshot that is being created. The name can't be changed after the snapshot is created.
 // Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80
@@ -228,7 +204,7 @@ func (client *SnapshotsClient) Get(ctx context.Context, resourceGroupName string
 		return SnapshotsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SnapshotsClientGetResponse{}, client.getHandleError(resp)
+		return SnapshotsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -263,25 +239,13 @@ func (client *SnapshotsClient) getCreateRequest(ctx context.Context, resourceGro
 func (client *SnapshotsClient) getHandleResponse(resp *http.Response) (SnapshotsClientGetResponse, error) {
 	result := SnapshotsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Snapshot); err != nil {
-		return SnapshotsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return SnapshotsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *SnapshotsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BeginGrantAccess - Grants access to a snapshot.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // snapshotName - The name of the snapshot that is being created. The name can't be changed after the snapshot is created.
 // Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80
@@ -297,7 +261,7 @@ func (client *SnapshotsClient) BeginGrantAccess(ctx context.Context, resourceGro
 	result := SnapshotsClientGrantAccessPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SnapshotsClient.GrantAccess", "location", resp, client.pl, client.grantAccessHandleError)
+	pt, err := armruntime.NewPoller("SnapshotsClient.GrantAccess", "location", resp, client.pl)
 	if err != nil {
 		return SnapshotsClientGrantAccessPollerResponse{}, err
 	}
@@ -308,7 +272,7 @@ func (client *SnapshotsClient) BeginGrantAccess(ctx context.Context, resourceGro
 }
 
 // GrantAccess - Grants access to a snapshot.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SnapshotsClient) grantAccess(ctx context.Context, resourceGroupName string, snapshotName string, grantAccessData GrantAccessData, options *SnapshotsClientBeginGrantAccessOptions) (*http.Response, error) {
 	req, err := client.grantAccessCreateRequest(ctx, resourceGroupName, snapshotName, grantAccessData, options)
 	if err != nil {
@@ -319,7 +283,7 @@ func (client *SnapshotsClient) grantAccess(ctx context.Context, resourceGroupNam
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.grantAccessHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -350,20 +314,8 @@ func (client *SnapshotsClient) grantAccessCreateRequest(ctx context.Context, res
 	return req, runtime.MarshalAsJSON(req, grantAccessData)
 }
 
-// grantAccessHandleError handles the GrantAccess error response.
-func (client *SnapshotsClient) grantAccessHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // List - Lists snapshots under a subscription.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - SnapshotsClientListOptions contains the optional parameters for the SnapshotsClient.List method.
 func (client *SnapshotsClient) List(options *SnapshotsClientListOptions) *SnapshotsClientListPager {
 	return &SnapshotsClientListPager{
@@ -399,25 +351,13 @@ func (client *SnapshotsClient) listCreateRequest(ctx context.Context, options *S
 func (client *SnapshotsClient) listHandleResponse(resp *http.Response) (SnapshotsClientListResponse, error) {
 	result := SnapshotsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SnapshotList); err != nil {
-		return SnapshotsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return SnapshotsClientListResponse{}, err
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *SnapshotsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // ListByResourceGroup - Lists snapshots under a resource group.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - SnapshotsClientListByResourceGroupOptions contains the optional parameters for the SnapshotsClient.ListByResourceGroup
 // method.
@@ -459,25 +399,13 @@ func (client *SnapshotsClient) listByResourceGroupCreateRequest(ctx context.Cont
 func (client *SnapshotsClient) listByResourceGroupHandleResponse(resp *http.Response) (SnapshotsClientListByResourceGroupResponse, error) {
 	result := SnapshotsClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SnapshotList); err != nil {
-		return SnapshotsClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return SnapshotsClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *SnapshotsClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BeginRevokeAccess - Revokes access to a snapshot.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // snapshotName - The name of the snapshot that is being created. The name can't be changed after the snapshot is created.
 // Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80
@@ -492,7 +420,7 @@ func (client *SnapshotsClient) BeginRevokeAccess(ctx context.Context, resourceGr
 	result := SnapshotsClientRevokeAccessPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SnapshotsClient.RevokeAccess", "location", resp, client.pl, client.revokeAccessHandleError)
+	pt, err := armruntime.NewPoller("SnapshotsClient.RevokeAccess", "location", resp, client.pl)
 	if err != nil {
 		return SnapshotsClientRevokeAccessPollerResponse{}, err
 	}
@@ -503,7 +431,7 @@ func (client *SnapshotsClient) BeginRevokeAccess(ctx context.Context, resourceGr
 }
 
 // RevokeAccess - Revokes access to a snapshot.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SnapshotsClient) revokeAccess(ctx context.Context, resourceGroupName string, snapshotName string, options *SnapshotsClientBeginRevokeAccessOptions) (*http.Response, error) {
 	req, err := client.revokeAccessCreateRequest(ctx, resourceGroupName, snapshotName, options)
 	if err != nil {
@@ -514,7 +442,7 @@ func (client *SnapshotsClient) revokeAccess(ctx context.Context, resourceGroupNa
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.revokeAccessHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -544,20 +472,8 @@ func (client *SnapshotsClient) revokeAccessCreateRequest(ctx context.Context, re
 	return req, nil
 }
 
-// revokeAccessHandleError handles the RevokeAccess error response.
-func (client *SnapshotsClient) revokeAccessHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BeginUpdate - Updates (patches) a snapshot.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // snapshotName - The name of the snapshot that is being created. The name can't be changed after the snapshot is created.
 // Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80
@@ -572,7 +488,7 @@ func (client *SnapshotsClient) BeginUpdate(ctx context.Context, resourceGroupNam
 	result := SnapshotsClientUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SnapshotsClient.Update", "", resp, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPoller("SnapshotsClient.Update", "", resp, client.pl)
 	if err != nil {
 		return SnapshotsClientUpdatePollerResponse{}, err
 	}
@@ -583,7 +499,7 @@ func (client *SnapshotsClient) BeginUpdate(ctx context.Context, resourceGroupNam
 }
 
 // Update - Updates (patches) a snapshot.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SnapshotsClient) update(ctx context.Context, resourceGroupName string, snapshotName string, snapshot SnapshotUpdate, options *SnapshotsClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, snapshotName, snapshot, options)
 	if err != nil {
@@ -594,7 +510,7 @@ func (client *SnapshotsClient) update(ctx context.Context, resourceGroupName str
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.updateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -623,16 +539,4 @@ func (client *SnapshotsClient) updateCreateRequest(ctx context.Context, resource
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, snapshot)
-}
-
-// updateHandleError handles the Update error response.
-func (client *SnapshotsClient) updateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

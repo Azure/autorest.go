@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewFirewallPolicyRuleGroupsClient(subscriptionID string, credential azcore.
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &FirewallPolicyRuleGroupsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified FirewallPolicyRuleGroup.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.
 // ruleGroupName - The name of the FirewallPolicyRuleGroup.
@@ -67,7 +66,7 @@ func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Co
 	result := FirewallPolicyRuleGroupsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("FirewallPolicyRuleGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("FirewallPolicyRuleGroupsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return FirewallPolicyRuleGroupsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -78,7 +77,7 @@ func (client *FirewallPolicyRuleGroupsClient) BeginCreateOrUpdate(ctx context.Co
 }
 
 // CreateOrUpdate - Creates or updates the specified FirewallPolicyRuleGroup.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *FirewallPolicyRuleGroupsClient) createOrUpdate(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, parameters FirewallPolicyRuleGroup, options *FirewallPolicyRuleGroupsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, parameters, options)
 	if err != nil {
@@ -89,7 +88,7 @@ func (client *FirewallPolicyRuleGroupsClient) createOrUpdate(ctx context.Context
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -124,21 +123,8 @@ func (client *FirewallPolicyRuleGroupsClient) createOrUpdateCreateRequest(ctx co
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *FirewallPolicyRuleGroupsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified FirewallPolicyRuleGroup.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.
 // ruleGroupName - The name of the FirewallPolicyRuleGroup.
@@ -152,7 +138,7 @@ func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, r
 	result := FirewallPolicyRuleGroupsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("FirewallPolicyRuleGroupsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("FirewallPolicyRuleGroupsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return FirewallPolicyRuleGroupsClientDeletePollerResponse{}, err
 	}
@@ -163,7 +149,7 @@ func (client *FirewallPolicyRuleGroupsClient) BeginDelete(ctx context.Context, r
 }
 
 // Delete - Deletes the specified FirewallPolicyRuleGroup.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *FirewallPolicyRuleGroupsClient) deleteOperation(ctx context.Context, resourceGroupName string, firewallPolicyName string, ruleGroupName string, options *FirewallPolicyRuleGroupsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, firewallPolicyName, ruleGroupName, options)
 	if err != nil {
@@ -174,7 +160,7 @@ func (client *FirewallPolicyRuleGroupsClient) deleteOperation(ctx context.Contex
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -209,21 +195,8 @@ func (client *FirewallPolicyRuleGroupsClient) deleteCreateRequest(ctx context.Co
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *FirewallPolicyRuleGroupsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the specified FirewallPolicyRuleGroup.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.
 // ruleGroupName - The name of the FirewallPolicyRuleGroup.
@@ -239,7 +212,7 @@ func (client *FirewallPolicyRuleGroupsClient) Get(ctx context.Context, resourceG
 		return FirewallPolicyRuleGroupsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FirewallPolicyRuleGroupsClientGetResponse{}, client.getHandleError(resp)
+		return FirewallPolicyRuleGroupsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -278,26 +251,13 @@ func (client *FirewallPolicyRuleGroupsClient) getCreateRequest(ctx context.Conte
 func (client *FirewallPolicyRuleGroupsClient) getHandleResponse(resp *http.Response) (FirewallPolicyRuleGroupsClientGetResponse, error) {
 	result := FirewallPolicyRuleGroupsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FirewallPolicyRuleGroup); err != nil {
-		return FirewallPolicyRuleGroupsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return FirewallPolicyRuleGroupsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *FirewallPolicyRuleGroupsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Lists all FirewallPolicyRuleGroups in a FirewallPolicy resource.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // firewallPolicyName - The name of the Firewall Policy.
 // options - FirewallPolicyRuleGroupsClientListOptions contains the optional parameters for the FirewallPolicyRuleGroupsClient.List
@@ -344,20 +304,7 @@ func (client *FirewallPolicyRuleGroupsClient) listCreateRequest(ctx context.Cont
 func (client *FirewallPolicyRuleGroupsClient) listHandleResponse(resp *http.Response) (FirewallPolicyRuleGroupsClientListResponse, error) {
 	result := FirewallPolicyRuleGroupsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.FirewallPolicyRuleGroupListResult); err != nil {
-		return FirewallPolicyRuleGroupsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return FirewallPolicyRuleGroupsClientListResponse{}, err
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *FirewallPolicyRuleGroupsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

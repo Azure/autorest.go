@@ -12,7 +12,6 @@ import (
 	"context"
 	"encoding/xml"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -44,7 +43,7 @@ func NewClient(endpoint string, version Enum0, pl runtime.Pipeline) *Client {
 }
 
 // Create - Creates a new table under the given account.
-// If the operation fails it returns the *ServiceError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // dataServiceVersion - Specifies the data service version.
 // tableProperties - The Table properties.
 // options - ClientCreateOptions contains the optional parameters for the Client.Create method.
@@ -58,7 +57,7 @@ func (client *Client) Create(ctx context.Context, dataServiceVersion Enum1, tabl
 		return ClientCreateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated, http.StatusNoContent) {
-		return ClientCreateResponse{}, client.createHandleError(resp)
+		return ClientCreateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
@@ -110,26 +109,13 @@ func (client *Client) createHandleResponse(resp *http.Response) (ClientCreateRes
 		result.PreferenceApplied = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Response); err != nil {
-		return ClientCreateResponse{}, runtime.NewResponseError(err, resp)
+		return ClientCreateResponse{}, err
 	}
 	return result, nil
 }
 
-// createHandleError handles the Create error response.
-func (client *Client) createHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ServiceError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Delete - Operation permanently deletes the specified table.
-// If the operation fails it returns the *ServiceError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // table - The name of the table.
 // options - ClientDeleteOptions contains the optional parameters for the Client.Delete method.
 func (client *Client) Delete(ctx context.Context, table string, options *ClientDeleteOptions) (ClientDeleteResponse, error) {
@@ -142,7 +128,7 @@ func (client *Client) Delete(ctx context.Context, table string, options *ClientD
 		return ClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ClientDeleteResponse{}, client.deleteHandleError(resp)
+		return ClientDeleteResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteHandleResponse(resp)
 }
@@ -188,21 +174,8 @@ func (client *Client) deleteHandleResponse(resp *http.Response) (ClientDeleteRes
 	return result, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *Client) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ServiceError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DeleteEntity - Deletes the specified entity in a table.
-// If the operation fails it returns the *ServiceError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // dataServiceVersion - Specifies the data service version.
 // table - The name of the table.
 // partitionKey - The partition key of the entity.
@@ -220,7 +193,7 @@ func (client *Client) DeleteEntity(ctx context.Context, dataServiceVersion Enum1
 		return ClientDeleteEntityResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ClientDeleteEntityResponse{}, client.deleteEntityHandleError(resp)
+		return ClientDeleteEntityResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteEntityHandleResponse(resp)
 }
@@ -284,22 +257,9 @@ func (client *Client) deleteEntityHandleResponse(resp *http.Response) (ClientDel
 	return result, nil
 }
 
-// deleteEntityHandleError handles the DeleteEntity error response.
-func (client *Client) deleteEntityHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ServiceError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetAccessPolicy - Retrieves details about any stored access policies specified on the table that may be used with Shared
 // Access Signatures.
-// If the operation fails it returns the *ServiceError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // table - The name of the table.
 // comp - Required query string to handle stored access policies for the table that may be used with Shared Access Signatures.
 // options - ClientGetAccessPolicyOptions contains the optional parameters for the Client.GetAccessPolicy method.
@@ -313,7 +273,7 @@ func (client *Client) GetAccessPolicy(ctx context.Context, table string, comp En
 		return ClientGetAccessPolicyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientGetAccessPolicyResponse{}, client.getAccessPolicyHandleError(resp)
+		return ClientGetAccessPolicyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getAccessPolicyHandleResponse(resp)
 }
@@ -363,26 +323,13 @@ func (client *Client) getAccessPolicyHandleResponse(resp *http.Response) (Client
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
-		return ClientGetAccessPolicyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientGetAccessPolicyResponse{}, err
 	}
 	return result, nil
 }
 
-// getAccessPolicyHandleError handles the GetAccessPolicy error response.
-func (client *Client) getAccessPolicyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ServiceError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // InsertEntity - Insert entity in a table.
-// If the operation fails it returns the *ServiceError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // dataServiceVersion - Specifies the data service version.
 // table - The name of the table.
 // options - ClientInsertEntityOptions contains the optional parameters for the Client.InsertEntity method.
@@ -396,7 +343,7 @@ func (client *Client) InsertEntity(ctx context.Context, dataServiceVersion Enum1
 		return ClientInsertEntityResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated, http.StatusNoContent) {
-		return ClientInsertEntityResponse{}, client.insertEntityHandleError(resp)
+		return ClientInsertEntityResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.insertEntityHandleResponse(resp)
 }
@@ -464,26 +411,13 @@ func (client *Client) insertEntityHandleResponse(resp *http.Response) (ClientIns
 		result.ContentType = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return ClientInsertEntityResponse{}, runtime.NewResponseError(err, resp)
+		return ClientInsertEntityResponse{}, err
 	}
 	return result, nil
 }
 
-// insertEntityHandleError handles the InsertEntity error response.
-func (client *Client) insertEntityHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ServiceError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // MergeEntity - Merge entity in a table.
-// If the operation fails it returns the *ServiceError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // dataServiceVersion - Specifies the data service version.
 // table - The name of the table.
 // partitionKey - The partition key of the entity.
@@ -499,7 +433,7 @@ func (client *Client) MergeEntity(ctx context.Context, dataServiceVersion Enum1,
 		return ClientMergeEntityResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ClientMergeEntityResponse{}, client.mergeEntityHandleError(resp)
+		return ClientMergeEntityResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.mergeEntityHandleResponse(resp)
 }
@@ -571,21 +505,8 @@ func (client *Client) mergeEntityHandleResponse(resp *http.Response) (ClientMerg
 	return result, nil
 }
 
-// mergeEntityHandleError handles the MergeEntity error response.
-func (client *Client) mergeEntityHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ServiceError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Query - Queries tables under the given account.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // dataServiceVersion - Specifies the data service version.
 // options - ClientQueryOptions contains the optional parameters for the Client.Query method.
 func (client *Client) Query(ctx context.Context, dataServiceVersion Enum1, options *ClientQueryOptions) (ClientQueryResponse, error) {
@@ -598,7 +519,7 @@ func (client *Client) Query(ctx context.Context, dataServiceVersion Enum1, optio
 		return ClientQueryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientQueryResponse{}, client.queryHandleError(resp)
+		return ClientQueryResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.queryHandleResponse(resp)
 }
@@ -659,25 +580,13 @@ func (client *Client) queryHandleResponse(resp *http.Response) (ClientQueryRespo
 		result.XMSContinuationNextTableName = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.QueryResponse); err != nil {
-		return ClientQueryResponse{}, runtime.NewResponseError(err, resp)
+		return ClientQueryResponse{}, err
 	}
 	return result, nil
 }
 
-// queryHandleError handles the Query error response.
-func (client *Client) queryHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // QueryEntities - Queries entities in a table.
-// If the operation fails it returns the *ServiceError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // dataServiceVersion - Specifies the data service version.
 // table - The name of the table.
 // options - ClientQueryEntitiesOptions contains the optional parameters for the Client.QueryEntities method.
@@ -691,7 +600,7 @@ func (client *Client) QueryEntities(ctx context.Context, dataServiceVersion Enum
 		return ClientQueryEntitiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientQueryEntitiesResponse{}, client.queryEntitiesHandleError(resp)
+		return ClientQueryEntitiesResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.queryEntitiesHandleResponse(resp)
 }
@@ -765,26 +674,13 @@ func (client *Client) queryEntitiesHandleResponse(resp *http.Response) (ClientQu
 		result.XMSContinuationNextRowKey = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.EntityQueryResponse); err != nil {
-		return ClientQueryEntitiesResponse{}, runtime.NewResponseError(err, resp)
+		return ClientQueryEntitiesResponse{}, err
 	}
 	return result, nil
 }
 
-// queryEntitiesHandleError handles the QueryEntities error response.
-func (client *Client) queryEntitiesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ServiceError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // QueryEntityWithPartitionAndRowKey - Queries a single entity in a table.
-// If the operation fails it returns the *ServiceError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // dataServiceVersion - Specifies the data service version.
 // table - The name of the table.
 // partitionKey - The partition key of the entity.
@@ -801,7 +697,7 @@ func (client *Client) QueryEntityWithPartitionAndRowKey(ctx context.Context, dat
 		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, client.queryEntityWithPartitionAndRowKeyHandleError(resp)
+		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.queryEntityWithPartitionAndRowKeyHandleResponse(resp)
 }
@@ -877,26 +773,13 @@ func (client *Client) queryEntityWithPartitionAndRowKeyHandleResponse(resp *http
 		result.XMSContinuationNextRowKey = &val
 	}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, runtime.NewResponseError(err, resp)
+		return ClientQueryEntityWithPartitionAndRowKeyResponse{}, err
 	}
 	return result, nil
 }
 
-// queryEntityWithPartitionAndRowKeyHandleError handles the QueryEntityWithPartitionAndRowKey error response.
-func (client *Client) queryEntityWithPartitionAndRowKeyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ServiceError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetAccessPolicy - Sets stored access policies for the table that may be used with Shared Access Signatures.
-// If the operation fails it returns the *ServiceError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // table - The name of the table.
 // comp - Required query string to handle stored access policies for the table that may be used with Shared Access Signatures.
 // options - ClientSetAccessPolicyOptions contains the optional parameters for the Client.SetAccessPolicy method.
@@ -910,7 +793,7 @@ func (client *Client) SetAccessPolicy(ctx context.Context, table string, comp En
 		return ClientSetAccessPolicyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ClientSetAccessPolicyResponse{}, client.setAccessPolicyHandleError(resp)
+		return ClientSetAccessPolicyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setAccessPolicyHandleResponse(resp)
 }
@@ -969,21 +852,8 @@ func (client *Client) setAccessPolicyHandleResponse(resp *http.Response) (Client
 	return result, nil
 }
 
-// setAccessPolicyHandleError handles the SetAccessPolicy error response.
-func (client *Client) setAccessPolicyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ServiceError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateEntity - Update entity in a table.
-// If the operation fails it returns the *ServiceError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // dataServiceVersion - Specifies the data service version.
 // table - The name of the table.
 // partitionKey - The partition key of the entity.
@@ -999,7 +869,7 @@ func (client *Client) UpdateEntity(ctx context.Context, dataServiceVersion Enum1
 		return ClientUpdateEntityResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return ClientUpdateEntityResponse{}, client.updateEntityHandleError(resp)
+		return ClientUpdateEntityResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateEntityHandleResponse(resp)
 }
@@ -1069,17 +939,4 @@ func (client *Client) updateEntityHandleResponse(resp *http.Response) (ClientUpd
 		result.ETag = &val
 	}
 	return result, nil
-}
-
-// updateEntityHandleError handles the UpdateEntity error response.
-func (client *Client) updateEntityHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ServiceError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

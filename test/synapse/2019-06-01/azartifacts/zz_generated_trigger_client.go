@@ -11,7 +11,6 @@ package azartifacts
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -36,7 +35,7 @@ func newTriggerClient(endpoint string, pl runtime.Pipeline) *triggerClient {
 }
 
 // BeginCreateOrUpdateTrigger - Creates or updates a trigger.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // triggerName - The trigger name.
 // trigger - Trigger resource definition.
 // options - triggerClientBeginCreateOrUpdateTriggerOptions contains the optional parameters for the triggerClient.BeginCreateOrUpdateTrigger
@@ -49,7 +48,7 @@ func (client *triggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, tri
 	result := triggerClientCreateOrUpdateTriggerPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("triggerClient.CreateOrUpdateTrigger", resp, client.pl, client.createOrUpdateTriggerHandleError)
+	pt, err := runtime.NewPoller("triggerClient.CreateOrUpdateTrigger", resp, client.pl)
 	if err != nil {
 		return triggerClientCreateOrUpdateTriggerPollerResponse{}, err
 	}
@@ -60,7 +59,7 @@ func (client *triggerClient) BeginCreateOrUpdateTrigger(ctx context.Context, tri
 }
 
 // CreateOrUpdateTrigger - Creates or updates a trigger.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *triggerClient) createOrUpdateTrigger(ctx context.Context, triggerName string, trigger TriggerResource, options *triggerClientBeginCreateOrUpdateTriggerOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateTriggerCreateRequest(ctx, triggerName, trigger, options)
 	if err != nil {
@@ -71,7 +70,7 @@ func (client *triggerClient) createOrUpdateTrigger(ctx context.Context, triggerN
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateTriggerHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -97,21 +96,8 @@ func (client *triggerClient) createOrUpdateTriggerCreateRequest(ctx context.Cont
 	return req, runtime.MarshalAsJSON(req, trigger)
 }
 
-// createOrUpdateTriggerHandleError handles the CreateOrUpdateTrigger error response.
-func (client *triggerClient) createOrUpdateTriggerHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDeleteTrigger - Deletes a trigger.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // triggerName - The trigger name.
 // options - triggerClientBeginDeleteTriggerOptions contains the optional parameters for the triggerClient.BeginDeleteTrigger
 // method.
@@ -123,7 +109,7 @@ func (client *triggerClient) BeginDeleteTrigger(ctx context.Context, triggerName
 	result := triggerClientDeleteTriggerPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("triggerClient.DeleteTrigger", resp, client.pl, client.deleteTriggerHandleError)
+	pt, err := runtime.NewPoller("triggerClient.DeleteTrigger", resp, client.pl)
 	if err != nil {
 		return triggerClientDeleteTriggerPollerResponse{}, err
 	}
@@ -134,7 +120,7 @@ func (client *triggerClient) BeginDeleteTrigger(ctx context.Context, triggerName
 }
 
 // DeleteTrigger - Deletes a trigger.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *triggerClient) deleteTrigger(ctx context.Context, triggerName string, options *triggerClientBeginDeleteTriggerOptions) (*http.Response, error) {
 	req, err := client.deleteTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
@@ -145,7 +131,7 @@ func (client *triggerClient) deleteTrigger(ctx context.Context, triggerName stri
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteTriggerHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -168,21 +154,8 @@ func (client *triggerClient) deleteTriggerCreateRequest(ctx context.Context, tri
 	return req, nil
 }
 
-// deleteTriggerHandleError handles the DeleteTrigger error response.
-func (client *triggerClient) deleteTriggerHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetEventSubscriptionStatus - Get a trigger's event subscription status.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // triggerName - The trigger name.
 // options - triggerClientGetEventSubscriptionStatusOptions contains the optional parameters for the triggerClient.GetEventSubscriptionStatus
 // method.
@@ -196,7 +169,7 @@ func (client *triggerClient) GetEventSubscriptionStatus(ctx context.Context, tri
 		return triggerClientGetEventSubscriptionStatusResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return triggerClientGetEventSubscriptionStatusResponse{}, client.getEventSubscriptionStatusHandleError(resp)
+		return triggerClientGetEventSubscriptionStatusResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getEventSubscriptionStatusHandleResponse(resp)
 }
@@ -223,26 +196,13 @@ func (client *triggerClient) getEventSubscriptionStatusCreateRequest(ctx context
 func (client *triggerClient) getEventSubscriptionStatusHandleResponse(resp *http.Response) (triggerClientGetEventSubscriptionStatusResponse, error) {
 	result := triggerClientGetEventSubscriptionStatusResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerSubscriptionOperationStatus); err != nil {
-		return triggerClientGetEventSubscriptionStatusResponse{}, runtime.NewResponseError(err, resp)
+		return triggerClientGetEventSubscriptionStatusResponse{}, err
 	}
 	return result, nil
 }
 
-// getEventSubscriptionStatusHandleError handles the GetEventSubscriptionStatus error response.
-func (client *triggerClient) getEventSubscriptionStatusHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetTrigger - Gets a trigger.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // triggerName - The trigger name.
 // options - triggerClientGetTriggerOptions contains the optional parameters for the triggerClient.GetTrigger method.
 func (client *triggerClient) GetTrigger(ctx context.Context, triggerName string, options *triggerClientGetTriggerOptions) (triggerClientGetTriggerResponse, error) {
@@ -255,7 +215,7 @@ func (client *triggerClient) GetTrigger(ctx context.Context, triggerName string,
 		return triggerClientGetTriggerResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
-		return triggerClientGetTriggerResponse{}, client.getTriggerHandleError(resp)
+		return triggerClientGetTriggerResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getTriggerHandleResponse(resp)
 }
@@ -285,26 +245,13 @@ func (client *triggerClient) getTriggerCreateRequest(ctx context.Context, trigge
 func (client *triggerClient) getTriggerHandleResponse(resp *http.Response) (triggerClientGetTriggerResponse, error) {
 	result := triggerClientGetTriggerResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerResource); err != nil {
-		return triggerClientGetTriggerResponse{}, runtime.NewResponseError(err, resp)
+		return triggerClientGetTriggerResponse{}, err
 	}
 	return result, nil
 }
 
-// getTriggerHandleError handles the GetTrigger error response.
-func (client *triggerClient) getTriggerHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetTriggersByWorkspace - Lists triggers.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - triggerClientGetTriggersByWorkspaceOptions contains the optional parameters for the triggerClient.GetTriggersByWorkspace
 // method.
 func (client *triggerClient) GetTriggersByWorkspace(options *triggerClientGetTriggersByWorkspaceOptions) *triggerClientGetTriggersByWorkspacePager {
@@ -337,26 +284,13 @@ func (client *triggerClient) getTriggersByWorkspaceCreateRequest(ctx context.Con
 func (client *triggerClient) getTriggersByWorkspaceHandleResponse(resp *http.Response) (triggerClientGetTriggersByWorkspaceResponse, error) {
 	result := triggerClientGetTriggersByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerListResponse); err != nil {
-		return triggerClientGetTriggersByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
+		return triggerClientGetTriggersByWorkspaceResponse{}, err
 	}
 	return result, nil
 }
 
-// getTriggersByWorkspaceHandleError handles the GetTriggersByWorkspace error response.
-func (client *triggerClient) getTriggersByWorkspaceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginStartTrigger - Starts a trigger.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // triggerName - The trigger name.
 // options - triggerClientBeginStartTriggerOptions contains the optional parameters for the triggerClient.BeginStartTrigger
 // method.
@@ -368,7 +302,7 @@ func (client *triggerClient) BeginStartTrigger(ctx context.Context, triggerName 
 	result := triggerClientStartTriggerPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("triggerClient.StartTrigger", resp, client.pl, client.startTriggerHandleError)
+	pt, err := runtime.NewPoller("triggerClient.StartTrigger", resp, client.pl)
 	if err != nil {
 		return triggerClientStartTriggerPollerResponse{}, err
 	}
@@ -379,7 +313,7 @@ func (client *triggerClient) BeginStartTrigger(ctx context.Context, triggerName 
 }
 
 // StartTrigger - Starts a trigger.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *triggerClient) startTrigger(ctx context.Context, triggerName string, options *triggerClientBeginStartTriggerOptions) (*http.Response, error) {
 	req, err := client.startTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
@@ -390,7 +324,7 @@ func (client *triggerClient) startTrigger(ctx context.Context, triggerName strin
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return nil, client.startTriggerHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -413,21 +347,8 @@ func (client *triggerClient) startTriggerCreateRequest(ctx context.Context, trig
 	return req, nil
 }
 
-// startTriggerHandleError handles the StartTrigger error response.
-func (client *triggerClient) startTriggerHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginStopTrigger - Stops a trigger.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // triggerName - The trigger name.
 // options - triggerClientBeginStopTriggerOptions contains the optional parameters for the triggerClient.BeginStopTrigger
 // method.
@@ -439,7 +360,7 @@ func (client *triggerClient) BeginStopTrigger(ctx context.Context, triggerName s
 	result := triggerClientStopTriggerPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("triggerClient.StopTrigger", resp, client.pl, client.stopTriggerHandleError)
+	pt, err := runtime.NewPoller("triggerClient.StopTrigger", resp, client.pl)
 	if err != nil {
 		return triggerClientStopTriggerPollerResponse{}, err
 	}
@@ -450,7 +371,7 @@ func (client *triggerClient) BeginStopTrigger(ctx context.Context, triggerName s
 }
 
 // StopTrigger - Stops a trigger.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *triggerClient) stopTrigger(ctx context.Context, triggerName string, options *triggerClientBeginStopTriggerOptions) (*http.Response, error) {
 	req, err := client.stopTriggerCreateRequest(ctx, triggerName, options)
 	if err != nil {
@@ -461,7 +382,7 @@ func (client *triggerClient) stopTrigger(ctx context.Context, triggerName string
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return nil, client.stopTriggerHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -484,21 +405,8 @@ func (client *triggerClient) stopTriggerCreateRequest(ctx context.Context, trigg
 	return req, nil
 }
 
-// stopTriggerHandleError handles the StopTrigger error response.
-func (client *triggerClient) stopTriggerHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginSubscribeTriggerToEvents - Subscribe event trigger to events.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // triggerName - The trigger name.
 // options - triggerClientBeginSubscribeTriggerToEventsOptions contains the optional parameters for the triggerClient.BeginSubscribeTriggerToEvents
 // method.
@@ -510,7 +418,7 @@ func (client *triggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, 
 	result := triggerClientSubscribeTriggerToEventsPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("triggerClient.SubscribeTriggerToEvents", resp, client.pl, client.subscribeTriggerToEventsHandleError)
+	pt, err := runtime.NewPoller("triggerClient.SubscribeTriggerToEvents", resp, client.pl)
 	if err != nil {
 		return triggerClientSubscribeTriggerToEventsPollerResponse{}, err
 	}
@@ -521,7 +429,7 @@ func (client *triggerClient) BeginSubscribeTriggerToEvents(ctx context.Context, 
 }
 
 // SubscribeTriggerToEvents - Subscribe event trigger to events.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *triggerClient) subscribeTriggerToEvents(ctx context.Context, triggerName string, options *triggerClientBeginSubscribeTriggerToEventsOptions) (*http.Response, error) {
 	req, err := client.subscribeTriggerToEventsCreateRequest(ctx, triggerName, options)
 	if err != nil {
@@ -532,7 +440,7 @@ func (client *triggerClient) subscribeTriggerToEvents(ctx context.Context, trigg
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.subscribeTriggerToEventsHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -555,21 +463,8 @@ func (client *triggerClient) subscribeTriggerToEventsCreateRequest(ctx context.C
 	return req, nil
 }
 
-// subscribeTriggerToEventsHandleError handles the SubscribeTriggerToEvents error response.
-func (client *triggerClient) subscribeTriggerToEventsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginUnsubscribeTriggerFromEvents - Unsubscribe event trigger from events.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // triggerName - The trigger name.
 // options - triggerClientBeginUnsubscribeTriggerFromEventsOptions contains the optional parameters for the triggerClient.BeginUnsubscribeTriggerFromEvents
 // method.
@@ -581,7 +476,7 @@ func (client *triggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Conte
 	result := triggerClientUnsubscribeTriggerFromEventsPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("triggerClient.UnsubscribeTriggerFromEvents", resp, client.pl, client.unsubscribeTriggerFromEventsHandleError)
+	pt, err := runtime.NewPoller("triggerClient.UnsubscribeTriggerFromEvents", resp, client.pl)
 	if err != nil {
 		return triggerClientUnsubscribeTriggerFromEventsPollerResponse{}, err
 	}
@@ -592,7 +487,7 @@ func (client *triggerClient) BeginUnsubscribeTriggerFromEvents(ctx context.Conte
 }
 
 // UnsubscribeTriggerFromEvents - Unsubscribe event trigger from events.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *triggerClient) unsubscribeTriggerFromEvents(ctx context.Context, triggerName string, options *triggerClientBeginUnsubscribeTriggerFromEventsOptions) (*http.Response, error) {
 	req, err := client.unsubscribeTriggerFromEventsCreateRequest(ctx, triggerName, options)
 	if err != nil {
@@ -603,7 +498,7 @@ func (client *triggerClient) unsubscribeTriggerFromEvents(ctx context.Context, t
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.unsubscribeTriggerFromEventsHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -624,17 +519,4 @@ func (client *triggerClient) unsubscribeTriggerFromEventsCreateRequest(ctx conte
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// unsubscribeTriggerFromEventsHandleError handles the UnsubscribeTriggerFromEvents error response.
-func (client *triggerClient) unsubscribeTriggerFromEventsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

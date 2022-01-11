@@ -11,7 +11,6 @@ package azartifacts
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -36,7 +35,7 @@ func newDataFlowClient(endpoint string, pl runtime.Pipeline) *dataFlowClient {
 }
 
 // BeginCreateOrUpdateDataFlow - Creates or updates a data flow.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // dataFlowName - The data flow name.
 // dataFlow - Data flow resource definition.
 // options - dataFlowClientBeginCreateOrUpdateDataFlowOptions contains the optional parameters for the dataFlowClient.BeginCreateOrUpdateDataFlow
@@ -49,7 +48,7 @@ func (client *dataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, d
 	result := dataFlowClientCreateOrUpdateDataFlowPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("dataFlowClient.CreateOrUpdateDataFlow", resp, client.pl, client.createOrUpdateDataFlowHandleError)
+	pt, err := runtime.NewPoller("dataFlowClient.CreateOrUpdateDataFlow", resp, client.pl)
 	if err != nil {
 		return dataFlowClientCreateOrUpdateDataFlowPollerResponse{}, err
 	}
@@ -60,7 +59,7 @@ func (client *dataFlowClient) BeginCreateOrUpdateDataFlow(ctx context.Context, d
 }
 
 // CreateOrUpdateDataFlow - Creates or updates a data flow.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *dataFlowClient) createOrUpdateDataFlow(ctx context.Context, dataFlowName string, dataFlow DataFlowResource, options *dataFlowClientBeginCreateOrUpdateDataFlowOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateDataFlowCreateRequest(ctx, dataFlowName, dataFlow, options)
 	if err != nil {
@@ -71,7 +70,7 @@ func (client *dataFlowClient) createOrUpdateDataFlow(ctx context.Context, dataFl
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateDataFlowHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -97,21 +96,8 @@ func (client *dataFlowClient) createOrUpdateDataFlowCreateRequest(ctx context.Co
 	return req, runtime.MarshalAsJSON(req, dataFlow)
 }
 
-// createOrUpdateDataFlowHandleError handles the CreateOrUpdateDataFlow error response.
-func (client *dataFlowClient) createOrUpdateDataFlowHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDeleteDataFlow - Deletes a data flow.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // dataFlowName - The data flow name.
 // options - dataFlowClientBeginDeleteDataFlowOptions contains the optional parameters for the dataFlowClient.BeginDeleteDataFlow
 // method.
@@ -123,7 +109,7 @@ func (client *dataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowN
 	result := dataFlowClientDeleteDataFlowPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("dataFlowClient.DeleteDataFlow", resp, client.pl, client.deleteDataFlowHandleError)
+	pt, err := runtime.NewPoller("dataFlowClient.DeleteDataFlow", resp, client.pl)
 	if err != nil {
 		return dataFlowClientDeleteDataFlowPollerResponse{}, err
 	}
@@ -134,7 +120,7 @@ func (client *dataFlowClient) BeginDeleteDataFlow(ctx context.Context, dataFlowN
 }
 
 // DeleteDataFlow - Deletes a data flow.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *dataFlowClient) deleteDataFlow(ctx context.Context, dataFlowName string, options *dataFlowClientBeginDeleteDataFlowOptions) (*http.Response, error) {
 	req, err := client.deleteDataFlowCreateRequest(ctx, dataFlowName, options)
 	if err != nil {
@@ -145,7 +131,7 @@ func (client *dataFlowClient) deleteDataFlow(ctx context.Context, dataFlowName s
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteDataFlowHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -168,21 +154,8 @@ func (client *dataFlowClient) deleteDataFlowCreateRequest(ctx context.Context, d
 	return req, nil
 }
 
-// deleteDataFlowHandleError handles the DeleteDataFlow error response.
-func (client *dataFlowClient) deleteDataFlowHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDataFlow - Gets a data flow.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // dataFlowName - The data flow name.
 // options - dataFlowClientGetDataFlowOptions contains the optional parameters for the dataFlowClient.GetDataFlow method.
 func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName string, options *dataFlowClientGetDataFlowOptions) (dataFlowClientGetDataFlowResponse, error) {
@@ -195,7 +168,7 @@ func (client *dataFlowClient) GetDataFlow(ctx context.Context, dataFlowName stri
 		return dataFlowClientGetDataFlowResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return dataFlowClientGetDataFlowResponse{}, client.getDataFlowHandleError(resp)
+		return dataFlowClientGetDataFlowResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDataFlowHandleResponse(resp)
 }
@@ -225,26 +198,13 @@ func (client *dataFlowClient) getDataFlowCreateRequest(ctx context.Context, data
 func (client *dataFlowClient) getDataFlowHandleResponse(resp *http.Response) (dataFlowClientGetDataFlowResponse, error) {
 	result := dataFlowClientGetDataFlowResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DataFlowResource); err != nil {
-		return dataFlowClientGetDataFlowResponse{}, runtime.NewResponseError(err, resp)
+		return dataFlowClientGetDataFlowResponse{}, err
 	}
 	return result, nil
 }
 
-// getDataFlowHandleError handles the GetDataFlow error response.
-func (client *dataFlowClient) getDataFlowHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDataFlowsByWorkspace - Lists data flows.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - dataFlowClientGetDataFlowsByWorkspaceOptions contains the optional parameters for the dataFlowClient.GetDataFlowsByWorkspace
 // method.
 func (client *dataFlowClient) GetDataFlowsByWorkspace(options *dataFlowClientGetDataFlowsByWorkspaceOptions) *dataFlowClientGetDataFlowsByWorkspacePager {
@@ -277,26 +237,13 @@ func (client *dataFlowClient) getDataFlowsByWorkspaceCreateRequest(ctx context.C
 func (client *dataFlowClient) getDataFlowsByWorkspaceHandleResponse(resp *http.Response) (dataFlowClientGetDataFlowsByWorkspaceResponse, error) {
 	result := dataFlowClientGetDataFlowsByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DataFlowListResponse); err != nil {
-		return dataFlowClientGetDataFlowsByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
+		return dataFlowClientGetDataFlowsByWorkspaceResponse{}, err
 	}
 	return result, nil
 }
 
-// getDataFlowsByWorkspaceHandleError handles the GetDataFlowsByWorkspace error response.
-func (client *dataFlowClient) getDataFlowsByWorkspaceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginRenameDataFlow - Renames a dataflow.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // dataFlowName - The data flow name.
 // request - proposed new name.
 // options - dataFlowClientBeginRenameDataFlowOptions contains the optional parameters for the dataFlowClient.BeginRenameDataFlow
@@ -309,7 +256,7 @@ func (client *dataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowN
 	result := dataFlowClientRenameDataFlowPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("dataFlowClient.RenameDataFlow", resp, client.pl, client.renameDataFlowHandleError)
+	pt, err := runtime.NewPoller("dataFlowClient.RenameDataFlow", resp, client.pl)
 	if err != nil {
 		return dataFlowClientRenameDataFlowPollerResponse{}, err
 	}
@@ -320,7 +267,7 @@ func (client *dataFlowClient) BeginRenameDataFlow(ctx context.Context, dataFlowN
 }
 
 // RenameDataFlow - Renames a dataflow.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *dataFlowClient) renameDataFlow(ctx context.Context, dataFlowName string, request ArtifactRenameRequest, options *dataFlowClientBeginRenameDataFlowOptions) (*http.Response, error) {
 	req, err := client.renameDataFlowCreateRequest(ctx, dataFlowName, request, options)
 	if err != nil {
@@ -331,7 +278,7 @@ func (client *dataFlowClient) renameDataFlow(ctx context.Context, dataFlowName s
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.renameDataFlowHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -352,17 +299,4 @@ func (client *dataFlowClient) renameDataFlowCreateRequest(ctx context.Context, d
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, request)
-}
-
-// renameDataFlowHandleError handles the RenameDataFlow error response.
-func (client *dataFlowClient) renameDataFlowHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

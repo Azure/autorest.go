@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { capitalize, comment, KnownMediaType, serialize, uncapitalize } from '@azure-tools/codegen';
+import { capitalize, KnownMediaType, serialize } from '@azure-tools/codegen';
 import { AutorestExtensionHost, startSession, Session } from '@autorest/extension-base';
-import { AnySchema, ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, SchemaResponse, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, BooleanSchema } from '@autorest/codemodel';
+import { AnySchema, ObjectSchema, ArraySchema, ByteArraySchema, ChoiceValue, codeModelSchema, CodeModel, DateTimeSchema, GroupProperty, HttpHeader, HttpResponse, ImplementationLocation, Language, OperationGroup, SchemaType, NumberSchema, Operation, Parameter, Property, Protocols, Response, Schema, DictionarySchema, Protocol, ChoiceSchema, SealedChoiceSchema, ConstantSchema, Request, BooleanSchema } from '@autorest/codemodel';
 import { clone, items, values } from '@azure-tools/linq';
 import { aggregateParameters, getSchemaResponse, hasAdditionalProperties, isMultiRespOperation, isTypePassedByValue, isPageableOperation, isObjectSchema, isSchemaResponse, PagerInfo, PollerInfo, isLROOperation } from '../common/helpers';
 import { namer, protocolMethods } from './namer';
@@ -53,6 +53,9 @@ async function process(session: Session<CodeModel>) {
   }
   // fix up struct field types
   for (const obj of values(session.model.schemas.objects)) {
+    if (obj.language.go!.errorType) {
+      continue;
+    }
     if (obj.language.go!.description) {
       obj.language.go!.description = parseComments(obj.language.go!.description);
       if (!obj.language.go!.description.startsWith(obj.language.go!.name)) {
@@ -79,10 +82,6 @@ async function process(session: Session<CodeModel>) {
             discValue = quoteString(asObj.discriminatorValue!);
           }
           asObj.discriminatorValue = discValue;
-        }
-        // add the error interface as the parent interface for discriminated types that are also errors
-        if (rootDiscriminator.language.go!.errorType) {
-          rootDiscriminator.language.go!.discriminatorParent = 'error';
         }
       }
     }
@@ -518,65 +517,51 @@ function processOperationResponses(session: Session<CodeModel>) {
   }
   for (const group of values(session.model.operationGroups)) {
     for (const op of values(group.operations)) {
-      // annotate all exception types as errors; this is so we know to generate an Error() method
-      const exTypeNames = new Array<string>();
-      for (const ex of values(op.exceptions)) {
-        const marshallingFormat = getMarshallingFormat(ex.protocol);
-        if (marshallingFormat === 'na') {
-          // this is for the case where the 'default' response section
-          // doesn't specify a model (legal, mostly in the test server)
-          ex.language.go!.genericError = true;
-          continue;
-        }
-        const schemaError = (<SchemaResponse>ex).schema;
-        if (isObjectSchema(schemaError)) {
-          for (const prop of values(schemaError.properties)) {
-            // adding the Inner prefix on error types, since errors in Go have an Error() method
-            // in order to implement the error interface. This causes errors to not be able to have
-            // an Error field as well, since it would cause confusion
-            if (prop.language.go!.name === 'Error') {
-              prop.language.go!.name = 'Inner' + prop.language.go!.name;
+      // TODO: make this work once relevant M4 bugs have been fixed
+      // annotate all exception types as errors so we can skip generating them
+      /*for (const ex of values(op.exceptions)) {
+        if (isSchemaResponse(ex) && isObjectSchema(ex.schema)) {
+          // we only mark the schema as an error type if it's used solely
+          // as an error.  it's legal, though weird, for a schema to be used
+          // for both error and non-error responses.  in this case, we must
+          // not skip generating the model
+          if (ex.schema.usage?.length !== 1 && ex.extensions?.['x-ms-error-response'] !== true) {
+            const marshallingFormat = getMarshallingFormat(ex.protocol);
+            if (marshallingFormat !== 'na') {
+              recursiveAddMarshallingFormat(ex.schema, marshallingFormat);
             }
-            if (prop.extensions?.['x-ms-client-flatten'] === true) {
-              schemaError.language.go!.flattenedErr = prop.language.go!.name;
+            for (const prop of values(ex.schema.properties)) {
+              prop.schema.language.go!.name = schemaTypeToGoType(session.model, prop.schema, true);
+            }
+            continue;
+          }
+          ex.schema.language.go!.errorType = true;
+          // propagate to all child/parent types
+          const doCheck = function(o: ObjectSchema): boolean {
+            if (o.extensions?.['x-ms-error-response']) {
+              return true;
+            } else if (o.discriminatorValue) {
+              return true;
+            } else if (o.usage?.length === 1 && o.usage[0] === SchemaContext.Exception) {
+              return true;
+            }
+            return false;
+          }
+          for (const parent of values(ex.schema.parents?.all)) {
+            if (isObjectSchema(parent) && doCheck(parent)) {
+              parent.language.go!.errorType = true;
             }
           }
-          // propagate error flag to all child types
-          for (const child of values(schemaError.children?.all)) {
-            if (isObjectSchema(child)) {
+          for (const child of values(ex.schema.children?.all)) {
+            if (isObjectSchema(child) && doCheck(child)) {
               child.language.go!.errorType = true;
             }
           }
-          if (schemaError.discriminator) {
-            // if the error is a discriminator we need to create an internal wrapper type
-            schemaError.language.go!.internalErrorType = uncapitalize(schemaError.language.go!.name);
-            for (const dt of values(<Array<string>>schemaError.language.go!.discriminatorTypes)) {
-              if (!exTypeNames.includes(dt)) {
-                exTypeNames.push(dt);
-              }
-            }
-          } else {
-            exTypeNames.push('*' + schemaError.language.go!.name);
-          }
-        } else {
-          schemaError.language.go!.name = schemaTypeToGoType(session.model, schemaError, true);
-          if (schemaError.type === SchemaType.Any || schemaError.type === SchemaType.AnyObject) {
-            ex.language.go!.genericError = true;
-            continue;
-          }
         }
-        schemaError.language.go!.errorType = true;
-        recursiveAddMarshallingFormat(schemaError, marshallingFormat);
-      }
-      op.language.go!.description += '\nIf the operation fails it returns ';
-      if (exTypeNames.length > 1) {
-        exTypeNames.sort();
-        op.language.go!.description += `one of the following error types.\n`;
-        op.language.go!.description += comment(exTypeNames.join(', '), ' - ');
-      } else if (exTypeNames.length === 1) {
-        op.language.go!.description += `the ${exTypeNames[0]} error type.`;
-      } else {
-        op.language.go!.description += 'a generic error.';
+      }*/
+      if (!(session.model.language.go!.headAsBoolean && op.requests![0].protocol.http!.method === 'head')) {
+        // when head-as-boolean is enabled, no error is returned for 4xx status codes
+        op.language.go!.description += '\nIf the operation fails it returns an *azcore.ResponseError type.';
       }
       // recursively add the marshalling format to the responses if applicable.
       // also remove any HTTP redirects from the list of responses.

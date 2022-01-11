@@ -11,7 +11,6 @@ package armdataboxedge
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -39,19 +38,19 @@ func NewStorageAccountCredentialsClient(subscriptionID string, credential azcore
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &StorageAccountCredentialsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates the storage account credential.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The storage account credential name.
 // resourceGroupName - The resource group name.
@@ -66,7 +65,7 @@ func (client *StorageAccountCredentialsClient) BeginCreateOrUpdate(ctx context.C
 	result := StorageAccountCredentialsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("StorageAccountCredentialsClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("StorageAccountCredentialsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return StorageAccountCredentialsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *StorageAccountCredentialsClient) BeginCreateOrUpdate(ctx context.C
 }
 
 // CreateOrUpdate - Creates or updates the storage account credential.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *StorageAccountCredentialsClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, storageAccountCredential StorageAccountCredential, options *StorageAccountCredentialsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, storageAccountCredential, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *StorageAccountCredentialsClient) createOrUpdate(ctx context.Contex
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -123,21 +122,8 @@ func (client *StorageAccountCredentialsClient) createOrUpdateCreateRequest(ctx c
 	return req, runtime.MarshalAsJSON(req, storageAccountCredential)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *StorageAccountCredentialsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the storage account credential.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The storage account credential name.
 // resourceGroupName - The resource group name.
@@ -151,7 +137,7 @@ func (client *StorageAccountCredentialsClient) BeginDelete(ctx context.Context, 
 	result := StorageAccountCredentialsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("StorageAccountCredentialsClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("StorageAccountCredentialsClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return StorageAccountCredentialsClientDeletePollerResponse{}, err
 	}
@@ -162,7 +148,7 @@ func (client *StorageAccountCredentialsClient) BeginDelete(ctx context.Context, 
 }
 
 // Delete - Deletes the storage account credential.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *StorageAccountCredentialsClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *StorageAccountCredentialsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -173,7 +159,7 @@ func (client *StorageAccountCredentialsClient) deleteOperation(ctx context.Conte
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -208,21 +194,8 @@ func (client *StorageAccountCredentialsClient) deleteCreateRequest(ctx context.C
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *StorageAccountCredentialsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the properties of the specified storage account credential.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The storage account credential name.
 // resourceGroupName - The resource group name.
@@ -238,7 +211,7 @@ func (client *StorageAccountCredentialsClient) Get(ctx context.Context, deviceNa
 		return StorageAccountCredentialsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StorageAccountCredentialsClientGetResponse{}, client.getHandleError(resp)
+		return StorageAccountCredentialsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -277,26 +250,13 @@ func (client *StorageAccountCredentialsClient) getCreateRequest(ctx context.Cont
 func (client *StorageAccountCredentialsClient) getHandleResponse(resp *http.Response) (StorageAccountCredentialsClientGetResponse, error) {
 	result := StorageAccountCredentialsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageAccountCredential); err != nil {
-		return StorageAccountCredentialsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return StorageAccountCredentialsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *StorageAccountCredentialsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByDataBoxEdgeDevice - Gets all the storage account credentials in a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - StorageAccountCredentialsClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the StorageAccountCredentialsClient.ListByDataBoxEdgeDevice
@@ -343,20 +303,7 @@ func (client *StorageAccountCredentialsClient) listByDataBoxEdgeDeviceCreateRequ
 func (client *StorageAccountCredentialsClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse, error) {
 	result := StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StorageAccountCredentialList); err != nil {
-		return StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
+		return StorageAccountCredentialsClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	return result, nil
-}
-
-// listByDataBoxEdgeDeviceHandleError handles the ListByDataBoxEdgeDevice error response.
-func (client *StorageAccountCredentialsClient) listByDataBoxEdgeDeviceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

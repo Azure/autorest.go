@@ -9,8 +9,8 @@
 package azalias
 
 const (
-	module  = "azalias"
-	version = "v0.1.0"
+	moduleName    = "azalias"
+	moduleVersion = "v0.1.0"
 )
 
 // GeoJSONObjectType - Specifies the GeoJSON type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint,

@@ -11,7 +11,6 @@ package azartifacts
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -36,7 +35,7 @@ func newDatasetClient(endpoint string, pl runtime.Pipeline) *datasetClient {
 }
 
 // BeginCreateOrUpdateDataset - Creates or updates a dataset.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // datasetName - The dataset name.
 // dataset - Dataset resource definition.
 // options - datasetClientBeginCreateOrUpdateDatasetOptions contains the optional parameters for the datasetClient.BeginCreateOrUpdateDataset
@@ -49,7 +48,7 @@ func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, dat
 	result := datasetClientCreateOrUpdateDatasetPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("datasetClient.CreateOrUpdateDataset", resp, client.pl, client.createOrUpdateDatasetHandleError)
+	pt, err := runtime.NewPoller("datasetClient.CreateOrUpdateDataset", resp, client.pl)
 	if err != nil {
 		return datasetClientCreateOrUpdateDatasetPollerResponse{}, err
 	}
@@ -60,7 +59,7 @@ func (client *datasetClient) BeginCreateOrUpdateDataset(ctx context.Context, dat
 }
 
 // CreateOrUpdateDataset - Creates or updates a dataset.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *datasetClient) createOrUpdateDataset(ctx context.Context, datasetName string, dataset DatasetResource, options *datasetClientBeginCreateOrUpdateDatasetOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateDatasetCreateRequest(ctx, datasetName, dataset, options)
 	if err != nil {
@@ -71,7 +70,7 @@ func (client *datasetClient) createOrUpdateDataset(ctx context.Context, datasetN
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateDatasetHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -97,21 +96,8 @@ func (client *datasetClient) createOrUpdateDatasetCreateRequest(ctx context.Cont
 	return req, runtime.MarshalAsJSON(req, dataset)
 }
 
-// createOrUpdateDatasetHandleError handles the CreateOrUpdateDataset error response.
-func (client *datasetClient) createOrUpdateDatasetHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDeleteDataset - Deletes a dataset.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // datasetName - The dataset name.
 // options - datasetClientBeginDeleteDatasetOptions contains the optional parameters for the datasetClient.BeginDeleteDataset
 // method.
@@ -123,7 +109,7 @@ func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName
 	result := datasetClientDeleteDatasetPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("datasetClient.DeleteDataset", resp, client.pl, client.deleteDatasetHandleError)
+	pt, err := runtime.NewPoller("datasetClient.DeleteDataset", resp, client.pl)
 	if err != nil {
 		return datasetClientDeleteDatasetPollerResponse{}, err
 	}
@@ -134,7 +120,7 @@ func (client *datasetClient) BeginDeleteDataset(ctx context.Context, datasetName
 }
 
 // DeleteDataset - Deletes a dataset.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *datasetClient) deleteDataset(ctx context.Context, datasetName string, options *datasetClientBeginDeleteDatasetOptions) (*http.Response, error) {
 	req, err := client.deleteDatasetCreateRequest(ctx, datasetName, options)
 	if err != nil {
@@ -145,7 +131,7 @@ func (client *datasetClient) deleteDataset(ctx context.Context, datasetName stri
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteDatasetHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -168,21 +154,8 @@ func (client *datasetClient) deleteDatasetCreateRequest(ctx context.Context, dat
 	return req, nil
 }
 
-// deleteDatasetHandleError handles the DeleteDataset error response.
-func (client *datasetClient) deleteDatasetHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDataset - Gets a dataset.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // datasetName - The dataset name.
 // options - datasetClientGetDatasetOptions contains the optional parameters for the datasetClient.GetDataset method.
 func (client *datasetClient) GetDataset(ctx context.Context, datasetName string, options *datasetClientGetDatasetOptions) (datasetClientGetDatasetResponse, error) {
@@ -195,7 +168,7 @@ func (client *datasetClient) GetDataset(ctx context.Context, datasetName string,
 		return datasetClientGetDatasetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNotModified) {
-		return datasetClientGetDatasetResponse{}, client.getDatasetHandleError(resp)
+		return datasetClientGetDatasetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDatasetHandleResponse(resp)
 }
@@ -225,26 +198,13 @@ func (client *datasetClient) getDatasetCreateRequest(ctx context.Context, datase
 func (client *datasetClient) getDatasetHandleResponse(resp *http.Response) (datasetClientGetDatasetResponse, error) {
 	result := datasetClientGetDatasetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DatasetResource); err != nil {
-		return datasetClientGetDatasetResponse{}, runtime.NewResponseError(err, resp)
+		return datasetClientGetDatasetResponse{}, err
 	}
 	return result, nil
 }
 
-// getDatasetHandleError handles the GetDataset error response.
-func (client *datasetClient) getDatasetHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDatasetsByWorkspace - Lists datasets.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - datasetClientGetDatasetsByWorkspaceOptions contains the optional parameters for the datasetClient.GetDatasetsByWorkspace
 // method.
 func (client *datasetClient) GetDatasetsByWorkspace(options *datasetClientGetDatasetsByWorkspaceOptions) *datasetClientGetDatasetsByWorkspacePager {
@@ -277,26 +237,13 @@ func (client *datasetClient) getDatasetsByWorkspaceCreateRequest(ctx context.Con
 func (client *datasetClient) getDatasetsByWorkspaceHandleResponse(resp *http.Response) (datasetClientGetDatasetsByWorkspaceResponse, error) {
 	result := datasetClientGetDatasetsByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DatasetListResponse); err != nil {
-		return datasetClientGetDatasetsByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
+		return datasetClientGetDatasetsByWorkspaceResponse{}, err
 	}
 	return result, nil
 }
 
-// getDatasetsByWorkspaceHandleError handles the GetDatasetsByWorkspace error response.
-func (client *datasetClient) getDatasetsByWorkspaceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginRenameDataset - Renames a dataset.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // datasetName - The dataset name.
 // request - proposed new name.
 // options - datasetClientBeginRenameDatasetOptions contains the optional parameters for the datasetClient.BeginRenameDataset
@@ -309,7 +256,7 @@ func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName
 	result := datasetClientRenameDatasetPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("datasetClient.RenameDataset", resp, client.pl, client.renameDatasetHandleError)
+	pt, err := runtime.NewPoller("datasetClient.RenameDataset", resp, client.pl)
 	if err != nil {
 		return datasetClientRenameDatasetPollerResponse{}, err
 	}
@@ -320,7 +267,7 @@ func (client *datasetClient) BeginRenameDataset(ctx context.Context, datasetName
 }
 
 // RenameDataset - Renames a dataset.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *datasetClient) renameDataset(ctx context.Context, datasetName string, request ArtifactRenameRequest, options *datasetClientBeginRenameDatasetOptions) (*http.Response, error) {
 	req, err := client.renameDatasetCreateRequest(ctx, datasetName, request, options)
 	if err != nil {
@@ -331,7 +278,7 @@ func (client *datasetClient) renameDataset(ctx context.Context, datasetName stri
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.renameDatasetHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -352,17 +299,4 @@ func (client *datasetClient) renameDatasetCreateRequest(ctx context.Context, dat
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, request)
-}
-
-// renameDatasetHandleError handles the RenameDataset error response.
-func (client *datasetClient) renameDatasetHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

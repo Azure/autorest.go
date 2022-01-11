@@ -39,19 +39,19 @@ func NewDedicatedHostsClient(subscriptionID string, credential azcore.TokenCrede
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &DedicatedHostsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Create or update a dedicated host .
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.
 // hostName - The name of the dedicated host .
@@ -66,7 +66,7 @@ func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, res
 	result := DedicatedHostsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DedicatedHostsClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("DedicatedHostsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return DedicatedHostsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +77,7 @@ func (client *DedicatedHostsClient) BeginCreateOrUpdate(ctx context.Context, res
 }
 
 // CreateOrUpdate - Create or update a dedicated host .
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *DedicatedHostsClient) createOrUpdate(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHost, options *DedicatedHostsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 	if err != nil {
@@ -88,7 +88,7 @@ func (client *DedicatedHostsClient) createOrUpdate(ctx context.Context, resource
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -123,20 +123,8 @@ func (client *DedicatedHostsClient) createOrUpdateCreateRequest(ctx context.Cont
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *DedicatedHostsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BeginDelete - Delete a dedicated host.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.
 // hostName - The name of the dedicated host.
@@ -150,7 +138,7 @@ func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGro
 	result := DedicatedHostsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DedicatedHostsClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("DedicatedHostsClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return DedicatedHostsClientDeletePollerResponse{}, err
 	}
@@ -161,7 +149,7 @@ func (client *DedicatedHostsClient) BeginDelete(ctx context.Context, resourceGro
 }
 
 // Delete - Delete a dedicated host.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *DedicatedHostsClient) deleteOperation(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, options *DedicatedHostsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, options)
 	if err != nil {
@@ -172,7 +160,7 @@ func (client *DedicatedHostsClient) deleteOperation(ctx context.Context, resourc
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -206,20 +194,8 @@ func (client *DedicatedHostsClient) deleteCreateRequest(ctx context.Context, res
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *DedicatedHostsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get - Retrieves information about a dedicated host.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.
 // hostName - The name of the dedicated host.
@@ -234,7 +210,7 @@ func (client *DedicatedHostsClient) Get(ctx context.Context, resourceGroupName s
 		return DedicatedHostsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DedicatedHostsClientGetResponse{}, client.getHandleError(resp)
+		return DedicatedHostsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -276,26 +252,14 @@ func (client *DedicatedHostsClient) getCreateRequest(ctx context.Context, resour
 func (client *DedicatedHostsClient) getHandleResponse(resp *http.Response) (DedicatedHostsClientGetResponse, error) {
 	result := DedicatedHostsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DedicatedHost); err != nil {
-		return DedicatedHostsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return DedicatedHostsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *DedicatedHostsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // ListByHostGroup - Lists all of the dedicated hosts in the specified dedicated host group. Use the nextLink property in
 // the response to get the next page of dedicated hosts.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.
 // options - DedicatedHostsClientListByHostGroupOptions contains the optional parameters for the DedicatedHostsClient.ListByHostGroup
@@ -342,25 +306,13 @@ func (client *DedicatedHostsClient) listByHostGroupCreateRequest(ctx context.Con
 func (client *DedicatedHostsClient) listByHostGroupHandleResponse(resp *http.Response) (DedicatedHostsClientListByHostGroupResponse, error) {
 	result := DedicatedHostsClientListByHostGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DedicatedHostListResult); err != nil {
-		return DedicatedHostsClientListByHostGroupResponse{}, runtime.NewResponseError(err, resp)
+		return DedicatedHostsClientListByHostGroupResponse{}, err
 	}
 	return result, nil
 }
 
-// listByHostGroupHandleError handles the ListByHostGroup error response.
-func (client *DedicatedHostsClient) listByHostGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BeginUpdate - Update an dedicated host .
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // hostGroupName - The name of the dedicated host group.
 // hostName - The name of the dedicated host .
@@ -375,7 +327,7 @@ func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGro
 	result := DedicatedHostsClientUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DedicatedHostsClient.Update", "", resp, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPoller("DedicatedHostsClient.Update", "", resp, client.pl)
 	if err != nil {
 		return DedicatedHostsClientUpdatePollerResponse{}, err
 	}
@@ -386,7 +338,7 @@ func (client *DedicatedHostsClient) BeginUpdate(ctx context.Context, resourceGro
 }
 
 // Update - Update an dedicated host .
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *DedicatedHostsClient) update(ctx context.Context, resourceGroupName string, hostGroupName string, hostName string, parameters DedicatedHostUpdate, options *DedicatedHostsClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, hostGroupName, hostName, parameters, options)
 	if err != nil {
@@ -397,7 +349,7 @@ func (client *DedicatedHostsClient) update(ctx context.Context, resourceGroupNam
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return nil, client.updateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -430,16 +382,4 @@ func (client *DedicatedHostsClient) updateCreateRequest(ctx context.Context, res
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, parameters)
-}
-
-// updateHandleError handles the Update error response.
-func (client *DedicatedHostsClient) updateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

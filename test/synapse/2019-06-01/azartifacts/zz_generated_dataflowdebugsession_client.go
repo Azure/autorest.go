@@ -10,7 +10,6 @@ package azartifacts
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -33,7 +32,7 @@ func newDataFlowDebugSessionClient(endpoint string, pl runtime.Pipeline) *dataFl
 }
 
 // AddDataFlow - Add a data flow into debug session.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // request - Data flow debug session definition with debug content.
 // options - dataFlowDebugSessionClientAddDataFlowOptions contains the optional parameters for the dataFlowDebugSessionClient.AddDataFlow
 // method.
@@ -47,7 +46,7 @@ func (client *dataFlowDebugSessionClient) AddDataFlow(ctx context.Context, reque
 		return dataFlowDebugSessionClientAddDataFlowResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return dataFlowDebugSessionClientAddDataFlowResponse{}, client.addDataFlowHandleError(resp)
+		return dataFlowDebugSessionClientAddDataFlowResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.addDataFlowHandleResponse(resp)
 }
@@ -70,26 +69,13 @@ func (client *dataFlowDebugSessionClient) addDataFlowCreateRequest(ctx context.C
 func (client *dataFlowDebugSessionClient) addDataFlowHandleResponse(resp *http.Response) (dataFlowDebugSessionClientAddDataFlowResponse, error) {
 	result := dataFlowDebugSessionClientAddDataFlowResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.AddDataFlowToDebugSessionResponse); err != nil {
-		return dataFlowDebugSessionClientAddDataFlowResponse{}, runtime.NewResponseError(err, resp)
+		return dataFlowDebugSessionClientAddDataFlowResponse{}, err
 	}
 	return result, nil
 }
 
-// addDataFlowHandleError handles the AddDataFlow error response.
-func (client *dataFlowDebugSessionClient) addDataFlowHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginCreateDataFlowDebugSession - Creates a data flow debug session.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // request - Data flow debug session definition
 // options - dataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions contains the optional parameters for the dataFlowDebugSessionClient.BeginCreateDataFlowDebugSession
 // method.
@@ -101,7 +87,7 @@ func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx co
 	result := dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("dataFlowDebugSessionClient.CreateDataFlowDebugSession", resp, client.pl, client.createDataFlowDebugSessionHandleError)
+	pt, err := runtime.NewPoller("dataFlowDebugSessionClient.CreateDataFlowDebugSession", resp, client.pl)
 	if err != nil {
 		return dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse{}, err
 	}
@@ -112,7 +98,7 @@ func (client *dataFlowDebugSessionClient) BeginCreateDataFlowDebugSession(ctx co
 }
 
 // CreateDataFlowDebugSession - Creates a data flow debug session.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *dataFlowDebugSessionClient) createDataFlowDebugSession(ctx context.Context, request CreateDataFlowDebugSessionRequest, options *dataFlowDebugSessionClientBeginCreateDataFlowDebugSessionOptions) (*http.Response, error) {
 	req, err := client.createDataFlowDebugSessionCreateRequest(ctx, request, options)
 	if err != nil {
@@ -123,7 +109,7 @@ func (client *dataFlowDebugSessionClient) createDataFlowDebugSession(ctx context
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createDataFlowDebugSessionHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -142,21 +128,8 @@ func (client *dataFlowDebugSessionClient) createDataFlowDebugSessionCreateReques
 	return req, runtime.MarshalAsJSON(req, request)
 }
 
-// createDataFlowDebugSessionHandleError handles the CreateDataFlowDebugSession error response.
-func (client *dataFlowDebugSessionClient) createDataFlowDebugSessionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DeleteDataFlowDebugSession - Deletes a data flow debug session.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // request - Data flow debug session definition for deletion
 // options - dataFlowDebugSessionClientDeleteDataFlowDebugSessionOptions contains the optional parameters for the dataFlowDebugSessionClient.DeleteDataFlowDebugSession
 // method.
@@ -170,7 +143,7 @@ func (client *dataFlowDebugSessionClient) DeleteDataFlowDebugSession(ctx context
 		return dataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return dataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse{}, client.deleteDataFlowDebugSessionHandleError(resp)
+		return dataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse{}, runtime.NewResponseError(resp)
 	}
 	return dataFlowDebugSessionClientDeleteDataFlowDebugSessionResponse{RawResponse: resp}, nil
 }
@@ -189,21 +162,8 @@ func (client *dataFlowDebugSessionClient) deleteDataFlowDebugSessionCreateReques
 	return req, runtime.MarshalAsJSON(req, request)
 }
 
-// deleteDataFlowDebugSessionHandleError handles the DeleteDataFlowDebugSession error response.
-func (client *dataFlowDebugSessionClient) deleteDataFlowDebugSessionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginExecuteCommand - Execute a data flow debug command.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // request - Data flow debug command definition.
 // options - dataFlowDebugSessionClientBeginExecuteCommandOptions contains the optional parameters for the dataFlowDebugSessionClient.BeginExecuteCommand
 // method.
@@ -215,7 +175,7 @@ func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Contex
 	result := dataFlowDebugSessionClientExecuteCommandPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := runtime.NewPoller("dataFlowDebugSessionClient.ExecuteCommand", resp, client.pl, client.executeCommandHandleError)
+	pt, err := runtime.NewPoller("dataFlowDebugSessionClient.ExecuteCommand", resp, client.pl)
 	if err != nil {
 		return dataFlowDebugSessionClientExecuteCommandPollerResponse{}, err
 	}
@@ -226,7 +186,7 @@ func (client *dataFlowDebugSessionClient) BeginExecuteCommand(ctx context.Contex
 }
 
 // ExecuteCommand - Execute a data flow debug command.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *dataFlowDebugSessionClient) executeCommand(ctx context.Context, request DataFlowDebugCommandRequest, options *dataFlowDebugSessionClientBeginExecuteCommandOptions) (*http.Response, error) {
 	req, err := client.executeCommandCreateRequest(ctx, request, options)
 	if err != nil {
@@ -237,7 +197,7 @@ func (client *dataFlowDebugSessionClient) executeCommand(ctx context.Context, re
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.executeCommandHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -256,21 +216,8 @@ func (client *dataFlowDebugSessionClient) executeCommandCreateRequest(ctx contex
 	return req, runtime.MarshalAsJSON(req, request)
 }
 
-// executeCommandHandleError handles the ExecuteCommand error response.
-func (client *dataFlowDebugSessionClient) executeCommandHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // QueryDataFlowDebugSessionsByWorkspace - Query all active data flow debug sessions.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions contains the optional parameters for the
 // dataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace method.
 func (client *dataFlowDebugSessionClient) QueryDataFlowDebugSessionsByWorkspace(options *dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceOptions) *dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspacePager {
@@ -303,20 +250,7 @@ func (client *dataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceC
 func (client *dataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceHandleResponse(resp *http.Response) (dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse, error) {
 	result := dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.QueryDataFlowDebugSessionsResponse); err != nil {
-		return dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
+		return dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspaceResponse{}, err
 	}
 	return result, nil
-}
-
-// queryDataFlowDebugSessionsByWorkspaceHandleError handles the QueryDataFlowDebugSessionsByWorkspace error response.
-func (client *dataFlowDebugSessionClient) queryDataFlowDebugSessionsByWorkspaceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

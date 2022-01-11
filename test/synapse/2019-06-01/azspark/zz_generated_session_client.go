@@ -10,7 +10,6 @@ package azspark
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -46,7 +45,7 @@ func newSessionClient(endpoint string, livyAPIVersion *string, sparkPoolName str
 }
 
 // CancelSparkSession - Cancels a running spark session.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sessionID - Identifier for the session.
 // options - sessionClientCancelSparkSessionOptions contains the optional parameters for the sessionClient.CancelSparkSession
 // method.
@@ -60,7 +59,7 @@ func (client *sessionClient) CancelSparkSession(ctx context.Context, sessionID i
 		return sessionClientCancelSparkSessionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return sessionClientCancelSparkSessionResponse{}, client.cancelSparkSessionHandleError(resp)
+		return sessionClientCancelSparkSessionResponse{}, runtime.NewResponseError(resp)
 	}
 	return sessionClientCancelSparkSessionResponse{RawResponse: resp}, nil
 }
@@ -76,20 +75,8 @@ func (client *sessionClient) cancelSparkSessionCreateRequest(ctx context.Context
 	return req, nil
 }
 
-// cancelSparkSessionHandleError handles the CancelSparkSession error response.
-func (client *sessionClient) cancelSparkSessionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // CancelSparkStatement - Kill a statement within a session.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sessionID - Identifier for the session.
 // statementID - Identifier for the statement.
 // options - sessionClientCancelSparkStatementOptions contains the optional parameters for the sessionClient.CancelSparkStatement
@@ -104,7 +91,7 @@ func (client *sessionClient) CancelSparkStatement(ctx context.Context, sessionID
 		return sessionClientCancelSparkStatementResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return sessionClientCancelSparkStatementResponse{}, client.cancelSparkStatementHandleError(resp)
+		return sessionClientCancelSparkStatementResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.cancelSparkStatementHandleResponse(resp)
 }
@@ -126,25 +113,13 @@ func (client *sessionClient) cancelSparkStatementCreateRequest(ctx context.Conte
 func (client *sessionClient) cancelSparkStatementHandleResponse(resp *http.Response) (sessionClientCancelSparkStatementResponse, error) {
 	result := sessionClientCancelSparkStatementResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StatementCancellationResult); err != nil {
-		return sessionClientCancelSparkStatementResponse{}, runtime.NewResponseError(err, resp)
+		return sessionClientCancelSparkStatementResponse{}, err
 	}
 	return result, nil
 }
 
-// cancelSparkStatementHandleError handles the CancelSparkStatement error response.
-func (client *sessionClient) cancelSparkStatementHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // CreateSparkSession - Create new spark session.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sparkSessionOptions - Livy compatible batch job request payload.
 // options - sessionClientCreateSparkSessionOptions contains the optional parameters for the sessionClient.CreateSparkSession
 // method.
@@ -158,7 +133,7 @@ func (client *sessionClient) CreateSparkSession(ctx context.Context, sparkSessio
 		return sessionClientCreateSparkSessionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return sessionClientCreateSparkSessionResponse{}, client.createSparkSessionHandleError(resp)
+		return sessionClientCreateSparkSessionResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createSparkSessionHandleResponse(resp)
 }
@@ -183,25 +158,13 @@ func (client *sessionClient) createSparkSessionCreateRequest(ctx context.Context
 func (client *sessionClient) createSparkSessionHandleResponse(resp *http.Response) (sessionClientCreateSparkSessionResponse, error) {
 	result := sessionClientCreateSparkSessionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Session); err != nil {
-		return sessionClientCreateSparkSessionResponse{}, runtime.NewResponseError(err, resp)
+		return sessionClientCreateSparkSessionResponse{}, err
 	}
 	return result, nil
 }
 
-// createSparkSessionHandleError handles the CreateSparkSession error response.
-func (client *sessionClient) createSparkSessionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // CreateSparkStatement - Create statement within a spark session.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sessionID - Identifier for the session.
 // sparkStatementOptions - Livy compatible batch job request payload.
 // options - sessionClientCreateSparkStatementOptions contains the optional parameters for the sessionClient.CreateSparkStatement
@@ -216,7 +179,7 @@ func (client *sessionClient) CreateSparkStatement(ctx context.Context, sessionID
 		return sessionClientCreateSparkStatementResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return sessionClientCreateSparkStatementResponse{}, client.createSparkStatementHandleError(resp)
+		return sessionClientCreateSparkStatementResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createSparkStatementHandleResponse(resp)
 }
@@ -237,25 +200,13 @@ func (client *sessionClient) createSparkStatementCreateRequest(ctx context.Conte
 func (client *sessionClient) createSparkStatementHandleResponse(resp *http.Response) (sessionClientCreateSparkStatementResponse, error) {
 	result := sessionClientCreateSparkStatementResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Statement); err != nil {
-		return sessionClientCreateSparkStatementResponse{}, runtime.NewResponseError(err, resp)
+		return sessionClientCreateSparkStatementResponse{}, err
 	}
 	return result, nil
 }
 
-// createSparkStatementHandleError handles the CreateSparkStatement error response.
-func (client *sessionClient) createSparkStatementHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // GetSparkSession - Gets a single spark session.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sessionID - Identifier for the session.
 // options - sessionClientGetSparkSessionOptions contains the optional parameters for the sessionClient.GetSparkSession method.
 func (client *sessionClient) GetSparkSession(ctx context.Context, sessionID int32, options *sessionClientGetSparkSessionOptions) (sessionClientGetSparkSessionResponse, error) {
@@ -268,7 +219,7 @@ func (client *sessionClient) GetSparkSession(ctx context.Context, sessionID int3
 		return sessionClientGetSparkSessionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return sessionClientGetSparkSessionResponse{}, client.getSparkSessionHandleError(resp)
+		return sessionClientGetSparkSessionResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getSparkSessionHandleResponse(resp)
 }
@@ -294,25 +245,13 @@ func (client *sessionClient) getSparkSessionCreateRequest(ctx context.Context, s
 func (client *sessionClient) getSparkSessionHandleResponse(resp *http.Response) (sessionClientGetSparkSessionResponse, error) {
 	result := sessionClientGetSparkSessionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Session); err != nil {
-		return sessionClientGetSparkSessionResponse{}, runtime.NewResponseError(err, resp)
+		return sessionClientGetSparkSessionResponse{}, err
 	}
 	return result, nil
 }
 
-// getSparkSessionHandleError handles the GetSparkSession error response.
-func (client *sessionClient) getSparkSessionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // GetSparkSessions - List all spark sessions which are running under a particular spark pool.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - sessionClientGetSparkSessionsOptions contains the optional parameters for the sessionClient.GetSparkSessions
 // method.
 func (client *sessionClient) GetSparkSessions(ctx context.Context, options *sessionClientGetSparkSessionsOptions) (sessionClientGetSparkSessionsResponse, error) {
@@ -325,7 +264,7 @@ func (client *sessionClient) GetSparkSessions(ctx context.Context, options *sess
 		return sessionClientGetSparkSessionsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return sessionClientGetSparkSessionsResponse{}, client.getSparkSessionsHandleError(resp)
+		return sessionClientGetSparkSessionsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getSparkSessionsHandleResponse(resp)
 }
@@ -356,25 +295,13 @@ func (client *sessionClient) getSparkSessionsCreateRequest(ctx context.Context, 
 func (client *sessionClient) getSparkSessionsHandleResponse(resp *http.Response) (sessionClientGetSparkSessionsResponse, error) {
 	result := sessionClientGetSparkSessionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SessionCollection); err != nil {
-		return sessionClientGetSparkSessionsResponse{}, runtime.NewResponseError(err, resp)
+		return sessionClientGetSparkSessionsResponse{}, err
 	}
 	return result, nil
 }
 
-// getSparkSessionsHandleError handles the GetSparkSessions error response.
-func (client *sessionClient) getSparkSessionsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // GetSparkStatement - Gets a single statement within a spark session.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sessionID - Identifier for the session.
 // statementID - Identifier for the statement.
 // options - sessionClientGetSparkStatementOptions contains the optional parameters for the sessionClient.GetSparkStatement
@@ -389,7 +316,7 @@ func (client *sessionClient) GetSparkStatement(ctx context.Context, sessionID in
 		return sessionClientGetSparkStatementResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return sessionClientGetSparkStatementResponse{}, client.getSparkStatementHandleError(resp)
+		return sessionClientGetSparkStatementResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getSparkStatementHandleResponse(resp)
 }
@@ -411,25 +338,13 @@ func (client *sessionClient) getSparkStatementCreateRequest(ctx context.Context,
 func (client *sessionClient) getSparkStatementHandleResponse(resp *http.Response) (sessionClientGetSparkStatementResponse, error) {
 	result := sessionClientGetSparkStatementResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Statement); err != nil {
-		return sessionClientGetSparkStatementResponse{}, runtime.NewResponseError(err, resp)
+		return sessionClientGetSparkStatementResponse{}, err
 	}
 	return result, nil
 }
 
-// getSparkStatementHandleError handles the GetSparkStatement error response.
-func (client *sessionClient) getSparkStatementHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // GetSparkStatements - Gets a list of statements within a spark session.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sessionID - Identifier for the session.
 // options - sessionClientGetSparkStatementsOptions contains the optional parameters for the sessionClient.GetSparkStatements
 // method.
@@ -443,7 +358,7 @@ func (client *sessionClient) GetSparkStatements(ctx context.Context, sessionID i
 		return sessionClientGetSparkStatementsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return sessionClientGetSparkStatementsResponse{}, client.getSparkStatementsHandleError(resp)
+		return sessionClientGetSparkStatementsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getSparkStatementsHandleResponse(resp)
 }
@@ -464,25 +379,13 @@ func (client *sessionClient) getSparkStatementsCreateRequest(ctx context.Context
 func (client *sessionClient) getSparkStatementsHandleResponse(resp *http.Response) (sessionClientGetSparkStatementsResponse, error) {
 	result := sessionClientGetSparkStatementsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.StatementCollection); err != nil {
-		return sessionClientGetSparkStatementsResponse{}, runtime.NewResponseError(err, resp)
+		return sessionClientGetSparkStatementsResponse{}, err
 	}
 	return result, nil
 }
 
-// getSparkStatementsHandleError handles the GetSparkStatements error response.
-func (client *sessionClient) getSparkStatementsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // ResetSparkSessionTimeout - Sends a keep alive call to the current session to reset the session timeout.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sessionID - Identifier for the session.
 // options - sessionClientResetSparkSessionTimeoutOptions contains the optional parameters for the sessionClient.ResetSparkSessionTimeout
 // method.
@@ -496,7 +399,7 @@ func (client *sessionClient) ResetSparkSessionTimeout(ctx context.Context, sessi
 		return sessionClientResetSparkSessionTimeoutResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return sessionClientResetSparkSessionTimeoutResponse{}, client.resetSparkSessionTimeoutHandleError(resp)
+		return sessionClientResetSparkSessionTimeoutResponse{}, runtime.NewResponseError(resp)
 	}
 	return sessionClientResetSparkSessionTimeoutResponse{RawResponse: resp}, nil
 }
@@ -510,16 +413,4 @@ func (client *sessionClient) resetSparkSessionTimeoutCreateRequest(ctx context.C
 		return nil, err
 	}
 	return req, nil
-}
-
-// resetSparkSessionTimeoutHandleError handles the ResetSparkSessionTimeout error response.
-func (client *sessionClient) resetSparkSessionTimeoutHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

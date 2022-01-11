@@ -53,7 +53,7 @@ func (p *dataFlowClientGetDataFlowsByWorkspacePager) NextPage(ctx context.Contex
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getDataFlowsByWorkspaceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getDataFlowsByWorkspaceHandleResponse(resp)
@@ -107,7 +107,7 @@ func (p *dataFlowDebugSessionClientQueryDataFlowDebugSessionsByWorkspacePager) N
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.queryDataFlowDebugSessionsByWorkspaceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.queryDataFlowDebugSessionsByWorkspaceHandleResponse(resp)
@@ -161,7 +161,7 @@ func (p *datasetClientGetDatasetsByWorkspacePager) NextPage(ctx context.Context)
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getDatasetsByWorkspaceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getDatasetsByWorkspaceHandleResponse(resp)
@@ -215,7 +215,7 @@ func (p *libraryClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -269,7 +269,7 @@ func (p *linkedServiceClientGetLinkedServicesByWorkspacePager) NextPage(ctx cont
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getLinkedServicesByWorkspaceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getLinkedServicesByWorkspaceHandleResponse(resp)
@@ -323,7 +323,7 @@ func (p *notebookClientGetNotebookSummaryByWorkSpacePager) NextPage(ctx context.
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getNotebookSummaryByWorkSpaceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getNotebookSummaryByWorkSpaceHandleResponse(resp)
@@ -377,7 +377,7 @@ func (p *notebookClientGetNotebooksByWorkspacePager) NextPage(ctx context.Contex
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getNotebooksByWorkspaceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getNotebooksByWorkspaceHandleResponse(resp)
@@ -431,7 +431,7 @@ func (p *pipelineClientGetPipelinesByWorkspacePager) NextPage(ctx context.Contex
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getPipelinesByWorkspaceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getPipelinesByWorkspaceHandleResponse(resp)
@@ -485,7 +485,7 @@ func (p *sparkJobDefinitionClientGetSparkJobDefinitionsByWorkspacePager) NextPag
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getSparkJobDefinitionsByWorkspaceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getSparkJobDefinitionsByWorkspaceHandleResponse(resp)
@@ -539,7 +539,7 @@ func (p *sqlScriptClientGetSQLScriptsByWorkspacePager) NextPage(ctx context.Cont
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getSQLScriptsByWorkspaceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getSQLScriptsByWorkspaceHandleResponse(resp)
@@ -593,7 +593,7 @@ func (p *triggerClientGetTriggersByWorkspacePager) NextPage(ctx context.Context)
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getTriggersByWorkspaceHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getTriggersByWorkspaceHandleResponse(resp)

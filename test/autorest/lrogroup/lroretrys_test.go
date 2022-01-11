@@ -16,7 +16,7 @@ import (
 
 func newLRORetrysClient() *LRORetrysClient {
 	options := azcore.ClientOptions{}
-	options.Retry.RetryDelay = 10 * time.Millisecond
+	options.Retry.RetryDelay = time.Second
 	options.Transport = httpClientWithCookieJar()
 	return NewLRORetrysClient(&options)
 }
@@ -36,7 +36,7 @@ func TestLRORetrysBeginDelete202Retry200(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	res, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -60,7 +60,7 @@ func TestLRORetrysBeginDeleteAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	res, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -84,7 +84,7 @@ func TestLRORetrysBeginDeleteProvisioning202Accepted200Succeeded(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	res, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -117,7 +117,7 @@ func TestLRORetrysBeginPost202Retry200(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	res, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -141,7 +141,7 @@ func TestLRORetrysBeginPostAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	res, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -165,7 +165,7 @@ func TestLRORetrysBeginPut201CreatingSucceeded200(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	res, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -198,7 +198,7 @@ func TestLRORetrysBeginPutAsyncRelativeRetrySucceeded(t *testing.T) {
 	if err = resp.Resume(context.Background(), op, rt); err != nil {
 		t.Fatal(err)
 	}
-	res, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	res, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}

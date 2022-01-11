@@ -11,7 +11,6 @@ package azkeyvault
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -35,7 +34,7 @@ func NewRoleAssignmentsClient(pl runtime.Pipeline) *RoleAssignmentsClient {
 }
 
 // Create - Creates a role assignment.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignment to create.
 // roleAssignmentName - The name of the role assignment to create. It can be any valid GUID.
@@ -51,7 +50,7 @@ func (client *RoleAssignmentsClient) Create(ctx context.Context, vaultBaseURL st
 		return RoleAssignmentsClientCreateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return RoleAssignmentsClientCreateResponse{}, client.createHandleError(resp)
+		return RoleAssignmentsClientCreateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
@@ -81,26 +80,13 @@ func (client *RoleAssignmentsClient) createCreateRequest(ctx context.Context, va
 func (client *RoleAssignmentsClient) createHandleResponse(resp *http.Response) (RoleAssignmentsClientCreateResponse, error) {
 	result := RoleAssignmentsClientCreateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleAssignment); err != nil {
-		return RoleAssignmentsClientCreateResponse{}, runtime.NewResponseError(err, resp)
+		return RoleAssignmentsClientCreateResponse{}, err
 	}
 	return result, nil
 }
 
-// createHandleError handles the Create error response.
-func (client *RoleAssignmentsClient) createHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Delete - Deletes a role assignment.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignment to delete.
 // roleAssignmentName - The name of the role assignment to delete.
@@ -115,7 +101,7 @@ func (client *RoleAssignmentsClient) Delete(ctx context.Context, vaultBaseURL st
 		return RoleAssignmentsClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RoleAssignmentsClientDeleteResponse{}, client.deleteHandleError(resp)
+		return RoleAssignmentsClientDeleteResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteHandleResponse(resp)
 }
@@ -145,26 +131,13 @@ func (client *RoleAssignmentsClient) deleteCreateRequest(ctx context.Context, va
 func (client *RoleAssignmentsClient) deleteHandleResponse(resp *http.Response) (RoleAssignmentsClientDeleteResponse, error) {
 	result := RoleAssignmentsClientDeleteResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleAssignment); err != nil {
-		return RoleAssignmentsClientDeleteResponse{}, runtime.NewResponseError(err, resp)
+		return RoleAssignmentsClientDeleteResponse{}, err
 	}
 	return result, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *RoleAssignmentsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Get the specified role assignment.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignment.
 // roleAssignmentName - The name of the role assignment to get.
@@ -179,7 +152,7 @@ func (client *RoleAssignmentsClient) Get(ctx context.Context, vaultBaseURL strin
 		return RoleAssignmentsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RoleAssignmentsClientGetResponse{}, client.getHandleError(resp)
+		return RoleAssignmentsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -209,26 +182,13 @@ func (client *RoleAssignmentsClient) getCreateRequest(ctx context.Context, vault
 func (client *RoleAssignmentsClient) getHandleResponse(resp *http.Response) (RoleAssignmentsClientGetResponse, error) {
 	result := RoleAssignmentsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleAssignment); err != nil {
-		return RoleAssignmentsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return RoleAssignmentsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *RoleAssignmentsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListForScope - Gets role assignments for a scope.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role assignments.
 // options - RoleAssignmentsClientListForScopeOptions contains the optional parameters for the RoleAssignmentsClient.ListForScope
@@ -269,20 +229,7 @@ func (client *RoleAssignmentsClient) listForScopeCreateRequest(ctx context.Conte
 func (client *RoleAssignmentsClient) listForScopeHandleResponse(resp *http.Response) (RoleAssignmentsClientListForScopeResponse, error) {
 	result := RoleAssignmentsClientListForScopeResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleAssignmentListResult); err != nil {
-		return RoleAssignmentsClientListForScopeResponse{}, runtime.NewResponseError(err, resp)
+		return RoleAssignmentsClientListForScopeResponse{}, err
 	}
 	return result, nil
-}
-
-// listForScopeHandleError handles the ListForScope error response.
-func (client *RoleAssignmentsClient) listForScopeHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

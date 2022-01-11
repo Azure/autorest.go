@@ -11,6 +11,6 @@ package migroup
 const host = "http://localhost:3000"
 
 const (
-	module  = "migroup"
-	version = "v0.1.0"
+	moduleName    = "migroup"
+	moduleVersion = "v0.1.0"
 )

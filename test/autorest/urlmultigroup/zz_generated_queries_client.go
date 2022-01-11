@@ -10,7 +10,6 @@ package urlmultigroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewQueriesClient(options *azcore.ClientOptions) *QueriesClient {
 		cp = *options
 	}
 	client := &QueriesClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // ArrayStringMultiEmpty - Get an empty array [] of string using the multi-array format
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientArrayStringMultiEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringMultiEmpty
 // method.
 func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options *QueriesClientArrayStringMultiEmptyOptions) (QueriesClientArrayStringMultiEmptyResponse, error) {
@@ -50,7 +49,7 @@ func (client *QueriesClient) ArrayStringMultiEmpty(ctx context.Context, options 
 		return QueriesClientArrayStringMultiEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringMultiEmptyResponse{}, client.arrayStringMultiEmptyHandleError(resp)
+		return QueriesClientArrayStringMultiEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientArrayStringMultiEmptyResponse{RawResponse: resp}, nil
 }
@@ -73,21 +72,8 @@ func (client *QueriesClient) arrayStringMultiEmptyCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// arrayStringMultiEmptyHandleError handles the ArrayStringMultiEmpty error response.
-func (client *QueriesClient) arrayStringMultiEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ArrayStringMultiNull - Get a null array of string using the multi-array format
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientArrayStringMultiNullOptions contains the optional parameters for the QueriesClient.ArrayStringMultiNull
 // method.
 func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, options *QueriesClientArrayStringMultiNullOptions) (QueriesClientArrayStringMultiNullResponse, error) {
@@ -100,7 +86,7 @@ func (client *QueriesClient) ArrayStringMultiNull(ctx context.Context, options *
 		return QueriesClientArrayStringMultiNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringMultiNullResponse{}, client.arrayStringMultiNullHandleError(resp)
+		return QueriesClientArrayStringMultiNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientArrayStringMultiNullResponse{RawResponse: resp}, nil
 }
@@ -123,22 +109,9 @@ func (client *QueriesClient) arrayStringMultiNullCreateRequest(ctx context.Conte
 	return req, nil
 }
 
-// arrayStringMultiNullHandleError handles the ArrayStringMultiNull error response.
-func (client *QueriesClient) arrayStringMultiNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ArrayStringMultiValid - Get an array of string ['ArrayQuery1', 'begin!*'();:@ &=+$,/?#[]end' , null, ''] using the mult-array
 // format
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - QueriesClientArrayStringMultiValidOptions contains the optional parameters for the QueriesClient.ArrayStringMultiValid
 // method.
 func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options *QueriesClientArrayStringMultiValidOptions) (QueriesClientArrayStringMultiValidResponse, error) {
@@ -151,7 +124,7 @@ func (client *QueriesClient) ArrayStringMultiValid(ctx context.Context, options 
 		return QueriesClientArrayStringMultiValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return QueriesClientArrayStringMultiValidResponse{}, client.arrayStringMultiValidHandleError(resp)
+		return QueriesClientArrayStringMultiValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return QueriesClientArrayStringMultiValidResponse{RawResponse: resp}, nil
 }
@@ -172,17 +145,4 @@ func (client *QueriesClient) arrayStringMultiValidCreateRequest(ctx context.Cont
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// arrayStringMultiValidHandleError handles the ArrayStringMultiValid error response.
-func (client *QueriesClient) arrayStringMultiValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

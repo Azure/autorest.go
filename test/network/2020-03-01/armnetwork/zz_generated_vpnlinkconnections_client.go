@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewVPNLinkConnectionsClient(subscriptionID string, credential azcore.TokenC
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VPNLinkConnectionsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // ListByVPNConnection - Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // connectionName - The name of the vpn connection.
@@ -104,20 +103,7 @@ func (client *VPNLinkConnectionsClient) listByVPNConnectionCreateRequest(ctx con
 func (client *VPNLinkConnectionsClient) listByVPNConnectionHandleResponse(resp *http.Response) (VPNLinkConnectionsClientListByVPNConnectionResponse, error) {
 	result := VPNLinkConnectionsClientListByVPNConnectionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNSiteLinkConnectionsResult); err != nil {
-		return VPNLinkConnectionsClientListByVPNConnectionResponse{}, runtime.NewResponseError(err, resp)
+		return VPNLinkConnectionsClientListByVPNConnectionResponse{}, err
 	}
 	return result, nil
-}
-
-// listByVPNConnectionHandleError handles the ListByVPNConnection error response.
-func (client *VPNLinkConnectionsClient) listByVPNConnectionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

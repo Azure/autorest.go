@@ -11,7 +11,6 @@ package azartifacts
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -36,7 +35,7 @@ func newSQLPoolsClient(endpoint string, pl runtime.Pipeline) *sqlPoolsClient {
 }
 
 // Get - Get Sql Pool
-// If the operation fails it returns the *ErrorContract error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sqlPoolName - The Sql Pool name
 // options - sqlPoolsClientGetOptions contains the optional parameters for the sqlPoolsClient.Get method.
 func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, options *sqlPoolsClientGetOptions) (sqlPoolsClientGetResponse, error) {
@@ -49,7 +48,7 @@ func (client *sqlPoolsClient) Get(ctx context.Context, sqlPoolName string, optio
 		return sqlPoolsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return sqlPoolsClientGetResponse{}, client.getHandleError(resp)
+		return sqlPoolsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -76,26 +75,13 @@ func (client *sqlPoolsClient) getCreateRequest(ctx context.Context, sqlPoolName 
 func (client *sqlPoolsClient) getHandleResponse(resp *http.Response) (sqlPoolsClientGetResponse, error) {
 	result := sqlPoolsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SQLPool); err != nil {
-		return sqlPoolsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return sqlPoolsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *sqlPoolsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorContract{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - List Sql Pools
-// If the operation fails it returns the *ErrorContract error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - sqlPoolsClientListOptions contains the optional parameters for the sqlPoolsClient.List method.
 func (client *sqlPoolsClient) List(ctx context.Context, options *sqlPoolsClientListOptions) (sqlPoolsClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
@@ -107,7 +93,7 @@ func (client *sqlPoolsClient) List(ctx context.Context, options *sqlPoolsClientL
 		return sqlPoolsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return sqlPoolsClientListResponse{}, client.listHandleError(resp)
+		return sqlPoolsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -130,20 +116,7 @@ func (client *sqlPoolsClient) listCreateRequest(ctx context.Context, options *sq
 func (client *sqlPoolsClient) listHandleResponse(resp *http.Response) (sqlPoolsClientListResponse, error) {
 	result := sqlPoolsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SQLPoolInfoListResult); err != nil {
-		return sqlPoolsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return sqlPoolsClientListResponse{}, err
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *sqlPoolsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorContract{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

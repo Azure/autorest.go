@@ -11,6 +11,6 @@ package integergroup
 const host = "http://localhost:3000"
 
 const (
-	module  = "integergroup"
-	version = "v0.1.0"
+	moduleName    = "integergroup"
+	moduleVersion = "v0.1.0"
 )

@@ -11,7 +11,6 @@ package armconsumption
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -37,18 +36,18 @@ func NewReservationTransactionsClient(credential azcore.TokenCredential, options
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ReservationTransactionsClient{
-		host: string(cp.Host),
-		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+		host: string(cp.Endpoint),
+		pl:   armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // List - List of transactions for reserved instances on billing account scope
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // billingAccountID - BillingAccount ID
 // options - ReservationTransactionsClientListOptions contains the optional parameters for the ReservationTransactionsClient.List
 // method.
@@ -89,26 +88,13 @@ func (client *ReservationTransactionsClient) listCreateRequest(ctx context.Conte
 func (client *ReservationTransactionsClient) listHandleResponse(resp *http.Response) (ReservationTransactionsClientListResponse, error) {
 	result := ReservationTransactionsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationTransactionsListResult); err != nil {
-		return ReservationTransactionsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationTransactionsClientListResponse{}, err
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *ReservationTransactionsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByBillingProfile - List of transactions for reserved instances on billing account scope
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // billingAccountID - BillingAccount ID
 // billingProfileID - Azure Billing Profile ID.
 // options - ReservationTransactionsClientListByBillingProfileOptions contains the optional parameters for the ReservationTransactionsClient.ListByBillingProfile
@@ -154,20 +140,7 @@ func (client *ReservationTransactionsClient) listByBillingProfileCreateRequest(c
 func (client *ReservationTransactionsClient) listByBillingProfileHandleResponse(resp *http.Response) (ReservationTransactionsClientListByBillingProfileResponse, error) {
 	result := ReservationTransactionsClientListByBillingProfileResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ModernReservationTransactionsListResult); err != nil {
-		return ReservationTransactionsClientListByBillingProfileResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationTransactionsClientListByBillingProfileResponse{}, err
 	}
 	return result, nil
-}
-
-// listByBillingProfileHandleError handles the ListByBillingProfile error response.
-func (client *ReservationTransactionsClient) listByBillingProfileHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

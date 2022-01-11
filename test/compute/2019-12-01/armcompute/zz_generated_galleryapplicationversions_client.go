@@ -11,7 +11,6 @@ package armcompute
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewGalleryApplicationVersionsClient(subscriptionID string, credential azcor
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &GalleryApplicationVersionsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Create or update a gallery Application Version.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition resides.
 // galleryApplicationName - The name of the gallery Application Definition in which the Application Version is to be created.
@@ -70,7 +69,7 @@ func (client *GalleryApplicationVersionsClient) BeginCreateOrUpdate(ctx context.
 	result := GalleryApplicationVersionsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("GalleryApplicationVersionsClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("GalleryApplicationVersionsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return GalleryApplicationVersionsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -81,7 +80,7 @@ func (client *GalleryApplicationVersionsClient) BeginCreateOrUpdate(ctx context.
 }
 
 // CreateOrUpdate - Create or update a gallery Application Version.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *GalleryApplicationVersionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion GalleryApplicationVersion, options *GalleryApplicationVersionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion, options)
 	if err != nil {
@@ -92,7 +91,7 @@ func (client *GalleryApplicationVersionsClient) createOrUpdate(ctx context.Conte
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -131,21 +130,8 @@ func (client *GalleryApplicationVersionsClient) createOrUpdateCreateRequest(ctx 
 	return req, runtime.MarshalAsJSON(req, galleryApplicationVersion)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *GalleryApplicationVersionsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Delete a gallery Application Version.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition resides.
 // galleryApplicationName - The name of the gallery Application Definition in which the Application Version resides.
@@ -160,7 +146,7 @@ func (client *GalleryApplicationVersionsClient) BeginDelete(ctx context.Context,
 	result := GalleryApplicationVersionsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("GalleryApplicationVersionsClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("GalleryApplicationVersionsClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return GalleryApplicationVersionsClientDeletePollerResponse{}, err
 	}
@@ -171,7 +157,7 @@ func (client *GalleryApplicationVersionsClient) BeginDelete(ctx context.Context,
 }
 
 // Delete - Delete a gallery Application Version.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *GalleryApplicationVersionsClient) deleteOperation(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, options *GalleryApplicationVersionsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, options)
 	if err != nil {
@@ -182,7 +168,7 @@ func (client *GalleryApplicationVersionsClient) deleteOperation(ctx context.Cont
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -221,21 +207,8 @@ func (client *GalleryApplicationVersionsClient) deleteCreateRequest(ctx context.
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *GalleryApplicationVersionsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Retrieves information about a gallery Application Version.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition resides.
 // galleryApplicationName - The name of the gallery Application Definition in which the Application Version resides.
@@ -252,7 +225,7 @@ func (client *GalleryApplicationVersionsClient) Get(ctx context.Context, resourc
 		return GalleryApplicationVersionsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return GalleryApplicationVersionsClientGetResponse{}, client.getHandleError(resp)
+		return GalleryApplicationVersionsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -298,26 +271,13 @@ func (client *GalleryApplicationVersionsClient) getCreateRequest(ctx context.Con
 func (client *GalleryApplicationVersionsClient) getHandleResponse(resp *http.Response) (GalleryApplicationVersionsClientGetResponse, error) {
 	result := GalleryApplicationVersionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GalleryApplicationVersion); err != nil {
-		return GalleryApplicationVersionsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return GalleryApplicationVersionsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *GalleryApplicationVersionsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByGalleryApplication - List gallery Application Versions in a gallery Application Definition.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition resides.
 // galleryApplicationName - The name of the Shared Application Gallery Application Definition from which the Application Versions
@@ -370,26 +330,13 @@ func (client *GalleryApplicationVersionsClient) listByGalleryApplicationCreateRe
 func (client *GalleryApplicationVersionsClient) listByGalleryApplicationHandleResponse(resp *http.Response) (GalleryApplicationVersionsClientListByGalleryApplicationResponse, error) {
 	result := GalleryApplicationVersionsClientListByGalleryApplicationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GalleryApplicationVersionList); err != nil {
-		return GalleryApplicationVersionsClientListByGalleryApplicationResponse{}, runtime.NewResponseError(err, resp)
+		return GalleryApplicationVersionsClientListByGalleryApplicationResponse{}, err
 	}
 	return result, nil
 }
 
-// listByGalleryApplicationHandleError handles the ListByGalleryApplication error response.
-func (client *GalleryApplicationVersionsClient) listByGalleryApplicationHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginUpdate - Update a gallery Application Version.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // galleryName - The name of the Shared Application Gallery in which the Application Definition resides.
 // galleryApplicationName - The name of the gallery Application Definition in which the Application Version is to be updated.
@@ -407,7 +354,7 @@ func (client *GalleryApplicationVersionsClient) BeginUpdate(ctx context.Context,
 	result := GalleryApplicationVersionsClientUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("GalleryApplicationVersionsClient.Update", "", resp, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPoller("GalleryApplicationVersionsClient.Update", "", resp, client.pl)
 	if err != nil {
 		return GalleryApplicationVersionsClientUpdatePollerResponse{}, err
 	}
@@ -418,7 +365,7 @@ func (client *GalleryApplicationVersionsClient) BeginUpdate(ctx context.Context,
 }
 
 // Update - Update a gallery Application Version.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *GalleryApplicationVersionsClient) update(ctx context.Context, resourceGroupName string, galleryName string, galleryApplicationName string, galleryApplicationVersionName string, galleryApplicationVersion GalleryApplicationVersionUpdate, options *GalleryApplicationVersionsClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion, options)
 	if err != nil {
@@ -429,7 +376,7 @@ func (client *GalleryApplicationVersionsClient) update(ctx context.Context, reso
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return nil, client.updateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -466,17 +413,4 @@ func (client *GalleryApplicationVersionsClient) updateCreateRequest(ctx context.
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, galleryApplicationVersion)
-}
-
-// updateHandleError handles the Update error response.
-func (client *GalleryApplicationVersionsClient) updateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

@@ -14,7 +14,7 @@ import (
 
 func newLrosaDsClient() *LROSADsClient {
 	options := azcore.ClientOptions{}
-	options.Retry.RetryDelay = 10 * time.Millisecond
+	options.Retry.RetryDelay = time.Second
 	options.Transport = httpClientWithCookieJar()
 	return NewLROSADsClient(&options)
 }
@@ -57,7 +57,7 @@ func TestLROSADSBeginDelete204Succeeded(t *testing.T) {
 	if rt != "" {
 		t.Fatal("expected an empty resume token")
 	}
-	pollResp, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pollResp, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}

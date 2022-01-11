@@ -10,7 +10,6 @@ package additionalpropsgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewPetsClient(options *azcore.ClientOptions) *PetsClient {
 		cp = *options
 	}
 	client := &PetsClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // CreateAPInProperties - Create a Pet which contains more properties than what is defined.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PetsClientCreateAPInPropertiesOptions contains the optional parameters for the PetsClient.CreateAPInProperties
 // method.
 func (client *PetsClient) CreateAPInProperties(ctx context.Context, createParameters PetAPInProperties, options *PetsClientCreateAPInPropertiesOptions) (PetsClientCreateAPInPropertiesResponse, error) {
@@ -50,7 +49,7 @@ func (client *PetsClient) CreateAPInProperties(ctx context.Context, createParame
 		return PetsClientCreateAPInPropertiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetsClientCreateAPInPropertiesResponse{}, client.createAPInPropertiesHandleError(resp)
+		return PetsClientCreateAPInPropertiesResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createAPInPropertiesHandleResponse(resp)
 }
@@ -70,26 +69,13 @@ func (client *PetsClient) createAPInPropertiesCreateRequest(ctx context.Context,
 func (client *PetsClient) createAPInPropertiesHandleResponse(resp *http.Response) (PetsClientCreateAPInPropertiesResponse, error) {
 	result := PetsClientCreateAPInPropertiesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PetAPInProperties); err != nil {
-		return PetsClientCreateAPInPropertiesResponse{}, runtime.NewResponseError(err, resp)
+		return PetsClientCreateAPInPropertiesResponse{}, err
 	}
 	return result, nil
 }
 
-// createAPInPropertiesHandleError handles the CreateAPInProperties error response.
-func (client *PetsClient) createAPInPropertiesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // CreateAPInPropertiesWithAPString - Create a Pet which contains more properties than what is defined.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PetsClientCreateAPInPropertiesWithAPStringOptions contains the optional parameters for the PetsClient.CreateAPInPropertiesWithAPString
 // method.
 func (client *PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, createParameters PetAPInPropertiesWithAPString, options *PetsClientCreateAPInPropertiesWithAPStringOptions) (PetsClientCreateAPInPropertiesWithAPStringResponse, error) {
@@ -102,7 +88,7 @@ func (client *PetsClient) CreateAPInPropertiesWithAPString(ctx context.Context, 
 		return PetsClientCreateAPInPropertiesWithAPStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetsClientCreateAPInPropertiesWithAPStringResponse{}, client.createAPInPropertiesWithAPStringHandleError(resp)
+		return PetsClientCreateAPInPropertiesWithAPStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createAPInPropertiesWithAPStringHandleResponse(resp)
 }
@@ -122,26 +108,13 @@ func (client *PetsClient) createAPInPropertiesWithAPStringCreateRequest(ctx cont
 func (client *PetsClient) createAPInPropertiesWithAPStringHandleResponse(resp *http.Response) (PetsClientCreateAPInPropertiesWithAPStringResponse, error) {
 	result := PetsClientCreateAPInPropertiesWithAPStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PetAPInPropertiesWithAPString); err != nil {
-		return PetsClientCreateAPInPropertiesWithAPStringResponse{}, runtime.NewResponseError(err, resp)
+		return PetsClientCreateAPInPropertiesWithAPStringResponse{}, err
 	}
 	return result, nil
 }
 
-// createAPInPropertiesWithAPStringHandleError handles the CreateAPInPropertiesWithAPString error response.
-func (client *PetsClient) createAPInPropertiesWithAPStringHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // CreateAPObject - Create a Pet which contains more properties than what is defined.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PetsClientCreateAPObjectOptions contains the optional parameters for the PetsClient.CreateAPObject method.
 func (client *PetsClient) CreateAPObject(ctx context.Context, createParameters PetAPObject, options *PetsClientCreateAPObjectOptions) (PetsClientCreateAPObjectResponse, error) {
 	req, err := client.createAPObjectCreateRequest(ctx, createParameters, options)
@@ -153,7 +126,7 @@ func (client *PetsClient) CreateAPObject(ctx context.Context, createParameters P
 		return PetsClientCreateAPObjectResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetsClientCreateAPObjectResponse{}, client.createAPObjectHandleError(resp)
+		return PetsClientCreateAPObjectResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createAPObjectHandleResponse(resp)
 }
@@ -173,26 +146,13 @@ func (client *PetsClient) createAPObjectCreateRequest(ctx context.Context, creat
 func (client *PetsClient) createAPObjectHandleResponse(resp *http.Response) (PetsClientCreateAPObjectResponse, error) {
 	result := PetsClientCreateAPObjectResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PetAPObject); err != nil {
-		return PetsClientCreateAPObjectResponse{}, runtime.NewResponseError(err, resp)
+		return PetsClientCreateAPObjectResponse{}, err
 	}
 	return result, nil
 }
 
-// createAPObjectHandleError handles the CreateAPObject error response.
-func (client *PetsClient) createAPObjectHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // CreateAPString - Create a Pet which contains more properties than what is defined.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PetsClientCreateAPStringOptions contains the optional parameters for the PetsClient.CreateAPString method.
 func (client *PetsClient) CreateAPString(ctx context.Context, createParameters PetAPString, options *PetsClientCreateAPStringOptions) (PetsClientCreateAPStringResponse, error) {
 	req, err := client.createAPStringCreateRequest(ctx, createParameters, options)
@@ -204,7 +164,7 @@ func (client *PetsClient) CreateAPString(ctx context.Context, createParameters P
 		return PetsClientCreateAPStringResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetsClientCreateAPStringResponse{}, client.createAPStringHandleError(resp)
+		return PetsClientCreateAPStringResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createAPStringHandleResponse(resp)
 }
@@ -224,26 +184,13 @@ func (client *PetsClient) createAPStringCreateRequest(ctx context.Context, creat
 func (client *PetsClient) createAPStringHandleResponse(resp *http.Response) (PetsClientCreateAPStringResponse, error) {
 	result := PetsClientCreateAPStringResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PetAPString); err != nil {
-		return PetsClientCreateAPStringResponse{}, runtime.NewResponseError(err, resp)
+		return PetsClientCreateAPStringResponse{}, err
 	}
 	return result, nil
 }
 
-// createAPStringHandleError handles the CreateAPString error response.
-func (client *PetsClient) createAPStringHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // CreateAPTrue - Create a Pet which contains more properties than what is defined.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PetsClientCreateAPTrueOptions contains the optional parameters for the PetsClient.CreateAPTrue method.
 func (client *PetsClient) CreateAPTrue(ctx context.Context, createParameters PetAPTrue, options *PetsClientCreateAPTrueOptions) (PetsClientCreateAPTrueResponse, error) {
 	req, err := client.createAPTrueCreateRequest(ctx, createParameters, options)
@@ -255,7 +202,7 @@ func (client *PetsClient) CreateAPTrue(ctx context.Context, createParameters Pet
 		return PetsClientCreateAPTrueResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetsClientCreateAPTrueResponse{}, client.createAPTrueHandleError(resp)
+		return PetsClientCreateAPTrueResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createAPTrueHandleResponse(resp)
 }
@@ -275,26 +222,13 @@ func (client *PetsClient) createAPTrueCreateRequest(ctx context.Context, createP
 func (client *PetsClient) createAPTrueHandleResponse(resp *http.Response) (PetsClientCreateAPTrueResponse, error) {
 	result := PetsClientCreateAPTrueResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PetAPTrue); err != nil {
-		return PetsClientCreateAPTrueResponse{}, runtime.NewResponseError(err, resp)
+		return PetsClientCreateAPTrueResponse{}, err
 	}
 	return result, nil
 }
 
-// createAPTrueHandleError handles the CreateAPTrue error response.
-func (client *PetsClient) createAPTrueHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // CreateCatAPTrue - Create a CatAPTrue which contains more properties than what is defined.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PetsClientCreateCatAPTrueOptions contains the optional parameters for the PetsClient.CreateCatAPTrue method.
 func (client *PetsClient) CreateCatAPTrue(ctx context.Context, createParameters CatAPTrue, options *PetsClientCreateCatAPTrueOptions) (PetsClientCreateCatAPTrueResponse, error) {
 	req, err := client.createCatAPTrueCreateRequest(ctx, createParameters, options)
@@ -306,7 +240,7 @@ func (client *PetsClient) CreateCatAPTrue(ctx context.Context, createParameters 
 		return PetsClientCreateCatAPTrueResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetsClientCreateCatAPTrueResponse{}, client.createCatAPTrueHandleError(resp)
+		return PetsClientCreateCatAPTrueResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createCatAPTrueHandleResponse(resp)
 }
@@ -326,20 +260,7 @@ func (client *PetsClient) createCatAPTrueCreateRequest(ctx context.Context, crea
 func (client *PetsClient) createCatAPTrueHandleResponse(resp *http.Response) (PetsClientCreateCatAPTrueResponse, error) {
 	result := PetsClientCreateCatAPTrueResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CatAPTrue); err != nil {
-		return PetsClientCreateCatAPTrueResponse{}, runtime.NewResponseError(err, resp)
+		return PetsClientCreateCatAPTrueResponse{}, err
 	}
 	return result, nil
-}
-
-// createCatAPTrueHandleError handles the CreateCatAPTrue error response.
-func (client *PetsClient) createCatAPTrueHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

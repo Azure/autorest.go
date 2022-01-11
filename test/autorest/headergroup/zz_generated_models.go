@@ -10,17 +10,9 @@ package headergroup
 
 import "time"
 
-// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
-	raw     string
 	Message *string `json:"message,omitempty"`
 	Status  *int32  `json:"status,omitempty"`
-}
-
-// Error implements the error interface for type Error.
-// The contents of the error text are not contractual and subject to change.
-func (e Error) Error() string {
-	return e.raw
 }
 
 // HeaderClientCustomRequestIDOptions contains the optional parameters for the HeaderClient.CustomRequestID method.

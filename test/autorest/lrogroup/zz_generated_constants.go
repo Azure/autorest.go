@@ -11,8 +11,8 @@ package lrogroup
 const host = "http://localhost:3000"
 
 const (
-	module  = "lrogroup"
-	version = "v0.1.0"
+	moduleName    = "lrogroup"
+	moduleVersion = "v0.1.0"
 )
 
 // OperationResultStatus - The status of the request

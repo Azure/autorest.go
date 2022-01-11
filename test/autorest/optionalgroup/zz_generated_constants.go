@@ -11,6 +11,6 @@ package optionalgroup
 const host = "http://localhost:3000"
 
 const (
-	module  = "optionalgroup"
-	version = "v0.1.0"
+	moduleName    = "optionalgroup"
+	moduleVersion = "v0.1.0"
 )

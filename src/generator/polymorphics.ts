@@ -64,21 +64,17 @@ export async function generatePolymorphicHelpers(session: Session<CodeModel>): P
       }
     }
   }
+  if (scalars.size === 0 && arrays.size === 0 && maps.size === 0) {
+    // this is a corner-case that can happen when all the discriminated types
+    // are error types.  there's a bug in M4 that incorrectly annotates such
+    // types as 'output', 'exception' in the usage however it's really just
+    // 'exception'.  until this is fixed, we can wind up here.
+    return '';
+  }
   discriminators.sort((a: ObjectSchema, b: ObjectSchema) => { return sortAscending(a.language.go!.discriminatorInterface, b.language.go!.discriminatorInterface) });
   for (const disc of values(discriminators)) {
     // generate unmarshallers for each discriminator
     const discName = disc.language.go!.discriminatorInterface;
-    if (disc.language.go!.internalErrorType) {
-      text += `type ${disc.language.go!.internalErrorType} struct {\n`;
-      text += `\twrapped ${discName}\n`;
-      text += '}\n\n';
-      const receiver = <string>disc.language.go!.internalErrorType[0];
-      text += `func (${receiver} *${disc.language.go!.internalErrorType}) UnmarshalJSON(data []byte) (err error) {\n`;
-      text += `\t${receiver}.wrapped, err = unmarshal${discName}(data)\n`;
-      text += '\treturn\n';
-      text += '}\n\n';
-      scalars.add(discName);
-    }
     // scalar unmarshaller
     if (scalars.has(discName)) {
       text += `func unmarshal${discName}(rawMsg json.RawMessage) (${discName}, error) {\n`;

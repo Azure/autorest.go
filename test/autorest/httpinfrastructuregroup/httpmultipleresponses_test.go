@@ -10,6 +10,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
@@ -63,15 +64,23 @@ func TestGet200Model201ModelDefaultError201Valid(t *testing.T) {
 func TestGet200Model201ModelDefaultError400Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model201ModelDefaultError400Valid(context.Background(), nil)
-	var r *Error
-	if !errors.As(err, &r) {
-		t.Fatalf("unexpected error type %T", err)
+	var respErr *azcore.ResponseError
+	if !errors.As(err, &respErr) {
+		t.Fatalf("expected azcore.ResponseError: %v", err)
 	}
-	if r := cmp.Diff(r, &Error{
-		Message: to.StringPtr("client error"),
-		Status:  to.Int32Ptr(400),
-	}, cmpopts.IgnoreUnexported(Error{})); r != "" {
-		t.Fatal(r)
+	const want = `GET http://localhost:3000/http/payloads/200/A/201/B/default/Error/response/400/valid
+--------------------------------------------------------------------------------
+RESPONSE 400: 400 Bad Request
+ERROR CODE UNAVAILABLE
+--------------------------------------------------------------------------------
+{
+  "message": "client error",
+  "status": 400
+}
+--------------------------------------------------------------------------------
+`
+	if got := respErr.Error(); got != want {
+		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected nil result")
@@ -96,12 +105,22 @@ func TestGet200Model204NoModelDefaultError200Valid(t *testing.T) {
 func TestGet200Model204NoModelDefaultError201Invalid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model204NoModelDefaultError201Invalid(context.Background(), nil)
-	var r *Error
-	if !errors.As(err, &r) {
-		t.Fatal("unexpected error type")
+	var respErr *azcore.ResponseError
+	if !errors.As(err, &respErr) {
+		t.Fatalf("expected azcore.ResponseError: %v", err)
 	}
-	if r := cmp.Diff(r, &Error{}, cmpopts.IgnoreUnexported(Error{})); r != "" {
-		t.Fatal(r)
+	const want = `GET http://localhost:3000/http/payloads/200/A/204/none/default/Error/response/201/valid
+--------------------------------------------------------------------------------
+RESPONSE 201: 201 Created
+ERROR CODE UNAVAILABLE
+--------------------------------------------------------------------------------
+{
+  "statusCode": "201"
+}
+--------------------------------------------------------------------------------
+`
+	if got := respErr.Error(); got != want {
+		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
@@ -112,12 +131,20 @@ func TestGet200Model204NoModelDefaultError201Invalid(t *testing.T) {
 func TestGet200Model204NoModelDefaultError202None(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model204NoModelDefaultError202None(context.Background(), nil)
-	var r *Error
-	if !errors.As(err, &r) {
-		t.Fatal("unexpected error type")
+	var respErr *azcore.ResponseError
+	if !errors.As(err, &respErr) {
+		t.Fatalf("expected azcore.ResponseError: %v", err)
 	}
-	if r := cmp.Diff(r, &Error{}, cmpopts.IgnoreUnexported(Error{})); r != "" {
-		t.Fatal(r)
+	const want = `GET http://localhost:3000/http/payloads/200/A/204/none/default/Error/response/202/none
+--------------------------------------------------------------------------------
+RESPONSE 202: 202 Accepted
+ERROR CODE UNAVAILABLE
+--------------------------------------------------------------------------------
+Response contained no body
+--------------------------------------------------------------------------------
+`
+	if got := respErr.Error(); got != want {
+		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
@@ -143,15 +170,23 @@ func TestGet200Model204NoModelDefaultError204Valid(t *testing.T) {
 func TestGet200Model204NoModelDefaultError400Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200Model204NoModelDefaultError400Valid(context.Background(), nil)
-	var r *Error
-	if !errors.As(err, &r) {
-		t.Fatal("unexpected error type")
+	var respErr *azcore.ResponseError
+	if !errors.As(err, &respErr) {
+		t.Fatalf("expected azcore.ResponseError: %v", err)
 	}
-	if r := cmp.Diff(r, &Error{
-		Message: to.StringPtr("client error"),
-		Status:  to.Int32Ptr(400),
-	}, cmpopts.IgnoreUnexported(Error{})); r != "" {
-		t.Fatal(r)
+	const want = `GET http://localhost:3000/http/payloads/200/A/204/none/default/Error/response/400/valid
+--------------------------------------------------------------------------------
+RESPONSE 400: 400 Bad Request
+ERROR CODE UNAVAILABLE
+--------------------------------------------------------------------------------
+{
+  "message": "client error",
+  "status": 400
+}
+--------------------------------------------------------------------------------
+`
+	if got := respErr.Error(); got != want {
+		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected empty response")
@@ -229,15 +264,23 @@ func TestGet200ModelA201ModelC404ModelDDefaultError201Valid(t *testing.T) {
 func TestGet200ModelA201ModelC404ModelDDefaultError400Valid(t *testing.T) {
 	client := newMultipleResponsesClient()
 	result, err := client.Get200ModelA201ModelC404ModelDDefaultError400Valid(context.Background(), nil)
-	var r *Error
-	if !errors.As(err, &r) {
-		t.Fatal("unexpected error type")
+	var respErr *azcore.ResponseError
+	if !errors.As(err, &respErr) {
+		t.Fatalf("expected azcore.ResponseError: %v", err)
 	}
-	if r := cmp.Diff(r, &Error{
-		Message: to.StringPtr("client error"),
-		Status:  to.Int32Ptr(400),
-	}, cmpopts.IgnoreUnexported(Error{})); r != "" {
-		t.Fatal(r)
+	const want = `GET http://localhost:3000/http/payloads/200/A/201/C/404/D/default/Error/response/400/valid
+--------------------------------------------------------------------------------
+RESPONSE 400: 400 Bad Request
+ERROR CODE UNAVAILABLE
+--------------------------------------------------------------------------------
+{
+  "message": "client error",
+  "status": 400
+}
+--------------------------------------------------------------------------------
+`
+	if got := respErr.Error(); got != want {
+		t.Fatalf("\ngot:\n%s\nwant:\n%s\n", got, want)
 	}
 	if !reflect.ValueOf(result).IsZero() {
 		t.Fatal("expected nil result")

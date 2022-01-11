@@ -40,19 +40,19 @@ func NewVirtualMachineImagesClient(subscriptionID string, credential azcore.Toke
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VirtualMachineImagesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Gets a virtual machine image.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // location - The name of a supported Azure region.
 // publisherName - A valid image publisher.
 // offer - A valid image publisher offer.
@@ -70,7 +70,7 @@ func (client *VirtualMachineImagesClient) Get(ctx context.Context, location stri
 		return VirtualMachineImagesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesClientGetResponse{}, client.getHandleError(resp)
+		return VirtualMachineImagesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -117,25 +117,13 @@ func (client *VirtualMachineImagesClient) getCreateRequest(ctx context.Context, 
 func (client *VirtualMachineImagesClient) getHandleResponse(resp *http.Response) (VirtualMachineImagesClientGetResponse, error) {
 	result := VirtualMachineImagesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImage); err != nil {
-		return VirtualMachineImagesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineImagesClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *VirtualMachineImagesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // List - Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // location - The name of a supported Azure region.
 // publisherName - A valid image publisher.
 // offer - A valid image publisher offer.
@@ -152,7 +140,7 @@ func (client *VirtualMachineImagesClient) List(ctx context.Context, location str
 		return VirtualMachineImagesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesClientListResponse{}, client.listHandleError(resp)
+		return VirtualMachineImagesClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -204,25 +192,13 @@ func (client *VirtualMachineImagesClient) listCreateRequest(ctx context.Context,
 func (client *VirtualMachineImagesClient) listHandleResponse(resp *http.Response) (VirtualMachineImagesClientListResponse, error) {
 	result := VirtualMachineImagesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImageResourceArray); err != nil {
-		return VirtualMachineImagesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineImagesClientListResponse{}, err
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *VirtualMachineImagesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // ListOffers - Gets a list of virtual machine image offers for the specified location and publisher.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // location - The name of a supported Azure region.
 // publisherName - A valid image publisher.
 // options - VirtualMachineImagesClientListOffersOptions contains the optional parameters for the VirtualMachineImagesClient.ListOffers
@@ -237,7 +213,7 @@ func (client *VirtualMachineImagesClient) ListOffers(ctx context.Context, locati
 		return VirtualMachineImagesClientListOffersResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesClientListOffersResponse{}, client.listOffersHandleError(resp)
+		return VirtualMachineImagesClientListOffersResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listOffersHandleResponse(resp)
 }
@@ -272,25 +248,13 @@ func (client *VirtualMachineImagesClient) listOffersCreateRequest(ctx context.Co
 func (client *VirtualMachineImagesClient) listOffersHandleResponse(resp *http.Response) (VirtualMachineImagesClientListOffersResponse, error) {
 	result := VirtualMachineImagesClientListOffersResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImageResourceArray); err != nil {
-		return VirtualMachineImagesClientListOffersResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineImagesClientListOffersResponse{}, err
 	}
 	return result, nil
 }
 
-// listOffersHandleError handles the ListOffers error response.
-func (client *VirtualMachineImagesClient) listOffersHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // ListPublishers - Gets a list of virtual machine image publishers for the specified Azure location.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // location - The name of a supported Azure region.
 // options - VirtualMachineImagesClientListPublishersOptions contains the optional parameters for the VirtualMachineImagesClient.ListPublishers
 // method.
@@ -304,7 +268,7 @@ func (client *VirtualMachineImagesClient) ListPublishers(ctx context.Context, lo
 		return VirtualMachineImagesClientListPublishersResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesClientListPublishersResponse{}, client.listPublishersHandleError(resp)
+		return VirtualMachineImagesClientListPublishersResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listPublishersHandleResponse(resp)
 }
@@ -335,25 +299,13 @@ func (client *VirtualMachineImagesClient) listPublishersCreateRequest(ctx contex
 func (client *VirtualMachineImagesClient) listPublishersHandleResponse(resp *http.Response) (VirtualMachineImagesClientListPublishersResponse, error) {
 	result := VirtualMachineImagesClientListPublishersResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImageResourceArray); err != nil {
-		return VirtualMachineImagesClientListPublishersResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineImagesClientListPublishersResponse{}, err
 	}
 	return result, nil
 }
 
-// listPublishersHandleError handles the ListPublishers error response.
-func (client *VirtualMachineImagesClient) listPublishersHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // ListSKUs - Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // location - The name of a supported Azure region.
 // publisherName - A valid image publisher.
 // offer - A valid image publisher offer.
@@ -369,7 +321,7 @@ func (client *VirtualMachineImagesClient) ListSKUs(ctx context.Context, location
 		return VirtualMachineImagesClientListSKUsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineImagesClientListSKUsResponse{}, client.listSKUsHandleError(resp)
+		return VirtualMachineImagesClientListSKUsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listSKUsHandleResponse(resp)
 }
@@ -408,19 +360,7 @@ func (client *VirtualMachineImagesClient) listSKUsCreateRequest(ctx context.Cont
 func (client *VirtualMachineImagesClient) listSKUsHandleResponse(resp *http.Response) (VirtualMachineImagesClientListSKUsResponse, error) {
 	result := VirtualMachineImagesClientListSKUsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineImageResourceArray); err != nil {
-		return VirtualMachineImagesClientListSKUsResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineImagesClientListSKUsResponse{}, err
 	}
 	return result, nil
-}
-
-// listSKUsHandleError handles the ListSKUs error response.
-func (client *VirtualMachineImagesClient) listSKUsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

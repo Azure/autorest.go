@@ -39,19 +39,19 @@ func NewVirtualMachineSizesClient(subscriptionID string, credential azcore.Token
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VirtualMachineSizesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // List - This API is deprecated. Use Resources Skus [https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list]
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // location - The location upon which virtual-machine-sizes is queried.
 // options - VirtualMachineSizesClientListOptions contains the optional parameters for the VirtualMachineSizesClient.List
 // method.
@@ -65,7 +65,7 @@ func (client *VirtualMachineSizesClient) List(ctx context.Context, location stri
 		return VirtualMachineSizesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineSizesClientListResponse{}, client.listHandleError(resp)
+		return VirtualMachineSizesClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -96,19 +96,7 @@ func (client *VirtualMachineSizesClient) listCreateRequest(ctx context.Context, 
 func (client *VirtualMachineSizesClient) listHandleResponse(resp *http.Response) (VirtualMachineSizesClientListResponse, error) {
 	result := VirtualMachineSizesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineSizeListResult); err != nil {
-		return VirtualMachineSizesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineSizesClientListResponse{}, err
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *VirtualMachineSizesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

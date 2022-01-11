@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewP2SVPNGatewaysClient(subscriptionID string, credential azcore.TokenCrede
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &P2SVPNGatewaysClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates a virtual wan p2s vpn gateway if it doesn't exist else updates the existing gateway.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the P2SVpnGateway.
 // gatewayName - The name of the gateway.
 // p2SVPNGatewayParameters - Parameters supplied to create or Update a virtual wan p2s vpn gateway.
@@ -66,7 +65,7 @@ func (client *P2SVPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, res
 	result := P2SVPNGatewaysClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return P2SVPNGatewaysClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *P2SVPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, res
 }
 
 // CreateOrUpdate - Creates a virtual wan p2s vpn gateway if it doesn't exist else updates the existing gateway.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *P2SVPNGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, p2SVPNGatewayParameters P2SVPNGateway, options *P2SVPNGatewaysClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, gatewayName, p2SVPNGatewayParameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *P2SVPNGatewaysClient) createOrUpdate(ctx context.Context, resource
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,21 +118,8 @@ func (client *P2SVPNGatewaysClient) createOrUpdateCreateRequest(ctx context.Cont
 	return req, runtime.MarshalAsJSON(req, p2SVPNGatewayParameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *P2SVPNGatewaysClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes a virtual wan p2s vpn gateway.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the P2SVpnGateway.
 // gatewayName - The name of the gateway.
 // options - P2SVPNGatewaysClientBeginDeleteOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginDelete
@@ -146,7 +132,7 @@ func (client *P2SVPNGatewaysClient) BeginDelete(ctx context.Context, resourceGro
 	result := P2SVPNGatewaysClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return P2SVPNGatewaysClientDeletePollerResponse{}, err
 	}
@@ -157,7 +143,7 @@ func (client *P2SVPNGatewaysClient) BeginDelete(ctx context.Context, resourceGro
 }
 
 // Delete - Deletes a virtual wan p2s vpn gateway.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *P2SVPNGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
@@ -168,7 +154,7 @@ func (client *P2SVPNGatewaysClient) deleteOperation(ctx context.Context, resourc
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -199,22 +185,9 @@ func (client *P2SVPNGatewaysClient) deleteCreateRequest(ctx context.Context, res
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *P2SVPNGatewaysClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDisconnectP2SVPNConnections - Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource
 // group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // p2SVPNGatewayName - The name of the P2S Vpn Gateway.
 // request - The parameters are supplied to disconnect p2s vpn connections.
@@ -228,7 +201,7 @@ func (client *P2SVPNGatewaysClient) BeginDisconnectP2SVPNConnections(ctx context
 	result := P2SVPNGatewaysClientDisconnectP2SVPNConnectionsPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.DisconnectP2SVPNConnections", "location", resp, client.pl, client.disconnectP2SVPNConnectionsHandleError)
+	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.DisconnectP2SVPNConnections", "location", resp, client.pl)
 	if err != nil {
 		return P2SVPNGatewaysClientDisconnectP2SVPNConnectionsPollerResponse{}, err
 	}
@@ -240,7 +213,7 @@ func (client *P2SVPNGatewaysClient) BeginDisconnectP2SVPNConnections(ctx context
 
 // DisconnectP2SVPNConnections - Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the specified resource
 // group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnections(ctx context.Context, resourceGroupName string, p2SVPNGatewayName string, request P2SVPNConnectionRequest, options *P2SVPNGatewaysClientBeginDisconnectP2SVPNConnectionsOptions) (*http.Response, error) {
 	req, err := client.disconnectP2SVPNConnectionsCreateRequest(ctx, resourceGroupName, p2SVPNGatewayName, request, options)
 	if err != nil {
@@ -251,7 +224,7 @@ func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnections(ctx context.Cont
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.disconnectP2SVPNConnectionsHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -282,21 +255,8 @@ func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnectionsCreateRequest(ctx
 	return req, runtime.MarshalAsJSON(req, request)
 }
 
-// disconnectP2SVPNConnectionsHandleError handles the DisconnectP2SVPNConnections error response.
-func (client *P2SVPNGatewaysClient) disconnectP2SVPNConnectionsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginGenerateVPNProfile - Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // gatewayName - The name of the P2SVpnGateway.
 // parameters - Parameters supplied to the generate P2SVpnGateway VPN client package operation.
@@ -310,7 +270,7 @@ func (client *P2SVPNGatewaysClient) BeginGenerateVPNProfile(ctx context.Context,
 	result := P2SVPNGatewaysClientGenerateVPNProfilePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.GenerateVPNProfile", "location", resp, client.pl, client.generateVPNProfileHandleError)
+	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.GenerateVPNProfile", "location", resp, client.pl)
 	if err != nil {
 		return P2SVPNGatewaysClientGenerateVPNProfilePollerResponse{}, err
 	}
@@ -321,7 +281,7 @@ func (client *P2SVPNGatewaysClient) BeginGenerateVPNProfile(ctx context.Context,
 }
 
 // GenerateVPNProfile - Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *P2SVPNGatewaysClient) generateVPNProfile(ctx context.Context, resourceGroupName string, gatewayName string, parameters P2SVPNProfileParameters, options *P2SVPNGatewaysClientBeginGenerateVPNProfileOptions) (*http.Response, error) {
 	req, err := client.generateVPNProfileCreateRequest(ctx, resourceGroupName, gatewayName, parameters, options)
 	if err != nil {
@@ -332,7 +292,7 @@ func (client *P2SVPNGatewaysClient) generateVPNProfile(ctx context.Context, reso
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.generateVPNProfileHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -363,21 +323,8 @@ func (client *P2SVPNGatewaysClient) generateVPNProfileCreateRequest(ctx context.
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// generateVPNProfileHandleError handles the GenerateVPNProfile error response.
-func (client *P2SVPNGatewaysClient) generateVPNProfileHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Retrieves the details of a virtual wan p2s vpn gateway.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the P2SVpnGateway.
 // gatewayName - The name of the gateway.
 // options - P2SVPNGatewaysClientGetOptions contains the optional parameters for the P2SVPNGatewaysClient.Get method.
@@ -391,7 +338,7 @@ func (client *P2SVPNGatewaysClient) Get(ctx context.Context, resourceGroupName s
 		return P2SVPNGatewaysClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return P2SVPNGatewaysClientGetResponse{}, client.getHandleError(resp)
+		return P2SVPNGatewaysClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -426,27 +373,14 @@ func (client *P2SVPNGatewaysClient) getCreateRequest(ctx context.Context, resour
 func (client *P2SVPNGatewaysClient) getHandleResponse(resp *http.Response) (P2SVPNGatewaysClientGetResponse, error) {
 	result := P2SVPNGatewaysClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.P2SVPNGateway); err != nil {
-		return P2SVPNGatewaysClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return P2SVPNGatewaysClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *P2SVPNGatewaysClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginGetP2SVPNConnectionHealth - Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified
 // resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // gatewayName - The name of the P2SVpnGateway.
 // options - P2SVPNGatewaysClientBeginGetP2SVPNConnectionHealthOptions contains the optional parameters for the P2SVPNGatewaysClient.BeginGetP2SVPNConnectionHealth
@@ -459,7 +393,7 @@ func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealth(ctx context.C
 	result := P2SVPNGatewaysClientGetP2SVPNConnectionHealthPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.GetP2SVPNConnectionHealth", "location", resp, client.pl, client.getP2SVPNConnectionHealthHandleError)
+	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.GetP2SVPNConnectionHealth", "location", resp, client.pl)
 	if err != nil {
 		return P2SVPNGatewaysClientGetP2SVPNConnectionHealthPollerResponse{}, err
 	}
@@ -471,7 +405,7 @@ func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealth(ctx context.C
 
 // GetP2SVPNConnectionHealth - Gets the connection health of P2S clients of the virtual wan P2SVpnGateway in the specified
 // resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealth(ctx context.Context, resourceGroupName string, gatewayName string, options *P2SVPNGatewaysClientBeginGetP2SVPNConnectionHealthOptions) (*http.Response, error) {
 	req, err := client.getP2SVPNConnectionHealthCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
@@ -482,7 +416,7 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealth(ctx context.Contex
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.getP2SVPNConnectionHealthHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -513,22 +447,9 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthCreateRequest(ctx c
 	return req, nil
 }
 
-// getP2SVPNConnectionHealthHandleError handles the GetP2SVPNConnectionHealth error response.
-func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginGetP2SVPNConnectionHealthDetailed - Gets the sas url to get the connection health detail of P2S clients of the virtual
 // wan P2SVpnGateway in the specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // gatewayName - The name of the P2SVpnGateway.
 // request - Request parameters supplied to get p2s vpn connections detailed health.
@@ -542,7 +463,7 @@ func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealthDetailed(ctx c
 	result := P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.GetP2SVPNConnectionHealthDetailed", "location", resp, client.pl, client.getP2SVPNConnectionHealthDetailedHandleError)
+	pt, err := armruntime.NewPoller("P2SVPNGatewaysClient.GetP2SVPNConnectionHealthDetailed", "location", resp, client.pl)
 	if err != nil {
 		return P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedPollerResponse{}, err
 	}
@@ -554,7 +475,7 @@ func (client *P2SVPNGatewaysClient) BeginGetP2SVPNConnectionHealthDetailed(ctx c
 
 // GetP2SVPNConnectionHealthDetailed - Gets the sas url to get the connection health detail of P2S clients of the virtual
 // wan P2SVpnGateway in the specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthDetailed(ctx context.Context, resourceGroupName string, gatewayName string, request P2SVPNConnectionHealthRequest, options *P2SVPNGatewaysClientBeginGetP2SVPNConnectionHealthDetailedOptions) (*http.Response, error) {
 	req, err := client.getP2SVPNConnectionHealthDetailedCreateRequest(ctx, resourceGroupName, gatewayName, request, options)
 	if err != nil {
@@ -565,7 +486,7 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthDetailed(ctx contex
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.getP2SVPNConnectionHealthDetailedHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -596,21 +517,8 @@ func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthDetailedCreateReque
 	return req, runtime.MarshalAsJSON(req, request)
 }
 
-// getP2SVPNConnectionHealthDetailedHandleError handles the GetP2SVPNConnectionHealthDetailed error response.
-func (client *P2SVPNGatewaysClient) getP2SVPNConnectionHealthDetailedHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Lists all the P2SVpnGateways in a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - P2SVPNGatewaysClientListOptions contains the optional parameters for the P2SVPNGatewaysClient.List method.
 func (client *P2SVPNGatewaysClient) List(options *P2SVPNGatewaysClientListOptions) *P2SVPNGatewaysClientListPager {
 	return &P2SVPNGatewaysClientListPager{
@@ -646,26 +554,13 @@ func (client *P2SVPNGatewaysClient) listCreateRequest(ctx context.Context, optio
 func (client *P2SVPNGatewaysClient) listHandleResponse(resp *http.Response) (P2SVPNGatewaysClientListResponse, error) {
 	result := P2SVPNGatewaysClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListP2SVPNGatewaysResult); err != nil {
-		return P2SVPNGatewaysClientListResponse{}, runtime.NewResponseError(err, resp)
+		return P2SVPNGatewaysClientListResponse{}, err
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *P2SVPNGatewaysClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByResourceGroup - Lists all the P2SVpnGateways in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the P2SVpnGateway.
 // options - P2SVPNGatewaysClientListByResourceGroupOptions contains the optional parameters for the P2SVPNGatewaysClient.ListByResourceGroup
 // method.
@@ -707,26 +602,13 @@ func (client *P2SVPNGatewaysClient) listByResourceGroupCreateRequest(ctx context
 func (client *P2SVPNGatewaysClient) listByResourceGroupHandleResponse(resp *http.Response) (P2SVPNGatewaysClientListByResourceGroupResponse, error) {
 	result := P2SVPNGatewaysClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListP2SVPNGatewaysResult); err != nil {
-		return P2SVPNGatewaysClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return P2SVPNGatewaysClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *P2SVPNGatewaysClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateTags - Updates virtual wan p2s vpn gateway tags.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the P2SVpnGateway.
 // gatewayName - The name of the gateway.
 // p2SVPNGatewayParameters - Parameters supplied to update a virtual wan p2s vpn gateway tags.
@@ -742,7 +624,7 @@ func (client *P2SVPNGatewaysClient) UpdateTags(ctx context.Context, resourceGrou
 		return P2SVPNGatewaysClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return P2SVPNGatewaysClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return P2SVPNGatewaysClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -777,20 +659,7 @@ func (client *P2SVPNGatewaysClient) updateTagsCreateRequest(ctx context.Context,
 func (client *P2SVPNGatewaysClient) updateTagsHandleResponse(resp *http.Response) (P2SVPNGatewaysClientUpdateTagsResponse, error) {
 	result := P2SVPNGatewaysClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.P2SVPNGateway); err != nil {
-		return P2SVPNGatewaysClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return P2SVPNGatewaysClientUpdateTagsResponse{}, err
 	}
 	return result, nil
-}
-
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *P2SVPNGatewaysClient) updateTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

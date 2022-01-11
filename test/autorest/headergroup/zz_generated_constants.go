@@ -11,8 +11,8 @@ package headergroup
 const host = "http://localhost:3000"
 
 const (
-	module  = "headergroup"
-	version = "v0.1.0"
+	moduleName    = "headergroup"
+	moduleVersion = "v0.1.0"
 )
 
 type GreyscaleColors string

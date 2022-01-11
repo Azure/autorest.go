@@ -10,7 +10,6 @@ package httpinfrastructuregroup
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
@@ -32,13 +31,13 @@ func NewMultipleResponsesClient(options *azcore.ClientOptions) *MultipleResponse
 		cp = *options
 	}
 	client := &MultipleResponsesClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get200Model201ModelDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200Model201ModelDefaultError200ValidOptions contains the optional parameters for the
 // MultipleResponsesClient.Get200Model201ModelDefaultError200Valid method.
 func (client *MultipleResponsesClient) Get200Model201ModelDefaultError200Valid(ctx context.Context, options *MultipleResponsesClientGet200Model201ModelDefaultError200ValidOptions) (MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse, error) {
@@ -51,7 +50,7 @@ func (client *MultipleResponsesClient) Get200Model201ModelDefaultError200Valid(c
 		return MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse{}, client.get200Model201ModelDefaultError200ValidHandleError(resp)
+		return MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200Model201ModelDefaultError200ValidHandleResponse(resp)
 }
@@ -74,13 +73,13 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError200ValidHa
 	case http.StatusOK:
 		var val MyException
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse{}, err
 		}
 		result.Value = val
 	case http.StatusCreated:
 		var val B
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200Model201ModelDefaultError200ValidResponse{}, err
 		}
 		result.Value = val
 	default:
@@ -89,22 +88,9 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError200ValidHa
 	return result, nil
 }
 
-// get200Model201ModelDefaultError200ValidHandleError handles the Get200Model201ModelDefaultError200Valid error response.
-func (client *MultipleResponsesClient) get200Model201ModelDefaultError200ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get200Model201ModelDefaultError201Valid - Send a 201 response with valid payload: {'statusCode': '201', 'textStatusCode':
 // 'Created'}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200Model201ModelDefaultError201ValidOptions contains the optional parameters for the
 // MultipleResponsesClient.Get200Model201ModelDefaultError201Valid method.
 func (client *MultipleResponsesClient) Get200Model201ModelDefaultError201Valid(ctx context.Context, options *MultipleResponsesClientGet200Model201ModelDefaultError201ValidOptions) (MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse, error) {
@@ -117,7 +103,7 @@ func (client *MultipleResponsesClient) Get200Model201ModelDefaultError201Valid(c
 		return MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse{}, client.get200Model201ModelDefaultError201ValidHandleError(resp)
+		return MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200Model201ModelDefaultError201ValidHandleResponse(resp)
 }
@@ -140,13 +126,13 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError201ValidHa
 	case http.StatusOK:
 		var val MyException
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse{}, err
 		}
 		result.Value = val
 	case http.StatusCreated:
 		var val B
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200Model201ModelDefaultError201ValidResponse{}, err
 		}
 		result.Value = val
 	default:
@@ -155,21 +141,8 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError201ValidHa
 	return result, nil
 }
 
-// get200Model201ModelDefaultError201ValidHandleError handles the Get200Model201ModelDefaultError201Valid error response.
-func (client *MultipleResponsesClient) get200Model201ModelDefaultError201ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get200Model201ModelDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200Model201ModelDefaultError400ValidOptions contains the optional parameters for the
 // MultipleResponsesClient.Get200Model201ModelDefaultError400Valid method.
 func (client *MultipleResponsesClient) Get200Model201ModelDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet200Model201ModelDefaultError400ValidOptions) (MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse, error) {
@@ -182,7 +155,7 @@ func (client *MultipleResponsesClient) Get200Model201ModelDefaultError400Valid(c
 		return MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse{}, client.get200Model201ModelDefaultError400ValidHandleError(resp)
+		return MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200Model201ModelDefaultError400ValidHandleResponse(resp)
 }
@@ -205,13 +178,13 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError400ValidHa
 	case http.StatusOK:
 		var val MyException
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse{}, err
 		}
 		result.Value = val
 	case http.StatusCreated:
 		var val B
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200Model201ModelDefaultError400ValidResponse{}, err
 		}
 		result.Value = val
 	default:
@@ -220,21 +193,8 @@ func (client *MultipleResponsesClient) get200Model201ModelDefaultError400ValidHa
 	return result, nil
 }
 
-// get200Model201ModelDefaultError400ValidHandleError handles the Get200Model201ModelDefaultError400Valid error response.
-func (client *MultipleResponsesClient) get200Model201ModelDefaultError400ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get200Model204NoModelDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200Model204NoModelDefaultError200ValidOptions contains the optional parameters for
 // the MultipleResponsesClient.Get200Model204NoModelDefaultError200Valid method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError200ValidOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse, error) {
@@ -247,7 +207,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError200Valid
 		return MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse{}, client.get200Model204NoModelDefaultError200ValidHandleError(resp)
+		return MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200Model204NoModelDefaultError200ValidHandleResponse(resp)
 }
@@ -267,26 +227,13 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError200Valid
 func (client *MultipleResponsesClient) get200Model204NoModelDefaultError200ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse, error) {
 	result := MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
-		return MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse{}, runtime.NewResponseError(err, resp)
+		return MultipleResponsesClientGet200Model204NoModelDefaultError200ValidResponse{}, err
 	}
 	return result, nil
 }
 
-// get200Model204NoModelDefaultError200ValidHandleError handles the Get200Model204NoModelDefaultError200Valid error response.
-func (client *MultipleResponsesClient) get200Model204NoModelDefaultError200ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get200Model204NoModelDefaultError201Invalid - Send a 201 response with valid payload: {'statusCode': '201'}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidOptions contains the optional parameters for
 // the MultipleResponsesClient.Get200Model204NoModelDefaultError201Invalid method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError201Invalid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse, error) {
@@ -299,7 +246,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError201Inval
 		return MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse{}, client.get200Model204NoModelDefaultError201InvalidHandleError(resp)
+		return MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200Model204NoModelDefaultError201InvalidHandleResponse(resp)
 }
@@ -319,26 +266,13 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError201Inval
 func (client *MultipleResponsesClient) get200Model204NoModelDefaultError201InvalidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse, error) {
 	result := MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
-		return MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse{}, runtime.NewResponseError(err, resp)
+		return MultipleResponsesClientGet200Model204NoModelDefaultError201InvalidResponse{}, err
 	}
 	return result, nil
 }
 
-// get200Model204NoModelDefaultError201InvalidHandleError handles the Get200Model204NoModelDefaultError201Invalid error response.
-func (client *MultipleResponsesClient) get200Model204NoModelDefaultError201InvalidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get200Model204NoModelDefaultError202None - Send a 202 response with no payload:
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200Model204NoModelDefaultError202NoneOptions contains the optional parameters for the
 // MultipleResponsesClient.Get200Model204NoModelDefaultError202None method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError202None(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError202NoneOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse, error) {
@@ -351,7 +285,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError202None(
 		return MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse{}, client.get200Model204NoModelDefaultError202NoneHandleError(resp)
+		return MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200Model204NoModelDefaultError202NoneHandleResponse(resp)
 }
@@ -371,26 +305,13 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError202NoneC
 func (client *MultipleResponsesClient) get200Model204NoModelDefaultError202NoneHandleResponse(resp *http.Response) (MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse, error) {
 	result := MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
-		return MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse{}, runtime.NewResponseError(err, resp)
+		return MultipleResponsesClientGet200Model204NoModelDefaultError202NoneResponse{}, err
 	}
 	return result, nil
 }
 
-// get200Model204NoModelDefaultError202NoneHandleError handles the Get200Model204NoModelDefaultError202None error response.
-func (client *MultipleResponsesClient) get200Model204NoModelDefaultError202NoneHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get200Model204NoModelDefaultError204Valid - Send a 204 response with no payload
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200Model204NoModelDefaultError204ValidOptions contains the optional parameters for
 // the MultipleResponsesClient.Get200Model204NoModelDefaultError204Valid method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError204ValidOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse, error) {
@@ -403,7 +324,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError204Valid
 		return MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse{}, client.get200Model204NoModelDefaultError204ValidHandleError(resp)
+		return MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200Model204NoModelDefaultError204ValidHandleResponse(resp)
 }
@@ -423,27 +344,14 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError204Valid
 func (client *MultipleResponsesClient) get200Model204NoModelDefaultError204ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse, error) {
 	result := MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
-		return MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse{}, runtime.NewResponseError(err, resp)
+		return MultipleResponsesClientGet200Model204NoModelDefaultError204ValidResponse{}, err
 	}
 	return result, nil
 }
 
-// get200Model204NoModelDefaultError204ValidHandleError handles the Get200Model204NoModelDefaultError204Valid error response.
-func (client *MultipleResponsesClient) get200Model204NoModelDefaultError204ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get200Model204NoModelDefaultError400Valid - Send a 400 response with valid error payload: {'status': 400, 'message': 'client
 // error'}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200Model204NoModelDefaultError400ValidOptions contains the optional parameters for
 // the MultipleResponsesClient.Get200Model204NoModelDefaultError400Valid method.
 func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet200Model204NoModelDefaultError400ValidOptions) (MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse, error) {
@@ -456,7 +364,7 @@ func (client *MultipleResponsesClient) Get200Model204NoModelDefaultError400Valid
 		return MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse{}, client.get200Model204NoModelDefaultError400ValidHandleError(resp)
+		return MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200Model204NoModelDefaultError400ValidHandleResponse(resp)
 }
@@ -476,26 +384,13 @@ func (client *MultipleResponsesClient) get200Model204NoModelDefaultError400Valid
 func (client *MultipleResponsesClient) get200Model204NoModelDefaultError400ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse, error) {
 	result := MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
-		return MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse{}, runtime.NewResponseError(err, resp)
+		return MultipleResponsesClientGet200Model204NoModelDefaultError400ValidResponse{}, err
 	}
 	return result, nil
 }
 
-// get200Model204NoModelDefaultError400ValidHandleError handles the Get200Model204NoModelDefaultError400Valid error response.
-func (client *MultipleResponsesClient) get200Model204NoModelDefaultError400ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get200ModelA200Invalid - Send a 200 response with invalid payload {'statusCodeInvalid': '200'}
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200ModelA200InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200Invalid
 // method.
 func (client *MultipleResponsesClient) Get200ModelA200Invalid(ctx context.Context, options *MultipleResponsesClientGet200ModelA200InvalidOptions) (MultipleResponsesClientGet200ModelA200InvalidResponse, error) {
@@ -508,7 +403,7 @@ func (client *MultipleResponsesClient) Get200ModelA200Invalid(ctx context.Contex
 		return MultipleResponsesClientGet200ModelA200InvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleResponsesClientGet200ModelA200InvalidResponse{}, client.get200ModelA200InvalidHandleError(resp)
+		return MultipleResponsesClientGet200ModelA200InvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200ModelA200InvalidHandleResponse(resp)
 }
@@ -528,26 +423,14 @@ func (client *MultipleResponsesClient) get200ModelA200InvalidCreateRequest(ctx c
 func (client *MultipleResponsesClient) get200ModelA200InvalidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA200InvalidResponse, error) {
 	result := MultipleResponsesClientGet200ModelA200InvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
-		return MultipleResponsesClientGet200ModelA200InvalidResponse{}, runtime.NewResponseError(err, resp)
+		return MultipleResponsesClientGet200ModelA200InvalidResponse{}, err
 	}
 	return result, nil
 }
 
-// get200ModelA200InvalidHandleError handles the Get200ModelA200Invalid error response.
-func (client *MultipleResponsesClient) get200ModelA200InvalidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get200ModelA200None - Send a 200 response with no payload, when a payload is expected - client should return a null object
 // of thde type for model A
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200ModelA200NoneOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200None
 // method.
 func (client *MultipleResponsesClient) Get200ModelA200None(ctx context.Context, options *MultipleResponsesClientGet200ModelA200NoneOptions) (MultipleResponsesClientGet200ModelA200NoneResponse, error) {
@@ -560,7 +443,7 @@ func (client *MultipleResponsesClient) Get200ModelA200None(ctx context.Context, 
 		return MultipleResponsesClientGet200ModelA200NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleResponsesClientGet200ModelA200NoneResponse{}, client.get200ModelA200NoneHandleError(resp)
+		return MultipleResponsesClientGet200ModelA200NoneResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200ModelA200NoneHandleResponse(resp)
 }
@@ -580,25 +463,13 @@ func (client *MultipleResponsesClient) get200ModelA200NoneCreateRequest(ctx cont
 func (client *MultipleResponsesClient) get200ModelA200NoneHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA200NoneResponse, error) {
 	result := MultipleResponsesClientGet200ModelA200NoneResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
-		return MultipleResponsesClientGet200ModelA200NoneResponse{}, runtime.NewResponseError(err, resp)
+		return MultipleResponsesClientGet200ModelA200NoneResponse{}, err
 	}
 	return result, nil
 }
 
-// get200ModelA200NoneHandleError handles the Get200ModelA200None error response.
-func (client *MultipleResponsesClient) get200ModelA200NoneHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get200ModelA200Valid - Send a 200 response with payload {'statusCode': '200'}
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200ModelA200ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA200Valid
 // method.
 func (client *MultipleResponsesClient) Get200ModelA200Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA200ValidOptions) (MultipleResponsesClientGet200ModelA200ValidResponse, error) {
@@ -611,7 +482,7 @@ func (client *MultipleResponsesClient) Get200ModelA200Valid(ctx context.Context,
 		return MultipleResponsesClientGet200ModelA200ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleResponsesClientGet200ModelA200ValidResponse{}, client.get200ModelA200ValidHandleError(resp)
+		return MultipleResponsesClientGet200ModelA200ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200ModelA200ValidHandleResponse(resp)
 }
@@ -631,25 +502,13 @@ func (client *MultipleResponsesClient) get200ModelA200ValidCreateRequest(ctx con
 func (client *MultipleResponsesClient) get200ModelA200ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA200ValidResponse, error) {
 	result := MultipleResponsesClientGet200ModelA200ValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
-		return MultipleResponsesClientGet200ModelA200ValidResponse{}, runtime.NewResponseError(err, resp)
+		return MultipleResponsesClientGet200ModelA200ValidResponse{}, err
 	}
 	return result, nil
 }
 
-// get200ModelA200ValidHandleError handles the Get200ModelA200Valid error response.
-func (client *MultipleResponsesClient) get200ModelA200ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get200ModelA201ModelC404ModelDDefaultError200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidOptions contains the optional parameters
 // for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError200Valid method.
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError200Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidOptions) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse, error) {
@@ -662,7 +521,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusNotFound) {
-		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse{}, client.get200ModelA201ModelC404ModelDDefaultError200ValidHandleError(resp)
+		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200ModelA201ModelC404ModelDDefaultError200ValidHandleResponse(resp)
 }
@@ -685,19 +544,19 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 	case http.StatusOK:
 		var val MyException
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse{}, err
 		}
 		result.Value = val
 	case http.StatusCreated:
 		var val C
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse{}, err
 		}
 		result.Value = val
 	case http.StatusNotFound:
 		var val D
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError200ValidResponse{}, err
 		}
 		result.Value = val
 	default:
@@ -706,21 +565,8 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 	return result, nil
 }
 
-// get200ModelA201ModelC404ModelDDefaultError200ValidHandleError handles the Get200ModelA201ModelC404ModelDDefaultError200Valid error response.
-func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultError200ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get200ModelA201ModelC404ModelDDefaultError201Valid - Send a 200 response with valid payload: {'httpCode': '201'}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidOptions contains the optional parameters
 // for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError201Valid method.
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError201Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidOptions) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse, error) {
@@ -733,7 +579,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusNotFound) {
-		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse{}, client.get200ModelA201ModelC404ModelDDefaultError201ValidHandleError(resp)
+		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200ModelA201ModelC404ModelDDefaultError201ValidHandleResponse(resp)
 }
@@ -756,19 +602,19 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 	case http.StatusOK:
 		var val MyException
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse{}, err
 		}
 		result.Value = val
 	case http.StatusCreated:
 		var val C
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse{}, err
 		}
 		result.Value = val
 	case http.StatusNotFound:
 		var val D
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError201ValidResponse{}, err
 		}
 		result.Value = val
 	default:
@@ -777,22 +623,9 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 	return result, nil
 }
 
-// get200ModelA201ModelC404ModelDDefaultError201ValidHandleError handles the Get200ModelA201ModelC404ModelDDefaultError201Valid error response.
-func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultError201ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get200ModelA201ModelC404ModelDDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message':
 // 'client error'}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidOptions contains the optional parameters
 // for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError400Valid method.
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidOptions) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse, error) {
@@ -805,7 +638,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusNotFound) {
-		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse{}, client.get200ModelA201ModelC404ModelDDefaultError400ValidHandleError(resp)
+		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200ModelA201ModelC404ModelDDefaultError400ValidHandleResponse(resp)
 }
@@ -828,19 +661,19 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 	case http.StatusOK:
 		var val MyException
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse{}, err
 		}
 		result.Value = val
 	case http.StatusCreated:
 		var val C
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse{}, err
 		}
 		result.Value = val
 	case http.StatusNotFound:
 		var val D
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError400ValidResponse{}, err
 		}
 		result.Value = val
 	default:
@@ -849,21 +682,8 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 	return result, nil
 }
 
-// get200ModelA201ModelC404ModelDDefaultError400ValidHandleError handles the Get200ModelA201ModelC404ModelDDefaultError400Valid error response.
-func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultError400ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get200ModelA201ModelC404ModelDDefaultError404Valid - Send a 200 response with valid payload: {'httpStatusCode': '404'}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidOptions contains the optional parameters
 // for the MultipleResponsesClient.Get200ModelA201ModelC404ModelDDefaultError404Valid method.
 func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultError404Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidOptions) (MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse, error) {
@@ -876,7 +696,7 @@ func (client *MultipleResponsesClient) Get200ModelA201ModelC404ModelDDefaultErro
 		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusNotFound) {
-		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse{}, client.get200ModelA201ModelC404ModelDDefaultError404ValidHandleError(resp)
+		return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200ModelA201ModelC404ModelDDefaultError404ValidHandleResponse(resp)
 }
@@ -899,19 +719,19 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 	case http.StatusOK:
 		var val MyException
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse{}, err
 		}
 		result.Value = val
 	case http.StatusCreated:
 		var val C
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse{}, err
 		}
 		result.Value = val
 	case http.StatusNotFound:
 		var val D
 		if err := runtime.UnmarshalAsJSON(resp, &val); err != nil {
-			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse{}, runtime.NewResponseError(err, resp)
+			return MultipleResponsesClientGet200ModelA201ModelC404ModelDDefaultError404ValidResponse{}, err
 		}
 		result.Value = val
 	default:
@@ -920,21 +740,8 @@ func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultErro
 	return result, nil
 }
 
-// get200ModelA201ModelC404ModelDDefaultError404ValidHandleError handles the Get200ModelA201ModelC404ModelDDefaultError404Valid error response.
-func (client *MultipleResponsesClient) get200ModelA201ModelC404ModelDDefaultError404ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get200ModelA202Valid - Send a 202 response with payload {'statusCode': '202'}
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200ModelA202ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA202Valid
 // method.
 func (client *MultipleResponsesClient) Get200ModelA202Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA202ValidOptions) (MultipleResponsesClientGet200ModelA202ValidResponse, error) {
@@ -947,7 +754,7 @@ func (client *MultipleResponsesClient) Get200ModelA202Valid(ctx context.Context,
 		return MultipleResponsesClientGet200ModelA202ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleResponsesClientGet200ModelA202ValidResponse{}, client.get200ModelA202ValidHandleError(resp)
+		return MultipleResponsesClientGet200ModelA202ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200ModelA202ValidHandleResponse(resp)
 }
@@ -967,25 +774,13 @@ func (client *MultipleResponsesClient) get200ModelA202ValidCreateRequest(ctx con
 func (client *MultipleResponsesClient) get200ModelA202ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA202ValidResponse, error) {
 	result := MultipleResponsesClientGet200ModelA202ValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
-		return MultipleResponsesClientGet200ModelA202ValidResponse{}, runtime.NewResponseError(err, resp)
+		return MultipleResponsesClientGet200ModelA202ValidResponse{}, err
 	}
 	return result, nil
 }
 
-// get200ModelA202ValidHandleError handles the Get200ModelA202Valid error response.
-func (client *MultipleResponsesClient) get200ModelA202ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get200ModelA400Invalid - Send a 200 response with invalid payload {'statusCodeInvalid': '400'}
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200ModelA400InvalidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400Invalid
 // method.
 func (client *MultipleResponsesClient) Get200ModelA400Invalid(ctx context.Context, options *MultipleResponsesClientGet200ModelA400InvalidOptions) (MultipleResponsesClientGet200ModelA400InvalidResponse, error) {
@@ -998,7 +793,7 @@ func (client *MultipleResponsesClient) Get200ModelA400Invalid(ctx context.Contex
 		return MultipleResponsesClientGet200ModelA400InvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleResponsesClientGet200ModelA400InvalidResponse{}, client.get200ModelA400InvalidHandleError(resp)
+		return MultipleResponsesClientGet200ModelA400InvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200ModelA400InvalidHandleResponse(resp)
 }
@@ -1018,25 +813,13 @@ func (client *MultipleResponsesClient) get200ModelA400InvalidCreateRequest(ctx c
 func (client *MultipleResponsesClient) get200ModelA400InvalidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA400InvalidResponse, error) {
 	result := MultipleResponsesClientGet200ModelA400InvalidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
-		return MultipleResponsesClientGet200ModelA400InvalidResponse{}, runtime.NewResponseError(err, resp)
+		return MultipleResponsesClientGet200ModelA400InvalidResponse{}, err
 	}
 	return result, nil
 }
 
-// get200ModelA400InvalidHandleError handles the Get200ModelA400Invalid error response.
-func (client *MultipleResponsesClient) get200ModelA400InvalidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get200ModelA400None - Send a 400 response with no payload client should treat as an http error with no error model
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200ModelA400NoneOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400None
 // method.
 func (client *MultipleResponsesClient) Get200ModelA400None(ctx context.Context, options *MultipleResponsesClientGet200ModelA400NoneOptions) (MultipleResponsesClientGet200ModelA400NoneResponse, error) {
@@ -1049,7 +832,7 @@ func (client *MultipleResponsesClient) Get200ModelA400None(ctx context.Context, 
 		return MultipleResponsesClientGet200ModelA400NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleResponsesClientGet200ModelA400NoneResponse{}, client.get200ModelA400NoneHandleError(resp)
+		return MultipleResponsesClientGet200ModelA400NoneResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200ModelA400NoneHandleResponse(resp)
 }
@@ -1069,25 +852,13 @@ func (client *MultipleResponsesClient) get200ModelA400NoneCreateRequest(ctx cont
 func (client *MultipleResponsesClient) get200ModelA400NoneHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA400NoneResponse, error) {
 	result := MultipleResponsesClientGet200ModelA400NoneResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
-		return MultipleResponsesClientGet200ModelA400NoneResponse{}, runtime.NewResponseError(err, resp)
+		return MultipleResponsesClientGet200ModelA400NoneResponse{}, err
 	}
 	return result, nil
 }
 
-// get200ModelA400NoneHandleError handles the Get200ModelA400None error response.
-func (client *MultipleResponsesClient) get200ModelA400NoneHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get200ModelA400Valid - Send a 200 response with payload {'statusCode': '400'}
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet200ModelA400ValidOptions contains the optional parameters for the MultipleResponsesClient.Get200ModelA400Valid
 // method.
 func (client *MultipleResponsesClient) Get200ModelA400Valid(ctx context.Context, options *MultipleResponsesClientGet200ModelA400ValidOptions) (MultipleResponsesClientGet200ModelA400ValidResponse, error) {
@@ -1100,7 +871,7 @@ func (client *MultipleResponsesClient) Get200ModelA400Valid(ctx context.Context,
 		return MultipleResponsesClientGet200ModelA400ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleResponsesClientGet200ModelA400ValidResponse{}, client.get200ModelA400ValidHandleError(resp)
+		return MultipleResponsesClientGet200ModelA400ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.get200ModelA400ValidHandleResponse(resp)
 }
@@ -1120,25 +891,13 @@ func (client *MultipleResponsesClient) get200ModelA400ValidCreateRequest(ctx con
 func (client *MultipleResponsesClient) get200ModelA400ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGet200ModelA400ValidResponse, error) {
 	result := MultipleResponsesClientGet200ModelA400ValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
-		return MultipleResponsesClientGet200ModelA400ValidResponse{}, runtime.NewResponseError(err, resp)
+		return MultipleResponsesClientGet200ModelA400ValidResponse{}, err
 	}
 	return result, nil
 }
 
-// get200ModelA400ValidHandleError handles the Get200ModelA400Valid error response.
-func (client *MultipleResponsesClient) get200ModelA400ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get202None204NoneDefaultError202None - Send a 202 response with no payload
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet202None204NoneDefaultError202NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultError202None
 // method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultError202None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultError202NoneOptions) (MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse, error) {
@@ -1151,7 +910,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError202None(ctx 
 		return MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
-		return MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse{}, client.get202None204NoneDefaultError202NoneHandleError(resp)
+		return MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse{}, runtime.NewResponseError(resp)
 	}
 	return MultipleResponsesClientGet202None204NoneDefaultError202NoneResponse{RawResponse: resp}, nil
 }
@@ -1167,21 +926,8 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError202NoneCreat
 	return req, nil
 }
 
-// get202None204NoneDefaultError202NoneHandleError handles the Get202None204NoneDefaultError202None error response.
-func (client *MultipleResponsesClient) get202None204NoneDefaultError202NoneHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get202None204NoneDefaultError204None - Send a 204 response with no payload
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet202None204NoneDefaultError204NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultError204None
 // method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultError204None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultError204NoneOptions) (MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse, error) {
@@ -1194,7 +940,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError204None(ctx 
 		return MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
-		return MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse{}, client.get202None204NoneDefaultError204NoneHandleError(resp)
+		return MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse{}, runtime.NewResponseError(resp)
 	}
 	return MultipleResponsesClientGet202None204NoneDefaultError204NoneResponse{RawResponse: resp}, nil
 }
@@ -1210,21 +956,8 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError204NoneCreat
 	return req, nil
 }
 
-// get202None204NoneDefaultError204NoneHandleError handles the Get202None204NoneDefaultError204None error response.
-func (client *MultipleResponsesClient) get202None204NoneDefaultError204NoneHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get202None204NoneDefaultError400Valid - Send a 400 response with valid payload: {'code': '400', 'message': 'client error'}
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet202None204NoneDefaultError400ValidOptions contains the optional parameters for the
 // MultipleResponsesClient.Get202None204NoneDefaultError400Valid method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultError400Valid(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultError400ValidOptions) (MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse, error) {
@@ -1237,7 +970,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultError400Valid(ctx
 		return MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
-		return MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse{}, client.get202None204NoneDefaultError400ValidHandleError(resp)
+		return MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return MultipleResponsesClientGet202None204NoneDefaultError400ValidResponse{RawResponse: resp}, nil
 }
@@ -1253,21 +986,8 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultError400ValidCrea
 	return req, nil
 }
 
-// get202None204NoneDefaultError400ValidHandleError handles the Get202None204NoneDefaultError400Valid error response.
-func (client *MultipleResponsesClient) get202None204NoneDefaultError400ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get202None204NoneDefaultNone202Invalid - Send a 202 response with an unexpected payload {'property': 'value'}
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet202None204NoneDefaultNone202InvalidOptions contains the optional parameters for the
 // MultipleResponsesClient.Get202None204NoneDefaultNone202Invalid method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone202InvalidOptions) (MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse, error) {
@@ -1280,7 +1000,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone202Invalid(ct
 		return MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
-		return MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse{}, client.get202None204NoneDefaultNone202InvalidHandleError(resp)
+		return MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return MultipleResponsesClientGet202None204NoneDefaultNone202InvalidResponse{RawResponse: resp}, nil
 }
@@ -1295,20 +1015,8 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone202InvalidCre
 	return req, nil
 }
 
-// get202None204NoneDefaultNone202InvalidHandleError handles the Get202None204NoneDefaultNone202Invalid error response.
-func (client *MultipleResponsesClient) get202None204NoneDefaultNone202InvalidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get202None204NoneDefaultNone204None - Send a 204 response with no payload
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet202None204NoneDefaultNone204NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone204None
 // method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultNone204None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone204NoneOptions) (MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse, error) {
@@ -1321,7 +1029,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone204None(ctx c
 		return MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
-		return MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse{}, client.get202None204NoneDefaultNone204NoneHandleError(resp)
+		return MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse{}, runtime.NewResponseError(resp)
 	}
 	return MultipleResponsesClientGet202None204NoneDefaultNone204NoneResponse{RawResponse: resp}, nil
 }
@@ -1336,20 +1044,8 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone204NoneCreate
 	return req, nil
 }
 
-// get202None204NoneDefaultNone204NoneHandleError handles the Get202None204NoneDefaultNone204None error response.
-func (client *MultipleResponsesClient) get202None204NoneDefaultNone204NoneHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get202None204NoneDefaultNone400Invalid - Send a 400 response with an unexpected payload {'property': 'value'}
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet202None204NoneDefaultNone400InvalidOptions contains the optional parameters for the
 // MultipleResponsesClient.Get202None204NoneDefaultNone400Invalid method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone400InvalidOptions) (MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse, error) {
@@ -1362,7 +1058,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400Invalid(ct
 		return MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
-		return MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse{}, client.get202None204NoneDefaultNone400InvalidHandleError(resp)
+		return MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return MultipleResponsesClientGet202None204NoneDefaultNone400InvalidResponse{RawResponse: resp}, nil
 }
@@ -1377,20 +1073,8 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone400InvalidCre
 	return req, nil
 }
 
-// get202None204NoneDefaultNone400InvalidHandleError handles the Get202None204NoneDefaultNone400Invalid error response.
-func (client *MultipleResponsesClient) get202None204NoneDefaultNone400InvalidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get202None204NoneDefaultNone400None - Send a 400 response with no payload
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGet202None204NoneDefaultNone400NoneOptions contains the optional parameters for the MultipleResponsesClient.Get202None204NoneDefaultNone400None
 // method.
 func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400None(ctx context.Context, options *MultipleResponsesClientGet202None204NoneDefaultNone400NoneOptions) (MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse, error) {
@@ -1403,7 +1087,7 @@ func (client *MultipleResponsesClient) Get202None204NoneDefaultNone400None(ctx c
 		return MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
-		return MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse{}, client.get202None204NoneDefaultNone400NoneHandleError(resp)
+		return MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse{}, runtime.NewResponseError(resp)
 	}
 	return MultipleResponsesClientGet202None204NoneDefaultNone400NoneResponse{RawResponse: resp}, nil
 }
@@ -1418,20 +1102,8 @@ func (client *MultipleResponsesClient) get202None204NoneDefaultNone400NoneCreate
 	return req, nil
 }
 
-// get202None204NoneDefaultNone400NoneHandleError handles the Get202None204NoneDefaultNone400None error response.
-func (client *MultipleResponsesClient) get202None204NoneDefaultNone400NoneHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // GetDefaultModelA200None - Send a 200 response with no payload
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGetDefaultModelA200NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA200None
 // method.
 func (client *MultipleResponsesClient) GetDefaultModelA200None(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA200NoneOptions) (MultipleResponsesClientGetDefaultModelA200NoneResponse, error) {
@@ -1444,7 +1116,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA200None(ctx context.Conte
 		return MultipleResponsesClientGetDefaultModelA200NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleResponsesClientGetDefaultModelA200NoneResponse{}, client.getDefaultModelA200NoneHandleError(resp)
+		return MultipleResponsesClientGetDefaultModelA200NoneResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDefaultModelA200NoneHandleResponse(resp)
 }
@@ -1464,25 +1136,13 @@ func (client *MultipleResponsesClient) getDefaultModelA200NoneCreateRequest(ctx 
 func (client *MultipleResponsesClient) getDefaultModelA200NoneHandleResponse(resp *http.Response) (MultipleResponsesClientGetDefaultModelA200NoneResponse, error) {
 	result := MultipleResponsesClientGetDefaultModelA200NoneResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
-		return MultipleResponsesClientGetDefaultModelA200NoneResponse{}, runtime.NewResponseError(err, resp)
+		return MultipleResponsesClientGetDefaultModelA200NoneResponse{}, err
 	}
 	return result, nil
 }
 
-// getDefaultModelA200NoneHandleError handles the GetDefaultModelA200None error response.
-func (client *MultipleResponsesClient) getDefaultModelA200NoneHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // GetDefaultModelA200Valid - Send a 200 response with valid payload: {'statusCode': '200'}
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGetDefaultModelA200ValidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA200Valid
 // method.
 func (client *MultipleResponsesClient) GetDefaultModelA200Valid(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA200ValidOptions) (MultipleResponsesClientGetDefaultModelA200ValidResponse, error) {
@@ -1495,7 +1155,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA200Valid(ctx context.Cont
 		return MultipleResponsesClientGetDefaultModelA200ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleResponsesClientGetDefaultModelA200ValidResponse{}, client.getDefaultModelA200ValidHandleError(resp)
+		return MultipleResponsesClientGetDefaultModelA200ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getDefaultModelA200ValidHandleResponse(resp)
 }
@@ -1515,25 +1175,13 @@ func (client *MultipleResponsesClient) getDefaultModelA200ValidCreateRequest(ctx
 func (client *MultipleResponsesClient) getDefaultModelA200ValidHandleResponse(resp *http.Response) (MultipleResponsesClientGetDefaultModelA200ValidResponse, error) {
 	result := MultipleResponsesClientGetDefaultModelA200ValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.MyException); err != nil {
-		return MultipleResponsesClientGetDefaultModelA200ValidResponse{}, runtime.NewResponseError(err, resp)
+		return MultipleResponsesClientGetDefaultModelA200ValidResponse{}, err
 	}
 	return result, nil
 }
 
-// getDefaultModelA200ValidHandleError handles the GetDefaultModelA200Valid error response.
-func (client *MultipleResponsesClient) getDefaultModelA200ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // GetDefaultModelA400None - Send a 400 response with no payload
-// If the operation fails it returns the *MyException error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGetDefaultModelA400NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA400None
 // method.
 func (client *MultipleResponsesClient) GetDefaultModelA400None(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA400NoneOptions) (MultipleResponsesClientGetDefaultModelA400NoneResponse, error) {
@@ -1546,7 +1194,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA400None(ctx context.Conte
 		return MultipleResponsesClientGetDefaultModelA400NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleResponsesClientGetDefaultModelA400NoneResponse{}, client.getDefaultModelA400NoneHandleError(resp)
+		return MultipleResponsesClientGetDefaultModelA400NoneResponse{}, runtime.NewResponseError(resp)
 	}
 	return MultipleResponsesClientGetDefaultModelA400NoneResponse{RawResponse: resp}, nil
 }
@@ -1562,21 +1210,8 @@ func (client *MultipleResponsesClient) getDefaultModelA400NoneCreateRequest(ctx 
 	return req, nil
 }
 
-// getDefaultModelA400NoneHandleError handles the GetDefaultModelA400None error response.
-func (client *MultipleResponsesClient) getDefaultModelA400NoneHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := MyException{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDefaultModelA400Valid - Send a 400 response with valid payload: {'statusCode': '400'}
-// If the operation fails it returns the *MyException error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGetDefaultModelA400ValidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultModelA400Valid
 // method.
 func (client *MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Context, options *MultipleResponsesClientGetDefaultModelA400ValidOptions) (MultipleResponsesClientGetDefaultModelA400ValidResponse, error) {
@@ -1589,7 +1224,7 @@ func (client *MultipleResponsesClient) GetDefaultModelA400Valid(ctx context.Cont
 		return MultipleResponsesClientGetDefaultModelA400ValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleResponsesClientGetDefaultModelA400ValidResponse{}, client.getDefaultModelA400ValidHandleError(resp)
+		return MultipleResponsesClientGetDefaultModelA400ValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return MultipleResponsesClientGetDefaultModelA400ValidResponse{RawResponse: resp}, nil
 }
@@ -1605,21 +1240,8 @@ func (client *MultipleResponsesClient) getDefaultModelA400ValidCreateRequest(ctx
 	return req, nil
 }
 
-// getDefaultModelA400ValidHandleError handles the GetDefaultModelA400Valid error response.
-func (client *MultipleResponsesClient) getDefaultModelA400ValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := MyException{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetDefaultNone200Invalid - Send a 200 response with invalid payload: {'statusCode': '200'}
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGetDefaultNone200InvalidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone200Invalid
 // method.
 func (client *MultipleResponsesClient) GetDefaultNone200Invalid(ctx context.Context, options *MultipleResponsesClientGetDefaultNone200InvalidOptions) (MultipleResponsesClientGetDefaultNone200InvalidResponse, error) {
@@ -1632,7 +1254,7 @@ func (client *MultipleResponsesClient) GetDefaultNone200Invalid(ctx context.Cont
 		return MultipleResponsesClientGetDefaultNone200InvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleResponsesClientGetDefaultNone200InvalidResponse{}, client.getDefaultNone200InvalidHandleError(resp)
+		return MultipleResponsesClientGetDefaultNone200InvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return MultipleResponsesClientGetDefaultNone200InvalidResponse{RawResponse: resp}, nil
 }
@@ -1647,20 +1269,8 @@ func (client *MultipleResponsesClient) getDefaultNone200InvalidCreateRequest(ctx
 	return req, nil
 }
 
-// getDefaultNone200InvalidHandleError handles the GetDefaultNone200Invalid error response.
-func (client *MultipleResponsesClient) getDefaultNone200InvalidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // GetDefaultNone200None - Send a 200 response with no payload
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGetDefaultNone200NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone200None
 // method.
 func (client *MultipleResponsesClient) GetDefaultNone200None(ctx context.Context, options *MultipleResponsesClientGetDefaultNone200NoneOptions) (MultipleResponsesClientGetDefaultNone200NoneResponse, error) {
@@ -1673,7 +1283,7 @@ func (client *MultipleResponsesClient) GetDefaultNone200None(ctx context.Context
 		return MultipleResponsesClientGetDefaultNone200NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleResponsesClientGetDefaultNone200NoneResponse{}, client.getDefaultNone200NoneHandleError(resp)
+		return MultipleResponsesClientGetDefaultNone200NoneResponse{}, runtime.NewResponseError(resp)
 	}
 	return MultipleResponsesClientGetDefaultNone200NoneResponse{RawResponse: resp}, nil
 }
@@ -1688,20 +1298,8 @@ func (client *MultipleResponsesClient) getDefaultNone200NoneCreateRequest(ctx co
 	return req, nil
 }
 
-// getDefaultNone200NoneHandleError handles the GetDefaultNone200None error response.
-func (client *MultipleResponsesClient) getDefaultNone200NoneHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // GetDefaultNone400Invalid - Send a 400 response with valid payload: {'statusCode': '400'}
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGetDefaultNone400InvalidOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone400Invalid
 // method.
 func (client *MultipleResponsesClient) GetDefaultNone400Invalid(ctx context.Context, options *MultipleResponsesClientGetDefaultNone400InvalidOptions) (MultipleResponsesClientGetDefaultNone400InvalidResponse, error) {
@@ -1714,7 +1312,7 @@ func (client *MultipleResponsesClient) GetDefaultNone400Invalid(ctx context.Cont
 		return MultipleResponsesClientGetDefaultNone400InvalidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleResponsesClientGetDefaultNone400InvalidResponse{}, client.getDefaultNone400InvalidHandleError(resp)
+		return MultipleResponsesClientGetDefaultNone400InvalidResponse{}, runtime.NewResponseError(resp)
 	}
 	return MultipleResponsesClientGetDefaultNone400InvalidResponse{RawResponse: resp}, nil
 }
@@ -1729,20 +1327,8 @@ func (client *MultipleResponsesClient) getDefaultNone400InvalidCreateRequest(ctx
 	return req, nil
 }
 
-// getDefaultNone400InvalidHandleError handles the GetDefaultNone400Invalid error response.
-func (client *MultipleResponsesClient) getDefaultNone400InvalidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // GetDefaultNone400None - Send a 400 response with no payload
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - MultipleResponsesClientGetDefaultNone400NoneOptions contains the optional parameters for the MultipleResponsesClient.GetDefaultNone400None
 // method.
 func (client *MultipleResponsesClient) GetDefaultNone400None(ctx context.Context, options *MultipleResponsesClientGetDefaultNone400NoneOptions) (MultipleResponsesClientGetDefaultNone400NoneResponse, error) {
@@ -1755,7 +1341,7 @@ func (client *MultipleResponsesClient) GetDefaultNone400None(ctx context.Context
 		return MultipleResponsesClientGetDefaultNone400NoneResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return MultipleResponsesClientGetDefaultNone400NoneResponse{}, client.getDefaultNone400NoneHandleError(resp)
+		return MultipleResponsesClientGetDefaultNone400NoneResponse{}, runtime.NewResponseError(resp)
 	}
 	return MultipleResponsesClientGetDefaultNone400NoneResponse{RawResponse: resp}, nil
 }
@@ -1768,16 +1354,4 @@ func (client *MultipleResponsesClient) getDefaultNone400NoneCreateRequest(ctx co
 		return nil, err
 	}
 	return req, nil
-}
-
-// getDefaultNone400NoneHandleError handles the GetDefaultNone400None error response.
-func (client *MultipleResponsesClient) getDefaultNone400NoneHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

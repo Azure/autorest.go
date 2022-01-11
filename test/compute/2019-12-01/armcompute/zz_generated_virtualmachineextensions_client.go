@@ -39,19 +39,19 @@ func NewVirtualMachineExtensionsClient(subscriptionID string, credential azcore.
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VirtualMachineExtensionsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - The operation to create or update the extension.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine where the extension should be created or updated.
 // vmExtensionName - The name of the virtual machine extension.
@@ -66,7 +66,7 @@ func (client *VirtualMachineExtensionsClient) BeginCreateOrUpdate(ctx context.Co
 	result := VirtualMachineExtensionsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualMachineExtensionsClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("VirtualMachineExtensionsClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineExtensionsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +77,7 @@ func (client *VirtualMachineExtensionsClient) BeginCreateOrUpdate(ctx context.Co
 }
 
 // CreateOrUpdate - The operation to create or update the extension.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualMachineExtensionsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtension, options *VirtualMachineExtensionsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)
 	if err != nil {
@@ -88,7 +88,7 @@ func (client *VirtualMachineExtensionsClient) createOrUpdate(ctx context.Context
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -123,20 +123,8 @@ func (client *VirtualMachineExtensionsClient) createOrUpdateCreateRequest(ctx co
 	return req, runtime.MarshalAsJSON(req, extensionParameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *VirtualMachineExtensionsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BeginDelete - The operation to delete the extension.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine where the extension should be deleted.
 // vmExtensionName - The name of the virtual machine extension.
@@ -150,7 +138,7 @@ func (client *VirtualMachineExtensionsClient) BeginDelete(ctx context.Context, r
 	result := VirtualMachineExtensionsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualMachineExtensionsClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("VirtualMachineExtensionsClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineExtensionsClientDeletePollerResponse{}, err
 	}
@@ -161,7 +149,7 @@ func (client *VirtualMachineExtensionsClient) BeginDelete(ctx context.Context, r
 }
 
 // Delete - The operation to delete the extension.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualMachineExtensionsClient) deleteOperation(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, options *VirtualMachineExtensionsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName, options)
 	if err != nil {
@@ -172,7 +160,7 @@ func (client *VirtualMachineExtensionsClient) deleteOperation(ctx context.Contex
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -206,20 +194,8 @@ func (client *VirtualMachineExtensionsClient) deleteCreateRequest(ctx context.Co
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *VirtualMachineExtensionsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // Get - The operation to get the extension.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine containing the extension.
 // vmExtensionName - The name of the virtual machine extension.
@@ -235,7 +211,7 @@ func (client *VirtualMachineExtensionsClient) Get(ctx context.Context, resourceG
 		return VirtualMachineExtensionsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineExtensionsClientGetResponse{}, client.getHandleError(resp)
+		return VirtualMachineExtensionsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -277,25 +253,13 @@ func (client *VirtualMachineExtensionsClient) getCreateRequest(ctx context.Conte
 func (client *VirtualMachineExtensionsClient) getHandleResponse(resp *http.Response) (VirtualMachineExtensionsClientGetResponse, error) {
 	result := VirtualMachineExtensionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtension); err != nil {
-		return VirtualMachineExtensionsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineExtensionsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *VirtualMachineExtensionsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // List - The operation to get all extensions of a Virtual Machine.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine containing the extension.
 // options - VirtualMachineExtensionsClientListOptions contains the optional parameters for the VirtualMachineExtensionsClient.List
@@ -310,7 +274,7 @@ func (client *VirtualMachineExtensionsClient) List(ctx context.Context, resource
 		return VirtualMachineExtensionsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineExtensionsClientListResponse{}, client.listHandleError(resp)
+		return VirtualMachineExtensionsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -348,25 +312,13 @@ func (client *VirtualMachineExtensionsClient) listCreateRequest(ctx context.Cont
 func (client *VirtualMachineExtensionsClient) listHandleResponse(resp *http.Response) (VirtualMachineExtensionsClientListResponse, error) {
 	result := VirtualMachineExtensionsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtensionsListResult); err != nil {
-		return VirtualMachineExtensionsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineExtensionsClientListResponse{}, err
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *VirtualMachineExtensionsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BeginUpdate - The operation to update the extension.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // vmName - The name of the virtual machine where the extension should be updated.
 // vmExtensionName - The name of the virtual machine extension.
@@ -381,7 +333,7 @@ func (client *VirtualMachineExtensionsClient) BeginUpdate(ctx context.Context, r
 	result := VirtualMachineExtensionsClientUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualMachineExtensionsClient.Update", "", resp, client.pl, client.updateHandleError)
+	pt, err := armruntime.NewPoller("VirtualMachineExtensionsClient.Update", "", resp, client.pl)
 	if err != nil {
 		return VirtualMachineExtensionsClientUpdatePollerResponse{}, err
 	}
@@ -392,7 +344,7 @@ func (client *VirtualMachineExtensionsClient) BeginUpdate(ctx context.Context, r
 }
 
 // Update - The operation to update the extension.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualMachineExtensionsClient) update(ctx context.Context, resourceGroupName string, vmName string, vmExtensionName string, extensionParameters VirtualMachineExtensionUpdate, options *VirtualMachineExtensionsClientBeginUpdateOptions) (*http.Response, error) {
 	req, err := client.updateCreateRequest(ctx, resourceGroupName, vmName, vmExtensionName, extensionParameters, options)
 	if err != nil {
@@ -403,7 +355,7 @@ func (client *VirtualMachineExtensionsClient) update(ctx context.Context, resour
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return nil, client.updateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -436,16 +388,4 @@ func (client *VirtualMachineExtensionsClient) updateCreateRequest(ctx context.Co
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, extensionParameters)
-}
-
-// updateHandleError handles the Update error response.
-func (client *VirtualMachineExtensionsClient) updateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

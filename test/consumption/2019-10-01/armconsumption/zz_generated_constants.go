@@ -9,8 +9,8 @@
 package armconsumption
 
 const (
-	module  = "armconsumption"
-	version = "v0.1.0"
+	moduleName    = "armconsumption"
+	moduleVersion = "v0.1.0"
 )
 
 // BillingFrequency - The billing frequency.

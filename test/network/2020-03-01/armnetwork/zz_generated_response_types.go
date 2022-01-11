@@ -39,7 +39,7 @@ func (l ApplicationGatewaysClientBackendHealthOnDemandPollerResponse) PollUntilD
 
 // Resume rehydrates a ApplicationGatewaysClientBackendHealthOnDemandPollerResponse from the provided client and resume token.
 func (l *ApplicationGatewaysClientBackendHealthOnDemandPollerResponse) Resume(ctx context.Context, client *ApplicationGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ApplicationGatewaysClient.BackendHealthOnDemand", token, client.pl, client.backendHealthOnDemandHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ApplicationGatewaysClient.BackendHealthOnDemand", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -91,7 +91,7 @@ func (l ApplicationGatewaysClientBackendHealthPollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a ApplicationGatewaysClientBackendHealthPollerResponse from the provided client and resume token.
 func (l *ApplicationGatewaysClientBackendHealthPollerResponse) Resume(ctx context.Context, client *ApplicationGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ApplicationGatewaysClient.BackendHealth", token, client.pl, client.backendHealthHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ApplicationGatewaysClient.BackendHealth", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -143,7 +143,7 @@ func (l ApplicationGatewaysClientCreateOrUpdatePollerResponse) PollUntilDone(ctx
 
 // Resume rehydrates a ApplicationGatewaysClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *ApplicationGatewaysClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ApplicationGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ApplicationGatewaysClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ApplicationGatewaysClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -195,7 +195,7 @@ func (l ApplicationGatewaysClientDeletePollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a ApplicationGatewaysClientDeletePollerResponse from the provided client and resume token.
 func (l *ApplicationGatewaysClientDeletePollerResponse) Resume(ctx context.Context, client *ApplicationGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ApplicationGatewaysClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ApplicationGatewaysClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -364,7 +364,7 @@ func (l ApplicationGatewaysClientStartPollerResponse) PollUntilDone(ctx context.
 
 // Resume rehydrates a ApplicationGatewaysClientStartPollerResponse from the provided client and resume token.
 func (l *ApplicationGatewaysClientStartPollerResponse) Resume(ctx context.Context, client *ApplicationGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ApplicationGatewaysClient.Start", token, client.pl, client.startHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ApplicationGatewaysClient.Start", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -410,7 +410,7 @@ func (l ApplicationGatewaysClientStopPollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a ApplicationGatewaysClientStopPollerResponse from the provided client and resume token.
 func (l *ApplicationGatewaysClientStopPollerResponse) Resume(ctx context.Context, client *ApplicationGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ApplicationGatewaysClient.Stop", token, client.pl, client.stopHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ApplicationGatewaysClient.Stop", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -468,7 +468,7 @@ func (l ApplicationSecurityGroupsClientCreateOrUpdatePollerResponse) PollUntilDo
 
 // Resume rehydrates a ApplicationSecurityGroupsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *ApplicationSecurityGroupsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ApplicationSecurityGroupsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ApplicationSecurityGroupsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ApplicationSecurityGroupsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -520,7 +520,7 @@ func (l ApplicationSecurityGroupsClientDeletePollerResponse) PollUntilDone(ctx c
 
 // Resume rehydrates a ApplicationSecurityGroupsClientDeletePollerResponse from the provided client and resume token.
 func (l *ApplicationSecurityGroupsClientDeletePollerResponse) Resume(ctx context.Context, client *ApplicationSecurityGroupsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ApplicationSecurityGroupsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ApplicationSecurityGroupsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -710,7 +710,7 @@ func (l AzureFirewallsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx cont
 
 // Resume rehydrates a AzureFirewallsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *AzureFirewallsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *AzureFirewallsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("AzureFirewallsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("AzureFirewallsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -762,7 +762,7 @@ func (l AzureFirewallsClientDeletePollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a AzureFirewallsClientDeletePollerResponse from the provided client and resume token.
 func (l *AzureFirewallsClientDeletePollerResponse) Resume(ctx context.Context, client *AzureFirewallsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("AzureFirewallsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("AzureFirewallsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -844,7 +844,7 @@ func (l AzureFirewallsClientUpdateTagsPollerResponse) PollUntilDone(ctx context.
 
 // Resume rehydrates a AzureFirewallsClientUpdateTagsPollerResponse from the provided client and resume token.
 func (l *AzureFirewallsClientUpdateTagsPollerResponse) Resume(ctx context.Context, client *AzureFirewallsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("AzureFirewallsClient.UpdateTags", token, client.pl, client.updateTagsHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("AzureFirewallsClient.UpdateTags", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -896,7 +896,7 @@ func (l BastionHostsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx contex
 
 // Resume rehydrates a BastionHostsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *BastionHostsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *BastionHostsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("BastionHostsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("BastionHostsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -948,7 +948,7 @@ func (l BastionHostsClientDeletePollerResponse) PollUntilDone(ctx context.Contex
 
 // Resume rehydrates a BastionHostsClientDeletePollerResponse from the provided client and resume token.
 func (l *BastionHostsClientDeletePollerResponse) Resume(ctx context.Context, client *BastionHostsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("BastionHostsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("BastionHostsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1042,7 +1042,7 @@ func (l ConnectionMonitorsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a ConnectionMonitorsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *ConnectionMonitorsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ConnectionMonitorsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ConnectionMonitorsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ConnectionMonitorsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1094,7 +1094,7 @@ func (l ConnectionMonitorsClientDeletePollerResponse) PollUntilDone(ctx context.
 
 // Resume rehydrates a ConnectionMonitorsClientDeletePollerResponse from the provided client and resume token.
 func (l *ConnectionMonitorsClientDeletePollerResponse) Resume(ctx context.Context, client *ConnectionMonitorsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ConnectionMonitorsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ConnectionMonitorsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1164,7 +1164,7 @@ func (l ConnectionMonitorsClientQueryPollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a ConnectionMonitorsClientQueryPollerResponse from the provided client and resume token.
 func (l *ConnectionMonitorsClientQueryPollerResponse) Resume(ctx context.Context, client *ConnectionMonitorsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ConnectionMonitorsClient.Query", token, client.pl, client.queryHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ConnectionMonitorsClient.Query", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1216,7 +1216,7 @@ func (l ConnectionMonitorsClientStartPollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a ConnectionMonitorsClientStartPollerResponse from the provided client and resume token.
 func (l *ConnectionMonitorsClientStartPollerResponse) Resume(ctx context.Context, client *ConnectionMonitorsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ConnectionMonitorsClient.Start", token, client.pl, client.startHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ConnectionMonitorsClient.Start", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1262,7 +1262,7 @@ func (l ConnectionMonitorsClientStopPollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a ConnectionMonitorsClientStopPollerResponse from the provided client and resume token.
 func (l *ConnectionMonitorsClientStopPollerResponse) Resume(ctx context.Context, client *ConnectionMonitorsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ConnectionMonitorsClient.Stop", token, client.pl, client.stopHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ConnectionMonitorsClient.Stop", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1320,7 +1320,7 @@ func (l DdosCustomPoliciesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a DdosCustomPoliciesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *DdosCustomPoliciesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *DdosCustomPoliciesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("DdosCustomPoliciesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("DdosCustomPoliciesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1372,7 +1372,7 @@ func (l DdosCustomPoliciesClientDeletePollerResponse) PollUntilDone(ctx context.
 
 // Resume rehydrates a DdosCustomPoliciesClientDeletePollerResponse from the provided client and resume token.
 func (l *DdosCustomPoliciesClientDeletePollerResponse) Resume(ctx context.Context, client *DdosCustomPoliciesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("DdosCustomPoliciesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("DdosCustomPoliciesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1442,7 +1442,7 @@ func (l DdosProtectionPlansClientCreateOrUpdatePollerResponse) PollUntilDone(ctx
 
 // Resume rehydrates a DdosProtectionPlansClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *DdosProtectionPlansClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *DdosProtectionPlansClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("DdosProtectionPlansClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("DdosProtectionPlansClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1494,7 +1494,7 @@ func (l DdosProtectionPlansClientDeletePollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a DdosProtectionPlansClientDeletePollerResponse from the provided client and resume token.
 func (l *DdosProtectionPlansClientDeletePollerResponse) Resume(ctx context.Context, client *DdosProtectionPlansClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("DdosProtectionPlansClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("DdosProtectionPlansClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1613,7 +1613,7 @@ func (l ExpressRouteCircuitAuthorizationsClientCreateOrUpdatePollerResponse) Pol
 // Resume rehydrates a ExpressRouteCircuitAuthorizationsClientCreateOrUpdatePollerResponse from the provided client and resume
 // token.
 func (l *ExpressRouteCircuitAuthorizationsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitAuthorizationsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitAuthorizationsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitAuthorizationsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1665,7 +1665,7 @@ func (l ExpressRouteCircuitAuthorizationsClientDeletePollerResponse) PollUntilDo
 
 // Resume rehydrates a ExpressRouteCircuitAuthorizationsClientDeletePollerResponse from the provided client and resume token.
 func (l *ExpressRouteCircuitAuthorizationsClientDeletePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitAuthorizationsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitAuthorizationsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitAuthorizationsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1736,7 +1736,7 @@ func (l ExpressRouteCircuitConnectionsClientCreateOrUpdatePollerResponse) PollUn
 // Resume rehydrates a ExpressRouteCircuitConnectionsClientCreateOrUpdatePollerResponse from the provided client and resume
 // token.
 func (l *ExpressRouteCircuitConnectionsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitConnectionsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitConnectionsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1788,7 +1788,7 @@ func (l ExpressRouteCircuitConnectionsClientDeletePollerResponse) PollUntilDone(
 
 // Resume rehydrates a ExpressRouteCircuitConnectionsClientDeletePollerResponse from the provided client and resume token.
 func (l *ExpressRouteCircuitConnectionsClientDeletePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitConnectionsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitConnectionsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1858,7 +1858,7 @@ func (l ExpressRouteCircuitPeeringsClientCreateOrUpdatePollerResponse) PollUntil
 
 // Resume rehydrates a ExpressRouteCircuitPeeringsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *ExpressRouteCircuitPeeringsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitPeeringsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitPeeringsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitPeeringsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1910,7 +1910,7 @@ func (l ExpressRouteCircuitPeeringsClientDeletePollerResponse) PollUntilDone(ctx
 
 // Resume rehydrates a ExpressRouteCircuitPeeringsClientDeletePollerResponse from the provided client and resume token.
 func (l *ExpressRouteCircuitPeeringsClientDeletePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitPeeringsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitPeeringsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitPeeringsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1980,7 +1980,7 @@ func (l ExpressRouteCircuitsClientCreateOrUpdatePollerResponse) PollUntilDone(ct
 
 // Resume rehydrates a ExpressRouteCircuitsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *ExpressRouteCircuitsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2032,7 +2032,7 @@ func (l ExpressRouteCircuitsClientDeletePollerResponse) PollUntilDone(ctx contex
 
 // Resume rehydrates a ExpressRouteCircuitsClientDeletePollerResponse from the provided client and resume token.
 func (l *ExpressRouteCircuitsClientDeletePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2126,7 +2126,7 @@ func (l ExpressRouteCircuitsClientListArpTablePollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a ExpressRouteCircuitsClientListArpTablePollerResponse from the provided client and resume token.
 func (l *ExpressRouteCircuitsClientListArpTablePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitsClient.ListArpTable", token, client.pl, client.listArpTableHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitsClient.ListArpTable", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2190,7 +2190,7 @@ func (l ExpressRouteCircuitsClientListRoutesTablePollerResponse) PollUntilDone(c
 
 // Resume rehydrates a ExpressRouteCircuitsClientListRoutesTablePollerResponse from the provided client and resume token.
 func (l *ExpressRouteCircuitsClientListRoutesTablePollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitsClient.ListRoutesTable", token, client.pl, client.listRoutesTableHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitsClient.ListRoutesTable", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2243,7 +2243,7 @@ func (l ExpressRouteCircuitsClientListRoutesTableSummaryPollerResponse) PollUnti
 // Resume rehydrates a ExpressRouteCircuitsClientListRoutesTableSummaryPollerResponse from the provided client and resume
 // token.
 func (l *ExpressRouteCircuitsClientListRoutesTableSummaryPollerResponse) Resume(ctx context.Context, client *ExpressRouteCircuitsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitsClient.ListRoutesTableSummary", token, client.pl, client.listRoutesTableSummaryHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCircuitsClient.ListRoutesTableSummary", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2307,7 +2307,7 @@ func (l ExpressRouteConnectionsClientCreateOrUpdatePollerResponse) PollUntilDone
 
 // Resume rehydrates a ExpressRouteConnectionsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *ExpressRouteConnectionsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteConnectionsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteConnectionsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2359,7 +2359,7 @@ func (l ExpressRouteConnectionsClientDeletePollerResponse) PollUntilDone(ctx con
 
 // Resume rehydrates a ExpressRouteConnectionsClientDeletePollerResponse from the provided client and resume token.
 func (l *ExpressRouteConnectionsClientDeletePollerResponse) Resume(ctx context.Context, client *ExpressRouteConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteConnectionsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteConnectionsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2430,7 +2430,7 @@ func (l ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse) P
 // Resume rehydrates a ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse from the provided client and
 // resume token.
 func (l *ExpressRouteCrossConnectionPeeringsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteCrossConnectionPeeringsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCrossConnectionPeeringsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2482,7 +2482,7 @@ func (l ExpressRouteCrossConnectionPeeringsClientDeletePollerResponse) PollUntil
 
 // Resume rehydrates a ExpressRouteCrossConnectionPeeringsClientDeletePollerResponse from the provided client and resume token.
 func (l *ExpressRouteCrossConnectionPeeringsClientDeletePollerResponse) Resume(ctx context.Context, client *ExpressRouteCrossConnectionPeeringsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCrossConnectionPeeringsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCrossConnectionPeeringsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2553,7 +2553,7 @@ func (l ExpressRouteCrossConnectionsClientCreateOrUpdatePollerResponse) PollUnti
 // Resume rehydrates a ExpressRouteCrossConnectionsClientCreateOrUpdatePollerResponse from the provided client and resume
 // token.
 func (l *ExpressRouteCrossConnectionsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteCrossConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCrossConnectionsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCrossConnectionsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2617,7 +2617,7 @@ func (l ExpressRouteCrossConnectionsClientListArpTablePollerResponse) PollUntilD
 
 // Resume rehydrates a ExpressRouteCrossConnectionsClientListArpTablePollerResponse from the provided client and resume token.
 func (l *ExpressRouteCrossConnectionsClientListArpTablePollerResponse) Resume(ctx context.Context, client *ExpressRouteCrossConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCrossConnectionsClient.ListArpTable", token, client.pl, client.listArpTableHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCrossConnectionsClient.ListArpTable", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2694,7 +2694,7 @@ func (l ExpressRouteCrossConnectionsClientListRoutesTablePollerResponse) PollUnt
 // Resume rehydrates a ExpressRouteCrossConnectionsClientListRoutesTablePollerResponse from the provided client and resume
 // token.
 func (l *ExpressRouteCrossConnectionsClientListRoutesTablePollerResponse) Resume(ctx context.Context, client *ExpressRouteCrossConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCrossConnectionsClient.ListRoutesTable", token, client.pl, client.listRoutesTableHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCrossConnectionsClient.ListRoutesTable", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2747,7 +2747,7 @@ func (l ExpressRouteCrossConnectionsClientListRoutesTableSummaryPollerResponse) 
 // Resume rehydrates a ExpressRouteCrossConnectionsClientListRoutesTableSummaryPollerResponse from the provided client and
 // resume token.
 func (l *ExpressRouteCrossConnectionsClientListRoutesTableSummaryPollerResponse) Resume(ctx context.Context, client *ExpressRouteCrossConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCrossConnectionsClient.ListRoutesTableSummary", token, client.pl, client.listRoutesTableSummaryHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteCrossConnectionsClient.ListRoutesTableSummary", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2811,7 +2811,7 @@ func (l ExpressRouteGatewaysClientCreateOrUpdatePollerResponse) PollUntilDone(ct
 
 // Resume rehydrates a ExpressRouteGatewaysClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *ExpressRouteGatewaysClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRouteGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteGatewaysClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteGatewaysClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2863,7 +2863,7 @@ func (l ExpressRouteGatewaysClientDeletePollerResponse) PollUntilDone(ctx contex
 
 // Resume rehydrates a ExpressRouteGatewaysClientDeletePollerResponse from the provided client and resume token.
 func (l *ExpressRouteGatewaysClientDeletePollerResponse) Resume(ctx context.Context, client *ExpressRouteGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteGatewaysClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRouteGatewaysClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2969,7 +2969,7 @@ func (l ExpressRoutePortsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx c
 
 // Resume rehydrates a ExpressRoutePortsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *ExpressRoutePortsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ExpressRoutePortsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRoutePortsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRoutePortsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3021,7 +3021,7 @@ func (l ExpressRoutePortsClientDeletePollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a ExpressRoutePortsClientDeletePollerResponse from the provided client and resume token.
 func (l *ExpressRoutePortsClientDeletePollerResponse) Resume(ctx context.Context, client *ExpressRoutePortsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ExpressRoutePortsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ExpressRoutePortsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3151,7 +3151,7 @@ func (l FirewallPoliciesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a FirewallPoliciesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *FirewallPoliciesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *FirewallPoliciesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("FirewallPoliciesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("FirewallPoliciesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3203,7 +3203,7 @@ func (l FirewallPoliciesClientDeletePollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a FirewallPoliciesClientDeletePollerResponse from the provided client and resume token.
 func (l *FirewallPoliciesClientDeletePollerResponse) Resume(ctx context.Context, client *FirewallPoliciesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("FirewallPoliciesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("FirewallPoliciesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3285,7 +3285,7 @@ func (l FirewallPolicyRuleGroupsClientCreateOrUpdatePollerResponse) PollUntilDon
 
 // Resume rehydrates a FirewallPolicyRuleGroupsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *FirewallPolicyRuleGroupsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *FirewallPolicyRuleGroupsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("FirewallPolicyRuleGroupsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("FirewallPolicyRuleGroupsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3337,7 +3337,7 @@ func (l FirewallPolicyRuleGroupsClientDeletePollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a FirewallPolicyRuleGroupsClientDeletePollerResponse from the provided client and resume token.
 func (l *FirewallPolicyRuleGroupsClientDeletePollerResponse) Resume(ctx context.Context, client *FirewallPolicyRuleGroupsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("FirewallPolicyRuleGroupsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("FirewallPolicyRuleGroupsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3407,7 +3407,7 @@ func (l FlowLogsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a FlowLogsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *FlowLogsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *FlowLogsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("FlowLogsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("FlowLogsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3459,7 +3459,7 @@ func (l FlowLogsClientDeletePollerResponse) PollUntilDone(ctx context.Context, f
 
 // Resume rehydrates a FlowLogsClientDeletePollerResponse from the provided client and resume token.
 func (l *FlowLogsClientDeletePollerResponse) Resume(ctx context.Context, client *FlowLogsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("FlowLogsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("FlowLogsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3553,7 +3553,7 @@ func (l IPAllocationsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx conte
 
 // Resume rehydrates a IPAllocationsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *IPAllocationsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *IPAllocationsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("IPAllocationsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("IPAllocationsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3605,7 +3605,7 @@ func (l IPAllocationsClientDeletePollerResponse) PollUntilDone(ctx context.Conte
 
 // Resume rehydrates a IPAllocationsClientDeletePollerResponse from the provided client and resume token.
 func (l *IPAllocationsClientDeletePollerResponse) Resume(ctx context.Context, client *IPAllocationsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("IPAllocationsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("IPAllocationsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3699,7 +3699,7 @@ func (l IPGroupsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a IPGroupsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *IPGroupsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *IPGroupsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("IPGroupsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("IPGroupsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3751,7 +3751,7 @@ func (l IPGroupsClientDeletePollerResponse) PollUntilDone(ctx context.Context, f
 
 // Resume rehydrates a IPGroupsClientDeletePollerResponse from the provided client and resume token.
 func (l *IPGroupsClientDeletePollerResponse) Resume(ctx context.Context, client *IPGroupsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("IPGroupsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("IPGroupsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3845,7 +3845,7 @@ func (l InboundNatRulesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx con
 
 // Resume rehydrates a InboundNatRulesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *InboundNatRulesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *InboundNatRulesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("InboundNatRulesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("InboundNatRulesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -3897,7 +3897,7 @@ func (l InboundNatRulesClientDeletePollerResponse) PollUntilDone(ctx context.Con
 
 // Resume rehydrates a InboundNatRulesClientDeletePollerResponse from the provided client and resume token.
 func (l *InboundNatRulesClientDeletePollerResponse) Resume(ctx context.Context, client *InboundNatRulesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("InboundNatRulesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("InboundNatRulesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4003,7 +4003,7 @@ func (l InterfaceTapConfigurationsClientCreateOrUpdatePollerResponse) PollUntilD
 
 // Resume rehydrates a InterfaceTapConfigurationsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *InterfaceTapConfigurationsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *InterfaceTapConfigurationsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("InterfaceTapConfigurationsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("InterfaceTapConfigurationsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4055,7 +4055,7 @@ func (l InterfaceTapConfigurationsClientDeletePollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a InterfaceTapConfigurationsClientDeletePollerResponse from the provided client and resume token.
 func (l *InterfaceTapConfigurationsClientDeletePollerResponse) Resume(ctx context.Context, client *InterfaceTapConfigurationsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("InterfaceTapConfigurationsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("InterfaceTapConfigurationsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4125,7 +4125,7 @@ func (l InterfacesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context.
 
 // Resume rehydrates a InterfacesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *InterfacesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *InterfacesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("InterfacesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("InterfacesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4177,7 +4177,7 @@ func (l InterfacesClientDeletePollerResponse) PollUntilDone(ctx context.Context,
 
 // Resume rehydrates a InterfacesClientDeletePollerResponse from the provided client and resume token.
 func (l *InterfacesClientDeletePollerResponse) Resume(ctx context.Context, client *InterfacesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("InterfacesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("InterfacesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4223,7 +4223,7 @@ func (l InterfacesClientGetEffectiveRouteTablePollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a InterfacesClientGetEffectiveRouteTablePollerResponse from the provided client and resume token.
 func (l *InterfacesClientGetEffectiveRouteTablePollerResponse) Resume(ctx context.Context, client *InterfacesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("InterfacesClient.GetEffectiveRouteTable", token, client.pl, client.getEffectiveRouteTableHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("InterfacesClient.GetEffectiveRouteTable", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4324,7 +4324,7 @@ func (l InterfacesClientListEffectiveNetworkSecurityGroupsPollerResponse) PollUn
 // Resume rehydrates a InterfacesClientListEffectiveNetworkSecurityGroupsPollerResponse from the provided client and resume
 // token.
 func (l *InterfacesClientListEffectiveNetworkSecurityGroupsPollerResponse) Resume(ctx context.Context, client *InterfacesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("InterfacesClient.ListEffectiveNetworkSecurityGroups", token, client.pl, client.listEffectiveNetworkSecurityGroupsHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("InterfacesClient.ListEffectiveNetworkSecurityGroups", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4568,7 +4568,7 @@ func (l LoadBalancersClientCreateOrUpdatePollerResponse) PollUntilDone(ctx conte
 
 // Resume rehydrates a LoadBalancersClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *LoadBalancersClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *LoadBalancersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LoadBalancersClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LoadBalancersClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4620,7 +4620,7 @@ func (l LoadBalancersClientDeletePollerResponse) PollUntilDone(ctx context.Conte
 
 // Resume rehydrates a LoadBalancersClientDeletePollerResponse from the provided client and resume token.
 func (l *LoadBalancersClientDeletePollerResponse) Resume(ctx context.Context, client *LoadBalancersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LoadBalancersClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LoadBalancersClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4714,7 +4714,7 @@ func (l LocalNetworkGatewaysClientCreateOrUpdatePollerResponse) PollUntilDone(ct
 
 // Resume rehydrates a LocalNetworkGatewaysClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *LocalNetworkGatewaysClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *LocalNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LocalNetworkGatewaysClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LocalNetworkGatewaysClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4766,7 +4766,7 @@ func (l LocalNetworkGatewaysClientDeletePollerResponse) PollUntilDone(ctx contex
 
 // Resume rehydrates a LocalNetworkGatewaysClientDeletePollerResponse from the provided client and resume token.
 func (l *LocalNetworkGatewaysClientDeletePollerResponse) Resume(ctx context.Context, client *LocalNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("LocalNetworkGatewaysClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("LocalNetworkGatewaysClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4860,7 +4860,7 @@ func (l ManagementClientDeleteBastionShareableLinkPollerResponse) PollUntilDone(
 
 // Resume rehydrates a ManagementClientDeleteBastionShareableLinkPollerResponse from the provided client and resume token.
 func (l *ManagementClientDeleteBastionShareableLinkPollerResponse) Resume(ctx context.Context, client *ManagementClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ManagementClient.DeleteBastionShareableLink", token, client.pl, client.deleteBastionShareableLinkHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ManagementClient.DeleteBastionShareableLink", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4919,7 +4919,7 @@ func (l ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePoller
 // Resume rehydrates a ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse from the provided
 // client and resume token.
 func (l *ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse) Resume(ctx context.Context, client *ManagementClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", token, client.pl, client.generatevirtualwanvpnserverconfigurationvpnprofileHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -4972,7 +4972,7 @@ func (l ManagementClientGetActiveSessionsPollerResponse) PollUntilDone(ctx conte
 
 // Resume rehydrates a ManagementClientGetActiveSessionsPollerResponse from the provided client and resume token.
 func (l *ManagementClientGetActiveSessionsPollerResponse) Resume(ctx context.Context, client *ManagementClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ManagementClient.GetActiveSessions", token, client.pl, client.getActiveSessionsHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ManagementClient.GetActiveSessions", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5038,7 +5038,7 @@ func (l ManagementClientPutBastionShareableLinkPollerResponse) PollUntilDone(ctx
 
 // Resume rehydrates a ManagementClientPutBastionShareableLinkPollerResponse from the provided client and resume token.
 func (l *ManagementClientPutBastionShareableLinkPollerResponse) Resume(ctx context.Context, client *ManagementClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ManagementClient.PutBastionShareableLink", token, client.pl, client.putBastionShareableLinkHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ManagementClient.PutBastionShareableLink", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5103,7 +5103,7 @@ func (l NatGatewaysClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a NatGatewaysClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *NatGatewaysClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *NatGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NatGatewaysClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("NatGatewaysClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5155,7 +5155,7 @@ func (l NatGatewaysClientDeletePollerResponse) PollUntilDone(ctx context.Context
 
 // Resume rehydrates a NatGatewaysClientDeletePollerResponse from the provided client and resume token.
 func (l *NatGatewaysClientDeletePollerResponse) Resume(ctx context.Context, client *NatGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("NatGatewaysClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("NatGatewaysClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5261,7 +5261,7 @@ func (l P2SVPNGatewaysClientCreateOrUpdatePollerResponse) PollUntilDone(ctx cont
 
 // Resume rehydrates a P2SVPNGatewaysClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *P2SVPNGatewaysClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *P2SVPNGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("P2SVPNGatewaysClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("P2SVPNGatewaysClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5313,7 +5313,7 @@ func (l P2SVPNGatewaysClientDeletePollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a P2SVPNGatewaysClientDeletePollerResponse from the provided client and resume token.
 func (l *P2SVPNGatewaysClientDeletePollerResponse) Resume(ctx context.Context, client *P2SVPNGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("P2SVPNGatewaysClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("P2SVPNGatewaysClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5359,7 +5359,7 @@ func (l P2SVPNGatewaysClientDisconnectP2SVPNConnectionsPollerResponse) PollUntil
 
 // Resume rehydrates a P2SVPNGatewaysClientDisconnectP2SVPNConnectionsPollerResponse from the provided client and resume token.
 func (l *P2SVPNGatewaysClientDisconnectP2SVPNConnectionsPollerResponse) Resume(ctx context.Context, client *P2SVPNGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("P2SVPNGatewaysClient.DisconnectP2SVPNConnections", token, client.pl, client.disconnectP2SVPNConnectionsHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("P2SVPNGatewaysClient.DisconnectP2SVPNConnections", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5405,7 +5405,7 @@ func (l P2SVPNGatewaysClientGenerateVPNProfilePollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a P2SVPNGatewaysClientGenerateVPNProfilePollerResponse from the provided client and resume token.
 func (l *P2SVPNGatewaysClientGenerateVPNProfilePollerResponse) Resume(ctx context.Context, client *P2SVPNGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("P2SVPNGatewaysClient.GenerateVPNProfile", token, client.pl, client.generateVPNProfileHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("P2SVPNGatewaysClient.GenerateVPNProfile", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5458,7 +5458,7 @@ func (l P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedPollerResponse) Pol
 // Resume rehydrates a P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedPollerResponse from the provided client and resume
 // token.
 func (l *P2SVPNGatewaysClientGetP2SVPNConnectionHealthDetailedPollerResponse) Resume(ctx context.Context, client *P2SVPNGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("P2SVPNGatewaysClient.GetP2SVPNConnectionHealthDetailed", token, client.pl, client.getP2SVPNConnectionHealthDetailedHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("P2SVPNGatewaysClient.GetP2SVPNConnectionHealthDetailed", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5510,7 +5510,7 @@ func (l P2SVPNGatewaysClientGetP2SVPNConnectionHealthPollerResponse) PollUntilDo
 
 // Resume rehydrates a P2SVPNGatewaysClientGetP2SVPNConnectionHealthPollerResponse from the provided client and resume token.
 func (l *P2SVPNGatewaysClientGetP2SVPNConnectionHealthPollerResponse) Resume(ctx context.Context, client *P2SVPNGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("P2SVPNGatewaysClient.GetP2SVPNConnectionHealth", token, client.pl, client.getP2SVPNConnectionHealthHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("P2SVPNGatewaysClient.GetP2SVPNConnectionHealth", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5610,7 +5610,7 @@ func (l PacketCapturesClientCreatePollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a PacketCapturesClientCreatePollerResponse from the provided client and resume token.
 func (l *PacketCapturesClientCreatePollerResponse) Resume(ctx context.Context, client *PacketCapturesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PacketCapturesClient.Create", token, client.pl, client.createHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PacketCapturesClient.Create", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5662,7 +5662,7 @@ func (l PacketCapturesClientDeletePollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a PacketCapturesClientDeletePollerResponse from the provided client and resume token.
 func (l *PacketCapturesClientDeletePollerResponse) Resume(ctx context.Context, client *PacketCapturesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PacketCapturesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PacketCapturesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5720,7 +5720,7 @@ func (l PacketCapturesClientGetStatusPollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a PacketCapturesClientGetStatusPollerResponse from the provided client and resume token.
 func (l *PacketCapturesClientGetStatusPollerResponse) Resume(ctx context.Context, client *PacketCapturesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PacketCapturesClient.GetStatus", token, client.pl, client.getStatusHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PacketCapturesClient.GetStatus", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5784,7 +5784,7 @@ func (l PacketCapturesClientStopPollerResponse) PollUntilDone(ctx context.Contex
 
 // Resume rehydrates a PacketCapturesClientStopPollerResponse from the provided client and resume token.
 func (l *PacketCapturesClientStopPollerResponse) Resume(ctx context.Context, client *PacketCapturesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PacketCapturesClient.Stop", token, client.pl, client.stopHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PacketCapturesClient.Stop", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5854,7 +5854,7 @@ func (l PrivateDNSZoneGroupsClientCreateOrUpdatePollerResponse) PollUntilDone(ct
 
 // Resume rehydrates a PrivateDNSZoneGroupsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *PrivateDNSZoneGroupsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *PrivateDNSZoneGroupsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PrivateDNSZoneGroupsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PrivateDNSZoneGroupsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5906,7 +5906,7 @@ func (l PrivateDNSZoneGroupsClientDeletePollerResponse) PollUntilDone(ctx contex
 
 // Resume rehydrates a PrivateDNSZoneGroupsClientDeletePollerResponse from the provided client and resume token.
 func (l *PrivateDNSZoneGroupsClientDeletePollerResponse) Resume(ctx context.Context, client *PrivateDNSZoneGroupsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PrivateDNSZoneGroupsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PrivateDNSZoneGroupsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -5976,7 +5976,7 @@ func (l PrivateEndpointsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a PrivateEndpointsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *PrivateEndpointsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *PrivateEndpointsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PrivateEndpointsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PrivateEndpointsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -6028,7 +6028,7 @@ func (l PrivateEndpointsClientDeletePollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a PrivateEndpointsClientDeletePollerResponse from the provided client and resume token.
 func (l *PrivateEndpointsClientDeletePollerResponse) Resume(ctx context.Context, client *PrivateEndpointsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PrivateEndpointsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PrivateEndpointsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -6112,7 +6112,7 @@ func (l PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGrou
 // Resume rehydrates a PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse from the provided
 // client and resume token.
 func (l *PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityByResourceGroupPollerResponse) Resume(ctx context.Context, client *PrivateLinkServicesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibilityByResourceGroup", token, client.pl, client.checkPrivateLinkServiceVisibilityByResourceGroupHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibilityByResourceGroup", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -6165,7 +6165,7 @@ func (l PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityPollerResponse
 // Resume rehydrates a PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityPollerResponse from the provided client and
 // resume token.
 func (l *PrivateLinkServicesClientCheckPrivateLinkServiceVisibilityPollerResponse) Resume(ctx context.Context, client *PrivateLinkServicesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibility", token, client.pl, client.checkPrivateLinkServiceVisibilityHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PrivateLinkServicesClient.CheckPrivateLinkServiceVisibility", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -6217,7 +6217,7 @@ func (l PrivateLinkServicesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx
 
 // Resume rehydrates a PrivateLinkServicesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *PrivateLinkServicesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *PrivateLinkServicesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PrivateLinkServicesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PrivateLinkServicesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -6269,7 +6269,7 @@ func (l PrivateLinkServicesClientDeletePollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a PrivateLinkServicesClientDeletePollerResponse from the provided client and resume token.
 func (l *PrivateLinkServicesClientDeletePollerResponse) Resume(ctx context.Context, client *PrivateLinkServicesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PrivateLinkServicesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PrivateLinkServicesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -6310,7 +6310,7 @@ func (l PrivateLinkServicesClientDeletePrivateEndpointConnectionPollerResponse) 
 // Resume rehydrates a PrivateLinkServicesClientDeletePrivateEndpointConnectionPollerResponse from the provided client and
 // resume token.
 func (l *PrivateLinkServicesClientDeletePrivateEndpointConnectionPollerResponse) Resume(ctx context.Context, client *PrivateLinkServicesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PrivateLinkServicesClient.DeletePrivateEndpointConnection", token, client.pl, client.deletePrivateEndpointConnectionHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PrivateLinkServicesClient.DeletePrivateEndpointConnection", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -6470,7 +6470,7 @@ func (l ProfilesClientDeletePollerResponse) PollUntilDone(ctx context.Context, f
 
 // Resume rehydrates a ProfilesClientDeletePollerResponse from the provided client and resume token.
 func (l *ProfilesClientDeletePollerResponse) Resume(ctx context.Context, client *ProfilesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ProfilesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ProfilesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -6564,7 +6564,7 @@ func (l PublicIPAddressesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx c
 
 // Resume rehydrates a PublicIPAddressesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *PublicIPAddressesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *PublicIPAddressesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PublicIPAddressesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PublicIPAddressesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -6616,7 +6616,7 @@ func (l PublicIPAddressesClientDeletePollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a PublicIPAddressesClientDeletePollerResponse from the provided client and resume token.
 func (l *PublicIPAddressesClientDeletePollerResponse) Resume(ctx context.Context, client *PublicIPAddressesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PublicIPAddressesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PublicIPAddressesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -6746,7 +6746,7 @@ func (l PublicIPPrefixesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a PublicIPPrefixesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *PublicIPPrefixesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *PublicIPPrefixesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PublicIPPrefixesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PublicIPPrefixesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -6798,7 +6798,7 @@ func (l PublicIPPrefixesClientDeletePollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a PublicIPPrefixesClientDeletePollerResponse from the provided client and resume token.
 func (l *PublicIPPrefixesClientDeletePollerResponse) Resume(ctx context.Context, client *PublicIPPrefixesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("PublicIPPrefixesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("PublicIPPrefixesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -6904,7 +6904,7 @@ func (l RouteFilterRulesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a RouteFilterRulesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *RouteFilterRulesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *RouteFilterRulesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("RouteFilterRulesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("RouteFilterRulesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -6956,7 +6956,7 @@ func (l RouteFilterRulesClientDeletePollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a RouteFilterRulesClientDeletePollerResponse from the provided client and resume token.
 func (l *RouteFilterRulesClientDeletePollerResponse) Resume(ctx context.Context, client *RouteFilterRulesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("RouteFilterRulesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("RouteFilterRulesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -7026,7 +7026,7 @@ func (l RouteFiltersClientCreateOrUpdatePollerResponse) PollUntilDone(ctx contex
 
 // Resume rehydrates a RouteFiltersClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *RouteFiltersClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *RouteFiltersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("RouteFiltersClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("RouteFiltersClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -7078,7 +7078,7 @@ func (l RouteFiltersClientDeletePollerResponse) PollUntilDone(ctx context.Contex
 
 // Resume rehydrates a RouteFiltersClientDeletePollerResponse from the provided client and resume token.
 func (l *RouteFiltersClientDeletePollerResponse) Resume(ctx context.Context, client *RouteFiltersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("RouteFiltersClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("RouteFiltersClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -7172,7 +7172,7 @@ func (l RouteTablesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a RouteTablesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *RouteTablesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *RouteTablesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("RouteTablesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("RouteTablesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -7224,7 +7224,7 @@ func (l RouteTablesClientDeletePollerResponse) PollUntilDone(ctx context.Context
 
 // Resume rehydrates a RouteTablesClientDeletePollerResponse from the provided client and resume token.
 func (l *RouteTablesClientDeletePollerResponse) Resume(ctx context.Context, client *RouteTablesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("RouteTablesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("RouteTablesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -7318,7 +7318,7 @@ func (l RoutesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a RoutesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *RoutesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *RoutesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("RoutesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("RoutesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -7370,7 +7370,7 @@ func (l RoutesClientDeletePollerResponse) PollUntilDone(ctx context.Context, fre
 
 // Resume rehydrates a RoutesClientDeletePollerResponse from the provided client and resume token.
 func (l *RoutesClientDeletePollerResponse) Resume(ctx context.Context, client *RoutesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("RoutesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("RoutesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -7440,7 +7440,7 @@ func (l SecurityGroupsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx cont
 
 // Resume rehydrates a SecurityGroupsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *SecurityGroupsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *SecurityGroupsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("SecurityGroupsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("SecurityGroupsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -7492,7 +7492,7 @@ func (l SecurityGroupsClientDeletePollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a SecurityGroupsClientDeletePollerResponse from the provided client and resume token.
 func (l *SecurityGroupsClientDeletePollerResponse) Resume(ctx context.Context, client *SecurityGroupsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("SecurityGroupsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("SecurityGroupsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -7586,7 +7586,7 @@ func (l SecurityPartnerProvidersClientCreateOrUpdatePollerResponse) PollUntilDon
 
 // Resume rehydrates a SecurityPartnerProvidersClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *SecurityPartnerProvidersClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *SecurityPartnerProvidersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("SecurityPartnerProvidersClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("SecurityPartnerProvidersClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -7638,7 +7638,7 @@ func (l SecurityPartnerProvidersClientDeletePollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a SecurityPartnerProvidersClientDeletePollerResponse from the provided client and resume token.
 func (l *SecurityPartnerProvidersClientDeletePollerResponse) Resume(ctx context.Context, client *SecurityPartnerProvidersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("SecurityPartnerProvidersClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("SecurityPartnerProvidersClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -7732,7 +7732,7 @@ func (l SecurityRulesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx conte
 
 // Resume rehydrates a SecurityRulesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *SecurityRulesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *SecurityRulesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("SecurityRulesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("SecurityRulesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -7784,7 +7784,7 @@ func (l SecurityRulesClientDeletePollerResponse) PollUntilDone(ctx context.Conte
 
 // Resume rehydrates a SecurityRulesClientDeletePollerResponse from the provided client and resume token.
 func (l *SecurityRulesClientDeletePollerResponse) Resume(ctx context.Context, client *SecurityRulesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("SecurityRulesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("SecurityRulesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -7866,7 +7866,7 @@ func (l ServiceEndpointPoliciesClientCreateOrUpdatePollerResponse) PollUntilDone
 
 // Resume rehydrates a ServiceEndpointPoliciesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *ServiceEndpointPoliciesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ServiceEndpointPoliciesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ServiceEndpointPoliciesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ServiceEndpointPoliciesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -7918,7 +7918,7 @@ func (l ServiceEndpointPoliciesClientDeletePollerResponse) PollUntilDone(ctx con
 
 // Resume rehydrates a ServiceEndpointPoliciesClientDeletePollerResponse from the provided client and resume token.
 func (l *ServiceEndpointPoliciesClientDeletePollerResponse) Resume(ctx context.Context, client *ServiceEndpointPoliciesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ServiceEndpointPoliciesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ServiceEndpointPoliciesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -8013,7 +8013,7 @@ func (l ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePollerResponse) Poll
 // Resume rehydrates a ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePollerResponse from the provided client and resume
 // token.
 func (l *ServiceEndpointPolicyDefinitionsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *ServiceEndpointPolicyDefinitionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ServiceEndpointPolicyDefinitionsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ServiceEndpointPolicyDefinitionsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -8065,7 +8065,7 @@ func (l ServiceEndpointPolicyDefinitionsClientDeletePollerResponse) PollUntilDon
 
 // Resume rehydrates a ServiceEndpointPolicyDefinitionsClientDeletePollerResponse from the provided client and resume token.
 func (l *ServiceEndpointPolicyDefinitionsClientDeletePollerResponse) Resume(ctx context.Context, client *ServiceEndpointPolicyDefinitionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("ServiceEndpointPolicyDefinitionsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("ServiceEndpointPolicyDefinitionsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -8147,7 +8147,7 @@ func (l SubnetsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Con
 
 // Resume rehydrates a SubnetsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *SubnetsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *SubnetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("SubnetsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("SubnetsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -8199,7 +8199,7 @@ func (l SubnetsClientDeletePollerResponse) PollUntilDone(ctx context.Context, fr
 
 // Resume rehydrates a SubnetsClientDeletePollerResponse from the provided client and resume token.
 func (l *SubnetsClientDeletePollerResponse) Resume(ctx context.Context, client *SubnetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("SubnetsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("SubnetsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -8269,7 +8269,7 @@ func (l SubnetsClientPrepareNetworkPoliciesPollerResponse) PollUntilDone(ctx con
 
 // Resume rehydrates a SubnetsClientPrepareNetworkPoliciesPollerResponse from the provided client and resume token.
 func (l *SubnetsClientPrepareNetworkPoliciesPollerResponse) Resume(ctx context.Context, client *SubnetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("SubnetsClient.PrepareNetworkPolicies", token, client.pl, client.prepareNetworkPoliciesHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("SubnetsClient.PrepareNetworkPolicies", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -8315,7 +8315,7 @@ func (l SubnetsClientUnprepareNetworkPoliciesPollerResponse) PollUntilDone(ctx c
 
 // Resume rehydrates a SubnetsClientUnprepareNetworkPoliciesPollerResponse from the provided client and resume token.
 func (l *SubnetsClientUnprepareNetworkPoliciesPollerResponse) Resume(ctx context.Context, client *SubnetsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("SubnetsClient.UnprepareNetworkPolicies", token, client.pl, client.unprepareNetworkPoliciesHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("SubnetsClient.UnprepareNetworkPolicies", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -8373,7 +8373,7 @@ func (l VPNConnectionsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx cont
 
 // Resume rehydrates a VPNConnectionsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VPNConnectionsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VPNConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VPNConnectionsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VPNConnectionsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -8425,7 +8425,7 @@ func (l VPNConnectionsClientDeletePollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a VPNConnectionsClientDeletePollerResponse from the provided client and resume token.
 func (l *VPNConnectionsClientDeletePollerResponse) Resume(ctx context.Context, client *VPNConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VPNConnectionsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VPNConnectionsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -8495,7 +8495,7 @@ func (l VPNGatewaysClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a VPNGatewaysClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VPNGatewaysClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VPNGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VPNGatewaysClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VPNGatewaysClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -8547,7 +8547,7 @@ func (l VPNGatewaysClientDeletePollerResponse) PollUntilDone(ctx context.Context
 
 // Resume rehydrates a VPNGatewaysClientDeletePollerResponse from the provided client and resume token.
 func (l *VPNGatewaysClientDeletePollerResponse) Resume(ctx context.Context, client *VPNGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VPNGatewaysClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VPNGatewaysClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -8629,7 +8629,7 @@ func (l VPNGatewaysClientResetPollerResponse) PollUntilDone(ctx context.Context,
 
 // Resume rehydrates a VPNGatewaysClientResetPollerResponse from the provided client and resume token.
 func (l *VPNGatewaysClientResetPollerResponse) Resume(ctx context.Context, client *VPNGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VPNGatewaysClient.Reset", token, client.pl, client.resetHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VPNGatewaysClient.Reset", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -8706,7 +8706,7 @@ func (l VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse)
 // Resume rehydrates a VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse from the provided client and
 // resume token.
 func (l *VPNServerConfigurationsAssociatedWithVirtualWanClientListPollerResponse) Resume(ctx context.Context, client *VPNServerConfigurationsAssociatedWithVirtualWanClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", token, client.pl, client.listHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VPNServerConfigurationsAssociatedWithVirtualWanClient.List", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -8758,7 +8758,7 @@ func (l VPNServerConfigurationsClientCreateOrUpdatePollerResponse) PollUntilDone
 
 // Resume rehydrates a VPNServerConfigurationsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VPNServerConfigurationsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VPNServerConfigurationsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VPNServerConfigurationsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VPNServerConfigurationsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -8810,7 +8810,7 @@ func (l VPNServerConfigurationsClientDeletePollerResponse) PollUntilDone(ctx con
 
 // Resume rehydrates a VPNServerConfigurationsClientDeletePollerResponse from the provided client and resume token.
 func (l *VPNServerConfigurationsClientDeletePollerResponse) Resume(ctx context.Context, client *VPNServerConfigurationsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VPNServerConfigurationsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VPNServerConfigurationsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -8940,7 +8940,7 @@ func (l VPNSitesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a VPNSitesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VPNSitesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VPNSitesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VPNSitesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VPNSitesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -8992,7 +8992,7 @@ func (l VPNSitesClientDeletePollerResponse) PollUntilDone(ctx context.Context, f
 
 // Resume rehydrates a VPNSitesClientDeletePollerResponse from the provided client and resume token.
 func (l *VPNSitesClientDeletePollerResponse) Resume(ctx context.Context, client *VPNSitesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VPNSitesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VPNSitesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -9086,7 +9086,7 @@ func (l VPNSitesConfigurationClientDownloadPollerResponse) PollUntilDone(ctx con
 
 // Resume rehydrates a VPNSitesConfigurationClientDownloadPollerResponse from the provided client and resume token.
 func (l *VPNSitesConfigurationClientDownloadPollerResponse) Resume(ctx context.Context, client *VPNSitesConfigurationClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VPNSitesConfigurationClient.Download", token, client.pl, client.downloadHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VPNSitesConfigurationClient.Download", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -9132,7 +9132,7 @@ func (l VirtualAppliancesClientCreateOrUpdatePollerResponse) PollUntilDone(ctx c
 
 // Resume rehydrates a VirtualAppliancesClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualAppliancesClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualAppliancesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualAppliancesClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualAppliancesClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -9184,7 +9184,7 @@ func (l VirtualAppliancesClientDeletePollerResponse) PollUntilDone(ctx context.C
 
 // Resume rehydrates a VirtualAppliancesClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualAppliancesClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualAppliancesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualAppliancesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualAppliancesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -9278,7 +9278,7 @@ func (l VirtualHubRouteTableV2SClientCreateOrUpdatePollerResponse) PollUntilDone
 
 // Resume rehydrates a VirtualHubRouteTableV2SClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualHubRouteTableV2SClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualHubRouteTableV2SClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualHubRouteTableV2SClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualHubRouteTableV2SClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -9330,7 +9330,7 @@ func (l VirtualHubRouteTableV2SClientDeletePollerResponse) PollUntilDone(ctx con
 
 // Resume rehydrates a VirtualHubRouteTableV2SClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualHubRouteTableV2SClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualHubRouteTableV2SClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualHubRouteTableV2SClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualHubRouteTableV2SClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -9400,7 +9400,7 @@ func (l VirtualHubsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a VirtualHubsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualHubsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualHubsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualHubsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualHubsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -9452,7 +9452,7 @@ func (l VirtualHubsClientDeletePollerResponse) PollUntilDone(ctx context.Context
 
 // Resume rehydrates a VirtualHubsClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualHubsClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualHubsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualHubsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualHubsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -9547,7 +9547,7 @@ func (l VirtualNetworkGatewayConnectionsClientCreateOrUpdatePollerResponse) Poll
 // Resume rehydrates a VirtualNetworkGatewayConnectionsClientCreateOrUpdatePollerResponse from the provided client and resume
 // token.
 func (l *VirtualNetworkGatewayConnectionsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewayConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -9599,7 +9599,7 @@ func (l VirtualNetworkGatewayConnectionsClientDeletePollerResponse) PollUntilDon
 
 // Resume rehydrates a VirtualNetworkGatewayConnectionsClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualNetworkGatewayConnectionsClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewayConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -9682,7 +9682,7 @@ func (l VirtualNetworkGatewayConnectionsClientResetSharedKeyPollerResponse) Poll
 // Resume rehydrates a VirtualNetworkGatewayConnectionsClientResetSharedKeyPollerResponse from the provided client and resume
 // token.
 func (l *VirtualNetworkGatewayConnectionsClientResetSharedKeyPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewayConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.ResetSharedKey", token, client.pl, client.resetSharedKeyHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.ResetSharedKey", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -9735,7 +9735,7 @@ func (l VirtualNetworkGatewayConnectionsClientSetSharedKeyPollerResponse) PollUn
 // Resume rehydrates a VirtualNetworkGatewayConnectionsClientSetSharedKeyPollerResponse from the provided client and resume
 // token.
 func (l *VirtualNetworkGatewayConnectionsClientSetSharedKeyPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewayConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.SetSharedKey", token, client.pl, client.setSharedKeyHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.SetSharedKey", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -9788,7 +9788,7 @@ func (l VirtualNetworkGatewayConnectionsClientStartPacketCapturePollerResponse) 
 // Resume rehydrates a VirtualNetworkGatewayConnectionsClientStartPacketCapturePollerResponse from the provided client and
 // resume token.
 func (l *VirtualNetworkGatewayConnectionsClientStartPacketCapturePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewayConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.StartPacketCapture", token, client.pl, client.startPacketCaptureHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.StartPacketCapture", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -9841,7 +9841,7 @@ func (l VirtualNetworkGatewayConnectionsClientStopPacketCapturePollerResponse) P
 // Resume rehydrates a VirtualNetworkGatewayConnectionsClientStopPacketCapturePollerResponse from the provided client and
 // resume token.
 func (l *VirtualNetworkGatewayConnectionsClientStopPacketCapturePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewayConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.StopPacketCapture", token, client.pl, client.stopPacketCaptureHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.StopPacketCapture", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -9894,7 +9894,7 @@ func (l VirtualNetworkGatewayConnectionsClientUpdateTagsPollerResponse) PollUnti
 // Resume rehydrates a VirtualNetworkGatewayConnectionsClientUpdateTagsPollerResponse from the provided client and resume
 // token.
 func (l *VirtualNetworkGatewayConnectionsClientUpdateTagsPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewayConnectionsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.UpdateTags", token, client.pl, client.updateTagsHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewayConnectionsClient.UpdateTags", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -9946,7 +9946,7 @@ func (l VirtualNetworkGatewaysClientCreateOrUpdatePollerResponse) PollUntilDone(
 
 // Resume rehydrates a VirtualNetworkGatewaysClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualNetworkGatewaysClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -9998,7 +9998,7 @@ func (l VirtualNetworkGatewaysClientDeletePollerResponse) PollUntilDone(ctx cont
 
 // Resume rehydrates a VirtualNetworkGatewaysClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualNetworkGatewaysClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10046,7 +10046,7 @@ func (l VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnection
 // Resume rehydrates a VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse from the provided
 // client and resume token.
 func (l *VirtualNetworkGatewaysClientDisconnectVirtualNetworkGatewayVPNConnectionsPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.DisconnectVirtualNetworkGatewayVPNConnections", token, client.pl, client.disconnectVirtualNetworkGatewayVPNConnectionsHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.DisconnectVirtualNetworkGatewayVPNConnections", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10092,7 +10092,7 @@ func (l VirtualNetworkGatewaysClientGenerateVPNProfilePollerResponse) PollUntilD
 
 // Resume rehydrates a VirtualNetworkGatewaysClientGenerateVPNProfilePollerResponse from the provided client and resume token.
 func (l *VirtualNetworkGatewaysClientGenerateVPNProfilePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GenerateVPNProfile", token, client.pl, client.generateVPNProfileHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GenerateVPNProfile", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10145,7 +10145,7 @@ func (l VirtualNetworkGatewaysClientGeneratevpnclientpackagePollerResponse) Poll
 // Resume rehydrates a VirtualNetworkGatewaysClientGeneratevpnclientpackagePollerResponse from the provided client and resume
 // token.
 func (l *VirtualNetworkGatewaysClientGeneratevpnclientpackagePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.Generatevpnclientpackage", token, client.pl, client.generatevpnclientpackageHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.Generatevpnclientpackage", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10197,7 +10197,7 @@ func (l VirtualNetworkGatewaysClientGetAdvertisedRoutesPollerResponse) PollUntil
 
 // Resume rehydrates a VirtualNetworkGatewaysClientGetAdvertisedRoutesPollerResponse from the provided client and resume token.
 func (l *VirtualNetworkGatewaysClientGetAdvertisedRoutesPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GetAdvertisedRoutes", token, client.pl, client.getAdvertisedRoutesHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GetAdvertisedRoutes", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10249,7 +10249,7 @@ func (l VirtualNetworkGatewaysClientGetBgpPeerStatusPollerResponse) PollUntilDon
 
 // Resume rehydrates a VirtualNetworkGatewaysClientGetBgpPeerStatusPollerResponse from the provided client and resume token.
 func (l *VirtualNetworkGatewaysClientGetBgpPeerStatusPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GetBgpPeerStatus", token, client.pl, client.getBgpPeerStatusHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GetBgpPeerStatus", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10301,7 +10301,7 @@ func (l VirtualNetworkGatewaysClientGetLearnedRoutesPollerResponse) PollUntilDon
 
 // Resume rehydrates a VirtualNetworkGatewaysClientGetLearnedRoutesPollerResponse from the provided client and resume token.
 func (l *VirtualNetworkGatewaysClientGetLearnedRoutesPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GetLearnedRoutes", token, client.pl, client.getLearnedRoutesHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GetLearnedRoutes", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10366,7 +10366,7 @@ func (l VirtualNetworkGatewaysClientGetVPNProfilePackageURLPollerResponse) PollU
 // Resume rehydrates a VirtualNetworkGatewaysClientGetVPNProfilePackageURLPollerResponse from the provided client and resume
 // token.
 func (l *VirtualNetworkGatewaysClientGetVPNProfilePackageURLPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GetVPNProfilePackageURL", token, client.pl, client.getVPNProfilePackageURLHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GetVPNProfilePackageURL", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10419,7 +10419,7 @@ func (l VirtualNetworkGatewaysClientGetVpnclientConnectionHealthPollerResponse) 
 // Resume rehydrates a VirtualNetworkGatewaysClientGetVpnclientConnectionHealthPollerResponse from the provided client and
 // resume token.
 func (l *VirtualNetworkGatewaysClientGetVpnclientConnectionHealthPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GetVpnclientConnectionHealth", token, client.pl, client.getVpnclientConnectionHealthHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GetVpnclientConnectionHealth", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10472,7 +10472,7 @@ func (l VirtualNetworkGatewaysClientGetVpnclientIPSecParametersPollerResponse) P
 // Resume rehydrates a VirtualNetworkGatewaysClientGetVpnclientIPSecParametersPollerResponse from the provided client and
 // resume token.
 func (l *VirtualNetworkGatewaysClientGetVpnclientIPSecParametersPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GetVpnclientIPSecParameters", token, client.pl, client.getVpnclientIPSecParametersHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.GetVpnclientIPSecParameters", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10548,7 +10548,7 @@ func (l VirtualNetworkGatewaysClientResetPollerResponse) PollUntilDone(ctx conte
 
 // Resume rehydrates a VirtualNetworkGatewaysClientResetPollerResponse from the provided client and resume token.
 func (l *VirtualNetworkGatewaysClientResetPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.Reset", token, client.pl, client.resetHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.Reset", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10601,7 +10601,7 @@ func (l VirtualNetworkGatewaysClientResetVPNClientSharedKeyPollerResponse) PollU
 // Resume rehydrates a VirtualNetworkGatewaysClientResetVPNClientSharedKeyPollerResponse from the provided client and resume
 // token.
 func (l *VirtualNetworkGatewaysClientResetVPNClientSharedKeyPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.ResetVPNClientSharedKey", token, client.pl, client.resetVPNClientSharedKeyHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.ResetVPNClientSharedKey", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10648,7 +10648,7 @@ func (l VirtualNetworkGatewaysClientSetVpnclientIPSecParametersPollerResponse) P
 // Resume rehydrates a VirtualNetworkGatewaysClientSetVpnclientIPSecParametersPollerResponse from the provided client and
 // resume token.
 func (l *VirtualNetworkGatewaysClientSetVpnclientIPSecParametersPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.SetVpnclientIPSecParameters", token, client.pl, client.setVpnclientIPSecParametersHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.SetVpnclientIPSecParameters", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10700,7 +10700,7 @@ func (l VirtualNetworkGatewaysClientStartPacketCapturePollerResponse) PollUntilD
 
 // Resume rehydrates a VirtualNetworkGatewaysClientStartPacketCapturePollerResponse from the provided client and resume token.
 func (l *VirtualNetworkGatewaysClientStartPacketCapturePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.StartPacketCapture", token, client.pl, client.startPacketCaptureHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.StartPacketCapture", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10752,7 +10752,7 @@ func (l VirtualNetworkGatewaysClientStopPacketCapturePollerResponse) PollUntilDo
 
 // Resume rehydrates a VirtualNetworkGatewaysClientStopPacketCapturePollerResponse from the provided client and resume token.
 func (l *VirtualNetworkGatewaysClientStopPacketCapturePollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.StopPacketCapture", token, client.pl, client.stopPacketCaptureHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.StopPacketCapture", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10816,7 +10816,7 @@ func (l VirtualNetworkGatewaysClientUpdateTagsPollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a VirtualNetworkGatewaysClientUpdateTagsPollerResponse from the provided client and resume token.
 func (l *VirtualNetworkGatewaysClientUpdateTagsPollerResponse) Resume(ctx context.Context, client *VirtualNetworkGatewaysClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.UpdateTags", token, client.pl, client.updateTagsHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkGatewaysClient.UpdateTags", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10880,7 +10880,7 @@ func (l VirtualNetworkPeeringsClientCreateOrUpdatePollerResponse) PollUntilDone(
 
 // Resume rehydrates a VirtualNetworkPeeringsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualNetworkPeeringsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualNetworkPeeringsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkPeeringsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkPeeringsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -10932,7 +10932,7 @@ func (l VirtualNetworkPeeringsClientDeletePollerResponse) PollUntilDone(ctx cont
 
 // Resume rehydrates a VirtualNetworkPeeringsClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualNetworkPeeringsClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualNetworkPeeringsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkPeeringsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkPeeringsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -11002,7 +11002,7 @@ func (l VirtualNetworkTapsClientCreateOrUpdatePollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a VirtualNetworkTapsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualNetworkTapsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualNetworkTapsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkTapsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkTapsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -11054,7 +11054,7 @@ func (l VirtualNetworkTapsClientDeletePollerResponse) PollUntilDone(ctx context.
 
 // Resume rehydrates a VirtualNetworkTapsClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualNetworkTapsClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualNetworkTapsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkTapsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworkTapsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -11160,7 +11160,7 @@ func (l VirtualNetworksClientCreateOrUpdatePollerResponse) PollUntilDone(ctx con
 
 // Resume rehydrates a VirtualNetworksClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualNetworksClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualNetworksClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworksClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworksClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -11212,7 +11212,7 @@ func (l VirtualNetworksClientDeletePollerResponse) PollUntilDone(ctx context.Con
 
 // Resume rehydrates a VirtualNetworksClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualNetworksClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualNetworksClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworksClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualNetworksClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -11318,7 +11318,7 @@ func (l VirtualRouterPeeringsClientCreateOrUpdatePollerResponse) PollUntilDone(c
 
 // Resume rehydrates a VirtualRouterPeeringsClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualRouterPeeringsClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualRouterPeeringsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualRouterPeeringsClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualRouterPeeringsClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -11370,7 +11370,7 @@ func (l VirtualRouterPeeringsClientDeletePollerResponse) PollUntilDone(ctx conte
 
 // Resume rehydrates a VirtualRouterPeeringsClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualRouterPeeringsClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualRouterPeeringsClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualRouterPeeringsClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualRouterPeeringsClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -11440,7 +11440,7 @@ func (l VirtualRoutersClientCreateOrUpdatePollerResponse) PollUntilDone(ctx cont
 
 // Resume rehydrates a VirtualRoutersClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualRoutersClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualRoutersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualRoutersClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualRoutersClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -11492,7 +11492,7 @@ func (l VirtualRoutersClientDeletePollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a VirtualRoutersClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualRoutersClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualRoutersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualRoutersClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualRoutersClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -11574,7 +11574,7 @@ func (l VirtualWansClientCreateOrUpdatePollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a VirtualWansClientCreateOrUpdatePollerResponse from the provided client and resume token.
 func (l *VirtualWansClientCreateOrUpdatePollerResponse) Resume(ctx context.Context, client *VirtualWansClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualWansClient.CreateOrUpdate", token, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualWansClient.CreateOrUpdate", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -11626,7 +11626,7 @@ func (l VirtualWansClientDeletePollerResponse) PollUntilDone(ctx context.Context
 
 // Resume rehydrates a VirtualWansClientDeletePollerResponse from the provided client and resume token.
 func (l *VirtualWansClientDeletePollerResponse) Resume(ctx context.Context, client *VirtualWansClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("VirtualWansClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("VirtualWansClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -11720,7 +11720,7 @@ func (l WatchersClientCheckConnectivityPollerResponse) PollUntilDone(ctx context
 
 // Resume rehydrates a WatchersClientCheckConnectivityPollerResponse from the provided client and resume token.
 func (l *WatchersClientCheckConnectivityPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.CheckConnectivity", token, client.pl, client.checkConnectivityHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.CheckConnectivity", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -11784,7 +11784,7 @@ func (l WatchersClientDeletePollerResponse) PollUntilDone(ctx context.Context, f
 
 // Resume rehydrates a WatchersClientDeletePollerResponse from the provided client and resume token.
 func (l *WatchersClientDeletePollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -11830,7 +11830,7 @@ func (l WatchersClientGetAzureReachabilityReportPollerResponse) PollUntilDone(ct
 
 // Resume rehydrates a WatchersClientGetAzureReachabilityReportPollerResponse from the provided client and resume token.
 func (l *WatchersClientGetAzureReachabilityReportPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetAzureReachabilityReport", token, client.pl, client.getAzureReachabilityReportHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetAzureReachabilityReport", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -11882,7 +11882,7 @@ func (l WatchersClientGetFlowLogStatusPollerResponse) PollUntilDone(ctx context.
 
 // Resume rehydrates a WatchersClientGetFlowLogStatusPollerResponse from the provided client and resume token.
 func (l *WatchersClientGetFlowLogStatusPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetFlowLogStatus", token, client.pl, client.getFlowLogStatusHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetFlowLogStatus", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -11934,7 +11934,7 @@ func (l WatchersClientGetNetworkConfigurationDiagnosticPollerResponse) PollUntil
 
 // Resume rehydrates a WatchersClientGetNetworkConfigurationDiagnosticPollerResponse from the provided client and resume token.
 func (l *WatchersClientGetNetworkConfigurationDiagnosticPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetNetworkConfigurationDiagnostic", token, client.pl, client.getNetworkConfigurationDiagnosticHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetNetworkConfigurationDiagnostic", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -11986,7 +11986,7 @@ func (l WatchersClientGetNextHopPollerResponse) PollUntilDone(ctx context.Contex
 
 // Resume rehydrates a WatchersClientGetNextHopPollerResponse from the provided client and resume token.
 func (l *WatchersClientGetNextHopPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetNextHop", token, client.pl, client.getNextHopHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetNextHop", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -12062,7 +12062,7 @@ func (l WatchersClientGetTroubleshootingPollerResponse) PollUntilDone(ctx contex
 
 // Resume rehydrates a WatchersClientGetTroubleshootingPollerResponse from the provided client and resume token.
 func (l *WatchersClientGetTroubleshootingPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetTroubleshooting", token, client.pl, client.getTroubleshootingHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetTroubleshooting", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -12114,7 +12114,7 @@ func (l WatchersClientGetTroubleshootingResultPollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a WatchersClientGetTroubleshootingResultPollerResponse from the provided client and resume token.
 func (l *WatchersClientGetTroubleshootingResultPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetTroubleshootingResult", token, client.pl, client.getTroubleshootingResultHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetTroubleshootingResult", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -12166,7 +12166,7 @@ func (l WatchersClientGetVMSecurityRulesPollerResponse) PollUntilDone(ctx contex
 
 // Resume rehydrates a WatchersClientGetVMSecurityRulesPollerResponse from the provided client and resume token.
 func (l *WatchersClientGetVMSecurityRulesPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetVMSecurityRules", token, client.pl, client.getVMSecurityRulesHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.GetVMSecurityRules", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -12230,7 +12230,7 @@ func (l WatchersClientListAvailableProvidersPollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a WatchersClientListAvailableProvidersPollerResponse from the provided client and resume token.
 func (l *WatchersClientListAvailableProvidersPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.ListAvailableProviders", token, client.pl, client.listAvailableProvidersHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.ListAvailableProviders", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -12294,7 +12294,7 @@ func (l WatchersClientSetFlowLogConfigurationPollerResponse) PollUntilDone(ctx c
 
 // Resume rehydrates a WatchersClientSetFlowLogConfigurationPollerResponse from the provided client and resume token.
 func (l *WatchersClientSetFlowLogConfigurationPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.SetFlowLogConfiguration", token, client.pl, client.setFlowLogConfigurationHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.SetFlowLogConfiguration", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -12358,7 +12358,7 @@ func (l WatchersClientVerifyIPFlowPollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a WatchersClientVerifyIPFlowPollerResponse from the provided client and resume token.
 func (l *WatchersClientVerifyIPFlowPollerResponse) Resume(ctx context.Context, client *WatchersClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.VerifyIPFlow", token, client.pl, client.verifyIPFlowHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("WatchersClient.VerifyIPFlow", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -12422,7 +12422,7 @@ func (l WebApplicationFirewallPoliciesClientDeletePollerResponse) PollUntilDone(
 
 // Resume rehydrates a WebApplicationFirewallPoliciesClientDeletePollerResponse from the provided client and resume token.
 func (l *WebApplicationFirewallPoliciesClientDeletePollerResponse) Resume(ctx context.Context, client *WebApplicationFirewallPoliciesClient, token string) error {
-	pt, err := armruntime.NewPollerFromResumeToken("WebApplicationFirewallPoliciesClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPollerFromResumeToken("WebApplicationFirewallPoliciesClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}

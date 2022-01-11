@@ -40,19 +40,19 @@ func NewVirtualMachineExtensionImagesClient(subscriptionID string, credential az
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VirtualMachineExtensionImagesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Gets a virtual machine extension image.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // location - The name of a supported Azure region.
 // options - VirtualMachineExtensionImagesClientGetOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.Get
 // method.
@@ -66,7 +66,7 @@ func (client *VirtualMachineExtensionImagesClient) Get(ctx context.Context, loca
 		return VirtualMachineExtensionImagesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineExtensionImagesClientGetResponse{}, client.getHandleError(resp)
+		return VirtualMachineExtensionImagesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -109,25 +109,13 @@ func (client *VirtualMachineExtensionImagesClient) getCreateRequest(ctx context.
 func (client *VirtualMachineExtensionImagesClient) getHandleResponse(resp *http.Response) (VirtualMachineExtensionImagesClientGetResponse, error) {
 	result := VirtualMachineExtensionImagesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtensionImage); err != nil {
-		return VirtualMachineExtensionImagesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineExtensionImagesClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *VirtualMachineExtensionImagesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // ListTypes - Gets a list of virtual machine extension image types.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // location - The name of a supported Azure region.
 // options - VirtualMachineExtensionImagesClientListTypesOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.ListTypes
 // method.
@@ -141,7 +129,7 @@ func (client *VirtualMachineExtensionImagesClient) ListTypes(ctx context.Context
 		return VirtualMachineExtensionImagesClientListTypesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineExtensionImagesClientListTypesResponse{}, client.listTypesHandleError(resp)
+		return VirtualMachineExtensionImagesClientListTypesResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listTypesHandleResponse(resp)
 }
@@ -176,25 +164,13 @@ func (client *VirtualMachineExtensionImagesClient) listTypesCreateRequest(ctx co
 func (client *VirtualMachineExtensionImagesClient) listTypesHandleResponse(resp *http.Response) (VirtualMachineExtensionImagesClientListTypesResponse, error) {
 	result := VirtualMachineExtensionImagesClientListTypesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtensionImageArray); err != nil {
-		return VirtualMachineExtensionImagesClientListTypesResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineExtensionImagesClientListTypesResponse{}, err
 	}
 	return result, nil
 }
 
-// listTypesHandleError handles the ListTypes error response.
-func (client *VirtualMachineExtensionImagesClient) listTypesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // ListVersions - Gets a list of virtual machine extension image versions.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // location - The name of a supported Azure region.
 // options - VirtualMachineExtensionImagesClientListVersionsOptions contains the optional parameters for the VirtualMachineExtensionImagesClient.ListVersions
 // method.
@@ -208,7 +184,7 @@ func (client *VirtualMachineExtensionImagesClient) ListVersions(ctx context.Cont
 		return VirtualMachineExtensionImagesClientListVersionsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualMachineExtensionImagesClientListVersionsResponse{}, client.listVersionsHandleError(resp)
+		return VirtualMachineExtensionImagesClientListVersionsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listVersionsHandleResponse(resp)
 }
@@ -256,19 +232,7 @@ func (client *VirtualMachineExtensionImagesClient) listVersionsCreateRequest(ctx
 func (client *VirtualMachineExtensionImagesClient) listVersionsHandleResponse(resp *http.Response) (VirtualMachineExtensionImagesClientListVersionsResponse, error) {
 	result := VirtualMachineExtensionImagesClientListVersionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualMachineExtensionImageArray); err != nil {
-		return VirtualMachineExtensionImagesClientListVersionsResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualMachineExtensionImagesClientListVersionsResponse{}, err
 	}
 	return result, nil
-}
-
-// listVersionsHandleError handles the ListVersions error response.
-func (client *VirtualMachineExtensionImagesClient) listVersionsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

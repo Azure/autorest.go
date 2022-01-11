@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewLoadBalancerProbesClient(subscriptionID string, credential azcore.TokenC
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &LoadBalancerProbesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Gets load balancer probe.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // probeName - The name of the probe.
@@ -67,7 +66,7 @@ func (client *LoadBalancerProbesClient) Get(ctx context.Context, resourceGroupNa
 		return LoadBalancerProbesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LoadBalancerProbesClientGetResponse{}, client.getHandleError(resp)
+		return LoadBalancerProbesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -106,26 +105,13 @@ func (client *LoadBalancerProbesClient) getCreateRequest(ctx context.Context, re
 func (client *LoadBalancerProbesClient) getHandleResponse(resp *http.Response) (LoadBalancerProbesClientGetResponse, error) {
 	result := LoadBalancerProbesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Probe); err != nil {
-		return LoadBalancerProbesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return LoadBalancerProbesClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *LoadBalancerProbesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all the load balancer probes.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // options - LoadBalancerProbesClientListOptions contains the optional parameters for the LoadBalancerProbesClient.List method.
@@ -171,20 +157,7 @@ func (client *LoadBalancerProbesClient) listCreateRequest(ctx context.Context, r
 func (client *LoadBalancerProbesClient) listHandleResponse(resp *http.Response) (LoadBalancerProbesClientListResponse, error) {
 	result := LoadBalancerProbesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancerProbeListResult); err != nil {
-		return LoadBalancerProbesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return LoadBalancerProbesClientListResponse{}, err
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *LoadBalancerProbesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

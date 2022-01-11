@@ -33,13 +33,13 @@ func NewPetClient(options *azcore.ClientOptions) *PetClient {
 		cp = *options
 	}
 	client := &PetClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // AddPet - add pet
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PetClientAddPetOptions contains the optional parameters for the PetClient.AddPet method.
 func (client *PetClient) AddPet(ctx context.Context, options *PetClientAddPetOptions) (PetClientAddPetResponse, error) {
 	req, err := client.addPetCreateRequest(ctx, options)
@@ -51,7 +51,7 @@ func (client *PetClient) AddPet(ctx context.Context, options *PetClientAddPetOpt
 		return PetClientAddPetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetClientAddPetResponse{}, client.addPetHandleError(resp)
+		return PetClientAddPetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.addPetHandleResponse(resp)
 }
@@ -74,25 +74,13 @@ func (client *PetClient) addPetCreateRequest(ctx context.Context, options *PetCl
 func (client *PetClient) addPetHandleResponse(resp *http.Response) (PetClientAddPetResponse, error) {
 	result := PetClientAddPetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Pet); err != nil {
-		return PetClientAddPetResponse{}, runtime.NewResponseError(err, resp)
+		return PetClientAddPetResponse{}, err
 	}
 	return result, nil
 }
 
-// addPetHandleError handles the AddPet error response.
-func (client *PetClient) addPetHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // GetByPetID - get pet by id
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // petID - Pet id
 // options - PetClientGetByPetIDOptions contains the optional parameters for the PetClient.GetByPetID method.
 func (client *PetClient) GetByPetID(ctx context.Context, petID string, options *PetClientGetByPetIDOptions) (PetClientGetByPetIDResponse, error) {
@@ -105,7 +93,7 @@ func (client *PetClient) GetByPetID(ctx context.Context, petID string, options *
 		return PetClientGetByPetIDResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetClientGetByPetIDResponse{}, client.getByPetIDHandleError(resp)
+		return PetClientGetByPetIDResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getByPetIDHandleResponse(resp)
 }
@@ -129,19 +117,7 @@ func (client *PetClient) getByPetIDCreateRequest(ctx context.Context, petID stri
 func (client *PetClient) getByPetIDHandleResponse(resp *http.Response) (PetClientGetByPetIDResponse, error) {
 	result := PetClientGetByPetIDResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Pet); err != nil {
-		return PetClientGetByPetIDResponse{}, runtime.NewResponseError(err, resp)
+		return PetClientGetByPetIDResponse{}, err
 	}
 	return result, nil
-}
-
-// getByPetIDHandleError handles the GetByPetID error response.
-func (client *PetClient) getByPetIDHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

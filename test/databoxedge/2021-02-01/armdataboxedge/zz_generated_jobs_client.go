@@ -11,7 +11,6 @@ package armdataboxedge
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -39,19 +38,19 @@ func NewJobsClient(subscriptionID string, credential azcore.TokenCredential, opt
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &JobsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Gets the details of a specified job on a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The job name.
 // resourceGroupName - The resource group name.
@@ -66,7 +65,7 @@ func (client *JobsClient) Get(ctx context.Context, deviceName string, name strin
 		return JobsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return JobsClientGetResponse{}, client.getHandleError(resp)
+		return JobsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -105,20 +104,7 @@ func (client *JobsClient) getCreateRequest(ctx context.Context, deviceName strin
 func (client *JobsClient) getHandleResponse(resp *http.Response) (JobsClientGetResponse, error) {
 	result := JobsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Job); err != nil {
-		return JobsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return JobsClientGetResponse{}, err
 	}
 	return result, nil
-}
-
-// getHandleError handles the Get error response.
-func (client *JobsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

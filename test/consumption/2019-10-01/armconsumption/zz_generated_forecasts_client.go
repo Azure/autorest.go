@@ -11,7 +11,6 @@ package armconsumption
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -39,13 +38,13 @@ func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ForecastsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
@@ -53,7 +52,7 @@ func NewForecastsClient(subscriptionID string, credential azcore.TokenCredential
 // List - Lists the forecast charges for scope defined. Please note that this API is no longer actively under development.
 // We recommend using our new Forecast API moving forward:
 // https://docs.microsoft.com/en-us/rest/api/cost-management/forecast/usage.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ForecastsClientListOptions contains the optional parameters for the ForecastsClient.List method.
 func (client *ForecastsClient) List(ctx context.Context, options *ForecastsClientListOptions) (ForecastsClientListResponse, error) {
 	req, err := client.listCreateRequest(ctx, options)
@@ -65,7 +64,7 @@ func (client *ForecastsClient) List(ctx context.Context, options *ForecastsClien
 		return ForecastsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ForecastsClientListResponse{}, client.listHandleError(resp)
+		return ForecastsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -95,20 +94,7 @@ func (client *ForecastsClient) listCreateRequest(ctx context.Context, options *F
 func (client *ForecastsClient) listHandleResponse(resp *http.Response) (ForecastsClientListResponse, error) {
 	result := ForecastsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ForecastsListResult); err != nil {
-		return ForecastsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return ForecastsClientListResponse{}, err
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *ForecastsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

@@ -10,7 +10,6 @@ package armconsumption
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -35,18 +34,18 @@ func NewReservationRecommendationDetailsClient(credential azcore.TokenCredential
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ReservationRecommendationDetailsClient{
-		host: string(cp.Host),
-		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+		host: string(cp.Endpoint),
+		pl:   armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Details of a reservation recommendation for what-if analysis of reserved instances.
-// If the operation fails it returns the *HighCasedErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // billingScope - The scope associated with reservation recommendation details operations. This includes '/subscriptions/{subscriptionId}/'
 // for subscription scope,
 // '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resource group scope, /providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
@@ -71,7 +70,7 @@ func (client *ReservationRecommendationDetailsClient) Get(ctx context.Context, b
 		return ReservationRecommendationDetailsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return ReservationRecommendationDetailsClientGetResponse{}, client.getHandleError(resp)
+		return ReservationRecommendationDetailsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -100,20 +99,7 @@ func (client *ReservationRecommendationDetailsClient) getCreateRequest(ctx conte
 func (client *ReservationRecommendationDetailsClient) getHandleResponse(resp *http.Response) (ReservationRecommendationDetailsClientGetResponse, error) {
 	result := ReservationRecommendationDetailsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationRecommendationDetailsModel); err != nil {
-		return ReservationRecommendationDetailsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationRecommendationDetailsClientGetResponse{}, err
 	}
 	return result, nil
-}
-
-// getHandleError handles the Get error response.
-func (client *ReservationRecommendationDetailsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := HighCasedErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

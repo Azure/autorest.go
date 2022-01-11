@@ -11,7 +11,6 @@ package armdataboxedge
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -39,19 +38,19 @@ func NewTriggersClient(subscriptionID string, credential azcore.TokenCredential,
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &TriggersClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a trigger.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - Creates or updates a trigger
 // name - The trigger name.
 // resourceGroupName - The resource group name.
@@ -66,7 +65,7 @@ func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceNam
 	result := TriggersClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("TriggersClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("TriggersClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return TriggersClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *TriggersClient) BeginCreateOrUpdate(ctx context.Context, deviceNam
 }
 
 // CreateOrUpdate - Creates or updates a trigger.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *TriggersClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, trigger TriggerClassification, options *TriggersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, trigger, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *TriggersClient) createOrUpdate(ctx context.Context, deviceName str
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -123,21 +122,8 @@ func (client *TriggersClient) createOrUpdateCreateRequest(ctx context.Context, d
 	return req, runtime.MarshalAsJSON(req, trigger)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *TriggersClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the trigger on the gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The trigger name.
 // resourceGroupName - The resource group name.
@@ -150,7 +136,7 @@ func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string
 	result := TriggersClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("TriggersClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("TriggersClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return TriggersClientDeletePollerResponse{}, err
 	}
@@ -161,7 +147,7 @@ func (client *TriggersClient) BeginDelete(ctx context.Context, deviceName string
 }
 
 // Delete - Deletes the trigger on the gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *TriggersClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *TriggersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -172,7 +158,7 @@ func (client *TriggersClient) deleteOperation(ctx context.Context, deviceName st
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -207,21 +193,8 @@ func (client *TriggersClient) deleteCreateRequest(ctx context.Context, deviceNam
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *TriggersClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Get a specific trigger by name.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The trigger name.
 // resourceGroupName - The resource group name.
@@ -236,7 +209,7 @@ func (client *TriggersClient) Get(ctx context.Context, deviceName string, name s
 		return TriggersClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return TriggersClientGetResponse{}, client.getHandleError(resp)
+		return TriggersClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -275,26 +248,13 @@ func (client *TriggersClient) getCreateRequest(ctx context.Context, deviceName s
 func (client *TriggersClient) getHandleResponse(resp *http.Response) (TriggersClientGetResponse, error) {
 	result := TriggersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return TriggersClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return TriggersClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *TriggersClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByDataBoxEdgeDevice - Lists all the triggers configured in the device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - TriggersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the TriggersClient.ListByDataBoxEdgeDevice
@@ -344,20 +304,7 @@ func (client *TriggersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.C
 func (client *TriggersClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (TriggersClientListByDataBoxEdgeDeviceResponse, error) {
 	result := TriggersClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerList); err != nil {
-		return TriggersClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
+		return TriggersClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	return result, nil
-}
-
-// listByDataBoxEdgeDeviceHandleError handles the ListByDataBoxEdgeDevice error response.
-func (client *TriggersClient) listByDataBoxEdgeDeviceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

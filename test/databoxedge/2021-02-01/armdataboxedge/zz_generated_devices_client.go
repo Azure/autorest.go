@@ -11,7 +11,6 @@ package armdataboxedge
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -39,19 +38,19 @@ func NewDevicesClient(subscriptionID string, credential azcore.TokenCredential, 
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &DevicesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // CreateOrUpdate - Creates or updates a Data Box Edge/Data Box Gateway resource.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // dataBoxEdgeDevice - The resource object.
@@ -66,7 +65,7 @@ func (client *DevicesClient) CreateOrUpdate(ctx context.Context, deviceName stri
 		return DevicesClientCreateOrUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientCreateOrUpdateResponse{}, client.createOrUpdateHandleError(resp)
+		return DevicesClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createOrUpdateHandleResponse(resp)
 }
@@ -101,26 +100,13 @@ func (client *DevicesClient) createOrUpdateCreateRequest(ctx context.Context, de
 func (client *DevicesClient) createOrUpdateHandleResponse(resp *http.Response) (DevicesClientCreateOrUpdateResponse, error) {
 	result := DevicesClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Device); err != nil {
-		return DevicesClientCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
+		return DevicesClientCreateOrUpdateResponse{}, err
 	}
 	return result, nil
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *DevicesClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginCreateOrUpdateSecuritySettings - Updates the security settings on a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // securitySettings - The security settings.
@@ -134,7 +120,7 @@ func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Con
 	result := DevicesClientCreateOrUpdateSecuritySettingsPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DevicesClient.CreateOrUpdateSecuritySettings", "", resp, client.pl, client.createOrUpdateSecuritySettingsHandleError)
+	pt, err := armruntime.NewPoller("DevicesClient.CreateOrUpdateSecuritySettings", "", resp, client.pl)
 	if err != nil {
 		return DevicesClientCreateOrUpdateSecuritySettingsPollerResponse{}, err
 	}
@@ -145,7 +131,7 @@ func (client *DevicesClient) BeginCreateOrUpdateSecuritySettings(ctx context.Con
 }
 
 // CreateOrUpdateSecuritySettings - Updates the security settings on a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *DevicesClient) createOrUpdateSecuritySettings(ctx context.Context, deviceName string, resourceGroupName string, securitySettings SecuritySettings, options *DevicesClientBeginCreateOrUpdateSecuritySettingsOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateSecuritySettingsCreateRequest(ctx, deviceName, resourceGroupName, securitySettings, options)
 	if err != nil {
@@ -156,7 +142,7 @@ func (client *DevicesClient) createOrUpdateSecuritySettings(ctx context.Context,
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.createOrUpdateSecuritySettingsHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -187,21 +173,8 @@ func (client *DevicesClient) createOrUpdateSecuritySettingsCreateRequest(ctx con
 	return req, runtime.MarshalAsJSON(req, securitySettings)
 }
 
-// createOrUpdateSecuritySettingsHandleError handles the CreateOrUpdateSecuritySettings error response.
-func (client *DevicesClient) createOrUpdateSecuritySettingsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginDeleteOptions contains the optional parameters for the DevicesClient.BeginDelete method.
@@ -213,7 +186,7 @@ func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string,
 	result := DevicesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DevicesClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("DevicesClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return DevicesClientDeletePollerResponse{}, err
 	}
@@ -224,7 +197,7 @@ func (client *DevicesClient) BeginDelete(ctx context.Context, deviceName string,
 }
 
 // Delete - Deletes the Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *DevicesClient) deleteOperation(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -235,7 +208,7 @@ func (client *DevicesClient) deleteOperation(ctx context.Context, deviceName str
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -266,21 +239,8 @@ func (client *DevicesClient) deleteCreateRequest(ctx context.Context, deviceName
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *DevicesClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDownloadUpdates - Downloads the updates on a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginDownloadUpdatesOptions contains the optional parameters for the DevicesClient.BeginDownloadUpdates
@@ -293,7 +253,7 @@ func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceNam
 	result := DevicesClientDownloadUpdatesPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DevicesClient.DownloadUpdates", "", resp, client.pl, client.downloadUpdatesHandleError)
+	pt, err := armruntime.NewPoller("DevicesClient.DownloadUpdates", "", resp, client.pl)
 	if err != nil {
 		return DevicesClientDownloadUpdatesPollerResponse{}, err
 	}
@@ -304,7 +264,7 @@ func (client *DevicesClient) BeginDownloadUpdates(ctx context.Context, deviceNam
 }
 
 // DownloadUpdates - Downloads the updates on a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *DevicesClient) downloadUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginDownloadUpdatesOptions) (*http.Response, error) {
 	req, err := client.downloadUpdatesCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -315,7 +275,7 @@ func (client *DevicesClient) downloadUpdates(ctx context.Context, deviceName str
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.downloadUpdatesHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -346,21 +306,8 @@ func (client *DevicesClient) downloadUpdatesCreateRequest(ctx context.Context, d
 	return req, nil
 }
 
-// downloadUpdatesHandleError handles the DownloadUpdates error response.
-func (client *DevicesClient) downloadUpdatesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GenerateCertificate - Generates certificate for activation key.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientGenerateCertificateOptions contains the optional parameters for the DevicesClient.GenerateCertificate
@@ -375,7 +322,7 @@ func (client *DevicesClient) GenerateCertificate(ctx context.Context, deviceName
 		return DevicesClientGenerateCertificateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientGenerateCertificateResponse{}, client.generateCertificateHandleError(resp)
+		return DevicesClientGenerateCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.generateCertificateHandleResponse(resp)
 }
@@ -410,26 +357,13 @@ func (client *DevicesClient) generateCertificateCreateRequest(ctx context.Contex
 func (client *DevicesClient) generateCertificateHandleResponse(resp *http.Response) (DevicesClientGenerateCertificateResponse, error) {
 	result := DevicesClientGenerateCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.GenerateCertResponse); err != nil {
-		return DevicesClientGenerateCertificateResponse{}, runtime.NewResponseError(err, resp)
+		return DevicesClientGenerateCertificateResponse{}, err
 	}
 	return result, nil
 }
 
-// generateCertificateHandleError handles the GenerateCertificate error response.
-func (client *DevicesClient) generateCertificateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the properties of the Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientGetOptions contains the optional parameters for the DevicesClient.Get method.
@@ -443,7 +377,7 @@ func (client *DevicesClient) Get(ctx context.Context, deviceName string, resourc
 		return DevicesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientGetResponse{}, client.getHandleError(resp)
+		return DevicesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -478,26 +412,13 @@ func (client *DevicesClient) getCreateRequest(ctx context.Context, deviceName st
 func (client *DevicesClient) getHandleResponse(resp *http.Response) (DevicesClientGetResponse, error) {
 	result := DevicesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Device); err != nil {
-		return DevicesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return DevicesClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *DevicesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetExtendedInformation - Gets additional information for the specified Azure Stack Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientGetExtendedInformationOptions contains the optional parameters for the DevicesClient.GetExtendedInformation
@@ -512,7 +433,7 @@ func (client *DevicesClient) GetExtendedInformation(ctx context.Context, deviceN
 		return DevicesClientGetExtendedInformationResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientGetExtendedInformationResponse{}, client.getExtendedInformationHandleError(resp)
+		return DevicesClientGetExtendedInformationResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getExtendedInformationHandleResponse(resp)
 }
@@ -547,26 +468,13 @@ func (client *DevicesClient) getExtendedInformationCreateRequest(ctx context.Con
 func (client *DevicesClient) getExtendedInformationHandleResponse(resp *http.Response) (DevicesClientGetExtendedInformationResponse, error) {
 	result := DevicesClientGetExtendedInformationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeviceExtendedInfo); err != nil {
-		return DevicesClientGetExtendedInformationResponse{}, runtime.NewResponseError(err, resp)
+		return DevicesClientGetExtendedInformationResponse{}, err
 	}
 	return result, nil
 }
 
-// getExtendedInformationHandleError handles the GetExtendedInformation error response.
-func (client *DevicesClient) getExtendedInformationHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetNetworkSettings - Gets the network settings of the specified Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientGetNetworkSettingsOptions contains the optional parameters for the DevicesClient.GetNetworkSettings
@@ -581,7 +489,7 @@ func (client *DevicesClient) GetNetworkSettings(ctx context.Context, deviceName 
 		return DevicesClientGetNetworkSettingsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientGetNetworkSettingsResponse{}, client.getNetworkSettingsHandleError(resp)
+		return DevicesClientGetNetworkSettingsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getNetworkSettingsHandleResponse(resp)
 }
@@ -616,27 +524,14 @@ func (client *DevicesClient) getNetworkSettingsCreateRequest(ctx context.Context
 func (client *DevicesClient) getNetworkSettingsHandleResponse(resp *http.Response) (DevicesClientGetNetworkSettingsResponse, error) {
 	result := DevicesClientGetNetworkSettingsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.NetworkSettings); err != nil {
-		return DevicesClientGetNetworkSettingsResponse{}, runtime.NewResponseError(err, resp)
+		return DevicesClientGetNetworkSettingsResponse{}, err
 	}
 	return result, nil
 }
 
-// getNetworkSettingsHandleError handles the GetNetworkSettings error response.
-func (client *DevicesClient) getNetworkSettingsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetUpdateSummary - Gets information about the availability of updates based on the last scan of the device. It also gets
 // information about any ongoing download or install jobs on the device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientGetUpdateSummaryOptions contains the optional parameters for the DevicesClient.GetUpdateSummary
@@ -651,7 +546,7 @@ func (client *DevicesClient) GetUpdateSummary(ctx context.Context, deviceName st
 		return DevicesClientGetUpdateSummaryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientGetUpdateSummaryResponse{}, client.getUpdateSummaryHandleError(resp)
+		return DevicesClientGetUpdateSummaryResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getUpdateSummaryHandleResponse(resp)
 }
@@ -686,26 +581,13 @@ func (client *DevicesClient) getUpdateSummaryCreateRequest(ctx context.Context, 
 func (client *DevicesClient) getUpdateSummaryHandleResponse(resp *http.Response) (DevicesClientGetUpdateSummaryResponse, error) {
 	result := DevicesClientGetUpdateSummaryResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.UpdateSummary); err != nil {
-		return DevicesClientGetUpdateSummaryResponse{}, runtime.NewResponseError(err, resp)
+		return DevicesClientGetUpdateSummaryResponse{}, err
 	}
 	return result, nil
 }
 
-// getUpdateSummaryHandleError handles the GetUpdateSummary error response.
-func (client *DevicesClient) getUpdateSummaryHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginInstallUpdates - Installs the updates on the Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginInstallUpdatesOptions contains the optional parameters for the DevicesClient.BeginInstallUpdates
@@ -718,7 +600,7 @@ func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName
 	result := DevicesClientInstallUpdatesPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DevicesClient.InstallUpdates", "", resp, client.pl, client.installUpdatesHandleError)
+	pt, err := armruntime.NewPoller("DevicesClient.InstallUpdates", "", resp, client.pl)
 	if err != nil {
 		return DevicesClientInstallUpdatesPollerResponse{}, err
 	}
@@ -729,7 +611,7 @@ func (client *DevicesClient) BeginInstallUpdates(ctx context.Context, deviceName
 }
 
 // InstallUpdates - Installs the updates on the Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *DevicesClient) installUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginInstallUpdatesOptions) (*http.Response, error) {
 	req, err := client.installUpdatesCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -740,7 +622,7 @@ func (client *DevicesClient) installUpdates(ctx context.Context, deviceName stri
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.installUpdatesHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -771,21 +653,8 @@ func (client *DevicesClient) installUpdatesCreateRequest(ctx context.Context, de
 	return req, nil
 }
 
-// installUpdatesHandleError handles the InstallUpdates error response.
-func (client *DevicesClient) installUpdatesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByResourceGroup - Gets all the Data Box Edge/Data Box Gateway devices in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name.
 // options - DevicesClientListByResourceGroupOptions contains the optional parameters for the DevicesClient.ListByResourceGroup
 // method.
@@ -830,26 +699,13 @@ func (client *DevicesClient) listByResourceGroupCreateRequest(ctx context.Contex
 func (client *DevicesClient) listByResourceGroupHandleResponse(resp *http.Response) (DevicesClientListByResourceGroupResponse, error) {
 	result := DevicesClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeviceList); err != nil {
-		return DevicesClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return DevicesClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *DevicesClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListBySubscription - Gets all the Data Box Edge/Data Box Gateway devices in a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - DevicesClientListBySubscriptionOptions contains the optional parameters for the DevicesClient.ListBySubscription
 // method.
 func (client *DevicesClient) ListBySubscription(options *DevicesClientListBySubscriptionOptions) *DevicesClientListBySubscriptionPager {
@@ -889,26 +745,13 @@ func (client *DevicesClient) listBySubscriptionCreateRequest(ctx context.Context
 func (client *DevicesClient) listBySubscriptionHandleResponse(resp *http.Response) (DevicesClientListBySubscriptionResponse, error) {
 	result := DevicesClientListBySubscriptionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeviceList); err != nil {
-		return DevicesClientListBySubscriptionResponse{}, runtime.NewResponseError(err, resp)
+		return DevicesClientListBySubscriptionResponse{}, err
 	}
 	return result, nil
 }
 
-// listBySubscriptionHandleError handles the ListBySubscription error response.
-func (client *DevicesClient) listBySubscriptionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginScanForUpdates - Scans for updates on a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - DevicesClientBeginScanForUpdatesOptions contains the optional parameters for the DevicesClient.BeginScanForUpdates
@@ -921,7 +764,7 @@ func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName
 	result := DevicesClientScanForUpdatesPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("DevicesClient.ScanForUpdates", "", resp, client.pl, client.scanForUpdatesHandleError)
+	pt, err := armruntime.NewPoller("DevicesClient.ScanForUpdates", "", resp, client.pl)
 	if err != nil {
 		return DevicesClientScanForUpdatesPollerResponse{}, err
 	}
@@ -932,7 +775,7 @@ func (client *DevicesClient) BeginScanForUpdates(ctx context.Context, deviceName
 }
 
 // ScanForUpdates - Scans for updates on a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *DevicesClient) scanForUpdates(ctx context.Context, deviceName string, resourceGroupName string, options *DevicesClientBeginScanForUpdatesOptions) (*http.Response, error) {
 	req, err := client.scanForUpdatesCreateRequest(ctx, deviceName, resourceGroupName, options)
 	if err != nil {
@@ -943,7 +786,7 @@ func (client *DevicesClient) scanForUpdates(ctx context.Context, deviceName stri
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.scanForUpdatesHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -974,21 +817,8 @@ func (client *DevicesClient) scanForUpdatesCreateRequest(ctx context.Context, de
 	return req, nil
 }
 
-// scanForUpdatesHandleError handles the ScanForUpdates error response.
-func (client *DevicesClient) scanForUpdatesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Update - Modifies a Data Box Edge/Data Box Gateway resource.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // parameters - The resource parameters.
@@ -1003,7 +833,7 @@ func (client *DevicesClient) Update(ctx context.Context, deviceName string, reso
 		return DevicesClientUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientUpdateResponse{}, client.updateHandleError(resp)
+		return DevicesClientUpdateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateHandleResponse(resp)
 }
@@ -1038,26 +868,13 @@ func (client *DevicesClient) updateCreateRequest(ctx context.Context, deviceName
 func (client *DevicesClient) updateHandleResponse(resp *http.Response) (DevicesClientUpdateResponse, error) {
 	result := DevicesClientUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Device); err != nil {
-		return DevicesClientUpdateResponse{}, runtime.NewResponseError(err, resp)
+		return DevicesClientUpdateResponse{}, err
 	}
 	return result, nil
 }
 
-// updateHandleError handles the Update error response.
-func (client *DevicesClient) updateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateExtendedInformation - Gets additional information for the specified Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // parameters - The patch object.
@@ -1073,7 +890,7 @@ func (client *DevicesClient) UpdateExtendedInformation(ctx context.Context, devi
 		return DevicesClientUpdateExtendedInformationResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientUpdateExtendedInformationResponse{}, client.updateExtendedInformationHandleError(resp)
+		return DevicesClientUpdateExtendedInformationResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateExtendedInformationHandleResponse(resp)
 }
@@ -1108,26 +925,13 @@ func (client *DevicesClient) updateExtendedInformationCreateRequest(ctx context.
 func (client *DevicesClient) updateExtendedInformationHandleResponse(resp *http.Response) (DevicesClientUpdateExtendedInformationResponse, error) {
 	result := DevicesClientUpdateExtendedInformationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DeviceExtendedInfo); err != nil {
-		return DevicesClientUpdateExtendedInformationResponse{}, runtime.NewResponseError(err, resp)
+		return DevicesClientUpdateExtendedInformationResponse{}, err
 	}
 	return result, nil
 }
 
-// updateExtendedInformationHandleError handles the UpdateExtendedInformation error response.
-func (client *DevicesClient) updateExtendedInformationHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UploadCertificate - Uploads registration certificate for the device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // parameters - The upload certificate request.
@@ -1143,7 +947,7 @@ func (client *DevicesClient) UploadCertificate(ctx context.Context, deviceName s
 		return DevicesClientUploadCertificateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return DevicesClientUploadCertificateResponse{}, client.uploadCertificateHandleError(resp)
+		return DevicesClientUploadCertificateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.uploadCertificateHandleResponse(resp)
 }
@@ -1178,20 +982,7 @@ func (client *DevicesClient) uploadCertificateCreateRequest(ctx context.Context,
 func (client *DevicesClient) uploadCertificateHandleResponse(resp *http.Response) (DevicesClientUploadCertificateResponse, error) {
 	result := DevicesClientUploadCertificateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.UploadCertificateResponse); err != nil {
-		return DevicesClientUploadCertificateResponse{}, runtime.NewResponseError(err, resp)
+		return DevicesClientUploadCertificateResponse{}, err
 	}
 	return result, nil
-}
-
-// uploadCertificateHandleError handles the UploadCertificate error response.
-func (client *DevicesClient) uploadCertificateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

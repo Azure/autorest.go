@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewLoadBalancerBackendAddressPoolsClient(subscriptionID string, credential 
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &LoadBalancerBackendAddressPoolsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Gets load balancer backend address pool.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // backendAddressPoolName - The name of the backend address pool.
@@ -68,7 +67,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) Get(ctx context.Context, re
 		return LoadBalancerBackendAddressPoolsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return LoadBalancerBackendAddressPoolsClientGetResponse{}, client.getHandleError(resp)
+		return LoadBalancerBackendAddressPoolsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -107,26 +106,13 @@ func (client *LoadBalancerBackendAddressPoolsClient) getCreateRequest(ctx contex
 func (client *LoadBalancerBackendAddressPoolsClient) getHandleResponse(resp *http.Response) (LoadBalancerBackendAddressPoolsClientGetResponse, error) {
 	result := LoadBalancerBackendAddressPoolsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BackendAddressPool); err != nil {
-		return LoadBalancerBackendAddressPoolsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return LoadBalancerBackendAddressPoolsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *LoadBalancerBackendAddressPoolsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all the load balancer backed address pools.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // loadBalancerName - The name of the load balancer.
 // options - LoadBalancerBackendAddressPoolsClientListOptions contains the optional parameters for the LoadBalancerBackendAddressPoolsClient.List
@@ -173,20 +159,7 @@ func (client *LoadBalancerBackendAddressPoolsClient) listCreateRequest(ctx conte
 func (client *LoadBalancerBackendAddressPoolsClient) listHandleResponse(resp *http.Response) (LoadBalancerBackendAddressPoolsClientListResponse, error) {
 	result := LoadBalancerBackendAddressPoolsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.LoadBalancerBackendAddressPoolListResult); err != nil {
-		return LoadBalancerBackendAddressPoolsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return LoadBalancerBackendAddressPoolsClientListResponse{}, err
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *LoadBalancerBackendAddressPoolsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

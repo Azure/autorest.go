@@ -11,7 +11,6 @@ package azkeyvault
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -35,7 +34,7 @@ func NewRoleDefinitionsClient(pl runtime.Pipeline) *RoleDefinitionsClient {
 }
 
 // CreateOrUpdate - Creates or updates a custom role definition.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role definition to create or update. Managed HSM only supports '/'.
 // roleDefinitionName - The name of the role definition to create or update. It can be any valid GUID.
@@ -52,7 +51,7 @@ func (client *RoleDefinitionsClient) CreateOrUpdate(ctx context.Context, vaultBa
 		return RoleDefinitionsClientCreateOrUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return RoleDefinitionsClientCreateOrUpdateResponse{}, client.createOrUpdateHandleError(resp)
+		return RoleDefinitionsClientCreateOrUpdateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createOrUpdateHandleResponse(resp)
 }
@@ -82,26 +81,13 @@ func (client *RoleDefinitionsClient) createOrUpdateCreateRequest(ctx context.Con
 func (client *RoleDefinitionsClient) createOrUpdateHandleResponse(resp *http.Response) (RoleDefinitionsClientCreateOrUpdateResponse, error) {
 	result := RoleDefinitionsClientCreateOrUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinition); err != nil {
-		return RoleDefinitionsClientCreateOrUpdateResponse{}, runtime.NewResponseError(err, resp)
+		return RoleDefinitionsClientCreateOrUpdateResponse{}, err
 	}
 	return result, nil
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *RoleDefinitionsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Delete - Deletes a custom role definition.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role definition to delete. Managed HSM only supports '/'.
 // roleDefinitionName - The name (GUID) of the role definition to delete.
@@ -116,7 +102,7 @@ func (client *RoleDefinitionsClient) Delete(ctx context.Context, vaultBaseURL st
 		return RoleDefinitionsClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RoleDefinitionsClientDeleteResponse{}, client.deleteHandleError(resp)
+		return RoleDefinitionsClientDeleteResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteHandleResponse(resp)
 }
@@ -146,26 +132,13 @@ func (client *RoleDefinitionsClient) deleteCreateRequest(ctx context.Context, va
 func (client *RoleDefinitionsClient) deleteHandleResponse(resp *http.Response) (RoleDefinitionsClientDeleteResponse, error) {
 	result := RoleDefinitionsClientDeleteResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinition); err != nil {
-		return RoleDefinitionsClientDeleteResponse{}, runtime.NewResponseError(err, resp)
+		return RoleDefinitionsClientDeleteResponse{}, err
 	}
 	return result, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *RoleDefinitionsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Get the specified role definition.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role definition to get. Managed HSM only supports '/'.
 // roleDefinitionName - The name of the role definition to get.
@@ -180,7 +153,7 @@ func (client *RoleDefinitionsClient) Get(ctx context.Context, vaultBaseURL strin
 		return RoleDefinitionsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return RoleDefinitionsClientGetResponse{}, client.getHandleError(resp)
+		return RoleDefinitionsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -210,26 +183,13 @@ func (client *RoleDefinitionsClient) getCreateRequest(ctx context.Context, vault
 func (client *RoleDefinitionsClient) getHandleResponse(resp *http.Response) (RoleDefinitionsClientGetResponse, error) {
 	result := RoleDefinitionsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinition); err != nil {
-		return RoleDefinitionsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return RoleDefinitionsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *RoleDefinitionsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Get all role definitions that are applicable at scope and above.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vaultBaseURL - The vault name, for example https://myvault.vault.azure.net.
 // scope - The scope of the role definition.
 // options - RoleDefinitionsClientListOptions contains the optional parameters for the RoleDefinitionsClient.List method.
@@ -269,20 +229,7 @@ func (client *RoleDefinitionsClient) listCreateRequest(ctx context.Context, vaul
 func (client *RoleDefinitionsClient) listHandleResponse(resp *http.Response) (RoleDefinitionsClientListResponse, error) {
 	result := RoleDefinitionsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.RoleDefinitionListResult); err != nil {
-		return RoleDefinitionsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return RoleDefinitionsClientListResponse{}, err
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *RoleDefinitionsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

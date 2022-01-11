@@ -53,7 +53,7 @@ func (p *BudgetsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -107,7 +107,7 @@ func (p *EventsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -161,7 +161,7 @@ func (p *LotsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -215,7 +215,7 @@ func (p *MarketplacesClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -269,7 +269,7 @@ func (p *OperationsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -323,7 +323,7 @@ func (p *ReservationRecommendationsClientListPager) NextPage(ctx context.Context
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -377,7 +377,7 @@ func (p *ReservationTransactionsClientListByBillingProfilePager) NextPage(ctx co
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByBillingProfileHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByBillingProfileHandleResponse(resp)
@@ -431,7 +431,7 @@ func (p *ReservationTransactionsClientListPager) NextPage(ctx context.Context) b
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -485,7 +485,7 @@ func (p *ReservationsDetailsClientListByReservationOrderAndReservationPager) Nex
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByReservationOrderAndReservationHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByReservationOrderAndReservationHandleResponse(resp)
@@ -539,7 +539,7 @@ func (p *ReservationsDetailsClientListByReservationOrderPager) NextPage(ctx cont
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByReservationOrderHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByReservationOrderHandleResponse(resp)
@@ -593,7 +593,7 @@ func (p *ReservationsDetailsClientListPager) NextPage(ctx context.Context) bool 
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -647,7 +647,7 @@ func (p *ReservationsSummariesClientListByReservationOrderAndReservationPager) N
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByReservationOrderAndReservationHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByReservationOrderAndReservationHandleResponse(resp)
@@ -701,7 +701,7 @@ func (p *ReservationsSummariesClientListByReservationOrderPager) NextPage(ctx co
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByReservationOrderHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByReservationOrderHandleResponse(resp)
@@ -755,7 +755,7 @@ func (p *ReservationsSummariesClientListPager) NextPage(ctx context.Context) boo
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -809,7 +809,7 @@ func (p *UsageDetailsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)

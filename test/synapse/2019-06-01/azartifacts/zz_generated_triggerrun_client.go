@@ -11,7 +11,6 @@ package azartifacts
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -36,7 +35,7 @@ func newTriggerRunClient(endpoint string, pl runtime.Pipeline) *triggerRunClient
 }
 
 // CancelTriggerInstance - Cancel single trigger instance by runId.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // triggerName - The trigger name.
 // runID - The pipeline run identifier.
 // options - triggerRunClientCancelTriggerInstanceOptions contains the optional parameters for the triggerRunClient.CancelTriggerInstance
@@ -51,7 +50,7 @@ func (client *triggerRunClient) CancelTriggerInstance(ctx context.Context, trigg
 		return triggerRunClientCancelTriggerInstanceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return triggerRunClientCancelTriggerInstanceResponse{}, client.cancelTriggerInstanceHandleError(resp)
+		return triggerRunClientCancelTriggerInstanceResponse{}, runtime.NewResponseError(resp)
 	}
 	return triggerRunClientCancelTriggerInstanceResponse{RawResponse: resp}, nil
 }
@@ -78,21 +77,8 @@ func (client *triggerRunClient) cancelTriggerInstanceCreateRequest(ctx context.C
 	return req, nil
 }
 
-// cancelTriggerInstanceHandleError handles the CancelTriggerInstance error response.
-func (client *triggerRunClient) cancelTriggerInstanceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // QueryTriggerRunsByWorkspace - Query trigger runs.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // filterParameters - Parameters to filter the pipeline run.
 // options - triggerRunClientQueryTriggerRunsByWorkspaceOptions contains the optional parameters for the triggerRunClient.QueryTriggerRunsByWorkspace
 // method.
@@ -106,7 +92,7 @@ func (client *triggerRunClient) QueryTriggerRunsByWorkspace(ctx context.Context,
 		return triggerRunClientQueryTriggerRunsByWorkspaceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return triggerRunClientQueryTriggerRunsByWorkspaceResponse{}, client.queryTriggerRunsByWorkspaceHandleError(resp)
+		return triggerRunClientQueryTriggerRunsByWorkspaceResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.queryTriggerRunsByWorkspaceHandleResponse(resp)
 }
@@ -129,26 +115,13 @@ func (client *triggerRunClient) queryTriggerRunsByWorkspaceCreateRequest(ctx con
 func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleResponse(resp *http.Response) (triggerRunClientQueryTriggerRunsByWorkspaceResponse, error) {
 	result := triggerRunClientQueryTriggerRunsByWorkspaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TriggerRunsQueryResponse); err != nil {
-		return triggerRunClientQueryTriggerRunsByWorkspaceResponse{}, runtime.NewResponseError(err, resp)
+		return triggerRunClientQueryTriggerRunsByWorkspaceResponse{}, err
 	}
 	return result, nil
 }
 
-// queryTriggerRunsByWorkspaceHandleError handles the QueryTriggerRunsByWorkspace error response.
-func (client *triggerRunClient) queryTriggerRunsByWorkspaceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // RerunTriggerInstance - Rerun single trigger instance by runId.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // triggerName - The trigger name.
 // runID - The pipeline run identifier.
 // options - triggerRunClientRerunTriggerInstanceOptions contains the optional parameters for the triggerRunClient.RerunTriggerInstance
@@ -163,7 +136,7 @@ func (client *triggerRunClient) RerunTriggerInstance(ctx context.Context, trigge
 		return triggerRunClientRerunTriggerInstanceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return triggerRunClientRerunTriggerInstanceResponse{}, client.rerunTriggerInstanceHandleError(resp)
+		return triggerRunClientRerunTriggerInstanceResponse{}, runtime.NewResponseError(resp)
 	}
 	return triggerRunClientRerunTriggerInstanceResponse{RawResponse: resp}, nil
 }
@@ -188,17 +161,4 @@ func (client *triggerRunClient) rerunTriggerInstanceCreateRequest(ctx context.Co
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// rerunTriggerInstanceHandleError handles the RerunTriggerInstance error response.
-func (client *triggerRunClient) rerunTriggerInstanceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType.InnerError); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

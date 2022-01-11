@@ -9,8 +9,8 @@
 package azartifacts
 
 const (
-	module  = "azartifacts"
-	version = "v0.1.0"
+	moduleName    = "azartifacts"
+	moduleVersion = "v0.1.0"
 )
 
 type AvroCompressionCodec string

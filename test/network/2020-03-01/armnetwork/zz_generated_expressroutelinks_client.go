@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewExpressRouteLinksClient(subscriptionID string, credential azcore.TokenCr
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ExpressRouteLinksClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Retrieves the specified ExpressRouteLink resource.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // expressRoutePortName - The name of the ExpressRoutePort resource.
 // linkName - The name of the ExpressRouteLink resource.
@@ -67,7 +66,7 @@ func (client *ExpressRouteLinksClient) Get(ctx context.Context, resourceGroupNam
 		return ExpressRouteLinksClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExpressRouteLinksClientGetResponse{}, client.getHandleError(resp)
+		return ExpressRouteLinksClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -106,26 +105,13 @@ func (client *ExpressRouteLinksClient) getCreateRequest(ctx context.Context, res
 func (client *ExpressRouteLinksClient) getHandleResponse(resp *http.Response) (ExpressRouteLinksClientGetResponse, error) {
 	result := ExpressRouteLinksClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteLink); err != nil {
-		return ExpressRouteLinksClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRouteLinksClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *ExpressRouteLinksClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Retrieve the ExpressRouteLink sub-resources of the specified ExpressRoutePort resource.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // expressRoutePortName - The name of the ExpressRoutePort resource.
 // options - ExpressRouteLinksClientListOptions contains the optional parameters for the ExpressRouteLinksClient.List method.
@@ -171,20 +157,7 @@ func (client *ExpressRouteLinksClient) listCreateRequest(ctx context.Context, re
 func (client *ExpressRouteLinksClient) listHandleResponse(resp *http.Response) (ExpressRouteLinksClientListResponse, error) {
 	result := ExpressRouteLinksClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteLinkListResult); err != nil {
-		return ExpressRouteLinksClientListResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRouteLinksClientListResponse{}, err
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *ExpressRouteLinksClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

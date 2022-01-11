@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewExpressRouteGatewaysClient(subscriptionID string, credential azcore.Toke
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ExpressRouteGatewaysClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a ExpressRoute gateway in a specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // expressRouteGatewayName - The name of the ExpressRoute gateway.
 // putExpressRouteGatewayParameters - Parameters required in an ExpressRoute gateway PUT operation.
@@ -66,7 +65,7 @@ func (client *ExpressRouteGatewaysClient) BeginCreateOrUpdate(ctx context.Contex
 	result := ExpressRouteGatewaysClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ExpressRouteGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("ExpressRouteGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return ExpressRouteGatewaysClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *ExpressRouteGatewaysClient) BeginCreateOrUpdate(ctx context.Contex
 }
 
 // CreateOrUpdate - Creates or updates a ExpressRoute gateway in a specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ExpressRouteGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, putExpressRouteGatewayParameters ExpressRouteGateway, options *ExpressRouteGatewaysClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *ExpressRouteGatewaysClient) createOrUpdate(ctx context.Context, re
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,22 +118,9 @@ func (client *ExpressRouteGatewaysClient) createOrUpdateCreateRequest(ctx contex
 	return req, runtime.MarshalAsJSON(req, putExpressRouteGatewayParameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *ExpressRouteGatewaysClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only
 // be deleted when there are no connection subresources.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // expressRouteGatewayName - The name of the ExpressRoute gateway.
 // options - ExpressRouteGatewaysClientBeginDeleteOptions contains the optional parameters for the ExpressRouteGatewaysClient.BeginDelete
@@ -147,7 +133,7 @@ func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resou
 	result := ExpressRouteGatewaysClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ExpressRouteGatewaysClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("ExpressRouteGatewaysClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRouteGatewaysClientDeletePollerResponse{}, err
 	}
@@ -159,7 +145,7 @@ func (client *ExpressRouteGatewaysClient) BeginDelete(ctx context.Context, resou
 
 // Delete - Deletes the specified ExpressRoute gateway in a resource group. An ExpressRoute gateway resource can only be deleted
 // when there are no connection subresources.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ExpressRouteGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, expressRouteGatewayName string, options *ExpressRouteGatewaysClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, expressRouteGatewayName, options)
 	if err != nil {
@@ -170,7 +156,7 @@ func (client *ExpressRouteGatewaysClient) deleteOperation(ctx context.Context, r
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -201,21 +187,8 @@ func (client *ExpressRouteGatewaysClient) deleteCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *ExpressRouteGatewaysClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Fetches the details of a ExpressRoute gateway in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // expressRouteGatewayName - The name of the ExpressRoute gateway.
 // options - ExpressRouteGatewaysClientGetOptions contains the optional parameters for the ExpressRouteGatewaysClient.Get
@@ -230,7 +203,7 @@ func (client *ExpressRouteGatewaysClient) Get(ctx context.Context, resourceGroup
 		return ExpressRouteGatewaysClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExpressRouteGatewaysClientGetResponse{}, client.getHandleError(resp)
+		return ExpressRouteGatewaysClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -265,26 +238,13 @@ func (client *ExpressRouteGatewaysClient) getCreateRequest(ctx context.Context, 
 func (client *ExpressRouteGatewaysClient) getHandleResponse(resp *http.Response) (ExpressRouteGatewaysClientGetResponse, error) {
 	result := ExpressRouteGatewaysClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteGateway); err != nil {
-		return ExpressRouteGatewaysClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRouteGatewaysClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *ExpressRouteGatewaysClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByResourceGroup - Lists ExpressRoute gateways in a given resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - ExpressRouteGatewaysClientListByResourceGroupOptions contains the optional parameters for the ExpressRouteGatewaysClient.ListByResourceGroup
 // method.
@@ -298,7 +258,7 @@ func (client *ExpressRouteGatewaysClient) ListByResourceGroup(ctx context.Contex
 		return ExpressRouteGatewaysClientListByResourceGroupResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExpressRouteGatewaysClientListByResourceGroupResponse{}, client.listByResourceGroupHandleError(resp)
+		return ExpressRouteGatewaysClientListByResourceGroupResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listByResourceGroupHandleResponse(resp)
 }
@@ -329,26 +289,13 @@ func (client *ExpressRouteGatewaysClient) listByResourceGroupCreateRequest(ctx c
 func (client *ExpressRouteGatewaysClient) listByResourceGroupHandleResponse(resp *http.Response) (ExpressRouteGatewaysClientListByResourceGroupResponse, error) {
 	result := ExpressRouteGatewaysClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteGatewayList); err != nil {
-		return ExpressRouteGatewaysClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRouteGatewaysClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *ExpressRouteGatewaysClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListBySubscription - Lists ExpressRoute gateways under a given subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ExpressRouteGatewaysClientListBySubscriptionOptions contains the optional parameters for the ExpressRouteGatewaysClient.ListBySubscription
 // method.
 func (client *ExpressRouteGatewaysClient) ListBySubscription(ctx context.Context, options *ExpressRouteGatewaysClientListBySubscriptionOptions) (ExpressRouteGatewaysClientListBySubscriptionResponse, error) {
@@ -361,7 +308,7 @@ func (client *ExpressRouteGatewaysClient) ListBySubscription(ctx context.Context
 		return ExpressRouteGatewaysClientListBySubscriptionResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExpressRouteGatewaysClientListBySubscriptionResponse{}, client.listBySubscriptionHandleError(resp)
+		return ExpressRouteGatewaysClientListBySubscriptionResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listBySubscriptionHandleResponse(resp)
 }
@@ -388,20 +335,7 @@ func (client *ExpressRouteGatewaysClient) listBySubscriptionCreateRequest(ctx co
 func (client *ExpressRouteGatewaysClient) listBySubscriptionHandleResponse(resp *http.Response) (ExpressRouteGatewaysClientListBySubscriptionResponse, error) {
 	result := ExpressRouteGatewaysClientListBySubscriptionResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteGatewayList); err != nil {
-		return ExpressRouteGatewaysClientListBySubscriptionResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRouteGatewaysClientListBySubscriptionResponse{}, err
 	}
 	return result, nil
-}
-
-// listBySubscriptionHandleError handles the ListBySubscription error response.
-func (client *ExpressRouteGatewaysClient) listBySubscriptionHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

@@ -11,7 +11,6 @@ package azblob
 import (
 	"context"
 	"encoding/base64"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"io"
@@ -46,7 +45,7 @@ func newBlockBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *bl
 // this by specifying whether to commit a block from the committed block list or from the uncommitted block list, or to commit
 // the most recently uploaded version of the block, whichever list it may
 // belong to.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // blockBlobClientCommitBlockListOptions - blockBlobClientCommitBlockListOptions contains the optional parameters for the
 // blockBlobClient.CommitBlockList method.
 // BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
@@ -64,7 +63,7 @@ func (client *blockBlobClient) CommitBlockList(ctx context.Context, comp Enum34,
 		return blockBlobClientCommitBlockListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return blockBlobClientCommitBlockListResponse{}, client.commitBlockListHandleError(resp)
+		return blockBlobClientCommitBlockListResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.commitBlockListHandleResponse(resp)
 }
@@ -225,21 +224,8 @@ func (client *blockBlobClient) commitBlockListHandleResponse(resp *http.Response
 	return result, nil
 }
 
-// commitBlockListHandleError handles the CommitBlockList error response.
-func (client *blockBlobClient) commitBlockListHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBlockList - The Get Block List operation retrieves the list of blocks that have been uploaded as part of a block blob
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // listType - Specifies whether to return the list of committed blocks, the list of uncommitted blocks, or both lists together.
 // blockBlobClientGetBlockListOptions - blockBlobClientGetBlockListOptions contains the optional parameters for the blockBlobClient.GetBlockList
 // method.
@@ -255,7 +241,7 @@ func (client *blockBlobClient) GetBlockList(ctx context.Context, comp Enum34, li
 		return blockBlobClientGetBlockListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return blockBlobClientGetBlockListResponse{}, client.getBlockListHandleError(resp)
+		return blockBlobClientGetBlockListResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBlockListHandleResponse(resp)
 }
@@ -330,22 +316,9 @@ func (client *blockBlobClient) getBlockListHandleResponse(resp *http.Response) (
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.BlockList); err != nil {
-		return blockBlobClientGetBlockListResponse{}, runtime.NewResponseError(err, resp)
+		return blockBlobClientGetBlockListResponse{}, err
 	}
 	return result, nil
-}
-
-// getBlockListHandleError handles the GetBlockList error response.
-func (client *blockBlobClient) getBlockListHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // PutBlobFromURL - The Put Blob from URL operation creates a new Block Blob where the contents of the blob are read from
@@ -353,7 +326,7 @@ func (client *blockBlobClient) getBlockListHandleError(resp *http.Response) erro
 // supported with Put Blob from URL; the content of an existing blob is overwritten with the content of the new blob. To perform
 // partial updates to a block blob’s contents using a source URL, use the Put
 // Block from URL API in conjunction with Put Block List.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // contentLength - The length of the request.
 // copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 // a page blob snapshot. The value should be URL-encoded as it would appear in a request
@@ -377,7 +350,7 @@ func (client *blockBlobClient) PutBlobFromURL(ctx context.Context, contentLength
 		return blockBlobClientPutBlobFromURLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return blockBlobClientPutBlobFromURLResponse{}, client.putBlobFromURLHandleError(resp)
+		return blockBlobClientPutBlobFromURLResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.putBlobFromURLHandleResponse(resp)
 }
@@ -542,21 +515,8 @@ func (client *blockBlobClient) putBlobFromURLHandleResponse(resp *http.Response)
 	return result, nil
 }
 
-// putBlobFromURLHandleError handles the PutBlobFromURL error response.
-func (client *blockBlobClient) putBlobFromURLHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // StageBlock - The Stage Block operation creates a new block to be committed as part of a blob
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // blockID - A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal
 // to 64 bytes in size. For a given blob, the length of the value specified for the blockid
 // parameter must be the same size for each block.
@@ -577,7 +537,7 @@ func (client *blockBlobClient) StageBlock(ctx context.Context, comp Enum33, bloc
 		return blockBlobClientStageBlockResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return blockBlobClientStageBlockResponse{}, client.stageBlockHandleError(resp)
+		return blockBlobClientStageBlockResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.stageBlockHandleResponse(resp)
 }
@@ -674,22 +634,9 @@ func (client *blockBlobClient) stageBlockHandleResponse(resp *http.Response) (bl
 	return result, nil
 }
 
-// stageBlockHandleError handles the StageBlock error response.
-func (client *blockBlobClient) stageBlockHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // StageBlockFromURL - The Stage Block operation creates a new block to be committed as part of a blob where the contents
 // are read from a URL.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // blockID - A valid Base64 string value that identifies the block. Prior to encoding, the string must be less than or equal
 // to 64 bytes in size. For a given blob, the length of the value specified for the blockid
 // parameter must be the same size for each block.
@@ -712,7 +659,7 @@ func (client *blockBlobClient) StageBlockFromURL(ctx context.Context, comp Enum3
 		return blockBlobClientStageBlockFromURLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return blockBlobClientStageBlockFromURLResponse{}, client.stageBlockFromURLHandleError(resp)
+		return blockBlobClientStageBlockFromURLResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.stageBlockFromURLHandleResponse(resp)
 }
@@ -825,24 +772,11 @@ func (client *blockBlobClient) stageBlockFromURLHandleResponse(resp *http.Respon
 	return result, nil
 }
 
-// stageBlockFromURLHandleError handles the StageBlockFromURL error response.
-func (client *blockBlobClient) stageBlockFromURLHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Upload - The Upload Block Blob operation updates the content of an existing block blob. Updating an existing block blob
 // overwrites any existing metadata on the blob. Partial updates are not supported with Put
 // Blob; the content of the existing blob is overwritten with the content of the new blob. To perform a partial update of
 // the content of a block blob, use the Put Block List operation.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // contentLength - The length of the request.
 // body - Initial data
 // blockBlobClientUploadOptions - blockBlobClientUploadOptions contains the optional parameters for the blockBlobClient.Upload
@@ -862,7 +796,7 @@ func (client *blockBlobClient) Upload(ctx context.Context, contentLength int64, 
 		return blockBlobClientUploadResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return blockBlobClientUploadResponse{}, client.uploadHandleError(resp)
+		return blockBlobClientUploadResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.uploadHandleResponse(resp)
 }
@@ -1012,17 +946,4 @@ func (client *blockBlobClient) uploadHandleResponse(resp *http.Response) (blockB
 		result.EncryptionScope = &val
 	}
 	return result, nil
-}
-
-// uploadHandleError handles the Upload error response.
-func (client *blockBlobClient) uploadHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

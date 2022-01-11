@@ -11,7 +11,6 @@ package validationgroup
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -38,13 +37,13 @@ func NewAutoRestValidationTestClient(subscriptionID string, options *azcore.Clie
 	}
 	client := &AutoRestValidationTestClient{
 		subscriptionID: subscriptionID,
-		pl:             runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl:             runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetWithConstantInPath -
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - AutoRestValidationTestClientGetWithConstantInPathOptions contains the optional parameters for the AutoRestValidationTestClient.GetWithConstantInPath
 // method.
 func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Context, options *AutoRestValidationTestClientGetWithConstantInPathOptions) (AutoRestValidationTestClientGetWithConstantInPathResponse, error) {
@@ -57,7 +56,7 @@ func (client *AutoRestValidationTestClient) GetWithConstantInPath(ctx context.Co
 		return AutoRestValidationTestClientGetWithConstantInPathResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AutoRestValidationTestClientGetWithConstantInPathResponse{}, client.getWithConstantInPathHandleError(resp)
+		return AutoRestValidationTestClientGetWithConstantInPathResponse{}, runtime.NewResponseError(resp)
 	}
 	return AutoRestValidationTestClientGetWithConstantInPathResponse{RawResponse: resp}, nil
 }
@@ -73,20 +72,8 @@ func (client *AutoRestValidationTestClient) getWithConstantInPathCreateRequest(c
 	return req, nil
 }
 
-// getWithConstantInPathHandleError handles the GetWithConstantInPath error response.
-func (client *AutoRestValidationTestClient) getWithConstantInPathHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // PostWithConstantInBody -
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - AutoRestValidationTestClientPostWithConstantInBodyOptions contains the optional parameters for the AutoRestValidationTestClient.PostWithConstantInBody
 // method.
 func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.Context, options *AutoRestValidationTestClientPostWithConstantInBodyOptions) (AutoRestValidationTestClientPostWithConstantInBodyResponse, error) {
@@ -99,7 +86,7 @@ func (client *AutoRestValidationTestClient) PostWithConstantInBody(ctx context.C
 		return AutoRestValidationTestClientPostWithConstantInBodyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AutoRestValidationTestClientPostWithConstantInBodyResponse{}, client.postWithConstantInBodyHandleError(resp)
+		return AutoRestValidationTestClientPostWithConstantInBodyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.postWithConstantInBodyHandleResponse(resp)
 }
@@ -123,25 +110,13 @@ func (client *AutoRestValidationTestClient) postWithConstantInBodyCreateRequest(
 func (client *AutoRestValidationTestClient) postWithConstantInBodyHandleResponse(resp *http.Response) (AutoRestValidationTestClientPostWithConstantInBodyResponse, error) {
 	result := AutoRestValidationTestClientPostWithConstantInBodyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Product); err != nil {
-		return AutoRestValidationTestClientPostWithConstantInBodyResponse{}, runtime.NewResponseError(err, resp)
+		return AutoRestValidationTestClientPostWithConstantInBodyResponse{}, err
 	}
 	return result, nil
 }
 
-// postWithConstantInBodyHandleError handles the PostWithConstantInBody error response.
-func (client *AutoRestValidationTestClient) postWithConstantInBodyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // ValidationOfBody - Validates body parameters on the method. See swagger for details.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - Required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
 // id - Required int multiple of 10 from 100 to 1000.
 // options - AutoRestValidationTestClientValidationOfBodyOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfBody
@@ -156,7 +131,7 @@ func (client *AutoRestValidationTestClient) ValidationOfBody(ctx context.Context
 		return AutoRestValidationTestClientValidationOfBodyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AutoRestValidationTestClientValidationOfBodyResponse{}, client.validationOfBodyHandleError(resp)
+		return AutoRestValidationTestClientValidationOfBodyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.validationOfBodyHandleResponse(resp)
 }
@@ -191,26 +166,13 @@ func (client *AutoRestValidationTestClient) validationOfBodyCreateRequest(ctx co
 func (client *AutoRestValidationTestClient) validationOfBodyHandleResponse(resp *http.Response) (AutoRestValidationTestClientValidationOfBodyResponse, error) {
 	result := AutoRestValidationTestClientValidationOfBodyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Product); err != nil {
-		return AutoRestValidationTestClientValidationOfBodyResponse{}, runtime.NewResponseError(err, resp)
+		return AutoRestValidationTestClientValidationOfBodyResponse{}, err
 	}
 	return result, nil
 }
 
-// validationOfBodyHandleError handles the ValidationOfBody error response.
-func (client *AutoRestValidationTestClient) validationOfBodyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ValidationOfMethodParameters - Validates input parameters on the method. See swagger for details.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - Required string between 3 and 10 chars with pattern [a-zA-Z0-9]+.
 // id - Required int multiple of 10 from 100 to 1000.
 // options - AutoRestValidationTestClientValidationOfMethodParametersOptions contains the optional parameters for the AutoRestValidationTestClient.ValidationOfMethodParameters
@@ -225,7 +187,7 @@ func (client *AutoRestValidationTestClient) ValidationOfMethodParameters(ctx con
 		return AutoRestValidationTestClientValidationOfMethodParametersResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return AutoRestValidationTestClientValidationOfMethodParametersResponse{}, client.validationOfMethodParametersHandleError(resp)
+		return AutoRestValidationTestClientValidationOfMethodParametersResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.validationOfMethodParametersHandleResponse(resp)
 }
@@ -257,20 +219,7 @@ func (client *AutoRestValidationTestClient) validationOfMethodParametersCreateRe
 func (client *AutoRestValidationTestClient) validationOfMethodParametersHandleResponse(resp *http.Response) (AutoRestValidationTestClientValidationOfMethodParametersResponse, error) {
 	result := AutoRestValidationTestClientValidationOfMethodParametersResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Product); err != nil {
-		return AutoRestValidationTestClientValidationOfMethodParametersResponse{}, runtime.NewResponseError(err, resp)
+		return AutoRestValidationTestClientValidationOfMethodParametersResponse{}, err
 	}
 	return result, nil
-}
-
-// validationOfMethodParametersHandleError handles the ValidationOfMethodParameters error response.
-func (client *AutoRestValidationTestClient) validationOfMethodParametersHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

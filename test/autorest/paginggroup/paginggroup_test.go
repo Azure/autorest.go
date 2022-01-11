@@ -18,7 +18,7 @@ import (
 
 func newPagingClient() *PagingClient {
 	options := azcore.ClientOptions{}
-	options.Retry.RetryDelay = 10 * time.Millisecond
+	options.Retry.RetryDelay = time.Second
 	options.Transport = httpClientWithCookieJar()
 	return NewPagingClient(&options)
 }
@@ -166,7 +166,7 @@ func TestGetMultiplePagesLro(t *testing.T) {
 	if err = resp.Resume(context.Background(), client, rt); err != nil {
 		t.Fatal(err)
 	}
-	pager, err := resp.PollUntilDone(context.Background(), 1*time.Millisecond)
+	pager, err := resp.PollUntilDone(context.Background(), time.Second)
 	if err != nil {
 		t.Fatal(err)
 	}

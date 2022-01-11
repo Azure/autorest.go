@@ -53,7 +53,7 @@ func (p *clientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)

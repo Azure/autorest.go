@@ -10,7 +10,6 @@ package lrogroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
@@ -32,7 +31,7 @@ func NewLROsCustomHeaderClient(options *azcore.ClientOptions) *LROsCustomHeaderC
 		cp = *options
 	}
 	client := &LROsCustomHeaderClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
@@ -40,7 +39,7 @@ func NewLROsCustomHeaderClient(options *azcore.ClientOptions) *LROsCustomHeaderC
 // BeginPost202Retry200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all
 // requests. Long running post request, service returns a 202 to the initial request, with 'Location' and
 // 'Retry-After' headers, Polls return a 200 with a response body after success
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - LROsCustomHeaderClientBeginPost202Retry200Options contains the optional parameters for the LROsCustomHeaderClient.BeginPost202Retry200
 // method.
 func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, options *LROsCustomHeaderClientBeginPost202Retry200Options) (LROsCustomHeaderClientPost202Retry200PollerResponse, error) {
@@ -51,7 +50,7 @@ func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, 
 	result := LROsCustomHeaderClientPost202Retry200PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsCustomHeaderClient.Post202Retry200", "", resp, client.pl, client.post202Retry200HandleError)
+	pt, err := armruntime.NewPoller("LROsCustomHeaderClient.Post202Retry200", "", resp, client.pl)
 	if err != nil {
 		return LROsCustomHeaderClientPost202Retry200PollerResponse{}, err
 	}
@@ -64,7 +63,7 @@ func (client *LROsCustomHeaderClient) BeginPost202Retry200(ctx context.Context, 
 // Post202Retry200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all requests.
 // Long running post request, service returns a 202 to the initial request, with 'Location' and
 // 'Retry-After' headers, Polls return a 200 with a response body after success
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *LROsCustomHeaderClient) post202Retry200(ctx context.Context, options *LROsCustomHeaderClientBeginPost202Retry200Options) (*http.Response, error) {
 	req, err := client.post202Retry200CreateRequest(ctx, options)
 	if err != nil {
@@ -75,7 +74,7 @@ func (client *LROsCustomHeaderClient) post202Retry200(ctx context.Context, optio
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return nil, client.post202Retry200HandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -94,23 +93,10 @@ func (client *LROsCustomHeaderClient) post202Retry200CreateRequest(ctx context.C
 	return req, nil
 }
 
-// post202Retry200HandleError handles the Post202Retry200 error response.
-func (client *LROsCustomHeaderClient) post202Retry200HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginPostAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header
 // for all requests. Long running post request, service returns a 202 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - LROsCustomHeaderClientBeginPostAsyncRetrySucceededOptions contains the optional parameters for the LROsCustomHeaderClient.BeginPostAsyncRetrySucceeded
 // method.
 func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.Context, options *LROsCustomHeaderClientBeginPostAsyncRetrySucceededOptions) (LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse, error) {
@@ -121,7 +107,7 @@ func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.C
 	result := LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsCustomHeaderClient.PostAsyncRetrySucceeded", "", resp, client.pl, client.postAsyncRetrySucceededHandleError)
+	pt, err := armruntime.NewPoller("LROsCustomHeaderClient.PostAsyncRetrySucceeded", "", resp, client.pl)
 	if err != nil {
 		return LROsCustomHeaderClientPostAsyncRetrySucceededPollerResponse{}, err
 	}
@@ -134,7 +120,7 @@ func (client *LROsCustomHeaderClient) BeginPostAsyncRetrySucceeded(ctx context.C
 // PostAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for
 // all requests. Long running post request, service returns a 202 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *LROsCustomHeaderClient) postAsyncRetrySucceeded(ctx context.Context, options *LROsCustomHeaderClientBeginPostAsyncRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.postAsyncRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -145,7 +131,7 @@ func (client *LROsCustomHeaderClient) postAsyncRetrySucceeded(ctx context.Contex
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return nil, client.postAsyncRetrySucceededHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -164,23 +150,10 @@ func (client *LROsCustomHeaderClient) postAsyncRetrySucceededCreateRequest(ctx c
 	return req, nil
 }
 
-// postAsyncRetrySucceededHandleError handles the PostAsyncRetrySucceeded error response.
-func (client *LROsCustomHeaderClient) postAsyncRetrySucceededHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginPut201CreatingSucceeded200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header
 // for all requests. Long running put request, service returns a 201 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options contains the optional parameters for the LROsCustomHeaderClient.BeginPut201CreatingSucceeded200
 // method.
 func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx context.Context, options *LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options) (LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse, error) {
@@ -191,7 +164,7 @@ func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx contex
 	result := LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsCustomHeaderClient.Put201CreatingSucceeded200", "", resp, client.pl, client.put201CreatingSucceeded200HandleError)
+	pt, err := armruntime.NewPoller("LROsCustomHeaderClient.Put201CreatingSucceeded200", "", resp, client.pl)
 	if err != nil {
 		return LROsCustomHeaderClientPut201CreatingSucceeded200PollerResponse{}, err
 	}
@@ -204,7 +177,7 @@ func (client *LROsCustomHeaderClient) BeginPut201CreatingSucceeded200(ctx contex
 // Put201CreatingSucceeded200 - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for
 // all requests. Long running put request, service returns a 201 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Polls return this value until the last poll returns a ‘200’ with ProvisioningState=’Succeeded’
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *LROsCustomHeaderClient) put201CreatingSucceeded200(ctx context.Context, options *LROsCustomHeaderClientBeginPut201CreatingSucceeded200Options) (*http.Response, error) {
 	req, err := client.put201CreatingSucceeded200CreateRequest(ctx, options)
 	if err != nil {
@@ -215,7 +188,7 @@ func (client *LROsCustomHeaderClient) put201CreatingSucceeded200(ctx context.Con
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.put201CreatingSucceeded200HandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -234,23 +207,10 @@ func (client *LROsCustomHeaderClient) put201CreatingSucceeded200CreateRequest(ct
 	return req, nil
 }
 
-// put201CreatingSucceeded200HandleError handles the Put201CreatingSucceeded200 error response.
-func (client *LROsCustomHeaderClient) put201CreatingSucceeded200HandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginPutAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header
 // for all requests. Long running put request, service returns a 200 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions contains the optional parameters for the LROsCustomHeaderClient.BeginPutAsyncRetrySucceeded
 // method.
 func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Context, options *LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions) (LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse, error) {
@@ -261,7 +221,7 @@ func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Co
 	result := LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LROsCustomHeaderClient.PutAsyncRetrySucceeded", "", resp, client.pl, client.putAsyncRetrySucceededHandleError)
+	pt, err := armruntime.NewPoller("LROsCustomHeaderClient.PutAsyncRetrySucceeded", "", resp, client.pl)
 	if err != nil {
 		return LROsCustomHeaderClientPutAsyncRetrySucceededPollerResponse{}, err
 	}
@@ -274,7 +234,7 @@ func (client *LROsCustomHeaderClient) BeginPutAsyncRetrySucceeded(ctx context.Co
 // PutAsyncRetrySucceeded - x-ms-client-request-id = 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0 is required message header for all
 // requests. Long running put request, service returns a 200 to the initial request, with an entity that
 // contains ProvisioningState=’Creating’. Poll the endpoint indicated in the Azure-AsyncOperation header for operation status
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *LROsCustomHeaderClient) putAsyncRetrySucceeded(ctx context.Context, options *LROsCustomHeaderClientBeginPutAsyncRetrySucceededOptions) (*http.Response, error) {
 	req, err := client.putAsyncRetrySucceededCreateRequest(ctx, options)
 	if err != nil {
@@ -285,7 +245,7 @@ func (client *LROsCustomHeaderClient) putAsyncRetrySucceeded(ctx context.Context
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return nil, client.putAsyncRetrySucceededHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -302,17 +262,4 @@ func (client *LROsCustomHeaderClient) putAsyncRetrySucceededCreateRequest(ctx co
 		return req, runtime.MarshalAsJSON(req, *options.Product)
 	}
 	return req, nil
-}
-
-// putAsyncRetrySucceededHandleError handles the PutAsyncRetrySucceeded error response.
-func (client *LROsCustomHeaderClient) putAsyncRetrySucceededHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

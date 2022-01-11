@@ -10,7 +10,6 @@ package armconsumption
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -35,18 +34,18 @@ func NewTagsClient(credential azcore.TokenCredential, options *arm.ClientOptions
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &TagsClient{
-		host: string(cp.Host),
-		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+		host: string(cp.Endpoint),
+		pl:   armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Get all available tag keys for the defined scope
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // scope - The scope associated with tags operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope,
 // '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
 // resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope,
@@ -65,7 +64,7 @@ func (client *TagsClient) Get(ctx context.Context, scope string, options *TagsCl
 		return TagsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusNoContent) {
-		return TagsClientGetResponse{}, client.getHandleError(resp)
+		return TagsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -89,20 +88,7 @@ func (client *TagsClient) getCreateRequest(ctx context.Context, scope string, op
 func (client *TagsClient) getHandleResponse(resp *http.Response) (TagsClientGetResponse, error) {
 	result := TagsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.TagsResult); err != nil {
-		return TagsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return TagsClientGetResponse{}, err
 	}
 	return result, nil
-}
-
-// getHandleError handles the Get error response.
-func (client *TagsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewExpressRouteCircuitsClient(subscriptionID string, credential azcore.Toke
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ExpressRouteCircuitsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates an express route circuit.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the circuit.
 // parameters - Parameters supplied to the create or update express route circuit operation.
@@ -66,7 +65,7 @@ func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Contex
 	result := ExpressRouteCircuitsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCircuitsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *ExpressRouteCircuitsClient) BeginCreateOrUpdate(ctx context.Contex
 }
 
 // CreateOrUpdate - Creates or updates an express route circuit.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ExpressRouteCircuitsClient) createOrUpdate(ctx context.Context, resourceGroupName string, circuitName string, parameters ExpressRouteCircuit, options *ExpressRouteCircuitsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, circuitName, parameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *ExpressRouteCircuitsClient) createOrUpdate(ctx context.Context, re
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,21 +118,8 @@ func (client *ExpressRouteCircuitsClient) createOrUpdateCreateRequest(ctx contex
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *ExpressRouteCircuitsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified express route circuit.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // options - ExpressRouteCircuitsClientBeginDeleteOptions contains the optional parameters for the ExpressRouteCircuitsClient.BeginDelete
@@ -146,7 +132,7 @@ func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resou
 	result := ExpressRouteCircuitsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCircuitsClientDeletePollerResponse{}, err
 	}
@@ -157,7 +143,7 @@ func (client *ExpressRouteCircuitsClient) BeginDelete(ctx context.Context, resou
 }
 
 // Delete - Deletes the specified express route circuit.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ExpressRouteCircuitsClient) deleteOperation(ctx context.Context, resourceGroupName string, circuitName string, options *ExpressRouteCircuitsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, circuitName, options)
 	if err != nil {
@@ -168,7 +154,7 @@ func (client *ExpressRouteCircuitsClient) deleteOperation(ctx context.Context, r
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -199,21 +185,8 @@ func (client *ExpressRouteCircuitsClient) deleteCreateRequest(ctx context.Contex
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *ExpressRouteCircuitsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets information about the specified express route circuit.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of express route circuit.
 // options - ExpressRouteCircuitsClientGetOptions contains the optional parameters for the ExpressRouteCircuitsClient.Get
@@ -228,7 +201,7 @@ func (client *ExpressRouteCircuitsClient) Get(ctx context.Context, resourceGroup
 		return ExpressRouteCircuitsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExpressRouteCircuitsClientGetResponse{}, client.getHandleError(resp)
+		return ExpressRouteCircuitsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -263,26 +236,13 @@ func (client *ExpressRouteCircuitsClient) getCreateRequest(ctx context.Context, 
 func (client *ExpressRouteCircuitsClient) getHandleResponse(resp *http.Response) (ExpressRouteCircuitsClientGetResponse, error) {
 	result := ExpressRouteCircuitsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuit); err != nil {
-		return ExpressRouteCircuitsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRouteCircuitsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *ExpressRouteCircuitsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetPeeringStats - Gets all stats from an express route circuit in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // peeringName - The name of the peering.
@@ -298,7 +258,7 @@ func (client *ExpressRouteCircuitsClient) GetPeeringStats(ctx context.Context, r
 		return ExpressRouteCircuitsClientGetPeeringStatsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExpressRouteCircuitsClientGetPeeringStatsResponse{}, client.getPeeringStatsHandleError(resp)
+		return ExpressRouteCircuitsClientGetPeeringStatsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getPeeringStatsHandleResponse(resp)
 }
@@ -337,26 +297,13 @@ func (client *ExpressRouteCircuitsClient) getPeeringStatsCreateRequest(ctx conte
 func (client *ExpressRouteCircuitsClient) getPeeringStatsHandleResponse(resp *http.Response) (ExpressRouteCircuitsClientGetPeeringStatsResponse, error) {
 	result := ExpressRouteCircuitsClientGetPeeringStatsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuitStats); err != nil {
-		return ExpressRouteCircuitsClientGetPeeringStatsResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRouteCircuitsClientGetPeeringStatsResponse{}, err
 	}
 	return result, nil
 }
 
-// getPeeringStatsHandleError handles the GetPeeringStats error response.
-func (client *ExpressRouteCircuitsClient) getPeeringStatsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetStats - Gets all the stats from an express route circuit in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // options - ExpressRouteCircuitsClientGetStatsOptions contains the optional parameters for the ExpressRouteCircuitsClient.GetStats
@@ -371,7 +318,7 @@ func (client *ExpressRouteCircuitsClient) GetStats(ctx context.Context, resource
 		return ExpressRouteCircuitsClientGetStatsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExpressRouteCircuitsClientGetStatsResponse{}, client.getStatsHandleError(resp)
+		return ExpressRouteCircuitsClientGetStatsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getStatsHandleResponse(resp)
 }
@@ -406,26 +353,13 @@ func (client *ExpressRouteCircuitsClient) getStatsCreateRequest(ctx context.Cont
 func (client *ExpressRouteCircuitsClient) getStatsHandleResponse(resp *http.Response) (ExpressRouteCircuitsClientGetStatsResponse, error) {
 	result := ExpressRouteCircuitsClientGetStatsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuitStats); err != nil {
-		return ExpressRouteCircuitsClientGetStatsResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRouteCircuitsClientGetStatsResponse{}, err
 	}
 	return result, nil
 }
 
-// getStatsHandleError handles the GetStats error response.
-func (client *ExpressRouteCircuitsClient) getStatsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all the express route circuits in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - ExpressRouteCircuitsClientListOptions contains the optional parameters for the ExpressRouteCircuitsClient.List
 // method.
@@ -467,26 +401,13 @@ func (client *ExpressRouteCircuitsClient) listCreateRequest(ctx context.Context,
 func (client *ExpressRouteCircuitsClient) listHandleResponse(resp *http.Response) (ExpressRouteCircuitsClientListResponse, error) {
 	result := ExpressRouteCircuitsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuitListResult); err != nil {
-		return ExpressRouteCircuitsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRouteCircuitsClientListResponse{}, err
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *ExpressRouteCircuitsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListAll - Gets all the express route circuits in a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ExpressRouteCircuitsClientListAllOptions contains the optional parameters for the ExpressRouteCircuitsClient.ListAll
 // method.
 func (client *ExpressRouteCircuitsClient) ListAll(options *ExpressRouteCircuitsClientListAllOptions) *ExpressRouteCircuitsClientListAllPager {
@@ -523,26 +444,13 @@ func (client *ExpressRouteCircuitsClient) listAllCreateRequest(ctx context.Conte
 func (client *ExpressRouteCircuitsClient) listAllHandleResponse(resp *http.Response) (ExpressRouteCircuitsClientListAllResponse, error) {
 	result := ExpressRouteCircuitsClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuitListResult); err != nil {
-		return ExpressRouteCircuitsClientListAllResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRouteCircuitsClientListAllResponse{}, err
 	}
 	return result, nil
 }
 
-// listAllHandleError handles the ListAll error response.
-func (client *ExpressRouteCircuitsClient) listAllHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginListArpTable - Gets the currently advertised ARP table associated with the express route circuit in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // peeringName - The name of the peering.
@@ -557,7 +465,7 @@ func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context,
 	result := ExpressRouteCircuitsClientListArpTablePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.ListArpTable", "location", resp, client.pl, client.listArpTableHandleError)
+	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.ListArpTable", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCircuitsClientListArpTablePollerResponse{}, err
 	}
@@ -568,7 +476,7 @@ func (client *ExpressRouteCircuitsClient) BeginListArpTable(ctx context.Context,
 }
 
 // ListArpTable - Gets the currently advertised ARP table associated with the express route circuit in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ExpressRouteCircuitsClient) listArpTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsClientBeginListArpTableOptions) (*http.Response, error) {
 	req, err := client.listArpTableCreateRequest(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
@@ -579,7 +487,7 @@ func (client *ExpressRouteCircuitsClient) listArpTable(ctx context.Context, reso
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.listArpTableHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -618,22 +526,9 @@ func (client *ExpressRouteCircuitsClient) listArpTableCreateRequest(ctx context.
 	return req, nil
 }
 
-// listArpTableHandleError handles the ListArpTable error response.
-func (client *ExpressRouteCircuitsClient) listArpTableHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginListRoutesTable - Gets the currently advertised routes table associated with the express route circuit in a resource
 // group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // peeringName - The name of the peering.
@@ -648,7 +543,7 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Conte
 	result := ExpressRouteCircuitsClientListRoutesTablePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.ListRoutesTable", "location", resp, client.pl, client.listRoutesTableHandleError)
+	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.ListRoutesTable", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCircuitsClientListRoutesTablePollerResponse{}, err
 	}
@@ -659,7 +554,7 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTable(ctx context.Conte
 }
 
 // ListRoutesTable - Gets the currently advertised routes table associated with the express route circuit in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ExpressRouteCircuitsClient) listRoutesTable(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsClientBeginListRoutesTableOptions) (*http.Response, error) {
 	req, err := client.listRoutesTableCreateRequest(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
@@ -670,7 +565,7 @@ func (client *ExpressRouteCircuitsClient) listRoutesTable(ctx context.Context, r
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.listRoutesTableHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -709,22 +604,9 @@ func (client *ExpressRouteCircuitsClient) listRoutesTableCreateRequest(ctx conte
 	return req, nil
 }
 
-// listRoutesTableHandleError handles the ListRoutesTable error response.
-func (client *ExpressRouteCircuitsClient) listRoutesTableHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit
 // in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the express route circuit.
 // peeringName - The name of the peering.
@@ -739,7 +621,7 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx contex
 	result := ExpressRouteCircuitsClientListRoutesTableSummaryPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.ListRoutesTableSummary", "location", resp, client.pl, client.listRoutesTableSummaryHandleError)
+	pt, err := armruntime.NewPoller("ExpressRouteCircuitsClient.ListRoutesTableSummary", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRouteCircuitsClientListRoutesTableSummaryPollerResponse{}, err
 	}
@@ -751,7 +633,7 @@ func (client *ExpressRouteCircuitsClient) BeginListRoutesTableSummary(ctx contex
 
 // ListRoutesTableSummary - Gets the currently advertised routes table summary associated with the express route circuit in
 // a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ExpressRouteCircuitsClient) listRoutesTableSummary(ctx context.Context, resourceGroupName string, circuitName string, peeringName string, devicePath string, options *ExpressRouteCircuitsClientBeginListRoutesTableSummaryOptions) (*http.Response, error) {
 	req, err := client.listRoutesTableSummaryCreateRequest(ctx, resourceGroupName, circuitName, peeringName, devicePath, options)
 	if err != nil {
@@ -762,7 +644,7 @@ func (client *ExpressRouteCircuitsClient) listRoutesTableSummary(ctx context.Con
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.listRoutesTableSummaryHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -801,21 +683,8 @@ func (client *ExpressRouteCircuitsClient) listRoutesTableSummaryCreateRequest(ct
 	return req, nil
 }
 
-// listRoutesTableSummaryHandleError handles the ListRoutesTableSummary error response.
-func (client *ExpressRouteCircuitsClient) listRoutesTableSummaryHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateTags - Updates an express route circuit tags.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // circuitName - The name of the circuit.
 // parameters - Parameters supplied to update express route circuit tags.
@@ -831,7 +700,7 @@ func (client *ExpressRouteCircuitsClient) UpdateTags(ctx context.Context, resour
 		return ExpressRouteCircuitsClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExpressRouteCircuitsClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return ExpressRouteCircuitsClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -866,20 +735,7 @@ func (client *ExpressRouteCircuitsClient) updateTagsCreateRequest(ctx context.Co
 func (client *ExpressRouteCircuitsClient) updateTagsHandleResponse(resp *http.Response) (ExpressRouteCircuitsClientUpdateTagsResponse, error) {
 	result := ExpressRouteCircuitsClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRouteCircuit); err != nil {
-		return ExpressRouteCircuitsClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRouteCircuitsClientUpdateTagsResponse{}, err
 	}
 	return result, nil
-}
-
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *ExpressRouteCircuitsClient) updateTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

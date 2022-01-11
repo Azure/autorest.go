@@ -53,7 +53,7 @@ func (p *containerClientListBlobFlatSegmentPager) NextPage(ctx context.Context) 
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listBlobFlatSegmentHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listBlobFlatSegmentHandleResponse(resp)
@@ -107,7 +107,7 @@ func (p *containerClientListBlobHierarchySegmentPager) NextPage(ctx context.Cont
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listBlobHierarchySegmentHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listBlobHierarchySegmentHandleResponse(resp)
@@ -161,7 +161,7 @@ func (p *serviceClientListContainersSegmentPager) NextPage(ctx context.Context) 
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listContainersSegmentHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listContainersSegmentHandleResponse(resp)

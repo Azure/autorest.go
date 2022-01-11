@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,20 +39,20 @@ func NewExpressRoutePortsLocationsClient(subscriptionID string, credential azcor
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ExpressRoutePortsLocationsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said
 // peering location.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // locationName - Name of the requested ExpressRoutePort peering location.
 // options - ExpressRoutePortsLocationsClientGetOptions contains the optional parameters for the ExpressRoutePortsLocationsClient.Get
 // method.
@@ -67,7 +66,7 @@ func (client *ExpressRoutePortsLocationsClient) Get(ctx context.Context, locatio
 		return ExpressRoutePortsLocationsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExpressRoutePortsLocationsClientGetResponse{}, client.getHandleError(resp)
+		return ExpressRoutePortsLocationsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -98,27 +97,14 @@ func (client *ExpressRoutePortsLocationsClient) getCreateRequest(ctx context.Con
 func (client *ExpressRoutePortsLocationsClient) getHandleResponse(resp *http.Response) (ExpressRoutePortsLocationsClientGetResponse, error) {
 	result := ExpressRoutePortsLocationsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePortsLocation); err != nil {
-		return ExpressRoutePortsLocationsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRoutePortsLocationsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *ExpressRoutePortsLocationsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available
 // bandwidths can only be obtained when retrieving a specific peering location.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ExpressRoutePortsLocationsClientListOptions contains the optional parameters for the ExpressRoutePortsLocationsClient.List
 // method.
 func (client *ExpressRoutePortsLocationsClient) List(options *ExpressRoutePortsLocationsClientListOptions) *ExpressRoutePortsLocationsClientListPager {
@@ -155,20 +141,7 @@ func (client *ExpressRoutePortsLocationsClient) listCreateRequest(ctx context.Co
 func (client *ExpressRoutePortsLocationsClient) listHandleResponse(resp *http.Response) (ExpressRoutePortsLocationsClientListResponse, error) {
 	result := ExpressRoutePortsLocationsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePortsLocationListResult); err != nil {
-		return ExpressRoutePortsLocationsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRoutePortsLocationsClientListResponse{}, err
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *ExpressRoutePortsLocationsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewConnectionMonitorsClient(subscriptionID string, credential azcore.TokenC
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ConnectionMonitorsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Create or update a connection monitor.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
@@ -67,7 +66,7 @@ func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context,
 	result := ConnectionMonitorsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return ConnectionMonitorsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -78,7 +77,7 @@ func (client *ConnectionMonitorsClient) BeginCreateOrUpdate(ctx context.Context,
 }
 
 // CreateOrUpdate - Create or update a connection monitor.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ConnectionMonitorsClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, parameters ConnectionMonitor, options *ConnectionMonitorsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, parameters, options)
 	if err != nil {
@@ -89,7 +88,7 @@ func (client *ConnectionMonitorsClient) createOrUpdate(ctx context.Context, reso
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -124,21 +123,8 @@ func (client *ConnectionMonitorsClient) createOrUpdateCreateRequest(ctx context.
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *ConnectionMonitorsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified connection monitor.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
@@ -152,7 +138,7 @@ func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourc
 	result := ConnectionMonitorsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return ConnectionMonitorsClientDeletePollerResponse{}, err
 	}
@@ -163,7 +149,7 @@ func (client *ConnectionMonitorsClient) BeginDelete(ctx context.Context, resourc
 }
 
 // Delete - Deletes the specified connection monitor.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ConnectionMonitorsClient) deleteOperation(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
@@ -174,7 +160,7 @@ func (client *ConnectionMonitorsClient) deleteOperation(ctx context.Context, res
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -209,21 +195,8 @@ func (client *ConnectionMonitorsClient) deleteCreateRequest(ctx context.Context,
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *ConnectionMonitorsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets a connection monitor by name.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
@@ -238,7 +211,7 @@ func (client *ConnectionMonitorsClient) Get(ctx context.Context, resourceGroupNa
 		return ConnectionMonitorsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ConnectionMonitorsClientGetResponse{}, client.getHandleError(resp)
+		return ConnectionMonitorsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -277,26 +250,13 @@ func (client *ConnectionMonitorsClient) getCreateRequest(ctx context.Context, re
 func (client *ConnectionMonitorsClient) getHandleResponse(resp *http.Response) (ConnectionMonitorsClientGetResponse, error) {
 	result := ConnectionMonitorsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ConnectionMonitorResult); err != nil {
-		return ConnectionMonitorsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return ConnectionMonitorsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *ConnectionMonitorsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Lists all connection monitors for the specified Network Watcher.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // options - ConnectionMonitorsClientListOptions contains the optional parameters for the ConnectionMonitorsClient.List method.
@@ -310,7 +270,7 @@ func (client *ConnectionMonitorsClient) List(ctx context.Context, resourceGroupN
 		return ConnectionMonitorsClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ConnectionMonitorsClientListResponse{}, client.listHandleError(resp)
+		return ConnectionMonitorsClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -345,26 +305,13 @@ func (client *ConnectionMonitorsClient) listCreateRequest(ctx context.Context, r
 func (client *ConnectionMonitorsClient) listHandleResponse(resp *http.Response) (ConnectionMonitorsClientListResponse, error) {
 	result := ConnectionMonitorsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ConnectionMonitorListResult); err != nil {
-		return ConnectionMonitorsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return ConnectionMonitorsClientListResponse{}, err
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *ConnectionMonitorsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginQuery - Query a snapshot of the most recent connection states.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name given to the connection monitor.
@@ -378,7 +325,7 @@ func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resource
 	result := ConnectionMonitorsClientQueryPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Query", "location", resp, client.pl, client.queryHandleError)
+	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Query", "location", resp, client.pl)
 	if err != nil {
 		return ConnectionMonitorsClientQueryPollerResponse{}, err
 	}
@@ -389,7 +336,7 @@ func (client *ConnectionMonitorsClient) BeginQuery(ctx context.Context, resource
 }
 
 // Query - Query a snapshot of the most recent connection states.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ConnectionMonitorsClient) query(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginQueryOptions) (*http.Response, error) {
 	req, err := client.queryCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
@@ -400,7 +347,7 @@ func (client *ConnectionMonitorsClient) query(ctx context.Context, resourceGroup
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.queryHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -435,21 +382,8 @@ func (client *ConnectionMonitorsClient) queryCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// queryHandleError handles the Query error response.
-func (client *ConnectionMonitorsClient) queryHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginStart - Starts the specified connection monitor.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
@@ -463,7 +397,7 @@ func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resource
 	result := ConnectionMonitorsClientStartPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Start", "location", resp, client.pl, client.startHandleError)
+	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Start", "location", resp, client.pl)
 	if err != nil {
 		return ConnectionMonitorsClientStartPollerResponse{}, err
 	}
@@ -474,7 +408,7 @@ func (client *ConnectionMonitorsClient) BeginStart(ctx context.Context, resource
 }
 
 // Start - Starts the specified connection monitor.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ConnectionMonitorsClient) start(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStartOptions) (*http.Response, error) {
 	req, err := client.startCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
@@ -485,7 +419,7 @@ func (client *ConnectionMonitorsClient) start(ctx context.Context, resourceGroup
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.startHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -520,21 +454,8 @@ func (client *ConnectionMonitorsClient) startCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// startHandleError handles the Start error response.
-func (client *ConnectionMonitorsClient) startHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginStop - Stops the specified connection monitor.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group containing Network Watcher.
 // networkWatcherName - The name of the Network Watcher resource.
 // connectionMonitorName - The name of the connection monitor.
@@ -548,7 +469,7 @@ func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceG
 	result := ConnectionMonitorsClientStopPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Stop", "location", resp, client.pl, client.stopHandleError)
+	pt, err := armruntime.NewPoller("ConnectionMonitorsClient.Stop", "location", resp, client.pl)
 	if err != nil {
 		return ConnectionMonitorsClientStopPollerResponse{}, err
 	}
@@ -559,7 +480,7 @@ func (client *ConnectionMonitorsClient) BeginStop(ctx context.Context, resourceG
 }
 
 // Stop - Stops the specified connection monitor.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ConnectionMonitorsClient) stop(ctx context.Context, resourceGroupName string, networkWatcherName string, connectionMonitorName string, options *ConnectionMonitorsClientBeginStopOptions) (*http.Response, error) {
 	req, err := client.stopCreateRequest(ctx, resourceGroupName, networkWatcherName, connectionMonitorName, options)
 	if err != nil {
@@ -570,7 +491,7 @@ func (client *ConnectionMonitorsClient) stop(ctx context.Context, resourceGroupN
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.stopHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -605,21 +526,8 @@ func (client *ConnectionMonitorsClient) stopCreateRequest(ctx context.Context, r
 	return req, nil
 }
 
-// stopHandleError handles the Stop error response.
-func (client *ConnectionMonitorsClient) stopHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateTags - Update tags of the specified connection monitor.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkWatcherName - The name of the network watcher.
 // connectionMonitorName - The name of the connection monitor.
@@ -636,7 +544,7 @@ func (client *ConnectionMonitorsClient) UpdateTags(ctx context.Context, resource
 		return ConnectionMonitorsClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ConnectionMonitorsClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return ConnectionMonitorsClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -675,20 +583,7 @@ func (client *ConnectionMonitorsClient) updateTagsCreateRequest(ctx context.Cont
 func (client *ConnectionMonitorsClient) updateTagsHandleResponse(resp *http.Response) (ConnectionMonitorsClientUpdateTagsResponse, error) {
 	result := ConnectionMonitorsClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ConnectionMonitorResult); err != nil {
-		return ConnectionMonitorsClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return ConnectionMonitorsClientUpdateTagsResponse{}, err
 	}
 	return result, nil
-}
-
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *ConnectionMonitorsClient) updateTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

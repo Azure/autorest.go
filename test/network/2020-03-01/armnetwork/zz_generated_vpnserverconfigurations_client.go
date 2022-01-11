@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewVPNServerConfigurationsClient(subscriptionID string, credential azcore.T
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VPNServerConfigurationsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates a VpnServerConfiguration resource if it doesn't exist else updates the existing VpnServerConfiguration.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VpnServerConfiguration.
 // vpnServerConfigurationName - The name of the VpnServerConfiguration being created or updated.
 // vpnServerConfigurationParameters - Parameters supplied to create or update VpnServerConfiguration.
@@ -66,7 +65,7 @@ func (client *VPNServerConfigurationsClient) BeginCreateOrUpdate(ctx context.Con
 	result := VPNServerConfigurationsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VPNServerConfigurationsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("VPNServerConfigurationsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VPNServerConfigurationsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *VPNServerConfigurationsClient) BeginCreateOrUpdate(ctx context.Con
 }
 
 // CreateOrUpdate - Creates a VpnServerConfiguration resource if it doesn't exist else updates the existing VpnServerConfiguration.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VPNServerConfigurationsClient) createOrUpdate(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, vpnServerConfigurationParameters VPNServerConfiguration, options *VPNServerConfigurationsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, vpnServerConfigurationName, vpnServerConfigurationParameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *VPNServerConfigurationsClient) createOrUpdate(ctx context.Context,
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,21 +118,8 @@ func (client *VPNServerConfigurationsClient) createOrUpdateCreateRequest(ctx con
 	return req, runtime.MarshalAsJSON(req, vpnServerConfigurationParameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *VPNServerConfigurationsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes a VpnServerConfiguration.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VpnServerConfiguration.
 // vpnServerConfigurationName - The name of the VpnServerConfiguration being deleted.
 // options - VPNServerConfigurationsClientBeginDeleteOptions contains the optional parameters for the VPNServerConfigurationsClient.BeginDelete
@@ -146,7 +132,7 @@ func (client *VPNServerConfigurationsClient) BeginDelete(ctx context.Context, re
 	result := VPNServerConfigurationsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VPNServerConfigurationsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("VPNServerConfigurationsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VPNServerConfigurationsClientDeletePollerResponse{}, err
 	}
@@ -157,7 +143,7 @@ func (client *VPNServerConfigurationsClient) BeginDelete(ctx context.Context, re
 }
 
 // Delete - Deletes a VpnServerConfiguration.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VPNServerConfigurationsClient) deleteOperation(ctx context.Context, resourceGroupName string, vpnServerConfigurationName string, options *VPNServerConfigurationsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, vpnServerConfigurationName, options)
 	if err != nil {
@@ -168,7 +154,7 @@ func (client *VPNServerConfigurationsClient) deleteOperation(ctx context.Context
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -199,21 +185,8 @@ func (client *VPNServerConfigurationsClient) deleteCreateRequest(ctx context.Con
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *VPNServerConfigurationsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Retrieves the details of a VpnServerConfiguration.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VpnServerConfiguration.
 // vpnServerConfigurationName - The name of the VpnServerConfiguration being retrieved.
 // options - VPNServerConfigurationsClientGetOptions contains the optional parameters for the VPNServerConfigurationsClient.Get
@@ -228,7 +201,7 @@ func (client *VPNServerConfigurationsClient) Get(ctx context.Context, resourceGr
 		return VPNServerConfigurationsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VPNServerConfigurationsClientGetResponse{}, client.getHandleError(resp)
+		return VPNServerConfigurationsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -263,26 +236,13 @@ func (client *VPNServerConfigurationsClient) getCreateRequest(ctx context.Contex
 func (client *VPNServerConfigurationsClient) getHandleResponse(resp *http.Response) (VPNServerConfigurationsClientGetResponse, error) {
 	result := VPNServerConfigurationsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNServerConfiguration); err != nil {
-		return VPNServerConfigurationsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return VPNServerConfigurationsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *VPNServerConfigurationsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Lists all the VpnServerConfigurations in a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - VPNServerConfigurationsClientListOptions contains the optional parameters for the VPNServerConfigurationsClient.List
 // method.
 func (client *VPNServerConfigurationsClient) List(options *VPNServerConfigurationsClientListOptions) *VPNServerConfigurationsClientListPager {
@@ -319,26 +279,13 @@ func (client *VPNServerConfigurationsClient) listCreateRequest(ctx context.Conte
 func (client *VPNServerConfigurationsClient) listHandleResponse(resp *http.Response) (VPNServerConfigurationsClientListResponse, error) {
 	result := VPNServerConfigurationsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNServerConfigurationsResult); err != nil {
-		return VPNServerConfigurationsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return VPNServerConfigurationsClientListResponse{}, err
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *VPNServerConfigurationsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByResourceGroup - Lists all the vpnServerConfigurations in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VpnServerConfiguration.
 // options - VPNServerConfigurationsClientListByResourceGroupOptions contains the optional parameters for the VPNServerConfigurationsClient.ListByResourceGroup
 // method.
@@ -380,26 +327,13 @@ func (client *VPNServerConfigurationsClient) listByResourceGroupCreateRequest(ct
 func (client *VPNServerConfigurationsClient) listByResourceGroupHandleResponse(resp *http.Response) (VPNServerConfigurationsClientListByResourceGroupResponse, error) {
 	result := VPNServerConfigurationsClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNServerConfigurationsResult); err != nil {
-		return VPNServerConfigurationsClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return VPNServerConfigurationsClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *VPNServerConfigurationsClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateTags - Updates VpnServerConfiguration tags.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VpnServerConfiguration.
 // vpnServerConfigurationName - The name of the VpnServerConfiguration being updated.
 // vpnServerConfigurationParameters - Parameters supplied to update VpnServerConfiguration tags.
@@ -415,7 +349,7 @@ func (client *VPNServerConfigurationsClient) UpdateTags(ctx context.Context, res
 		return VPNServerConfigurationsClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VPNServerConfigurationsClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return VPNServerConfigurationsClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -450,20 +384,7 @@ func (client *VPNServerConfigurationsClient) updateTagsCreateRequest(ctx context
 func (client *VPNServerConfigurationsClient) updateTagsHandleResponse(resp *http.Response) (VPNServerConfigurationsClientUpdateTagsResponse, error) {
 	result := VPNServerConfigurationsClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNServerConfiguration); err != nil {
-		return VPNServerConfigurationsClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return VPNServerConfigurationsClientUpdateTagsResponse{}, err
 	}
 	return result, nil
-}
-
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *VPNServerConfigurationsClient) updateTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

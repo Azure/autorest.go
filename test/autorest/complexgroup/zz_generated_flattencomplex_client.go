@@ -10,7 +10,6 @@ package complexgroup
 
 import (
 	"context"
-	"errors"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewFlattencomplexClient(options *azcore.ClientOptions) *FlattencomplexClien
 		cp = *options
 	}
 	client := &FlattencomplexClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetValid -
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - FlattencomplexClientGetValidOptions contains the optional parameters for the FlattencomplexClient.GetValid method.
 func (client *FlattencomplexClient) GetValid(ctx context.Context, options *FlattencomplexClientGetValidOptions) (FlattencomplexClientGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
@@ -49,7 +48,7 @@ func (client *FlattencomplexClient) GetValid(ctx context.Context, options *Flatt
 		return FlattencomplexClientGetValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FlattencomplexClientGetValidResponse{}, client.getValidHandleError(resp)
+		return FlattencomplexClientGetValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getValidHandleResponse(resp)
 }
@@ -69,19 +68,7 @@ func (client *FlattencomplexClient) getValidCreateRequest(ctx context.Context, o
 func (client *FlattencomplexClient) getValidHandleResponse(resp *http.Response) (FlattencomplexClientGetValidResponse, error) {
 	result := FlattencomplexClientGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return FlattencomplexClientGetValidResponse{}, runtime.NewResponseError(err, resp)
+		return FlattencomplexClientGetValidResponse{}, err
 	}
 	return result, nil
-}
-
-// getValidHandleError handles the GetValid error response.
-func (client *FlattencomplexClient) getValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

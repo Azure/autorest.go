@@ -62,7 +62,7 @@ func (l dataFlowClientCreateOrUpdateDataFlowPollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a dataFlowClientCreateOrUpdateDataFlowPollerResponse from the provided client and resume token.
 func (l *dataFlowClientCreateOrUpdateDataFlowPollerResponse) Resume(ctx context.Context, client *dataFlowClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("dataFlowClient.CreateOrUpdateDataFlow", token, client.pl, client.createOrUpdateDataFlowHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("dataFlowClient.CreateOrUpdateDataFlow", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -113,7 +113,7 @@ func (l dataFlowClientDeleteDataFlowPollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a dataFlowClientDeleteDataFlowPollerResponse from the provided client and resume token.
 func (l *dataFlowClientDeleteDataFlowPollerResponse) Resume(ctx context.Context, client *dataFlowClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("dataFlowClient.DeleteDataFlow", token, client.pl, client.deleteDataFlowHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("dataFlowClient.DeleteDataFlow", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -182,7 +182,7 @@ func (l dataFlowClientRenameDataFlowPollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a dataFlowClientRenameDataFlowPollerResponse from the provided client and resume token.
 func (l *dataFlowClientRenameDataFlowPollerResponse) Resume(ctx context.Context, client *dataFlowClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("dataFlowClient.RenameDataFlow", token, client.pl, client.renameDataFlowHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("dataFlowClient.RenameDataFlow", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -240,7 +240,7 @@ func (l dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse) Poll
 // Resume rehydrates a dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse from the provided client and resume
 // token.
 func (l *dataFlowDebugSessionClientCreateDataFlowDebugSessionPollerResponse) Resume(ctx context.Context, client *dataFlowDebugSessionClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("dataFlowDebugSessionClient.CreateDataFlowDebugSession", token, client.pl, client.createDataFlowDebugSessionHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("dataFlowDebugSessionClient.CreateDataFlowDebugSession", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -297,7 +297,7 @@ func (l dataFlowDebugSessionClientExecuteCommandPollerResponse) PollUntilDone(ct
 
 // Resume rehydrates a dataFlowDebugSessionClientExecuteCommandPollerResponse from the provided client and resume token.
 func (l *dataFlowDebugSessionClientExecuteCommandPollerResponse) Resume(ctx context.Context, client *dataFlowDebugSessionClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("dataFlowDebugSessionClient.ExecuteCommand", token, client.pl, client.executeCommandHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("dataFlowDebugSessionClient.ExecuteCommand", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -360,7 +360,7 @@ func (l datasetClientCreateOrUpdateDatasetPollerResponse) PollUntilDone(ctx cont
 
 // Resume rehydrates a datasetClientCreateOrUpdateDatasetPollerResponse from the provided client and resume token.
 func (l *datasetClientCreateOrUpdateDatasetPollerResponse) Resume(ctx context.Context, client *datasetClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("datasetClient.CreateOrUpdateDataset", token, client.pl, client.createOrUpdateDatasetHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("datasetClient.CreateOrUpdateDataset", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -411,7 +411,7 @@ func (l datasetClientDeleteDatasetPollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a datasetClientDeleteDatasetPollerResponse from the provided client and resume token.
 func (l *datasetClientDeleteDatasetPollerResponse) Resume(ctx context.Context, client *datasetClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("datasetClient.DeleteDataset", token, client.pl, client.deleteDatasetHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("datasetClient.DeleteDataset", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -480,7 +480,7 @@ func (l datasetClientRenameDatasetPollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a datasetClientRenameDatasetPollerResponse from the provided client and resume token.
 func (l *datasetClientRenameDatasetPollerResponse) Resume(ctx context.Context, client *datasetClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("datasetClient.RenameDataset", token, client.pl, client.renameDatasetHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("datasetClient.RenameDataset", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -555,7 +555,7 @@ func (l libraryClientCreatePollerResponse) PollUntilDone(ctx context.Context, fr
 
 // Resume rehydrates a libraryClientCreatePollerResponse from the provided client and resume token.
 func (l *libraryClientCreatePollerResponse) Resume(ctx context.Context, client *libraryClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("libraryClient.Create", token, client.pl, client.createHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("libraryClient.Create", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -606,7 +606,7 @@ func (l libraryClientDeletePollerResponse) PollUntilDone(ctx context.Context, fr
 
 // Resume rehydrates a libraryClientDeletePollerResponse from the provided client and resume token.
 func (l *libraryClientDeletePollerResponse) Resume(ctx context.Context, client *libraryClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("libraryClient.Delete", token, client.pl, client.deleteHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("libraryClient.Delete", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -657,7 +657,7 @@ func (l libraryClientFlushPollerResponse) PollUntilDone(ctx context.Context, fre
 
 // Resume rehydrates a libraryClientFlushPollerResponse from the provided client and resume token.
 func (l *libraryClientFlushPollerResponse) Resume(ctx context.Context, client *libraryClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("libraryClient.Flush", token, client.pl, client.flushHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("libraryClient.Flush", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -741,7 +741,7 @@ func (l linkedServiceClientCreateOrUpdateLinkedServicePollerResponse) PollUntilD
 
 // Resume rehydrates a linkedServiceClientCreateOrUpdateLinkedServicePollerResponse from the provided client and resume token.
 func (l *linkedServiceClientCreateOrUpdateLinkedServicePollerResponse) Resume(ctx context.Context, client *linkedServiceClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("linkedServiceClient.CreateOrUpdateLinkedService", token, client.pl, client.createOrUpdateLinkedServiceHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("linkedServiceClient.CreateOrUpdateLinkedService", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -792,7 +792,7 @@ func (l linkedServiceClientDeleteLinkedServicePollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a linkedServiceClientDeleteLinkedServicePollerResponse from the provided client and resume token.
 func (l *linkedServiceClientDeleteLinkedServicePollerResponse) Resume(ctx context.Context, client *linkedServiceClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("linkedServiceClient.DeleteLinkedService", token, client.pl, client.deleteLinkedServiceHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("linkedServiceClient.DeleteLinkedService", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -861,7 +861,7 @@ func (l linkedServiceClientRenameLinkedServicePollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a linkedServiceClientRenameLinkedServicePollerResponse from the provided client and resume token.
 func (l *linkedServiceClientRenameLinkedServicePollerResponse) Resume(ctx context.Context, client *linkedServiceClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("linkedServiceClient.RenameLinkedService", token, client.pl, client.renameLinkedServiceHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("linkedServiceClient.RenameLinkedService", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -906,7 +906,7 @@ func (l notebookClientCreateOrUpdateNotebookPollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a notebookClientCreateOrUpdateNotebookPollerResponse from the provided client and resume token.
 func (l *notebookClientCreateOrUpdateNotebookPollerResponse) Resume(ctx context.Context, client *notebookClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("notebookClient.CreateOrUpdateNotebook", token, client.pl, client.createOrUpdateNotebookHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("notebookClient.CreateOrUpdateNotebook", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -957,7 +957,7 @@ func (l notebookClientDeleteNotebookPollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a notebookClientDeleteNotebookPollerResponse from the provided client and resume token.
 func (l *notebookClientDeleteNotebookPollerResponse) Resume(ctx context.Context, client *notebookClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("notebookClient.DeleteNotebook", token, client.pl, client.deleteNotebookHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("notebookClient.DeleteNotebook", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1038,7 +1038,7 @@ func (l notebookClientRenameNotebookPollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a notebookClientRenameNotebookPollerResponse from the provided client and resume token.
 func (l *notebookClientRenameNotebookPollerResponse) Resume(ctx context.Context, client *notebookClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("notebookClient.RenameNotebook", token, client.pl, client.renameNotebookHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("notebookClient.RenameNotebook", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1083,7 +1083,7 @@ func (l pipelineClientCreateOrUpdatePipelinePollerResponse) PollUntilDone(ctx co
 
 // Resume rehydrates a pipelineClientCreateOrUpdatePipelinePollerResponse from the provided client and resume token.
 func (l *pipelineClientCreateOrUpdatePipelinePollerResponse) Resume(ctx context.Context, client *pipelineClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("pipelineClient.CreateOrUpdatePipeline", token, client.pl, client.createOrUpdatePipelineHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("pipelineClient.CreateOrUpdatePipeline", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1146,7 +1146,7 @@ func (l pipelineClientDeletePipelinePollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a pipelineClientDeletePipelinePollerResponse from the provided client and resume token.
 func (l *pipelineClientDeletePipelinePollerResponse) Resume(ctx context.Context, client *pipelineClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("pipelineClient.DeletePipeline", token, client.pl, client.deletePipelineHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("pipelineClient.DeletePipeline", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1215,7 +1215,7 @@ func (l pipelineClientRenamePipelinePollerResponse) PollUntilDone(ctx context.Co
 
 // Resume rehydrates a pipelineClientRenamePipelinePollerResponse from the provided client and resume token.
 func (l *pipelineClientRenamePipelinePollerResponse) Resume(ctx context.Context, client *pipelineClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("pipelineClient.RenamePipeline", token, client.pl, client.renamePipelineHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("pipelineClient.RenamePipeline", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1303,7 +1303,7 @@ func (l sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPollerResponse) 
 // Resume rehydrates a sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPollerResponse from the provided client and
 // resume token.
 func (l *sparkJobDefinitionClientCreateOrUpdateSparkJobDefinitionPollerResponse) Resume(ctx context.Context, client *sparkJobDefinitionClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition", token, client.pl, client.createOrUpdateSparkJobDefinitionHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("sparkJobDefinitionClient.CreateOrUpdateSparkJobDefinition", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1354,7 +1354,7 @@ func (l sparkJobDefinitionClientDebugSparkJobDefinitionPollerResponse) PollUntil
 
 // Resume rehydrates a sparkJobDefinitionClientDebugSparkJobDefinitionPollerResponse from the provided client and resume token.
 func (l *sparkJobDefinitionClientDebugSparkJobDefinitionPollerResponse) Resume(ctx context.Context, client *sparkJobDefinitionClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("sparkJobDefinitionClient.DebugSparkJobDefinition", token, client.pl, client.debugSparkJobDefinitionHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("sparkJobDefinitionClient.DebugSparkJobDefinition", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1406,7 +1406,7 @@ func (l sparkJobDefinitionClientDeleteSparkJobDefinitionPollerResponse) PollUnti
 // Resume rehydrates a sparkJobDefinitionClientDeleteSparkJobDefinitionPollerResponse from the provided client and resume
 // token.
 func (l *sparkJobDefinitionClientDeleteSparkJobDefinitionPollerResponse) Resume(ctx context.Context, client *sparkJobDefinitionClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("sparkJobDefinitionClient.DeleteSparkJobDefinition", token, client.pl, client.deleteSparkJobDefinitionHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("sparkJobDefinitionClient.DeleteSparkJobDefinition", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1452,7 +1452,7 @@ func (l sparkJobDefinitionClientExecuteSparkJobDefinitionPollerResponse) PollUnt
 // Resume rehydrates a sparkJobDefinitionClientExecuteSparkJobDefinitionPollerResponse from the provided client and resume
 // token.
 func (l *sparkJobDefinitionClientExecuteSparkJobDefinitionPollerResponse) Resume(ctx context.Context, client *sparkJobDefinitionClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("sparkJobDefinitionClient.ExecuteSparkJobDefinition", token, client.pl, client.executeSparkJobDefinitionHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("sparkJobDefinitionClient.ExecuteSparkJobDefinition", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1528,7 +1528,7 @@ func (l sparkJobDefinitionClientRenameSparkJobDefinitionPollerResponse) PollUnti
 // Resume rehydrates a sparkJobDefinitionClientRenameSparkJobDefinitionPollerResponse from the provided client and resume
 // token.
 func (l *sparkJobDefinitionClientRenameSparkJobDefinitionPollerResponse) Resume(ctx context.Context, client *sparkJobDefinitionClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("sparkJobDefinitionClient.RenameSparkJobDefinition", token, client.pl, client.renameSparkJobDefinitionHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("sparkJobDefinitionClient.RenameSparkJobDefinition", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1597,7 +1597,7 @@ func (l sqlScriptClientCreateOrUpdateSQLScriptPollerResponse) PollUntilDone(ctx 
 
 // Resume rehydrates a sqlScriptClientCreateOrUpdateSQLScriptPollerResponse from the provided client and resume token.
 func (l *sqlScriptClientCreateOrUpdateSQLScriptPollerResponse) Resume(ctx context.Context, client *sqlScriptClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("sqlScriptClient.CreateOrUpdateSQLScript", token, client.pl, client.createOrUpdateSQLScriptHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("sqlScriptClient.CreateOrUpdateSQLScript", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1648,7 +1648,7 @@ func (l sqlScriptClientDeleteSQLScriptPollerResponse) PollUntilDone(ctx context.
 
 // Resume rehydrates a sqlScriptClientDeleteSQLScriptPollerResponse from the provided client and resume token.
 func (l *sqlScriptClientDeleteSQLScriptPollerResponse) Resume(ctx context.Context, client *sqlScriptClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("sqlScriptClient.DeleteSQLScript", token, client.pl, client.deleteSQLScriptHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("sqlScriptClient.DeleteSQLScript", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1717,7 +1717,7 @@ func (l sqlScriptClientRenameSQLScriptPollerResponse) PollUntilDone(ctx context.
 
 // Resume rehydrates a sqlScriptClientRenameSQLScriptPollerResponse from the provided client and resume token.
 func (l *sqlScriptClientRenameSQLScriptPollerResponse) Resume(ctx context.Context, client *sqlScriptClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("sqlScriptClient.RenameSQLScript", token, client.pl, client.renameSQLScriptHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("sqlScriptClient.RenameSQLScript", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1762,7 +1762,7 @@ func (l triggerClientCreateOrUpdateTriggerPollerResponse) PollUntilDone(ctx cont
 
 // Resume rehydrates a triggerClientCreateOrUpdateTriggerPollerResponse from the provided client and resume token.
 func (l *triggerClientCreateOrUpdateTriggerPollerResponse) Resume(ctx context.Context, client *triggerClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("triggerClient.CreateOrUpdateTrigger", token, client.pl, client.createOrUpdateTriggerHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("triggerClient.CreateOrUpdateTrigger", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1813,7 +1813,7 @@ func (l triggerClientDeleteTriggerPollerResponse) PollUntilDone(ctx context.Cont
 
 // Resume rehydrates a triggerClientDeleteTriggerPollerResponse from the provided client and resume token.
 func (l *triggerClientDeleteTriggerPollerResponse) Resume(ctx context.Context, client *triggerClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("triggerClient.DeleteTrigger", token, client.pl, client.deleteTriggerHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("triggerClient.DeleteTrigger", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1894,7 +1894,7 @@ func (l triggerClientStartTriggerPollerResponse) PollUntilDone(ctx context.Conte
 
 // Resume rehydrates a triggerClientStartTriggerPollerResponse from the provided client and resume token.
 func (l *triggerClientStartTriggerPollerResponse) Resume(ctx context.Context, client *triggerClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("triggerClient.StartTrigger", token, client.pl, client.startTriggerHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("triggerClient.StartTrigger", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1939,7 +1939,7 @@ func (l triggerClientStopTriggerPollerResponse) PollUntilDone(ctx context.Contex
 
 // Resume rehydrates a triggerClientStopTriggerPollerResponse from the provided client and resume token.
 func (l *triggerClientStopTriggerPollerResponse) Resume(ctx context.Context, client *triggerClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("triggerClient.StopTrigger", token, client.pl, client.stopTriggerHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("triggerClient.StopTrigger", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -1984,7 +1984,7 @@ func (l triggerClientSubscribeTriggerToEventsPollerResponse) PollUntilDone(ctx c
 
 // Resume rehydrates a triggerClientSubscribeTriggerToEventsPollerResponse from the provided client and resume token.
 func (l *triggerClientSubscribeTriggerToEventsPollerResponse) Resume(ctx context.Context, client *triggerClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("triggerClient.SubscribeTriggerToEvents", token, client.pl, client.subscribeTriggerToEventsHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("triggerClient.SubscribeTriggerToEvents", token, client.pl)
 	if err != nil {
 		return err
 	}
@@ -2035,7 +2035,7 @@ func (l triggerClientUnsubscribeTriggerFromEventsPollerResponse) PollUntilDone(c
 
 // Resume rehydrates a triggerClientUnsubscribeTriggerFromEventsPollerResponse from the provided client and resume token.
 func (l *triggerClientUnsubscribeTriggerFromEventsPollerResponse) Resume(ctx context.Context, client *triggerClient, token string) error {
-	pt, err := runtime.NewPollerFromResumeToken("triggerClient.UnsubscribeTriggerFromEvents", token, client.pl, client.unsubscribeTriggerFromEventsHandleError)
+	pt, err := runtime.NewPollerFromResumeToken("triggerClient.UnsubscribeTriggerFromEvents", token, client.pl)
 	if err != nil {
 		return err
 	}

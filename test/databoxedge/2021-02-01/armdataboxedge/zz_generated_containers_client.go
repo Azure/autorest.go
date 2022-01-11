@@ -11,7 +11,6 @@ package armdataboxedge
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -39,19 +38,19 @@ func NewContainersClient(subscriptionID string, credential azcore.TokenCredentia
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ContainersClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates a new container or updates an existing container on the device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // storageAccountName - The Storage Account Name
 // containerName - The container name.
@@ -67,7 +66,7 @@ func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceN
 	result := ContainersClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ContainersClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("ContainersClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return ContainersClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -78,7 +77,7 @@ func (client *ContainersClient) BeginCreateOrUpdate(ctx context.Context, deviceN
 }
 
 // CreateOrUpdate - Creates a new container or updates an existing container on the device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ContainersClient) createOrUpdate(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, containerParam Container, options *ContainersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, containerParam, options)
 	if err != nil {
@@ -89,7 +88,7 @@ func (client *ContainersClient) createOrUpdate(ctx context.Context, deviceName s
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -128,21 +127,8 @@ func (client *ContainersClient) createOrUpdateCreateRequest(ctx context.Context,
 	return req, runtime.MarshalAsJSON(req, containerParam)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *ContainersClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the container on the Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // storageAccountName - The Storage Account Name
 // containerName - The container name.
@@ -156,7 +142,7 @@ func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName stri
 	result := ContainersClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ContainersClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("ContainersClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return ContainersClientDeletePollerResponse{}, err
 	}
@@ -167,7 +153,7 @@ func (client *ContainersClient) BeginDelete(ctx context.Context, deviceName stri
 }
 
 // Delete - Deletes the container on the Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ContainersClient) deleteOperation(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
@@ -178,7 +164,7 @@ func (client *ContainersClient) deleteOperation(ctx context.Context, deviceName 
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -217,21 +203,8 @@ func (client *ContainersClient) deleteCreateRequest(ctx context.Context, deviceN
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *ContainersClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets a container by name.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // storageAccountName - The Storage Account Name
 // containerName - The container Name
@@ -247,7 +220,7 @@ func (client *ContainersClient) Get(ctx context.Context, deviceName string, stor
 		return ContainersClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ContainersClientGetResponse{}, client.getHandleError(resp)
+		return ContainersClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -290,26 +263,13 @@ func (client *ContainersClient) getCreateRequest(ctx context.Context, deviceName
 func (client *ContainersClient) getHandleResponse(resp *http.Response) (ContainersClientGetResponse, error) {
 	result := ContainersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Container); err != nil {
-		return ContainersClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return ContainersClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *ContainersClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByStorageAccount - Lists all the containers of a storage Account in a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // storageAccountName - The storage Account name.
 // resourceGroupName - The resource group name.
@@ -361,26 +321,13 @@ func (client *ContainersClient) listByStorageAccountCreateRequest(ctx context.Co
 func (client *ContainersClient) listByStorageAccountHandleResponse(resp *http.Response) (ContainersClientListByStorageAccountResponse, error) {
 	result := ContainersClientListByStorageAccountResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ContainerList); err != nil {
-		return ContainersClientListByStorageAccountResponse{}, runtime.NewResponseError(err, resp)
+		return ContainersClientListByStorageAccountResponse{}, err
 	}
 	return result, nil
 }
 
-// listByStorageAccountHandleError handles the ListByStorageAccount error response.
-func (client *ContainersClient) listByStorageAccountHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginRefresh - Refreshes the container metadata with the data from the cloud.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // storageAccountName - The Storage Account Name
 // containerName - The container name.
@@ -394,7 +341,7 @@ func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName str
 	result := ContainersClientRefreshPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ContainersClient.Refresh", "", resp, client.pl, client.refreshHandleError)
+	pt, err := armruntime.NewPoller("ContainersClient.Refresh", "", resp, client.pl)
 	if err != nil {
 		return ContainersClientRefreshPollerResponse{}, err
 	}
@@ -405,7 +352,7 @@ func (client *ContainersClient) BeginRefresh(ctx context.Context, deviceName str
 }
 
 // Refresh - Refreshes the container metadata with the data from the cloud.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ContainersClient) refresh(ctx context.Context, deviceName string, storageAccountName string, containerName string, resourceGroupName string, options *ContainersClientBeginRefreshOptions) (*http.Response, error) {
 	req, err := client.refreshCreateRequest(ctx, deviceName, storageAccountName, containerName, resourceGroupName, options)
 	if err != nil {
@@ -416,7 +363,7 @@ func (client *ContainersClient) refresh(ctx context.Context, deviceName string, 
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.refreshHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -453,17 +400,4 @@ func (client *ContainersClient) refreshCreateRequest(ctx context.Context, device
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// refreshHandleError handles the Refresh error response.
-func (client *ContainersClient) refreshHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

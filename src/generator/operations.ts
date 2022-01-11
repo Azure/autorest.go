@@ -199,8 +199,8 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       optionsCopy = 'cp.ClientOptions';
     }
     if (<boolean>session.model.language.go!.azureARM) {
-      clientText += '\tif len(cp.Host) == 0 {\n';
-      clientText += '\t\tcp.Host = arm.AzurePublicCloud\n';
+      clientText += '\tif len(cp.Endpoint) == 0 {\n';
+      clientText += '\t\tcp.Endpoint = arm.AzurePublicCloud\n';
       clientText += '\t}\n';
     }
     let parameterizedURL = '';
@@ -278,10 +278,10 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     }
     // create or add pipeline based on arm/vanilla/data-plane
     if (<boolean>session.model.language.go!.azureARM) {
-      clientText += `\t\t${group.language.go!.hostParamName}: string(cp.Host),\n`;
-      clientText += `\t\tpl: armruntime.NewPipeline(module, version, credential, &${optionsCopy}),\n`;
+      clientText += `\t\t${group.language.go!.hostParamName}: string(cp.Endpoint),\n`;
+      clientText += `\t\tpl: armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &${optionsCopy}),\n`;
     } else if (isARM) {
-      clientText += `\t\tpl: runtime.NewPipeline(module, version, nil, nil, &${optionsCopy}),\n`;
+      clientText += `\t\tpl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &${optionsCopy}),\n`;
     } else {
       clientText += '\t\tpl: pl,\n';
     }
@@ -316,10 +316,6 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       if (!isLROOperation(op) || isPageableOperation(op)) {
         // LRO responses are handled elsewhere, with the exception of pageable LROs
         opText += createProtocolResponse(op, imports);
-      }
-      if (!op.language.go!.headAsBoolean) {
-        // HEAD requests never return a response body so there's no error to unmarshal
-        opText += createProtocolErrHandler(op, imports);
       }
     }
 
@@ -553,7 +549,7 @@ function generateOperation(op: Operation, imports: ImportManager): string {
     // for complex HAB the status code check isn't applicable
     if (!op.language.go!.headAsBoolean) {
       text += `\tif !runtime.HasStatusCode(resp, ${formatStatusCodes(statusCodes)}) {\n`;
-      text += `\t\treturn ${zeroResp}, client.${info.protocolNaming.errorMethod}(resp)\n`;
+      text += `\t\treturn ${zeroResp}, runtime.NewResponseError(resp)\n`;
       text += '\t}\n';
     }
     if (isLROOperation(op)) {
@@ -761,7 +757,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
   }
   if (hasBinaryResponse(op.responses!)) {
     // skip auto-body downloading for binary stream responses
-    text += '\treq.SkipBodyDownload()\n';
+    text += '\truntime.SkipBodyDownload(req)\n';
   }
   // add specific request headers
   const headerParam = values(aggregateParameters(op)).where((each: Parameter) => { return each.protocol.http !== undefined; }).where((each: Parameter) => { return each.protocol.http!.in === 'header'; });
@@ -947,7 +943,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
     // use the designated time type for unmarshalling
     unmarshallerText += `\tvar aux *${response.schema.language.go!.internalTimeType}\n`;
     unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaType(response.protocol)}(resp, &aux); err != nil {\n`;
-    unmarshallerText += `\t\treturn ${zeroValue}, runtime.NewResponseError(err, resp)\n`;
+    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
     unmarshallerText += `\tresult.${getResultFieldName(op)} = (*time.Time)(aux)\n`;
     return unmarshallerText;
@@ -955,7 +951,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
     // unmarshalling arrays of date/time is a little more involved
     unmarshallerText += `\tvar aux []*${(<ArraySchema>response.schema).elementType.language.go!.internalTimeType}\n`;
     unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaType(response.protocol)}(resp, &aux); err != nil {\n`;
-    unmarshallerText += `\t\treturn ${zeroValue}, runtime.NewResponseError(err, resp)\n`;
+    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
     unmarshallerText += '\tcp := make([]*time.Time, len(aux), len(aux))\n';
     unmarshallerText += '\tfor i := 0; i < len(aux); i++ {\n';
@@ -966,7 +962,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
   } else if (isMapOfDateTime(response.schema) || isMapOfDate(response.schema)) {
     unmarshallerText += `\taux := map[string]*${(<DictionarySchema>response.schema).elementType.language.go!.internalTimeType}{}\n`;
     unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaType(response.protocol)}(resp, &aux); err != nil {\n`;
-    unmarshallerText += `\t\treturn ${zeroValue}, runtime.NewResponseError(err, resp)\n`;
+    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
     unmarshallerText += `\tcp := map[string]*time.Time{}\n`;
     unmarshallerText += `\tfor k, v := range aux {\n`;
@@ -978,12 +974,12 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
   const mediaType = getMediaType(response.protocol);
   if (mediaType === 'JSON' || mediaType === 'XML') {
     unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaFormat(response.schema, mediaType, `resp, &${unmarshalTarget}`)}; err != nil {\n`;
-    unmarshallerText += `\t\treturn ${zeroValue}, runtime.NewResponseError(err, resp)\n`;
+    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
   } else if (mediaType === 'text') {
     unmarshallerText += `\tbody, err := runtime.Payload(resp)\n`;
     unmarshallerText += '\tif err != nil {\n';
-    unmarshallerText += `\t\treturn ${zeroValue}, runtime.NewResponseError(err, resp)\n`;
+    unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
     unmarshallerText += '\ttxt := string(body)\n';
     unmarshallerText += `\t${unmarshalTarget} = &txt\n`;
@@ -1059,110 +1055,6 @@ function createProtocolResponse(op: Operation, imports: ImportManager): string {
     text += '\t}\n';
     text += '\treturn result, nil\n';
   }
-  text += '}\n\n';
-  return text;
-}
-
-function createProtocolErrHandler(op: Operation, imports: ImportManager): string {
-  imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-  const info = <OperationNaming>op.language.go!;
-  const name = info.protocolNaming.errorMethod;
-  let text = `${comment(name, '// ')} handles the ${info.name} error response.\n`;
-  text += `func (client *${op.language.go!.clientName}) ${name}(resp *http.Response) error {\n`;
-  text += '\tbody, err := runtime.Payload(resp)\n';
-  text += '\tif err != nil {\n';
-  text += '\t\treturn runtime.NewResponseError(err, resp)\n';
-  text += '\t}\n';
-  // define a generic error for when there are no exceptions or no error schema
-  const generateGenericError = function () {
-    imports.add('errors');
-    return `\tif len(body) == 0 {
-      return runtime.NewResponseError(errors.New(resp.Status), resp)
-    }
-    return runtime.NewResponseError(errors.New(string(body)), resp)
-    `;
-  }
-
-  // if the response doesn't define any error types return a generic error
-  if (!op.exceptions) {
-    text += generateGenericError();
-    text += '}\n\n';
-    return text;
-  }
-
-  const generateUnmarshaller = function (schemaError: Schema, prefix: string) {
-    let unmarshaller = '';
-    if (schemaError.language.default.name === 'generic') {
-      unmarshaller += `${prefix}${generateGenericError()}`;
-      return unmarshaller;
-    }
-    const errFormat = <string>schemaError.language.go!.marshallingFormat;
-    let typeName = schemaError.language.go!.name;
-    if (schemaError.language.go!.internalErrorType) {
-      typeName = schemaError.language.go!.internalErrorType;
-    }
-    imports.add('fmt');
-    // for wrapped errors, raw is initialized in the unmarshaller.
-    // error types other than object obviously don't have a raw field.
-    if (!schemaError.language.go!.internalErrorType && schemaError.type === SchemaType.Object) {
-      unmarshaller += `${prefix}errType := ${typeName}{raw: string(body)}\n`;
-    } else {
-      unmarshaller += `\tvar errType ${typeName}\n`;
-    }
-    const innerErr = schemaError.language.go!.flattenedErr ? `.${schemaError.language.go!.flattenedErr}` : '';
-    unmarshaller += `${prefix}if err := runtime.UnmarshalAs${errFormat.toUpperCase()}(resp, &errType${innerErr}); err != nil {\n`;
-    unmarshaller += `${prefix}\treturn runtime.NewResponseError(fmt.Errorf("%s\\n%s", string(body), err), resp)\n`;
-    unmarshaller += `${prefix}}\n`;
-    if (schemaError.language.go!.internalErrorType) {
-      // err.wrapped is for discriminated error types, it will already be pointer-to-type
-      unmarshaller += `${prefix}return runtime.NewResponseError(errType.wrapped, resp)\n`;
-    } else if (schemaError.type === SchemaType.Object) {
-      // for consistency with success responses, return pointer-to-error type
-      unmarshaller += `${prefix}return runtime.NewResponseError(&errType, resp)\n`;
-    } else {
-      unmarshaller += `${prefix}return runtime.NewResponseError(fmt.Errorf("%v", errType), resp)\n`;
-    }
-    return unmarshaller;
-  };
-  // fold multiple error responses with the same schema into a single unmarshaller.
-  const foldedMap = new Map<Schema, Array<string>>();
-  // create a dummy schema for schemaless errors
-  const genericErr = new Schema('generic', 'generic', SchemaType.Object);
-  for (const exception of values(op.exceptions)) {
-    let errSchema = genericErr;
-    if (!exception.language.go!.genericError) {
-      errSchema = (<SchemaResponse>exception).schema;
-    }
-    if (!foldedMap.has(errSchema)) {
-      foldedMap.set(errSchema, new Array<string>());
-    }
-    for (const statusCode of values(<Array<string>>exception.protocol.http!.statusCodes)) {
-      foldedMap.get(errSchema)!.push(statusCode);
-    }
-  }
-  // only one entry in the map means all status codes return the same error schema
-  if (foldedMap.size === 1) {
-    text += generateUnmarshaller(values(foldedMap.keys()).first()!, '\t');
-    text += '}\n\n';
-    return text;
-  }
-  text += '\tswitch resp.StatusCode {\n';
-  let hasDefault = false;
-  for (const kv of foldedMap) {
-    if (kv[1].length === 1 && kv[1][0] === 'default') {
-      hasDefault = true;
-      text += '\tdefault:\n';
-    } else {
-      text += `\tcase ${formatStatusCodes(kv[1])}:\n`;
-    }
-    text += generateUnmarshaller(kv[0], '\t\t');
-  }
-  if (!hasDefault) {
-    // add a generic unmarshaller for an unspecified default response
-    text += '\tdefault:\n';
-    text += generateGenericError();
-  }
-  text += '\t}\n';
   text += '}\n\n';
   return text;
 }
@@ -1330,10 +1222,10 @@ function generateLROBeginMethod(op: Operation, imports: ImportManager, isARM: bo
     if (op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via']) {
       finalState = op.extensions?.['x-ms-long-running-operation-options']?.['final-state-via'];
     }
-    text += `\tpt, err := armruntime.NewPoller("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.pl, client.${info.protocolNaming.errorMethod})\n`;
+    text += `\tpt, err := armruntime.NewPoller("${clientName}.${op.language.go!.name}", "${finalState}", resp, client.pl)\n`;
   } else {
     imports.add('github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime');
-    text += `\tpt, err := runtime.NewPoller("${clientName}.${op.language.go!.name}",resp, client.pl, client.${info.protocolNaming.errorMethod})\n`;
+    text += `\tpt, err := runtime.NewPoller("${clientName}.${op.language.go!.name}",resp, client.pl)\n`;
   }
   text += '\tif err != nil {\n';
   text += `\t\treturn ${zeroResp}, err\n`;

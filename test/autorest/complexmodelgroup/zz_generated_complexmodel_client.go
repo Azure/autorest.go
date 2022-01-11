@@ -11,7 +11,6 @@ package complexmodelgroup
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -34,13 +33,13 @@ func NewComplexModelClient(options *azcore.ClientOptions) *ComplexModelClient {
 		cp = *options
 	}
 	client := &ComplexModelClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Create - Resets products.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // subscriptionID - Subscription ID.
 // resourceGroupName - Resource Group ID.
 // bodyParameter - body Parameter
@@ -55,7 +54,7 @@ func (client *ComplexModelClient) Create(ctx context.Context, subscriptionID str
 		return ComplexModelClientCreateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ComplexModelClientCreateResponse{}, client.createHandleError(resp)
+		return ComplexModelClientCreateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
@@ -86,28 +85,15 @@ func (client *ComplexModelClient) createCreateRequest(ctx context.Context, subsc
 func (client *ComplexModelClient) createHandleResponse(resp *http.Response) (ComplexModelClientCreateResponse, error) {
 	result := ComplexModelClientCreateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CatalogDictionary); err != nil {
-		return ComplexModelClientCreateResponse{}, runtime.NewResponseError(err, resp)
+		return ComplexModelClientCreateResponse{}, err
 	}
 	return result, nil
-}
-
-// createHandleError handles the Create error response.
-func (client *ComplexModelClient) createHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
 
 // List - The Products endpoint returns information about the Uber products offered at a given location. The response includes
 // the display name and other details about each product, and lists the products in
 // the proper display order.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - Resource Group ID.
 // options - ComplexModelClientListOptions contains the optional parameters for the ComplexModelClient.List method.
 func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName string, options *ComplexModelClientListOptions) (ComplexModelClientListResponse, error) {
@@ -120,7 +106,7 @@ func (client *ComplexModelClient) List(ctx context.Context, resourceGroupName st
 		return ComplexModelClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ComplexModelClientListResponse{}, client.listHandleError(resp)
+		return ComplexModelClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -148,26 +134,13 @@ func (client *ComplexModelClient) listCreateRequest(ctx context.Context, resourc
 func (client *ComplexModelClient) listHandleResponse(resp *http.Response) (ComplexModelClientListResponse, error) {
 	result := ComplexModelClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CatalogArray); err != nil {
-		return ComplexModelClientListResponse{}, runtime.NewResponseError(err, resp)
+		return ComplexModelClientListResponse{}, err
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *ComplexModelClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Update - Resets products.
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // subscriptionID - Subscription ID.
 // resourceGroupName - Resource Group ID.
 // bodyParameter - body Parameter
@@ -182,7 +155,7 @@ func (client *ComplexModelClient) Update(ctx context.Context, subscriptionID str
 		return ComplexModelClientUpdateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ComplexModelClientUpdateResponse{}, client.updateHandleError(resp)
+		return ComplexModelClientUpdateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateHandleResponse(resp)
 }
@@ -213,20 +186,7 @@ func (client *ComplexModelClient) updateCreateRequest(ctx context.Context, subsc
 func (client *ComplexModelClient) updateHandleResponse(resp *http.Response) (ComplexModelClientUpdateResponse, error) {
 	result := ComplexModelClientUpdateResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.CatalogArray); err != nil {
-		return ComplexModelClientUpdateResponse{}, runtime.NewResponseError(err, resp)
+		return ComplexModelClientUpdateResponse{}, err
 	}
 	return result, nil
-}
-
-// updateHandleError handles the Update error response.
-func (client *ComplexModelClient) updateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

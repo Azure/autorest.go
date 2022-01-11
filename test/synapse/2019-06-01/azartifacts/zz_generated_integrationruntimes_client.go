@@ -11,7 +11,6 @@ package azartifacts
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -36,7 +35,7 @@ func newIntegrationRuntimesClient(endpoint string, pl runtime.Pipeline) *integra
 }
 
 // Get - Get Integration Runtime
-// If the operation fails it returns the *ErrorContract error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // integrationRuntimeName - The Integration Runtime name
 // options - integrationRuntimesClientGetOptions contains the optional parameters for the integrationRuntimesClient.Get method.
 func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRuntimeName string, options *integrationRuntimesClientGetOptions) (integrationRuntimesClientGetResponse, error) {
@@ -49,7 +48,7 @@ func (client *integrationRuntimesClient) Get(ctx context.Context, integrationRun
 		return integrationRuntimesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return integrationRuntimesClientGetResponse{}, client.getHandleError(resp)
+		return integrationRuntimesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -76,26 +75,13 @@ func (client *integrationRuntimesClient) getCreateRequest(ctx context.Context, i
 func (client *integrationRuntimesClient) getHandleResponse(resp *http.Response) (integrationRuntimesClientGetResponse, error) {
 	result := integrationRuntimesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IntegrationRuntimeResource); err != nil {
-		return integrationRuntimesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return integrationRuntimesClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *integrationRuntimesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorContract{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - List Integration Runtimes
-// If the operation fails it returns the *ErrorContract error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - integrationRuntimesClientListOptions contains the optional parameters for the integrationRuntimesClient.List
 // method.
 func (client *integrationRuntimesClient) List(ctx context.Context, options *integrationRuntimesClientListOptions) (integrationRuntimesClientListResponse, error) {
@@ -108,7 +94,7 @@ func (client *integrationRuntimesClient) List(ctx context.Context, options *inte
 		return integrationRuntimesClientListResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return integrationRuntimesClientListResponse{}, client.listHandleError(resp)
+		return integrationRuntimesClientListResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.listHandleResponse(resp)
 }
@@ -131,20 +117,7 @@ func (client *integrationRuntimesClient) listCreateRequest(ctx context.Context, 
 func (client *integrationRuntimesClient) listHandleResponse(resp *http.Response) (integrationRuntimesClientListResponse, error) {
 	result := integrationRuntimesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.IntegrationRuntimeListResponse); err != nil {
-		return integrationRuntimesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return integrationRuntimesClientListResponse{}, err
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *integrationRuntimesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorContract{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

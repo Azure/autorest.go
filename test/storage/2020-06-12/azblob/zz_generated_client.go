@@ -11,7 +11,6 @@ package azblob
 import (
 	"context"
 	"encoding/base64"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"net/http"
@@ -44,7 +43,7 @@ func newClient(endpoint string, version Enum2, pathRenameMode *PathRenameMode, p
 
 // AbortCopyFromURL - The Abort Copy From URL operation aborts a pending Copy From URL operation, and leaves a destination
 // blob with zero length and full metadata.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // copyID - The copy identifier provided in the x-ms-copy-id header of the original Copy Blob operation.
 // clientAbortCopyFromURLOptions - clientAbortCopyFromURLOptions contains the optional parameters for the client.AbortCopyFromURL
 // method.
@@ -59,7 +58,7 @@ func (client *client) AbortCopyFromURL(ctx context.Context, comp Enum30, copyAct
 		return clientAbortCopyFromURLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return clientAbortCopyFromURLResponse{}, client.abortCopyFromURLHandleError(resp)
+		return clientAbortCopyFromURLResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.abortCopyFromURLHandleResponse(resp)
 }
@@ -111,21 +110,8 @@ func (client *client) abortCopyFromURLHandleResponse(resp *http.Response) (clien
 	return result, nil
 }
 
-// abortCopyFromURLHandleError handles the AbortCopyFromURL error response.
-func (client *client) abortCopyFromURLHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // AcquireLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // clientAcquireLeaseOptions - clientAcquireLeaseOptions contains the optional parameters for the client.AcquireLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *client) AcquireLease(ctx context.Context, comp Enum16, clientAcquireLeaseOptions *clientAcquireLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (clientAcquireLeaseResponse, error) {
@@ -138,7 +124,7 @@ func (client *client) AcquireLease(ctx context.Context, comp Enum16, clientAcqui
 		return clientAcquireLeaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return clientAcquireLeaseResponse{}, client.acquireLeaseHandleError(resp)
+		return clientAcquireLeaseResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.acquireLeaseHandleResponse(resp)
 }
@@ -220,21 +206,8 @@ func (client *client) acquireLeaseHandleResponse(resp *http.Response) (clientAcq
 	return result, nil
 }
 
-// acquireLeaseHandleError handles the AcquireLease error response.
-func (client *client) acquireLeaseHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BreakLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // clientBreakLeaseOptions - clientBreakLeaseOptions contains the optional parameters for the client.BreakLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 func (client *client) BreakLease(ctx context.Context, comp Enum16, clientBreakLeaseOptions *clientBreakLeaseOptions, modifiedAccessConditions *ModifiedAccessConditions) (clientBreakLeaseResponse, error) {
@@ -247,7 +220,7 @@ func (client *client) BreakLease(ctx context.Context, comp Enum16, clientBreakLe
 		return clientBreakLeaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return clientBreakLeaseResponse{}, client.breakLeaseHandleError(resp)
+		return clientBreakLeaseResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.breakLeaseHandleResponse(resp)
 }
@@ -331,21 +304,8 @@ func (client *client) breakLeaseHandleResponse(resp *http.Response) (clientBreak
 	return result, nil
 }
 
-// breakLeaseHandleError handles the BreakLease error response.
-func (client *client) breakLeaseHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ChangeLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // leaseID - Specifies the current lease ID on the resource.
 // proposedLeaseID - Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed
 // lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID
@@ -362,7 +322,7 @@ func (client *client) ChangeLease(ctx context.Context, comp Enum16, leaseID stri
 		return clientChangeLeaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientChangeLeaseResponse{}, client.changeLeaseHandleError(resp)
+		return clientChangeLeaseResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.changeLeaseHandleResponse(resp)
 }
@@ -440,22 +400,9 @@ func (client *client) changeLeaseHandleResponse(resp *http.Response) (clientChan
 	return result, nil
 }
 
-// changeLeaseHandleError handles the ChangeLease error response.
-func (client *client) changeLeaseHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // CopyFromURL - The Copy From URL operation copies a blob or an internet resource to a new blob. It will not return a response
 // until the copy is complete.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 // a page blob snapshot. The value should be URL-encoded as it would appear in a request
 // URI. The source blob must either be public or must be authenticated via a shared access signature.
@@ -474,7 +421,7 @@ func (client *client) CopyFromURL(ctx context.Context, xmsRequiresSync Enum29, c
 		return clientCopyFromURLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return clientCopyFromURLResponse{}, client.copyFromURLHandleError(resp)
+		return clientCopyFromURLResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.copyFromURLHandleResponse(resp)
 }
@@ -608,21 +555,8 @@ func (client *client) copyFromURLHandleResponse(resp *http.Response) (clientCopy
 	return result, nil
 }
 
-// copyFromURLHandleError handles the CopyFromURL error response.
-func (client *client) copyFromURLHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // CreateSnapshot - The Create Snapshot operation creates a read-only snapshot of a blob
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // clientCreateSnapshotOptions - clientCreateSnapshotOptions contains the optional parameters for the client.CreateSnapshot
 // method.
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
@@ -639,7 +573,7 @@ func (client *client) CreateSnapshot(ctx context.Context, comp Enum28, clientCre
 		return clientCreateSnapshotResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return clientCreateSnapshotResponse{}, client.createSnapshotHandleError(resp)
+		return clientCreateSnapshotResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createSnapshotHandleResponse(resp)
 }
@@ -744,19 +678,6 @@ func (client *client) createSnapshotHandleResponse(resp *http.Response) (clientC
 	return result, nil
 }
 
-// createSnapshotHandleError handles the CreateSnapshot error response.
-func (client *client) createSnapshotHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Delete - If the storage account's soft delete feature is disabled then, when a blob is deleted, it is permanently removed
 // from the storage account. If the storage account's soft delete feature is enabled,
 // then, when a blob is deleted, it is marked for deletion and becomes inaccessible immediately. However, the blob service
@@ -768,7 +689,7 @@ func (client *client) createSnapshotHandleError(resp *http.Response) error {
 // which blobs and snapshots have been soft deleted. You can then use the Undelete Blob API to restore a soft-deleted blob.
 // All other operations on a soft-deleted blob or snapshot causes the service to
 // return an HTTP status code of 404 (ResourceNotFound).
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // clientDeleteOptions - clientDeleteOptions contains the optional parameters for the client.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -782,7 +703,7 @@ func (client *client) Delete(ctx context.Context, clientDeleteOptions *clientDel
 		return clientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return clientDeleteResponse{}, client.deleteHandleError(resp)
+		return clientDeleteResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteHandleResponse(resp)
 }
@@ -858,21 +779,8 @@ func (client *client) deleteHandleResponse(resp *http.Response) (clientDeleteRes
 	return result, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *client) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DeleteImmutabilityPolicy - The Delete Immutability Policy operation deletes the immutability policy on the blob
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - clientDeleteImmutabilityPolicyOptions contains the optional parameters for the client.DeleteImmutabilityPolicy
 // method.
 func (client *client) DeleteImmutabilityPolicy(ctx context.Context, comp Enum26, options *clientDeleteImmutabilityPolicyOptions) (clientDeleteImmutabilityPolicyResponse, error) {
@@ -885,7 +793,7 @@ func (client *client) DeleteImmutabilityPolicy(ctx context.Context, comp Enum26,
 		return clientDeleteImmutabilityPolicyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientDeleteImmutabilityPolicyResponse{}, client.deleteImmutabilityPolicyHandleError(resp)
+		return clientDeleteImmutabilityPolicyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteImmutabilityPolicyHandleResponse(resp)
 }
@@ -932,22 +840,9 @@ func (client *client) deleteImmutabilityPolicyHandleResponse(resp *http.Response
 	return result, nil
 }
 
-// deleteImmutabilityPolicyHandleError handles the DeleteImmutabilityPolicy error response.
-func (client *client) deleteImmutabilityPolicyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Download - The Download operation reads or downloads a blob from the system, including its metadata and properties. You
 // can also call Download to read a snapshot.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // clientDownloadOptions - clientDownloadOptions contains the optional parameters for the client.Download method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
@@ -962,7 +857,7 @@ func (client *client) Download(ctx context.Context, clientDownloadOptions *clien
 		return clientDownloadResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusPartialContent) {
-		return clientDownloadResponse{}, client.downloadHandleError(resp)
+		return clientDownloadResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.downloadHandleResponse(resp)
 }
@@ -984,7 +879,7 @@ func (client *client) downloadCreateRequest(ctx context.Context, clientDownloadO
 		reqQP.Set("timeout", strconv.FormatInt(int64(*clientDownloadOptions.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.SkipBodyDownload()
+	runtime.SkipBodyDownload(req)
 	if clientDownloadOptions != nil && clientDownloadOptions.Range != nil {
 		req.Raw().Header.Set("x-ms-range", *clientDownloadOptions.Range)
 	}
@@ -1239,21 +1134,8 @@ func (client *client) downloadHandleResponse(resp *http.Response) (clientDownloa
 	return result, nil
 }
 
-// downloadHandleError handles the Download error response.
-func (client *client) downloadHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetAccessControl - Get the owner, group, permissions, or access control list for a blob.
-// If the operation fails it returns the *DataLakeStorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // clientGetAccessControlOptions - clientGetAccessControlOptions contains the optional parameters for the client.GetAccessControl
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -1268,7 +1150,7 @@ func (client *client) GetAccessControl(ctx context.Context, action Enum22, clien
 		return clientGetAccessControlResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientGetAccessControlResponse{}, client.getAccessControlHandleError(resp)
+		return clientGetAccessControlResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getAccessControlHandleResponse(resp)
 }
@@ -1352,21 +1234,8 @@ func (client *client) getAccessControlHandleResponse(resp *http.Response) (clien
 	return result, nil
 }
 
-// getAccessControlHandleError handles the GetAccessControl error response.
-func (client *client) getAccessControlHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := DataLakeStorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetAccountInfo - Returns the sku name and account kind
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - clientGetAccountInfoOptions contains the optional parameters for the client.GetAccountInfo method.
 func (client *client) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *clientGetAccountInfoOptions) (clientGetAccountInfoResponse, error) {
 	req, err := client.getAccountInfoCreateRequest(ctx, restype, comp, options)
@@ -1378,7 +1247,7 @@ func (client *client) GetAccountInfo(ctx context.Context, restype Enum8, comp En
 		return clientGetAccountInfoResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientGetAccountInfoResponse{}, client.getAccountInfoHandleError(resp)
+		return clientGetAccountInfoResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getAccountInfoHandleResponse(resp)
 }
@@ -1426,22 +1295,9 @@ func (client *client) getAccountInfoHandleResponse(resp *http.Response) (clientG
 	return result, nil
 }
 
-// getAccountInfoHandleError handles the GetAccountInfo error response.
-func (client *client) getAccountInfoHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetProperties - The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties
 // for the blob. It does not return the content of the blob.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // clientGetPropertiesOptions - clientGetPropertiesOptions contains the optional parameters for the client.GetProperties method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
@@ -1456,7 +1312,7 @@ func (client *client) GetProperties(ctx context.Context, clientGetPropertiesOpti
 		return clientGetPropertiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientGetPropertiesResponse{}, client.getPropertiesHandleError(resp)
+		return clientGetPropertiesResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getPropertiesHandleResponse(resp)
 }
@@ -1753,21 +1609,8 @@ func (client *client) getPropertiesHandleResponse(resp *http.Response) (clientGe
 	return result, nil
 }
 
-// getPropertiesHandleError handles the GetProperties error response.
-func (client *client) getPropertiesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetTags - The Get Tags operation enables users to get the tags associated with a blob.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // clientGetTagsOptions - clientGetTagsOptions contains the optional parameters for the client.GetTags method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -1781,7 +1624,7 @@ func (client *client) GetTags(ctx context.Context, comp Enum42, clientGetTagsOpt
 		return clientGetTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientGetTagsResponse{}, client.getTagsHandleError(resp)
+		return clientGetTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getTagsHandleResponse(resp)
 }
@@ -1838,26 +1681,13 @@ func (client *client) getTagsHandleResponse(resp *http.Response) (clientGetTagsR
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.Tags); err != nil {
-		return clientGetTagsResponse{}, runtime.NewResponseError(err, resp)
+		return clientGetTagsResponse{}, err
 	}
 	return result, nil
 }
 
-// getTagsHandleError handles the GetTags error response.
-func (client *client) getTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Query - The Query operation enables users to select/project on blob data by providing simple query expressions.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // clientQueryOptions - clientQueryOptions contains the optional parameters for the client.Query method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
@@ -1872,7 +1702,7 @@ func (client *client) Query(ctx context.Context, comp Enum40, clientQueryOptions
 		return clientQueryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusPartialContent) {
-		return clientQueryResponse{}, client.queryHandleError(resp)
+		return clientQueryResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.queryHandleResponse(resp)
 }
@@ -1892,7 +1722,7 @@ func (client *client) queryCreateRequest(ctx context.Context, comp Enum40, clien
 		reqQP.Set("timeout", strconv.FormatInt(int64(*clientQueryOptions.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.SkipBodyDownload()
+	runtime.SkipBodyDownload(req)
 	if leaseAccessConditions != nil && leaseAccessConditions.LeaseID != nil {
 		req.Raw().Header.Set("x-ms-lease-id", *leaseAccessConditions.LeaseID)
 	}
@@ -2082,21 +1912,8 @@ func (client *client) queryHandleResponse(resp *http.Response) (clientQueryRespo
 	return result, nil
 }
 
-// queryHandleError handles the Query error response.
-func (client *client) queryHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ReleaseLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // leaseID - Specifies the current lease ID on the resource.
 // clientReleaseLeaseOptions - clientReleaseLeaseOptions contains the optional parameters for the client.ReleaseLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -2110,7 +1927,7 @@ func (client *client) ReleaseLease(ctx context.Context, comp Enum16, leaseID str
 		return clientReleaseLeaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientReleaseLeaseResponse{}, client.releaseLeaseHandleError(resp)
+		return clientReleaseLeaseResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.releaseLeaseHandleResponse(resp)
 }
@@ -2184,25 +2001,12 @@ func (client *client) releaseLeaseHandleResponse(resp *http.Response) (clientRel
 	return result, nil
 }
 
-// releaseLeaseHandleError handles the ReleaseLease error response.
-func (client *client) releaseLeaseHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Rename - Rename a blob/file. By default, the destination is overwritten and if the destination already exists and has a
 // lease the lease is broken. This operation supports conditional HTTP requests. For more
 // information, see Specifying Conditional Headers for Blob Service Operations [https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations].
 // To
 // fail if the destination already exists, use a conditional request with If-None-Match: "*".
-// If the operation fails it returns the *DataLakeStorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // renameSource - The file or directory to be renamed. The value must have the following format: "/{filesysystem}/{path}".
 // If "x-ms-properties" is specified, the properties will overwrite the existing properties;
 // otherwise, the existing properties will be preserved.
@@ -2222,7 +2026,7 @@ func (client *client) Rename(ctx context.Context, renameSource string, clientRen
 		return clientRenameResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return clientRenameResponse{}, client.renameHandleError(resp)
+		return clientRenameResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.renameHandleResponse(resp)
 }
@@ -2343,21 +2147,8 @@ func (client *client) renameHandleResponse(resp *http.Response) (clientRenameRes
 	return result, nil
 }
 
-// renameHandleError handles the Rename error response.
-func (client *client) renameHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := DataLakeStorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // RenewLease - [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // leaseID - Specifies the current lease ID on the resource.
 // clientRenewLeaseOptions - clientRenewLeaseOptions contains the optional parameters for the client.RenewLease method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -2371,7 +2162,7 @@ func (client *client) RenewLease(ctx context.Context, comp Enum16, leaseID strin
 		return clientRenewLeaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientRenewLeaseResponse{}, client.renewLeaseHandleError(resp)
+		return clientRenewLeaseResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.renewLeaseHandleResponse(resp)
 }
@@ -2448,21 +2239,8 @@ func (client *client) renewLeaseHandleResponse(resp *http.Response) (clientRenew
 	return result, nil
 }
 
-// renewLeaseHandleError handles the RenewLease error response.
-func (client *client) renewLeaseHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetAccessControl - Set the owner, group, permissions, or access control list for a blob.
-// If the operation fails it returns the *DataLakeStorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // clientSetAccessControlOptions - clientSetAccessControlOptions contains the optional parameters for the client.SetAccessControl
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -2477,7 +2255,7 @@ func (client *client) SetAccessControl(ctx context.Context, action Enum21, clien
 		return clientSetAccessControlResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientSetAccessControlResponse{}, client.setAccessControlHandleError(resp)
+		return clientSetAccessControlResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setAccessControlHandleResponse(resp)
 }
@@ -2558,21 +2336,8 @@ func (client *client) setAccessControlHandleResponse(resp *http.Response) (clien
 	return result, nil
 }
 
-// setAccessControlHandleError handles the SetAccessControl error response.
-func (client *client) setAccessControlHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := DataLakeStorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetExpiry - Sets the time a blob will expire and be deleted.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // expiryOptions - Required. Indicates mode of the expiry time
 // options - clientSetExpiryOptions contains the optional parameters for the client.SetExpiry method.
 func (client *client) SetExpiry(ctx context.Context, comp Enum24, expiryOptions BlobExpiryOptions, options *clientSetExpiryOptions) (clientSetExpiryResponse, error) {
@@ -2585,7 +2350,7 @@ func (client *client) SetExpiry(ctx context.Context, comp Enum24, expiryOptions 
 		return clientSetExpiryResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientSetExpiryResponse{}, client.setExpiryHandleError(resp)
+		return clientSetExpiryResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setExpiryHandleResponse(resp)
 }
@@ -2646,21 +2411,8 @@ func (client *client) setExpiryHandleResponse(resp *http.Response) (clientSetExp
 	return result, nil
 }
 
-// setExpiryHandleError handles the SetExpiry error response.
-func (client *client) setExpiryHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetHTTPHeaders - The Set HTTP Headers operation sets system properties on the blob
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // clientSetHTTPHeadersOptions - clientSetHTTPHeadersOptions contains the optional parameters for the client.SetHTTPHeaders
 // method.
 // BlobHTTPHeaders - BlobHTTPHeaders contains a group of parameters for the client.SetHTTPHeaders method.
@@ -2676,7 +2428,7 @@ func (client *client) SetHTTPHeaders(ctx context.Context, comp Enum1, clientSetH
 		return clientSetHTTPHeadersResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientSetHTTPHeadersResponse{}, client.setHTTPHeadersHandleError(resp)
+		return clientSetHTTPHeadersResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setHTTPHeadersHandleResponse(resp)
 }
@@ -2776,21 +2528,8 @@ func (client *client) setHTTPHeadersHandleResponse(resp *http.Response) (clientS
 	return result, nil
 }
 
-// setHTTPHeadersHandleError handles the SetHTTPHeaders error response.
-func (client *client) setHTTPHeadersHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetImmutabilityPolicy - The Set Immutability Policy operation sets the immutability policy on the blob
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // clientSetImmutabilityPolicyOptions - clientSetImmutabilityPolicyOptions contains the optional parameters for the client.SetImmutabilityPolicy
 // method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -2804,7 +2543,7 @@ func (client *client) SetImmutabilityPolicy(ctx context.Context, comp Enum26, cl
 		return clientSetImmutabilityPolicyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientSetImmutabilityPolicyResponse{}, client.setImmutabilityPolicyHandleError(resp)
+		return clientSetImmutabilityPolicyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setImmutabilityPolicyHandleResponse(resp)
 }
@@ -2870,21 +2609,8 @@ func (client *client) setImmutabilityPolicyHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
-// setImmutabilityPolicyHandleError handles the SetImmutabilityPolicy error response.
-func (client *client) setImmutabilityPolicyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetLegalHold - The Set Legal Hold operation sets a legal hold on the blob.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // legalHold - Specified if a legal hold should be set on the blob.
 // options - clientSetLegalHoldOptions contains the optional parameters for the client.SetLegalHold method.
 func (client *client) SetLegalHold(ctx context.Context, comp Enum27, legalHold bool, options *clientSetLegalHoldOptions) (clientSetLegalHoldResponse, error) {
@@ -2897,7 +2623,7 @@ func (client *client) SetLegalHold(ctx context.Context, comp Enum27, legalHold b
 		return clientSetLegalHoldResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientSetLegalHoldResponse{}, client.setLegalHoldHandleError(resp)
+		return clientSetLegalHoldResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setLegalHoldHandleResponse(resp)
 }
@@ -2952,22 +2678,9 @@ func (client *client) setLegalHoldHandleResponse(resp *http.Response) (clientSet
 	return result, nil
 }
 
-// setLegalHoldHandleError handles the SetLegalHold error response.
-func (client *client) setLegalHoldHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetMetadata - The Set Blob Metadata operation sets user-defined metadata for the specified blob as one or more name-value
 // pairs
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // clientSetMetadataOptions - clientSetMetadataOptions contains the optional parameters for the client.SetMetadata method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
 // CpkInfo - CpkInfo contains a group of parameters for the client.Download method.
@@ -2983,7 +2696,7 @@ func (client *client) SetMetadata(ctx context.Context, comp Enum12, clientSetMet
 		return clientSetMetadataResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientSetMetadataResponse{}, client.setMetadataHandleError(resp)
+		return clientSetMetadataResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setMetadataHandleResponse(resp)
 }
@@ -3091,21 +2804,8 @@ func (client *client) setMetadataHandleResponse(resp *http.Response) (clientSetM
 	return result, nil
 }
 
-// setMetadataHandleError handles the SetMetadata error response.
-func (client *client) setMetadataHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetTags - The Set Tags operation enables users to set tags on a blob.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // clientSetTagsOptions - clientSetTagsOptions contains the optional parameters for the client.SetTags method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -3119,7 +2819,7 @@ func (client *client) SetTags(ctx context.Context, comp Enum42, clientSetTagsOpt
 		return clientSetTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusNoContent) {
-		return clientSetTagsResponse{}, client.setTagsHandleError(resp)
+		return clientSetTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setTagsHandleResponse(resp)
 }
@@ -3184,24 +2884,11 @@ func (client *client) setTagsHandleResponse(resp *http.Response) (clientSetTagsR
 	return result, nil
 }
 
-// setTagsHandleError handles the SetTags error response.
-func (client *client) setTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetTier - The Set Tier operation sets the tier on a blob. The operation is allowed on a page blob in a premium storage
 // account and on a block blob in a blob storage account (locally redundant storage only). A
 // premium page blob's tier determines the allowed size, IOPS, and bandwidth of the blob. A block blob's tier determines Hot/Cool/Archive
 // storage type. This operation does not update the blob's ETag.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // tier - Indicates the tier to be set on the blob.
 // clientSetTierOptions - clientSetTierOptions contains the optional parameters for the client.SetTier method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -3216,7 +2903,7 @@ func (client *client) SetTier(ctx context.Context, comp Enum32, tier AccessTier,
 		return clientSetTierResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return clientSetTierResponse{}, client.setTierHandleError(resp)
+		return clientSetTierResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setTierHandleResponse(resp)
 }
@@ -3272,21 +2959,8 @@ func (client *client) setTierHandleResponse(resp *http.Response) (clientSetTierR
 	return result, nil
 }
 
-// setTierHandleError handles the SetTier error response.
-func (client *client) setTierHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // StartCopyFromURL - The Start Copy From URL operation copies a blob or an internet resource to a new blob.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 // a page blob snapshot. The value should be URL-encoded as it would appear in a request
 // URI. The source blob must either be public or must be authenticated via a shared access signature.
@@ -3306,7 +2980,7 @@ func (client *client) StartCopyFromURL(ctx context.Context, copySource string, c
 		return clientStartCopyFromURLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return clientStartCopyFromURLResponse{}, client.startCopyFromURLHandleError(resp)
+		return clientStartCopyFromURLResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.startCopyFromURLHandleResponse(resp)
 }
@@ -3431,21 +3105,8 @@ func (client *client) startCopyFromURLHandleResponse(resp *http.Response) (clien
 	return result, nil
 }
 
-// startCopyFromURLHandleError handles the StartCopyFromURL error response.
-func (client *client) startCopyFromURLHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Undelete - Undelete a blob that was previously soft deleted
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - clientUndeleteOptions contains the optional parameters for the client.Undelete method.
 func (client *client) Undelete(ctx context.Context, comp Enum14, options *clientUndeleteOptions) (clientUndeleteResponse, error) {
 	req, err := client.undeleteCreateRequest(ctx, comp, options)
@@ -3457,7 +3118,7 @@ func (client *client) Undelete(ctx context.Context, comp Enum14, options *client
 		return clientUndeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return clientUndeleteResponse{}, client.undeleteHandleError(resp)
+		return clientUndeleteResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.undeleteHandleResponse(resp)
 }
@@ -3502,17 +3163,4 @@ func (client *client) undeleteHandleResponse(resp *http.Response) (clientUndelet
 		result.Date = &date
 	}
 	return result, nil
-}
-
-// undeleteHandleError handles the Undelete error response.
-func (client *client) undeleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

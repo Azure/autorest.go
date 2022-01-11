@@ -53,7 +53,7 @@ func (p *ApplicationGatewaysClientListAllPager) NextPage(ctx context.Context) bo
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -107,7 +107,7 @@ func (p *ApplicationGatewaysClientListAvailableSSLPredefinedPoliciesPager) NextP
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAvailableSSLPredefinedPoliciesHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAvailableSSLPredefinedPoliciesHandleResponse(resp)
@@ -161,7 +161,7 @@ func (p *ApplicationGatewaysClientListPager) NextPage(ctx context.Context) bool 
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -215,7 +215,7 @@ func (p *ApplicationSecurityGroupsClientListAllPager) NextPage(ctx context.Conte
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -269,7 +269,7 @@ func (p *ApplicationSecurityGroupsClientListPager) NextPage(ctx context.Context)
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -323,7 +323,7 @@ func (p *AvailableDelegationsClientListPager) NextPage(ctx context.Context) bool
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -377,7 +377,7 @@ func (p *AvailableEndpointServicesClientListPager) NextPage(ctx context.Context)
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -431,7 +431,7 @@ func (p *AvailablePrivateEndpointTypesClientListByResourceGroupPager) NextPage(c
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -485,7 +485,7 @@ func (p *AvailablePrivateEndpointTypesClientListPager) NextPage(ctx context.Cont
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -539,7 +539,7 @@ func (p *AvailableResourceGroupDelegationsClientListPager) NextPage(ctx context.
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -593,7 +593,7 @@ func (p *AvailableServiceAliasesClientListByResourceGroupPager) NextPage(ctx con
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -647,7 +647,7 @@ func (p *AvailableServiceAliasesClientListPager) NextPage(ctx context.Context) b
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -701,7 +701,7 @@ func (p *AzureFirewallFqdnTagsClientListAllPager) NextPage(ctx context.Context) 
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -755,7 +755,7 @@ func (p *AzureFirewallsClientListAllPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -809,7 +809,7 @@ func (p *AzureFirewallsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -863,7 +863,7 @@ func (p *BastionHostsClientListByResourceGroupPager) NextPage(ctx context.Contex
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -917,7 +917,7 @@ func (p *BastionHostsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -971,7 +971,7 @@ func (p *BgpServiceCommunitiesClientListPager) NextPage(ctx context.Context) boo
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -1025,7 +1025,7 @@ func (p *DdosProtectionPlansClientListByResourceGroupPager) NextPage(ctx context
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -1079,7 +1079,7 @@ func (p *DdosProtectionPlansClientListPager) NextPage(ctx context.Context) bool 
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -1133,7 +1133,7 @@ func (p *DefaultSecurityRulesClientListPager) NextPage(ctx context.Context) bool
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -1187,7 +1187,7 @@ func (p *ExpressRouteCircuitAuthorizationsClientListPager) NextPage(ctx context.
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -1241,7 +1241,7 @@ func (p *ExpressRouteCircuitConnectionsClientListPager) NextPage(ctx context.Con
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -1295,7 +1295,7 @@ func (p *ExpressRouteCircuitPeeringsClientListPager) NextPage(ctx context.Contex
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -1349,7 +1349,7 @@ func (p *ExpressRouteCircuitsClientListAllPager) NextPage(ctx context.Context) b
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -1403,7 +1403,7 @@ func (p *ExpressRouteCircuitsClientListPager) NextPage(ctx context.Context) bool
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -1457,7 +1457,7 @@ func (p *ExpressRouteCrossConnectionPeeringsClientListPager) NextPage(ctx contex
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -1511,7 +1511,7 @@ func (p *ExpressRouteCrossConnectionsClientListByResourceGroupPager) NextPage(ct
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -1565,7 +1565,7 @@ func (p *ExpressRouteCrossConnectionsClientListPager) NextPage(ctx context.Conte
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -1619,7 +1619,7 @@ func (p *ExpressRouteLinksClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -1673,7 +1673,7 @@ func (p *ExpressRoutePortsClientListByResourceGroupPager) NextPage(ctx context.C
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -1727,7 +1727,7 @@ func (p *ExpressRoutePortsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -1781,7 +1781,7 @@ func (p *ExpressRoutePortsLocationsClientListPager) NextPage(ctx context.Context
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -1835,7 +1835,7 @@ func (p *ExpressRouteServiceProvidersClientListPager) NextPage(ctx context.Conte
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -1889,7 +1889,7 @@ func (p *FirewallPoliciesClientListAllPager) NextPage(ctx context.Context) bool 
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -1943,7 +1943,7 @@ func (p *FirewallPoliciesClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -1997,7 +1997,7 @@ func (p *FirewallPolicyRuleGroupsClientListPager) NextPage(ctx context.Context) 
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -2051,7 +2051,7 @@ func (p *FlowLogsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -2105,7 +2105,7 @@ func (p *HubVirtualNetworkConnectionsClientListPager) NextPage(ctx context.Conte
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -2159,7 +2159,7 @@ func (p *IPAllocationsClientListByResourceGroupPager) NextPage(ctx context.Conte
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -2213,7 +2213,7 @@ func (p *IPAllocationsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -2267,7 +2267,7 @@ func (p *IPGroupsClientListByResourceGroupPager) NextPage(ctx context.Context) b
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -2321,7 +2321,7 @@ func (p *IPGroupsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -2375,7 +2375,7 @@ func (p *InboundNatRulesClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -2429,7 +2429,7 @@ func (p *InterfaceIPConfigurationsClientListPager) NextPage(ctx context.Context)
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -2483,7 +2483,7 @@ func (p *InterfaceLoadBalancersClientListPager) NextPage(ctx context.Context) bo
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -2537,7 +2537,7 @@ func (p *InterfaceTapConfigurationsClientListPager) NextPage(ctx context.Context
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -2591,7 +2591,7 @@ func (p *InterfacesClientListAllPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -2645,7 +2645,7 @@ func (p *InterfacesClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -2699,7 +2699,7 @@ func (p *InterfacesClientListVirtualMachineScaleSetIPConfigurationsPager) NextPa
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listVirtualMachineScaleSetIPConfigurationsHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listVirtualMachineScaleSetIPConfigurationsHandleResponse(resp)
@@ -2753,7 +2753,7 @@ func (p *InterfacesClientListVirtualMachineScaleSetNetworkInterfacesPager) NextP
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listVirtualMachineScaleSetNetworkInterfacesHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listVirtualMachineScaleSetNetworkInterfacesHandleResponse(resp)
@@ -2807,7 +2807,7 @@ func (p *InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesPager) Nex
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listVirtualMachineScaleSetVMNetworkInterfacesHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listVirtualMachineScaleSetVMNetworkInterfacesHandleResponse(resp)
@@ -2861,7 +2861,7 @@ func (p *LoadBalancerBackendAddressPoolsClientListPager) NextPage(ctx context.Co
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -2915,7 +2915,7 @@ func (p *LoadBalancerFrontendIPConfigurationsClientListPager) NextPage(ctx conte
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -2969,7 +2969,7 @@ func (p *LoadBalancerLoadBalancingRulesClientListPager) NextPage(ctx context.Con
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -3023,7 +3023,7 @@ func (p *LoadBalancerNetworkInterfacesClientListPager) NextPage(ctx context.Cont
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -3077,7 +3077,7 @@ func (p *LoadBalancerOutboundRulesClientListPager) NextPage(ctx context.Context)
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -3131,7 +3131,7 @@ func (p *LoadBalancerProbesClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -3185,7 +3185,7 @@ func (p *LoadBalancersClientListAllPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -3239,7 +3239,7 @@ func (p *LoadBalancersClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -3293,7 +3293,7 @@ func (p *LocalNetworkGatewaysClientListPager) NextPage(ctx context.Context) bool
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -3347,7 +3347,7 @@ func (p *ManagementClientDisconnectActiveSessionsPager) NextPage(ctx context.Con
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.disconnectActiveSessionsHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.disconnectActiveSessionsHandleResponse(resp)
@@ -3399,7 +3399,7 @@ func (p *ManagementClientGetActiveSessionsPager) NextPage(ctx context.Context) b
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
-		p.err = p.client.getActiveSessionsHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getActiveSessionsHandleResponse(resp)
@@ -3453,7 +3453,7 @@ func (p *ManagementClientGetBastionShareableLinkPager) NextPage(ctx context.Cont
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.getBastionShareableLinkHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.getBastionShareableLinkHandleResponse(resp)
@@ -3505,7 +3505,7 @@ func (p *ManagementClientPutBastionShareableLinkPager) NextPage(ctx context.Cont
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted) {
-		p.err = p.client.putBastionShareableLinkHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.putBastionShareableLinkHandleResponse(resp)
@@ -3559,7 +3559,7 @@ func (p *NatGatewaysClientListAllPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -3613,7 +3613,7 @@ func (p *NatGatewaysClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -3667,7 +3667,7 @@ func (p *OperationsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -3721,7 +3721,7 @@ func (p *P2SVPNGatewaysClientListByResourceGroupPager) NextPage(ctx context.Cont
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -3775,7 +3775,7 @@ func (p *P2SVPNGatewaysClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -3829,7 +3829,7 @@ func (p *PeerExpressRouteCircuitConnectionsClientListPager) NextPage(ctx context
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -3883,7 +3883,7 @@ func (p *PrivateDNSZoneGroupsClientListPager) NextPage(ctx context.Context) bool
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -3937,7 +3937,7 @@ func (p *PrivateEndpointsClientListBySubscriptionPager) NextPage(ctx context.Con
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listBySubscriptionHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listBySubscriptionHandleResponse(resp)
@@ -3991,7 +3991,7 @@ func (p *PrivateEndpointsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -4045,7 +4045,7 @@ func (p *PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesByResourceG
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAutoApprovedPrivateLinkServicesByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAutoApprovedPrivateLinkServicesByResourceGroupHandleResponse(resp)
@@ -4099,7 +4099,7 @@ func (p *PrivateLinkServicesClientListAutoApprovedPrivateLinkServicesPager) Next
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAutoApprovedPrivateLinkServicesHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAutoApprovedPrivateLinkServicesHandleResponse(resp)
@@ -4153,7 +4153,7 @@ func (p *PrivateLinkServicesClientListBySubscriptionPager) NextPage(ctx context.
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listBySubscriptionHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listBySubscriptionHandleResponse(resp)
@@ -4207,7 +4207,7 @@ func (p *PrivateLinkServicesClientListPager) NextPage(ctx context.Context) bool 
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -4261,7 +4261,7 @@ func (p *PrivateLinkServicesClientListPrivateEndpointConnectionsPager) NextPage(
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listPrivateEndpointConnectionsHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listPrivateEndpointConnectionsHandleResponse(resp)
@@ -4315,7 +4315,7 @@ func (p *ProfilesClientListAllPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -4369,7 +4369,7 @@ func (p *ProfilesClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -4423,7 +4423,7 @@ func (p *PublicIPAddressesClientListAllPager) NextPage(ctx context.Context) bool
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -4477,7 +4477,7 @@ func (p *PublicIPAddressesClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -4531,7 +4531,7 @@ func (p *PublicIPAddressesClientListVirtualMachineScaleSetPublicIPAddressesPager
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listVirtualMachineScaleSetPublicIPAddressesHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listVirtualMachineScaleSetPublicIPAddressesHandleResponse(resp)
@@ -4585,7 +4585,7 @@ func (p *PublicIPAddressesClientListVirtualMachineScaleSetVMPublicIPAddressesPag
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listVirtualMachineScaleSetVMPublicIPAddressesHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listVirtualMachineScaleSetVMPublicIPAddressesHandleResponse(resp)
@@ -4639,7 +4639,7 @@ func (p *PublicIPPrefixesClientListAllPager) NextPage(ctx context.Context) bool 
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -4693,7 +4693,7 @@ func (p *PublicIPPrefixesClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -4747,7 +4747,7 @@ func (p *RouteFilterRulesClientListByRouteFilterPager) NextPage(ctx context.Cont
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByRouteFilterHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByRouteFilterHandleResponse(resp)
@@ -4801,7 +4801,7 @@ func (p *RouteFiltersClientListByResourceGroupPager) NextPage(ctx context.Contex
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -4855,7 +4855,7 @@ func (p *RouteFiltersClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -4909,7 +4909,7 @@ func (p *RouteTablesClientListAllPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -4963,7 +4963,7 @@ func (p *RouteTablesClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -5017,7 +5017,7 @@ func (p *RoutesClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -5071,7 +5071,7 @@ func (p *SecurityGroupsClientListAllPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -5125,7 +5125,7 @@ func (p *SecurityGroupsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -5179,7 +5179,7 @@ func (p *SecurityPartnerProvidersClientListByResourceGroupPager) NextPage(ctx co
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -5233,7 +5233,7 @@ func (p *SecurityPartnerProvidersClientListPager) NextPage(ctx context.Context) 
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -5287,7 +5287,7 @@ func (p *SecurityRulesClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -5341,7 +5341,7 @@ func (p *ServiceEndpointPoliciesClientListByResourceGroupPager) NextPage(ctx con
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -5395,7 +5395,7 @@ func (p *ServiceEndpointPoliciesClientListPager) NextPage(ctx context.Context) b
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -5449,7 +5449,7 @@ func (p *ServiceEndpointPolicyDefinitionsClientListByResourceGroupPager) NextPag
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -5503,7 +5503,7 @@ func (p *SubnetsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -5557,7 +5557,7 @@ func (p *UsagesClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -5611,7 +5611,7 @@ func (p *VPNConnectionsClientListByVPNGatewayPager) NextPage(ctx context.Context
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByVPNGatewayHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByVPNGatewayHandleResponse(resp)
@@ -5665,7 +5665,7 @@ func (p *VPNGatewaysClientListByResourceGroupPager) NextPage(ctx context.Context
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -5719,7 +5719,7 @@ func (p *VPNGatewaysClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -5773,7 +5773,7 @@ func (p *VPNLinkConnectionsClientListByVPNConnectionPager) NextPage(ctx context.
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByVPNConnectionHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByVPNConnectionHandleResponse(resp)
@@ -5827,7 +5827,7 @@ func (p *VPNServerConfigurationsClientListByResourceGroupPager) NextPage(ctx con
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -5881,7 +5881,7 @@ func (p *VPNServerConfigurationsClientListPager) NextPage(ctx context.Context) b
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -5935,7 +5935,7 @@ func (p *VPNSiteLinksClientListByVPNSitePager) NextPage(ctx context.Context) boo
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByVPNSiteHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByVPNSiteHandleResponse(resp)
@@ -5989,7 +5989,7 @@ func (p *VPNSitesClientListByResourceGroupPager) NextPage(ctx context.Context) b
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -6043,7 +6043,7 @@ func (p *VPNSitesClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -6097,7 +6097,7 @@ func (p *VirtualAppliancesClientListByResourceGroupPager) NextPage(ctx context.C
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -6151,7 +6151,7 @@ func (p *VirtualAppliancesClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -6205,7 +6205,7 @@ func (p *VirtualHubRouteTableV2SClientListPager) NextPage(ctx context.Context) b
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -6259,7 +6259,7 @@ func (p *VirtualHubsClientListByResourceGroupPager) NextPage(ctx context.Context
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -6313,7 +6313,7 @@ func (p *VirtualHubsClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -6367,7 +6367,7 @@ func (p *VirtualNetworkGatewayConnectionsClientListPager) NextPage(ctx context.C
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -6421,7 +6421,7 @@ func (p *VirtualNetworkGatewaysClientListConnectionsPager) NextPage(ctx context.
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listConnectionsHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listConnectionsHandleResponse(resp)
@@ -6475,7 +6475,7 @@ func (p *VirtualNetworkGatewaysClientListPager) NextPage(ctx context.Context) bo
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -6529,7 +6529,7 @@ func (p *VirtualNetworkPeeringsClientListPager) NextPage(ctx context.Context) bo
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -6583,7 +6583,7 @@ func (p *VirtualNetworkTapsClientListAllPager) NextPage(ctx context.Context) boo
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -6637,7 +6637,7 @@ func (p *VirtualNetworkTapsClientListByResourceGroupPager) NextPage(ctx context.
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -6691,7 +6691,7 @@ func (p *VirtualNetworksClientListAllPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -6745,7 +6745,7 @@ func (p *VirtualNetworksClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -6799,7 +6799,7 @@ func (p *VirtualNetworksClientListUsagePager) NextPage(ctx context.Context) bool
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listUsageHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listUsageHandleResponse(resp)
@@ -6853,7 +6853,7 @@ func (p *VirtualRouterPeeringsClientListPager) NextPage(ctx context.Context) boo
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -6907,7 +6907,7 @@ func (p *VirtualRoutersClientListByResourceGroupPager) NextPage(ctx context.Cont
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -6961,7 +6961,7 @@ func (p *VirtualRoutersClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -7015,7 +7015,7 @@ func (p *VirtualWansClientListByResourceGroupPager) NextPage(ctx context.Context
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listByResourceGroupHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listByResourceGroupHandleResponse(resp)
@@ -7069,7 +7069,7 @@ func (p *VirtualWansClientListPager) NextPage(ctx context.Context) bool {
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)
@@ -7123,7 +7123,7 @@ func (p *WebApplicationFirewallPoliciesClientListAllPager) NextPage(ctx context.
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listAllHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listAllHandleResponse(resp)
@@ -7177,7 +7177,7 @@ func (p *WebApplicationFirewallPoliciesClientListPager) NextPage(ctx context.Con
 		return false
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		p.err = p.client.listHandleError(resp)
+		p.err = runtime.NewResponseError(resp)
 		return false
 	}
 	result, err := p.client.listHandleResponse(resp)

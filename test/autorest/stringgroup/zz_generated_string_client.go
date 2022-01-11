@@ -10,7 +10,6 @@ package stringgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewStringClient(options *azcore.ClientOptions) *StringClient {
 		cp = *options
 	}
 	client := &StringClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetBase64Encoded - Get value that is base64 encoded
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - StringClientGetBase64EncodedOptions contains the optional parameters for the StringClient.GetBase64Encoded method.
 func (client *StringClient) GetBase64Encoded(ctx context.Context, options *StringClientGetBase64EncodedOptions) (StringClientGetBase64EncodedResponse, error) {
 	req, err := client.getBase64EncodedCreateRequest(ctx, options)
@@ -49,7 +48,7 @@ func (client *StringClient) GetBase64Encoded(ctx context.Context, options *Strin
 		return StringClientGetBase64EncodedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientGetBase64EncodedResponse{}, client.getBase64EncodedHandleError(resp)
+		return StringClientGetBase64EncodedResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBase64EncodedHandleResponse(resp)
 }
@@ -69,26 +68,13 @@ func (client *StringClient) getBase64EncodedCreateRequest(ctx context.Context, o
 func (client *StringClient) getBase64EncodedHandleResponse(resp *http.Response) (StringClientGetBase64EncodedResponse, error) {
 	result := StringClientGetBase64EncodedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64StdFormat); err != nil {
-		return StringClientGetBase64EncodedResponse{}, runtime.NewResponseError(err, resp)
+		return StringClientGetBase64EncodedResponse{}, err
 	}
 	return result, nil
 }
 
-// getBase64EncodedHandleError handles the GetBase64Encoded error response.
-func (client *StringClient) getBase64EncodedHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBase64URLEncoded - Get value that is base64url encoded
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - StringClientGetBase64URLEncodedOptions contains the optional parameters for the StringClient.GetBase64URLEncoded
 // method.
 func (client *StringClient) GetBase64URLEncoded(ctx context.Context, options *StringClientGetBase64URLEncodedOptions) (StringClientGetBase64URLEncodedResponse, error) {
@@ -101,7 +87,7 @@ func (client *StringClient) GetBase64URLEncoded(ctx context.Context, options *St
 		return StringClientGetBase64URLEncodedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientGetBase64URLEncodedResponse{}, client.getBase64URLEncodedHandleError(resp)
+		return StringClientGetBase64URLEncodedResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getBase64URLEncodedHandleResponse(resp)
 }
@@ -121,26 +107,13 @@ func (client *StringClient) getBase64URLEncodedCreateRequest(ctx context.Context
 func (client *StringClient) getBase64URLEncodedHandleResponse(resp *http.Response) (StringClientGetBase64URLEncodedResponse, error) {
 	result := StringClientGetBase64URLEncodedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64URLFormat); err != nil {
-		return StringClientGetBase64URLEncodedResponse{}, runtime.NewResponseError(err, resp)
+		return StringClientGetBase64URLEncodedResponse{}, err
 	}
 	return result, nil
 }
 
-// getBase64URLEncodedHandleError handles the GetBase64URLEncoded error response.
-func (client *StringClient) getBase64URLEncodedHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetEmpty - Get empty string value value ''
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - StringClientGetEmptyOptions contains the optional parameters for the StringClient.GetEmpty method.
 func (client *StringClient) GetEmpty(ctx context.Context, options *StringClientGetEmptyOptions) (StringClientGetEmptyResponse, error) {
 	req, err := client.getEmptyCreateRequest(ctx, options)
@@ -152,7 +125,7 @@ func (client *StringClient) GetEmpty(ctx context.Context, options *StringClientG
 		return StringClientGetEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientGetEmptyResponse{}, client.getEmptyHandleError(resp)
+		return StringClientGetEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getEmptyHandleResponse(resp)
 }
@@ -172,26 +145,13 @@ func (client *StringClient) getEmptyCreateRequest(ctx context.Context, options *
 func (client *StringClient) getEmptyHandleResponse(resp *http.Response) (StringClientGetEmptyResponse, error) {
 	result := StringClientGetEmptyResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringClientGetEmptyResponse{}, runtime.NewResponseError(err, resp)
+		return StringClientGetEmptyResponse{}, err
 	}
 	return result, nil
 }
 
-// getEmptyHandleError handles the GetEmpty error response.
-func (client *StringClient) getEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetMBCS - Get mbcs string value '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - StringClientGetMBCSOptions contains the optional parameters for the StringClient.GetMBCS method.
 func (client *StringClient) GetMBCS(ctx context.Context, options *StringClientGetMBCSOptions) (StringClientGetMBCSResponse, error) {
 	req, err := client.getMBCSCreateRequest(ctx, options)
@@ -203,7 +163,7 @@ func (client *StringClient) GetMBCS(ctx context.Context, options *StringClientGe
 		return StringClientGetMBCSResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientGetMBCSResponse{}, client.getMBCSHandleError(resp)
+		return StringClientGetMBCSResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getMBCSHandleResponse(resp)
 }
@@ -223,26 +183,13 @@ func (client *StringClient) getMBCSCreateRequest(ctx context.Context, options *S
 func (client *StringClient) getMBCSHandleResponse(resp *http.Response) (StringClientGetMBCSResponse, error) {
 	result := StringClientGetMBCSResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringClientGetMBCSResponse{}, runtime.NewResponseError(err, resp)
+		return StringClientGetMBCSResponse{}, err
 	}
 	return result, nil
 }
 
-// getMBCSHandleError handles the GetMBCS error response.
-func (client *StringClient) getMBCSHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetNotProvided - Get String value when no string value is sent in response payload
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - StringClientGetNotProvidedOptions contains the optional parameters for the StringClient.GetNotProvided method.
 func (client *StringClient) GetNotProvided(ctx context.Context, options *StringClientGetNotProvidedOptions) (StringClientGetNotProvidedResponse, error) {
 	req, err := client.getNotProvidedCreateRequest(ctx, options)
@@ -254,7 +201,7 @@ func (client *StringClient) GetNotProvided(ctx context.Context, options *StringC
 		return StringClientGetNotProvidedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientGetNotProvidedResponse{}, client.getNotProvidedHandleError(resp)
+		return StringClientGetNotProvidedResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getNotProvidedHandleResponse(resp)
 }
@@ -274,26 +221,13 @@ func (client *StringClient) getNotProvidedCreateRequest(ctx context.Context, opt
 func (client *StringClient) getNotProvidedHandleResponse(resp *http.Response) (StringClientGetNotProvidedResponse, error) {
 	result := StringClientGetNotProvidedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringClientGetNotProvidedResponse{}, runtime.NewResponseError(err, resp)
+		return StringClientGetNotProvidedResponse{}, err
 	}
 	return result, nil
 }
 
-// getNotProvidedHandleError handles the GetNotProvided error response.
-func (client *StringClient) getNotProvidedHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetNull - Get null string value value
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - StringClientGetNullOptions contains the optional parameters for the StringClient.GetNull method.
 func (client *StringClient) GetNull(ctx context.Context, options *StringClientGetNullOptions) (StringClientGetNullResponse, error) {
 	req, err := client.getNullCreateRequest(ctx, options)
@@ -305,7 +239,7 @@ func (client *StringClient) GetNull(ctx context.Context, options *StringClientGe
 		return StringClientGetNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientGetNullResponse{}, client.getNullHandleError(resp)
+		return StringClientGetNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getNullHandleResponse(resp)
 }
@@ -325,26 +259,13 @@ func (client *StringClient) getNullCreateRequest(ctx context.Context, options *S
 func (client *StringClient) getNullHandleResponse(resp *http.Response) (StringClientGetNullResponse, error) {
 	result := StringClientGetNullResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringClientGetNullResponse{}, runtime.NewResponseError(err, resp)
+		return StringClientGetNullResponse{}, err
 	}
 	return result, nil
 }
 
-// getNullHandleError handles the GetNull error response.
-func (client *StringClient) getNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetNullBase64URLEncoded - Get null value that is expected to be base64url encoded
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - StringClientGetNullBase64URLEncodedOptions contains the optional parameters for the StringClient.GetNullBase64URLEncoded
 // method.
 func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context, options *StringClientGetNullBase64URLEncodedOptions) (StringClientGetNullBase64URLEncodedResponse, error) {
@@ -357,7 +278,7 @@ func (client *StringClient) GetNullBase64URLEncoded(ctx context.Context, options
 		return StringClientGetNullBase64URLEncodedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientGetNullBase64URLEncodedResponse{}, client.getNullBase64URLEncodedHandleError(resp)
+		return StringClientGetNullBase64URLEncodedResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getNullBase64URLEncodedHandleResponse(resp)
 }
@@ -377,27 +298,14 @@ func (client *StringClient) getNullBase64URLEncodedCreateRequest(ctx context.Con
 func (client *StringClient) getNullBase64URLEncodedHandleResponse(resp *http.Response) (StringClientGetNullBase64URLEncodedResponse, error) {
 	result := StringClientGetNullBase64URLEncodedResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsByteArray(resp, &result.Value, runtime.Base64URLFormat); err != nil {
-		return StringClientGetNullBase64URLEncodedResponse{}, runtime.NewResponseError(err, resp)
+		return StringClientGetNullBase64URLEncodedResponse{}, err
 	}
 	return result, nil
 }
 
-// getNullBase64URLEncodedHandleError handles the GetNullBase64URLEncoded error response.
-func (client *StringClient) getNullBase64URLEncodedHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetWhitespace - Get string value with leading and trailing whitespace 'Now is the time for all good men to come to the
 // aid of their country'
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - StringClientGetWhitespaceOptions contains the optional parameters for the StringClient.GetWhitespace method.
 func (client *StringClient) GetWhitespace(ctx context.Context, options *StringClientGetWhitespaceOptions) (StringClientGetWhitespaceResponse, error) {
 	req, err := client.getWhitespaceCreateRequest(ctx, options)
@@ -409,7 +317,7 @@ func (client *StringClient) GetWhitespace(ctx context.Context, options *StringCl
 		return StringClientGetWhitespaceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientGetWhitespaceResponse{}, client.getWhitespaceHandleError(resp)
+		return StringClientGetWhitespaceResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getWhitespaceHandleResponse(resp)
 }
@@ -429,26 +337,13 @@ func (client *StringClient) getWhitespaceCreateRequest(ctx context.Context, opti
 func (client *StringClient) getWhitespaceHandleResponse(resp *http.Response) (StringClientGetWhitespaceResponse, error) {
 	result := StringClientGetWhitespaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Value); err != nil {
-		return StringClientGetWhitespaceResponse{}, runtime.NewResponseError(err, resp)
+		return StringClientGetWhitespaceResponse{}, err
 	}
 	return result, nil
 }
 
-// getWhitespaceHandleError handles the GetWhitespace error response.
-func (client *StringClient) getWhitespaceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutBase64URLEncoded - Put value that is base64url encoded
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // stringBody - string body
 // options - StringClientPutBase64URLEncodedOptions contains the optional parameters for the StringClient.PutBase64URLEncoded
 // method.
@@ -462,7 +357,7 @@ func (client *StringClient) PutBase64URLEncoded(ctx context.Context, stringBody 
 		return StringClientPutBase64URLEncodedResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientPutBase64URLEncodedResponse{}, client.putBase64URLEncodedHandleError(resp)
+		return StringClientPutBase64URLEncodedResponse{}, runtime.NewResponseError(resp)
 	}
 	return StringClientPutBase64URLEncodedResponse{RawResponse: resp}, nil
 }
@@ -478,21 +373,8 @@ func (client *StringClient) putBase64URLEncodedCreateRequest(ctx context.Context
 	return req, runtime.MarshalAsByteArray(req, stringBody, runtime.Base64URLFormat)
 }
 
-// putBase64URLEncodedHandleError handles the PutBase64URLEncoded error response.
-func (client *StringClient) putBase64URLEncodedHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutEmpty - Set string value empty ''
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - StringClientPutEmptyOptions contains the optional parameters for the StringClient.PutEmpty method.
 func (client *StringClient) PutEmpty(ctx context.Context, options *StringClientPutEmptyOptions) (StringClientPutEmptyResponse, error) {
 	req, err := client.putEmptyCreateRequest(ctx, options)
@@ -504,7 +386,7 @@ func (client *StringClient) PutEmpty(ctx context.Context, options *StringClientP
 		return StringClientPutEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientPutEmptyResponse{}, client.putEmptyHandleError(resp)
+		return StringClientPutEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return StringClientPutEmptyResponse{RawResponse: resp}, nil
 }
@@ -520,21 +402,8 @@ func (client *StringClient) putEmptyCreateRequest(ctx context.Context, options *
 	return req, runtime.MarshalAsJSON(req, "")
 }
 
-// putEmptyHandleError handles the PutEmpty error response.
-func (client *StringClient) putEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutMBCS - Set string value mbcs '啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€'
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - StringClientPutMBCSOptions contains the optional parameters for the StringClient.PutMBCS method.
 func (client *StringClient) PutMBCS(ctx context.Context, options *StringClientPutMBCSOptions) (StringClientPutMBCSResponse, error) {
 	req, err := client.putMBCSCreateRequest(ctx, options)
@@ -546,7 +415,7 @@ func (client *StringClient) PutMBCS(ctx context.Context, options *StringClientPu
 		return StringClientPutMBCSResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientPutMBCSResponse{}, client.putMBCSHandleError(resp)
+		return StringClientPutMBCSResponse{}, runtime.NewResponseError(resp)
 	}
 	return StringClientPutMBCSResponse{RawResponse: resp}, nil
 }
@@ -562,21 +431,8 @@ func (client *StringClient) putMBCSCreateRequest(ctx context.Context, options *S
 	return req, runtime.MarshalAsJSON(req, "啊齄丂狛狜隣郎隣兀﨩ˊ〞〡￤℡㈱‐ー﹡﹢﹫、〓ⅰⅹ⒈€㈠㈩ⅠⅫ！￣ぁんァヶΑ︴АЯаяāɡㄅㄩ─╋︵﹄︻︱︳︴ⅰⅹɑɡ〇〾⿻⺁䜣€")
 }
 
-// putMBCSHandleError handles the PutMBCS error response.
-func (client *StringClient) putMBCSHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutNull - Set string value null
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - StringClientPutNullOptions contains the optional parameters for the StringClient.PutNull method.
 func (client *StringClient) PutNull(ctx context.Context, options *StringClientPutNullOptions) (StringClientPutNullResponse, error) {
 	req, err := client.putNullCreateRequest(ctx, options)
@@ -588,7 +444,7 @@ func (client *StringClient) PutNull(ctx context.Context, options *StringClientPu
 		return StringClientPutNullResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientPutNullResponse{}, client.putNullHandleError(resp)
+		return StringClientPutNullResponse{}, runtime.NewResponseError(resp)
 	}
 	return StringClientPutNullResponse{RawResponse: resp}, nil
 }
@@ -607,22 +463,9 @@ func (client *StringClient) putNullCreateRequest(ctx context.Context, options *S
 	return req, nil
 }
 
-// putNullHandleError handles the PutNull error response.
-func (client *StringClient) putNullHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutWhitespace - Set String value with leading and trailing whitespace 'Now is the time for all good men to come to the
 // aid of their country'
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - StringClientPutWhitespaceOptions contains the optional parameters for the StringClient.PutWhitespace method.
 func (client *StringClient) PutWhitespace(ctx context.Context, options *StringClientPutWhitespaceOptions) (StringClientPutWhitespaceResponse, error) {
 	req, err := client.putWhitespaceCreateRequest(ctx, options)
@@ -634,7 +477,7 @@ func (client *StringClient) PutWhitespace(ctx context.Context, options *StringCl
 		return StringClientPutWhitespaceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return StringClientPutWhitespaceResponse{}, client.putWhitespaceHandleError(resp)
+		return StringClientPutWhitespaceResponse{}, runtime.NewResponseError(resp)
 	}
 	return StringClientPutWhitespaceResponse{RawResponse: resp}, nil
 }
@@ -648,17 +491,4 @@ func (client *StringClient) putWhitespaceCreateRequest(ctx context.Context, opti
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, "    Now is the time for all good men to come to the aid of their country    ")
-}
-
-// putWhitespaceHandleError handles the PutWhitespace error response.
-func (client *StringClient) putWhitespaceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

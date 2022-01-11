@@ -11,6 +11,6 @@ package paramgroupinggroup
 const host = "http://localhost:3000"
 
 const (
-	module  = "paramgroupinggroup"
-	version = "v0.1.0"
+	moduleName    = "paramgroupinggroup"
+	moduleVersion = "v0.1.0"
 )

@@ -11,7 +11,6 @@ package armdataboxedge
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -39,19 +38,19 @@ func NewBandwidthSchedulesClient(subscriptionID string, credential azcore.TokenC
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &BandwidthSchedulesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a bandwidth schedule.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The bandwidth schedule name which needs to be added/updated.
 // resourceGroupName - The resource group name.
@@ -66,7 +65,7 @@ func (client *BandwidthSchedulesClient) BeginCreateOrUpdate(ctx context.Context,
 	result := BandwidthSchedulesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("BandwidthSchedulesClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("BandwidthSchedulesClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return BandwidthSchedulesClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *BandwidthSchedulesClient) BeginCreateOrUpdate(ctx context.Context,
 }
 
 // CreateOrUpdate - Creates or updates a bandwidth schedule.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *BandwidthSchedulesClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, parameters BandwidthSchedule, options *BandwidthSchedulesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, parameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *BandwidthSchedulesClient) createOrUpdate(ctx context.Context, devi
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -123,21 +122,8 @@ func (client *BandwidthSchedulesClient) createOrUpdateCreateRequest(ctx context.
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *BandwidthSchedulesClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified bandwidth schedule.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The bandwidth schedule name.
 // resourceGroupName - The resource group name.
@@ -151,7 +137,7 @@ func (client *BandwidthSchedulesClient) BeginDelete(ctx context.Context, deviceN
 	result := BandwidthSchedulesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("BandwidthSchedulesClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("BandwidthSchedulesClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return BandwidthSchedulesClientDeletePollerResponse{}, err
 	}
@@ -162,7 +148,7 @@ func (client *BandwidthSchedulesClient) BeginDelete(ctx context.Context, deviceN
 }
 
 // Delete - Deletes the specified bandwidth schedule.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *BandwidthSchedulesClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *BandwidthSchedulesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -173,7 +159,7 @@ func (client *BandwidthSchedulesClient) deleteOperation(ctx context.Context, dev
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -208,21 +194,8 @@ func (client *BandwidthSchedulesClient) deleteCreateRequest(ctx context.Context,
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *BandwidthSchedulesClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the properties of the specified bandwidth schedule.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The bandwidth schedule name.
 // resourceGroupName - The resource group name.
@@ -237,7 +210,7 @@ func (client *BandwidthSchedulesClient) Get(ctx context.Context, deviceName stri
 		return BandwidthSchedulesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return BandwidthSchedulesClientGetResponse{}, client.getHandleError(resp)
+		return BandwidthSchedulesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -276,26 +249,13 @@ func (client *BandwidthSchedulesClient) getCreateRequest(ctx context.Context, de
 func (client *BandwidthSchedulesClient) getHandleResponse(resp *http.Response) (BandwidthSchedulesClientGetResponse, error) {
 	result := BandwidthSchedulesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BandwidthSchedule); err != nil {
-		return BandwidthSchedulesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return BandwidthSchedulesClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *BandwidthSchedulesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByDataBoxEdgeDevice - Gets all the bandwidth schedules for a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - BandwidthSchedulesClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the BandwidthSchedulesClient.ListByDataBoxEdgeDevice
@@ -342,20 +302,7 @@ func (client *BandwidthSchedulesClient) listByDataBoxEdgeDeviceCreateRequest(ctx
 func (client *BandwidthSchedulesClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse, error) {
 	result := BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BandwidthSchedulesList); err != nil {
-		return BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
+		return BandwidthSchedulesClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	return result, nil
-}
-
-// listByDataBoxEdgeDeviceHandleError handles the ListByDataBoxEdgeDevice error response.
-func (client *BandwidthSchedulesClient) listByDataBoxEdgeDeviceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

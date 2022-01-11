@@ -10,7 +10,6 @@ package complexgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewPolymorphicrecursiveClient(options *azcore.ClientOptions) *Polymorphicre
 		cp = *options
 	}
 	client := &PolymorphicrecursiveClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetValid - Get complex types that are polymorphic and have recursive references
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PolymorphicrecursiveClientGetValidOptions contains the optional parameters for the PolymorphicrecursiveClient.GetValid
 // method.
 func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context, options *PolymorphicrecursiveClientGetValidOptions) (PolymorphicrecursiveClientGetValidResponse, error) {
@@ -50,7 +49,7 @@ func (client *PolymorphicrecursiveClient) GetValid(ctx context.Context, options 
 		return PolymorphicrecursiveClientGetValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PolymorphicrecursiveClientGetValidResponse{}, client.getValidHandleError(resp)
+		return PolymorphicrecursiveClientGetValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getValidHandleResponse(resp)
 }
@@ -70,26 +69,13 @@ func (client *PolymorphicrecursiveClient) getValidCreateRequest(ctx context.Cont
 func (client *PolymorphicrecursiveClient) getValidHandleResponse(resp *http.Response) (PolymorphicrecursiveClientGetValidResponse, error) {
 	result := PolymorphicrecursiveClientGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result); err != nil {
-		return PolymorphicrecursiveClientGetValidResponse{}, runtime.NewResponseError(err, resp)
+		return PolymorphicrecursiveClientGetValidResponse{}, err
 	}
 	return result, nil
 }
 
-// getValidHandleError handles the GetValid error response.
-func (client *PolymorphicrecursiveClient) getValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutValid - Put complex types that are polymorphic and have recursive references
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // complexBody - Please put a salmon that looks like this: { "fishtype": "salmon", "species": "king", "length": 1, "age":
 // 1, "location": "alaska", "iswild": true, "siblings": [ { "fishtype": "shark", "species":
 // "predator", "length": 20, "age": 6, "siblings": [ { "fishtype": "salmon", "species": "coho", "length": 2, "age": 2, "location":
@@ -109,7 +95,7 @@ func (client *PolymorphicrecursiveClient) PutValid(ctx context.Context, complexB
 		return PolymorphicrecursiveClientPutValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PolymorphicrecursiveClientPutValidResponse{}, client.putValidHandleError(resp)
+		return PolymorphicrecursiveClientPutValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return PolymorphicrecursiveClientPutValidResponse{RawResponse: resp}, nil
 }
@@ -123,17 +109,4 @@ func (client *PolymorphicrecursiveClient) putValidCreateRequest(ctx context.Cont
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, complexBody)
-}
-
-// putValidHandleError handles the PutValid error response.
-func (client *PolymorphicrecursiveClient) putValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

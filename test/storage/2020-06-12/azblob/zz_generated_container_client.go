@@ -42,7 +42,7 @@ func newContainerClient(endpoint string, version Enum2, pl runtime.Pipeline) *co
 
 // AcquireLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
 // to 60 seconds, or can be infinite
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // containerClientAcquireLeaseOptions - containerClientAcquireLeaseOptions contains the optional parameters for the containerClient.AcquireLease
 // method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -56,7 +56,7 @@ func (client *containerClient) AcquireLease(ctx context.Context, comp Enum16, re
 		return containerClientAcquireLeaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return containerClientAcquireLeaseResponse{}, client.acquireLeaseHandleError(resp)
+		return containerClientAcquireLeaseResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.acquireLeaseHandleResponse(resp)
 }
@@ -130,22 +130,9 @@ func (client *containerClient) acquireLeaseHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
-// acquireLeaseHandleError handles the AcquireLease error response.
-func (client *containerClient) acquireLeaseHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BreakLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
 // to 60 seconds, or can be infinite
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // containerClientBreakLeaseOptions - containerClientBreakLeaseOptions contains the optional parameters for the containerClient.BreakLease
 // method.
 // ModifiedAccessConditions - ModifiedAccessConditions contains a group of parameters for the containerClient.Delete method.
@@ -159,7 +146,7 @@ func (client *containerClient) BreakLease(ctx context.Context, comp Enum16, rest
 		return containerClientBreakLeaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return containerClientBreakLeaseResponse{}, client.breakLeaseHandleError(resp)
+		return containerClientBreakLeaseResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.breakLeaseHandleResponse(resp)
 }
@@ -235,22 +222,9 @@ func (client *containerClient) breakLeaseHandleResponse(resp *http.Response) (co
 	return result, nil
 }
 
-// breakLeaseHandleError handles the BreakLease error response.
-func (client *containerClient) breakLeaseHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ChangeLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
 // to 60 seconds, or can be infinite
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // leaseID - Specifies the current lease ID on the resource.
 // proposedLeaseID - Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed
 // lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID
@@ -268,7 +242,7 @@ func (client *containerClient) ChangeLease(ctx context.Context, comp Enum16, res
 		return containerClientChangeLeaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return containerClientChangeLeaseResponse{}, client.changeLeaseHandleError(resp)
+		return containerClientChangeLeaseResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.changeLeaseHandleResponse(resp)
 }
@@ -338,22 +312,9 @@ func (client *containerClient) changeLeaseHandleResponse(resp *http.Response) (c
 	return result, nil
 }
 
-// changeLeaseHandleError handles the ChangeLease error response.
-func (client *containerClient) changeLeaseHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Create - creates a new container under the specified account. If the container with the same name already exists, the operation
 // fails
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // containerClientCreateOptions - containerClientCreateOptions contains the optional parameters for the containerClient.Create
 // method.
 // ContainerCpkScopeInfo - ContainerCpkScopeInfo contains a group of parameters for the containerClient.Create method.
@@ -367,7 +328,7 @@ func (client *containerClient) Create(ctx context.Context, restype Enum11, conta
 		return containerClientCreateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return containerClientCreateResponse{}, client.createHandleError(resp)
+		return containerClientCreateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
@@ -438,22 +399,9 @@ func (client *containerClient) createHandleResponse(resp *http.Response) (contai
 	return result, nil
 }
 
-// createHandleError handles the Create error response.
-func (client *containerClient) createHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Delete - operation marks the specified container for deletion. The container and any blobs contained within it are later
 // deleted during garbage collection
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // containerClientDeleteOptions - containerClientDeleteOptions contains the optional parameters for the containerClient.Delete
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -468,7 +416,7 @@ func (client *containerClient) Delete(ctx context.Context, restype Enum11, conta
 		return containerClientDeleteResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return containerClientDeleteResponse{}, client.deleteHandleError(resp)
+		return containerClientDeleteResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.deleteHandleResponse(resp)
 }
@@ -524,22 +472,9 @@ func (client *containerClient) deleteHandleResponse(resp *http.Response) (contai
 	return result, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *containerClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetAccessPolicy - gets the permissions for the specified container. The permissions indicate whether container data may
 // be accessed publicly.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // containerClientGetAccessPolicyOptions - containerClientGetAccessPolicyOptions contains the optional parameters for the
 // containerClient.GetAccessPolicy method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -553,7 +488,7 @@ func (client *containerClient) GetAccessPolicy(ctx context.Context, restype Enum
 		return containerClientGetAccessPolicyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return containerClientGetAccessPolicyResponse{}, client.getAccessPolicyHandleError(resp)
+		return containerClientGetAccessPolicyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getAccessPolicyHandleResponse(resp)
 }
@@ -615,26 +550,13 @@ func (client *containerClient) getAccessPolicyHandleResponse(resp *http.Response
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result); err != nil {
-		return containerClientGetAccessPolicyResponse{}, runtime.NewResponseError(err, resp)
+		return containerClientGetAccessPolicyResponse{}, err
 	}
 	return result, nil
 }
 
-// getAccessPolicyHandleError handles the GetAccessPolicy error response.
-func (client *containerClient) getAccessPolicyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetAccountInfo - Returns the sku name and account kind
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - containerClientGetAccountInfoOptions contains the optional parameters for the containerClient.GetAccountInfo
 // method.
 func (client *containerClient) GetAccountInfo(ctx context.Context, restype Enum8, comp Enum1, options *containerClientGetAccountInfoOptions) (containerClientGetAccountInfoResponse, error) {
@@ -647,7 +569,7 @@ func (client *containerClient) GetAccountInfo(ctx context.Context, restype Enum8
 		return containerClientGetAccountInfoResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return containerClientGetAccountInfoResponse{}, client.getAccountInfoHandleError(resp)
+		return containerClientGetAccountInfoResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getAccountInfoHandleResponse(resp)
 }
@@ -695,22 +617,9 @@ func (client *containerClient) getAccountInfoHandleResponse(resp *http.Response)
 	return result, nil
 }
 
-// getAccountInfoHandleError handles the GetAccountInfo error response.
-func (client *containerClient) getAccountInfoHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetProperties - returns all user-defined metadata and system properties for the specified container. The data returned
 // does not include the container's list of blobs
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // containerClientGetPropertiesOptions - containerClientGetPropertiesOptions contains the optional parameters for the containerClient.GetProperties
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -724,7 +633,7 @@ func (client *containerClient) GetProperties(ctx context.Context, restype Enum11
 		return containerClientGetPropertiesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return containerClientGetPropertiesResponse{}, client.getPropertiesHandleError(resp)
+		return containerClientGetPropertiesResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getPropertiesHandleResponse(resp)
 }
@@ -835,21 +744,8 @@ func (client *containerClient) getPropertiesHandleResponse(resp *http.Response) 
 	return result, nil
 }
 
-// getPropertiesHandleError handles the GetProperties error response.
-func (client *containerClient) getPropertiesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListBlobFlatSegment - [Update] The List Blobs operation returns a list of the blobs under the specified container
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - containerClientListBlobFlatSegmentOptions contains the optional parameters for the containerClient.ListBlobFlatSegment
 // method.
 func (client *containerClient) ListBlobFlatSegment(restype Enum11, comp Enum5, options *containerClientListBlobFlatSegmentOptions) *containerClientListBlobFlatSegmentPager {
@@ -920,26 +816,13 @@ func (client *containerClient) listBlobFlatSegmentHandleResponse(resp *http.Resp
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ListBlobsFlatSegmentResponse); err != nil {
-		return containerClientListBlobFlatSegmentResponse{}, runtime.NewResponseError(err, resp)
+		return containerClientListBlobFlatSegmentResponse{}, err
 	}
 	return result, nil
 }
 
-// listBlobFlatSegmentHandleError handles the ListBlobFlatSegment error response.
-func (client *containerClient) listBlobFlatSegmentHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListBlobHierarchySegment - [Update] The List Blobs operation returns a list of the blobs under the specified container
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // delimiter - When the request includes this parameter, the operation returns a BlobPrefix element in the response body that
 // acts as a placeholder for all blobs whose names begin with the same substring up to the
 // appearance of the delimiter character. The delimiter may be a single character or a string.
@@ -1014,27 +897,14 @@ func (client *containerClient) listBlobHierarchySegmentHandleResponse(resp *http
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.ListBlobsHierarchySegmentResponse); err != nil {
-		return containerClientListBlobHierarchySegmentResponse{}, runtime.NewResponseError(err, resp)
+		return containerClientListBlobHierarchySegmentResponse{}, err
 	}
 	return result, nil
 }
 
-// listBlobHierarchySegmentHandleError handles the ListBlobHierarchySegment error response.
-func (client *containerClient) listBlobHierarchySegmentHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ReleaseLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
 // to 60 seconds, or can be infinite
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // leaseID - Specifies the current lease ID on the resource.
 // containerClientReleaseLeaseOptions - containerClientReleaseLeaseOptions contains the optional parameters for the containerClient.ReleaseLease
 // method.
@@ -1049,7 +919,7 @@ func (client *containerClient) ReleaseLease(ctx context.Context, comp Enum16, re
 		return containerClientReleaseLeaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return containerClientReleaseLeaseResponse{}, client.releaseLeaseHandleError(resp)
+		return containerClientReleaseLeaseResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.releaseLeaseHandleResponse(resp)
 }
@@ -1115,21 +985,8 @@ func (client *containerClient) releaseLeaseHandleResponse(resp *http.Response) (
 	return result, nil
 }
 
-// releaseLeaseHandleError handles the ReleaseLease error response.
-func (client *containerClient) releaseLeaseHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Rename - Renames an existing container.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sourceContainerName - Required. Specifies the name of the container to rename.
 // options - containerClientRenameOptions contains the optional parameters for the containerClient.Rename method.
 func (client *containerClient) Rename(ctx context.Context, restype Enum11, comp Enum15, sourceContainerName string, options *containerClientRenameOptions) (containerClientRenameResponse, error) {
@@ -1142,7 +999,7 @@ func (client *containerClient) Rename(ctx context.Context, restype Enum11, comp 
 		return containerClientRenameResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return containerClientRenameResponse{}, client.renameHandleError(resp)
+		return containerClientRenameResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.renameHandleResponse(resp)
 }
@@ -1194,22 +1051,9 @@ func (client *containerClient) renameHandleResponse(resp *http.Response) (contai
 	return result, nil
 }
 
-// renameHandleError handles the Rename error response.
-func (client *containerClient) renameHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // RenewLease - [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15
 // to 60 seconds, or can be infinite
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // leaseID - Specifies the current lease ID on the resource.
 // containerClientRenewLeaseOptions - containerClientRenewLeaseOptions contains the optional parameters for the containerClient.RenewLease
 // method.
@@ -1224,7 +1068,7 @@ func (client *containerClient) RenewLease(ctx context.Context, comp Enum16, rest
 		return containerClientRenewLeaseResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return containerClientRenewLeaseResponse{}, client.renewLeaseHandleError(resp)
+		return containerClientRenewLeaseResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.renewLeaseHandleResponse(resp)
 }
@@ -1293,21 +1137,8 @@ func (client *containerClient) renewLeaseHandleResponse(resp *http.Response) (co
 	return result, nil
 }
 
-// renewLeaseHandleError handles the RenewLease error response.
-func (client *containerClient) renewLeaseHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Restore - Restores a previously-deleted container.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - containerClientRestoreOptions contains the optional parameters for the containerClient.Restore method.
 func (client *containerClient) Restore(ctx context.Context, restype Enum11, comp Enum14, options *containerClientRestoreOptions) (containerClientRestoreResponse, error) {
 	req, err := client.restoreCreateRequest(ctx, restype, comp, options)
@@ -1319,7 +1150,7 @@ func (client *containerClient) Restore(ctx context.Context, restype Enum11, comp
 		return containerClientRestoreResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return containerClientRestoreResponse{}, client.restoreHandleError(resp)
+		return containerClientRestoreResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.restoreHandleResponse(resp)
 }
@@ -1373,22 +1204,9 @@ func (client *containerClient) restoreHandleResponse(resp *http.Response) (conta
 	return result, nil
 }
 
-// restoreHandleError handles the Restore error response.
-func (client *containerClient) restoreHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetAccessPolicy - sets the permissions for the specified container. The permissions indicate whether blobs in a container
 // may be accessed publicly.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // containerClientSetAccessPolicyOptions - containerClientSetAccessPolicyOptions contains the optional parameters for the
 // containerClient.SetAccessPolicy method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -1403,7 +1221,7 @@ func (client *containerClient) SetAccessPolicy(ctx context.Context, restype Enum
 		return containerClientSetAccessPolicyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return containerClientSetAccessPolicyResponse{}, client.setAccessPolicyHandleError(resp)
+		return containerClientSetAccessPolicyResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setAccessPolicyHandleResponse(resp)
 }
@@ -1480,21 +1298,8 @@ func (client *containerClient) setAccessPolicyHandleResponse(resp *http.Response
 	return result, nil
 }
 
-// setAccessPolicyHandleError handles the SetAccessPolicy error response.
-func (client *containerClient) setAccessPolicyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SetMetadata - operation sets one or more user-defined name-value pairs for the specified container.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // containerClientSetMetadataOptions - containerClientSetMetadataOptions contains the optional parameters for the containerClient.SetMetadata
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -1509,7 +1314,7 @@ func (client *containerClient) SetMetadata(ctx context.Context, restype Enum11, 
 		return containerClientSetMetadataResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return containerClientSetMetadataResponse{}, client.setMetadataHandleError(resp)
+		return containerClientSetMetadataResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.setMetadataHandleResponse(resp)
 }
@@ -1578,21 +1383,8 @@ func (client *containerClient) setMetadataHandleResponse(resp *http.Response) (c
 	return result, nil
 }
 
-// setMetadataHandleError handles the SetMetadata error response.
-func (client *containerClient) setMetadataHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SubmitBatch - The Batch operation allows multiple API calls to be embedded into a single HTTP request.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // contentLength - The length of the request.
 // multipartContentType - Required. The value of this header must be multipart/mixed with a batch boundary. Example header
 // value: multipart/mixed; boundary=batch_
@@ -1608,7 +1400,7 @@ func (client *containerClient) SubmitBatch(ctx context.Context, restype Enum11, 
 		return containerClientSubmitBatchResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return containerClientSubmitBatchResponse{}, client.submitBatchHandleError(resp)
+		return containerClientSubmitBatchResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.submitBatchHandleResponse(resp)
 }
@@ -1626,7 +1418,7 @@ func (client *containerClient) submitBatchCreateRequest(ctx context.Context, res
 		reqQP.Set("timeout", strconv.FormatInt(int64(*options.Timeout), 10))
 	}
 	req.Raw().URL.RawQuery = reqQP.Encode()
-	req.SkipBodyDownload()
+	runtime.SkipBodyDownload(req)
 	req.Raw().Header.Set("Content-Length", strconv.FormatInt(contentLength, 10))
 	req.Raw().Header.Set("Content-Type", multipartContentType)
 	req.Raw().Header.Set("x-ms-version", string(client.version))
@@ -1650,17 +1442,4 @@ func (client *containerClient) submitBatchHandleResponse(resp *http.Response) (c
 		result.Version = &val
 	}
 	return result, nil
-}
-
-// submitBatchHandleError handles the SubmitBatch error response.
-func (client *containerClient) submitBatchHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

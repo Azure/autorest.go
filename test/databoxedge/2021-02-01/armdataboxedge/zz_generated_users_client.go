@@ -11,7 +11,6 @@ package armdataboxedge
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -39,20 +38,20 @@ func NewUsersClient(subscriptionID string, credential azcore.TokenCredential, op
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &UsersClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway
 // device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The user name.
 // resourceGroupName - The resource group name.
@@ -67,7 +66,7 @@ func (client *UsersClient) BeginCreateOrUpdate(ctx context.Context, deviceName s
 	result := UsersClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("UsersClient.CreateOrUpdate", "", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("UsersClient.CreateOrUpdate", "", resp, client.pl)
 	if err != nil {
 		return UsersClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -78,7 +77,7 @@ func (client *UsersClient) BeginCreateOrUpdate(ctx context.Context, deviceName s
 }
 
 // CreateOrUpdate - Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *UsersClient) createOrUpdate(ctx context.Context, deviceName string, name string, resourceGroupName string, userParam User, options *UsersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, deviceName, name, resourceGroupName, userParam, options)
 	if err != nil {
@@ -89,7 +88,7 @@ func (client *UsersClient) createOrUpdate(ctx context.Context, deviceName string
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -124,21 +123,8 @@ func (client *UsersClient) createOrUpdateCreateRequest(ctx context.Context, devi
 	return req, runtime.MarshalAsJSON(req, userParam)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *UsersClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the user on a databox edge/gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The user name.
 // resourceGroupName - The resource group name.
@@ -151,7 +137,7 @@ func (client *UsersClient) BeginDelete(ctx context.Context, deviceName string, n
 	result := UsersClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("UsersClient.Delete", "", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("UsersClient.Delete", "", resp, client.pl)
 	if err != nil {
 		return UsersClientDeletePollerResponse{}, err
 	}
@@ -162,7 +148,7 @@ func (client *UsersClient) BeginDelete(ctx context.Context, deviceName string, n
 }
 
 // Delete - Deletes the user on a databox edge/gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *UsersClient) deleteOperation(ctx context.Context, deviceName string, name string, resourceGroupName string, options *UsersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, deviceName, name, resourceGroupName, options)
 	if err != nil {
@@ -173,7 +159,7 @@ func (client *UsersClient) deleteOperation(ctx context.Context, deviceName strin
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -208,21 +194,8 @@ func (client *UsersClient) deleteCreateRequest(ctx context.Context, deviceName s
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *UsersClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the properties of the specified user.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // name - The user name.
 // resourceGroupName - The resource group name.
@@ -237,7 +210,7 @@ func (client *UsersClient) Get(ctx context.Context, deviceName string, name stri
 		return UsersClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return UsersClientGetResponse{}, client.getHandleError(resp)
+		return UsersClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -276,26 +249,13 @@ func (client *UsersClient) getCreateRequest(ctx context.Context, deviceName stri
 func (client *UsersClient) getHandleResponse(resp *http.Response) (UsersClientGetResponse, error) {
 	result := UsersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.User); err != nil {
-		return UsersClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return UsersClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *UsersClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByDataBoxEdgeDevice - Gets all the users registered on a Data Box Edge/Data Box Gateway device.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // deviceName - The device name.
 // resourceGroupName - The resource group name.
 // options - UsersClientListByDataBoxEdgeDeviceOptions contains the optional parameters for the UsersClient.ListByDataBoxEdgeDevice
@@ -345,20 +305,7 @@ func (client *UsersClient) listByDataBoxEdgeDeviceCreateRequest(ctx context.Cont
 func (client *UsersClient) listByDataBoxEdgeDeviceHandleResponse(resp *http.Response) (UsersClientListByDataBoxEdgeDeviceResponse, error) {
 	result := UsersClientListByDataBoxEdgeDeviceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.UserList); err != nil {
-		return UsersClientListByDataBoxEdgeDeviceResponse{}, runtime.NewResponseError(err, resp)
+		return UsersClientListByDataBoxEdgeDeviceResponse{}, err
 	}
 	return result, nil
-}
-
-// listByDataBoxEdgeDeviceHandleError handles the ListByDataBoxEdgeDevice error response.
-func (client *UsersClient) listByDataBoxEdgeDeviceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

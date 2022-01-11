@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewSecurityPartnerProvidersClient(subscriptionID string, credential azcore.
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &SecurityPartnerProvidersClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified Security Partner Provider.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // securityPartnerProviderName - The name of the Security Partner Provider.
 // parameters - Parameters supplied to the create or update Security Partner Provider operation.
@@ -66,7 +65,7 @@ func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Co
 	result := SecurityPartnerProvidersClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SecurityPartnerProvidersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("SecurityPartnerProvidersClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return SecurityPartnerProvidersClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *SecurityPartnerProvidersClient) BeginCreateOrUpdate(ctx context.Co
 }
 
 // CreateOrUpdate - Creates or updates the specified Security Partner Provider.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SecurityPartnerProvidersClient) createOrUpdate(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, parameters SecurityPartnerProvider, options *SecurityPartnerProvidersClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, parameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *SecurityPartnerProvidersClient) createOrUpdate(ctx context.Context
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,21 +118,8 @@ func (client *SecurityPartnerProvidersClient) createOrUpdateCreateRequest(ctx co
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *SecurityPartnerProvidersClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified Security Partner Provider.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // securityPartnerProviderName - The name of the Security Partner Provider.
 // options - SecurityPartnerProvidersClientBeginDeleteOptions contains the optional parameters for the SecurityPartnerProvidersClient.BeginDelete
@@ -146,7 +132,7 @@ func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, r
 	result := SecurityPartnerProvidersClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SecurityPartnerProvidersClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("SecurityPartnerProvidersClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return SecurityPartnerProvidersClientDeletePollerResponse{}, err
 	}
@@ -157,7 +143,7 @@ func (client *SecurityPartnerProvidersClient) BeginDelete(ctx context.Context, r
 }
 
 // Delete - Deletes the specified Security Partner Provider.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SecurityPartnerProvidersClient) deleteOperation(ctx context.Context, resourceGroupName string, securityPartnerProviderName string, options *SecurityPartnerProvidersClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, securityPartnerProviderName, options)
 	if err != nil {
@@ -168,7 +154,7 @@ func (client *SecurityPartnerProvidersClient) deleteOperation(ctx context.Contex
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -199,21 +185,8 @@ func (client *SecurityPartnerProvidersClient) deleteCreateRequest(ctx context.Co
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *SecurityPartnerProvidersClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the specified Security Partner Provider.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // securityPartnerProviderName - The name of the Security Partner Provider.
 // options - SecurityPartnerProvidersClientGetOptions contains the optional parameters for the SecurityPartnerProvidersClient.Get
@@ -228,7 +201,7 @@ func (client *SecurityPartnerProvidersClient) Get(ctx context.Context, resourceG
 		return SecurityPartnerProvidersClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SecurityPartnerProvidersClientGetResponse{}, client.getHandleError(resp)
+		return SecurityPartnerProvidersClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -263,26 +236,13 @@ func (client *SecurityPartnerProvidersClient) getCreateRequest(ctx context.Conte
 func (client *SecurityPartnerProvidersClient) getHandleResponse(resp *http.Response) (SecurityPartnerProvidersClientGetResponse, error) {
 	result := SecurityPartnerProvidersClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityPartnerProvider); err != nil {
-		return SecurityPartnerProvidersClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return SecurityPartnerProvidersClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *SecurityPartnerProvidersClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all the Security Partner Providers in a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - SecurityPartnerProvidersClientListOptions contains the optional parameters for the SecurityPartnerProvidersClient.List
 // method.
 func (client *SecurityPartnerProvidersClient) List(options *SecurityPartnerProvidersClientListOptions) *SecurityPartnerProvidersClientListPager {
@@ -319,26 +279,13 @@ func (client *SecurityPartnerProvidersClient) listCreateRequest(ctx context.Cont
 func (client *SecurityPartnerProvidersClient) listHandleResponse(resp *http.Response) (SecurityPartnerProvidersClientListResponse, error) {
 	result := SecurityPartnerProvidersClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityPartnerProviderListResult); err != nil {
-		return SecurityPartnerProvidersClientListResponse{}, runtime.NewResponseError(err, resp)
+		return SecurityPartnerProvidersClientListResponse{}, err
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *SecurityPartnerProvidersClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByResourceGroup - Lists all Security Partner Providers in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - SecurityPartnerProvidersClientListByResourceGroupOptions contains the optional parameters for the SecurityPartnerProvidersClient.ListByResourceGroup
 // method.
@@ -380,26 +327,13 @@ func (client *SecurityPartnerProvidersClient) listByResourceGroupCreateRequest(c
 func (client *SecurityPartnerProvidersClient) listByResourceGroupHandleResponse(resp *http.Response) (SecurityPartnerProvidersClientListByResourceGroupResponse, error) {
 	result := SecurityPartnerProvidersClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityPartnerProviderListResult); err != nil {
-		return SecurityPartnerProvidersClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return SecurityPartnerProvidersClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *SecurityPartnerProvidersClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateTags - Updates tags of a Security Partner Provider resource.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // securityPartnerProviderName - The name of the Security Partner Provider.
 // parameters - Parameters supplied to update Security Partner Provider tags.
@@ -415,7 +349,7 @@ func (client *SecurityPartnerProvidersClient) UpdateTags(ctx context.Context, re
 		return SecurityPartnerProvidersClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SecurityPartnerProvidersClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return SecurityPartnerProvidersClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -450,20 +384,7 @@ func (client *SecurityPartnerProvidersClient) updateTagsCreateRequest(ctx contex
 func (client *SecurityPartnerProvidersClient) updateTagsHandleResponse(resp *http.Response) (SecurityPartnerProvidersClientUpdateTagsResponse, error) {
 	result := SecurityPartnerProvidersClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SecurityPartnerProvider); err != nil {
-		return SecurityPartnerProvidersClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return SecurityPartnerProvidersClientUpdateTagsResponse{}, err
 	}
 	return result, nil
-}
-
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *SecurityPartnerProvidersClient) updateTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

@@ -11,7 +11,6 @@ package morecustombaseurigroup
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -45,7 +44,7 @@ func NewPathsClient(subscriptionID string, options *PathsClientOptions) *PathsCl
 	client := &PathsClient{
 		dnsSuffix:      "host",
 		subscriptionID: subscriptionID,
-		pl:             runtime.NewPipeline(module, version, nil, nil, &cp.ClientOptions),
+		pl:             runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp.ClientOptions),
 	}
 	if options.DnsSuffix != nil {
 		client.dnsSuffix = *options.DnsSuffix
@@ -54,7 +53,7 @@ func NewPathsClient(subscriptionID string, options *PathsClientOptions) *PathsCl
 }
 
 // GetEmpty - Get a 200 to test a valid base uri
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // vault - The vault name, e.g. https://myvault
 // secret - Secret value.
 // keyName - The key name with value 'key1'.
@@ -69,7 +68,7 @@ func (client *PathsClient) GetEmpty(ctx context.Context, vault string, secret st
 		return PathsClientGetEmptyResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PathsClientGetEmptyResponse{}, client.getEmptyHandleError(resp)
+		return PathsClientGetEmptyResponse{}, runtime.NewResponseError(resp)
 	}
 	return PathsClientGetEmptyResponse{RawResponse: resp}, nil
 }
@@ -100,17 +99,4 @@ func (client *PathsClient) getEmptyCreateRequest(ctx context.Context, vault stri
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// getEmptyHandleError handles the GetEmpty error response.
-func (client *PathsClient) getEmptyHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

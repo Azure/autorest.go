@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewExpressRoutePortsClient(subscriptionID string, credential azcore.TokenCr
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ExpressRoutePortsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates the specified ExpressRoutePort resource.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // expressRoutePortName - The name of the ExpressRoutePort resource.
 // parameters - Parameters supplied to the create ExpressRoutePort operation.
@@ -66,7 +65,7 @@ func (client *ExpressRoutePortsClient) BeginCreateOrUpdate(ctx context.Context, 
 	result := ExpressRoutePortsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ExpressRoutePortsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("ExpressRoutePortsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return ExpressRoutePortsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *ExpressRoutePortsClient) BeginCreateOrUpdate(ctx context.Context, 
 }
 
 // CreateOrUpdate - Creates or updates the specified ExpressRoutePort resource.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ExpressRoutePortsClient) createOrUpdate(ctx context.Context, resourceGroupName string, expressRoutePortName string, parameters ExpressRoutePort, options *ExpressRoutePortsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, expressRoutePortName, parameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *ExpressRoutePortsClient) createOrUpdate(ctx context.Context, resou
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,21 +118,8 @@ func (client *ExpressRoutePortsClient) createOrUpdateCreateRequest(ctx context.C
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *ExpressRoutePortsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified ExpressRoutePort resource.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // expressRoutePortName - The name of the ExpressRoutePort resource.
 // options - ExpressRoutePortsClientBeginDeleteOptions contains the optional parameters for the ExpressRoutePortsClient.BeginDelete
@@ -146,7 +132,7 @@ func (client *ExpressRoutePortsClient) BeginDelete(ctx context.Context, resource
 	result := ExpressRoutePortsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ExpressRoutePortsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("ExpressRoutePortsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return ExpressRoutePortsClientDeletePollerResponse{}, err
 	}
@@ -157,7 +143,7 @@ func (client *ExpressRoutePortsClient) BeginDelete(ctx context.Context, resource
 }
 
 // Delete - Deletes the specified ExpressRoutePort resource.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ExpressRoutePortsClient) deleteOperation(ctx context.Context, resourceGroupName string, expressRoutePortName string, options *ExpressRoutePortsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, expressRoutePortName, options)
 	if err != nil {
@@ -168,7 +154,7 @@ func (client *ExpressRoutePortsClient) deleteOperation(ctx context.Context, reso
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -199,21 +185,8 @@ func (client *ExpressRoutePortsClient) deleteCreateRequest(ctx context.Context, 
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *ExpressRoutePortsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Retrieves the requested ExpressRoutePort resource.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // expressRoutePortName - The name of ExpressRoutePort.
 // options - ExpressRoutePortsClientGetOptions contains the optional parameters for the ExpressRoutePortsClient.Get method.
@@ -227,7 +200,7 @@ func (client *ExpressRoutePortsClient) Get(ctx context.Context, resourceGroupNam
 		return ExpressRoutePortsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExpressRoutePortsClientGetResponse{}, client.getHandleError(resp)
+		return ExpressRoutePortsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -262,26 +235,13 @@ func (client *ExpressRoutePortsClient) getCreateRequest(ctx context.Context, res
 func (client *ExpressRoutePortsClient) getHandleResponse(resp *http.Response) (ExpressRoutePortsClientGetResponse, error) {
 	result := ExpressRoutePortsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePort); err != nil {
-		return ExpressRoutePortsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRoutePortsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *ExpressRoutePortsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - List all the ExpressRoutePort resources in the specified subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ExpressRoutePortsClientListOptions contains the optional parameters for the ExpressRoutePortsClient.List method.
 func (client *ExpressRoutePortsClient) List(options *ExpressRoutePortsClientListOptions) *ExpressRoutePortsClientListPager {
 	return &ExpressRoutePortsClientListPager{
@@ -317,26 +277,13 @@ func (client *ExpressRoutePortsClient) listCreateRequest(ctx context.Context, op
 func (client *ExpressRoutePortsClient) listHandleResponse(resp *http.Response) (ExpressRoutePortsClientListResponse, error) {
 	result := ExpressRoutePortsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePortListResult); err != nil {
-		return ExpressRoutePortsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRoutePortsClientListResponse{}, err
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *ExpressRoutePortsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByResourceGroup - List all the ExpressRoutePort resources in the specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - ExpressRoutePortsClientListByResourceGroupOptions contains the optional parameters for the ExpressRoutePortsClient.ListByResourceGroup
 // method.
@@ -378,26 +325,13 @@ func (client *ExpressRoutePortsClient) listByResourceGroupCreateRequest(ctx cont
 func (client *ExpressRoutePortsClient) listByResourceGroupHandleResponse(resp *http.Response) (ExpressRoutePortsClientListByResourceGroupResponse, error) {
 	result := ExpressRoutePortsClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePortListResult); err != nil {
-		return ExpressRoutePortsClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRoutePortsClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *ExpressRoutePortsClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateTags - Update ExpressRoutePort tags.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // expressRoutePortName - The name of the ExpressRoutePort resource.
 // parameters - Parameters supplied to update ExpressRoutePort resource tags.
@@ -413,7 +347,7 @@ func (client *ExpressRoutePortsClient) UpdateTags(ctx context.Context, resourceG
 		return ExpressRoutePortsClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ExpressRoutePortsClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return ExpressRoutePortsClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -448,20 +382,7 @@ func (client *ExpressRoutePortsClient) updateTagsCreateRequest(ctx context.Conte
 func (client *ExpressRoutePortsClient) updateTagsHandleResponse(resp *http.Response) (ExpressRoutePortsClientUpdateTagsResponse, error) {
 	result := ExpressRoutePortsClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ExpressRoutePort); err != nil {
-		return ExpressRoutePortsClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return ExpressRoutePortsClientUpdateTagsResponse{}, err
 	}
 	return result, nil
-}
-
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *ExpressRoutePortsClient) updateTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

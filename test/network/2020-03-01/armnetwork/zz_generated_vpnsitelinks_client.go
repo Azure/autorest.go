@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewVPNSiteLinksClient(subscriptionID string, credential azcore.TokenCredent
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VPNSiteLinksClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // Get - Retrieves the details of a VPN site link.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VpnSite.
 // vpnSiteName - The name of the VpnSite.
 // vpnSiteLinkName - The name of the VpnSiteLink being retrieved.
@@ -67,7 +66,7 @@ func (client *VPNSiteLinksClient) Get(ctx context.Context, resourceGroupName str
 		return VPNSiteLinksClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VPNSiteLinksClientGetResponse{}, client.getHandleError(resp)
+		return VPNSiteLinksClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -106,26 +105,13 @@ func (client *VPNSiteLinksClient) getCreateRequest(ctx context.Context, resource
 func (client *VPNSiteLinksClient) getHandleResponse(resp *http.Response) (VPNSiteLinksClientGetResponse, error) {
 	result := VPNSiteLinksClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNSiteLink); err != nil {
-		return VPNSiteLinksClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return VPNSiteLinksClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *VPNSiteLinksClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByVPNSite - Lists all the vpnSiteLinks in a resource group for a vpn site.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VpnSite.
 // vpnSiteName - The name of the VpnSite.
 // options - VPNSiteLinksClientListByVPNSiteOptions contains the optional parameters for the VPNSiteLinksClient.ListByVPNSite
@@ -172,20 +158,7 @@ func (client *VPNSiteLinksClient) listByVPNSiteCreateRequest(ctx context.Context
 func (client *VPNSiteLinksClient) listByVPNSiteHandleResponse(resp *http.Response) (VPNSiteLinksClientListByVPNSiteResponse, error) {
 	result := VPNSiteLinksClientListByVPNSiteResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNSiteLinksResult); err != nil {
-		return VPNSiteLinksClientListByVPNSiteResponse{}, runtime.NewResponseError(err, resp)
+		return VPNSiteLinksClientListByVPNSiteResponse{}, err
 	}
 	return result, nil
-}
-
-// listByVPNSiteHandleError handles the ListByVPNSite error response.
-func (client *VPNSiteLinksClient) listByVPNSiteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

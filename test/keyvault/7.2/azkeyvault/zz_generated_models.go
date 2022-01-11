@@ -2241,17 +2241,9 @@ func (d DeletedStorageListResult) MarshalJSON() ([]byte, error) {
 }
 
 // Error - The key vault error exception.
-// Implements the error and azcore.HTTPResponse interfaces.
 type Error struct {
-	raw string
 	// READ-ONLY; The key vault server error.
-	InnerError *ErrorInfo `json:"error,omitempty" azure:"ro"`
-}
-
-// Error implements the error interface for type Error.
-// The contents of the error text are not contractual and subject to change.
-func (e Error) Error() string {
-	return e.raw
+	Error *ErrorInfo `json:"error,omitempty" azure:"ro"`
 }
 
 // ErrorInfo - The key vault server error.

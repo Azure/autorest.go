@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewVPNGatewaysClient(subscriptionID string, credential azcore.TokenCredenti
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VPNGatewaysClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates a virtual wan vpn gateway if it doesn't exist else updates the existing gateway.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // vpnGatewayParameters - Parameters supplied to create or Update a virtual wan vpn gateway.
@@ -66,7 +65,7 @@ func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 	result := VPNGatewaysClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VPNGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("VPNGatewaysClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VPNGatewaysClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *VPNGatewaysClient) BeginCreateOrUpdate(ctx context.Context, resour
 }
 
 // CreateOrUpdate - Creates a virtual wan vpn gateway if it doesn't exist else updates the existing gateway.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VPNGatewaysClient) createOrUpdate(ctx context.Context, resourceGroupName string, gatewayName string, vpnGatewayParameters VPNGateway, options *VPNGatewaysClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, gatewayName, vpnGatewayParameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *VPNGatewaysClient) createOrUpdate(ctx context.Context, resourceGro
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,21 +118,8 @@ func (client *VPNGatewaysClient) createOrUpdateCreateRequest(ctx context.Context
 	return req, runtime.MarshalAsJSON(req, vpnGatewayParameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *VPNGatewaysClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes a virtual wan vpn gateway.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // options - VPNGatewaysClientBeginDeleteOptions contains the optional parameters for the VPNGatewaysClient.BeginDelete method.
@@ -145,7 +131,7 @@ func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 	result := VPNGatewaysClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VPNGatewaysClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("VPNGatewaysClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VPNGatewaysClientDeletePollerResponse{}, err
 	}
@@ -156,7 +142,7 @@ func (client *VPNGatewaysClient) BeginDelete(ctx context.Context, resourceGroupN
 }
 
 // Delete - Deletes a virtual wan vpn gateway.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VPNGatewaysClient) deleteOperation(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
@@ -167,7 +153,7 @@ func (client *VPNGatewaysClient) deleteOperation(ctx context.Context, resourceGr
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -198,21 +184,8 @@ func (client *VPNGatewaysClient) deleteCreateRequest(ctx context.Context, resour
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *VPNGatewaysClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Retrieves the details of a virtual wan vpn gateway.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // options - VPNGatewaysClientGetOptions contains the optional parameters for the VPNGatewaysClient.Get method.
@@ -226,7 +199,7 @@ func (client *VPNGatewaysClient) Get(ctx context.Context, resourceGroupName stri
 		return VPNGatewaysClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VPNGatewaysClientGetResponse{}, client.getHandleError(resp)
+		return VPNGatewaysClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -261,26 +234,13 @@ func (client *VPNGatewaysClient) getCreateRequest(ctx context.Context, resourceG
 func (client *VPNGatewaysClient) getHandleResponse(resp *http.Response) (VPNGatewaysClientGetResponse, error) {
 	result := VPNGatewaysClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNGateway); err != nil {
-		return VPNGatewaysClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return VPNGatewaysClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *VPNGatewaysClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Lists all the VpnGateways in a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - VPNGatewaysClientListOptions contains the optional parameters for the VPNGatewaysClient.List method.
 func (client *VPNGatewaysClient) List(options *VPNGatewaysClientListOptions) *VPNGatewaysClientListPager {
 	return &VPNGatewaysClientListPager{
@@ -316,26 +276,13 @@ func (client *VPNGatewaysClient) listCreateRequest(ctx context.Context, options 
 func (client *VPNGatewaysClient) listHandleResponse(resp *http.Response) (VPNGatewaysClientListResponse, error) {
 	result := VPNGatewaysClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNGatewaysResult); err != nil {
-		return VPNGatewaysClientListResponse{}, runtime.NewResponseError(err, resp)
+		return VPNGatewaysClientListResponse{}, err
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *VPNGatewaysClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByResourceGroup - Lists all the VpnGateways in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // options - VPNGatewaysClientListByResourceGroupOptions contains the optional parameters for the VPNGatewaysClient.ListByResourceGroup
 // method.
@@ -377,26 +324,13 @@ func (client *VPNGatewaysClient) listByResourceGroupCreateRequest(ctx context.Co
 func (client *VPNGatewaysClient) listByResourceGroupHandleResponse(resp *http.Response) (VPNGatewaysClientListByResourceGroupResponse, error) {
 	result := VPNGatewaysClientListByResourceGroupResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListVPNGatewaysResult); err != nil {
-		return VPNGatewaysClientListByResourceGroupResponse{}, runtime.NewResponseError(err, resp)
+		return VPNGatewaysClientListByResourceGroupResponse{}, err
 	}
 	return result, nil
 }
 
-// listByResourceGroupHandleError handles the ListByResourceGroup error response.
-func (client *VPNGatewaysClient) listByResourceGroupHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginReset - Resets the primary of the vpn gateway in the specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // options - VPNGatewaysClientBeginResetOptions contains the optional parameters for the VPNGatewaysClient.BeginReset method.
@@ -408,7 +342,7 @@ func (client *VPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupNa
 	result := VPNGatewaysClientResetPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VPNGatewaysClient.Reset", "location", resp, client.pl, client.resetHandleError)
+	pt, err := armruntime.NewPoller("VPNGatewaysClient.Reset", "location", resp, client.pl)
 	if err != nil {
 		return VPNGatewaysClientResetPollerResponse{}, err
 	}
@@ -419,7 +353,7 @@ func (client *VPNGatewaysClient) BeginReset(ctx context.Context, resourceGroupNa
 }
 
 // Reset - Resets the primary of the vpn gateway in the specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VPNGatewaysClient) reset(ctx context.Context, resourceGroupName string, gatewayName string, options *VPNGatewaysClientBeginResetOptions) (*http.Response, error) {
 	req, err := client.resetCreateRequest(ctx, resourceGroupName, gatewayName, options)
 	if err != nil {
@@ -430,7 +364,7 @@ func (client *VPNGatewaysClient) reset(ctx context.Context, resourceGroupName st
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.resetHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -461,21 +395,8 @@ func (client *VPNGatewaysClient) resetCreateRequest(ctx context.Context, resourc
 	return req, nil
 }
 
-// resetHandleError handles the Reset error response.
-func (client *VPNGatewaysClient) resetHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateTags - Updates virtual wan vpn gateway tags.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name of the VpnGateway.
 // gatewayName - The name of the gateway.
 // vpnGatewayParameters - Parameters supplied to update a virtual wan vpn gateway tags.
@@ -490,7 +411,7 @@ func (client *VPNGatewaysClient) UpdateTags(ctx context.Context, resourceGroupNa
 		return VPNGatewaysClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VPNGatewaysClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return VPNGatewaysClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -525,20 +446,7 @@ func (client *VPNGatewaysClient) updateTagsCreateRequest(ctx context.Context, re
 func (client *VPNGatewaysClient) updateTagsHandleResponse(resp *http.Response) (VPNGatewaysClientUpdateTagsResponse, error) {
 	result := VPNGatewaysClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VPNGateway); err != nil {
-		return VPNGatewaysClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return VPNGatewaysClientUpdateTagsResponse{}, err
 	}
 	return result, nil
-}
-
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *VPNGatewaysClient) updateTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

@@ -39,19 +39,19 @@ func NewResourceSKUsClient(subscriptionID string, credential azcore.TokenCredent
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ResourceSKUsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // List - Gets the list of Microsoft.Compute SKUs available for your Subscription.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ResourceSKUsClientListOptions contains the optional parameters for the ResourceSKUsClient.List method.
 func (client *ResourceSKUsClient) List(options *ResourceSKUsClientListOptions) *ResourceSKUsClientListPager {
 	return &ResourceSKUsClientListPager{
@@ -90,19 +90,7 @@ func (client *ResourceSKUsClient) listCreateRequest(ctx context.Context, options
 func (client *ResourceSKUsClient) listHandleResponse(resp *http.Response) (ResourceSKUsClientListResponse, error) {
 	result := ResourceSKUsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ResourceSKUsResult); err != nil {
-		return ResourceSKUsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return ResourceSKUsClientListResponse{}, err
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *ResourceSKUsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

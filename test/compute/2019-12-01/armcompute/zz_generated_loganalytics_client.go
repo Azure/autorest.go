@@ -39,20 +39,20 @@ func NewLogAnalyticsClient(subscriptionID string, credential azcore.TokenCredent
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &LogAnalyticsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginExportRequestRateByInterval - Export logs that show Api requests made by this subscription in the given time window
 // to show throttling activities.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // location - The location upon which virtual-machine-sizes is queried.
 // parameters - Parameters supplied to the LogAnalytics getRequestRateByInterval Api.
 // options - LogAnalyticsClientBeginExportRequestRateByIntervalOptions contains the optional parameters for the LogAnalyticsClient.BeginExportRequestRateByInterval
@@ -65,7 +65,7 @@ func (client *LogAnalyticsClient) BeginExportRequestRateByInterval(ctx context.C
 	result := LogAnalyticsClientExportRequestRateByIntervalPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LogAnalyticsClient.ExportRequestRateByInterval", "azure-async-operation", resp, client.pl, client.exportRequestRateByIntervalHandleError)
+	pt, err := armruntime.NewPoller("LogAnalyticsClient.ExportRequestRateByInterval", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return LogAnalyticsClientExportRequestRateByIntervalPollerResponse{}, err
 	}
@@ -77,7 +77,7 @@ func (client *LogAnalyticsClient) BeginExportRequestRateByInterval(ctx context.C
 
 // ExportRequestRateByInterval - Export logs that show Api requests made by this subscription in the given time window to
 // show throttling activities.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *LogAnalyticsClient) exportRequestRateByInterval(ctx context.Context, location string, parameters RequestRateByIntervalInput, options *LogAnalyticsClientBeginExportRequestRateByIntervalOptions) (*http.Response, error) {
 	req, err := client.exportRequestRateByIntervalCreateRequest(ctx, location, parameters, options)
 	if err != nil {
@@ -88,7 +88,7 @@ func (client *LogAnalyticsClient) exportRequestRateByInterval(ctx context.Contex
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.exportRequestRateByIntervalHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -115,21 +115,9 @@ func (client *LogAnalyticsClient) exportRequestRateByIntervalCreateRequest(ctx c
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// exportRequestRateByIntervalHandleError handles the ExportRequestRateByInterval error response.
-func (client *LogAnalyticsClient) exportRequestRateByIntervalHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
-}
-
 // BeginExportThrottledRequests - Export logs that show total throttled Api requests for this subscription in the given time
 // window.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 // location - The location upon which virtual-machine-sizes is queried.
 // parameters - Parameters supplied to the LogAnalytics getThrottledRequests Api.
 // options - LogAnalyticsClientBeginExportThrottledRequestsOptions contains the optional parameters for the LogAnalyticsClient.BeginExportThrottledRequests
@@ -142,7 +130,7 @@ func (client *LogAnalyticsClient) BeginExportThrottledRequests(ctx context.Conte
 	result := LogAnalyticsClientExportThrottledRequestsPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("LogAnalyticsClient.ExportThrottledRequests", "azure-async-operation", resp, client.pl, client.exportThrottledRequestsHandleError)
+	pt, err := armruntime.NewPoller("LogAnalyticsClient.ExportThrottledRequests", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return LogAnalyticsClientExportThrottledRequestsPollerResponse{}, err
 	}
@@ -153,7 +141,7 @@ func (client *LogAnalyticsClient) BeginExportThrottledRequests(ctx context.Conte
 }
 
 // ExportThrottledRequests - Export logs that show total throttled Api requests for this subscription in the given time window.
-// If the operation fails it returns a generic error.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *LogAnalyticsClient) exportThrottledRequests(ctx context.Context, location string, parameters ThrottledRequestsInput, options *LogAnalyticsClientBeginExportThrottledRequestsOptions) (*http.Response, error) {
 	req, err := client.exportThrottledRequestsCreateRequest(ctx, location, parameters, options)
 	if err != nil {
@@ -164,7 +152,7 @@ func (client *LogAnalyticsClient) exportThrottledRequests(ctx context.Context, l
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.exportThrottledRequestsHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -189,16 +177,4 @@ func (client *LogAnalyticsClient) exportThrottledRequestsCreateRequest(ctx conte
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, parameters)
-}
-
-// exportThrottledRequestsHandleError handles the ExportThrottledRequests error response.
-func (client *LogAnalyticsClient) exportThrottledRequestsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	if len(body) == 0 {
-		return runtime.NewResponseError(errors.New(resp.Status), resp)
-	}
-	return runtime.NewResponseError(errors.New(string(body)), resp)
 }

@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewVirtualNetworkPeeringsClient(subscriptionID string, credential azcore.To
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &VirtualNetworkPeeringsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a peering in the specified virtual network.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // virtualNetworkPeeringName - The name of the peering.
@@ -67,7 +66,7 @@ func (client *VirtualNetworkPeeringsClient) BeginCreateOrUpdate(ctx context.Cont
 	result := VirtualNetworkPeeringsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualNetworkPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("VirtualNetworkPeeringsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkPeeringsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -78,7 +77,7 @@ func (client *VirtualNetworkPeeringsClient) BeginCreateOrUpdate(ctx context.Cont
 }
 
 // CreateOrUpdate - Creates or updates a peering in the specified virtual network.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualNetworkPeeringsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, virtualNetworkPeeringParameters VirtualNetworkPeering, options *VirtualNetworkPeeringsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, virtualNetworkPeeringParameters, options)
 	if err != nil {
@@ -89,7 +88,7 @@ func (client *VirtualNetworkPeeringsClient) createOrUpdate(ctx context.Context, 
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -124,21 +123,8 @@ func (client *VirtualNetworkPeeringsClient) createOrUpdateCreateRequest(ctx cont
 	return req, runtime.MarshalAsJSON(req, virtualNetworkPeeringParameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *VirtualNetworkPeeringsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified virtual network peering.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // virtualNetworkPeeringName - The name of the virtual network peering.
@@ -152,7 +138,7 @@ func (client *VirtualNetworkPeeringsClient) BeginDelete(ctx context.Context, res
 	result := VirtualNetworkPeeringsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("VirtualNetworkPeeringsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("VirtualNetworkPeeringsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return VirtualNetworkPeeringsClientDeletePollerResponse{}, err
 	}
@@ -163,7 +149,7 @@ func (client *VirtualNetworkPeeringsClient) BeginDelete(ctx context.Context, res
 }
 
 // Delete - Deletes the specified virtual network peering.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *VirtualNetworkPeeringsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualNetworkName string, virtualNetworkPeeringName string, options *VirtualNetworkPeeringsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName, options)
 	if err != nil {
@@ -174,7 +160,7 @@ func (client *VirtualNetworkPeeringsClient) deleteOperation(ctx context.Context,
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -209,21 +195,8 @@ func (client *VirtualNetworkPeeringsClient) deleteCreateRequest(ctx context.Cont
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *VirtualNetworkPeeringsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the specified virtual network peering.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // virtualNetworkPeeringName - The name of the virtual network peering.
@@ -239,7 +212,7 @@ func (client *VirtualNetworkPeeringsClient) Get(ctx context.Context, resourceGro
 		return VirtualNetworkPeeringsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return VirtualNetworkPeeringsClientGetResponse{}, client.getHandleError(resp)
+		return VirtualNetworkPeeringsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -278,26 +251,13 @@ func (client *VirtualNetworkPeeringsClient) getCreateRequest(ctx context.Context
 func (client *VirtualNetworkPeeringsClient) getHandleResponse(resp *http.Response) (VirtualNetworkPeeringsClientGetResponse, error) {
 	result := VirtualNetworkPeeringsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkPeering); err != nil {
-		return VirtualNetworkPeeringsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualNetworkPeeringsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *VirtualNetworkPeeringsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all virtual network peerings in a virtual network.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // options - VirtualNetworkPeeringsClientListOptions contains the optional parameters for the VirtualNetworkPeeringsClient.List
@@ -344,20 +304,7 @@ func (client *VirtualNetworkPeeringsClient) listCreateRequest(ctx context.Contex
 func (client *VirtualNetworkPeeringsClient) listHandleResponse(resp *http.Response) (VirtualNetworkPeeringsClientListResponse, error) {
 	result := VirtualNetworkPeeringsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualNetworkPeeringListResult); err != nil {
-		return VirtualNetworkPeeringsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return VirtualNetworkPeeringsClientListResponse{}, err
 	}
 	return result, nil
-}
-
-// listHandleError handles the List error response.
-func (client *VirtualNetworkPeeringsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

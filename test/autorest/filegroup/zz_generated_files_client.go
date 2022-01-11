@@ -10,7 +10,6 @@ package filegroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewFilesClient(options *azcore.ClientOptions) *FilesClient {
 		cp = *options
 	}
 	client := &FilesClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetEmptyFile - Get empty file
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - FilesClientGetEmptyFileOptions contains the optional parameters for the FilesClient.GetEmptyFile method.
 func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesClientGetEmptyFileOptions) (FilesClientGetEmptyFileResponse, error) {
 	req, err := client.getEmptyFileCreateRequest(ctx, options)
@@ -49,7 +48,7 @@ func (client *FilesClient) GetEmptyFile(ctx context.Context, options *FilesClien
 		return FilesClientGetEmptyFileResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FilesClientGetEmptyFileResponse{}, client.getEmptyFileHandleError(resp)
+		return FilesClientGetEmptyFileResponse{}, runtime.NewResponseError(resp)
 	}
 	return FilesClientGetEmptyFileResponse{RawResponse: resp}, nil
 }
@@ -61,26 +60,13 @@ func (client *FilesClient) getEmptyFileCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	req.SkipBodyDownload()
+	runtime.SkipBodyDownload(req)
 	req.Raw().Header.Set("Accept", "image/png, application/json")
 	return req, nil
 }
 
-// getEmptyFileHandleError handles the GetEmptyFile error response.
-func (client *FilesClient) getEmptyFileHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetFile - Get file
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - FilesClientGetFileOptions contains the optional parameters for the FilesClient.GetFile method.
 func (client *FilesClient) GetFile(ctx context.Context, options *FilesClientGetFileOptions) (FilesClientGetFileResponse, error) {
 	req, err := client.getFileCreateRequest(ctx, options)
@@ -92,7 +78,7 @@ func (client *FilesClient) GetFile(ctx context.Context, options *FilesClientGetF
 		return FilesClientGetFileResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FilesClientGetFileResponse{}, client.getFileHandleError(resp)
+		return FilesClientGetFileResponse{}, runtime.NewResponseError(resp)
 	}
 	return FilesClientGetFileResponse{RawResponse: resp}, nil
 }
@@ -104,26 +90,13 @@ func (client *FilesClient) getFileCreateRequest(ctx context.Context, options *Fi
 	if err != nil {
 		return nil, err
 	}
-	req.SkipBodyDownload()
+	runtime.SkipBodyDownload(req)
 	req.Raw().Header.Set("Accept", "image/png, application/json")
 	return req, nil
 }
 
-// getFileHandleError handles the GetFile error response.
-func (client *FilesClient) getFileHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetFileLarge - Get a large file
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - FilesClientGetFileLargeOptions contains the optional parameters for the FilesClient.GetFileLarge method.
 func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesClientGetFileLargeOptions) (FilesClientGetFileLargeResponse, error) {
 	req, err := client.getFileLargeCreateRequest(ctx, options)
@@ -135,7 +108,7 @@ func (client *FilesClient) GetFileLarge(ctx context.Context, options *FilesClien
 		return FilesClientGetFileLargeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return FilesClientGetFileLargeResponse{}, client.getFileLargeHandleError(resp)
+		return FilesClientGetFileLargeResponse{}, runtime.NewResponseError(resp)
 	}
 	return FilesClientGetFileLargeResponse{RawResponse: resp}, nil
 }
@@ -147,20 +120,7 @@ func (client *FilesClient) getFileLargeCreateRequest(ctx context.Context, option
 	if err != nil {
 		return nil, err
 	}
-	req.SkipBodyDownload()
+	runtime.SkipBodyDownload(req)
 	req.Raw().Header.Set("Accept", "image/png, application/json")
 	return req, nil
-}
-
-// getFileLargeHandleError handles the GetFileLarge error response.
-func (client *FilesClient) getFileLargeHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewInterfacesClient(subscriptionID string, credential azcore.TokenCredentia
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &InterfacesClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a network interface.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // parameters - Parameters supplied to the create or update network interface operation.
@@ -66,7 +65,7 @@ func (client *InterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourc
 	result := InterfacesClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("InterfacesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("InterfacesClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return InterfacesClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -77,7 +76,7 @@ func (client *InterfacesClient) BeginCreateOrUpdate(ctx context.Context, resourc
 }
 
 // CreateOrUpdate - Creates or updates a network interface.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *InterfacesClient) createOrUpdate(ctx context.Context, resourceGroupName string, networkInterfaceName string, parameters Interface, options *InterfacesClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, networkInterfaceName, parameters, options)
 	if err != nil {
@@ -88,7 +87,7 @@ func (client *InterfacesClient) createOrUpdate(ctx context.Context, resourceGrou
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -119,21 +118,8 @@ func (client *InterfacesClient) createOrUpdateCreateRequest(ctx context.Context,
 	return req, runtime.MarshalAsJSON(req, parameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *InterfacesClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified network interface.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // options - InterfacesClientBeginDeleteOptions contains the optional parameters for the InterfacesClient.BeginDelete method.
@@ -145,7 +131,7 @@ func (client *InterfacesClient) BeginDelete(ctx context.Context, resourceGroupNa
 	result := InterfacesClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("InterfacesClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("InterfacesClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return InterfacesClientDeletePollerResponse{}, err
 	}
@@ -156,7 +142,7 @@ func (client *InterfacesClient) BeginDelete(ctx context.Context, resourceGroupNa
 }
 
 // Delete - Deletes the specified network interface.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *InterfacesClient) deleteOperation(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
@@ -167,7 +153,7 @@ func (client *InterfacesClient) deleteOperation(ctx context.Context, resourceGro
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -198,21 +184,8 @@ func (client *InterfacesClient) deleteCreateRequest(ctx context.Context, resourc
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *InterfacesClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets information about the specified network interface.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // options - InterfacesClientGetOptions contains the optional parameters for the InterfacesClient.Get method.
@@ -226,7 +199,7 @@ func (client *InterfacesClient) Get(ctx context.Context, resourceGroupName strin
 		return InterfacesClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return InterfacesClientGetResponse{}, client.getHandleError(resp)
+		return InterfacesClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -264,26 +237,13 @@ func (client *InterfacesClient) getCreateRequest(ctx context.Context, resourceGr
 func (client *InterfacesClient) getHandleResponse(resp *http.Response) (InterfacesClientGetResponse, error) {
 	result := InterfacesClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Interface); err != nil {
-		return InterfacesClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return InterfacesClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *InterfacesClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginGetEffectiveRouteTable - Gets all route tables applied to a network interface.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // options - InterfacesClientBeginGetEffectiveRouteTableOptions contains the optional parameters for the InterfacesClient.BeginGetEffectiveRouteTable
@@ -296,7 +256,7 @@ func (client *InterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context,
 	result := InterfacesClientGetEffectiveRouteTablePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("InterfacesClient.GetEffectiveRouteTable", "location", resp, client.pl, client.getEffectiveRouteTableHandleError)
+	pt, err := armruntime.NewPoller("InterfacesClient.GetEffectiveRouteTable", "location", resp, client.pl)
 	if err != nil {
 		return InterfacesClientGetEffectiveRouteTablePollerResponse{}, err
 	}
@@ -307,7 +267,7 @@ func (client *InterfacesClient) BeginGetEffectiveRouteTable(ctx context.Context,
 }
 
 // GetEffectiveRouteTable - Gets all route tables applied to a network interface.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *InterfacesClient) getEffectiveRouteTable(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginGetEffectiveRouteTableOptions) (*http.Response, error) {
 	req, err := client.getEffectiveRouteTableCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
@@ -318,7 +278,7 @@ func (client *InterfacesClient) getEffectiveRouteTable(ctx context.Context, reso
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.getEffectiveRouteTableHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -349,22 +309,9 @@ func (client *InterfacesClient) getEffectiveRouteTableCreateRequest(ctx context.
 	return req, nil
 }
 
-// getEffectiveRouteTableHandleError handles the GetEffectiveRouteTable error response.
-func (client *InterfacesClient) getEffectiveRouteTableHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetVirtualMachineScaleSetIPConfiguration - Get the specified network interface ip configuration in a virtual machine scale
 // set.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // virtualmachineIndex - The virtual machine index.
@@ -382,7 +329,7 @@ func (client *InterfacesClient) GetVirtualMachineScaleSetIPConfiguration(ctx con
 		return InterfacesClientGetVirtualMachineScaleSetIPConfigurationResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return InterfacesClientGetVirtualMachineScaleSetIPConfigurationResponse{}, client.getVirtualMachineScaleSetIPConfigurationHandleError(resp)
+		return InterfacesClientGetVirtualMachineScaleSetIPConfigurationResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getVirtualMachineScaleSetIPConfigurationHandleResponse(resp)
 }
@@ -432,26 +379,13 @@ func (client *InterfacesClient) getVirtualMachineScaleSetIPConfigurationCreateRe
 func (client *InterfacesClient) getVirtualMachineScaleSetIPConfigurationHandleResponse(resp *http.Response) (InterfacesClientGetVirtualMachineScaleSetIPConfigurationResponse, error) {
 	result := InterfacesClientGetVirtualMachineScaleSetIPConfigurationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceIPConfiguration); err != nil {
-		return InterfacesClientGetVirtualMachineScaleSetIPConfigurationResponse{}, runtime.NewResponseError(err, resp)
+		return InterfacesClientGetVirtualMachineScaleSetIPConfigurationResponse{}, err
 	}
 	return result, nil
 }
 
-// getVirtualMachineScaleSetIPConfigurationHandleError handles the GetVirtualMachineScaleSetIPConfiguration error response.
-func (client *InterfacesClient) getVirtualMachineScaleSetIPConfigurationHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetVirtualMachineScaleSetNetworkInterface - Get the specified network interface in a virtual machine scale set.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // virtualmachineIndex - The virtual machine index.
@@ -468,7 +402,7 @@ func (client *InterfacesClient) GetVirtualMachineScaleSetNetworkInterface(ctx co
 		return InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResponse{}, client.getVirtualMachineScaleSetNetworkInterfaceHandleError(resp)
+		return InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getVirtualMachineScaleSetNetworkInterfaceHandleResponse(resp)
 }
@@ -514,26 +448,13 @@ func (client *InterfacesClient) getVirtualMachineScaleSetNetworkInterfaceCreateR
 func (client *InterfacesClient) getVirtualMachineScaleSetNetworkInterfaceHandleResponse(resp *http.Response) (InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResponse, error) {
 	result := InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Interface); err != nil {
-		return InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResponse{}, runtime.NewResponseError(err, resp)
+		return InterfacesClientGetVirtualMachineScaleSetNetworkInterfaceResponse{}, err
 	}
 	return result, nil
 }
 
-// getVirtualMachineScaleSetNetworkInterfaceHandleError handles the GetVirtualMachineScaleSetNetworkInterface error response.
-func (client *InterfacesClient) getVirtualMachineScaleSetNetworkInterfaceHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all network interfaces in a resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // options - InterfacesClientListOptions contains the optional parameters for the InterfacesClient.List method.
 func (client *InterfacesClient) List(resourceGroupName string, options *InterfacesClientListOptions) *InterfacesClientListPager {
@@ -574,26 +495,13 @@ func (client *InterfacesClient) listCreateRequest(ctx context.Context, resourceG
 func (client *InterfacesClient) listHandleResponse(resp *http.Response) (InterfacesClientListResponse, error) {
 	result := InterfacesClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceListResult); err != nil {
-		return InterfacesClientListResponse{}, runtime.NewResponseError(err, resp)
+		return InterfacesClientListResponse{}, err
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *InterfacesClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListAll - Gets all network interfaces in a subscription.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - InterfacesClientListAllOptions contains the optional parameters for the InterfacesClient.ListAll method.
 func (client *InterfacesClient) ListAll(options *InterfacesClientListAllOptions) *InterfacesClientListAllPager {
 	return &InterfacesClientListAllPager{
@@ -629,26 +537,13 @@ func (client *InterfacesClient) listAllCreateRequest(ctx context.Context, option
 func (client *InterfacesClient) listAllHandleResponse(resp *http.Response) (InterfacesClientListAllResponse, error) {
 	result := InterfacesClientListAllResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceListResult); err != nil {
-		return InterfacesClientListAllResponse{}, runtime.NewResponseError(err, resp)
+		return InterfacesClientListAllResponse{}, err
 	}
 	return result, nil
 }
 
-// listAllHandleError handles the ListAll error response.
-func (client *InterfacesClient) listAllHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginListEffectiveNetworkSecurityGroups - Gets all network security groups applied to a network interface.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // options - InterfacesClientBeginListEffectiveNetworkSecurityGroupsOptions contains the optional parameters for the InterfacesClient.BeginListEffectiveNetworkSecurityGroups
@@ -661,7 +556,7 @@ func (client *InterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx cont
 	result := InterfacesClientListEffectiveNetworkSecurityGroupsPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("InterfacesClient.ListEffectiveNetworkSecurityGroups", "location", resp, client.pl, client.listEffectiveNetworkSecurityGroupsHandleError)
+	pt, err := armruntime.NewPoller("InterfacesClient.ListEffectiveNetworkSecurityGroups", "location", resp, client.pl)
 	if err != nil {
 		return InterfacesClientListEffectiveNetworkSecurityGroupsPollerResponse{}, err
 	}
@@ -672,7 +567,7 @@ func (client *InterfacesClient) BeginListEffectiveNetworkSecurityGroups(ctx cont
 }
 
 // ListEffectiveNetworkSecurityGroups - Gets all network security groups applied to a network interface.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *InterfacesClient) listEffectiveNetworkSecurityGroups(ctx context.Context, resourceGroupName string, networkInterfaceName string, options *InterfacesClientBeginListEffectiveNetworkSecurityGroupsOptions) (*http.Response, error) {
 	req, err := client.listEffectiveNetworkSecurityGroupsCreateRequest(ctx, resourceGroupName, networkInterfaceName, options)
 	if err != nil {
@@ -683,7 +578,7 @@ func (client *InterfacesClient) listEffectiveNetworkSecurityGroups(ctx context.C
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.listEffectiveNetworkSecurityGroupsHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -714,22 +609,9 @@ func (client *InterfacesClient) listEffectiveNetworkSecurityGroupsCreateRequest(
 	return req, nil
 }
 
-// listEffectiveNetworkSecurityGroupsHandleError handles the ListEffectiveNetworkSecurityGroups error response.
-func (client *InterfacesClient) listEffectiveNetworkSecurityGroupsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListVirtualMachineScaleSetIPConfigurations - Get the specified network interface ip configuration in a virtual machine
 // scale set.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // virtualmachineIndex - The virtual machine index.
@@ -789,26 +671,13 @@ func (client *InterfacesClient) listVirtualMachineScaleSetIPConfigurationsCreate
 func (client *InterfacesClient) listVirtualMachineScaleSetIPConfigurationsHandleResponse(resp *http.Response) (InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse, error) {
 	result := InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceIPConfigurationListResult); err != nil {
-		return InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse{}, runtime.NewResponseError(err, resp)
+		return InterfacesClientListVirtualMachineScaleSetIPConfigurationsResponse{}, err
 	}
 	return result, nil
 }
 
-// listVirtualMachineScaleSetIPConfigurationsHandleError handles the ListVirtualMachineScaleSetIPConfigurations error response.
-func (client *InterfacesClient) listVirtualMachineScaleSetIPConfigurationsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListVirtualMachineScaleSetNetworkInterfaces - Gets all network interfaces in a virtual machine scale set.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // options - InterfacesClientListVirtualMachineScaleSetNetworkInterfacesOptions contains the optional parameters for the InterfacesClient.ListVirtualMachineScaleSetNetworkInterfaces
@@ -855,27 +724,14 @@ func (client *InterfacesClient) listVirtualMachineScaleSetNetworkInterfacesCreat
 func (client *InterfacesClient) listVirtualMachineScaleSetNetworkInterfacesHandleResponse(resp *http.Response) (InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse, error) {
 	result := InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceListResult); err != nil {
-		return InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse{}, runtime.NewResponseError(err, resp)
+		return InterfacesClientListVirtualMachineScaleSetNetworkInterfacesResponse{}, err
 	}
 	return result, nil
 }
 
-// listVirtualMachineScaleSetNetworkInterfacesHandleError handles the ListVirtualMachineScaleSetNetworkInterfaces error response.
-func (client *InterfacesClient) listVirtualMachineScaleSetNetworkInterfacesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListVirtualMachineScaleSetVMNetworkInterfaces - Gets information about all network interfaces in a virtual machine in a
 // virtual machine scale set.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualMachineScaleSetName - The name of the virtual machine scale set.
 // virtualmachineIndex - The virtual machine index.
@@ -927,26 +783,13 @@ func (client *InterfacesClient) listVirtualMachineScaleSetVMNetworkInterfacesCre
 func (client *InterfacesClient) listVirtualMachineScaleSetVMNetworkInterfacesHandleResponse(resp *http.Response) (InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse, error) {
 	result := InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.InterfaceListResult); err != nil {
-		return InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse{}, runtime.NewResponseError(err, resp)
+		return InterfacesClientListVirtualMachineScaleSetVMNetworkInterfacesResponse{}, err
 	}
 	return result, nil
 }
 
-// listVirtualMachineScaleSetVMNetworkInterfacesHandleError handles the ListVirtualMachineScaleSetVMNetworkInterfaces error response.
-func (client *InterfacesClient) listVirtualMachineScaleSetVMNetworkInterfacesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateTags - Updates a network interface tags.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // networkInterfaceName - The name of the network interface.
 // parameters - Parameters supplied to update network interface tags.
@@ -961,7 +804,7 @@ func (client *InterfacesClient) UpdateTags(ctx context.Context, resourceGroupNam
 		return InterfacesClientUpdateTagsResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return InterfacesClientUpdateTagsResponse{}, client.updateTagsHandleError(resp)
+		return InterfacesClientUpdateTagsResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateTagsHandleResponse(resp)
 }
@@ -996,20 +839,7 @@ func (client *InterfacesClient) updateTagsCreateRequest(ctx context.Context, res
 func (client *InterfacesClient) updateTagsHandleResponse(resp *http.Response) (InterfacesClientUpdateTagsResponse, error) {
 	result := InterfacesClientUpdateTagsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Interface); err != nil {
-		return InterfacesClientUpdateTagsResponse{}, runtime.NewResponseError(err, resp)
+		return InterfacesClientUpdateTagsResponse{}, err
 	}
 	return result, nil
-}
-
-// updateTagsHandleError handles the UpdateTags error response.
-func (client *InterfacesClient) updateTagsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

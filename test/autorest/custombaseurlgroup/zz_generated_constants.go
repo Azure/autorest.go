@@ -9,6 +9,6 @@
 package custombaseurlgroup
 
 const (
-	module  = "custombaseurlgroup"
-	version = "v0.1.0"
+	moduleName    = "custombaseurlgroup"
+	moduleVersion = "v0.1.0"
 )

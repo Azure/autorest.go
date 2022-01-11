@@ -11,7 +11,6 @@ package armconsumption
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -37,18 +36,18 @@ func NewReservationsDetailsClient(credential azcore.TokenCredential, options *ar
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ReservationsDetailsClient{
-		host: string(cp.Host),
-		pl:   armruntime.NewPipeline(module, version, credential, &cp),
+		host: string(cp.Endpoint),
+		pl:   armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // List - Lists the reservations details for the defined scope and provided date range.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // scope - The scope associated with reservations details operations. This includes '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
 // for BillingAccount scope (legacy), and
 // '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile
@@ -101,26 +100,13 @@ func (client *ReservationsDetailsClient) listCreateRequest(ctx context.Context, 
 func (client *ReservationsDetailsClient) listHandleResponse(resp *http.Response) (ReservationsDetailsClientListResponse, error) {
 	result := ReservationsDetailsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationDetailsListResult); err != nil {
-		return ReservationsDetailsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationsDetailsClientListResponse{}, err
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *ReservationsDetailsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByReservationOrder - Lists the reservations details for provided date range.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // reservationOrderID - Order Id of the reservation
 // filter - Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports
 // 'le' and 'ge'
@@ -161,26 +147,13 @@ func (client *ReservationsDetailsClient) listByReservationOrderCreateRequest(ctx
 func (client *ReservationsDetailsClient) listByReservationOrderHandleResponse(resp *http.Response) (ReservationsDetailsClientListByReservationOrderResponse, error) {
 	result := ReservationsDetailsClientListByReservationOrderResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationDetailsListResult); err != nil {
-		return ReservationsDetailsClientListByReservationOrderResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationsDetailsClientListByReservationOrderResponse{}, err
 	}
 	return result, nil
 }
 
-// listByReservationOrderHandleError handles the ListByReservationOrder error response.
-func (client *ReservationsDetailsClient) listByReservationOrderHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // ListByReservationOrderAndReservation - Lists the reservations details for provided date range.
-// If the operation fails it returns the *ErrorResponse error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // reservationOrderID - Order Id of the reservation
 // reservationID - Id of the reservation
 // filter - Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports
@@ -226,20 +199,7 @@ func (client *ReservationsDetailsClient) listByReservationOrderAndReservationCre
 func (client *ReservationsDetailsClient) listByReservationOrderAndReservationHandleResponse(resp *http.Response) (ReservationsDetailsClientListByReservationOrderAndReservationResponse, error) {
 	result := ReservationsDetailsClientListByReservationOrderAndReservationResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReservationDetailsListResult); err != nil {
-		return ReservationsDetailsClientListByReservationOrderAndReservationResponse{}, runtime.NewResponseError(err, resp)
+		return ReservationsDetailsClientListByReservationOrderAndReservationResponse{}, err
 	}
 	return result, nil
-}
-
-// listByReservationOrderAndReservationHandleError handles the ListByReservationOrderAndReservation error response.
-func (client *ReservationsDetailsClient) listByReservationOrderAndReservationHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := ErrorResponse{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

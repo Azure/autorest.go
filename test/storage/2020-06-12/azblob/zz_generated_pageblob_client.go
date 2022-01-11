@@ -11,7 +11,6 @@ package azblob
 import (
 	"context"
 	"encoding/base64"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"io"
@@ -40,7 +39,7 @@ func newPageBlobClient(endpoint string, version Enum2, pl runtime.Pipeline) *pag
 }
 
 // ClearPages - The Clear Pages operation clears a set of pages from a page blob
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // contentLength - The length of the request.
 // pageBlobClientClearPagesOptions - pageBlobClientClearPagesOptions contains the optional parameters for the pageBlobClient.ClearPages
 // method.
@@ -60,7 +59,7 @@ func (client *pageBlobClient) ClearPages(ctx context.Context, comp Enum35, conte
 		return pageBlobClientClearPagesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return pageBlobClientClearPagesResponse{}, client.clearPagesHandleError(resp)
+		return pageBlobClientClearPagesResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.clearPagesHandleResponse(resp)
 }
@@ -182,25 +181,12 @@ func (client *pageBlobClient) clearPagesHandleResponse(resp *http.Response) (pag
 	return result, nil
 }
 
-// clearPagesHandleError handles the ClearPages error response.
-func (client *pageBlobClient) clearPagesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // CopyIncremental - The Copy Incremental operation copies a snapshot of the source page blob to a destination page blob.
 // The snapshot is copied such that only the differential changes between the previously copied
 // snapshot are transferred to the destination. The copied snapshots are complete copies of the original snapshot and can
 // be read or copied from as usual. This API is supported since REST version
 // 2016-05-31.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // copySource - Specifies the name of the source page blob snapshot. This value is a URL of up to 2 KB in length that specifies
 // a page blob snapshot. The value should be URL-encoded as it would appear in a request
 // URI. The source blob must either be public or must be authenticated via a shared access signature.
@@ -217,7 +203,7 @@ func (client *pageBlobClient) CopyIncremental(ctx context.Context, comp Enum37, 
 		return pageBlobClientCopyIncrementalResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusAccepted) {
-		return pageBlobClientCopyIncrementalResponse{}, client.copyIncrementalHandleError(resp)
+		return pageBlobClientCopyIncrementalResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.copyIncrementalHandleResponse(resp)
 }
@@ -296,21 +282,8 @@ func (client *pageBlobClient) copyIncrementalHandleResponse(resp *http.Response)
 	return result, nil
 }
 
-// copyIncrementalHandleError handles the CopyIncremental error response.
-func (client *pageBlobClient) copyIncrementalHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Create - The Create operation creates a new page blob.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // contentLength - The length of the request.
 // blobContentLength - This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned
 // to a 512-byte boundary.
@@ -331,7 +304,7 @@ func (client *pageBlobClient) Create(ctx context.Context, contentLength int64, b
 		return pageBlobClientCreateResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return pageBlobClientCreateResponse{}, client.createHandleError(resp)
+		return pageBlobClientCreateResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.createHandleResponse(resp)
 }
@@ -484,22 +457,9 @@ func (client *pageBlobClient) createHandleResponse(resp *http.Response) (pageBlo
 	return result, nil
 }
 
-// createHandleError handles the Create error response.
-func (client *pageBlobClient) createHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetPageRanges - The Get Page Ranges operation returns the list of valid page ranges for a page blob or snapshot of a page
 // blob
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // pageBlobClientGetPageRangesOptions - pageBlobClientGetPageRangesOptions contains the optional parameters for the pageBlobClient.GetPageRanges
 // method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -514,7 +474,7 @@ func (client *pageBlobClient) GetPageRanges(ctx context.Context, comp Enum36, pa
 		return pageBlobClientGetPageRangesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return pageBlobClientGetPageRangesResponse{}, client.getPageRangesHandleError(resp)
+		return pageBlobClientGetPageRangesResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getPageRangesHandleResponse(resp)
 }
@@ -600,27 +560,14 @@ func (client *pageBlobClient) getPageRangesHandleResponse(resp *http.Response) (
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.PageList); err != nil {
-		return pageBlobClientGetPageRangesResponse{}, runtime.NewResponseError(err, resp)
+		return pageBlobClientGetPageRangesResponse{}, err
 	}
 	return result, nil
 }
 
-// getPageRangesHandleError handles the GetPageRanges error response.
-func (client *pageBlobClient) getPageRangesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetPageRangesDiff - The Get Page Ranges Diff operation returns the list of valid page ranges for a page blob that were
 // changed between target blob and previous snapshot.
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // pageBlobClientGetPageRangesDiffOptions - pageBlobClientGetPageRangesDiffOptions contains the optional parameters for the
 // pageBlobClient.GetPageRangesDiff method.
 // LeaseAccessConditions - LeaseAccessConditions contains a group of parameters for the containerClient.GetProperties method.
@@ -635,7 +582,7 @@ func (client *pageBlobClient) GetPageRangesDiff(ctx context.Context, comp Enum36
 		return pageBlobClientGetPageRangesDiffResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return pageBlobClientGetPageRangesDiffResponse{}, client.getPageRangesDiffHandleError(resp)
+		return pageBlobClientGetPageRangesDiffResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getPageRangesDiffHandleResponse(resp)
 }
@@ -727,26 +674,13 @@ func (client *pageBlobClient) getPageRangesDiffHandleResponse(resp *http.Respons
 		result.Date = &date
 	}
 	if err := runtime.UnmarshalAsXML(resp, &result.PageList); err != nil {
-		return pageBlobClientGetPageRangesDiffResponse{}, runtime.NewResponseError(err, resp)
+		return pageBlobClientGetPageRangesDiffResponse{}, err
 	}
 	return result, nil
 }
 
-// getPageRangesDiffHandleError handles the GetPageRangesDiff error response.
-func (client *pageBlobClient) getPageRangesDiffHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Resize - Resize the Blob
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // blobContentLength - This header specifies the maximum size for the page blob, up to 1 TB. The page blob size must be aligned
 // to a 512-byte boundary.
 // pageBlobClientResizeOptions - pageBlobClientResizeOptions contains the optional parameters for the pageBlobClient.Resize
@@ -765,7 +699,7 @@ func (client *pageBlobClient) Resize(ctx context.Context, comp Enum1, blobConten
 		return pageBlobClientResizeResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return pageBlobClientResizeResponse{}, client.resizeHandleError(resp)
+		return pageBlobClientResizeResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.resizeHandleResponse(resp)
 }
@@ -860,21 +794,8 @@ func (client *pageBlobClient) resizeHandleResponse(resp *http.Response) (pageBlo
 	return result, nil
 }
 
-// resizeHandleError handles the Resize error response.
-func (client *pageBlobClient) resizeHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UpdateSequenceNumber - Update the sequence number of the blob
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sequenceNumberAction - Required if the x-ms-blob-sequence-number header is set for the request. This property applies to
 // page blobs only. This property indicates how the service should modify the blob's sequence number
 // pageBlobClientUpdateSequenceNumberOptions - pageBlobClientUpdateSequenceNumberOptions contains the optional parameters
@@ -891,7 +812,7 @@ func (client *pageBlobClient) UpdateSequenceNumber(ctx context.Context, comp Enu
 		return pageBlobClientUpdateSequenceNumberResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return pageBlobClientUpdateSequenceNumberResponse{}, client.updateSequenceNumberHandleError(resp)
+		return pageBlobClientUpdateSequenceNumberResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.updateSequenceNumberHandleResponse(resp)
 }
@@ -977,21 +898,8 @@ func (client *pageBlobClient) updateSequenceNumberHandleResponse(resp *http.Resp
 	return result, nil
 }
 
-// updateSequenceNumberHandleError handles the UpdateSequenceNumber error response.
-func (client *pageBlobClient) updateSequenceNumberHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UploadPages - The Upload Pages operation writes a range of pages to a page blob
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // contentLength - The length of the request.
 // body - Initial data
 // pageBlobClientUploadPagesOptions - pageBlobClientUploadPagesOptions contains the optional parameters for the pageBlobClient.UploadPages
@@ -1012,7 +920,7 @@ func (client *pageBlobClient) UploadPages(ctx context.Context, comp Enum35, cont
 		return pageBlobClientUploadPagesResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return pageBlobClientUploadPagesResponse{}, client.uploadPagesHandleError(resp)
+		return pageBlobClientUploadPagesResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.uploadPagesHandleResponse(resp)
 }
@@ -1153,22 +1061,9 @@ func (client *pageBlobClient) uploadPagesHandleResponse(resp *http.Response) (pa
 	return result, nil
 }
 
-// uploadPagesHandleError handles the UploadPages error response.
-func (client *pageBlobClient) uploadPagesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // UploadPagesFromURL - The Upload Pages operation writes a range of pages to a page blob where the contents are read from
 // a URL
-// If the operation fails it returns the *StorageError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // sourceURL - Specify a URL to the copy source.
 // sourceRange - Bytes of source data in the specified range. The length of this range should match the ContentLength header
 // and x-ms-range/Range destination range header.
@@ -1195,7 +1090,7 @@ func (client *pageBlobClient) UploadPagesFromURL(ctx context.Context, comp Enum3
 		return pageBlobClientUploadPagesFromURLResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusCreated) {
-		return pageBlobClientUploadPagesFromURLResponse{}, client.uploadPagesFromURLHandleError(resp)
+		return pageBlobClientUploadPagesFromURLResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.uploadPagesFromURLHandleResponse(resp)
 }
@@ -1343,17 +1238,4 @@ func (client *pageBlobClient) uploadPagesFromURLHandleResponse(resp *http.Respon
 		result.EncryptionScope = &val
 	}
 	return result, nil
-}
-
-// uploadPagesFromURLHandleError handles the UploadPagesFromURL error response.
-func (client *pageBlobClient) uploadPagesFromURLHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := StorageError{raw: string(body)}
-	if err := runtime.UnmarshalAsXML(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

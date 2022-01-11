@@ -11,6 +11,6 @@ package additionalpropsgroup
 const host = "http://localhost:3000"
 
 const (
-	module  = "additionalpropsgroup"
-	version = "v0.1.0"
+	moduleName    = "additionalpropsgroup"
+	moduleVersion = "v0.1.0"
 )

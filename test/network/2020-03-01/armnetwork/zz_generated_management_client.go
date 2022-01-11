@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewManagementClient(subscriptionID string, credential azcore.TokenCredentia
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &ManagementClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // CheckDNSNameAvailability - Checks whether a domain name in the cloudapp.azure.com zone is available for use.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // location - The location of the domain name.
 // domainNameLabel - The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$.
 // options - ManagementClientCheckDNSNameAvailabilityOptions contains the optional parameters for the ManagementClient.CheckDNSNameAvailability
@@ -67,7 +66,7 @@ func (client *ManagementClient) CheckDNSNameAvailability(ctx context.Context, lo
 		return ManagementClientCheckDNSNameAvailabilityResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ManagementClientCheckDNSNameAvailabilityResponse{}, client.checkDNSNameAvailabilityHandleError(resp)
+		return ManagementClientCheckDNSNameAvailabilityResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.checkDNSNameAvailabilityHandleResponse(resp)
 }
@@ -99,26 +98,13 @@ func (client *ManagementClient) checkDNSNameAvailabilityCreateRequest(ctx contex
 func (client *ManagementClient) checkDNSNameAvailabilityHandleResponse(resp *http.Response) (ManagementClientCheckDNSNameAvailabilityResponse, error) {
 	result := ManagementClientCheckDNSNameAvailabilityResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.DNSNameAvailabilityResult); err != nil {
-		return ManagementClientCheckDNSNameAvailabilityResponse{}, runtime.NewResponseError(err, resp)
+		return ManagementClientCheckDNSNameAvailabilityResponse{}, err
 	}
 	return result, nil
 }
 
-// checkDNSNameAvailabilityHandleError handles the CheckDNSNameAvailability error response.
-func (client *ManagementClient) checkDNSNameAvailabilityHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDeleteBastionShareableLink - Deletes the Bastion Shareable Links for all the VMs specified in the request.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
 // bslRequest - Post request for all the Bastion Shareable Link endpoints.
@@ -132,7 +118,7 @@ func (client *ManagementClient) BeginDeleteBastionShareableLink(ctx context.Cont
 	result := ManagementClientDeleteBastionShareableLinkPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ManagementClient.DeleteBastionShareableLink", "location", resp, client.pl, client.deleteBastionShareableLinkHandleError)
+	pt, err := armruntime.NewPoller("ManagementClient.DeleteBastionShareableLink", "location", resp, client.pl)
 	if err != nil {
 		return ManagementClientDeleteBastionShareableLinkPollerResponse{}, err
 	}
@@ -143,7 +129,7 @@ func (client *ManagementClient) BeginDeleteBastionShareableLink(ctx context.Cont
 }
 
 // DeleteBastionShareableLink - Deletes the Bastion Shareable Links for all the VMs specified in the request.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ManagementClient) deleteBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginDeleteBastionShareableLinkOptions) (*http.Response, error) {
 	req, err := client.deleteBastionShareableLinkCreateRequest(ctx, resourceGroupName, bastionHostName, bslRequest, options)
 	if err != nil {
@@ -154,7 +140,7 @@ func (client *ManagementClient) deleteBastionShareableLink(ctx context.Context, 
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.deleteBastionShareableLinkHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -185,21 +171,8 @@ func (client *ManagementClient) deleteBastionShareableLinkCreateRequest(ctx cont
 	return req, runtime.MarshalAsJSON(req, bslRequest)
 }
 
-// deleteBastionShareableLinkHandleError handles the DeleteBastionShareableLink error response.
-func (client *ManagementClient) deleteBastionShareableLinkHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // DisconnectActiveSessions - Returns the list of currently active sessions on the Bastion.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
 // sessionIDs - The list of sessionids to disconnect.
@@ -247,27 +220,14 @@ func (client *ManagementClient) disconnectActiveSessionsCreateRequest(ctx contex
 func (client *ManagementClient) disconnectActiveSessionsHandleResponse(resp *http.Response) (ManagementClientDisconnectActiveSessionsResponse, error) {
 	result := ManagementClientDisconnectActiveSessionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BastionSessionDeleteResult); err != nil {
-		return ManagementClientDisconnectActiveSessionsResponse{}, runtime.NewResponseError(err, resp)
+		return ManagementClientDisconnectActiveSessionsResponse{}, err
 	}
 	return result, nil
 }
 
-// disconnectActiveSessionsHandleError handles the DisconnectActiveSessions error response.
-func (client *ManagementClient) disconnectActiveSessionsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginGeneratevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan
 // and associated VpnServerConfiguration combination in the specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name.
 // virtualWANName - The name of the VirtualWAN whose associated VpnServerConfigurations is needed.
 // vpnClientParams - Parameters supplied to the generate VirtualWan VPN profile generation operation.
@@ -281,7 +241,7 @@ func (client *ManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpn
 	result := ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", "location", resp, client.pl, client.generatevirtualwanvpnserverconfigurationvpnprofileHandleError)
+	pt, err := armruntime.NewPoller("ManagementClient.Generatevirtualwanvpnserverconfigurationvpnprofile", "location", resp, client.pl)
 	if err != nil {
 		return ManagementClientGeneratevirtualwanvpnserverconfigurationvpnprofilePollerResponse{}, err
 	}
@@ -293,7 +253,7 @@ func (client *ManagementClient) BeginGeneratevirtualwanvpnserverconfigurationvpn
 
 // Generatevirtualwanvpnserverconfigurationvpnprofile - Generates a unique VPN profile for P2S clients for VirtualWan and
 // associated VpnServerConfiguration combination in the specified resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ManagementClient) generatevirtualwanvpnserverconfigurationvpnprofile(ctx context.Context, resourceGroupName string, virtualWANName string, vpnClientParams VirtualWanVPNProfileParameters, options *ManagementClientBeginGeneratevirtualwanvpnserverconfigurationvpnprofileOptions) (*http.Response, error) {
 	req, err := client.generatevirtualwanvpnserverconfigurationvpnprofileCreateRequest(ctx, resourceGroupName, virtualWANName, vpnClientParams, options)
 	if err != nil {
@@ -304,7 +264,7 @@ func (client *ManagementClient) generatevirtualwanvpnserverconfigurationvpnprofi
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.generatevirtualwanvpnserverconfigurationvpnprofileHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -335,21 +295,8 @@ func (client *ManagementClient) generatevirtualwanvpnserverconfigurationvpnprofi
 	return req, runtime.MarshalAsJSON(req, vpnClientParams)
 }
 
-// generatevirtualwanvpnserverconfigurationvpnprofileHandleError handles the Generatevirtualwanvpnserverconfigurationvpnprofile error response.
-func (client *ManagementClient) generatevirtualwanvpnserverconfigurationvpnprofileHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginGetActiveSessions - Returns the list of currently active sessions on the Bastion.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
 // options - ManagementClientBeginGetActiveSessionsOptions contains the optional parameters for the ManagementClient.BeginGetActiveSessions
@@ -362,7 +309,7 @@ func (client *ManagementClient) BeginGetActiveSessions(ctx context.Context, reso
 	result := ManagementClientGetActiveSessionsPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ManagementClient.GetActiveSessions", "location", resp, client.pl, client.getActiveSessionsHandleError)
+	pt, err := armruntime.NewPoller("ManagementClient.GetActiveSessions", "location", resp, client.pl)
 	if err != nil {
 		return ManagementClientGetActiveSessionsPollerResponse{}, err
 	}
@@ -374,7 +321,7 @@ func (client *ManagementClient) BeginGetActiveSessions(ctx context.Context, reso
 }
 
 // GetActiveSessions - Returns the list of currently active sessions on the Bastion.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ManagementClient) getActiveSessions(ctx context.Context, resourceGroupName string, bastionHostName string, options *ManagementClientBeginGetActiveSessionsOptions) (*http.Response, error) {
 	req, err := client.getActiveSessionsCreateRequest(ctx, resourceGroupName, bastionHostName, options)
 	if err != nil {
@@ -385,7 +332,7 @@ func (client *ManagementClient) getActiveSessions(ctx context.Context, resourceG
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.getActiveSessionsHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -420,26 +367,13 @@ func (client *ManagementClient) getActiveSessionsCreateRequest(ctx context.Conte
 func (client *ManagementClient) getActiveSessionsHandleResponse(resp *http.Response) (ManagementClientGetActiveSessionsResponse, error) {
 	result := ManagementClientGetActiveSessionsResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BastionActiveSessionListResult); err != nil {
-		return ManagementClientGetActiveSessionsResponse{}, runtime.NewResponseError(err, resp)
+		return ManagementClientGetActiveSessionsResponse{}, err
 	}
 	return result, nil
 }
 
-// getActiveSessionsHandleError handles the GetActiveSessions error response.
-func (client *ManagementClient) getActiveSessionsHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // GetBastionShareableLink - Return the Bastion Shareable Links for all the VMs specified in the request.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
 // bslRequest - Post request for all the Bastion Shareable Link endpoints.
@@ -487,26 +421,13 @@ func (client *ManagementClient) getBastionShareableLinkCreateRequest(ctx context
 func (client *ManagementClient) getBastionShareableLinkHandleResponse(resp *http.Response) (ManagementClientGetBastionShareableLinkResponse, error) {
 	result := ManagementClientGetBastionShareableLinkResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BastionShareableLinkListResult); err != nil {
-		return ManagementClientGetBastionShareableLinkResponse{}, runtime.NewResponseError(err, resp)
+		return ManagementClientGetBastionShareableLinkResponse{}, err
 	}
 	return result, nil
 }
 
-// getBastionShareableLinkHandleError handles the GetBastionShareableLink error response.
-func (client *ManagementClient) getBastionShareableLinkHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginPutBastionShareableLink - Creates a Bastion Shareable Links for all the VMs specified in the request.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // bastionHostName - The name of the Bastion Host.
 // bslRequest - Post request for all the Bastion Shareable Link endpoints.
@@ -520,7 +441,7 @@ func (client *ManagementClient) BeginPutBastionShareableLink(ctx context.Context
 	result := ManagementClientPutBastionShareableLinkPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("ManagementClient.PutBastionShareableLink", "location", resp, client.pl, client.putBastionShareableLinkHandleError)
+	pt, err := armruntime.NewPoller("ManagementClient.PutBastionShareableLink", "location", resp, client.pl)
 	if err != nil {
 		return ManagementClientPutBastionShareableLinkPollerResponse{}, err
 	}
@@ -532,7 +453,7 @@ func (client *ManagementClient) BeginPutBastionShareableLink(ctx context.Context
 }
 
 // PutBastionShareableLink - Creates a Bastion Shareable Links for all the VMs specified in the request.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *ManagementClient) putBastionShareableLink(ctx context.Context, resourceGroupName string, bastionHostName string, bslRequest BastionShareableLinkListRequest, options *ManagementClientBeginPutBastionShareableLinkOptions) (*http.Response, error) {
 	req, err := client.putBastionShareableLinkCreateRequest(ctx, resourceGroupName, bastionHostName, bslRequest, options)
 	if err != nil {
@@ -543,7 +464,7 @@ func (client *ManagementClient) putBastionShareableLink(ctx context.Context, res
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.putBastionShareableLinkHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -578,26 +499,13 @@ func (client *ManagementClient) putBastionShareableLinkCreateRequest(ctx context
 func (client *ManagementClient) putBastionShareableLinkHandleResponse(resp *http.Response) (ManagementClientPutBastionShareableLinkResponse, error) {
 	result := ManagementClientPutBastionShareableLinkResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.BastionShareableLinkListResult); err != nil {
-		return ManagementClientPutBastionShareableLinkResponse{}, runtime.NewResponseError(err, resp)
+		return ManagementClientPutBastionShareableLinkResponse{}, err
 	}
 	return result, nil
 }
 
-// putBastionShareableLinkHandleError handles the PutBastionShareableLink error response.
-func (client *ManagementClient) putBastionShareableLinkHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // SupportedSecurityProviders - Gives the supported security providers for the virtual wan.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The resource group name.
 // virtualWANName - The name of the VirtualWAN for which supported security providers are needed.
 // options - ManagementClientSupportedSecurityProvidersOptions contains the optional parameters for the ManagementClient.SupportedSecurityProviders
@@ -612,7 +520,7 @@ func (client *ManagementClient) SupportedSecurityProviders(ctx context.Context, 
 		return ManagementClientSupportedSecurityProvidersResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ManagementClientSupportedSecurityProvidersResponse{}, client.supportedSecurityProvidersHandleError(resp)
+		return ManagementClientSupportedSecurityProvidersResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.supportedSecurityProvidersHandleResponse(resp)
 }
@@ -647,20 +555,7 @@ func (client *ManagementClient) supportedSecurityProvidersCreateRequest(ctx cont
 func (client *ManagementClient) supportedSecurityProvidersHandleResponse(resp *http.Response) (ManagementClientSupportedSecurityProvidersResponse, error) {
 	result := ManagementClientSupportedSecurityProvidersResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.VirtualWanSecurityProviders); err != nil {
-		return ManagementClientSupportedSecurityProvidersResponse{}, runtime.NewResponseError(err, resp)
+		return ManagementClientSupportedSecurityProvidersResponse{}, err
 	}
 	return result, nil
-}
-
-// supportedSecurityProvidersHandleError handles the SupportedSecurityProviders error response.
-func (client *ManagementClient) supportedSecurityProvidersHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

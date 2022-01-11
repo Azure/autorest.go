@@ -10,7 +10,6 @@ package complexgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewReadonlypropertyClient(options *azcore.ClientOptions) *ReadonlypropertyC
 		cp = *options
 	}
 	client := &ReadonlypropertyClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetValid - Get complex types that have readonly properties
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ReadonlypropertyClientGetValidOptions contains the optional parameters for the ReadonlypropertyClient.GetValid
 // method.
 func (client *ReadonlypropertyClient) GetValid(ctx context.Context, options *ReadonlypropertyClientGetValidOptions) (ReadonlypropertyClientGetValidResponse, error) {
@@ -50,7 +49,7 @@ func (client *ReadonlypropertyClient) GetValid(ctx context.Context, options *Rea
 		return ReadonlypropertyClientGetValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ReadonlypropertyClientGetValidResponse{}, client.getValidHandleError(resp)
+		return ReadonlypropertyClientGetValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getValidHandleResponse(resp)
 }
@@ -70,26 +69,13 @@ func (client *ReadonlypropertyClient) getValidCreateRequest(ctx context.Context,
 func (client *ReadonlypropertyClient) getValidHandleResponse(resp *http.Response) (ReadonlypropertyClientGetValidResponse, error) {
 	result := ReadonlypropertyClientGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ReadonlyObj); err != nil {
-		return ReadonlypropertyClientGetValidResponse{}, runtime.NewResponseError(err, resp)
+		return ReadonlypropertyClientGetValidResponse{}, err
 	}
 	return result, nil
 }
 
-// getValidHandleError handles the GetValid error response.
-func (client *ReadonlypropertyClient) getValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutValid - Put complex types that have readonly properties
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - ReadonlypropertyClientPutValidOptions contains the optional parameters for the ReadonlypropertyClient.PutValid
 // method.
 func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody ReadonlyObj, options *ReadonlypropertyClientPutValidOptions) (ReadonlypropertyClientPutValidResponse, error) {
@@ -102,7 +88,7 @@ func (client *ReadonlypropertyClient) PutValid(ctx context.Context, complexBody 
 		return ReadonlypropertyClientPutValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return ReadonlypropertyClientPutValidResponse{}, client.putValidHandleError(resp)
+		return ReadonlypropertyClientPutValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return ReadonlypropertyClientPutValidResponse{RawResponse: resp}, nil
 }
@@ -116,17 +102,4 @@ func (client *ReadonlypropertyClient) putValidCreateRequest(ctx context.Context,
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, complexBody)
-}
-
-// putValidHandleError handles the PutValid error response.
-func (client *ReadonlypropertyClient) putValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

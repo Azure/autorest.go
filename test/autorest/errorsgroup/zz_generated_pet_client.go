@@ -11,7 +11,6 @@ package errorsgroup
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -34,14 +33,13 @@ func NewPetClient(options *azcore.ClientOptions) *PetClient {
 		cp = *options
 	}
 	client := &PetClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // DoSomething - Asks pet to do something
-// If the operation fails it returns one of the following error types.
-// - *PetActionError, *PetHungryOrThirstyError, *PetSadError
+// If the operation fails it returns an *azcore.ResponseError type.
 // whatAction - what action the pet should do
 // options - PetClientDoSomethingOptions contains the optional parameters for the PetClient.DoSomething method.
 func (client *PetClient) DoSomething(ctx context.Context, whatAction string, options *PetClientDoSomethingOptions) (PetClientDoSomethingResponse, error) {
@@ -54,7 +52,7 @@ func (client *PetClient) DoSomething(ctx context.Context, whatAction string, opt
 		return PetClientDoSomethingResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetClientDoSomethingResponse{}, client.doSomethingHandleError(resp)
+		return PetClientDoSomethingResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.doSomethingHandleResponse(resp)
 }
@@ -78,27 +76,13 @@ func (client *PetClient) doSomethingCreateRequest(ctx context.Context, whatActio
 func (client *PetClient) doSomethingHandleResponse(resp *http.Response) (PetClientDoSomethingResponse, error) {
 	result := PetClientDoSomethingResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.PetAction); err != nil {
-		return PetClientDoSomethingResponse{}, runtime.NewResponseError(err, resp)
+		return PetClientDoSomethingResponse{}, err
 	}
 	return result, nil
 }
 
-// doSomethingHandleError handles the DoSomething error response.
-func (client *PetClient) doSomethingHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	var errType petActionError
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(errType.wrapped, resp)
-}
-
 // GetPetByID - Gets pets by id.
-// If the operation fails it returns one of the following error types.
-// - *AnimalNotFound, *LinkNotFound, *NotFoundErrorBase
+// If the operation fails it returns an *azcore.ResponseError type.
 // petID - pet id
 // options - PetClientGetPetByIDOptions contains the optional parameters for the PetClient.GetPetByID method.
 func (client *PetClient) GetPetByID(ctx context.Context, petID string, options *PetClientGetPetByIDOptions) (PetClientGetPetByIDResponse, error) {
@@ -111,7 +95,7 @@ func (client *PetClient) GetPetByID(ctx context.Context, petID string, options *
 		return PetClientGetPetByIDResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return PetClientGetPetByIDResponse{}, client.getPetByIDHandleError(resp)
+		return PetClientGetPetByIDResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getPetByIDHandleResponse(resp)
 }
@@ -135,48 +119,14 @@ func (client *PetClient) getPetByIDCreateRequest(ctx context.Context, petID stri
 func (client *PetClient) getPetByIDHandleResponse(resp *http.Response) (PetClientGetPetByIDResponse, error) {
 	result := PetClientGetPetByIDResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Pet); err != nil {
-		return PetClientGetPetByIDResponse{}, runtime.NewResponseError(err, resp)
+		return PetClientGetPetByIDResponse{}, err
 	}
 	return result, nil
 }
 
-// getPetByIDHandleError handles the GetPetByID error response.
-func (client *PetClient) getPetByIDHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	switch resp.StatusCode {
-	case http.StatusBadRequest:
-		var errType string
-		if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-			return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-		}
-		return runtime.NewResponseError(fmt.Errorf("%v", errType), resp)
-	case http.StatusNotFound:
-		var errType notFoundErrorBase
-		if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-			return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-		}
-		return runtime.NewResponseError(errType.wrapped, resp)
-	case http.StatusNotImplemented:
-		var errType int32
-		if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-			return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-		}
-		return runtime.NewResponseError(fmt.Errorf("%v", errType), resp)
-	default:
-		if len(body) == 0 {
-			return runtime.NewResponseError(errors.New(resp.Status), resp)
-		}
-		return runtime.NewResponseError(errors.New(string(body)), resp)
-	}
-}
-
 // HasModelsParam - Ensure you can correctly deserialize the returned PetActionError and deserialization doesn't conflict
 // with the input param name 'models'
-// If the operation fails it returns one of the following error types.
-// - *PetActionError, *PetHungryOrThirstyError, *PetSadError
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - PetClientHasModelsParamOptions contains the optional parameters for the PetClient.HasModelsParam method.
 func (client *PetClient) HasModelsParam(ctx context.Context, options *PetClientHasModelsParamOptions) (PetClientHasModelsParamResponse, error) {
 	req, err := client.hasModelsParamCreateRequest(ctx, options)
@@ -188,7 +138,7 @@ func (client *PetClient) HasModelsParam(ctx context.Context, options *PetClientH
 		return PetClientHasModelsParamResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return PetClientHasModelsParamResponse{}, client.hasModelsParamHandleError(resp)
+		return PetClientHasModelsParamResponse{}, runtime.NewResponseError(resp)
 	}
 	return PetClientHasModelsParamResponse{RawResponse: resp}, nil
 }
@@ -207,17 +157,4 @@ func (client *PetClient) hasModelsParamCreateRequest(ctx context.Context, option
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, nil
-}
-
-// hasModelsParamHandleError handles the HasModelsParam error response.
-func (client *PetClient) hasModelsParamHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	var errType petActionError
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(errType.wrapped, resp)
 }

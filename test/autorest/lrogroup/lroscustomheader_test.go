@@ -17,7 +17,7 @@ import (
 
 func newLrOSCustomHeaderClient() *LROsCustomHeaderClient {
 	options := azcore.ClientOptions{}
-	options.Retry.RetryDelay = 10 * time.Millisecond
+	options.Retry.RetryDelay = time.Second
 	options.Transport = httpClientWithCookieJar()
 	return NewLROsCustomHeaderClient(&options)
 }

@@ -10,7 +10,6 @@ package complexgroup
 
 import (
 	"context"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/policy"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
@@ -31,13 +30,13 @@ func NewInheritanceClient(options *azcore.ClientOptions) *InheritanceClient {
 		cp = *options
 	}
 	client := &InheritanceClient{
-		pl: runtime.NewPipeline(module, version, nil, nil, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // GetValid - Get complex types that extend others
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // options - InheritanceClientGetValidOptions contains the optional parameters for the InheritanceClient.GetValid method.
 func (client *InheritanceClient) GetValid(ctx context.Context, options *InheritanceClientGetValidOptions) (InheritanceClientGetValidResponse, error) {
 	req, err := client.getValidCreateRequest(ctx, options)
@@ -49,7 +48,7 @@ func (client *InheritanceClient) GetValid(ctx context.Context, options *Inherita
 		return InheritanceClientGetValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return InheritanceClientGetValidResponse{}, client.getValidHandleError(resp)
+		return InheritanceClientGetValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getValidHandleResponse(resp)
 }
@@ -69,26 +68,13 @@ func (client *InheritanceClient) getValidCreateRequest(ctx context.Context, opti
 func (client *InheritanceClient) getValidHandleResponse(resp *http.Response) (InheritanceClientGetValidResponse, error) {
 	result := InheritanceClientGetValidResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Siamese); err != nil {
-		return InheritanceClientGetValidResponse{}, runtime.NewResponseError(err, resp)
+		return InheritanceClientGetValidResponse{}, err
 	}
 	return result, nil
 }
 
-// getValidHandleError handles the GetValid error response.
-func (client *InheritanceClient) getValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // PutValid - Put complex types that extend others
-// If the operation fails it returns the *Error error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // complexBody - Please put a siamese with id=2, name="Siameee", color=green, breed=persion, which hates 2 dogs, the 1st one
 // named "Potato" with id=1 and food="tomato", and the 2nd one named "Tomato" with id=-1 and
 // food="french fries".
@@ -103,7 +89,7 @@ func (client *InheritanceClient) PutValid(ctx context.Context, complexBody Siame
 		return InheritanceClientPutValidResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return InheritanceClientPutValidResponse{}, client.putValidHandleError(resp)
+		return InheritanceClientPutValidResponse{}, runtime.NewResponseError(resp)
 	}
 	return InheritanceClientPutValidResponse{RawResponse: resp}, nil
 }
@@ -117,17 +103,4 @@ func (client *InheritanceClient) putValidCreateRequest(ctx context.Context, comp
 	}
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, complexBody)
-}
-
-// putValidHandleError handles the PutValid error response.
-func (client *InheritanceClient) putValidHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := Error{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }

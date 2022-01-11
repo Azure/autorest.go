@@ -11,7 +11,6 @@ package armnetwork
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/arm"
 	armruntime "github.com/Azure/azure-sdk-for-go/sdk/azcore/arm/runtime"
@@ -40,19 +39,19 @@ func NewSubnetsClient(subscriptionID string, credential azcore.TokenCredential, 
 	if options != nil {
 		cp = *options
 	}
-	if len(cp.Host) == 0 {
-		cp.Host = arm.AzurePublicCloud
+	if len(cp.Endpoint) == 0 {
+		cp.Endpoint = arm.AzurePublicCloud
 	}
 	client := &SubnetsClient{
 		subscriptionID: subscriptionID,
-		host:           string(cp.Host),
-		pl:             armruntime.NewPipeline(module, version, credential, &cp),
+		host:           string(cp.Endpoint),
+		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &cp),
 	}
 	return client
 }
 
 // BeginCreateOrUpdate - Creates or updates a subnet in the specified virtual network.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // subnetName - The name of the subnet.
@@ -67,7 +66,7 @@ func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGr
 	result := SubnetsClientCreateOrUpdatePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SubnetsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl, client.createOrUpdateHandleError)
+	pt, err := armruntime.NewPoller("SubnetsClient.CreateOrUpdate", "azure-async-operation", resp, client.pl)
 	if err != nil {
 		return SubnetsClientCreateOrUpdatePollerResponse{}, err
 	}
@@ -78,7 +77,7 @@ func (client *SubnetsClient) BeginCreateOrUpdate(ctx context.Context, resourceGr
 }
 
 // CreateOrUpdate - Creates or updates a subnet in the specified virtual network.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SubnetsClient) createOrUpdate(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, subnetParameters Subnet, options *SubnetsClientBeginCreateOrUpdateOptions) (*http.Response, error) {
 	req, err := client.createOrUpdateCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, subnetParameters, options)
 	if err != nil {
@@ -89,7 +88,7 @@ func (client *SubnetsClient) createOrUpdate(ctx context.Context, resourceGroupNa
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusCreated) {
-		return nil, client.createOrUpdateHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -124,21 +123,8 @@ func (client *SubnetsClient) createOrUpdateCreateRequest(ctx context.Context, re
 	return req, runtime.MarshalAsJSON(req, subnetParameters)
 }
 
-// createOrUpdateHandleError handles the CreateOrUpdate error response.
-func (client *SubnetsClient) createOrUpdateHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginDelete - Deletes the specified subnet.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // subnetName - The name of the subnet.
@@ -151,7 +137,7 @@ func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName 
 	result := SubnetsClientDeletePollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SubnetsClient.Delete", "location", resp, client.pl, client.deleteHandleError)
+	pt, err := armruntime.NewPoller("SubnetsClient.Delete", "location", resp, client.pl)
 	if err != nil {
 		return SubnetsClientDeletePollerResponse{}, err
 	}
@@ -162,7 +148,7 @@ func (client *SubnetsClient) BeginDelete(ctx context.Context, resourceGroupName 
 }
 
 // Delete - Deletes the specified subnet.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SubnetsClient) deleteOperation(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, options *SubnetsClientBeginDeleteOptions) (*http.Response, error) {
 	req, err := client.deleteCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, options)
 	if err != nil {
@@ -173,7 +159,7 @@ func (client *SubnetsClient) deleteOperation(ctx context.Context, resourceGroupN
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted, http.StatusNoContent) {
-		return nil, client.deleteHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -208,21 +194,8 @@ func (client *SubnetsClient) deleteCreateRequest(ctx context.Context, resourceGr
 	return req, nil
 }
 
-// deleteHandleError handles the Delete error response.
-func (client *SubnetsClient) deleteHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // Get - Gets the specified subnet by virtual network and resource group.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // subnetName - The name of the subnet.
@@ -237,7 +210,7 @@ func (client *SubnetsClient) Get(ctx context.Context, resourceGroupName string, 
 		return SubnetsClientGetResponse{}, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK) {
-		return SubnetsClientGetResponse{}, client.getHandleError(resp)
+		return SubnetsClientGetResponse{}, runtime.NewResponseError(resp)
 	}
 	return client.getHandleResponse(resp)
 }
@@ -279,26 +252,13 @@ func (client *SubnetsClient) getCreateRequest(ctx context.Context, resourceGroup
 func (client *SubnetsClient) getHandleResponse(resp *http.Response) (SubnetsClientGetResponse, error) {
 	result := SubnetsClientGetResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.Subnet); err != nil {
-		return SubnetsClientGetResponse{}, runtime.NewResponseError(err, resp)
+		return SubnetsClientGetResponse{}, err
 	}
 	return result, nil
 }
 
-// getHandleError handles the Get error response.
-func (client *SubnetsClient) getHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // List - Gets all subnets in a virtual network.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // options - SubnetsClientListOptions contains the optional parameters for the SubnetsClient.List method.
@@ -344,26 +304,13 @@ func (client *SubnetsClient) listCreateRequest(ctx context.Context, resourceGrou
 func (client *SubnetsClient) listHandleResponse(resp *http.Response) (SubnetsClientListResponse, error) {
 	result := SubnetsClientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.SubnetListResult); err != nil {
-		return SubnetsClientListResponse{}, runtime.NewResponseError(err, resp)
+		return SubnetsClientListResponse{}, err
 	}
 	return result, nil
 }
 
-// listHandleError handles the List error response.
-func (client *SubnetsClient) listHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginPrepareNetworkPolicies - Prepares a subnet by applying network intent policies.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // subnetName - The name of the subnet.
@@ -378,7 +325,7 @@ func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, re
 	result := SubnetsClientPrepareNetworkPoliciesPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SubnetsClient.PrepareNetworkPolicies", "location", resp, client.pl, client.prepareNetworkPoliciesHandleError)
+	pt, err := armruntime.NewPoller("SubnetsClient.PrepareNetworkPolicies", "location", resp, client.pl)
 	if err != nil {
 		return SubnetsClientPrepareNetworkPoliciesPollerResponse{}, err
 	}
@@ -389,7 +336,7 @@ func (client *SubnetsClient) BeginPrepareNetworkPolicies(ctx context.Context, re
 }
 
 // PrepareNetworkPolicies - Prepares a subnet by applying network intent policies.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SubnetsClient) prepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, prepareNetworkPoliciesRequestParameters PrepareNetworkPoliciesRequest, options *SubnetsClientBeginPrepareNetworkPoliciesOptions) (*http.Response, error) {
 	req, err := client.prepareNetworkPoliciesCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters, options)
 	if err != nil {
@@ -400,7 +347,7 @@ func (client *SubnetsClient) prepareNetworkPolicies(ctx context.Context, resourc
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.prepareNetworkPoliciesHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -435,21 +382,8 @@ func (client *SubnetsClient) prepareNetworkPoliciesCreateRequest(ctx context.Con
 	return req, runtime.MarshalAsJSON(req, prepareNetworkPoliciesRequestParameters)
 }
 
-// prepareNetworkPoliciesHandleError handles the PrepareNetworkPolicies error response.
-func (client *SubnetsClient) prepareNetworkPoliciesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
-}
-
 // BeginUnprepareNetworkPolicies - Unprepares a subnet by removing network intent policies.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 // resourceGroupName - The name of the resource group.
 // virtualNetworkName - The name of the virtual network.
 // subnetName - The name of the subnet.
@@ -464,7 +398,7 @@ func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, 
 	result := SubnetsClientUnprepareNetworkPoliciesPollerResponse{
 		RawResponse: resp,
 	}
-	pt, err := armruntime.NewPoller("SubnetsClient.UnprepareNetworkPolicies", "location", resp, client.pl, client.unprepareNetworkPoliciesHandleError)
+	pt, err := armruntime.NewPoller("SubnetsClient.UnprepareNetworkPolicies", "location", resp, client.pl)
 	if err != nil {
 		return SubnetsClientUnprepareNetworkPoliciesPollerResponse{}, err
 	}
@@ -475,7 +409,7 @@ func (client *SubnetsClient) BeginUnprepareNetworkPolicies(ctx context.Context, 
 }
 
 // UnprepareNetworkPolicies - Unprepares a subnet by removing network intent policies.
-// If the operation fails it returns the *CloudError error type.
+// If the operation fails it returns an *azcore.ResponseError type.
 func (client *SubnetsClient) unprepareNetworkPolicies(ctx context.Context, resourceGroupName string, virtualNetworkName string, subnetName string, unprepareNetworkPoliciesRequestParameters UnprepareNetworkPoliciesRequest, options *SubnetsClientBeginUnprepareNetworkPoliciesOptions) (*http.Response, error) {
 	req, err := client.unprepareNetworkPoliciesCreateRequest(ctx, resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters, options)
 	if err != nil {
@@ -486,7 +420,7 @@ func (client *SubnetsClient) unprepareNetworkPolicies(ctx context.Context, resou
 		return nil, err
 	}
 	if !runtime.HasStatusCode(resp, http.StatusOK, http.StatusAccepted) {
-		return nil, client.unprepareNetworkPoliciesHandleError(resp)
+		return nil, runtime.NewResponseError(resp)
 	}
 	return resp, nil
 }
@@ -519,17 +453,4 @@ func (client *SubnetsClient) unprepareNetworkPoliciesCreateRequest(ctx context.C
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header.Set("Accept", "application/json")
 	return req, runtime.MarshalAsJSON(req, unprepareNetworkPoliciesRequestParameters)
-}
-
-// unprepareNetworkPoliciesHandleError handles the UnprepareNetworkPolicies error response.
-func (client *SubnetsClient) unprepareNetworkPoliciesHandleError(resp *http.Response) error {
-	body, err := runtime.Payload(resp)
-	if err != nil {
-		return runtime.NewResponseError(err, resp)
-	}
-	errType := CloudError{raw: string(body)}
-	if err := runtime.UnmarshalAsJSON(resp, &errType); err != nil {
-		return runtime.NewResponseError(fmt.Errorf("%s\n%s", string(body), err), resp)
-	}
-	return runtime.NewResponseError(&errType, resp)
 }
