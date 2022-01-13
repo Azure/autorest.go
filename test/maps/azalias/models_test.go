@@ -33,7 +33,11 @@ func TestPolicyAssignmentProperties(t *testing.T) {
 	if !ok {
 		t.Fatal("missing one")
 	}
-	if v := m.Value["key"]; v != "value" {
+	mm, ok := m.Value.(map[string]interface{})
+	if !ok {
+		t.Fatalf("unexpected type %T", m.Value)
+	}
+	if v := mm["key"]; v != "value" {
 		t.Fatalf("got %s want value", v)
 	}
 	b, err := json.Marshal(paprops)

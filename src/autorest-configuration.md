@@ -13,6 +13,7 @@ use-extension:
   "@autorest/modelerfour" : "4.22.3"
 
 modelerfour:
+  treat-type-object-as-anything: true
   resolve-schema-name-collisons: true
   naming:
     preserve-uppercase-max-length: 64

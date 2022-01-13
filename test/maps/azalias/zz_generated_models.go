@@ -55,7 +55,7 @@ type GeoJSONFeature struct {
 	ID *string `json:"id,omitempty"`
 
 	// Properties can contain any additional metadata about the Feature. Value can be any JSON object or a JSON null value
-	Properties map[string]interface{} `json:"properties,omitempty"`
+	Properties interface{} `json:"properties,omitempty"`
 }
 
 // GetGeoJSONObject implements the GeoJSONObjectClassification interface for type GeoJSONFeature.
@@ -71,7 +71,7 @@ func (g GeoJSONFeature) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "featureType", g.FeatureType)
 	populate(objectMap, "id", g.ID)
-	populate(objectMap, "properties", g.Properties)
+	populate(objectMap, "properties", &g.Properties)
 	objectMap["type"] = GeoJSONObjectTypeGeoJSONFeature
 	return json.Marshal(objectMap)
 }
@@ -114,7 +114,7 @@ type GeoJSONFeatureData struct {
 	ID *string `json:"id,omitempty"`
 
 	// Properties can contain any additional metadata about the Feature. Value can be any JSON object or a JSON null value
-	Properties map[string]interface{} `json:"properties,omitempty"`
+	Properties interface{} `json:"properties,omitempty"`
 }
 
 // GeoJSONObjectClassification provides polymorphic access to related types.
@@ -214,7 +214,7 @@ func (l ListResponse) MarshalJSON() ([]byte, error) {
 
 type ParameterMetadataValue struct {
 	// a JSON object
-	Value map[string]interface{} `json:"value,omitempty"`
+	Value interface{} `json:"value,omitempty"`
 }
 
 // ParameterValuesValue - The value of a parameter.

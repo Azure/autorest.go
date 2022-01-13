@@ -633,18 +633,18 @@ type StatementOutput struct {
 	// REQUIRED
 	ExecutionCount *int32 `json:"execution_count,omitempty"`
 
-	// Any object
-	Data       map[string]interface{} `json:"data,omitempty"`
-	ErrorName  *string                `json:"ename,omitempty"`
-	ErrorValue *string                `json:"evalue,omitempty"`
-	Status     *string                `json:"status,omitempty"`
-	Traceback  []*string              `json:"traceback,omitempty"`
+	// Anything
+	Data       interface{} `json:"data,omitempty"`
+	ErrorName  *string     `json:"ename,omitempty"`
+	ErrorValue *string     `json:"evalue,omitempty"`
+	Status     *string     `json:"status,omitempty"`
+	Traceback  []*string   `json:"traceback,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface for type StatementOutput.
 func (s StatementOutput) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
-	populate(objectMap, "data", s.Data)
+	populate(objectMap, "data", &s.Data)
 	populate(objectMap, "ename", s.ErrorName)
 	populate(objectMap, "evalue", s.ErrorValue)
 	populate(objectMap, "execution_count", s.ExecutionCount)
