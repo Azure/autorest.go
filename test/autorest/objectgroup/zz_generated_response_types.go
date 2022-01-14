@@ -19,8 +19,8 @@ type ObjectTypeClientGetResponse struct {
 
 // ObjectTypeClientGetResult contains the result from method ObjectTypeClient.Get.
 type ObjectTypeClientGetResult struct {
-	// Any object
-	Object map[string]interface{}
+	// Anything
+	Interface interface{}
 }
 
 // ObjectTypeClientPutResponse contains the response from method ObjectTypeClient.Put.
