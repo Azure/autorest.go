@@ -2076,20 +2076,6 @@ func (a AvailableServiceAliasesResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// AzureAsyncOperationResult - The response body contains the status of the specified asynchronous operation, indicating whether
-// it has succeeded, is in progress, or has failed. Note that this status is distinct from the HTTP
-// status code returned for the Get Operation Status operation itself. If the asynchronous operation succeeded, the response
-// body includes the HTTP status code for the successful request. If the
-// asynchronous operation failed, the response body includes the HTTP status code for the failed request and error information
-// regarding the failure.
-type AzureAsyncOperationResult struct {
-	// Details of the error occurred during specified asynchronous operation.
-	Error *Error `json:"error,omitempty"`
-
-	// Status of the Azure async operation.
-	Status *NetworkOperationStatus `json:"status,omitempty"`
-}
-
 // AzureFirewall - Azure Firewall resource.
 type AzureFirewall struct {
 	// Resource ID.
@@ -3278,37 +3264,6 @@ func (b BgpSettings) MarshalJSON() ([]byte, error) {
 type CheckPrivateLinkServiceVisibilityRequest struct {
 	// The alias of the private link service.
 	PrivateLinkServiceAlias *string `json:"privateLinkServiceAlias,omitempty"`
-}
-
-// CloudError - An error response from the service.
-type CloudError struct {
-	// Cloud error body.
-	Error *CloudErrorBody `json:"error,omitempty"`
-}
-
-// CloudErrorBody - An error response from the service.
-type CloudErrorBody struct {
-	// An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-	Code *string `json:"code,omitempty"`
-
-	// A list of additional details about the error.
-	Details []*CloudErrorBody `json:"details,omitempty"`
-
-	// A message describing the error, intended to be suitable for display in a user interface.
-	Message *string `json:"message,omitempty"`
-
-	// The target of the particular error. For example, the name of the property in error.
-	Target *string `json:"target,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type CloudErrorBody.
-func (c CloudErrorBody) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "code", c.Code)
-	populate(objectMap, "details", c.Details)
-	populate(objectMap, "message", c.Message)
-	populate(objectMap, "target", c.Target)
-	return json.Marshal(objectMap)
 }
 
 type Components1Jq1T4ISchemasManagedserviceidentityPropertiesUserassignedidentitiesAdditionalproperties struct {
@@ -4720,53 +4675,6 @@ func (e EndpointServicesListResult) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "nextLink", e.NextLink)
 	populate(objectMap, "value", e.Value)
 	return json.Marshal(objectMap)
-}
-
-// Error - Common error representation.
-type Error struct {
-	// Error code.
-	Code *string `json:"code,omitempty"`
-
-	// Error details.
-	Details []*ErrorDetails `json:"details,omitempty"`
-
-	// Inner error message.
-	InnerError *string `json:"innerError,omitempty"`
-
-	// Error message.
-	Message *string `json:"message,omitempty"`
-
-	// Error target.
-	Target *string `json:"target,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type Error.
-func (e Error) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "code", e.Code)
-	populate(objectMap, "details", e.Details)
-	populate(objectMap, "innerError", e.InnerError)
-	populate(objectMap, "message", e.Message)
-	populate(objectMap, "target", e.Target)
-	return json.Marshal(objectMap)
-}
-
-// ErrorDetails - Common error details representation.
-type ErrorDetails struct {
-	// Error code.
-	Code *string `json:"code,omitempty"`
-
-	// Error message.
-	Message *string `json:"message,omitempty"`
-
-	// Error target.
-	Target *string `json:"target,omitempty"`
-}
-
-// ErrorResponse - The error object.
-type ErrorResponse struct {
-	// The error details object.
-	Error *ErrorDetails `json:"error,omitempty"`
 }
 
 // EvaluatedNetworkSecurityGroup - Results of network security group evaluation.
@@ -13981,12 +13889,6 @@ func (v VPNSite) MarshalJSON() ([]byte, error) {
 	populate(objectMap, "tags", v.Tags)
 	populate(objectMap, "type", v.Type)
 	return json.Marshal(objectMap)
-}
-
-// VPNSiteID - VpnSite Resource.
-type VPNSiteID struct {
-	// READ-ONLY; The resource-uri of the vpn-site for which config is to be fetched.
-	VPNSite *string `json:"vpnSite,omitempty" azure:"ro"`
 }
 
 // VPNSiteLink - VpnSiteLink Resource.

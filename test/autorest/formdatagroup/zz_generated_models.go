@@ -8,18 +8,6 @@
 
 package formdatagroup
 
-import (
-	"encoding/json"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	"io"
-	"reflect"
-)
-
-type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
-}
-
 // FormdataClientUploadFileOptions contains the optional parameters for the FormdataClient.UploadFile method.
 type FormdataClientUploadFileOptions struct {
 	// placeholder for future optional parameters
@@ -33,34 +21,4 @@ type FormdataClientUploadFileViaBodyOptions struct {
 // FormdataClientUploadFilesOptions contains the optional parameters for the FormdataClient.UploadFiles method.
 type FormdataClientUploadFilesOptions struct {
 	// placeholder for future optional parameters
-}
-
-type Paths1MqqetpFormdataStreamUploadfilePostRequestbodyContentMultipartFormDataSchema struct {
-	// REQUIRED; File to upload.
-	FileContent *io.ReadSeekCloser `json:"fileContent,omitempty"`
-
-	// REQUIRED; File name to upload. Name has to be spelled exactly as written here.
-	FileName *string `json:"fileName,omitempty"`
-}
-
-type Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema struct {
-	// REQUIRED; Files to upload.
-	FileContent []io.ReadSeekCloser `json:"fileContent,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema.
-func (p Paths1P3Stk3FormdataStreamUploadfilesPostRequestbodyContentMultipartFormDataSchema) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "fileContent", p.FileContent)
-	return json.Marshal(objectMap)
-}
-
-func populate(m map[string]interface{}, k string, v interface{}) {
-	if v == nil {
-		return
-	} else if azcore.IsNullValue(v) {
-		m[k] = nil
-	} else if !reflect.ValueOf(v).IsNil() {
-		m[k] = v
-	}
 }

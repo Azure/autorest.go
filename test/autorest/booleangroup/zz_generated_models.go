@@ -37,8 +37,3 @@ type BoolClientPutFalseOptions struct {
 type BoolClientPutTrueOptions struct {
 	// placeholder for future optional parameters
 }
-
-type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
-}

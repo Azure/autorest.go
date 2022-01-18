@@ -30,15 +30,6 @@ type AliasesCreateResponse struct {
 	LastUpdatedTimestamp *string `json:"lastUpdatedTimestamp,omitempty" azure:"ro"`
 }
 
-// ErrorResponse - An error happened.
-type ErrorResponse struct {
-	// READ-ONLY; The error code.
-	Code *string `json:"code,omitempty" azure:"ro"`
-
-	// READ-ONLY; The error message.
-	Message *string `json:"message,omitempty" azure:"ro"`
-}
-
 // GeoJSONFeature - A valid GeoJSON Feature object type. Please refer to RFC 7946 [https://tools.ietf.org/html/rfc7946#section-3.2]
 // for details.
 type GeoJSONFeature struct {
@@ -312,6 +303,11 @@ type clientGetScriptOptions struct {
 // clientListOptions contains the optional parameters for the client.List method.
 type clientListOptions struct {
 	GroupBy []LogMetricsGroupBy
+}
+
+// clientPolicyAssignmentOptions contains the optional parameters for the client.PolicyAssignment method.
+type clientPolicyAssignmentOptions struct {
+	// placeholder for future optional parameters
 }
 
 func populate(m map[string]interface{}, k string, v interface{}) {

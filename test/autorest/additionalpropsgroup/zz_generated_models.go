@@ -81,11 +81,6 @@ func (c *CatAPTrue) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
-}
-
 type PetAPInProperties struct {
 	// REQUIRED
 	ID *int32 `json:"id,omitempty"`

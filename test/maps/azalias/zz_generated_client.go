@@ -112,8 +112,8 @@ func (client *client) createHandleResponse(resp *http.Response) (clientCreateRes
 // GetScript - Retrieve the configuration script identified by configuration name.
 // If the operation fails it returns an *azcore.ResponseError type.
 // options - clientGetScriptOptions contains the optional parameters for the client.GetScript method.
-func (client *client) GetScript(ctx context.Context, options *clientGetScriptOptions) (clientGetScriptResponse, error) {
-	req, err := client.getScriptCreateRequest(ctx, options)
+func (client *client) GetScript(ctx context.Context, props GeoJSONObjectNamedCollection, options *clientGetScriptOptions) (clientGetScriptResponse, error) {
+	req, err := client.getScriptCreateRequest(ctx, props, options)
 	if err != nil {
 		return clientGetScriptResponse{}, err
 	}
@@ -128,14 +128,14 @@ func (client *client) GetScript(ctx context.Context, options *clientGetScriptOpt
 }
 
 // getScriptCreateRequest creates the GetScript request.
-func (client *client) getScriptCreateRequest(ctx context.Context, options *clientGetScriptOptions) (*policy.Request, error) {
+func (client *client) getScriptCreateRequest(ctx context.Context, props GeoJSONObjectNamedCollection, options *clientGetScriptOptions) (*policy.Request, error) {
 	urlPath := "/scripts"
-	req, err := runtime.NewRequest(ctx, http.MethodGet, runtime.JoinPaths(client.endpoint, urlPath))
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
 	if err != nil {
 		return nil, err
 	}
 	req.Raw().Header.Set("Accept", "text/powershell")
-	return req, nil
+	return req, runtime.MarshalAsJSON(req, props)
 }
 
 // getScriptHandleResponse handles the GetScript response.
@@ -208,6 +208,44 @@ func (client *client) listHandleResponse(resp *http.Response) (clientListRespons
 	result := clientListResponse{RawResponse: resp}
 	if err := runtime.UnmarshalAsJSON(resp, &result.ListResponse); err != nil {
 		return clientListResponse{}, err
+	}
+	return result, nil
+}
+
+// PolicyAssignment -
+// If the operation fails it returns an *azcore.ResponseError type.
+// options - clientPolicyAssignmentOptions contains the optional parameters for the client.PolicyAssignment method.
+func (client *client) PolicyAssignment(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *clientPolicyAssignmentOptions) (clientPolicyAssignmentResponse, error) {
+	req, err := client.policyAssignmentCreateRequest(ctx, props, options)
+	if err != nil {
+		return clientPolicyAssignmentResponse{}, err
+	}
+	resp, err := client.pl.Do(req)
+	if err != nil {
+		return clientPolicyAssignmentResponse{}, err
+	}
+	if !runtime.HasStatusCode(resp, http.StatusOK) {
+		return clientPolicyAssignmentResponse{}, runtime.NewResponseError(resp)
+	}
+	return client.policyAssignmentHandleResponse(resp)
+}
+
+// policyAssignmentCreateRequest creates the PolicyAssignment request.
+func (client *client) policyAssignmentCreateRequest(ctx context.Context, props ScheduleCreateOrUpdateProperties, options *clientPolicyAssignmentOptions) (*policy.Request, error) {
+	urlPath := "/policy"
+	req, err := runtime.NewRequest(ctx, http.MethodPut, runtime.JoinPaths(client.endpoint, urlPath))
+	if err != nil {
+		return nil, err
+	}
+	req.Raw().Header.Set("Accept", "application/json")
+	return req, runtime.MarshalAsJSON(req, props)
+}
+
+// policyAssignmentHandleResponse handles the PolicyAssignment response.
+func (client *client) policyAssignmentHandleResponse(resp *http.Response) (clientPolicyAssignmentResponse, error) {
+	result := clientPolicyAssignmentResponse{RawResponse: resp}
+	if err := runtime.UnmarshalAsJSON(resp, &result.PolicyAssignmentProperties); err != nil {
+		return clientPolicyAssignmentResponse{}, err
 	}
 	return result, nil
 }
