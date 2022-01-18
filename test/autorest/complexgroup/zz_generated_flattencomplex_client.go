@@ -25,12 +25,11 @@ type FlattencomplexClient struct {
 // NewFlattencomplexClient creates a new instance of FlattencomplexClient with the specified values.
 // options - pass nil to accept the default values.
 func NewFlattencomplexClient(options *azcore.ClientOptions) *FlattencomplexClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &FlattencomplexClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

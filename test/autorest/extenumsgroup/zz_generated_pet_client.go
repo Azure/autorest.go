@@ -28,12 +28,11 @@ type PetClient struct {
 // NewPetClient creates a new instance of PetClient with the specified values.
 // options - pass nil to accept the default values.
 func NewPetClient(options *azcore.ClientOptions) *PetClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &PetClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

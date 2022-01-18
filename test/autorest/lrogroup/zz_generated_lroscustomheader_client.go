@@ -26,12 +26,11 @@ type LROsCustomHeaderClient struct {
 // NewLROsCustomHeaderClient creates a new instance of LROsCustomHeaderClient with the specified values.
 // options - pass nil to accept the default values.
 func NewLROsCustomHeaderClient(options *azcore.ClientOptions) *LROsCustomHeaderClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &LROsCustomHeaderClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

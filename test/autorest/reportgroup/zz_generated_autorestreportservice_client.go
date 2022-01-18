@@ -25,12 +25,11 @@ type AutoRestReportServiceClient struct {
 // NewAutoRestReportServiceClient creates a new instance of AutoRestReportServiceClient with the specified values.
 // options - pass nil to accept the default values.
 func NewAutoRestReportServiceClient(options *azcore.ClientOptions) *AutoRestReportServiceClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &AutoRestReportServiceClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

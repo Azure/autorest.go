@@ -25,12 +25,11 @@ type HeaderClient struct {
 // NewHeaderClient creates a new instance of HeaderClient with the specified values.
 // options - pass nil to accept the default values.
 func NewHeaderClient(options *azcore.ClientOptions) *HeaderClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &HeaderClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

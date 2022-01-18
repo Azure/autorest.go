@@ -25,12 +25,11 @@ type BasicClient struct {
 // NewBasicClient creates a new instance of BasicClient with the specified values.
 // options - pass nil to accept the default values.
 func NewBasicClient(options *azcore.ClientOptions) *BasicClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &BasicClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

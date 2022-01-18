@@ -25,12 +25,11 @@ type HTTPSuccessClient struct {
 // NewHTTPSuccessClient creates a new instance of HTTPSuccessClient with the specified values.
 // options - pass nil to accept the default values.
 func NewHTTPSuccessClient(options *azcore.ClientOptions) *HTTPSuccessClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &HTTPSuccessClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

@@ -25,12 +25,11 @@ type HTTPRedirectsClient struct {
 // NewHTTPRedirectsClient creates a new instance of HTTPRedirectsClient with the specified values.
 // options - pass nil to accept the default values.
 func NewHTTPRedirectsClient(options *azcore.ClientOptions) *HTTPRedirectsClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &HTTPRedirectsClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

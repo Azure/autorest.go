@@ -25,12 +25,11 @@ type HTTPClientFailureClient struct {
 // NewHTTPClientFailureClient creates a new instance of HTTPClientFailureClient with the specified values.
 // options - pass nil to accept the default values.
 func NewHTTPClientFailureClient(options *azcore.ClientOptions) *HTTPClientFailureClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &HTTPClientFailureClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

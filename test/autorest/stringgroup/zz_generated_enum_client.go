@@ -25,12 +25,11 @@ type EnumClient struct {
 // NewEnumClient creates a new instance of EnumClient with the specified values.
 // options - pass nil to accept the default values.
 func NewEnumClient(options *azcore.ClientOptions) *EnumClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &EnumClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

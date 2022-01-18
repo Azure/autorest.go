@@ -25,12 +25,11 @@ type FloatClient struct {
 // NewFloatClient creates a new instance of FloatClient with the specified values.
 // options - pass nil to accept the default values.
 func NewFloatClient(options *azcore.ClientOptions) *FloatClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &FloatClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

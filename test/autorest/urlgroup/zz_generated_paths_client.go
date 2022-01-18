@@ -30,12 +30,11 @@ type PathsClient struct {
 // NewPathsClient creates a new instance of PathsClient with the specified values.
 // options - pass nil to accept the default values.
 func NewPathsClient(options *azcore.ClientOptions) *PathsClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &PathsClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

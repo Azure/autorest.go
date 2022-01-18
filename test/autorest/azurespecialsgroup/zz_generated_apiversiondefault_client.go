@@ -25,12 +25,11 @@ type APIVersionDefaultClient struct {
 // NewAPIVersionDefaultClient creates a new instance of APIVersionDefaultClient with the specified values.
 // options - pass nil to accept the default values.
 func NewAPIVersionDefaultClient(options *azcore.ClientOptions) *APIVersionDefaultClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &APIVersionDefaultClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

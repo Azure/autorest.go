@@ -26,12 +26,11 @@ type FormdataClient struct {
 // NewFormdataClient creates a new instance of FormdataClient with the specified values.
 // options - pass nil to accept the default values.
 func NewFormdataClient(options *azcore.ClientOptions) *FormdataClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &FormdataClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

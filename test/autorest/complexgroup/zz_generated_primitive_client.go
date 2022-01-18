@@ -25,12 +25,11 @@ type PrimitiveClient struct {
 // NewPrimitiveClient creates a new instance of PrimitiveClient with the specified values.
 // options - pass nil to accept the default values.
 func NewPrimitiveClient(options *azcore.ClientOptions) *PrimitiveClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &PrimitiveClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

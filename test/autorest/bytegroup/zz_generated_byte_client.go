@@ -25,12 +25,11 @@ type ByteClient struct {
 // NewByteClient creates a new instance of ByteClient with the specified values.
 // options - pass nil to accept the default values.
 func NewByteClient(options *azcore.ClientOptions) *ByteClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &ByteClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

@@ -25,12 +25,11 @@ type ReadonlypropertyClient struct {
 // NewReadonlypropertyClient creates a new instance of ReadonlypropertyClient with the specified values.
 // options - pass nil to accept the default values.
 func NewReadonlypropertyClient(options *azcore.ClientOptions) *ReadonlypropertyClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &ReadonlypropertyClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

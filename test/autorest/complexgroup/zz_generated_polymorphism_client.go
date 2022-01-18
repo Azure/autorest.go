@@ -25,12 +25,11 @@ type PolymorphismClient struct {
 // NewPolymorphismClient creates a new instance of PolymorphismClient with the specified values.
 // options - pass nil to accept the default values.
 func NewPolymorphismClient(options *azcore.ClientOptions) *PolymorphismClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &PolymorphismClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

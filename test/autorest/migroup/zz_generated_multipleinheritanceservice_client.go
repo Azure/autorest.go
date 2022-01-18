@@ -25,12 +25,11 @@ type MultipleInheritanceServiceClient struct {
 // NewMultipleInheritanceServiceClient creates a new instance of MultipleInheritanceServiceClient with the specified values.
 // options - pass nil to accept the default values.
 func NewMultipleInheritanceServiceClient(options *azcore.ClientOptions) *MultipleInheritanceServiceClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &MultipleInheritanceServiceClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

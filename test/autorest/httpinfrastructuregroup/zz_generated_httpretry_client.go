@@ -25,12 +25,11 @@ type HTTPRetryClient struct {
 // NewHTTPRetryClient creates a new instance of HTTPRetryClient with the specified values.
 // options - pass nil to accept the default values.
 func NewHTTPRetryClient(options *azcore.ClientOptions) *HTTPRetryClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &HTTPRetryClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

@@ -25,12 +25,11 @@ type BoolClient struct {
 // NewBoolClient creates a new instance of BoolClient with the specified values.
 // options - pass nil to accept the default values.
 func NewBoolClient(options *azcore.ClientOptions) *BoolClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &BoolClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

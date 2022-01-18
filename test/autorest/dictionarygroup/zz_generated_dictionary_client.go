@@ -26,12 +26,11 @@ type DictionaryClient struct {
 // NewDictionaryClient creates a new instance of DictionaryClient with the specified values.
 // options - pass nil to accept the default values.
 func NewDictionaryClient(options *azcore.ClientOptions) *DictionaryClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &DictionaryClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }
