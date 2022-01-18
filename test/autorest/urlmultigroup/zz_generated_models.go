@@ -8,11 +8,6 @@
 
 package urlmultigroup
 
-type Error struct {
-	Message *string `json:"message,omitempty"`
-	Status  *int32  `json:"status,omitempty"`
-}
-
 // QueriesClientArrayStringMultiEmptyOptions contains the optional parameters for the QueriesClient.ArrayStringMultiEmpty
 // method.
 type QueriesClientArrayStringMultiEmptyOptions struct {

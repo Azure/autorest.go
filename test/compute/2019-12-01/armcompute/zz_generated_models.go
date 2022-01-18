@@ -324,12 +324,6 @@ type BootDiagnosticsInstanceView struct {
 	Status *InstanceViewStatus `json:"status,omitempty" azure:"ro"`
 }
 
-// CloudError - An error response from the Compute service.
-type CloudError struct {
-	// Api error.
-	Error *APIError `json:"error,omitempty"`
-}
-
 // ContainerService - Container service.
 type ContainerService struct {
 	// REQUIRED; Resource location
@@ -2185,12 +2179,6 @@ func (g *GalleryArtifactPublishingProfileBase) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-// GalleryArtifactSource - The source image from which the Image Version is going to be created.
-type GalleryArtifactSource struct {
-	// REQUIRED; The managed artifact.
-	ManagedImage *ManagedArtifact `json:"managedImage,omitempty"`
-}
-
 // GalleryArtifactVersionSource - The gallery artifact version source.
 type GalleryArtifactVersionSource struct {
 	// The id of the gallery artifact version source. Can specify a disk uri, snapshot uri, or user image.
@@ -3390,12 +3378,6 @@ func (m *MaintenanceRedeployStatus) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-// ManagedArtifact - The managed artifact.
-type ManagedArtifact struct {
-	// REQUIRED; The managed artifact id.
-	ID *string `json:"id,omitempty"`
 }
 
 // ManagedDiskParameters - The parameters of a managed disk.

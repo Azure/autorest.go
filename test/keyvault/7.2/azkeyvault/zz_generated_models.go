@@ -2240,12 +2240,6 @@ func (d DeletedStorageListResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// Error - The key vault error exception.
-type Error struct {
-	// READ-ONLY; The key vault server error.
-	Error *ErrorInfo `json:"error,omitempty" azure:"ro"`
-}
-
 // ErrorInfo - The key vault server error.
 type ErrorInfo struct {
 	// READ-ONLY; The error code.
@@ -3104,12 +3098,6 @@ func (o OrganizationDetails) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-// PendingCertificateSigningRequestResult - The pending certificate signing request result.
-type PendingCertificateSigningRequestResult struct {
-	// READ-ONLY; The pending certificate signing request as Base64 encoded string.
-	Value *string `json:"value,omitempty" azure:"ro"`
-}
-
 // Permission - Role definition permissions.
 type Permission struct {
 	// Action permissions that are granted.
@@ -3232,12 +3220,6 @@ type RoleAssignmentCreateParameters struct {
 	Properties *RoleAssignmentProperties `json:"properties,omitempty"`
 }
 
-// RoleAssignmentFilter - Role Assignments filter
-type RoleAssignmentFilter struct {
-	// Returns role assignment of the specific principal.
-	PrincipalID *string `json:"principalId,omitempty"`
-}
-
 // RoleAssignmentListResult - Role assignment list operation result.
 type RoleAssignmentListResult struct {
 	// The URL to use for getting the next set of results.
@@ -3319,12 +3301,6 @@ type RoleDefinition struct {
 type RoleDefinitionCreateParameters struct {
 	// REQUIRED; Role definition properties.
 	Properties *RoleDefinitionProperties `json:"properties,omitempty"`
-}
-
-// RoleDefinitionFilter - Role Definitions filter
-type RoleDefinitionFilter struct {
-	// Returns role definition with the specific name.
-	RoleName *string `json:"roleName,omitempty"`
 }
 
 // RoleDefinitionListResult - Role definition list operation result.

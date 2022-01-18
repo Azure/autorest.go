@@ -47,3 +47,15 @@ type clientListResponse struct {
 type clientListResult struct {
 	ListResponse
 }
+
+// clientPolicyAssignmentResponse contains the response from method client.PolicyAssignment.
+type clientPolicyAssignmentResponse struct {
+	clientPolicyAssignmentResult
+	// RawResponse contains the underlying HTTP response.
+	RawResponse *http.Response
+}
+
+// clientPolicyAssignmentResult contains the result from method client.PolicyAssignment.
+type clientPolicyAssignmentResult struct {
+	PolicyAssignmentProperties
+}

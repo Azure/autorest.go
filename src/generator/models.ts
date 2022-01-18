@@ -92,8 +92,7 @@ export async function generateModels(session: Session<CodeModel>): Promise<strin
 function generateStructs(imports: ImportManager, objects?: ObjectSchema[]): StructDef[] {
   const structTypes = new Array<StructDef>();
   for (const obj of values(objects)) {
-    if (obj.language.go!.errorType) {
-      // don't generate models for error types as we don't use them
+    if (obj.language.go!.omitType) {
       continue;
     }
     const structDef = generateStruct(imports, obj.language.go!, aggregateProperties(obj));

@@ -35,11 +35,6 @@ func (o ODataProductResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(objectMap)
 }
 
-type OperationResult struct {
-	// The status of the request
-	Status *OperationResultStatus `json:"status,omitempty"`
-}
-
 // PagingClientBeginGetMultiplePagesLROOptions contains the optional parameters for the PagingClient.BeginGetMultiplePagesLRO
 // method.
 type PagingClientBeginGetMultiplePagesLROOptions struct {

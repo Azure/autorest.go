@@ -602,33 +602,6 @@ type CloudEdgeManagementRoleProperties struct {
 	LocalManagementStatus *RoleStatus `json:"localManagementStatus,omitempty" azure:"ro"`
 }
 
-// CloudError - An error response from the service.
-type CloudError struct {
-	// The error details.
-	Error *CloudErrorBody `json:"error,omitempty"`
-}
-
-// CloudErrorBody - An error response from the service.
-type CloudErrorBody struct {
-	// An identifier for the error. Codes are invariant and are intended to be consumed programmatically.
-	Code *string `json:"code,omitempty"`
-
-	// A list of additional details about the error.
-	Details []*CloudErrorBody `json:"details,omitempty"`
-
-	// A message describing the error, intended to be suitable for display in a user interface.
-	Message *string `json:"message,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type CloudErrorBody.
-func (c CloudErrorBody) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "code", c.Code)
-	populate(objectMap, "details", c.Details)
-	populate(objectMap, "message", c.Message)
-	return json.Marshal(objectMap)
-}
-
 // CniConfig - Cni configuration
 type CniConfig struct {
 	// READ-ONLY; Pod Subnet
@@ -2360,23 +2333,6 @@ type MountPointMap struct {
 	RoleType *RoleTypes `json:"roleType,omitempty" azure:"ro"`
 }
 
-// MoveRequest - Resource Move details
-type MoveRequest struct {
-	// REQUIRED; List of resources to be moved
-	Resources []*string `json:"resources,omitempty"`
-
-	// REQUIRED; Target resource group ARMId
-	TargetResourceGroup *string `json:"targetResourceGroup,omitempty"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type MoveRequest.
-func (m MoveRequest) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "resources", m.Resources)
-	populate(objectMap, "targetResourceGroup", m.TargetResourceGroup)
-	return json.Marshal(objectMap)
-}
-
 // NetworkAdapter - Represents the networkAdapter on a device.
 type NetworkAdapter struct {
 	// Value indicating whether this adapter has DHCP enabled.
@@ -3115,23 +3071,6 @@ func (r *ResourceMoveDetails) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ResourceTypeSKU - Resource type Sku object
-type ResourceTypeSKU struct {
-	// READ-ONLY; The resource type.
-	ResourceType *string `json:"resourceType,omitempty" azure:"ro"`
-
-	// READ-ONLY; The skus.
-	SKUs []*SKUInformation `json:"skus,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type ResourceTypeSKU.
-func (r ResourceTypeSKU) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "resourceType", r.ResourceType)
-	populate(objectMap, "skus", r.SKUs)
-	return json.Marshal(objectMap)
-}
-
 // RoleClassification provides polymorphic access to related types.
 // Call the interface's GetRole() method to access the common type.
 // Use a type switch to determine the concrete type.  The possible types are:
@@ -3317,68 +3256,6 @@ type SKUCost struct {
 
 	// READ-ONLY; The cost quantity.
 	Quantity *int64 `json:"quantity,omitempty" azure:"ro"`
-}
-
-// SKUInformation - Sku information
-type SKUInformation struct {
-	// READ-ONLY; The pricing info of the Sku.
-	Costs []*SKUCost `json:"costs,omitempty" azure:"ro"`
-
-	// READ-ONLY; The Sku family.
-	Family *string `json:"family,omitempty" azure:"ro"`
-
-	// READ-ONLY; The sku kind.
-	Kind *string `json:"kind,omitempty" azure:"ro"`
-
-	// READ-ONLY; The locations where Sku is available with zones and sites info
-	LocationInfo []*SKULocationInfo `json:"locationInfo,omitempty" azure:"ro"`
-
-	// READ-ONLY; The locations where Sku is available.
-	Locations []*string `json:"locations,omitempty" azure:"ro"`
-
-	// READ-ONLY; The sku name.
-	Name *string `json:"name,omitempty" azure:"ro"`
-
-	// READ-ONLY; The required features for the sku to be available.
-	RequiredFeatures []*string `json:"requiredFeatures,omitempty" azure:"ro"`
-
-	// READ-ONLY; The required quotaIds for the sku to be available.
-	RequiredQuotaIDs []*string `json:"requiredQuotaIds,omitempty" azure:"ro"`
-
-	// READ-ONLY; The sku tier.
-	Tier *string `json:"tier,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type SKUInformation.
-func (s SKUInformation) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "costs", s.Costs)
-	populate(objectMap, "family", s.Family)
-	populate(objectMap, "kind", s.Kind)
-	populate(objectMap, "locationInfo", s.LocationInfo)
-	populate(objectMap, "locations", s.Locations)
-	populate(objectMap, "name", s.Name)
-	populate(objectMap, "requiredFeatures", s.RequiredFeatures)
-	populate(objectMap, "requiredQuotaIds", s.RequiredQuotaIDs)
-	populate(objectMap, "tier", s.Tier)
-	return json.Marshal(objectMap)
-}
-
-// SKUInformationList - List of SKU Information objects
-type SKUInformationList struct {
-	// READ-ONLY; Links to the next set of results
-	NextLink *string `json:"nextLink,omitempty" azure:"ro"`
-
-	// READ-ONLY; List of ResourceTypeSku objects
-	Value []*ResourceTypeSKU `json:"value,omitempty" azure:"ro"`
-}
-
-// MarshalJSON implements the json.Marshaller interface for type SKUInformationList.
-func (s SKUInformationList) MarshalJSON() ([]byte, error) {
-	objectMap := make(map[string]interface{})
-	populate(objectMap, "nextLink", s.NextLink)
-	populate(objectMap, "value", s.Value)
-	return json.Marshal(objectMap)
 }
 
 // SKUList - List of SKU Information objects.

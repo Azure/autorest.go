@@ -16,7 +16,9 @@
       }
     ]
   },
-  "consumes": [],
+  "consumes": [
+    "application/json"
+  ],
   "produces": [
     "application/json"
   ],
@@ -106,6 +108,22 @@
         ]
       },
       "x-ms-parameter-location": "client"
+    },
+    "ScheduleCreateOrUpdateProperties": {
+      "name": "props",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/ScheduleCreateOrUpdateProperties"
+      }
+    },
+    "GeoJsonCreateOrUpdateProperties": {
+      "name": "props",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/GeoJsonObjectNamedCollection"
+      }
     }
   },
   "paths": {
@@ -215,18 +233,43 @@
       }
     },
     "/scripts": {
-      "get": {
+      "put": {
         "operationId": "Alias_GetScript",
         "description": "Retrieve the configuration script identified by configuration name.",
         "produces": [
           "text/powershell"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "$ref": "#/parameters/GeoJsonCreateOrUpdateProperties"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
               "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/policy": {
+      "put": {
+        "operationId": "Alias_PolicyAssignment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/ScheduleCreateOrUpdateProperties"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PolicyAssignmentProperties"
             }
           }
         }

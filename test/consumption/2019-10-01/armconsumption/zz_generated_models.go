@@ -559,38 +559,6 @@ type CurrentSpend struct {
 	Unit *string `json:"unit,omitempty" azure:"ro"`
 }
 
-// DownloadProperties - The properties of the price sheet download.
-type DownloadProperties struct {
-	// READ-ONLY; The link (url) to download the pricesheet.
-	DownloadURL *string `json:"downloadUrl,omitempty" azure:"ro"`
-
-	// READ-ONLY; Download link validity.
-	ValidTill *string `json:"validTill,omitempty" azure:"ro"`
-}
-
-// ErrorDetails - The details of the error.
-type ErrorDetails struct {
-	// READ-ONLY; Error code.
-	Code *string `json:"code,omitempty" azure:"ro"`
-
-	// READ-ONLY; Error message indicating why the operation failed.
-	Message *string `json:"message,omitempty" azure:"ro"`
-}
-
-// ErrorResponse - Error response indicates that the service is not able to process the incoming request. The reason is provided
-// in the error message.
-// Some Error responses:
-// * 429 TooManyRequests - Request is throttled. Retry after waiting for the time specified in the "x-ms-ratelimit-microsoft.consumption-retry-after"
-// header.
-//
-//
-// * 503 ServiceUnavailable - Service is temporarily unavailable. Retry after waiting for the time specified in the "Retry-After"
-// header.
-type ErrorResponse struct {
-	// The details of the error.
-	Error *ErrorDetails `json:"error,omitempty"`
-}
-
 // EventProperties - The event properties.
 type EventProperties struct {
 	// The type of event.
@@ -899,29 +867,6 @@ func (f ForecastsListResult) MarshalJSON() ([]byte, error) {
 	objectMap := make(map[string]interface{})
 	populate(objectMap, "value", f.Value)
 	return json.Marshal(objectMap)
-}
-
-// HighCasedErrorDetails - The details of the error.
-type HighCasedErrorDetails struct {
-	// READ-ONLY; Error code.
-	Code *string `json:"code,omitempty" azure:"ro"`
-
-	// READ-ONLY; Error message indicating why the operation failed.
-	Message *string `json:"message,omitempty" azure:"ro"`
-}
-
-// HighCasedErrorResponse - Error response indicates that the service is not able to process the incoming request. The reason
-// is provided in the error message.
-// Some Error responses:
-// * 429 TooManyRequests - Request is throttled. Retry after waiting for the time specified in the "x-ms-ratelimit-microsoft.consumption-retry-after"
-// header.
-//
-//
-// * 503 ServiceUnavailable - Service is temporarily unavailable. Retry after waiting for the time specified in the "Retry-After"
-// header.
-type HighCasedErrorResponse struct {
-	// The details of the error.
-	Error *HighCasedErrorDetails `json:"error,omitempty"`
 }
 
 // LegacyChargeSummary - Legacy charge summary.
