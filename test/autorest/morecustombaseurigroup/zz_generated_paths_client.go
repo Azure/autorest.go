@@ -37,14 +37,13 @@ type PathsClientOptions struct {
 // subscriptionID - The subscription id with value 'test12'.
 // options - pass nil to accept the default values.
 func NewPathsClient(subscriptionID string, options *PathsClientOptions) *PathsClient {
-	cp := PathsClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &PathsClientOptions{}
 	}
 	client := &PathsClient{
 		dnsSuffix:      "host",
 		subscriptionID: subscriptionID,
-		pl:             runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp.ClientOptions),
+		pl:             runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions),
 	}
 	if options.DnsSuffix != nil {
 		client.dnsSuffix = *options.DnsSuffix

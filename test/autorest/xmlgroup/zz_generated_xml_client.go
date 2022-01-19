@@ -26,12 +26,11 @@ type XMLClient struct {
 // NewXMLClient creates a new instance of XMLClient with the specified values.
 // options - pass nil to accept the default values.
 func NewXMLClient(options *azcore.ClientOptions) *XMLClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &XMLClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

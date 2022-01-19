@@ -25,12 +25,11 @@ type XMSClientRequestIDClient struct {
 // NewXMSClientRequestIDClient creates a new instance of XMSClientRequestIDClient with the specified values.
 // options - pass nil to accept the default values.
 func NewXMSClientRequestIDClient(options *azcore.ClientOptions) *XMSClientRequestIDClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &XMSClientRequestIDClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

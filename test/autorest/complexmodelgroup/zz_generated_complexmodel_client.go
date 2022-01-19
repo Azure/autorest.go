@@ -28,12 +28,11 @@ type ComplexModelClient struct {
 // NewComplexModelClient creates a new instance of ComplexModelClient with the specified values.
 // options - pass nil to accept the default values.
 func NewComplexModelClient(options *azcore.ClientOptions) *ComplexModelClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &ComplexModelClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

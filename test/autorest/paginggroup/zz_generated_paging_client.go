@@ -30,12 +30,11 @@ type PagingClient struct {
 // NewPagingClient creates a new instance of PagingClient with the specified values.
 // options - pass nil to accept the default values.
 func NewPagingClient(options *azcore.ClientOptions) *PagingClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &PagingClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

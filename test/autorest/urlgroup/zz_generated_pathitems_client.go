@@ -32,14 +32,13 @@ type PathItemsClient struct {
 // globalStringQuery - should contain value null
 // options - pass nil to accept the default values.
 func NewPathItemsClient(globalStringPath string, globalStringQuery *string, options *azcore.ClientOptions) *PathItemsClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &PathItemsClient{
 		globalStringPath:  globalStringPath,
 		globalStringQuery: globalStringQuery,
-		pl:                runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl:                runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

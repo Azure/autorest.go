@@ -28,12 +28,11 @@ type SubscriptionInMethodClient struct {
 // NewSubscriptionInMethodClient creates a new instance of SubscriptionInMethodClient with the specified values.
 // options - pass nil to accept the default values.
 func NewSubscriptionInMethodClient(options *azcore.ClientOptions) *SubscriptionInMethodClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &SubscriptionInMethodClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

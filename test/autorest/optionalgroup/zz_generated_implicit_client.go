@@ -35,15 +35,14 @@ type ImplicitClient struct {
 // optionalGlobalQuery - number of items to skip
 // options - pass nil to accept the default values.
 func NewImplicitClient(requiredGlobalPath string, requiredGlobalQuery string, optionalGlobalQuery *int32, options *azcore.ClientOptions) *ImplicitClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &ImplicitClient{
 		requiredGlobalPath:  requiredGlobalPath,
 		requiredGlobalQuery: requiredGlobalQuery,
 		optionalGlobalQuery: optionalGlobalQuery,
-		pl:                  runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl:                  runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

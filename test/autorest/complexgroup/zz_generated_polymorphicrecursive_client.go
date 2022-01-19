@@ -25,12 +25,11 @@ type PolymorphicrecursiveClient struct {
 // NewPolymorphicrecursiveClient creates a new instance of PolymorphicrecursiveClient with the specified values.
 // options - pass nil to accept the default values.
 func NewPolymorphicrecursiveClient(options *azcore.ClientOptions) *PolymorphicrecursiveClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &PolymorphicrecursiveClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

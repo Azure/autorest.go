@@ -26,12 +26,11 @@ type Datetimerfc1123Client struct {
 // NewDatetimerfc1123Client creates a new instance of Datetimerfc1123Client with the specified values.
 // options - pass nil to accept the default values.
 func NewDatetimerfc1123Client(options *azcore.ClientOptions) *Datetimerfc1123Client {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &Datetimerfc1123Client{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

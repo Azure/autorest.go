@@ -30,13 +30,12 @@ type SubscriptionInCredentialsClient struct {
 // subscriptionID - The subscription id, which appears in the path, always modeled in credentials. The value is always '1234-5678-9012-3456'
 // options - pass nil to accept the default values.
 func NewSubscriptionInCredentialsClient(subscriptionID string, options *azcore.ClientOptions) *SubscriptionInCredentialsClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &SubscriptionInCredentialsClient{
 		subscriptionID: subscriptionID,
-		pl:             runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl:             runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

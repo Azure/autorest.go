@@ -26,12 +26,11 @@ type UploadClient struct {
 // NewUploadClient creates a new instance of UploadClient with the specified values.
 // options - pass nil to accept the default values.
 func NewUploadClient(options *azcore.ClientOptions) *UploadClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &UploadClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

@@ -29,12 +29,11 @@ type QueriesClient struct {
 // NewQueriesClient creates a new instance of QueriesClient with the specified values.
 // options - pass nil to accept the default values.
 func NewQueriesClient(options *azcore.ClientOptions) *QueriesClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &QueriesClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

@@ -189,18 +189,14 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     clientText += `func ${clientCtor}(${methodParams.join(', ')}) *${clientName} {\n`;
     if (isARM) {
       // data-plane doesn't take client options
-      clientText += `\tcp := ${optionsType}{}\n`;
-      clientText += '\tif options != nil {\n';
-      clientText += '\t\tcp = *options\n';
+      clientText += '\tif options == nil {\n';
+      clientText += `\t\toptions = &${optionsType}{}\n`;
       clientText += '\t}\n';
     }
-    let optionsCopy = 'cp';
-    if (optionalParams.length > 0) {
-      optionsCopy = 'cp.ClientOptions';
-    }
     if (<boolean>session.model.language.go!.azureARM) {
-      clientText += '\tif len(cp.Endpoint) == 0 {\n';
-      clientText += '\t\tcp.Endpoint = arm.AzurePublicCloud\n';
+      clientText += '\tep := options.Endpoint\n'
+      clientText += '\tif len(ep) == 0 {\n';
+      clientText += '\t\tep = arm.AzurePublicCloud\n';
       clientText += '\t}\n';
     }
     let parameterizedURL = '';
@@ -278,10 +274,15 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     }
     // create or add pipeline based on arm/vanilla/data-plane
     if (<boolean>session.model.language.go!.azureARM) {
-      clientText += `\t\t${group.language.go!.hostParamName}: string(cp.Endpoint),\n`;
-      clientText += `\t\tpl: armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, &${optionsCopy}),\n`;
+      clientText += `\t\t${group.language.go!.hostParamName}: string(ep),\n`;
+      clientText += `\t\tpl: armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options),\n`;
     } else if (isARM) {
-      clientText += `\t\tpl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &${optionsCopy}),\n`;
+      let clientOpts = 'options'
+      if (optionsType != 'azcore.ClientOptions') {
+        // optionsType is a generated type which embeds azcore.ClientOptions
+        clientOpts = '&options.ClientOptions'
+      }
+      clientText += `\t\tpl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, ${clientOpts}),\n`;
     } else {
       clientText += '\t\tpl: pl,\n';
     }

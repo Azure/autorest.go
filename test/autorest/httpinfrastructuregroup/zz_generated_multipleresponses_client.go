@@ -26,12 +26,11 @@ type MultipleResponsesClient struct {
 // NewMultipleResponsesClient creates a new instance of MultipleResponsesClient with the specified values.
 // options - pass nil to accept the default values.
 func NewMultipleResponsesClient(options *azcore.ClientOptions) *MultipleResponsesClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &MultipleResponsesClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

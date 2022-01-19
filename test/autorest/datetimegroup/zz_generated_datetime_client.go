@@ -26,12 +26,11 @@ type DatetimeClient struct {
 // NewDatetimeClient creates a new instance of DatetimeClient with the specified values.
 // options - pass nil to accept the default values.
 func NewDatetimeClient(options *azcore.ClientOptions) *DatetimeClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &DatetimeClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

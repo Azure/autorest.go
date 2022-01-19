@@ -26,12 +26,11 @@ type ODataClient struct {
 // NewODataClient creates a new instance of ODataClient with the specified values.
 // options - pass nil to accept the default values.
 func NewODataClient(options *azcore.ClientOptions) *ODataClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &ODataClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

@@ -26,12 +26,11 @@ type LROsClient struct {
 // NewLROsClient creates a new instance of LROsClient with the specified values.
 // options - pass nil to accept the default values.
 func NewLROsClient(options *azcore.ClientOptions) *LROsClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &LROsClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

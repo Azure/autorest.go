@@ -26,12 +26,11 @@ type LRORetrysClient struct {
 // NewLRORetrysClient creates a new instance of LRORetrysClient with the specified values.
 // options - pass nil to accept the default values.
 func NewLRORetrysClient(options *azcore.ClientOptions) *LRORetrysClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &LRORetrysClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

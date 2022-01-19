@@ -25,12 +25,11 @@ type FilesClient struct {
 // NewFilesClient creates a new instance of FilesClient with the specified values.
 // options - pass nil to accept the default values.
 func NewFilesClient(options *azcore.ClientOptions) *FilesClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &FilesClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

@@ -33,13 +33,12 @@ type PathsClientOptions struct {
 // NewPathsClient creates a new instance of PathsClient with the specified values.
 // options - pass nil to accept the default values.
 func NewPathsClient(options *PathsClientOptions) *PathsClient {
-	cp := PathsClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &PathsClientOptions{}
 	}
 	client := &PathsClient{
 		host: "host",
-		pl:   runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp.ClientOptions),
+		pl:   runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &options.ClientOptions),
 	}
 	if options.Host != nil {
 		client.host = *options.Host

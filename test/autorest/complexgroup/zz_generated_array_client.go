@@ -25,12 +25,11 @@ type ArrayClient struct {
 // NewArrayClient creates a new instance of ArrayClient with the specified values.
 // options - pass nil to accept the default values.
 func NewArrayClient(options *azcore.ClientOptions) *ArrayClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &ArrayClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

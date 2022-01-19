@@ -25,12 +25,11 @@ type NumberClient struct {
 // NewNumberClient creates a new instance of NumberClient with the specified values.
 // options - pass nil to accept the default values.
 func NewNumberClient(options *azcore.ClientOptions) *NumberClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &NumberClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

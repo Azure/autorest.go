@@ -25,12 +25,11 @@ type IntClient struct {
 // NewIntClient creates a new instance of IntClient with the specified values.
 // options - pass nil to accept the default values.
 func NewIntClient(options *azcore.ClientOptions) *IntClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &IntClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }

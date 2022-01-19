@@ -26,12 +26,11 @@ type LROSADsClient struct {
 // NewLROSADsClient creates a new instance of LROSADsClient with the specified values.
 // options - pass nil to accept the default values.
 func NewLROSADsClient(options *azcore.ClientOptions) *LROSADsClient {
-	cp := azcore.ClientOptions{}
-	if options != nil {
-		cp = *options
+	if options == nil {
+		options = &azcore.ClientOptions{}
 	}
 	client := &LROSADsClient{
-		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, &cp),
+		pl: runtime.NewPipeline(moduleName, moduleVersion, runtime.PipelineOptions{}, options),
 	}
 	return client
 }
