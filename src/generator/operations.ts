@@ -194,7 +194,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
       clientText += '\t}\n';
     }
     if (<boolean>session.model.language.go!.azureARM) {
-      clientText += '\tep := string(options.Endpoint)\n'
+      clientText += '\tep := options.Endpoint\n'
       clientText += '\tif len(ep) == 0 {\n';
       clientText += '\t\tep = arm.AzurePublicCloud\n';
       clientText += '\t}\n';
@@ -274,7 +274,7 @@ export async function generateOperations(session: Session<CodeModel>): Promise<O
     }
     // create or add pipeline based on arm/vanilla/data-plane
     if (<boolean>session.model.language.go!.azureARM) {
-      clientText += `\t\t${group.language.go!.hostParamName}: ep,\n`;
+      clientText += `\t\t${group.language.go!.hostParamName}: string(ep),\n`;
       clientText += `\t\tpl: armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options),\n`;
     } else if (isARM) {
       let clientOpts = 'options'

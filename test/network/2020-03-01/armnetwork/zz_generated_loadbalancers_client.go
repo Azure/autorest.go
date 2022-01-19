@@ -38,13 +38,13 @@ func NewLoadBalancersClient(subscriptionID string, credential azcore.TokenCreden
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := string(options.Endpoint)
+	ep := options.Endpoint
 	if len(ep) == 0 {
 		ep = arm.AzurePublicCloud
 	}
 	client := &LoadBalancersClient{
 		subscriptionID: subscriptionID,
-		host:           ep,
+		host:           string(ep),
 		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options),
 	}
 	return client

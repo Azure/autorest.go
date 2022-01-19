@@ -38,13 +38,13 @@ func NewLoadBalancerOutboundRulesClient(subscriptionID string, credential azcore
 	if options == nil {
 		options = &arm.ClientOptions{}
 	}
-	ep := string(options.Endpoint)
+	ep := options.Endpoint
 	if len(ep) == 0 {
 		ep = arm.AzurePublicCloud
 	}
 	client := &LoadBalancerOutboundRulesClient{
 		subscriptionID: subscriptionID,
-		host:           ep,
+		host:           string(ep),
 		pl:             armruntime.NewPipeline(moduleName, moduleVersion, credential, runtime.PipelineOptions{}, options),
 	}
 	return client
