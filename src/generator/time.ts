@@ -32,7 +32,7 @@ export async function generateTimeHelpers(session: Session<CodeModel>): Promise<
   }
   let needsPopulate = false;
   for (const obj of values(session.model.schemas.objects)) {
-    if (obj.language.go!.marshallingFormat === 'xml') {
+    if (obj.language.go!.marshallingFormat !== 'json') {
       // population helpers are for JSON only
       continue;
     }
