@@ -822,7 +822,7 @@ function createProtocolRequest(group: OperationGroup, op: Operation, imports: Im
       body = 'aux';
     } else if (isArrayOfTimesForMarshalling(bodyParam!.schema) || isArrayOfDatesForMarshalling(bodyParam!.schema)) {
       const timeType = (<ArraySchema>bodyParam!.schema).elementType.language.go!.internalTimeType;
-      text += `\taux := make([]*${timeType}, len(${body}), len(${body}))\n`;
+      text += `\taux := make([]*${timeType}, len(${body}))\n`;
       text += `\tfor i := 0; i < len(${body}); i++ {\n`;
       text += `\t\taux[i] = (*${timeType})(${body}[i])\n`;
       text += '\t}\n';
@@ -954,7 +954,7 @@ function generateResponseUnmarshaller(op: Operation, response: SchemaResponse, u
     unmarshallerText += `\tif err := runtime.UnmarshalAs${getMediaType(response.protocol)}(resp, &aux); err != nil {\n`;
     unmarshallerText += `\t\treturn ${zeroValue}, err\n`;
     unmarshallerText += '\t}\n';
-    unmarshallerText += '\tcp := make([]*time.Time, len(aux), len(aux))\n';
+    unmarshallerText += '\tcp := make([]*time.Time, len(aux))\n';
     unmarshallerText += '\tfor i := 0; i < len(aux); i++ {\n';
     unmarshallerText += '\t\tcp[i] = (*time.Time)(aux[i])\n';
     unmarshallerText += '\t}\n';
